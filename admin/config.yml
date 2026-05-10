@@ -1,0 +1,197 @@
+# ════════════════════════════════════════════════════════════════════
+# CONFIG DECAP CMS — Back-office HELP! Confort Saint-Omer / Dunkerque
+# Documentation : https://decapcms.org/docs/
+# ════════════════════════════════════════════════════════════════════
+
+# === Backend Git (Netlify Identity + Git Gateway) ===
+backend:
+  name: git-gateway
+  branch: main
+  commit_messages:
+    create: '[CMS] ✨ {{collection}} : ajout "{{slug}}"'
+    update: '[CMS] ✏️ {{collection}} : modification "{{slug}}"'
+    delete: '[CMS] 🗑 {{collection}} : suppression "{{slug}}"'
+
+# === Dossier de stockage des médias (images uploadées) ===
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+# === Site URL (à mettre à jour avec ton domaine définitif) ===
+site_url: https://www.helpconfort-saintomer.fr
+display_url: https://www.helpconfort-saintomer.fr
+logo_url: /logo-officiel.png
+locale: 'fr'
+
+# ═══════════════════════════════════════════
+#   COLLECTIONS — ce que tu peux éditer
+# ═══════════════════════════════════════════
+collections:
+
+  # === ACTUALITÉS / BLOG ===
+  - name: "actualites"
+    label: "📰 Actualités"
+    label_singular: "Actualité"
+    folder: "content/actualites"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} — {{date | date('DD/MM/YYYY')}}"
+    sortable_fields: ['date', 'title']
+    view_filters:
+      - label: "Publiées"
+        field: published
+        pattern: true
+      - label: "Brouillons"
+        field: published
+        pattern: false
+    fields:
+      - {label: "Titre", name: "title", widget: "string", hint: "Titre de l'article (apparaît en H1)"}
+      - {label: "Date", name: "date", widget: "datetime", default: "", format: "YYYY-MM-DDTHH:mm", date_format: "DD/MM/YYYY", time_format: "HH:mm"}
+      - {label: "Image principale", name: "image", widget: "image", required: false, hint: "Bannière de l'article (recommandé : 1200×600 px)"}
+      - {label: "Catégorie", name: "categorie", widget: "select", options: ["Conseils", "Actualité agence", "Sécurité", "Économies d'énergie", "Réglementation", "Saisonnier"]}
+      - {label: "Zone concernée", name: "zone", widget: "select", options: ["Saint-Omer", "Dunkerque", "Les deux"], default: "Les deux"}
+      - {label: "Résumé court", name: "resume", widget: "text", hint: "1-2 phrases qui apparaissent dans la liste des articles"}
+      - {label: "Contenu de l'article", name: "body", widget: "markdown", hint: "Texte complet — vous pouvez ajouter des images, listes, titres, liens"}
+      - {label: "Publier", name: "published", widget: "boolean", default: true, hint: "Décocher pour mettre en brouillon"}
+
+  # === RÉALISATIONS / CHANTIERS ===
+  - name: "realisations"
+    label: "🛠 Réalisations / Chantiers"
+    label_singular: "Réalisation"
+    folder: "content/realisations"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    summary: "{{title}} — {{ville}}"
+    sortable_fields: ['date', 'title', 'ville']
+    fields:
+      - {label: "Titre du chantier", name: "title", widget: "string", hint: "Ex : Rénovation salle de bain à Longuenesse"}
+      - {label: "Date du chantier", name: "date", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false}
+      - {label: "Métier", name: "metier", widget: "select", options: ["Plomberie", "Chauffage", "Électricité", "Serrurerie", "Vitrerie", "Menuiserie", "Volets", "Rénovation", "Adaptation PMR", "Multi-métiers"]}
+      - {label: "Ville", name: "ville", widget: "string", hint: "Ex : Saint-Omer, Coudekerque, Dunkerque…"}
+      - {label: "Zone", name: "zone", widget: "select", options: ["Saint-Omer", "Dunkerque"]}
+      - {label: "Photo AVANT", name: "photo_avant", widget: "image", required: false, hint: "Photo avant intervention (optionnel)"}
+      - {label: "Photo APRÈS", name: "photo_apres", widget: "image", hint: "Photo après intervention (obligatoire)"}
+      - {label: "Photos supplémentaires", name: "photos_extra", widget: "list", required: false, summary: "Photo {{fields.alt}}", field: {label: "Photo", name: "photo", widget: "image"}}
+      - {label: "Description", name: "description", widget: "text", hint: "Décris en quelques lignes : problème + intervention + résultat"}
+      - {label: "Durée", name: "duree", widget: "string", required: false, hint: "Ex : 2 jours, 1 semaine, 3h"}
+      - {label: "Mis en avant", name: "featured", widget: "boolean", default: false, hint: "Cocher pour afficher sur la page d'accueil"}
+      - {label: "Publier", name: "published", widget: "boolean", default: true}
+
+  # === APPORTEURS D'AFFAIRES (homepage — bandeau défilant) ===
+  # Fichier unique JSON édité via interface liste — chargé dynamiquement par index.html
+  - name: "apporteurs"
+    label: "🤝 Apporteurs d'affaires"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: "liste"
+        label: "Liste des apporteurs (homepage)"
+        file: "content/apporteurs/index.json"
+        description: "Apporteurs d'affaires affichés en bandeau défilant sur la page d'accueil. Modifications visibles immédiatement après publication."
+        fields:
+          - label: "Apporteurs d'affaires"
+            name: "apporteurs"
+            widget: "list"
+            summary: "{{fields.nom}} — {{fields.categorie}} ({{fields.portee}})"
+            allow_add: true
+            collapsed: false
+            fields:
+              - {label: "Nom", name: "nom", widget: "string", hint: "Ex : MAIF, Cabinet Dupont, Syndic Immo Saint-Omer…"}
+              - {label: "Logo officiel", name: "logo", widget: "image", required: false, hint: "PNG ou SVG transparent. ~200×80 px. Laissez vide si pas encore de logo (le nom s'affiche à la place)"}
+              - {label: "URL du site partenaire", name: "url", widget: "string", required: false, hint: "Ex : https://www.maif.fr — facultatif"}
+              - label: "Catégorie"
+                name: "categorie"
+                widget: "select"
+                options:
+                  - "Compagnie d'assurance"
+                  - "Cabinet d'expertise"
+                  - "Syndic de copropriété"
+                  - "Bailleur social"
+                  - "Bailleur privé"
+                  - "Agence immobilière"
+                  - "Collectivité / CCAS"
+                  - "Réseau / Groupe national"
+                  - "Partenaire pro"
+                  - "Autre"
+              - {label: "Portée", name: "portee", widget: "select", options: ["Local", "National"], default: "Local"}
+              - {label: "Ordre d'affichage", name: "ordre", widget: "number", default: 100, value_type: "int", min: 0, max: 999, hint: "Plus le chiffre est petit, plus l'apporteur apparaît tôt"}
+              - {label: "Description courte", name: "description", widget: "string", required: false}
+              - {label: "Logo blanc / fond sombre", name: "bg_dark", widget: "boolean", default: false, required: false, hint: "Cocher SI le logo est blanc/clair (sera affiché sur fond bleu marine pour rester visible)"}
+              - {label: "Afficher sur la homepage", name: "published", widget: "boolean", default: true}
+
+  # === FOURNISSEURS / MARQUES par métier (pages métiers) ===
+  - name: "fournisseurs"
+    label: "🏭 Fournisseurs &amp; marques (pages métiers)"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: "liste"
+        label: "Liste des fournisseurs par métier"
+        file: "content/fournisseurs/index.json"
+        description: "Marques affichées sur les pages métiers (plomberie, chauffage, etc.)"
+        fields:
+          - label: "Fournisseurs / marques"
+            name: "fournisseurs"
+            widget: "list"
+            summary: "{{fields.nom}} — {{fields.metier}}"
+            allow_add: true
+            collapsed: false
+            fields:
+              - {label: "Nom de la marque", name: "nom", widget: "string"}
+              - {label: "Logo officiel", name: "logo", widget: "image", required: false}
+              - {label: "URL du site fournisseur", name: "url", widget: "string", required: false}
+              - label: "Métier concerné"
+                name: "metier"
+                widget: "select"
+                options: ["Plomberie", "Chauffage", "Électricité", "Serrurerie", "Vitrerie", "Menuiserie", "Volets", "Rénovation", "Adaptation PMR", "Multi-métiers"]
+              - {label: "Spécialité / sous-titre", name: "specialite", widget: "string", required: false}
+              - {label: "Ordre d'affichage", name: "ordre", widget: "number", default: 100, value_type: "int", min: 0, max: 999}
+              - {label: "Afficher", name: "published", widget: "boolean", default: true}
+
+  # === CONFIGURATION GLOBALE DU SITE ===
+  - name: "config"
+    label: "⚙️ Configuration générale"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: "contact"
+        label: "📞 Coordonnées agences"
+        file: "content/config/contact.json"
+        fields:
+          - {label: "Téléphone principal", name: "telephone", widget: "string", default: "03 66 10 01 34"}
+          - {label: "Email Saint-Omer", name: "email_saint_omer", widget: "string", default: "florian.dhaillecourt@helpconfort.com"}
+          - {label: "Email Dunkerque", name: "email_dunkerque", widget: "string", default: "dunkerque@helpconfort.com"}
+          - {label: "Adresse agence Saint-Omer", name: "adresse_saint_omer", widget: "text", default: "Saint-Martin-lez-Tatinghem · 62500"}
+          - {label: "Horaires", name: "horaires", widget: "string", default: "Lun-Sam 9h-17h"}
+
+      - name: "tarifs"
+        label: "💰 Tarifs &amp; contrats"
+        file: "content/config/tarifs.json"
+        fields:
+          - {label: "Main d'œuvre (€ HT/h)", name: "main_oeuvre", widget: "string", default: "52"}
+          - {label: "Déplacement Saint-Omer (€ HT)", name: "deplacement_so", widget: "string", default: "0 (gratuit)"}
+          - {label: "Déplacement Dunkerque (€ HT)", name: "deplacement_dk", widget: "string", default: "60"}
+          - label: "Contrats Gaz"
+            name: "contrats_gaz"
+            widget: "object"
+            fields:
+              - {label: "BASIC (€/mois)", name: "basic", widget: "string", default: "9"}
+              - {label: "CONFORT (€/mois)", name: "confort", widget: "string", default: "13"}
+              - {label: "SÉCURITÉ (€/mois)", name: "securite", widget: "string", default: "23"}
+          - label: "Contrats Fioul"
+            name: "contrats_fioul"
+            widget: "object"
+            fields:
+              - {label: "BASIC (€/mois)", name: "basic", widget: "string", default: "12"}
+              - {label: "CONFORT (€/mois)", name: "confort", widget: "string", default: "16"}
+              - {label: "SÉCURITÉ (€/mois)", name: "securite", widget: "string", default: "27"}
+
+      - name: "slogans"
+        label: "💬 Slogans &amp; accroches"
+        file: "content/config/slogans.json"
+        fields:
+          - {label: "Slogan principal", name: "slogan", widget: "string", default: "Un seul interlocuteur pour tous vos travaux."}
+          - {label: "H1 d'accueil", name: "h1", widget: "string", default: "Quand ça lâche, on répond. Et on règle."}
+          - {label: "Sous-titre hero", name: "sous_titre", widget: "text", default: "Diagnostic clair, devis détaillé, intervention propre — et des photos avant/après pour que vous voyiez ce qu'on a fait."}
