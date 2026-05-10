@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=1778436727">
+<link rel="stylesheet" href="styles.css?v=1778438525">
 <style id="hc-critical-header">
 /* CSS critique — header + megamenu (inline pour garantir le rendu même si cache foireux) */
 .hc-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.92); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(229,237,243,.5); }
@@ -635,16 +635,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
   @keyframes m-float { 0%,100% { transform: translateY(0) rotate(-.4deg) } 50% { transform: translateY(-10px) rotate(.4deg) } }
 
-  /* Speech bubble qui sort de la mascotte */
+  /* Speech bubble — POSITIONNÉE LOIN DE LA MASCOTTE (haut-gauche), pointe vers elle */
   .m-hero-speech {
-    position: absolute; top: 12%; left: 0;
+    position: absolute; top: 4%; left: -2%;
     background: #fff;
-    padding: 12px 18px; border-radius: 14px 14px 14px 4px;
+    padding: 12px 16px; border-radius: 14px 14px 4px 14px;
     box-shadow: 0 12px 28px rgba(10,20,40,.14), 0 2px 6px rgba(13,160,207,.08);
     border: 1px solid var(--m-glow);
-    max-width: 220px;
+    max-width: 200px;
     z-index: 4;
     animation: m-speech-in .8s cubic-bezier(.34,1.56,.64,1) .4s both;
+  }
+  /* Tail/pointe qui sort en bas-droite de la bulle vers la mascotte */
+  .m-hero-speech::after {
+    content: ''; position: absolute;
+    right: -8px; bottom: 8px;
+    width: 14px; height: 14px;
+    background: #fff;
+    border-right: 1px solid var(--m-glow);
+    border-bottom: 1px solid var(--m-glow);
+    transform: rotate(-45deg);
+    border-radius: 0 0 4px 0;
   }
   @keyframes m-speech-in {
     0% { opacity: 0; transform: translateY(-6px) scale(.92) }
@@ -695,13 +706,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     flex-shrink: 0;
   }
   .m-hero-service-ico svg { width: 14px; height: 14px }
-  /* 6 positions orbitantes */
-  .m-hero-service.s1 { top: 8%; right: 18%; animation-delay: 0s }
-  .m-hero-service.s2 { top: 28%; right: -2%; animation-delay: .8s }
-  .m-hero-service.s3 { top: 52%; right: 6%; animation-delay: 1.6s }
-  .m-hero-service.s4 { bottom: 14%; right: 22%; animation-delay: 2.4s }
-  .m-hero-service.s5 { bottom: 28%; left: 2%; animation-delay: 3.2s }
-  .m-hero-service.s6 { top: 48%; left: -2%; animation-delay: 4s }
+  /* 6 services orbitants — sur les BORDS uniquement, jamais sur la mascotte
+     Layout : 3 droite (haut, milieu, bas) + 3 gauche (haut, milieu, bas)
+     Distribution symétrique en miroir */
+  /* Côté droit */
+  .m-hero-service.s1 { top: 6%;    right: 4%;  animation-delay: 0s   }   /* Recherche fuite — haut */
+  .m-hero-service.s2 { top: 38%;   right: -3%; animation-delay: .8s  }   /* Débouchage — milieu */
+  .m-hero-service.s3 { bottom: 6%; right: 4%;  animation-delay: 1.6s }   /* Chauffe-eau — bas */
+  /* Côté gauche (en miroir) */
+  .m-hero-service.s4 { bottom: 6%; left: 4%;   animation-delay: 2.4s }   /* Sanitaire — bas */
+  .m-hero-service.s5 { top: 38%;   left: -3%;  animation-delay: 3.2s }   /* Salle de bain — milieu */
+  .m-hero-service.s6 { top: 28%;   left: 12%;  animation-delay: 4s   }   /* Réseaux — sous la speech bubble */
   @keyframes m-svc-float {
     0%, 100% { transform: translateY(0) }
     50%      { transform: translateY(-6px) }
