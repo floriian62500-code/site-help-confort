@@ -1,7 +1,4 @@
-<!-- ═══════════════════════════════════════════════════════════════════
-     PAGE MÉTIER — PLOMBERIE · Premium refonte complète
-     Couleur dominante métier : #12C6FE (eau / fluidité / urgence)
-═══════════════════════════════════════════════════════════════════ -->
+<!-- ═══ PAGE PLOMBERIE — VERSION COMPACTE PREMIUM ═══ -->
 <style>
   body[data-metier-page="plomberie"] {
     --m-color: #12C6FE;
@@ -9,489 +6,888 @@
     --m-color-light: #6FDFFF;
     --m-glow: rgba(18, 198, 254, .25);
     --m-soft: rgba(18, 198, 254, .08);
-    --m-bg-tint: rgba(18, 198, 254, .04);
   }
-  .m-section { padding: clamp(50px, 7vw, 90px) 0; position: relative; }
+
+  /* SECTION COMMUN */
+  .m-section { padding: clamp(48px, 6vw, 80px) 0; }
   .m-section .container { max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); }
-  .m-section-head { text-align: center; max-width: 720px; margin: 0 auto 48px; }
-  .m-section-eyebrow {
+  .m-head { text-align: center; max-width: 680px; margin: 0 auto 36px; }
+  .m-head .eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
     font-size: .72rem; font-weight: 800; text-transform: uppercase;
     letter-spacing: 2.5px; color: var(--m-color-dark);
-    background: var(--m-soft);
-    padding: 7px 16px; border-radius: 999px;
-    border: 1px solid var(--m-glow);
-    margin-bottom: 18px;
+    background: var(--m-soft); padding: 7px 16px; border-radius: 999px;
+    border: 1px solid var(--m-glow); margin-bottom: 16px;
   }
-  .m-section-eyebrow svg { width: 14px; height: 14px; }
-  .m-section-h2 {
-    font-size: clamp(1.7rem, 3.2vw, 2.4rem);
-    font-weight: 800; color: #0A1428;
-    letter-spacing: -.02em; line-height: 1.15;
-    margin: 0 0 14px;
+  .m-head h2 {
+    font-size: clamp(1.6rem, 2.8vw, 2.2rem); font-weight: 800; color: #0A1428;
+    letter-spacing: -.02em; line-height: 1.15; margin: 0 0 12px;
   }
-  .m-section-h2 em {
+  .m-head h2 em {
     font-family: 'Playfair Display', Georgia, serif;
     font-style: italic; font-weight: 600;
     background: linear-gradient(135deg, var(--m-color), var(--m-color-dark));
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
   }
-  .m-section-lead { font-size: 1.04rem; line-height: 1.6; color: #475569; margin: 0; }
-  .m-section-lead strong { color: #0A1428; font-weight: 700; }
+  .m-head p { font-size: 1rem; line-height: 1.6; color: #475569; margin: 0; }
+  .m-head p strong { color: #0A1428; font-weight: 700; }
 
-  /* HERO */
+  /* ─── HERO ─── */
   .m-hero {
     position: relative; overflow: hidden;
-    padding: clamp(50px, 6vw, 90px) 0 clamp(60px, 7vw, 100px);
+    padding: clamp(40px, 5vw, 80px) 0 clamp(50px, 6vw, 90px);
     background:
       radial-gradient(ellipse 70% 50% at 80% 20%, var(--m-glow), transparent 65%),
-      radial-gradient(ellipse 60% 50% at 20% 80%, rgba(13,160,207,.08), transparent 60%),
-      linear-gradient(180deg, #fff 0%, #F2FBFE 60%, #E8F7FE 100%);
+      radial-gradient(ellipse 60% 50% at 20% 80%, rgba(13,160,207,.06), transparent 60%),
+      linear-gradient(180deg, #fff 0%, #F2FBFE 100%);
   }
   .m-hero-inner {
-    position: relative; z-index: 2;
     max-width: 1280px; margin: 0 auto;
     padding: 0 clamp(20px, 4vw, 40px);
-    display: grid; grid-template-columns: 1fr; gap: 40px;
-    align-items: center;
+    display: grid; grid-template-columns: 1fr; gap: 36px; align-items: center;
   }
-  @media (min-width: 1000px) { .m-hero-inner { grid-template-columns: 1.15fr 1fr; gap: 60px; } }
-  .m-hero-eyebrow {
+  @media (min-width: 1000px) { .m-hero-inner { grid-template-columns: 1.1fr 1fr; gap: 60px; } }
+
+  .m-hero-eye {
     display: inline-flex; align-items: center; gap: 8px;
     font-size: .76rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--m-color-dark);
-    background: rgba(255,255,255,.85);
-    padding: 8px 16px; border-radius: 999px;
-    border: 1px solid var(--m-glow);
-    box-shadow: 0 6px 18px rgba(18,198,254,.15);
-    margin-bottom: 18px;
+    color: var(--m-color-dark); background: rgba(255,255,255,.85);
+    padding: 8px 16px; border-radius: 999px; border: 1px solid var(--m-glow);
+    box-shadow: 0 6px 18px rgba(18,198,254,.15); margin-bottom: 16px;
   }
-  .m-hero-eyebrow .pulse { width: 8px; height: 8px; border-radius: 50%; background: #22C55E; box-shadow: 0 0 0 0 rgba(34,197,94,.6); animation: m-pulse 2.2s ease-out infinite; }
-  @keyframes m-pulse { 0% { box-shadow: 0 0 0 0 rgba(34,197,94,.65) } 70% { box-shadow: 0 0 0 9px rgba(34,197,94,0) } 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0) } }
-  .m-hero-h1 { font-size: clamp(2rem, 4.2vw, 3.4rem); font-weight: 800; color: #0A1428; line-height: 1.06; letter-spacing: -.025em; margin: 0 0 18px; max-width: 620px; }
-  .m-hero-h1 em { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 600; background: linear-gradient(135deg, var(--m-color) 0%, var(--m-color-dark) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-  .m-hero-lead { font-size: clamp(1rem, 1.2vw, 1.12rem); line-height: 1.6; color: #334155; max-width: 560px; margin: 0 0 26px; font-weight: 500; }
+  .m-hero-eye .pulse {
+    width: 8px; height: 8px; border-radius: 50%; background: #22C55E;
+    box-shadow: 0 0 0 0 rgba(34,197,94,.6); animation: m-pulse 2.2s ease-out infinite;
+  }
+  @keyframes m-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(34,197,94,.65) }
+    70% { box-shadow: 0 0 0 9px rgba(34,197,94,0) }
+    100% { box-shadow: 0 0 0 0 rgba(34,197,94,0) }
+  }
+
+  .m-hero-h1 {
+    font-size: clamp(1.9rem, 3.8vw, 3rem); font-weight: 800; color: #0A1428;
+    line-height: 1.06; letter-spacing: -.025em; margin: 0 0 14px;
+  }
+  .m-hero-h1 em {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic; font-weight: 600;
+    background: linear-gradient(135deg, var(--m-color), var(--m-color-dark));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .m-hero-lead {
+    font-size: clamp(.96rem, 1.1vw, 1.06rem); line-height: 1.6;
+    color: #334155; max-width: 540px; margin: 0 0 20px;
+  }
   .m-hero-lead strong { color: #0A1428; font-weight: 700; }
-  .m-hero-promises { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 560px; margin: 0 0 26px; }
-  @media (min-width: 580px) { .m-hero-promises { grid-template-columns: repeat(4, 1fr); gap: 8px } }
-  .m-promise { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: rgba(255,255,255,.7); border: 1px solid rgba(13,160,207,.14); border-radius: 10px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-  .m-promise svg { width: 18px; height: 18px; color: var(--m-color-dark); flex-shrink: 0 }
-  .m-promise span { font-size: .76rem; font-weight: 700; color: #0A1428; line-height: 1.2 }
-  .m-hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
-  .m-cta { display: inline-flex; align-items: center; gap: 12px; padding: 15px 22px; border-radius: 14px; text-decoration: none; cursor: pointer; border: 0; font-family: inherit; font-size: 1rem; font-weight: 800; transition: all .25s cubic-bezier(.16,1,.3,1); letter-spacing: -.005em; }
-  .m-cta-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .m-cta-icon svg { width: 18px; height: 18px }
-  .m-cta-text { display: flex; flex-direction: column; line-height: 1.15; gap: 2px; align-items: flex-start; }
-  .m-cta-text strong { font-size: 1rem; font-weight: 800 }
-  .m-cta-text small { font-size: .72rem; opacity: .85; font-weight: 500 }
-  .m-cta-urgent { background: linear-gradient(135deg, #E11D48 0%, #9F1239 100%); color: #fff; box-shadow: 0 12px 28px rgba(225,29,72,.30); }
-  .m-cta-urgent:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(225,29,72,.45); }
-  .m-cta-urgent .m-cta-icon { background: rgba(255,255,255,.22); }
-  .m-cta-quote { background: linear-gradient(135deg, var(--m-color), var(--m-color-dark)); color: #fff; box-shadow: 0 12px 28px var(--m-glow); }
-  .m-cta-quote:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(13,160,207,.40); }
-  .m-cta-quote .m-cta-icon { background: rgba(255,255,255,.22); }
-  .m-hero-trust { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 14px 18px; background: rgba(255,255,255,.7); border: 1px solid rgba(13,160,207,.14); border-radius: 12px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); max-width: 560px; }
-  .m-hero-trust-stars { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: #0A1428; }
-  .m-hero-trust-stars .stars { color: #FFB400; letter-spacing: 1px; font-size: .98rem }
-  .m-hero-trust-stars strong { font-size: 1.1rem; font-weight: 800 }
-  .m-hero-trust-meta { font-size: .82rem; color: #475569; flex: 1; min-width: 140px; line-height: 1.3 }
-  .m-hero-trust-meta strong { color: #0A1428; font-weight: 700 }
-  .m-hero-visual { position: relative; display: flex; align-items: center; justify-content: center; min-height: 420px; }
-  .m-hero-bg-blob { position: absolute; inset: 5% 0 0; width: 100%; aspect-ratio: 1; background: radial-gradient(circle, var(--m-glow) 0%, rgba(13,160,207,.08) 40%, transparent 70%); filter: blur(40px); pointer-events: none; animation: m-blob-pulse 6s ease-in-out infinite; }
-  @keyframes m-blob-pulse { 0%,100% { transform: scale(1); opacity: .85 } 50% { transform: scale(1.06); opacity: 1 } }
-  .m-hero-mascotte { position: relative; z-index: 2; height: clamp(360px, 50vw, 540px); width: auto; object-fit: contain; filter: drop-shadow(0 24px 32px rgba(10,20,40,.28)) drop-shadow(0 6px 12px var(--m-glow)); animation: m-float 4.6s ease-in-out infinite; }
+
+  /* Badges courts */
+  .m-badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
+  .m-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px; border-radius: 999px;
+    background: rgba(255,255,255,.85); border: 1px solid var(--m-glow);
+    font-size: .76rem; font-weight: 700; color: #0A1428;
+  }
+  .m-badge svg { width: 12px; height: 12px; color: var(--m-color-dark); }
+
+  /* CTAs hero */
+  .m-hero-ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+  .m-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 20px; border-radius: 12px;
+    text-decoration: none; cursor: pointer; border: 0;
+    font-family: inherit; font-size: .96rem; font-weight: 800;
+    transition: all .25s cubic-bezier(.16,1,.3,1);
+    letter-spacing: -.005em;
+  }
+  .m-cta-icon {
+    width: 32px; height: 32px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .m-cta-icon svg { width: 16px; height: 16px; }
+  .m-cta-text { display: flex; flex-direction: column; line-height: 1.15; gap: 1px; align-items: flex-start; }
+  .m-cta-text strong { font-size: .94rem; font-weight: 800; }
+  .m-cta-text small { font-size: .68rem; opacity: .85; font-weight: 500; }
+  .m-cta-urg { background: linear-gradient(135deg, #E11D48, #9F1239); color: #fff; box-shadow: 0 10px 24px rgba(225,29,72,.30); }
+  .m-cta-urg:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(225,29,72,.40); }
+  .m-cta-urg .m-cta-icon { background: rgba(255,255,255,.22); }
+  .m-cta-q { background: linear-gradient(135deg, var(--m-color), var(--m-color-dark)); color: #fff; box-shadow: 0 10px 24px var(--m-glow); }
+  .m-cta-q:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(13,160,207,.40); }
+  .m-cta-q .m-cta-icon { background: rgba(255,255,255,.22); }
+
+  /* Avis dynamiques live */
+  .m-trust-live {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    padding: 0; max-width: 540px;
+  }
+  .m-trust-pill {
+    flex: 1; min-width: 180px;
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 12px 16px; background: #fff;
+    border: 1px solid rgba(13,160,207,.15); border-radius: 12px;
+    text-decoration: none; transition: all .2s ease;
+  }
+  .m-trust-pill:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(13,160,207,.10); border-color: var(--m-glow); }
+  .m-trust-pill-logo { width: 32px; height: 32px; flex-shrink: 0; }
+  .m-trust-pill-data { display: flex; flex-direction: column; line-height: 1.15; gap: 1px; }
+  .m-trust-pill-data .num { font-size: 1.1rem; font-weight: 800; color: #0A1428; }
+  .m-trust-pill-data .stars { color: #FFB400; font-size: .82rem; letter-spacing: .5px; }
+  .m-trust-pill-data .meta { font-size: .68rem; color: #64748b; font-weight: 600; }
+  .m-trust-pill-badge {
+    margin-left: auto; padding: 3px 8px; border-radius: 6px;
+    background: rgba(34,197,94,.10); color: #16A34A;
+    font-size: .62rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
+  }
+
+  /* Visuel droite : mascotte + ambiance */
+  .m-hero-visual { position: relative; display: flex; align-items: center; justify-content: center; min-height: 400px; }
+  .m-hero-blob { position: absolute; inset: 5% 0 0; width: 100%; aspect-ratio: 1;
+    background: radial-gradient(circle, var(--m-glow) 0%, rgba(13,160,207,.06) 40%, transparent 70%);
+    filter: blur(40px); pointer-events: none; animation: m-blob 6s ease-in-out infinite; }
+  @keyframes m-blob { 0%,100% { transform: scale(1); opacity: .85 } 50% { transform: scale(1.06); opacity: 1 } }
+  .m-hero-mascotte { position: relative; z-index: 2; height: clamp(320px, 45vw, 480px);
+    width: auto; object-fit: contain;
+    filter: drop-shadow(0 22px 28px rgba(10,20,40,.26)) drop-shadow(0 4px 10px var(--m-glow));
+    animation: m-float 4.6s ease-in-out infinite; }
   @keyframes m-float { 0%,100% { transform: translateY(0) rotate(-.4deg) } 50% { transform: translateY(-10px) rotate(.4deg) } }
-  .m-hero-bubbles { position: absolute; inset: 0; pointer-events: none; z-index: 1 }
-  .m-bubble { position: absolute; border-radius: 50%; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.85), var(--m-color-light) 70%); border: 1px solid rgba(255,255,255,.6); animation: m-bubble-float 6s ease-in-out infinite; }
+  .m-hero-bubbles { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+  .m-bubble { position: absolute; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.85), var(--m-color-light) 70%);
+    border: 1px solid rgba(255,255,255,.6); animation: m-bubble-f 6s ease-in-out infinite; }
   .m-bubble.b1 { width: 22px; height: 22px; top: 18%; left: 12%; animation-delay: 0s; opacity: .6 }
   .m-bubble.b2 { width: 14px; height: 14px; top: 38%; left: 6%; animation-delay: 1.2s; opacity: .5 }
   .m-bubble.b3 { width: 28px; height: 28px; top: 60%; right: 8%; animation-delay: 2.4s; opacity: .5 }
   .m-bubble.b4 { width: 16px; height: 16px; top: 22%; right: 14%; animation-delay: 3.6s; opacity: .55 }
-  @keyframes m-bubble-float { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-14px) } }
+  @keyframes m-bubble-f { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-14px) } }
 
-  /* URGENCE BAR */
-  .m-urgence-bar { background: linear-gradient(135deg, #E11D48 0%, #9F1239 100%); color: #fff; padding: 16px 0; box-shadow: 0 4px 14px rgba(225,29,72,.20); }
-  .m-urgence-bar .container { max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
-  .m-urgence-text { display: flex; align-items: center; gap: 12px; font-size: 1rem; font-weight: 700; }
-  .m-urgence-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,.22); display: flex; align-items: center; justify-content: center; animation: m-shake 2s ease-in-out infinite; }
-  @keyframes m-shake { 0%, 100% { transform: rotate(0) } 25% { transform: rotate(-8deg) } 75% { transform: rotate(8deg) } }
-  .m-urgence-icon svg { width: 18px; height: 18px }
-  .m-urgence-cta { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 10px; background: #fff; color: #E11D48; font-weight: 800; font-size: .94rem; text-decoration: none; transition: all .2s ease; }
-  .m-urgence-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,.25); }
-
-  /* PROBLEMS */
-  .m-problems { background: linear-gradient(180deg, #fff 0%, #F8FCFE 100%); }
-  .m-problems-grid { display: grid; grid-template-columns: 1fr; gap: 18px; max-width: 1100px; margin: 0 auto; }
-  @media (min-width: 700px) { .m-problems-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1000px) { .m-problems-grid { grid-template-columns: repeat(3, 1fr); } }
-  .m-problem-card { background: #fff; border: 1px solid #E5EDF3; border-radius: 16px; padding: 22px 22px 20px; transition: all .25s cubic-bezier(.16,1,.3,1); position: relative; overflow: hidden; }
-  .m-problem-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--m-color); opacity: 0; transition: opacity .25s ease; }
-  .m-problem-card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px var(--m-glow); border-color: var(--m-color); }
-  .m-problem-card:hover::before { opacity: 1 }
-  .m-problem-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--m-soft), var(--m-glow)); color: var(--m-color-dark); margin-bottom: 14px; }
-  .m-problem-icon svg { width: 26px; height: 26px }
-  .m-problem-card h3 { margin: 0 0 8px; font-size: 1.08rem; font-weight: 800; color: #0A1428; letter-spacing: -.005em }
-  .m-problem-card p { margin: 0; font-size: .9rem; line-height: 1.55; color: #475569 }
-
-  /* SERVICES */
-  .m-services { background: radial-gradient(ellipse 60% 40% at 50% 0%, var(--m-soft), transparent 60%), #fff; }
-  .m-services-grid { display: grid; grid-template-columns: 1fr; gap: 14px; max-width: 1180px; margin: 0 auto; }
+  /* ─── SERVICES (6 cards compactes) ─── */
+  .m-services-grid {
+    display: grid; grid-template-columns: 1fr; gap: 12px;
+    max-width: 1100px; margin: 0 auto;
+  }
   @media (min-width: 640px) { .m-services-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 980px) { .m-services-grid { grid-template-columns: repeat(3, 1fr); } }
-  @media (min-width: 1200px) { .m-services-grid { grid-template-columns: repeat(4, 1fr); } }
-  .m-service-card { display: flex; flex-direction: column; gap: 14px; padding: 24px 22px; background: linear-gradient(180deg, #fff 0%, #F8FCFE 100%); border: 1.5px solid #E5EDF3; border-radius: 18px; text-decoration: none; transition: all .3s cubic-bezier(.16,1,.3,1); position: relative; overflow: hidden; color: inherit; }
-  .m-service-card::after { content: ''; position: absolute; right: -30px; top: -30px; width: 120px; height: 120px; border-radius: 50%; background: var(--m-glow); filter: blur(40px); opacity: 0; transition: opacity .3s ease; }
-  .m-service-card:hover { transform: translateY(-6px); border-color: var(--m-color); box-shadow: 0 22px 44px var(--m-glow), 0 4px 10px rgba(10,20,40,.04); }
-  .m-service-card:hover::after { opacity: 1 }
-  .m-service-icon { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, var(--m-color), var(--m-color-dark)); color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px var(--m-glow); flex-shrink: 0; position: relative; z-index: 1; }
-  .m-service-icon svg { width: 28px; height: 28px }
-  .m-service-card h3 { margin: 0; font-size: 1.05rem; font-weight: 800; color: #0A1428; letter-spacing: -.005em; line-height: 1.25; position: relative; z-index: 1; }
-  .m-service-card p { margin: 0; font-size: .88rem; line-height: 1.5; color: #475569; position: relative; z-index: 1; }
-  .m-service-link { margin-top: auto; padding-top: 8px; color: var(--m-color-dark); font-size: .82rem; font-weight: 700; display: inline-flex; align-items: center; gap: 5px; transition: gap .2s ease; position: relative; z-index: 1; }
-  .m-service-card:hover .m-service-link { gap: 9px }
+  .m-svc {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 18px 20px; background: #fff;
+    border: 1px solid #E5EDF3; border-radius: 14px;
+    text-decoration: none; transition: all .25s cubic-bezier(.16,1,.3,1);
+  }
+  .m-svc:hover { transform: translateY(-3px); box-shadow: 0 14px 32px var(--m-glow); border-color: var(--m-color); }
+  .m-svc-icon {
+    width: 44px; height: 44px; border-radius: 11px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--m-color), var(--m-color-dark));
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 14px var(--m-glow);
+  }
+  .m-svc-icon svg { width: 22px; height: 22px }
+  .m-svc-body { flex: 1; min-width: 0; }
+  .m-svc-body h3 { margin: 0 0 4px; font-size: 1rem; font-weight: 800; color: #0A1428; letter-spacing: -.005em; }
+  .m-svc-body p { margin: 0; font-size: .84rem; line-height: 1.5; color: #475569; }
+  .m-svc-arrow { color: var(--m-color-dark); font-size: 1.2rem; align-self: center; transition: transform .2s ease; }
+  .m-svc:hover .m-svc-arrow { transform: translateX(3px); }
 
-  /* METHOD */
-  .m-method { background: linear-gradient(180deg, #F8FCFE 0%, #fff 100%); position: relative; }
-  .m-method-grid { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 1180px; margin: 0 auto; position: relative; }
-  @media (min-width: 760px) { .m-method-grid { grid-template-columns: repeat(2, 1fr); gap: 24px } }
-  @media (min-width: 1100px) { .m-method-grid { grid-template-columns: repeat(4, 1fr); gap: 16px } .m-method-grid::before { content: ''; position: absolute; top: 50px; left: 8%; right: 8%; height: 2px; background: linear-gradient(90deg, var(--m-color) 0%, var(--m-color-dark) 100%); opacity: .3; z-index: 0; } }
-  .m-step { position: relative; z-index: 1; padding: 26px 22px 24px; background: #fff; border: 1px solid #E5EDF3; border-radius: 18px; transition: all .25s cubic-bezier(.16,1,.3,1); }
-  .m-step:hover { transform: translateY(-4px); box-shadow: 0 16px 36px var(--m-glow); border-color: var(--m-color); }
-  .m-step-num { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; background: linear-gradient(135deg, var(--m-color), var(--m-color-dark)); color: #fff; border-radius: 50%; font-size: 1.2rem; font-weight: 800; box-shadow: 0 8px 18px var(--m-glow); margin-bottom: 16px; }
-  .m-step h3 { margin: 0 0 8px; font-size: 1.08rem; font-weight: 800; color: #0A1428; letter-spacing: -.005em; }
-  .m-step p { margin: 0; font-size: .9rem; line-height: 1.55; color: #475569; }
+  /* ─── RÉALISATIONS — slider compact ─── */
+  .m-real-section { background: linear-gradient(180deg, #fff 0%, #F8FCFE 100%); }
+  .m-real-track {
+    display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory;
+    padding: 8px 4px 24px; scrollbar-width: thin;
+  }
+  .m-real-track::-webkit-scrollbar { height: 6px; }
+  .m-real-track::-webkit-scrollbar-thumb { background: var(--m-color); border-radius: 3px; }
+  .m-real-card {
+    flex: 0 0 320px; scroll-snap-align: start;
+    background: #fff; border: 1px solid #E5EDF3; border-radius: 14px;
+    overflow: hidden; transition: all .25s ease; text-decoration: none; color: inherit;
+    display: flex; flex-direction: column;
+  }
+  @media (min-width: 720px) { .m-real-card { flex: 0 0 360px; } }
+  .m-real-card:hover { transform: translateY(-3px); box-shadow: 0 14px 32px var(--m-glow); border-color: var(--m-color); }
+  .m-real-img { aspect-ratio: 4/3; background: linear-gradient(135deg, #F4F8FC, #EAF2F7); position: relative; overflow: hidden; }
+  .m-real-img iframe { position: absolute; top: -60px; left: -40px; width: calc(100% + 80px); height: calc(100% + 200px); border: 0; pointer-events: none; }
+  .m-real-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .m-real-img .placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--m-color-dark); gap: 10px; font-size: .88rem; font-weight: 600; }
+  .m-real-img .placeholder svg { width: 36px; height: 36px; opacity: .6; }
+  .m-real-body { padding: 14px 16px 16px; }
+  .m-real-tag { display: inline-block; padding: 3px 8px; background: var(--m-soft); color: var(--m-color-dark); border-radius: 6px; font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+  .m-real-card h3 { margin: 0 0 4px; font-size: .98rem; font-weight: 800; color: #0A1428; line-height: 1.3; }
+  .m-real-card p { margin: 0; font-size: .82rem; line-height: 1.5; color: #475569; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .m-real-foot { text-align: center; margin-top: 12px; }
+  .m-real-foot a { display: inline-flex; align-items: center; gap: 6px; color: var(--m-color-dark); font-weight: 700; font-size: .9rem; text-decoration: none; }
+  .m-real-foot a:hover { gap: 10px; }
 
-  /* WHY */
-  .m-why { background: radial-gradient(ellipse 50% 40% at 50% 100%, var(--m-soft), transparent 60%), #fff; }
-  .m-why-grid { display: grid; grid-template-columns: 1fr; gap: 18px; max-width: 1180px; margin: 0 auto; }
-  @media (min-width: 700px) { .m-why-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1100px) { .m-why-grid { grid-template-columns: repeat(3, 1fr); } }
-  .m-why-card { display: flex; align-items: flex-start; gap: 16px; padding: 24px 22px; background: #fff; border: 1px solid #E5EDF3; border-radius: 16px; transition: all .25s ease; }
-  .m-why-card:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(13,160,207,.10); border-color: var(--m-glow); }
-  .m-why-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--m-soft); color: var(--m-color-dark); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .m-why-icon svg { width: 24px; height: 24px }
-  .m-why-card h3 { margin: 0 0 6px; font-size: 1rem; font-weight: 800; color: #0A1428 }
-  .m-why-card p { margin: 0; font-size: .88rem; line-height: 1.55; color: #475569 }
+  /* ─── TARIFS RÉSERVABLES (avec wizard) ─── */
+  .m-tarifs-grid {
+    display: grid; grid-template-columns: 1fr; gap: 14px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  @media (min-width: 720px) { .m-tarifs-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1080px) { .m-tarifs-grid { grid-template-columns: repeat(3, 1fr); } }
+  .m-tarif-card {
+    padding: 22px 22px 20px; background: #fff;
+    border: 1px solid #E5EDF3; border-radius: 16px;
+    transition: all .25s ease; cursor: pointer;
+    display: flex; flex-direction: column; gap: 10px;
+    position: relative;
+  }
+  .m-tarif-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--m-color); opacity: 0; transition: opacity .25s ease; border-radius: 16px 16px 0 0; }
+  .m-tarif-card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px var(--m-glow); border-color: var(--m-color); }
+  .m-tarif-card:hover::before { opacity: 1 }
+  .m-tarif-icon { width: 44px; height: 44px; border-radius: 11px;
+    background: var(--m-soft); color: var(--m-color-dark);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .m-tarif-icon svg { width: 22px; height: 22px }
+  .m-tarif-card h3 { margin: 0; font-size: 1rem; font-weight: 800; color: #0A1428; }
+  .m-tarif-card p { margin: 0; font-size: .84rem; line-height: 1.5; color: #475569; flex: 1; }
+  .m-tarif-action {
+    margin-top: 6px; padding: 10px 16px;
+    background: linear-gradient(135deg, var(--m-color), var(--m-color-dark));
+    color: #fff; border: 0; border-radius: 10px;
+    font-family: inherit; font-size: .88rem; font-weight: 700;
+    cursor: pointer; transition: all .2s ease;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .m-tarif-action:hover { box-shadow: 0 8px 18px var(--m-glow); }
+  .m-tarif-card.complex .m-tarif-action {
+    background: #fff; color: #0A1428; border: 1.5px solid #0A1428;
+  }
+  .m-tarif-card.complex .m-tarif-action:hover { background: #0A1428; color: #fff; }
 
-  /* REVIEWS */
-  .m-reviews { background: linear-gradient(180deg, #fff 0%, #F8FCFE 100%); }
-  .m-reviews-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 36px; max-width: 1180px; margin-left: auto; margin-right: auto; }
-  .m-reviews-summary { display: flex; align-items: center; gap: 18px; padding: 16px 22px; background: linear-gradient(135deg, #fff 0%, #F8FCFE 100%); border: 1px solid var(--m-glow); border-radius: 16px; box-shadow: 0 8px 22px var(--m-soft); }
-  .m-reviews-google { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; }
-  .m-reviews-rating { display: flex; flex-direction: column; gap: 2px; line-height: 1.1 }
-  .m-reviews-rating .num { font-size: 1.6rem; font-weight: 800; color: #0A1428; letter-spacing: -.01em }
-  .m-reviews-rating .stars { color: #FFB400; font-size: .96rem; letter-spacing: 1px }
-  .m-reviews-rating .label { font-size: .82rem; color: #475569; font-weight: 600; margin-top: 2px }
-  .m-reviews-grid { display: grid; grid-template-columns: 1fr; gap: 18px; max-width: 1180px; margin: 0 auto; }
-  @media (min-width: 800px) { .m-reviews-grid { grid-template-columns: repeat(3, 1fr); } }
-  .m-review-card { padding: 24px 24px 22px; background: #fff; border: 1px solid #E5EDF3; border-radius: 18px; display: flex; flex-direction: column; gap: 14px; transition: all .25s ease; position: relative; }
-  .m-review-card:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(13,160,207,.10); border-color: var(--m-glow); }
-  .m-review-card .stars { color: #FFB400; font-size: 1rem; letter-spacing: 1px }
-  .m-review-card blockquote { margin: 0; font-size: .94rem; line-height: 1.6; color: #334155; font-style: italic; }
-  .m-review-author { display: flex; align-items: center; gap: 12px; padding-top: 12px; border-top: 1px dashed #E5EDF3; }
-  .m-review-avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--m-color), var(--m-color-dark)); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; }
-  .m-review-meta { display: flex; flex-direction: column; line-height: 1.2 }
-  .m-review-meta strong { font-size: .88rem; color: #0A1428; font-weight: 700 }
-  .m-review-meta span { font-size: .76rem; color: #64748b; margin-top: 2px }
+  .m-tarifs-note {
+    max-width: 880px; margin: 28px auto 0;
+    padding: 16px 22px; background: var(--m-soft);
+    border: 1px solid var(--m-glow); border-radius: 12px;
+    font-size: .88rem; line-height: 1.55; color: #334155;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .m-tarifs-note svg { color: var(--m-color-dark); flex-shrink: 0; margin-top: 2px; }
+  .m-tarifs-note strong { color: #0A1428; font-weight: 700; }
 
-  /* ZONES */
-  .m-zones { background: #fff }
-  .m-zones-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 12px; max-width: 880px; margin: 0 auto; }
-  @media (min-width: 600px) { .m-zones-grid { grid-template-columns: repeat(3, 1fr); } }
-  @media (min-width: 900px) { .m-zones-grid { grid-template-columns: repeat(4, 1fr); } }
-  .m-zone-pill { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; background: var(--m-soft); border: 1px solid var(--m-glow); border-radius: 10px; color: #0A1428; text-decoration: none; font-size: .88rem; font-weight: 600; transition: all .2s ease; }
-  .m-zone-pill:hover { background: var(--m-glow); border-color: var(--m-color); transform: translateY(-1px); }
-  .m-zone-pill svg { width: 14px; height: 14px; color: var(--m-color-dark); flex-shrink: 0 }
+  /* MODAL réservation */
+  .m-modal-overlay {
+    position: fixed; inset: 0; background: rgba(10,20,40,.65);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    z-index: 9000; display: none; align-items: center; justify-content: center;
+    padding: 16px; opacity: 0; transition: opacity .25s ease;
+  }
+  .m-modal-overlay.is-open { display: flex; opacity: 1 }
+  .m-modal {
+    background: #fff; border-radius: 18px; width: 100%; max-width: 480px;
+    box-shadow: 0 28px 60px rgba(10,20,40,.30);
+    transform: scale(.95); transition: transform .25s ease;
+    max-height: 92vh; overflow-y: auto;
+  }
+  .m-modal-overlay.is-open .m-modal { transform: scale(1) }
+  .m-modal-head {
+    padding: 22px 24px 18px;
+    background: linear-gradient(135deg, var(--m-color-light), var(--m-soft));
+    border-bottom: 1px solid var(--m-glow);
+    border-radius: 18px 18px 0 0;
+    position: relative;
+  }
+  .m-modal-head h3 { margin: 0; font-size: 1.18rem; font-weight: 800; color: #0A1428; }
+  .m-modal-head p { margin: 4px 0 0; font-size: .88rem; color: #475569; line-height: 1.4 }
+  .m-modal-close {
+    position: absolute; top: 14px; right: 14px;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255,255,255,.7); border: 0; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: #475569; transition: all .2s ease;
+  }
+  .m-modal-close:hover { background: #fff; color: #0A1428; }
+  .m-modal-body { padding: 22px 24px 24px; }
+  .m-modal-form { display: flex; flex-direction: column; gap: 14px; }
+  .m-modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .m-modal-field { display: flex; flex-direction: column; gap: 5px; }
+  .m-modal-field label { font-size: .76rem; font-weight: 700; color: #0A1428; letter-spacing: .01em; }
+  .m-modal-field input, .m-modal-field textarea {
+    padding: 11px 14px; border: 1.5px solid #E5EDF3; border-radius: 10px;
+    background: #fff; font-family: inherit; font-size: .92rem; color: #0A1428;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .m-modal-field input:focus, .m-modal-field textarea:focus {
+    outline: 0; border-color: var(--m-color);
+    box-shadow: 0 0 0 3px var(--m-soft);
+  }
+  .m-modal-submit {
+    margin-top: 6px; padding: 14px 22px;
+    background: linear-gradient(135deg, var(--m-color), var(--m-color-dark));
+    color: #fff; border: 0; border-radius: 11px;
+    font-family: inherit; font-size: 1rem; font-weight: 800;
+    cursor: pointer; transition: all .2s ease;
+  }
+  .m-modal-submit:hover { box-shadow: 0 10px 22px var(--m-glow); transform: translateY(-1px); }
+  .m-modal-rgpd {
+    font-size: .72rem; color: #64748b; line-height: 1.4; margin: 4px 0 0;
+  }
+  .m-modal-rgpd a { color: var(--m-color-dark); }
+  /* État succès (après submit) */
+  .m-modal-success {
+    text-align: center; padding: 30px 20px;
+  }
+  .m-modal-success-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: linear-gradient(135deg, #22C55E, #16A34A);
+    color: #fff; display: inline-flex; align-items: center; justify-content: center;
+    margin: 0 auto 18px; box-shadow: 0 12px 28px rgba(34,197,94,.30);
+  }
+  .m-modal-success-icon svg { width: 32px; height: 32px }
+  .m-modal-success h4 { margin: 0 0 8px; font-size: 1.18rem; font-weight: 800; color: #0A1428; }
+  .m-modal-success p { margin: 0 0 18px; font-size: .94rem; color: #475569; line-height: 1.55 }
+  .m-modal-success .price-reveal {
+    margin: 0 auto 18px; max-width: 280px; padding: 16px 20px;
+    background: var(--m-soft); border: 1px solid var(--m-glow); border-radius: 12px;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .m-modal-success .price-reveal .label { font-size: .76rem; color: #475569; font-weight: 600; text-transform: uppercase; letter-spacing: .06em }
+  .m-modal-success .price-reveal .price { font-size: 1.6rem; font-weight: 800; color: var(--m-color-dark); }
 
-  /* FAQ */
-  .m-faq { background: linear-gradient(180deg, #F8FCFE 0%, #fff 100%); }
-  .m-faq-list { max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
-  .m-faq-item { background: #fff; border: 1px solid #E5EDF3; border-radius: 14px; overflow: hidden; transition: all .25s ease; }
-  .m-faq-item:hover { border-color: var(--m-glow) }
-  .m-faq-item[open] { border-color: var(--m-color); box-shadow: 0 8px 22px var(--m-soft) }
-  .m-faq-summary { list-style: none; padding: 18px 22px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 1rem; font-weight: 700; color: #0A1428; transition: color .2s ease; }
-  .m-faq-summary::-webkit-details-marker { display: none }
-  .m-faq-summary:hover { color: var(--m-color-dark) }
-  .m-faq-toggle { width: 28px; height: 28px; border-radius: 8px; background: var(--m-soft); color: var(--m-color-dark); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform .25s ease, background .25s ease; }
-  .m-faq-item[open] .m-faq-toggle { transform: rotate(45deg); background: var(--m-color); color: #fff }
-  .m-faq-toggle svg { width: 16px; height: 16px }
-  .m-faq-body { padding: 0 22px 18px; font-size: .94rem; line-height: 1.65; color: #475569; }
-  .m-faq-body p { margin: 0 0 10px }
-  .m-faq-body p:last-child { margin: 0 }
-  .m-faq-body strong { color: #0A1428; font-weight: 700 }
+  /* ─── ENGAGEMENTS (compact, 6 max) ─── */
+  .m-eng-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  @media (min-width: 720px) { .m-eng-grid { grid-template-columns: repeat(3, 1fr); } }
+  .m-eng-card {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 16px; background: #fff;
+    border: 1px solid #E5EDF3; border-radius: 12px;
+    transition: all .2s ease;
+  }
+  .m-eng-card:hover { border-color: var(--m-glow); box-shadow: 0 6px 14px var(--m-soft) }
+  .m-eng-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: var(--m-soft); color: var(--m-color-dark);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .m-eng-icon svg { width: 18px; height: 18px }
+  .m-eng-card span { font-size: .9rem; font-weight: 700; color: #0A1428; line-height: 1.3; }
 
-  /* CTA FINAL */
-  .m-cta-final { padding: clamp(60px, 8vw, 100px) 0; background: radial-gradient(ellipse 60% 60% at 50% 50%, var(--m-glow), transparent 70%), linear-gradient(135deg, #0A1428 0%, #0E2240 100%); color: #fff; text-align: center; position: relative; overflow: hidden; }
-  .m-cta-final-inner { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px) }
-  .m-cta-final h2 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); font-weight: 800; letter-spacing: -.02em; line-height: 1.15; margin: 0 0 14px; }
-  .m-cta-final h2 em { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 600; background: linear-gradient(135deg, var(--m-color-light), var(--m-color)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-  .m-cta-final-lead { font-size: 1.06rem; line-height: 1.6; color: rgba(255,255,255,.78); margin: 0 0 30px; }
-  .m-cta-final-buttons { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
-  .m-cta-final-tel, .m-cta-final-quote { display: inline-flex; align-items: center; gap: 10px; padding: 16px 28px; border-radius: 14px; text-decoration: none; font-weight: 800; font-size: 1.04rem; transition: all .25s ease; }
-  .m-cta-final-tel { background: #fff; color: #0A1428; box-shadow: 0 12px 28px rgba(0,0,0,.20); }
-  .m-cta-final-tel:hover { transform: translateY(-3px); box-shadow: 0 18px 38px rgba(0,0,0,.30) }
-  .m-cta-final-quote { background: linear-gradient(135deg, var(--m-color), var(--m-color-dark)); color: #fff; box-shadow: 0 12px 28px var(--m-glow); }
-  .m-cta-final-quote:hover { transform: translateY(-3px); box-shadow: 0 18px 38px rgba(13,160,207,.50) }
-  .m-cta-final-tel svg, .m-cta-final-quote svg { width: 18px; height: 18px }
+  /* ─── FOURNISSEURS / MARQUES ─── */
+  .m-suppliers { background: linear-gradient(180deg, #F8FCFE 0%, #fff 100%); }
+  .m-suppliers-intro {
+    max-width: 720px; margin: 0 auto 28px;
+    text-align: center;
+  }
+  .m-suppliers-intro p { font-size: .98rem; line-height: 1.6; color: #475569; margin: 0 0 8px; }
+  .m-suppliers-intro p strong { color: #0A1428; font-weight: 700; }
+  .m-suppliers-intro .made-in {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px; border-radius: 999px;
+    background: rgba(34,197,94,.08); color: #16A34A;
+    font-size: .76rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
+    margin-top: 6px;
+  }
+  .m-suppliers-intro .made-in svg { width: 12px; height: 12px; }
 
-  /* TARIFS */
-  .metier-tarifs-grid { display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 1100px; margin: 0 auto; }
-  @media (min-width: 720px) { .metier-tarifs-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1080px) { .metier-tarifs-grid { grid-template-columns: repeat(3, 1fr); } }
-  .tarif-card { display: flex; flex-direction: column; gap: 14px; background: #fff; border: 1px solid #E5EDF3; border-radius: 18px; padding: 22px 22px 20px; transition: all .25s ease; position: relative; overflow: hidden; }
-  .tarif-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--tarif-c, #0DA0CF); opacity: 0; transition: opacity .25s ease; }
-  .tarif-card:hover { transform: translateY(-4px); box-shadow: 0 22px 44px var(--m-glow); border-color: var(--m-glow); }
-  .tarif-card:hover::before { opacity: 1; }
-  .tarif-card-highlight { background: linear-gradient(135deg, #F0FDF4 0%, #fff 100%); border-color: rgba(34,197,94,.30); }
-  .tarif-card-highlight::before { background: #22C55E; opacity: 1; }
-  .tarif-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--tarif-c) 12%, transparent); color: var(--tarif-c); flex-shrink: 0; }
-  .tarif-icon svg { width: 24px; height: 24px; }
-  .tarif-body { flex: 1; }
-  .tarif-body h3 { margin: 0 0 6px; font-size: 1.08rem; font-weight: 700; color: #0A1428; letter-spacing: -.005em; }
-  .tarif-body p { margin: 0; font-size: .9rem; line-height: 1.55; color: #475569; }
-  .tarif-body p strong { color: #0A1428; font-weight: 700; }
-  .tarif-price { display: flex; align-items: baseline; gap: 6px; padding-top: 14px; margin-top: 4px; border-top: 1px dashed #E5EDF3; }
-  .tarif-price .tarif-from { font-size: .72rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: .06em; }
-  .tarif-price strong { font-size: 1.7rem; font-weight: 800; color: #0A1428; letter-spacing: -.01em; margin-left: auto; }
-  .tarif-price .tarif-ttc { font-size: .76rem; font-weight: 600; color: #64748b; }
-  .metier-tarifs-foot { max-width: 1100px; margin: 36px auto 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding: 22px 26px; background: #fff; border: 1px solid #E5EDF3; border-radius: 16px; box-shadow: 0 8px 22px var(--m-soft); }
-  .tarifs-foot-note { display: flex; align-items: flex-start; gap: 10px; max-width: 560px; font-size: .88rem; line-height: 1.5; color: #475569; }
-  .tarifs-foot-note svg { color: var(--m-color-dark); flex-shrink: 0; margin-top: 2px; }
-  .tarifs-foot-note strong { color: #0A1428; font-weight: 700; }
-  .tarifs-foot-cta { display: flex; flex-wrap: wrap; gap: 10px; }
-  .tarif-cta { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 11px; font-size: .92rem; font-weight: 700; text-decoration: none; transition: all .25s ease; }
-  .tarif-cta-primary { background: linear-gradient(135deg, var(--m-color), var(--m-color-dark)); color: #fff; box-shadow: 0 8px 18px var(--m-glow); }
-  .tarif-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(13,160,207,.42); }
-  .tarif-cta-secondary { background: #fff; color: #0A1428; border: 1.5px solid #0A1428; }
-  .tarif-cta-secondary:hover { background: #0A1428; color: #fff; transform: translateY(-2px); }
-  @media (max-width: 640px) { .metier-tarifs-foot { flex-direction: column; align-items: stretch; padding: 18px 20px; } .tarifs-foot-cta { flex-direction: column; } .tarif-cta { justify-content: center; } }
+  .m-suppliers-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+    max-width: 1100px; margin: 0 auto 24px;
+  }
+  @media (min-width: 600px) { .m-suppliers-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 900px) { .m-suppliers-grid { grid-template-columns: repeat(5, 1fr); } }
+  .m-supplier {
+    aspect-ratio: 5/3; background: #fff;
+    border: 1px solid #E5EDF3; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    color: #475569; font-size: .94rem; font-weight: 700; letter-spacing: .04em;
+    transition: all .25s ease; padding: 12px;
+    text-align: center;
+  }
+  .m-supplier:hover { transform: translateY(-2px); border-color: var(--m-color); color: var(--m-color-dark); box-shadow: 0 8px 18px var(--m-soft); }
+
+  .m-suppliers-cta {
+    text-align: center; margin-top: 8px;
+  }
+  .m-suppliers-cta a {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px; border-radius: 10px;
+    background: var(--m-soft); color: var(--m-color-dark);
+    border: 1px solid var(--m-glow);
+    text-decoration: none; font-size: .9rem; font-weight: 700;
+    transition: all .2s ease;
+  }
+  .m-suppliers-cta a:hover { background: var(--m-glow); transform: translateY(-1px); }
+
+  /* ─── ZONE COMPACTE ─── */
+  .m-zone-compact {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+    gap: 10px;
+    max-width: 1000px; margin: 0 auto;
+    padding: 22px 26px;
+    background: var(--m-soft); border: 1px solid var(--m-glow);
+    border-radius: 16px;
+  }
+  .m-zone-compact .label {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: .82rem; font-weight: 800; color: var(--m-color-dark);
+    text-transform: uppercase; letter-spacing: .08em;
+  }
+  .m-zone-compact .label svg { width: 14px; height: 14px }
+  .m-zone-compact .cities { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .m-zone-compact .city { font-size: .88rem; color: #0A1428; font-weight: 600; }
+  .m-zone-compact .sep { color: #94a3b8; }
+  .m-zone-compact a {
+    color: var(--m-color-dark); font-weight: 700; font-size: .82rem; text-decoration: none;
+    border-bottom: 1px solid var(--m-glow); padding-bottom: 1px; margin-left: auto;
+  }
+  .m-zone-compact a:hover { border-color: var(--m-color); }
+
+  /* ─── CTA FINAL SIMPLE ─── */
+  .m-cta-final {
+    padding: clamp(50px, 6vw, 80px) 0; text-align: center;
+    background: linear-gradient(135deg, #0A1428 0%, #0E2240 100%);
+    color: #fff; position: relative; overflow: hidden;
+  }
+  .m-cta-final::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, var(--m-glow), transparent 70%);
+    pointer-events: none;
+  }
+  .m-cta-final-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); }
+  .m-cta-final h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800;
+    letter-spacing: -.02em; line-height: 1.15; margin: 0 0 10px;
+  }
+  .m-cta-final-tagline {
+    font-size: .94rem; color: rgba(255,255,255,.72); margin: 0 0 24px;
+  }
+  .m-cta-final-tagline strong { color: var(--m-color-light); font-weight: 700; }
+  .m-cta-final-btns { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .m-cta-final-tel {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px; border-radius: 12px;
+    background: #fff; color: #0A1428;
+    font-weight: 800; font-size: 1rem; text-decoration: none;
+    transition: all .25s ease; box-shadow: 0 10px 24px rgba(0,0,0,.20);
+  }
+  .m-cta-final-tel:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(0,0,0,.30) }
+  .m-cta-final-q {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--m-color), var(--m-color-dark));
+    color: #fff; font-weight: 800; font-size: 1rem; text-decoration: none;
+    transition: all .25s ease; box-shadow: 0 10px 24px var(--m-glow);
+  }
+  .m-cta-final-q:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(13,160,207,.45) }
+  .m-cta-final svg { width: 18px; height: 18px }
+  .m-cta-final-info {
+    margin-top: 20px; font-size: .82rem; color: rgba(255,255,255,.55);
+  }
+
+  @media (max-width: 640px) {
+    .m-modal-row { grid-template-columns: 1fr; }
+  }
 </style>
 
 <script>document.body.setAttribute('data-metier-page', 'plomberie');</script>
 
-<!-- HERO -->
+<!-- ─── 1. HERO ─── -->
 <section class="m-hero" aria-label="Plomberie HELP! Confort">
   <div class="m-hero-inner">
-    <div class="m-hero-text">
-      <span class="m-hero-eyebrow"><span class="pulse"></span>Plomberie · Saint-Omer / Dunkerque</span>
+    <div>
+      <span class="m-hero-eye"><span class="pulse"></span>Plomberie · Saint-Omer / Dunkerque</span>
       <h1 class="m-hero-h1">Plomberie &amp; dépannage rapide à <em>Saint-Omer</em> et <em>Dunkerque</em></h1>
-      <p class="m-hero-lead">Fuite, dégorgement, chauffe-eau, recherche de fuite, sanitaire, salle de bain : nos <strong>techniciens salariés</strong> interviennent rapidement avec un accompagnement clair et professionnel.</p>
-      <div class="m-hero-promises">
-        <div class="m-promise"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Intervention<br>sous 2h</span></div>
-        <div class="m-promise"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Devis<br>avant travaux</span></div>
-        <div class="m-promise"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Garantie<br>décennale</span></div>
-        <div class="m-promise"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Photos<br>avant/après</span></div>
+      <p class="m-hero-lead">Fuite, chauffe-eau, débouchage, recherche de fuite, sanitaire : nos <strong>techniciens interviennent rapidement</strong> sur tout le secteur.</p>
+
+      <div class="m-badges">
+        <span class="m-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Intervention rapide</span>
+        <span class="m-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Équipe interne</span>
+        <span class="m-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/></svg>Sans sous-traitance</span>
+        <span class="m-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Techniciens qualifiés</span>
       </div>
+
       <div class="m-hero-ctas">
-        <a href="tel:+33366100134" class="m-cta m-cta-urgent">
+        <a href="tel:+33366100134" class="m-cta m-cta-urg">
           <span class="m-cta-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-          <span class="m-cta-text"><strong>Demander une intervention</strong><small>03 66 10 01 34 · réponse immédiate</small></span>
+          <span class="m-cta-text"><strong>Demander une intervention</strong><small>03 66 10 01 34</small></span>
         </a>
-        <a href="contact.html#rappel" class="m-cta m-cta-quote">
+        <a href="contact.html#rappel" class="m-cta m-cta-q">
           <span class="m-cta-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3z"/><path d="M3 19a2 2 0 0 0 2 2h1v-6H3z"/></svg></span>
           <span class="m-cta-text"><strong>Être rappelé</strong><small>Sous 1h ouvrée</small></span>
         </a>
       </div>
-      <div class="m-hero-trust">
-        <div class="m-hero-trust-stars"><span class="stars">★★★★★</span><strong>4,7/5</strong></div>
-        <div class="m-hero-trust-meta"><strong>343 avis Google</strong> vérifiés<br>9 clients sur 10 nous recommandent</div>
+
+      <div class="m-trust-live">
+        <a href="https://maps.app.goo.gl/B4BPVTiRp5rDp26fA" target="_blank" rel="noopener" class="m-trust-pill">
+          <svg class="m-trust-pill-logo" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          <span class="m-trust-pill-data">
+            <span class="num"><span data-google-rating>4,7</span>/5</span>
+            <span class="stars">★★★★★</span>
+            <span class="meta"><span data-google-count>343</span> avis Google</span>
+          </span>
+          <span class="m-trust-pill-badge">Vérifié</span>
+        </a>
+        <a href="https://www.trustville.fr/avis-help-confort-saint-omer" target="_blank" rel="noopener" class="m-trust-pill">
+          <svg class="m-trust-pill-logo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#7C3AED"/><circle cx="12" cy="12" r="9.5" fill="none" stroke="#fff" stroke-width=".8"/><path d="M7.5 12.5l3 3 6-6.5" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="m-trust-pill-data">
+            <span class="num"><span data-trustville-rating>4,0</span>/5</span>
+            <span class="stars">★★★★<span style="color:#cbd5e1">★</span></span>
+            <span class="meta">Trustville</span>
+          </span>
+          <span class="m-trust-pill-badge">Indép.</span>
+        </a>
       </div>
     </div>
+
     <div class="m-hero-visual" aria-hidden="true">
-      <div class="m-hero-bg-blob"></div>
-      <div class="m-hero-bubbles"><div class="m-bubble b1"></div><div class="m-bubble b2"></div><div class="m-bubble b3"></div><div class="m-bubble b4"></div></div>
-      <img src="images/mascotte.png" alt="Technicien HELP! Confort" class="m-hero-mascotte" loading="eager">
+      <div class="m-hero-blob"></div>
+      <div class="m-hero-bubbles">
+        <div class="m-bubble b1"></div><div class="m-bubble b2"></div>
+        <div class="m-bubble b3"></div><div class="m-bubble b4"></div>
+      </div>
+      <img src="images/mascotte.png" alt="Technicien plomberie HELP! Confort" class="m-hero-mascotte" loading="eager">
     </div>
   </div>
 </section>
 
-<!-- URGENCE BAR -->
-<section class="m-urgence-bar" aria-label="Urgence plomberie">
+<!-- ─── 2. SERVICES PRINCIPAUX (6 cards) ─── -->
+<section class="m-section" aria-label="Services plomberie">
   <div class="container">
-    <div class="m-urgence-text">
-      <span class="m-urgence-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
-      <span>Une fuite ? Un dégorgement urgent ? <strong>On intervient sous 2h.</strong></span>
-    </div>
-    <a href="tel:+33366100134" class="m-urgence-cta">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      Appeler maintenant
-    </a>
-  </div>
-</section>
-
-<!-- PROBLEMS -->
-<section class="m-section m-problems" aria-label="Problèmes plomberie fréquents">
-  <div class="container">
-    <div class="m-section-head">
-      <span class="m-section-eyebrow">Vous reconnaissez votre situation ?</span>
-      <h2 class="m-section-h2">Les problèmes <em>plomberie</em> les plus fréquents</h2>
-      <p class="m-section-lead">Notre équipe traite chaque semaine ces situations courantes à Saint-Omer, Dunkerque et leurs alentours. <strong>Diagnostic, devis détaillé, intervention propre.</strong></p>
-    </div>
-    <div class="m-problems-grid">
-      <article class="m-problem-card"><div class="m-problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></div><h3>Fuite d'eau</h3><p>Joint usé, raccord desserré, canalisation percée, fuite encastrée derrière un mur. <strong>Détection précise et réparation durable.</strong></p></article>
-      <article class="m-problem-card"><div class="m-problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M6 8v8"/><path d="M18 8v8"/><path d="M12 6v12"/></svg></div><h3>Canalisation bouchée</h3><p>WC, évier, douche, lavabo : dégorgement par <strong>furet électrique ou hydrocurage</strong>. Sans produits agressifs qui détériorent les canalisations.</p></article>
-      <article class="m-problem-card"><div class="m-problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div><h3>Chauffe-eau / ballon HS</h3><p>Plus d'eau chaude, fuite sous le ballon, disjoncteur qui saute. <strong>Dépannage et remplacement</strong> rapide tous modèles (électrique, gaz, thermodynamique).</p></article>
-      <article class="m-problem-card"><div class="m-problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6"/><path d="M12 22v-6"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="M2 12h6"/><path d="M22 12h-6"/></svg></div><h3>Pression d'eau faible</h3><p>Filtre encrassé, calcaire, fuite cachée, vanne défectueuse. <strong>Diagnostic complet</strong> et remise à niveau de l'installation.</p></article>
-      <article class="m-problem-card"><div class="m-problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><h3>Recherche de fuite</h3><p>Tache au plafond, surconsommation d'eau, dégât des eaux. <strong>Caméra thermique, gaz traceur, écoute acoustique</strong> — localisation sans casse.</p></article>
-      <article class="m-problem-card"><div class="m-problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg></div><h3>Sanitaire à remplacer</h3><p>WC qui fuit, mitigeur qui goutte, lavabo fendu, robinetterie hors d'âge. <strong>Remplacement</strong> avec garantie pièces &amp; main d'œuvre.</p></article>
-    </div>
-  </div>
-</section>
-
-<!-- SERVICES -->
-<section class="m-section m-services" aria-label="Nos prestations plomberie">
-  <div class="container">
-    <div class="m-section-head">
-      <span class="m-section-eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Nos prestations</span>
-      <h2 class="m-section-h2">Tout ce que nous <em>réalisons</em> en plomberie</h2>
-      <p class="m-section-lead">De l'urgence dépannage à la rénovation complète de votre salle de bain — <strong>une équipe, une organisation, un suivi.</strong></p>
+    <div class="m-head">
+      <span class="eyebrow">Nos prestations</span>
+      <h2>Tout ce que nous <em>faisons</em> en plomberie</h2>
     </div>
     <div class="m-services-grid">
-      <a href="guide-fuite-eau.html" class="m-service-card"><span class="m-service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></span><h3>Recherche de fuite</h3><p>Caméra thermique, gaz traceur, écoute acoustique. Localisation précise sans casse inutile.</p><span class="m-service-link">En savoir plus →</span></a>
-      <a href="contact.html#form" class="m-service-card"><span class="m-service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><h3>Réparation de fuite</h3><p>Joint, raccord, soudure cuivre/PER, fuite encastrée. Réparation durable garantie.</p><span class="m-service-link">Demander un devis →</span></a>
-      <a href="contact.html#form" class="m-service-card"><span class="m-service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M6 8v8"/><path d="M18 8v8"/><path d="M12 6v12"/></svg></span><h3>Dégorgement</h3><p>WC, évier, canalisation. Furet électrique ou hydrocurage haute pression.</p><span class="m-service-link">Demander un devis →</span></a>
-      <a href="contact.html#form" class="m-service-card"><span class="m-service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span><h3>Ballon eau chaude</h3><p>Installation, dépannage, détartrage, remplacement résistance. Tous modèles.</p><span class="m-service-link">En savoir plus →</span></a>
-      <a href="contact.html#form" class="m-service-card"><span class="m-service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg></span><h3>Sanitaire</h3><p>WC, lavabo, douche, baignoire. Pose, remplacement, mise aux normes.</p><span class="m-service-link">Demander un devis →</span></a>
-      <a href="travaux-saint-omer.html" class="m-service-card"><span class="m-service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9z"/></svg></span><h3>Salle de bain</h3><p>Rénovation complète : conception, plomberie, carrelage, électricité.</p><span class="m-service-link">Découvrir →</span></a>
-      <a href="contact.html#form" class="m-service-card"><span class="m-service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6"/><path d="M12 22v-6"/><path d="M2 12h6"/><path d="M22 12h-6"/></svg></span><h3>Robinetterie</h3><p>Mitigeur, robinet thermostatique, vanne d'arrêt, raccord. Marques de référence.</p><span class="m-service-link">Demander un devis →</span></a>
-      <a href="contact.html#form" class="m-service-card"><span class="m-service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3z"/><path d="M3 19a2 2 0 0 0 2 2h1v-6H3z"/></svg></span><h3>Sinistre dégât des eaux</h3><p>Sécurisation immédiate, rapport technique, dialogue avec votre assurance.</p><span class="m-service-link">En savoir plus →</span></a>
+      <a href="guide-fuite-eau.html" class="m-svc">
+        <span class="m-svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <div class="m-svc-body"><h3>Recherche de fuite</h3><p>Caméra thermique, gaz traceur, écoute acoustique.</p></div>
+        <span class="m-svc-arrow">→</span>
+      </a>
+      <a href="contact.html#form" class="m-svc">
+        <span class="m-svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M6 8v8"/><path d="M18 8v8"/><path d="M12 6v12"/></svg></span>
+        <div class="m-svc-body"><h3>Débouchage</h3><p>WC, évier, canalisation. Furet ou hydrocurage.</p></div>
+        <span class="m-svc-arrow">→</span>
+      </a>
+      <a href="contact.html#form" class="m-svc">
+        <span class="m-svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>
+        <div class="m-svc-body"><h3>Chauffe-eau</h3><p>Installation, dépannage, remplacement tous modèles.</p></div>
+        <span class="m-svc-arrow">→</span>
+      </a>
+      <a href="contact.html#form" class="m-svc">
+        <span class="m-svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg></span>
+        <div class="m-svc-body"><h3>Sanitaire</h3><p>WC, lavabo, douche, baignoire, robinetterie.</p></div>
+        <span class="m-svc-arrow">→</span>
+      </a>
+      <a href="travaux-saint-omer.html" class="m-svc">
+        <span class="m-svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9z"/></svg></span>
+        <div class="m-svc-body"><h3>Salle de bain</h3><p>Rénovation complète clés en main.</p></div>
+        <span class="m-svc-arrow">→</span>
+      </a>
+      <a href="contact.html#form" class="m-svc">
+        <span class="m-svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6"/><path d="M12 22v-6"/><path d="M2 12h6"/><path d="M22 12h-6"/></svg></span>
+        <div class="m-svc-body"><h3>Réseaux</h3><p>Canalisations, raccordement, mise aux normes.</p></div>
+        <span class="m-svc-arrow">→</span>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- METHOD -->
-<section class="m-section m-method" aria-label="Notre méthode d'intervention">
+<!-- ─── 3. RÉALISATIONS (slider compact, dynamique via JSON) ─── -->
+<section class="m-section m-real-section" aria-label="Nos réalisations plomberie">
   <div class="container">
-    <div class="m-section-head">
-      <span class="m-section-eyebrow">Notre méthode</span>
-      <h2 class="m-section-h2">Comment ça se passe <em>concrètement</em> ?</h2>
-      <p class="m-section-lead">Un parcours simple, transparent, sans surprise — du premier appel jusqu'au suivi post-intervention.</p>
+    <div class="m-head">
+      <span class="eyebrow">Sur le terrain</span>
+      <h2>Nos <em>chantiers</em> plomberie récents</h2>
+      <p>Avant/après, photos réelles, interventions locales — preuve par les <strong>résultats</strong>.</p>
     </div>
-    <div class="m-method-grid">
-      <article class="m-step"><span class="m-step-num">1</span><h3>Vous appelez</h3><p>Standard direct du lundi au samedi. Une vraie personne décroche, qualifie votre besoin, programme une intervention.</p></article>
-      <article class="m-step"><span class="m-step-num">2</span><h3>On diagnostique</h3><p>Visite sur place ou diagnostic par photos pour les cas simples. Identification précise du problème, transparente.</p></article>
-      <article class="m-step"><span class="m-step-num">3</span><h3>Devis détaillé</h3><p>Main d'œuvre, pièces, déplacement : tout est ligne par ligne. Vous validez par écrit avant tout travail.</p></article>
-      <article class="m-step"><span class="m-step-num">4</span><h3>On intervient</h3><p>Techniciens qualifiés, matériel professionnel, protection du logement. Photos avant/après, bon d'intervention signé.</p></article>
+    <div class="m-real-track" id="m-real-plomberie">
+      <!-- Cards générées dynamiquement via JS, fallback statique ci-dessous -->
+      <a href="realisations.html" class="m-real-card">
+        <div class="m-real-img"><div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photos à venir</div></div>
+        <div class="m-real-body">
+          <span class="m-real-tag">Plomberie</span>
+          <h3>Fuite cuisine — Saint-Omer</h3>
+          <p>Recherche de fuite par caméra thermique, réparation propre et remise en service en 2h.</p>
+        </div>
+      </a>
+      <a href="realisations.html" class="m-real-card">
+        <div class="m-real-img"><div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photos à venir</div></div>
+        <div class="m-real-body">
+          <span class="m-real-tag">Plomberie</span>
+          <h3>Remplacement chauffe-eau — Dunkerque</h3>
+          <p>Dépose ancien ballon + pose ballon thermodynamique 200L. Mise en service le jour même.</p>
+        </div>
+      </a>
+      <a href="realisations.html" class="m-real-card">
+        <div class="m-real-img"><div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photos à venir</div></div>
+        <div class="m-real-body">
+          <span class="m-real-tag">Plomberie</span>
+          <h3>Salle de bain complète — Longuenesse</h3>
+          <p>Rénovation tous corps d'état : plomberie, carrelage, électricité, peinture. 12 jours.</p>
+        </div>
+      </a>
+    </div>
+    <div class="m-real-foot">
+      <a href="realisations.html?filter=Plomberie">Voir toutes nos réalisations <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var track = document.getElementById('m-real-plomberie');
+    if(!track) return;
+    fetch('content/realisations/index.json?t=' + Date.now())
+      .then(function(r){return r.ok?r.json():Promise.reject()})
+      .then(function(list){
+        var plomb = list.filter(function(r){
+          return r.published !== false && (r.metier === 'Plomberie' || /plomb/i.test(r.metier||''));
+        }).slice(0, 5);
+        if(!plomb.length) return; // garde le fallback statique
+        track.innerHTML = plomb.map(function(r){
+          var url = r.url || 'realisations.html';
+          var img = '';
+          if(r.image){
+            img = '<img src="'+r.image+'" alt="'+r.title+'" loading="lazy">';
+          } else if(r.source_facebook){
+            var fb = 'https://www.facebook.com/plugins/post.php?href='+encodeURIComponent(r.source_facebook)+'&show_text=false&width=380';
+            img = '<iframe src="'+fb+'" loading="lazy" scrolling="no" frameborder="0"></iframe>';
+          } else {
+            img = '<div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photos à venir</div>';
+          }
+          return '<a href="'+url+'" class="m-real-card"><div class="m-real-img">'+img+'</div><div class="m-real-body"><span class="m-real-tag">'+(r.metier||'Plomberie')+'</span><h3>'+(r.title||'Chantier')+'</h3><p>'+(r.description||'').slice(0,140)+'</p></div></a>';
+        }).join('');
+      })
+      .catch(function(){ /* keep static fallback */ });
+  })();
+  </script>
+</section>
+
+<!-- ─── 4. TARIFS RÉSERVABLES + COMPLEXES ─── -->
+<section class="m-section" style="background: linear-gradient(180deg, #fff 0%, #F8FCFE 100%);" aria-label="Tarifs et prestations plomberie">
+  <div class="container">
+    <div class="m-head">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Réservations &amp; devis</span>
+      <h2>Réservez ou demandez un <em>devis</em></h2>
+      <p>Prestations simples : réservez en ligne. Travaux complexes : <strong>devis personnalisé après visite technique.</strong></p>
+    </div>
+
+    <div class="m-tarifs-grid">
+      <article class="m-tarif-card" data-presta="Déplacement &amp; diagnostic">
+        <div class="m-tarif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <h3>Déplacement &amp; diagnostic</h3>
+        <p>Technicien sur place, état des lieux, devis détaillé.</p>
+        <button type="button" class="m-tarif-action m-reserve-btn" data-presta="Déplacement &amp; diagnostic">Voir le tarif &amp; réserver</button>
+      </article>
+
+      <article class="m-tarif-card" data-presta="Débouchage simple">
+        <div class="m-tarif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M6 8v8"/><path d="M18 8v8"/><path d="M12 6v12"/></svg></div>
+        <h3>Débouchage simple</h3>
+        <p>WC, évier, douche. Furet électrique. Sans produits agressifs.</p>
+        <button type="button" class="m-tarif-action m-reserve-btn" data-presta="Débouchage simple">Voir le tarif &amp; réserver</button>
+      </article>
+
+      <article class="m-tarif-card" data-presta="Recherche de fuite simple">
+        <div class="m-tarif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <h3>Recherche de fuite simple</h3>
+        <p>Localisation visible. Cas non encastrés, accessible.</p>
+        <button type="button" class="m-tarif-action m-reserve-btn" data-presta="Recherche de fuite simple">Voir le tarif &amp; réserver</button>
+      </article>
+
+      <article class="m-tarif-card" data-presta="Remplacement joint / mitigeur">
+        <div class="m-tarif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg></div>
+        <h3>Remplacement joint / mitigeur</h3>
+        <p>Robinet qui goutte, mitigeur HS. Pose simple.</p>
+        <button type="button" class="m-tarif-action m-reserve-btn" data-presta="Remplacement joint / mitigeur">Voir le tarif &amp; réserver</button>
+      </article>
+
+      <article class="m-tarif-card complex">
+        <div class="m-tarif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+        <h3>Remplacement chauffe-eau</h3>
+        <p>Étude des besoins, conseil modèle, dépose &amp; pose.</p>
+        <a href="contact.html#form?presta=ballon" class="m-tarif-action">Demander un devis</a>
+      </article>
+
+      <article class="m-tarif-card complex">
+        <div class="m-tarif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/></svg></div>
+        <h3>Rénovation salle de bain</h3>
+        <p>Visite technique gratuite. Devis détaillé sous 5 jours.</p>
+        <a href="contact.html#form?presta=salledebain" class="m-tarif-action">Demander un devis</a>
+      </article>
+    </div>
+
+    <div class="m-tarifs-note">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span>Le tarif vous est <strong>communiqué après vérification de votre situation</strong> et avant toute intervention. Aucun engagement tant que vous n'avez pas validé le devis.</span>
     </div>
   </div>
 </section>
 
-<!-- TARIFS -->
-<section class="m-section" style="background: linear-gradient(180deg, #fff 0%, #F8FCFE 100%);" aria-label="Tarifs indicatifs plomberie">
+<!-- ─── 5. ENGAGEMENTS (compact, 6 max) ─── -->
+<section class="m-section" aria-label="Engagements HELP! Confort">
   <div class="container">
-    <div class="m-section-head">
-      <span class="m-section-eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Transparence des prix</span>
-      <h2 class="m-section-h2">Tarifs indicatifs <em>plomberie</em></h2>
-      <p class="m-section-lead">Notre engagement : <strong>aucune surprise</strong>. Voici les ordres de grandeur les plus fréquents. Un devis détaillé est <strong>toujours établi avant intervention</strong>.</p>
+    <div class="m-head">
+      <span class="eyebrow">Nos engagements</span>
+      <h2>Pourquoi nous faire <em>confiance</em></h2>
     </div>
-    <div class="metier-tarifs-grid">
-      <article class="tarif-card"><div class="tarif-icon" style="--tarif-c:#0DA0CF"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="tarif-body"><h3>Déplacement &amp; diagnostic</h3><p>Technicien sur place, état des lieux, devis détaillé. Le déplacement est <strong>déduit</strong> du devis si vous l'acceptez.</p></div><div class="tarif-price"><span class="tarif-from">à partir de</span><strong>89 €</strong><span class="tarif-ttc">TTC</span></div></article>
-      <article class="tarif-card"><div class="tarif-icon" style="--tarif-c:#12C6FE"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><div class="tarif-body"><h3>Recherche de fuite</h3><p>Caméra thermique, gaz traceur, écoute acoustique. Localisation précise <strong>sans casse inutile</strong>.</p></div><div class="tarif-price"><span class="tarif-from">à partir de</span><strong>250 €</strong><span class="tarif-ttc">TTC</span></div></article>
-      <article class="tarif-card"><div class="tarif-icon" style="--tarif-c:#0DA0CF"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M6 8v8"/><path d="M18 8v8"/><path d="M12 6v12"/></svg></div><div class="tarif-body"><h3>Débouchage canalisation</h3><p>Furet électrique ou hydrocurage. WC, évier, douche. <strong>Sans produits agressifs.</strong></p></div><div class="tarif-price"><span class="tarif-from">à partir de</span><strong>120 €</strong><span class="tarif-ttc">TTC</span></div></article>
-      <article class="tarif-card"><div class="tarif-icon" style="--tarif-c:#FF6B1A"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg></div><div class="tarif-body"><h3>Joint / robinet</h3><p>Mitigeur lavabo, évier, douche. Pose du matériel fourni par vous ou par nous.</p></div><div class="tarif-price"><span class="tarif-from">à partir de</span><strong>95 €</strong><span class="tarif-ttc">TTC</span></div></article>
-      <article class="tarif-card"><div class="tarif-icon" style="--tarif-c:#0DA0CF"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div><div class="tarif-body"><h3>Pose ballon eau chaude</h3><p>Ballon électrique, thermodynamique ou gaz. Dépose &amp; recyclage de l'ancien inclus.</p></div><div class="tarif-price"><span class="tarif-from">pose dès</span><strong>450 €</strong><span class="tarif-ttc">TTC</span></div></article>
-      <article class="tarif-card tarif-card-highlight"><div class="tarif-icon" style="--tarif-c:#22C55E"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/></svg></div><div class="tarif-body"><h3>Salle de bain rénovation</h3><p>Devis personnalisé selon surface &amp; prestations. <strong>Visite technique gratuite</strong> pour les projets &gt; 3 000 €.</p></div><div class="tarif-price"><span class="tarif-from">sur devis</span><strong>—</strong><span class="tarif-ttc">gratuit</span></div></article>
+    <div class="m-eng-grid">
+      <div class="m-eng-card"><span class="m-eng-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span><span>Équipe interne qualifiée</span></div>
+      <div class="m-eng-card"><span class="m-eng-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/></svg></span><span>Pas de sous-traitance anonyme</span></div>
+      <div class="m-eng-card"><span class="m-eng-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span><span>Diagnostic clair</span></div>
+      <div class="m-eng-card"><span class="m-eng-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg></span><span>Devis transparents</span></div>
+      <div class="m-eng-card"><span class="m-eng-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><span>Intervention organisée</span></div>
+      <div class="m-eng-card"><span class="m-eng-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span><span>Suivi client sérieux</span></div>
     </div>
-    <div class="metier-tarifs-foot">
-      <div class="tarifs-foot-note"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Tarifs indicatifs hors pièces et fournitures spécifiques. <strong>Devis détaillé systématique</strong> avant toute intervention.</span></div>
-      <div class="tarifs-foot-cta">
-        <a href="contact.html" class="tarif-cta tarif-cta-primary">Demander un devis gratuit <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-        <a href="tel:+33366100134" class="tarif-cta tarif-cta-secondary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>03 66 10 01 34</a>
+  </div>
+</section>
+
+<!-- ─── 6. FOURNISSEURS & MARQUES ─── -->
+<section class="m-section m-suppliers" aria-label="Fournisseurs et marques partenaires">
+  <div class="container">
+    <div class="m-head">
+      <span class="eyebrow">Nos partenaires</span>
+      <h2>Marques de <em>confiance</em></h2>
+    </div>
+    <div class="m-suppliers-intro">
+      <p>HELP! Confort privilégie des fournisseurs <strong>français et européens</strong> reconnus pour leur qualité, leur fiabilité et la disponibilité des pièces.</p>
+      <span class="made-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Fabricants français &amp; européens</span>
+    </div>
+    <div class="m-suppliers-grid">
+      <div class="m-supplier">Atlantic</div>
+      <div class="m-supplier">Grohe</div>
+      <div class="m-supplier">Geberit</div>
+      <div class="m-supplier">Jacob Delafon</div>
+      <div class="m-supplier">Roca</div>
+      <div class="m-supplier">Saunier Duval</div>
+      <div class="m-supplier">Thermor</div>
+      <div class="m-supplier">De Dietrich</div>
+      <div class="m-supplier">Hansgrohe</div>
+      <div class="m-supplier">Sanijura</div>
+    </div>
+    <div class="m-suppliers-cta">
+      <a href="contact.html#catalogues">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Demander les catalogues fournisseurs
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 7. ZONE COMPACTE ─── -->
+<section class="m-section" style="padding: clamp(36px, 4vw, 56px) 0" aria-label="Zone d'intervention plomberie">
+  <div class="container">
+    <div class="m-zone-compact">
+      <span class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Zone d'intervention</span>
+      <span class="cities">
+        <span class="city">Saint-Omer</span><span class="sep">·</span>
+        <span class="city">Longuenesse</span><span class="sep">·</span>
+        <span class="city">Arques</span><span class="sep">·</span>
+        <span class="city">Dunkerque</span><span class="sep">·</span>
+        <span class="city">Bergues</span><span class="sep">·</span>
+        <span class="city">Gravelines</span>
+      </span>
+      <a href="depannage-saint-omer.html">Voir toutes les zones →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 8. CTA FINAL ─── -->
+<section class="m-cta-final" aria-label="Contact plomberie">
+  <div class="m-cta-final-inner">
+    <h2>Besoin d'une intervention&nbsp;?</h2>
+    <p class="m-cta-final-tagline">Notre équipe plomberie est <strong>disponible du lundi au samedi</strong>. Urgence 7j/7 sur appel.</p>
+    <div class="m-cta-final-btns">
+      <a href="tel:+33366100134" class="m-cta-final-tel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>03 66 10 01 34</a>
+      <a href="contact.html" class="m-cta-final-q"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Demander une intervention</a>
+    </div>
+    <div class="m-cta-final-info">Lun–Sam · 8h–18h · Urgence 7j/7</div>
+  </div>
+</section>
+
+<!-- MODAL RÉSERVATION -->
+<div class="m-modal-overlay" id="m-reserve-modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="m-modal">
+    <div class="m-modal-head">
+      <h3 id="m-modal-title">Réserver votre intervention</h3>
+      <p id="m-modal-subtitle">Renseignez vos coordonnées, nous revenons vers vous avec le tarif personnalisé sous 1h ouvrée.</p>
+      <button type="button" class="m-modal-close" aria-label="Fermer">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="m-modal-body">
+      <form class="m-modal-form" id="m-reserve-form">
+        <input type="hidden" name="presta" id="m-modal-presta">
+        <div class="m-modal-row">
+          <div class="m-modal-field"><label>Prénom *</label><input type="text" name="prenom" required autocomplete="given-name"></div>
+          <div class="m-modal-field"><label>Nom *</label><input type="text" name="nom" required autocomplete="family-name"></div>
+        </div>
+        <div class="m-modal-row">
+          <div class="m-modal-field"><label>Téléphone *</label><input type="tel" name="tel" required autocomplete="tel" pattern="[0-9 +.-]{10,}"></div>
+          <div class="m-modal-field"><label>Email *</label><input type="email" name="email" required autocomplete="email"></div>
+        </div>
+        <div class="m-modal-row">
+          <div class="m-modal-field"><label>Code postal *</label><input type="text" name="cp" required autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5"></div>
+          <div class="m-modal-field"><label>Ville *</label><input type="text" name="ville" required autocomplete="address-level2"></div>
+        </div>
+        <div class="m-modal-field"><label>Décrivez votre situation</label><textarea name="message" rows="2"></textarea></div>
+        <button type="submit" class="m-modal-submit">Voir le tarif &amp; valider</button>
+        <p class="m-modal-rgpd">En soumettant, vous acceptez d'être recontacté(e). Vos données sont traitées conformément à notre <a href="mentions-legales.html#privacy">politique de confidentialité</a>.</p>
+      </form>
+      <div class="m-modal-success" id="m-modal-success" style="display: none;">
+        <div class="m-modal-success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <h4>Demande reçue ✓</h4>
+        <p>Notre équipe revient vers vous <strong>sous 1h ouvrée</strong> avec le tarif et les disponibilités.</p>
+        <div class="price-reveal">
+          <span class="label">Tarif estimé</span>
+          <span class="price" id="m-modal-price">—</span>
+        </div>
+        <p style="font-size: .82rem; color: #64748b">Ce tarif sera confirmé après échange. Aucun engagement tant que vous n'avez pas validé.</p>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- WHY -->
-<section class="m-section m-why" aria-label="Pourquoi nous choisir">
-  <div class="container">
-    <div class="m-section-head">
-      <span class="m-section-eyebrow">Pourquoi nous</span>
-      <h2 class="m-section-h2">Pas un artisan isolé. <em>Une équipe structurée.</em></h2>
-      <p class="m-section-lead">Faire appel à HELP! Confort Saint-Omer, c'est s'appuyer sur une <strong>entreprise locale rattachée à un réseau national</strong>. Cette double identité change concrètement votre expérience.</p>
-    </div>
-    <div class="m-why-grid">
-      <article class="m-why-card"><div class="m-why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div><h3>Techniciens salariés</h3><p>100% en interne. Pas de sous-traitants, pas d'opérateur anonyme. Mêmes équipes, même qualité.</p></div></article>
-      <article class="m-why-card"><div class="m-why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div><h3>Devis transparent</h3><p>Main d'œuvre, pièces, déplacement : ligne par ligne. Vous validez par écrit avant tout travail.</p></div></article>
-      <article class="m-why-card"><div class="m-why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><h3>Garantie décennale</h3><p>Couverture sur tous les chantiers. Assurance RC pro + tous risques chantiers à jour.</p></div></article>
-      <article class="m-why-card"><div class="m-why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div><h3>Réseau national</h3><p>Membre du réseau HELP! Confort (groupe La Poste). Process structuré, traçabilité, qualité réseau.</p></div></article>
-      <article class="m-why-card"><div class="m-why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><div><h3>Photos avant/après</h3><p>Chaque intervention est documentée : état initial, travaux réalisés, résultat. Utile pour vous et votre assurance.</p></div></article>
-      <article class="m-why-card"><div class="m-why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><h3>Suivi de dossier</h3><p>Bon d'intervention signé, factures détaillées, dossier traçable. Idéal pour syndic ou assurance.</p></div></article>
-    </div>
-  </div>
-</section>
+<script>
+(function(){
+  var modal = document.getElementById('m-reserve-modal');
+  var titleEl = document.getElementById('m-modal-title');
+  var prestaInput = document.getElementById('m-modal-presta');
+  var form = document.getElementById('m-reserve-form');
+  var success = document.getElementById('m-modal-success');
+  var priceEl = document.getElementById('m-modal-price');
 
-<!-- REVIEWS -->
-<section class="m-section m-reviews" aria-label="Avis clients plomberie">
-  <div class="container">
-    <div class="m-reviews-head">
-      <div><span class="m-section-eyebrow" style="margin-bottom: 12px">Vos témoignages</span><h2 class="m-section-h2" style="margin: 0">Ce que <em>nos clients</em> disent de nous</h2></div>
-      <a href="https://maps.app.goo.gl/B4BPVTiRp5rDp26fA" target="_blank" rel="noopener" class="m-reviews-summary" style="text-decoration: none; color: inherit">
-        <span class="m-reviews-google"><svg viewBox="0 0 24 24" width="40" height="40"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg></span>
-        <div class="m-reviews-rating"><span class="num">4,7/5</span><span class="stars">★★★★★</span><span class="label">343 avis Google vérifiés</span></div>
-      </a>
-    </div>
-    <div class="m-reviews-grid">
-      <article class="m-review-card"><div class="stars">★★★★★</div><blockquote>« Fuite sous l'évier un samedi matin. Appel à 9h, technicien sur place à 11h. Diagnostic clair, devis transparent, réparation propre. Je recommande sans hésiter. »</blockquote><div class="m-review-author"><div class="m-review-avatar">M</div><div class="m-review-meta"><strong>Mathieu D.</strong><span>Saint-Omer · Plomberie</span></div></div></article>
-      <article class="m-review-card"><div class="stars">★★★★★</div><blockquote>« Recherche de fuite avec caméra thermique impeccable. Pas de casse inutile, ils ont localisé la fuite au mm. Rapport remis à l'assurance, dossier accepté sans problème. »</blockquote><div class="m-review-author"><div class="m-review-avatar">S</div><div class="m-review-meta"><strong>Sophie L.</strong><span>Longuenesse · Recherche de fuite</span></div></div></article>
-      <article class="m-review-card"><div class="stars">★★★★★</div><blockquote>« Remplacement complet de la salle de bain. Devis détaillé, planning respecté, finitions soignées. L'équipe est sérieuse et le suivi nickel. Bravo. »</blockquote><div class="m-review-author"><div class="m-review-avatar">P</div><div class="m-review-meta"><strong>Patrick V.</strong><span>Dunkerque · Salle de bain</span></div></div></article>
-    </div>
-  </div>
-</section>
+  // Tarifs internes (révélés après submit)
+  var TARIFS = {
+    'Déplacement & diagnostic': 'à partir de 89 € TTC',
+    'Débouchage simple': 'à partir de 120 € TTC',
+    'Recherche de fuite simple': 'à partir de 250 € TTC',
+    'Remplacement joint / mitigeur': 'à partir de 95 € TTC'
+  };
 
-<!-- ZONES -->
-<section class="m-section m-zones" aria-label="Zones d'intervention plomberie">
-  <div class="container">
-    <div class="m-section-head">
-      <span class="m-section-eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Zones d'intervention</span>
-      <h2 class="m-section-h2">Plombier dans toute l'<em>agglomération Saint-Omer / Dunkerque</em></h2>
-      <p class="m-section-lead">Notre proximité géographique est un vrai atout pour les urgences : <strong>pas de longue route, pas de frais cachés.</strong></p>
-    </div>
-    <div class="m-zones-grid">
-      <a href="depannage-saint-omer.html" class="m-zone-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Saint-Omer</a>
-      <a href="depannage-longuenesse.html" class="m-zone-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Longuenesse</a>
-      <a href="depannage-arques.html" class="m-zone-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Arques</a>
-      <a href="depannage-saint-martin-lez-tatinghem.html" class="m-zone-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>St-Martin-lez-Tatinghem</a>
-      <span class="m-zone-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Blendecques</span>
-      <span class="m-zone-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Wizernes</span>
-      <span class="m-zone-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Lumbres</span>
-      <span class="m-zone-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Aire-sur-la-Lys</span>
-      <span class="m-zone-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Hazebrouck</span>
-      <a href="depannage-dunkerque.html" class="m-zone-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Dunkerque</a>
-      <a href="depannage-bergues.html" class="m-zone-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Bergues</a>
-      <a href="depannage-gravelines.html" class="m-zone-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Gravelines</a>
-    </div>
-  </div>
-</section>
+  function open(presta){
+    titleEl.textContent = 'Réserver : ' + presta;
+    prestaInput.value = presta;
+    form.style.display = '';
+    success.style.display = 'none';
+    form.reset();
+    prestaInput.value = presta;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function close(){
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
 
-<!-- FAQ -->
-<section class="m-section m-faq" aria-label="Questions fréquentes plomberie">
-  <div class="container">
-    <div class="m-section-head">
-      <span class="m-section-eyebrow">FAQ</span>
-      <h2 class="m-section-h2">Vos questions, <em>nos réponses</em></h2>
-      <p class="m-section-lead">Les questions les plus fréquentes que nous recevons sur la plomberie. Une autre interrogation ? <strong>Appelez-nous, c'est gratuit.</strong></p>
-    </div>
-    <div class="m-faq-list">
-      <details class="m-faq-item"><summary class="m-faq-summary"><span>Quel est le tarif d'un plombier à Saint-Omer ?</span><span class="m-faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></summary><div class="m-faq-body"><p>Le coût d'un dépannage de plomberie dépend du type d'intervention, de la durée et du jour. <strong>Avant tout travail, nous établissons un devis clair que vous validez.</strong> Nos tarifs sont alignés sur le marché local et toujours annoncés à l'avance. Le déplacement est offert sur acceptation du devis.</p><p>Voir nos <strong>tarifs indicatifs</strong> dans la section dédiée plus haut.</p></div></details>
-      <details class="m-faq-item"><summary class="m-faq-summary"><span>Intervenez-vous en urgence le soir et le week-end ?</span><span class="m-faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></summary><div class="m-faq-body"><p>Oui. Notre service de dépannage plomberie est disponible pour <strong>toute urgence</strong> : fuite, ballon HS, canalisation bouchée. Un technicien se déplace dans la journée à Saint-Omer du lundi au samedi. Pour les week-ends et jours fériés, contactez le 03 66 10 01 34 — un dispatcher d'astreinte vous répond.</p></div></details>
-      <details class="m-faq-item"><summary class="m-faq-summary"><span>Pouvez-vous gérer mon dossier d'assurance dégât des eaux ?</span><span class="m-faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></summary><div class="m-faq-body"><p>Tout à fait. Nous <strong>sécurisons votre logement, fournissons un rapport technique, dialoguons avec votre expert</strong> et émettons les factures conformes. Vous n'avez rien à gérer côté technique : c'est l'avantage d'une entreprise structurée. La déclaration auprès de votre assureur reste à votre charge.</p></div></details>
-      <details class="m-faq-item"><summary class="m-faq-summary"><span>Posez-vous des chauffe-eau neufs ?</span><span class="m-faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></summary><div class="m-faq-body"><p>Oui : ballon électrique, thermodynamique, gaz. Nous étudions vos besoins (nombre de personnes, place disponible, énergie) et nous vous conseillons le modèle le plus adapté. Nous nous occupons aussi de <strong>la dépose et du recyclage de l'ancien matériel</strong>.</p><p>Marques de référence : Atlantic, Bosch, Thermor, Ariston, Saunier Duval.</p></div></details>
-      <details class="m-faq-item"><summary class="m-faq-summary"><span>Comment se passe une recherche de fuite ?</span><span class="m-faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></summary><div class="m-faq-body"><p>Nous utilisons <strong>3 méthodes non destructives</strong> selon la situation : <strong>caméra thermique</strong> (différence de température sur le mur), <strong>gaz traceur</strong> (injection d'un gaz inerte qui remonte au point de fuite), <strong>écoute acoustique</strong> (microphone amplifié). Localisation au cm près sans ouvrir les murs inutilement.</p></div></details>
-      <details class="m-faq-item"><summary class="m-faq-summary"><span>Quels paiements acceptez-vous ?</span><span class="m-faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></summary><div class="m-faq-body"><p>CB sur place (terminal mobile), chèque, virement bancaire. <strong>Paiement après intervention</strong> sur acceptation du devis et après bon d'intervention signé. Pas d'acompte sur le dépannage simple. Pour les gros chantiers (rénovation), un acompte de 30% est demandé à la commande.</p></div></details>
-    </div>
-  </div>
-</section>
+  document.querySelectorAll('.m-reserve-btn').forEach(function(b){
+    b.addEventListener('click', function(){ open(this.getAttribute('data-presta')); });
+  });
+  modal.querySelector('.m-modal-close').addEventListener('click', close);
+  modal.addEventListener('click', function(e){ if(e.target === modal) close(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && modal.classList.contains('is-open')) close(); });
 
-<!-- CTA FINAL -->
-<section class="m-cta-final" aria-label="Contact urgence plomberie">
-  <div class="m-cta-final-inner">
-    <h2>Une fuite ? Un WC bouché ? <em>On est là.</em></h2>
-    <p class="m-cta-final-lead">Notre équipe plomberie intervient rapidement à Saint-Omer / Dunkerque. <strong>Diagnostic clair, devis transparent, intervention propre.</strong> Du lundi au samedi, urgence 7j/7.</p>
-    <div class="m-cta-final-buttons">
-      <a href="tel:+33366100134" class="m-cta-final-tel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>03 66 10 01 34</a>
-      <a href="contact.html" class="m-cta-final-quote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Demander un devis gratuit</a>
-    </div>
-  </div>
-</section>
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var data = new FormData(form);
+    var presta = data.get('presta');
+
+    // TODO: brancher sur Netlify Forms ou backend
+    // Pour l'instant : affichage succès + tarif révélé
+    priceEl.textContent = TARIFS[presta] || 'sur devis';
+    form.style.display = 'none';
+    success.style.display = 'block';
+  });
+})();
+</script>
