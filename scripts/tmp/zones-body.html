@@ -1,3 +1,79 @@
+<!-- SEO : Schema.org structured data (Service + AreaServed) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "HELP! Confort — Plomberie, chauffage, électricité, serrurerie, vitrerie, rénovation",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "HELP! Confort Saint-Omer / Dunkerque",
+    "alternateName": ["Dépan'Audo", "Dépan'DK", "SARL Dépan'Audo"],
+    "telephone": "+33366100134",
+    "email": "saint-omer@helpconfort.com",
+    "url": "https://www.helpconfort-saintomer.fr/",
+    "logo": "https://www.helpconfort-saintomer.fr/logo-officiel.jpg",
+    "image": "https://www.helpconfort-saintomer.fr/logo-officiel.jpg",
+    "priceRange": "€€",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "242 route de Boulogne",
+      "addressLocality": "Saint-Martin-lez-Tatinghem",
+      "postalCode": "62500",
+      "addressRegion": "Hauts-de-France",
+      "addressCountry": "FR"
+    },
+    "openingHoursSpecification": [{
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "08:00", "closes": "18:00"
+    }],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.7",
+      "reviewCount": "343",
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+  },
+  "areaServed": [
+    { "@type": "City", "name": "Saint-Omer", "@id": "https://www.wikidata.org/wiki/Q183033" },
+    { "@type": "City", "name": "Dunkerque", "@id": "https://www.wikidata.org/wiki/Q45797" },
+    { "@type": "City", "name": "Calais", "@id": "https://www.wikidata.org/wiki/Q43399" },
+    { "@type": "City", "name": "Boulogne-sur-Mer", "@id": "https://www.wikidata.org/wiki/Q42537" },
+    { "@type": "City", "name": "Longuenesse" },
+    { "@type": "City", "name": "Arques" },
+    { "@type": "City", "name": "Saint-Martin-lez-Tatinghem" },
+    { "@type": "City", "name": "Blendecques" },
+    { "@type": "City", "name": "Wizernes" },
+    { "@type": "City", "name": "Lumbres" },
+    { "@type": "City", "name": "Aire-sur-la-Lys" },
+    { "@type": "City", "name": "Hazebrouck" },
+    { "@type": "City", "name": "Gravelines" },
+    { "@type": "City", "name": "Bergues" },
+    { "@type": "City", "name": "Coudekerque-Branche" },
+    { "@type": "City", "name": "Grande-Synthe" },
+    { "@type": "City", "name": "Bray-Dunes" },
+    { "@type": "City", "name": "Wormhout" },
+    { "@type": "AdministrativeArea", "name": "Pas-de-Calais", "@id": "https://www.wikidata.org/wiki/Q12642" },
+    { "@type": "AdministrativeArea", "name": "Nord (département)", "@id": "https://www.wikidata.org/wiki/Q12649" }
+  ],
+  "serviceType": [
+    "Plomberie", "Chauffage", "Électricité", "Serrurerie", "Vitrerie", "Rénovation", "Adaptation PMR", "Dépannage urgence habitat"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Prestations habitat HELP! Confort",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Plomberie · Recherche de fuite · Débouchage · Chauffe-eau" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Chauffage · Chaudière · Entretien" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Électricité · Dépannage · Mise aux normes" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Serrurerie · Vitrerie · Sécurisation" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Rénovation · Travaux tous corps d'état" } }
+    ]
+  }
+}
+</script>
+
 <!-- ═══ PAGE ZONES D'INTERVENTION — Premium ═══ -->
 <style>
   body[data-zones-page] {
@@ -364,8 +440,8 @@
   <div class="z-hero-inner">
     <div>
       <span class="z-hero-eye"><span class="pulse"></span>Zones d'intervention · Région</span>
-      <h1 class="z-hero-h1">Nos équipes interviennent sur tout le secteur <em>Saint-Omer</em> &amp; <em>Dunkerque</em></h1>
-      <p class="z-hero-lead">Plomberie, chauffage, électricité, serrurerie, vitrerie et rénovation : <strong>nos techniciens interviennent rapidement</strong> sur l'ensemble du territoire.</p>
+      <h1 class="z-hero-h1">Nos équipes interviennent sur tout le secteur <em>Saint-Omer</em> · <em>Dunkerque</em> · <em>Calais</em> · <em>Boulogne</em></h1>
+      <p class="z-hero-lead">Plomberie, chauffage, électricité, serrurerie, vitrerie et rénovation : <strong>2 agences locales</strong> (Dépan'Audo &amp; Dépan'DK) couvrent l'ensemble du <strong>Pas-de-Calais et du Nord</strong>.</p>
       <div class="z-badges">
         <span class="z-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Intervention rapide</span>
         <span class="z-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Équipes locales</span>
@@ -384,141 +460,206 @@
       </div>
     </div>
 
-    <div class="z-hero-map" aria-hidden="true">
-      <svg viewBox="0 0 700 600" xmlns="http://www.w3.org/2000/svg">
+    <div class="z-hero-map" aria-label="Carte des zones d'intervention HELP! Confort">
+      <svg viewBox="0 0 760 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="map-title">
+        <title id="map-title">Carte interactive des zones HELP! Confort — agences Saint-Omer (Dépan'Audo) et Dunkerque (Dépan'DK)</title>
         <defs>
           <radialGradient id="zone-glow-so" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#1FC4F0" stop-opacity=".55"/>
-            <stop offset="50%" stop-color="#0DA0CF" stop-opacity=".22"/>
+            <stop offset="0%" stop-color="#1FC4F0" stop-opacity=".50"/>
+            <stop offset="60%" stop-color="#0DA0CF" stop-opacity=".18"/>
             <stop offset="100%" stop-color="#0DA0CF" stop-opacity="0"/>
           </radialGradient>
           <radialGradient id="zone-glow-dk" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#FF6B1A" stop-opacity=".55"/>
-            <stop offset="50%" stop-color="#FFB400" stop-opacity=".22"/>
+            <stop offset="0%" stop-color="#FF6B1A" stop-opacity=".50"/>
+            <stop offset="60%" stop-color="#FFB400" stop-opacity=".18"/>
             <stop offset="100%" stop-color="#FFB400" stop-opacity="0"/>
           </radialGradient>
-          <filter id="zone-blur"><feGaussianBlur stdDeviation="8"/></filter>
+          <filter id="zone-blur"><feGaussianBlur stdDeviation="10"/></filter>
+          <linearGradient id="sea-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#dbeafe" stop-opacity=".6"/>
+            <stop offset="100%" stop-color="#dbeafe" stop-opacity="0"/>
+          </linearGradient>
         </defs>
 
-        <!-- Trait pointillé reliant les 2 zones (axe géographique) -->
-        <line class="z-map-line" x1="200" y1="200" x2="500" y2="430" stroke="#94a3b8" stroke-width="1.5" stroke-opacity=".5"/>
+        <!-- Mer du Nord en filigrane (haut de la carte = littoral) -->
+        <path d="M 0 0 L 760 0 L 760 110 Q 600 130 460 120 Q 320 110 180 130 Q 80 140 0 130 Z"
+              fill="url(#sea-gradient)"/>
+        <text x="30" y="40" font-size="11" font-weight="700" fill="#94a3b8" font-family="Inter, sans-serif" letter-spacing="3" opacity=".6">MER DU NORD</text>
 
-        <!-- ZONE DUNKERQUE (haut — Nord, littoral) -->
+        <!-- Trait géographique reliant les agences (axe Saint-Omer ↔ Dunkerque ~50km) -->
+        <line class="z-map-line" x1="320" y1="430" x2="600" y2="200" stroke="#94a3b8" stroke-width="1.5" stroke-opacity=".5"/>
+
+        <!-- ═══ ZONE D'INTERVENTION ÉLARGIE Dunkerque (Calais + littoral) ═══ -->
         <g class="z-map-zone-dunkerque">
-          <circle cx="200" cy="200" r="170" fill="url(#zone-glow-dk)" filter="url(#zone-blur)"/>
-          <circle cx="200" cy="200" r="140" fill="none" stroke="#FF6B1A" stroke-width="1.5" stroke-dasharray="4 6" opacity=".40"/>
+          <!-- Large halo de couverture -->
+          <ellipse cx="500" cy="200" rx="230" ry="160" fill="url(#zone-glow-dk)" filter="url(#zone-blur)"/>
+          <ellipse cx="500" cy="200" rx="190" ry="130" fill="none" stroke="#FF6B1A" stroke-width="1.5" stroke-dasharray="5 6" opacity=".35"/>
 
-          <!-- Dunkerque (centre principal) -->
-          <g class="z-map-pin">
-            <circle cx="200" cy="200" r="18" fill="#FF6B1A" opacity=".22"/>
-            <circle cx="200" cy="200" r="10" fill="#FF6B1A"/>
-            <circle cx="200" cy="200" r="5" fill="#fff"/>
+          <!-- AGENCE DÉPAN'DK (badge agence avec icône bâtiment) -->
+          <g class="z-map-agency">
+            <circle cx="600" cy="200" r="26" fill="#FF6B1A" opacity=".18"/>
+            <circle cx="600" cy="200" r="18" fill="#FF6B1A"/>
+            <!-- Icône bâtiment -->
+            <g transform="translate(600 200)" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="-7" y="-7" width="14" height="13" rx="1"/>
+              <line x1="-3" y1="-3" x2="-3" y2="-2.5"/>
+              <line x1="3" y1="-3" x2="3" y2="-2.5"/>
+              <line x1="-3" y1="1" x2="-3" y2="1.5"/>
+              <line x1="3" y1="1" x2="3" y2="1.5"/>
+              <rect x="-2" y="3" width="4" height="3"/>
+            </g>
           </g>
-          <rect x="222" y="190" width="98" height="22" rx="11" fill="#fff" stroke="#FF6B1A" stroke-width="1"/>
-          <text x="271" y="205" font-size="13" font-weight="800" fill="#0A1428" font-family="Inter, sans-serif" text-anchor="middle">Dunkerque</text>
+          <!-- Étiquette agence -->
+          <g transform="translate(600 235)">
+            <rect x="-58" y="0" width="116" height="36" rx="6" fill="#fff" stroke="#FF6B1A" stroke-width="1.5"/>
+            <text x="0" y="14" font-size="8" font-weight="800" fill="#FF6B1A" font-family="Inter, sans-serif" text-anchor="middle" letter-spacing="1.5">AGENCE</text>
+            <text x="0" y="29" font-size="13" font-weight="800" fill="#0A1428" font-family="Inter, sans-serif" text-anchor="middle">Dépan'DK · Dunkerque</text>
+          </g>
 
-          <!-- Bray-Dunes (nord-est, sur littoral) -->
+          <!-- Bray-Dunes -->
           <g class="z-map-pin delay1">
-            <circle cx="290" cy="120" r="8" fill="#FF6B1A" opacity=".35"/>
-            <circle cx="290" cy="120" r="4" fill="#FF6B1A"/>
+            <circle cx="680" cy="120" r="8" fill="#FF6B1A" opacity=".35"/>
+            <circle cx="680" cy="120" r="4" fill="#FF6B1A"/>
           </g>
-          <text x="298" y="116" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Bray-Dunes</text>
+          <text x="690" y="116" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Bray-Dunes</text>
 
-          <!-- Gravelines (ouest) -->
+          <!-- Calais (extrême nord-ouest, sur la côte) -->
           <g class="z-map-pin delay2">
-            <circle cx="80" cy="170" r="8" fill="#FF6B1A" opacity=".35"/>
-            <circle cx="80" cy="170" r="4" fill="#FF6B1A"/>
+            <circle cx="340" cy="135" r="11" fill="#FF6B1A" opacity=".30"/>
+            <circle cx="340" cy="135" r="6" fill="#FF6B1A"/>
+            <circle cx="340" cy="135" r="3" fill="#fff"/>
           </g>
-          <text x="22" y="166" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Gravelines</text>
+          <text x="354" y="130" font-size="12" font-weight="800" fill="#0A1428" font-family="Inter, sans-serif">Calais</text>
 
-          <!-- Grande-Synthe (sud-ouest de Dunkerque) -->
+          <!-- Gravelines (entre Calais et Dunkerque) -->
           <g class="z-map-pin delay3">
-            <circle cx="135" cy="245" r="8" fill="#FF6B1A" opacity=".35"/>
-            <circle cx="135" cy="245" r="4" fill="#FF6B1A"/>
+            <circle cx="450" cy="150" r="8" fill="#FF6B1A" opacity=".35"/>
+            <circle cx="450" cy="150" r="4" fill="#FF6B1A"/>
           </g>
-          <text x="55" y="262" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Grande-Synthe</text>
+          <text x="455" y="143" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Gravelines</text>
 
-          <!-- Coudekerque (sud) -->
+          <!-- Grande-Synthe -->
           <g class="z-map-pin delay4">
-            <circle cx="225" cy="265" r="8" fill="#FF6B1A" opacity=".35"/>
-            <circle cx="225" cy="265" r="4" fill="#FF6B1A"/>
+            <circle cx="555" cy="220" r="8" fill="#FF6B1A" opacity=".35"/>
+            <circle cx="555" cy="220" r="4" fill="#FF6B1A"/>
           </g>
-          <text x="237" y="280" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Coudekerque</text>
+          <text x="478" y="238" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Grande-Synthe</text>
 
-          <!-- Bergues (sud-est) -->
+          <!-- Coudekerque -->
           <g class="z-map-pin delay2">
-            <circle cx="295" cy="275" r="8" fill="#FF6B1A" opacity=".35"/>
-            <circle cx="295" cy="275" r="4" fill="#FF6B1A"/>
+            <circle cx="610" cy="245" r="8" fill="#FF6B1A" opacity=".35"/>
+            <circle cx="610" cy="245" r="4" fill="#FF6B1A"/>
           </g>
-          <text x="305" y="290" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Bergues</text>
+          <text x="620" y="258" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Coudekerque</text>
+
+          <!-- Bergues -->
+          <g class="z-map-pin delay3">
+            <circle cx="660" cy="155" r="8" fill="#FF6B1A" opacity=".35"/>
+            <circle cx="660" cy="155" r="4" fill="#FF6B1A"/>
+          </g>
+          <text x="672" y="150" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Bergues</text>
         </g>
 
-        <!-- ZONE SAINT-OMER (bas — Sud, intérieur des terres) -->
+        <!-- ═══ ZONE D'INTERVENTION ÉLARGIE Saint-Omer (Boulogne + audomarois) ═══ -->
         <g class="z-map-zone-saint-omer">
-          <circle cx="500" cy="430" r="170" fill="url(#zone-glow-so)" filter="url(#zone-blur)"/>
-          <circle cx="500" cy="430" r="140" fill="none" stroke="#0DA0CF" stroke-width="1.5" stroke-dasharray="4 6" opacity=".40"/>
+          <!-- Large halo de couverture -->
+          <ellipse cx="220" cy="430" rx="230" ry="170" fill="url(#zone-glow-so)" filter="url(#zone-blur)"/>
+          <ellipse cx="220" cy="430" rx="190" ry="140" fill="none" stroke="#0DA0CF" stroke-width="1.5" stroke-dasharray="5 6" opacity=".35"/>
 
-          <!-- Saint-Omer (centre principal) -->
-          <g class="z-map-pin">
-            <circle cx="500" cy="430" r="18" fill="#0DA0CF" opacity=".22"/>
-            <circle cx="500" cy="430" r="10" fill="#0DA0CF"/>
-            <circle cx="500" cy="430" r="5" fill="#fff"/>
+          <!-- AGENCE DÉPAN'AUDO (badge agence avec icône bâtiment) -->
+          <g class="z-map-agency">
+            <circle cx="320" cy="430" r="26" fill="#0DA0CF" opacity=".18"/>
+            <circle cx="320" cy="430" r="18" fill="#0DA0CF"/>
+            <g transform="translate(320 430)" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="-7" y="-7" width="14" height="13" rx="1"/>
+              <line x1="-3" y1="-3" x2="-3" y2="-2.5"/>
+              <line x1="3" y1="-3" x2="3" y2="-2.5"/>
+              <line x1="-3" y1="1" x2="-3" y2="1.5"/>
+              <line x1="3" y1="1" x2="3" y2="1.5"/>
+              <rect x="-2" y="3" width="4" height="3"/>
+            </g>
           </g>
-          <rect x="402" y="420" width="92" height="22" rx="11" fill="#fff" stroke="#0DA0CF" stroke-width="1"/>
-          <text x="448" y="435" font-size="13" font-weight="800" fill="#0A1428" font-family="Inter, sans-serif" text-anchor="middle">Saint-Omer</text>
+          <g transform="translate(320 465)">
+            <rect x="-65" y="0" width="130" height="36" rx="6" fill="#fff" stroke="#0DA0CF" stroke-width="1.5"/>
+            <text x="0" y="14" font-size="8" font-weight="800" fill="#0DA0CF" font-family="Inter, sans-serif" text-anchor="middle" letter-spacing="1.5">AGENCE</text>
+            <text x="0" y="29" font-size="13" font-weight="800" fill="#0A1428" font-family="Inter, sans-serif" text-anchor="middle">Dépan'Audo · Saint-Omer</text>
+          </g>
 
-          <!-- Longuenesse (NW) -->
+          <!-- Longuenesse (proche Saint-Omer) -->
           <g class="z-map-pin delay1">
-            <circle cx="450" cy="380" r="8" fill="#0DA0CF" opacity=".35"/>
-            <circle cx="450" cy="380" r="4" fill="#0DA0CF"/>
+            <circle cx="280" cy="395" r="7" fill="#0DA0CF" opacity=".35"/>
+            <circle cx="280" cy="395" r="4" fill="#0DA0CF"/>
           </g>
-          <text x="370" y="378" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Longuenesse</text>
+          <text x="200" y="392" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Longuenesse</text>
 
-          <!-- Arques (E) -->
+          <!-- Arques -->
           <g class="z-map-pin delay2">
-            <circle cx="570" cy="445" r="8" fill="#0DA0CF" opacity=".35"/>
-            <circle cx="570" cy="445" r="4" fill="#0DA0CF"/>
+            <circle cx="380" cy="445" r="7" fill="#0DA0CF" opacity=".35"/>
+            <circle cx="380" cy="445" r="4" fill="#0DA0CF"/>
           </g>
-          <text x="582" y="450" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Arques</text>
+          <text x="390" y="449" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Arques</text>
 
-          <!-- Lumbres (W) -->
+          <!-- Lumbres -->
           <g class="z-map-pin delay3">
-            <circle cx="395" cy="445" r="8" fill="#0DA0CF" opacity=".35"/>
-            <circle cx="395" cy="445" r="4" fill="#0DA0CF"/>
+            <circle cx="225" cy="445" r="7" fill="#0DA0CF" opacity=".35"/>
+            <circle cx="225" cy="445" r="4" fill="#0DA0CF"/>
           </g>
-          <text x="338" y="450" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Lumbres</text>
+          <text x="170" y="461" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Lumbres</text>
 
-          <!-- Wizernes (S) -->
+          <!-- Wizernes -->
           <g class="z-map-pin delay4">
-            <circle cx="475" cy="490" r="8" fill="#0DA0CF" opacity=".35"/>
-            <circle cx="475" cy="490" r="4" fill="#0DA0CF"/>
+            <circle cx="290" cy="495" r="7" fill="#0DA0CF" opacity=".35"/>
+            <circle cx="290" cy="495" r="4" fill="#0DA0CF"/>
           </g>
-          <text x="425" y="510" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Wizernes</text>
+          <text x="298" y="510" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Wizernes</text>
 
-          <!-- Aire-sur-la-Lys (SE) -->
+          <!-- Aire-sur-la-Lys (sud) -->
           <g class="z-map-pin delay2">
-            <circle cx="595" cy="510" r="8" fill="#0DA0CF" opacity=".35"/>
-            <circle cx="595" cy="510" r="4" fill="#0DA0CF"/>
+            <circle cx="400" cy="525" r="7" fill="#0DA0CF" opacity=".35"/>
+            <circle cx="400" cy="525" r="4" fill="#0DA0CF"/>
           </g>
-          <text x="555" y="535" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Aire-sur-la-Lys</text>
+          <text x="410" y="540" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Aire-sur-la-Lys</text>
+
+          <!-- Boulogne-sur-Mer (extrême ouest, sur la côte) -->
+          <g class="z-map-pin delay3">
+            <circle cx="70" cy="345" r="11" fill="#0DA0CF" opacity=".30"/>
+            <circle cx="70" cy="345" r="6" fill="#0DA0CF"/>
+            <circle cx="70" cy="345" r="3" fill="#fff"/>
+          </g>
+          <text x="40" y="370" font-size="12" font-weight="800" fill="#0A1428" font-family="Inter, sans-serif">Boulogne-sur-Mer</text>
+
+          <!-- Hazebrouck (est) -->
+          <g class="z-map-pin delay4">
+            <circle cx="495" cy="495" r="7" fill="#0DA0CF" opacity=".35"/>
+            <circle cx="495" cy="495" r="4" fill="#0DA0CF"/>
+          </g>
+          <text x="505" y="500" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Hazebrouck</text>
         </g>
 
-        <!-- Indication directionnelle -->
-        <g opacity=".55">
-          <text x="350" y="320" font-size="9" font-weight="700" fill="#94a3b8" font-family="Inter, sans-serif" text-anchor="middle" letter-spacing="2">~ 50 km ~</text>
+        <!-- Indicateur distance entre agences -->
+        <g opacity=".7">
+          <text x="465" y="328" font-size="10" font-weight="700" fill="#94a3b8" font-family="Inter, sans-serif" text-anchor="middle" letter-spacing="2">~ 55 km entre agences</text>
         </g>
 
-        <!-- Légende avec compass -->
-        <g transform="translate(20, 555)">
-          <rect x="0" y="0" width="320" height="32" rx="16" fill="#fff" stroke="#E5EDF3"/>
-          <circle cx="20" cy="16" r="6" fill="#FF6B1A"/>
-          <text x="32" y="20" font-size="11" font-weight="700" fill="#0A1428" font-family="Inter, sans-serif">Dunkerque · littoral</text>
-          <circle cx="180" cy="16" r="6" fill="#0DA0CF"/>
-          <text x="192" y="20" font-size="11" font-weight="700" fill="#0A1428" font-family="Inter, sans-serif">Saint-Omer · audomarois</text>
+        <!-- Légende -->
+        <g transform="translate(20, 590)">
+          <rect x="0" y="0" width="510" height="38" rx="19" fill="#fff" stroke="#E5EDF3" stroke-width="1.5"/>
+          <g transform="translate(20 19)">
+            <circle r="7" fill="#FF6B1A"/>
+            <rect x="-2" y="-2" width="4" height="4" fill="#fff"/>
+          </g>
+          <text x="32" y="23" font-size="11" font-weight="700" fill="#0A1428" font-family="Inter, sans-serif">Agence Dépan'DK</text>
+          <text x="135" y="23" font-size="10" font-weight="600" fill="#94a3b8" font-family="Inter, sans-serif">+ couverture</text>
+          <g transform="translate(245 19)">
+            <circle r="7" fill="#0DA0CF"/>
+            <rect x="-2" y="-2" width="4" height="4" fill="#fff"/>
+          </g>
+          <text x="257" y="23" font-size="11" font-weight="700" fill="#0A1428" font-family="Inter, sans-serif">Agence Dépan'Audo</text>
+          <text x="372" y="23" font-size="10" font-weight="600" fill="#94a3b8" font-family="Inter, sans-serif">+ couverture</text>
         </g>
 
-        <!-- Boussole en haut-droite -->
-        <g transform="translate(640, 30)" opacity=".5">
+        <!-- Boussole -->
+        <g transform="translate(710, 50)" opacity=".55">
           <circle cx="0" cy="0" r="22" fill="#fff" stroke="#E5EDF3"/>
           <path d="M 0 -14 L 4 0 L 0 14 L -4 0 Z" fill="#E11D48"/>
           <text x="0" y="-26" font-size="9" font-weight="800" fill="#475569" font-family="Inter, sans-serif" text-anchor="middle">N</text>
@@ -547,11 +688,12 @@
             <span class="agency">Dépan'Audo</span>
           </div>
         </div>
-        <p>Nos techniciens interviennent <strong>quotidiennement</strong> sur le secteur audomarois pour les urgences, l'entretien et les travaux. Plomberie, chauffage, électricité, serrurerie, vitrerie, rénovation — toutes nos prestations sont disponibles.</p>
+        <p>Nos techniciens interviennent <strong>quotidiennement</strong> sur le secteur audomarois et jusqu'à <strong>Boulogne-sur-Mer</strong>. Plomberie, chauffage, électricité, serrurerie, vitrerie, rénovation — toutes nos prestations sont disponibles.</p>
         <div class="z-zone-cities">
           <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Saint-Omer</span>
           <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Longuenesse</span>
           <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Arques</span>
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Boulogne-sur-Mer</span>
           <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Blendecques</span>
           <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Wizernes</span>
           <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Aire-sur-la-Lys</span>
@@ -570,16 +712,16 @@
             <span class="agency" style="color: #FF6B1A">Dépan'DK</span>
           </div>
         </div>
-        <p>Nos équipes couvrent également le <strong>littoral dunkerquois</strong> avec des interventions rapides et une prise en charge complète. Multi-métiers, urgences habitat, contrats annuels — un interlocuteur unique du diagnostic à la livraison.</p>
+        <p>Nos équipes couvrent le <strong>littoral dunkerquois jusqu'à Calais</strong> avec des interventions rapides et une prise en charge complète. Multi-métiers, urgences habitat, contrats annuels — un interlocuteur unique du diagnostic à la livraison.</p>
         <div class="z-zone-cities">
           <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Dunkerque</span>
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Calais</span>
           <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Coudekerque</span>
           <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Grande-Synthe</span>
           <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Bergues</span>
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Gravelines</span>
           <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Bray-Dunes</span>
           <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Wormhout</span>
-          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Gravelines</span>
-          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Téteghem</span>
         </div>
       </article>
     </div>
