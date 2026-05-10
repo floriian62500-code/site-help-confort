@@ -183,16 +183,52 @@
 
   /* CARTE STYLISÉE droite */
   .z-hero-map {
-    position: relative; aspect-ratio: 1.1/1;
-    background:
-      radial-gradient(ellipse 50% 50% at 50% 50%, var(--m-glow), transparent 65%),
-      linear-gradient(135deg, #F0FAFE 0%, #E5F4FB 100%);
+    position: relative;
+    width: 100%; aspect-ratio: 1.05/1; min-height: 360px;
     border-radius: 24px; border: 1px solid var(--m-glow);
     box-shadow: 0 20px 50px rgba(13,160,207,.15);
     overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
   }
+  #zones-leaflet-map { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 24px; z-index: 0; }
   .z-hero-map svg { width: 100%; height: 100%; }
+
+  /* Markers AGENCE custom Leaflet */
+  .z-agency-marker { background: transparent !important; border: 0 !important; }
+  .z-agency-pin {
+    position: relative;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--c, #0DA0CF); border: 3px solid #fff;
+    box-shadow: 0 8px 22px rgba(10,20,40,.30), 0 0 0 4px color-mix(in srgb, var(--c) 25%, transparent);
+    display: flex; align-items: center; justify-content: center;
+    animation: z-agency-pulse 2.6s ease-in-out infinite;
+  }
+  .z-agency-pin svg { width: 22px; height: 22px }
+  @keyframes z-agency-pulse {
+    0%, 100% { box-shadow: 0 8px 22px rgba(10,20,40,.30), 0 0 0 4px color-mix(in srgb, var(--c) 25%, transparent) }
+    50%      { box-shadow: 0 8px 22px rgba(10,20,40,.30), 0 0 0 10px color-mix(in srgb, var(--c) 8%, transparent) }
+  }
+  .z-agency-label {
+    position: absolute; top: 48px; left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 10px; background: #fff; border-radius: 999px;
+    border: 1.5px solid var(--c);
+    font-size: .76rem; font-weight: 800; color: #0A1428;
+    white-space: nowrap; box-shadow: 0 4px 10px rgba(10,20,40,.10);
+  }
+  /* Popups Leaflet stylisés */
+  .leaflet-popup-content-wrapper { border-radius: 14px !important; box-shadow: 0 18px 38px rgba(10,20,40,.18) !important; padding: 4px !important; }
+  .leaflet-popup-tip { background: #fff !important; box-shadow: none !important }
+  .z-popup { padding: 8px 6px; min-width: 220px; }
+  .z-popup strong { display: block; font-size: .68rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+  .z-popup h4 { margin: 0 0 8px; font-size: 1rem; font-weight: 800; color: #0A1428; }
+  .z-popup p { margin: 0 0 6px; font-size: .82rem; line-height: 1.45; color: #475569; }
+  .z-popup p:last-of-type { color: #64748b }
+  .z-popup-tel { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 8px 14px; background: #0A1428; color: #fff !important; border-radius: 8px; text-decoration: none; font-size: .88rem; font-weight: 700; }
+  .z-popup-tel:hover { background: #0DA0CF }
+  .z-tooltip { background: #0A1428 !important; color: #fff !important; border: 0 !important; box-shadow: 0 6px 14px rgba(10,20,40,.20) !important; border-radius: 6px !important; padding: 4px 10px !important; font-size: .76rem !important; font-weight: 700 !important; }
+  .leaflet-control-zoom a { border-radius: 8px !important; background: #fff !important; color: #0A1428 !important; font-weight: 700 !important; box-shadow: 0 4px 10px rgba(10,20,40,.10) !important; border: 1px solid #E5EDF3 !important; }
+  .leaflet-control-zoom a:hover { background: var(--m-color) !important; color: #fff !important; border-color: var(--m-color) !important; }
+  .leaflet-control-attribution { font-size: 10px !important; background: rgba(255,255,255,.85) !important; backdrop-filter: blur(4px); }
   .z-map-zone-saint-omer, .z-map-zone-dunkerque {
     transition: opacity .3s ease;
   }
@@ -461,8 +497,103 @@
     </div>
 
     <div class="z-hero-map" aria-label="Carte des zones d'intervention HELP! Confort">
+      <!-- Vraie carte Leaflet interactive (tuiles CartoDB Voyager) -->
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+      <div id="zones-leaflet-map" role="img" aria-label="Carte interactive des zones HELP! Confort — agences Saint-Omer et Dunkerque"></div>
+      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+      <script>
+      (function(){
+        if (!window.L) return;
+        var mapEl = document.getElementById('zones-leaflet-map');
+        if (!mapEl) return;
+
+        // Init carte centrée entre les 2 agences
+        var map = L.map(mapEl, {
+          center: [50.89, 2.30],
+          zoom: 10,
+          zoomControl: true,
+          scrollWheelZoom: false,
+          dragging: !L.Browser.mobile,
+          tap: false
+        });
+
+        // Tuiles CartoDB Voyager (moderne, propre, lisible)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+          attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+          subdomains: 'abcd',
+          maxZoom: 19
+        }).addTo(map);
+
+        // ZONE DE COUVERTURE (cercles colorés)
+        L.circle([50.7503, 2.2519], { // Saint-Omer
+          radius: 35000, // 35 km
+          color: '#0DA0CF', fillColor: '#0DA0CF', fillOpacity: 0.12,
+          weight: 2, dashArray: '6 6'
+        }).addTo(map);
+
+        L.circle([51.0345, 2.3768], { // Dunkerque
+          radius: 35000,
+          color: '#FF6B1A', fillColor: '#FF6B1A', fillOpacity: 0.12,
+          weight: 2, dashArray: '6 6'
+        }).addTo(map);
+
+        // Icône custom AGENCE (Dépan'Audo - cyan)
+        var agencyAudo = L.divIcon({
+          className: 'z-agency-marker',
+          html: '<div class="z-agency-pin" style="--c:#0DA0CF"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="1"/><line x1="9" y1="9" x2="9" y2="9.5"/><line x1="15" y1="9" x2="15" y2="9.5"/><line x1="9" y1="13" x2="9" y2="13.5"/><line x1="15" y1="13" x2="15" y2="13.5"/><rect x="10" y="15" width="4" height="3"/></svg><span class="z-agency-label">Dépan\'Audo</span></div>',
+          iconSize: [44, 44],
+          iconAnchor: [22, 22]
+        });
+
+        // Icône custom AGENCE (Dépan'DK - orange)
+        var agencyDK = L.divIcon({
+          className: 'z-agency-marker',
+          html: '<div class="z-agency-pin" style="--c:#FF6B1A"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="1"/><line x1="9" y1="9" x2="9" y2="9.5"/><line x1="15" y1="9" x2="15" y2="9.5"/><line x1="9" y1="13" x2="9" y2="13.5"/><line x1="15" y1="13" x2="15" y2="13.5"/><rect x="10" y="15" width="4" height="3"/></svg><span class="z-agency-label">Dépan\'DK</span></div>',
+          iconSize: [44, 44],
+          iconAnchor: [22, 22]
+        });
+
+        // Markers agences avec popups
+        L.marker([50.7503, 2.2519], { icon: agencyAudo }).addTo(map)
+          .bindPopup('<div class="z-popup"><strong style="color:#0DA0CF">AGENCE DÉPAN\'AUDO</strong><h4>Saint-Omer & Audomarois</h4><p>Plomberie · Chauffage · Électricité · Serrurerie · Vitrerie · Rénovation</p><p style="font-size:.8rem;color:#64748b">Couverture : Saint-Omer, Longuenesse, Arques, Lumbres, Aire-sur-la-Lys, Hazebrouck, Boulogne-sur-Mer</p><a href="tel:+33366100134" class="z-popup-tel">☎ 03 66 10 01 34</a></div>');
+
+        L.marker([51.0345, 2.3768], { icon: agencyDK }).addTo(map)
+          .bindPopup('<div class="z-popup"><strong style="color:#FF6B1A">AGENCE DÉPAN\'DK</strong><h4>Dunkerque & littoral</h4><p>Plomberie · Chauffage · Électricité · Serrurerie · Vitrerie · Rénovation</p><p style="font-size:.8rem;color:#64748b">Couverture : Dunkerque, Calais, Gravelines, Bergues, Bray-Dunes, Grande-Synthe, Coudekerque</p><a href="tel:+33366100134" class="z-popup-tel">☎ 03 66 10 01 34</a></div>');
+
+        // Villes secondaires (markers discrets)
+        var cities = [
+          { lat: 50.9513, lng: 1.8587, name: 'Calais', zone: 'dk' },
+          { lat: 50.7264, lng: 1.6147, name: 'Boulogne-sur-Mer', zone: 'so' },
+          { lat: 50.9869, lng: 2.1283, name: 'Gravelines', zone: 'dk' },
+          { lat: 50.9692, lng: 2.4347, name: 'Bergues', zone: 'dk' },
+          { lat: 51.0808, lng: 2.5142, name: 'Bray-Dunes', zone: 'dk' },
+          { lat: 51.0186, lng: 2.2967, name: 'Grande-Synthe', zone: 'dk' },
+          { lat: 51.0167, lng: 2.3603, name: 'Coudekerque-Branche', zone: 'dk' },
+          { lat: 50.7367, lng: 2.2381, name: 'Longuenesse', zone: 'so' },
+          { lat: 50.7397, lng: 2.3014, name: 'Arques', zone: 'so' },
+          { lat: 50.7106, lng: 2.1281, name: 'Lumbres', zone: 'so' },
+          { lat: 50.7211, lng: 2.2161, name: 'Wizernes', zone: 'so' },
+          { lat: 50.6378, lng: 2.3997, name: 'Aire-sur-la-Lys', zone: 'so' },
+          { lat: 50.7244, lng: 2.5408, name: 'Hazebrouck', zone: 'so' }
+        ];
+
+        cities.forEach(function(c){
+          var color = c.zone === 'dk' ? '#FF6B1A' : '#0DA0CF';
+          var marker = L.circleMarker([c.lat, c.lng], {
+            radius: 6, color: '#fff', fillColor: color, fillOpacity: 1, weight: 2
+          }).addTo(map);
+          marker.bindTooltip(c.name, { permanent: false, direction: 'top', offset: [0, -6], className: 'z-tooltip' });
+        });
+
+        // Fit bounds aux 2 agences + marge
+        var bounds = L.latLngBounds([[50.6, 1.55], [51.12, 2.62]]);
+        map.fitBounds(bounds, { padding: [20, 20] });
+      })();
+      </script>
+      <!-- Fallback SVG si JS désactivé (caché si Leaflet charge) -->
+      <noscript>
       <svg viewBox="0 0 760 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="map-title">
-        <title id="map-title">Carte interactive des zones HELP! Confort — agences Saint-Omer (Dépan'Audo) et Dunkerque (Dépan'DK)</title>
+        <title id="map-title">Carte des zones HELP! Confort — Saint-Omer (Dépan'Audo) et Dunkerque (Dépan'DK)</title>
         <defs>
           <radialGradient id="zone-glow-so" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stop-color="#1FC4F0" stop-opacity=".50"/>
@@ -665,6 +796,7 @@
           <text x="0" y="-26" font-size="9" font-weight="800" fill="#475569" font-family="Inter, sans-serif" text-anchor="middle">N</text>
         </g>
       </svg>
+      </noscript>
     </div>
   </div>
 </section>
