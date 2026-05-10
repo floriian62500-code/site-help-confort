@@ -1,0 +1,738 @@
+<!-- ═══ PAGE ZONES D'INTERVENTION — Premium ═══ -->
+<style>
+  body[data-zones-page] {
+    --m-color: #0DA0CF;
+    --m-color-dark: #0A78A0;
+    --m-color-light: #1FC4F0;
+    --m-glow: rgba(13, 160, 207, .25);
+    --m-soft: rgba(13, 160, 207, .08);
+  }
+  /* SECTIONS */
+  .z-section { padding: clamp(48px, 6vw, 80px) 0; }
+  .z-section .container { max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); }
+  .z-head { text-align: center; max-width: 720px; margin: 0 auto 36px; }
+  .z-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: .72rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 2.5px; color: var(--m-color-dark);
+    background: var(--m-soft); padding: 7px 16px; border-radius: 999px;
+    border: 1px solid var(--m-glow); margin-bottom: 16px;
+  }
+  .z-head h2 {
+    font-size: clamp(1.6rem, 2.8vw, 2.2rem); font-weight: 800; color: #0A1428;
+    letter-spacing: -.02em; line-height: 1.15; margin: 0 0 12px;
+  }
+  .z-head h2 em {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic; font-weight: 600;
+    background: linear-gradient(135deg, var(--m-color), var(--m-color-dark));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .z-head p { font-size: 1rem; line-height: 1.6; color: #475569; margin: 0; }
+  .z-head p strong { color: #0A1428; font-weight: 700; }
+
+  /* ─── HERO ─── */
+  .z-hero {
+    position: relative; overflow: hidden;
+    padding: clamp(48px, 5vw, 80px) 0 clamp(60px, 6vw, 90px);
+    background:
+      radial-gradient(ellipse 70% 50% at 80% 20%, var(--m-glow), transparent 65%),
+      radial-gradient(ellipse 60% 50% at 20% 80%, rgba(255,107,26,.05), transparent 60%),
+      linear-gradient(180deg, #fff 0%, #F2FBFE 100%);
+  }
+  .z-hero-inner {
+    max-width: 1280px; margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 40px);
+    display: grid; grid-template-columns: 1fr; gap: 36px; align-items: center;
+  }
+  @media (min-width: 1000px) { .z-hero-inner { grid-template-columns: 1.05fr 1fr; gap: 50px; } }
+  .z-hero-eye {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: .76rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--m-color-dark); background: rgba(255,255,255,.85);
+    padding: 8px 16px; border-radius: 999px; border: 1px solid var(--m-glow);
+    box-shadow: 0 6px 18px rgba(13,160,207,.15); margin-bottom: 16px;
+  }
+  .z-hero-eye .pulse {
+    width: 8px; height: 8px; border-radius: 50%; background: #22C55E;
+    box-shadow: 0 0 0 0 rgba(34,197,94,.6); animation: z-pulse 2.2s ease-out infinite;
+  }
+  @keyframes z-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(34,197,94,.65) }
+    70% { box-shadow: 0 0 0 9px rgba(34,197,94,0) }
+    100% { box-shadow: 0 0 0 0 rgba(34,197,94,0) }
+  }
+  .z-hero-h1 {
+    font-size: clamp(1.9rem, 3.6vw, 2.9rem); font-weight: 800; color: #0A1428;
+    line-height: 1.06; letter-spacing: -.025em; margin: 0 0 14px;
+  }
+  .z-hero-h1 em {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic; font-weight: 600;
+    background: linear-gradient(135deg, var(--m-color), var(--m-color-dark));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .z-hero-lead {
+    font-size: clamp(.96rem, 1.1vw, 1.06rem); line-height: 1.6;
+    color: #334155; max-width: 560px; margin: 0 0 22px;
+  }
+  .z-hero-lead strong { color: #0A1428; font-weight: 700; }
+  .z-badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
+  .z-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px; border-radius: 999px;
+    background: rgba(255,255,255,.85); border: 1px solid var(--m-glow);
+    font-size: .76rem; font-weight: 700; color: #0A1428;
+  }
+  .z-badge svg { width: 12px; height: 12px; color: var(--m-color-dark); }
+  .z-hero-ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 0; }
+  .z-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 20px; border-radius: 12px;
+    text-decoration: none; cursor: pointer; border: 0;
+    font-family: inherit; font-size: .96rem; font-weight: 800;
+    transition: all .25s cubic-bezier(.16,1,.3,1);
+  }
+  .z-cta-icon { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .z-cta-icon svg { width: 16px; height: 16px; }
+  .z-cta-text { display: flex; flex-direction: column; line-height: 1.15; gap: 1px; align-items: flex-start; }
+  .z-cta-text strong { font-size: .94rem; font-weight: 800; }
+  .z-cta-text small { font-size: .68rem; opacity: .85; font-weight: 500; }
+  .z-cta-urg { background: linear-gradient(135deg, #E11D48, #9F1239); color: #fff; box-shadow: 0 10px 24px rgba(225,29,72,.30); }
+  .z-cta-urg:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(225,29,72,.40); }
+  .z-cta-urg .z-cta-icon { background: rgba(255,255,255,.22); }
+  .z-cta-q { background: linear-gradient(135deg, var(--m-color), var(--m-color-dark)); color: #fff; box-shadow: 0 10px 24px var(--m-glow); }
+  .z-cta-q:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(13,160,207,.40); }
+  .z-cta-q .z-cta-icon { background: rgba(255,255,255,.22); }
+
+  /* CARTE STYLISÉE droite */
+  .z-hero-map {
+    position: relative; aspect-ratio: 1.1/1;
+    background:
+      radial-gradient(ellipse 50% 50% at 50% 50%, var(--m-glow), transparent 65%),
+      linear-gradient(135deg, #F0FAFE 0%, #E5F4FB 100%);
+    border-radius: 24px; border: 1px solid var(--m-glow);
+    box-shadow: 0 20px 50px rgba(13,160,207,.15);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .z-hero-map svg { width: 100%; height: 100%; }
+  .z-map-zone-saint-omer, .z-map-zone-dunkerque {
+    transition: opacity .3s ease;
+  }
+  .z-hero-map:hover .z-map-zone-saint-omer { opacity: .9; }
+  .z-hero-map:hover .z-map-zone-dunkerque { opacity: .9; }
+  .z-map-pin { animation: z-pin-pulse 2.4s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+  .z-map-pin.delay1 { animation-delay: .3s }
+  .z-map-pin.delay2 { animation-delay: .6s }
+  .z-map-pin.delay3 { animation-delay: .9s }
+  .z-map-pin.delay4 { animation-delay: 1.2s }
+  @keyframes z-pin-pulse { 0%, 100% { transform: scale(1); opacity: 1 } 50% { transform: scale(1.25); opacity: .75 } }
+  .z-map-line { stroke-dasharray: 6 6; animation: z-dash 12s linear infinite; }
+  @keyframes z-dash { to { stroke-dashoffset: -120 } }
+
+  /* ─── ZONES DÉTAILLÉES (2 cards) ─── */
+  .z-zones-grid {
+    display: grid; grid-template-columns: 1fr; gap: 18px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  @media (min-width: 800px) { .z-zones-grid { grid-template-columns: repeat(2, 1fr); } }
+  .z-zone-card {
+    padding: 28px 28px 24px;
+    background: linear-gradient(180deg, #fff 0%, #F8FCFE 100%);
+    border: 1px solid #E5EDF3; border-radius: 18px;
+    transition: all .3s cubic-bezier(.16,1,.3,1);
+    position: relative; overflow: hidden;
+  }
+  .z-zone-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--m-color), var(--m-color-dark)); border-radius: 18px 18px 0 0; }
+  .z-zone-card:hover { transform: translateY(-4px); box-shadow: 0 22px 44px var(--m-glow); border-color: var(--m-color); }
+  .z-zone-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .z-zone-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: linear-gradient(135deg, var(--m-color), var(--m-color-dark));
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 20px var(--m-glow); flex-shrink: 0;
+  }
+  .z-zone-icon svg { width: 26px; height: 26px; }
+  .z-zone-head h3 { margin: 0; font-size: 1.2rem; font-weight: 800; color: #0A1428; letter-spacing: -.005em; }
+  .z-zone-head .agency { font-size: .8rem; color: var(--m-color-dark); font-weight: 700; font-family: 'Playfair Display', Georgia, serif; font-style: italic; }
+  .z-zone-card p {
+    font-size: .94rem; line-height: 1.55; color: #475569;
+    margin: 0 0 18px;
+  }
+  .z-zone-card p strong { color: #0A1428; font-weight: 700; }
+  .z-zone-cities {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding-top: 14px; border-top: 1px dashed #E5EDF3;
+  }
+  .z-city-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 10px; background: var(--m-soft);
+    border: 1px solid var(--m-glow); border-radius: 999px;
+    font-size: .78rem; font-weight: 600; color: #0A1428;
+  }
+  .z-city-pill svg { width: 11px; height: 11px; color: var(--m-color-dark); }
+
+  /* ─── DÉLAIS D'INTERVENTION ─── */
+  .z-delays-grid {
+    display: grid; grid-template-columns: 1fr; gap: 16px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  @media (min-width: 720px) { .z-delays-grid { grid-template-columns: repeat(3, 1fr); } }
+  .z-delay-card {
+    padding: 22px 22px 20px;
+    background: #fff;
+    border: 1px solid #E5EDF3; border-radius: 16px;
+    text-align: center;
+    transition: all .25s ease;
+  }
+  .z-delay-card:hover { transform: translateY(-3px); border-color: var(--m-color); box-shadow: 0 12px 28px var(--m-glow); }
+  .z-delay-icon {
+    width: 56px; height: 56px; border-radius: 14px;
+    margin: 0 auto 14px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+  }
+  .z-delay-icon svg { width: 28px; height: 28px; }
+  .z-delay-card h3 { margin: 0 0 6px; font-size: 1.04rem; font-weight: 800; color: #0A1428; }
+  .z-delay-card p { margin: 0; font-size: .88rem; line-height: 1.55; color: #475569; }
+  .z-delay-urgent .z-delay-icon { background: linear-gradient(135deg, #E11D48, #9F1239); box-shadow: 0 8px 18px rgba(225,29,72,.30); }
+  .z-delay-fast .z-delay-icon { background: linear-gradient(135deg, var(--m-color), var(--m-color-dark)); box-shadow: 0 8px 18px var(--m-glow); }
+  .z-delay-rdv .z-delay-icon { background: linear-gradient(135deg, #FFB400, #FF6B1A); box-shadow: 0 8px 18px rgba(255,107,26,.30); }
+
+  /* ─── MÉTIERS DISPONIBLES ─── */
+  .z-metiers-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  @media (min-width: 700px) { .z-metiers-grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 1000px) { .z-metiers-grid { grid-template-columns: repeat(7, 1fr); } }
+  .z-metier-tile {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    padding: 18px 12px;
+    background: #fff;
+    border: 1px solid #E5EDF3; border-radius: 14px;
+    text-decoration: none; transition: all .25s cubic-bezier(.16,1,.3,1);
+    text-align: center;
+  }
+  .z-metier-tile:hover {
+    transform: translateY(-4px);
+    border-color: var(--metier-c, var(--m-color));
+    box-shadow: 0 14px 32px color-mix(in srgb, var(--metier-c, var(--m-color)) 20%, transparent);
+  }
+  .z-metier-icon {
+    width: 44px; height: 44px; border-radius: 11px;
+    background: color-mix(in srgb, var(--metier-c, var(--m-color)) 12%, transparent);
+    color: var(--metier-c, var(--m-color-dark));
+    display: flex; align-items: center; justify-content: center;
+  }
+  .z-metier-icon svg { width: 22px; height: 22px; }
+  .z-metier-tile span { font-size: .82rem; font-weight: 700; color: #0A1428; }
+
+  /* ─── RÉALISATIONS LOCALES (slider) ─── */
+  .z-real-section { background: linear-gradient(180deg, #fff 0%, #F8FCFE 100%); }
+  .z-real-track { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 8px 4px 24px; scrollbar-width: thin; }
+  .z-real-track::-webkit-scrollbar { height: 6px; }
+  .z-real-track::-webkit-scrollbar-thumb { background: var(--m-color); border-radius: 3px; }
+  .z-real-card {
+    flex: 0 0 320px; scroll-snap-align: start;
+    background: #fff; border: 1px solid #E5EDF3; border-radius: 14px;
+    overflow: hidden; transition: all .25s ease;
+    text-decoration: none; color: inherit;
+    display: flex; flex-direction: column;
+  }
+  @media (min-width: 720px) { .z-real-card { flex: 0 0 360px; } }
+  .z-real-card:hover { transform: translateY(-3px); box-shadow: 0 14px 32px var(--m-glow); border-color: var(--m-color); }
+  .z-real-img { aspect-ratio: 4/3; background: linear-gradient(135deg, #F4F8FC, #EAF2F7); position: relative; overflow: hidden; }
+  .z-real-img iframe { position: absolute; top: -60px; left: -40px; width: calc(100% + 80px); height: calc(100% + 200px); border: 0; pointer-events: none; }
+  .z-real-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .z-real-img .placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--m-color-dark); gap: 10px; font-size: .88rem; font-weight: 600; }
+  .z-real-img .placeholder svg { width: 36px; height: 36px; opacity: .5; }
+  .z-real-body { padding: 14px 16px 16px; }
+  .z-real-tag-row { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+  .z-real-tag { padding: 3px 8px; background: var(--m-soft); color: var(--m-color-dark); border-radius: 6px; font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+  .z-real-tag.city { background: rgba(255,107,26,.10); color: #FF6B1A; }
+  .z-real-card h3 { margin: 0 0 4px; font-size: .98rem; font-weight: 800; color: #0A1428; line-height: 1.3; }
+  .z-real-card p { margin: 0; font-size: .82rem; line-height: 1.5; color: #475569; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .z-real-foot { text-align: center; margin-top: 12px; }
+  .z-real-foot a { display: inline-flex; align-items: center; gap: 6px; color: var(--m-color-dark); font-weight: 700; font-size: .9rem; text-decoration: none; }
+  .z-real-foot a:hover { gap: 10px; }
+
+  /* ─── AVIS LOCAUX ─── */
+  .z-reviews-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; max-width: 1100px; margin: 0 auto 28px; }
+  .z-reviews-summary { display: flex; align-items: center; gap: 14px; padding: 14px 20px;
+    background: linear-gradient(135deg, #fff, #F8FCFE);
+    border: 1px solid var(--m-glow); border-radius: 14px;
+    text-decoration: none; color: inherit;
+    box-shadow: 0 6px 18px var(--m-soft);
+  }
+  .z-reviews-summary:hover { transform: translateY(-2px); }
+  .z-reviews-google { width: 40px; height: 40px; flex-shrink: 0; }
+  .z-reviews-data { display: flex; flex-direction: column; line-height: 1.1; gap: 2px; }
+  .z-reviews-data .num { font-size: 1.4rem; font-weight: 800; color: #0A1428; }
+  .z-reviews-data .stars { color: #FFB400; font-size: .88rem; letter-spacing: 1px; }
+  .z-reviews-data .meta { font-size: .76rem; color: #475569; }
+  .z-reviews-grid { display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 1100px; margin: 0 auto; }
+  @media (min-width: 800px) { .z-reviews-grid { grid-template-columns: repeat(3, 1fr); } }
+  .z-review-card {
+    padding: 22px 22px 20px;
+    background: #fff;
+    border: 1px solid #E5EDF3; border-radius: 16px;
+    display: flex; flex-direction: column; gap: 12px;
+    transition: all .25s ease;
+  }
+  .z-review-card:hover { transform: translateY(-3px); box-shadow: 0 14px 32px var(--m-glow); border-color: var(--m-glow); }
+  .z-review-card .stars { color: #FFB400; font-size: .96rem; letter-spacing: 1px; }
+  .z-review-card blockquote { margin: 0; font-size: .92rem; line-height: 1.55; color: #334155; font-style: italic; }
+  .z-review-author { display: flex; align-items: center; gap: 10px; padding-top: 10px; border-top: 1px dashed #E5EDF3; }
+  .z-review-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--m-color), var(--m-color-dark)); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: .96rem; }
+  .z-review-meta { display: flex; flex-direction: column; line-height: 1.2; }
+  .z-review-meta strong { font-size: .86rem; color: #0A1428; font-weight: 700; }
+  .z-review-meta span { font-size: .74rem; color: #64748b; margin-top: 2px; }
+
+  /* ─── CTA FINAL ─── */
+  .z-cta-final {
+    padding: clamp(50px, 6vw, 80px) 0; text-align: center;
+    background: linear-gradient(135deg, #0A1428 0%, #0E2240 100%);
+    color: #fff; position: relative; overflow: hidden;
+  }
+  .z-cta-final::before { content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, var(--m-glow), transparent 70%);
+    pointer-events: none;
+  }
+  .z-cta-final-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); }
+  .z-cta-final h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -.02em; line-height: 1.15; margin: 0 0 10px; }
+  .z-cta-final h2 em {
+    font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 600;
+    background: linear-gradient(135deg, var(--m-color-light), var(--m-color));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .z-cta-final-tagline { font-size: .94rem; color: rgba(255,255,255,.72); margin: 0 0 24px; }
+  .z-cta-final-tagline strong { color: var(--m-color-light); font-weight: 700; }
+  .z-cta-final-btns { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .z-cta-final-tel, .z-cta-final-q {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px; border-radius: 12px;
+    font-weight: 800; font-size: 1rem; text-decoration: none;
+    transition: all .25s ease;
+  }
+  .z-cta-final-tel { background: #fff; color: #0A1428; box-shadow: 0 10px 24px rgba(0,0,0,.20); }
+  .z-cta-final-tel:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(0,0,0,.30); }
+  .z-cta-final-q { background: linear-gradient(135deg, var(--m-color), var(--m-color-dark)); color: #fff; box-shadow: 0 10px 24px var(--m-glow); }
+  .z-cta-final-q:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(13,160,207,.45); }
+  .z-cta-final svg { width: 18px; height: 18px; }
+  .z-cta-final-info { margin-top: 20px; font-size: .82rem; color: rgba(255,255,255,.55); }
+</style>
+
+<script>document.body.setAttribute('data-zones-page', 'true');</script>
+
+<!-- ─── 1. HERO ─── -->
+<section class="z-hero" aria-label="Zones d'intervention HELP! Confort">
+  <div class="z-hero-inner">
+    <div>
+      <span class="z-hero-eye"><span class="pulse"></span>Zones d'intervention · Région</span>
+      <h1 class="z-hero-h1">Nos équipes interviennent sur tout le secteur <em>Saint-Omer</em> &amp; <em>Dunkerque</em></h1>
+      <p class="z-hero-lead">Plomberie, chauffage, électricité, serrurerie, vitrerie et rénovation : <strong>nos techniciens interviennent rapidement</strong> sur l'ensemble du territoire.</p>
+      <div class="z-badges">
+        <span class="z-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Intervention rapide</span>
+        <span class="z-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Équipes locales</span>
+        <span class="z-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Multi-métiers</span>
+        <span class="z-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Urgence habitat</span>
+      </div>
+      <div class="z-hero-ctas">
+        <a href="tel:+33366100134" class="z-cta z-cta-urg">
+          <span class="z-cta-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+          <span class="z-cta-text"><strong>Demander une intervention</strong><small>03 66 10 01 34</small></span>
+        </a>
+        <a href="contact.html#rappel" class="z-cta z-cta-q">
+          <span class="z-cta-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3z"/><path d="M3 19a2 2 0 0 0 2 2h1v-6H3z"/></svg></span>
+          <span class="z-cta-text"><strong>Être rappelé</strong><small>Sous 1h ouvrée</small></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="z-hero-map" aria-hidden="true">
+      <svg viewBox="0 0 600 540" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="zone-glow-so" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#1FC4F0" stop-opacity=".5"/>
+            <stop offset="60%" stop-color="#0DA0CF" stop-opacity=".18"/>
+            <stop offset="100%" stop-color="#0DA0CF" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="zone-glow-dk" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FF6B1A" stop-opacity=".40"/>
+            <stop offset="60%" stop-color="#FFB400" stop-opacity=".15"/>
+            <stop offset="100%" stop-color="#FFB400" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="zone-blur"><feGaussianBlur stdDeviation="6"/></filter>
+        </defs>
+
+        <!-- Lignes décoratives reliant les 2 zones -->
+        <line class="z-map-line" x1="180" y1="320" x2="430" y2="170" stroke="#0DA0CF" stroke-width="1.5" stroke-opacity=".4"/>
+
+        <!-- Zone Saint-Omer (sud-ouest) -->
+        <g class="z-map-zone-saint-omer">
+          <ellipse cx="180" cy="340" rx="160" ry="120" fill="url(#zone-glow-so)" filter="url(#zone-blur)"/>
+          <ellipse cx="180" cy="340" rx="130" ry="95" fill="none" stroke="#0DA0CF" stroke-width="1.5" stroke-dasharray="4 6" opacity=".35"/>
+
+          <!-- Saint-Omer -->
+          <g class="z-map-pin">
+            <circle cx="180" cy="340" r="14" fill="#0DA0CF" opacity=".25"/>
+            <circle cx="180" cy="340" r="8" fill="#0DA0CF"/>
+            <circle cx="180" cy="340" r="4" fill="#fff"/>
+          </g>
+          <text x="200" y="345" font-size="13" font-weight="800" fill="#0A1428" font-family="Inter, sans-serif">Saint-Omer</text>
+
+          <!-- Longuenesse -->
+          <g class="z-map-pin delay1">
+            <circle cx="135" cy="305" r="6" fill="#0DA0CF" opacity=".4"/>
+            <circle cx="135" cy="305" r="3" fill="#0DA0CF"/>
+          </g>
+          <text x="80" y="295" font-size="10" font-weight="600" fill="#475569" font-family="Inter, sans-serif">Longuenesse</text>
+
+          <!-- Arques -->
+          <g class="z-map-pin delay2">
+            <circle cx="240" cy="365" r="6" fill="#0DA0CF" opacity=".4"/>
+            <circle cx="240" cy="365" r="3" fill="#0DA0CF"/>
+          </g>
+          <text x="252" y="370" font-size="10" font-weight="600" fill="#475569" font-family="Inter, sans-serif">Arques</text>
+
+          <!-- Aire-sur-la-Lys -->
+          <g class="z-map-pin delay3">
+            <circle cx="220" cy="430" r="6" fill="#0DA0CF" opacity=".4"/>
+            <circle cx="220" cy="430" r="3" fill="#0DA0CF"/>
+          </g>
+          <text x="232" y="435" font-size="10" font-weight="600" fill="#475569" font-family="Inter, sans-serif">Aire-sur-la-Lys</text>
+
+          <!-- Lumbres -->
+          <g class="z-map-pin delay4">
+            <circle cx="100" cy="365" r="6" fill="#0DA0CF" opacity=".4"/>
+            <circle cx="100" cy="365" r="3" fill="#0DA0CF"/>
+          </g>
+          <text x="42" y="370" font-size="10" font-weight="600" fill="#475569" font-family="Inter, sans-serif">Lumbres</text>
+
+          <!-- Wizernes -->
+          <g class="z-map-pin delay2">
+            <circle cx="155" cy="385" r="6" fill="#0DA0CF" opacity=".4"/>
+            <circle cx="155" cy="385" r="3" fill="#0DA0CF"/>
+          </g>
+          <text x="115" y="403" font-size="10" font-weight="600" fill="#475569" font-family="Inter, sans-serif">Wizernes</text>
+        </g>
+
+        <!-- Zone Dunkerque (nord-est) -->
+        <g class="z-map-zone-dunkerque">
+          <ellipse cx="430" cy="170" rx="140" ry="105" fill="url(#zone-glow-dk)" filter="url(#zone-blur)"/>
+          <ellipse cx="430" cy="170" rx="115" ry="80" fill="none" stroke="#FF6B1A" stroke-width="1.5" stroke-dasharray="4 6" opacity=".30"/>
+
+          <!-- Dunkerque -->
+          <g class="z-map-pin">
+            <circle cx="430" cy="170" r="14" fill="#FF6B1A" opacity=".25"/>
+            <circle cx="430" cy="170" r="8" fill="#FF6B1A"/>
+            <circle cx="430" cy="170" r="4" fill="#fff"/>
+          </g>
+          <text x="450" y="175" font-size="13" font-weight="800" fill="#0A1428" font-family="Inter, sans-serif">Dunkerque</text>
+
+          <!-- Coudekerque -->
+          <g class="z-map-pin delay1">
+            <circle cx="395" cy="195" r="6" fill="#FF6B1A" opacity=".4"/>
+            <circle cx="395" cy="195" r="3" fill="#FF6B1A"/>
+          </g>
+          <text x="320" y="200" font-size="10" font-weight="600" fill="#475569" font-family="Inter, sans-serif">Coudekerque</text>
+
+          <!-- Grande-Synthe -->
+          <g class="z-map-pin delay2">
+            <circle cx="385" cy="155" r="6" fill="#FF6B1A" opacity=".4"/>
+            <circle cx="385" cy="155" r="3" fill="#FF6B1A"/>
+          </g>
+          <text x="295" y="160" font-size="10" font-weight="600" fill="#475569" font-family="Inter, sans-serif">Grande-Synthe</text>
+
+          <!-- Bergues -->
+          <g class="z-map-pin delay3">
+            <circle cx="475" cy="200" r="6" fill="#FF6B1A" opacity=".4"/>
+            <circle cx="475" cy="200" r="3" fill="#FF6B1A"/>
+          </g>
+          <text x="487" y="205" font-size="10" font-weight="600" fill="#475569" font-family="Inter, sans-serif">Bergues</text>
+
+          <!-- Bray-Dunes -->
+          <g class="z-map-pin delay4">
+            <circle cx="490" cy="135" r="6" fill="#FF6B1A" opacity=".4"/>
+            <circle cx="490" cy="135" r="3" fill="#FF6B1A"/>
+          </g>
+          <text x="502" y="140" font-size="10" font-weight="600" fill="#475569" font-family="Inter, sans-serif">Bray-Dunes</text>
+
+          <!-- Gravelines -->
+          <g class="z-map-pin delay2">
+            <circle cx="370" cy="135" r="6" fill="#FF6B1A" opacity=".4"/>
+            <circle cx="370" cy="135" r="3" fill="#FF6B1A"/>
+          </g>
+          <text x="295" y="125" font-size="10" font-weight="600" fill="#475569" font-family="Inter, sans-serif">Gravelines</text>
+        </g>
+
+        <!-- Légende -->
+        <g transform="translate(20, 490)">
+          <rect x="0" y="0" width="280" height="34" rx="17" fill="#fff" stroke="#E5EDF3"/>
+          <circle cx="22" cy="17" r="6" fill="#0DA0CF"/>
+          <text x="36" y="21" font-size="11" font-weight="700" fill="#0A1428" font-family="Inter, sans-serif">Zone Saint-Omer</text>
+          <circle cx="160" cy="17" r="6" fill="#FF6B1A"/>
+          <text x="174" y="21" font-size="11" font-weight="700" fill="#0A1428" font-family="Inter, sans-serif">Zone Dunkerque</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 2. ZONES DÉTAILLÉES ─── -->
+<section class="z-section" aria-label="Détail des zones couvertes">
+  <div class="container">
+    <div class="z-head">
+      <span class="z-eyebrow">Zones couvertes</span>
+      <h2>Deux secteurs, <em>une seule équipe</em></h2>
+      <p>Une organisation locale structurée, deux agences sur le terrain pour un maillage optimal.</p>
+    </div>
+    <div class="z-zones-grid">
+      <article class="z-zone-card">
+        <div class="z-zone-head">
+          <div class="z-zone-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <h3>Saint-Omer &amp; Audomarois</h3>
+            <span class="agency">Dépan'Audo</span>
+          </div>
+        </div>
+        <p>Nos techniciens interviennent <strong>quotidiennement</strong> sur le secteur audomarois pour les urgences, l'entretien et les travaux. Plomberie, chauffage, électricité, serrurerie, vitrerie, rénovation — toutes nos prestations sont disponibles.</p>
+        <div class="z-zone-cities">
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Saint-Omer</span>
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Longuenesse</span>
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Arques</span>
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Blendecques</span>
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Wizernes</span>
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Aire-sur-la-Lys</span>
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Lumbres</span>
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Hazebrouck</span>
+        </div>
+      </article>
+
+      <article class="z-zone-card">
+        <div class="z-zone-head">
+          <div class="z-zone-icon" style="background: linear-gradient(135deg, #FF6B1A, #E65510); box-shadow: 0 8px 20px rgba(255,107,26,.30)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <h3>Dunkerque &amp; littoral</h3>
+            <span class="agency" style="color: #FF6B1A">Dépan'DK</span>
+          </div>
+        </div>
+        <p>Nos équipes couvrent également le <strong>littoral dunkerquois</strong> avec des interventions rapides et une prise en charge complète. Multi-métiers, urgences habitat, contrats annuels — un interlocuteur unique du diagnostic à la livraison.</p>
+        <div class="z-zone-cities">
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Dunkerque</span>
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Coudekerque</span>
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Grande-Synthe</span>
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Bergues</span>
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Bray-Dunes</span>
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Wormhout</span>
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Gravelines</span>
+          <span class="z-city-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Téteghem</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 3. DÉLAIS ─── -->
+<section class="z-section" style="background: linear-gradient(180deg, #fff 0%, #F8FCFE 100%);" aria-label="Délais d'intervention">
+  <div class="container">
+    <div class="z-head">
+      <span class="z-eyebrow">Délais d'intervention</span>
+      <h2>Réactivité &amp; <em>organisation</em></h2>
+      <p>Selon le caractère urgent, le métier et la disponibilité des équipes, nos délais s'adaptent.</p>
+    </div>
+    <div class="z-delays-grid">
+      <div class="z-delay-card z-delay-urgent">
+        <div class="z-delay-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <h3>Urgence habitat</h3>
+        <p>Intervention prioritaire selon disponibilité des équipes. Fuite, ballon HS, effraction, sinistre.</p>
+      </div>
+      <div class="z-delay-card z-delay-fast">
+        <div class="z-delay-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <h3>Dépannage rapide</h3>
+        <p>Intervention sous 24-48h ouvrées en moyenne. Diagnostic, devis détaillé, exécution.</p>
+      </div>
+      <div class="z-delay-card z-delay-rdv">
+        <div class="z-delay-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <h3>Travaux planifiés</h3>
+        <p>Prise de RDV rapide pour travaux, rénovations, contrats d'entretien. Visite technique gratuite.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 4. MÉTIERS DISPONIBLES ─── -->
+<section class="z-section" aria-label="Métiers disponibles">
+  <div class="container">
+    <div class="z-head">
+      <span class="z-eyebrow">7 métiers</span>
+      <h2>Tous nos <em>savoir-faire</em>, sur tout le secteur</h2>
+      <p>Une seule équipe, sept spécialités. <strong>Pas besoin de jongler entre artisans.</strong></p>
+    </div>
+    <div class="z-metiers-grid">
+      <a href="plombier-saint-omer.html" class="z-metier-tile" style="--metier-c:#12C6FE">
+        <span class="z-metier-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></span>
+        <span>Plomberie</span>
+      </a>
+      <a href="chauffagiste-saint-omer.html" class="z-metier-tile" style="--metier-c:#FD9533">
+        <span class="z-metier-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 4-2 4 0 8 2 4 4 4 0 12-1-4 2-4 0-8-2-4-4-4 0-12z"/></svg></span>
+        <span>Chauffage</span>
+      </a>
+      <a href="electricien-saint-omer.html" class="z-metier-tile" style="--metier-c:#F4B400">
+        <span class="z-metier-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+        <span>Électricité</span>
+      </a>
+      <a href="serrurier-saint-omer.html" class="z-metier-tile" style="--metier-c:#FF2DA3">
+        <span class="z-metier-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+        <span>Serrurerie</span>
+      </a>
+      <a href="serrurier-saint-omer.html" class="z-metier-tile" style="--metier-c:#7BEA32">
+        <span class="z-metier-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="3" x2="21" y2="21"/></svg></span>
+        <span>Vitrerie</span>
+      </a>
+      <a href="travaux-saint-omer.html" class="z-metier-tile" style="--metier-c:#A28C7A">
+        <span class="z-metier-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
+        <span>Rénovation</span>
+      </a>
+      <a href="guide-adaptation-pmr.html" class="z-metier-tile" style="--metier-c:#0DA0CF">
+        <span class="z-metier-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg></span>
+        <span>PMR</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 5. RÉALISATIONS LOCALES ─── -->
+<section class="z-section z-real-section" aria-label="Réalisations locales">
+  <div class="container">
+    <div class="z-head">
+      <span class="z-eyebrow">Sur le terrain</span>
+      <h2>Nos <em>chantiers</em> sur le secteur</h2>
+      <p>Vrais chantiers, vrais clients, photos terrain. <strong>La preuve par les résultats.</strong></p>
+    </div>
+    <div class="z-real-track" id="z-real-track">
+      <a href="realisations.html" class="z-real-card">
+        <div class="z-real-img"><div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photos à venir</div></div>
+        <div class="z-real-body">
+          <div class="z-real-tag-row"><span class="z-real-tag">Plomberie</span><span class="z-real-tag city">Saint-Omer</span></div>
+          <h3>Recherche de fuite par caméra thermique</h3>
+          <p>Localisation précise sans casse. Réparation propre et remise en service en 2h.</p>
+        </div>
+      </a>
+      <a href="realisations.html" class="z-real-card">
+        <div class="z-real-img"><div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photos à venir</div></div>
+        <div class="z-real-body">
+          <div class="z-real-tag-row"><span class="z-real-tag">Chauffage</span><span class="z-real-tag city">Dunkerque</span></div>
+          <h3>Remplacement chaudière gaz condensation</h3>
+          <p>Dépose ancienne chaudière, pose neuve, mise en service et formation utilisateur.</p>
+        </div>
+      </a>
+      <a href="realisations.html" class="z-real-card">
+        <div class="z-real-img"><div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photos à venir</div></div>
+        <div class="z-real-body">
+          <div class="z-real-tag-row"><span class="z-real-tag">Serrurerie</span><span class="z-real-tag city">Bergues</span></div>
+          <h3>Sécurisation porte d'entrée après effraction</h3>
+          <p>Remplacement serrure A2P, blindage, rapport pour assurance.</p>
+        </div>
+      </a>
+      <a href="realisations.html" class="z-real-card">
+        <div class="z-real-img"><div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photos à venir</div></div>
+        <div class="z-real-body">
+          <div class="z-real-tag-row"><span class="z-real-tag">Vitrerie</span><span class="z-real-tag city">Longuenesse</span></div>
+          <h3>Remplacement double vitrage cassé</h3>
+          <p>Mesure, commande sur-mesure, pose. Intervention en 1 journée.</p>
+        </div>
+      </a>
+    </div>
+    <div class="z-real-foot">
+      <a href="realisations.html">Voir toutes nos réalisations <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var track = document.getElementById('z-real-track');
+    if(!track) return;
+    fetch('content/realisations/index.json?t=' + Date.now())
+      .then(function(r){return r.ok?r.json():Promise.reject()})
+      .then(function(list){
+        var items = list.filter(function(r){ return r.published !== false }).slice(0, 6);
+        if(!items.length) return;
+        track.innerHTML = items.map(function(r){
+          var url = r.url || 'realisations.html';
+          var img = '';
+          if(r.image){ img = '<img src="'+r.image+'" alt="'+r.title+'" loading="lazy">'; }
+          else if(r.source_facebook){ var fb = 'https://www.facebook.com/plugins/post.php?href='+encodeURIComponent(r.source_facebook)+'&show_text=false&width=380'; img = '<iframe src="'+fb+'" loading="lazy" scrolling="no" frameborder="0"></iframe>'; }
+          else { img = '<div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photos à venir</div>'; }
+          var city = r.ville || '';
+          return '<a href="'+url+'" class="z-real-card"><div class="z-real-img">'+img+'</div><div class="z-real-body"><div class="z-real-tag-row"><span class="z-real-tag">'+(r.metier||'Chantier')+'</span>'+(city?'<span class="z-real-tag city">'+city+'</span>':'')+'</div><h3>'+(r.title||'Chantier')+'</h3><p>'+(r.description||'').slice(0,140)+'</p></div></a>';
+        }).join('');
+      })
+      .catch(function(){});
+  })();
+  </script>
+</section>
+
+<!-- ─── 6. AVIS LOCAUX ─── -->
+<section class="z-section" aria-label="Avis clients locaux">
+  <div class="container">
+    <div class="z-reviews-head">
+      <div>
+        <span class="z-eyebrow" style="margin-bottom: 12px">Vos témoignages</span>
+        <h2 style="font-size: clamp(1.6rem, 2.8vw, 2.2rem); font-weight: 800; color: #0A1428; letter-spacing: -.02em; line-height: 1.15; margin: 0">Ils nous ont fait <em style="font-family: 'Playfair Display',Georgia,serif; font-style: italic; font-weight: 600; background: linear-gradient(135deg, var(--m-color), var(--m-color-dark)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">confiance</em></h2>
+      </div>
+      <a href="https://maps.app.goo.gl/B4BPVTiRp5rDp26fA" target="_blank" rel="noopener" class="z-reviews-summary">
+        <svg class="z-reviews-google" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        <div class="z-reviews-data">
+          <span class="num"><span data-google-rating>4,7</span>/5</span>
+          <span class="stars">★★★★★</span>
+          <span class="meta"><span data-google-count>343</span> avis Google</span>
+        </div>
+      </a>
+    </div>
+    <div class="z-reviews-grid">
+      <article class="z-review-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>« Intervention rapide à Saint-Omer pour une fuite. Diagnostic clair, devis transparent, réparation propre. Je recommande sans hésiter. »</blockquote>
+        <div class="z-review-author">
+          <div class="z-review-avatar">M</div>
+          <div class="z-review-meta"><strong>Mathieu D.</strong><span>Saint-Omer</span></div>
+        </div>
+      </article>
+      <article class="z-review-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>« Remplacement chaudière à Dunkerque. Équipe sérieuse, planning respecté, finitions impeccables. »</blockquote>
+        <div class="z-review-author">
+          <div class="z-review-avatar">S</div>
+          <div class="z-review-meta"><strong>Sophie L.</strong><span>Dunkerque</span></div>
+        </div>
+      </article>
+      <article class="z-review-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>« Sécurisation après effraction à Bergues. Intervention en moins de 2h, rapport remis pour l'assurance. Bravo. »</blockquote>
+        <div class="z-review-author">
+          <div class="z-review-avatar">P</div>
+          <div class="z-review-meta"><strong>Patrick V.</strong><span>Bergues</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 7. CTA FINAL ─── -->
+<section class="z-cta-final" aria-label="Contact zones d'intervention">
+  <div class="z-cta-final-inner">
+    <h2>Besoin d'une intervention <em>près de chez vous</em>&nbsp;?</h2>
+    <p class="z-cta-final-tagline">Notre équipe couvre <strong>tout le secteur Saint-Omer / Dunkerque</strong>. Du lundi au samedi, urgence 7j/7.</p>
+    <div class="z-cta-final-btns">
+      <a href="tel:+33366100134" class="z-cta-final-tel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>03 66 10 01 34</a>
+      <a href="contact.html" class="z-cta-final-q"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Demander une intervention</a>
+    </div>
+    <div class="z-cta-final-info">Lun–Sam · 8h–18h · Urgence 7j/7</div>
+  </div>
+</section>
