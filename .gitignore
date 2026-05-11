@@ -27,3 +27,9 @@ images/mascotte-with-bg.png
 videos/*.original
 videos/*-OLD.*
 videos/*-NOAUDIO-bak.*
+
+# Supabase CLI cache (local, ne doit pas être committé)
+supabase/.temp/
+supabase/.branches/
+.env
+.env.local
