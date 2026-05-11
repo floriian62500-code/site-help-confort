@@ -168,6 +168,7 @@
             <li class="setup-step is-loading" data-step="fn-sitemap"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>sitemap</strong><span>Sitemap dynamique SEO</span></div></div></li>
             <li class="setup-step is-loading" data-step="fn-check-tokens"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>check-tokens</strong><span>Surveillance expiration tokens</span></div></div></li>
             <li class="setup-step is-loading" data-step="fn-publish-scheduled"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>publish-scheduled</strong><span>Cron — exécute les publications planifiées</span></div></div></li>
+            <li class="setup-step is-loading" data-step="fn-sync-facebook-posts"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>sync-facebook-posts</strong><span>Import automatique des nouveaux posts FB</span></div></div></li>
           </ul>
         </div>
 
@@ -301,6 +302,7 @@ const checks = {
   'fn-sitemap':          { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
   'fn-check-tokens':     { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
   'fn-publish-scheduled':{ critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
+  'fn-sync-facebook-posts':{ critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
 
   'int-anthropic':       { critical: false, weight: 2, fixUrl: 'settings.html#section-anthropic', fixLabel: 'Configurer' },
   'int-meta':            { critical: false, weight: 1, fixUrl: 'settings.html#section-meta', fixLabel: 'Configurer' },
@@ -377,6 +379,7 @@ function updateScoreAndPriorities() {
     'fn-sitemap':          ['Déployer sitemap', 'Sitemap dynamique pour le SEO'],
     'fn-check-tokens':     ['Déployer check-tokens', 'Surveillance des tokens qui expirent'],
     'fn-publish-scheduled':['Déployer publish-scheduled', 'Sans ça, les publications planifiées ne s\'exécuteront pas'],
+    'fn-sync-facebook-posts':['Déployer sync-facebook-posts', 'Pour importer automatiquement les nouveaux posts FB'],
     'int-anthropic':       ['Ajouter la clé Anthropic Claude', 'Bloque toute la génération IA'],
     'int-meta':            ['Configurer Meta', 'Sans ça, pas de cross-post Facebook/Instagram'],
     'int-linkedin':        ['Configurer LinkedIn', 'Sans ça, pas de cross-post LinkedIn'],
@@ -511,7 +514,8 @@ function actionLink(key, isPrimary) {
     checkFn('fn-ga4-stats', 'ga4-stats'),
     checkFn('fn-sitemap', 'sitemap'),
     checkFn('fn-check-tokens', 'check-tokens'),
-    checkFn('fn-publish-scheduled', 'publish-scheduled')
+    checkFn('fn-publish-scheduled', 'publish-scheduled'),
+    checkFn('fn-sync-facebook-posts', 'sync-facebook-posts')
   ]);
 
   // ─── 5. Intégrations (app_settings remplies) ───

@@ -66,10 +66,16 @@
       </div>
       <div class="admin-page-head">
         <div><h1>Avis clients</h1><p>Synchronisation Google &amp; Facebook + réponse depuis le back-office.</p></div>
-        <button class="btn btn-primary" id="btnSync">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"/><path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/></svg>
-          Synchroniser
-        </button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn" id="btnExport" title="Exporter en CSV">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Exporter CSV
+          </button>
+          <button class="btn btn-primary" id="btnSync">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"/><path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/></svg>
+            Synchroniser
+          </button>
+        </div>
       </div>
 
       <div class="rv-stats" id="rvStats"></div>
@@ -278,6 +284,27 @@ let _currentReply = null;
     document.getElementById('replyModal').classList.remove('is-open');
     document.body.style.overflow = '';
   }
+
+  // Export CSV
+  document.getElementById('btnExport').addEventListener('click', () => {
+    const headers = ['Date','Auteur','Note','Source','Agence','Statut','Commentaire','Réponse'];
+    const rows = (_all || []).map(r => [
+      r.created_at ? new Date(r.created_at).toLocaleDateString('fr-FR') : '',
+      r.author || '',
+      r.rating || '',
+      r.source || '',
+      r.agence || '',
+      r.status || '',
+      (r.comment || '').replace(/[\r\n]+/g,' / '),
+      (r.reply || '').replace(/[\r\n]+/g,' / ')
+    ].map(v => `"${String(v).replace(/"/g,'""')}"`).join(','));
+    const csv = [headers.join(','), ...rows].join('\n');
+    const blob = new Blob([new Uint8Array([0xEF,0xBB,0xBF]), csv], { type: 'text/csv;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'avis-help-confort-' + new Date().toISOString().slice(0,10) + '.csv';
+    a.click();
+  });
 
   // Sync
   document.getElementById('btnSync').addEventListener('click', async (e) => {

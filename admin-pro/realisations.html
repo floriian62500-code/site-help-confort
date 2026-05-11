@@ -279,10 +279,20 @@
           <h1>Réalisations</h1>
           <p>Vos chantiers avant/après — métier, ville, technicien, statut. Publication multi-canal.</p>
         </div>
-        <button class="btn btn-primary" id="btnNew">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Créer un chantier
-        </button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn" id="btnSyncFb" title="Importer les nouveaux posts Facebook">
+            <svg viewBox="0 0 24 24" fill="#1877F2"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+            Sync Facebook
+          </button>
+          <button class="btn" id="btnExport" title="Exporter en CSV">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Exporter CSV
+          </button>
+          <button class="btn btn-primary" id="btnNew">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Créer un chantier
+          </button>
+        </div>
       </div>
 
       <!-- Toolbar filtres -->
@@ -1449,6 +1459,61 @@ async function triggerMultichannelPublish(realisationId, targets) {
 
   // Buttons
   document.getElementById('btnNew').addEventListener('click', () => openEdit());
+  document.getElementById('btnSyncFb').addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    btn.disabled = true;
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="9" stroke-opacity=".3"/><path d="M12 3a9 9 0 0 1 9 9"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur=".8s" repeatCount="indefinite"/></path></svg> Synchronisation…';
+    try {
+      const c = await HCSupabase.init();
+      const { data: { session } } = await c.auth.getSession();
+      const r = await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sync-facebook-posts', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + session.access_token, 'content-type': 'application/json' },
+        body: '{}'
+      });
+      const d = await r.json();
+      if (!r.ok || d.error) throw new Error(d.error || 'Erreur');
+      if (d.imported > 0) {
+        toast(d.imported + ' nouveau' + (d.imported>1?'x':'') + ' post' + (d.imported>1?'s':'') + ' importé' + (d.imported>1?'s':'') + ' en validation', 'ok', 4500);
+        await loadReals();
+      } else {
+        toast('Aucun nouveau post à importer (' + (d.skipped || 0) + ' ignorés)', 'ok', 3500);
+      }
+    } catch (err) {
+      toast('Erreur sync FB : ' + err.message, 'err', 5000);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = orig;
+    }
+  });
+  document.getElementById('btnExport').addEventListener('click', () => {
+    // On exporte les chantiers actuellement filtrés (visibles à l'écran)
+    const items = getFiltered();
+    if (!items.length) { toast('Aucun chantier à exporter avec ces filtres', 'err'); return; }
+    const headers = ['Date','Titre','Slug','Métier','Ville','Technicien','Statut','Épinglé','Image avant','Image après','Date intervention','Description'];
+    const rows = items.map(r => [
+      r.created_at ? new Date(r.created_at).toLocaleDateString('fr-FR') : '',
+      r.title || '',
+      r.slug || '',
+      labelMetier(r.metier),
+      r.ville || '',
+      r.technicien || '',
+      r.status === 'publie' ? 'Publié' : r.status === 'validation' ? 'À valider' : 'Brouillon',
+      r.pinned ? 'Oui' : '',
+      r.image_before || '',
+      r.image_after || '',
+      r.date_intervention || '',
+      (r.description || '').replace(/[\r\n]+/g,' / ')
+    ].map(v => `"${String(v).replace(/"/g,'""')}"`).join(','));
+    const csv = [headers.join(','), ...rows].join('\n');
+    const blob = new Blob([new Uint8Array([0xEF,0xBB,0xBF]), csv], { type: 'text/csv;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'chantiers-help-confort-' + new Date().toISOString().slice(0,10) + '.csv';
+    a.click();
+    toast(items.length + ' chantier' + (items.length>1?'s':'') + ' exporté' + (items.length>1?'s':''), 'ok');
+  });
   document.getElementById('btnCancel').addEventListener('click', closeEdit);
   document.getElementById('modalClose').addEventListener('click', closeEdit);
   document.getElementById('btnSave').addEventListener('click', saveReal);
