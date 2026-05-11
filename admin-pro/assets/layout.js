@@ -21,7 +21,7 @@ window.HCLayout = (function() {
         { id:'social', href:'social.html', label:'Connexions réseaux', icon:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>' }
       ]},
       { section: 'IA & Outils', links: [
-        { id:'magic', href:'magic.html', label:'Studio IA (photos → post)', icon:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' },
+        { id:'magic', href:'magic.html', label:'Studio IA (photos &rarr; post)', icon:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' },
         { id:'templates', href:'templates.html', label:'Modèles de posts', icon:'<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/>' },
         { id:'ai', href:'ai.html', label:'Chat IA', icon:'<path d="M12 8V4H8"/><rect x="2" y="2" width="20" height="8" rx="2"/><path d="M2 12h20"/><path d="M2 16h20"/><path d="M2 20h20"/>' },
         { id:'analytics', href:'analytics.html', label:'SEO & Analytics', icon:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>' }
@@ -765,13 +765,41 @@ window.HCLayout = (function() {
     foot.appendChild(btn);
   }
 
+  function fallbackSidebar(activePage) {
+    return '<div class="admin-sidebar-brand"><div class="admin-brand-logo">H!</div><div class="admin-brand-text"><strong>HELP! Confort</strong><span>Back-Office Pro</span></div></div>' +
+      '<nav class="admin-sidebar-nav" style="padding:10px"><div style="color:#fff;font-size:.8rem;padding:10px;background:rgba(217,45,32,.20);border-radius:8px;margin-bottom:10px">⚠ Sidebar fallback (erreur chargement)</div>' +
+      '<a href="index.html" class="admin-nav-item">Dashboard</a>' +
+      '<a href="realisations.html" class="admin-nav-item">Réalisations</a>' +
+      '<a href="content-site.html" class="admin-nav-item">Contenu du site</a>' +
+      '<a href="publications.html" class="admin-nav-item">Publications</a>' +
+      '<a href="reviews.html" class="admin-nav-item">Avis clients</a>' +
+      '<a href="settings.html" class="admin-nav-item">Paramètres</a>' +
+      '</nav>';
+  }
+
   async function mount(activePage, pageTitle) {
-    // Injecter sidebar
+    // Injecter sidebar — try/catch pour ne JAMAIS laisser la sidebar vide
     const sb = document.querySelector('.admin-sidebar');
-    if (sb) sb.innerHTML = sidebarHTML(activePage);
+    if (sb) {
+      try {
+        const html = sidebarHTML(activePage);
+        if (!html || html.length < 100) throw new Error('Empty sidebar HTML');
+        sb.innerHTML = html;
+      } catch (e) {
+        console.error('[HCLayout] sidebarHTML failed:', e);
+        sb.innerHTML = fallbackSidebar(activePage);
+      }
+    }
     // Injecter topbar
     const tb = document.querySelector('.admin-topbar');
-    if (tb) tb.innerHTML = topbarHTML(pageTitle);
+    if (tb) {
+      try {
+        tb.innerHTML = topbarHTML(pageTitle);
+      } catch (e) {
+        console.error('[HCLayout] topbarHTML failed:', e);
+        tb.innerHTML = '<h2 class="admin-topbar-title">' + (pageTitle || 'Back-Office') + '</h2>';
+      }
+    }
     // Live count Réalisations + Leads non traités
     if (window.HCSupabase) {
       try {
@@ -818,7 +846,16 @@ window.HCLayout = (function() {
   // Utile pour les pages avec topbar custom (index.html, realisations.html, settings.html)
   async function mountSidebar(activePage) {
     const sb = document.querySelector('.admin-sidebar');
-    if (sb) sb.innerHTML = sidebarHTML(activePage);
+    if (sb) {
+      try {
+        const html = sidebarHTML(activePage);
+        if (!html || html.length < 100) throw new Error('Empty sidebar HTML');
+        sb.innerHTML = html;
+      } catch (e) {
+        console.error('[HCLayout] sidebarHTML failed:', e);
+        sb.innerHTML = fallbackSidebar(activePage);
+      }
+    }
     // Live counts + notifs + palette + theme + FAB
     if (window.HCSupabase) {
       try {
