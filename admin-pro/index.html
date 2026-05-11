@@ -415,6 +415,30 @@
   const coverage = total ? Math.round(aiReady / total * 100) : 0;
   setKpi('ai-coverage', coverage + '%', aiReady + '/' + total, 'titre + description');
 
+  // ─── GA4 stats (si configuré) ───────────────────────────
+  try {
+    const { data: ga4Settings } = await c.from('app_settings').select('value').eq('key','ga4').single();
+    if (ga4Settings?.value?.property_id && ga4Settings?.value?.service_account_json) {
+      // Override le KPI couverture IA en "Visiteurs" si GA4 dispo
+      const { data: { session: sess } } = await c.auth.getSession();
+      const r = await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/ga4-stats', {
+        method:'POST',
+        headers:{ 'Authorization':'Bearer '+sess.access_token, 'content-type':'application/json' },
+        body: JSON.stringify({ period:'7d' })
+      });
+      const ga = await r.json();
+      if (ga.success && ga.kpi) {
+        const card = document.querySelector('[data-kpi="ai-coverage"]');
+        if (card) {
+          card.querySelector('.stat-card-label').textContent = 'Visiteurs site (7j)';
+          card.querySelector('[data-kpi-value]').textContent = ga.kpi.users.toLocaleString('fr-FR');
+          card.querySelector('[data-kpi-trend]').textContent = ga.kpi.sessions + ' sessions';
+          card.querySelector('[data-kpi-meta]').textContent = ga.kpi.page_views + ' vues · ' + Math.floor(ga.kpi.avg_duration_sec/60) + ':' + String(ga.kpi.avg_duration_sec%60).padStart(2,'0') + ' moy';
+        }
+      }
+    }
+  } catch (e) { /* GA4 non configuré ou erreur — KPI couverture IA reste affichée */ }
+
   // ─── Badge nav "Réalisations" ────────────────────────────
   const navBadge = document.getElementById('navRealCount');
   if (navBadge) navBadge.textContent = total;

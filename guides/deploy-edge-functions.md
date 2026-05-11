@@ -63,6 +63,10 @@ supabase functions deploy publish-meta --no-verify-jwt
 supabase functions deploy publish-linkedin --no-verify-jwt
 supabase functions deploy publish-gbp --no-verify-jwt
 supabase functions deploy sitemap --no-verify-jwt
+supabase functions deploy check-tokens --no-verify-jwt
+supabase functions deploy sync-reviews --no-verify-jwt
+supabase functions deploy reply-review --no-verify-jwt
+supabase functions deploy ga4-stats --no-verify-jwt
 ```
 
 Chaque commande met ~10-30 secondes. Tu dois voir "Deployed Function …" à la fin.

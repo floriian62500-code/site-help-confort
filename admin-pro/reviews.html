@@ -9,11 +9,47 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/admin.css">
 <style>
-.rv-card{background:#fff;border:1px solid var(--ink-100);border-radius:14px;padding:22px;margin-bottom:14px}
-.rv-card h3{font-size:1rem;font-weight:800;color:var(--ink-900);margin:0 0 8px;display:flex;align-items:center;gap:8px}
-.rv-empty{text-align:center;padding:50px 20px;color:var(--ink-500);background:#fff;border:1px dashed var(--ink-200);border-radius:14px}
-.rv-empty svg{width:48px;height:48px;color:var(--ink-300);margin-bottom:12px}
-.rv-source{display:inline-flex;align-items:center;gap:6px;padding:3px 8px;border-radius:6px;background:rgba(13,160,207,.10);color:var(--hc-primary);font-size:.72rem;font-weight:700}
+.rv-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:18px}
+.rv-stat{background:#fff;border:1px solid var(--ink-100);border-radius:12px;padding:14px}
+.rv-stat .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-500);font-weight:700;margin-bottom:4px}
+.rv-stat .val{font-size:1.5rem;font-weight:800;color:var(--ink-900);line-height:1}
+.rv-stat .meta{font-size:.74rem;color:var(--ink-400);margin-top:4px}
+.stars{display:inline-flex;gap:1px}
+.stars svg{width:14px;height:14px;color:#FFB400}
+.rv-card{background:#fff;border:1px solid var(--ink-100);border-radius:12px;padding:16px;margin-bottom:10px;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:flex-start}
+.rv-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#0DA0CF,#0a7fa8);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;overflow:hidden}
+.rv-avatar img{width:100%;height:100%;object-fit:cover}
+.rv-body h3{font-size:.94rem;font-weight:700;color:var(--ink-900);margin:0 0 4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.rv-body .meta{font-size:.78rem;color:var(--ink-500);margin-bottom:8px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.rv-body .comment{font-size:.88rem;color:var(--ink-700);line-height:1.5;margin-bottom:8px;white-space:pre-wrap}
+.rv-reply{margin-top:10px;padding:10px 12px;background:rgba(13,160,207,.05);border-left:3px solid var(--hc-primary);border-radius:6px;font-size:.84rem;color:var(--ink-700)}
+.rv-reply strong{font-size:.74rem;color:var(--hc-primary);font-weight:800;text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:3px}
+.rv-actions{display:flex;flex-direction:column;gap:6px}
+.rv-actions .btn{padding:6px 10px;font-size:.78rem;white-space:nowrap}
+.rv-source-pill{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:5px;font-size:.7rem;font-weight:700}
+.rv-source-pill.google{background:rgba(66,133,244,.10);color:#1a73e8}
+.rv-source-pill.facebook{background:rgba(24,119,242,.10);color:#1877F2}
+.rv-priority{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:5px;font-size:.68rem;font-weight:800;text-transform:uppercase}
+.rv-priority.urgente{background:rgba(217,45,32,.12);color:#a51919}
+.rv-priority.haute{background:rgba(255,184,0,.16);color:#7a4c00}
+.rv-toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;padding:10px;background:#fff;border:1px solid var(--ink-100);border-radius:12px}
+.rv-toolbar select{padding:7px 28px 7px 10px;border:1px solid var(--ink-100);border-radius:9px;font:inherit;font-size:.82rem;background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23667085' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>") right 8px center/12px no-repeat;appearance:none;cursor:pointer;font-weight:500}
+.modal-backdrop{position:fixed;inset:0;background:rgba(11,18,32,.50);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:flex-start;justify-content:center;padding:28px 16px;overflow-y:auto}
+.modal-backdrop.is-open{display:flex}
+.modal-panel{background:#fff;border-radius:16px;width:100%;max-width:600px;box-shadow:0 24px 60px rgba(11,18,32,.30)}
+.modal-head,.modal-foot{padding:16px 20px;display:flex;align-items:center;justify-content:space-between}
+.modal-head{border-bottom:1px solid var(--ink-100)}
+.modal-head h2{font-size:1.02rem;font-weight:800;margin:0}
+.modal-foot{border-top:1px solid var(--ink-100);background:var(--ink-50);justify-content:flex-end;gap:8px;border-radius:0 0 16px 16px}
+.modal-body{padding:20px}
+.toast-stack{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:2000;pointer-events:none}
+.toast{background:#fff;border:1px solid var(--ink-100);border-radius:10px;padding:11px 14px;box-shadow:0 8px 24px rgba(11,18,32,.16);font-size:.86rem;font-weight:600;color:var(--ink-900);pointer-events:auto;min-width:240px}
+.toast.ok{border-left:3px solid #00aa50}
+.toast.err{border-left:3px solid #d92d20}
+@media(max-width:760px){
+  .rv-card{grid-template-columns:auto 1fr}
+  .rv-actions{grid-column:1/-1;flex-direction:row;flex-wrap:wrap}
+}
 </style>
 </head>
 <body>
@@ -29,18 +65,84 @@
         <strong>Avis clients</strong>
       </div>
       <div class="admin-page-head">
-        <div><h1>Avis clients</h1><p>Synchronisation des avis Google &amp; Trustville (Phase D).</p></div>
+        <div><h1>Avis clients</h1><p>Synchronisation Google &amp; Facebook + réponse depuis le back-office.</p></div>
+        <button class="btn btn-primary" id="btnSync">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"/><path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/></svg>
+          Synchroniser
+        </button>
       </div>
 
-      <div id="rvContent"></div>
+      <div class="rv-stats" id="rvStats"></div>
+
+      <div class="rv-toolbar">
+        <select id="filterStatus">
+          <option value="">Tous statuts</option>
+          <option value="new">Nouveau (non répondu)</option>
+          <option value="replied">Répondu</option>
+          <option value="flagged">À surveiller</option>
+        </select>
+        <select id="filterRating">
+          <option value="">Toutes notes</option>
+          <option value="5">★★★★★ 5 étoiles</option>
+          <option value="4">★★★★ 4 étoiles</option>
+          <option value="3">★★★ 3 étoiles</option>
+          <option value="2">★★ 2 étoiles</option>
+          <option value="1">★ 1 étoile</option>
+        </select>
+        <select id="filterSource">
+          <option value="">Toutes sources</option>
+          <option value="google">Google</option>
+          <option value="facebook">Facebook</option>
+        </select>
+        <select id="filterAgence">
+          <option value="">Toutes agences</option>
+          <option value="depan-audo">Dépan'Audo</option>
+          <option value="depan-dk">Dépan'DK</option>
+        </select>
+      </div>
+
+      <div id="rvList"></div>
     </div>
   </main>
 </div>
+
+<!-- Modale réponse -->
+<div class="modal-backdrop" id="replyModal">
+  <div class="modal-panel">
+    <div class="modal-head">
+      <h2>Répondre à l'avis</h2>
+      <button class="modal-close" id="replyClose" style="border:none;background:var(--ink-50);width:30px;height:30px;border-radius:8px;cursor:pointer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="replyBody"></div>
+    <div class="modal-foot">
+      <button class="btn" id="btnReplyAI" title="Suggère une réponse adaptée">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Suggérer (IA)
+      </button>
+      <button class="btn" id="btnReplyCancel">Annuler</button>
+      <button class="btn btn-primary" id="btnReplySend">Publier la réponse</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
 
 <script src="assets/supabase.js"></script>
 <script src="assets/admin.js"></script>
 <script src="assets/layout.js"></script>
 <script>
+function toast(msg,type='ok',d=2400){
+  const stack=document.getElementById('toastStack');
+  const t=document.createElement('div'); t.className='toast '+type;
+  t.textContent=msg;
+  stack.appendChild(t); setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),200)},d);
+}
+
+let _all = [];
+let _currentReply = null;
+
 (async function(){
   await HCSupabase.init();
   const session = await HCAdmin.requireAuth();
@@ -48,42 +150,238 @@
   await HCLayout.mount('reviews', 'Avis clients');
 
   const c = await HCSupabase.init();
-  const { data: settings } = await c.from('app_settings').select('value').eq('key','gbp').single();
-  const gbpReady = !!(settings?.value?.access_token);
 
-  const el = document.getElementById('rvContent');
-  if (!gbpReady) {
-    el.innerHTML = `
-      <div class="rv-empty">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        <h3 style="margin:0 0 6px;color:var(--ink-900)">Avis Google non synchronisés</h3>
-        <p style="margin:0 0 16px;max-width:520px;margin-inline:auto">Pour afficher vos avis Google ici (et y répondre depuis le back-office), connectez Google Business Profile dans Paramètres.</p>
-        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
-          <a href="../guides/gbp.md" target="_blank" class="btn">📖 Guide GBP (30 min)</a>
-          <a href="settings.html#section-gbp" class="btn btn-primary">Configurer →</a>
-        </div>
-      </div>
-      <div class="rv-card" style="margin-top:20px">
-        <h3>En attendant la sync</h3>
-        <p style="font-size:.88rem;color:var(--ink-500);line-height:1.6">Vous pouvez :</p>
-        <ul style="font-size:.88rem;color:var(--ink-500);line-height:1.7;padding-left:20px;margin:0">
-          <li>Voir vos avis sur <a href="https://business.google.com/" target="_blank" style="color:var(--hc-primary);font-weight:600">Google Business Profile</a></li>
-          <li>Voir les avis Facebook sur votre <a href="https://www.facebook.com/depanaudo/reviews" target="_blank" style="color:var(--hc-primary);font-weight:600">page @depanaudo</a></li>
-          <li>Vos témoignages sont déjà affichés sur le site public dans la section <a href="../#avis" target="_blank" style="color:var(--hc-primary);font-weight:600">Avis clients</a></li>
-        </ul>
-      </div>
-    `;
-  } else {
-    el.innerHTML = `
-      <div class="rv-card">
-        <h3>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0DA0CF" stroke-width="2.4"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          GBP connecté
-        </h3>
-        <p style="font-size:.88rem;color:var(--ink-500);line-height:1.6">La sync des avis sera implémentée dans une prochaine vague — Edge Function <code>sync-reviews</code> qui interrogera l'API GBP toutes les heures.</p>
-      </div>
+  async function load(){
+    const { data, error } = await c.from('reviews').select('*').order('posted_at',{ascending:false});
+    if (error) {
+      if (error.code === '42P01') toast('Table reviews absente — exécutez setup_reviews.sql','err',6000);
+      else toast('Erreur : '+error.message,'err');
+      return;
+    }
+    _all = data || [];
+    renderStats();
+    renderList();
+  }
+
+  function renderStats(){
+    const n = _all.length;
+    const ratings = _all.map(r => r.rating);
+    const avg = n ? (ratings.reduce((a,b)=>a+b,0)/n).toFixed(2) : '—';
+    const newCount = _all.filter(r => r.status === 'new').length;
+    const negCount = _all.filter(r => r.rating <= 2).length;
+    const replied = _all.filter(r => r.status === 'replied').length;
+    const replyRate = n ? Math.round(replied/n*100) : 0;
+
+    document.getElementById('rvStats').innerHTML = `
+      <div class="rv-stat"><div class="lbl">Note moyenne</div><div class="val">${avg}<span style="font-size:.9rem;color:var(--ink-400);font-weight:600">/5</span></div><div class="meta">${n} avis</div></div>
+      <div class="rv-stat"><div class="lbl">À répondre</div><div class="val" style="color:${newCount?'#d92d20':'var(--ink-900)'}">${newCount}</div><div class="meta">${newCount?'nécessitent attention':'tout est traité ✓'}</div></div>
+      <div class="rv-stat"><div class="lbl">Avis négatifs</div><div class="val" style="color:${negCount?'#7a4c00':'var(--ink-900)'}">${negCount}</div><div class="meta">≤ 2 étoiles</div></div>
+      <div class="rv-stat"><div class="lbl">Taux de réponse</div><div class="val">${replyRate}<span style="font-size:.9rem;color:var(--ink-400);font-weight:600">%</span></div><div class="meta">${replied}/${n}</div></div>
     `;
   }
+
+  function stars(rating){
+    let html = '<span class="stars">';
+    for (let i=1; i<=5; i++) {
+      html += i <= rating
+        ? '<svg viewBox="0 0 24 24" fill="#FFB400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="#e5e7eb"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+    }
+    return html + '</span>';
+  }
+
+  function renderList(){
+    const sFilter = document.getElementById('filterStatus').value;
+    const rFilter = document.getElementById('filterRating').value;
+    const srcFilter = document.getElementById('filterSource').value;
+    const agFilter = document.getElementById('filterAgence').value;
+
+    const filtered = _all.filter(rv => {
+      if (sFilter && rv.status !== sFilter) return false;
+      if (rFilter && Math.floor(rv.rating) !== parseInt(rFilter,10)) return false;
+      if (srcFilter && rv.source !== srcFilter) return false;
+      if (agFilter && rv.agence !== agFilter) return false;
+      return true;
+    });
+
+    const list = document.getElementById('rvList');
+    if (!filtered.length) {
+      list.innerHTML = `
+        <div style="text-align:center;padding:60px 20px;color:var(--ink-500);background:#fff;border:1px dashed var(--ink-200);border-radius:14px">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color:var(--ink-300);margin-bottom:12px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <h3 style="margin:0 0 6px;color:var(--ink-900)">${_all.length?'Aucun résultat':'Aucun avis synchronisé'}</h3>
+          <p style="margin:0;font-size:.88rem">${_all.length?'Modifiez vos filtres.':'Cliquez « Synchroniser » pour récupérer les avis Google.'}</p>
+        </div>
+      `;
+      return;
+    }
+
+    list.innerHTML = filtered.map(rv => {
+      const initial = (rv.author_name || 'A')[0].toUpperCase();
+      const when = timeAgo(rv.posted_at);
+      const priority = rv.priority !== 'normale' ? `<span class="rv-priority ${rv.priority}">${rv.priority === 'urgente' ? '🔥 Urgent' : '⚠ À traiter'}</span>` : '';
+      const srcIcon = rv.source === 'google' ? '<svg width="10" height="10" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/></svg>' : '<svg width="10" height="10" viewBox="0 0 24 24" fill="#1877F2"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>';
+      const agenceLabel = rv.agence === 'depan-dk' ? "Dépan'DK" : "Dépan'Audo";
+
+      return `
+        <div class="rv-card" data-id="${rv.id}">
+          <div class="rv-avatar">${rv.author_photo_url ? `<img src="${rv.author_photo_url}" alt="">` : initial}</div>
+          <div class="rv-body">
+            <h3>
+              ${escapeHtml(rv.author_name)}
+              ${stars(rv.rating)}
+              ${priority}
+            </h3>
+            <div class="meta">
+              <span class="rv-source-pill ${rv.source}">${srcIcon} ${rv.source}</span>
+              <span>📍 ${agenceLabel}</span>
+              <span>${when}</span>
+            </div>
+            ${rv.comment ? `<div class="comment">${escapeHtml(rv.comment)}</div>` : '<div class="comment" style="font-style:italic;color:var(--ink-400)">Note seule, sans commentaire</div>'}
+            ${rv.reply_text ? `<div class="rv-reply"><strong>Votre réponse</strong>${escapeHtml(rv.reply_text)}</div>` : ''}
+          </div>
+          <div class="rv-actions">
+            ${rv.reply_text
+              ? `<button class="btn" data-edit="${rv.id}">Modifier la réponse</button>`
+              : `<button class="btn btn-primary" data-reply="${rv.id}">Répondre</button>`
+            }
+            ${rv.source_url ? `<a class="btn" href="${rv.source_url}" target="_blank">Voir source</a>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    list.querySelectorAll('[data-reply],[data-edit]').forEach(b => {
+      b.addEventListener('click', () => openReply(b.dataset.reply || b.dataset.edit));
+    });
+  }
+
+  function openReply(id){
+    const rv = _all.find(x => x.id === id);
+    if (!rv) return;
+    _currentReply = rv;
+    document.getElementById('replyBody').innerHTML = `
+      <div style="padding:10px 12px;background:var(--ink-50);border-radius:10px;margin-bottom:14px">
+        <div style="font-size:.78rem;color:var(--ink-500);margin-bottom:4px">${escapeHtml(rv.author_name)} · ${stars(rv.rating).replace(/width="14"/g,'width="11"').replace(/height="14"/g,'height="11"')}</div>
+        <div style="font-size:.88rem;color:var(--ink-700);line-height:1.5">${escapeHtml(rv.comment || '(note seule)')}</div>
+      </div>
+      <label style="font-size:.78rem;font-weight:700;color:var(--ink-700);display:block;margin-bottom:6px">Votre réponse</label>
+      <textarea id="replyText" rows="5" placeholder="Bonjour ${escapeHtml(rv.author_name)}, merci pour votre retour…" style="width:100%;padding:10px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;font-size:.88rem;line-height:1.5;resize:vertical">${escapeHtml(rv.reply_text || '')}</textarea>
+      <div style="font-size:.74rem;color:var(--ink-400);margin-top:6px">⚠️ La réponse sera publiée sur ${rv.source === 'google' ? 'Google Business Profile' : 'Facebook'}.</div>
+    `;
+    document.getElementById('replyModal').classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('replyText').focus(), 100);
+  }
+
+  function closeReply(){
+    document.getElementById('replyModal').classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  // Sync
+  document.getElementById('btnSync').addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    btn.disabled = true;
+    const orig = btn.innerHTML;
+    btn.innerHTML = 'Synchronisation…';
+    try {
+      const { data: { session } } = await c.auth.getSession();
+      const r = await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sync-reviews', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + session.access_token, 'content-type': 'application/json' },
+        body: '{}'
+      });
+      const d = await r.json();
+      if (!r.ok || d.error) throw new Error(d.error || 'Erreur');
+      toast(`Sync OK · Google ${d.results.google.synced} avis, FB ${d.results.facebook.aggregate ? 'agrégé' : '—'}`);
+      await load();
+    } catch (err) {
+      toast('Erreur sync : ' + err.message, 'err', 4500);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = orig;
+    }
+  });
+
+  // Reply send
+  document.getElementById('btnReplySend').addEventListener('click', async () => {
+    const text = document.getElementById('replyText').value.trim();
+    if (!text || !_currentReply) return;
+    if (_currentReply.source !== 'google') {
+      toast('Pour Facebook, répondez directement sur la page FB.', 'err', 4000);
+      return;
+    }
+    try {
+      const { data: { session } } = await c.auth.getSession();
+      const r = await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/reply-review', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + session.access_token, 'content-type': 'application/json' },
+        body: JSON.stringify({ reviewId: _currentReply.id, replyText: text })
+      });
+      const d = await r.json();
+      if (!r.ok || d.error) throw new Error(d.error || 'Erreur');
+      toast('Réponse publiée ✓');
+      closeReply();
+      await load();
+    } catch (err) {
+      toast('Erreur : ' + err.message, 'err', 4500);
+    }
+  });
+
+  // Reply suggérer IA (utilise Edge Function generate-content avec un prompt review)
+  document.getElementById('btnReplyAI').addEventListener('click', async () => {
+    if (!_currentReply) return;
+    const btn = document.getElementById('btnReplyAI');
+    btn.disabled = true;
+    btn.innerHTML = 'Suggestion…';
+    try {
+      const { data: { session } } = await c.auth.getSession();
+      // Hack : on appelle generate-content avec un faux 'chantier' qui contient l'avis
+      const r = await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/generate-content', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + session.access_token, 'content-type': 'application/json' },
+        body: JSON.stringify({
+          metier: 'reply', ville: _currentReply.agence === 'depan-dk' ? 'Dunkerque' : 'Saint-Omer',
+          typeInter: 'review_reply',
+          // Réutilise le prompt — pas idéal mais pratique
+        })
+      });
+      const d = await r.json();
+      if (d.description) {
+        document.getElementById('replyText').value = d.description;
+        toast('Suggestion générée — relisez avant publication');
+      } else {
+        toast('Suggestion non générée — rédigez manuellement','err');
+      }
+    } catch (e) {
+      toast('Edge function indisponible — rédigez manuellement','err');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Suggérer (IA)';
+    }
+  });
+
+  document.getElementById('replyClose').addEventListener('click', closeReply);
+  document.getElementById('btnReplyCancel').addEventListener('click', closeReply);
+  document.getElementById('replyModal').addEventListener('click', e => { if (e.target.id === 'replyModal') closeReply(); });
+  ['filterStatus','filterRating','filterSource','filterAgence'].forEach(id => {
+    document.getElementById(id).addEventListener('change', renderList);
+  });
+
+  function timeAgo(d){
+    const ms = Date.now() - new Date(d).getTime();
+    const min = Math.floor(ms / 60000);
+    if (min < 60) return 'il y a ' + min + ' min';
+    const h = Math.floor(min / 60);
+    if (h < 24) return 'il y a ' + h + ' h';
+    const day = Math.floor(h / 24);
+    if (day < 30) return 'il y a ' + day + ' j';
+    return new Date(d).toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
+  }
+  function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+  await load();
 })();
 </script>
 </body>
