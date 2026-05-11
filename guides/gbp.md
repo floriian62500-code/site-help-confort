@@ -1,138 +1,226 @@
 # Guide d'intégration — Google Business Profile
 
-**Durée estimée : 30-45 minutes** (le plus long des 5)
-**Coût : gratuit**
+**Durée estimée : 25-30 minutes** · **Coût : gratuit**
 
-## Pourquoi
+## Ce que tu vas obtenir
 
-Permet :
-- De publier des **"Posts Google"** (actualités) directement sur tes fiches Google Business Saint-Omer + Dunkerque
-- De **synchroniser les avis Google** en temps réel dans le dashboard
-- De répondre aux avis depuis le back-office
+Après cette config, ton back-office pourra :
+- ✅ **Synchroniser tes avis Google** (Saint-Omer + Dunkerque) en temps réel dans la page Avis clients
+- ✅ **Répondre aux avis Google** directement depuis le back-office (en 1 clic)
+- ✅ **Publier des Posts Google** (actualités GBP) sur tes fiches depuis le back-office
+
+Tu auras 5 valeurs à coller dans **Paramètres → Google Business Profile** :
+1. `access_token` (OAuth Google)
+2. `refresh_token` (pour régénérer le token automatiquement)
+3. `account_id_audo` (l'ID de ton compte Dépan'Audo)
+4. `location_id_st_omer` (l'ID de la fiche Saint-Omer)
+5. `location_id_dk` (l'ID de la fiche Dunkerque)
 
 ## Pré-requis
 
-- Compte Google admin de la fiche Google Business Profile (Saint-Omer ET Dunkerque)
-- Accès à Google Cloud Console (gratuit)
+- Compte Google **admin** des fiches Help Confort Saint-Omer ET Dunkerque
+- Navigateur (Chrome ou Safari)
+- ~30 min sans interruption
 
-## Étapes
+---
 
-### 1. Créer un projet Google Cloud
+# Étape 1 — Créer un projet Google Cloud (5 min)
 
-Aller sur **https://console.cloud.google.com/**
+Google exige qu'on passe par leur "Cloud Console" pour activer leurs APIs (même les gratuites).
 
-- En haut, cliquer le sélecteur de projet → **"New Project"**
-- Nom : `Help Confort Back-Office`
-- Organisation : laisser par défaut
-- Créer
+1. Ouvre **https://console.cloud.google.com/**
 
-Bien sélectionner ce projet ensuite dans le sélecteur en haut.
+2. Connecte-toi avec **le compte Google qui gère tes fiches Business Profile**
 
-### 2. Activer les APIs
+3. En haut de la page, clique sur le sélecteur de projet (à côté de "Google Cloud") → **"Nouveau projet"**
 
-Menu de gauche → **APIs & Services** → **Library**
+4. Remplis :
+   - **Nom du projet** : `Help Confort Back-Office`
+   - **Organisation** : laisse "Aucune organisation"
+   - Clique **"Créer"**
 
-Rechercher et activer **les 4 APIs suivantes** (une par une) :
+5. Patiente ~30 secondes que le projet soit créé. Vérifie en haut que le projet sélectionné est bien `Help Confort Back-Office`.
 
-1. **Google My Business Account Management API**
-2. **Google My Business Business Information API**
-3. **My Business Posts API**
-4. **My Business Q&A API**
+---
 
-⚠️ Note : Google a fragmenté l'ancienne API GMB en plusieurs sous-APIs. Tu dois toutes les activer.
+# Étape 2 — Activer les APIs Google (3 min)
 
-### 3. Demander l'accès à l'API GBP
+1. Dans le menu de gauche (☰), va dans **"APIs et services"** → **"Bibliothèque"**
 
-L'API GBP nécessite une **demande d'accès manuelle** auprès de Google :
+2. Une par une, **active ces 2 APIs** (cherche dans la barre puis clique **Activer**) :
+   - **My Business Account Management API**
+   - **My Business Business Information API**
 
-- Aller sur **https://developers.google.com/my-business/content/prereqs**
-- Cliquer **"Request access"** → remplir le formulaire :
-  - Project Number : visible dans Cloud Console → IAM → "Project number"
-  - Use case : "We use this API to publish updates and read reviews for our verified Google Business Profile locations"
-- Soumettre
+⚠️ Si tu vois une 3e API "Google My Business API" — **NE l'active PAS**, elle est obsolète (deprecated par Google fin 2024).
 
-Délai d'approbation : **1 à 3 jours ouvrés**. Google t'enverra un email.
+3. Reviens dans **"APIs et services"** → **"APIs et services activés"** → vérifie que les 2 sont bien en vert "Activé".
 
-⚠️ Sans cette validation, tu ne peux pas appeler l'API. Lance cette étape **en premier**.
+---
 
-### 4. Créer des credentials OAuth 2.0
+# Étape 3 — Demander l'accès aux APIs Business Profile (15 min, async)
 
-En attendant la validation, prépare les credentials :
+⚠️ **Étape importante et bloquante** : Google exige qu'on demande une **autorisation manuelle** pour accéder à leurs APIs Business Profile (pour éviter les abus).
 
-Menu Cloud Console → **APIs & Services** → **Credentials**
+1. Va sur **https://support.google.com/business/contact/api_default**
 
-- Cliquer **"Create credentials"** → **"OAuth client ID"**
-- Si demandé : configurer l'écran de consentement (User type : External, app name : Help Confort, support email)
-- Type d'application : **Web application**
-- Name : `Help Confort Back-Office`
-- Authorized redirect URIs : `https://remarkable-dragon-364e2b.netlify.app/admin-pro/settings.html`
-- Créer
+2. Remplis le formulaire :
+   - **Nom de l'organisation** : `HELP! Confort Saint-Omer`
+   - **Adresse e-mail** : l'email Google qui gère tes fiches
+   - **Nom du contact** : Florian Dhaillecourt
+   - **Numéro du projet Google Cloud** : récupère-le dans console.cloud.google.com → menu principal → "Tableau de bord" → "Numéro du projet" (12 chiffres)
+   - **Description du cas d'usage** : copie-colle ceci :
+     > Synchronisation des avis Google Business Profile de nos 2 fiches (Help Confort Saint-Omer et Help Confort Dunkerque) dans notre back-office interne, pour permettre à notre équipe de répondre aux avis depuis un point central. Volume estimé : ~500 avis/an et ~50 réponses/mois.
 
-Copie le **Client ID** et **Client Secret**.
+3. Soumets le formulaire.
 
-### 5. Effectuer le flow OAuth (après validation Google)
+⏱️ **Délai d'approbation Google** : généralement **1 à 3 jours ouvrés**. Tu recevras un mail de confirmation. **Sans cette approbation, l'API renvoie des erreurs 403**.
 
-Une fois que Google a approuvé ta demande (étape 3) :
+---
 
-```
-https://accounts.google.com/o/oauth2/v2/auth?
-  client_id={CLIENT_ID}
-  &redirect_uri=https://remarkable-dragon-364e2b.netlify.app/admin-pro/settings.html
-  &response_type=code
-  &scope=https://www.googleapis.com/auth/business.manage
-  &access_type=offline
-  &prompt=consent
-```
+# Étape 4 — Configurer l'écran de consentement OAuth (3 min)
 
-- Coller dans navigateur → autoriser
-- Récupérer le `code` dans l'URL de retour
-- Échanger le code contre les tokens :
+Pendant que Google traite ta demande, on continue.
 
-```bash
-curl -X POST https://oauth2.googleapis.com/token \
-  -d "code={CODE}" \
-  -d "client_id={CLIENT_ID}" \
-  -d "client_secret={CLIENT_SECRET}" \
-  -d "redirect_uri=https://remarkable-dragon-364e2b.netlify.app/admin-pro/settings.html" \
-  -d "grant_type=authorization_code"
-```
+1. Dans Google Cloud Console → **"APIs et services"** → **"Écran de consentement OAuth"**
 
-Tu obtiens :
-- `access_token` (valide 1h)
-- `refresh_token` (permanent, sert à régénérer l'access_token)
+2. Choisis **"Externe"** → clique "Créer"
 
-### 6. Récupérer Account ID et Location IDs
+3. Remplis les infos de base :
+   - **Nom de l'application** : `Help Confort Back-Office`
+   - **E-mail d'assistance utilisateur** : ton email
+   - **Logo de l'application** : optionnel
+   - **Domaines autorisés** : `helpconfort.com` (et ton URL Netlify si différente)
+   - **Adresse e-mail du développeur** : ton email
+   - Clique **"Enregistrer et continuer"**
 
-```bash
-# Liste de tes comptes
-curl https://mybusinessaccountmanagement.googleapis.com/v1/accounts \
-  -H "Authorization: Bearer {ACCESS_TOKEN}"
-```
+4. **Champs d'application (Scopes)** : clique "Ajouter ou retirer des champs d'application" → cherche et coche :
+   - `https://www.googleapis.com/auth/business.manage`
+   - Clique "Update" puis "Enregistrer et continuer"
 
-Repère le `name` (format : `accounts/12345...`) → c'est ton **Account ID**.
+5. **Utilisateurs test** : ajoute **ton email Google** (celui qui gère les fiches) → Enregistrer
 
-```bash
-# Liste tes locations (fiches GBP)
-curl https://mybusinessbusinessinformation.googleapis.com/v1/{ACCOUNT_NAME}/locations \
-  -H "Authorization: Bearer {ACCESS_TOKEN}"
-```
+6. **Résumé** → "Retour au tableau de bord"
 
-Tu obtiens 2 locations (Saint-Omer + Dunkerque). Note les 2 IDs (format : `locations/9876...`).
+---
 
-### 7. Coller dans le back-office
+# Étape 5 — Créer des identifiants OAuth (3 min)
 
-- Back-office → **Paramètres** → **Google Business Profile**
-- Access Token, Refresh Token, Account ID
-- Location ID Saint-Omer
-- Location ID Dunkerque
-- Enregistrer
+1. **"APIs et services"** → **"Identifiants"** → **"+ Créer des identifiants"** → **"ID client OAuth"**
 
-### 8. Vérifier
+2. **Type d'application** : "Application Web"
 
-Voyant vert. Le dashboard commencera à afficher les vrais avis Google (intégration Vague D).
+3. **Nom** : `Help Confort Back-Office`
 
-## Note importante
+4. **URIs de redirection autorisées** : ajoute exactement :
+   ```
+   https://developers.google.com/oauthplayground
+   ```
+   (On utilise le Playground Google pour générer le premier token, c'est officiel et sécurisé.)
 
-Le refresh_token permet de régénérer l'access_token automatiquement à chaque expiration (sans réintervention). Le back-office gère ça côté Edge Function.
+5. Clique **"Créer"**
 
-Si tu révoques l'app dans https://myaccount.google.com/permissions, il faudra refaire le flow OAuth.
+6. Une popup affiche **Client ID** + **Client Secret** — **copie-les et garde-les précieusement** (mets-les dans un texte temporaire à part).
+
+---
+
+# Étape 6 — Générer le Refresh Token via OAuth Playground (5 min)
+
+1. Ouvre **https://developers.google.com/oauthplayground**
+
+2. En haut à droite, clique sur l'icône **⚙️ paramètres**
+
+3. Coche **"Use your own OAuth credentials"** → colle ton **Client ID** et **Client Secret** de l'étape 5 → ferme la modale
+
+4. **Step 1** dans la colonne de gauche : dans le champ texte, tape :
+   ```
+   https://www.googleapis.com/auth/business.manage
+   ```
+   → Clique **"Authorize APIs"** (bouton bleu)
+
+5. Une page Google s'ouvre. **Connecte-toi avec le compte qui gère tes fiches**. Tu verras un avertissement "Cette application n'est pas validée par Google" — c'est normal en mode développement. Clique **"Paramètres avancés"** → **"Accéder à Help Confort Back-Office (non sécurisé)"** → **"Continuer"**.
+
+6. Tu reviens dans OAuth Playground. **Step 2** : clique **"Exchange authorization code for tokens"**.
+
+7. Tu verras apparaître **Access token** (court, ~1h) ET **Refresh token** (longue durée).
+
+8. **Garde précieusement** :
+   - `access_token` (mais expire dans 1h, sera régénéré auto par l'Edge Function)
+   - `refresh_token` (LE VRAI TRÉSOR — durée illimitée si pas révoqué)
+
+---
+
+# Étape 7 — Récupérer les Account ID et Location IDs (5 min)
+
+Maintenant qu'on a un access_token, on peut demander à Google la liste de tes fiches.
+
+1. Toujours dans OAuth Playground, **Step 3** : dans le champ "Request URI", tape :
+   ```
+   https://mybusinessaccountmanagement.googleapis.com/v1/accounts
+   ```
+   → Clique **"Send the request"**
+
+2. La réponse JSON affiche tes comptes business. Cherche celui qui s'appelle **"Dépan'Audo"** (ou similaire). Note la valeur de **`name`** — ce sera quelque chose comme `accounts/123456789012345`.
+
+   → **Copie cette valeur complète** (avec le préfixe `accounts/`) — c'est ton **`account_id_audo`**
+
+3. Maintenant on récupère les locations. Tape :
+   ```
+   https://mybusinessbusinessinformation.googleapis.com/v1/accounts/123456789012345/locations?readMask=name,title,storefrontAddress
+   ```
+   ⚠️ Remplace `123456789012345` par TON numéro de compte (sans le préfixe `accounts/` cette fois).
+
+4. La réponse liste tes 2 fiches : Saint-Omer + Dunkerque. Note les **`name`** de chacune :
+   - Pour **Saint-Omer** : `locations/1234567890123456789` → **`location_id_st_omer`**
+   - Pour **Dunkerque** : `locations/9876543210987654321` → **`location_id_dk`**
+
+---
+
+# Étape 8 — Coller le tout dans le back-office (1 min)
+
+1. Va dans ton back-office → **Paramètres** → **Google Business Profile**
+
+2. Colle :
+   - **Access Token (OAuth Google)** : `ya29.xxxx...`
+   - **Refresh Token** : `1//xxxx...`
+   - **Account ID (Dépan'Audo)** : `accounts/123456789012345`
+   - **Location ID Saint-Omer** : `locations/1234567890123456789`
+   - **Location ID Dunkerque** : `locations/9876543210987654321`
+
+3. Clique **Enregistrer**
+
+4. Va dans **Avis clients** → clique **Synchroniser** → tes avis Google des 2 fiches devraient apparaître.
+
+---
+
+# Étape 9 — Activer le refresh automatique du token (optionnel)
+
+L'Access Token Google expire au bout d'1h. L'Edge Function `sync-reviews` et `reply-review` sont déjà codées pour :
+- Détecter si le token est expiré
+- Utiliser le `refresh_token` pour en générer un nouveau automatiquement
+- Sauvegarder le nouveau token dans `app_settings.gbp.access_token`
+
+Donc une fois le `refresh_token` collé, **tu n'auras plus jamais à te reconnecter**. Ça tourne en autonomie.
+
+---
+
+# Problèmes courants
+
+## "Erreur 403 — API not enabled / Not authorized"
+→ L'étape 3 (autorisation Google) n'est pas encore validée. Patiente quelques jours, retry. Tu recevras un mail de Google.
+
+## "Invalid_grant" en utilisant le refresh_token
+→ Le refresh_token a été révoqué. Refais l'étape 6 (OAuth Playground) pour en obtenir un nouveau.
+
+## Les avis Google ne remontent pas mais pas d'erreur
+→ Vérifie que la fiche Google Business est bien vérifiée (le badge "Vérifié" sur Google Maps). Sinon Google bloque l'accès API même avec autorisation.
+
+## Token expire toutes les heures et c'est lourd
+→ Le refresh est automatique côté Edge Function. Si ça ne marche pas, vérifie que `refresh_token` est bien stocké en BDD (`SELECT value FROM app_settings WHERE key='gbp'`).
+
+---
+
+# Notes de sécurité
+
+- Le `refresh_token` est l'équivalent d'un mot de passe — ne le partage jamais publiquement
+- Il est stocké en BDD Supabase avec RLS authentifiée → seuls tes utilisateurs auth peuvent y accéder
+- Si compromis, va dans **https://myaccount.google.com/permissions** → révoque "Help Confort Back-Office" → recommence l'étape 6

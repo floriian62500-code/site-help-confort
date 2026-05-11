@@ -67,6 +67,10 @@
       <div class="admin-page-head">
         <div><h1>Avis clients</h1><p>Synchronisation Google &amp; Facebook + réponse depuis le back-office.</p></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn" id="btnAddManual" title="Ajouter un avis manuel (Trustville, papier, etc.)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Ajouter manuel
+          </button>
           <button class="btn" id="btnExport" title="Exporter en CSV">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Exporter CSV
@@ -129,6 +133,71 @@
       </button>
       <button class="btn" id="btnReplyCancel">Annuler</button>
       <button class="btn btn-primary" id="btnReplySend">Publier la réponse</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modale ajout manuel -->
+<div class="modal-backdrop" id="manualModal">
+  <div class="modal-panel" style="max-width:540px">
+    <div class="modal-head">
+      <h2>Ajouter un avis manuel</h2>
+      <button class="modal-close" id="manualClose" style="border:none;background:var(--ink-50);width:30px;height:30px;border-radius:8px;cursor:pointer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:.84rem;color:var(--ink-500);margin:0 0 14px;line-height:1.5">Utile pour les avis Trustville, papier, oraux, ou autres plateformes sans API. L'avis sera stocké en base avec source <strong>"manuel"</strong>.</p>
+      <div style="display:grid;gap:12px">
+        <div>
+          <label style="font-size:.78rem;font-weight:700;color:var(--ink-700);display:block;margin-bottom:5px">Nom de l'auteur *</label>
+          <input id="m_author" type="text" placeholder="Jean Dupont" style="width:100%;padding:10px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div>
+            <label style="font-size:.78rem;font-weight:700;color:var(--ink-700);display:block;margin-bottom:5px">Note (étoiles) *</label>
+            <select id="m_rating" style="width:100%;padding:10px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;background:#fff">
+              <option value="5">★★★★★ 5 étoiles</option>
+              <option value="4">★★★★ 4 étoiles</option>
+              <option value="3">★★★ 3 étoiles</option>
+              <option value="2">★★ 2 étoiles</option>
+              <option value="1">★ 1 étoile</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:.78rem;font-weight:700;color:var(--ink-700);display:block;margin-bottom:5px">Source *</label>
+            <select id="m_source" style="width:100%;padding:10px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;background:#fff">
+              <option value="trustville">Trustville</option>
+              <option value="manuel">Manuel / Oral</option>
+              <option value="papier">Papier / Courrier</option>
+              <option value="autre">Autre plateforme</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label style="font-size:.78rem;font-weight:700;color:var(--ink-700);display:block;margin-bottom:5px">Agence *</label>
+          <select id="m_agence" style="width:100%;padding:10px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;background:#fff">
+            <option value="depan-audo">Dépan'Audo (Saint-Omer)</option>
+            <option value="depan-dk">Dépan'DK (Dunkerque)</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:.78rem;font-weight:700;color:var(--ink-700);display:block;margin-bottom:5px">Commentaire</label>
+          <textarea id="m_comment" rows="4" placeholder="Texte de l'avis (facultatif si note seule)" style="width:100%;padding:10px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;resize:vertical;min-height:80px"></textarea>
+        </div>
+        <div>
+          <label style="font-size:.78rem;font-weight:700;color:var(--ink-700);display:block;margin-bottom:5px">Date de l'avis *</label>
+          <input id="m_date" type="date" style="width:100%;padding:10px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit">
+        </div>
+        <div>
+          <label style="font-size:.78rem;font-weight:700;color:var(--ink-700);display:block;margin-bottom:5px">Lien vers l'avis (optionnel)</label>
+          <input id="m_url" type="url" placeholder="https://trustville.fr/..." style="width:100%;padding:10px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit">
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" id="m_cancel">Annuler</button>
+      <button class="btn btn-primary" id="m_save">Enregistrer l'avis</button>
     </div>
   </div>
 </div>
@@ -247,11 +316,13 @@ let _currentReply = null;
             ${rv.reply_text ? `<div class="rv-reply"><strong>Votre réponse</strong>${escapeHtml(rv.reply_text)}</div>` : ''}
           </div>
           <div class="rv-actions">
-            ${rv.reply_text
-              ? `<button class="btn" data-edit="${rv.id}">Modifier la réponse</button>`
-              : `<button class="btn btn-primary" data-reply="${rv.id}">Répondre</button>`
+            ${rv.source === 'facebook'
+              ? `<a class="btn btn-primary" href="${rv.source_url || 'https://business.facebook.com/latest/reviews'}" target="_blank" rel="noopener" title="L'API Facebook ne permet plus de répondre aux avis depuis 2021 — utilise Meta Business Suite"><svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" style="vertical-align:-2px;margin-right:4px"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>Répondre sur Facebook</a>`
+              : (rv.reply_text
+                ? `<button class="btn" data-edit="${rv.id}">Modifier la réponse</button>`
+                : `<button class="btn btn-primary" data-reply="${rv.id}">Répondre</button>`)
             }
-            ${rv.source_url ? `<a class="btn" href="${rv.source_url}" target="_blank">Voir source</a>` : ''}
+            ${rv.source_url && rv.source !== 'facebook' ? `<a class="btn" href="${rv.source_url}" target="_blank">Voir source</a>` : ''}
           </div>
         </div>
       `;
@@ -284,6 +355,56 @@ let _currentReply = null;
     document.getElementById('replyModal').classList.remove('is-open');
     document.body.style.overflow = '';
   }
+
+  // Ajout manuel
+  document.getElementById('btnAddManual').addEventListener('click', () => {
+    document.getElementById('m_date').value = new Date().toISOString().slice(0,10);
+    document.getElementById('manualModal').classList.add('is-open');
+  });
+  document.getElementById('manualClose').addEventListener('click', () => document.getElementById('manualModal').classList.remove('is-open'));
+  document.getElementById('m_cancel').addEventListener('click', () => document.getElementById('manualModal').classList.remove('is-open'));
+  document.getElementById('manualModal').addEventListener('click', e => { if (e.target.id === 'manualModal') document.getElementById('manualModal').classList.remove('is-open'); });
+
+  document.getElementById('m_save').addEventListener('click', async () => {
+    const author = document.getElementById('m_author').value.trim();
+    if (!author) { toast('Le nom de l\'auteur est requis', 'err'); return; }
+    const rating = parseInt(document.getElementById('m_rating').value, 10);
+    const source = document.getElementById('m_source').value;
+    const agence = document.getElementById('m_agence').value;
+    const comment = document.getElementById('m_comment').value.trim();
+    const dateStr = document.getElementById('m_date').value;
+    if (!dateStr) { toast('Date requise', 'err'); return; }
+    const url = document.getElementById('m_url').value.trim();
+
+    const btn = document.getElementById('m_save');
+    btn.disabled = true; const orig = btn.textContent; btn.textContent = 'Enregistrement…';
+    try {
+      const payload = {
+        source,
+        source_id: 'manual-' + Date.now(),
+        source_url: url || null,
+        agence,
+        author_name: author,
+        rating,
+        comment: comment || null,
+        posted_at: new Date(dateStr + 'T12:00:00').toISOString(),
+        status: 'new'
+      };
+      const { error } = await c.from('reviews').insert(payload);
+      if (error) throw error;
+      toast('Avis ajouté');
+      document.getElementById('manualModal').classList.remove('is-open');
+      // Reset
+      ['m_author','m_comment','m_url'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('m_rating').value = '5';
+      document.getElementById('m_source').value = 'trustville';
+      await load();
+    } catch (e) {
+      toast('Erreur : ' + (e.message || e), 'err', 4500);
+    } finally {
+      btn.disabled = false; btn.textContent = orig;
+    }
+  });
 
   // Export CSV
   document.getElementById('btnExport').addEventListener('click', () => {
