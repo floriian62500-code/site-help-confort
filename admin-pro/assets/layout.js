@@ -19,6 +19,7 @@ window.HCLayout = (function() {
         { id:'social', href:'social.html', label:'Réseaux sociaux', icon:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>' }
       ]},
       { section: 'Intelligence', links: [
+        { id:'magic', href:'magic.html', label:'Magic Dropzone IA', icon:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' },
         { id:'ai', href:'ai.html', label:'Assistant IA', icon:'<path d="M12 8V4H8"/><rect x="2" y="2" width="20" height="8" rx="2"/><path d="M2 12h20"/><path d="M2 16h20"/><path d="M2 20h20"/>' },
         { id:'reviews', href:'reviews.html', label:'Avis clients', icon:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>' },
         { id:'analytics', href:'analytics.html', label:'SEO & Analytics', icon:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>' }
@@ -495,6 +496,7 @@ window.HCLayout = (function() {
     { id:'publications', label:'Publications', href:'publications.html', icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>', group:'Pages' },
     { id:'calendar', label:'Calendrier éditorial', href:'calendar.html', icon:'<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>', group:'Pages' },
     { id:'social', label:'Réseaux sociaux', href:'social.html', icon:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>', group:'Pages' },
+    { id:'magic', label:'Magic Dropzone IA', href:'magic.html', icon:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>', group:'Pages' },
     { id:'ai', label:'Assistant IA', href:'ai.html', icon:'<path d="M12 8V4H8"/><rect x="2" y="2" width="20" height="8" rx="2"/><path d="M2 12h20"/><path d="M2 16h20"/><path d="M2 20h20"/>', group:'Pages' },
     { id:'reviews', label:'Avis clients', href:'reviews.html', icon:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>', group:'Pages' },
     { id:'analytics', label:'SEO & Analytics', href:'analytics.html', icon:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>', group:'Pages' },

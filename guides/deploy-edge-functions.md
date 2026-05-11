@@ -69,6 +69,7 @@ supabase functions deploy reply-review --no-verify-jwt
 supabase functions deploy ga4-stats --no-verify-jwt
 supabase functions deploy publish-scheduled --no-verify-jwt
 supabase functions deploy sync-facebook-posts --no-verify-jwt
+supabase functions deploy auto-publish-from-photos --no-verify-jwt
 ```
 
 Chaque commande met ~10-30 secondes. Tu dois voir "Deployed Function …" à la fin.

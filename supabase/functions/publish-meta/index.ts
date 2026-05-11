@@ -18,7 +18,8 @@ const CORS_HEADERS = {
 
 interface PublishInput {
   realisationId: string;
-  targets: { facebook?: boolean; instagram?: boolean };
+  targets?: { facebook?: boolean; instagram?: boolean };
+  customText?: string;  // texte personnalisé (optimisé IA pour FB)
 }
 
 // @ts-ignore Deno global
@@ -59,20 +60,27 @@ Deno.serve(async (req: Request) => {
     if (error || !r) return json({ error: "Chantier introuvable" }, 404);
 
     const photo = r.image_after || r.image_before;
-    const fullText = [
-      r.title,
-      r.description,
-      "",
-      `📍 ${r.ville}`,
-      r.technicien ? `🔧 Technicien : ${r.technicien}` : "",
-      "",
-      r.hashtags || ""
-    ].filter(Boolean).join("\n");
+    // Texte FB : customText si fourni (généré par IA), sinon assemblage par défaut
+    const fullText = body.customText && body.customText.trim()
+      ? body.customText.trim() + (r.hashtags ? "\n\n" + r.hashtags : "")
+      : [
+          r.title,
+          r.description,
+          "",
+          `📍 ${r.ville}`,
+          r.technicien ? `🔧 Technicien : ${r.technicien}` : "",
+          "",
+          r.hashtags || ""
+        ].filter(Boolean).join("\n");
+
+    // Targets par défaut : si non fourni, on lit publish_targets de la réalisation
+    const wantFb = body.targets?.facebook ?? !!(r.publish_targets?.facebook);
+    const wantIg = body.targets?.instagram ?? !!(r.publish_targets?.instagram);
 
     const results: any = {};
 
     // ─── Facebook ───
-    if (body.targets.facebook && meta.fb_page_id) {
+    if (wantFb && meta.fb_page_id) {
       try {
         const fbBody: any = {
           access_token: meta.page_access_token,
@@ -102,7 +110,7 @@ Deno.serve(async (req: Request) => {
     }
 
     // ─── Instagram ───
-    if (body.targets.instagram && meta.ig_business_account_id) {
+    if (wantIg && meta.ig_business_account_id) {
       if (!photo) {
         results.instagram = { error: "Instagram nécessite une photo" };
       } else {
