@@ -36,7 +36,6 @@
         <a href="alerts.html" class="admin-nav-item">
           <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
           Alertes &amp; Monitoring
-          <span class="admin-nav-item-badge alert">3</span>
         </a>
       </div>
 
@@ -45,7 +44,7 @@
         <a href="realisations.html" class="admin-nav-item">
           <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           Réalisations
-          <span class="admin-nav-item-badge">12</span>
+          <span class="admin-nav-item-badge" id="navRealCount">—</span>
         </a>
         <a href="medias.html" class="admin-nav-item">
           <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -54,7 +53,6 @@
         <a href="publications.html" class="admin-nav-item">
           <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           Publications
-          <span class="admin-nav-item-badge">5</span>
         </a>
         <a href="social.html" class="admin-nav-item">
           <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
@@ -71,7 +69,6 @@
         <a href="reviews.html" class="admin-nav-item">
           <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           Avis clients
-          <span class="admin-nav-item-badge">2 nouveaux</span>
         </a>
         <a href="analytics.html" class="admin-nav-item">
           <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
@@ -149,57 +146,57 @@
         </div>
       </div>
 
-      <!-- KPI STATS -->
+      <!-- KPI STATS — branchés sur Supabase + placeholders pour APIs externes -->
       <div class="grid grid-stats" style="margin-bottom: 24px;">
-        <div class="stat-card">
+        <div class="stat-card" data-kpi="reals-total">
           <div class="stat-card-icon cyan">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           </div>
-          <div class="stat-card-label">Nouvelles demandes</div>
-          <p class="stat-card-value">14</p>
+          <div class="stat-card-label">Réalisations totales</div>
+          <p class="stat-card-value" data-kpi-value>—</p>
           <div class="stat-card-trend up">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-            +23%
-            <span class="stat-card-trend-meta">vs sem. dernière</span>
+            <span data-kpi-trend>—</span>
+            <span class="stat-card-trend-meta" data-kpi-meta>dans Supabase</span>
           </div>
         </div>
 
-        <div class="stat-card">
+        <div class="stat-card" data-kpi="reals-published">
           <div class="stat-card-icon orange">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
-          <div class="stat-card-label">Interventions terminées</div>
-          <p class="stat-card-value">28</p>
+          <div class="stat-card-label">Chantiers publiés</div>
+          <p class="stat-card-value" data-kpi-value>—</p>
           <div class="stat-card-trend up">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-            +12%
-            <span class="stat-card-trend-meta">cette semaine</span>
+            <span data-kpi-trend>—</span>
+            <span class="stat-card-trend-meta" data-kpi-meta>statut « publié »</span>
           </div>
         </div>
 
-        <div class="stat-card">
+        <div class="stat-card" data-kpi="reals-draft">
           <div class="stat-card-icon green">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           </div>
-          <div class="stat-card-label">Avis Google</div>
-          <p class="stat-card-value">4,7<span style="font-size: 1rem; color: var(--ink-400); font-weight: 600;">/5</span></p>
-          <div class="stat-card-trend up">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
-            +2 nouveaux
-            <span class="stat-card-trend-meta">343 au total</span>
+          <div class="stat-card-label">En attente</div>
+          <p class="stat-card-value" data-kpi-value>—</p>
+          <div class="stat-card-trend">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span data-kpi-trend>—</span>
+            <span class="stat-card-trend-meta" data-kpi-meta>brouillons + à valider</span>
           </div>
         </div>
 
-        <div class="stat-card">
+        <div class="stat-card" data-kpi="ai-coverage">
           <div class="stat-card-icon purple">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
           </div>
-          <div class="stat-card-label">Visiteurs site (7j)</div>
-          <p class="stat-card-value">1 247</p>
-          <div class="stat-card-trend up">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
-            +18%
-            <span class="stat-card-trend-meta">temps moy 2:34</span>
+          <div class="stat-card-label">Couverture IA</div>
+          <p class="stat-card-value" data-kpi-value>—</p>
+          <div class="stat-card-trend">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span data-kpi-trend>—</span>
+            <span class="stat-card-trend-meta" data-kpi-meta>titre + desc générés</span>
           </div>
         </div>
       </div>
@@ -272,63 +269,17 @@
             </div>
             <a href="#" style="font-size: .8rem; font-weight: 600; color: var(--hc-primary);">Voir tout →</a>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 0;">
-            <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--ink-100);">
-              <span class="badge success"><span class="badge-dot"></span>Nouveau</span>
-              <div style="flex: 1; min-width: 0;">
-                <strong style="display: block; font-size: .86rem; color: var(--ink-900);">Avis Google ★★★★★</strong>
-                <span style="font-size: .78rem; color: var(--ink-400);">Mathieu D. · il y a 12 min</span>
-              </div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--ink-100);">
-              <span class="badge info"><span class="badge-dot"></span>CRM sync</span>
-              <div style="flex: 1; min-width: 0;">
-                <strong style="display: block; font-size: .86rem; color: var(--ink-900);">3 photos chantier Saint-Omer</strong>
-                <span style="font-size: .78rem; color: var(--ink-400);">Plomberie · il y a 1h</span>
-              </div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--ink-100);">
-              <span class="badge warning"><span class="badge-dot"></span>À valider</span>
-              <div style="flex: 1; min-width: 0;">
-                <strong style="display: block; font-size: .86rem; color: var(--ink-900);">Post IA généré · Facebook</strong>
-                <span style="font-size: .78rem; color: var(--ink-400);">Brouillon · il y a 2h</span>
-              </div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--ink-100);">
-              <span class="badge neutral"><span class="badge-dot"></span>Publié</span>
-              <div style="flex: 1; min-width: 0;">
-                <strong style="display: block; font-size: .86rem; color: var(--ink-900);">Chantier salle de bain Dunkerque</strong>
-                <span style="font-size: .78rem; color: var(--ink-400);">Site + GBP · il y a 4h</span>
-              </div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0;">
-              <span class="badge danger"><span class="badge-dot"></span>Erreur</span>
-              <div style="flex: 1; min-width: 0;">
-                <strong style="display: block; font-size: .86rem; color: var(--ink-900);">Sync Instagram timeout</strong>
-                <span style="font-size: .78rem; color: var(--ink-400);">Token à renouveler · il y a 6h</span>
-              </div>
+          <div id="recentActivity" style="display: flex; flex-direction: column; gap: 0;">
+            <div style="padding: 20px 0; text-align: center; color: var(--ink-400); font-size: .82rem;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:.5;margin-bottom:6px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <div>Chargement de l'activité…</div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- 2 ALERTES IMPORTANTES -->
-      <div class="grid grid-2" style="margin-bottom: 24px;">
-        <div class="alert info">
-          <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-          <div>
-            <strong style="display: block; margin-bottom: 2px;">5 publications en attente de validation</strong>
-            Posts générés par l'IA depuis vos derniers chantiers — <a href="publications.html" style="color: var(--hc-primary); font-weight: 700;">les valider</a>
-          </div>
-        </div>
-        <div class="alert warning">
-          <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          <div>
-            <strong style="display: block; margin-bottom: 2px;">Token Instagram à renouveler</strong>
-            Le token API expire dans 3 jours — <a href="settings.html" style="color: #B45309; font-weight: 700;">renouveler maintenant</a>
-          </div>
-        </div>
-      </div>
+      <!-- ALERTES — branchées sur l'état réel -->
+      <div id="dashAlerts" class="grid grid-2" style="margin-bottom: 24px;"></div>
 
       <!-- STATS CANAUX SOCIAUX -->
       <div class="card">
@@ -346,7 +297,7 @@
             </div>
             <div style="flex: 1; min-width: 0;">
               <strong style="display: block; font-size: .88rem; color: var(--ink-900);">Facebook</strong>
-              <span class="badge success" style="margin-top: 2px;"><span class="badge-dot"></span>Connecté</span>
+              <span class="badge neutral" style="margin-top: 2px;"><span class="badge-dot"></span>Non configuré</span>
             </div>
           </div>
           <div style="display: flex; align-items: center; gap: 12px; padding: 14px; background: var(--ink-50); border-radius: var(--radius-md);">
@@ -355,7 +306,7 @@
             </div>
             <div style="flex: 1; min-width: 0;">
               <strong style="display: block; font-size: .88rem; color: var(--ink-900);">Instagram</strong>
-              <span class="badge warning" style="margin-top: 2px;"><span class="badge-dot"></span>Token expire 3j</span>
+              <span class="badge neutral" style="margin-top: 2px;"><span class="badge-dot"></span>Non configuré</span>
             </div>
           </div>
           <div style="display: flex; align-items: center; gap: 12px; padding: 14px; background: var(--ink-50); border-radius: var(--radius-md);">
@@ -364,7 +315,7 @@
             </div>
             <div style="flex: 1; min-width: 0;">
               <strong style="display: block; font-size: .88rem; color: var(--ink-900);">LinkedIn</strong>
-              <span class="badge success" style="margin-top: 2px;"><span class="badge-dot"></span>Connecté</span>
+              <span class="badge neutral" style="margin-top: 2px;"><span class="badge-dot"></span>Non configuré</span>
             </div>
           </div>
           <div style="display: flex; align-items: center; gap: 12px; padding: 14px; background: var(--ink-50); border-radius: var(--radius-md);">
@@ -373,7 +324,7 @@
             </div>
             <div style="flex: 1; min-width: 0;">
               <strong style="display: block; font-size: .88rem; color: var(--ink-900);">Google Business</strong>
-              <span class="badge success" style="margin-top: 2px;"><span class="badge-dot"></span>Connecté</span>
+              <span class="badge neutral" style="margin-top: 2px;"><span class="badge-dot"></span>Non configuré</span>
             </div>
           </div>
           <div style="display: flex; align-items: center; gap: 12px; padding: 14px; background: var(--ink-50); border-radius: var(--radius-md);">
@@ -391,7 +342,7 @@
             </div>
             <div style="flex: 1; min-width: 0;">
               <strong style="display: block; font-size: .88rem; color: var(--ink-900);">Claude IA</strong>
-              <span class="badge success" style="margin-top: 2px;"><span class="badge-dot"></span>Actif</span>
+              <span class="badge neutral" style="margin-top: 2px;"><span class="badge-dot"></span>Clé API requise</span>
             </div>
           </div>
         </div>
@@ -404,7 +355,146 @@
 <script src="assets/supabase.js"></script>
 <script src="assets/admin.js"></script>
 <script>
-  (async function(){ await HCSupabase.init(); await HCAdmin.requireAuth(); })();
+// ═══════════════════════════════════════════════════════════════
+// Dashboard — Données live depuis Supabase
+// ═══════════════════════════════════════════════════════════════
+(async function() {
+  await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+
+  const c = await HCSupabase.init();
+
+  // Récupère toutes les réalisations en une requête
+  const { data: reals, error } = await c.from('realisations').select('id,title,metier,ville,status,pinned,created_at,published_at,ai_generated,image_before,image_after');
+  if (error) { console.error('Dashboard load error:', error); return; }
+  const all = reals || [];
+
+  // ─── KPI 1 : Réalisations totales ─────────────────────────
+  const total = all.length;
+  setKpi('reals-total', total, total === 1 ? '1 chantier' : `${total} chantiers`, 'dans Supabase');
+
+  // ─── KPI 2 : Chantiers publiés ────────────────────────────
+  const published = all.filter(r => r.status === 'publie').length;
+  const pct = total ? Math.round(published / total * 100) : 0;
+  setKpi('reals-published', published, pct + '%', 'du catalogue');
+
+  // ─── KPI 3 : En attente (brouillons + à valider) ──────────
+  const pending = all.filter(r => r.status === 'brouillon' || r.status === 'validation').length;
+  setKpi('reals-draft', pending, pending === 0 ? '✓ à jour' : `${pending} à traiter`, 'brouillons + à valider');
+
+  // ─── KPI 4 : Couverture IA (chantiers avec titre + description) ──
+  const aiReady = all.filter(r => r.title && r.title.length > 10).length; // proxy : titre rempli
+  const coverage = total ? Math.round(aiReady / total * 100) : 0;
+  setKpi('ai-coverage', coverage + '%', aiReady + '/' + total, 'titre + description');
+
+  // ─── Badge nav "Réalisations" ────────────────────────────
+  const navBadge = document.getElementById('navRealCount');
+  if (navBadge) navBadge.textContent = total;
+
+  // ─── Activité récente : 5 derniers chantiers ─────────────
+  const recent = all.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5);
+  const recentEl = document.getElementById('recentActivity');
+  if (recent.length === 0) {
+    recentEl.innerHTML = `
+      <div style="padding: 20px 0; text-align: center; color: var(--ink-400); font-size: .82rem;">
+        <div>Aucune activité pour le moment.</div>
+        <a href="realisations.html?action=new" style="color: var(--hc-primary); font-weight: 600; font-size: .82rem;">Créer le premier chantier →</a>
+      </div>
+    `;
+  } else {
+    recentEl.innerHTML = recent.map(r => {
+      const badge = r.status === 'publie' ? '<span class="badge success"><span class="badge-dot"></span>Publié</span>'
+        : r.status === 'validation' ? '<span class="badge warning"><span class="badge-dot"></span>À valider</span>'
+        : '<span class="badge neutral"><span class="badge-dot"></span>Brouillon</span>';
+      const meta = r.metier ? capitalize(r.metier) + ' · ' + r.ville : r.ville || '';
+      const when = timeAgo(r.created_at);
+      const imported = (r.ai_generated && r.ai_generated.imported_from) === 'facebook_scrape' ? ' <span style="color:#1877F2;font-weight:600">FB</span>' : '';
+      return `
+        <a href="realisations.html" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--ink-100);text-decoration:none;color:inherit">
+          ${badge}
+          <div style="flex: 1; min-width: 0;">
+            <strong style="display:block;font-size:.86rem;color:var(--ink-900);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(r.title)}${imported}</strong>
+            <span style="font-size:.78rem;color:var(--ink-400)">${escapeHtml(meta)} · ${when}</span>
+          </div>
+        </a>
+      `;
+    }).join('');
+    // Retirer la dernière border-bottom
+    const lastChild = recentEl.lastElementChild;
+    if (lastChild) lastChild.style.borderBottom = 'none';
+  }
+
+  // ─── Alertes contextuelles (état réel) ────────────────────
+  const alertsEl = document.getElementById('dashAlerts');
+  const alerts = [];
+
+  if (pending > 0) {
+    alerts.push(`
+      <div class="alert info">
+        <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <div>
+          <strong style="display: block; margin-bottom: 2px;">${pending} chantier${pending>1?'s':''} en attente</strong>
+          <a href="realisations.html?filter=brouillon" style="color: var(--hc-primary); font-weight: 700;">Compléter et publier →</a>
+        </div>
+      </div>
+    `);
+  }
+
+  // Chantiers sans photo
+  const withoutPhotos = all.filter(r => !r.image_before && !r.image_after).length;
+  if (withoutPhotos > 0) {
+    alerts.push(`
+      <div class="alert warning">
+        <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <div>
+          <strong style="display: block; margin-bottom: 2px;">${withoutPhotos} chantier${withoutPhotos>1?'s':''} sans photo</strong>
+          Améliorez le rendu SEO en ajoutant des photos avant/après — <a href="realisations.html" style="color: #B45309; font-weight: 700;">les compléter →</a>
+        </div>
+      </div>
+    `);
+  }
+
+  if (alerts.length === 0) {
+    alerts.push(`
+      <div class="alert info" style="grid-column:1/-1">
+        <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div>
+          <strong style="display: block; margin-bottom: 2px;">Aucune alerte — tout est à jour</strong>
+          Tous vos chantiers sont publiés et complets.
+        </div>
+      </div>
+    `);
+  }
+
+  alertsEl.innerHTML = alerts.join('');
+
+  // ─── Helpers ─────────────────────────────────────────────
+  function setKpi(name, value, trend, meta) {
+    const card = document.querySelector(`[data-kpi="${name}"]`);
+    if (!card) return;
+    card.querySelector('[data-kpi-value]').textContent = value;
+    card.querySelector('[data-kpi-trend]').textContent = trend;
+    card.querySelector('[data-kpi-meta]').textContent = meta;
+  }
+  function timeAgo(d) {
+    const ms = Date.now() - new Date(d).getTime();
+    const min = Math.floor(ms / 60000);
+    if (min < 1) return 'à l\'instant';
+    if (min < 60) return 'il y a ' + min + ' min';
+    const h = Math.floor(min / 60);
+    if (h < 24) return 'il y a ' + h + ' h';
+    const day = Math.floor(h / 24);
+    if (day < 30) return 'il y a ' + day + ' j';
+    const month = Math.floor(day / 30);
+    return 'il y a ' + month + ' mois';
+  }
+  function capitalize(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
+  function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+})();
 </script>
 
 </body>

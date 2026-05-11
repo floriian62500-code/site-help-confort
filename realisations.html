@@ -778,6 +778,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </footer>
 
 
+<!-- Supabase JS pour lecture live des réalisations -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 (async function(){
   var grid = document.getElementById('realGrid');
@@ -786,13 +788,64 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   var currentMetier = 'all';
   var currentZone = null;
 
+  // Mapping métier Supabase (lowercase) → label affiché (capitalisé)
+  var METIER_LABELS = {
+    plomberie:'Plomberie', chauffage:'Chauffage', electricite:'Électricité',
+    serrurerie:'Serrurerie', vitrerie:'Vitrerie', renovation:'Rénovation',
+    menuiserie:'Menuiserie', volets:'Volets', pmr:'Adaptation PMR',
+    multiservice:'Multi-métiers'
+  };
+
+  // 1. Tentative Supabase (source vivante)
+  var supabaseOk = false;
   try {
-    var res = await fetch('content/realisations/index.json', {cache:'no-cache'});
-    if (!res.ok) throw new Error('No index');
-    allRealisations = await res.json();
+    var sb = window.supabase.createClient(
+      'https://btcbjwqiivhpwoszomhg.supabase.co',
+      'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2'
+    );
+    var sbRes = await sb
+      .from('realisations')
+      .select('title,slug,description,description_long,metier,ville,date_intervention,image_before,image_after,pinned,ai_generated,published_at,created_at')
+      .eq('status','publie')
+      .order('pinned',{ascending:false})
+      .order('published_at',{ascending:false,nullsFirst:false})
+      .order('created_at',{ascending:false});
+    if (sbRes.error) throw sbRes.error;
+    if (sbRes.data && sbRes.data.length){
+      allRealisations = sbRes.data.map(function(r){
+        var fbUrl = (r.ai_generated && r.ai_generated.source_fb) || '';
+        return {
+          title: r.title,
+          date: r.date_intervention || r.published_at || r.created_at,
+          metier: METIER_LABELS[r.metier] || r.metier || 'Multi-métiers',
+          ville: r.ville,
+          zone: r.ville && r.ville.toLowerCase().indexOf('dunkerque') !== -1 ? 'Dunkerque' : 'Saint-Omer',
+          photo_avant: r.image_before || '',
+          photo_apres: r.image_after || '',
+          description: r.description || '',
+          duree: '',
+          published: true,
+          url: r.slug ? 'realisation/' + r.slug + '.html' : '#',
+          source_facebook: fbUrl
+        };
+      });
+      supabaseOk = true;
+      console.info('[HC] Réalisations chargées depuis Supabase :', allRealisations.length);
+    }
   } catch(e) {
-    grid.innerHTML = '<div class="real-empty" style="grid-column:1/-1"><h3>Aucun chantier publié pour le moment.</h3><p>Les réalisations publiées via le back-office <a href="admin/index.html" style="color:#FF6B1A;font-weight:700">/admin/</a> apparaîtront ici automatiquement.</p></div>';
-    return;
+    console.warn('[HC] Supabase indispo, fallback JSON :', e.message);
+  }
+
+  // 2. Fallback JSON statique si Supabase n'a rien renvoyé
+  if (!supabaseOk){
+    try {
+      var res = await fetch('content/realisations/index.json', {cache:'no-cache'});
+      if (!res.ok) throw new Error('No index');
+      allRealisations = await res.json();
+    } catch(e) {
+      grid.innerHTML = '<div class="real-empty" style="grid-column:1/-1"><h3>Aucun chantier publié pour le moment.</h3><p>Les réalisations publiées via le <a href="admin-pro/login.html" style="color:#FF6B1A;font-weight:700">back-office</a> apparaîtront ici automatiquement.</p></div>';
+      return;
+    }
   }
 
   function render(){
