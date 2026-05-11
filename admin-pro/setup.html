@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Démarrage rapide · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+.setup-hero{background:linear-gradient(135deg,#0DA0CF 0%,#0a7fa3 60%,#0c6385 100%);color:#fff;border-radius:18px;padding:28px 30px;margin-bottom:22px;box-shadow:0 16px 40px rgba(13,160,207,.20);position:relative;overflow:hidden}
+.setup-hero::before{content:'';position:absolute;right:-40px;top:-40px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.07)}
+.setup-hero::after{content:'';position:absolute;right:60px;bottom:-50px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.05)}
+.setup-hero-content{position:relative;z-index:1;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.setup-hero-text{flex:1;min-width:260px}
+.setup-hero h1{font-size:1.62rem;font-weight:800;margin:0 0 6px 0;line-height:1.2}
+.setup-hero p{font-size:.96rem;opacity:.92;margin:0;line-height:1.5;max-width:600px}
+.setup-score{flex-shrink:0;display:flex;align-items:center;gap:18px}
+.setup-score-ring{position:relative;width:118px;height:118px}
+.setup-score-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.setup-score-ring circle{fill:none;stroke-width:9;stroke-linecap:round}
+.setup-score-ring circle.bg{stroke:rgba(255,255,255,.15)}
+.setup-score-ring circle.fg{stroke:#fff;transition:stroke-dashoffset .8s ease;filter:drop-shadow(0 0 8px rgba(255,255,255,.45))}
+.setup-score-ring .pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.setup-score-ring .pct strong{font-size:1.74rem;font-weight:800;line-height:1}
+.setup-score-ring .pct span{font-size:.72rem;opacity:.85;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-top:3px}
+
+.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px}
+@media(max-width:980px){.setup-grid{grid-template-columns:1fr}}
+
+.setup-card{background:#fff;border:1px solid var(--ink-100);border-radius:14px;padding:0;box-shadow:0 1px 2px rgba(11,18,32,.04);overflow:hidden}
+.setup-card-head{padding:18px 20px 14px 20px;border-bottom:1px solid var(--ink-100);display:flex;align-items:center;gap:12px}
+.setup-card-head h3{font-size:1.02rem;font-weight:800;color:var(--ink-900);margin:0}
+.setup-card-head p{font-size:.78rem;color:var(--ink-500);margin:1px 0 0 0}
+.setup-card-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
+.setup-card-icon svg{width:18px;height:18px}
+.setup-card-icon.cyan{background:linear-gradient(135deg,#5fc7e5,var(--hc-primary))}
+.setup-card-icon.orange{background:linear-gradient(135deg,#FFB400,var(--hc-orange,#FF6B1A))}
+.setup-card-icon.green{background:linear-gradient(135deg,#3DCF8E,#00aa50)}
+.setup-card-icon.purple{background:linear-gradient(135deg,#A78BFA,#7C3AED)}
+
+.setup-step-list{list-style:none;padding:6px 0;margin:0}
+.setup-step{display:flex;align-items:flex-start;gap:12px;padding:11px 20px;border-bottom:1px solid var(--ink-50);position:relative}
+.setup-step:last-child{border-bottom:none}
+.setup-step-mark{flex-shrink:0;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:800;background:var(--ink-100);color:var(--ink-500);transition:.2s}
+.setup-step-mark.ok{background:#00aa50;color:#fff;box-shadow:0 0 0 4px rgba(0,170,80,.14)}
+.setup-step-mark.fail{background:#d92d20;color:#fff;box-shadow:0 0 0 4px rgba(217,45,32,.14)}
+.setup-step-mark.warn{background:#ff9500;color:#fff;box-shadow:0 0 0 4px rgba(255,149,0,.14)}
+.setup-step-mark.skip{background:#94a3b8;color:#fff}
+.setup-step-mark svg{width:14px;height:14px}
+.setup-step-body{flex:1;min-width:0;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.setup-step-text{flex:1;min-width:0}
+.setup-step-text strong{display:block;font-size:.88rem;color:var(--ink-900);font-weight:700;line-height:1.3}
+.setup-step-text span{display:block;font-size:.76rem;color:var(--ink-500);margin-top:2px;line-height:1.4}
+.setup-step-action{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:7px;font-size:.74rem;font-weight:700;border:1px solid var(--ink-200);background:#fff;color:var(--ink-700);text-decoration:none;cursor:pointer;transition:.15s;flex-shrink:0}
+.setup-step-action:hover{background:var(--hc-primary);color:#fff;border-color:var(--hc-primary)}
+.setup-step-action.is-primary{background:var(--hc-primary);color:#fff;border-color:var(--hc-primary);box-shadow:0 2px 6px rgba(13,160,207,.30)}
+.setup-step-action.is-primary:hover{background:#0a8db6}
+.setup-step-action svg{width:12px;height:12px}
+.setup-step.is-dim{opacity:.55}
+.setup-step.is-loading .setup-step-mark{background:transparent;color:var(--hc-primary)}
+.setup-step.is-loading .setup-step-mark::before{content:'';display:block;width:16px;height:16px;border:2px solid var(--ink-200);border-top-color:var(--hc-primary);border-radius:50%;animation:setup-spin .7s linear infinite}
+@keyframes setup-spin{to{transform:rotate(360deg)}}
+
+.setup-priority{background:linear-gradient(135deg,#FFF8EC 0%,#FFFCF6 100%);border:1px solid #FFE3B0;border-radius:14px;padding:18px 20px;margin-bottom:22px}
+.setup-priority h3{font-size:.94rem;font-weight:800;color:#9A6B0A;margin:0 0 10px 0;display:flex;align-items:center;gap:8px}
+.setup-priority h3 svg{width:18px;height:18px}
+.setup-priority-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.setup-priority-list li{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #FFE3B0;border-radius:10px;padding:10px 14px}
+.setup-priority-num{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;font-weight:800;font-size:.78rem;display:flex;align-items:center;justify-content:center}
+.setup-priority-text{flex:1;min-width:0;font-size:.86rem;color:var(--ink-900);font-weight:600}
+.setup-priority-text small{display:block;font-size:.74rem;color:var(--ink-500);font-weight:500;margin-top:2px}
+.setup-priority-list a{padding:6px 12px;border-radius:7px;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;font-weight:700;font-size:.78rem;text-decoration:none;flex-shrink:0;transition:.15s}
+.setup-priority-list a:hover{filter:brightness(.95);transform:translateY(-1px)}
+
+.setup-actions-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.setup-actions-row .btn{flex:1;min-width:200px;justify-content:center}
+
+.setup-empty-priority{padding:18px;text-align:center;background:linear-gradient(135deg,rgba(0,170,80,.06),#fff);border:1px solid rgba(0,170,80,.18);border-radius:14px;margin-bottom:22px}
+.setup-empty-priority strong{display:block;color:#007033;font-size:1.02rem;margin-bottom:4px}
+.setup-empty-priority p{font-size:.86rem;color:var(--ink-500);margin:0;line-height:1.5}
+
+.setup-resources{background:#fff;border:1px solid var(--ink-100);border-radius:14px;padding:18px 20px;box-shadow:0 1px 2px rgba(11,18,32,.04)}
+.setup-resources h3{font-size:.94rem;font-weight:800;color:var(--ink-900);margin:0 0 12px 0}
+.setup-resources-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.setup-resources-grid a{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;border:1px solid var(--ink-100);text-decoration:none;color:var(--ink-700);font-size:.84rem;font-weight:600;transition:.15s}
+.setup-resources-grid a:hover{background:var(--hc-primary);color:#fff;border-color:var(--hc-primary);transform:translateY(-1px)}
+.setup-resources-grid a svg{width:16px;height:16px;color:var(--hc-primary);transition:.15s}
+.setup-resources-grid a:hover svg{color:#fff}
+</style>
+</head>
+<body>
+<div class="admin-overlay"></div>
+<div class="admin-shell">
+  <aside class="admin-sidebar"></aside>
+  <main class="admin-main">
+    <header class="admin-topbar"></header>
+    <div class="admin-content">
+
+      <!-- HERO + SCORE -->
+      <div class="setup-hero">
+        <div class="setup-hero-content">
+          <div class="setup-hero-text">
+            <h1>🚀 Démarrage rapide</h1>
+            <p>Vérifions où en est ton back-office et identifions les <strong>2-3 actions clés</strong> qui débloqueraient le plus de fonctionnalités. Tout est testé en direct.</p>
+          </div>
+          <div class="setup-score">
+            <div class="setup-score-ring">
+              <svg viewBox="0 0 120 120">
+                <circle class="bg" cx="60" cy="60" r="52"/>
+                <circle class="fg" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7" id="scoreRing"/>
+              </svg>
+              <div class="pct"><strong id="scorePct">—</strong><span>opérationnel</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIONS PRIORITAIRES -->
+      <div id="priorityBox"></div>
+
+      <!-- GRID DE CARTES -->
+      <div class="setup-grid">
+
+        <!-- Carte 1 : Base de données -->
+        <div class="setup-card">
+          <div class="setup-card-head">
+            <div class="setup-card-icon cyan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div>
+            <div>
+              <h3>Base de données</h3>
+              <p>Connexion Supabase + tables SQL</p>
+            </div>
+          </div>
+          <ul class="setup-step-list" id="grpDb">
+            <li class="setup-step is-loading" data-step="supabase"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>Connexion Supabase</strong><span>Vérification en cours…</span></div></div></li>
+            <li class="setup-step is-loading" data-step="t_realisations"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>Table <code>realisations</code></strong><span>Stocke les chantiers avant/après</span></div></div></li>
+            <li class="setup-step is-loading" data-step="t_app_settings"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>Table <code>app_settings</code></strong><span>Stocke les clés API</span></div></div></li>
+            <li class="setup-step is-loading" data-step="t_leads"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>Table <code>leads</code></strong><span>Capture les demandes formulaires</span></div></div></li>
+            <li class="setup-step is-loading" data-step="t_reviews"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>Table <code>reviews</code></strong><span>Stocke les avis Google/Facebook</span></div></div></li>
+            <li class="setup-step is-loading" data-step="storage"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>Stockage photos</strong><span>Bucket <code>realisations</code></span></div></div></li>
+          </ul>
+        </div>
+
+        <!-- Carte 2 : Edge Functions -->
+        <div class="setup-card">
+          <div class="setup-card-head">
+            <div class="setup-card-icon purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <div>
+              <h3>Edge Functions (serveur)</h3>
+              <p>Fonctions Supabase déployées</p>
+            </div>
+          </div>
+          <ul class="setup-step-list" id="grpFn">
+            <li class="setup-step is-loading" data-step="fn-generate-content"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>generate-content</strong><span>Génération IA Claude</span></div></div></li>
+            <li class="setup-step is-loading" data-step="fn-publish-meta"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>publish-meta</strong><span>Publication Facebook + Instagram</span></div></div></li>
+            <li class="setup-step is-loading" data-step="fn-publish-linkedin"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>publish-linkedin</strong><span>Publication LinkedIn</span></div></div></li>
+            <li class="setup-step is-loading" data-step="fn-publish-gbp"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>publish-gbp</strong><span>Publication Google Business</span></div></div></li>
+            <li class="setup-step is-loading" data-step="fn-sync-reviews"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>sync-reviews</strong><span>Récupération des avis Google</span></div></div></li>
+            <li class="setup-step is-loading" data-step="fn-reply-review"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>reply-review</strong><span>Réponse aux avis</span></div></div></li>
+            <li class="setup-step is-loading" data-step="fn-ga4-stats"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>ga4-stats</strong><span>Statistiques GA4 dans le dashboard</span></div></div></li>
+            <li class="setup-step is-loading" data-step="fn-sitemap"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>sitemap</strong><span>Sitemap dynamique SEO</span></div></div></li>
+            <li class="setup-step is-loading" data-step="fn-check-tokens"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>check-tokens</strong><span>Surveillance expiration tokens</span></div></div></li>
+          </ul>
+        </div>
+
+        <!-- Carte 3 : Intégrations -->
+        <div class="setup-card">
+          <div class="setup-card-head">
+            <div class="setup-card-icon orange">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </div>
+            <div>
+              <h3>Intégrations externes</h3>
+              <p>Clés API saisies dans Paramètres</p>
+            </div>
+          </div>
+          <ul class="setup-step-list" id="grpInt">
+            <li class="setup-step is-loading" data-step="int-anthropic"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>Anthropic Claude</strong><span>Clé API pour la génération IA</span></div></div></li>
+            <li class="setup-step is-loading" data-step="int-meta"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>Meta (Facebook + Instagram)</strong><span>Page Access Token + Page ID</span></div></div></li>
+            <li class="setup-step is-loading" data-step="int-linkedin"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>LinkedIn</strong><span>Token + Organization ID</span></div></div></li>
+            <li class="setup-step is-loading" data-step="int-gbp"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>Google Business Profile</strong><span>OAuth + Account/Location ID</span></div></div></li>
+            <li class="setup-step is-loading" data-step="int-ga4"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>Google Analytics 4</strong><span>Property ID + Service Account</span></div></div></li>
+          </ul>
+        </div>
+
+        <!-- Carte 4 : Contenu -->
+        <div class="setup-card">
+          <div class="setup-card-head">
+            <div class="setup-card-icon green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div>
+              <h3>Contenu</h3>
+              <p>Premières données dans le système</p>
+            </div>
+          </div>
+          <ul class="setup-step-list" id="grpCnt">
+            <li class="setup-step is-loading" data-step="cnt-reals"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>Au moins 1 chantier publié</strong><span>Pour alimenter la page publique</span></div></div></li>
+            <li class="setup-step is-loading" data-step="cnt-reviews"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>Au moins 1 avis client</strong><span>Synchronisé depuis Google</span></div></div></li>
+            <li class="setup-step is-loading" data-step="cnt-leads-form"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>Capture leads active</strong><span>Formulaires liés à la table</span></div></div></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- LIENS UTILES -->
+      <div class="setup-resources">
+        <h3>📚 Ressources et documentation</h3>
+        <div class="setup-resources-grid">
+          <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Console Supabase
+          </a>
+          <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/sql/new" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            Éditeur SQL
+          </a>
+          <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/functions" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Edge Functions
+          </a>
+          <a href="settings.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Configurer les clés
+          </a>
+          <a href="../guides/deploy-edge-functions.md" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Guide déploiement Edge Functions
+          </a>
+          <a href="../SETUP-CMS.md" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Guide d'installation complet
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+HCLayout.mount('setup', 'Démarrage rapide');
+
+const SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+
+const ICON_OK   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+const ICON_FAIL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+const ICON_WARN = '!';
+
+function setStep(key, state, label, sublabel, actionHtml) {
+  const li = document.querySelector(`[data-step="${key}"]`);
+  if (!li) return;
+  li.classList.remove('is-loading');
+  const mark = li.querySelector('.setup-step-mark');
+  const textEl = li.querySelector('.setup-step-text');
+  const bodyEl = li.querySelector('.setup-step-body');
+
+  mark.className = 'setup-step-mark ' + state;
+  if (state === 'ok') mark.innerHTML = ICON_OK;
+  else if (state === 'fail') mark.innerHTML = ICON_FAIL;
+  else if (state === 'warn') mark.innerHTML = ICON_WARN;
+  else if (state === 'skip') mark.innerHTML = '−';
+
+  if (label) textEl.querySelector('strong').innerHTML = label;
+  if (sublabel !== undefined) textEl.querySelector('span').textContent = sublabel;
+
+  // Action (button or link) à droite
+  let existing = bodyEl.querySelector('.setup-step-action');
+  if (existing) existing.remove();
+  if (actionHtml) {
+    bodyEl.insertAdjacentHTML('beforeend', actionHtml);
+  }
+}
+
+const checks = {
+  // map step → { critical: bool, weight: number, fixUrl: string|null, fixLabel: string }
+  'supabase':            { critical: true,  weight: 5 },
+  't_realisations':      { critical: true,  weight: 3, fixUrl: 'https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/sql/new', fixLabel: 'SQL Editor' },
+  't_app_settings':      { critical: true,  weight: 3, fixUrl: 'https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/sql/new', fixLabel: 'Exécuter setup_app_settings.sql' },
+  't_leads':             { critical: false, weight: 2, fixUrl: 'https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/sql/new', fixLabel: 'Exécuter setup_leads.sql' },
+  't_reviews':           { critical: false, weight: 2, fixUrl: 'https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/sql/new', fixLabel: 'Exécuter setup_reviews.sql' },
+  'storage':             { critical: false, weight: 2, fixUrl: 'https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/storage/buckets', fixLabel: 'Créer le bucket' },
+
+  'fn-generate-content': { critical: false, weight: 2, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
+  'fn-publish-meta':     { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
+  'fn-publish-linkedin': { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
+  'fn-publish-gbp':      { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
+  'fn-sync-reviews':     { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
+  'fn-reply-review':     { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
+  'fn-ga4-stats':        { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
+  'fn-sitemap':          { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
+  'fn-check-tokens':     { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
+
+  'int-anthropic':       { critical: false, weight: 2, fixUrl: 'settings.html#section-anthropic', fixLabel: 'Configurer' },
+  'int-meta':            { critical: false, weight: 1, fixUrl: 'settings.html#section-meta', fixLabel: 'Configurer' },
+  'int-linkedin':        { critical: false, weight: 1, fixUrl: 'settings.html#section-linkedin', fixLabel: 'Configurer' },
+  'int-gbp':             { critical: false, weight: 1, fixUrl: 'settings.html#section-gbp', fixLabel: 'Configurer' },
+  'int-ga4':             { critical: false, weight: 1, fixUrl: 'settings.html#section-ga4', fixLabel: 'Configurer' },
+
+  'cnt-reals':           { critical: false, weight: 2, fixUrl: 'realisations.html?action=new', fixLabel: 'Créer un chantier' },
+  'cnt-reviews':         { critical: false, weight: 1, fixUrl: 'reviews.html', fixLabel: 'Synchroniser' },
+  'cnt-leads-form':      { critical: false, weight: 1, fixUrl: '../contact.html', fixLabel: 'Voir formulaires' }
+};
+
+const results = {};
+
+function recordResult(key, state) {
+  results[key] = state;
+  updateScoreAndPriorities();
+}
+
+function updateScoreAndPriorities() {
+  const allKeys = Object.keys(checks);
+  let totalWeight = 0, okWeight = 0;
+  allKeys.forEach(k => {
+    totalWeight += checks[k].weight;
+    if (results[k] === 'ok') okWeight += checks[k].weight;
+    else if (results[k] === 'warn') okWeight += checks[k].weight * 0.5;
+  });
+  const pct = totalWeight ? Math.round(okWeight / totalWeight * 100) : 0;
+  const ring = document.getElementById('scoreRing');
+  const circ = 2 * Math.PI * 52;
+  ring.setAttribute('stroke-dasharray', circ);
+  ring.setAttribute('stroke-dashoffset', circ - (pct/100) * circ);
+  document.getElementById('scorePct').textContent = pct + '%';
+
+  // Priorités : on liste les checks "fail" critiques d'abord, puis les fails standards, puis les warns
+  const allDone = allKeys.every(k => results[k] !== undefined);
+  if (!allDone) return;
+
+  const priorityBox = document.getElementById('priorityBox');
+  const fails = allKeys.filter(k => results[k] === 'fail' || results[k] === 'warn');
+
+  if (fails.length === 0) {
+    priorityBox.innerHTML = `
+      <div class="setup-empty-priority">
+        <strong>🎉 Tout est opérationnel !</strong>
+        <p>Le back-office est prêt à 100 %. Tu peux commencer à publier des chantiers.</p>
+      </div>`;
+    return;
+  }
+
+  // Ordre : critical fail > non-critical fail > warn
+  fails.sort((a, b) => {
+    const sa = checks[a], sb = checks[b];
+    if (sa.critical !== sb.critical) return sa.critical ? -1 : 1;
+    if (results[a] !== results[b]) return results[a] === 'fail' ? -1 : 1;
+    return sb.weight - sa.weight;
+  });
+
+  const top = fails.slice(0, 5);
+  const labels = {
+    'supabase':            ['Connexion Supabase impossible', 'Vérifier la clé anon et l\'URL'],
+    't_realisations':      ['Créer la table realisations', 'Exécuter le SQL initial'],
+    't_app_settings':      ['Créer la table app_settings', 'Sans ça, aucune intégration ne peut se sauvegarder'],
+    't_leads':             ['Créer la table leads', 'Sans ça, les formulaires ne capturent rien'],
+    't_reviews':           ['Créer la table reviews', 'Sans ça, pas de synchro avis Google'],
+    'storage':             ['Créer le bucket Storage', 'Sans ça, impossible d\'uploader les photos'],
+    'fn-generate-content': ['Déployer generate-content', 'Pour activer l\'assistant IA Claude'],
+    'fn-publish-meta':     ['Déployer publish-meta', 'Pour publier vers Facebook + Instagram'],
+    'fn-publish-linkedin': ['Déployer publish-linkedin', 'Pour publier vers LinkedIn'],
+    'fn-publish-gbp':      ['Déployer publish-gbp', 'Pour publier vers Google Business'],
+    'fn-sync-reviews':     ['Déployer sync-reviews', 'Pour récupérer les avis Google'],
+    'fn-reply-review':     ['Déployer reply-review', 'Pour répondre aux avis'],
+    'fn-ga4-stats':        ['Déployer ga4-stats', 'Pour afficher les visiteurs dans le dashboard'],
+    'fn-sitemap':          ['Déployer sitemap', 'Sitemap dynamique pour le SEO'],
+    'fn-check-tokens':     ['Déployer check-tokens', 'Surveillance des tokens qui expirent'],
+    'int-anthropic':       ['Ajouter la clé Anthropic Claude', 'Bloque toute la génération IA'],
+    'int-meta':            ['Configurer Meta', 'Sans ça, pas de cross-post Facebook/Instagram'],
+    'int-linkedin':        ['Configurer LinkedIn', 'Sans ça, pas de cross-post LinkedIn'],
+    'int-gbp':             ['Configurer Google Business', 'Sans ça, pas de cross-post + pas d\'avis Google'],
+    'int-ga4':             ['Configurer GA4', 'Sans ça, pas de stats visiteurs dans le dashboard'],
+    'cnt-reals':           ['Créer ton premier chantier', 'C\'est la matière première du back-office'],
+    'cnt-reviews':         ['Synchroniser tes premiers avis', 'Une fois GBP configuré'],
+    'cnt-leads-form':      ['Vérifier la capture des leads', 'Les formulaires sont automatiquement liés']
+  };
+
+  priorityBox.innerHTML = `
+    <div class="setup-priority">
+      <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      ${fails.length} action${fails.length>1?'s':''} pour débloquer le back-office</h3>
+      <ul class="setup-priority-list">
+        ${top.map((k, i) => {
+          const [title, hint] = labels[k] || [k, ''];
+          const fix = checks[k];
+          return `
+            <li>
+              <div class="setup-priority-num">${i+1}</div>
+              <div class="setup-priority-text">${title}<small>${hint}</small></div>
+              ${fix.fixUrl ? `<a href="${fix.fixUrl}" ${fix.fixUrl.startsWith('http') ? 'target="_blank" rel="noopener"' : ''}>${fix.fixLabel} →</a>` : ''}
+            </li>`;
+        }).join('')}
+        ${fails.length > 5 ? `<li style="background:transparent;border:none;justify-content:center;color:var(--ink-500);font-size:.8rem;padding:4px 0">+ ${fails.length - 5} autre${fails.length-5>1?'s':''} action${fails.length-5>1?'s':''} secondaire${fails.length-5>1?'s':''}</li>` : ''}
+      </ul>
+    </div>`;
+}
+
+function actionLink(key, isPrimary) {
+  const c = checks[key];
+  if (!c || !c.fixUrl) return '';
+  const isExternal = c.fixUrl.startsWith('http');
+  const cls = 'setup-step-action' + (isPrimary ? ' is-primary' : '');
+  return `<a class="${cls}" href="${c.fixUrl}" ${isExternal ? 'target="_blank" rel="noopener"' : ''}>${c.fixLabel} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>`;
+}
+
+(async function runChecks() {
+  // Auth obligatoire
+  await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+  const c = await HCSupabase.init();
+  const tokenRes = await c.auth.getSession();
+  const accessToken = tokenRes.data.session?.access_token;
+
+  // ─── 1. Connexion Supabase ─────────────────────
+  try {
+    const { error } = await c.from('realisations').select('id', { count:'exact', head:true });
+    // Si l'erreur n'est pas une "relation does not exist", on considère la connexion OK
+    if (error && !/does not exist|relation/i.test(error.message)) throw error;
+    setStep('supabase', 'ok', 'Connexion Supabase active', `Projet btcbjwqiivhpwoszomhg · auth OK`);
+    recordResult('supabase', 'ok');
+  } catch (e) {
+    setStep('supabase', 'fail', 'Connexion Supabase impossible', e.message || 'Erreur inconnue', actionLink('supabase', true));
+    recordResult('supabase', 'fail');
+  }
+
+  // ─── 2. Tables ─────────────────────────────────
+  async function checkTable(stepKey, table, label) {
+    try {
+      const { error, count } = await c.from(table).select('id', { count:'exact', head:true });
+      if (error) {
+        if (/does not exist|relation/i.test(error.message)) {
+          setStep(stepKey, 'fail', label + ' absente', 'Exécute le script SQL correspondant', actionLink(stepKey, true));
+          recordResult(stepKey, 'fail');
+        } else {
+          setStep(stepKey, 'fail', label + ' inaccessible', error.message, actionLink(stepKey, true));
+          recordResult(stepKey, 'fail');
+        }
+      } else {
+        setStep(stepKey, 'ok', label + ' OK', (count ?? 0) + ' ligne' + ((count||0)>1?'s':''));
+        recordResult(stepKey, 'ok');
+      }
+    } catch (e) {
+      setStep(stepKey, 'fail', label, e.message, actionLink(stepKey, true));
+      recordResult(stepKey, 'fail');
+    }
+  }
+  await checkTable('t_realisations', 'realisations', 'Table realisations');
+  await checkTable('t_app_settings', 'app_settings', 'Table app_settings');
+  await checkTable('t_leads', 'leads', 'Table leads');
+  await checkTable('t_reviews', 'reviews', 'Table reviews');
+
+  // ─── 3. Storage bucket ─────────────────────────
+  try {
+    const { data, error } = await c.storage.listBuckets();
+    if (error) throw error;
+    const found = data.find(b => b.name === 'realisations' || b.name === 'réalisations');
+    if (found) {
+      setStep('storage', 'ok', 'Bucket Storage prêt', `Bucket : "${found.name}"`);
+      recordResult('storage', 'ok');
+    } else {
+      setStep('storage', 'warn', 'Bucket photo absent', 'Créer un bucket "realisations" public', actionLink('storage', true));
+      recordResult('storage', 'warn');
+    }
+  } catch (e) {
+    setStep('storage', 'warn', 'Storage non vérifiable', 'Permissions Storage non accessibles côté client (normal). Vérifie manuellement.');
+    recordResult('storage', 'warn');
+  }
+
+  // ─── 4. Edge Functions ─────────────────────────
+  async function checkFn(stepKey, fnName) {
+    try {
+      // OPTIONS preflight pour vérifier que la fonction existe (200) — sans déclencher la logique
+      const r = await fetch(`${SUPABASE_URL}/functions/v1/${fnName}`, {
+        method: 'OPTIONS',
+        headers: { 'Authorization': 'Bearer ' + accessToken }
+      });
+      // 200 = fonction déployée, 404 = absente
+      if (r.status === 404) {
+        setStep(stepKey, 'fail', fnName, 'Non déployée', actionLink(stepKey, false));
+        recordResult(stepKey, 'fail');
+      } else {
+        setStep(stepKey, 'ok', fnName, 'Déployée et accessible');
+        recordResult(stepKey, 'ok');
+      }
+    } catch (e) {
+      // Erreur réseau ou CORS — souvent ça veut dire fonction non déployée
+      setStep(stepKey, 'warn', fnName, 'Non vérifiable côté navigateur', actionLink(stepKey, false));
+      recordResult(stepKey, 'warn');
+    }
+  }
+  await Promise.all([
+    checkFn('fn-generate-content', 'generate-content'),
+    checkFn('fn-publish-meta', 'publish-meta'),
+    checkFn('fn-publish-linkedin', 'publish-linkedin'),
+    checkFn('fn-publish-gbp', 'publish-gbp'),
+    checkFn('fn-sync-reviews', 'sync-reviews'),
+    checkFn('fn-reply-review', 'reply-review'),
+    checkFn('fn-ga4-stats', 'ga4-stats'),
+    checkFn('fn-sitemap', 'sitemap'),
+    checkFn('fn-check-tokens', 'check-tokens')
+  ]);
+
+  // ─── 5. Intégrations (app_settings remplies) ───
+  let settings = {};
+  try {
+    const { data } = await c.from('app_settings').select('key,value');
+    (data || []).forEach(row => { settings[row.key] = row.value || {}; });
+  } catch (e) { /* table absente — déjà signalée plus haut */ }
+
+  function checkInt(stepKey, settingsKey, requiredFields, label) {
+    const v = settings[settingsKey] || {};
+    const allFilled = requiredFields.every(f => v[f] && String(v[f]).trim().length > 0);
+    if (allFilled) {
+      setStep(stepKey, 'ok', label + ' configuré', requiredFields.length + ' champ' + (requiredFields.length>1?'s':'') + ' rempli' + (requiredFields.length>1?'s':''));
+      recordResult(stepKey, 'ok');
+    } else {
+      setStep(stepKey, 'fail', label + ' non configuré', 'Champs manquants dans Paramètres', actionLink(stepKey, false));
+      recordResult(stepKey, 'fail');
+    }
+  }
+  checkInt('int-anthropic', 'anthropic', ['api_key'], 'Anthropic Claude');
+  checkInt('int-meta', 'meta', ['page_access_token', 'fb_page_id'], 'Meta');
+  checkInt('int-linkedin', 'linkedin', ['access_token', 'organization_urn'], 'LinkedIn');
+  checkInt('int-gbp', 'gbp', ['access_token', 'account_id_audo'], 'Google Business Profile');
+  checkInt('int-ga4', 'ga4', ['property_id', 'service_account_json'], 'Google Analytics 4');
+
+  // ─── 6. Contenu ─────────────────────────────────
+  try {
+    const { count: realsCount } = await c.from('realisations').select('id', { count:'exact', head:true }).eq('status', 'publie');
+    if (realsCount > 0) {
+      setStep('cnt-reals', 'ok', realsCount + ' chantier' + (realsCount>1?'s':'') + ' publié' + (realsCount>1?'s':''), 'Page publique alimentée');
+      recordResult('cnt-reals', 'ok');
+    } else {
+      setStep('cnt-reals', 'fail', 'Aucun chantier publié', 'La page publique est vide', actionLink('cnt-reals', true));
+      recordResult('cnt-reals', 'fail');
+    }
+  } catch (e) { recordResult('cnt-reals', 'fail'); setStep('cnt-reals', 'fail', 'Chantiers inaccessibles', e.message); }
+
+  try {
+    const { count: revCount } = await c.from('reviews').select('id', { count:'exact', head:true });
+    if (revCount > 0) {
+      setStep('cnt-reviews', 'ok', revCount + ' avis' + (revCount>1?'':''), 'Synchronisés depuis Google/Facebook');
+      recordResult('cnt-reviews', 'ok');
+    } else {
+      setStep('cnt-reviews', 'warn', 'Aucun avis synchronisé', 'Configure GBP puis clique Synchroniser', actionLink('cnt-reviews', false));
+      recordResult('cnt-reviews', 'warn');
+    }
+  } catch (e) { recordResult('cnt-reviews', 'warn'); setStep('cnt-reviews', 'warn', 'Avis inaccessibles', 'Crée la table reviews d\'abord'); }
+
+  // Capture leads : on regarde simplement si la table leads existe et a déjà reçu des leads, sinon on indique que les forms sont prêts
+  try {
+    const { count: leadsCount } = await c.from('leads').select('id', { count:'exact', head:true });
+    if (leadsCount > 0) {
+      setStep('cnt-leads-form', 'ok', leadsCount + ' lead' + (leadsCount>1?'s':'') + ' capturé' + (leadsCount>1?'s':''), 'Les formulaires fonctionnent');
+      recordResult('cnt-leads-form', 'ok');
+    } else {
+      setStep('cnt-leads-form', 'warn', 'Formulaires patchés, en attente du premier lead', 'C\'est normal si le site n\'a pas encore reçu de demande');
+      recordResult('cnt-leads-form', 'warn');
+    }
+  } catch (e) { recordResult('cnt-leads-form', 'warn'); setStep('cnt-leads-form', 'warn', 'Leads inaccessibles', 'Crée la table leads d\'abord'); }
+
+  // Force la mise à jour finale du score + des priorités
+  updateScoreAndPriorities();
+})();
+</script>
+</body>
+</html>
