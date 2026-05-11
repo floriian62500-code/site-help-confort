@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Contenu du site · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+.cs-hero{background:linear-gradient(135deg,#0DA0CF 0%,#0a7fa3 50%,#FFB400 130%);color:#fff;border-radius:18px;padding:26px 30px;margin-bottom:22px;box-shadow:0 14px 40px rgba(13,160,207,.25)}
+.cs-hero h1{font-size:1.55rem;font-weight:800;margin:0 0 6px 0;line-height:1.2;display:flex;align-items:center;gap:10px}
+.cs-hero p{font-size:.94rem;opacity:.94;margin:0;line-height:1.5}
+.cs-hero .badge-info{display:inline-block;margin-top:10px;padding:4px 11px;background:rgba(255,255,255,.18);border-radius:8px;font-size:.78rem;font-weight:600;backdrop-filter:blur(8px)}
+
+.cs-tabs{display:flex;gap:4px;margin-bottom:18px;background:#fff;border:1px solid var(--ink-100);border-radius:12px;padding:5px;overflow-x:auto;box-shadow:0 1px 2px rgba(11,18,32,.04)}
+.cs-tab{padding:9px 14px;border:none;background:transparent;color:var(--ink-500);font:inherit;font-weight:700;font-size:.84rem;border-radius:8px;cursor:pointer;white-space:nowrap;transition:.12s;display:inline-flex;align-items:center;gap:6px}
+.cs-tab:hover{background:var(--ink-50);color:var(--ink-900)}
+.cs-tab.is-active{background:var(--hc-primary);color:#fff;box-shadow:0 2px 6px rgba(13,160,207,.30)}
+.cs-tab svg{width:14px;height:14px}
+
+.cs-panel{display:none}
+.cs-panel.is-active{display:block}
+
+.cs-card{background:#fff;border:1px solid var(--ink-100);border-radius:14px;padding:22px;margin-bottom:16px;box-shadow:0 1px 2px rgba(11,18,32,.04)}
+.cs-card h3{font-size:1rem;font-weight:800;color:var(--ink-900);margin:0 0 4px 0}
+.cs-card p.desc{font-size:.84rem;color:var(--ink-500);margin:0 0 16px 0;line-height:1.5}
+
+.cs-field{display:grid;gap:6px;margin-bottom:14px}
+.cs-field label{font-size:.78rem;font-weight:700;color:var(--ink-700);letter-spacing:.02em;display:flex;align-items:center;gap:6px}
+.cs-field label .hint{font-size:.7rem;color:var(--ink-400);font-weight:500}
+.cs-field input,.cs-field textarea,.cs-field select{padding:10px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;font-size:.9rem;color:var(--ink-900);background:#fff;width:100%}
+.cs-field textarea{min-height:80px;resize:vertical;line-height:1.5}
+.cs-field input:focus,.cs-field textarea:focus,.cs-field select:focus{outline:none;border-color:var(--hc-primary);box-shadow:0 0 0 3px rgba(13,160,207,.10)}
+.cs-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:760px){.cs-grid-2{grid-template-columns:1fr}}
+
+.cs-foot{display:flex;align-items:center;gap:10px;padding:14px 0 0;border-top:1px solid var(--ink-100);margin-top:14px}
+.cs-foot .status{font-size:.78rem;color:var(--ink-500)}
+.cs-foot .right{margin-left:auto;display:flex;gap:8px}
+
+.cs-metiers{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.cs-metier{background:#fff;border:1px solid var(--ink-100);border-radius:12px;padding:14px;position:relative}
+.cs-metier .head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.cs-metier .head input.icon{width:42px;text-align:center;font-size:1.1rem;padding:6px}
+.cs-metier .head input.name{flex:1;padding:6px 10px;font-weight:700}
+.cs-metier textarea.desc{min-height:60px;font-size:.84rem}
+.cs-metier input.url{font-size:.78rem;color:var(--ink-500)}
+
+.cs-img-uploader{position:relative;border:2px dashed var(--ink-200);border-radius:12px;padding:18px;text-align:center;cursor:pointer;background:var(--ink-50);transition:.15s}
+.cs-img-uploader:hover{border-color:var(--hc-primary);background:rgba(13,160,207,.04)}
+.cs-img-uploader.has-img{padding:0;border:1px solid var(--ink-100);border-style:solid;background:var(--ink-50)}
+.cs-img-uploader img{max-width:100%;display:block;border-radius:10px}
+.cs-img-uploader input[type=file]{display:none}
+.cs-img-uploader-empty svg{width:32px;height:32px;color:var(--ink-300);margin-bottom:6px}
+.cs-img-uploader-empty strong{display:block;font-size:.88rem;color:var(--ink-700)}
+.cs-img-uploader-empty span{font-size:.74rem;color:var(--ink-400)}
+
+.toast-stack{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:2000;pointer-events:none}
+.toast{background:#fff;border:1px solid var(--ink-100);border-radius:10px;padding:11px 14px;box-shadow:0 8px 24px rgba(11,18,32,.16);font-size:.86rem;font-weight:600;color:var(--ink-900);pointer-events:auto;min-width:240px}
+.toast.ok{border-left:3px solid #00aa50}
+.toast.err{border-left:3px solid #d92d20}
+</style>
+</head>
+<body>
+<div class="admin-overlay"></div>
+<div class="admin-shell">
+  <aside class="admin-sidebar"></aside>
+  <main class="admin-main">
+    <header class="admin-topbar"></header>
+    <div class="admin-content">
+
+      <div class="cs-hero">
+        <h1>📝 Contenu du site public</h1>
+        <p>Édite les textes, photos et liens de ton site public depuis ici. Les modifications sont en direct (rafraîchis le site pour voir).</p>
+        <span class="badge-info">✨ Tout est stocké dans Supabase · le site lit dynamiquement à chaque visite</span>
+      </div>
+
+      <div class="cs-tabs">
+        <button class="cs-tab is-active" data-tab="hero">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          En-tête / Hero
+        </button>
+        <button class="cs-tab" data-tab="contact">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Coordonnées
+        </button>
+        <button class="cs-tab" data-tab="metiers">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Métiers (services)
+        </button>
+        <button class="cs-tab" data-tab="zones">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Zones d'intervention
+        </button>
+        <button class="cs-tab" data-tab="texts">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>
+          Textes phares
+        </button>
+        <button class="cs-tab" data-tab="footer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          Footer
+        </button>
+      </div>
+
+      <!-- HERO -->
+      <div class="cs-panel is-active" data-panel="hero">
+        <div class="cs-card">
+          <h3>En-tête principal (hero)</h3>
+          <p class="desc">Le premier visuel que les visiteurs voient sur ta page d'accueil.</p>
+          <div class="cs-field">
+            <label>Titre principal <span class="hint">(50 caractères max recommandé)</span></label>
+            <input type="text" data-key="hero.title" maxlength="100" placeholder="Plombier, chauffagiste, électricien · Saint-Omer & Dunkerque">
+          </div>
+          <div class="cs-field">
+            <label>Sous-titre / Accroche</label>
+            <textarea data-key="hero.subtitle" maxlength="300" placeholder="Intervention rapide · Techniciens salariés · Garantie sur tous nos chantiers"></textarea>
+          </div>
+          <div class="cs-grid-2">
+            <div class="cs-field">
+              <label>Téléphone principal</label>
+              <input type="tel" data-key="hero.phone" placeholder="03 21 00 00 00">
+            </div>
+            <div class="cs-field">
+              <label>Bouton principal (texte CTA)</label>
+              <input type="text" data-key="hero.cta" placeholder="Demander un devis gratuit">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="cs-panel" data-panel="contact">
+        <div class="cs-card">
+          <h3>Coordonnées générales</h3>
+          <p class="desc">Affichées dans le header, footer, et pages contact / mentions légales.</p>
+          <div class="cs-grid-2">
+            <div class="cs-field">
+              <label>Téléphone Saint-Omer</label>
+              <input type="tel" data-key="contact.phone_audo" placeholder="03 21 00 00 00">
+            </div>
+            <div class="cs-field">
+              <label>Téléphone Dunkerque</label>
+              <input type="tel" data-key="contact.phone_dk" placeholder="03 28 00 00 00">
+            </div>
+            <div class="cs-field">
+              <label>Email général</label>
+              <input type="email" data-key="contact.email" placeholder="contact@helpconfort.com">
+            </div>
+            <div class="cs-field">
+              <label>Email urgences</label>
+              <input type="email" data-key="contact.email_urgence" placeholder="urgence@helpconfort.com">
+            </div>
+            <div class="cs-field">
+              <label>Adresse Saint-Omer</label>
+              <input type="text" data-key="contact.address_audo" placeholder="Saint-Martin-lez-Tatinghem">
+            </div>
+            <div class="cs-field">
+              <label>Adresse Dunkerque</label>
+              <input type="text" data-key="contact.address_dk" placeholder="Dunkerque">
+            </div>
+          </div>
+          <div class="cs-field">
+            <label>Horaires d'ouverture</label>
+            <textarea data-key="contact.hours" placeholder="Lundi - Vendredi : 8h - 18h&#10;Samedi : 9h - 12h&#10;Urgences 7j/7"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- METIERS -->
+      <div class="cs-panel" data-panel="metiers">
+        <div class="cs-card">
+          <h3>Métiers / Services</h3>
+          <p class="desc">Les 8-10 services principaux affichés sur la page d'accueil. Le titre court doit tenir en 2-3 mots.</p>
+          <div class="cs-metiers" id="metiersList"></div>
+          <button class="btn btn-secondary" id="btnAddMetier" style="margin-top:12px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:4px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Ajouter un métier
+          </button>
+        </div>
+      </div>
+
+      <!-- ZONES -->
+      <div class="cs-panel" data-panel="zones">
+        <div class="cs-card">
+          <h3>Zones d'intervention</h3>
+          <p class="desc">Les villes principales où tu interviens (affichées dans les pages "Zones d'intervention").</p>
+          <div class="cs-field">
+            <label>Villes Saint-Omer / Audomarois <span class="hint">(une par ligne)</span></label>
+            <textarea data-key="zones.audo" rows="6" placeholder="Saint-Omer&#10;Arques&#10;Longuenesse&#10;Wizernes&#10;Aire-sur-la-Lys"></textarea>
+          </div>
+          <div class="cs-field">
+            <label>Villes Dunkerque / Flandre maritime <span class="hint">(une par ligne)</span></label>
+            <textarea data-key="zones.dk" rows="6" placeholder="Dunkerque&#10;Gravelines&#10;Coudekerque-Branche&#10;Téteghem&#10;Bergues"></textarea>
+          </div>
+          <div class="cs-field">
+            <label>Rayon d'intervention <span class="hint">(km)</span></label>
+            <input type="text" data-key="zones.radius" placeholder="40 km autour de Saint-Omer / Dunkerque">
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTS -->
+      <div class="cs-panel" data-panel="texts">
+        <div class="cs-card">
+          <h3>Textes phares</h3>
+          <p class="desc">Phrases clés répétées dans le site (pages, footer, bandeau urgence). Modifier ici met à jour partout.</p>
+          <div class="cs-field">
+            <label>Bandeau urgence (header)</label>
+            <input type="text" data-key="texts.banner_urgence" placeholder="🚨 Urgence plomberie, chauffage, serrurerie · 7j/7">
+          </div>
+          <div class="cs-field">
+            <label>Phrase de garantie</label>
+            <textarea data-key="texts.garantie" placeholder="Tous nos chantiers sont garantis. Techniciens salariés, jamais de sous-traitance."></textarea>
+          </div>
+          <div class="cs-field">
+            <label>Texte "À propos" (page d'accueil section)</label>
+            <textarea data-key="texts.about" rows="5" placeholder="Help Confort, c'est l'expertise locale au service de votre confort..."></textarea>
+          </div>
+          <div class="cs-field">
+            <label>Slogan court</label>
+            <input type="text" data-key="texts.slogan" placeholder="L'expertise multi-services près de chez vous">
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="cs-panel" data-panel="footer">
+        <div class="cs-card">
+          <h3>Pied de page (footer)</h3>
+          <p class="desc">Mentions légales, copyright, et liens sociaux du footer.</p>
+          <div class="cs-grid-2">
+            <div class="cs-field">
+              <label>Raison sociale</label>
+              <input type="text" data-key="footer.raison_sociale" placeholder="SARL Dépan'Audo">
+            </div>
+            <div class="cs-field">
+              <label>SIREN / SIRET</label>
+              <input type="text" data-key="footer.siren" placeholder="898 196 159">
+            </div>
+            <div class="cs-field">
+              <label>RCS</label>
+              <input type="text" data-key="footer.rcs" placeholder="RCS Boulogne">
+            </div>
+            <div class="cs-field">
+              <label>Réseau / Franchise</label>
+              <input type="text" data-key="footer.reseau" placeholder="Membre du réseau HELP! Confort (groupe La Poste)">
+            </div>
+          </div>
+          <div class="cs-field">
+            <label>Texte copyright (sera précédé de l'année)</label>
+            <input type="text" data-key="footer.copyright" placeholder="Tous droits réservés.">
+          </div>
+          <div class="cs-grid-2">
+            <div class="cs-field">
+              <label>URL Facebook</label>
+              <input type="url" data-key="footer.fb_url" placeholder="https://www.facebook.com/depanaudo/">
+            </div>
+            <div class="cs-field">
+              <label>URL LinkedIn</label>
+              <input type="url" data-key="footer.linkedin_url" placeholder="https://www.linkedin.com/in/...">
+            </div>
+            <div class="cs-field">
+              <label>URL Google Maps</label>
+              <input type="url" data-key="footer.maps_url" placeholder="https://maps.app.goo.gl/...">
+            </div>
+            <div class="cs-field">
+              <label>URL Trustville</label>
+              <input type="url" data-key="footer.trustville_url" placeholder="https://www.trustville.fr/...">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Save bar -->
+      <div class="cs-card" style="position:sticky;bottom:14px;display:flex;align-items:center;gap:12px;padding:14px 18px;box-shadow:0 -2px 24px rgba(11,18,32,.10)">
+        <div class="status" id="saveStatus" style="font-size:.84rem;color:var(--ink-500);flex:1">
+          Modifications enregistrées automatiquement dans Supabase.
+        </div>
+        <a href="../" target="_blank" rel="noopener" class="btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Voir le site
+        </a>
+        <button class="btn btn-primary" id="btnSaveAll">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-1px;margin-right:4px"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Tout enregistrer
+        </button>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+function toast(msg, type='ok', d=2400){
+  const stack = document.getElementById('toastStack');
+  const t = document.createElement('div'); t.className='toast '+type;
+  t.textContent = msg;
+  stack.appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),200); }, d);
+}
+
+const DEFAULT_METIERS = [
+  { icon:'🔧', name:'Plomberie', desc:'Fuites, mitigeurs, sanitaires, WC, ballon d\'eau chaude', url:'plombier-saint-omer.html' },
+  { icon:'🔥', name:'Chauffage', desc:'Chaudière, radiateurs, désembouage, entretien obligatoire', url:'chauffagiste-saint-omer.html' },
+  { icon:'⚡', name:'Électricité', desc:'Tableau, prises, mise aux normes, dépannage', url:'electricien-saint-omer.html' },
+  { icon:'🔑', name:'Serrurerie', desc:'Porte claquée, blindage, cylindre, ouverture urgente', url:'serrurier-saint-omer.html' },
+  { icon:'🪟', name:'Vitrerie', desc:'Bris de glace, double vitrage, insert, miroirs', url:'travaux-saint-omer.html' },
+  { icon:'🚿', name:'Adaptation PMR', desc:'Douche italienne, barre de maintien, accessibilité', url:'travaux-saint-omer.html' },
+  { icon:'🏠', name:'Rénovation', desc:'Plafonds, peinture, sols, cuisine, salle de bain', url:'travaux-saint-omer.html' },
+  { icon:'🚪', name:'Menuiserie', desc:'Portes, fenêtres, volets, panneaux PVC', url:'travaux-saint-omer.html' }
+];
+
+(async function(){
+  await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+  await HCLayout.mount('content-site', 'Contenu du site');
+  const c = await HCSupabase.init();
+
+  // ─── Tabs ────────────────────────────────────────
+  document.querySelectorAll('.cs-tab').forEach(t => {
+    t.onclick = () => {
+      document.querySelectorAll('.cs-tab').forEach(x => x.classList.remove('is-active'));
+      document.querySelectorAll('.cs-panel').forEach(x => x.classList.remove('is-active'));
+      t.classList.add('is-active');
+      document.querySelector('[data-panel="' + t.dataset.tab + '"]').classList.add('is-active');
+    };
+  });
+
+  // ─── Charger les contenus existants ──────────────
+  let siteContent = {};
+  try {
+    const { data } = await c.from('app_settings').select('value').eq('key', 'site_content').single();
+    siteContent = data?.value || {};
+  } catch(e) { /* pas encore créé */ }
+
+  // Remplir les inputs depuis siteContent (via data-key paths comme "hero.title")
+  function getDeep(obj, path) {
+    return path.split('.').reduce((o, k) => o && o[k], obj);
+  }
+  function setDeep(obj, path, value) {
+    const keys = path.split('.');
+    let cur = obj;
+    for (let i = 0; i < keys.length - 1; i++) {
+      if (!cur[keys[i]] || typeof cur[keys[i]] !== 'object') cur[keys[i]] = {};
+      cur = cur[keys[i]];
+    }
+    cur[keys[keys.length - 1]] = value;
+  }
+
+  document.querySelectorAll('[data-key]').forEach(input => {
+    const path = input.dataset.key;
+    const val = getDeep(siteContent, path);
+    if (val !== undefined && val !== null) {
+      input.value = typeof val === 'object' ? JSON.stringify(val) : val;
+    }
+  });
+
+  // Métiers : liste dynamique
+  const metiersList = document.getElementById('metiersList');
+  let metiers = siteContent.metiers || DEFAULT_METIERS;
+
+  function renderMetiers() {
+    metiersList.innerHTML = metiers.map((m, i) => `
+      <div class="cs-metier" data-i="${i}">
+        <div class="head">
+          <input class="icon" type="text" maxlength="3" value="${m.icon || ''}" data-field="icon">
+          <input class="name" type="text" placeholder="Nom du métier" value="${m.name || ''}" data-field="name">
+          <button class="btn-del" data-del="${i}" title="Supprimer" style="background:none;border:none;cursor:pointer;color:#d92d20;padding:4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg></button>
+        </div>
+        <textarea class="desc" placeholder="Description" data-field="desc">${m.desc || ''}</textarea>
+        <input class="url" type="text" placeholder="Page lien (ex: plombier-saint-omer.html)" value="${m.url || ''}" data-field="url">
+      </div>
+    `).join('');
+    metiersList.querySelectorAll('[data-del]').forEach(b => b.onclick = () => {
+      metiers.splice(parseInt(b.dataset.del), 1);
+      renderMetiers();
+    });
+    metiersList.querySelectorAll('[data-field]').forEach(inp => {
+      inp.onchange = (e) => {
+        const tile = e.target.closest('.cs-metier');
+        const i = parseInt(tile.dataset.i);
+        metiers[i] = metiers[i] || {};
+        metiers[i][e.target.dataset.field] = e.target.value;
+      };
+    });
+  }
+  renderMetiers();
+
+  document.getElementById('btnAddMetier').onclick = () => {
+    metiers.push({ icon:'⚙️', name:'Nouveau service', desc:'', url:'' });
+    renderMetiers();
+  };
+
+  // ─── Save ────────────────────────────────────────
+  async function saveAll() {
+    const data = {};
+    document.querySelectorAll('[data-key]').forEach(input => {
+      setDeep(data, input.dataset.key, input.value);
+    });
+    data.metiers = metiers;
+    try {
+      const { error } = await c.from('app_settings').upsert({
+        key: 'site_content',
+        value: data,
+        updated_by: session.email
+      }, { onConflict: 'key' });
+      if (error) throw error;
+      siteContent = data;
+      toast('Contenu enregistré · le site se mettra à jour à la prochaine visite');
+      document.getElementById('saveStatus').textContent = '✓ Enregistré ' + new Date().toLocaleTimeString('fr-FR');
+    } catch (e) {
+      toast('Erreur : ' + e.message, 'err', 4500);
+    }
+  }
+
+  document.getElementById('btnSaveAll').onclick = saveAll;
+
+  // Auto-save sur blur pour les inputs simples
+  document.querySelectorAll('[data-key]').forEach(input => {
+    input.addEventListener('blur', () => {
+      document.getElementById('saveStatus').textContent = '⏳ Modification non sauvegardée — clique "Tout enregistrer" pour valider';
+      document.getElementById('saveStatus').style.color = '#FFB400';
+    });
+  });
+})();
+</script>
+</body>
+</html>

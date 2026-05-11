@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Templates de posts · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+.tp-hero{background:linear-gradient(135deg,#0DA0CF 0%,#5fc7e5 60%,#FFB400 130%);color:#fff;border-radius:18px;padding:28px 30px;margin-bottom:22px;box-shadow:0 14px 40px rgba(13,160,207,.25)}
+.tp-hero h1{font-size:1.62rem;font-weight:800;margin:0 0 6px 0;line-height:1.2}
+.tp-hero p{font-size:.96rem;opacity:.96;margin:0;line-height:1.5;max-width:680px}
+
+.tp-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.tp-toolbar h2{font-size:1.04rem;font-weight:800;color:var(--ink-900);margin:0;flex:1}
+.tp-search{flex:1;max-width:340px;display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fff;border:1px solid var(--ink-100);border-radius:10px}
+.tp-search svg{width:16px;height:16px;color:var(--ink-400)}
+.tp-search input{flex:1;border:none;background:transparent;outline:none;font:inherit;font-size:.88rem}
+
+.tp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.tp-card{background:#fff;border:1px solid var(--ink-100);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:.2s;box-shadow:0 1px 2px rgba(11,18,32,.04)}
+.tp-card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(11,18,32,.08);border-color:var(--hc-primary)}
+.tp-card-head{padding:14px 16px 10px 16px;display:flex;align-items:center;gap:11px;background:linear-gradient(135deg,rgba(13,160,207,.06),transparent)}
+.tp-card-head .icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem}
+.tp-card-head .icon svg{width:18px;height:18px;color:#fff}
+.tp-card-head h3{font-size:.96rem;font-weight:800;color:var(--ink-900);margin:0;flex:1;line-height:1.2}
+.tp-card-head .cat{font-size:.66rem;font-weight:800;color:var(--ink-500);text-transform:uppercase;letter-spacing:.06em;background:var(--ink-50);padding:3px 8px;border-radius:5px;flex-shrink:0}
+.tp-card-body{padding:10px 16px;flex:1;display:flex;flex-direction:column;gap:8px}
+.tp-card-desc{font-size:.82rem;color:var(--ink-500);line-height:1.5;margin:0;flex:1}
+.tp-card-tags{display:flex;gap:5px;flex-wrap:wrap}
+.tp-card-tags span{font-size:.7rem;color:var(--ink-700);background:var(--ink-50);padding:2px 7px;border-radius:5px;font-weight:600}
+.tp-card-foot{padding:10px 16px 14px 16px;display:flex;gap:6px;border-top:1px solid var(--ink-50);background:#FAFCFD}
+.tp-card-foot .btn{flex:1;padding:8px 12px;border-radius:9px;font-size:.82rem;font-weight:700;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:5px;transition:.15s}
+.tp-card-foot .btn-use{background:var(--hc-primary);color:#fff;flex:2}
+.tp-card-foot .btn-use:hover{background:#0a8db6}
+.tp-card-foot .btn-edit{background:#fff;color:var(--ink-700);border:1px solid var(--ink-100)}
+.tp-card-foot .btn-edit:hover{border-color:var(--hc-primary);color:var(--hc-primary)}
+.tp-card-foot .btn-del{background:#fff;color:#d92d20;border:1px solid var(--ink-100);width:36px;padding:8px}
+.tp-card-foot .btn-del:hover{background:#d92d20;color:#fff;border-color:#d92d20}
+.tp-card-foot .btn svg{width:13px;height:13px}
+
+/* Modale */
+.tp-modal{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(10,20,40,.55);backdrop-filter:blur(4px)}
+.tp-modal.open{display:flex}
+.tp-modal-sheet{background:#fff;border-radius:16px;width:100%;max-width:600px;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 30px 70px rgba(0,0,0,.32);overflow:hidden}
+.tp-modal-head{padding:18px 22px 14px 22px;border-bottom:1px solid var(--ink-100);display:flex;align-items:center;gap:12px}
+.tp-modal-head h2{font-size:1.05rem;font-weight:800;color:var(--ink-900);margin:0;flex:1}
+.tp-modal-head .close{width:30px;height:30px;border-radius:50%;background:var(--ink-50);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-500)}
+.tp-modal-body{padding:18px 22px;overflow-y:auto;flex:1;display:grid;gap:14px}
+.tp-modal-body label{font-size:.78rem;font-weight:700;color:var(--ink-700);display:block;margin-bottom:5px;letter-spacing:.02em}
+.tp-modal-body input, .tp-modal-body select, .tp-modal-body textarea{width:100%;padding:10px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;font-size:.88rem;color:var(--ink-900);background:#fff}
+.tp-modal-body textarea{min-height:90px;resize:vertical}
+.tp-modal-foot{padding:14px 22px;border-top:1px solid var(--ink-100);background:#FAFCFD;display:flex;gap:10px}
+.tp-modal-foot .right{margin-left:auto;display:flex;gap:8px}
+
+/* Color presets */
+.tp-color-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
+.tp-color-grid button{width:100%;aspect-ratio:1;border-radius:9px;border:2px solid transparent;cursor:pointer}
+.tp-color-grid button.selected{border-color:var(--ink-900);box-shadow:0 0 0 2px #fff}
+
+.toast-stack{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:2000;pointer-events:none}
+.toast{background:#fff;border:1px solid var(--ink-100);border-radius:10px;padding:11px 14px;box-shadow:0 8px 24px rgba(11,18,32,.16);font-size:.86rem;font-weight:600;color:var(--ink-900);pointer-events:auto;min-width:240px}
+.toast.ok{border-left:3px solid #00aa50}
+.toast.err{border-left:3px solid #d92d20}
+</style>
+</head>
+<body>
+<div class="admin-overlay"></div>
+<div class="admin-shell">
+  <aside class="admin-sidebar"></aside>
+  <main class="admin-main">
+    <header class="admin-topbar"></header>
+    <div class="admin-content">
+
+      <div class="tp-hero">
+        <h1>📋 Templates de posts</h1>
+        <p>Bibliothèque de modèles réutilisables pour gagner du temps : promo saisonnière, recrutement, alerte météo, jours fériés, voeux… Clique sur "Utiliser" pour ouvrir la création express avec le contenu pré-rempli.</p>
+      </div>
+
+      <div class="tp-toolbar">
+        <h2 id="tpCount">— modèles disponibles</h2>
+        <div class="tp-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="searchInput" type="search" placeholder="Chercher un template…">
+        </div>
+        <button class="btn btn-primary" id="btnNew">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nouveau template
+        </button>
+      </div>
+
+      <div class="tp-grid" id="tpGrid"></div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Modale Édition -->
+<div class="tp-modal" id="editModal">
+  <div class="tp-modal-sheet">
+    <div class="tp-modal-head">
+      <h2 id="editTitle">Nouveau template</h2>
+      <button class="close" id="editClose">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="tp-modal-body">
+      <div>
+        <label>Nom du template *</label>
+        <input id="ed_name" type="text" placeholder="Ex : Promo printemps">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <label>Catégorie</label>
+          <select id="ed_category">
+            <option value="promo">Promo / Offre</option>
+            <option value="recrutement">Recrutement</option>
+            <option value="alerte">Alerte / Urgence</option>
+            <option value="ferie">Jour férié / Voeux</option>
+            <option value="metier">Mise en avant métier</option>
+            <option value="info">Information</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+        <div>
+          <label>Icône emoji</label>
+          <input id="ed_icon" type="text" maxlength="3" placeholder="🎁">
+        </div>
+      </div>
+      <div>
+        <label>Description courte (pour le catalogue)</label>
+        <input id="ed_desc" type="text" maxlength="120" placeholder="Ex : Promo de printemps sur les fenêtres double vitrage">
+      </div>
+      <div>
+        <label>Titre du chantier (pré-rempli) *</label>
+        <input id="ed_title" type="text" placeholder="Ex : Profitez du printemps pour rénover vos fenêtres">
+      </div>
+      <div>
+        <label>Texte de la publication (pré-rempli)</label>
+        <textarea id="ed_content" rows="5" placeholder="Ex : 🌸 Le printemps est arrivé ! C'est le moment idéal pour rénover vos fenêtres avec du double vitrage performant. Help Confort vous accompagne…"></textarea>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <label>Métier par défaut</label>
+          <select id="ed_metier">
+            <option value="">— Choisir au moment de l'utilisation —</option>
+            <option value="plomberie">Plomberie</option>
+            <option value="chauffage">Chauffage</option>
+            <option value="electricite">Électricité</option>
+            <option value="serrurerie">Serrurerie</option>
+            <option value="vitrerie">Vitrerie</option>
+            <option value="menuiserie">Menuiserie</option>
+            <option value="renovation">Rénovation</option>
+            <option value="pmr">Adaptation PMR</option>
+            <option value="volets">Volets</option>
+            <option value="multiservice">Multi-services</option>
+          </select>
+        </div>
+        <div>
+          <label>Hashtags</label>
+          <input id="ed_hashtags" type="text" placeholder="#promo #printemps #helpconfort">
+        </div>
+      </div>
+    </div>
+    <div class="tp-modal-foot">
+      <button class="btn" id="editCancel">Annuler</button>
+      <div class="right">
+        <button class="btn btn-primary" id="editSave">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+function toast(msg, type='ok', d=2400){
+  const stack = document.getElementById('toastStack');
+  const t = document.createElement('div'); t.className='toast '+type;
+  t.textContent = msg;
+  stack.appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),200); }, d);
+}
+
+// Templates par défaut (fournis avec le système)
+const DEFAULT_TEMPLATES = [
+  {
+    id: 'default-promo-printemps',
+    name: 'Promo printemps fenêtres',
+    category: 'promo',
+    icon: '🌸',
+    desc: 'Offre printemps sur la rénovation de fenêtres',
+    title: 'Profitez du printemps pour rénover vos fenêtres',
+    content: '🌸 Le printemps est là ! C\'est le moment idéal pour remplacer vos vieilles fenêtres par du double vitrage performant.\n\n✔️ Devis gratuit et sans engagement\n✔️ Pose par nos techniciens salariés\n✔️ Économies d\'énergie immédiates\n\n📞 Contactez Help Confort Saint-Omer pour votre projet.',
+    metier: 'vitrerie',
+    hashtags: '#promo #printemps #fenetres #renovation #helpconfort #saintomer'
+  },
+  {
+    id: 'default-hiver-chauffage',
+    name: 'Entretien chauffage avant hiver',
+    category: 'metier',
+    icon: '🔥',
+    desc: 'Rappel entretien chaudière + désembouage',
+    title: 'L\'hiver approche : pensez à l\'entretien de votre chauffage',
+    content: '🔥 Avant les premiers froids, Help Confort vous recommande :\n\n✔️ Entretien annuel de votre chaudière (obligatoire)\n✔️ Désembouage du circuit (tous les 5 ans)\n✔️ Vérification du circulateur\n\nUn chauffage entretenu = jusqu\'à 15% d\'économies sur votre facture.\n\n📞 Prenez RDV dès maintenant.',
+    metier: 'chauffage',
+    hashtags: '#chauffage #entretien #hiver #chaudiere #desembouage #helpconfort'
+  },
+  {
+    id: 'default-recrutement',
+    name: 'Recrutement technicien',
+    category: 'recrutement',
+    icon: '👷',
+    desc: 'Offre d\'emploi technicien polyvalent',
+    title: 'Help Confort recrute un technicien polyvalent (H/F)',
+    content: '👷 Nous recrutons !\n\nHelp Confort renforce son équipe et cherche un(e) technicien(ne) polyvalent(e) en CDI.\n\n✔️ CDI temps plein, salaire selon expérience\n✔️ Véhicule de service fourni\n✔️ Formation continue\n✔️ Mutuelle, tickets restaurant\n\nMétiers : plomberie, électricité, chauffage, serrurerie.\n\n📧 Envoyez votre CV à contact@helpconfort.com',
+    metier: 'multiservice',
+    hashtags: '#recrutement #emploi #saintomer #technicien #cdi #helpconfort'
+  },
+  {
+    id: 'default-meteo-froid',
+    name: 'Alerte froid / gel canalisations',
+    category: 'alerte',
+    icon: '❄️',
+    desc: 'Conseil prévention gel pour clients',
+    title: 'Vague de froid : protégez vos canalisations',
+    content: '❄️ Alerte vague de froid !\n\nQuelques gestes simples pour éviter le gel de vos canalisations :\n\n✔️ Coupez l\'eau et purgez les robinets extérieurs\n✔️ Maintenez vos pièces à minimum 8°C\n✔️ Calorifugez les tuyaux apparents\n\nEn cas de fuite ou de canalisation gelée, Help Confort intervient 7j/7.\n\n📞 Saint-Omer & Dunkerque',
+    metier: 'plomberie',
+    hashtags: '#alerte #froid #gel #plomberie #urgence #helpconfort #saintomer #dunkerque'
+  },
+  {
+    id: 'default-fete-noel',
+    name: 'Vœux Noël / Nouvel An',
+    category: 'ferie',
+    icon: '🎄',
+    desc: 'Vœux de fin d\'année + permanence urgences',
+    title: 'Toute l\'équipe Help Confort vous souhaite de joyeuses fêtes',
+    content: '🎄 Toute l\'équipe Help Confort Saint-Omer & Dunkerque vous souhaite de très joyeuses fêtes de fin d\'année !\n\nMerci à nos clients, nos partenaires et nos salariés pour cette belle année à vos côtés.\n\n⚠️ Permanence urgences plomberie / chauffage maintenue les 24, 25, 31 décembre et 1er janvier.\n\n📞 N\'hésitez pas en cas de panne.',
+    metier: 'multiservice',
+    hashtags: '#noel #voeux #fetes #helpconfort #saintomer #dunkerque'
+  },
+  {
+    id: 'default-pmr',
+    name: 'Aménagement PMR (douche italienne)',
+    category: 'metier',
+    icon: '🚿',
+    desc: 'Promo douche italienne et PMR',
+    title: 'Transformez votre baignoire en douche italienne sécurisée',
+    content: '🚿 Help Confort spécialiste de l\'adaptation PMR (Personnes à Mobilité Réduite).\n\nNotre prestation clé en main :\n✔️ Dépose baignoire\n✔️ Pose douche italienne anti-dérapante\n✔️ Barre de maintien, siège mural\n✔️ Devis gratuit éligible aux aides MaPrimeAdapt\'\n\nProfitez d\'aides financières jusqu\'à 70% du devis.',
+    metier: 'pmr',
+    hashtags: '#pmr #douche #adaptation #maprimeadapt #seniors #helpconfort #saintomer'
+  }
+];
+
+let _templates = [];
+
+(async function(){
+  await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+  await HCLayout.mount('templates', 'Templates de posts');
+  const c = await HCSupabase.init();
+
+  // Charger les templates depuis app_settings.templates
+  try {
+    const { data } = await c.from('app_settings').select('value').eq('key', 'templates').single();
+    const userTemplates = (data?.value?.list || []);
+    _templates = [...DEFAULT_TEMPLATES, ...userTemplates];
+  } catch(e) {
+    _templates = [...DEFAULT_TEMPLATES];
+  }
+
+  render();
+
+  function render(filter = '') {
+    const grid = document.getElementById('tpGrid');
+    const q = filter.toLowerCase();
+    const filtered = _templates.filter(t =>
+      !q || (t.name + ' ' + t.desc + ' ' + t.content + ' ' + (t.hashtags || '')).toLowerCase().includes(q)
+    );
+    document.getElementById('tpCount').textContent = filtered.length + ' modèle' + (filtered.length>1?'s':'') + ' disponible' + (filtered.length>1?'s':'');
+
+    const CAT_COLORS = {
+      promo: '#FF6B1A', recrutement: '#7C3AED', alerte: '#d92d20',
+      ferie: '#FFB400', metier: '#0DA0CF', info: '#64748b', autre: '#475569'
+    };
+    const CAT_LABELS = {
+      promo: 'Promo', recrutement: 'Recrutement', alerte: 'Alerte',
+      ferie: 'Férié', metier: 'Métier', info: 'Info', autre: 'Autre'
+    };
+
+    grid.innerHTML = filtered.map(t => {
+      const isDefault = t.id && t.id.startsWith('default-');
+      const color = CAT_COLORS[t.category] || '#64748b';
+      return `
+        <div class="tp-card" data-id="${t.id}">
+          <div class="tp-card-head">
+            <div class="icon" style="background:${color}"><span style="font-size:1.2rem">${t.icon || '📋'}</span></div>
+            <h3>${escapeHtml(t.name)}</h3>
+            <span class="cat">${CAT_LABELS[t.category] || t.category}</span>
+          </div>
+          <div class="tp-card-body">
+            <p class="tp-card-desc">${escapeHtml(t.desc || t.title.slice(0,100))}</p>
+            ${t.hashtags ? `<div class="tp-card-tags">${t.hashtags.split(' ').filter(Boolean).slice(0,4).map(h => '<span>' + escapeHtml(h) + '</span>').join('')}</div>` : ''}
+          </div>
+          <div class="tp-card-foot">
+            <button class="btn btn-use" data-use="${t.id}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              Utiliser
+            </button>
+            ${!isDefault ? `<button class="btn btn-edit" data-edit="${t.id}" title="Éditer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>` : ''}
+            ${!isDefault ? `<button class="btn btn-del" data-del="${t.id}" title="Supprimer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg></button>` : ''}
+          </div>
+        </div>`;
+    }).join('');
+
+    grid.querySelectorAll('[data-use]').forEach(b => b.onclick = () => useTemplate(b.dataset.use));
+    grid.querySelectorAll('[data-edit]').forEach(b => b.onclick = () => openEdit(b.dataset.edit));
+    grid.querySelectorAll('[data-del]').forEach(b => b.onclick = () => deleteTemplate(b.dataset.del));
+  }
+
+  function useTemplate(id) {
+    const t = _templates.find(x => x.id === id);
+    if (!t) return;
+    // Stocker temporairement dans localStorage et ouvrir la modale création express via le FAB
+    sessionStorage.setItem('hcq-template', JSON.stringify({
+      title: t.title,
+      desc: t.content,
+      metier: t.metier,
+      hashtags: t.hashtags
+    }));
+    toast('Template chargé — ouverture de la création express…', 'ok', 1800);
+    setTimeout(() => {
+      if (window.HCLayout && window.HCLayout.openQuickModal) {
+        window.HCLayout.openQuickModal();
+        // Pré-remplir les champs
+        setTimeout(() => {
+          const data = JSON.parse(sessionStorage.getItem('hcq-template') || '{}');
+          if (data.title && document.getElementById('hcqTitle')) document.getElementById('hcqTitle').value = data.title;
+          if (data.desc && document.getElementById('hcqDesc')) document.getElementById('hcqDesc').value = data.desc;
+          if (data.metier && document.getElementById('hcqMetier')) document.getElementById('hcqMetier').value = data.metier;
+          sessionStorage.removeItem('hcq-template');
+        }, 80);
+      }
+    }, 100);
+  }
+
+  function openEdit(id) {
+    const t = id ? _templates.find(x => x.id === id) : null;
+    document.getElementById('editTitle').textContent = t ? 'Éditer le template' : 'Nouveau template';
+    document.getElementById('editModal').dataset.id = id || '';
+    document.getElementById('ed_name').value = t?.name || '';
+    document.getElementById('ed_category').value = t?.category || 'promo';
+    document.getElementById('ed_icon').value = t?.icon || '🎁';
+    document.getElementById('ed_desc').value = t?.desc || '';
+    document.getElementById('ed_title').value = t?.title || '';
+    document.getElementById('ed_content').value = t?.content || '';
+    document.getElementById('ed_metier').value = t?.metier || '';
+    document.getElementById('ed_hashtags').value = t?.hashtags || '';
+    document.getElementById('editModal').classList.add('open');
+  }
+
+  document.getElementById('btnNew').onclick = () => openEdit();
+  document.getElementById('editClose').onclick = () => document.getElementById('editModal').classList.remove('open');
+  document.getElementById('editCancel').onclick = () => document.getElementById('editModal').classList.remove('open');
+
+  document.getElementById('editSave').onclick = async () => {
+    const name = document.getElementById('ed_name').value.trim();
+    const title = document.getElementById('ed_title').value.trim();
+    if (!name || !title) { toast('Nom et titre obligatoires', 'err'); return; }
+    const id = document.getElementById('editModal').dataset.id || 'user-' + Date.now();
+    const t = {
+      id,
+      name,
+      category: document.getElementById('ed_category').value,
+      icon: document.getElementById('ed_icon').value.trim() || '📋',
+      desc: document.getElementById('ed_desc').value.trim(),
+      title,
+      content: document.getElementById('ed_content').value.trim(),
+      metier: document.getElementById('ed_metier').value,
+      hashtags: document.getElementById('ed_hashtags').value.trim()
+    };
+
+    // Mettre à jour la liste user (sans les defaults)
+    const userList = _templates.filter(x => !x.id.startsWith('default-') && x.id !== id);
+    userList.push(t);
+
+    try {
+      const { error } = await c.from('app_settings').upsert({
+        key: 'templates',
+        value: { list: userList },
+        updated_by: session.email
+      }, { onConflict: 'key' });
+      if (error) throw error;
+      _templates = [...DEFAULT_TEMPLATES, ...userList];
+      toast('Template enregistré');
+      document.getElementById('editModal').classList.remove('open');
+      render(document.getElementById('searchInput').value);
+    } catch (e) {
+      toast('Erreur : ' + e.message, 'err', 4500);
+    }
+  };
+
+  async function deleteTemplate(id) {
+    if (!confirm('Supprimer ce template ?')) return;
+    const userList = _templates.filter(x => !x.id.startsWith('default-') && x.id !== id);
+    try {
+      const { error } = await c.from('app_settings').upsert({
+        key: 'templates',
+        value: { list: userList },
+        updated_by: session.email
+      }, { onConflict: 'key' });
+      if (error) throw error;
+      _templates = [...DEFAULT_TEMPLATES, ...userList];
+      toast('Template supprimé');
+      render(document.getElementById('searchInput').value);
+    } catch (e) {
+      toast('Erreur : ' + e.message, 'err', 4500);
+    }
+  }
+
+  document.getElementById('searchInput').oninput = (e) => render(e.target.value);
+
+  function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+})();
+</script>
+</body>
+</html>
