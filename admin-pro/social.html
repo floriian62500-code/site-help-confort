@@ -148,7 +148,8 @@
     </div>
   </main>
 </div>
+<script src="assets/supabase.js"></script>
 <script src="assets/admin.js"></script>
-<script>HCAdmin.requireAuth();</script>
+<script>(async function(){ await HCSupabase.init(); await HCAdmin.requireAuth(); })();</script>
 </body>
 </html>

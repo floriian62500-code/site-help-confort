@@ -401,9 +401,10 @@
   </main>
 </div>
 
+<script src="assets/supabase.js"></script>
 <script src="assets/admin.js"></script>
 <script>
-  HCAdmin.requireAuth();
+  (async function(){ await HCSupabase.init(); await HCAdmin.requireAuth(); })();
 </script>
 
 </body>

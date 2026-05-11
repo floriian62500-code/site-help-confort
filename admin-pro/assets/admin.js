@@ -5,59 +5,58 @@
 (function() {
   'use strict';
 
-  // ─── AUTH ─────────────────────────────────────────────────────
-  // Phase 0 : auth localStorage simple. Sera remplacé par Supabase Auth en Phase 1.
-  const AUTH_KEY = 'hc_admin_session';
-  const AUTH_DEMO = {
-    // À remplacer par vraie auth Supabase. Mot de passe DEMO uniquement.
-    email: 'admin@helpconfort.com',
-    password: 'helpconfort2026',
-    name: 'Florian',
-    role: 'Administrateur',
-    initial: 'F'
-  };
+  // ─── AUTH RÉELLE (Supabase) ──────────────────────────────────
+  // Le client Supabase est chargé via supabase.js
+  let cachedUser = null;
 
   window.HCAdmin = {
-    isAuthenticated() {
+    async isAuthenticated() {
+      if (!window.HCSupabase) return false;
       try {
-        const session = JSON.parse(localStorage.getItem(AUTH_KEY) || 'null');
-        if (!session) return false;
-        // Session valide 24h
-        if (Date.now() - session.t > 24 * 60 * 60 * 1000) {
-          localStorage.removeItem(AUTH_KEY);
-          return false;
-        }
-        return session;
+        const user = await window.HCSupabase.getUser();
+        if (!user) { cachedUser = null; return false; }
+        cachedUser = {
+          email: user.email,
+          name: user.user_metadata?.name || user.email.split('@')[0],
+          role: user.user_metadata?.role || 'Utilisateur',
+          initial: (user.user_metadata?.name || user.email)[0].toUpperCase(),
+          id: user.id
+        };
+        return cachedUser;
       } catch (e) { return false; }
     },
 
-    login(email, password) {
-      if (email === AUTH_DEMO.email && password === AUTH_DEMO.password) {
-        localStorage.setItem(AUTH_KEY, JSON.stringify({
-          email: AUTH_DEMO.email,
-          name: AUTH_DEMO.name,
-          role: AUTH_DEMO.role,
-          initial: AUTH_DEMO.initial,
-          t: Date.now()
-        }));
-        return true;
-      }
-      return false;
+    async login(email, password) {
+      if (!window.HCSupabase) return { ok: false, error: 'Supabase non chargé' };
+      const { data, error } = await window.HCSupabase.signIn(email, password);
+      if (error) return { ok: false, error: error.message };
+      return { ok: true, data };
     },
 
-    logout() {
-      localStorage.removeItem(AUTH_KEY);
+    async logout() {
+      if (window.HCSupabase) await window.HCSupabase.signOut();
+      cachedUser = null;
       window.location.href = 'login.html';
     },
 
-    requireAuth() {
-      const session = this.isAuthenticated();
-      if (!session && !window.location.pathname.endsWith('login.html')) {
+    async requireAuth() {
+      const session = await this.isAuthenticated();
+      const isLoginPage = window.location.pathname.endsWith('login.html');
+      if (!session && !isLoginPage) {
         window.location.href = 'login.html';
         return null;
       }
+      if (session) {
+        // Renseigner les éléments DOM
+        document.querySelectorAll('[data-user-name]').forEach(el => el.textContent = session.name);
+        document.querySelectorAll('[data-user-role]').forEach(el => el.textContent = session.role);
+        document.querySelectorAll('[data-user-initial]').forEach(el => el.textContent = session.initial);
+        document.querySelectorAll('[data-user-email]').forEach(el => el.textContent = session.email);
+      }
       return session;
-    }
+    },
+
+    getCachedUser() { return cachedUser; }
   };
 
   // ─── SIDEBAR MOBILE TOGGLE ────────────────────────────────────
@@ -90,15 +89,6 @@
         if (confirm('Déconnexion ?')) HCAdmin.logout();
       });
     });
-
-    // Renseigner les infos user partout où nécessaire
-    const session = HCAdmin.isAuthenticated();
-    if (session) {
-      document.querySelectorAll('[data-user-name]').forEach(el => el.textContent = session.name);
-      document.querySelectorAll('[data-user-role]').forEach(el => el.textContent = session.role);
-      document.querySelectorAll('[data-user-initial]').forEach(el => el.textContent = session.initial);
-      document.querySelectorAll('[data-user-email]').forEach(el => el.textContent = session.email);
-    }
   });
 
   // ─── HELPERS ──────────────────────────────────────────────────
