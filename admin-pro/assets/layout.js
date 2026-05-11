@@ -71,6 +71,80 @@ window.HCLayout = (function() {
       </div>`;
   }
 
+  // ─── Notifications nouveaux leads ────────────────────────
+  const LEAD_NOTIF_KEY = 'hc-lead-last-seen';
+  const LEAD_NOTIF_ENABLED = 'hc-lead-notif-on';
+
+  async function pollNewLeads() {
+    if (!window.HCSupabase) return;
+    try {
+      const c = await window.HCSupabase.init();
+      const lastSeen = localStorage.getItem(LEAD_NOTIF_KEY) || new Date(Date.now() - 5*60*1000).toISOString();
+      const { data, error } = await c.from('leads')
+        .select('id,nom,metier,ville,telephone,created_at')
+        .eq('status','nouveau')
+        .gt('created_at', lastSeen)
+        .order('created_at',{ascending:false})
+        .limit(5);
+      if (error || !data || !data.length) return;
+
+      // Mettre à jour le badge nav
+      const leadsEl = document.getElementById('navLeadsCount');
+      if (leadsEl) {
+        const newCount = parseInt(leadsEl.textContent || '0', 10) + data.length;
+        leadsEl.textContent = newCount;
+        leadsEl.style.display = '';
+      }
+
+      // Notif navigateur si autorisée
+      if (localStorage.getItem(LEAD_NOTIF_ENABLED) === '1' && 'Notification' in window && Notification.permission === 'granted') {
+        data.forEach(l => {
+          const n = new Notification('🔔 Nouveau lead — HELP! Confort', {
+            body: `${l.nom}${l.metier ? ' · ' + l.metier : ''}${l.ville ? ' · ' + l.ville : ''}${l.telephone ? '\n📞 ' + l.telephone : ''}`,
+            icon: '/logo-help-confort.png',
+            tag: 'hc-lead-' + l.id,
+            requireInteraction: false
+          });
+          n.onclick = () => { window.focus(); location.href = 'leads.html'; };
+        });
+      }
+
+      localStorage.setItem(LEAD_NOTIF_KEY, new Date().toISOString());
+    } catch(e) { console.warn('Lead polling error:', e); }
+  }
+
+  function setupLeadNotifications() {
+    // Bouton activer/désactiver dans la sidebar foot
+    const foot = document.querySelector('.admin-sidebar-foot');
+    if (!foot || foot.querySelector('[data-notif-toggle]')) return;
+
+    const enabled = localStorage.getItem(LEAD_NOTIF_ENABLED) === '1' && (window.Notification?.permission === 'granted');
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.dataset.notifToggle = '';
+    btn.style.cssText = 'width:100%;margin-top:8px;padding:8px 10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:8px;color:rgba(255,255,255,.7);font:inherit;font-size:.78rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;text-align:left;transition:.15s';
+    btn.innerHTML = `
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span style="flex:1">${enabled ? 'Notifs leads : ON' : 'Activer notifs leads'}</span>
+      <span style="width:6px;height:6px;border-radius:50%;background:${enabled ? '#00aa50' : '#666'}"></span>
+    `;
+    btn.onclick = async () => {
+      if (!('Notification' in window)) { alert('Votre navigateur ne supporte pas les notifications.'); return; }
+      if (Notification.permission === 'granted') {
+        const cur = localStorage.getItem(LEAD_NOTIF_ENABLED) === '1';
+        localStorage.setItem(LEAD_NOTIF_ENABLED, cur ? '0' : '1');
+      } else if (Notification.permission !== 'denied') {
+        const perm = await Notification.requestPermission();
+        if (perm === 'granted') localStorage.setItem(LEAD_NOTIF_ENABLED, '1');
+      } else {
+        alert('Notifications bloquées par le navigateur. Activez-les dans les paramètres du site.');
+      }
+      // Refresh
+      btn.remove(); setupLeadNotifications();
+    };
+    foot.appendChild(btn);
+  }
+
   async function mount(activePage, pageTitle) {
     // Injecter sidebar
     const sb = document.querySelector('.admin-sidebar');
@@ -99,6 +173,10 @@ window.HCLayout = (function() {
         }
       } catch(e) {}
     }
+    // Bouton notifications + polling
+    setupLeadNotifications();
+    pollNewLeads();
+    setInterval(pollNewLeads, 30000);  // toutes les 30s
   }
 
   return { mount };
