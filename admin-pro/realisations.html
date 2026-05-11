@@ -100,7 +100,11 @@
 .target-pill:hover{border-color:var(--ink-200)}
 .target-pill input{margin:0}
 .target-pill.is-on{background:rgba(13,160,207,.06);border-color:rgba(13,160,207,.30);color:var(--hc-primary)}
+.target-pill.is-disabled{opacity:.55;cursor:not-allowed;background:var(--ink-50)}
+.target-pill.is-disabled:hover{border-color:var(--ink-100)}
+.target-pill.is-disabled input{cursor:not-allowed}
 .target-pill svg{width:14px;height:14px}
+.soon-pill{margin-left:auto;padding:2px 7px;border-radius:999px;background:rgba(255,184,0,.18);color:#7a4c00;font-size:.62rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
 
 /* Toast */
 .toast-stack{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:2000;pointer-events:none}
@@ -144,7 +148,6 @@
         <a href="alerts.html" class="admin-nav-item ">
           <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
           Alertes &amp; Monitoring
-          <span class="admin-nav-item-badge alert">3</span>
         </a>
       </div>
       <div class="admin-nav-section">
@@ -251,15 +254,20 @@
           <option value="electricite">Électricité</option>
           <option value="serrurerie">Serrurerie</option>
           <option value="vitrerie">Vitrerie</option>
+          <option value="menuiserie">Menuiserie</option>
+          <option value="volets">Volets</option>
           <option value="renovation">Rénovation</option>
+          <option value="pmr">Adaptation PMR</option>
           <option value="multiservice">Multi-services</option>
         </select>
         <select id="filterVille">
           <option value="">Toutes villes</option>
-          <option value="Saint-Omer">Saint-Omer</option>
-          <option value="Dunkerque">Dunkerque</option>
-          <option value="Calais">Calais</option>
-          <option value="Boulogne-sur-Mer">Boulogne</option>
+          <!-- Peuplé dynamiquement par JS -->
+        </select>
+        <select id="filterAgence">
+          <option value="">Toutes agences</option>
+          <option value="depan-audo">Dépan'Audo (Saint-Omer)</option>
+          <option value="depan-dk">Dépan'DK (Dunkerque)</option>
         </select>
         <select id="filterStatus">
           <option value="">Tous statuts</option>
@@ -333,23 +341,63 @@
               <option value="electricite">Électricité</option>
               <option value="serrurerie">Serrurerie</option>
               <option value="vitrerie">Vitrerie</option>
+              <option value="menuiserie">Menuiserie</option>
+              <option value="volets">Volets</option>
               <option value="renovation">Rénovation</option>
+              <option value="pmr">Adaptation PMR</option>
               <option value="multiservice">Multi-services</option>
             </select>
           </div>
           <div class="field-block">
             <label>Ville *</label>
-            <input type="text" id="f_ville" placeholder="Saint-Omer, Dunkerque…" required list="villesList">
-            <datalist id="villesList">
-              <option value="Saint-Omer">
-              <option value="Dunkerque">
-              <option value="Calais">
-              <option value="Boulogne-sur-Mer">
-              <option value="Arques">
-              <option value="Longuenesse">
-              <option value="Grande-Synthe">
-              <option value="Coudekerque-Branche">
-            </datalist>
+            <select id="f_ville" required>
+              <option value="">— Sélectionner —</option>
+              <optgroup label="Zone Saint-Omer (Dépan'Audo)">
+                <option value="Saint-Omer">Saint-Omer</option>
+                <option value="Arques">Arques</option>
+                <option value="Longuenesse">Longuenesse</option>
+                <option value="Tatinghem">Tatinghem</option>
+                <option value="Wizernes">Wizernes</option>
+                <option value="Blendecques">Blendecques</option>
+                <option value="Aire-sur-la-Lys">Aire-sur-la-Lys</option>
+                <option value="Lumbres">Lumbres</option>
+                <option value="Saint-Martin-lez-Tatinghem">Saint-Martin-lez-Tatinghem</option>
+              </optgroup>
+              <optgroup label="Zone Dunkerque (Dépan'DK)">
+                <option value="Dunkerque">Dunkerque</option>
+                <option value="Grande-Synthe">Grande-Synthe</option>
+                <option value="Coudekerque-Branche">Coudekerque-Branche</option>
+                <option value="Téteghem">Téteghem</option>
+                <option value="Cappelle-la-Grande">Cappelle-la-Grande</option>
+                <option value="Saint-Pol-sur-Mer">Saint-Pol-sur-Mer</option>
+              </optgroup>
+              <optgroup label="Zone Calais / Boulogne (extension)">
+                <option value="Calais">Calais</option>
+                <option value="Boulogne-sur-Mer">Boulogne-sur-Mer</option>
+              </optgroup>
+              <option value="__other">Autre ville…</option>
+            </select>
+            <input type="text" id="f_ville_other" placeholder="Précisez la ville" style="display:none;margin-top:6px">
+          </div>
+
+          <div class="field-block">
+            <label>Agence *</label>
+            <select id="f_agence" required>
+              <option value="">— Auto-déduite de la ville —</option>
+              <option value="depan-audo">Dépan'Audo (Saint-Omer)</option>
+              <option value="depan-dk">Dépan'DK (Dunkerque)</option>
+            </select>
+            <span class="hint">Modifiable si chantier croisé entre les deux agences.</span>
+          </div>
+          <div class="field-block">
+            <label>Type d'intervention</label>
+            <select id="f_type">
+              <option value="">— Optionnel —</option>
+              <option value="depannage">Dépannage urgent</option>
+              <option value="renovation">Rénovation programmée</option>
+              <option value="installation">Installation neuve</option>
+              <option value="entretien">Entretien / maintenance</option>
+            </select>
           </div>
 
           <div class="field-block">
@@ -395,12 +443,13 @@
           <div class="field-block field-full">
             <label>Canaux de publication</label>
             <div class="publish-targets" id="publishTargets">
-              <label class="target-pill is-on"><input type="checkbox" data-target="site" checked> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Site public</label>
-              <label class="target-pill"><input type="checkbox" data-target="facebook"> <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> Facebook</label>
-              <label class="target-pill"><input type="checkbox" data-target="instagram"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> Instagram</label>
-              <label class="target-pill"><input type="checkbox" data-target="linkedin"> <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn</label>
-              <label class="target-pill"><input type="checkbox" data-target="gbp"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Google Business</label>
+              <label class="target-pill is-on" data-target-pill="site"><input type="checkbox" data-target="site" checked> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Site public</label>
+              <label class="target-pill is-disabled" data-target-pill="facebook" title="Configurez l'API Meta dans Paramètres"><input type="checkbox" data-target="facebook" disabled> <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> Facebook <span class="soon-pill">Bientôt</span></label>
+              <label class="target-pill is-disabled" data-target-pill="instagram" title="Configurez l'API Meta dans Paramètres"><input type="checkbox" data-target="instagram" disabled> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> Instagram <span class="soon-pill">Bientôt</span></label>
+              <label class="target-pill is-disabled" data-target-pill="linkedin" title="Configurez le token LinkedIn dans Paramètres"><input type="checkbox" data-target="linkedin" disabled> <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn <span class="soon-pill">Bientôt</span></label>
+              <label class="target-pill is-disabled" data-target-pill="gbp" title="Configurez Google Business dans Paramètres"><input type="checkbox" data-target="gbp" disabled> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> GBP <span class="soon-pill">Bientôt</span></label>
             </div>
+            <span class="hint" style="margin-top:6px;display:block">Pour activer les réseaux sociaux : <a href="settings.html" style="color:var(--hc-primary);font-weight:600">configurez les APIs dans Paramètres</a>.</span>
           </div>
         </div>
       </form>
@@ -432,6 +481,18 @@ let _uploads = { before: null, after: null }; // URLs uploadées dans la session
 let _user = null;
 
 const BUCKET = 'réalisations';
+
+// ─── Mapping ville → agence ──────────────────────────────────
+const VILLES_DEPAN_AUDO = ['Saint-Omer','Arques','Longuenesse','Tatinghem','Wizernes','Blendecques','Aire-sur-la-Lys','Lumbres','Saint-Martin-lez-Tatinghem'];
+const VILLES_DEPAN_DK = ['Dunkerque','Grande-Synthe','Coudekerque-Branche','Téteghem','Cappelle-la-Grande','Saint-Pol-sur-Mer'];
+function deduceAgence(ville) {
+  if (!ville) return '';
+  if (VILLES_DEPAN_AUDO.includes(ville)) return 'depan-audo';
+  if (VILLES_DEPAN_DK.includes(ville)) return 'depan-dk';
+  // Calais / Boulogne / autre : par défaut Dépan'DK (plus proche)
+  if (['Calais','Boulogne-sur-Mer'].includes(ville)) return 'depan-dk';
+  return '';
+}
 
 // ─── Toast helper ────────────────────────────────────────────
 function toast(msg, type = 'ok', duration = 2800) {
@@ -567,6 +628,7 @@ async function loadReals() {
   if (error) { toast('Erreur chargement : ' + error.message, 'err', 4000); _all = []; }
   else { _all = data || []; }
   document.getElementById('navRealCount').textContent = _all.length;
+  refreshVilleFilter();
   renderList();
 }
 
@@ -576,16 +638,30 @@ function getFiltered() {
   const m = document.getElementById('filterMetier').value;
   const v = document.getElementById('filterVille').value;
   const s = document.getElementById('filterStatus').value;
+  const ag = document.getElementById('filterAgence').value;
   return _all.filter(r => {
     if (m && r.metier !== m) return false;
     if (v && r.ville !== v) return false;
     if (s && r.status !== s) return false;
+    if (ag) {
+      const rAg = (r.ai_generated && r.ai_generated.agence) || deduceAgence(r.ville);
+      if (rAg !== ag) return false;
+    }
     if (q) {
       const hay = (r.title + ' ' + (r.ville || '') + ' ' + (r.technicien || '') + ' ' + (r.description || '')).toLowerCase();
       if (!hay.includes(q)) return false;
     }
     return true;
   });
+}
+
+// Peuple dynamiquement le filtre Ville depuis les données chargées
+function refreshVilleFilter() {
+  const villes = Array.from(new Set(_all.map(r => r.ville).filter(Boolean))).sort();
+  const sel = document.getElementById('filterVille');
+  const current = sel.value;
+  sel.innerHTML = '<option value="">Toutes villes</option>' + villes.map(v => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
+  if (villes.includes(current)) sel.value = current;
 }
 
 // ─── Rendu liste ─────────────────────────────────────────────
@@ -720,7 +796,24 @@ function openEdit(id = null) {
     const r = _all.find(x => x.id === id);
     if (!r) return;
     document.getElementById('f_metier').value = r.metier || '';
-    document.getElementById('f_ville').value = r.ville || '';
+    // Gestion ville (rigide ou "Autre")
+    const vSelect = document.getElementById('f_ville');
+    const vOther = document.getElementById('f_ville_other');
+    const knownVille = Array.from(vSelect.options).some(o => o.value === r.ville);
+    if (knownVille) {
+      vSelect.value = r.ville || '';
+      vOther.style.display = 'none';
+      vOther.value = '';
+    } else {
+      vSelect.value = '__other';
+      vOther.style.display = 'block';
+      vOther.value = r.ville || '';
+    }
+    // Agence (utilise ai_generated.agence si stocké, sinon déduit)
+    const storedAgence = (r.ai_generated && r.ai_generated.agence) || deduceAgence(r.ville);
+    document.getElementById('f_agence').value = storedAgence || '';
+    // Type d'intervention
+    document.getElementById('f_type').value = (r.ai_generated && r.ai_generated.type) || '';
     document.getElementById('f_technicien').value = r.technicien || '';
     document.getElementById('f_date').value = r.date_intervention || '';
     document.getElementById('f_title').value = r.title || '';
@@ -758,8 +851,20 @@ async function saveReal() {
   const btn = document.getElementById('btnSave');
   const title = document.getElementById('f_title').value.trim();
   const metier = document.getElementById('f_metier').value;
-  const ville = document.getElementById('f_ville').value.trim();
+  // Ville : select rigide OU "Autre"
+  let ville = document.getElementById('f_ville').value;
+  if (ville === '__other') ville = document.getElementById('f_ville_other').value.trim();
+  // Agence : auto-déduite si vide
+  let agence = document.getElementById('f_agence').value;
+  if (!agence) agence = deduceAgence(ville);
+  const typeInter = document.getElementById('f_type').value;
+  const status = document.getElementById('f_status').value;
+
   if (!title || !metier || !ville) { toast('Titre, métier et ville sont requis', 'err'); return; }
+  if (status === 'publie' && !_uploads.before && !_uploads.after) {
+    toast('Au moins une photo (avant ou après) est requise pour publier', 'err', 4000);
+    return;
+  }
 
   btn.disabled = true;
   const oldHTML = btn.innerHTML;
@@ -768,7 +873,10 @@ async function saveReal() {
   const targets = {};
   document.querySelectorAll('#publishTargets input[type=checkbox]').forEach(cb => targets[cb.dataset.target] = cb.checked);
 
-  const status = document.getElementById('f_status').value;
+  // ai_generated stocke aussi agence + type + import_facebook si dispo (preservé)
+  const existingAi = _editing ? (_all.find(x => x.id === _editing)?.ai_generated || {}) : {};
+  const aiPayload = Object.assign({}, existingAi, { agence, type: typeInter });
+
   const payload = {
     title,
     slug: slugify(title) + '-' + (Date.now().toString(36).slice(-4)),
@@ -783,6 +891,7 @@ async function saveReal() {
     image_before: _uploads.before,
     image_after: _uploads.after,
     publish_targets: targets,
+    ai_generated: aiPayload,
     created_by: _user?.email || null,
     updated_at: new Date().toISOString()
   };
@@ -854,9 +963,35 @@ function slugify(s) {
     if (e.key === 'Escape' && document.getElementById('modalEdit').classList.contains('is-open')) closeEdit();
   });
 
-  // Target pills visual sync
+  // Target pills visual sync (uniquement pour les canaux activés)
   document.querySelectorAll('#publishTargets input[type=checkbox]').forEach(cb => {
+    if (cb.disabled) return;
     cb.addEventListener('change', () => cb.closest('.target-pill').classList.toggle('is-on', cb.checked));
+  });
+
+  // Ville → ouvrir/fermer champ "Autre" + auto-déduire agence
+  const vSelect = document.getElementById('f_ville');
+  const vOther = document.getElementById('f_ville_other');
+  const agSelect = document.getElementById('f_agence');
+  vSelect.addEventListener('change', () => {
+    if (vSelect.value === '__other') {
+      vOther.style.display = 'block';
+      vOther.focus();
+      agSelect.value = '';
+    } else {
+      vOther.style.display = 'none';
+      vOther.value = '';
+      // Auto-déduire l'agence si pas déjà choisie manuellement
+      const deduced = deduceAgence(vSelect.value);
+      if (deduced) agSelect.value = deduced;
+    }
+  });
+  vOther.addEventListener('blur', () => {
+    if (vOther.value && !agSelect.value) {
+      // Tentative déduction sur ville libre (peu fiable, mais essai)
+      const d = deduceAgence(vOther.value.trim());
+      if (d) agSelect.value = d;
+    }
   });
 
   // Filtres

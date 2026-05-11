@@ -10,111 +10,35 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/admin.css">
+<style>
+.med-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:18px;padding:12px;background:#fff;border:1px solid var(--ink-100);border-radius:14px;box-shadow:0 1px 2px rgba(11,18,32,.04)}
+.med-toolbar .toolbar-search{flex:1 1 240px;display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--ink-50);border:1px solid var(--ink-100);border-radius:10px}
+.med-toolbar .toolbar-search input{flex:1;border:none;background:transparent;outline:none;font:inherit;color:var(--ink-900);font-size:.88rem}
+.med-toolbar .toolbar-search svg{width:16px;height:16px;color:var(--ink-400)}
+.med-toolbar select{padding:8px 32px 8px 12px;border:1px solid var(--ink-100);border-radius:10px;background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23667085' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>") right 10px center/14px no-repeat;font:inherit;font-size:.86rem;color:var(--ink-900);appearance:none;cursor:pointer;font-weight:500}
+.med-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.med-card{position:relative;background:#fff;border:1px solid var(--ink-100);border-radius:12px;overflow:hidden;aspect-ratio:1;cursor:pointer;transition:.18s;box-shadow:0 1px 2px rgba(11,18,32,.04)}
+.med-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(11,18,32,.08)}
+.med-card img{width:100%;height:100%;object-fit:cover;display:block}
+.med-card .overlay{position:absolute;inset:0;background:linear-gradient(to top, rgba(11,18,32,.7) 0%, transparent 50%);opacity:0;transition:.18s;display:flex;flex-direction:column;justify-content:flex-end;padding:10px;color:#fff;font-size:.74rem;font-weight:600}
+.med-card:hover .overlay{opacity:1}
+.med-card .folder-tag{position:absolute;top:6px;left:6px;padding:2px 7px;border-radius:6px;background:rgba(11,18,32,.78);color:#fff;font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;backdrop-filter:blur(6px)}
+.med-empty{padding:40px;text-align:center;color:var(--ink-400);background:#fff;border:1px solid var(--ink-100);border-radius:14px}
+.med-empty svg{width:48px;height:48px;margin-bottom:10px;opacity:.4}
+.med-stats{display:flex;gap:16px;margin-bottom:18px;font-size:.84rem;color:var(--ink-500);flex-wrap:wrap}
+.med-stats strong{color:var(--ink-900);font-weight:700}
+.lightbox{position:fixed;inset:0;background:rgba(11,18,32,.92);z-index:1000;display:none;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+.lightbox.open{display:flex}
+.lightbox img{max-width:100%;max-height:90vh;border-radius:12px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.lightbox .lb-info{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.95);padding:8px 14px;border-radius:8px;font-size:.84rem;font-weight:600;color:var(--ink-900);max-width:80%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+</style>
 </head>
 <body>
 <div class="admin-overlay"></div>
 <div class="admin-shell">
-  <aside class="admin-sidebar">
-    <div class="admin-sidebar-brand">
-      <div class="admin-brand-logo">H!</div>
-      <div class="admin-brand-text">
-        <strong>HELP! Confort</strong>
-        <span>Back-Office Pro</span>
-      </div>
-    </div>
-    <nav class="admin-sidebar-nav">
-      <div class="admin-nav-section">
-        <div class="admin-nav-section-title">Pilotage</div>
-        <a href="index.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
-          Dashboard
-        </a>
-        <a href="alerts.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Alertes &amp; Monitoring
-          <span class="admin-nav-item-badge alert">3</span>
-        </a>
-      </div>
-      <div class="admin-nav-section">
-        <div class="admin-nav-section-title">Contenu</div>
-        <a href="realisations.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          Réalisations
-          <span class="admin-nav-item-badge">12</span>
-        </a>
-        <a href="medias.html" class="admin-nav-item is-active">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          Médiathèque
-        </a>
-        <a href="publications.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Publications
-          <span class="admin-nav-item-badge">5</span>
-        </a>
-        <a href="social.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          Réseaux sociaux
-        </a>
-      </div>
-      <div class="admin-nav-section">
-        <div class="admin-nav-section-title">Intelligence</div>
-        <a href="ai.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect x="2" y="2" width="20" height="8" rx="2"/><path d="M2 12h20"/><path d="M2 16h20"/><path d="M2 20h20"/></svg>
-          Assistant IA
-        </a>
-        <a href="reviews.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          Avis clients
-          <span class="admin-nav-item-badge">2 nouveaux</span>
-        </a>
-        <a href="analytics.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          SEO &amp; Analytics
-        </a>
-      </div>
-      <div class="admin-nav-section">
-        <div class="admin-nav-section-title">Système</div>
-        <a href="users.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          Utilisateurs
-        </a>
-        <a href="settings.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-          Paramètres
-        </a>
-      </div>
-    </nav>
-    <div class="admin-sidebar-foot">
-      <div class="admin-user-card" data-logout title="Cliquer pour déconnexion">
-        <div class="admin-user-avatar" data-user-initial>F</div>
-        <div class="admin-user-info">
-          <strong data-user-name>Florian</strong>
-          <span data-user-role>Administrateur</span>
-        </div>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: .5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      </div>
-    </div>
-  </aside>
+  <aside class="admin-sidebar"></aside>
   <main class="admin-main">
-    <header class="admin-topbar">
-      <button class="admin-topbar-burger" aria-label="Ouvrir le menu">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-      <h2 class="admin-topbar-title">Médiathèque</h2>
-      <div class="admin-topbar-search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="search" placeholder="Rechercher…">
-      </div>
-      <div class="admin-topbar-actions">
-        <button class="admin-icon-btn" title="Notifications">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          <span class="admin-icon-btn-dot"></span>
-        </button>
-        <a href="../" class="admin-icon-btn" title="Voir le site public" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
-      </div>
-    </header>
+    <header class="admin-topbar"></header>
     <div class="admin-content">
       <div class="breadcrumb">
         <a href="index.html">Dashboard</a>
@@ -124,32 +48,124 @@
       <div class="admin-page-head">
         <div>
           <h1>Médiathèque</h1>
-          <p>Photos, vidéos, documents — classement automatique par métier, ville, technicien, date.</p>
+          <p>Toutes les photos uploadées dans le bucket Supabase Storage.</p>
         </div>
-        <button class="btn btn-primary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Uploader des médias
-        </button>
       </div>
 
-      <div class="empty-state">
-        <div class="empty-state-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      <div class="med-stats" id="medStats">Chargement…</div>
+
+      <div class="med-toolbar">
+        <div class="toolbar-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="search" id="medSearch" placeholder="Rechercher par nom…">
         </div>
-        <h3>Aucun média</h3>
-        <p>Uploadez vos photos terrain — l'IA classifiera automatiquement par métier et ville.</p>
-        <button class="btn btn-primary">Uploader des médias</button>
+        <select id="medFolder">
+          <option value="">Tous dossiers</option>
+          <option value="before">Photos avant</option>
+          <option value="after">Photos après</option>
+        </select>
       </div>
 
-      <div style="margin-top: 28px; padding: 20px; background: rgba(13,160,207,.04); border: 1px dashed rgba(13,160,207,.20); border-radius: 12px; font-size: .86rem; color: var(--ink-500); line-height: 1.6;">
-        🚧 <strong style="color: var(--ink-900);">Module en cours de construction.</strong> Cette page sera fonctionnelle dans la prochaine phase de développement. Pour l'instant, la maquette est en place — UI, navigation et design system validés.
-      </div>
-
+      <div id="medGrid"></div>
     </div>
   </main>
 </div>
+
+<div class="lightbox" id="medLightbox">
+  <img id="lbImg" alt="">
+  <div class="lb-info" id="lbInfo"></div>
+</div>
+
 <script src="assets/supabase.js"></script>
 <script src="assets/admin.js"></script>
-<script>(async function(){ await HCSupabase.init(); await HCAdmin.requireAuth(); })();</script>
+<script src="assets/layout.js"></script>
+<script>
+(async function() {
+  await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+  await HCLayout.mount('medias', 'Médiathèque');
+
+  const c = await HCSupabase.init();
+  const BUCKET = 'réalisations';
+  let allFiles = [];
+
+  async function loadFiles() {
+    const grid = document.getElementById('medGrid');
+    grid.innerHTML = '<div class="med-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div>Chargement des médias…</div></div>';
+
+    const all = [];
+    for (const folder of ['before', 'after']) {
+      const { data, error } = await c.storage.from(BUCKET).list(folder, {
+        limit: 200, sortBy: { column: 'created_at', order: 'desc' }
+      });
+      if (error) { console.warn('Folder ' + folder + ' :', error); continue; }
+      (data || []).forEach(f => {
+        if (f.name && !(f.id||'').startsWith('.')) {
+          const { data: pub } = c.storage.from(BUCKET).getPublicUrl(folder + '/' + f.name);
+          all.push({
+            folder, name: f.name, path: folder + '/' + f.name,
+            url: pub.publicUrl, size: f.metadata?.size || 0,
+            created: f.created_at
+          });
+        }
+      });
+    }
+    allFiles = all;
+    const totalSize = all.reduce((s,f)=>s+(f.size||0),0);
+    const nBefore = all.filter(f=>f.folder==='before').length;
+    const nAfter = all.filter(f=>f.folder==='after').length;
+    document.getElementById('medStats').innerHTML =
+      `<span><strong>${all.length}</strong> média${all.length>1?'s':''}</span>` +
+      `<span><strong>${nBefore}</strong> photo${nBefore>1?'s':''} avant</span>` +
+      `<span><strong>${nAfter}</strong> photo${nAfter>1?'s':''} après</span>` +
+      `<span><strong>${formatBytes(totalSize)}</strong> au total</span>`;
+    render();
+  }
+
+  function render() {
+    const q = document.getElementById('medSearch').value.toLowerCase().trim();
+    const f = document.getElementById('medFolder').value;
+    const filtered = allFiles.filter(file => {
+      if (f && file.folder !== f) return false;
+      if (q && !file.name.toLowerCase().includes(q)) return false;
+      return true;
+    });
+    const grid = document.getElementById('medGrid');
+    if (!filtered.length) {
+      grid.innerHTML = '<div class="med-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><div>' + (allFiles.length ? 'Aucun résultat avec ces filtres.' : 'Aucun média uploadé pour le moment.<br><a href="realisations.html?action=new" style="color:var(--hc-primary);font-weight:700">Créer un premier chantier →</a>') + '</div></div>';
+      return;
+    }
+    grid.innerHTML = '<div class="med-grid">' + filtered.map(f => `
+      <div class="med-card" data-url="${f.url}" data-name="${f.name}" data-folder="${f.folder}">
+        <span class="folder-tag">${f.folder === 'before' ? 'Avant' : 'Après'}</span>
+        <img src="${f.url}" alt="${f.name}" loading="lazy">
+        <div class="overlay">${formatBytes(f.size)}<br>${new Date(f.created).toLocaleDateString('fr-FR')}</div>
+      </div>
+    `).join('') + '</div>';
+    grid.querySelectorAll('.med-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.getElementById('lbImg').src = card.dataset.url;
+        document.getElementById('lbInfo').textContent = card.dataset.name + ' · ' + (card.dataset.folder === 'before' ? 'Avant' : 'Après');
+        document.getElementById('medLightbox').classList.add('open');
+      });
+    });
+  }
+
+  function formatBytes(b) {
+    if (!b) return '0 ko';
+    if (b < 1024) return b + ' o';
+    if (b < 1048576) return (b/1024).toFixed(1) + ' ko';
+    return (b/1048576).toFixed(2) + ' Mo';
+  }
+
+  document.getElementById('medSearch').addEventListener('input', render);
+  document.getElementById('medFolder').addEventListener('change', render);
+  document.getElementById('medLightbox').addEventListener('click', () => document.getElementById('medLightbox').classList.remove('open'));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('medLightbox').classList.remove('open'); });
+
+  await loadFiles();
+})();
+</script>
 </body>
 </html>

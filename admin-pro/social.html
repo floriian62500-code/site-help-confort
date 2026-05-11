@@ -10,111 +10,39 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/admin.css">
+<style>
+.social-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.social-card{background:#fff;border:1px solid var(--ink-100);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:14px;box-shadow:0 1px 2px rgba(11,18,32,.04)}
+.social-card-head{display:flex;align-items:center;gap:12px}
+.social-card-logo{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.social-card-logo.fb{background:#1877F2}
+.social-card-logo.ig{background:linear-gradient(135deg,#F58529,#DD2A7B,#8134AF)}
+.social-card-logo.li{background:#0A66C2}
+.social-card-logo.gbp{background:#fff;border:1px solid var(--ink-100);box-shadow:0 1px 2px rgba(11,18,32,.06)}
+.social-card-logo svg{width:24px;height:24px}
+.social-card-name{flex:1}
+.social-card-name strong{display:block;font-size:1rem;color:var(--ink-900);margin-bottom:2px}
+.social-card-name span{font-size:.78rem;color:var(--ink-500)}
+.social-status{padding:4px 10px;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;display:inline-flex;align-items:center;gap:5px}
+.social-status::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+.social-status.ok{background:rgba(0,170,80,.12);color:#007033}
+.social-status.off{background:var(--ink-50);color:var(--ink-500)}
+.social-card-body{font-size:.86rem;color:var(--ink-500);line-height:1.5;flex:1}
+.social-card-body code{background:var(--ink-50);padding:1px 6px;border-radius:5px;font-size:.78em;font-family:'SF Mono','Monaco','Consolas',monospace}
+.social-card-foot{display:flex;gap:8px;flex-wrap:wrap;padding-top:14px;border-top:1px solid var(--ink-100)}
+.social-card-foot .btn{flex:1;text-align:center;justify-content:center}
+.summary-box{background:linear-gradient(135deg,rgba(13,160,207,.04),#fff);border:1px solid rgba(13,160,207,.18);border-radius:14px;padding:18px;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.summary-box svg{flex-shrink:0;width:32px;height:32px;color:var(--hc-primary)}
+.summary-box strong{display:block;font-size:1rem;color:var(--ink-900);margin-bottom:2px}
+.summary-box span{font-size:.86rem;color:var(--ink-500)}
+</style>
 </head>
 <body>
 <div class="admin-overlay"></div>
 <div class="admin-shell">
-  <aside class="admin-sidebar">
-    <div class="admin-sidebar-brand">
-      <div class="admin-brand-logo">H!</div>
-      <div class="admin-brand-text">
-        <strong>HELP! Confort</strong>
-        <span>Back-Office Pro</span>
-      </div>
-    </div>
-    <nav class="admin-sidebar-nav">
-      <div class="admin-nav-section">
-        <div class="admin-nav-section-title">Pilotage</div>
-        <a href="index.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
-          Dashboard
-        </a>
-        <a href="alerts.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Alertes &amp; Monitoring
-          <span class="admin-nav-item-badge alert">3</span>
-        </a>
-      </div>
-      <div class="admin-nav-section">
-        <div class="admin-nav-section-title">Contenu</div>
-        <a href="realisations.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          Réalisations
-          <span class="admin-nav-item-badge">12</span>
-        </a>
-        <a href="medias.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          Médiathèque
-        </a>
-        <a href="publications.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Publications
-          <span class="admin-nav-item-badge">5</span>
-        </a>
-        <a href="social.html" class="admin-nav-item is-active">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          Réseaux sociaux
-        </a>
-      </div>
-      <div class="admin-nav-section">
-        <div class="admin-nav-section-title">Intelligence</div>
-        <a href="ai.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect x="2" y="2" width="20" height="8" rx="2"/><path d="M2 12h20"/><path d="M2 16h20"/><path d="M2 20h20"/></svg>
-          Assistant IA
-        </a>
-        <a href="reviews.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          Avis clients
-          <span class="admin-nav-item-badge">2 nouveaux</span>
-        </a>
-        <a href="analytics.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          SEO &amp; Analytics
-        </a>
-      </div>
-      <div class="admin-nav-section">
-        <div class="admin-nav-section-title">Système</div>
-        <a href="users.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          Utilisateurs
-        </a>
-        <a href="settings.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-          Paramètres
-        </a>
-      </div>
-    </nav>
-    <div class="admin-sidebar-foot">
-      <div class="admin-user-card" data-logout title="Cliquer pour déconnexion">
-        <div class="admin-user-avatar" data-user-initial>F</div>
-        <div class="admin-user-info">
-          <strong data-user-name>Florian</strong>
-          <span data-user-role>Administrateur</span>
-        </div>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: .5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      </div>
-    </div>
-  </aside>
+  <aside class="admin-sidebar"></aside>
   <main class="admin-main">
-    <header class="admin-topbar">
-      <button class="admin-topbar-burger" aria-label="Ouvrir le menu">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-      <h2 class="admin-topbar-title">Réseaux sociaux</h2>
-      <div class="admin-topbar-search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="search" placeholder="Rechercher…">
-      </div>
-      <div class="admin-topbar-actions">
-        <button class="admin-icon-btn" title="Notifications">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          <span class="admin-icon-btn-dot"></span>
-        </button>
-        <a href="../" class="admin-icon-btn" title="Voir le site public" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
-      </div>
-    </header>
+    <header class="admin-topbar"></header>
     <div class="admin-content">
       <div class="breadcrumb">
         <a href="index.html">Dashboard</a>
@@ -124,32 +52,129 @@
       <div class="admin-page-head">
         <div>
           <h1>Réseaux sociaux</h1>
-          <p>Cross-posting Facebook · Instagram · LinkedIn · Google Business Profile · TikTok · YouTube.</p>
+          <p>État des connexions et capacités de publication multi-canal.</p>
         </div>
-        <button class="btn btn-primary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Configurer les canaux
-        </button>
       </div>
 
-      <div class="empty-state">
-        <div class="empty-state-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      <div class="summary-box" id="summaryBox">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div>
+          <strong>Chargement de l'état des connexions…</strong>
+          <span>Patientez quelques secondes</span>
         </div>
-        <h3>Connectez vos canaux</h3>
-        <p>Une fois les API connectées dans Paramètres, vos publications validées se posteront automatiquement sur tous vos canaux.</p>
-        <button class="btn btn-primary">Configurer les canaux</button>
       </div>
 
-      <div style="margin-top: 28px; padding: 20px; background: rgba(13,160,207,.04); border: 1px dashed rgba(13,160,207,.20); border-radius: 12px; font-size: .86rem; color: var(--ink-500); line-height: 1.6;">
-        🚧 <strong style="color: var(--ink-900);">Module en cours de construction.</strong> Cette page sera fonctionnelle dans la prochaine phase de développement. Pour l'instant, la maquette est en place — UI, navigation et design system validés.
-      </div>
-
+      <div class="social-grid" id="socialGrid"></div>
     </div>
   </main>
 </div>
+
 <script src="assets/supabase.js"></script>
 <script src="assets/admin.js"></script>
-<script>(async function(){ await HCSupabase.init(); await HCAdmin.requireAuth(); })();</script>
+<script src="assets/layout.js"></script>
+<script>
+(async function() {
+  await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+  await HCLayout.mount('social', 'Réseaux sociaux');
+
+  const c = await HCSupabase.init();
+  const { data: settings } = await c.from('app_settings').select('*');
+  const byKey = {};
+  (settings || []).forEach(s => byKey[s.key] = s.value || {});
+
+  const platforms = [
+    {
+      key: 'meta_fb',
+      name: 'Facebook',
+      handle: '@depanaudo',
+      desc: 'Publication automatique de chantiers avec photos avant/après. Programmation, hashtags, mentions de page.',
+      logo: 'fb',
+      icon: '<svg viewBox="0 0 24 24" fill="#fff"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>',
+      configKey: 'meta',
+      isOk: d => !!(d.page_access_token && d.fb_page_id),
+      guideUrl: '../guides/meta.md',
+      configAnchor: 'section-meta'
+    },
+    {
+      key: 'meta_ig',
+      name: 'Instagram',
+      handle: 'depanaudo.officiel',
+      desc: 'Publication automatique sur compte Instagram Business. Formats carré et stories (à venir).',
+      logo: 'ig',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>',
+      configKey: 'meta',
+      isOk: d => !!(d.page_access_token && d.ig_business_account_id),
+      guideUrl: '../guides/meta.md',
+      configAnchor: 'section-meta'
+    },
+    {
+      key: 'linkedin',
+      name: 'LinkedIn',
+      handle: 'Page entreprise',
+      desc: 'Publication sur votre page entreprise LinkedIn — adapté au contenu B2B et au réseautage professionnel local.',
+      logo: 'li',
+      icon: '<svg viewBox="0 0 24 24" fill="#fff"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM3.56 20.45h3.55V9H3.56v11.45z"/></svg>',
+      configKey: 'linkedin',
+      isOk: d => !!(d.access_token && d.organization_urn),
+      guideUrl: '../guides/linkedin.md',
+      configAnchor: 'section-linkedin'
+    },
+    {
+      key: 'gbp',
+      name: 'Google Business',
+      handle: 'Saint-Omer + Dunkerque',
+      desc: 'Posts Google sur vos 2 fiches Business + synchronisation automatique des nouveaux avis Google.',
+      logo: 'gbp',
+      icon: '<svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>',
+      configKey: 'gbp',
+      isOk: d => !!(d.access_token && d.account_id_audo),
+      guideUrl: '../guides/gbp.md',
+      configAnchor: 'section-gbp'
+    }
+  ];
+
+  const connectedCount = platforms.filter(p => p.isOk(byKey[p.configKey] || {})).length;
+  const summary = document.getElementById('summaryBox');
+  if (connectedCount === 0) {
+    summary.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div><strong>Aucun réseau social connecté pour l'instant</strong><span>Suivez les guides d'intégration pour activer la publication automatique.</span></div>`;
+  } else {
+    summary.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><div><strong>${connectedCount} / ${platforms.length} canaux connectés</strong><span>Vous pouvez publier automatiquement sur ces canaux depuis la page Réalisations.</span></div>`;
+  }
+
+  document.getElementById('socialGrid').innerHTML = platforms.map(p => {
+    const data = byKey[p.configKey] || {};
+    const ok = p.isOk(data);
+    return `
+      <div class="social-card">
+        <div class="social-card-head">
+          <div class="social-card-logo ${p.logo}">${p.icon}</div>
+          <div class="social-card-name">
+            <strong>${p.name}</strong>
+            <span>${p.handle}</span>
+          </div>
+          <span class="social-status ${ok ? 'ok' : 'off'}">${ok ? 'Connecté' : 'Non configuré'}</span>
+        </div>
+        <div class="social-card-body">
+          ${p.desc}
+          ${ok && data.fb_page_id ? `<br><br>Page ID : <code>${data.fb_page_id}</code>` : ''}
+          ${ok && data.organization_urn ? `<br><br>URN : <code>${data.organization_urn.slice(0, 30)}…</code>` : ''}
+          ${ok && data.account_id_audo ? `<br><br>Account : <code>${data.account_id_audo.slice(0, 28)}…</code>` : ''}
+        </div>
+        <div class="social-card-foot">
+          <a href="${p.guideUrl}" class="btn" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Guide
+          </a>
+          <a href="settings.html#${p.configAnchor}" class="btn btn-primary">
+            ${ok ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Gérer' : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Configurer'}
+          </a>
+        </div>
+      </div>
+    `;
+  }).join('');
+})();
+</script>
 </body>
 </html>
