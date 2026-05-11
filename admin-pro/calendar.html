@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Calendrier éditorial · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+.cal-head{display:flex;align-items:center;gap:14px;padding:14px 18px;background:#fff;border:1px solid var(--ink-100);border-radius:14px;margin-bottom:14px;box-shadow:0 1px 2px rgba(11,18,32,.04);flex-wrap:wrap}
+.cal-head h2{font-size:1.12rem;font-weight:800;margin:0;color:var(--ink-900);flex:1}
+.cal-nav{display:flex;align-items:center;gap:6px}
+.cal-nav button{width:32px;height:32px;border-radius:8px;border:1px solid var(--ink-100);background:#fff;color:var(--ink-700);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
+.cal-nav button:hover{background:var(--hc-primary);color:#fff;border-color:var(--hc-primary)}
+.cal-nav .today{width:auto;padding:0 12px;font:inherit;font-weight:700;font-size:.82rem}
+.cal-legend{display:flex;gap:14px;flex-wrap:wrap}
+.cal-legend span{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:var(--ink-500);font-weight:600}
+.cal-legend .dot{width:10px;height:10px;border-radius:3px}
+.cal-legend .dot.pub{background:#16A34A}
+.cal-legend .dot.sched{background:#7C3AED}
+.cal-legend .dot.lead{background:#0DA0CF}
+.cal-legend .dot.failed{background:#d92d20}
+
+.cal-grid{background:#fff;border:1px solid var(--ink-100);border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(11,18,32,.04)}
+.cal-grid-head{display:grid;grid-template-columns:repeat(7,1fr);background:var(--ink-50);border-bottom:1px solid var(--ink-100)}
+.cal-grid-head div{padding:9px 10px;font-size:.74rem;font-weight:700;color:var(--ink-500);text-transform:uppercase;letter-spacing:.04em}
+.cal-grid-body{display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:minmax(110px,auto)}
+.cal-cell{border-right:1px solid var(--ink-100);border-bottom:1px solid var(--ink-100);padding:8px;position:relative;min-height:110px;display:flex;flex-direction:column;background:#fff;transition:background .12s}
+.cal-cell.is-other-month{background:#FAFCFD;color:var(--ink-300)}
+.cal-cell.is-today{background:rgba(13,160,207,.04)}
+.cal-cell.is-today .cal-cell-num{background:var(--hc-primary);color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+.cal-cell:hover{background:var(--ink-50)}
+.cal-cell-num{font-size:.86rem;font-weight:700;color:var(--ink-700);margin-bottom:4px;width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+.cal-cell-events{display:flex;flex-direction:column;gap:2px;flex:1;overflow:hidden}
+.cal-evt{padding:2px 7px;border-radius:5px;font-size:.7rem;font-weight:600;color:#fff;cursor:pointer;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:4px}
+.cal-evt.pub{background:#16A34A}
+.cal-evt.sched{background:#7C3AED}
+.cal-evt.lead{background:#0DA0CF}
+.cal-evt.failed{background:#d92d20}
+.cal-evt:hover{filter:brightness(1.1)}
+.cal-evt svg{width:9px;height:9px;flex-shrink:0}
+.cal-evt-more{font-size:.66rem;color:var(--ink-500);font-weight:600;padding:1px 7px;cursor:pointer}
+.cal-evt-more:hover{color:var(--hc-primary)}
+@media(max-width:760px){
+  .cal-grid-body{grid-auto-rows:minmax(80px,auto)}
+  .cal-cell{min-height:80px;padding:5px}
+  .cal-evt{font-size:.6rem;padding:1px 5px}
+}
+
+/* Modale détail jour */
+.day-modal{position:fixed;inset:0;z-index:900;display:none;background:rgba(10,20,40,.55);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px}
+.day-modal.open{display:flex}
+.day-sheet{background:#fff;border-radius:18px;width:100%;max-width:520px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.32)}
+.day-head{padding:18px 22px;border-bottom:1px solid var(--ink-100);display:flex;align-items:center;gap:12px}
+.day-head h3{font-size:1.05rem;font-weight:800;margin:0;color:var(--ink-900);flex:1}
+.day-close{background:#F4F7FB;border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-500)}
+.day-body{padding:8px 14px 18px;overflow-y:auto;flex:1}
+.day-evt{display:flex;align-items:flex-start;gap:10px;padding:11px 8px;border-bottom:1px solid var(--ink-50)}
+.day-evt:last-child{border-bottom:none}
+.day-evt-dot{flex-shrink:0;width:10px;height:10px;border-radius:50%;margin-top:5px}
+.day-evt-text{flex:1;min-width:0}
+.day-evt-text strong{display:block;font-size:.88rem;color:var(--ink-900);font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.day-evt-text small{display:block;font-size:.74rem;color:var(--ink-500);margin-top:1px}
+.day-evt a{font-size:.74rem;color:var(--hc-primary);font-weight:700;text-decoration:none;flex-shrink:0}
+.day-evt a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="admin-overlay"></div>
+<div class="admin-shell">
+  <aside class="admin-sidebar"></aside>
+  <main class="admin-main">
+    <header class="admin-topbar"></header>
+    <div class="admin-content">
+
+      <div class="cal-head">
+        <h2 id="calTitle">—</h2>
+        <div class="cal-nav">
+          <button id="calPrev" aria-label="Mois précédent">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button id="calToday" class="today">Aujourd'hui</button>
+          <button id="calNext" aria-label="Mois suivant">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+        <div class="cal-legend">
+          <span><span class="dot pub"></span>Publié</span>
+          <span><span class="dot sched"></span>Planifié</span>
+          <span><span class="dot lead"></span>Lead reçu</span>
+          <span><span class="dot failed"></span>Échec</span>
+        </div>
+      </div>
+
+      <div class="cal-grid">
+        <div class="cal-grid-head">
+          <div>Lun</div><div>Mar</div><div>Mer</div><div>Jeu</div><div>Ven</div><div>Sam</div><div>Dim</div>
+        </div>
+        <div class="cal-grid-body" id="calBody"></div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Modale détail jour -->
+<div class="day-modal" id="dayModal">
+  <div class="day-sheet">
+    <div class="day-head">
+      <h3 id="dayTitle">—</h3>
+      <button class="day-close" id="dayClose" type="button">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="day-body" id="dayBody"></div>
+  </div>
+</div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+(async function() {
+  await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+  await HCLayout.mount('calendar', 'Calendrier éditorial');
+  const c = await HCSupabase.init();
+
+  let curDate = new Date();
+  curDate.setDate(1);
+  let allEvents = []; // { date: 'YYYY-MM-DD', type: 'pub'|'sched'|'lead'|'failed', title, ref, time, link }
+
+  const MONTHS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+
+  function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  function fmtDate(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+  function fmtTime(d){return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}
+
+  async function loadEvents() {
+    // On charge un peu en avance/arrière du mois courant pour bien remplir les cellules
+    const first = new Date(curDate.getFullYear(), curDate.getMonth(), 1);
+    const last = new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0);
+    // Élargir la fenêtre pour inclure cells de bord
+    const winStart = new Date(first); winStart.setDate(first.getDate() - 7);
+    const winEnd = new Date(last); winEnd.setDate(last.getDate() + 7);
+
+    const events = [];
+
+    // Réalisations publiées
+    try {
+      const r = await c.from('realisations')
+        .select('id,title,slug,metier,ville,published_at,status,image_after')
+        .eq('status', 'publie')
+        .gte('published_at', winStart.toISOString())
+        .lte('published_at', winEnd.toISOString())
+        .limit(500);
+      (r.data || []).forEach(x => {
+        const d = new Date(x.published_at);
+        events.push({
+          date: fmtDate(d),
+          time: fmtTime(d),
+          dt: d,
+          type: 'pub',
+          title: x.title,
+          sub: (x.metier ? x.metier[0].toUpperCase() + x.metier.slice(1) : '') + (x.ville ? ' · ' + x.ville : ''),
+          link: 'realisation.html?slug=' + encodeURIComponent(x.slug || ''),
+          adminLink: 'realisations.html?edit=' + x.id
+        });
+      });
+    } catch (e) { console.warn('Reals load', e); }
+
+    // Publications planifiées
+    try {
+      const sched = await c.from('scheduled_publications')
+        .select('id,realisation_id,scheduled_at,status,channels,last_error,realisations(title,metier,ville,slug)')
+        .gte('scheduled_at', winStart.toISOString())
+        .lte('scheduled_at', winEnd.toISOString())
+        .limit(500);
+      (sched.data || []).forEach(x => {
+        const d = new Date(x.scheduled_at);
+        const r = x.realisations || {};
+        const isFailed = x.status === 'failed';
+        events.push({
+          date: fmtDate(d),
+          time: fmtTime(d),
+          dt: d,
+          type: isFailed ? 'failed' : (x.status === 'done' ? 'pub' : 'sched'),
+          title: r.title || '(chantier)',
+          sub: (x.status === 'pending' ? 'À publier' : x.status === 'done' ? 'Publié' : x.status === 'failed' ? 'Échec' : x.status) + ' · ' + Object.entries(x.channels || {}).filter(([_,v])=>v).map(([k])=>k.toUpperCase()).join(', '),
+          link: 'publications.html',
+          adminLink: 'publications.html'
+        });
+      });
+    } catch (e) { /* table absente */ }
+
+    // Leads reçus
+    try {
+      const l = await c.from('leads')
+        .select('id,nom,metier,ville,telephone,created_at')
+        .gte('created_at', winStart.toISOString())
+        .lte('created_at', winEnd.toISOString())
+        .limit(500);
+      (l.data || []).forEach(x => {
+        const d = new Date(x.created_at);
+        events.push({
+          date: fmtDate(d),
+          time: fmtTime(d),
+          dt: d,
+          type: 'lead',
+          title: (x.nom || 'Sans nom'),
+          sub: [x.metier && x.metier[0].toUpperCase()+x.metier.slice(1), x.ville, x.telephone].filter(Boolean).join(' · '),
+          link: 'leads.html'
+        });
+      });
+    } catch (e) { /* table absente */ }
+
+    allEvents = events;
+  }
+
+  function render() {
+    document.getElementById('calTitle').textContent = MONTHS[curDate.getMonth()] + ' ' + curDate.getFullYear();
+
+    const first = new Date(curDate.getFullYear(), curDate.getMonth(), 1);
+    const last = new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0);
+
+    // Premier lundi avant ou égal au 1er du mois
+    const firstDow = (first.getDay() + 6) % 7; // lundi = 0
+    const startGrid = new Date(first); startGrid.setDate(first.getDate() - firstDow);
+    // Toujours afficher 6 semaines = 42 cases
+    const cells = [];
+    for (let i = 0; i < 42; i++) {
+      const d = new Date(startGrid);
+      d.setDate(startGrid.getDate() + i);
+      cells.push(d);
+    }
+
+    const today = fmtDate(new Date());
+    const body = document.getElementById('calBody');
+    body.innerHTML = cells.map(d => {
+      const ds = fmtDate(d);
+      const isToday = ds === today;
+      const isOther = d.getMonth() !== curDate.getMonth();
+      const dayEvents = allEvents.filter(e => e.date === ds).sort((a,b) => a.dt - b.dt);
+      const visible = dayEvents.slice(0, 3);
+      const more = dayEvents.length - visible.length;
+      const eventsHtml = visible.map(e => {
+        const icon = e.type === 'pub' ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>'
+          : e.type === 'sched' ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
+          : e.type === 'failed' ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+          : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+        return `<div class="cal-evt ${e.type}" data-date="${ds}" title="${escapeHtml(e.title)}">${icon}<span>${e.time} ${escapeHtml(e.title)}</span></div>`;
+      }).join('');
+      const moreHtml = more > 0 ? `<div class="cal-evt-more" data-date="${ds}">+ ${more} de plus</div>` : '';
+      return `
+        <div class="cal-cell ${isOther?'is-other-month':''} ${isToday?'is-today':''}" data-date="${ds}">
+          <div class="cal-cell-num">${d.getDate()}</div>
+          <div class="cal-cell-events">${eventsHtml}${moreHtml}</div>
+        </div>`;
+    }).join('');
+
+    // Clic sur une cellule ouvre la modale du jour
+    body.querySelectorAll('.cal-cell').forEach(cell => {
+      cell.addEventListener('click', () => openDayModal(cell.dataset.date));
+    });
+  }
+
+  function openDayModal(ds) {
+    const dayEvents = allEvents.filter(e => e.date === ds).sort((a,b) => a.dt - b.dt);
+    const [y, m, d] = ds.split('-').map(Number);
+    const date = new Date(y, m-1, d);
+    document.getElementById('dayTitle').textContent = date.toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+    const body = document.getElementById('dayBody');
+    if (!dayEvents.length) {
+      body.innerHTML = '<div style="padding:30px 14px;text-align:center;color:var(--ink-400)">Aucun événement ce jour-là.</div>';
+    } else {
+      body.innerHTML = dayEvents.map(e => {
+        const color = e.type === 'pub' ? '#16A34A' : e.type === 'sched' ? '#7C3AED' : e.type === 'failed' ? '#d92d20' : '#0DA0CF';
+        const label = e.type === 'pub' ? 'Publication' : e.type === 'sched' ? 'Planifié' : e.type === 'failed' ? 'Échec' : 'Lead';
+        return `
+          <div class="day-evt">
+            <div class="day-evt-dot" style="background:${color}"></div>
+            <div class="day-evt-text">
+              <strong>${escapeHtml(e.title)}</strong>
+              <small>${e.time} · ${label}${e.sub ? ' · ' + escapeHtml(e.sub) : ''}</small>
+            </div>
+            ${e.link ? `<a href="${escapeHtml(e.link)}">Ouvrir →</a>` : ''}
+          </div>`;
+      }).join('');
+    }
+    document.getElementById('dayModal').classList.add('open');
+  }
+
+  document.getElementById('dayClose').addEventListener('click', () => document.getElementById('dayModal').classList.remove('open'));
+  document.getElementById('dayModal').addEventListener('click', e => { if (e.target.id === 'dayModal') document.getElementById('dayModal').classList.remove('open'); });
+
+  document.getElementById('calPrev').addEventListener('click', async () => { curDate.setMonth(curDate.getMonth() - 1); await refresh(); });
+  document.getElementById('calNext').addEventListener('click', async () => { curDate.setMonth(curDate.getMonth() + 1); await refresh(); });
+  document.getElementById('calToday').addEventListener('click', async () => { curDate = new Date(); curDate.setDate(1); await refresh(); });
+
+  async function refresh() {
+    await loadEvents();
+    render();
+  }
+
+  await refresh();
+})();
+</script>
+</body>
+</html>

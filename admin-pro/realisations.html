@@ -51,6 +51,9 @@
 .reals-table td{padding:12px 14px;border-bottom:1px solid var(--ink-100);font-size:.86rem;color:var(--ink-700);vertical-align:middle}
 .reals-table tr:last-child td{border-bottom:none}
 .reals-table tr:hover{background:rgba(13,160,207,.03)}
+.reals-table tr.row-selected{background:rgba(13,160,207,.08)}
+.reals-table tr.row-selected:hover{background:rgba(13,160,207,.12)}
+.reals-table tr[data-id]{cursor:pointer}
 .reals-table .thumb{width:48px;height:48px;border-radius:8px;background:var(--ink-50);object-fit:cover;display:block}
 .reals-table .row-actions{display:flex;gap:6px;justify-content:flex-end}
 .reals-table .row-actions button{border:1px solid var(--ink-100);background:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-500);transition:.15s}
@@ -201,6 +204,10 @@
         <a href="publications.html" class="admin-nav-item ">
           <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           Publications
+        </a>
+        <a href="calendar.html" class="admin-nav-item ">
+          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Calendrier éditorial
         </a>
         <a href="social.html" class="admin-nav-item ">
           <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
@@ -551,8 +558,74 @@ let _view = 'grid';      // 'grid' | 'table'
 let _editing = null;     // ID en cours d'édition (null = nouveau)
 let _uploads = { before: null, after: null }; // URLs uploadées dans la session courante
 let _user = null;
+let _selectedIds = new Set();  // bulk actions
 
 const BUCKET = 'réalisations';
+
+// ─── Bulk actions ───────────────────────────────────────────
+function updateBulkBar() {
+  let bar = document.getElementById('bulkBar');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'bulkBar';
+    bar.style.cssText = 'position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(140%);z-index:850;background:linear-gradient(135deg,#0A1428,#1A2A44);color:#fff;border-radius:14px;padding:10px 14px;display:flex;align-items:center;gap:10px;box-shadow:0 18px 50px rgba(0,0,0,.4);transition:transform .25s cubic-bezier(.16,1,.3,1);flex-wrap:wrap;max-width:calc(100vw - 40px)';
+    bar.innerHTML = `
+      <strong id="bulkCount" style="font-size:.86rem;font-weight:700;padding-right:8px;border-right:1px solid rgba(255,255,255,.15);margin-right:4px">— sélectionnés</strong>
+      <button data-bulk="publish" title="Publier la sélection" style="background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.15);color:#fff;padding:7px 11px;border-radius:8px;font:inherit;font-size:.78rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Publier</button>
+      <button data-bulk="validation" title="Mettre à valider" style="background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.15);color:#fff;padding:7px 11px;border-radius:8px;font:inherit;font-size:.78rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>À valider</button>
+      <button data-bulk="brouillon" title="Remettre en brouillon" style="background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.15);color:#fff;padding:7px 11px;border-radius:8px;font:inherit;font-size:.78rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>Brouillon</button>
+      <button data-bulk="pin" title="Épingler / désépingler" style="background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.15);color:#fff;padding:7px 11px;border-radius:8px;font:inherit;font-size:.78rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L9.5 8H4l4.5 3.5L7 18l5-3.5L17 18l-1.5-6.5L20 8h-5.5z"/></svg>Épingler</button>
+      <button data-bulk="delete" title="Supprimer" style="background:rgba(217,45,32,.20);border:1px solid rgba(255,150,150,.30);color:#fff;padding:7px 11px;border-radius:8px;font:inherit;font-size:.78rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg>Supprimer</button>
+      <button data-bulk="cancel" title="Annuler" style="background:transparent;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);padding:7px 11px;border-radius:8px;font:inherit;font-size:.78rem;font-weight:600;cursor:pointer">✕</button>
+    `;
+    document.body.appendChild(bar);
+    bar.querySelectorAll('[data-bulk]').forEach(b => b.addEventListener('click', () => bulkAction(b.dataset.bulk)));
+  }
+  const n = _selectedIds.size;
+  if (n > 0) {
+    bar.querySelector('#bulkCount').textContent = n + ' chantier' + (n>1?'s':'') + ' sélectionné' + (n>1?'s':'');
+    bar.style.transform = 'translateX(-50%) translateY(0)';
+  } else {
+    bar.style.transform = 'translateX(-50%) translateY(140%)';
+  }
+}
+
+async function bulkAction(act) {
+  if (act === 'cancel') { _selectedIds.clear(); updateBulkBar(); applyFilters(); return; }
+  if (_selectedIds.size === 0) return;
+  const ids = Array.from(_selectedIds);
+  const c = await HCSupabase.init();
+
+  try {
+    if (act === 'publish' || act === 'validation' || act === 'brouillon') {
+      const update = { status: act, updated_at: new Date().toISOString() };
+      if (act === 'publish') { update.status = 'publie'; update.published_at = new Date().toISOString(); }
+      else if (act === 'validation') update.status = 'validation';
+      else update.status = 'brouillon';
+      const { error } = await c.from('realisations').update(update).in('id', ids);
+      if (error) throw error;
+      toast(ids.length + ' chantier' + (ids.length>1?'s':'') + ' mis à jour', 'ok');
+    }
+    else if (act === 'pin') {
+      // Toggle : si au moins un n'est pas pinned, on pin tous ; sinon on dépin tous
+      const someUnpinned = _all.filter(r => ids.includes(r.id)).some(r => !r.pinned);
+      const { error } = await c.from('realisations').update({ pinned: someUnpinned }).in('id', ids);
+      if (error) throw error;
+      toast(ids.length + ' chantier' + (ids.length>1?'s':'') + (someUnpinned ? ' épinglé' : ' désépinglé') + (ids.length>1?'s':''), 'ok');
+    }
+    else if (act === 'delete') {
+      if (!confirm('Supprimer ' + ids.length + ' chantier' + (ids.length>1?'s':'') + ' ? Action irréversible.')) return;
+      const { error } = await c.from('realisations').delete().in('id', ids);
+      if (error) throw error;
+      toast(ids.length + ' chantier' + (ids.length>1?'s':'') + ' supprimé' + (ids.length>1?'s':''), 'ok');
+    }
+    _selectedIds.clear();
+    updateBulkBar();
+    await loadReals();
+  } catch (e) {
+    toast('Erreur : ' + (e.message || e), 'err', 4500);
+  }
+}
 
 // ─── Mapping ville → agence ──────────────────────────────────
 const VILLES_DEPAN_AUDO = ['Saint-Omer','Arques','Longuenesse','Tatinghem','Wizernes','Blendecques','Aire-sur-la-Lys','Lumbres','Saint-Martin-lez-Tatinghem'];
@@ -794,6 +867,7 @@ function renderTable(container, items) {
       <table>
         <thead>
           <tr>
+            <th style="width:34px"><input type="checkbox" id="bulkSelectAll" style="accent-color:var(--hc-primary);cursor:pointer;width:15px;height:15px" title="Tout sélectionner"></th>
             <th style="width:60px"></th>
             <th>Titre</th>
             <th>Métier</th>
@@ -808,8 +882,10 @@ function renderTable(container, items) {
           ${items.map(r => {
             const img = r.image_after || r.image_before;
             const statusLabel = r.status === 'publie' ? 'Publié' : r.status === 'validation' ? 'À valider' : 'Brouillon';
+            const isChecked = _selectedIds.has(r.id);
             return `
-              <tr data-id="${r.id}">
+              <tr data-id="${r.id}" ${isChecked ? 'class="row-selected"' : ''}>
+                <td><input type="checkbox" class="bulk-row-check" data-row-id="${r.id}" ${isChecked?'checked':''} style="accent-color:var(--hc-primary);cursor:pointer;width:15px;height:15px"></td>
                 <td>${img ? `<img class="thumb" src="${img}" loading="lazy">` : '<div class="thumb" style="display:flex;align-items:center;justify-content:center;color:var(--ink-300)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>'}</td>
                 <td>
                   <strong style="color:var(--ink-900)">${escapeHtml(r.title || 'Sans titre')}</strong>
@@ -840,7 +916,41 @@ function renderTable(container, items) {
       e.stopPropagation();
       if (confirm('Supprimer cette réalisation ? Cette action est irréversible.')) await deleteReal(id);
     });
+    // Clic sur ligne (hors checkbox/actions) ouvre l'édition
+    row.addEventListener('click', e => {
+      if (e.target.closest('.bulk-row-check') || e.target.closest('.row-actions')) return;
+      openEdit(id);
+    });
   });
+
+  // Bulk checkboxes
+  container.querySelectorAll('.bulk-row-check').forEach(cb => {
+    cb.addEventListener('click', e => { e.stopPropagation(); });
+    cb.addEventListener('change', () => {
+      const id = cb.dataset.rowId;
+      if (cb.checked) _selectedIds.add(id);
+      else _selectedIds.delete(id);
+      cb.closest('tr').classList.toggle('row-selected', cb.checked);
+      updateBulkBar();
+    });
+  });
+
+  // Master checkbox
+  const master = document.getElementById('bulkSelectAll');
+  if (master) {
+    const checkedCount = container.querySelectorAll('.bulk-row-check:checked').length;
+    master.checked = checkedCount > 0 && checkedCount === container.querySelectorAll('.bulk-row-check').length;
+    master.addEventListener('change', () => {
+      container.querySelectorAll('.bulk-row-check').forEach(cb => {
+        cb.checked = master.checked;
+        const id = cb.dataset.rowId;
+        if (master.checked) _selectedIds.add(id);
+        else _selectedIds.delete(id);
+        cb.closest('tr').classList.toggle('row-selected', master.checked);
+      });
+      updateBulkBar();
+    });
+  }
 }
 
 function labelMetier(m) {

@@ -38,6 +38,47 @@
 .ch-pill .ch-icon{display:flex;align-items:center}
 .ch-pill .ch-icon svg{width:11px;height:11px}
 .ch-pill:hover.ok{background:rgba(0,170,80,.18)}
+
+/* Schedule modal */
+.sched-modal{position:fixed;inset:0;z-index:900;display:none;background:rgba(10,20,40,.55);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px}
+.sched-modal.open{display:flex}
+.sched-sheet{background:#fff;border-radius:18px;width:100%;max-width:480px;box-shadow:0 30px 70px rgba(0,0,0,.32);overflow:hidden}
+.sched-head{padding:20px 22px 14px;border-bottom:1px solid var(--ink-100);display:flex;align-items:center;gap:12px}
+.sched-head h2{font-size:1.05rem;font-weight:800;margin:0;color:var(--ink-900)}
+.sched-head .icon{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#A78BFA,#7C3AED);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sched-head .icon svg{width:18px;height:18px}
+.sched-body{padding:18px 22px;display:grid;gap:14px}
+.sched-body label{font-size:.78rem;font-weight:700;color:var(--ink-700);letter-spacing:.02em;display:block;margin-bottom:5px}
+.sched-body input[type="datetime-local"]{width:100%;padding:10px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;font-size:.92rem;color:var(--ink-900)}
+.sched-channels{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sched-channels label{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid var(--ink-100);border-radius:10px;cursor:pointer;font-size:.86rem;color:var(--ink-700);font-weight:600;margin:0}
+.sched-channels label:hover{background:var(--ink-50)}
+.sched-channels input[type="checkbox"]{accent-color:var(--hc-primary)}
+.sched-foot{padding:14px 22px;border-top:1px solid var(--ink-100);background:#FAFCFD;display:flex;gap:10px;align-items:center}
+.sched-foot .right{margin-left:auto;display:flex;gap:8px}
+.sched-quick{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.sched-quick button{padding:5px 10px;border-radius:7px;border:1px solid var(--ink-100);background:#fff;color:var(--ink-700);font:inherit;font-size:.74rem;font-weight:600;cursor:pointer}
+.sched-quick button:hover{background:var(--hc-primary);color:#fff;border-color:var(--hc-primary)}
+
+.sched-card{display:flex;align-items:center;gap:14px;padding:12px 14px;background:#fff;border:1px solid var(--ink-100);border-radius:12px;margin-bottom:8px}
+.sched-card.is-due{border-left:3px solid #FF6B1A}
+.sched-card-when{flex-shrink:0;width:78px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(124,58,237,.08);border-radius:10px;padding:6px;color:#5B21B6}
+.sched-card-when .d{font-size:1.05rem;font-weight:800;line-height:1.1}
+.sched-card-when .m{font-size:.66rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;opacity:.7}
+.sched-card-when .t{font-size:.7rem;font-weight:700;margin-top:2px}
+.sched-card-body{flex:1;min-width:0}
+.sched-card-body strong{display:block;font-size:.9rem;color:var(--ink-900);font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sched-card-body .meta{font-size:.74rem;color:var(--ink-500);margin-top:2px}
+.sched-card-chans{display:inline-flex;gap:4px}
+.sched-card-chans .ch{padding:1px 6px;border-radius:5px;background:var(--ink-50);font-size:.66rem;font-weight:700;color:var(--ink-700)}
+.sched-card-status{padding:3px 8px;border-radius:7px;font-size:.7rem;font-weight:700;flex-shrink:0}
+.sched-card-status.pending{background:rgba(124,58,237,.12);color:#5B21B6}
+.sched-card-status.running{background:rgba(13,160,207,.12);color:#0A78A0}
+.sched-card-status.done{background:rgba(0,170,80,.12);color:#007033}
+.sched-card-status.failed{background:rgba(217,45,32,.12);color:#9F0E2B}
+.sched-card-status.cancelled{background:var(--ink-50);color:var(--ink-500)}
+.sched-card-cancel{padding:5px 9px;border-radius:7px;border:1px solid var(--ink-100);background:#fff;color:var(--ink-500);font:inherit;font-size:.74rem;font-weight:600;cursor:pointer}
+.sched-card-cancel:hover{border-color:#d92d20;color:#d92d20}
 </style>
 </head>
 <body>
@@ -79,6 +120,16 @@
       </div>
       <div id="listDraft"></div>
 
+      <!-- PLANIFIÉES -->
+      <div class="section-head" style="margin-top:28px">
+        <h3>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Publications planifiées
+        </h3>
+        <span class="count-pill" id="countScheduled">—</span>
+      </div>
+      <div id="listScheduled"></div>
+
       <!-- PUBLIÉS RÉCENTS -->
       <div class="section-head" style="margin-top:28px">
         <h3>
@@ -90,6 +141,49 @@
       <div id="listPublished"></div>
     </div>
   </main>
+</div>
+
+<!-- Modale de planification -->
+<div class="sched-modal" id="schedModal">
+  <div class="sched-sheet">
+    <div class="sched-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <div style="flex:1">
+        <h2>Planifier la publication</h2>
+        <p style="font-size:.82rem;color:var(--ink-500);margin:1px 0 0;line-height:1.4" id="schedSubtitle">—</p>
+      </div>
+    </div>
+    <div class="sched-body">
+      <div>
+        <label>Date et heure</label>
+        <input type="datetime-local" id="schedAt">
+        <div class="sched-quick">
+          <button type="button" data-quick="1h">+1h</button>
+          <button type="button" data-quick="3h">+3h</button>
+          <button type="button" data-quick="tomorrow9">Demain 9h</button>
+          <button type="button" data-quick="tomorrow14">Demain 14h</button>
+          <button type="button" data-quick="monday9">Lundi 9h</button>
+        </div>
+      </div>
+      <div>
+        <label>Canaux de publication</label>
+        <div class="sched-channels">
+          <label><input type="checkbox" id="schChMeta" checked> Facebook + Instagram</label>
+          <label><input type="checkbox" id="schChLinkedin"> LinkedIn</label>
+          <label><input type="checkbox" id="schChGbp"> Google Business</label>
+        </div>
+        <p style="font-size:.74rem;color:var(--ink-400);margin:6px 0 0;line-height:1.4">Le site web reçoit toujours la publication. Les autres canaux requièrent leur API configurée.</p>
+      </div>
+    </div>
+    <div class="sched-foot">
+      <button type="button" class="btn" id="schedCancel">Annuler</button>
+      <div class="right">
+        <button type="button" class="btn btn-primary" id="schedConfirm">Planifier</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="toast-stack" id="toastStack"></div>
@@ -118,12 +212,82 @@ function toast(msg,type='ok',d=2600){
     const { data, error } = await c.from('realisations').select('id,title,status,metier,ville,image_before,image_after,created_at,published_at,ai_generated,publish_targets').order('created_at',{ascending:false});
     if (error) { toast('Erreur : '+error.message,'err'); return; }
     const all = data || [];
+    window._allReals = all;
     render('listValidation', all.filter(r=>r.status==='validation'), 'validation');
     render('listDraft',      all.filter(r=>r.status==='brouillon'),  'brouillon');
     render('listPublished',  all.filter(r=>r.status==='publie').slice(0,10), 'publie');
     document.getElementById('countValidation').textContent = all.filter(r=>r.status==='validation').length;
     document.getElementById('countDraft').textContent      = all.filter(r=>r.status==='brouillon').length;
     document.getElementById('countPublished').textContent  = all.filter(r=>r.status==='publie').length;
+    await loadScheduled();
+  }
+
+  async function loadScheduled() {
+    const el = document.getElementById('listScheduled');
+    let data = [];
+    try {
+      const r = await c.from('scheduled_publications')
+        .select('id,realisation_id,scheduled_at,channels,status,last_error,executed_at,realisations(title,metier,ville,image_after,image_before)')
+        .in('status', ['pending','running','failed'])
+        .order('scheduled_at', { ascending: true })
+        .limit(50);
+      if (r.error) throw r.error;
+      data = r.data || [];
+    } catch (e) {
+      el.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg><div>Table <code>scheduled_publications</code> absente — exécute <code>setup_scheduled_publications.sql</code> dans Supabase pour activer la planification.</div></div>`;
+      document.getElementById('countScheduled').textContent = '0';
+      return;
+    }
+
+    document.getElementById('countScheduled').textContent = data.length;
+    if (!data.length) {
+      el.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div>Aucune publication planifiée. Clique sur "Planifier" sur un brouillon ou un chantier à valider pour programmer sa publication.</div></div>`;
+      return;
+    }
+
+    const months = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+    el.innerHTML = data.map(s => {
+      const dt = new Date(s.scheduled_at);
+      const d = dt.getDate();
+      const m = months[dt.getMonth()];
+      const t = dt.getHours().toString().padStart(2,'0') + ':' + dt.getMinutes().toString().padStart(2,'0');
+      const isDue = dt < new Date() && s.status === 'pending';
+      const r = s.realisations || {};
+      const chans = [];
+      if (s.channels?.meta) chans.push('Meta');
+      if (s.channels?.linkedin) chans.push('LinkedIn');
+      if (s.channels?.gbp) chans.push('GBP');
+      const errHtml = s.last_error ? `<div style="font-size:.72rem;color:#9F0E2B;margin-top:4px" title="${escapeHtml(s.last_error)}">⚠ ${escapeHtml(s.last_error.slice(0,80))}${s.last_error.length>80?'…':''}</div>` : '';
+      return `
+        <div class="sched-card ${isDue?'is-due':''}" data-id="${s.id}">
+          <div class="sched-card-when">
+            <div class="d">${d}</div>
+            <div class="m">${m}</div>
+            <div class="t">${t}</div>
+          </div>
+          <div class="sched-card-body">
+            <strong>${escapeHtml(r.title || '(chantier supprimé)')}</strong>
+            <div class="meta">
+              <span>📍 ${escapeHtml(r.ville || '')}</span>
+              · <span class="sched-card-chans">${chans.map(ch=>'<span class="ch">'+ch+'</span>').join(' ')}</span>
+              ${isDue ? '<span style="color:#FF6B1A;margin-left:8px;font-weight:700">⏰ Dû — exécution prochaine</span>' : ''}
+            </div>
+            ${errHtml}
+          </div>
+          <span class="sched-card-status ${s.status}">${({pending:'En attente',running:'En cours',done:'Publié',failed:'Échec',cancelled:'Annulé'})[s.status]||s.status}</span>
+          ${s.status === 'pending' || s.status === 'failed' ? `<button class="sched-card-cancel" data-cancel="${s.id}">Annuler</button>` : ''}
+        </div>
+      `;
+    }).join('');
+
+    el.querySelectorAll('[data-cancel]').forEach(b => {
+      b.addEventListener('click', async () => {
+        if (!confirm('Annuler cette publication planifiée ?')) return;
+        const { error } = await c.from('scheduled_publications').update({ status: 'cancelled' }).eq('id', b.dataset.cancel);
+        if (error) toast('Erreur : ' + error.message, 'err');
+        else { toast('Planification annulée'); await loadScheduled(); }
+      });
+    });
   }
 
   function render(elId, items, status){
@@ -169,6 +333,7 @@ function toast(msg,type='ok',d=2600){
       let actions = '';
       if (status === 'brouillon' || status === 'validation'){
         actions += `<button class="btn btn-primary" data-act="publish" data-id="${r.id}">Publier</button>`;
+        actions += `<button class="btn" data-act="schedule" data-id="${r.id}" title="Planifier la publication"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="vertical-align:-1px;margin-right:3px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Planifier</button>`;
         if (status === 'brouillon') actions += `<button class="btn" data-act="validate" data-id="${r.id}">Mettre à valider</button>`;
       }
       actions += `<a class="btn" href="realisations.html?edit=${r.id}">Éditer</a>`;
@@ -192,6 +357,7 @@ function toast(msg,type='ok',d=2600){
       btn.addEventListener('click', async () => {
         const id = btn.dataset.id;
         const act = btn.dataset.act;
+        if (act === 'schedule') { openScheduleModal(id); return; }
         const newStatus = act === 'publish' ? 'publie' : 'validation';
         btn.disabled = true; btn.textContent = '…';
         const update = { status: newStatus, updated_at: new Date().toISOString() };
@@ -202,6 +368,86 @@ function toast(msg,type='ok',d=2600){
       });
     });
   }
+
+  // ─── Modale planification ──────────────────────────
+  let _schedCurrentId = null;
+  function openScheduleModal(realisationId) {
+    _schedCurrentId = realisationId;
+    const real = (window._allReals || []).find(x => x.id === realisationId);
+    document.getElementById('schedSubtitle').textContent = real ? real.title : '';
+    // Default : maintenant + 1 heure
+    const d = new Date(Date.now() + 60 * 60 * 1000);
+    d.setMinutes(0, 0, 0);
+    document.getElementById('schedAt').value = toLocalDateTime(d);
+    document.getElementById('schedModal').classList.add('open');
+  }
+  function closeScheduleModal() {
+    document.getElementById('schedModal').classList.remove('open');
+    _schedCurrentId = null;
+  }
+  function toLocalDateTime(date) {
+    const tz = date.getTimezoneOffset() * 60000;
+    return new Date(date - tz).toISOString().slice(0,16);
+  }
+
+  document.getElementById('schedCancel').addEventListener('click', closeScheduleModal);
+  document.getElementById('schedModal').addEventListener('click', e => { if (e.target.id === 'schedModal') closeScheduleModal(); });
+
+  document.querySelectorAll('.sched-quick button').forEach(b => {
+    b.addEventListener('click', () => {
+      const q = b.dataset.quick;
+      let d = new Date();
+      if (q === '1h') d = new Date(Date.now() + 60*60*1000);
+      else if (q === '3h') d = new Date(Date.now() + 3*60*60*1000);
+      else if (q === 'tomorrow9') { d.setDate(d.getDate()+1); d.setHours(9,0,0,0); }
+      else if (q === 'tomorrow14') { d.setDate(d.getDate()+1); d.setHours(14,0,0,0); }
+      else if (q === 'monday9') {
+        const dow = d.getDay();
+        const add = dow === 0 ? 1 : (8 - dow);
+        d.setDate(d.getDate()+add); d.setHours(9,0,0,0);
+      }
+      document.getElementById('schedAt').value = toLocalDateTime(d);
+    });
+  });
+
+  document.getElementById('schedConfirm').addEventListener('click', async () => {
+    if (!_schedCurrentId) return;
+    const atStr = document.getElementById('schedAt').value;
+    if (!atStr) { toast('Choisis une date/heure', 'err'); return; }
+    const scheduled_at = new Date(atStr).toISOString();
+    if (new Date(scheduled_at) < new Date()) {
+      if (!confirm('La date est dans le passé. Publier dès le prochain cron (5 min) ?')) return;
+    }
+    const channels = {
+      meta: document.getElementById('schChMeta').checked,
+      linkedin: document.getElementById('schChLinkedin').checked,
+      gbp: document.getElementById('schChGbp').checked
+    };
+    const { data: { user } } = await c.auth.getUser();
+    const btn = document.getElementById('schedConfirm');
+    btn.disabled = true; const orig = btn.textContent; btn.textContent = 'Planification…';
+    try {
+      const { error } = await c.from('scheduled_publications').insert({
+        realisation_id: _schedCurrentId,
+        scheduled_at,
+        channels,
+        status: 'pending',
+        created_by: user?.email || null
+      });
+      if (error) throw error;
+      toast('Publication planifiée pour le ' + new Date(scheduled_at).toLocaleString('fr-FR'));
+      closeScheduleModal();
+      await loadScheduled();
+    } catch (e) {
+      if (/does not exist|relation/i.test(e.message || '')) {
+        toast('Table scheduled_publications absente — exécute setup_scheduled_publications.sql', 'err', 5500);
+      } else {
+        toast('Erreur : ' + (e.message || e), 'err', 4500);
+      }
+    } finally {
+      btn.disabled = false; btn.textContent = orig;
+    }
+  });
 
   function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 

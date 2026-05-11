@@ -48,12 +48,19 @@ Deno.serve(async (req: Request) => {
     if (!authHeader) return json({ error: "Missing Authorization" }, 401);
 
     // @ts-ignore
-    const sb = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_ANON_KEY")!, {
-      global: { headers: { Authorization: authHeader } }
-    });
+    const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
+    const isCron = authHeader === `Bearer ${serviceKey}`;
+    // @ts-ignore
+    const sb = isCron
+      // @ts-ignore
+      ? createClient(Deno.env.get("SUPABASE_URL")!, serviceKey, { auth: { persistSession: false } })
+      // @ts-ignore
+      : createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_ANON_KEY")!, { global: { headers: { Authorization: authHeader } } });
 
-    const { data: { user } } = await sb.auth.getUser();
-    if (!user) return json({ error: "Not authenticated" }, 401);
+    if (!isCron) {
+      const { data: { user } } = await sb.auth.getUser();
+      if (!user) return json({ error: "Not authenticated" }, 401);
+    }
 
     const { data: settings } = await sb.from("app_settings").select("value").eq("key", "gbp").single();
     const cfg = settings?.value;
