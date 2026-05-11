@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Maintenance & Santé · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+.mt-hero{background:linear-gradient(135deg,#0A1428 0%,#1A2A44 50%,#0DA0CF 130%);color:#fff;border-radius:18px;padding:28px 30px;margin-bottom:22px;box-shadow:0 14px 40px rgba(10,20,40,.30)}
+.mt-hero h1{font-size:1.62rem;font-weight:800;margin:0 0 6px 0;line-height:1.2}
+.mt-hero p{font-size:.96rem;opacity:.92;margin:0;line-height:1.5}
+.mt-hero-stats{display:flex;gap:18px;margin-top:18px;flex-wrap:wrap}
+.mt-hero-stat{background:rgba(255,255,255,.10);backdrop-filter:blur(8px);border-radius:12px;padding:12px 18px;flex:1;min-width:160px}
+.mt-hero-stat .lbl{font-size:.72rem;opacity:.85;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px}
+.mt-hero-stat .val{font-size:1.55rem;font-weight:800;line-height:1}
+.mt-hero-stat .sub{font-size:.74rem;opacity:.7;margin-top:3px}
+
+.mt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px;margin-bottom:22px}
+.mt-card{background:#fff;border:1px solid var(--ink-100);border-radius:14px;box-shadow:0 1px 2px rgba(11,18,32,.04);overflow:hidden}
+.mt-card-head{padding:16px 20px 12px 20px;border-bottom:1px solid var(--ink-100);display:flex;align-items:center;gap:12px}
+.mt-card-head h2{font-size:.96rem;font-weight:800;color:var(--ink-900);margin:0;flex:1}
+.mt-card-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.mt-card-icon svg{width:16px;height:16px}
+.mt-card-icon.green{background:linear-gradient(135deg,#3DCF8E,#00aa50)}
+.mt-card-icon.orange{background:linear-gradient(135deg,#FFB400,#FF6B1A)}
+.mt-card-icon.purple{background:linear-gradient(135deg,#A78BFA,#7C3AED)}
+.mt-card-icon.cyan{background:linear-gradient(135deg,#5fc7e5,#0DA0CF)}
+.mt-card-icon.red{background:linear-gradient(135deg,#FF6B6B,#d92d20)}
+.mt-card-status{padding:3px 9px;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.mt-card-status.ok{background:rgba(0,170,80,.12);color:#007033}
+.mt-card-status.warn{background:rgba(255,180,0,.18);color:#7a4c00}
+.mt-card-status.fail{background:rgba(217,45,32,.10);color:#9F0E2B}
+.mt-card-status.unknown{background:var(--ink-50);color:var(--ink-500)}
+.mt-card-body{padding:14px 20px}
+
+.mt-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--ink-50);font-size:.86rem}
+.mt-row:last-child{border-bottom:none}
+.mt-row .lbl{flex:1;color:var(--ink-700);font-weight:600}
+.mt-row .val{color:var(--ink-900);font-weight:700;text-align:right}
+.mt-row .val.muted{color:var(--ink-400);font-weight:500}
+.mt-row .val.ok{color:#007033}
+.mt-row .val.warn{color:#7a4c00}
+.mt-row .val.fail{color:#9F0E2B}
+
+.mt-alert{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:11px;margin-bottom:10px;font-size:.86rem;line-height:1.5}
+.mt-alert svg{width:18px;height:18px;flex-shrink:0;margin-top:1px}
+.mt-alert.info{background:rgba(13,160,207,.06);color:#0a6e8b;border-left:3px solid var(--hc-primary)}
+.mt-alert.warn{background:rgba(255,180,0,.08);color:#7a4c00;border-left:3px solid #FFB400}
+.mt-alert.danger{background:rgba(217,45,32,.06);color:#9F0E2B;border-left:3px solid #d92d20}
+.mt-alert a{color:inherit;text-decoration:underline;font-weight:700}
+.mt-alert strong{display:block;margin-bottom:2px}
+
+.mt-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.mt-actions a, .mt-actions button{padding:7px 12px;border-radius:8px;font-size:.78rem;font-weight:700;text-decoration:none;border:1px solid var(--ink-100);background:#fff;color:var(--ink-700);cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:.15s}
+.mt-actions a:hover, .mt-actions button:hover{border-color:var(--hc-primary);color:var(--hc-primary)}
+.mt-actions svg{width:12px;height:12px}
+
+.mt-loading{padding:30px;text-align:center;color:var(--ink-400);font-size:.86rem}
+.mt-loading svg{width:24px;height:24px;color:var(--ink-300);margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="admin-overlay"></div>
+<div class="admin-shell">
+  <aside class="admin-sidebar"></aside>
+  <main class="admin-main">
+    <header class="admin-topbar"></header>
+    <div class="admin-content">
+
+      <div class="mt-hero">
+        <h1>🔧 Maintenance & Santé</h1>
+        <p>État de santé global du système, tokens à renouveler, dernière exécution des cron jobs et alertes prioritaires.</p>
+        <div class="mt-hero-stats">
+          <div class="mt-hero-stat">
+            <div class="lbl">Chantiers totaux</div>
+            <div class="val" id="statReals">—</div>
+            <div class="sub" id="statRealsSub">—</div>
+          </div>
+          <div class="mt-hero-stat">
+            <div class="lbl">Avis collectés</div>
+            <div class="val" id="statReviews">—</div>
+            <div class="sub" id="statReviewsSub">—</div>
+          </div>
+          <div class="mt-hero-stat">
+            <div class="lbl">Leads ce mois</div>
+            <div class="val" id="statLeads">—</div>
+            <div class="sub" id="statLeadsSub">—</div>
+          </div>
+          <div class="mt-hero-stat">
+            <div class="lbl">Score Démarrage</div>
+            <div class="val" id="statScore">—</div>
+            <div class="sub" id="statScoreSub">basé sur les intégrations</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alertes prioritaires -->
+      <div id="mtAlerts"></div>
+
+      <div class="mt-grid">
+
+        <!-- Intégrations -->
+        <div class="mt-card">
+          <div class="mt-card-head">
+            <div class="mt-card-icon purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </div>
+            <h2>Intégrations API</h2>
+          </div>
+          <div class="mt-card-body" id="cardIntegrations">
+            <div class="mt-loading">Chargement…</div>
+          </div>
+        </div>
+
+        <!-- Activité récente -->
+        <div class="mt-card">
+          <div class="mt-card-head">
+            <div class="mt-card-icon cyan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h2>Activité récente</h2>
+          </div>
+          <div class="mt-card-body" id="cardActivity">
+            <div class="mt-loading">Chargement…</div>
+          </div>
+        </div>
+
+        <!-- Publications planifiées -->
+        <div class="mt-card">
+          <div class="mt-card-head">
+            <div class="mt-card-icon orange">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <h2>Cron & Planification</h2>
+          </div>
+          <div class="mt-card-body" id="cardCron">
+            <div class="mt-loading">Chargement…</div>
+          </div>
+        </div>
+
+        <!-- Storage & BDD -->
+        <div class="mt-card">
+          <div class="mt-card-head">
+            <div class="mt-card-icon green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div>
+            <h2>Base de données</h2>
+          </div>
+          <div class="mt-card-body" id="cardDb">
+            <div class="mt-loading">Chargement…</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+(async function() {
+  await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+  await HCLayout.mount('maintenance', 'Maintenance & Santé');
+  const c = await HCSupabase.init();
+
+  const alerts = [];
+  const integrationsRows = [];
+  const activityRows = [];
+  const cronRows = [];
+  const dbRows = [];
+
+  function fmtDate(d) {
+    if (!d) return '—';
+    const date = new Date(d);
+    const now = Date.now();
+    const diff = now - date.getTime();
+    if (diff < 60000) return 'à l\'instant';
+    if (diff < 3600000) return 'il y a ' + Math.floor(diff/60000) + ' min';
+    if (diff < 86400000) return 'il y a ' + Math.floor(diff/3600000) + 'h';
+    if (diff < 7*86400000) return 'il y a ' + Math.floor(diff/86400000) + ' jour(s)';
+    return date.toLocaleDateString('fr-FR', { day:'numeric', month:'short', year:'2-digit' });
+  }
+
+  // ─── 1. Charger toutes les données en parallèle ────────────
+  const [realsRes, leadsRes, reviewsRes, schedRes, settingsRes] = await Promise.all([
+    c.from('realisations').select('id,status,created_at,published_at,ai_generated', { count: 'exact' }),
+    c.from('leads').select('id,status,created_at', { count: 'exact' }).catch(() => ({ data: null, count: null })),
+    c.from('reviews').select('id,source,rating,status,synced_at,posted_at', { count: 'exact' }).catch(() => ({ data: null, count: null })),
+    c.from('scheduled_publications').select('id,status,scheduled_at,executed_at,last_error', { count: 'exact' }).catch(() => ({ data: null, count: null })),
+    c.from('app_settings').select('key,value,updated_at')
+  ]);
+
+  const reals = realsRes.data || [];
+  const leads = leadsRes.data || [];
+  const reviews = reviewsRes.data || [];
+  const sched = schedRes.data || [];
+  const settings = {};
+  (settingsRes.data || []).forEach(s => { settings[s.key] = { value: s.value || {}, updated_at: s.updated_at }; });
+
+  // ─── 2. Stats hero ──────────────────────────────────────
+  document.getElementById('statReals').textContent = reals.length;
+  document.getElementById('statRealsSub').textContent = reals.filter(r => r.status === 'publie').length + ' publiés';
+
+  document.getElementById('statReviews').textContent = reviews.length;
+  const avgRating = reviews.length ? (reviews.reduce((s,r) => s + parseFloat(r.rating), 0) / reviews.length).toFixed(1) : '—';
+  document.getElementById('statReviewsSub').textContent = avgRating + '/5 moyenne';
+
+  const thisMonth = new Date().toISOString().slice(0, 7);
+  const leadsMonth = leads.filter(l => (l.created_at || '').startsWith(thisMonth)).length;
+  document.getElementById('statLeads').textContent = leadsMonth;
+  document.getElementById('statLeadsSub').textContent = leads.length + ' au total';
+
+  // Score Démarrage (basé sur intégrations + Edge Functions estimées)
+  let score = 0, max = 0;
+  const integrations = [
+    { key: 'anthropic', name: 'Claude IA', fields: ['api_key'], weight: 2, fixUrl: 'settings.html#section-anthropic' },
+    { key: 'meta', name: 'Facebook/Meta', fields: ['page_access_token', 'fb_page_id'], weight: 3, fixUrl: 'settings.html#section-meta' },
+    { key: 'linkedin', name: 'LinkedIn', fields: ['access_token', 'organization_urn'], weight: 1, fixUrl: 'settings.html#section-linkedin' },
+    { key: 'gbp', name: 'Google Business', fields: ['access_token', 'account_id_audo'], weight: 3, fixUrl: 'settings.html#section-gbp' },
+    { key: 'ga4', name: 'Google Analytics 4', fields: ['property_id', 'service_account_json'], weight: 1, fixUrl: 'settings.html#section-ga4' }
+  ];
+  integrations.forEach(i => {
+    max += i.weight;
+    const v = settings[i.key]?.value || {};
+    const filled = i.fields.every(f => v[f] && String(v[f]).trim());
+    if (filled) score += i.weight;
+    integrationsRows.push({
+      name: i.name,
+      ok: filled,
+      updated_at: settings[i.key]?.updated_at,
+      fixUrl: i.fixUrl
+    });
+    if (!filled && i.weight >= 2) {
+      alerts.push({
+        type: i.weight >= 3 ? 'warn' : 'info',
+        title: i.name + ' non configuré',
+        msg: 'Cette intégration apportera une grosse valeur ajoutée (notes ' + i.weight + '/3). Configure-la dans Paramètres.',
+        action: { label: 'Configurer', url: i.fixUrl }
+      });
+    }
+  });
+  const scorePct = max ? Math.round(score / max * 100) : 0;
+  document.getElementById('statScore').textContent = scorePct + '%';
+  document.getElementById('statScoreSub').textContent = score + '/' + max + ' points';
+
+  // ─── 3. Carte Intégrations ──────────────────────────────
+  document.getElementById('cardIntegrations').innerHTML = integrationsRows.map(i => `
+    <div class="mt-row">
+      <span class="lbl">${i.name}</span>
+      <span class="val ${i.ok ? 'ok' : 'muted'}">${i.ok ? '✓ Configuré' : 'Non configuré'}</span>
+    </div>
+  `).join('') + `
+    <div class="mt-actions">
+      <a href="setup.html">Diagnostic complet →</a>
+      <a href="settings.html">Paramètres →</a>
+    </div>
+  `;
+
+  // ─── 4. Activité récente ────────────────────────────────
+  const lastReal = [...reals].sort((a,b) => new Date(b.created_at) - new Date(a.created_at))[0];
+  const lastReview = [...reviews].sort((a,b) => new Date(b.posted_at || b.synced_at) - new Date(a.posted_at || a.synced_at))[0];
+  const lastLead = [...leads].sort((a,b) => new Date(b.created_at) - new Date(a.created_at))[0];
+  const lastFbSync = reals.filter(r => r.ai_generated?.imported_from === 'facebook_scrape_auto')
+    .sort((a,b) => new Date(b.ai_generated?.imported_at || b.created_at) - new Date(a.ai_generated?.imported_at || a.created_at))[0];
+
+  document.getElementById('cardActivity').innerHTML = `
+    <div class="mt-row">
+      <span class="lbl">Dernier chantier</span>
+      <span class="val ${lastReal ? '' : 'muted'}">${lastReal ? fmtDate(lastReal.created_at) : 'Aucun'}</span>
+    </div>
+    <div class="mt-row">
+      <span class="lbl">Dernier lead</span>
+      <span class="val ${lastLead ? '' : 'muted'}">${lastLead ? fmtDate(lastLead.created_at) : 'Aucun'}</span>
+    </div>
+    <div class="mt-row">
+      <span class="lbl">Dernier avis</span>
+      <span class="val ${lastReview ? '' : 'muted'}">${lastReview ? fmtDate(lastReview.posted_at || lastReview.synced_at) : 'Aucun'}</span>
+    </div>
+    <div class="mt-row">
+      <span class="lbl">Dernière sync FB</span>
+      <span class="val ${lastFbSync ? '' : 'muted'}">${lastFbSync ? fmtDate(lastFbSync.ai_generated?.imported_at || lastFbSync.created_at) : 'Jamais'}</span>
+    </div>
+  `;
+
+  // ─── 5. Cron & Planification ────────────────────────────
+  const pendingCount = sched.filter(s => s.status === 'pending').length;
+  const failedCount = sched.filter(s => s.status === 'failed').length;
+  const doneCount = sched.filter(s => s.status === 'done').length;
+  const lastExec = [...sched].filter(s => s.executed_at).sort((a,b) => new Date(b.executed_at) - new Date(a.executed_at))[0];
+  const nextPending = [...sched].filter(s => s.status === 'pending').sort((a,b) => new Date(a.scheduled_at) - new Date(b.scheduled_at))[0];
+
+  document.getElementById('cardCron').innerHTML = `
+    <div class="mt-row">
+      <span class="lbl">Publications planifiées</span>
+      <span class="val ${pendingCount ? '' : 'muted'}">${pendingCount} en attente</span>
+    </div>
+    <div class="mt-row">
+      <span class="lbl">Prochaine exécution</span>
+      <span class="val ${nextPending ? '' : 'muted'}">${nextPending ? new Date(nextPending.scheduled_at).toLocaleString('fr-FR', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : 'Aucune'}</span>
+    </div>
+    <div class="mt-row">
+      <span class="lbl">Dernière exécution</span>
+      <span class="val ${lastExec ? '' : 'muted'}">${lastExec ? fmtDate(lastExec.executed_at) : 'Aucune'}</span>
+    </div>
+    <div class="mt-row">
+      <span class="lbl">Échecs récents</span>
+      <span class="val ${failedCount > 0 ? 'fail' : 'ok'}">${failedCount > 0 ? failedCount + ' ⚠' : '0 ✓'}</span>
+    </div>
+    <div class="mt-row">
+      <span class="lbl">Publications réussies</span>
+      <span class="val">${doneCount}</span>
+    </div>
+    <div class="mt-actions">
+      <a href="publications.html">Voir publications →</a>
+      <a href="calendar.html">Calendrier →</a>
+    </div>
+  `;
+
+  if (failedCount > 0) {
+    alerts.push({
+      type: 'danger',
+      title: failedCount + ' publication(s) planifiée(s) en échec',
+      msg: 'Vérifie les configurations API ou ré-essaie. Détails dans la page Publications.',
+      action: { label: 'Voir les échecs', url: 'publications.html' }
+    });
+  }
+
+  // ─── 6. Base de données ─────────────────────────────────
+  const totalRows = reals.length + leads.length + reviews.length + sched.length;
+  const lastSettingsUpdate = Object.values(settings).reduce((latest, s) => {
+    return (!latest || new Date(s.updated_at) > new Date(latest)) ? s.updated_at : latest;
+  }, null);
+
+  document.getElementById('cardDb').innerHTML = `
+    <div class="mt-row">
+      <span class="lbl">Réalisations</span>
+      <span class="val">${reals.length}</span>
+    </div>
+    <div class="mt-row">
+      <span class="lbl">Leads</span>
+      <span class="val">${leads.length}</span>
+    </div>
+    <div class="mt-row">
+      <span class="lbl">Avis</span>
+      <span class="val">${reviews.length}</span>
+    </div>
+    <div class="mt-row">
+      <span class="lbl">Publications planifiées</span>
+      <span class="val">${sched.length}</span>
+    </div>
+    <div class="mt-row">
+      <span class="lbl">Total lignes BDD</span>
+      <span class="val">${totalRows}</span>
+    </div>
+    <div class="mt-row">
+      <span class="lbl">Dernière modif params</span>
+      <span class="val muted">${lastSettingsUpdate ? fmtDate(lastSettingsUpdate) : '—'}</span>
+    </div>
+    <div class="mt-actions">
+      <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg" target="_blank" rel="noopener">Console Supabase →</a>
+    </div>
+  `;
+
+  // ─── 7. Alertes en haut ─────────────────────────────────
+  const alertsEl = document.getElementById('mtAlerts');
+  if (alerts.length > 0) {
+    alertsEl.innerHTML = alerts.map(a => `
+      <div class="mt-alert ${a.type}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          ${a.type === 'danger' ? '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>' :
+            a.type === 'warn' ? '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/>' :
+            '<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>'}
+        </svg>
+        <div style="flex:1">
+          <strong>${a.title}</strong>
+          ${a.msg}${a.action ? ' <a href="' + a.action.url + '">' + a.action.label + ' →</a>' : ''}
+        </div>
+      </div>
+    `).join('');
+  } else {
+    alertsEl.innerHTML = `
+      <div class="mt-alert info" style="background:rgba(0,170,80,.06);color:#007033;border-left-color:#00aa50">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div><strong>Tout est sous contrôle</strong>Aucune action urgente. Profite-en pour publier des chantiers ✨</div>
+      </div>
+    `;
+  }
+})();
+</script>
+</body>
+</html>
