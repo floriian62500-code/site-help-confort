@@ -402,8 +402,8 @@
   await HCSupabase.init();
   const session = await HCAdmin.requireAuth();
   if (!session) return;
-  // FAB création express + notifs leads (sidebar codée en dur, on n'utilise que init())
-  HCLayout.init();
+  // Sidebar dynamique + FAB + palette + notifs (écrase la sidebar hardcodée pour la mettre à jour)
+  HCLayout.mountSidebar('dashboard');
 
   const c = await HCSupabase.init();
 

@@ -814,8 +814,36 @@ window.HCLayout = (function() {
     setInterval(pollNewLeads, 30000);
   }
 
+  // Mount uniquement la sidebar dynamique (garde la topbar existante)
+  // Utile pour les pages avec topbar custom (index.html, realisations.html, settings.html)
+  async function mountSidebar(activePage) {
+    const sb = document.querySelector('.admin-sidebar');
+    if (sb) sb.innerHTML = sidebarHTML(activePage);
+    // Live counts + notifs + palette + theme + FAB
+    if (window.HCSupabase) {
+      try {
+        const c = await window.HCSupabase.init();
+        const realsRes = await c.from('realisations').select('id', { count:'exact', head:true });
+        const realsEl = document.getElementById('navRealCount');
+        if (realsEl && realsRes.count != null) realsEl.textContent = realsRes.count;
+        const leadsRes = await c.from('leads').select('id', { count:'exact', head:true }).eq('status','nouveau');
+        const leadsEl = document.getElementById('navLeadsCount');
+        if (leadsEl) {
+          if (leadsRes.count > 0) { leadsEl.textContent = leadsRes.count; leadsEl.style.display = ''; }
+          else leadsEl.style.display = 'none';
+        }
+      } catch(e) {}
+    }
+    setupLeadNotifications();
+    pollNewLeads();
+    setInterval(pollNewLeads, 30000);
+    injectQuickCreate();
+    injectPalette();
+    setupThemeToggle();
+  }
+
   // Appliquer le thème AU PLUS TÔT (avant DOMContentLoaded) pour éviter le flash
   try { applyTheme(localStorage.getItem(THEME_KEY) || 'light'); } catch(e) {}
 
-  return { mount, openQuickModal, init, toggleTheme };
+  return { mount, mountSidebar, openQuickModal, init, toggleTheme };
 })();

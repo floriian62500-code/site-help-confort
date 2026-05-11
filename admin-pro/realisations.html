@@ -562,8 +562,8 @@
 <script src="assets/admin.js"></script>
 <script src="assets/layout.js"></script>
 <script>
-// FAB création express + notifs leads (sidebar codée en dur, on n'utilise que init())
-window.addEventListener('load', () => { if (window.HCLayout) HCLayout.init(); });
+// Sidebar dynamique + FAB + palette + notifs (écrase la sidebar hardcodée)
+window.addEventListener('load', () => { if (window.HCLayout) HCLayout.mountSidebar('realisations'); });
 // ═════════════════════════════════════════════════════════════
 // Module Réalisations — Logique fonctionnelle
 // ═════════════════════════════════════════════════════════════
