@@ -331,6 +331,21 @@
           </div>
         </div>
 
+        <!-- Bouton génération IA -->
+        <div id="aiPanel" style="display:none;padding:14px 16px;background:linear-gradient(135deg,rgba(167,139,250,.08),rgba(124,58,237,.04));border:1px solid rgba(124,58,237,.20);border-radius:12px;margin-bottom:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#A78BFA,#7C3AED);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          </div>
+          <div style="flex:1;min-width:0">
+            <strong style="display:block;color:var(--ink-900);font-size:.92rem">Générer titre, descriptions et hashtags avec Claude IA</strong>
+            <span id="aiPanelHint" style="font-size:.78rem;color:var(--ink-500)">Remplit automatiquement les champs ci-dessous à partir du métier, ville et photos.</span>
+          </div>
+          <button type="button" class="btn" id="btnGenerateAI" style="background:linear-gradient(135deg,#A78BFA,#7C3AED);color:#fff;border:none">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Générer
+          </button>
+        </div>
+
         <div class="form-grid">
           <div class="field-block">
             <label>Métier *</label>
@@ -937,6 +952,71 @@ function slugify(s) {
   return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
 }
 
+// ─── Génération IA Claude ────────────────────────────────────
+async function generateWithAI() {
+  const btn = document.getElementById('btnGenerateAI');
+  const hint = document.getElementById('aiPanelHint');
+  const metier = document.getElementById('f_metier').value;
+  const vSel = document.getElementById('f_ville').value;
+  const ville = vSel === '__other' ? document.getElementById('f_ville_other').value.trim() : vSel;
+  const agence = document.getElementById('f_agence').value || deduceAgence(ville);
+  const typeInter = document.getElementById('f_type').value;
+
+  if (!metier || !ville) { toast('Choisissez d\'abord métier et ville', 'err', 3000); return; }
+
+  btn.disabled = true;
+  const orig = btn.innerHTML;
+  btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9" stroke-dasharray="40" stroke-dashoffset="20"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/></circle></svg> Génération…';
+  hint.textContent = 'Claude réfléchit (5-15 secondes)…';
+
+  try {
+    const c = await HCSupabase.init();
+    const { data: { session } } = await c.auth.getSession();
+    const resp = await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/generate-content', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + session.access_token,
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        realisationId: _editing,
+        metier, ville, agence,
+        typeInter,
+        photoBeforeUrl: _uploads.before,
+        photoAfterUrl: _uploads.after
+      })
+    });
+    const data = await resp.json();
+    if (!resp.ok || data.error) throw new Error(data.error || 'Erreur génération');
+
+    // Remplir les champs
+    if (data.title) document.getElementById('f_title').value = data.title;
+    if (data.description) document.getElementById('f_description').value = data.description;
+    if (data.description_long) document.getElementById('f_description_long').value = data.description_long;
+
+    toast('Contenu généré ✓');
+    hint.textContent = 'Vérifiez et ajustez si besoin avant de publier.';
+  } catch (e) {
+    console.error(e);
+    toast('Erreur IA : ' + (e.message || e), 'err', 5000);
+    hint.textContent = 'Génération échouée. Vérifiez la clé API dans Paramètres.';
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = orig;
+  }
+}
+
+// Afficher le panneau IA si Anthropic configuré
+async function checkAIAvailability() {
+  try {
+    const c = await HCSupabase.init();
+    const { data } = await c.from('app_settings').select('value').eq('key', 'anthropic').single();
+    if (data && data.value && data.value.api_key) {
+      document.getElementById('aiPanel').style.display = 'flex';
+    }
+  } catch (e) { /* table app_settings peut ne pas exister encore */ }
+}
+
 // ─── Init au chargement ──────────────────────────────────────
 (async function() {
   await HCSupabase.init();
@@ -1016,6 +1096,10 @@ function slugify(s) {
     document.getElementById('viewGrid').classList.remove('is-active');
     renderList();
   });
+
+  // Bouton IA
+  document.getElementById('btnGenerateAI').addEventListener('click', generateWithAI);
+  checkAIAvailability();
 
   // Charger les données
   await loadReals();

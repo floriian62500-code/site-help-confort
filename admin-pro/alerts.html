@@ -6,147 +6,132 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Alertes &amp; Monitoring · Back-Office HELP! Confort</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/admin.css">
+<style>
+.alert-card{display:flex;align-items:flex-start;gap:12px;padding:14px;background:#fff;border:1px solid var(--ink-100);border-radius:12px;margin-bottom:8px;border-left-width:4px}
+.alert-card.crit{border-left-color:#d92d20;background:rgba(217,45,32,.02)}
+.alert-card.warn{border-left-color:#FFB400;background:rgba(255,184,0,.02)}
+.alert-card.info{border-left-color:#0DA0CF}
+.alert-card.ok{border-left-color:#00aa50}
+.alert-card svg.icon{width:22px;height:22px;flex-shrink:0}
+.alert-card.crit svg.icon{color:#d92d20}
+.alert-card.warn svg.icon{color:#FFB400}
+.alert-card.info svg.icon{color:#0DA0CF}
+.alert-card.ok svg.icon{color:#00aa50}
+.alert-card .body{flex:1;min-width:0}
+.alert-card strong{display:block;font-size:.94rem;color:var(--ink-900);margin-bottom:2px}
+.alert-card span{font-size:.82rem;color:var(--ink-500);line-height:1.5}
+.alert-card .body a{color:var(--hc-primary);font-weight:600;text-decoration:none}
+.health-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+.health-tile{background:#fff;border:1px solid var(--ink-100);border-radius:12px;padding:14px}
+.health-tile .lbl{font-size:.74rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+.health-tile .val{font-size:1.4rem;font-weight:800;color:var(--ink-900)}
+.health-tile .meta{font-size:.74rem;color:var(--ink-400);margin-top:2px}
+.health-tile.ok .val{color:#007033}
+.health-tile.warn .val{color:#7a4c00}
+.health-tile.err .val{color:#d92d20}
+</style>
 </head>
 <body>
 <div class="admin-overlay"></div>
 <div class="admin-shell">
-  <aside class="admin-sidebar">
-    <div class="admin-sidebar-brand">
-      <div class="admin-brand-logo">H!</div>
-      <div class="admin-brand-text">
-        <strong>HELP! Confort</strong>
-        <span>Back-Office Pro</span>
-      </div>
-    </div>
-    <nav class="admin-sidebar-nav">
-      <div class="admin-nav-section">
-        <div class="admin-nav-section-title">Pilotage</div>
-        <a href="index.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
-          Dashboard
-        </a>
-        <a href="alerts.html" class="admin-nav-item is-active">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Alertes &amp; Monitoring
-        </a>
-      </div>
-      <div class="admin-nav-section">
-        <div class="admin-nav-section-title">Contenu</div>
-        <a href="realisations.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          Réalisations
-          <span class="admin-nav-item-badge" id="navRealCount">—</span>
-        </a>
-        <a href="medias.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          Médiathèque
-        </a>
-        <a href="publications.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Publications
-        </a>
-        <a href="social.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          Réseaux sociaux
-        </a>
-      </div>
-      <div class="admin-nav-section">
-        <div class="admin-nav-section-title">Intelligence</div>
-        <a href="ai.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect x="2" y="2" width="20" height="8" rx="2"/><path d="M2 12h20"/><path d="M2 16h20"/><path d="M2 20h20"/></svg>
-          Assistant IA
-        </a>
-        <a href="reviews.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          Avis clients
-        </a>
-        <a href="analytics.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          SEO &amp; Analytics
-        </a>
-      </div>
-      <div class="admin-nav-section">
-        <div class="admin-nav-section-title">Système</div>
-        <a href="users.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          Utilisateurs
-        </a>
-        <a href="settings.html" class="admin-nav-item ">
-          <svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-          Paramètres
-        </a>
-      </div>
-    </nav>
-    <div class="admin-sidebar-foot">
-      <div class="admin-user-card" data-logout title="Cliquer pour déconnexion">
-        <div class="admin-user-avatar" data-user-initial>F</div>
-        <div class="admin-user-info">
-          <strong data-user-name>Florian</strong>
-          <span data-user-role>Administrateur</span>
-        </div>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: .5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      </div>
-    </div>
-  </aside>
+  <aside class="admin-sidebar"></aside>
   <main class="admin-main">
-    <header class="admin-topbar">
-      <button class="admin-topbar-burger" aria-label="Ouvrir le menu">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-      <h2 class="admin-topbar-title">Alertes & Monitoring</h2>
-      <div class="admin-topbar-search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="search" placeholder="Rechercher…">
-      </div>
-      <div class="admin-topbar-actions">
-        <button class="admin-icon-btn" title="Notifications">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          <span class="admin-icon-btn-dot"></span>
-        </button>
-        <a href="../" class="admin-icon-btn" title="Voir le site public" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
-      </div>
-    </header>
+    <header class="admin-topbar"></header>
     <div class="admin-content">
       <div class="breadcrumb">
         <a href="index.html">Dashboard</a>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="9 18 15 12 9 6"/></svg>
         <strong>Alertes &amp; Monitoring</strong>
       </div>
       <div class="admin-page-head">
-        <div>
-          <h1>Alertes &amp; Monitoring</h1>
-          <p>Surveillance temps réel — erreurs API, pages cassées, ralentissements, problèmes SEO, sécurité.</p>
-        </div>
-        <button class="btn btn-primary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Voir le détail
-        </button>
+        <div><h1>Alertes &amp; Monitoring</h1><p>Santé du système, tokens expirants, chantiers incomplets.</p></div>
       </div>
 
-      <div class="empty-state">
-        <div class="empty-state-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        </div>
-        <h3>3 alertes actives</h3>
-        <p>Token Instagram à renouveler · Lighthouse score baisse de 3 pts sur /contact · 2 liens cassés détectés.</p>
-        <button class="btn btn-primary">Voir le détail</button>
-      </div>
+      <div class="health-grid" id="healthGrid"></div>
 
-      <div style="margin-top: 28px; padding: 20px; background: rgba(13,160,207,.04); border: 1px dashed rgba(13,160,207,.20); border-radius: 12px; font-size: .86rem; color: var(--ink-500); line-height: 1.6;">
-        🚧 <strong style="color: var(--ink-900);">Module en cours de construction.</strong> Cette page sera fonctionnelle dans la prochaine phase de développement. Pour l'instant, la maquette est en place — UI, navigation et design system validés.
-      </div>
-
+      <h3 style="font-size:.92rem;font-weight:700;margin:24px 0 12px;color:var(--ink-900)">Alertes actives</h3>
+      <div id="alertsList"></div>
     </div>
   </main>
 </div>
+
 <script src="assets/supabase.js"></script>
 <script src="assets/admin.js"></script>
-<script>(async function(){ await HCSupabase.init(); await HCAdmin.requireAuth(); })();</script>
+<script src="assets/layout.js"></script>
+<script>
+(async function(){
+  await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+  await HCLayout.mount('alerts', 'Alertes & Monitoring');
+
+  const c = await HCSupabase.init();
+
+  // Charger données pour calcul des alertes
+  const [reals, settings] = await Promise.all([
+    c.from('realisations').select('id,title,status,image_before,image_after,created_at').limit(500),
+    c.from('app_settings').select('*')
+  ]);
+  const all = reals.data || [];
+  const byKey = {};
+  (settings.data || []).forEach(s => byKey[s.key] = s.value || {});
+
+  // Health tiles
+  const tiles = [
+    { lbl:'Supabase', val:'Connecté', cls:'ok', meta:'Auth + DB + Storage' },
+    { lbl:'Réalisations', val:all.length, cls:'ok', meta: all.length + ' chantiers en base' },
+    { lbl:'Clé IA Claude', val: byKey.anthropic?.api_key ? 'Configurée' : 'Manquante', cls: byKey.anthropic?.api_key ? 'ok' : 'warn', meta: byKey.anthropic?.api_key ? 'Génération active' : 'Génération désactivée' },
+    { lbl:'Canaux sociaux', val: ['meta','linkedin','gbp'].filter(k => byKey[k] && Object.keys(byKey[k]).length).length + '/3', cls: 'warn', meta:'à connecter' }
+  ];
+  document.getElementById('healthGrid').innerHTML = tiles.map(t => `
+    <div class="health-tile ${t.cls}">
+      <div class="lbl">${t.lbl}</div>
+      <div class="val">${t.val}</div>
+      <div class="meta">${t.meta}</div>
+    </div>
+  `).join('');
+
+  // Alertes
+  const alerts = [];
+  const draftsNoPhoto = all.filter(r => r.status === 'brouillon' && !r.image_before && !r.image_after);
+  if (draftsNoPhoto.length) alerts.push({
+    cls:'warn', icon:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',
+    title: draftsNoPhoto.length + ' brouillon' + (draftsNoPhoto.length>1?'s':'') + ' sans photo',
+    body: 'Ajoutez au moins une photo avant de publier — c\'est le facteur n°1 de conversion. <a href="realisations.html?filter=brouillon">Ouvrir les brouillons →</a>'
+  });
+  const validations = all.filter(r => r.status === 'validation').length;
+  if (validations) alerts.push({
+    cls:'info', icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
+    title: validations + ' chantier' + (validations>1?'s':'') + ' à valider',
+    body: 'En attente de votre validation avant publication. <a href="publications.html">Aller à la pile →</a>'
+  });
+  if (!byKey.anthropic?.api_key) alerts.push({
+    cls:'warn', icon:'<path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>',
+    title: 'Génération IA non activée',
+    body: 'Configurez votre clé Anthropic pour générer titres et descriptions automatiquement. <a href="settings.html#section-anthropic">Configurer →</a>'
+  });
+  if (!byKey.company?.raison_sociale) alerts.push({
+    cls:'info', icon:'<path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/>',
+    title: 'Informations société à compléter',
+    body: 'Améliore le SEO et les balises meta du site. <a href="settings.html#section-company">Compléter →</a>'
+  });
+
+  if (alerts.length === 0) {
+    alerts.push({
+      cls:'ok', icon:'<polyline points="20 6 9 17 4 12"/>',
+      title:'Aucune alerte — tout est à jour ✓',
+      body:'Votre système est en bonne santé.'
+    });
+  }
+  document.getElementById('alertsList').innerHTML = alerts.map(a => `
+    <div class="alert-card ${a.cls}">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${a.icon}</svg>
+      <div class="body"><strong>${a.title}</strong><span>${a.body}</span></div>
+    </div>
+  `).join('');
+})();
+</script>
 </body>
 </html>
