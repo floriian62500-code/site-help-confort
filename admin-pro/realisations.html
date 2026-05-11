@@ -125,6 +125,39 @@
   .upload-pair{grid-template-columns:1fr}
   .reals-toolbar select{font-size:.8rem}
 }
+
+/* === Modal Preview === */
+.preview-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.preview-card{background:#fff;border:1px solid #e1e5eb;border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.preview-card.fb,.preview-card.li{background:#f0f2f5}
+.preview-card.ig{background:#000}
+.preview-card.gbp{background:#fff;border:1px solid #dadce0}
+.preview-card .pv-head{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#fff}
+.preview-card.fb .pv-head,.preview-card.li .pv-head{background:#fff}
+.preview-card.ig .pv-head{background:#000;color:#fff}
+.preview-card .pv-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#0DA0CF,#0a7fa8);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.78rem;flex-shrink:0}
+.preview-card .pv-name{flex:1;font-size:.82rem;font-weight:700;color:#0A1428;line-height:1.2}
+.preview-card.ig .pv-name{color:#fff}
+.preview-card .pv-handle{font-size:.7rem;color:#65676b;font-weight:400}
+.preview-card.ig .pv-handle{color:#a8a8a8}
+.preview-card .pv-platform{font-size:.62rem;font-weight:800;padding:2px 7px;border-radius:4px;text-transform:uppercase}
+.preview-card.fb .pv-platform{background:#1877F2;color:#fff}
+.preview-card.ig .pv-platform{background:linear-gradient(135deg,#F58529,#DD2A7B);color:#fff}
+.preview-card.li .pv-platform{background:#0A66C2;color:#fff}
+.preview-card.gbp .pv-platform{background:#4285F4;color:#fff}
+.preview-card .pv-text{padding:10px 12px;font-size:.84rem;color:#0A1428;line-height:1.4;white-space:pre-wrap;background:#fff;max-height:140px;overflow-y:auto}
+.preview-card.fb .pv-text,.preview-card.li .pv-text{background:#fff}
+.preview-card.ig .pv-text{background:#000;color:#fff;border-top:1px solid rgba(255,255,255,.10)}
+.preview-card.gbp .pv-text{font-size:.82rem}
+.preview-card .pv-photo{aspect-ratio:1;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.preview-card.fb .pv-photo,.preview-card.li .pv-photo{aspect-ratio:1.91/1}
+.preview-card.gbp .pv-photo{aspect-ratio:16/9}
+.preview-card .pv-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.preview-card .pv-photo-empty{color:rgba(255,255,255,.4);font-size:.78rem;padding:20px}
+.preview-card .pv-foot{padding:8px 12px;display:flex;gap:14px;align-items:center;font-size:.74rem;color:#65676b;border-top:1px solid #e1e5eb;background:#fff}
+.preview-card.ig .pv-foot{background:#000;color:#a8a8a8;border-color:rgba(255,255,255,.10)}
+.preview-card .pv-foot svg{width:18px;height:18px}
+.preview-not-pub{padding:14px;background:rgba(255,184,0,.10);border:1px solid rgba(255,184,0,.30);border-radius:10px;color:#7a4c00;font-size:.84rem;font-weight:600;text-align:center;margin-bottom:14px}
 </style>
 </head>
 <body>
@@ -292,6 +325,19 @@
 
     </div>
   </main>
+</div>
+
+<!-- Modal Preview -->
+<div class="modal-backdrop" id="previewModal">
+  <div class="modal-panel" style="max-width:1080px">
+    <div class="modal-head">
+      <h2>Aperçu — rendu sur les réseaux sociaux</h2>
+      <button class="modal-close" id="previewClose" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="previewBody"></div>
+  </div>
 </div>
 
 <!-- Toast stack -->
@@ -475,6 +521,10 @@
         Supprimer
       </button>
       <button class="btn" id="btnCancel" type="button">Annuler</button>
+      <button class="btn" id="btnPreview" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Aperçu
+      </button>
       <button class="btn btn-primary" id="btnSave" type="button">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         Enregistrer
@@ -1056,6 +1106,84 @@ function slugify(s) {
   return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
 }
 
+// ─── Aperçu post réseaux sociaux ────────────────────────────
+function openPreview() {
+  const title = document.getElementById('f_title').value.trim() || 'Sans titre';
+  const desc = document.getElementById('f_description').value.trim();
+  const descLong = document.getElementById('f_description_long').value.trim();
+  let ville = document.getElementById('f_ville').value;
+  if (ville === '__other') ville = document.getElementById('f_ville_other').value.trim();
+  const photo = _uploads.after || _uploads.before;
+
+  const fullText = [title, desc, '', ville ? `📍 ${ville}` : ''].filter(Boolean).join('\n');
+  const fullTextLong = [title, descLong || desc, '', ville ? `📍 ${ville}` : '', '', '#HelpConfort #DepanAudo'].filter(Boolean).join('\n');
+
+  const photoHtml = photo
+    ? `<img src="${photo}" alt="">`
+    : '<div class="pv-photo-empty">📷 Pas de photo<br><span style="font-size:.7rem">Uploader avant publication</span></div>';
+
+  const status = document.getElementById('f_status').value;
+  const warn = status !== 'publie' ? '<div class="preview-not-pub">⚠️ Ce chantier est en statut « ' + (status === 'brouillon' ? 'Brouillon' : 'À valider') + ' » — passez-le en « Publié » pour diffuser sur les réseaux sociaux cochés.</div>' : '';
+
+  document.getElementById('previewBody').innerHTML = warn + `
+    <div class="preview-grid">
+      <!-- Facebook -->
+      <div class="preview-card fb">
+        <div class="pv-head">
+          <div class="pv-avatar">H!</div>
+          <div class="pv-name">HELP! Confort Saint-Omer<div class="pv-handle">@depanaudo · maintenant</div></div>
+          <span class="pv-platform">FB</span>
+        </div>
+        <div class="pv-text">${escapeHtml(fullText)}</div>
+        <div class="pv-photo">${photoHtml}</div>
+        <div class="pv-foot">
+          <span>👍 J'aime</span><span>💬 Commenter</span><span>↪ Partager</span>
+        </div>
+      </div>
+      <!-- Instagram -->
+      <div class="preview-card ig">
+        <div class="pv-head">
+          <div class="pv-avatar">H!</div>
+          <div class="pv-name">depanaudo.officiel<div class="pv-handle">Maintenant</div></div>
+          <span class="pv-platform">IG</span>
+        </div>
+        <div class="pv-photo">${photoHtml}</div>
+        <div class="pv-text">${escapeHtml(fullText.slice(0, 250) + (fullText.length > 250 ? '… plus' : ''))}</div>
+      </div>
+      <!-- LinkedIn -->
+      <div class="preview-card li">
+        <div class="pv-head">
+          <div class="pv-avatar">H!</div>
+          <div class="pv-name">HELP! Confort · Page entreprise<div class="pv-handle">Maintenant · 🌐 Public</div></div>
+          <span class="pv-platform">LI</span>
+        </div>
+        <div class="pv-text">${escapeHtml(fullTextLong)}</div>
+        <div class="pv-photo">${photoHtml}</div>
+        <div class="pv-foot">
+          <span>👍 Like</span><span>💬 Comment</span><span>🔁 Repost</span><span>📤 Send</span>
+        </div>
+      </div>
+      <!-- Google Business -->
+      <div class="preview-card gbp">
+        <div class="pv-head">
+          <div class="pv-avatar" style="background:linear-gradient(135deg,#4285F4,#34A853)">G</div>
+          <div class="pv-name">HELP! Confort Saint-Omer<div class="pv-handle">Mise à jour Google · maintenant</div></div>
+          <span class="pv-platform">GBP</span>
+        </div>
+        <div class="pv-photo">${photoHtml}</div>
+        <div class="pv-text">${escapeHtml(fullText)}<br><br><span style="color:#1a73e8;font-weight:600">En savoir plus →</span></div>
+      </div>
+    </div>
+  `;
+  document.getElementById('previewModal').classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePreview() {
+  document.getElementById('previewModal').classList.remove('is-open');
+  document.body.style.overflow = 'hidden'; // garder car modal édit est dessous
+}
+
 // ─── Génération IA Claude ────────────────────────────────────
 async function generateWithAI() {
   const btn = document.getElementById('btnGenerateAI');
@@ -1291,6 +1419,9 @@ async function triggerMultichannelPublish(realisationId, targets) {
 
   // Bouton IA + état canaux
   document.getElementById('btnGenerateAI').addEventListener('click', generateWithAI);
+  document.getElementById('btnPreview').addEventListener('click', openPreview);
+  document.getElementById('previewClose').addEventListener('click', closePreview);
+  document.getElementById('previewModal').addEventListener('click', e => { if (e.target.id === 'previewModal') closePreview(); });
   await loadSettings();
 
   // Charger les données
