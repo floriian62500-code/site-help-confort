@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Générateur visuel · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+.vs-hero{background:linear-gradient(135deg,#0DA0CF 0%,#FFB400 60%,#FF6B1A 130%);color:#fff;border-radius:18px;padding:26px 30px;margin-bottom:22px;box-shadow:0 14px 40px rgba(13,160,207,.25)}
+.vs-hero h1{font-size:1.55rem;font-weight:800;margin:0 0 6px 0;line-height:1.2;display:flex;align-items:center;gap:10px}
+.vs-hero p{font-size:.94rem;opacity:.96;margin:0;line-height:1.5;max-width:740px}
+
+.vs-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:22px;align-items:start}
+@media(max-width:1100px){.vs-grid{grid-template-columns:1fr}}
+
+.vs-card{background:#fff;border:1px solid var(--ink-100);border-radius:16px;padding:22px;box-shadow:0 1px 2px rgba(11,18,32,.04)}
+.vs-card h3{font-size:1rem;font-weight:800;color:var(--ink-900);margin:0 0 4px 0}
+.vs-card p.desc{font-size:.84rem;color:var(--ink-500);margin:0 0 16px 0;line-height:1.5}
+
+.vs-uploads{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.vs-upload{border:2px dashed var(--ink-200);border-radius:12px;aspect-ratio:1;cursor:pointer;background:var(--ink-50);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--ink-500);overflow:hidden;position:relative;transition:.15s}
+.vs-upload:hover{border-color:var(--hc-primary);background:rgba(13,160,207,.04)}
+.vs-upload.has-img{border-style:solid;border-color:var(--hc-primary);padding:0}
+.vs-upload img{width:100%;height:100%;object-fit:cover}
+.vs-upload .label{font-size:.78rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-700);position:absolute;top:6px;left:6px;background:rgba(255,255,255,.9);padding:3px 9px;border-radius:6px;backdrop-filter:blur(6px)}
+.vs-upload .placeholder{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:14px}
+.vs-upload .placeholder svg{width:32px;height:32px;color:var(--ink-300)}
+.vs-upload .placeholder strong{font-size:.86rem;color:var(--ink-700)}
+.vs-upload .placeholder span{font-size:.72rem;color:var(--ink-400)}
+.vs-upload input{display:none}
+
+.vs-field{margin-bottom:14px}
+.vs-field label{display:block;font-size:.78rem;font-weight:700;color:var(--ink-700);margin-bottom:5px;letter-spacing:.02em}
+.vs-field select, .vs-field input{width:100%;padding:9px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;font-size:.9rem;background:#fff;color:var(--ink-900)}
+.vs-field select:focus, .vs-field input:focus{outline:none;border-color:var(--hc-primary);box-shadow:0 0 0 3px rgba(13,160,207,.10)}
+
+.vs-format-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.vs-format-grid button{padding:8px 4px;border:1.5px solid var(--ink-100);background:#fff;border-radius:9px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;font:inherit;font-weight:600;font-size:.74rem;color:var(--ink-700);transition:.15s}
+.vs-format-grid button:hover{border-color:var(--hc-primary)}
+.vs-format-grid button.active{border-color:var(--hc-primary);background:rgba(13,160,207,.06);color:var(--hc-primary)}
+.vs-format-icon{width:32px;height:32px;border:2px solid currentColor;border-radius:3px;margin-bottom:2px}
+.vs-format-grid button[data-format="square"] .vs-format-icon{width:24px;height:24px}
+.vs-format-grid button[data-format="portrait"] .vs-format-icon{width:20px;height:28px}
+.vs-format-grid button[data-format="landscape"] .vs-format-icon{width:30px;height:18px}
+.vs-format-grid button[data-format="story"] .vs-format-icon{width:18px;height:30px}
+
+.vs-preview-wrap{background:linear-gradient(135deg,#0A1428,#1A2A44);border-radius:16px;padding:22px;display:flex;align-items:center;justify-content:center;min-height:300px;position:relative;overflow:hidden}
+.vs-preview-wrap::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 30% 30%, rgba(13,160,207,.10), transparent 60%);pointer-events:none}
+.vs-canvas-wrap{max-width:100%;max-height:600px;display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
+.vs-canvas-wrap canvas{max-width:100%;max-height:600px;box-shadow:0 20px 50px rgba(0,0,0,.40);border-radius:8px;background:#fff}
+.vs-preview-empty{text-align:center;color:rgba(255,255,255,.5);font-size:.9rem;position:relative;z-index:1}
+.vs-preview-empty svg{width:48px;height:48px;margin-bottom:10px;color:rgba(255,255,255,.30)}
+
+.vs-foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:18px}
+.vs-foot .right{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.vs-foot .btn-export{padding:10px 22px;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;border:none;border-radius:10px;font:inherit;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 6px 20px rgba(255,107,26,.30);transition:.15s}
+.vs-foot .btn-export:hover{transform:translateY(-1px)}
+.vs-foot .btn-export:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+.toast-stack{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:2000;pointer-events:none}
+.toast{background:#fff;border:1px solid var(--ink-100);border-radius:10px;padding:11px 14px;box-shadow:0 8px 24px rgba(11,18,32,.16);font-size:.86rem;font-weight:600;color:var(--ink-900);pointer-events:auto;min-width:240px}
+.toast.ok{border-left:3px solid #00aa50}
+.toast.err{border-left:3px solid #d92d20}
+</style>
+</head>
+<body>
+<div class="admin-overlay"></div>
+<div class="admin-shell">
+  <aside class="admin-sidebar"></aside>
+  <main class="admin-main">
+    <header class="admin-topbar"></header>
+    <div class="admin-content">
+
+      <div class="vs-hero">
+        <h1>🎨 Générateur visuel avant/après</h1>
+        <p>Upload 2 photos, choisis le métier et le format réseau social → tu obtiens une image prête à publier sur Facebook, Instagram ou en story. Au format identique à tes templates PDF.</p>
+      </div>
+
+      <div class="vs-grid">
+
+        <!-- Colonne gauche : controls -->
+        <div class="vs-card">
+          <h3>1. Tes photos</h3>
+          <p class="desc">Glisse ou clique pour ajouter.</p>
+          <div class="vs-uploads">
+            <label class="vs-upload" id="upBefore">
+              <span class="label">AVANT</span>
+              <div class="placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <strong>Photo avant</strong>
+                <span>JPG/PNG · max 10 Mo</span>
+              </div>
+              <input type="file" accept="image/*" data-side="before">
+            </label>
+            <label class="vs-upload" id="upAfter">
+              <span class="label">APRÈS</span>
+              <div class="placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <strong>Photo après</strong>
+                <span>JPG/PNG · max 10 Mo</span>
+              </div>
+              <input type="file" accept="image/*" data-side="after">
+            </label>
+          </div>
+
+          <h3 style="margin-top:18px">2. Métier</h3>
+          <div class="vs-field">
+            <select id="metier">
+              <option value="PLOMBERIE">Plomberie</option>
+              <option value="CHAUFFAGE">Chauffage</option>
+              <option value="ÉLECTRICITÉ">Électricité</option>
+              <option value="SERRURERIE">Serrurerie</option>
+              <option value="VITRERIE">Vitrerie</option>
+              <option value="MENUISERIE">Menuiserie</option>
+              <option value="RÉNOVATION">Rénovation</option>
+              <option value="VOLET ROULANT">Volet roulant</option>
+              <option value="PMR">PMR</option>
+              <option value="MULTI-SERVICES">Multi-services</option>
+            </select>
+          </div>
+
+          <h3 style="margin-top:18px">3. Format réseau social</h3>
+          <div class="vs-format-grid">
+            <button data-format="square" class="active">
+              <div class="vs-format-icon"></div>
+              <span>1080×1080</span>
+              <span style="color:var(--ink-400);font-size:.66rem">Insta carré</span>
+            </button>
+            <button data-format="portrait">
+              <div class="vs-format-icon"></div>
+              <span>1080×1350</span>
+              <span style="color:var(--ink-400);font-size:.66rem">Insta portrait</span>
+            </button>
+            <button data-format="landscape">
+              <div class="vs-format-icon"></div>
+              <span>1200×630</span>
+              <span style="color:var(--ink-400);font-size:.66rem">FB feed</span>
+            </button>
+            <button data-format="story">
+              <div class="vs-format-icon"></div>
+              <span>1080×1920</span>
+              <span style="color:var(--ink-400);font-size:.66rem">Story IG/FB</span>
+            </button>
+          </div>
+
+          <h3 style="margin-top:18px">4. Texte optionnel sur l'image</h3>
+          <div class="vs-field">
+            <input type="text" id="subtitle" maxlength="80" placeholder="Ex: Rénovation complète · Saint-Omer">
+          </div>
+        </div>
+
+        <!-- Colonne droite : preview -->
+        <div>
+          <div class="vs-preview-wrap" id="previewWrap">
+            <div class="vs-preview-empty" id="previewEmpty">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <div>Upload 2 photos pour voir le rendu</div>
+            </div>
+            <div class="vs-canvas-wrap" style="display:none" id="canvasWrap">
+              <canvas id="canvas"></canvas>
+            </div>
+          </div>
+          <div class="vs-foot">
+            <span style="font-size:.82rem;color:var(--ink-500)" id="dimsLabel">—</span>
+            <div class="right">
+              <button class="btn" id="btnReset">↻ Réinitialiser</button>
+              <button class="btn-export" id="btnExport" disabled>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Télécharger PNG
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+const FORMATS = {
+  square:    { w: 1080, h: 1080, photoRatio: 0.78 },
+  portrait:  { w: 1080, h: 1350, photoRatio: 0.78 },
+  landscape: { w: 1200, h: 630,  photoRatio: 0.82 },
+  story:     { w: 1080, h: 1920, photoRatio: 0.72 }
+};
+
+const METIER_COLORS = {
+  'PLOMBERIE':       { main: '#0DA0CF', accent: '#5fc7e5' },
+  'CHAUFFAGE':       { main: '#FF6B1A', accent: '#FFB400' },
+  'ÉLECTRICITÉ':     { main: '#FFB400', accent: '#FFE066' },
+  'SERRURERIE':      { main: '#7C3AED', accent: '#A78BFA' },
+  'VITRERIE':        { main: '#16A34A', accent: '#3DCF8E' },
+  'MENUISERIE':      { main: '#92400E', accent: '#D97706' },
+  'RÉNOVATION':      { main: '#0EA5E9', accent: '#38BDF8' },
+  'VOLET ROULANT':   { main: '#475569', accent: '#94A3B8' },
+  'PMR':             { main: '#DB2777', accent: '#F472B6' },
+  'MULTI-SERVICES':  { main: '#0A1428', accent: '#1A2A44' }
+};
+
+function toast(msg, type='ok', d=2400){
+  const stack = document.getElementById('toastStack');
+  const t = document.createElement('div'); t.className='toast '+type;
+  t.textContent = msg;
+  stack.appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),200); }, d);
+}
+
+const images = { before: null, after: null };
+let currentFormat = 'square';
+
+(async function() {
+  await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+  await HCLayout.mount('visuel', 'Générateur visuel');
+
+  // ─── Upload handlers ────────────────────────────────
+  ['before', 'after'].forEach(side => {
+    const wrap = document.getElementById('up' + side[0].toUpperCase() + side.slice(1));
+    const input = wrap.querySelector('input');
+    input.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) { toast('Format invalide', 'err'); return; }
+      if (file.size > 10 * 1024 * 1024) { toast('Photo > 10 Mo', 'err'); return; }
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const img = new Image();
+        img.onload = () => {
+          images[side] = img;
+          wrap.classList.add('has-img');
+          wrap.querySelector('.placeholder')?.remove();
+          let preview = wrap.querySelector('img');
+          if (!preview) { preview = document.createElement('img'); wrap.insertBefore(preview, input); }
+          preview.src = ev.target.result;
+          render();
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Drag & drop
+    wrap.addEventListener('dragover', e => { e.preventDefault(); wrap.style.borderColor = 'var(--hc-primary)'; });
+    wrap.addEventListener('dragleave', e => { wrap.style.borderColor = ''; });
+    wrap.addEventListener('drop', e => {
+      e.preventDefault();
+      wrap.style.borderColor = '';
+      if (e.dataTransfer.files[0]) {
+        input.files = e.dataTransfer.files;
+        input.dispatchEvent(new Event('change'));
+      }
+    });
+  });
+
+  // ─── Format selector ────────────────────────────────
+  document.querySelectorAll('.vs-format-grid button').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.vs-format-grid button').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      currentFormat = b.dataset.format;
+      render();
+    });
+  });
+
+  // ─── Metier / subtitle changes ──────────────────────
+  document.getElementById('metier').addEventListener('change', render);
+  document.getElementById('subtitle').addEventListener('input', render);
+
+  // ─── Reset ──────────────────────────────────────────
+  document.getElementById('btnReset').addEventListener('click', () => {
+    images.before = images.after = null;
+    ['Before', 'After'].forEach(s => {
+      const wrap = document.getElementById('up' + s);
+      wrap.classList.remove('has-img');
+      const img = wrap.querySelector('img'); if (img) img.remove();
+      if (!wrap.querySelector('.placeholder')) {
+        const ph = document.createElement('div');
+        ph.className = 'placeholder';
+        ph.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><strong>Photo ${s === 'Before' ? 'avant' : 'après'}</strong><span>JPG/PNG · max 10 Mo</span>`;
+        wrap.insertBefore(ph, wrap.querySelector('input'));
+      }
+      wrap.querySelector('input').value = '';
+    });
+    document.getElementById('previewEmpty').style.display = '';
+    document.getElementById('canvasWrap').style.display = 'none';
+    document.getElementById('btnExport').disabled = true;
+    document.getElementById('dimsLabel').textContent = '—';
+  });
+
+  // ─── Export ─────────────────────────────────────────
+  document.getElementById('btnExport').addEventListener('click', () => {
+    const canvas = document.getElementById('canvas');
+    canvas.toBlob(blob => {
+      const a = document.createElement('a');
+      const metier = document.getElementById('metier').value.toLowerCase().replace(/\s/g,'-');
+      a.href = URL.createObjectURL(blob);
+      a.download = `helpconfort-${metier}-${currentFormat}-${Date.now()}.png`;
+      a.click();
+      toast('Image téléchargée ✓');
+    }, 'image/png', 0.95);
+  });
+
+  function drawImageCover(ctx, img, x, y, w, h) {
+    // dessine l'image en mode "cover" (recadrée pour remplir w×h)
+    const imgRatio = img.width / img.height;
+    const boxRatio = w / h;
+    let sx, sy, sw, sh;
+    if (imgRatio > boxRatio) {
+      // image plus large : on coupe les côtés
+      sh = img.height;
+      sw = sh * boxRatio;
+      sx = (img.width - sw) / 2;
+      sy = 0;
+    } else {
+      sw = img.width;
+      sh = sw / boxRatio;
+      sx = 0;
+      sy = (img.height - sh) / 2;
+    }
+    ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
+  }
+
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+  }
+
+  function render() {
+    if (!images.before || !images.after) return;
+    const cfg = FORMATS[currentFormat];
+    const metier = document.getElementById('metier').value;
+    const subtitle = document.getElementById('subtitle').value.trim();
+    const colors = METIER_COLORS[metier] || METIER_COLORS['MULTI-SERVICES'];
+
+    const canvas = document.getElementById('canvas');
+    canvas.width = cfg.w;
+    canvas.height = cfg.h;
+    const ctx = canvas.getContext('2d');
+
+    // Background
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, cfg.w, cfg.h);
+
+    // Photo zone (top part)
+    const photoH = Math.round(cfg.h * cfg.photoRatio);
+    const halfW = cfg.w / 2;
+    const gap = 4; // separator width in px
+
+    // Dessiner photo BEFORE (gauche)
+    drawImageCover(ctx, images.before, 0, 0, halfW - gap/2, photoH);
+    // Photo AFTER (droite)
+    drawImageCover(ctx, images.after, halfW + gap/2, 0, halfW - gap/2, photoH);
+
+    // Séparateur central (ligne blanche fine)
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(halfW - gap/2, 0, gap, photoH);
+
+    // Badges AVANT / APRÈS en haut
+    const badgeFont = currentFormat === 'story' || currentFormat === 'portrait' ? 'bold 38px Inter' : 'bold 32px Inter';
+    ctx.font = badgeFont;
+    function drawBadge(text, x, y, bg, color) {
+      ctx.font = badgeFont;
+      const metrics = ctx.measureText(text);
+      const padX = 16, padY = 10;
+      const bw = metrics.width + padX * 2;
+      const bh = parseInt(badgeFont) + padY;
+      ctx.fillStyle = bg;
+      roundRect(ctx, x, y, bw, bh, 6);
+      ctx.fill();
+      ctx.fillStyle = color;
+      ctx.textBaseline = 'middle';
+      ctx.fillText(text, x + padX, y + bh / 2 + 1);
+    }
+    drawBadge('AVANT', 24, 24, 'rgba(255,255,255,.94)', '#0A1428');
+    const afterText = 'APRÈS';
+    ctx.font = badgeFont;
+    const afterW = ctx.measureText(afterText).width + 32;
+    drawBadge(afterText, halfW + gap/2 + 24, 24, colors.main, '#fff');
+
+    // Banner métier en bas
+    const bannerY = photoH;
+    const bannerH = cfg.h - photoH;
+
+    // Background banner gradient
+    const grad = ctx.createLinearGradient(0, bannerY, cfg.w, bannerY + bannerH);
+    grad.addColorStop(0, colors.main);
+    grad.addColorStop(1, colors.accent);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, bannerY, cfg.w, bannerH);
+
+    // Texte métier (gros)
+    ctx.fillStyle = '#fff';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    const metierFontSize = Math.min(bannerH * 0.45, cfg.w / metier.length * 1.4);
+    ctx.font = `900 ${metierFontSize}px Inter`;
+    const textY = subtitle ? bannerY + bannerH * 0.38 : bannerY + bannerH * 0.50;
+    ctx.fillText(metier, cfg.w / 2, textY);
+
+    // Sous-titre (optionnel)
+    if (subtitle) {
+      ctx.font = `600 ${metierFontSize * 0.32}px Inter`;
+      ctx.fillStyle = 'rgba(255,255,255,.92)';
+      ctx.fillText(subtitle, cfg.w / 2, bannerY + bannerH * 0.70);
+    }
+
+    // Logo / branding Help Confort en bas-droit du banner
+    const brandFontSize = bannerH * 0.16;
+    ctx.font = `800 ${brandFontSize}px Inter`;
+    ctx.fillStyle = 'rgba(255,255,255,.85)';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText('HELP! Confort', cfg.w - 30, cfg.h - 18);
+
+    // Show preview
+    document.getElementById('previewEmpty').style.display = 'none';
+    document.getElementById('canvasWrap').style.display = '';
+    document.getElementById('btnExport').disabled = false;
+    document.getElementById('dimsLabel').textContent = `${cfg.w} × ${cfg.h} px · ${currentFormat}`;
+  }
+})();
+</script>
+</body>
+</html>

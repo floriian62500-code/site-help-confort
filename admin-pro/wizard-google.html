@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Assistant Google · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+.gw-hero{background:linear-gradient(135deg,#4285F4 0%,#34A853 50%,#FBBC05 130%);color:#fff;border-radius:18px;padding:26px 30px;margin-bottom:22px;box-shadow:0 14px 40px rgba(66,133,244,.25)}
+.gw-hero h1{font-size:1.5rem;font-weight:800;margin:0 0 6px 0;display:flex;align-items:center;gap:10px}
+.gw-hero p{font-size:.94rem;opacity:.96;margin:0;line-height:1.5;max-width:680px}
+.gw-hero .badge{display:inline-block;margin-top:10px;padding:4px 11px;background:rgba(255,255,255,.20);border-radius:8px;font-size:.8rem;font-weight:600;backdrop-filter:blur(8px)}
+
+.gw-progress{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.gw-progress-step{flex:1;min-width:90px;background:var(--ink-50);border-radius:9px;padding:8px 10px;border:2px solid transparent;text-align:center;cursor:pointer;transition:.15s}
+.gw-progress-step:hover{border-color:var(--ink-200)}
+.gw-progress-step.done{background:rgba(0,170,80,.10);border-color:#00aa50;color:#007033}
+.gw-progress-step.current{background:rgba(66,133,244,.10);border-color:#4285F4;color:#1A237E;transform:scale(1.05);box-shadow:0 4px 12px rgba(66,133,244,.20)}
+.gw-progress-step .num{display:block;font-size:.66rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.gw-progress-step .lbl{display:block;font-size:.76rem;font-weight:700;margin-top:2px}
+
+.gw-step{display:none;background:#fff;border:1px solid var(--ink-100);border-radius:14px;padding:24px 26px;box-shadow:0 1px 2px rgba(11,18,32,.04);margin-bottom:14px}
+.gw-step.active{display:block;animation:gw-fade .25s ease-out}
+@keyframes gw-fade{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
+
+.gw-step-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.gw-step-num{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#4285F4,#34A853);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;flex-shrink:0}
+.gw-step-head h2{font-size:1.1rem;font-weight:800;color:var(--ink-900);margin:0;line-height:1.2}
+.gw-step-head p{font-size:.84rem;color:var(--ink-500);margin:1px 0 0 0}
+.gw-step-time{margin-left:auto;background:var(--ink-50);padding:4px 9px;border-radius:6px;font-size:.74rem;font-weight:700;color:var(--ink-500)}
+
+.gw-step-body{font-size:.92rem;color:var(--ink-700);line-height:1.6}
+.gw-step-body p{margin:0 0 12px 0}
+.gw-step-body ol, .gw-step-body ul{padding-left:22px;margin:10px 0}
+.gw-step-body ol li, .gw-step-body ul li{margin-bottom:6px}
+.gw-step-body strong{color:var(--ink-900);font-weight:700}
+.gw-step-body code{background:var(--ink-50);padding:2px 7px;border-radius:5px;font-family:'SF Mono','Monaco',monospace;font-size:.85em;color:var(--hc-primary)}
+.gw-step-body a{color:var(--hc-primary);font-weight:600}
+.gw-step-body pre{background:#0A1428;color:#5fc7e5;padding:12px 14px;border-radius:10px;font-family:'SF Mono','Monaco',monospace;font-size:.78em;overflow-x:auto;line-height:1.5;margin:10px 0}
+.gw-step-body kbd{background:var(--ink-50);border:1px solid var(--ink-100);padding:2px 6px;border-radius:5px;font-family:'SF Mono','Monaco',monospace;font-size:.85em;box-shadow:0 1px 0 var(--ink-100)}
+
+.gw-info-box{background:linear-gradient(135deg,rgba(66,133,244,.06),#fff);border:1px solid rgba(66,133,244,.20);border-left:3px solid #4285F4;border-radius:10px;padding:12px 14px;margin:10px 0;font-size:.84rem;color:var(--ink-700);line-height:1.5}
+.gw-info-box strong{color:#1A237E;display:block;margin-bottom:3px}
+.gw-warn-box{background:linear-gradient(135deg,rgba(255,180,0,.08),#fff);border:1px solid rgba(255,180,0,.30);border-left:3px solid #FFB400;border-radius:10px;padding:12px 14px;margin:10px 0;font-size:.84rem;color:#7a4c00;line-height:1.5}
+.gw-warn-box strong{color:#9A6B0A;display:block;margin-bottom:3px}
+.gw-ok-box{background:linear-gradient(135deg,rgba(0,170,80,.06),#fff);border:1px solid rgba(0,170,80,.20);border-left:3px solid #00aa50;border-radius:10px;padding:12px 14px;margin:10px 0;font-size:.84rem;color:#007033;line-height:1.5}
+
+.gw-cta{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:linear-gradient(135deg,#4285F4,#1A237E);color:#fff;border:none;border-radius:10px;font:inherit;font-weight:700;text-decoration:none;cursor:pointer;font-size:.86rem;margin-top:6px;transition:.15s;box-shadow:0 4px 14px rgba(66,133,244,.30)}
+.gw-cta:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(66,133,244,.40)}
+.gw-cta svg{width:14px;height:14px}
+
+.gw-nav{display:flex;align-items:center;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid var(--ink-100)}
+.gw-nav .btn{padding:9px 16px;font-size:.86rem}
+.gw-nav .right{margin-left:auto}
+
+.gw-check{display:flex;align-items:center;gap:8px;padding:9px 11px;margin:8px 0;border-radius:9px;background:var(--ink-50);cursor:pointer;transition:.12s}
+.gw-check:hover{background:rgba(13,160,207,.06)}
+.gw-check input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:#4285F4}
+.gw-check label{font-size:.84rem;color:var(--ink-700);cursor:pointer;flex:1;margin:0}
+.gw-check.done{background:rgba(0,170,80,.06);color:#007033}
+.gw-check.done label{color:#007033;text-decoration:line-through}
+
+.toast-stack{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:2000;pointer-events:none}
+.toast{background:#fff;border:1px solid var(--ink-100);border-radius:10px;padding:11px 14px;box-shadow:0 8px 24px rgba(11,18,32,.16);font-size:.86rem;font-weight:600;color:var(--ink-900);pointer-events:auto;min-width:240px}
+.toast.ok{border-left:3px solid #00aa50}
+</style>
+</head>
+<body>
+<div class="admin-overlay"></div>
+<div class="admin-shell">
+  <aside class="admin-sidebar"></aside>
+  <main class="admin-main">
+    <header class="admin-topbar"></header>
+    <div class="admin-content">
+
+      <div class="gw-hero">
+        <h1>🌐 Assistant Connexion Google Business</h1>
+        <p>Je te guide pas à pas pour connecter tes 2 fiches Google Business Profile (Saint-Omer + Dunkerque) au back-office. Une fois fait, tu pourras répondre aux avis Google et publier des Posts directement depuis ici.</p>
+        <span class="badge">⏱️ ~25 min · 🆓 Gratuit</span>
+      </div>
+
+      <div class="gw-progress" id="progressBar"></div>
+
+      <!-- Step 1 -->
+      <div class="gw-step active" data-step="1">
+        <div class="gw-step-head">
+          <div class="gw-step-num">1</div>
+          <div>
+            <h2>Créer un projet Google Cloud</h2>
+            <p>Google demande qu'on passe par leur Cloud Console pour activer les APIs.</p>
+          </div>
+          <div class="gw-step-time">5 min</div>
+        </div>
+        <div class="gw-step-body">
+          <ol>
+            <li>Clique sur le bouton ci-dessous pour ouvrir Google Cloud Console</li>
+            <li>Connecte-toi avec <strong>le compte Google qui gère tes fiches Business Profile</strong> (pas un autre compte)</li>
+            <li>En haut de la page, clique sur le sélecteur de projet → <strong>"Nouveau projet"</strong></li>
+            <li>Nom du projet : <code>Help Confort Back-Office</code></li>
+            <li>Clique <strong>Créer</strong> et patiente 30 secondes</li>
+            <li>Vérifie que le projet sélectionné en haut est bien <code>Help Confort Back-Office</code></li>
+          </ol>
+          <a href="https://console.cloud.google.com/" target="_blank" rel="noopener" class="gw-cta">
+            Ouvrir Google Cloud Console
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+          </a>
+          <div class="gw-check"><input type="checkbox" id="ch1"><label for="ch1">J'ai créé le projet et il est bien sélectionné</label></div>
+        </div>
+        <div class="gw-nav">
+          <button class="btn" disabled>← Précédent</button>
+          <div class="right"><button class="btn btn-primary" data-next>Suivant →</button></div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="gw-step" data-step="2">
+        <div class="gw-step-head">
+          <div class="gw-step-num">2</div>
+          <div>
+            <h2>Activer les 2 APIs Business Profile</h2>
+            <p>2 APIs à activer dans la bibliothèque.</p>
+          </div>
+          <div class="gw-step-time">3 min</div>
+        </div>
+        <div class="gw-step-body">
+          <ol>
+            <li>Va dans <strong>APIs et services → Bibliothèque</strong> (menu hamburger en haut à gauche)</li>
+            <li>Cherche puis active <strong>My Business Account Management API</strong></li>
+            <li>Cherche puis active <strong>My Business Business Information API</strong></li>
+          </ol>
+          <div class="gw-warn-box">
+            <strong>⚠️ NE PAS activer "Google My Business API"</strong>
+            Cette API est obsolète depuis fin 2024 (deprecated par Google).
+          </div>
+          <a href="https://console.cloud.google.com/apis/library" target="_blank" rel="noopener" class="gw-cta">
+            Ouvrir la bibliothèque d'APIs
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+          </a>
+          <div class="gw-check"><input type="checkbox" id="ch2a"><label for="ch2a">Account Management API activée ✓</label></div>
+          <div class="gw-check"><input type="checkbox" id="ch2b"><label for="ch2b">Business Information API activée ✓</label></div>
+        </div>
+        <div class="gw-nav">
+          <button class="btn" data-prev>← Précédent</button>
+          <div class="right"><button class="btn btn-primary" data-next>Suivant →</button></div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="gw-step" data-step="3">
+        <div class="gw-step-head">
+          <div class="gw-step-num">3</div>
+          <div>
+            <h2>Demander l'accès aux APIs</h2>
+            <p>Étape importante — Google demande une autorisation manuelle.</p>
+          </div>
+          <div class="gw-step-time">15 min · async</div>
+        </div>
+        <div class="gw-step-body">
+          <div class="gw-warn-box">
+            <strong>⏱️ Délai d'approbation Google : 1 à 3 jours ouvrés</strong>
+            Tu peux continuer la suite des étapes en parallèle, mais sans cette approbation, les API renverront des erreurs 403.
+          </div>
+          <p>Remplis le formulaire d'accès en utilisant ces informations :</p>
+          <ul>
+            <li><strong>Organisation</strong> : HELP! Confort Saint-Omer</li>
+            <li><strong>Nom du contact</strong> : Florian Dhaillecourt</li>
+            <li><strong>Numéro du projet</strong> : ouvre <a href="https://console.cloud.google.com/home/dashboard" target="_blank">le tableau de bord</a> → tu trouveras un nombre à 12 chiffres "Numéro du projet"</li>
+            <li><strong>Cas d'usage</strong> :
+              <pre style="white-space:pre-wrap;font-size:.78em">Synchronisation des avis Google Business Profile de nos 2 fiches (Help Confort Saint-Omer et Help Confort Dunkerque) dans notre back-office interne, pour permettre à notre équipe de répondre aux avis depuis un point central. Volume estimé : ~500 avis/an et ~50 réponses/mois.</pre>
+            </li>
+          </ul>
+          <a href="https://support.google.com/business/contact/api_default" target="_blank" rel="noopener" class="gw-cta">
+            Ouvrir le formulaire d'accès
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+          </a>
+          <div class="gw-check"><input type="checkbox" id="ch3"><label for="ch3">J'ai envoyé la demande à Google</label></div>
+        </div>
+        <div class="gw-nav">
+          <button class="btn" data-prev>← Précédent</button>
+          <div class="right"><button class="btn btn-primary" data-next>Suivant →</button></div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="gw-step" data-step="4">
+        <div class="gw-step-head">
+          <div class="gw-step-num">4</div>
+          <div>
+            <h2>Configurer l'écran OAuth</h2>
+            <p>Définit comment ton app demandera les permissions Google.</p>
+          </div>
+          <div class="gw-step-time">3 min</div>
+        </div>
+        <div class="gw-step-body">
+          <ol>
+            <li>Va dans <strong>APIs et services → Écran de consentement OAuth</strong></li>
+            <li>Choisis <strong>"Externe"</strong> → Créer</li>
+            <li>Remplis :
+              <ul>
+                <li>Nom de l'application : <code>Help Confort Back-Office</code></li>
+                <li>Email d'assistance utilisateur : ton email</li>
+                <li>Domaines autorisés : <code>helpconfort.com</code></li>
+                <li>Email du développeur : ton email</li>
+              </ul>
+            </li>
+            <li><strong>Champs d'application</strong> → ajouter <code>https://www.googleapis.com/auth/business.manage</code></li>
+            <li><strong>Utilisateurs test</strong> → ajouter ton email Google</li>
+            <li>Valide tout</li>
+          </ol>
+          <a href="https://console.cloud.google.com/apis/credentials/consent" target="_blank" rel="noopener" class="gw-cta">
+            Ouvrir l'écran OAuth
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+          </a>
+          <div class="gw-check"><input type="checkbox" id="ch4"><label for="ch4">Écran OAuth configuré</label></div>
+        </div>
+        <div class="gw-nav">
+          <button class="btn" data-prev>← Précédent</button>
+          <div class="right"><button class="btn btn-primary" data-next>Suivant →</button></div>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="gw-step" data-step="5">
+        <div class="gw-step-head">
+          <div class="gw-step-num">5</div>
+          <div>
+            <h2>Créer les identifiants OAuth</h2>
+            <p>Génère ton Client ID + Client Secret.</p>
+          </div>
+          <div class="gw-step-time">3 min</div>
+        </div>
+        <div class="gw-step-body">
+          <ol>
+            <li>Va dans <strong>APIs et services → Identifiants</strong></li>
+            <li>Clique <strong>+ Créer des identifiants → ID client OAuth</strong></li>
+            <li>Type d'application : <strong>Application Web</strong></li>
+            <li>Nom : <code>Help Confort Back-Office</code></li>
+            <li>URI de redirection autorisée : <code>https://developers.google.com/oauthplayground</code></li>
+            <li>Clique <strong>Créer</strong></li>
+            <li>Une popup affiche ton <strong>Client ID</strong> et <strong>Client Secret</strong></li>
+          </ol>
+          <div class="gw-info-box">
+            <strong>💾 Garde précieusement ces 2 valeurs</strong>
+            On en aura besoin à l'étape 6 et plus tard pour configurer le back-office.
+          </div>
+          <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener" class="gw-cta">
+            Créer les identifiants
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+          </a>
+          <div class="gw-check"><input type="checkbox" id="ch5"><label for="ch5">J'ai mes Client ID + Client Secret</label></div>
+        </div>
+        <div class="gw-nav">
+          <button class="btn" data-prev>← Précédent</button>
+          <div class="right"><button class="btn btn-primary" data-next>Suivant →</button></div>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="gw-step" data-step="6">
+        <div class="gw-step-head">
+          <div class="gw-step-num">6</div>
+          <div>
+            <h2>Générer le Refresh Token</h2>
+            <p>Via l'OAuth Playground officiel Google.</p>
+          </div>
+          <div class="gw-step-time">5 min</div>
+        </div>
+        <div class="gw-step-body">
+          <ol>
+            <li>Ouvre <strong>OAuth Playground</strong>
+            <li>Clique l'icône <strong>⚙️ paramètres</strong> en haut à droite</li>
+            <li>Coche <strong>"Use your own OAuth credentials"</strong> et colle ton Client ID + Client Secret</li>
+            <li>Dans Step 1, tape ce scope :
+              <pre>https://www.googleapis.com/auth/business.manage</pre>
+            </li>
+            <li>Clique <strong>Authorize APIs</strong> → connecte-toi avec ton compte Google qui gère les fiches</li>
+            <li>Google affiche un avertissement "non vérifiée" → <strong>Paramètres avancés → Accéder</strong></li>
+            <li>De retour dans Playground, Step 2 → clique <strong>Exchange authorization code for tokens</strong></li>
+            <li>Tu vois <strong>Access token</strong> ET <strong>Refresh token</strong> apparaître</li>
+          </ol>
+          <div class="gw-info-box">
+            <strong>🔑 Le Refresh Token est le plus important</strong>
+            Il a une durée illimitée. L'Access Token expire en 1h mais l'Edge Function le régénère auto via le Refresh Token.
+          </div>
+          <a href="https://developers.google.com/oauthplayground" target="_blank" rel="noopener" class="gw-cta">
+            Ouvrir OAuth Playground
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+          </a>
+          <div class="gw-check"><input type="checkbox" id="ch6"><label for="ch6">J'ai mes Access Token + Refresh Token</label></div>
+        </div>
+        <div class="gw-nav">
+          <button class="btn" data-prev>← Précédent</button>
+          <div class="right"><button class="btn btn-primary" data-next>Suivant →</button></div>
+        </div>
+      </div>
+
+      <!-- Step 7 -->
+      <div class="gw-step" data-step="7">
+        <div class="gw-step-head">
+          <div class="gw-step-num">7</div>
+          <div>
+            <h2>Récupérer les IDs comptes + locations</h2>
+            <p>Pour identifier tes fiches Saint-Omer et Dunkerque.</p>
+          </div>
+          <div class="gw-step-time">5 min</div>
+        </div>
+        <div class="gw-step-body">
+          <p>Dans OAuth Playground (toujours ouvert), Step 3 :</p>
+          <ol>
+            <li>Dans le champ "Request URI", tape :
+              <pre>https://mybusinessaccountmanagement.googleapis.com/v1/accounts</pre>
+            </li>
+            <li>Clique <strong>Send the request</strong></li>
+            <li>Dans la réponse JSON, trouve l'<code>name</code> de "Dépan'Audo" (genre <code>accounts/123456789012345</code>)</li>
+            <li><strong>Copie cette valeur complète</strong> — c'est ton <code>account_id_audo</code></li>
+          </ol>
+          <p>Ensuite, dans Request URI :</p>
+          <pre>https://mybusinessbusinessinformation.googleapis.com/v1/accounts/123456789012345/locations?readMask=name,title</pre>
+          <ol start="5">
+            <li>Remplace <code>123456789012345</code> par TON numéro de compte</li>
+            <li>Send the request</li>
+            <li>Note les <code>name</code> pour Saint-Omer (<code>location_id_st_omer</code>) et Dunkerque (<code>location_id_dk</code>)</li>
+          </ol>
+          <div class="gw-check"><input type="checkbox" id="ch7"><label for="ch7">J'ai les 3 IDs (account + 2 locations)</label></div>
+        </div>
+        <div class="gw-nav">
+          <button class="btn" data-prev>← Précédent</button>
+          <div class="right"><button class="btn btn-primary" data-next>Suivant →</button></div>
+        </div>
+      </div>
+
+      <!-- Step 8 -->
+      <div class="gw-step" data-step="8">
+        <div class="gw-step-head">
+          <div class="gw-step-num">8</div>
+          <div>
+            <h2>Coller dans le back-office</h2>
+            <p>5 valeurs à placer dans Paramètres → Google Business Profile.</p>
+          </div>
+          <div class="gw-step-time">1 min</div>
+        </div>
+        <div class="gw-step-body">
+          <p>Va dans <strong>Paramètres</strong> du back-office, section <strong>Google Business Profile</strong>, et colle :</p>
+          <ul>
+            <li><strong>Access Token (OAuth Google)</strong> : <code>ya29.xxxx...</code> (de l'étape 6)</li>
+            <li><strong>Refresh Token</strong> : <code>1//xxxx...</code> (de l'étape 6)</li>
+            <li><strong>Account ID (Dépan'Audo)</strong> : <code>accounts/123...</code> (de l'étape 7)</li>
+            <li><strong>Location ID Saint-Omer</strong> : <code>locations/123...</code></li>
+            <li><strong>Location ID Dunkerque</strong> : <code>locations/987...</code></li>
+          </ul>
+          <a href="settings.html#section-gbp" class="gw-cta">
+            Ouvrir Paramètres → GBP
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+          <div class="gw-check"><input type="checkbox" id="ch8"><label for="ch8">J'ai collé et sauvegardé les 5 valeurs</label></div>
+        </div>
+        <div class="gw-nav">
+          <button class="btn" data-prev>← Précédent</button>
+          <div class="right"><button class="btn btn-primary" data-next>Suivant →</button></div>
+        </div>
+      </div>
+
+      <!-- Step 9 -->
+      <div class="gw-step" data-step="9">
+        <div class="gw-step-head">
+          <div class="gw-step-num">9</div>
+          <div>
+            <h2>Tester ! 🎉</h2>
+            <p>Vérifie que ça fonctionne end-to-end.</p>
+          </div>
+          <div class="gw-step-time">1 min</div>
+        </div>
+        <div class="gw-step-body">
+          <div class="gw-ok-box">
+            <strong>✓ Tu es à la dernière étape</strong>
+            Une fois les tests validés, tu pourras synchroniser tes avis Google et y répondre depuis le back-office.
+          </div>
+          <ol>
+            <li>Va sur la page <a href="reviews.html"><strong>Avis clients</strong></a></li>
+            <li>Clique le bouton <strong>"Synchroniser"</strong> en haut à droite</li>
+            <li>Tu devrais voir tes avis Google des 2 fiches apparaître après quelques secondes</li>
+            <li>Pour répondre à un avis : clique <strong>Répondre</strong> sur n'importe quel avis Google, écris ta réponse → elle sera publiée sur Google Maps directement</li>
+          </ol>
+          <div class="gw-info-box">
+            <strong>🔄 Refresh auto</strong>
+            L'Access Token expire toutes les heures, mais l'Edge Function utilise le Refresh Token pour le régénérer automatiquement. Tu n'as plus besoin de te reconnecter.
+          </div>
+          <a href="reviews.html" class="gw-cta">
+            Tester sur Avis clients
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+          <div class="gw-check"><input type="checkbox" id="ch9"><label for="ch9">Sync OK et réponse postée 🎉</label></div>
+        </div>
+        <div class="gw-nav">
+          <button class="btn" data-prev>← Précédent</button>
+          <div class="right"><a href="setup.html" class="btn btn-primary">Voir le diagnostic complet →</a></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+const TOTAL_STEPS = 9;
+const STEP_LABELS = ['Projet GCP','APIs','Accès','OAuth','Identifiants','Tokens','IDs','Back-office','Test'];
+
+(async function(){
+  await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+  await HCLayout.mount('wizard-google', 'Assistant Google');
+
+  // ─── Restore progress depuis localStorage ───────
+  const KEY = 'hc-gbp-wizard-progress';
+  const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
+  let currentStep = saved.currentStep || 1;
+  const checks = saved.checks || {};
+
+  // Build progress bar
+  const bar = document.getElementById('progressBar');
+  bar.innerHTML = '';
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    const el = document.createElement('div');
+    el.className = 'gw-progress-step';
+    el.dataset.step = i;
+    el.innerHTML = '<span class="num">Étape ' + i + '</span><span class="lbl">' + STEP_LABELS[i-1] + '</span>';
+    el.onclick = () => goTo(i);
+    bar.appendChild(el);
+  }
+
+  // Restore checkboxes
+  document.querySelectorAll('.gw-check input[type=checkbox]').forEach(cb => {
+    if (checks[cb.id]) {
+      cb.checked = true;
+      cb.closest('.gw-check').classList.add('done');
+    }
+    cb.addEventListener('change', () => {
+      cb.closest('.gw-check').classList.toggle('done', cb.checked);
+      checks[cb.id] = cb.checked;
+      save();
+    });
+  });
+
+  function save() {
+    localStorage.setItem(KEY, JSON.stringify({ currentStep, checks }));
+  }
+
+  function goTo(n) {
+    if (n < 1 || n > TOTAL_STEPS) return;
+    currentStep = n;
+    document.querySelectorAll('.gw-step').forEach(s => s.classList.toggle('active', parseInt(s.dataset.step) === n));
+    document.querySelectorAll('.gw-progress-step').forEach(s => {
+      const i = parseInt(s.dataset.step);
+      s.classList.remove('current','done');
+      if (i === n) s.classList.add('current');
+      else if (i < n) s.classList.add('done');
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    save();
+  }
+
+  document.querySelectorAll('[data-next]').forEach(b => b.onclick = () => goTo(currentStep + 1));
+  document.querySelectorAll('[data-prev]').forEach(b => b.onclick = () => goTo(currentStep - 1));
+
+  goTo(currentStep);
+})();
+</script>
+</body>
+</html>
