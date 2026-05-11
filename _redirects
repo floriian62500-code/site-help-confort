@@ -1,0 +1,5 @@
+# Sitemap dynamique servi par Edge Function Supabase
+/sitemap.xml https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sitemap 200
+
+# Anciennes URLs réalisations (legacy JSON) → page détail dynamique
+/realisations/:slug /realisation.html?slug=:slug 301

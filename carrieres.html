@@ -505,7 +505,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
       <strong style="color:#C0392B">À noter :</strong> ce formulaire envoie un email à l'agence avec un lien vers votre CV. Pour une candidature avec pièces jointes complètes, écrivez directement à <a href="mailto:saint-omer@helpconfort.com" style="color:#FF6B1A;font-weight:700">saint-omer@helpconfort.com</a> en mentionnant « Candidature » dans l'objet.
     </div>
 
-    <form class="form-app" action="mailto:saint-omer@helpconfort.com?subject=Candidature%20HC%20-%20via%20site" method="post" enctype="text/plain" novalidate>
+    <form class="form-app" action="javascript:void(0)" method="post" enctype="text/plain" novalidate data-hc-lead="candidature">
       <div class="row two">
         <div>
           <label for="poste">Poste visé *</label>
@@ -911,5 +911,6 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 <!-- HC-WIDGETS-V1 -->
 <script defer src="assets/hc-widgets.js?v=1778322703"></script>
 <script src="script.js" defer></script>
+<script src="assets/hc-leads-capture.js"></script>
 </body>
 </html>

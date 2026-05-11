@@ -5324,7 +5324,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <!-- Step 2 : formulaire (caché tant que pas de selection) -->
-    <form id="chatUrgForm" action="javascript:void(0)" class="chat-urg-form" style="display:none">
+    <form id="chatUrgForm" action="javascript:void(0)" class="chat-urg-form" style="display:none" data-hc-lead="urgence">
       <div class="chat-msg chat-msg-bot" id="chatStep2Msg">
         <p>OK 👌 — laissez-moi votre <strong>numéro</strong> et un <strong>mot clé</strong>, je transfère immédiatement au technicien.</p>
       </div>
@@ -5574,7 +5574,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <!-- Form -->
-    <form action="https://formspree.io/f/your_id_here" method="POST" style="padding:24px 26px 26px">
+    <form action="javascript:void(0)" method="POST" style="padding:24px 26px 26px" data-hc-lead="urgence_form">
       <input type="hidden" name="_subject" value="🚨 Demande urgente HELP! Confort Saint-Omer">
 
       <!-- Type d'urgence -->
@@ -5813,5 +5813,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- HC-WIDGETS-V1 -->
 <script defer src="assets/hc-widgets.js?v=1778351200"></script>
+<script src="assets/hc-leads-capture.js"></script>
 </body>
 </html>

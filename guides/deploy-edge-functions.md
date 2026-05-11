@@ -62,6 +62,7 @@ supabase functions deploy generate-content --no-verify-jwt
 supabase functions deploy publish-meta --no-verify-jwt
 supabase functions deploy publish-linkedin --no-verify-jwt
 supabase functions deploy publish-gbp --no-verify-jwt
+supabase functions deploy sitemap --no-verify-jwt
 ```
 
 Chaque commande met ~10-30 secondes. Tu dois voir "Deployed Function …" à la fin.

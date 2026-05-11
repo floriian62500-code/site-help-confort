@@ -1,10 +1,12 @@
 User-agent: *
 Allow: /
 
-# Bloquer l'admin Decap CMS de l'indexation
+# Bloquer le back-office de l'indexation
 Disallow: /admin/
+Disallow: /admin-pro/
 
 # Bloquer les fichiers techniques
 Disallow: /*.json$
+Disallow: /content/
 
 Sitemap: https://www.helpconfort-saintomer.fr/sitemap.xml

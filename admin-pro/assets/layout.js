@@ -7,6 +7,7 @@ window.HCLayout = (function() {
     const items = [
       { section: 'Pilotage', links: [
         { id:'dashboard', href:'index.html', label:'Dashboard', icon:'<rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/>' },
+        { id:'leads', href:'leads.html', label:'Demandes clients', icon:'<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>', badge:'<span class="admin-nav-item-badge alert" id="navLeadsCount" style="display:none"></span>' },
         { id:'alerts', href:'alerts.html', label:'Alertes & Monitoring', icon:'<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>' }
       ]},
       { section: 'Contenu', links: [
@@ -77,13 +78,25 @@ window.HCLayout = (function() {
     // Injecter topbar
     const tb = document.querySelector('.admin-topbar');
     if (tb) tb.innerHTML = topbarHTML(pageTitle);
-    // Live count Réalisations
+    // Live count Réalisations + Leads non traités
     if (window.HCSupabase) {
       try {
         const c = await window.HCSupabase.init();
-        const { count } = await c.from('realisations').select('id', { count:'exact', head:true });
-        const el = document.getElementById('navRealCount');
-        if (el && count != null) el.textContent = count;
+        const realsRes = await c.from('realisations').select('id', { count:'exact', head:true });
+        const realsEl = document.getElementById('navRealCount');
+        if (realsEl && realsRes.count != null) realsEl.textContent = realsRes.count;
+
+        // Leads nouveaux
+        const leadsRes = await c.from('leads').select('id', { count:'exact', head:true }).eq('status','nouveau');
+        const leadsEl = document.getElementById('navLeadsCount');
+        if (leadsEl) {
+          if (leadsRes.count > 0) {
+            leadsEl.textContent = leadsRes.count;
+            leadsEl.style.display = '';
+          } else {
+            leadsEl.style.display = 'none';
+          }
+        }
       } catch(e) {}
     }
   }

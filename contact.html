@@ -394,7 +394,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
 
-      <form class="contact-form" action="mailto:saint-omer@helpconfort.com" method="post" enctype="text/plain" novalidate>
+      <form class="contact-form" action="javascript:void(0)" method="post" enctype="text/plain" novalidate data-hc-lead="contact">
         <h2 style="margin-top:0">Demander un devis</h2>
         <p style="color:var(--gray-700);margin-bottom:24px">Vous décrivez votre besoin, nous vous rappelons sous 24h ouvrées. Pour une urgence, appelez le 03 66 10 01 34.</p>
 
@@ -856,7 +856,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <!-- Step 2 : formulaire (caché tant que pas de selection) -->
-    <form id="chatUrgForm" action="javascript:void(0)" class="chat-urg-form" style="display:none">
+    <form id="chatUrgForm" action="javascript:void(0)" class="chat-urg-form" style="display:none" data-hc-lead="urgence">
       <div class="chat-msg chat-msg-bot" id="chatStep2Msg">
         <p>OK 👌 — laissez-moi votre <strong>numéro</strong> et un <strong>mot clé</strong>, je transfère immédiatement au technicien.</p>
       </div>
@@ -1090,5 +1090,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- HC-WIDGETS-V1 -->
 <script defer src="assets/hc-widgets.js?v=1778322703"></script>
+<script src="assets/hc-leads-capture.js"></script>
 </body>
 </html>

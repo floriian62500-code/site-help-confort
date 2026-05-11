@@ -422,7 +422,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
       <strong style="color:#C0392B">À noter :</strong> votre pré-inscription envoie simplement un email à l'agence. Aucun compte n'est créé pour le moment — vous serez recontacté(e) dès l'ouverture officielle.
     </div>
 
-    <form class="form-pre" action="mailto:saint-omer@helpconfort.com?subject=Pré-inscription%20Espace%20Client" method="post" enctype="text/plain" novalidate>
+    <form class="form-pre" action="javascript:void(0)" method="post" enctype="text/plain" novalidate data-hc-lead="espace_client">
       <div class="row two">
         <div>
           <label for="prenom">Prénom *</label>
@@ -817,5 +817,6 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 <script defer src="assets/hc-widgets.js?v=1778322703"></script>
 
 <script src="script.js" defer></script>
+<script src="assets/hc-leads-capture.js"></script>
 </body>
 </html>
