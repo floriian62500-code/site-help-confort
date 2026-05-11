@@ -851,15 +851,100 @@ function openEdit(id = null) {
       cb.closest('.target-pill').classList.toggle('is-on', cb.checked);
     });
     document.getElementById('f_date').valueAsDate = new Date();
+    // Restaurer brouillon auto-sauvegardé ?
+    const draft = loadDraft();
+    if (draft && !draft.editing) {
+      if (confirm('Un brouillon non sauvegardé a été trouvé. Le restaurer ?')) {
+        restoreDraft(draft);
+        toast('Brouillon restauré', 'ok');
+      } else {
+        localStorage.removeItem(DRAFT_KEY);
+      }
+    }
   }
 
   document.getElementById('modalEdit').classList.add('is-open');
   document.body.style.overflow = 'hidden';
+
+  // Démarre l'auto-save (toutes les 5s)
+  if (_autosaveInterval) clearInterval(_autosaveInterval);
+  _autosaveInterval = setInterval(autoSave, 5000);
 }
 
 function closeEdit() {
   document.getElementById('modalEdit').classList.remove('is-open');
   document.body.style.overflow = '';
+  if (_autosaveInterval) { clearInterval(_autosaveInterval); _autosaveInterval = null; }
+}
+
+// ─── Auto-save brouillon ─────────────────────────────────────
+let _autosaveInterval = null;
+const DRAFT_KEY = 'hc-real-draft';
+
+function captureForm() {
+  return {
+    editing: _editing,
+    f_metier: document.getElementById('f_metier').value,
+    f_ville: document.getElementById('f_ville').value,
+    f_ville_other: document.getElementById('f_ville_other').value,
+    f_agence: document.getElementById('f_agence').value,
+    f_type: document.getElementById('f_type').value,
+    f_technicien: document.getElementById('f_technicien').value,
+    f_date: document.getElementById('f_date').value,
+    f_title: document.getElementById('f_title').value,
+    f_description: document.getElementById('f_description').value,
+    f_description_long: document.getElementById('f_description_long').value,
+    f_status: document.getElementById('f_status').value,
+    f_pinned: document.getElementById('f_pinned').checked,
+    uploads: _uploads,
+    savedAt: Date.now()
+  };
+}
+
+function autoSave() {
+  // Ne sauve que pour les NOUVEAUX chantiers (pas en édition d'existant — sinon risque de confusion)
+  if (_editing) return;
+  const form = captureForm();
+  // Ne sauve que si l'utilisateur a tapé quelque chose de significatif
+  if (form.f_title || form.f_description || _uploads.before || _uploads.after) {
+    try { localStorage.setItem(DRAFT_KEY, JSON.stringify(form)); } catch(e) {}
+  }
+}
+
+function loadDraft() {
+  try {
+    const raw = localStorage.getItem(DRAFT_KEY);
+    if (!raw) return null;
+    const d = JSON.parse(raw);
+    // Brouillons de + de 7 jours : ignorés
+    if (Date.now() - d.savedAt > 7 * 24 * 3600 * 1000) {
+      localStorage.removeItem(DRAFT_KEY);
+      return null;
+    }
+    return d;
+  } catch(e) { return null; }
+}
+
+function restoreDraft(d) {
+  document.getElementById('f_metier').value = d.f_metier || '';
+  const vSel = document.getElementById('f_ville');
+  const vOther = document.getElementById('f_ville_other');
+  vSel.value = d.f_ville || '';
+  if (d.f_ville === '__other') {
+    vOther.style.display = 'block';
+    vOther.value = d.f_ville_other || '';
+  }
+  document.getElementById('f_agence').value = d.f_agence || '';
+  document.getElementById('f_type').value = d.f_type || '';
+  document.getElementById('f_technicien').value = d.f_technicien || '';
+  document.getElementById('f_date').value = d.f_date || '';
+  document.getElementById('f_title').value = d.f_title || '';
+  document.getElementById('f_description').value = d.f_description || '';
+  document.getElementById('f_description_long').value = d.f_description_long || '';
+  document.getElementById('f_status').value = d.f_status || 'brouillon';
+  document.getElementById('f_pinned').checked = !!d.f_pinned;
+  if (d.uploads?.before) { _uploads.before = d.uploads.before; renderUploadZone(document.getElementById('uzBefore'), 'before', d.uploads.before); }
+  if (d.uploads?.after)  { _uploads.after = d.uploads.after;   renderUploadZone(document.getElementById('uzAfter'), 'after', d.uploads.after); }
 }
 
 async function saveReal() {
@@ -914,18 +999,37 @@ async function saveReal() {
 
   try {
     const c = await HCSupabase.init();
+    let savedId = _editing;
     if (_editing) {
       delete payload.slug; // ne pas écraser le slug
       const { error } = await c.from('realisations').update(payload).eq('id', _editing);
       if (error) throw error;
       toast('Chantier mis à jour', 'ok');
     } else {
-      const { error } = await c.from('realisations').insert([payload]);
+      const { data: ins, error } = await c.from('realisations').insert([payload]).select('id').single();
       if (error) throw error;
+      savedId = ins?.id;
       toast('Chantier créé', 'ok');
     }
+
+    // Effacer auto-save brouillon
+    try { localStorage.removeItem('hc-real-draft'); } catch(e) {}
+
     closeEdit();
     await loadReals();
+
+    // Si publié et canaux cochés (autres que site), déclencher la publication
+    if (status === 'publie' && savedId) {
+      const channelTargets = {
+        facebook: targets.facebook,
+        instagram: targets.instagram,
+        linkedin: targets.linkedin,
+        gbp: targets.gbp
+      };
+      if (Object.values(channelTargets).some(v => v)) {
+        triggerMultichannelPublish(savedId, channelTargets);
+      }
+    }
   } catch (e) {
     console.error(e);
     toast('Erreur : ' + (e.message || e), 'err', 4000);
@@ -1006,15 +1110,85 @@ async function generateWithAI() {
   }
 }
 
-// Afficher le panneau IA si Anthropic configuré
-async function checkAIAvailability() {
+// Charge tous les settings pour activer IA + canaux configurés
+let _settings = {};
+async function loadSettings() {
   try {
     const c = await HCSupabase.init();
-    const { data } = await c.from('app_settings').select('value').eq('key', 'anthropic').single();
-    if (data && data.value && data.value.api_key) {
-      document.getElementById('aiPanel').style.display = 'flex';
+    const { data } = await c.from('app_settings').select('*');
+    _settings = {};
+    (data || []).forEach(s => _settings[s.key] = s.value || {});
+  } catch (e) { /* table peut ne pas exister */ }
+
+  // Panneau IA visible si Anthropic configuré
+  if (_settings.anthropic?.api_key) {
+    document.getElementById('aiPanel').style.display = 'flex';
+  }
+
+  // Activer les checkboxes des canaux configurés
+  const channelChecks = {
+    facebook: !!(_settings.meta?.page_access_token && _settings.meta?.fb_page_id),
+    instagram: !!(_settings.meta?.page_access_token && _settings.meta?.ig_business_account_id),
+    linkedin: !!(_settings.linkedin?.access_token && _settings.linkedin?.organization_urn),
+    gbp: !!(_settings.gbp?.access_token && _settings.gbp?.account_id_audo)
+  };
+  Object.keys(channelChecks).forEach(name => {
+    const cb = document.querySelector(`#publishTargets input[data-target="${name}"]`);
+    const pill = document.querySelector(`#publishTargets [data-target-pill="${name}"]`);
+    if (cb && pill) {
+      if (channelChecks[name]) {
+        cb.disabled = false;
+        pill.classList.remove('is-disabled');
+        const soon = pill.querySelector('.soon-pill');
+        if (soon) soon.remove();
+        pill.title = '';
+      }
     }
-  } catch (e) { /* table app_settings peut ne pas exister encore */ }
+  });
+}
+
+// Déclenche la publication multi-canal pour un chantier sauvegardé
+async function triggerMultichannelPublish(realisationId, targets) {
+  const toPublish = [];
+  if (targets.facebook || targets.instagram) toPublish.push({ name: 'meta', fn: 'publish-meta', body: { realisationId, targets: { facebook: targets.facebook, instagram: targets.instagram } }, label: 'Facebook/Instagram' });
+  if (targets.linkedin) toPublish.push({ name: 'linkedin', fn: 'publish-linkedin', body: { realisationId }, label: 'LinkedIn' });
+  if (targets.gbp) toPublish.push({ name: 'gbp', fn: 'publish-gbp', body: { realisationId }, label: 'Google Business' });
+  if (toPublish.length === 0) return;
+
+  toast(`Publication sur ${toPublish.length} canal${toPublish.length>1?'aux':''}…`, 'ok', 2500);
+
+  const c = await HCSupabase.init();
+  const { data: { session } } = await c.auth.getSession();
+  const url = 'https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/';
+
+  // Lance en parallèle
+  const results = await Promise.all(toPublish.map(async (job) => {
+    try {
+      const r = await fetch(url + job.fn, {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + session.access_token, 'content-type': 'application/json' },
+        body: JSON.stringify(job.body)
+      });
+      const data = await r.json();
+      return { ...job, ok: !data.error, data };
+    } catch (e) {
+      return { ...job, ok: false, data: { error: e.message } };
+    }
+  }));
+
+  // Stocker les retours dans la BDD
+  const log = {};
+  results.forEach(r => log[r.name] = { ok: r.ok, ...r.data, published_at: new Date().toISOString() });
+  const real = _all.find(x => x.id === realisationId);
+  const aiPayload = Object.assign({}, real?.ai_generated || {}, { publish_log: log });
+  await c.from('realisations').update({ ai_generated: aiPayload }).eq('id', realisationId);
+
+  // Notification finale
+  const ok = results.filter(r => r.ok).length;
+  const ko = results.length - ok;
+  if (ko === 0) toast(`✓ Publié sur ${ok} canal${ok>1?'aux':''}`, 'ok', 3500);
+  else if (ok === 0) toast(`Échec publication sur ${ko} canal${ko>1?'aux':''} — voir Publications`, 'err', 5000);
+  else toast(`${ok} OK · ${ko} échec — voir Publications`, 'err', 5000);
 }
 
 // ─── Init au chargement ──────────────────────────────────────
@@ -1040,7 +1214,25 @@ async function checkAIAvailability() {
     if (e.target.id === 'modalEdit') closeEdit();
   });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && document.getElementById('modalEdit').classList.contains('is-open')) closeEdit();
+    const modalOpen = document.getElementById('modalEdit').classList.contains('is-open');
+    // Esc → fermer modale
+    if (e.key === 'Escape' && modalOpen) { closeEdit(); return; }
+    // Cmd/Ctrl + S → enregistrer (dans modale)
+    if ((e.metaKey || e.ctrlKey) && e.key === 's' && modalOpen) {
+      e.preventDefault(); saveReal(); return;
+    }
+    // Cmd/Ctrl + Enter → enregistrer (dans modale)
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && modalOpen) {
+      e.preventDefault(); saveReal(); return;
+    }
+    // Hors modale
+    if (modalOpen) return;
+    const inInput = ['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName);
+    if (inInput) return;
+    // N → nouveau chantier
+    if (e.key === 'n' || e.key === 'N') { e.preventDefault(); openEdit(); return; }
+    // / → focus recherche
+    if (e.key === '/') { e.preventDefault(); document.getElementById('filterSearch').focus(); return; }
   });
 
   // Target pills visual sync (uniquement pour les canaux activés)
@@ -1097,9 +1289,9 @@ async function checkAIAvailability() {
     renderList();
   });
 
-  // Bouton IA
+  // Bouton IA + état canaux
   document.getElementById('btnGenerateAI').addEventListener('click', generateWithAI);
-  checkAIAvailability();
+  await loadSettings();
 
   // Charger les données
   await loadReals();

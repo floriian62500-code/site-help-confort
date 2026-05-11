@@ -281,6 +281,32 @@
       <!-- ALERTES — branchées sur l'état réel -->
       <div id="dashAlerts" class="grid grid-2" style="margin-bottom: 24px;"></div>
 
+      <!-- GRAPHIQUES — Analytics interne -->
+      <div class="grid grid-2" style="margin-bottom: 24px;">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h3 class="card-title">📈 Publications par mois</h3>
+              <p class="card-subtitle">Évolution sur 12 mois</p>
+            </div>
+          </div>
+          <div style="position:relative;height:240px">
+            <canvas id="chartMonthly"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h3 class="card-title">🔧 Répartition par métier</h3>
+              <p class="card-subtitle">Toutes périodes</p>
+            </div>
+          </div>
+          <div style="position:relative;height:240px;display:flex;align-items:center;justify-content:center">
+            <canvas id="chartMetier"></canvas>
+          </div>
+        </div>
+      </div>
+
       <!-- STATS CANAUX SOCIAUX -->
       <div class="card">
         <div class="card-head">
@@ -354,6 +380,7 @@
 
 <script src="assets/supabase.js"></script>
 <script src="assets/admin.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 // ═══════════════════════════════════════════════════════════════
 // Dashboard — Données live depuis Supabase
@@ -469,6 +496,9 @@
 
   alertsEl.innerHTML = alerts.join('');
 
+  // ─── Graphiques Chart.js ─────────────────────────────────
+  renderCharts(all);
+
   // ─── Helpers ─────────────────────────────────────────────
   function setKpi(name, value, trend, meta) {
     const card = document.querySelector(`[data-kpi="${name}"]`);
@@ -493,6 +523,70 @@
   function escapeHtml(s) {
     if (s == null) return '';
     return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function renderCharts(items) {
+    if (typeof Chart === 'undefined') return;
+    Chart.defaults.font.family = "'Inter', sans-serif";
+    Chart.defaults.color = '#64748b';
+
+    // ─── Évolution publications par mois (12 derniers mois) ───
+    const monthlyCounts = {};
+    const monthlyDrafts = {};
+    const now = new Date();
+    for (let i = 11; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const key = d.toISOString().slice(0, 7);
+      monthlyCounts[key] = 0;
+      monthlyDrafts[key] = 0;
+    }
+    items.forEach(r => {
+      const dateStr = (r.published_at || r.created_at || '').slice(0, 7);
+      if (dateStr in monthlyCounts) {
+        if (r.status === 'publie') monthlyCounts[dateStr]++;
+        else monthlyDrafts[dateStr]++;
+      }
+    });
+    const labels = Object.keys(monthlyCounts).map(k => {
+      const [y, m] = k.split('-');
+      return ['Jan','Fév','Mars','Avr','Mai','Juin','Juil','Août','Sept','Oct','Nov','Déc'][parseInt(m,10)-1] + ' ' + y.slice(2);
+    });
+    new Chart(document.getElementById('chartMonthly'), {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          { label:'Publiés', data: Object.values(monthlyCounts), borderColor:'#0DA0CF', backgroundColor:'rgba(13,160,207,.12)', borderWidth:2.4, tension:.32, fill:true, pointRadius:3, pointBackgroundColor:'#0DA0CF' },
+          { label:'Brouillons/Validation', data: Object.values(monthlyDrafts), borderColor:'#FFB400', backgroundColor:'rgba(255,184,0,.10)', borderWidth:2, tension:.32, fill:false, pointRadius:2, borderDash:[4,4] }
+        ]
+      },
+      options: {
+        responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ position:'bottom', labels:{ font:{size:11, weight:600}, padding:14, usePointStyle:true } } },
+        scales:{
+          y:{ beginAtZero:true, ticks:{ precision:0, font:{size:10} }, grid:{ color:'#F1F5F9' } },
+          x:{ ticks:{ font:{size:10} }, grid:{ display:false } }
+        }
+      }
+    });
+
+    // ─── Donut métiers ───
+    const byMetier = {};
+    items.forEach(r => byMetier[r.metier || 'autre'] = (byMetier[r.metier || 'autre'] || 0) + 1);
+    const metierLabels = { plomberie:'Plomberie', chauffage:'Chauffage', electricite:'Électricité', serrurerie:'Serrurerie', vitrerie:'Vitrerie', renovation:'Rénovation', menuiserie:'Menuiserie', volets:'Volets', pmr:'Adaptation PMR', multiservice:'Multi-services', autre:'Autre' };
+    const colors = ['#0DA0CF','#FF6B1A','#FFB400','#7C3AED','#00aa50','#d92d20','#0a7fa8','#5996F2','#A78BFA','#1FA9E1','#94A3B8'];
+    const sortedM = Object.entries(byMetier).sort((a,b)=>b[1]-a[1]);
+    new Chart(document.getElementById('chartMetier'), {
+      type: 'doughnut',
+      data: {
+        labels: sortedM.map(([k]) => metierLabels[k] || k),
+        datasets: [{ data: sortedM.map(([,v]) => v), backgroundColor: colors, borderColor:'#fff', borderWidth:2 }]
+      },
+      options: {
+        responsive:true, maintainAspectRatio:false, cutout:'62%',
+        plugins:{ legend:{ position:'right', labels:{ font:{size:11, weight:600}, padding:8, boxWidth:10, usePointStyle:true } } }
+      }
+    });
   }
 })();
 </script>

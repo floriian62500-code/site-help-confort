@@ -31,6 +31,13 @@
 .toast.ok{border-left:3px solid #00aa50}
 .toast.err{border-left:3px solid #d92d20}
 .toast svg{width:16px;height:16px;flex-shrink:0}
+.pub-channels{display:inline-flex;gap:5px;margin-left:6px;flex-wrap:wrap}
+.ch-pill{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:6px;font-size:.7rem;font-weight:700;text-decoration:none;transition:.15s}
+.ch-pill.ok{background:rgba(0,170,80,.10);color:#007033}
+.ch-pill.err{background:rgba(217,45,32,.10);color:#a51919;cursor:help}
+.ch-pill .ch-icon{display:flex;align-items:center}
+.ch-pill .ch-icon svg{width:11px;height:11px}
+.ch-pill:hover.ok{background:rgba(0,170,80,.18)}
 </style>
 </head>
 <body>
@@ -108,7 +115,7 @@ function toast(msg,type='ok',d=2600){
   const METIER_LABELS = { plomberie:'Plomberie',chauffage:'Chauffage',electricite:'Électricité',serrurerie:'Serrurerie',vitrerie:'Vitrerie',renovation:'Rénovation',menuiserie:'Menuiserie',volets:'Volets',pmr:'Adaptation PMR',multiservice:'Multi-services' };
 
   async function load(){
-    const { data, error } = await c.from('realisations').select('id,title,status,metier,ville,image_before,image_after,created_at,published_at').order('created_at',{ascending:false});
+    const { data, error } = await c.from('realisations').select('id,title,status,metier,ville,image_before,image_after,created_at,published_at,ai_generated,publish_targets').order('created_at',{ascending:false});
     if (error) { toast('Erreur : '+error.message,'err'); return; }
     const all = data || [];
     render('listValidation', all.filter(r=>r.status==='validation'), 'validation');
@@ -129,12 +136,42 @@ function toast(msg,type='ok',d=2600){
       const img = r.image_after || r.image_before;
       const m = METIER_LABELS[r.metier] || r.metier;
       const when = new Date(r.published_at || r.created_at).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+
+      // Canaux publiés (depuis ai_generated.publish_log)
+      const log = r.ai_generated?.publish_log || {};
+      let channelsHtml = '';
+      if (status === 'publie') {
+        const channels = [];
+        // Site toujours
+        if (r.publish_targets?.site !== false) channels.push({ key:'site', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>', label:'Site', ok:true, url:`../realisation.html?slug=${r.id}` });
+        if (log.meta) {
+          if (log.meta.results?.facebook?.success) channels.push({ key:'fb', icon:'<svg viewBox="0 0 24 24" fill="#1877F2"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>', label:'FB', ok:true, url:log.meta.results.facebook.url });
+          else if (log.meta.results?.facebook?.error) channels.push({ key:'fb', icon:'<svg viewBox="0 0 24 24" fill="#1877F2" opacity=".4"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12z"/></svg>', label:'FB', ok:false, error:log.meta.results.facebook.error });
+          if (log.meta.results?.instagram?.success) channels.push({ key:'ig', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="#DD2A7B" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg>', label:'IG', ok:true });
+          else if (log.meta.results?.instagram?.error) channels.push({ key:'ig', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="#DD2A7B" stroke-width="2" opacity=".4"><rect x="2" y="2" width="20" height="20" rx="5"/></svg>', label:'IG', ok:false, error:log.meta.results.instagram.error });
+        }
+        if (log.linkedin) {
+          if (log.linkedin.success) channels.push({ key:'li', icon:'<svg viewBox="0 0 24 24" fill="#0A66C2"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM3.56 20.45h3.55V9H3.56z"/></svg>', label:'LinkedIn', ok:true, url:log.linkedin.url });
+          else channels.push({ key:'li', icon:'<svg viewBox="0 0 24 24" fill="#0A66C2" opacity=".4"><path d="M3.56 20.45h3.55V9H3.56z"/></svg>', label:'LinkedIn', ok:false, error:log.linkedin.error });
+        }
+        if (log.gbp) {
+          if (log.gbp.success) channels.push({ key:'gbp', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="#4285F4" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>', label:'GBP', ok:true });
+          else channels.push({ key:'gbp', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="#4285F4" stroke-width="2" opacity=".4"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/></svg>', label:'GBP', ok:false, error:log.gbp.error });
+        }
+        channelsHtml = '<div class="pub-channels">' + channels.map(ch => {
+          const cls = ch.ok ? 'ok' : 'err';
+          const title = ch.error ? ' title="' + escapeHtml(ch.error) + '"' : '';
+          const content = `<span class="ch-icon">${ch.icon}</span><span class="ch-label">${ch.label}</span>`;
+          return ch.url ? `<a href="${ch.url}" target="_blank" rel="noopener" class="ch-pill ${cls}"${title}>${content}</a>` : `<span class="ch-pill ${cls}"${title}>${content}</span>`;
+        }).join('') + '</div>';
+      }
+
       let actions = '';
       if (status === 'brouillon' || status === 'validation'){
         actions += `<button class="btn btn-primary" data-act="publish" data-id="${r.id}">Publier</button>`;
         if (status === 'brouillon') actions += `<button class="btn" data-act="validate" data-id="${r.id}">Mettre à valider</button>`;
       }
-      actions += `<a class="btn" href="realisations.html#${r.id}">Éditer</a>`;
+      actions += `<a class="btn" href="realisations.html?edit=${r.id}">Éditer</a>`;
       return `
         <div class="pub-card" data-id="${r.id}">
           <div class="pub-thumb">${img ? `<img src="${img}" alt="" loading="lazy">` : '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>'}</div>
@@ -144,6 +181,7 @@ function toast(msg,type='ok',d=2600){
               <span class="tag">${m}</span>
               <span>📍 ${escapeHtml(r.ville)}</span>
               <span>· ${when}</span>
+              ${channelsHtml}
             </div>
           </div>
           <div class="pub-actions">${actions}</div>
