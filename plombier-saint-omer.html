@@ -1254,12 +1254,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="eyebrow">Nos prestations</span>
       <h2>Tout ce que nous <em>faisons</em> en plomberie</h2>
     </div>
-    <!-- 6 cartes prestations avec photos (Unsplash libres de droits — remplacer par photos chantiers réels quand dispo) -->
+    <!-- 6 cartes prestations avec illustrations SVG sur fond dégradé (toujours juste, à remplacer par photos chantiers réels) -->
     <div class="m-services-grid">
       <a href="guide-fuite-eau.html" class="m-svc">
-        <div class="m-svc-img">
+        <div class="m-svc-img" style="background:linear-gradient(135deg,#0DA0CF 0%,#0888B0 100%);">
           <span class="m-svc-tag">Diagnostic</span>
-          <img src="https://images.unsplash.com/photo-1585128792020-803d29415281?auto=format&fit=crop&w=600&h=375&q=70" alt="Plombier inspectant des tuyaux pour rechercher une fuite" loading="lazy" onerror="this.style.display='none'">
+          <svg class="m-svc-illu" viewBox="0 0 200 125" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Goutte d'eau qui tombe + loupe -->
+            <defs><filter id="sh1"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity=".25"/></filter></defs>
+            <g filter="url(#sh1)" fill="#fff">
+              <!-- robinet stylisé -->
+              <rect x="68" y="32" width="34" height="9" rx="2"/>
+              <rect x="83" y="41" width="4" height="14"/>
+              <!-- goutte -->
+              <path d="M85 75c-7 0-12-6-12-12 0-8 12-22 12-22s12 14 12 22c0 6-5 12-12 12z"/>
+              <!-- loupe -->
+              <circle cx="135" cy="68" r="20" fill="none" stroke="#fff" stroke-width="5"/>
+              <line x1="150" y1="84" x2="165" y2="100" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+            </g>
+          </svg>
         </div>
         <div class="m-svc-body">
           <div class="m-svc-body-text"><h3>Recherche de fuite</h3><p>Caméra thermique, gaz traceur, écoute acoustique — sans casse inutile.</p></div>
@@ -1267,9 +1280,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </a>
       <a href="contact.html#form" class="m-svc">
-        <div class="m-svc-img">
+        <div class="m-svc-img" style="background:linear-gradient(135deg,#E11D48 0%,#9F1239 100%);">
           <span class="m-svc-tag">Urgence</span>
-          <img src="https://images.unsplash.com/photo-1542013936693-884638332954?auto=format&fit=crop&w=600&h=375&q=70" alt="Plombier débouchant une canalisation" loading="lazy" onerror="this.style.display='none'">
+          <svg class="m-svc-illu" viewBox="0 0 200 125" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs><filter id="sh2"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity=".25"/></filter></defs>
+            <g filter="url(#sh2)" fill="#fff">
+              <!-- WC stylisé -->
+              <rect x="62" y="35" width="48" height="32" rx="4"/>
+              <rect x="68" y="67" width="36" height="30" rx="3"/>
+              <ellipse cx="86" cy="98" rx="22" ry="4" fill-opacity=".4"/>
+              <!-- furet (ressort) -->
+              <path d="M125 50q5 0 5 5t-5 5t-5 5t5 5t-5 5t5 5t-5 5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="148" cy="80" r="3"/>
+            </g>
+          </svg>
         </div>
         <div class="m-svc-body">
           <div class="m-svc-body-text"><h3>Débouchage</h3><p>WC, évier, canalisation. Furet ou hydrocurage haute pression.</p></div>
@@ -1277,9 +1301,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </a>
       <a href="contact.html#form" class="m-svc">
-        <div class="m-svc-img">
+        <div class="m-svc-img" style="background:linear-gradient(135deg,#FF6B1A 0%,#E85E15 100%);">
           <span class="m-svc-tag">Installation</span>
-          <img src="https://images.unsplash.com/photo-1574359411659-15573a27fd0c?auto=format&fit=crop&w=600&h=375&q=70" alt="Ballon d'eau chaude installé dans une chaufferie" loading="lazy" onerror="this.style.display='none'">
+          <svg class="m-svc-illu" viewBox="0 0 200 125" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs><filter id="sh3"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity=".25"/></filter></defs>
+            <g filter="url(#sh3)" fill="#fff">
+              <!-- Ballon d'eau chaude cylindrique -->
+              <rect x="80" y="22" width="40" height="80" rx="6"/>
+              <rect x="78" y="20" width="44" height="6" rx="2"/>
+              <rect x="78" y="102" width="44" height="6" rx="2"/>
+              <!-- bandeau -->
+              <rect x="80" y="50" width="40" height="14" fill="#FF6B1A" opacity=".4"/>
+              <!-- thermomètre/indicateur -->
+              <circle cx="100" cy="80" r="6" fill="#FF6B1A"/>
+              <!-- tuyaux -->
+              <rect x="70" y="14" width="3" height="10" fill="#fff"/>
+              <rect x="127" y="14" width="3" height="10" fill="#fff"/>
+              <rect x="60" y="14" width="14" height="3" fill="#fff"/>
+              <rect x="126" y="14" width="14" height="3" fill="#fff"/>
+            </g>
+          </svg>
         </div>
         <div class="m-svc-body">
           <div class="m-svc-body-text"><h3>Chauffe-eau</h3><p>Installation, dépannage, remplacement tous modèles (gaz, élec, thermo).</p></div>
@@ -1287,9 +1328,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </a>
       <a href="contact.html#form" class="m-svc">
-        <div class="m-svc-img">
+        <div class="m-svc-img" style="background:linear-gradient(135deg,#1FC4F0 0%,#0DA0CF 100%);">
           <span class="m-svc-tag">Sanitaire</span>
-          <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&h=375&q=70" alt="Robinetterie inox moderne sur lavabo" loading="lazy" onerror="this.style.display='none'">
+          <svg class="m-svc-illu" viewBox="0 0 200 125" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs><filter id="sh4"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity=".25"/></filter></defs>
+            <g filter="url(#sh4)" fill="#fff">
+              <!-- Lavabo stylisé + robinet -->
+              <path d="M55 80 Q55 65 75 65 L125 65 Q145 65 145 80 L142 95 L58 95 Z"/>
+              <ellipse cx="100" cy="83" rx="35" ry="4" fill="#1FC4F0" opacity=".5"/>
+              <!-- robinet -->
+              <rect x="93" y="40" width="14" height="6" rx="2"/>
+              <rect x="98" y="46" width="4" height="14"/>
+              <rect x="85" y="32" width="30" height="10" rx="3"/>
+              <!-- gouttes -->
+              <circle cx="100" cy="65" r="2"/>
+            </g>
+          </svg>
         </div>
         <div class="m-svc-body">
           <div class="m-svc-body-text"><h3>Sanitaire</h3><p>WC, lavabo, douche, baignoire, robinetterie — pose et remplacement.</p></div>
@@ -1297,9 +1351,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </a>
       <a href="travaux-saint-omer.html" class="m-svc">
-        <div class="m-svc-img">
+        <div class="m-svc-img" style="background:linear-gradient(135deg,#7C3AED 0%,#5B21B6 100%);">
           <span class="m-svc-tag">Rénovation</span>
-          <img src="https://images.unsplash.com/photo-1604014237800-1c9102c219da?auto=format&fit=crop&w=600&h=375&q=70" alt="Salle de bain rénovée avec douche à l'italienne" loading="lazy" onerror="this.style.display='none'">
+          <svg class="m-svc-illu" viewBox="0 0 200 125" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs><filter id="sh5"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity=".25"/></filter></defs>
+            <g filter="url(#sh5)" fill="#fff">
+              <!-- Douche italienne -->
+              <!-- pommeau -->
+              <rect x="65" y="18" width="6" height="20" rx="2"/>
+              <circle cx="68" cy="42" r="8"/>
+              <!-- jets d'eau -->
+              <line x1="64" y1="50" x2="62" y2="65" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+              <line x1="68" y1="50" x2="68" y2="68" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+              <line x1="72" y1="50" x2="74" y2="65" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+              <!-- paroi de douche -->
+              <rect x="100" y="20" width="4" height="85" opacity=".6"/>
+              <!-- baignoire vue de côté / sol douche -->
+              <rect x="55" y="95" width="90" height="6" rx="2"/>
+              <!-- evacuation -->
+              <circle cx="125" cy="98" r="3" fill="#5B21B6"/>
+            </g>
+          </svg>
         </div>
         <div class="m-svc-body">
           <div class="m-svc-body-text"><h3>Salle de bain</h3><p>Rénovation complète clés en main, douche à l'italienne, PMR.</p></div>
@@ -1307,9 +1379,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </a>
       <a href="contact.html#form" class="m-svc">
-        <div class="m-svc-img">
+        <div class="m-svc-img" style="background:linear-gradient(135deg,#0A1428 0%,#1E3A5F 100%);">
           <span class="m-svc-tag">Technique</span>
-          <img src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?auto=format&fit=crop&w=600&h=375&q=70" alt="Tuyaux de canalisations PVC et cuivre" loading="lazy" onerror="this.style.display='none'">
+          <svg class="m-svc-illu" viewBox="0 0 200 125" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs><filter id="sh6"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity=".25"/></filter></defs>
+            <g filter="url(#sh6)" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round">
+              <!-- Tuyaux qui forment un réseau -->
+              <path d="M30 35 L80 35 L80 65 L140 65 L140 95 L180 95"/>
+              <path d="M30 95 L60 95 L60 65 L100 65"/>
+              <path d="M170 30 L170 50"/>
+            </g>
+            <g fill="#fff">
+              <!-- Coudes / raccords -->
+              <circle cx="80" cy="35" r="5"/>
+              <circle cx="80" cy="65" r="5"/>
+              <circle cx="140" cy="65" r="5"/>
+              <circle cx="140" cy="95" r="5"/>
+              <circle cx="60" cy="95" r="5"/>
+              <circle cx="60" cy="65" r="5"/>
+              <!-- vanne -->
+              <rect x="166" y="22" width="8" height="14" rx="2"/>
+              <rect x="160" y="22" width="20" height="4" rx="1"/>
+            </g>
+          </svg>
         </div>
         <div class="m-svc-body">
           <div class="m-svc-body-text"><h3>Réseaux</h3><p>Canalisations, raccordement, mise aux normes, dépose et reprise.</p></div>
@@ -1317,6 +1409,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </a>
     </div>
+    <!-- Style pour les illustrations SVG -->
+    <style>
+      .m-svc-illu {
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        width: 100%; height: 75%;
+        z-index: 1;
+        opacity: .92;
+      }
+      .m-svc-img { position: relative; }
+      .m-svc-tag { z-index: 3; }
+    </style>
   </div>
 </section>
 
