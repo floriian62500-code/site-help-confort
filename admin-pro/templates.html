@@ -370,7 +370,12 @@ const DEFAULT_TEMPLATES = [
   }
 ];
 
-let _templates = [];
+// Pré-init avec les 13 defaults : ils s'affichent INSTANTANÉMENT
+// sans attendre Supabase/auth/layout (sinon, si l'un de ces awaits hang
+// ou si app_settings.templates contient une structure cassée, on perdait
+// l'affichage complet du catalogue).
+let _templates = [...DEFAULT_TEMPLATES];
+let activeCat = '';
 
 (async function(){
   await HCSupabase.init();
@@ -379,17 +384,22 @@ let _templates = [];
   await HCLayout.mount('templates', 'Templates de posts');
   const c = await HCSupabase.init();
 
-  // Charger les templates depuis app_settings.templates
+  // Render immédiat : on garantit l'affichage des 13 modèles
+  // de base AVANT toute requête réseau.
+  render();
+
+  // Puis on hydrate avec les templates user en arrière-plan.
   try {
     const { data } = await c.from('app_settings').select('value').eq('key', 'templates').single();
-    const userTemplates = (data?.value?.list || []);
-    _templates = [...DEFAULT_TEMPLATES, ...userTemplates];
+    const raw = data?.value?.list;
+    const userTemplates = Array.isArray(raw) ? raw : [];
+    if (userTemplates.length) {
+      _templates = [...DEFAULT_TEMPLATES, ...userTemplates];
+      render(document.getElementById('searchInput').value);
+    }
   } catch(e) {
-    _templates = [...DEFAULT_TEMPLATES];
+    // On garde les defaults — déjà affichés.
   }
-
-  let activeCat = '';
-  render();
 
   function render(filter = '') {
     const grid = document.getElementById('tpGrid');
