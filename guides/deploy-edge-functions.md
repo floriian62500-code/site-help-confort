@@ -55,7 +55,7 @@ supabase link --project-ref btcbjwqiivhpwoszomhg
 
 Si on te demande le mot de passe de la base, tape celui que tu as défini lors de la création du projet Supabase.
 
-## Étape 5 : Déployer les 4 Edge Functions
+## Étape 5 : Déployer les Edge Functions
 
 ```bash
 supabase functions deploy generate-content --no-verify-jwt
@@ -66,10 +66,25 @@ supabase functions deploy sitemap --no-verify-jwt
 supabase functions deploy check-tokens --no-verify-jwt
 supabase functions deploy sync-reviews --no-verify-jwt
 supabase functions deploy reply-review --no-verify-jwt
+supabase functions deploy gbp-diagnostic --no-verify-jwt
+supabase functions deploy suggest-reply --no-verify-jwt
 supabase functions deploy ga4-stats --no-verify-jwt
 supabase functions deploy publish-scheduled --no-verify-jwt
 supabase functions deploy sync-facebook-posts --no-verify-jwt
 supabase functions deploy auto-publish-from-photos --no-verify-jwt
+```
+
+### 🔄 Mise à jour rapide (Vague Q — mai 2026)
+
+Si tu as déjà déployé une première fois et que tu veux juste pousser les modifs récentes liées à la connexion Google :
+
+```bash
+supabase functions deploy gbp-diagnostic --no-verify-jwt
+supabase functions deploy suggest-reply --no-verify-jwt
+supabase functions deploy sync-reviews --no-verify-jwt
+supabase functions deploy reply-review --no-verify-jwt
+supabase functions deploy publish-gbp --no-verify-jwt
+supabase functions deploy check-tokens --no-verify-jwt
 ```
 
 Chaque commande met ~10-30 secondes. Tu dois voir "Deployed Function …" à la fin.

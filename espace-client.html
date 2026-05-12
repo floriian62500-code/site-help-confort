@@ -590,11 +590,11 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     <!-- ═══ SECTION 3 : Bandeau légal compact ═══ -->
     <div class="fv3-legal">
       <p class="fv3-legal-line">
-        <span>© <span id="year">2026</span> <strong>SARL Dépan'Audo</strong></span>
+        <span>© <span id="year">2026</span> <strong data-content="footer.raison_sociale">SARL Dépan'Audo</strong></span>
         <span class="fv3-sep">·</span>
-        <span>Membre du réseau <strong>HELP! Confort</strong> (groupe La Poste)</span>
+        <span data-content="footer.reseau">Membre du réseau HELP! Confort (groupe La Poste)</span>
         <span class="fv3-sep">·</span>
-        <span>SIREN 898 196 159 · RCS Boulogne</span>
+        <span><span data-content="footer.siren">SIREN 898 196 159</span> · <span data-content="footer.rcs">RCS Boulogne</span></span>
       </p>
       <nav class="fv3-legal-links" aria-label="Liens légaux">
         <a href="mentions-legales.html">Mentions légales</a>
@@ -818,5 +818,6 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 
 <script src="script.js" defer></script>
 <script src="assets/hc-leads-capture.js"></script>
+<script src="assets/hc-content.js" defer></script>
 </body>
 </html>

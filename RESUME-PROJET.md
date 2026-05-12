@@ -1,7 +1,7 @@
 # 📋 Résumé du projet — Site HELP! Confort Saint-Omer
 
 > **À coller au début d'une nouvelle conversation Cowork** pour reprendre le travail sans repartir de zéro.
-> Mise à jour : **10 mai 2026** (après audit UX/UI complet et améliorations en autonomie totale)
+> Mise à jour : **11 mai 2026** (Vague Q : connexion Google Business Profile — wizard + diagnostic + Edge Functions consolidées)
 
 ---
 
@@ -114,6 +114,47 @@
 - Déplacement Dunkerque : **60 € HT**
 - Contrats Gaz : BASIC 9 € / CONFORT 13 € / SÉCURITÉ 23 € / mois
 - Contrats Fioul : BASIC 12 € / CONFORT 16 € / SÉCURITÉ 27 € / mois
+
+---
+
+## 🌐 Connexion Google Business Profile (Vague Q, 11 mai 2026)
+
+État : **prête à brancher, en attente de push GitHub + déploiement Edge Functions**.
+
+### Côté code (fini)
+- **`admin-pro/wizard-google.html`** : assistant 9 étapes piloté pas-à-pas (progression sauvegardée en localStorage, bouton diagnostic réel en étape 9 qui appelle `gbp-diagnostic`)
+- **`admin-pro/settings.html`** section GBP : 7 champs (Client ID, Client Secret, Access Token, Refresh Token, Account ID, 2 Location IDs) + bouton "Tester la connexion" qui appelle l'Edge Function réelle. Tous les boutons "Tester" des autres connecteurs (Anthropic, Meta, LinkedIn, GA4) appellent maintenant la vraie `check-tokens` aussi.
+- **`admin-pro/reviews.html`** : sync button avec reporting détaillé par fiche (Saint-Omer / Dunkerque) + dernière sync affichée + erreurs détaillées + bouton "Suggérer (IA)" maintenant connecté à la nouvelle `suggest-reply`.
+- **`admin-pro/setup.html`** : page diagnostic globale mise à jour pour vérifier `gbp-diagnostic` et `suggest-reply` ; le check `int-gbp` exige maintenant les nouveaux champs (`client_id`, `client_secret`, `refresh_token`, `account_id_audo`).
+- **`admin-pro/assets/supabase.js`** : helpers `authHeaders()` et `fnUrl()` pour appeler les Edge Functions plus proprement.
+- **`supabase/functions/gbp-diagnostic/index.ts`** : NOUVELLE — teste end-to-end (creds, refresh, accounts, locations, lecture avis).
+- **`supabase/functions/suggest-reply/index.ts`** : NOUVELLE — Claude génère une réponse contextuelle à un avis (ton adapté selon le rating, signature, prénom, etc.).
+- **`supabase/functions/sync-reviews/index.ts`** : pagination ajoutée (jusqu'à 500 avis), reporting par location, `last_synced_at` persisté, **callable en mode cron** via service_role.
+- **`supabase/functions/reply-review/index.ts`** : ne dépend plus de l'access_token (refresh auto si absent ou 401).
+- **`supabase/functions/publish-gbp/index.ts`** : idem (refresh auto).
+- **`supabase/functions/check-tokens/index.ts`** : supporte le mode "single service" (paramètre `service`), test GA4 ajouté (signature JWT RS256 + Analytics Data API), test GBP utilise maintenant le refresh_token.
+- **`admin-pro/scripts/setup_cron_sync_reviews.sql`** : NOUVEAU script SQL pour activer le cron Supabase (sync auto toutes les 6h).
+- **`guides/gbp.md`** : doc mise à jour (7 valeurs au lieu de 5, mention test connexion).
+- **`guides/deploy-edge-functions.md`** : liste complète à jour + section "Mise à jour rapide Vague Q".
+
+### Ce qui reste à faire (par Florian)
+1. **Push sur GitHub** — actuellement bloqué côté machine. Solution : **GitHub Desktop → Settings → Accounts → Sign out + Sign in** (auth navigateur).
+2. **Déployer les Edge Functions** sur Supabase (cf. `guides/deploy-edge-functions.md` section Vague Q) :
+   ```bash
+   cd "/Users/HP/Documents/Claude/Projects/SITE INTERNET"
+   supabase functions deploy gbp-diagnostic --no-verify-jwt
+   supabase functions deploy suggest-reply --no-verify-jwt
+   supabase functions deploy sync-reviews --no-verify-jwt
+   supabase functions deploy reply-review --no-verify-jwt
+   supabase functions deploy publish-gbp --no-verify-jwt
+   supabase functions deploy check-tokens --no-verify-jwt
+   ```
+3. **Suivre l'assistant** dans `back-office → Assistant Google` (9 étapes, ~25 min). Étape 3 = formulaire Google qui prend 1-3 jours ouvrés à être approuvé.
+4. Une fois les 7 valeurs collées dans **Paramètres → GBP** + bouton **Tester la connexion** au vert : aller dans **Avis clients** → **Synchroniser** → les avis Google des 2 fiches remontent.
+5. **Optionnel — activer le cron auto-sync** : copier le contenu de `admin-pro/scripts/setup_cron_sync_reviews.sql` dans Supabase → SQL Editor (remplacer `TON_SERVICE_ROLE_KEY` par la vraie clé). Une sync auto toutes les 6h.
+
+### Push GitHub bloqué
+Le push échoue avec `Password authentication is not supported for Git operations`. Solution la plus simple : **GitHub Desktop → Settings → Accounts → Sign out + Sign in** (auth navigateur). Sinon créer un Personal Access Token sur https://github.com/settings/tokens/new (scope `repo`) et le coller comme mot de passe quand `git push` demande.
 
 ---
 

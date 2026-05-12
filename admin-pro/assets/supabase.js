@@ -52,5 +52,20 @@ window.HCSupabase = {
     await c.auth.signOut();
   },
 
-  STORAGE_URL: `${SUPABASE_URL}/storage/v1/object/public`
+  STORAGE_URL: `${SUPABASE_URL}/storage/v1/object/public`,
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY,
+
+  // Helper : retourne le header Authorization avec le JWT user (pour appeler les Edge Functions)
+  async authHeaders() {
+    const c = await this.init();
+    const { data: { session } } = await c.auth.getSession();
+    return {
+      'Authorization': 'Bearer ' + (session?.access_token || SUPABASE_ANON_KEY),
+      'Content-Type': 'application/json',
+      'apikey': SUPABASE_ANON_KEY
+    };
+  },
+
+  fnUrl(name) { return `${SUPABASE_URL}/functions/v1/${name}`; }
 };

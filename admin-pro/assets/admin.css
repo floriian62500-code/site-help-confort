@@ -831,3 +831,6 @@ button, input, textarea, select { font-family: inherit; font-size: inherit; }
   margin-bottom: 12px;
 }
 .login-mfa-pill svg { width: 12px; height: 12px; }
+
+/* ─── Spinner utilitaire (settings, wizard) ─── */
+@keyframes spin { to { transform: rotate(360deg); } }

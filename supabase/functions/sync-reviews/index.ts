@@ -43,12 +43,21 @@ Deno.serve(async (req: Request) => {
   try {
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) return json({ error: "Missing Authorization" }, 401);
+
     // @ts-ignore
-    const sb = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_ANON_KEY")!, {
-      global: { headers: { Authorization: authHeader } }
-    });
-    const { data: { user } } = await sb.auth.getUser();
-    if (!user) return json({ error: "Not authenticated" }, 401);
+    const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
+    const isCron = authHeader === `Bearer ${serviceKey}`;
+    // @ts-ignore
+    const sb = isCron
+      // @ts-ignore
+      ? createClient(Deno.env.get("SUPABASE_URL")!, serviceKey, { auth: { persistSession: false } })
+      // @ts-ignore
+      : createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_ANON_KEY")!, { global: { headers: { Authorization: authHeader } } });
+
+    if (!isCron) {
+      const { data: { user } } = await sb.auth.getUser();
+      if (!user) return json({ error: "Not authenticated" }, 401);
+    }
 
     const { data: settings } = await sb.from("app_settings").select("*");
     const byKey: Record<string, any> = {};
@@ -57,46 +66,77 @@ Deno.serve(async (req: Request) => {
     const results: any = { google: { synced: 0, errors: [] }, facebook: { synced: 0, errors: [] } };
 
     // ─── GOOGLE BUSINESS PROFILE ───
-    if (byKey.gbp?.access_token && byKey.gbp?.account_id_audo) {
+    if (byKey.gbp?.refresh_token && byKey.gbp?.account_id_audo) {
       let token = byKey.gbp.access_token;
       const locations = [
-        { agence: "depan-audo", id: byKey.gbp.location_id_st_omer },
-        { agence: "depan-dk", id: byKey.gbp.location_id_dk }
+        { agence: "depan-audo", id: byKey.gbp.location_id_st_omer, label: "Saint-Omer" },
+        { agence: "depan-dk", id: byKey.gbp.location_id_dk, label: "Dunkerque" }
       ].filter(l => l.id);
 
+      const ratingMap: any = { ONE: 1, TWO: 2, THREE: 3, FOUR: 4, FIVE: 5 };
+      results.google.byLocation = {};
+
       for (const loc of locations) {
+        const locResult = { synced: 0, fetched: 0, errors: [] as string[] };
         try {
-          const url = `https://mybusiness.googleapis.com/v4/${byKey.gbp.account_id_audo}/${loc.id}/reviews`;
-          let r = await fetch(url, { headers: { "Authorization": `Bearer ${token}` } });
-          if (r.status === 401 && byKey.gbp.refresh_token) {
-            token = await refreshGoogleToken(byKey.gbp, sb);
-            r = await fetch(url, { headers: { "Authorization": `Bearer ${token}` } });
-          }
-          if (!r.ok) { results.google.errors.push(`${loc.agence}: HTTP ${r.status}`); continue; }
-          const data = await r.json();
-          for (const rv of (data.reviews || [])) {
-            const ratingMap: any = { ONE: 1, TWO: 2, THREE: 3, FOUR: 4, FIVE: 5 };
-            const row = {
-              source: "google",
-              source_id: rv.reviewId || rv.name,
-              source_url: `https://search.google.com/local/reviews?placeid=${loc.id}`,
-              agence: loc.agence,
-              location_id: loc.id,
-              author_name: rv.reviewer?.displayName || "Anonyme",
-              author_photo_url: rv.reviewer?.profilePhotoUrl,
-              rating: ratingMap[rv.starRating] || 5,
-              comment: rv.comment || null,
-              posted_at: rv.createTime,
-              reply_text: rv.reviewReply?.comment || null,
-              reply_posted_at: rv.reviewReply?.updateTime || null,
-              status: rv.reviewReply ? "replied" : "new"
-            };
-            const { error } = await sb.from("reviews").upsert(row, { onConflict: "source,source_id" });
-            if (!error) results.google.synced++;
-            else results.google.errors.push(error.message);
-          }
-        } catch (e: any) { results.google.errors.push(`${loc.agence}: ${e.message}`); }
+          let nextPage: string | undefined = undefined;
+          let safety = 0;
+          do {
+            const u = new URL(`https://mybusiness.googleapis.com/v4/${byKey.gbp.account_id_audo}/${loc.id}/reviews`);
+            u.searchParams.set("pageSize", "50");
+            if (nextPage) u.searchParams.set("pageToken", nextPage);
+
+            let r = await fetch(u.toString(), { headers: { "Authorization": `Bearer ${token}` } });
+            if (r.status === 401 && byKey.gbp.refresh_token) {
+              token = await refreshGoogleToken(byKey.gbp, sb);
+              r = await fetch(u.toString(), { headers: { "Authorization": `Bearer ${token}` } });
+            }
+            if (!r.ok) {
+              const body = await r.text();
+              locResult.errors.push(`HTTP ${r.status} — ${body.slice(0, 140)}`);
+              break;
+            }
+            const data = await r.json();
+            locResult.fetched += (data.reviews || []).length;
+
+            for (const rv of (data.reviews || [])) {
+              const row = {
+                source: "google",
+                source_id: rv.reviewId || rv.name,
+                source_url: `https://search.google.com/local/reviews?placeid=${loc.id}`,
+                agence: loc.agence,
+                location_id: loc.id,
+                author_name: rv.reviewer?.displayName || "Anonyme",
+                author_photo_url: rv.reviewer?.profilePhotoUrl,
+                rating: ratingMap[rv.starRating] || 5,
+                comment: rv.comment || null,
+                posted_at: rv.createTime,
+                reply_text: rv.reviewReply?.comment || null,
+                reply_posted_at: rv.reviewReply?.updateTime || null,
+                status: rv.reviewReply ? "replied" : "new"
+              };
+              const { error } = await sb.from("reviews").upsert(row, { onConflict: "source,source_id" });
+              if (!error) locResult.synced++;
+              else locResult.errors.push(error.message);
+            }
+            nextPage = data.nextPageToken;
+            safety++;
+          } while (nextPage && safety < 10); // garde-fou max 500 avis par sync
+
+        } catch (e: any) {
+          locResult.errors.push(`${e.message}`);
+        }
+        results.google.byLocation[loc.agence] = locResult;
+        results.google.synced += locResult.synced;
+        if (locResult.errors.length) {
+          results.google.errors.push(`${loc.label}: ${locResult.errors.join(" | ")}`);
+        }
       }
+
+      // Mémorise la date de dernier sync
+      await sb.from("app_settings").update({
+        value: { ...byKey.gbp, last_synced_at: new Date().toISOString(), last_sync_count: results.google.synced }
+      }).eq("key", "gbp");
     }
 
     // ─── FACEBOOK ─── (note : FB n'expose plus les avis individuels via API depuis 2021)

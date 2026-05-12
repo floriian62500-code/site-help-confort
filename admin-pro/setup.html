@@ -164,6 +164,8 @@
             <li class="setup-step is-loading" data-step="fn-publish-gbp"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>publish-gbp</strong><span>Publication Google Business</span></div></div></li>
             <li class="setup-step is-loading" data-step="fn-sync-reviews"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>sync-reviews</strong><span>Récupération des avis Google</span></div></div></li>
             <li class="setup-step is-loading" data-step="fn-reply-review"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>reply-review</strong><span>Réponse aux avis</span></div></div></li>
+            <li class="setup-step is-loading" data-step="fn-gbp-diagnostic"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>gbp-diagnostic</strong><span>Test end-to-end de la connexion Google</span></div></div></li>
+            <li class="setup-step is-loading" data-step="fn-suggest-reply"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>suggest-reply</strong><span>Suggestion IA de réponse aux avis</span></div></div></li>
             <li class="setup-step is-loading" data-step="fn-ga4-stats"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>ga4-stats</strong><span>Statistiques GA4 dans le dashboard</span></div></div></li>
             <li class="setup-step is-loading" data-step="fn-sitemap"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>sitemap</strong><span>Sitemap dynamique SEO</span></div></div></li>
             <li class="setup-step is-loading" data-step="fn-check-tokens"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>check-tokens</strong><span>Surveillance expiration tokens</span></div></div></li>
@@ -299,6 +301,8 @@ const checks = {
   'fn-publish-gbp':      { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
   'fn-sync-reviews':     { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
   'fn-reply-review':     { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
+  'fn-gbp-diagnostic':   { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
+  'fn-suggest-reply':    { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
   'fn-ga4-stats':        { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
   'fn-sitemap':          { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
   'fn-check-tokens':     { critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
@@ -377,6 +381,8 @@ function updateScoreAndPriorities() {
     'fn-publish-gbp':      ['Déployer publish-gbp', 'Pour publier vers Google Business'],
     'fn-sync-reviews':     ['Déployer sync-reviews', 'Pour récupérer les avis Google'],
     'fn-reply-review':     ['Déployer reply-review', 'Pour répondre aux avis'],
+    'fn-gbp-diagnostic':   ['Déployer gbp-diagnostic', 'Pour tester la connexion Google depuis le wizard'],
+    'fn-suggest-reply':    ['Déployer suggest-reply', 'Suggestion IA contextuelle pour répondre aux avis'],
     'fn-ga4-stats':        ['Déployer ga4-stats', 'Pour afficher les visiteurs dans le dashboard'],
     'fn-sitemap':          ['Déployer sitemap', 'Sitemap dynamique pour le SEO'],
     'fn-check-tokens':     ['Déployer check-tokens', 'Surveillance des tokens qui expirent'],
@@ -514,6 +520,8 @@ function actionLink(key, isPrimary) {
     checkFn('fn-publish-gbp', 'publish-gbp'),
     checkFn('fn-sync-reviews', 'sync-reviews'),
     checkFn('fn-reply-review', 'reply-review'),
+    checkFn('fn-gbp-diagnostic', 'gbp-diagnostic'),
+    checkFn('fn-suggest-reply', 'suggest-reply'),
     checkFn('fn-ga4-stats', 'ga4-stats'),
     checkFn('fn-sitemap', 'sitemap'),
     checkFn('fn-check-tokens', 'check-tokens'),
@@ -543,8 +551,17 @@ function actionLink(key, isPrimary) {
   checkInt('int-anthropic', 'anthropic', ['api_key'], 'Anthropic Claude');
   checkInt('int-meta', 'meta', ['page_access_token', 'fb_page_id'], 'Meta');
   checkInt('int-linkedin', 'linkedin', ['access_token', 'organization_urn'], 'LinkedIn');
-  checkInt('int-gbp', 'gbp', ['access_token', 'account_id_audo'], 'Google Business Profile');
-  checkInt('int-ga4', 'ga4', ['property_id', 'service_account_json'], 'Google Analytics 4');
+  // GBP : nouveau set de champs (client_id/client_secret/refresh_token requis pour le refresh auto)
+  checkInt('int-gbp', 'gbp', ['client_id', 'client_secret', 'refresh_token', 'account_id_audo'], 'Google Business Profile');
+  // GA4 : accepte service_account_key OU service_account_json (legacy)
+  const ga4v = settings['ga4'] || {};
+  if (ga4v.property_id && (ga4v.service_account_json || ga4v.service_account_key)) {
+    setStep('int-ga4', 'ok', 'Google Analytics 4 configuré', 'Property ID + Service Account renseignés');
+    recordResult('int-ga4', 'ok');
+  } else {
+    setStep('int-ga4', 'fail', 'Google Analytics 4 non configuré', 'Property ID + Service Account requis', actionLink('int-ga4', false));
+    recordResult('int-ga4', 'fail');
+  }
 
   // ─── 6. Contenu ─────────────────────────────────
   try {

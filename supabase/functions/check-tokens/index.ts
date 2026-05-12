@@ -22,6 +22,51 @@ interface TokenHealth {
   checked_at: string;
 }
 
+// Helpers pour signer un JWT RS256 avec une clé privée PEM (service account Google)
+function base64UrlEncode(input: ArrayBuffer | Uint8Array | string): string {
+  const bytes = typeof input === "string"
+    ? new TextEncoder().encode(input)
+    : input instanceof ArrayBuffer ? new Uint8Array(input) : input;
+  let bin = "";
+  for (let i = 0; i < bytes.byteLength; i++) bin += String.fromCharCode(bytes[i]);
+  // @ts-ignore Deno btoa
+  return btoa(bin).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
+}
+
+function pemToBinary(pem: string): Uint8Array {
+  const b64 = pem.replace(/-----BEGIN PRIVATE KEY-----/, "").replace(/-----END PRIVATE KEY-----/, "").replace(/\s+/g, "");
+  // @ts-ignore Deno atob
+  const bin = atob(b64);
+  const buf = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+  return buf;
+}
+
+async function signGoogleJwt(sa: { client_email: string; private_key: string }, scope: string): Promise<string> {
+  const header = { alg: "RS256", typ: "JWT" };
+  const now = Math.floor(Date.now() / 1000);
+  const claims = {
+    iss: sa.client_email,
+    scope,
+    aud: "https://oauth2.googleapis.com/token",
+    exp: now + 3600,
+    iat: now
+  };
+  const headerB64 = base64UrlEncode(JSON.stringify(header));
+  const claimsB64 = base64UrlEncode(JSON.stringify(claims));
+  const signingInput = `${headerB64}.${claimsB64}`;
+  const keyData = pemToBinary(sa.private_key);
+  // @ts-ignore Deno crypto
+  const key = await crypto.subtle.importKey(
+    "pkcs8", keyData,
+    { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+    false, ["sign"]
+  );
+  // @ts-ignore Deno crypto
+  const sig = await crypto.subtle.sign("RSASSA-PKCS1-v1_5", key, new TextEncoder().encode(signingInput));
+  return `${signingInput}.${base64UrlEncode(sig)}`;
+}
+
 // @ts-ignore Deno
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
@@ -36,6 +81,18 @@ Deno.serve(async (req: Request) => {
     const { data: { user } } = await sb.auth.getUser();
     if (!user) return json({ error: "Not authenticated" }, 401);
 
+    // Si on a un body JSON {service: "meta"}, on ne teste que ce service-là (pour bouton Tester ciblé)
+    let onlyService: string | null = null;
+    if (req.method === "POST") {
+      try {
+        const body = await req.json();
+        onlyService = body?.service || null;
+      } catch (_) {}
+    }
+    const url = new URL(req.url);
+    if (!onlyService) onlyService = url.searchParams.get("service");
+    const shouldTest = (key: string) => !onlyService || onlyService === key;
+
     const { data: settings } = await sb.from("app_settings").select("*");
     const byKey: Record<string, any> = {};
     (settings || []).forEach((s: any) => byKey[s.key] = s.value || {});
@@ -44,7 +101,7 @@ Deno.serve(async (req: Request) => {
     const now = new Date().toISOString();
 
     // ─── META (FB + IG) ───
-    if (byKey.meta?.page_access_token) {
+    if (shouldTest("meta") && byKey.meta?.page_access_token) {
       try {
         const r = await fetch(`https://graph.facebook.com/v21.0/debug_token?input_token=${byKey.meta.page_access_token}&access_token=${byKey.meta.page_access_token}`);
         const d = await r.json();
@@ -59,7 +116,7 @@ Deno.serve(async (req: Request) => {
     }
 
     // ─── LinkedIn ───
-    if (byKey.linkedin?.access_token) {
+    if (shouldTest("linkedin") && byKey.linkedin?.access_token) {
       try {
         const r = await fetch("https://api.linkedin.com/v2/me", {
           headers: { "Authorization": `Bearer ${byKey.linkedin.access_token}` }
@@ -70,8 +127,32 @@ Deno.serve(async (req: Request) => {
       } catch (e: any) { health.linkedin = { ok: false, error: e.message, checked_at: now }; }
     }
 
-    // ─── GBP ───
-    if (byKey.gbp?.access_token) {
+    // ─── GBP (refresh token = source de vérité, on tente un refresh) ───
+    if (shouldTest("gbp") && byKey.gbp?.refresh_token && byKey.gbp?.client_id && byKey.gbp?.client_secret) {
+      try {
+        const r = await fetch("https://oauth2.googleapis.com/token", {
+          method: "POST",
+          headers: { "content-type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({
+            client_id: byKey.gbp.client_id,
+            client_secret: byKey.gbp.client_secret,
+            refresh_token: byKey.gbp.refresh_token,
+            grant_type: "refresh_token"
+          })
+        });
+        const d = await r.json();
+        if (d.access_token) {
+          // Mémorise le nouveau token
+          await sb.from("app_settings").update({
+            value: { ...byKey.gbp, access_token: d.access_token }
+          }).eq("key", "gbp");
+          health.gbp = { ok: true, expires_in_days: null, checked_at: now };
+        } else {
+          health.gbp = { ok: false, error: d.error_description || d.error || "refresh failed", checked_at: now };
+        }
+      } catch (e: any) { health.gbp = { ok: false, error: e.message, checked_at: now }; }
+    } else if (shouldTest("gbp") && byKey.gbp?.access_token) {
+      // Fallback : ping tokeninfo
       try {
         const r = await fetch(`https://oauth2.googleapis.com/tokeninfo?access_token=${byKey.gbp.access_token}`);
         const d = await r.json();
@@ -84,8 +165,47 @@ Deno.serve(async (req: Request) => {
       } catch (e: any) { health.gbp = { ok: false, error: e.message, checked_at: now }; }
     }
 
+    // ─── GA4 (Analytics Data API) ───
+    if (shouldTest("ga4") && byKey.ga4?.property_id && byKey.ga4?.service_account_key) {
+      try {
+        // Décode le service account JSON
+        let sa: any;
+        try {
+          sa = typeof byKey.ga4.service_account_key === "string"
+            ? JSON.parse(byKey.ga4.service_account_key)
+            : byKey.ga4.service_account_key;
+        } catch (_) {
+          health.ga4 = { ok: false, error: "service_account_key n'est pas un JSON valide", checked_at: now };
+        }
+        if (sa?.client_email && sa?.private_key) {
+          // Génère un JWT signé pour obtenir un access token Google
+          const jwtToken = await signGoogleJwt(sa, "https://www.googleapis.com/auth/analytics.readonly");
+          const tokRes = await fetch("https://oauth2.googleapis.com/token", {
+            method: "POST",
+            headers: { "content-type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+              grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
+              assertion: jwtToken
+            })
+          });
+          const tokJson = await tokRes.json();
+          if (tokJson.access_token) {
+            // Ping minimaliste sur la property
+            const pingRes = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${byKey.ga4.property_id}/metadata`, {
+              headers: { "Authorization": `Bearer ${tokJson.access_token}` }
+            });
+            health.ga4 = pingRes.ok
+              ? { ok: true, expires_in_days: null, checked_at: now }
+              : { ok: false, error: `HTTP ${pingRes.status} sur metadata — Property ID correct ?`, checked_at: now };
+          } else {
+            health.ga4 = { ok: false, error: tokJson.error_description || "Échec auth service account", checked_at: now };
+          }
+        }
+      } catch (e: any) { health.ga4 = { ok: false, error: e.message, checked_at: now }; }
+    }
+
     // ─── Anthropic (test minimaliste) ───
-    if (byKey.anthropic?.api_key) {
+    if (shouldTest("anthropic") && byKey.anthropic?.api_key) {
       try {
         const r = await fetch("https://api.anthropic.com/v1/messages", {
           method: "POST",

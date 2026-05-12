@@ -340,24 +340,30 @@
           <div class="gw-step-num">8</div>
           <div>
             <h2>Coller dans le back-office</h2>
-            <p>5 valeurs à placer dans Paramètres → Google Business Profile.</p>
+            <p>7 valeurs à placer dans Paramètres → Google Business Profile.</p>
           </div>
-          <div class="gw-step-time">1 min</div>
+          <div class="gw-step-time">2 min</div>
         </div>
         <div class="gw-step-body">
-          <p>Va dans <strong>Paramètres</strong> du back-office, section <strong>Google Business Profile</strong>, et colle :</p>
+          <p>Va dans <strong>Paramètres</strong> du back-office, section <strong>Google Business Profile</strong>, et colle dans l'ordre :</p>
           <ul>
-            <li><strong>Access Token (OAuth Google)</strong> : <code>ya29.xxxx...</code> (de l'étape 6)</li>
-            <li><strong>Refresh Token</strong> : <code>1//xxxx...</code> (de l'étape 6)</li>
-            <li><strong>Account ID (Dépan'Audo)</strong> : <code>accounts/123...</code> (de l'étape 7)</li>
+            <li><strong>Client ID OAuth</strong> : <code>123456...apps.googleusercontent.com</code> (étape 5) <span style="color:#E11D48;font-weight:700">*</span></li>
+            <li><strong>Client Secret OAuth</strong> : <code>GOCSPX-xxxx...</code> (étape 5) <span style="color:#E11D48;font-weight:700">*</span></li>
+            <li><strong>Access Token (OAuth Google)</strong> : <code>ya29.xxxx...</code> (étape 6)</li>
+            <li><strong>Refresh Token</strong> : <code>1//xxxx...</code> (étape 6) <span style="color:#E11D48;font-weight:700">*</span></li>
+            <li><strong>Account ID (Dépan'Audo)</strong> : <code>accounts/123...</code> (étape 7)</li>
             <li><strong>Location ID Saint-Omer</strong> : <code>locations/123...</code></li>
             <li><strong>Location ID Dunkerque</strong> : <code>locations/987...</code></li>
           </ul>
+          <div class="gw-warn-box">
+            <strong>⚠️ Client ID + Client Secret obligatoires</strong>
+            Sans eux, l'access token ne pourra pas être renouvelé automatiquement (il expire en 1h). Tu serais obligé de refaire la manip OAuth Playground chaque heure.
+          </div>
           <a href="settings.html#section-gbp" class="gw-cta">
             Ouvrir Paramètres → GBP
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="9 18 15 12 9 6"/></svg>
           </a>
-          <div class="gw-check"><input type="checkbox" id="ch8"><label for="ch8">J'ai collé et sauvegardé les 5 valeurs</label></div>
+          <div class="gw-check"><input type="checkbox" id="ch8"><label for="ch8">J'ai collé et sauvegardé les 7 valeurs</label></div>
         </div>
         <div class="gw-nav">
           <button class="btn" data-prev>← Précédent</button>
@@ -378,23 +384,29 @@
         <div class="gw-step-body">
           <div class="gw-ok-box">
             <strong>✓ Tu es à la dernière étape</strong>
-            Une fois les tests validés, tu pourras synchroniser tes avis Google et y répondre depuis le back-office.
+            Lance le diagnostic auto pour vérifier que tout est branché correctement.
           </div>
-          <ol>
-            <li>Va sur la page <a href="reviews.html"><strong>Avis clients</strong></a></li>
-            <li>Clique le bouton <strong>"Synchroniser"</strong> en haut à droite</li>
-            <li>Tu devrais voir tes avis Google des 2 fiches apparaître après quelques secondes</li>
-            <li>Pour répondre à un avis : clique <strong>Répondre</strong> sur n'importe quel avis Google, écris ta réponse → elle sera publiée sur Google Maps directement</li>
-          </ol>
-          <div class="gw-info-box">
+          <button type="button" id="wizardRunDiag" class="gw-cta" style="cursor:pointer">
+            🔍 Lancer le diagnostic complet
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+          <div id="wizardDiagResult" style="display:none;margin-top:14px;padding:14px 16px;border-radius:10px;background:var(--ink-50);border:1px solid var(--ink-100);font-size:.86rem"></div>
+
+          <div class="gw-info-box" style="margin-top:14px">
             <strong>🔄 Refresh auto</strong>
             L'Access Token expire toutes les heures, mais l'Edge Function utilise le Refresh Token pour le régénérer automatiquement. Tu n'as plus besoin de te reconnecter.
           </div>
-          <a href="reviews.html" class="gw-cta">
-            Tester sur Avis clients
+          <p style="margin-top:14px"><strong>Étapes manuelles à valider ensuite :</strong></p>
+          <ol>
+            <li>Va sur la page <a href="reviews.html"><strong>Avis clients</strong></a> → clique <strong>Synchroniser</strong></li>
+            <li>Tes avis Google des 2 fiches apparaissent après quelques secondes</li>
+            <li>Réponds à un avis : <strong>Répondre</strong> → la réponse est publiée sur Google Maps directement</li>
+          </ol>
+          <a href="reviews.html" class="gw-cta" style="background:linear-gradient(135deg,#0DA0CF,#0A1428)">
+            Aller à Avis clients
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="9 18 15 12 9 6"/></svg>
           </a>
-          <div class="gw-check"><input type="checkbox" id="ch9"><label for="ch9">Sync OK et réponse postée 🎉</label></div>
+          <div class="gw-check"><input type="checkbox" id="ch9"><label for="ch9">Diagnostic OK et au moins 1 avis synchronisé 🎉</label></div>
         </div>
         <div class="gw-nav">
           <button class="btn" data-prev>← Précédent</button>
@@ -472,6 +484,39 @@ const STEP_LABELS = ['Projet GCP','APIs','Accès','OAuth','Identifiants','Tokens
 
   document.querySelectorAll('[data-next]').forEach(b => b.onclick = () => goTo(currentStep + 1));
   document.querySelectorAll('[data-prev]').forEach(b => b.onclick = () => goTo(currentStep - 1));
+
+  // ─── Diagnostic step 9 ─────────────────────────
+  const diagBtn = document.getElementById('wizardRunDiag');
+  const diagOut = document.getElementById('wizardDiagResult');
+  if (diagBtn) {
+    diagBtn.addEventListener('click', async () => {
+      diagOut.style.display = 'block';
+      diagOut.innerHTML = '<div style="display:flex;align-items:center;gap:8px;color:#1A237E"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite"><circle cx="12" cy="12" r="9" opacity=".3"/><path d="M12 3a9 9 0 0 1 9 9"/></svg> Test en cours auprès des APIs Google…</div>';
+      diagBtn.disabled = true;
+      try {
+        const headers = await HCSupabase.authHeaders();
+        const r = await fetch(HCSupabase.fnUrl('gbp-diagnostic'), { method: 'POST', headers });
+        const d = await r.json();
+        const row = (lbl, val, hint) => `<div style="display:flex;align-items:center;gap:8px;padding:5px 0"><span style="width:20px;height:20px;border-radius:50%;background:${val?'#00aa50':'#E11D48'};color:#fff;font-size:.8rem;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0">${val?'✓':'✗'}</span><span><strong>${lbl}</strong>${hint?'<span style="color:#666;font-size:.84em"> — '+hint+'</span>':''}</span></div>`;
+        const head = d.success
+          ? '<div style="font-weight:800;color:#007033;font-size:1rem;margin-bottom:10px">✅ Tout est en ordre — tu peux passer aux avis !</div>'
+          : '<div style="font-weight:800;color:#9F1239;font-size:1rem;margin-bottom:10px">⚠️ Connexion incomplète</div>';
+        diagOut.innerHTML = head
+          + row('Credentials OAuth', d.checks?.creds, d.checks?.creds ? null : 'Client ID/Secret/Refresh manquants dans Settings')
+          + row('Refresh Token fonctionnel', d.checks?.refresh, d.checks?.refresh_err)
+          + row('Accès aux comptes Business', d.checks?.account, d.checks?.accounts_count ? d.checks.accounts_count + ' compte(s) accessibles' : d.checks?.account_err)
+          + row('Location Saint-Omer', d.checks?.loc_st_omer, d.checks?.loc_st_omer_title)
+          + row('Location Dunkerque', d.checks?.loc_dk, d.checks?.loc_dk_title)
+          + row('Lecture du flux d\'avis', d.checks?.reviews, d.checks?.reviews_count != null ? d.checks.reviews_count + ' avis lisibles' : d.checks?.reviews_err)
+          + (d.error ? '<div style="margin-top:10px;padding:9px 11px;background:#FEE2E2;color:#9F1239;border-radius:8px;font-size:.82rem"><strong>Erreur :</strong> ' + d.error + '</div>' : '')
+          + (!d.checks?.account && d.checks?.creds && d.checks?.refresh ? '<div style="margin-top:10px;padding:9px 11px;background:#FFF4D6;color:#7a4c00;border-radius:8px;font-size:.82rem"><strong>💡 Astuce :</strong> Si l\'accès aux comptes échoue avec 403, Google n\'a pas encore approuvé ta demande (étape 3). Réessaye dans 1-3 jours ouvrés.</div>' : '');
+      } catch (e) {
+        diagOut.innerHTML = '<div style="color:#9F1239"><strong>❌ Erreur réseau</strong><br><span style="font-size:.82em">' + (e.message || e) + '</span><br><span style="font-size:.78em;color:#666">L\'Edge Function <code>gbp-diagnostic</code> est-elle déployée ?</span></div>';
+      } finally {
+        diagBtn.disabled = false;
+      }
+    });
+  }
 
   goTo(currentStep);
 })();

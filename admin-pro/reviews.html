@@ -65,7 +65,10 @@
         <strong>Avis clients</strong>
       </div>
       <div class="admin-page-head">
-        <div><h1>Avis clients</h1><p>Synchronisation Google &amp; Facebook + réponse depuis le back-office.</p></div>
+        <div>
+          <h1>Avis clients</h1>
+          <p>Synchronisation Google &amp; Facebook + réponse depuis le back-office. <span id="lastSyncInfo" style="display:none;color:var(--ink-500);font-size:.84em;margin-left:8px"></span></p>
+        </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn" id="btnAddManual" title="Ajouter un avis manuel (Trustville, papier, etc.)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -81,6 +84,7 @@
           </button>
         </div>
       </div>
+      <div id="syncReport" style="display:none;margin:10px 0 4px;padding:11px 14px;border-radius:10px;background:var(--ink-50);border:1px solid var(--ink-100);font-size:.84rem"></div>
 
       <div class="rv-stats" id="rvStats"></div>
 
@@ -433,6 +437,7 @@ let _currentReply = null;
     btn.disabled = true;
     const orig = btn.innerHTML;
     btn.innerHTML = 'Synchronisation…';
+    const report = document.getElementById('syncReport');
     try {
       const { data: { session } } = await c.auth.getSession();
       const r = await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sync-reviews', {
@@ -442,15 +447,55 @@ let _currentReply = null;
       });
       const d = await r.json();
       if (!r.ok || d.error) throw new Error(d.error || 'Erreur');
-      toast(`Sync OK · Google ${d.results.google.synced} avis, FB ${d.results.facebook.aggregate ? 'agrégé' : '—'}`);
+      const g = d.results.google;
+      const so = g.byLocation?.['depan-audo'];
+      const dk = g.byLocation?.['depan-dk'];
+      const lines = [
+        '<strong style="color:#007033">✓ Synchronisation terminée</strong>',
+        '<div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:6px">'
+        + (so ? `<span><strong>Saint-Omer :</strong> ${so.synced}/${so.fetched} avis ${so.errors.length ? '<span style="color:#9F1239">(' + so.errors.length + ' erreur(s))</span>' : ''}</span>` : '')
+        + (dk ? `<span><strong>Dunkerque :</strong> ${dk.synced}/${dk.fetched} avis ${dk.errors.length ? '<span style="color:#9F1239">(' + dk.errors.length + ' erreur(s))</span>' : ''}</span>` : '')
+        + (d.results.facebook?.aggregate ? `<span><strong>Facebook :</strong> ${d.results.facebook.aggregate.rating}/5 (${d.results.facebook.aggregate.count} avis)</span>` : '')
+        + '</div>'
+      ];
+      if (g.errors?.length) {
+        lines.push('<div style="margin-top:8px;color:#9F1239;font-size:.82em"><strong>Erreurs :</strong><br>' + g.errors.map(e => '· ' + e).join('<br>') + '</div>');
+      }
+      report.innerHTML = lines.join('');
+      report.style.display = 'block';
+      toast(`✓ ${g.synced} avis Google synchronisés`);
+      _renderLastSync(d.synced_at);
       await load();
     } catch (err) {
+      report.innerHTML = '<strong style="color:#9F1239">❌ Erreur de synchronisation</strong><br><span style="font-size:.82em;color:var(--ink-500)">' + (err.message || err) + '</span><br><span style="font-size:.78em;color:var(--ink-400);margin-top:4px;display:inline-block">Vérifie la connexion dans <a href="settings.html#section-gbp">Paramètres → Google Business Profile</a> ou ré-ouvre <a href="wizard-google.html">l\'assistant</a>.</span>';
+      report.style.display = 'block';
       toast('Erreur sync : ' + err.message, 'err', 4500);
     } finally {
       btn.disabled = false;
       btn.innerHTML = orig;
     }
   });
+
+  function _renderLastSync(iso) {
+    const el = document.getElementById('lastSyncInfo');
+    if (!iso || !el) return;
+    const dt = new Date(iso);
+    const diff = Math.round((Date.now() - dt.getTime()) / 60000);
+    const human = diff < 1 ? "à l'instant"
+      : diff < 60 ? "il y a " + diff + " min"
+      : diff < 1440 ? "il y a " + Math.round(diff / 60) + " h"
+      : dt.toLocaleDateString('fr-FR');
+    el.textContent = '· Dernière sync ' + human;
+    el.style.display = 'inline';
+  }
+
+  // Charge la date de dernière sync depuis app_settings
+  (async () => {
+    try {
+      const { data } = await c.from('app_settings').select('value').eq('key', 'gbp').single();
+      if (data?.value?.last_synced_at) _renderLastSync(data.value.last_synced_at);
+    } catch (_) {}
+  })();
 
   // Reply send
   document.getElementById('btnReplySend').addEventListener('click', async () => {
@@ -477,36 +522,32 @@ let _currentReply = null;
     }
   });
 
-  // Reply suggérer IA (utilise Edge Function generate-content avec un prompt review)
+  // Reply suggérer IA — appelle l'Edge Function dédiée suggest-reply
   document.getElementById('btnReplyAI').addEventListener('click', async () => {
     if (!_currentReply) return;
     const btn = document.getElementById('btnReplyAI');
     btn.disabled = true;
-    btn.innerHTML = 'Suggestion…';
+    const origHtml = btn.innerHTML;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="animation:spin 1s linear infinite"><circle cx="12" cy="12" r="9" opacity=".3"/><path d="M12 3a9 9 0 0 1 9 9"/></svg> Réflexion…';
     try {
       const { data: { session } } = await c.auth.getSession();
-      // Hack : on appelle generate-content avec un faux 'chantier' qui contient l'avis
-      const r = await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/generate-content', {
+      const r = await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/suggest-reply', {
         method: 'POST',
         headers: { 'Authorization': 'Bearer ' + session.access_token, 'content-type': 'application/json' },
-        body: JSON.stringify({
-          metier: 'reply', ville: _currentReply.agence === 'depan-dk' ? 'Dunkerque' : 'Saint-Omer',
-          typeInter: 'review_reply',
-          // Réutilise le prompt — pas idéal mais pratique
-        })
+        body: JSON.stringify({ reviewId: _currentReply.id })
       });
       const d = await r.json();
-      if (d.description) {
-        document.getElementById('replyText').value = d.description;
-        toast('Suggestion générée — relisez avant publication');
+      if (d.success && d.suggestion) {
+        document.getElementById('replyText').value = d.suggestion;
+        toast(`Suggestion générée (${d.rating}★) — relisez avant publication`);
       } else {
-        toast('Suggestion non générée — rédigez manuellement','err');
+        toast('Suggestion impossible : ' + (d.error || 'erreur inconnue'), 'err', 5000);
       }
     } catch (e) {
-      toast('Edge function indisponible — rédigez manuellement','err');
+      toast('Edge function indisponible — rédigez manuellement', 'err', 4500);
     } finally {
       btn.disabled = false;
-      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Suggérer (IA)';
+      btn.innerHTML = origHtml;
     }
   });
 

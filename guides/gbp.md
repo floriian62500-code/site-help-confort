@@ -9,12 +9,16 @@ Après cette config, ton back-office pourra :
 - ✅ **Répondre aux avis Google** directement depuis le back-office (en 1 clic)
 - ✅ **Publier des Posts Google** (actualités GBP) sur tes fiches depuis le back-office
 
-Tu auras 5 valeurs à coller dans **Paramètres → Google Business Profile** :
-1. `access_token` (OAuth Google)
-2. `refresh_token` (pour régénérer le token automatiquement)
-3. `account_id_audo` (l'ID de ton compte Dépan'Audo)
-4. `location_id_st_omer` (l'ID de la fiche Saint-Omer)
-5. `location_id_dk` (l'ID de la fiche Dunkerque)
+Tu auras **7 valeurs** à coller dans **Paramètres → Google Business Profile** :
+1. `client_id` (OAuth, étape 5) — **indispensable** pour régénérer le token expiré
+2. `client_secret` (OAuth, étape 5) — **indispensable** aussi
+3. `access_token` (OAuth Google, étape 6)
+4. `refresh_token` (étape 6) — **indispensable**, durée illimitée
+5. `account_id_audo` (étape 7) — l'ID du compte Dépan'Audo
+6. `location_id_st_omer` (étape 7) — fiche Saint-Omer
+7. `location_id_dk` (étape 7) — fiche Dunkerque
+
+> 💡 **Plus simple** : utilise l'**assistant pas-à-pas** dans le back-office → **Assistant Google** (menu latéral) plutôt que ce guide manuel. Tout est piloté avec progression sauvegardée et tests automatiques.
 
 ## Pré-requis
 
@@ -175,11 +179,13 @@ Maintenant qu'on a un access_token, on peut demander à Google la liste de tes f
 
 ---
 
-# Étape 8 — Coller le tout dans le back-office (1 min)
+# Étape 8 — Coller le tout dans le back-office (2 min)
 
 1. Va dans ton back-office → **Paramètres** → **Google Business Profile**
 
-2. Colle :
+2. Colle dans l'ordre :
+   - **Client ID OAuth** : `123456...apps.googleusercontent.com` ← **NOUVEAU, obligatoire**
+   - **Client Secret OAuth** : `GOCSPX-xxxx...` ← **NOUVEAU, obligatoire**
    - **Access Token (OAuth Google)** : `ya29.xxxx...`
    - **Refresh Token** : `1//xxxx...`
    - **Account ID (Dépan'Audo)** : `accounts/123456789012345`
@@ -188,7 +194,9 @@ Maintenant qu'on a un access_token, on peut demander à Google la liste de tes f
 
 3. Clique **Enregistrer**
 
-4. Va dans **Avis clients** → clique **Synchroniser** → tes avis Google des 2 fiches devraient apparaître.
+4. Clique **Tester la connexion** — un diagnostic complet s'affiche (credentials ✓, refresh ✓, account ✓, locations ✓, lecture des avis ✓). Si tout est vert, tu peux passer à l'étape 9.
+
+5. Va dans **Avis clients** → clique **Synchroniser** → tes avis Google des 2 fiches apparaissent (Saint-Omer + Dunkerque).
 
 ---
 

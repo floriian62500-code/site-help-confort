@@ -58,17 +58,28 @@ Deno.serve(async (req: Request) => {
 
     const { data: settings } = await sb.from("app_settings").select("value").eq("key", "gbp").single();
     const cfg = settings?.value;
-    if (!cfg?.access_token) return json({ error: "GBP non configuré" }, 400);
+    if (!cfg?.refresh_token || !cfg?.account_id_audo) {
+      return json({ error: "GBP non configuré — voir Paramètres → Google Business Profile" }, 400);
+    }
+
+    // Si pas d'access_token en cache, on rafraîchit avant l'appel
+    let token = cfg.access_token;
+    if (!token) {
+      try { token = await refreshGoogleToken(cfg, sb); } catch (e: any) {
+        return json({ error: "Impossible de rafraîchir le token : " + e.message }, 401);
+      }
+    }
 
     const url = `https://mybusiness.googleapis.com/v4/${cfg.account_id_audo}/${r.location_id}/reviews/${r.source_id}/reply`;
-    let token = cfg.access_token;
     let res = await fetch(url, {
       method: "PUT",
       headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
       body: JSON.stringify({ comment: replyText })
     });
-    if (res.status === 401 && cfg.refresh_token) {
-      token = await refreshGoogleToken(cfg, sb);
+    if (res.status === 401) {
+      try { token = await refreshGoogleToken(cfg, sb); } catch (e: any) {
+        return json({ error: "Refresh échec : " + e.message }, 401);
+      }
       res = await fetch(url, {
         method: "PUT",
         headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },

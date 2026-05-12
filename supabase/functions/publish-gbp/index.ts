@@ -64,7 +64,7 @@ Deno.serve(async (req: Request) => {
 
     const { data: settings } = await sb.from("app_settings").select("value").eq("key", "gbp").single();
     const cfg = settings?.value;
-    if (!cfg?.access_token || !cfg?.account_id_audo) {
+    if (!cfg?.refresh_token || !cfg?.account_id_audo) {
       return json({ error: "Config GBP absente — voir Paramètres → Google Business Profile" }, 400);
     }
 
@@ -97,6 +97,11 @@ Deno.serve(async (req: Request) => {
 
     const url = `${GBP_API}/${cfg.account_id_audo}/${locationId}/localPosts`;
     let token = cfg.access_token;
+    if (!token) {
+      try { token = await refreshAccessToken(cfg, sb); } catch (e: any) {
+        return json({ error: "Impossible de rafraîchir le token : " + e.message }, 401);
+      }
+    }
     let postRes = await fetch(url, {
       method: "POST",
       headers: {
@@ -107,7 +112,7 @@ Deno.serve(async (req: Request) => {
     });
 
     // Token expiré → refresh + retry
-    if (postRes.status === 401 && cfg.refresh_token) {
+    if (postRes.status === 401) {
       try {
         token = await refreshAccessToken(cfg, sb);
         postRes = await fetch(url, {

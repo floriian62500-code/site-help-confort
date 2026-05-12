@@ -375,11 +375,20 @@
             <p class="section-desc">Permet de publier des "Posts Google" sur votre fiche Google Business + de synchroniser les avis. <a href="../guides/gbp.md" target="_blank">Guide complet (30 min)</a>.</p>
             <form class="settings-form" data-section="gbp">
               <div class="field-row">
+                <label>Client ID OAuth <span style="color:#E11D48;font-size:.78em">*</span></label>
+                <input type="text" name="client_id" placeholder="123456789012-xxxxxxxxxxxxxxxx.apps.googleusercontent.com" autocomplete="off">
+                <small style="display:block;color:var(--ink-500);font-size:.76rem;margin-top:3px">Indispensable pour renouveler le token expiré (auto toutes les heures).</small>
+              </div>
+              <div class="field-row">
+                <label>Client Secret OAuth <span style="color:#E11D48;font-size:.78em">*</span></label>
+                <input type="password" name="client_secret" placeholder="GOCSPX-xxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+              </div>
+              <div class="field-row">
                 <label>Access Token (OAuth Google)</label>
                 <input type="password" name="access_token" placeholder="ya29.xxxxxxxxxxxxxxxx" autocomplete="off">
               </div>
               <div class="field-row">
-                <label>Refresh Token</label>
+                <label>Refresh Token <span style="color:#E11D48;font-size:.78em">*</span></label>
                 <input type="password" name="refresh_token" placeholder="1//xxxxxxxxxxxxxxxx" autocomplete="off">
               </div>
               <div class="field-row">
@@ -397,10 +406,11 @@
               <div class="settings-actions">
                 <span class="hint" data-saved-meta>Non sauvegardé</span>
                 <div class="right">
-                  <button type="button" class="btn" data-test="gbp">Tester</button>
+                  <button type="button" class="btn" data-test="gbp">Tester la connexion</button>
                   <button type="button" class="btn btn-primary" data-save="gbp">Enregistrer</button>
                 </div>
               </div>
+              <div class="gbp-diag" id="gbpDiag" style="display:none;margin-top:14px;border-radius:10px;border:1px solid var(--ink-100);background:var(--ink-50);padding:14px 16px;font-size:.86rem"></div>
             </form>
           </section>
 
@@ -505,8 +515,8 @@ function toast(msg, type='ok', d=2800) {
       case 'anthropic': return !!data.api_key;
       case 'meta':      return !!data.page_access_token && !!data.fb_page_id;
       case 'linkedin':  return !!data.access_token && !!data.organization_urn;
-      case 'gbp':       return !!data.access_token;
-      case 'ga4':       return !!data.property_id && !!data.service_account_json;
+      case 'gbp':       return !!data.refresh_token && !!data.client_id && !!data.client_secret && !!data.account_id_audo;
+      case 'ga4':       return !!data.property_id && (!!data.service_account_json || !!data.service_account_key);
       case 'company':   return !!data.raison_sociale;
       default: return false;
     }
@@ -553,11 +563,80 @@ function toast(msg, type='ok', d=2800) {
     });
   });
 
-  // Tester (placeholder — Edge Function à venir)
+  // Tester la connexion (appel Edge Function réel pour GBP, placeholder pour les autres)
   document.querySelectorAll('[data-test]').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
       const key = btn.dataset.test;
-      toast('Test ' + key + ' : Edge Function de test à déployer dans une prochaine vague. Sauvegardez d\'abord la configuration.', 'err', 4500);
+
+      if (key === 'gbp') {
+        const diag = document.getElementById('gbpDiag');
+        diag.style.display = 'block';
+        diag.innerHTML = '<div style="display:flex;align-items:center;gap:8px;color:var(--ink-500)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite"><circle cx="12" cy="12" r="9" opacity=".3"/><path d="M12 3a9 9 0 0 1 9 9"/></svg> Test en cours — appel de l\'API Google Business…</div>';
+        const orig = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = 'Test…';
+        try {
+          const headers = await HCSupabase.authHeaders();
+          const r = await fetch(HCSupabase.fnUrl('gbp-diagnostic'), {
+            method: 'POST',
+            headers
+          });
+          const d = await r.json();
+          const ok = (lbl, val, hint) => `<div style="display:flex;align-items:center;gap:8px;padding:6px 0"><span style="width:18px;height:18px;border-radius:50%;background:${val?'#00aa50':'#E11D48'};color:#fff;font-size:.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0">${val?'✓':'✗'}</span><span><strong>${lbl}</strong>${hint?'<span style="color:var(--ink-500);font-size:.82em"> — '+hint+'</span>':''}</span></div>`;
+          const summary = d.success
+            ? '<div style="font-weight:700;color:#007033;margin-bottom:10px;display:flex;align-items:center;gap:6px">✅ Connexion Google Business Profile opérationnelle</div>'
+            : '<div style="font-weight:700;color:#9F1239;margin-bottom:10px;display:flex;align-items:center;gap:6px">⚠️ Connexion incomplète — corrigez les points ci-dessous</div>';
+          diag.innerHTML = summary
+            + ok('Credentials OAuth renseignés', d.checks?.creds, d.checks?.creds ? null : 'Client ID + Secret + Refresh Token requis')
+            + ok('Access Token valide', d.checks?.access_token, d.checks?.access_token_err)
+            + ok('Refresh Token fonctionnel', d.checks?.refresh, d.checks?.refresh_err)
+            + ok('Account ID accessible', d.checks?.account, d.checks?.accounts_count ? d.checks.accounts_count + ' compte(s) trouvé(s)' : d.checks?.account_err)
+            + ok('Location Saint-Omer', d.checks?.loc_st_omer, d.checks?.loc_st_omer_title)
+            + ok('Location Dunkerque', d.checks?.loc_dk, d.checks?.loc_dk_title)
+            + ok('Lecture des avis', d.checks?.reviews, d.checks?.reviews_count != null ? d.checks.reviews_count + ' avis Google récupérables' : d.checks?.reviews_err)
+            + (d.error ? '<div style="margin-top:10px;padding:8px 10px;background:#FEE2E2;color:#9F1239;border-radius:8px;font-size:.78rem"><strong>Erreur :</strong> ' + d.error + '</div>' : '');
+          toast(d.success ? '✓ Connexion OK' : 'Configuration incomplète', d.success ? 'ok' : 'err', 3500);
+        } catch (e) {
+          diag.innerHTML = '<div style="color:#9F1239"><strong>❌ Erreur réseau</strong><br><span style="font-size:.82em">' + (e.message || e) + '</span><br><span style="font-size:.78em;color:var(--ink-500)">L\'Edge Function <code>gbp-diagnostic</code> est-elle déployée ?</span></div>';
+          toast('Erreur : ' + (e.message || e), 'err', 4000);
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = orig;
+        }
+        return;
+      }
+
+      // Autres services — appel à check-tokens avec service ciblé
+      const orig = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = 'Test…';
+      try {
+        const headers = await HCSupabase.authHeaders();
+        const r = await fetch(HCSupabase.fnUrl('check-tokens'), {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({ service: key })
+        });
+        const d = await r.json();
+        const h = d.health?.[key];
+        if (h?.ok) {
+          const exp = h.expires_in_days != null
+            ? (h.expires_in_days > 0 ? ` (expire dans ${h.expires_in_days}j)` : ' (expire bientôt !)')
+            : '';
+          toast(`✓ ${key.toUpperCase()} : connexion OK${exp}`, 'ok', 3500);
+        } else if (h?.error) {
+          toast(`✗ ${key.toUpperCase()} : ${h.error}`, 'err', 5000);
+        } else if (d.error) {
+          toast(`Erreur : ${d.error}`, 'err', 5000);
+        } else {
+          toast(`${key.toUpperCase()} : aucun token sauvegardé — enregistre d'abord les credentials`, 'err', 4500);
+        }
+      } catch (e) {
+        toast('Erreur réseau : ' + (e.message || e), 'err', 4500);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = orig;
+      }
     });
   });
 
