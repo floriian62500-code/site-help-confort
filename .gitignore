@@ -22,11 +22,16 @@ __pycache__/
 # Mascotte source (HD original — pas besoin sur le site)
 images/mascotte1.png
 images/mascotte-with-bg.png
+# Variantes orphelines après passage au WebP (gardées sur disque mais non servies)
+images/mascotte.png
+images/mascotte-opt.png
 
 # Vidéo originale énorme
 videos/*.original
 videos/*-OLD.*
 videos/*-NOAUDIO-bak.*
+# Vidéo source non compressée (remplacée par hero-metier-720p.mp4 servi en prod)
+videos/hero-metier.mp4
 
 # Supabase CLI cache (local, ne doit pas être committé)
 supabase/.temp/

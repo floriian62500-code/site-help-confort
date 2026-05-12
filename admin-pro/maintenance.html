@@ -166,46 +166,102 @@
 <script src="assets/admin.js"></script>
 <script src="assets/layout.js"></script>
 <script>
+// ───────────────────────────────────────────────────────────────
+// Maintenance & Santé — Back-Office HELP! Confort
+// Robustesse : chaque requête Supabase est isolée via safeQuery()
+// pour éviter qu'une seule erreur RLS / table absente bloque toute
+// la page sur "Chargement…". Try/catch global pour les imprévus.
+// ───────────────────────────────────────────────────────────────
 (async function() {
-  await HCSupabase.init();
-  const session = await HCAdmin.requireAuth();
-  if (!session) return;
-  await HCLayout.mount('maintenance', 'Maintenance & Santé');
-  const c = await HCSupabase.init();
-
-  const alerts = [];
-  const integrationsRows = [];
-  const activityRows = [];
-  const cronRows = [];
-  const dbRows = [];
-
-  function fmtDate(d) {
-    if (!d) return '—';
-    const date = new Date(d);
-    const now = Date.now();
-    const diff = now - date.getTime();
-    if (diff < 60000) return 'à l\'instant';
-    if (diff < 3600000) return 'il y a ' + Math.floor(diff/60000) + ' min';
-    if (diff < 86400000) return 'il y a ' + Math.floor(diff/3600000) + 'h';
-    if (diff < 7*86400000) return 'il y a ' + Math.floor(diff/86400000) + ' jour(s)';
-    return date.toLocaleDateString('fr-FR', { day:'numeric', month:'short', year:'2-digit' });
+  // ── État UI : on remplace les "Chargement…" en cas de pépin global ──
+  function showGlobalError(message, details) {
+    const html = `
+      <div class="mt-alert danger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div style="flex:1"><strong>Erreur de chargement</strong>${message}${details ? ' <span style="opacity:.7;font-size:.78rem">(' + details + ')</span>' : ''}</div>
+      </div>`;
+    const alertsEl = document.getElementById('mtAlerts');
+    if (alertsEl) alertsEl.innerHTML = html;
+    // remplace les blocs "Chargement…" restants par "Indisponible"
+    ['cardIntegrations','cardActivity','cardCron','cardDb'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.querySelector('.mt-loading')) {
+        el.innerHTML = '<div class="mt-loading" style="color:#9F0E2B">Données indisponibles</div>';
+      }
+    });
   }
 
-  // ─── 1. Charger toutes les données en parallèle ────────────
-  const [realsRes, leadsRes, reviewsRes, schedRes, settingsRes] = await Promise.all([
-    c.from('realisations').select('id,status,created_at,published_at,ai_generated', { count: 'exact' }),
-    c.from('leads').select('id,status,created_at', { count: 'exact' }).catch(() => ({ data: null, count: null })),
-    c.from('reviews').select('id,source,rating,status,synced_at,posted_at', { count: 'exact' }).catch(() => ({ data: null, count: null })),
-    c.from('scheduled_publications').select('id,status,scheduled_at,executed_at,last_error', { count: 'exact' }).catch(() => ({ data: null, count: null })),
-    c.from('app_settings').select('key,value,updated_at')
-  ]);
+  try {
+    await HCSupabase.init();
+    const session = await HCAdmin.requireAuth();
+    if (!session) return;
+    await HCLayout.mount('maintenance', 'Maintenance & Santé');
+    const c = await HCSupabase.init();
 
-  const reals = realsRes.data || [];
-  const leads = leadsRes.data || [];
-  const reviews = reviewsRes.data || [];
-  const sched = schedRes.data || [];
-  const settings = {};
-  (settingsRes.data || []).forEach(s => { settings[s.key] = { value: s.value || {}, updated_at: s.updated_at }; });
+    const alerts = [];
+    const integrationsRows = [];
+
+    function fmtDate(d) {
+      if (!d) return '—';
+      const date = new Date(d);
+      const now = Date.now();
+      const diff = now - date.getTime();
+      if (diff < 60000) return 'à l\'instant';
+      if (diff < 3600000) return 'il y a ' + Math.floor(diff/60000) + ' min';
+      if (diff < 86400000) return 'il y a ' + Math.floor(diff/3600000) + 'h';
+      if (diff < 7*86400000) return 'il y a ' + Math.floor(diff/86400000) + ' jour(s)';
+      return date.toLocaleDateString('fr-FR', { day:'numeric', month:'short', year:'2-digit' });
+    }
+
+    // safeQuery : enveloppe toute requête Supabase pour qu'une erreur
+    // (table absente, RLS, colonne manquante…) n'arrête pas la page.
+    // Retourne toujours { data: [], count: 0, error: <objet ou null> }.
+    async function safeQuery(label, queryBuilder) {
+      try {
+        const res = await queryBuilder;
+        if (res?.error) {
+          console.warn('[maintenance] requête "' + label + '" en erreur :', res.error.message || res.error);
+          return { data: [], count: 0, error: res.error };
+        }
+        return { data: res?.data || [], count: res?.count ?? (res?.data?.length || 0), error: null };
+      } catch (e) {
+        console.warn('[maintenance] requête "' + label + '" exception :', e?.message || e);
+        return { data: [], count: 0, error: e };
+      }
+    }
+
+    // ─── 1. Charger toutes les données en parallèle (chaque requête isolée) ──
+    const [realsRes, leadsRes, reviewsRes, schedRes, settingsRes] = await Promise.all([
+      safeQuery('realisations', c.from('realisations').select('id,status,created_at,published_at,ai_generated', { count: 'exact' })),
+      safeQuery('leads', c.from('leads').select('id,status,created_at', { count: 'exact' })),
+      safeQuery('reviews', c.from('reviews').select('id,source,rating,status,synced_at,posted_at', { count: 'exact' })),
+      safeQuery('scheduled_publications', c.from('scheduled_publications').select('id,status,scheduled_at,executed_at,last_error', { count: 'exact' })),
+      safeQuery('app_settings', c.from('app_settings').select('key,value,updated_at'))
+    ]);
+
+    const reals = realsRes.data;
+    const leads = leadsRes.data;
+    const reviews = reviewsRes.data;
+    const sched = schedRes.data;
+    const settings = {};
+    settingsRes.data.forEach(s => { settings[s.key] = { value: s.value || {}, updated_at: s.updated_at }; });
+
+    // ─── Annonces des erreurs partielles ────────────────────────
+    const failedTables = [
+      realsRes.error && 'realisations',
+      leadsRes.error && 'leads',
+      reviewsRes.error && 'reviews',
+      schedRes.error && 'scheduled_publications',
+      settingsRes.error && 'app_settings'
+    ].filter(Boolean);
+    if (failedTables.length) {
+      alerts.push({
+        type: 'warn',
+        title: 'Données partielles : ' + failedTables.length + ' table(s) inaccessible(s)',
+        msg: 'Tables : ' + failedTables.join(', ') + '. Probable problème RLS ou table absente. Détails dans la console (F12).',
+        action: { label: 'Console Supabase', url: 'https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg' }
+      });
+    }
 
   // ─── 2. Stats hero ──────────────────────────────────────
   document.getElementById('statReals').textContent = reals.length;
@@ -394,6 +450,10 @@
         <div><strong>Tout est sous contrôle</strong>Aucune action urgente. Profite-en pour publier des chantiers ✨</div>
       </div>
     `;
+  }
+  } catch (e) {
+    console.error('[maintenance] erreur fatale :', e);
+    showGlobalError('Impossible de charger la page Maintenance.', e?.message || 'erreur inconnue');
   }
 })();
 </script>

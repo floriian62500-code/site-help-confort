@@ -34,9 +34,10 @@ PLACEHOLDERS = [
     "YOUR_API_KEY",
     "TONIDREEL",
     "TON_SERVICE_ROLE_KEY",
-    "vous@entreprise.fr",
-    "vous@exemple.fr",
     "0321000000",
+    # Note : "vous@entreprise.fr" et "vous@exemple.fr" sont des placeholders
+    # HTML légitimes utilisés comme texte d'exemple dans des inputs email.
+    # Volontairement exclus pour éviter les faux positifs.
 ]
 
 VALID_PHONE = "+33366100134"
@@ -57,7 +58,9 @@ SECRET_PATTERNS = [
     re.compile(r"service_role.*[A-Za-z0-9]{40,}"),
 ]
 
-CONSOLE_RX = re.compile(r"console\.(log|warn|error|debug|info)\b")
+# On flag uniquement console.log/debug (souvent du dev oublié).
+# console.warn/error/info sont du logging légitime, on les laisse.
+CONSOLE_RX = re.compile(r"console\.(log|debug)\b")
 META_DESC_RX = re.compile(
     r'<meta\s+name="description"\s+content="([^"]+)"', re.IGNORECASE
 )
@@ -95,11 +98,18 @@ def scan_file(path: Path, root: Path) -> dict:
 
     size = path.stat().st_size
 
-    # Placeholders non remplacés
+    # Placeholders non remplacés.
+    # Les ID de tracking (G-XXXX / GTM-XXXX) sont gardés par une condition
+    # `if(id==='G-XXXXXXXXXX')return;` qui les rend inertes : pas de crash
+    # mais aucune analytics. On les classe "important" (à activer quand prêt)
+    # plutôt que "critical" (qui casserait le site).
+    TRACKING_PLACEHOLDERS = ("G-XXXXXXXXXX", "GTM-XXXXXXX")
     for ph in PLACEHOLDERS:
         if ph in text:
-            findings.append({"severity": "critical", "code": "PLACEHOLDER",
-                             "msg": f"Placeholder non remplacé : {ph}"})
+            sev = "important" if ph in TRACKING_PLACEHOLDERS else "critical"
+            code = "TRACKING_INACTIVE" if ph in TRACKING_PLACEHOLDERS else "PLACEHOLDER"
+            findings.append({"severity": sev, "code": code,
+                             "msg": f"Placeholder à remplacer : {ph}"})
 
     # Console.*
     cm = CONSOLE_RX.findall(text)
@@ -139,8 +149,12 @@ def scan_file(path: Path, root: Path) -> dict:
             findings.append({"severity": "important", "code": "TITLE_SHORT",
                              "msg": f"Title {L} caractères (<10)"})
 
-    # Canonical (skip admin-pro qui n'en a pas besoin)
-    if not rel.startswith("admin-pro") and not CANONICAL_RX.search(text):
+    # Canonical (skip back-offices et pages explicitement noindex)
+    is_noindex = bool(re.search(r'name="robots"\s+content="[^"]*noindex', text, re.IGNORECASE))
+    if (not rel.startswith("admin-pro")
+            and not rel.startswith("admin/")
+            and not is_noindex
+            and not CANONICAL_RX.search(text)):
         findings.append({"severity": "important", "code": "NO_CANONICAL",
                          "msg": "Pas de balise <link rel=\"canonical\">"})
 
@@ -163,31 +177,67 @@ def scan_file(path: Path, root: Path) -> dict:
     return {"file": rel, "size": size, "findings": findings, "cache_busters": cbs}
 
 
+def _build_gitignore_matcher(root: Path):
+    """Construit un matcher simple basé sur le .gitignore racine.
+    Supporte les patterns courants : *.ext, dir/, prefix*, suffix*.
+    """
+    patterns: list[str] = []
+    gi = root / ".gitignore"
+    if gi.exists():
+        for line in gi.read_text(encoding="utf-8", errors="ignore").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            patterns.append(line)
+
+    import fnmatch
+    def is_ignored(rel: str) -> bool:
+        # rel : chemin relatif depuis root, séparateurs /
+        for pat in patterns:
+            # patterns avec / explicites : match exact
+            target = pat.rstrip("/")
+            if fnmatch.fnmatch(rel, target) or fnmatch.fnmatch(rel, target + "/*"):
+                return True
+            # match du basename pour les patterns sans /
+            if "/" not in pat and fnmatch.fnmatch(rel.split("/")[-1], target):
+                return True
+        return False
+    return is_ignored
+
+
 def scan_assets(root: Path) -> list:
-    """Détecte images/vidéos lourdes."""
+    """Détecte images/vidéos lourdes (ignore ce qui est gitignored)."""
     findings = []
+    is_ignored = _build_gitignore_matcher(root)
+
     for ext in ("*.png", "*.jpg", "*.jpeg", "*.webp"):
         for p in root.rglob(ext):
             if "/.git/" in str(p) or "/node_modules/" in str(p):
+                continue
+            rel = str(p.relative_to(root))
+            if is_ignored(rel):
                 continue
             s = p.stat().st_size
             if s > HEAVY_IMG_THRESHOLD:
                 findings.append({
                     "severity": "important",
                     "code": "HEAVY_IMG",
-                    "file": str(p.relative_to(root)),
+                    "file": rel,
                     "msg": f"Image {s // 1024} KB (>500 KB)"
                 })
     for ext in ("*.mp4", "*.webm", "*.mov"):
         for p in root.rglob(ext):
             if "/.git/" in str(p):
                 continue
+            rel = str(p.relative_to(root))
+            if is_ignored(rel):
+                continue
             s = p.stat().st_size
             if s > HEAVY_VIDEO_THRESHOLD:
                 findings.append({
                     "severity": "optimisation",
                     "code": "HEAVY_VIDEO",
-                    "file": str(p.relative_to(root)),
+                    "file": rel,
                     "msg": f"Vidéo {s // (1024 * 1024)} MB (>10 MB)"
                 })
     return findings
@@ -282,6 +332,28 @@ def run(root: Path, verbose: bool = False) -> dict:
     # Détection inter-fichiers
     for f in detect_cache_buster_drift(per_file):
         all_findings.append({"file": "[multi]", **f})
+
+    # Agrégation : les findings dispersés sur N pages (TRACKING_INACTIVE,
+    # NO_VIEWPORT…) sont collapsés en un seul finding pour réduire le bruit.
+    AGGREGABLE = {"TRACKING_INACTIVE"}
+    aggregated: list[dict] = []
+    by_code: dict[tuple, list] = {}
+    for f in all_findings:
+        if f["code"] in AGGREGABLE:
+            key = (f["code"], f.get("msg", ""))
+            by_code.setdefault(key, []).append(f["file"])
+        else:
+            aggregated.append(f)
+    for (code, msg), files in by_code.items():
+        aggregated.append({
+            "file": f"[{len(files)} pages]",
+            "severity": all_findings[0]["severity"] if False else (
+                "important" if code == "TRACKING_INACTIVE" else "important"),
+            "code": code,
+            "msg": msg + f" — présent sur {len(files)} pages",
+            "files": files[:50]  # pour debug
+        })
+    all_findings = aggregated
 
     # Assets
     for f in scan_assets(root):

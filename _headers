@@ -1,0 +1,71 @@
+# ═══════════════════════════════════════════════════════════════════
+# Netlify HTTP Headers — HELP! Confort Saint-Omer
+# Documentation : https://docs.netlify.com/routing/headers/
+# ═══════════════════════════════════════════════════════════════════
+
+# Sécurité globale — toutes les pages
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(self), interest-cohort=()
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-XSS-Protection: 1; mode=block
+
+# Back-office : noindex robuste + jamais cacher
+/admin-pro/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+  Cache-Control: no-store, no-cache, must-revalidate
+
+# Decap CMS : idem
+/admin/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store, no-cache, must-revalidate
+
+# Assets JS/CSS partagés — cache long (cache-busting via ?v=)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+# Images — cache long
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Vidéos — cache long
+/videos/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Logo/favicon — cache long
+/logo.svg
+  Cache-Control: public, max-age=31536000, immutable
+/logo-officiel.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+# styles.css — cache 1h pour permettre les hotfix rapides
+/styles.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# script.js
+/script.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# Pages HTML — cache court avec revalidation
+/*.html
+  Cache-Control: public, max-age=300, must-revalidate
+
+# Index — cache court
+/
+  Cache-Control: public, max-age=300, must-revalidate
+
+# Sitemap & robots — cache court
+/sitemap.xml
+  Cache-Control: public, max-age=3600
+  Content-Type: application/xml; charset=UTF-8
+/robots.txt
+  Cache-Control: public, max-age=3600
+  Content-Type: text/plain; charset=UTF-8
+
+# Manifest PWA
+/manifest.json
+  Cache-Control: public, max-age=3600
+  Content-Type: application/manifest+json
