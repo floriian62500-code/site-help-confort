@@ -23,6 +23,24 @@
 - ✅ **Section « Nos prestations » plombier** : 6 icônes SVG remplacées par 6 photos Unsplash (lazy-loaded, fallback gradient)
 - ✅ **Module chantiers + avis** : fusionnés en 2 colonnes sans scroll sur les 5 pages métiers (plombier + 4 autres), 2 témoignages métier-spécifiques par page
 - ✅ **Grille « Nos prestations »** (style plombier) ajoutée sur les 4 anciennes pages métiers (chauffagiste, électricien, serrurier, travaux) — 6 photos prestations par page
+- ✅ **Section « Nous intervenons à »** sur les 5 pages métiers avec 7 cartes liées vers `depannage-{ville}` (Saint-Omer, Longuenesse, Arques, Saint-Martin-lez-Tatinghem, Dunkerque, Bergues, Gravelines)
+- ✅ **Footer global** (31 pages) : Longuenesse + Saint-Martin-lez-Tatinghem ajoutés aux Zones d'intervention (étaient cachés sous "Aire-sur-la-Lys, Hazebrouck...")
+
+### Performance (quick wins)
+- ✅ **Logo header en `loading="eager"` + `fetchpriority="high"`** sur 32 pages (était lazy par erreur — anti-pattern LCP)
+- ✅ **Preload mascotte.webp** sur index.html (image LCP du hero)
+- ✅ **Preconnect Supabase** + **dns-prefetch jsdelivr** sur 20 pages avec formulaires (gain ~150ms à la 1ère soumission de lead)
+- ✅ **dns-prefetch Facebook** sur 9 pages avec iframes FB
+- ✅ Formulaire `contact.html` : ajout `autocomplete` + `inputmode` + `placeholder` sur tous les champs (boost mobile autofill)
+
+### SEO complémentaire (l'après-midi)
+- ✅ **Schema BreadcrumbList** sur 19 pages (fil d'Ariane rich results Google)
+- ✅ **Schema Plumber enrichi** sur home : `sameAs` (Facebook + LinkedIn + Google Maps + Trustville), `hasOfferCatalog` 5 services, `knowsAbout` 11 métiers, `aggregateRating` bestRating/worstRating
+- ✅ **Schema WebSite** séparé sur home (pour Sitelinks Search Box potentiel)
+- ✅ **Sitemap.xml** : 28 dates lastmod refresh au 2026-05-12
+
+### Cohérence éditoriale
+- ✅ **Horaires harmonisés partout** : "Lun-Sam · 8h-18h" + "astreinte 7j/7" sur 15 fichiers (26 remplacements de mentions "9h-17h" obsolètes)
 
 ### Repo / Organisation
 - ✅ **Nettoyage racine** : créé `docs/` (10 fichiers .md/.docx) + `tools/` (7 scripts .command + obsolètes archivés)
