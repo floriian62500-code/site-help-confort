@@ -138,9 +138,9 @@
   const connectedCount = platforms.filter(p => p.isOk(byKey[p.configKey] || {})).length;
   const summary = document.getElementById('summaryBox');
   if (connectedCount === 0) {
-    summary.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div><strong>Aucun réseau social connecté pour l'instant</strong><span>Suivez les guides d'intégration pour activer la publication automatique.</span></div>`;
+    summary.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div><strong>Aucun réseau connecté pour l'instant</strong><span>Utilise les <a href="wizard-meta.html" style="color:#fff;text-decoration:underline">assistants pas-à-pas</a> pour activer la publication auto sur FB, IG, LinkedIn et Google.</span></div>`;
   } else {
-    summary.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><div><strong>${connectedCount} / ${platforms.length} canaux connectés</strong><span>Vous pouvez publier automatiquement sur ces canaux depuis la page Réalisations.</span></div>`;
+    summary.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><div><strong>${connectedCount} / ${platforms.length} canaux connectés 🎉</strong><span>Tu peux publier en 1 clic sur ces canaux depuis n'importe quel chantier.</span></div>`;
   }
 
   document.getElementById('socialGrid').innerHTML = platforms.map(p => {

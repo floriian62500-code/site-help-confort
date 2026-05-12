@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Assistant Google Analytics 4 · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<link rel="stylesheet" href="assets/wizard.css">
+<style>
+:root {
+  --wz-grad-1: #F9AB00;
+  --wz-grad-2: #E37400;
+  --wz-grad-3: #4285F4;
+  --wz-primary: #E37400;
+  --wz-primary-dark: #B45F00;
+}
+</style>
+</head>
+<body>
+<div class="admin-overlay"></div>
+<div class="admin-shell">
+  <aside class="admin-sidebar"></aside>
+  <main class="admin-main">
+    <header class="admin-topbar"></header>
+    <div class="admin-content">
+
+      <div class="gw-hero">
+        <h1>📊 Assistant Google Analytics 4</h1>
+        <p>Je te guide pour brancher GA4 au dashboard, pour voir tes vraies stats visiteurs (sessions, sources, conversions) directement dans le back-office au lieu d'aller sur le site GA.</p>
+        <span class="badge">⏱️ ~20 min · 🆓 Gratuit · Service Account (jamais expire)</span>
+      </div>
+
+      <div class="gw-progress" id="progressBar"></div>
+
+      <!-- Step 1 -->
+      <div class="gw-step active" data-step="1">
+        <div class="gw-step-head">
+          <div class="gw-step-num">1</div>
+          <div>
+            <h2>Vérifier que GA4 est bien actif sur le site</h2>
+            <p>Pré-requis évident mais à vérifier.</p>
+          </div>
+          <div class="gw-step-time">2 min</div>
+        </div>
+        <div class="gw-step-body">
+          <ol>
+            <li>Ouvre <a href="https://analytics.google.com/" target="_blank">Google Analytics</a></li>
+            <li>Choisis la propriété <strong>HELP! Confort</strong></li>
+            <li>Va dans <strong>Admin (engrenage en bas) → Property settings</strong></li>
+            <li>Note ton <strong>Property ID</strong> (un nombre à 9 chiffres comme <code>492836271</code>)</li>
+          </ol>
+          <div class="gw-info-box">
+            <strong>Pas encore de propriété ?</strong>
+            Crée-la dans GA4 d'abord puis remplace l'ID <code>G-XXXXXXXXXX</code> dans toutes les pages HTML par ton vrai ID GA4. Voir <a href="../ACTIVER-TRACKING.md" target="_blank">ACTIVER-TRACKING.md</a>.
+          </div>
+          <div class="gw-check"><input type="checkbox" id="ch1"><label for="ch1">J'ai mon Property ID GA4</label></div>
+        </div>
+        <div class="gw-nav">
+          <button class="btn" disabled>← Précédent</button>
+          <div class="right"><button class="btn btn-primary" data-next>Suivant →</button></div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="gw-step" data-step="2">
+        <div class="gw-step-head">
+          <div class="gw-step-num">2</div>
+          <div>
+            <h2>Créer / réutiliser un projet Google Cloud</h2>
+            <p>Tu peux réutiliser le projet "Help Confort Back-Office" créé pour la connexion Google Business.</p>
+          </div>
+          <div class="gw-step-time">2 min</div>
+        </div>
+        <div class="gw-step-body">
+          <ol>
+            <li>Ouvre Google Cloud Console (bouton ci-dessous)</li>
+            <li>En haut, vérifie que le projet sélectionné est <code>Help Confort Back-Office</code>
+              (sinon clique sur le sélecteur en haut et choisis-le, ou crée-le)</li>
+          </ol>
+          <a href="https://console.cloud.google.com/" target="_blank" rel="noopener" class="gw-cta">
+            Ouvrir Google Cloud Console
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+          </a>
+          <div class="gw-check"><input type="checkbox" id="ch2"><label for="ch2">Projet GCP sélectionné</label></div>
+        </div>
+        <div class="gw-nav">
+          <button class="btn" data-prev>← Précédent</button>
+          <div class="right"><button class="btn btn-primary" data-next>Suivant →</button></div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="gw-step" data-step="3">
+        <div class="gw-step-head">
+          <div class="gw-step-num">3</div>
+          <div>
+            <h2>Activer la Google Analytics Data API</h2>
+            <p>L'API à activer pour lire les stats programmatiquement.</p>
+          </div>
+          <div class="gw-step-time">2 min</div>
+        </div>
+        <div class="gw-step-body">
+          <ol>
+            <li>Va dans <strong>APIs et services → Bibliothèque</strong></li>
+            <li>Cherche <strong>« Google Analytics Data API »</strong></li>
+            <li>Clique → <strong>Activer</strong></li>
+          </ol>
+          <a href="https://console.cloud.google.com/apis/library/analyticsdata.googleapis.com" target="_blank" rel="noopener" class="gw-cta">
+            Activer Google Analytics Data API
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+          </a>
+          <div class="gw-check"><input type="checkbox" id="ch3"><label for="ch3">Analytics Data API activée</label></div>
+        </div>
+        <div class="gw-nav">
+          <button class="btn" data-prev>← Précédent</button>
+          <div class="right"><button class="btn btn-primary" data-next>Suivant →</button></div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="gw-step" data-step="4">
+        <div class="gw-step-head">
+          <div class="gw-step-num">4</div>
+          <div>
+            <h2>Créer un Service Account</h2>
+            <p>Un compte robot qui aura accès à tes stats en lecture seule (plus sécurisé que d'utiliser ton compte perso).</p>
+          </div>
+          <div class="gw-step-time">3 min</div>
+        </div>
+        <div class="gw-step-body">
+          <ol>
+            <li>Va dans <strong>IAM &amp; admin → Service Accounts</strong></li>
+            <li>Clique <strong>+ Create service account</strong></li>
+            <li>Remplis :
+              <ul>
+                <li><strong>Service account name</strong> : <code>ga4-stats-reader</code></li>
+                <li><strong>Service account ID</strong> : se remplit auto</li>
+                <li><strong>Description</strong> : <code>Lecture stats GA4 pour back-office</code></li>
+              </ul>
+            </li>
+            <li>Clique <strong>Create and continue</strong></li>
+            <li>Étape "Grant access" : laisse vide → <strong>Continue</strong></li>
+            <li>Étape "Grant users access" : laisse vide → <strong>Done</strong></li>
+            <li>Note l'<strong>email du service account</strong> (genre <code>ga4-stats-reader@help-confort-back-office.iam.gserviceaccount.com</code>) — tu en auras besoin à l'étape 6</li>
+          </ol>
+          <a href="https://console.cloud.google.com/iam-admin/serviceaccounts" target="_blank" rel="noopener" class="gw-cta">
+            Ouvrir Service Accounts
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+          </a>
+          <div class="gw-check"><input type="checkbox" id="ch4"><label for="ch4">Service account créé, email noté</label></div>
+        </div>
+        <div class="gw-nav">
+          <button class="btn" data-prev>← Précédent</button>
+          <div class="right"><button class="btn btn-primary" data-next>Suivant →</button></div>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="gw-step" data-step="5">
+        <div class="gw-step-head">
+          <div class="gw-step-num">5</div>
+          <div>
+            <h2>Créer + télécharger la clé JSON</h2>
+            <p>Le fichier d'authentification du service account.</p>
+          </div>
+          <div class="gw-step-time">2 min</div>
+        </div>
+        <div class="gw-step-body">
+          <ol>
+            <li>Clique sur le service account <code>ga4-stats-reader</code></li>
+            <li>Onglet <strong>Keys</strong></li>
+            <li>Clique <strong>Add key → Create new key</strong></li>
+            <li>Type : <strong>JSON</strong> → Create</li>
+            <li>Un fichier <code>help-confort-back-office-xxxxx.json</code> se télécharge dans ton dossier Downloads</li>
+            <li>Ouvre-le avec TextEdit, copie tout le contenu (Cmd+A puis Cmd+C)</li>
+          </ol>
+          <div class="gw-warn-box">
+            <strong>🔒 Ce fichier JSON = mot de passe</strong>
+            Ne le partage jamais, ne le commit pas dans Git. Si compromis, supprime-le dans Service Accounts → Keys et regénère.
+          </div>
+          <div class="gw-check"><input type="checkbox" id="ch5"><label for="ch5">Fichier JSON téléchargé et contenu copié</label></div>
+        </div>
+        <div class="gw-nav">
+          <button class="btn" data-prev>← Précédent</button>
+          <div class="right"><button class="btn btn-primary" data-next>Suivant →</button></div>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="gw-step" data-step="6">
+        <div class="gw-step-head">
+          <div class="gw-step-num">6</div>
+          <div>
+            <h2>Partager ta propriété GA4 avec le service account</h2>
+            <p>Étape critique : sinon le service account verra rien.</p>
+          </div>
+          <div class="gw-step-time">3 min</div>
+        </div>
+        <div class="gw-step-body">
+          <ol>
+            <li>Retourne dans <a href="https://analytics.google.com/" target="_blank">Google Analytics</a></li>
+            <li>Choisis la propriété HELP! Confort</li>
+            <li><strong>Admin (engrenage)</strong> → colonne <strong>Property</strong> → <strong>Property Access Management</strong></li>
+            <li>Clique <strong>+ (haut droite)</strong> → <strong>Add users</strong></li>
+            <li>Email : colle l'email du service account de l'étape 4 (<code>ga4-stats-reader@...iam.gserviceaccount.com</code>)</li>
+            <li>Rôle : choisis <strong>« Viewer »</strong> (lecture seule, le minimum nécessaire)</li>
+            <li>DÉCOCHE "Notify new users by email" (pas la peine de spammer un robot)</li>
+            <li>Clique <strong>Add</strong></li>
+          </ol>
+          <div class="gw-info-box">
+            <strong>🔑 C'est l'étape qui débloque tout</strong>
+            Sans ce partage explicite, même avec la bonne clé JSON, l'API te répondra 403.
+          </div>
+          <div class="gw-check"><input type="checkbox" id="ch6"><label for="ch6">Service account ajouté en Viewer sur la propriété</label></div>
+        </div>
+        <div class="gw-nav">
+          <button class="btn" data-prev>← Précédent</button>
+          <div class="right"><button class="btn btn-primary" data-next>Suivant →</button></div>
+        </div>
+      </div>
+
+      <!-- Step 7 -->
+      <div class="gw-step" data-step="7">
+        <div class="gw-step-head">
+          <div class="gw-step-num">7</div>
+          <div>
+            <h2>Coller dans le back-office + Tester 🎉</h2>
+            <p>Le bout du tunnel.</p>
+          </div>
+          <div class="gw-step-time">2 min</div>
+        </div>
+        <div class="gw-step-body">
+          <p>Va dans <strong>Paramètres</strong> → <strong>Google Analytics 4</strong> :</p>
+          <ul>
+            <li><strong>Property ID</strong> : <code>492836271</code> (étape 1, juste le nombre, sans <code>properties/</code>)</li>
+            <li><strong>Service Account Key (JSON)</strong> : colle tout le contenu du fichier JSON (étape 5)</li>
+          </ul>
+          <a href="settings.html#section-ga4" class="gw-cta">
+            Ouvrir Paramètres → GA4
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+
+          <div class="gw-ok-box" style="margin-top:18px">
+            <strong>Puis lance le diagnostic :</strong>
+          </div>
+          <button type="button" id="wizardRunDiag" class="gw-cta" style="cursor:pointer;margin-top:6px">
+            🔍 Tester la connexion GA4
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+          <div id="wizardDiagResult" style="display:none;margin-top:14px;padding:14px 16px;border-radius:10px;background:var(--ink-50);border:1px solid var(--ink-100);font-size:.86rem"></div>
+
+          <div class="gw-info-box" style="margin-top:14px">
+            <strong>🎉 Une fois testé OK</strong>
+            Le dashboard affichera automatiquement les vraies stats : sessions, sources, top pages, conversions. Le service account ne périme jamais — installation à vie.
+          </div>
+          <div class="gw-check"><input type="checkbox" id="ch7"><label for="ch7">Diagnostic GA4 OK 🎉</label></div>
+        </div>
+        <div class="gw-nav">
+          <button class="btn" data-prev>← Précédent</button>
+          <div class="right"><a href="setup.html" class="btn btn-primary">Voir le diagnostic complet →</a></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+const TOTAL_STEPS = 7;
+const STEP_LABELS = ['Property','Projet GCP','API','Service Account','Clé JSON','Partage','Test'];
+
+(async function(){
+  await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+  await HCLayout.mount('wizard-ga4', 'Assistant GA4');
+
+  const KEY = 'hc-ga4-wizard-progress';
+  const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
+  let currentStep = saved.currentStep || 1;
+  const checks = saved.checks || {};
+
+  const bar = document.getElementById('progressBar');
+  bar.innerHTML = '';
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    const el = document.createElement('div');
+    el.className = 'gw-progress-step';
+    el.dataset.step = i;
+    el.innerHTML = '<span class="num">Étape ' + i + '</span><span class="lbl">' + STEP_LABELS[i-1] + '</span>';
+    el.onclick = () => goTo(i);
+    bar.appendChild(el);
+  }
+
+  document.querySelectorAll('.gw-check input[type=checkbox]').forEach(cb => {
+    if (checks[cb.id]) {
+      cb.checked = true;
+      cb.closest('.gw-check').classList.add('done');
+    }
+    cb.addEventListener('change', () => {
+      cb.closest('.gw-check').classList.toggle('done', cb.checked);
+      checks[cb.id] = cb.checked;
+      save();
+    });
+  });
+
+  function save() { localStorage.setItem(KEY, JSON.stringify({ currentStep, checks })); }
+
+  function goTo(n) {
+    if (n < 1 || n > TOTAL_STEPS) return;
+    currentStep = n;
+    document.querySelectorAll('.gw-step').forEach(s => s.classList.toggle('active', parseInt(s.dataset.step) === n));
+    document.querySelectorAll('.gw-progress-step').forEach(s => {
+      const i = parseInt(s.dataset.step);
+      s.classList.remove('current','done');
+      if (i === n) s.classList.add('current');
+      else if (i < n) s.classList.add('done');
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    save();
+  }
+
+  document.querySelectorAll('[data-next]').forEach(b => b.onclick = () => goTo(currentStep + 1));
+  document.querySelectorAll('[data-prev]').forEach(b => b.onclick = () => goTo(currentStep - 1));
+
+  // Diagnostic
+  const diagBtn = document.getElementById('wizardRunDiag');
+  const diagOut = document.getElementById('wizardDiagResult');
+  if (diagBtn) {
+    diagBtn.addEventListener('click', async () => {
+      diagOut.style.display = 'block';
+      diagOut.innerHTML = '<div style="display:flex;align-items:center;gap:8px;color:#B45F00"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite"><circle cx="12" cy="12" r="9" opacity=".3"/><path d="M12 3a9 9 0 0 1 9 9"/></svg> Test JWT + Analytics Data API…</div>';
+      diagBtn.disabled = true;
+      try {
+        const headers = await HCSupabase.authHeaders();
+        const r = await fetch(HCSupabase.fnUrl('check-tokens'), { method: 'POST', headers, body: JSON.stringify({ service: 'ga4' }) });
+        const d = await r.json();
+        const h = d.health?.ga4;
+        if (h?.ok) {
+          diagOut.innerHTML = `<div style="font-weight:800;color:#007033;font-size:1rem;margin-bottom:10px">✅ Connexion GA4 opérationnelle</div>
+            <div>Les stats vont remonter dans le dashboard automatiquement.</div>`;
+        } else {
+          let hint = '';
+          if (h?.error?.includes('403')) hint = '<div style="margin-top:10px;padding:9px 11px;background:#FFF4D6;color:#7a4c00;border-radius:8px;font-size:.82rem"><strong>💡 Astuce :</strong> erreur 403 = service account pas autorisé sur la propriété. Re-vérifie l\'étape 6.</div>';
+          else if (h?.error?.includes('JSON')) hint = '<div style="margin-top:10px;padding:9px 11px;background:#FFF4D6;color:#7a4c00;border-radius:8px;font-size:.82rem"><strong>💡 Astuce :</strong> le JSON collé est mal formé. Re-copie tout le contenu du fichier <code>.json</code> depuis le début (<code>{</code>) jusqu\'à la fin (<code>}</code>).</div>';
+          diagOut.innerHTML = `<div style="font-weight:800;color:#9F1239;font-size:1rem;margin-bottom:10px">⚠️ Connexion GA4 échouée</div>
+            <div style="font-size:.86rem;color:var(--ink-700)">${h?.error || 'Aucun token sauvegardé'}</div>
+            ${hint}
+            ${d.error ? '<div style="margin-top:10px;padding:9px 11px;background:#FEE2E2;color:#9F1239;border-radius:8px;font-size:.82rem"><strong>Erreur :</strong> ' + d.error + '</div>' : ''}`;
+        }
+      } catch (e) {
+        diagOut.innerHTML = '<div style="color:#9F1239"><strong>❌ Erreur réseau</strong><br><span style="font-size:.82em">' + (e.message || e) + '</span></div>';
+      } finally {
+        diagBtn.disabled = false;
+      }
+    });
+  }
+
+  goTo(currentStep);
+})();
+</script>
+</body>
+</html>

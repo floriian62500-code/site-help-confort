@@ -299,7 +299,7 @@
               </h3>
               <span class="head-status" data-head-status="meta">Non configuré</span>
             </div>
-            <p class="section-desc">Une seule app Meta gère Facebook et Instagram. Vous obtenez 3 valeurs à coller ici. <a href="../guides/meta.md" target="_blank">Guide complet (15 min)</a>.</p>
+            <p class="section-desc">Une seule app Meta gère Facebook et Instagram. <a href="wizard-meta.html">Assistant pas-à-pas (~25 min)</a> · <a href="../guides/meta.md" target="_blank">Guide manuel</a></p>
 
             <div class="guide-box" style="margin-bottom:14px">
               <strong>📖 Étapes résumées :</strong>
@@ -343,7 +343,7 @@
               </h3>
               <span class="head-status" data-head-status="linkedin">Non configuré</span>
             </div>
-            <p class="section-desc">Publication sur votre page entreprise LinkedIn. <a href="../guides/linkedin.md" target="_blank">Guide complet (10 min)</a>.</p>
+            <p class="section-desc">Publication sur votre page entreprise LinkedIn. <a href="wizard-linkedin.html">Assistant pas-à-pas (~20 min)</a> · <a href="../guides/linkedin.md" target="_blank">Guide manuel</a></p>
             <form class="settings-form" data-section="linkedin">
               <div class="field-row">
                 <label>Access Token (3-legged OAuth)</label>
@@ -372,7 +372,7 @@
               </h3>
               <span class="head-status" data-head-status="gbp">Non configuré</span>
             </div>
-            <p class="section-desc">Permet de publier des "Posts Google" sur votre fiche Google Business + de synchroniser les avis. <a href="../guides/gbp.md" target="_blank">Guide complet (30 min)</a>.</p>
+            <p class="section-desc">Publication de Posts Google + synchronisation des avis. <a href="wizard-google.html">Assistant pas-à-pas (~25 min)</a> · <a href="../guides/gbp.md" target="_blank">Guide manuel</a></p>
             <form class="settings-form" data-section="gbp">
               <div class="field-row">
                 <label>Client ID OAuth <span style="color:#E11D48;font-size:.78em">*</span></label>
@@ -423,16 +423,17 @@
               </h3>
               <span class="head-status" data-head-status="ga4">Non configuré</span>
             </div>
-            <p class="section-desc">Affiche dans le dashboard les vraies stats visiteurs (sessions, sources, conversions). <a href="../guides/ga4.md" target="_blank">Guide complet (20 min)</a>.</p>
+            <p class="section-desc">Affiche dans le dashboard les vraies stats visiteurs (sessions, sources, conversions). <a href="wizard-ga4.html">Assistant pas-à-pas (~20 min)</a> · <a href="../guides/ga4.md" target="_blank">Guide manuel</a></p>
             <form class="settings-form" data-section="ga4">
               <div class="field-row">
                 <label>Property ID</label>
                 <input type="text" name="property_id" placeholder="123456789">
+                <small style="display:block;color:var(--ink-500);font-size:.76rem;margin-top:3px">Juste le nombre à 9 chiffres, sans le préfixe <code>properties/</code>.</small>
               </div>
               <div class="field-row">
                 <label>Service Account JSON (clé privée)</label>
                 <textarea name="service_account_json" placeholder='{"type":"service_account","project_id":"…", …}'></textarea>
-                <span class="hint">Collez ici le contenu intégral du fichier JSON téléchargé depuis Google Cloud Console.</span>
+                <span class="hint">Colle ici le contenu intégral du fichier JSON téléchargé depuis Google Cloud Console (étape 5 du wizard).</span>
               </div>
               <div class="settings-actions">
                 <span class="hint" data-saved-meta>Non sauvegardé</span>

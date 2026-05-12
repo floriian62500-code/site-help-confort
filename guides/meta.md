@@ -1,7 +1,8 @@
 # Guide d'intégration — Facebook + Instagram (Meta)
 
-**Durée estimée : 15-20 minutes**
-**Coût : gratuit**
+**Durée estimée : 15-20 minutes** · **Coût : gratuit**
+
+> 💡 **Méthode recommandée** : utilise l'**[Assistant pas-à-pas Meta](../admin-pro/wizard-meta.html)** dans le back-office (menu → Assistants de connexion → Facebook + Instagram). Il guide chaque étape avec progression sauvegardée et diagnostic auto en fin de parcours. Ce guide markdown reste utile en référence ou pour partage hors back-office.
 
 ## Pourquoi
 

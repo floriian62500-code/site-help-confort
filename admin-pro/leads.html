@@ -221,13 +221,10 @@ let _filterStatusOverride = null;
 
     const list = document.getElementById('leadsList');
     if (!filtered.length){
-      list.innerHTML = `
-        <div class="empty-state">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          <h3 style="margin:0 0 6px;color:var(--ink-900)">${_all.length ? 'Aucun résultat' : 'Aucune demande pour le moment'}</h3>
-          <p style="margin:0;font-size:.88rem">${_all.length ? 'Modifiez vos filtres.' : 'Les demandes des formulaires du site apparaîtront ici automatiquement.'}</p>
-        </div>
-      `;
+      const m = _all.length
+        ? { ic:'🔎', h:'Aucun résultat', p:'Modifie tes filtres pour voir tes demandes.' }
+        : { ic:'📥', h:'Pas encore de demandes', p:'Les demandes envoyées via les formulaires du site arrivent ici automatiquement, en temps réel.' };
+      list.innerHTML = `<div class="hc-empty"><div class="hc-empty-icon">${m.ic}</div><h3>${m.h}</h3><p>${m.p}</p></div>`;
       return;
     }
     list.innerHTML = filtered.map(l => {

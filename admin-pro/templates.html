@@ -62,6 +62,28 @@
 .tp-color-grid button{width:100%;aspect-ratio:1;border-radius:9px;border:2px solid transparent;cursor:pointer}
 .tp-color-grid button.selected{border-color:var(--ink-900);box-shadow:0 0 0 2px #fff}
 
+/* Filtres par catégorie */
+.tp-filter{padding:7px 14px;border-radius:999px;border:1px solid var(--ink-100);background:#fff;color:var(--ink-700);font:inherit;font-size:.82rem;font-weight:600;cursor:pointer;transition:.15s;white-space:nowrap}
+.tp-filter:hover{border-color:var(--hc-primary);color:var(--hc-primary)}
+.tp-filter.active{background:var(--hc-primary);color:#fff;border-color:var(--hc-primary);box-shadow:0 4px 12px rgba(13,160,207,.25)}
+
+/* Preview-on-hover : afficher le contenu réel au survol */
+.tp-card-body{position:relative}
+.tp-card-preview{
+  position:absolute;top:0;left:0;right:0;bottom:0;background:#FAFCFD;
+  padding:10px 16px;font-size:.78rem;color:var(--ink-700);line-height:1.55;
+  white-space:pre-line;overflow:hidden;display:flex;align-items:flex-start;
+  opacity:0;transition:opacity .2s;pointer-events:none;
+  border-top:1px solid var(--ink-50);
+}
+.tp-card:hover .tp-card-preview{opacity:1}
+.tp-card-preview::before{
+  content:'Aperçu du post';
+  position:absolute;top:-10px;left:12px;background:var(--hc-primary);color:#fff;
+  font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 8px;border-radius:5px;
+}
+
 .toast-stack{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:2000;pointer-events:none}
 .toast{background:#fff;border:1px solid var(--ink-100);border-radius:10px;padding:11px 14px;box-shadow:0 8px 24px rgba(11,18,32,.16);font-size:.86rem;font-weight:600;color:var(--ink-900);pointer-events:auto;min-width:240px}
 .toast.ok{border-left:3px solid #00aa50}
@@ -91,6 +113,18 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           Nouveau template
         </button>
+      </div>
+
+      <!-- Filtres par catégorie -->
+      <div class="tp-filters" id="tpFilters" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
+        <button class="tp-filter active" data-cat="">Tout</button>
+        <button class="tp-filter" data-cat="promo">🎁 Promo</button>
+        <button class="tp-filter" data-cat="metier">🔧 Métier</button>
+        <button class="tp-filter" data-cat="alerte">⚠️ Alerte</button>
+        <button class="tp-filter" data-cat="recrutement">👷 Recrutement</button>
+        <button class="tp-filter" data-cat="ferie">🎄 Fêtes</button>
+        <button class="tp-filter" data-cat="info">ℹ️ Info</button>
+        <button class="tp-filter" data-cat="temoignage">⭐ Témoignage</button>
       </div>
 
       <div class="tp-grid" id="tpGrid"></div>
@@ -256,6 +290,83 @@ const DEFAULT_TEMPLATES = [
     content: '🚿 Help Confort spécialiste de l\'adaptation PMR (Personnes à Mobilité Réduite).\n\nNotre prestation clé en main :\n✔️ Dépose baignoire\n✔️ Pose douche italienne anti-dérapante\n✔️ Barre de maintien, siège mural\n✔️ Devis gratuit éligible aux aides MaPrimeAdapt\'\n\nProfitez d\'aides financières jusqu\'à 70% du devis.',
     metier: 'pmr',
     hashtags: '#pmr #douche #adaptation #maprimeadapt #seniors #helpconfort #saintomer'
+  },
+  {
+    id: 'default-temoignage-client',
+    name: 'Témoignage client 5 étoiles',
+    category: 'temoignage',
+    icon: '⭐',
+    desc: 'Mise en avant d\'un avis client positif',
+    title: 'Merci à Madame X pour cet avis 5 étoiles !',
+    content: '⭐⭐⭐⭐⭐\n\n« [Citation de l\'avis client - à remplacer] »\n— Madame X, Saint-Omer\n\nMerci pour ce retour qui fait chaud au cœur ! Notre équipe se mobilise chaque jour pour vous offrir un service irréprochable.\n\n👉 Vous aussi, contactez-nous pour vos travaux.',
+    metier: 'multiservice',
+    hashtags: '#avisclient #merci #helpconfort #saintomer #temoignage'
+  },
+  {
+    id: 'default-urgence-fuite',
+    name: 'Urgence fuite d\'eau 24/7',
+    category: 'alerte',
+    icon: '🚨',
+    desc: 'Rappel astreinte fuite d\'eau',
+    title: 'Une fuite d\'eau ? On intervient sous 1 heure',
+    content: '🚨 Une fuite chez vous ? Ne perdez pas une minute.\n\nHelp Confort intervient en urgence 7j/7 sur Saint-Omer & Dunkerque.\n\n✔️ Plombier qualifié sous 1h\n✔️ Localisation précise sans casse\n✔️ Devis transparent avant intervention\n✔️ Astreinte week-end et jours fériés\n\n📞 03 66 10 01 34 — appelez maintenant',
+    metier: 'plomberie',
+    hashtags: '#urgence #fuite #plombier #depannage #saintomer #dunkerque #helpconfort'
+  },
+  {
+    id: 'default-chantier-fini',
+    name: 'Chantier terminé — partage',
+    category: 'metier',
+    icon: '✅',
+    desc: 'Partage d\'un chantier finalisé avec avant/après',
+    title: 'Chantier terminé ! Avant / Après',
+    content: '✅ Encore un beau chantier livré par nos équipes !\n\n📍 [Ville]\n🛠️ [Type de travaux]\n👷 Technicien : [Prénom]\n⏱️ Durée : [X jours]\n\nNotre client peut désormais profiter de [bénéfice principal].\n\nVous aussi, racontez-nous votre projet : devis gratuit en 24h.',
+    metier: 'multiservice',
+    hashtags: '#chantier #avantapres #helpconfort #saintomer #renovation'
+  },
+  {
+    id: 'default-conseil-saison',
+    name: 'Conseil saisonnier (rentrée)',
+    category: 'info',
+    icon: '🍂',
+    desc: 'Tip utile pour les clients (préparation hiver)',
+    title: '5 vérifications à faire avant l\'hiver',
+    content: '🍂 La rentrée est là, l\'hiver approche. Voici 5 vérifications express pour éviter les galères :\n\n1️⃣ Faire entretenir sa chaudière (obligatoire chaque année)\n2️⃣ Vérifier l\'étanchéité des fenêtres et joints\n3️⃣ Tester les détecteurs de fumée et CO\n4️⃣ Faire un check radiateurs (purger, désembouage si besoin)\n5️⃣ Calorifuger les canalisations exposées au gel\n\n💡 Help Confort peut s\'occuper de tout ça en une seule visite. 📞',
+    metier: 'multiservice',
+    hashtags: '#conseil #hiver #entretien #helpconfort #saintomer #astuces'
+  },
+  {
+    id: 'default-jour-ferie',
+    name: 'Information jour férié',
+    category: 'ferie',
+    icon: '📅',
+    desc: 'Fermeture exceptionnelle / permanence',
+    title: 'Fermeture exceptionnelle le [date]',
+    content: '📅 Information à nos clients :\n\nL\'agence Help Confort sera fermée le [date] à l\'occasion de [motif].\n\nNous reprenons normalement le [date de reprise].\n\n⚠️ Notre service d\'astreinte urgences (plomberie / chauffage) reste actif 7j/7 :\n📞 03 66 10 01 34\n\nMerci de votre compréhension. À très vite !',
+    metier: 'multiservice',
+    hashtags: '#fermeture #helpconfort #saintomer #information'
+  },
+  {
+    id: 'default-promo-contrat',
+    name: 'Promo contrat entretien gaz',
+    category: 'promo',
+    icon: '🔥',
+    desc: 'Mise en avant des contrats annuels',
+    title: 'Contrats d\'entretien gaz : à partir de 9€/mois',
+    content: '🔥 Votre tranquillité au quotidien, à petit prix.\n\nNos contrats d\'entretien chaudière gaz :\n\n💙 BASIC — 9€/mois\n  Entretien annuel obligatoire\n\n💚 CONFORT — 13€/mois\n  Entretien + dépannage prioritaire\n\n💛 SÉCURITÉ — 23€/mois\n  Entretien + dépannage + pièces incluses\n\n✔️ Sans engagement, résiliable à tout moment\n✔️ Technicien Help Confort dédié\n\n📞 Souscrivez en 5 minutes',
+    metier: 'chauffage',
+    hashtags: '#contrat #chaudiere #gaz #entretien #helpconfort #abonnement'
+  },
+  {
+    id: 'default-portrait-team',
+    name: 'Portrait d\'équipe — Nouveau salarié',
+    category: 'info',
+    icon: '🤝',
+    desc: 'Présentation d\'un membre de l\'équipe',
+    title: 'Bienvenue à [Prénom], nouveau technicien Help Confort !',
+    content: '🤝 L\'équipe Help Confort s\'agrandit !\n\nNous accueillons [Prénom], notre nouveau technicien polyvalent.\n\n👷 Spécialités : [métiers]\n📍 Zone : Saint-Omer & Dunkerque\n⭐ Son objectif : continuer à offrir un service de qualité dans la lignée de l\'équipe.\n\nN\'hésitez pas à le saluer si tu le croises sur un chantier ! 👋',
+    metier: 'multiservice',
+    hashtags: '#equipe #recrutement #welcome #helpconfort #saintomer'
   }
 ];
 
@@ -277,14 +388,17 @@ let _templates = [];
     _templates = [...DEFAULT_TEMPLATES];
   }
 
+  let activeCat = '';
   render();
 
   function render(filter = '') {
     const grid = document.getElementById('tpGrid');
     const q = filter.toLowerCase();
-    const filtered = _templates.filter(t =>
-      !q || (t.name + ' ' + t.desc + ' ' + t.content + ' ' + (t.hashtags || '')).toLowerCase().includes(q)
-    );
+    const filtered = _templates.filter(t => {
+      const okQ = !q || (t.name + ' ' + t.desc + ' ' + t.content + ' ' + (t.hashtags || '')).toLowerCase().includes(q);
+      const okCat = !activeCat || t.category === activeCat;
+      return okQ && okCat;
+    });
     document.getElementById('tpCount').textContent = filtered.length + ' modèle' + (filtered.length>1?'s':'') + ' disponible' + (filtered.length>1?'s':'');
 
     const CAT_COLORS = {
@@ -296,30 +410,40 @@ let _templates = [];
       ferie: 'Férié', metier: 'Métier', info: 'Info', autre: 'Autre'
     };
 
-    grid.innerHTML = filtered.map(t => {
-      const isDefault = t.id && t.id.startsWith('default-');
-      const color = CAT_COLORS[t.category] || '#64748b';
-      return `
-        <div class="tp-card" data-id="${t.id}">
-          <div class="tp-card-head">
-            <div class="icon" style="background:${color}"><span style="font-size:1.2rem">${t.icon || '📋'}</span></div>
-            <h3>${escapeHtml(t.name)}</h3>
-            <span class="cat">${CAT_LABELS[t.category] || t.category}</span>
-          </div>
-          <div class="tp-card-body">
-            <p class="tp-card-desc">${escapeHtml(t.desc || t.title.slice(0,100))}</p>
-            ${t.hashtags ? `<div class="tp-card-tags">${t.hashtags.split(' ').filter(Boolean).slice(0,4).map(h => '<span>' + escapeHtml(h) + '</span>').join('')}</div>` : ''}
-          </div>
-          <div class="tp-card-foot">
-            <button class="btn btn-use" data-use="${t.id}">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-              Utiliser
-            </button>
-            ${!isDefault ? `<button class="btn btn-edit" data-edit="${t.id}" title="Éditer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>` : ''}
-            ${!isDefault ? `<button class="btn btn-del" data-del="${t.id}" title="Supprimer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg></button>` : ''}
-          </div>
-        </div>`;
-    }).join('');
+    if (filtered.length === 0) {
+      grid.innerHTML = `<div class="hc-empty" style="grid-column:1/-1">
+        <div class="hc-empty-icon">🔍</div>
+        <h3>Aucun template ne matche</h3>
+        <p>Essaie de modifier ta recherche ou ton filtre catégorie.</p>
+      </div>`;
+    } else {
+      grid.innerHTML = filtered.map(t => {
+        const isDefault = t.id && t.id.startsWith('default-');
+        const color = CAT_COLORS[t.category] || '#64748b';
+        const previewText = (t.content || t.title || '').slice(0, 280);
+        return `
+          <div class="tp-card" data-id="${t.id}">
+            <div class="tp-card-head">
+              <div class="icon" style="background:${color}"><span style="font-size:1.2rem">${t.icon || '📋'}</span></div>
+              <h3>${escapeHtml(t.name)}</h3>
+              <span class="cat">${CAT_LABELS[t.category] || t.category}</span>
+            </div>
+            <div class="tp-card-body">
+              <p class="tp-card-desc">${escapeHtml(t.desc || t.title.slice(0,100))}</p>
+              ${t.hashtags ? `<div class="tp-card-tags">${t.hashtags.split(' ').filter(Boolean).slice(0,4).map(h => '<span>' + escapeHtml(h) + '</span>').join('')}</div>` : ''}
+              <div class="tp-card-preview">${escapeHtml(previewText)}${previewText.length === 280 ? '…' : ''}</div>
+            </div>
+            <div class="tp-card-foot">
+              <button class="btn btn-use" data-use="${t.id}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                Utiliser
+              </button>
+              ${!isDefault ? `<button class="btn btn-edit" data-edit="${t.id}" title="Éditer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>` : ''}
+              ${!isDefault ? `<button class="btn btn-del" data-del="${t.id}" title="Supprimer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg></button>` : ''}
+            </div>
+          </div>`;
+      }).join('');
+    }
 
     grid.querySelectorAll('[data-use]').forEach(b => b.onclick = () => useTemplate(b.dataset.use));
     grid.querySelectorAll('[data-edit]').forEach(b => b.onclick = () => openEdit(b.dataset.edit));
@@ -427,6 +551,16 @@ let _templates = [];
   }
 
   document.getElementById('searchInput').oninput = (e) => render(e.target.value);
+
+  // Filtres par catégorie
+  document.querySelectorAll('.tp-filter').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.tp-filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCat = btn.dataset.cat;
+      render(document.getElementById('searchInput').value);
+    };
+  });
 
   function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 })();

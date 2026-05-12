@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Agent IA Maintenance · HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink-50:#f5f7fa;--ink-100:#e6ebf2;--ink-200:#cfd6e0;--ink-400:#7c8aa1;--ink-500:#5d6c87;--ink-700:#3a4860;--ink-900:#0b1220;
+    --hc-primary:#0DA0CF;--hc-navy:#0A1428;--hc-orange:#FF6B1A;
+    --c-green:#16A34A;--c-amber:#F59E0B;--c-red:#E11D48;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:#f5f7fa;color:var(--ink-900);padding:24px;min-height:100vh}
+  .wrap{max-width:1240px;margin:0 auto}
+
+  /* HERO */
+  .hero{background:linear-gradient(135deg,#0A1428 0%,#1A2A44 50%,#0DA0CF 130%);color:#fff;border-radius:18px;padding:28px 30px;margin-bottom:22px;box-shadow:0 14px 40px rgba(10,20,40,.30);position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;right:-30px;top:-30px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.10),transparent 70%)}
+  .hero h1{font-size:1.62rem;font-weight:800;margin-bottom:6px;line-height:1.2;position:relative}
+  .hero h1 .badge{display:inline-block;background:rgba(255,255,255,.18);font-size:.65rem;padding:3px 9px;border-radius:999px;letter-spacing:.06em;text-transform:uppercase;font-weight:800;vertical-align:middle;margin-left:8px}
+  .hero p{font-size:.96rem;opacity:.92;line-height:1.5;position:relative;max-width:760px}
+  .hero-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-top:20px;position:relative}
+  .hero-stat{background:rgba(255,255,255,.10);backdrop-filter:blur(8px);border-radius:12px;padding:14px 18px}
+  .hero-stat .lbl{font-size:.68rem;opacity:.85;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px}
+  .hero-stat .val{font-size:1.65rem;font-weight:900;line-height:1}
+  .hero-stat .sub{font-size:.72rem;opacity:.75;margin-top:3px}
+  .hero-stat.score .val{font-size:2.4rem}
+  .hero-stat.score.good .val{color:#86efac}
+  .hero-stat.score.warn .val{color:#fde68a}
+  .hero-stat.score.bad  .val{color:#fca5a5}
+
+  /* Bandeau actions */
+  .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:#fff;padding:12px 16px;border-radius:12px;border:1px solid var(--ink-100);margin-bottom:18px}
+  .toolbar .left{flex:1;font-size:.84rem;color:var(--ink-500)}
+  .toolbar .left strong{color:var(--ink-900);font-weight:700}
+  .toolbar button{padding:8px 14px;border-radius:8px;border:1px solid var(--ink-200);background:#fff;font-size:.82rem;font-weight:700;color:var(--ink-700);cursor:pointer;transition:.15s;font-family:inherit}
+  .toolbar button:hover{border-color:var(--hc-primary);color:var(--hc-primary)}
+  .toolbar button.primary{background:var(--hc-primary);color:#fff;border-color:var(--hc-primary)}
+  .toolbar button.primary:hover{background:#0a87ad;color:#fff}
+
+  /* Filtres */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+  .filters button{padding:7px 14px;border-radius:999px;border:1px solid var(--ink-200);background:#fff;font-size:.78rem;font-weight:700;color:var(--ink-700);cursor:pointer;transition:.12s;font-family:inherit}
+  .filters button:hover{background:var(--ink-50)}
+  .filters button.active{background:var(--hc-navy);color:#fff;border-color:var(--hc-navy)}
+  .filters button.sev-critical.active{background:var(--c-red);border-color:var(--c-red)}
+  .filters button.sev-important.active{background:var(--c-amber);border-color:var(--c-amber)}
+  .filters button.sev-optimisation.active{background:var(--c-green);border-color:var(--c-green)}
+
+  /* Grid */
+  .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:flex-start}
+  @media (max-width:980px){.grid{grid-template-columns:1fr}}
+
+  /* Findings list */
+  .findings{background:#fff;border-radius:14px;border:1px solid var(--ink-100);overflow:hidden}
+  .findings-head{padding:14px 18px;border-bottom:1px solid var(--ink-100);display:flex;align-items:center;gap:12px}
+  .findings-head h2{font-size:.96rem;font-weight:800;color:var(--ink-900);flex:1}
+  .findings-head .count{font-size:.78rem;color:var(--ink-500);font-weight:700}
+  .finding{padding:13px 18px;border-bottom:1px solid var(--ink-50);display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;font-size:.84rem}
+  .finding:last-child{border-bottom:none}
+  .finding:hover{background:var(--ink-50)}
+  .pill{padding:3px 10px;border-radius:999px;font-size:.66rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase;flex-shrink:0;align-self:flex-start;margin-top:2px}
+  .pill.critical{background:rgba(225,29,72,.12);color:var(--c-red)}
+  .pill.important{background:rgba(245,158,11,.16);color:#92400e}
+  .pill.optimisation{background:rgba(22,163,74,.12);color:#14532d}
+  .finding .msg{color:var(--ink-700);line-height:1.45}
+  .finding .msg strong{color:var(--ink-900);font-weight:700;display:block;font-size:.82rem;margin-bottom:2px;font-family:'SF Mono',Monaco,monospace}
+  .finding .code{font-size:.66rem;color:var(--ink-400);font-family:'SF Mono',Monaco,monospace;background:var(--ink-50);padding:2px 7px;border-radius:5px;align-self:flex-start;margin-top:2px;font-weight:600}
+
+  /* Sidebar */
+  .side-card{background:#fff;border-radius:14px;border:1px solid var(--ink-100);margin-bottom:14px;overflow:hidden}
+  .side-card-head{padding:13px 16px;border-bottom:1px solid var(--ink-100);font-size:.82rem;font-weight:800;color:var(--ink-900);display:flex;align-items:center;gap:8px}
+  .side-card-body{padding:12px 16px;font-size:.82rem;color:var(--ink-700)}
+  .side-card-body p{margin-bottom:8px;line-height:1.5}
+  .side-card-body p:last-child{margin-bottom:0}
+  .side-card-body code{background:var(--ink-50);padding:2px 6px;border-radius:5px;font-size:.74rem;color:var(--ink-900);font-family:'SF Mono',Monaco,monospace}
+  .top-codes{list-style:none}
+  .top-codes li{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--ink-50);font-size:.78rem}
+  .top-codes li:last-child{border-bottom:none}
+  .top-codes .code{flex:1;font-family:'SF Mono',Monaco,monospace;font-weight:700;color:var(--ink-700)}
+  .top-codes .n{font-weight:900;color:var(--c-red);font-size:.92rem}
+
+  /* Bar chart */
+  .bar{display:flex;height:14px;border-radius:999px;overflow:hidden;background:var(--ink-100);margin-bottom:10px}
+  .bar > span{display:block;height:100%;transition:.4s}
+  .bar > .b-critical{background:var(--c-red)}
+  .bar > .b-important{background:var(--c-amber)}
+  .bar > .b-optimisation{background:var(--c-green)}
+  .legend{display:flex;gap:14px;font-size:.74rem;flex-wrap:wrap}
+  .legend span{display:flex;align-items:center;gap:5px;color:var(--ink-700);font-weight:600}
+  .legend span::before{content:"";width:9px;height:9px;border-radius:50%;display:inline-block}
+  .legend .l-critical::before{background:var(--c-red)}
+  .legend .l-important::before{background:var(--c-amber)}
+  .legend .l-optimisation::before{background:var(--c-green)}
+
+  /* Empty / Loading */
+  .empty{padding:50px 30px;text-align:center;color:var(--ink-400);font-size:.9rem}
+  .empty h3{color:var(--ink-700);font-weight:800;margin-bottom:6px;font-size:1.1rem}
+
+  /* Toast */
+  .toast{position:fixed;bottom:20px;right:20px;background:var(--ink-900);color:#fff;padding:12px 18px;border-radius:10px;font-size:.84rem;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.2);opacity:0;transform:translateY(10px);transition:.25s;z-index:1000}
+  .toast.show{opacity:1;transform:translateY(0)}
+
+  a.back{display:inline-flex;align-items:center;gap:6px;font-size:.84rem;font-weight:700;color:var(--ink-500);text-decoration:none;margin-bottom:14px}
+  a.back:hover{color:var(--hc-primary)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="index.html" class="back">← Retour au back-office</a>
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>🤖 Agent IA Maintenance <span class="badge">live</span></h1>
+    <p>Surveillance autonome du site et du back-office : détection de bugs, placeholders, cache incohérent, perf, SEO, sécurité. Données issues du dernier scan automatique.</p>
+    <div class="hero-stats">
+      <div class="hero-stat score" id="scoreCard">
+        <div class="lbl">Score santé</div>
+        <div class="val" id="scoreVal">—</div>
+        <div class="sub" id="scoreSub">en attente du scan</div>
+      </div>
+      <div class="hero-stat">
+        <div class="lbl">Critiques</div>
+        <div class="val" id="critN">—</div>
+        <div class="sub">à corriger sous 7j</div>
+      </div>
+      <div class="hero-stat">
+        <div class="lbl">Importants</div>
+        <div class="val" id="impN">—</div>
+        <div class="sub">à corriger sous 30j</div>
+      </div>
+      <div class="hero-stat">
+        <div class="lbl">Pages scannées</div>
+        <div class="val" id="pagesN">—</div>
+        <div class="sub" id="durationSub">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="left">
+      Dernier scan : <strong id="scanDate">—</strong> · Source : <code>logs/scan-latest.json</code>
+    </div>
+    <button onclick="copyCmd()">📋 Copier la commande</button>
+    <button class="primary" onclick="loadData(true)">↻ Recharger</button>
+  </div>
+
+  <!-- FILTRES -->
+  <div class="filters" id="filters">
+    <button class="active" data-filter="all">Tout (<span id="cnt-all">0</span>)</button>
+    <button class="sev-critical" data-filter="critical">🔴 Critique (<span id="cnt-critical">0</span>)</button>
+    <button class="sev-important" data-filter="important">🟡 Important (<span id="cnt-important">0</span>)</button>
+    <button class="sev-optimisation" data-filter="optimisation">🟢 Optim. (<span id="cnt-optimisation">0</span>)</button>
+  </div>
+
+  <!-- GRID -->
+  <div class="grid">
+    <!-- LISTE -->
+    <div class="findings">
+      <div class="findings-head">
+        <h2>Findings</h2>
+        <span class="count" id="listCount">—</span>
+      </div>
+      <div id="findingsList">
+        <div class="empty">
+          <h3>Chargement…</h3>
+          <p>Lecture de <code>logs/scan-latest.json</code></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside>
+      <div class="side-card">
+        <div class="side-card-head">📊 Répartition par sévérité</div>
+        <div class="side-card-body">
+          <div class="bar" id="severityBar"></div>
+          <div class="legend">
+            <span class="l-critical"><span id="leg-critical">0</span> critique</span>
+            <span class="l-important"><span id="leg-important">0</span> important</span>
+            <span class="l-optimisation"><span id="leg-optimisation">0</span> optim.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-card-head">🔥 Top codes</div>
+        <div class="side-card-body">
+          <ul class="top-codes" id="topCodes"></ul>
+        </div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-card-head">▶ Relancer un scan</div>
+        <div class="side-card-body">
+          <p>Pour rafraîchir les données, lance le scan dans le terminal :</p>
+          <p><code id="cmdLine">python3 scripts/maintenance-scan.py --verbose</code></p>
+          <p style="color:var(--ink-500);font-size:.76rem;margin-top:8px">Le script écrit <code>logs/scan-latest.json</code> que cette page lit automatiquement.</p>
+        </div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-card-head">📁 Rapport détaillé</div>
+        <div class="side-card-body">
+          <p>Le rapport complet en markdown :</p>
+          <p><code id="reportPath">logs/audit-YYYY-MM-DD.md</code></p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let __DATA = null;
+let __FILTER = "all";
+
+const $ = s => document.querySelector(s);
+const fmtDate = iso => {
+  if (!iso) return "—";
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString("fr-FR", { day:"2-digit", month:"long", year:"numeric" }) + " à " + d.toLocaleTimeString("fr-FR", { hour:"2-digit", minute:"2-digit" });
+  } catch(e) { return iso; }
+};
+
+async function loadData(force) {
+  try {
+    const url = "../logs/scan-latest.json" + (force ? "?t=" + Date.now() : "");
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    __DATA = await res.json();
+    render();
+    if (force) toast("Données rafraîchies");
+  } catch (e) {
+    $("#findingsList").innerHTML = `
+      <div class="empty">
+        <h3>Aucun scan disponible</h3>
+        <p>Le fichier <code>logs/scan-latest.json</code> n'a pas été trouvé.</p>
+        <p style="margin-top:14px">Lance d'abord le scan :</p>
+        <p><code>python3 scripts/maintenance-scan.py</code></p>
+      </div>`;
+    $("#scoreVal").textContent = "—";
+    $("#scoreSub").textContent = "scan jamais exécuté";
+  }
+}
+
+function render() {
+  if (!__DATA) return;
+  const d = __DATA;
+  const sev = d.by_severity || {};
+  const total = d.total_findings || 0;
+
+  // Hero
+  $("#scoreVal").textContent = (d.health_score ?? "—");
+  const score = d.health_score ?? 0;
+  const card = $("#scoreCard");
+  card.classList.remove("good","warn","bad");
+  if (score >= 75) { card.classList.add("good"); $("#scoreSub").textContent = "système stable"; }
+  else if (score >= 40) { card.classList.add("warn"); $("#scoreSub").textContent = "points à corriger"; }
+  else { card.classList.add("bad"); $("#scoreSub").textContent = "intervention nécessaire"; }
+
+  $("#critN").textContent = sev.critical || 0;
+  $("#impN").textContent = sev.important || 0;
+  $("#pagesN").textContent = d.pages_scanned || 0;
+  $("#durationSub").textContent = d.duration_ms ? `scan en ${d.duration_ms}ms` : "—";
+  $("#scanDate").textContent = fmtDate(d.scanned_at);
+
+  // Rapport path
+  if (d.scanned_at) {
+    const ymd = d.scanned_at.substring(0,10);
+    $("#reportPath").textContent = `logs/audit-${ymd}.md`;
+  }
+
+  // Compteurs filtres
+  $("#cnt-all").textContent = total;
+  $("#cnt-critical").textContent = sev.critical || 0;
+  $("#cnt-important").textContent = sev.important || 0;
+  $("#cnt-optimisation").textContent = sev.optimisation || 0;
+
+  // Bar
+  const c = sev.critical || 0;
+  const i = sev.important || 0;
+  const o = sev.optimisation || 0;
+  const tot = Math.max(1, c + i + o);
+  $("#severityBar").innerHTML = `
+    <span class="b-critical" style="width:${(c/tot*100).toFixed(1)}%"></span>
+    <span class="b-important" style="width:${(i/tot*100).toFixed(1)}%"></span>
+    <span class="b-optimisation" style="width:${(o/tot*100).toFixed(1)}%"></span>`;
+  $("#leg-critical").textContent = c;
+  $("#leg-important").textContent = i;
+  $("#leg-optimisation").textContent = o;
+
+  // Top codes
+  const codeCounts = {};
+  (d.findings || []).forEach(f => {
+    codeCounts[f.code] = (codeCounts[f.code] || 0) + 1;
+  });
+  const top = Object.entries(codeCounts).sort((a,b) => b[1] - a[1]).slice(0, 8);
+  $("#topCodes").innerHTML = top.map(([code, n]) =>
+    `<li><span class="code">${code}</span><span class="n">${n}</span></li>`
+  ).join("") || '<li style="color:var(--ink-400)">Aucun finding</li>';
+
+  // Liste filtrée
+  renderList();
+}
+
+function renderList() {
+  if (!__DATA) return;
+  const findings = (__DATA.findings || []).filter(f => __FILTER === "all" || f.severity === __FILTER);
+  $("#listCount").textContent = findings.length + " entrée" + (findings.length > 1 ? "s" : "");
+
+  if (findings.length === 0) {
+    $("#findingsList").innerHTML = `
+      <div class="empty">
+        <h3>Aucun finding</h3>
+        <p>Rien à signaler avec ce filtre.</p>
+      </div>`;
+    return;
+  }
+
+  // Tri : critical > important > optimisation
+  const order = { critical: 0, important: 1, optimisation: 2 };
+  findings.sort((a,b) => (order[a.severity] ?? 9) - (order[b.severity] ?? 9));
+
+  $("#findingsList").innerHTML = findings.map(f => `
+    <div class="finding">
+      <span class="pill ${f.severity}">${f.severity === "optimisation" ? "OPTIM" : f.severity.slice(0,4).toUpperCase()}</span>
+      <div class="msg"><strong>${escapeHtml(f.file || "—")}</strong>${escapeHtml(f.msg || "")}</div>
+      <span class="code">${escapeHtml(f.code || "")}</span>
+    </div>`).join("");
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" }[c]));
+}
+
+function toast(msg) {
+  const t = $("#toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2400);
+}
+
+function copyCmd() {
+  const cmd = "python3 scripts/maintenance-scan.py --verbose";
+  navigator.clipboard.writeText(cmd).then(() => toast("Commande copiée"));
+}
+
+document.getElementById("filters").addEventListener("click", e => {
+  const b = e.target.closest("button[data-filter]");
+  if (!b) return;
+  __FILTER = b.dataset.filter;
+  document.querySelectorAll("#filters button").forEach(x => x.classList.remove("active"));
+  b.classList.add("active");
+  renderList();
+});
+
+loadData();
+</script>
+</body>
+</html>

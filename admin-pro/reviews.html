@@ -285,13 +285,10 @@ let _currentReply = null;
 
     const list = document.getElementById('rvList');
     if (!filtered.length) {
-      list.innerHTML = `
-        <div style="text-align:center;padding:60px 20px;color:var(--ink-500);background:#fff;border:1px dashed var(--ink-200);border-radius:14px">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color:var(--ink-300);margin-bottom:12px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <h3 style="margin:0 0 6px;color:var(--ink-900)">${_all.length?'Aucun résultat':'Aucun avis synchronisé'}</h3>
-          <p style="margin:0;font-size:.88rem">${_all.length?'Modifiez vos filtres.':'Cliquez « Synchroniser » pour récupérer les avis Google.'}</p>
-        </div>
-      `;
+      const m = _all.length
+        ? { ic:'🔍', h:'Aucun résultat', p:'Modifie tes filtres (statut, étoiles, source, agence).' }
+        : { ic:'⭐', h:'Aucun avis synchronisé', p:'Clique « Synchroniser » en haut à droite pour récupérer tes avis Google des 2 fiches.' };
+      list.innerHTML = `<div class="hc-empty"><div class="hc-empty-icon">${m.ic}</div><h3>${m.h}</h3><p>${m.p}</p></div>`;
       return;
     }
 

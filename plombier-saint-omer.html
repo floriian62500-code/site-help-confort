@@ -713,10 +713,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   .m-hero-service.s1 { top: 6%;    right: 4%;  animation-delay: 0s   }   /* Recherche fuite — haut */
   .m-hero-service.s2 { top: 38%;   right: -3%; animation-delay: .8s  }   /* Débouchage — milieu */
   .m-hero-service.s3 { bottom: 6%; right: 4%;  animation-delay: 1.6s }   /* Chauffe-eau — bas */
-  /* Côté gauche (en miroir) */
-  .m-hero-service.s4 { bottom: 6%; left: 4%;   animation-delay: 2.4s }   /* Sanitaire — bas */
+  /* Côté gauche — 3 pills réparties sur la hauteur, en évitant la speech bubble (top 4-22%) et la mascotte */
+  .m-hero-service.s4 { bottom: 6%; left: 4%;   animation-delay: 2.4s }   /* Sanitaire — bas (~86-92%) */
   .m-hero-service.s5 { top: 38%;   left: -3%;  animation-delay: 3.2s }   /* Salle de bain — milieu */
-  .m-hero-service.s6 { top: 28%;   left: 12%;  animation-delay: 4s   }   /* Réseaux — sous la speech bubble */
+  .m-hero-service.s6 { top: 62%;   left: 4%;   animation-delay: 4s   }   /* Réseaux — entre Salle de bain et Sanitaire */
   @keyframes m-svc-float {
     0%, 100% { transform: translateY(0) }
     50%      { transform: translateY(-6px) }
@@ -737,32 +737,69 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   .m-bubble.b4 { width: 14px; height: 14px; top: 82%; right: 20%; animation-delay: 3.6s; opacity: .55 }
   @keyframes m-bubble-f { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-14px) } }
 
-  /* ─── SERVICES (6 cards compactes) ─── */
+  /* ─── SERVICES (6 cards image — plus parlantes que des icônes) ─── */
   .m-services-grid {
-    display: grid; grid-template-columns: 1fr; gap: 12px;
-    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr; gap: 18px;
+    max-width: 1180px; margin: 0 auto;
   }
   @media (min-width: 640px) { .m-services-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 980px) { .m-services-grid { grid-template-columns: repeat(3, 1fr); } }
   .m-svc {
-    display: flex; align-items: flex-start; gap: 14px;
-    padding: 18px 20px; background: #fff;
-    border: 1px solid #E5EDF3; border-radius: 14px;
-    text-decoration: none; transition: all .25s cubic-bezier(.16,1,.3,1);
+    display: flex; flex-direction: column;
+    background: #fff;
+    border: 1px solid #E5EDF3; border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none; color: inherit;
+    transition: all .25s cubic-bezier(.16,1,.3,1);
+    position: relative;
   }
-  .m-svc:hover { transform: translateY(-3px); box-shadow: 0 14px 32px var(--m-glow); border-color: var(--m-color); }
-  .m-svc-icon {
-    width: 44px; height: 44px; border-radius: 11px; flex-shrink: 0;
+  .m-svc:hover { transform: translateY(-4px); box-shadow: 0 18px 38px var(--m-glow); border-color: var(--m-color); }
+  .m-svc-img {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
     background: linear-gradient(135deg, var(--m-color), var(--m-color-dark));
-    color: #fff; display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 6px 14px var(--m-glow);
   }
-  .m-svc-icon svg { width: 22px; height: 22px }
-  .m-svc-body { flex: 1; min-width: 0; }
-  .m-svc-body h3 { margin: 0 0 4px; font-size: 1rem; font-weight: 800; color: #0A1428; letter-spacing: -.005em; }
-  .m-svc-body p { margin: 0; font-size: .84rem; line-height: 1.5; color: #475569; }
-  .m-svc-arrow { color: var(--m-color-dark); font-size: 1.2rem; align-self: center; transition: transform .2s ease; }
-  .m-svc:hover .m-svc-arrow { transform: translateX(3px); }
+  .m-svc-img img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform .5s cubic-bezier(.16,1,.3,1);
+  }
+  .m-svc:hover .m-svc-img img { transform: scale(1.06); }
+  .m-svc-img::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgba(10,20,40,.45) 100%);
+    pointer-events: none;
+  }
+  .m-svc-tag {
+    position: absolute; top: 12px; left: 12px;
+    padding: 5px 10px;
+    background: rgba(255,255,255,.95);
+    color: var(--m-color-dark);
+    border-radius: 999px;
+    font-size: .68rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: .06em;
+    z-index: 2;
+    backdrop-filter: blur(4px);
+  }
+  .m-svc-body {
+    padding: 16px 18px 18px;
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .m-svc-body-text { flex: 1; min-width: 0; }
+  .m-svc-body h3 { margin: 0 0 4px; font-size: 1.04rem; font-weight: 800; color: #0A1428; letter-spacing: -.005em; }
+  .m-svc-body p { margin: 0; font-size: .86rem; line-height: 1.5; color: #475569; }
+  .m-svc-arrow {
+    color: #fff;
+    background: linear-gradient(135deg, var(--m-color), var(--m-color-dark));
+    width: 34px; height: 34px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; font-weight: 800;
+    flex-shrink: 0; align-self: center;
+    transition: transform .2s ease;
+    box-shadow: 0 4px 10px var(--m-glow);
+  }
+  .m-svc:hover .m-svc-arrow { transform: translateX(3px) scale(1.08); }
 
   /* ─── RÉALISATIONS — slider compact ─── */
   .m-real-section { background: linear-gradient(180deg, #fff 0%, #F8FCFE 100%); }
@@ -1190,80 +1227,139 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="eyebrow">Nos prestations</span>
       <h2>Tout ce que nous <em>faisons</em> en plomberie</h2>
     </div>
+    <!-- 6 cartes prestations avec photos (Unsplash libres de droits — remplacer par photos chantiers réels quand dispo) -->
     <div class="m-services-grid">
       <a href="guide-fuite-eau.html" class="m-svc">
-        <span class="m-svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-        <div class="m-svc-body"><h3>Recherche de fuite</h3><p>Caméra thermique, gaz traceur, écoute acoustique.</p></div>
-        <span class="m-svc-arrow">→</span>
+        <div class="m-svc-img">
+          <span class="m-svc-tag">Diagnostic</span>
+          <img src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=600&h=375&q=70" alt="Recherche de fuite sous évier" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <div class="m-svc-body">
+          <div class="m-svc-body-text"><h3>Recherche de fuite</h3><p>Caméra thermique, gaz traceur, écoute acoustique — sans casse inutile.</p></div>
+          <span class="m-svc-arrow" aria-hidden="true">→</span>
+        </div>
       </a>
       <a href="contact.html#form" class="m-svc">
-        <span class="m-svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M6 8v8"/><path d="M18 8v8"/><path d="M12 6v12"/></svg></span>
-        <div class="m-svc-body"><h3>Débouchage</h3><p>WC, évier, canalisation. Furet ou hydrocurage.</p></div>
-        <span class="m-svc-arrow">→</span>
+        <div class="m-svc-img">
+          <span class="m-svc-tag">Urgence</span>
+          <img src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?auto=format&fit=crop&w=600&h=375&q=70" alt="Débouchage canalisation" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <div class="m-svc-body">
+          <div class="m-svc-body-text"><h3>Débouchage</h3><p>WC, évier, canalisation. Furet ou hydrocurage haute pression.</p></div>
+          <span class="m-svc-arrow" aria-hidden="true">→</span>
+        </div>
       </a>
       <a href="contact.html#form" class="m-svc">
-        <span class="m-svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>
-        <div class="m-svc-body"><h3>Chauffe-eau</h3><p>Installation, dépannage, remplacement tous modèles.</p></div>
-        <span class="m-svc-arrow">→</span>
+        <div class="m-svc-img">
+          <span class="m-svc-tag">Installation</span>
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&h=375&q=70" alt="Chauffe-eau" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <div class="m-svc-body">
+          <div class="m-svc-body-text"><h3>Chauffe-eau</h3><p>Installation, dépannage, remplacement tous modèles (gaz, élec, thermo).</p></div>
+          <span class="m-svc-arrow" aria-hidden="true">→</span>
+        </div>
       </a>
       <a href="contact.html#form" class="m-svc">
-        <span class="m-svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg></span>
-        <div class="m-svc-body"><h3>Sanitaire</h3><p>WC, lavabo, douche, baignoire, robinetterie.</p></div>
-        <span class="m-svc-arrow">→</span>
+        <div class="m-svc-img">
+          <span class="m-svc-tag">Sanitaire</span>
+          <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&h=375&q=70" alt="Robinetterie et sanitaire" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <div class="m-svc-body">
+          <div class="m-svc-body-text"><h3>Sanitaire</h3><p>WC, lavabo, douche, baignoire, robinetterie — pose et remplacement.</p></div>
+          <span class="m-svc-arrow" aria-hidden="true">→</span>
+        </div>
       </a>
       <a href="travaux-saint-omer.html" class="m-svc">
-        <span class="m-svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9z"/></svg></span>
-        <div class="m-svc-body"><h3>Salle de bain</h3><p>Rénovation complète clés en main.</p></div>
-        <span class="m-svc-arrow">→</span>
+        <div class="m-svc-img">
+          <span class="m-svc-tag">Rénovation</span>
+          <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=600&h=375&q=70" alt="Salle de bain rénovée" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <div class="m-svc-body">
+          <div class="m-svc-body-text"><h3>Salle de bain</h3><p>Rénovation complète clés en main, douche à l'italienne, PMR.</p></div>
+          <span class="m-svc-arrow" aria-hidden="true">→</span>
+        </div>
       </a>
       <a href="contact.html#form" class="m-svc">
-        <span class="m-svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6"/><path d="M12 22v-6"/><path d="M2 12h6"/><path d="M22 12h-6"/></svg></span>
-        <div class="m-svc-body"><h3>Réseaux</h3><p>Canalisations, raccordement, mise aux normes.</p></div>
-        <span class="m-svc-arrow">→</span>
+        <div class="m-svc-img">
+          <span class="m-svc-tag">Technique</span>
+          <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=600&h=375&q=70" alt="Réseaux de canalisations" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <div class="m-svc-body">
+          <div class="m-svc-body-text"><h3>Réseaux</h3><p>Canalisations, raccordement, mise aux normes, dépose et reprise.</p></div>
+          <span class="m-svc-arrow" aria-hidden="true">→</span>
+        </div>
       </a>
     </div>
   </div>
 </section>
 
-<!-- ─── 3. RÉALISATIONS (slider compact, dynamique via JSON) ─── -->
-<section class="m-section m-real-section" aria-label="Nos réalisations plomberie">
+<!-- ─── 3. CHANTIERS + AVIS (2 colonnes côte à côte, sans défilement) ─── -->
+<section class="m-section m-proof-section" aria-label="Chantiers et avis plomberie">
   <div class="container">
-    <div class="m-head">
-      <span class="eyebrow">Sur le terrain</span>
-      <h2>Nos <em>chantiers</em> plomberie récents</h2>
-      <p>Avant/après, photos réelles, interventions locales — preuve par les <strong>résultats</strong>.</p>
-    </div>
-    <div class="m-real-track" id="m-real-plomberie">
-      <!-- Cards générées dynamiquement via JS, fallback statique ci-dessous -->
-      <a href="realisations.html" class="m-real-card">
-        <div class="m-real-img"><div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photos à venir</div></div>
-        <div class="m-real-body">
-          <span class="m-real-tag">Plomberie</span>
-          <h3>Fuite cuisine — Saint-Omer</h3>
-          <p>Recherche de fuite par caméra thermique, réparation propre et remise en service en 2h.</p>
+    <div class="m-proof-2cols">
+      <!-- Colonne GAUCHE : chantiers -->
+      <div class="m-proof-col">
+        <div class="m-proof-head">
+          <span class="eyebrow">Sur le terrain</span>
+          <h2>Nos <em>chantiers</em> plomberie</h2>
+          <p>Avant/après, photos réelles, interventions locales.</p>
         </div>
-      </a>
-      <a href="realisations.html" class="m-real-card">
-        <div class="m-real-img"><div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photos à venir</div></div>
-        <div class="m-real-body">
-          <span class="m-real-tag">Plomberie</span>
-          <h3>Remplacement chauffe-eau — Dunkerque</h3>
-          <p>Dépose ancien ballon + pose ballon thermodynamique 200L. Mise en service le jour même.</p>
+        <div class="m-proof-stack" id="m-real-plomberie">
+          <!-- Cards générées dynamiquement via JS, fallback statique ci-dessous -->
+          <a href="realisations.html" class="m-proof-card m-proof-real">
+            <div class="m-proof-thumb"><div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div></div>
+            <div class="m-proof-card-body">
+              <span class="m-proof-tag">Plomberie</span>
+              <h3>Fuite cuisine — Saint-Omer</h3>
+              <p>Recherche de fuite par caméra thermique, réparation propre, remise en service en 2h.</p>
+            </div>
+          </a>
+          <a href="realisations.html" class="m-proof-card m-proof-real">
+            <div class="m-proof-thumb"><div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div></div>
+            <div class="m-proof-card-body">
+              <span class="m-proof-tag">Plomberie</span>
+              <h3>Remplacement chauffe-eau — Dunkerque</h3>
+              <p>Dépose ancien ballon + pose ballon thermodynamique 200L. Mise en service le jour même.</p>
+            </div>
+          </a>
         </div>
-      </a>
-      <a href="realisations.html" class="m-real-card">
-        <div class="m-real-img"><div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photos à venir</div></div>
-        <div class="m-real-body">
-          <span class="m-real-tag">Plomberie</span>
-          <h3>Salle de bain complète — Longuenesse</h3>
-          <p>Rénovation tous corps d'état : plomberie, carrelage, électricité, peinture. 12 jours.</p>
+        <div class="m-proof-foot">
+          <a href="realisations.html?filter=Plomberie" class="m-proof-link">Voir toutes nos réalisations <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
-      </a>
-    </div>
-    <div class="m-real-foot">
-      <a href="realisations.html?filter=Plomberie">Voir toutes nos réalisations <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+
+      <!-- Colonne DROITE : avis -->
+      <div class="m-proof-col">
+        <div class="m-proof-head">
+          <span class="eyebrow"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>Vos témoignages</span>
+          <h2>Ils nous ont confié leur <em>plomberie</em></h2>
+          <p><strong>4,7/5 sur 343 avis</strong> — Google &amp; Trustville.</p>
+        </div>
+        <div class="m-proof-stack">
+          <article class="m-proof-card m-proof-review">
+            <div class="m-review-stars">★★★★★</div>
+            <blockquote>« Fuite sous l'évier un samedi matin. Appel à 9h, technicien sur place à 11h. <strong>Diagnostic clair, devis transparent, réparation propre.</strong> »</blockquote>
+            <div class="m-review-author">
+              <div class="m-review-avatar">M</div>
+              <div class="m-review-meta"><strong>Mathieu D.</strong><span>Saint-Omer · Fuite cuisine</span></div>
+            </div>
+          </article>
+          <article class="m-proof-card m-proof-review">
+            <div class="m-review-stars">★★★★★</div>
+            <blockquote>« Recherche de fuite avec <strong>caméra thermique</strong> impeccable. Pas de casse inutile, localisé au mm. Rapport remis à l'assurance. »</blockquote>
+            <div class="m-review-author">
+              <div class="m-review-avatar">S</div>
+              <div class="m-review-meta"><strong>Sophie L.</strong><span>Longuenesse · Recherche de fuite</span></div>
+            </div>
+          </article>
+        </div>
+        <div class="m-proof-foot">
+          <a href="https://maps.app.goo.gl/B4BPVTiRp5rDp26fA" target="_blank" rel="noopener" class="m-proof-link">Voir tous nos avis Google <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
     </div>
   </div>
+
   <script>
   (function(){
     var track = document.getElementById('m-real-plomberie');
@@ -1273,7 +1369,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       .then(function(list){
         var plomb = list.filter(function(r){
           return r.published !== false && (r.metier === 'Plomberie' || /plomb/i.test(r.metier||''));
-        }).slice(0, 5);
+        }).slice(0, 2);
         if(!plomb.length) return; // garde le fallback statique
         track.innerHTML = plomb.map(function(r){
           var url = r.url || 'realisations.html';
@@ -1284,154 +1380,139 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             var fb = 'https://www.facebook.com/plugins/post.php?href='+encodeURIComponent(r.source_facebook)+'&show_text=false&width=380';
             img = '<iframe src="'+fb+'" loading="lazy" scrolling="no" frameborder="0"></iframe>';
           } else {
-            img = '<div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photos à venir</div>';
+            img = '<div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>';
           }
-          return '<a href="'+url+'" class="m-real-card"><div class="m-real-img">'+img+'</div><div class="m-real-body"><span class="m-real-tag">'+(r.metier||'Plomberie')+'</span><h3>'+(r.title||'Chantier')+'</h3><p>'+(r.description||'').slice(0,140)+'</p></div></a>';
+          return '<a href="'+url+'" class="m-proof-card m-proof-real"><div class="m-proof-thumb">'+img+'</div><div class="m-proof-card-body"><span class="m-proof-tag">'+(r.metier||'Plomberie')+'</span><h3>'+(r.title||'Chantier')+'</h3><p>'+(r.description||'').slice(0,120)+'</p></div></a>';
         }).join('');
       })
       .catch(function(){ /* keep static fallback */ });
   })();
   </script>
-</section>
-
-<!-- ─── 3 bis. AVIS CLIENTS PLOMBERIE ─── -->
-<section class="m-section m-reviews-section" aria-label="Avis clients plomberie">
-  <div class="container">
-    <div class="m-head">
-      <span class="eyebrow"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>Vos témoignages</span>
-      <h2>Ils nous ont confié leur <em>plomberie</em></h2>
-      <p>Notes vérifiées Google &amp; Trustville. <strong>4,7/5 sur 343 avis</strong> — sans surprise.</p>
-    </div>
-
-    <div class="m-reviews-grid">
-      <article class="m-review-card">
-        <div class="m-review-stars">★★★★★</div>
-        <blockquote>« Fuite sous l'évier un samedi matin. Appel à 9h, technicien sur place à 11h. <strong>Diagnostic clair, devis transparent, réparation propre.</strong> Je recommande sans hésiter. »</blockquote>
-        <div class="m-review-author">
-          <div class="m-review-avatar">M</div>
-          <div class="m-review-meta">
-            <strong>Mathieu D.</strong>
-            <span>Saint-Omer · Fuite cuisine</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="m-review-card">
-        <div class="m-review-stars">★★★★★</div>
-        <blockquote>« Recherche de fuite avec <strong>caméra thermique</strong> impeccable. Pas de casse inutile, localisé au mm. Rapport remis à l'assurance, dossier accepté sans problème. »</blockquote>
-        <div class="m-review-author">
-          <div class="m-review-avatar">S</div>
-          <div class="m-review-meta">
-            <strong>Sophie L.</strong>
-            <span>Longuenesse · Recherche de fuite</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="m-review-card">
-        <div class="m-review-stars">★★★★★</div>
-        <blockquote>« Remplacement complet salle de bain. <strong>Devis détaillé, planning respecté, finitions soignées.</strong> L'équipe est sérieuse et le suivi nickel. Bravo. »</blockquote>
-        <div class="m-review-author">
-          <div class="m-review-avatar">P</div>
-          <div class="m-review-meta">
-            <strong>Patrick V.</strong>
-            <span>Dunkerque · Salle de bain</span>
-          </div>
-        </div>
-      </article>
-    </div>
-
-    <div class="m-reviews-summary-foot">
-      <div class="m-reviews-summary-pill">
-        <svg width="22" height="22" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-        <div>
-          <span class="num">4,7/5</span>
-          <span class="stars">★★★★★</span>
-        </div>
-        <span class="meta">343 avis Google vérifiés</span>
-      </div>
-      <a href="https://maps.app.goo.gl/B4BPVTiRp5rDp26fA" target="_blank" rel="noopener" class="m-reviews-link">
-        Voir tous nos avis Google
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-    </div>
-  </div>
 
   <style>
-    .m-reviews-section { background: linear-gradient(180deg, #F8FCFE 0%, #fff 100%); }
-    .m-reviews-grid {
-      display: grid; grid-template-columns: 1fr; gap: 16px;
-      max-width: 1180px; margin: 0 auto;
+    .m-proof-section { background: linear-gradient(180deg, #fff 0%, #F8FCFE 100%); }
+    .m-proof-2cols {
+      display: grid; grid-template-columns: 1fr;
+      gap: 36px;
+      max-width: 1280px; margin: 0 auto;
     }
-    @media (min-width: 800px) { .m-reviews-grid { grid-template-columns: repeat(3, 1fr); } }
-    .m-review-card {
-      padding: 22px 22px 20px;
+    @media (min-width: 980px) {
+      .m-proof-2cols { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    .m-proof-col { display: flex; flex-direction: column; }
+    .m-proof-head { text-align: left; margin-bottom: 18px; }
+    .m-proof-head .eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px;
+      background: var(--m-soft); color: var(--m-color-dark);
+      border-radius: 999px;
+      font-size: .72rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .08em;
+      margin-bottom: 8px;
+    }
+    .m-proof-head .eyebrow svg { width: 12px; height: 12px; }
+    .m-proof-head h2 {
+      margin: 0 0 6px; font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+      font-weight: 800; color: #0A1428; letter-spacing: -.018em; line-height: 1.2;
+    }
+    .m-proof-head h2 em {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic; font-weight: 500; color: var(--m-color-dark);
+    }
+    .m-proof-head p { margin: 0; font-size: .92rem; color: #475569; }
+    .m-proof-head p strong { color: #0A1428; font-weight: 700; }
+
+    .m-proof-stack {
+      display: flex; flex-direction: column;
+      gap: 14px;
+      flex: 1;
+    }
+    .m-proof-card {
       background: #fff;
-      border: 1px solid #E5EDF3; border-radius: 16px;
-      display: flex; flex-direction: column; gap: 12px;
+      border: 1px solid #E5EDF3; border-radius: 14px;
+      overflow: hidden;
+      text-decoration: none; color: inherit;
       transition: all .25s ease;
-      position: relative;
     }
-    .m-review-card:hover {
+    .m-proof-card:hover {
       transform: translateY(-3px);
       box-shadow: 0 14px 32px var(--m-glow);
-      border-color: var(--m-glow);
+      border-color: var(--m-color);
     }
-    .m-review-stars { color: #FFB400; font-size: 1rem; letter-spacing: 2px; }
-    .m-review-card blockquote {
-      margin: 0; font-size: .92rem; line-height: 1.55; color: #334155;
+    /* Chantiers : photo gauche + texte droite */
+    .m-proof-real { display: flex; align-items: stretch; gap: 0; }
+    .m-proof-thumb {
+      flex: 0 0 38%;
+      min-height: 140px;
+      background: linear-gradient(135deg, #F4F8FC, #EAF2F7);
+      position: relative; overflow: hidden;
+    }
+    .m-proof-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .m-proof-thumb iframe { position: absolute; top: -40px; left: -30px; width: calc(100% + 60px); height: calc(100% + 120px); border: 0; pointer-events: none; }
+    .m-proof-thumb .placeholder {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--m-color-dark); opacity: .55;
+    }
+    .m-proof-thumb .placeholder svg { width: 30px; height: 30px; }
+    .m-proof-card-body { padding: 14px 16px; flex: 1; min-width: 0; }
+    .m-proof-tag {
+      display: inline-block;
+      padding: 3px 8px;
+      background: var(--m-soft); color: var(--m-color-dark);
+      border-radius: 6px;
+      font-size: .66rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .06em;
+      margin-bottom: 6px;
+    }
+    .m-proof-card-body h3 {
+      margin: 0 0 4px; font-size: .96rem; font-weight: 800;
+      color: #0A1428; line-height: 1.3;
+    }
+    .m-proof-card-body p {
+      margin: 0; font-size: .82rem; line-height: 1.5; color: #475569;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    /* Avis : pile verticale */
+    .m-proof-review {
+      padding: 18px 20px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .m-proof-review .m-review-stars { color: #FFB400; font-size: .98rem; letter-spacing: 2px; }
+    .m-proof-review blockquote {
+      margin: 0; font-size: .88rem; line-height: 1.55; color: #334155;
       font-style: italic;
     }
-    .m-review-card blockquote strong { color: #0A1428; font-weight: 700; font-style: normal; }
-    .m-review-author {
+    .m-proof-review blockquote strong { color: #0A1428; font-weight: 700; font-style: normal; }
+    .m-proof-review .m-review-author {
       display: flex; align-items: center; gap: 10px;
-      padding-top: 12px; border-top: 1px dashed #E5EDF3;
+      padding-top: 10px; border-top: 1px dashed #E5EDF3;
     }
-    .m-review-avatar {
-      width: 38px; height: 38px; border-radius: 50%;
+    .m-proof-review .m-review-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
       background: linear-gradient(135deg, var(--m-color), var(--m-color-dark));
       color: #fff;
       display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: .96rem;
+      font-weight: 800; font-size: .9rem;
       flex-shrink: 0;
     }
-    .m-review-meta { display: flex; flex-direction: column; line-height: 1.2; }
-    .m-review-meta strong { font-size: .88rem; color: #0A1428; font-weight: 700; }
-    .m-review-meta span { font-size: .76rem; color: #64748b; margin-top: 2px; }
+    .m-proof-review .m-review-meta { display: flex; flex-direction: column; line-height: 1.2; }
+    .m-proof-review .m-review-meta strong { font-size: .86rem; color: #0A1428; font-weight: 700; }
+    .m-proof-review .m-review-meta span { font-size: .74rem; color: #64748b; margin-top: 2px; }
 
-    .m-reviews-summary-foot {
-      max-width: 1180px; margin: 28px auto 0;
-      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-      gap: 16px;
-      padding: 16px 22px;
-      background: #fff; border: 1px solid var(--m-glow); border-radius: 14px;
-      box-shadow: 0 8px 22px var(--m-soft);
-    }
-    .m-reviews-summary-pill {
-      display: flex; align-items: center; gap: 14px;
-    }
-    .m-reviews-summary-pill > div {
-      display: flex; flex-direction: column; line-height: 1.1; gap: 1px;
-    }
-    .m-reviews-summary-pill .num { font-size: 1.3rem; font-weight: 800; color: #0A1428; }
-    .m-reviews-summary-pill .stars { color: #FFB400; font-size: .82rem; letter-spacing: 1px; }
-    .m-reviews-summary-pill .meta {
-      font-size: .82rem; color: #64748b; font-weight: 600;
-      padding-left: 14px; border-left: 1px solid #E5EDF3;
-    }
-    .m-reviews-link {
+    .m-proof-foot { margin-top: 14px; }
+    .m-proof-link {
       display: inline-flex; align-items: center; gap: 6px;
-      padding: 10px 16px; border-radius: 10px;
-      background: var(--m-color); color: #fff;
-      text-decoration: none; font-size: .88rem; font-weight: 700;
-      transition: all .25s ease;
+      color: var(--m-color-dark);
+      font-weight: 700; font-size: .9rem;
+      text-decoration: none;
+      transition: gap .2s ease;
     }
-    .m-reviews-link:hover { background: var(--m-color-dark); transform: translateY(-1px); }
-    @media (max-width: 640px) {
-      .m-reviews-summary-foot { flex-direction: column; align-items: stretch; }
-      .m-reviews-summary-pill { justify-content: center; }
-      .m-reviews-summary-pill .meta { padding-left: 0; border-left: 0; }
-      .m-reviews-link { justify-content: center; }
+    .m-proof-link:hover { gap: 10px; }
+
+    @media (max-width: 560px) {
+      .m-proof-real { flex-direction: column; }
+      .m-proof-thumb { flex: 0 0 auto; min-height: 160px; aspect-ratio: 16/9; }
     }
   </style>
 </section>

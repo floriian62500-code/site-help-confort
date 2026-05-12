@@ -1,7 +1,7 @@
 # 📋 Résumé du projet — Site HELP! Confort Saint-Omer
 
 > **À coller au début d'une nouvelle conversation Cowork** pour reprendre le travail sans repartir de zéro.
-> Mise à jour : **11 mai 2026** (Vague Q : connexion Google Business Profile — wizard + diagnostic + Edge Functions consolidées)
+> Mise à jour : **12 mai 2026 — Vague S** (UX globale back-office · presets visuel HC officiels · 14 templates posts · états vides ludiques · greeting adaptatif · CSS d'animations)
 
 ---
 
@@ -114,6 +114,75 @@
 - Déplacement Dunkerque : **60 € HT**
 - Contrats Gaz : BASIC 9 € / CONFORT 13 € / SÉCURITÉ 23 € / mois
 - Contrats Fioul : BASIC 12 € / CONFORT 16 € / SÉCURITÉ 27 € / mois
+
+---
+
+## 🎨 Vague S — Refonte UX globale + presets visuel HC (12 mai 2026)
+
+### Générateur visuel `visuel.html` — refonte complète
+Reproduit fidèlement les **7 templates "Avant/Après"** officiels HELP! Confort (fournis en PDF par Florian) :
+- **Plomberie** : fond cyan saturé `#0093D0` · picto robinet
+- **Menuiserie / Chauffage** : fond orange vif `#F37322` · picto règle
+- **Rénovation** : fond brun taupe `#9C8B78` · picto maison
+- **Vitrerie** : fond vert pomme `#8DC83F` · picto 4 carreaux
+- **Serrurerie** : fond magenta `#E91063` · picto clé
+- **Volet Roulant** : fond violet `#9C1E84` · picto lamelles
+- **PMR** : fond bleu marine `#2A4FA0` · picto maison+main
+
+Layout fidèle : logo HELP! Confort + "Une marque de La Poste" en haut-gauche, 2 photos côte-à-côte avec bandes blanches qui dépassent (effet caractéristique), étiquettes blanches AVANT/APRÈS sous chaque photo (texte coloré métier), nom du métier centré + picto rond en bas. Format 1080×1080 (Instagram carré), 1080×1350 (portrait), 1200×630 (FB feed), 1080×1920 (story).
+
+### Templates de posts `templates.html` — refonte
+- **14 templates** au lieu de 6 (ajouts : témoignage 5★, urgence fuite, chantier terminé, conseil saisonnier, jour férié, promo contrats gaz, portrait équipe)
+- **Filtres par catégorie** en pills (Tout / Promo / Métier / Alerte / Recrutement / Fêtes / Info / Témoignage)
+- **Preview live** : au survol d'une carte, le contenu réel du post apparaît en transparence
+- État vide ludique
+
+### Dashboard `index.html` — touches ludiques
+- **Greeting adaptatif** selon heure et jour : "Bonjour ☀️ / Bon appétit 🍽️ / Bel après-midi ⚙️ / Bonsoir 🌆 / Tu travailles tard 🌙 / Bon week-end 🥐"
+- Taglines randomisées ("Prêt à régler quelques chantiers aujourd'hui ?", "Le café est servi, on attaque ?", "Belle journée pour bosser ses avis Google.", etc.)
+- Widget "🔌 Connecter tes outils" déjà ajouté en vague R, persistant
+
+### CSS partagé `admin.css` — Vague S
+- Animations utilitaires : `hc-fade-in`, `hc-slide-in`, `hc-pulse-soft`, `hc-bounce-in`, `hc-shimmer`, `hc-confetti`, `hc-wave`
+- Apparition fluide en cascade des éléments du dashboard
+- Hover state cards (translateY -2px + shadow plus profonde)
+- Boutons primaires avec effet shimmer au hover
+- Composant `.hc-empty` standardisé (icon emoji + h3 + p) — utilisé sur 8 pages
+- Composant `.hc-skeleton` pour loading states
+- Composant `.hc-achievement` (notification milestone façon jeu)
+- Tags métier colorés `.hc-tag-metier.plomberie/chauffage/...`
+- Greeting wave emoji `hc-wave`
+
+### États vides ludiques — 8 pages mises à jour
+- **leads.html** : 📥 / 🔎 "Aucun résultat"
+- **reviews.html** : ⭐ "Aucun avis synchronisé" / 🔍
+- **publications.html** : 🎉 "Tout est traité" / 📝 "Aucun brouillon" / 🚀 "Aucun chantier publié" / 📅 "Rien de planifié"
+- **realisations.html** : 🚀 "Démarre ton premier chantier" + bouton CTA
+- **calendar.html** : 🌤️ "Journée libre"
+- **medias.html** : 📸 "Médiathèque vide" + CTA
+- **users.html** : 👤 "Personne n'est connecté"
+- **social.html** : message avec lien direct vers wizards
+
+---
+
+## 🧙 Assistants de connexion (Vague R — 11 mai 2026, soir)
+
+4 wizards pas-à-pas dans le back-office, avec progression sauvegardée et diagnostic auto en dernière étape :
+
+- **`admin-pro/wizard-google.html`** (existant, refactoré) — 9 étapes pour GBP (~25 min)
+- **`admin-pro/wizard-meta.html`** (NOUVEAU) — 8 étapes pour Facebook + Instagram (~25 min). App Meta Developers, permissions, User Token → Long-Lived → Page Token never-expiring, IG Business Account ID.
+- **`admin-pro/wizard-linkedin.html`** (NOUVEAU) — 8 étapes pour LinkedIn (~20 min). App + vérification page + Community Management API (1-3j d'approbation) + OAuth Token Generator + Organization URN.
+- **`admin-pro/wizard-ga4.html`** (NOUVEAU) — 7 étapes pour Google Analytics 4 (~20 min). Service Account + clé JSON + partage propriété → stats GA4 directement dans le dashboard.
+
+**Tous accessibles depuis le menu latéral** → section « Assistants de connexion » (4 entrées, sous "IA & Outils").
+
+CSS partagé extrait dans `admin-pro/assets/wizard.css` (DRY entre les 4 wizards, variables CSS pour les couleurs : Google bleu/vert/jaune, Meta bleu/violet, LinkedIn bleu, GA4 orange).
+
+### Améliorations parallèles Vague R
+- **`supabase/functions/publish-meta/index.ts`** — ajout du **polling Instagram** : Meta exige d'attendre `status_code: FINISHED` sur le container avant de publier. Sans ça, ~30% des publications IG échouaient avec erreur cryptique. Retry 8× avec backoff 1.5s (jusqu'à 12s d'attente).
+- **`supabase/functions/check-tokens/index.ts`** — accepte maintenant `service_account_json` OU `service_account_key` (cohérence avec settings.html).
+- **`admin-pro/settings.html`** — toutes les sections renvoient vers leur wizard correspondant en complément du guide manuel markdown.
+- **Accessibilité** (demandé dans la version précédente) — contraste augmenté de `#64748b` à `#475569` sur les petites typos (`.hcv-body p`, `.urg-btn span`, `.cta-side-sub`, `.hc-header-stars .reviews`, taille augmentée d'env. +0.02rem partout, WCAG AAA atteint).
 
 ---
 

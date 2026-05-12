@@ -133,7 +133,9 @@
     });
     const grid = document.getElementById('medGrid');
     if (!filtered.length) {
-      grid.innerHTML = '<div class="med-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><div>' + (allFiles.length ? 'Aucun résultat avec ces filtres.' : 'Aucun média uploadé pour le moment.<br><a href="realisations.html?action=new" style="color:var(--hc-primary);font-weight:700">Créer un premier chantier →</a>') + '</div></div>';
+      grid.innerHTML = allFiles.length
+        ? '<div class="hc-empty"><div class="hc-empty-icon">🔍</div><h3>Aucun résultat</h3><p>Modifie tes filtres pour voir d\'autres médias.</p></div>'
+        : '<div class="hc-empty"><div class="hc-empty-icon">📸</div><h3>Médiathèque vide</h3><p>Tes photos chantier alimentent la médiathèque automatiquement. Crée ton premier chantier pour démarrer.</p><a href="realisations.html?action=new" class="btn btn-primary" style="margin-top:6px;display:inline-block">+ Créer un chantier</a></div>';
       return;
     }
     grid.innerHTML = '<div class="med-grid">' + filtered.map(f => `

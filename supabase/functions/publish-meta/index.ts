@@ -127,18 +127,37 @@ Deno.serve(async (req: Request) => {
           });
           const cJson = await cRes.json();
           if (cJson.error) throw new Error(cJson.error.message);
-          // 2. Publier le container
+          const containerId = cJson.id;
+
+          // 2. Attendre que le container soit prêt (Meta peut prendre 2-10s pour valider l'image)
+          let status = "IN_PROGRESS";
+          let attempts = 0;
+          while (status !== "FINISHED" && attempts < 8) {
+            await new Promise(r => setTimeout(r, 1500));
+            const sRes = await fetch(`${GRAPH_API}/${containerId}?fields=status_code&access_token=${encodeURIComponent(meta.page_access_token)}`);
+            const sJson = await sRes.json();
+            status = sJson.status_code || "IN_PROGRESS";
+            if (status === "ERROR" || status === "EXPIRED") {
+              throw new Error(`Container Instagram ${status} : Meta a rejeté l'image (URL non accessible ou format invalide)`);
+            }
+            attempts++;
+          }
+          if (status !== "FINISHED") {
+            throw new Error("Container Instagram pas prêt après 12s — réessayez ou vérifiez que l'URL photo est publiquement accessible");
+          }
+
+          // 3. Publier le container
           const pRes = await fetch(`${GRAPH_API}/${meta.ig_business_account_id}/media_publish`, {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({
               access_token: meta.page_access_token,
-              creation_id: cJson.id
+              creation_id: containerId
             })
           });
           const pJson = await pRes.json();
           if (pJson.error) throw new Error(pJson.error.message);
-          results.instagram = { success: true, postId: pJson.id };
+          results.instagram = { success: true, postId: pJson.id, url: `https://www.instagram.com/p/${pJson.id}` };
         } catch (e: any) {
           results.instagram = { error: e.message };
         }

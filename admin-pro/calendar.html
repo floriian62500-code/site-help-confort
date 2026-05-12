@@ -276,7 +276,7 @@
     document.getElementById('dayTitle').textContent = date.toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
     const body = document.getElementById('dayBody');
     if (!dayEvents.length) {
-      body.innerHTML = '<div style="padding:30px 14px;text-align:center;color:var(--ink-400)">Aucun événement ce jour-là.</div>';
+      body.innerHTML = '<div style="padding:24px 14px;text-align:center"><div style="font-size:2rem;margin-bottom:6px">🌤️</div><div style="font-weight:700;color:var(--ink-700);font-size:.9rem">Journée libre</div><div style="color:var(--ink-500);font-size:.8rem;margin-top:3px">Aucun événement ce jour-là.</div></div>';
     } else {
       body.innerHTML = dayEvents.map(e => {
         const color = e.type === 'pub' ? '#16A34A' : e.type === 'sched' ? '#7C3AED' : e.type === 'failed' ? '#d92d20' : '#0DA0CF';

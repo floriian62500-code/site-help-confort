@@ -189,23 +189,38 @@
 <script src="assets/layout.js"></script>
 <script>
 const FORMATS = {
-  square:    { w: 1080, h: 1080, photoRatio: 0.78 },
-  portrait:  { w: 1080, h: 1350, photoRatio: 0.78 },
-  landscape: { w: 1200, h: 630,  photoRatio: 0.82 },
-  story:     { w: 1080, h: 1920, photoRatio: 0.72 }
+  square:    { w: 1080, h: 1080 },
+  portrait:  { w: 1080, h: 1350 },
+  landscape: { w: 1200, h: 630  },
+  story:     { w: 1080, h: 1920 }
 };
 
+// Couleurs OFFICIELLES extraites des templates PDF de Florian (Vague S)
 const METIER_COLORS = {
-  'PLOMBERIE':       { main: '#0DA0CF', accent: '#5fc7e5' },
-  'CHAUFFAGE':       { main: '#FF6B1A', accent: '#FFB400' },
-  'ÉLECTRICITÉ':     { main: '#FFB400', accent: '#FFE066' },
-  'SERRURERIE':      { main: '#7C3AED', accent: '#A78BFA' },
-  'VITRERIE':        { main: '#16A34A', accent: '#3DCF8E' },
-  'MENUISERIE':      { main: '#92400E', accent: '#D97706' },
-  'RÉNOVATION':      { main: '#0EA5E9', accent: '#38BDF8' },
-  'VOLET ROULANT':   { main: '#475569', accent: '#94A3B8' },
-  'PMR':             { main: '#DB2777', accent: '#F472B6' },
-  'MULTI-SERVICES':  { main: '#0A1428', accent: '#1A2A44' }
+  'PLOMBERIE':       { bg: '#0093D0', label: '#0093D0' },   // cyan saturé
+  'CHAUFFAGE':       { bg: '#F37322', label: '#F37322' },   // orange (similaire menuiserie)
+  'ÉLECTRICITÉ':     { bg: '#FFB400', label: '#B87900' },   // jaune-or
+  'SERRURERIE':      { bg: '#E91063', label: '#E91063' },   // magenta/rose
+  'VITRERIE':        { bg: '#8DC83F', label: '#75A82F' },   // vert pomme
+  'MENUISERIE':      { bg: '#F37322', label: '#0A1428' },   // orange vif, texte noir
+  'RÉNOVATION':      { bg: '#9C8B78', label: '#75664F' },   // brun taupe
+  'VOLET ROULANT':   { bg: '#9C1E84', label: '#9C1E84' },   // violet/magenta
+  'PMR':             { bg: '#2A4FA0', label: '#2A4FA0' },   // bleu marine
+  'MULTI-SERVICES':  { bg: '#0A1428', label: '#0A1428' }    // bleu marine HC
+};
+
+// Pictos SVG par métier (path data utilisé par drawIcon)
+const METIER_ICONS = {
+  'PLOMBERIE': 'M14 6h-2v6l-3 0v2h7v-2h-3V6h1m-7 6V8H4v4H3l3 3 3-3M16 16v2H6v-2h10z', // robinet stylisé
+  'CHAUFFAGE': 'M12 3c0 4-4 4-4 8a4 4 0 0 0 8 0c0-4-4-4-4-8z', // flamme
+  'ÉLECTRICITÉ': 'M13 2L4 14h7l-1 8 9-12h-7l1-8z', // éclair
+  'SERRURERIE': 'M7 14a3 3 0 1 1 3-3v3l4 4v3h-3v-3l-1-1h-3z M7 11v.01', // clé
+  'VITRERIE': 'M4 4h7v7H4z M13 4h7v7h-7z M4 13h7v7H4z M13 13h7v7h-7z', // 4 carreaux
+  'MENUISERIE': 'M3 21V8h2v3h4V8h2v3h4V8h2v3h4v10z M9 11V3h2v8 M14 11V5h2v6', // règle/équerre
+  'RÉNOVATION': 'M3 12l9-9 9 9v9H3z M9 21v-6h6v6', // maison + chevron
+  'VOLET ROULANT': 'M5 4h14v3H5z M5 9h14v2H5z M5 13h14v2H5z M5 17h14v3H5z', // volet lamelles
+  'PMR': 'M3 12l9-4 9 4-9 4-9-4z M12 14v6 M9 17h6', // maison + main (simplifié)
+  'MULTI-SERVICES': 'M10 2l2 4 4 1-3 3 1 4-4-2-4 2 1-4-3-3 4-1z' // étoile
 };
 
 function toast(msg, type='ok', d=2400){
@@ -346,6 +361,45 @@ let currentFormat = 'square';
     ctx.closePath();
   }
 
+  function drawIcon(ctx, pathData, cx, cy, size, color) {
+    // Dessine un picto dans un cercle centré sur (cx, cy)
+    ctx.save();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = size * 0.06;
+    ctx.beginPath();
+    ctx.arc(cx, cy, size / 2, 0, Math.PI * 2);
+    ctx.stroke();
+    // Path SVG dans le cercle — on parse les commandes simples
+    ctx.translate(cx - size * 0.5, cy - size * 0.5);
+    ctx.scale(size / 24, size / 24);
+    const p = new Path2D(pathData);
+    ctx.fillStyle = '#fff';
+    ctx.fill(p);
+    ctx.restore();
+  }
+
+  function drawHcLogo(ctx, x, y, height, color = '#fff') {
+    // Reproduit le logo "HELP! Confort" type texte
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.textBaseline = 'top';
+    ctx.font = `900 ${height * 0.62}px Inter`;
+    ctx.fillText('HELP', x, y);
+    const helpW = ctx.measureText('HELP').width;
+    // Point d'exclamation orange
+    ctx.fillStyle = '#FFB400';
+    ctx.fillText('!', x + helpW + 2, y);
+    const exclW = ctx.measureText('!').width;
+    // "Confort" en plus fin
+    ctx.fillStyle = color;
+    ctx.font = `300 ${height * 0.50}px Inter`;
+    ctx.fillText('Confort', x, y + height * 0.55);
+    // "Une marque de La Poste"
+    ctx.font = `500 ${height * 0.14}px Inter`;
+    ctx.fillText('Une marque de La Poste', x, y + height * 1.05);
+    ctx.restore();
+  }
+
   function render() {
     if (!images.before || !images.after) return;
     const cfg = FORMATS[currentFormat];
@@ -358,80 +412,82 @@ let currentFormat = 'square';
     canvas.height = cfg.h;
     const ctx = canvas.getContext('2d');
 
-    // Background
-    ctx.fillStyle = '#fff';
+    // ─── Background couleur du métier ───
+    ctx.fillStyle = colors.bg;
     ctx.fillRect(0, 0, cfg.w, cfg.h);
 
-    // Photo zone (top part)
-    const photoH = Math.round(cfg.h * cfg.photoRatio);
-    const halfW = cfg.w / 2;
-    const gap = 4; // separator width in px
+    // ─── Logo HELP! Confort en haut à gauche ───
+    const logoH = cfg.h * 0.06;
+    const logoX = cfg.w * 0.04;
+    const logoY = cfg.h * 0.025;
+    drawHcLogo(ctx, logoX, logoY, logoH);
 
-    // Dessiner photo BEFORE (gauche)
-    drawImageCover(ctx, images.before, 0, 0, halfW - gap/2, photoH);
-    // Photo AFTER (droite)
-    drawImageCover(ctx, images.after, halfW + gap/2, 0, halfW - gap/2, photoH);
+    // ─── Layout central : 2 photos avec bandes blanches qui dépassent ───
+    // Format identique aux PDFs : photos rectangulaires verticales centrées
+    const padX = cfg.w * 0.10;             // marge gauche/droite
+    const photoTop = cfg.h * 0.18;          // commence à 18% de la hauteur
+    const photoH = cfg.h * 0.58;            // 58% de hauteur
+    const photoGap = cfg.w * 0.025;         // espace entre les 2 photos
+    const photoW = (cfg.w - padX * 2 - photoGap) / 2;
+    const photoLeftX = padX;
+    const photoRightX = padX + photoW + photoGap;
 
-    // Séparateur central (ligne blanche fine)
+    // Bandes blanches qui dépassent (effet caractéristique des PDFs)
+    // Bande blanche haute : ~6% sous le logo
+    const stripH = cfg.h * 0.08;
     ctx.fillStyle = '#fff';
-    ctx.fillRect(halfW - gap/2, 0, gap, photoH);
+    ctx.fillRect(0, cfg.h * 0.22, padX + photoW * 0.5, stripH * 0.7);  // bande gauche haute (sort à gauche)
+    ctx.fillRect(cfg.w - padX - photoW * 0.5, cfg.h * 0.55, padX + photoW * 0.5, stripH * 0.6); // bande droite milieu
+    ctx.fillRect(0, cfg.h * 0.65, cfg.w * 0.18, stripH * 0.6); // petite bande gauche basse
 
-    // Badges AVANT / APRÈS en haut
-    const badgeFont = currentFormat === 'story' || currentFormat === 'portrait' ? 'bold 38px Inter' : 'bold 32px Inter';
-    ctx.font = badgeFont;
-    function drawBadge(text, x, y, bg, color) {
-      ctx.font = badgeFont;
+    // ─── Photos ───
+    drawImageCover(ctx, images.before, photoLeftX, photoTop, photoW, photoH);
+    drawImageCover(ctx, images.after, photoRightX, photoTop, photoW, photoH);
+
+    // ─── Étiquettes blanches AVANT / APRÈS en bas de chaque photo ───
+    const labelFontSize = cfg.w * 0.06;
+    ctx.font = `900 ${labelFontSize}px Inter`;
+    function drawWhiteLabel(text, photoCenterX, photoBottomY, labelColor) {
+      ctx.font = `900 ${labelFontSize}px Inter`;
       const metrics = ctx.measureText(text);
-      const padX = 16, padY = 10;
-      const bw = metrics.width + padX * 2;
-      const bh = parseInt(badgeFont) + padY;
-      ctx.fillStyle = bg;
-      roundRect(ctx, x, y, bw, bh, 6);
-      ctx.fill();
-      ctx.fillStyle = color;
+      const padW = labelFontSize * 0.7, padH = labelFontSize * 0.35;
+      const w = metrics.width + padW * 2;
+      const h = labelFontSize + padH * 2;
+      // Boîte blanche
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(photoCenterX - w / 2, photoBottomY - h * 0.7, w, h);
+      // Texte coloré
+      ctx.fillStyle = labelColor;
+      ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(text, x + padX, y + bh / 2 + 1);
+      ctx.fillText(text, photoCenterX, photoBottomY - h * 0.7 + h / 2 + 2);
     }
-    drawBadge('AVANT', 24, 24, 'rgba(255,255,255,.94)', '#0A1428');
-    const afterText = 'APRÈS';
-    ctx.font = badgeFont;
-    const afterW = ctx.measureText(afterText).width + 32;
-    drawBadge(afterText, halfW + gap/2 + 24, 24, colors.main, '#fff');
+    drawWhiteLabel('AVANT', photoLeftX + photoW / 2, photoTop + photoH, colors.label);
+    drawWhiteLabel('APRÈS', photoRightX + photoW / 2, photoTop + photoH, colors.label);
 
-    // Banner métier en bas
-    const bannerY = photoH;
-    const bannerH = cfg.h - photoH;
-
-    // Background banner gradient
-    const grad = ctx.createLinearGradient(0, bannerY, cfg.w, bannerY + bannerH);
-    grad.addColorStop(0, colors.main);
-    grad.addColorStop(1, colors.accent);
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, bannerY, cfg.w, bannerH);
-
-    // Texte métier (gros)
+    // ─── Nom du métier centré en bas + picto ───
+    const metierY = cfg.h * 0.86;
     ctx.fillStyle = '#fff';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    const metierFontSize = Math.min(bannerH * 0.45, cfg.w / metier.length * 1.4);
-    ctx.font = `900 ${metierFontSize}px Inter`;
-    const textY = subtitle ? bannerY + bannerH * 0.38 : bannerY + bannerH * 0.50;
-    ctx.fillText(metier, cfg.w / 2, textY);
+    const metierFontSize = cfg.w * 0.038;
+    ctx.font = `700 ${metierFontSize}px Inter`;
+    ctx.letterSpacing = '4px';
+    ctx.fillText(metier, cfg.w / 2, metierY);
 
-    // Sous-titre (optionnel)
+    // Picto rond
+    const iconSize = cfg.w * 0.08;
+    const iconY = metierY + metierFontSize * 0.9 + iconSize / 2;
+    const iconPath = METIER_ICONS[metier] || METIER_ICONS['MULTI-SERVICES'];
+    drawIcon(ctx, iconPath, cfg.w / 2, iconY, iconSize);
+
+    // Sous-titre optionnel (en bas, sous le picto)
     if (subtitle) {
-      ctx.font = `600 ${metierFontSize * 0.32}px Inter`;
+      ctx.font = `600 ${cfg.w * 0.022}px Inter`;
       ctx.fillStyle = 'rgba(255,255,255,.92)';
-      ctx.fillText(subtitle, cfg.w / 2, bannerY + bannerH * 0.70);
+      ctx.textAlign = 'center';
+      ctx.fillText(subtitle, cfg.w / 2, iconY + iconSize * 0.7 + cfg.w * 0.025);
     }
-
-    // Logo / branding Help Confort en bas-droit du banner
-    const brandFontSize = bannerH * 0.16;
-    ctx.font = `800 ${brandFontSize}px Inter`;
-    ctx.fillStyle = 'rgba(255,255,255,.85)';
-    ctx.textAlign = 'right';
-    ctx.textBaseline = 'bottom';
-    ctx.fillText('HELP! Confort', cfg.w - 30, cfg.h - 18);
 
     // Show preview
     document.getElementById('previewEmpty').style.display = 'none';

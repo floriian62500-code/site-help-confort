@@ -1,7 +1,8 @@
 # Guide d'intégration — LinkedIn
 
-**Durée estimée : 10-15 minutes**
-**Coût : gratuit**
+**Durée estimée : 10-15 minutes** · **Coût : gratuit**
+
+> 💡 **Méthode recommandée** : utilise l'**[Assistant pas-à-pas LinkedIn](../admin-pro/wizard-linkedin.html)** dans le back-office (menu → Assistants de connexion → LinkedIn). Il guide les 8 étapes avec progression sauvegardée et diagnostic auto. Ce guide markdown reste utile en référence.
 
 ## Pourquoi
 

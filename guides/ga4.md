@@ -1,7 +1,8 @@
 # Guide d'intégration — Google Analytics 4
 
-**Durée estimée : 20 minutes**
-**Coût : gratuit**
+**Durée estimée : 20 minutes** · **Coût : gratuit**
+
+> 💡 **Méthode recommandée** : utilise l'**[Assistant pas-à-pas GA4](../admin-pro/wizard-ga4.html)** dans le back-office (menu → Assistants de connexion → Google Analytics 4). Il guide les 7 étapes (Property ID, projet GCP, API, service account, clé JSON, partage propriété) avec progression sauvegardée et diagnostic auto. Ce guide markdown reste utile en référence.
 
 ## Pourquoi
 

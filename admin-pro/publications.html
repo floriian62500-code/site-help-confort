@@ -234,14 +234,14 @@ function toast(msg,type='ok',d=2600){
       if (r.error) throw r.error;
       data = r.data || [];
     } catch (e) {
-      el.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg><div>Table <code>scheduled_publications</code> absente — exécute <code>setup_scheduled_publications.sql</code> dans Supabase pour activer la planification.</div></div>`;
+      el.innerHTML = `<div class="hc-empty"><div class="hc-empty-icon">⚙️</div><h3>Table <code>scheduled_publications</code> manquante</h3><p>Exécute <code>setup_scheduled_publications.sql</code> dans Supabase pour activer la planification de publications.</p></div>`;
       document.getElementById('countScheduled').textContent = '0';
       return;
     }
 
     document.getElementById('countScheduled').textContent = data.length;
     if (!data.length) {
-      el.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div>Aucune publication planifiée. Clique sur "Planifier" sur un brouillon ou un chantier à valider pour programmer sa publication.</div></div>`;
+      el.innerHTML = `<div class="hc-empty"><div class="hc-empty-icon">📅</div><h3>Rien de planifié</h3><p>Programme une publication à l'avance : clique sur « Planifier » sur un brouillon ou un chantier validé.</p></div>`;
       return;
     }
 
@@ -293,7 +293,10 @@ function toast(msg,type='ok',d=2600){
   function render(elId, items, status){
     const el = document.getElementById(elId);
     if (!items.length){
-      el.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="20 6 9 17 4 12"/></svg><div>${status==='validation'?'Aucune publication en attente — tout est traité ✓':status==='brouillon'?'Aucun brouillon en cours':'Aucun chantier publié'}</div></div>`;
+      const msg = status==='validation' ? {ic:'🎉', h:'Tout est traité', p:'Aucune publication en attente — beau boulot !'}
+                : status==='brouillon' ? {ic:'📝', h:'Aucun brouillon', p:'Tu démarres un chantier ? Crée-en un depuis Réalisations.'}
+                : {ic:'🚀', h:'Aucun chantier publié pour l\'instant', p:'Tes prochains chantiers publiés apparaîtront ici.'};
+      el.innerHTML = `<div class="hc-empty"><div class="hc-empty-icon">${msg.ic}</div><h3>${msg.h}</h3><p>${msg.p}</p></div>`;
       return;
     }
     el.innerHTML = items.map(r => {

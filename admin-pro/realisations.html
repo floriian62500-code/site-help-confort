@@ -828,16 +828,15 @@ function renderList() {
   const container = document.getElementById('listContainer');
   const items = getFiltered();
   if (!items.length) {
-    container.innerHTML = `
-      <div class="empty-state" style="margin-top:0">
-        <div class="empty-state-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        </div>
-        <h3>${_all.length ? 'Aucun résultat' : 'Aucune réalisation'}</h3>
-        <p>${_all.length ? 'Modifiez vos filtres pour afficher d\'autres chantiers.' : 'Ajoutez votre premier chantier — l\'IA générera titre, description et hashtags automatiquement.'}</p>
-        ${_all.length ? '' : '<button class="btn btn-primary" onclick="openEdit()">Créer un chantier</button>'}
-      </div>
-    `;
+    const m = _all.length
+      ? { ic:'🔍', h:'Aucun résultat', p:'Modifie tes filtres pour afficher d\'autres chantiers.' }
+      : { ic:'🚀', h:'Démarre ton premier chantier', p:'Ajoute des photos avant/après et l\'IA génère titre, description et hashtags en 10 secondes.' };
+    container.innerHTML = `<div class="hc-empty">
+        <div class="hc-empty-icon">${m.ic}</div>
+        <h3>${m.h}</h3>
+        <p>${m.p}</p>
+        ${_all.length ? '' : '<button class="btn btn-primary" onclick="openEdit()">+ Créer un chantier</button>'}
+      </div>`;
     return;
   }
   if (_view === 'grid') renderGrid(container, items);

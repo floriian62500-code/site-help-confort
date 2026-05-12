@@ -166,16 +166,15 @@ Deno.serve(async (req: Request) => {
     }
 
     // ─── GA4 (Analytics Data API) ───
-    if (shouldTest("ga4") && byKey.ga4?.property_id && byKey.ga4?.service_account_key) {
+    if (shouldTest("ga4") && byKey.ga4?.property_id && (byKey.ga4?.service_account_json || byKey.ga4?.service_account_key)) {
       try {
-        // Décode le service account JSON
+        // Décode le service account JSON (accepte service_account_json ou service_account_key)
+        const rawJson = byKey.ga4.service_account_json || byKey.ga4.service_account_key;
         let sa: any;
         try {
-          sa = typeof byKey.ga4.service_account_key === "string"
-            ? JSON.parse(byKey.ga4.service_account_key)
-            : byKey.ga4.service_account_key;
+          sa = typeof rawJson === "string" ? JSON.parse(rawJson) : rawJson;
         } catch (_) {
-          health.ga4 = { ok: false, error: "service_account_key n'est pas un JSON valide", checked_at: now };
+          health.ga4 = { ok: false, error: "service_account_json n'est pas un JSON valide", checked_at: now };
         }
         if (sa?.client_email && sa?.private_key) {
           // Génère un JWT signé pour obtenir un access token Google
