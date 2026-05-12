@@ -3192,8 +3192,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 
-  <p style="text-align:center;margin:38px auto 0;color:#94a3b8;font-size:.78rem;max-width:680px;font-style:italic" id="hc-apporteurs-note">
-    Logos &amp; URLs gérés depuis le back-office — <a href="admin/" style="color:#0DA0CF;text-decoration:none;font-weight:700">/admin/</a> · ajout/modification immédiats.
+  <p style="text-align:center;margin:38px auto 0;color:#94a3b8;font-size:.78rem;max-width:680px;font-style:italic;display:none" id="hc-apporteurs-note">
+    <!-- Note interne masquée du public (visible uniquement si modifié via JS) -->
   </p>
 
   <style>
@@ -3435,7 +3435,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           .sort(function(a, b) { return (a.ordre || 100) - (b.ordre || 100); });
 
         if (list.length === 0) {
-          track1.innerHTML = '<div class="hc-logo-card"><strong>Ajouter des apporteurs via /admin/</strong></div>';
+          track1.innerHTML = '<div class="hc-logo-card" style="display:none"></div>';
           return;
         }
 
@@ -3446,7 +3446,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         })).then(function(logoStates) {
           var withLogo = list.filter(function(a, i) { return logoStates[i] === true; });
           if (withLogo.length === 0) {
-            track1.innerHTML = '<div class="hc-logo-card"><strong>Ajouter des logos via /admin/</strong></div>';
+            track1.innerHTML = '<div class="hc-logo-card" style="display:none"></div>';
             return;
           }
           var cards = withLogo.map(function(a) { return buildCard(a); });
@@ -4152,7 +4152,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         Demande prioritaire
       </div>
       <h3 id="urgenceTitle" style="margin:0;font-size:1.4rem;font-weight:800;line-height:1.2">Une urgence ? On vous rappelle.</h3>
-      <p style="margin:6px 0 0;font-size:.92rem;color:rgba(255,255,255,.92);font-weight:500">Décrivez votre situation. On revient vers vous dans l'heure (Lun–Sam 9h–17h).</p>
+      <p style="margin:6px 0 0;font-size:.92rem;color:rgba(255,255,255,.92);font-weight:500">Décrivez votre situation. On revient vers vous dans l'heure (Lun-Sam 8h-18h · urgences 7j/7).</p>
     </div>
 
     <!-- Form -->
