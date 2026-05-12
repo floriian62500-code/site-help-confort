@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Interventions · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+.iv-hero{background:linear-gradient(135deg,#0DA0CF 0%,#5fc7e5 60%,#FF6B1A 130%);color:#fff;border-radius:18px;padding:26px 28px;margin-bottom:22px;box-shadow:0 14px 40px rgba(13,160,207,.22);display:flex;align-items:center;gap:18px}
+.iv-hero .emoji{font-size:2.4rem;flex-shrink:0}
+.iv-hero h1{font-size:1.55rem;font-weight:800;margin:0 0 5px;line-height:1.2}
+.iv-hero p{font-size:.94rem;opacity:.96;margin:0;line-height:1.5;max-width:680px}
+
+.iv-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+.iv-stat{background:#fff;border:1px solid var(--ink-100);border-radius:12px;padding:14px 16px;position:relative;overflow:hidden}
+.iv-stat::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c,#0DA0CF)}
+.iv-stat .label{font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.iv-stat .value{font-size:1.55rem;font-weight:800;color:var(--ink-900);line-height:1}
+
+.iv-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.iv-toolbar h2{font-size:1.04rem;font-weight:800;color:var(--ink-900);margin:0;flex:1}
+.iv-search{flex:1;max-width:280px;display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fff;border:1px solid var(--ink-100);border-radius:10px}
+.iv-search svg{width:16px;height:16px;color:var(--ink-400)}
+.iv-search input{flex:1;border:none;background:transparent;outline:none;font:inherit;font-size:.88rem}
+
+.iv-filter{padding:7px 14px;border-radius:999px;border:1px solid var(--ink-100);background:#fff;color:var(--ink-700);font:inherit;font-size:.82rem;font-weight:600;cursor:pointer;transition:.15s;white-space:nowrap}
+.iv-filter:hover{border-color:var(--hc-primary);color:var(--hc-primary)}
+.iv-filter.active{background:var(--hc-primary);color:#fff;border-color:var(--hc-primary);box-shadow:0 4px 12px rgba(13,160,207,.25)}
+
+/* Agenda style : groupes par date */
+.iv-day{margin-bottom:22px}
+.iv-day-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding:0 4px}
+.iv-day-head .day-num{background:var(--hc-primary);color:#fff;width:42px;height:42px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;line-height:1;flex-shrink:0;box-shadow:0 4px 12px rgba(13,160,207,.20)}
+.iv-day-head .day-num .num{font-size:1.1rem}
+.iv-day-head .day-num .mo{font-size:.55rem;text-transform:uppercase;letter-spacing:.06em;margin-top:2px;opacity:.9}
+.iv-day-head .day-label{font-size:.86rem;font-weight:800;color:var(--ink-900)}
+.iv-day-head .day-label small{display:block;font-size:.7rem;font-weight:600;color:var(--ink-500);margin-top:2px}
+.iv-day-head .count{margin-left:auto;font-size:.7rem;color:var(--ink-500);font-weight:700;background:var(--ink-50);padding:3px 10px;border-radius:5px}
+
+.iv-day.today .day-num{background:#FF6B1A;box-shadow:0 4px 12px rgba(255,107,26,.25)}
+.iv-day.today .day-label{color:#FF6B1A}
+
+.iv-list{background:#fff;border:1px solid var(--ink-100);border-radius:12px;overflow:hidden}
+.iv-card{display:grid;grid-template-columns:auto 1.4fr 1fr 1fr auto auto;gap:14px;padding:13px 16px;border-bottom:1px solid var(--ink-50);align-items:center;cursor:pointer;transition:.15s}
+.iv-card:last-child{border-bottom:none}
+.iv-card:hover{background:#FAFCFD}
+.iv-card.urgent{border-left:3px solid #d92d20;padding-left:13px}
+.iv-time{font-weight:800;color:var(--ink-900);font-size:.95rem}
+.iv-time small{display:block;font-size:.66rem;font-weight:600;color:var(--ink-500);margin-top:2px}
+.iv-client strong{display:block;font-size:.9rem;color:var(--ink-900);font-weight:700;line-height:1.25}
+.iv-client span{font-size:.74rem;color:var(--ink-500)}
+.iv-type{display:inline-flex;align-items:center;gap:5px;font-size:.74rem;font-weight:700;color:var(--ink-700);padding:3px 9px;border-radius:5px;background:var(--metier-soft,rgba(100,116,139,.10));color:var(--metier-color,#475569)}
+.iv-tech{font-size:.78rem;color:var(--ink-700);font-weight:600}
+.iv-tech::before{content:'👷 ';opacity:.6}
+.iv-status{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:800;padding:3px 8px;border-radius:5px;text-transform:uppercase;letter-spacing:.04em}
+.iv-status.scheduled{background:rgba(100,116,139,.10);color:#475569}
+.iv-status.confirmed{background:rgba(13,160,207,.10);color:#0a7fa3}
+.iv-status.in_progress{background:rgba(255,180,0,.14);color:#b87900}
+.iv-status.done{background:rgba(0,170,80,.10);color:#00763a}
+.iv-status.cancelled, .iv-status.no_show{background:rgba(217,45,32,.08);color:#b91c1c;opacity:.7}
+
+.iv-actions{display:flex;gap:4px}
+.iv-actions button{background:#fff;border:1px solid var(--ink-100);color:var(--ink-700);width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.iv-actions button:hover{border-color:var(--hc-primary);color:var(--hc-primary)}
+.iv-actions button svg{width:12px;height:12px}
+
+@media (max-width:880px){.iv-card{grid-template-columns:1fr;gap:6px;padding:14px}}
+
+.iv-modal{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(10,20,40,.55);backdrop-filter:blur(4px)}
+.iv-modal.open{display:flex}
+.iv-modal-sheet{background:#fff;border-radius:16px;width:100%;max-width:640px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 30px 70px rgba(0,0,0,.32);overflow:hidden}
+.iv-modal-head{padding:18px 22px 14px 22px;border-bottom:1px solid var(--ink-100);display:flex;align-items:center;gap:12px}
+.iv-modal-head h2{font-size:1.05rem;font-weight:800;color:var(--ink-900);margin:0;flex:1}
+.iv-modal-head .close{width:30px;height:30px;border-radius:50%;background:var(--ink-50);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-500)}
+.iv-modal-body{padding:18px 22px;overflow-y:auto;flex:1;display:grid;gap:14px}
+.iv-modal-body label{font-size:.78rem;font-weight:700;color:var(--ink-700);display:block;margin-bottom:5px;letter-spacing:.02em}
+.iv-modal-body input, .iv-modal-body select, .iv-modal-body textarea{width:100%;padding:10px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;font-size:.88rem;color:var(--ink-900);background:#fff}
+.iv-modal-body textarea{min-height:60px;resize:vertical}
+.iv-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.iv-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.iv-modal-foot{padding:14px 22px;border-top:1px solid var(--ink-100);background:#FAFCFD;display:flex;gap:10px}
+.iv-modal-foot .right{margin-left:auto;display:flex;gap:8px}
+.iv-section-title{font-size:.78rem;font-weight:800;color:var(--ink-700);text-transform:uppercase;letter-spacing:.05em;margin:6px 0 -4px;display:flex;align-items:center;gap:6px}
+.iv-section-title::before, .iv-section-title::after{content:'';flex:1;height:1px;background:var(--ink-100)}
+.iv-section-title::before{margin-right:6px}
+.iv-section-title::after{margin-left:6px}
+
+.toast-stack{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:2000;pointer-events:none}
+.toast{background:#fff;border:1px solid var(--ink-100);border-radius:10px;padding:11px 14px;box-shadow:0 8px 24px rgba(11,18,32,.16);font-size:.86rem;font-weight:600;color:var(--ink-900);pointer-events:auto;min-width:240px}
+.toast.ok{border-left:3px solid #00aa50}.toast.err{border-left:3px solid #d92d20}
+</style>
+</head>
+<body>
+<div class="admin-overlay"></div>
+<div class="admin-shell">
+  <aside class="admin-sidebar"></aside>
+  <main class="admin-main">
+    <header class="admin-topbar"></header>
+    <div class="admin-content">
+
+      <div class="iv-hero">
+        <div class="emoji">🗓️</div>
+        <div>
+          <h1>Interventions & rendez-vous</h1>
+          <p>Planning des dépannages, entretiens et chantiers. Crée un RDV en 30 secondes, lie-le à un contrat ou un lead, suis le déroulé en temps réel.</p>
+        </div>
+      </div>
+
+      <div class="iv-stats" id="ivStats"></div>
+
+      <div class="iv-toolbar">
+        <h2 id="ivCount">— interventions</h2>
+        <div class="iv-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="searchInput" type="search" placeholder="Chercher un client, un technicien…">
+        </div>
+        <button class="btn btn-primary" id="btnNew" data-require-perm="create">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nouvelle intervention
+        </button>
+      </div>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
+        <button class="iv-filter active" data-when="upcoming">📅 À venir</button>
+        <button class="iv-filter" data-when="today">🟢 Aujourd'hui</button>
+        <button class="iv-filter" data-when="week">📆 Cette semaine</button>
+        <button class="iv-filter" data-when="urgent">🚨 Urgentes</button>
+        <button class="iv-filter" data-when="done">✓ Terminées</button>
+        <button class="iv-filter" data-when="all">🔎 Toutes</button>
+      </div>
+
+      <div id="ivAgenda"></div>
+    </div>
+  </main>
+</div>
+
+<!-- Modale Nouvelle / Éditer Intervention -->
+<div class="iv-modal" id="ivModal">
+  <div class="iv-modal-sheet">
+    <div class="iv-modal-head">
+      <h2 id="ivTitle">Nouvelle intervention</h2>
+      <button class="close" id="ivClose">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="iv-modal-body">
+      <div class="iv-section-title">Planification</div>
+      <div class="iv-row-3">
+        <div><label>Date *</label><input id="iv_date" type="date" required></div>
+        <div><label>Heure *</label><input id="iv_time" type="time" required></div>
+        <div><label>Durée (min)</label><input id="iv_dur" type="number" min="15" step="15" value="60"></div>
+      </div>
+      <div class="iv-row-2">
+        <div><label>Type</label>
+          <select id="iv_type">
+            <option value="depannage">🛠 Dépannage</option><option value="entretien">🔧 Entretien</option>
+            <option value="devis">📋 Devis</option><option value="installation">🔨 Installation</option>
+            <option value="chantier">🏗 Chantier</option>
+          </select>
+        </div>
+        <div><label>Métier</label>
+          <select id="iv_metier">
+            <option value="plomberie">Plomberie</option><option value="chauffage">Chauffage</option>
+            <option value="electricite">Électricité</option><option value="serrurerie">Serrurerie</option>
+            <option value="vitrerie">Vitrerie</option><option value="menuiserie">Menuiserie</option>
+            <option value="renovation">Rénovation</option><option value="pmr">Adaptation PMR</option>
+            <option value="multiservice">Multi-services</option>
+          </select>
+        </div>
+      </div>
+      <div class="iv-row-2">
+        <div><label>Technicien</label><input id="iv_tech" type="text" placeholder="Prénom du technicien"></div>
+        <div><label>Statut</label>
+          <select id="iv_status">
+            <option value="scheduled">📅 Planifié</option><option value="confirmed">✓ Confirmé</option>
+            <option value="in_progress">▶️ En cours</option><option value="done">✅ Terminé</option>
+            <option value="cancelled">❌ Annulé</option><option value="no_show">⚠️ Absent</option>
+          </select>
+        </div>
+      </div>
+      <label style="display:flex;gap:7px;align-items:center;font-size:.86rem;color:var(--ink-700)">
+        <input id="iv_urgent" type="checkbox" style="width:auto;margin-bottom:0"> Marquer comme urgent
+      </label>
+
+      <div class="iv-section-title">Client</div>
+      <div>
+        <label>Contrat lié (optionnel)</label>
+        <select id="iv_contract"><option value="">Aucun — intervention ponctuelle</option></select>
+      </div>
+      <div class="iv-row-2">
+        <div><label>Prénom</label><input id="iv_fn" type="text"></div>
+        <div><label>Nom *</label><input id="iv_ln" type="text" required></div>
+      </div>
+      <div class="iv-row-2">
+        <div><label>Téléphone</label><input id="iv_phone" type="tel"></div>
+        <div><label>Email</label><input id="iv_email" type="email"></div>
+      </div>
+      <div><label>Adresse</label><input id="iv_addr" type="text"></div>
+      <div class="iv-row-2">
+        <div><label>Code postal</label><input id="iv_pc" type="text"></div>
+        <div><label>Ville</label><input id="iv_city" type="text"></div>
+      </div>
+
+      <div><label>Notes pour le technicien</label><textarea id="iv_notes" placeholder="Code accès, modèle de matériel, problème déclaré…"></textarea></div>
+    </div>
+    <div class="iv-modal-foot">
+      <button class="btn" id="ivCancel">Annuler</button>
+      <div class="right">
+        <button class="btn" id="ivDelBtn" style="color:#d92d20;display:none" data-require-perm="delete">Supprimer</button>
+        <button class="btn btn-primary" id="ivSave">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+function toast(m,t='ok',d=2400){const s=document.getElementById('toastStack');const e=document.createElement('div');e.className='toast '+t;e.textContent=m;s.appendChild(e);setTimeout(()=>{e.style.opacity='0';setTimeout(()=>e.remove(),200)},d)}
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+const METIER_COLORS = {
+  plomberie:'#0DA0CF', chauffage:'#FF6B1A', electricite:'#FFB400',
+  serrurerie:'#7C3AED', vitrerie:'#22C55E', renovation:'#E11D48',
+  menuiserie:'#92501A', volets:'#6366F1', pmr:'#14B8A6', multiservice:'#64748b'
+};
+const TYPE_EMOJI = { depannage:'🛠', entretien:'🔧', devis:'📋', installation:'🔨', chantier:'🏗' };
+const STATUS_LABEL = { scheduled:'Planifié', confirmed:'Confirmé', in_progress:'En cours', done:'Terminé', cancelled:'Annulé', no_show:'Absent' };
+
+let _all = [];
+let _contracts = [];
+let _filter = 'upcoming';
+let _q = '';
+let _editingId = null;
+
+(async function(){
+  await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+  await HCLayout.mount('interventions', 'Interventions');
+  const c = await HCSupabase.init();
+
+  await Promise.all([loadInterventions(), loadContracts()]);
+
+  // Préselection depuis ?contract=
+  const params = new URLSearchParams(window.location.search);
+  const presetCt = params.get('contract');
+  if (presetCt) setTimeout(() => openModal(null, presetCt), 250);
+
+  document.getElementById('searchInput').oninput = e => { _q = e.target.value.toLowerCase(); render(); };
+  document.querySelectorAll('.iv-filter').forEach(b => b.onclick = () => {
+    document.querySelectorAll('.iv-filter').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    _filter = b.dataset.when;
+    render();
+  });
+  document.getElementById('btnNew').onclick = () => openModal();
+  document.getElementById('ivClose').onclick = closeModal;
+  document.getElementById('ivCancel').onclick = closeModal;
+  document.getElementById('ivSave').onclick = save;
+  document.getElementById('ivDelBtn').onclick = remove;
+  document.getElementById('iv_contract').onchange = applyContract;
+
+  async function loadInterventions() {
+    const wrap = document.getElementById('ivAgenda');
+    wrap.innerHTML = '<div class="hc-skeleton" style="height:80px;border-radius:12px;margin-bottom:14px"></div>'.repeat(3);
+    try {
+      const { data, error } = await c.from('interventions').select('*').order('scheduled_at',{ascending:true});
+      if (error) throw error;
+      _all = data || [];
+      render();
+    } catch (e) {
+      wrap.innerHTML = `<div class="hc-empty"><div class="hc-empty-icon">⚠️</div><h3>Table interventions manquante</h3><p>Lance <code>admin-pro/scripts/setup_contracts_interventions.sql</code> dans Supabase SQL Editor.</p><p style="font-size:.74rem;color:var(--ink-400);margin-top:8px">${escapeHtml(e.message)}</p></div>`;
+    }
+  }
+
+  async function loadContracts() {
+    try {
+      const { data } = await c.from('contracts').select('id,client_first_name,client_last_name,type,metier,monthly_amount,client_phone,client_email,client_address,client_postal_code,client_city').in('status',['active','prospect']).order('client_last_name');
+      _contracts = data || [];
+      const sel = document.getElementById('iv_contract');
+      sel.innerHTML = '<option value="">Aucun — intervention ponctuelle</option>' + _contracts.map(x =>
+        `<option value="${x.id}">${escapeHtml((x.client_first_name||'') + ' ' + (x.client_last_name||''))} — ${(x.type||'').toUpperCase()}</option>`
+      ).join('');
+    } catch(e) { _contracts = []; }
+  }
+
+  function applyContract() {
+    const id = document.getElementById('iv_contract').value;
+    if (!id) return;
+    const ct = _contracts.find(x => x.id === id);
+    if (!ct) return;
+    document.getElementById('iv_fn').value = ct.client_first_name || '';
+    document.getElementById('iv_ln').value = ct.client_last_name || '';
+    document.getElementById('iv_phone').value = ct.client_phone || '';
+    document.getElementById('iv_email').value = ct.client_email || '';
+    document.getElementById('iv_addr').value = ct.client_address || '';
+    document.getElementById('iv_pc').value = ct.client_postal_code || '';
+    document.getElementById('iv_city').value = ct.client_city || '';
+    document.getElementById('iv_metier').value = ct.metier || 'chauffage';
+    document.getElementById('iv_type').value = 'entretien';
+  }
+
+  function render() {
+    const now = new Date();
+    const today = new Date(now); today.setHours(0,0,0,0);
+    const endOfToday = new Date(today); endOfToday.setHours(23,59,59,999);
+    const endOfWeek = new Date(today); endOfWeek.setDate(endOfWeek.getDate() + (7 - endOfWeek.getDay()));
+
+    // Stats
+    const todayList = _all.filter(x => { const d = new Date(x.scheduled_at); return d >= today && d <= endOfToday && !['cancelled','no_show'].includes(x.status); });
+    const upcoming = _all.filter(x => new Date(x.scheduled_at) >= now && !['cancelled','no_show','done'].includes(x.status));
+    const urgent = _all.filter(x => x.is_urgent && !['cancelled','done'].includes(x.status));
+    const week = _all.filter(x => { const d = new Date(x.scheduled_at); return d >= today && d <= endOfWeek && !['cancelled','no_show'].includes(x.status); });
+
+    document.getElementById('ivStats').innerHTML = `
+      <div class="iv-stat" style="--c:#FF6B1A"><div class="label">📅 Aujourd'hui</div><div class="value">${todayList.length}</div></div>
+      <div class="iv-stat" style="--c:#0DA0CF"><div class="label">📆 Cette semaine</div><div class="value">${week.length}</div></div>
+      <div class="iv-stat" style="--c:#d92d20"><div class="label">🚨 Urgentes</div><div class="value">${urgent.length}</div></div>
+      <div class="iv-stat" style="--c:#64748b"><div class="label">Total à venir</div><div class="value">${upcoming.length}</div></div>
+    `;
+
+    // Filtre
+    let filtered = _all;
+    if (_filter === 'upcoming') filtered = _all.filter(x => new Date(x.scheduled_at) >= now && !['cancelled','no_show','done'].includes(x.status));
+    else if (_filter === 'today') filtered = todayList;
+    else if (_filter === 'week') filtered = week;
+    else if (_filter === 'urgent') filtered = urgent;
+    else if (_filter === 'done') filtered = _all.filter(x => x.status === 'done').reverse();
+
+    if (_q) {
+      filtered = filtered.filter(x => (
+        (x.client_last_name||'') + ' ' + (x.client_first_name||'') + ' ' +
+        (x.client_phone||'') + ' ' + (x.technician||'') + ' ' +
+        (x.client_city||'') + ' ' + (x.notes||'')
+      ).toLowerCase().includes(_q));
+    }
+
+    document.getElementById('ivCount').textContent = filtered.length + ' intervention' + (filtered.length>1?'s':'');
+
+    const wrap = document.getElementById('ivAgenda');
+    if (!filtered.length) {
+      wrap.innerHTML = `<div class="hc-empty" style="padding:36px 20px"><div class="hc-empty-icon">🗓️</div>
+        <h3>${_all.length === 0 ? 'Pas encore d\\'intervention' : 'Aucune intervention sur ce filtre'}</h3>
+        <p>${_all.length === 0 ? 'Clique sur "Nouvelle intervention" pour planifier ton premier RDV.' : 'Change le filtre ou la recherche.'}</p></div>`;
+      return;
+    }
+
+    // Groupe par date
+    const byDay = {};
+    filtered.forEach(x => {
+      const d = new Date(x.scheduled_at);
+      const k = d.toISOString().slice(0,10);
+      (byDay[k] = byDay[k] || []).push(x);
+    });
+    const days = Object.keys(byDay).sort();
+
+    wrap.innerHTML = days.map(k => {
+      const d = new Date(k + 'T12:00');
+      const isToday = k === today.toISOString().slice(0,10);
+      const list = byDay[k];
+      const dayLabel = isToday ? "Aujourd'hui" : d.toLocaleDateString('fr-FR',{weekday:'long'});
+      const dayDate = d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+      return `<div class="iv-day ${isToday ? 'today' : ''}">
+        <div class="iv-day-head">
+          <div class="day-num"><span class="num">${d.getDate()}</span><span class="mo">${d.toLocaleDateString('fr-FR',{month:'short'}).replace('.','')}</span></div>
+          <div class="day-label">${dayLabel.charAt(0).toUpperCase()+dayLabel.slice(1)}<small>${dayDate}</small></div>
+          <span class="count">${list.length} RDV</span>
+        </div>
+        <div class="iv-list">
+          ${list.map(x => {
+            const dt = new Date(x.scheduled_at);
+            const time = dt.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+            const dur = x.duration_minutes || 60;
+            const mc = METIER_COLORS[x.metier] || '#64748b';
+            const name = (x.client_first_name ? x.client_first_name + ' ' : '') + (x.client_last_name||'');
+            return `<div class="iv-card ${x.is_urgent?'urgent':''}" onclick="window.editIv('${x.id}')">
+              <div class="iv-time">${time}<small>${dur} min</small></div>
+              <div class="iv-client"><strong>${escapeHtml(name)}</strong><span>${escapeHtml((x.client_phone||x.client_city||x.client_address||'—'))}</span></div>
+              <div><span class="iv-type" style="--metier-color:${mc};--metier-soft:${mc}1A">${TYPE_EMOJI[x.type]||''} ${escapeHtml(x.type||'')}</span></div>
+              <div class="iv-tech">${escapeHtml(x.technician||'À assigner')}</div>
+              <div><span class="iv-status ${x.status}">${STATUS_LABEL[x.status]||x.status}</span></div>
+              <div class="iv-actions" onclick="event.stopPropagation()">
+                ${x.status !== 'done' ? `<button title="Marquer terminé" onclick="window.markDone('${x.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="20 6 9 17 4 12"/></svg></button>` : ''}
+                <button title="Éditer" onclick="window.editIv('${x.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
+              </div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function openModal(id = null, presetContract = null) {
+    _editingId = id;
+    const x = id ? _all.find(t => t.id === id) : null;
+    document.getElementById('ivTitle').textContent = x ? 'Éditer l\'intervention' : 'Nouvelle intervention';
+    document.getElementById('ivDelBtn').style.display = x ? '' : 'none';
+    const now = new Date();
+    const defDate = (x ? new Date(x.scheduled_at) : new Date(now.getTime() + 2*3600*1000));
+    document.getElementById('iv_date').value = defDate.toISOString().slice(0,10);
+    document.getElementById('iv_time').value = defDate.toTimeString().slice(0,5);
+    document.getElementById('iv_dur').value = x?.duration_minutes ?? 60;
+    document.getElementById('iv_type').value = x?.type ?? 'depannage';
+    document.getElementById('iv_metier').value = x?.metier ?? 'plomberie';
+    document.getElementById('iv_tech').value = x?.technician ?? '';
+    document.getElementById('iv_status').value = x?.status ?? 'scheduled';
+    document.getElementById('iv_urgent').checked = !!x?.is_urgent;
+    document.getElementById('iv_contract').value = x?.contract_id || presetContract || '';
+    document.getElementById('iv_fn').value = x?.client_first_name || '';
+    document.getElementById('iv_ln').value = x?.client_last_name || '';
+    document.getElementById('iv_phone').value = x?.client_phone || '';
+    document.getElementById('iv_email').value = x?.client_email || '';
+    document.getElementById('iv_addr').value = x?.client_address || '';
+    document.getElementById('iv_pc').value = x?.client_postal_code || '';
+    document.getElementById('iv_city').value = x?.client_city || '';
+    document.getElementById('iv_notes').value = x?.notes || '';
+    if (presetContract) applyContract();
+    document.getElementById('ivModal').classList.add('open');
+  }
+  function closeModal() { document.getElementById('ivModal').classList.remove('open'); _editingId = null; }
+
+  async function save() {
+    const ln = document.getElementById('iv_ln').value.trim();
+    if (!ln) { toast('Nom client obligatoire', 'err'); return; }
+    const date = document.getElementById('iv_date').value;
+    const time = document.getElementById('iv_time').value;
+    if (!date || !time) { toast('Date et heure obligatoires', 'err'); return; }
+    const scheduled_at = new Date(date + 'T' + time + ':00').toISOString();
+
+    const payload = {
+      contract_id: document.getElementById('iv_contract').value || null,
+      scheduled_at,
+      duration_minutes: parseInt(document.getElementById('iv_dur').value) || 60,
+      type: document.getElementById('iv_type').value,
+      metier: document.getElementById('iv_metier').value,
+      technician: document.getElementById('iv_tech').value.trim() || null,
+      status: document.getElementById('iv_status').value,
+      is_urgent: document.getElementById('iv_urgent').checked,
+      client_first_name: document.getElementById('iv_fn').value.trim() || null,
+      client_last_name: ln,
+      client_phone: document.getElementById('iv_phone').value.trim() || null,
+      client_email: document.getElementById('iv_email').value.trim() || null,
+      client_address: document.getElementById('iv_addr').value.trim() || null,
+      client_postal_code: document.getElementById('iv_pc').value.trim() || null,
+      client_city: document.getElementById('iv_city').value.trim() || null,
+      notes: document.getElementById('iv_notes').value.trim() || null
+    };
+
+    try {
+      if (_editingId) {
+        const { error } = await c.from('interventions').update(payload).eq('id', _editingId);
+        if (error) throw error;
+        toast('Intervention mise à jour');
+      } else {
+        payload.created_by = session.id;
+        const { error } = await c.from('interventions').insert(payload);
+        if (error) throw error;
+        toast('Intervention créée');
+      }
+      closeModal();
+      await loadInterventions();
+    } catch (e) { toast('Erreur : ' + e.message, 'err', 4500); }
+  }
+
+  async function remove() {
+    if (!_editingId) return;
+    if (!confirm('Supprimer cette intervention ?')) return;
+    try {
+      const { error } = await c.from('interventions').delete().eq('id', _editingId);
+      if (error) throw error;
+      toast('Intervention supprimée');
+      closeModal();
+      await loadInterventions();
+    } catch (e) { toast('Erreur : ' + e.message, 'err', 4500); }
+  }
+
+  window.editIv = (id) => openModal(id);
+  window.markDone = async (id) => {
+    try {
+      const { error } = await c.from('interventions').update({ status: 'done' }).eq('id', id);
+      if (error) throw error;
+      toast('Intervention marquée terminée');
+      await loadInterventions();
+    } catch (e) { toast('Erreur : ' + e.message, 'err', 4500); }
+  };
+})();
+</script>
+</body>
+</html>
