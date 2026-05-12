@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Contrats d'entretien · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+.ct-hero{background:linear-gradient(135deg,#FF6B1A 0%,#FFB400 70%,#0DA0CF 130%);color:#fff;border-radius:18px;padding:26px 28px;margin-bottom:22px;box-shadow:0 14px 40px rgba(255,107,26,.22);display:flex;align-items:center;gap:18px}
+.ct-hero .emoji{font-size:2.4rem;flex-shrink:0}
+.ct-hero h1{font-size:1.55rem;font-weight:800;margin:0 0 5px;line-height:1.2}
+.ct-hero p{font-size:.94rem;opacity:.96;margin:0;line-height:1.5;max-width:680px}
+
+.ct-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
+.ct-stat{background:#fff;border:1px solid var(--ink-100);border-radius:12px;padding:14px 16px;position:relative;overflow:hidden}
+.ct-stat::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c,#0DA0CF)}
+.ct-stat .label{font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.ct-stat .value{font-size:1.55rem;font-weight:800;color:var(--ink-900);line-height:1}
+.ct-stat .value small{font-size:.78rem;color:var(--ink-400);font-weight:600;margin-left:6px}
+
+.ct-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.ct-toolbar h2{font-size:1.04rem;font-weight:800;color:var(--ink-900);margin:0;flex:1}
+.ct-search{flex:1;max-width:280px;display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fff;border:1px solid var(--ink-100);border-radius:10px}
+.ct-search svg{width:16px;height:16px;color:var(--ink-400)}
+.ct-search input{flex:1;border:none;background:transparent;outline:none;font:inherit;font-size:.88rem}
+
+.ct-filter{padding:7px 14px;border-radius:999px;border:1px solid var(--ink-100);background:#fff;color:var(--ink-700);font:inherit;font-size:.82rem;font-weight:600;cursor:pointer;transition:.15s;white-space:nowrap}
+.ct-filter:hover{border-color:var(--hc-primary);color:var(--hc-primary)}
+.ct-filter.active{background:var(--hc-primary);color:#fff;border-color:var(--hc-primary);box-shadow:0 4px 12px rgba(13,160,207,.25)}
+
+.ct-table{background:#fff;border:1px solid var(--ink-100);border-radius:14px;overflow:hidden}
+.ct-row{display:grid;grid-template-columns:1.8fr 1fr 1fr 1.1fr 1fr auto;gap:16px;padding:14px 18px;border-bottom:1px solid var(--ink-50);align-items:center;transition:.15s}
+.ct-row:last-child{border-bottom:none}
+.ct-row:hover{background:#FAFCFD}
+.ct-row.head{background:#F7F9FC;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-500);font-weight:800;padding:11px 18px}
+.ct-cell-client strong{display:block;font-size:.92rem;color:var(--ink-900);font-weight:700}
+.ct-cell-client span{font-size:.75rem;color:var(--ink-500)}
+.ct-type-badge{display:inline-block;font-size:.7rem;font-weight:800;padding:3px 9px;border-radius:5px;text-transform:uppercase;letter-spacing:.04em}
+.ct-type-basic{background:rgba(100,116,139,.12);color:#475569}
+.ct-type-confort{background:rgba(34,197,94,.10);color:#15803d}
+.ct-type-securite{background:rgba(255,180,0,.14);color:#b87900}
+.ct-type-custom{background:rgba(124,58,237,.10);color:#5b21b6}
+.ct-status{display:inline-flex;align-items:center;gap:5px;font-size:.74rem;font-weight:700;padding:3px 9px;border-radius:5px}
+.ct-status .dot{width:7px;height:7px;border-radius:50%}
+.ct-status.active{background:rgba(0,170,80,.10);color:#00763a}.ct-status.active .dot{background:#00aa50}
+.ct-status.suspended{background:rgba(255,180,0,.10);color:#b87900}.ct-status.suspended .dot{background:#FFB400}
+.ct-status.cancelled{background:rgba(217,45,32,.08);color:#b91c1c}.ct-status.cancelled .dot{background:#d92d20}
+.ct-status.prospect{background:rgba(13,160,207,.08);color:#0a7fa3}.ct-status.prospect .dot{background:#0DA0CF}
+.ct-amount{font-weight:800;color:var(--ink-900);font-size:.92rem}
+.ct-amount small{font-size:.7rem;color:var(--ink-400);font-weight:500;margin-left:1px}
+.ct-next{font-size:.78rem;color:var(--ink-700)}
+.ct-next.due{color:#d92d20;font-weight:700}
+.ct-next.soon{color:#b87900;font-weight:700}
+.ct-actions{display:flex;gap:5px}
+.ct-actions button{background:#fff;border:1px solid var(--ink-100);color:var(--ink-700);width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s}
+.ct-actions button:hover{border-color:var(--hc-primary);color:var(--hc-primary)}
+.ct-actions button.danger:hover{border-color:#d92d20;color:#d92d20}
+.ct-actions button svg{width:13px;height:13px}
+
+/* Mobile : passe en cards */
+@media (max-width:880px){
+  .ct-row{grid-template-columns:1fr;gap:6px;padding:14px}
+  .ct-row.head{display:none}
+}
+
+.ct-modal{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(10,20,40,.55);backdrop-filter:blur(4px)}
+.ct-modal.open{display:flex}
+.ct-modal-sheet{background:#fff;border-radius:16px;width:100%;max-width:660px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 30px 70px rgba(0,0,0,.32);overflow:hidden}
+.ct-modal-head{padding:18px 22px 14px 22px;border-bottom:1px solid var(--ink-100);display:flex;align-items:center;gap:12px}
+.ct-modal-head h2{font-size:1.05rem;font-weight:800;color:var(--ink-900);margin:0;flex:1}
+.ct-modal-head .close{width:30px;height:30px;border-radius:50%;background:var(--ink-50);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-500)}
+.ct-modal-body{padding:18px 22px;overflow-y:auto;flex:1;display:grid;gap:14px}
+.ct-modal-body label{font-size:.78rem;font-weight:700;color:var(--ink-700);display:block;margin-bottom:5px;letter-spacing:.02em}
+.ct-modal-body input, .ct-modal-body select, .ct-modal-body textarea{width:100%;padding:10px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;font-size:.88rem;color:var(--ink-900);background:#fff}
+.ct-modal-body textarea{min-height:70px;resize:vertical}
+.ct-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ct-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.ct-modal-foot{padding:14px 22px;border-top:1px solid var(--ink-100);background:#FAFCFD;display:flex;gap:10px}
+.ct-modal-foot .right{margin-left:auto;display:flex;gap:8px}
+.ct-section-title{font-size:.78rem;font-weight:800;color:var(--ink-700);text-transform:uppercase;letter-spacing:.05em;margin:6px 0 -4px 0;display:flex;align-items:center;gap:6px}
+.ct-section-title::before{content:'';flex:1;height:1px;background:var(--ink-100);margin-right:6px}
+.ct-section-title::after{content:'';flex:1;height:1px;background:var(--ink-100);margin-left:6px}
+
+.type-pick{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.type-opt{display:flex;flex-direction:column;gap:3px;padding:10px 12px;border:1px solid var(--ink-100);border-radius:10px;cursor:pointer;background:#fff;transition:.15s;position:relative}
+.type-opt:hover{border-color:var(--hc-primary)}
+.type-opt input{display:none}
+.type-opt:has(input:checked){border-color:var(--hc-primary);background:rgba(13,160,207,.04);box-shadow:0 0 0 3px rgba(13,160,207,.10)}
+.type-opt strong{font-size:.88rem;font-weight:800;color:var(--ink-900)}
+.type-opt small{font-size:.72rem;color:var(--ink-500);line-height:1.4}
+.type-opt .price{font-size:.82rem;font-weight:700;color:var(--hc-primary)}
+
+.toast-stack{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:2000;pointer-events:none}
+.toast{background:#fff;border:1px solid var(--ink-100);border-radius:10px;padding:11px 14px;box-shadow:0 8px 24px rgba(11,18,32,.16);font-size:.86rem;font-weight:600;color:var(--ink-900);pointer-events:auto;min-width:240px}
+.toast.ok{border-left:3px solid #00aa50}.toast.err{border-left:3px solid #d92d20}
+</style>
+</head>
+<body>
+<div class="admin-overlay"></div>
+<div class="admin-shell">
+  <aside class="admin-sidebar"></aside>
+  <main class="admin-main">
+    <header class="admin-topbar"></header>
+    <div class="admin-content">
+
+      <div class="ct-hero">
+        <div class="emoji">📄</div>
+        <div>
+          <h1>Contrats d'entretien</h1>
+          <p>Suivi des contrats annuels chaudière gaz, entretien clim, multi-services. Programme automatiquement les entretiens à échéance, garde l'historique client à portée.</p>
+        </div>
+      </div>
+
+      <div class="ct-stats" id="ctStats"></div>
+
+      <div class="ct-toolbar">
+        <h2 id="ctCount">— contrats</h2>
+        <div class="ct-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="searchInput" type="search" placeholder="Chercher un client, n° contrat…">
+        </div>
+        <button class="btn btn-primary" id="btnNew" data-require-perm="create">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nouveau contrat
+        </button>
+      </div>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
+        <button class="ct-filter active" data-status="">Tous</button>
+        <button class="ct-filter" data-status="active">🟢 Actifs</button>
+        <button class="ct-filter" data-status="due">⏰ Échéance proche</button>
+        <button class="ct-filter" data-status="suspended">⏸️ Suspendus</button>
+        <button class="ct-filter" data-status="prospect">💡 Prospects</button>
+        <button class="ct-filter" data-status="cancelled">❌ Résiliés</button>
+      </div>
+
+      <div class="ct-table" id="ctTable">
+        <div class="ct-row head">
+          <div>Client</div>
+          <div>Type</div>
+          <div>Métier</div>
+          <div>Prochaine échéance</div>
+          <div>Montant / mois</div>
+          <div></div>
+        </div>
+        <div id="ctBody"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Modale Nouveau / Éditer Contrat -->
+<div class="ct-modal" id="ctModal">
+  <div class="ct-modal-sheet">
+    <div class="ct-modal-head">
+      <h2 id="ctTitle">Nouveau contrat</h2>
+      <button class="close" id="ctClose">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="ct-modal-body">
+      <div class="ct-section-title">Type de contrat</div>
+      <div class="type-pick" id="typePick">
+        <label class="type-opt"><input type="radio" name="ct_type" value="basic" checked>
+          <strong>BASIC</strong><small>Entretien annuel obligatoire</small><span class="price">9 €/mois</span></label>
+        <label class="type-opt"><input type="radio" name="ct_type" value="confort">
+          <strong>CONFORT</strong><small>Entretien + dépannage prioritaire</small><span class="price">13 €/mois</span></label>
+        <label class="type-opt"><input type="radio" name="ct_type" value="securite">
+          <strong>SÉCURITÉ</strong><small>Entretien + dépannage + pièces incluses</small><span class="price">23 €/mois</span></label>
+        <label class="type-opt"><input type="radio" name="ct_type" value="custom">
+          <strong>Personnalisé</strong><small>Montant et conditions sur mesure</small><span class="price">— €</span></label>
+      </div>
+
+      <div class="ct-section-title">Client</div>
+      <div class="ct-row-2">
+        <div><label>Prénom</label><input id="ct_fn" type="text" placeholder="Marie"></div>
+        <div><label>Nom *</label><input id="ct_ln" type="text" placeholder="Dubois" required></div>
+      </div>
+      <div class="ct-row-2">
+        <div><label>Téléphone</label><input id="ct_phone" type="tel" placeholder="06 12 34 56 78"></div>
+        <div><label>Email</label><input id="ct_email" type="email" placeholder="marie@exemple.fr"></div>
+      </div>
+      <div><label>Adresse</label><input id="ct_addr" type="text" placeholder="12 rue de la Paix"></div>
+      <div class="ct-row-2">
+        <div><label>Code postal</label><input id="ct_pc" type="text" placeholder="62500"></div>
+        <div><label>Ville</label><input id="ct_city" type="text" placeholder="Saint-Omer"></div>
+      </div>
+
+      <div class="ct-section-title">Conditions</div>
+      <div class="ct-row-3">
+        <div><label>Métier</label>
+          <select id="ct_metier">
+            <option value="chauffage">Chauffage</option><option value="plomberie">Plomberie</option>
+            <option value="electricite">Électricité</option><option value="multiservice">Multi-services</option>
+            <option value="vitrerie">Vitrerie</option><option value="serrurerie">Serrurerie</option>
+          </select>
+        </div>
+        <div><label>Montant mensuel (€)</label><input id="ct_amount" type="number" step="0.01" min="0" value="9"></div>
+        <div><label>Mode de paiement</label>
+          <select id="ct_pay">
+            <option value="sepa">Prélèvement SEPA</option><option value="cb">Carte bancaire</option>
+            <option value="cheque">Chèque</option><option value="especes">Espèces</option>
+            <option value="virement">Virement</option>
+          </select>
+        </div>
+      </div>
+      <div class="ct-row-3">
+        <div><label>Date de souscription</label><input id="ct_start" type="date"></div>
+        <div><label>Prochain entretien</label><input id="ct_next" type="date"></div>
+        <div><label>Statut</label>
+          <select id="ct_status">
+            <option value="prospect">💡 Prospect</option><option value="active" selected>🟢 Actif</option>
+            <option value="suspended">⏸️ Suspendu</option><option value="cancelled">❌ Résilié</option>
+          </select>
+        </div>
+      </div>
+      <div><label>Notes internes</label><textarea id="ct_notes" placeholder="Modèle de chaudière, code accès, points d'attention…"></textarea></div>
+    </div>
+    <div class="ct-modal-foot">
+      <button class="btn" id="ctCancel">Annuler</button>
+      <div class="right">
+        <button class="btn" id="ctDelBtn" style="color:#d92d20;display:none" data-require-perm="delete">Supprimer</button>
+        <button class="btn btn-primary" id="ctSave">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+function toast(m,t='ok',d=2400){const s=document.getElementById('toastStack');const e=document.createElement('div');e.className='toast '+t;e.textContent=m;s.appendChild(e);setTimeout(()=>{e.style.opacity='0';setTimeout(()=>e.remove(),200)},d)}
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+const TYPE_PRESETS = { basic: 9, confort: 13, securite: 23, custom: null };
+const METIER_LABEL = { chauffage:'Chauffage', plomberie:'Plomberie', electricite:'Électricité', multiservice:'Multi-services', vitrerie:'Vitrerie', serrurerie:'Serrurerie' };
+let _all = [];
+let _filter = '';
+let _q = '';
+let _editingId = null;
+
+(async function(){
+  await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+  await HCLayout.mount('contracts', 'Contrats d\'entretien');
+  const c = await HCSupabase.init();
+
+  await load();
+
+  document.getElementById('searchInput').oninput = e => { _q = e.target.value.toLowerCase(); render(); };
+  document.querySelectorAll('.ct-filter').forEach(b => b.onclick = () => {
+    document.querySelectorAll('.ct-filter').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    _filter = b.dataset.status;
+    render();
+  });
+  document.getElementById('btnNew').onclick = () => openModal();
+  document.getElementById('ctClose').onclick = closeModal;
+  document.getElementById('ctCancel').onclick = closeModal;
+  document.getElementById('ctSave').onclick = save;
+  document.getElementById('ctDelBtn').onclick = remove;
+  document.querySelectorAll('input[name="ct_type"]').forEach(r => r.addEventListener('change', e => {
+    const p = TYPE_PRESETS[e.target.value];
+    if (p !== null) document.getElementById('ct_amount').value = p;
+  }));
+
+  async function load() {
+    const body = document.getElementById('ctBody');
+    body.innerHTML = '<div class="hc-skeleton" style="height:60px;margin:10px 18px;border-radius:8px"></div>'.repeat(3);
+    try {
+      const { data, error } = await c.from('contracts').select('*').order('created_at',{ascending:false});
+      if (error) throw error;
+      _all = data || [];
+      render();
+    } catch (e) {
+      body.innerHTML = `<div class="hc-empty"><div class="hc-empty-icon">⚠️</div><h3>Table contracts manquante</h3><p>Lance <code>admin-pro/scripts/setup_contracts_interventions.sql</code> dans Supabase SQL Editor.</p><p style="font-size:.74rem;color:var(--ink-400);margin-top:8px">${escapeHtml(e.message)}</p></div>`;
+    }
+  }
+
+  function render() {
+    const today = new Date(); today.setHours(0,0,0,0);
+    const in30 = new Date(today); in30.setDate(in30.getDate()+30);
+
+    // Stats
+    const active = _all.filter(x => x.status === 'active');
+    const monthlyRev = active.reduce((s,x) => s + Number(x.monthly_amount||0), 0);
+    const dueSoon = active.filter(x => x.next_intervention_date && new Date(x.next_intervention_date) <= in30).length;
+    document.getElementById('ctStats').innerHTML = `
+      <div class="ct-stat" style="--c:#0DA0CF"><div class="label">Total</div><div class="value">${_all.length}</div></div>
+      <div class="ct-stat" style="--c:#00aa50"><div class="label">🟢 Actifs</div><div class="value">${active.length}</div></div>
+      <div class="ct-stat" style="--c:#FF6B1A"><div class="label">CA mensuel récurrent</div><div class="value">${monthlyRev.toLocaleString('fr-FR',{minimumFractionDigits:0,maximumFractionDigits:0})}<small>€</small></div></div>
+      <div class="ct-stat" style="--c:#FFB400"><div class="label">⏰ Échéances 30j</div><div class="value">${dueSoon}</div></div>
+    `;
+
+    // Filtrage
+    let filtered = _all;
+    if (_filter === 'due') {
+      filtered = _all.filter(x => x.status === 'active' && x.next_intervention_date && new Date(x.next_intervention_date) <= in30);
+    } else if (_filter) {
+      filtered = _all.filter(x => x.status === _filter);
+    }
+    if (_q) {
+      filtered = filtered.filter(x => (
+        (x.client_last_name||'') + ' ' + (x.client_first_name||'') + ' ' +
+        (x.client_phone||'') + ' ' + (x.client_email||'') + ' ' +
+        (x.contract_number||'') + ' ' + (x.client_city||'')
+      ).toLowerCase().includes(_q));
+    }
+
+    document.getElementById('ctCount').textContent = filtered.length + ' contrat' + (filtered.length>1?'s':'');
+    const body = document.getElementById('ctBody');
+    if (!filtered.length) {
+      body.innerHTML = `<div class="hc-empty" style="padding:32px 20px"><div class="hc-empty-icon">📄</div>
+        <h3>${_all.length === 0 ? 'Pas encore de contrat' : 'Aucun contrat ne matche'}</h3>
+        <p>${_all.length === 0 ? 'Clique sur "Nouveau contrat" pour démarrer ton premier abonnement.' : 'Modifie ton filtre ou ta recherche.'}</p></div>`;
+      return;
+    }
+
+    body.innerHTML = filtered.map(x => {
+      const next = x.next_intervention_date ? new Date(x.next_intervention_date) : null;
+      let nextCls = '';
+      if (next) {
+        if (next < today) nextCls = 'due';
+        else if (next <= in30) nextCls = 'soon';
+      }
+      const nextStr = next ? next.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'2-digit'}) : '—';
+      const name = (x.client_first_name ? x.client_first_name + ' ' : '') + (x.client_last_name || '');
+      return `<div class="ct-row" onclick="window.editCt('${x.id}')">
+        <div class="ct-cell-client">
+          <strong>${escapeHtml(name)}</strong>
+          <span>${escapeHtml((x.client_phone || x.client_email || x.client_city) || '—')}</span>
+        </div>
+        <div><span class="ct-type-badge ct-type-${x.type}">${(x.type||'').toUpperCase()}</span></div>
+        <div style="font-size:.82rem;color:var(--ink-700)">${escapeHtml(METIER_LABEL[x.metier] || x.metier || '')}</div>
+        <div class="ct-next ${nextCls}">${nextStr}</div>
+        <div class="ct-amount">${Number(x.monthly_amount||0).toLocaleString('fr-FR',{minimumFractionDigits:2})}<small>€/mois</small></div>
+        <div class="ct-actions" onclick="event.stopPropagation()">
+          <button title="Éditer" onclick="window.editCt('${x.id}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </button>
+          <button title="Planifier intervention" onclick="window.planFromContract('${x.id}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function openModal(id = null) {
+    _editingId = id;
+    const ct = id ? _all.find(x => x.id === id) : null;
+    document.getElementById('ctTitle').textContent = ct ? 'Éditer le contrat' : 'Nouveau contrat';
+    document.getElementById('ctDelBtn').style.display = ct ? '' : 'none';
+    document.querySelector('input[name="ct_type"][value="' + (ct?.type || 'basic') + '"]').checked = true;
+    document.getElementById('ct_fn').value = ct?.client_first_name || '';
+    document.getElementById('ct_ln').value = ct?.client_last_name || '';
+    document.getElementById('ct_phone').value = ct?.client_phone || '';
+    document.getElementById('ct_email').value = ct?.client_email || '';
+    document.getElementById('ct_addr').value = ct?.client_address || '';
+    document.getElementById('ct_pc').value = ct?.client_postal_code || '';
+    document.getElementById('ct_city').value = ct?.client_city || '';
+    document.getElementById('ct_metier').value = ct?.metier || 'chauffage';
+    document.getElementById('ct_amount').value = ct?.monthly_amount ?? 9;
+    document.getElementById('ct_pay').value = ct?.payment_method || 'sepa';
+    document.getElementById('ct_start').value = (ct?.start_date || new Date().toISOString().slice(0,10));
+    document.getElementById('ct_next').value = ct?.next_intervention_date || '';
+    document.getElementById('ct_status').value = ct?.status || 'active';
+    document.getElementById('ct_notes').value = ct?.notes || '';
+    document.getElementById('ctModal').classList.add('open');
+  }
+  function closeModal() { document.getElementById('ctModal').classList.remove('open'); _editingId = null; }
+
+  async function save() {
+    const ln = document.getElementById('ct_ln').value.trim();
+    if (!ln) { toast('Nom client obligatoire', 'err'); return; }
+    const payload = {
+      type: document.querySelector('input[name="ct_type"]:checked').value,
+      client_first_name: document.getElementById('ct_fn').value.trim() || null,
+      client_last_name: ln,
+      client_phone: document.getElementById('ct_phone').value.trim() || null,
+      client_email: document.getElementById('ct_email').value.trim() || null,
+      client_address: document.getElementById('ct_addr').value.trim() || null,
+      client_postal_code: document.getElementById('ct_pc').value.trim() || null,
+      client_city: document.getElementById('ct_city').value.trim() || null,
+      metier: document.getElementById('ct_metier').value,
+      monthly_amount: parseFloat(document.getElementById('ct_amount').value) || 0,
+      payment_method: document.getElementById('ct_pay').value,
+      start_date: document.getElementById('ct_start').value || null,
+      next_intervention_date: document.getElementById('ct_next').value || null,
+      status: document.getElementById('ct_status').value,
+      notes: document.getElementById('ct_notes').value.trim() || null
+    };
+    try {
+      if (_editingId) {
+        const { error } = await c.from('contracts').update(payload).eq('id', _editingId);
+        if (error) throw error;
+        toast('Contrat mis à jour');
+      } else {
+        payload.created_by = session.id;
+        const { error } = await c.from('contracts').insert(payload);
+        if (error) throw error;
+        toast('Contrat créé');
+      }
+      closeModal();
+      await load();
+    } catch (e) { toast('Erreur : ' + e.message, 'err', 4500); }
+  }
+
+  async function remove() {
+    if (!_editingId) return;
+    if (!confirm('Supprimer définitivement ce contrat ?')) return;
+    try {
+      const { error } = await c.from('contracts').delete().eq('id', _editingId);
+      if (error) throw error;
+      toast('Contrat supprimé');
+      closeModal();
+      await load();
+    } catch (e) { toast('Erreur : ' + e.message, 'err', 4500); }
+  }
+
+  window.editCt = (id) => openModal(id);
+  window.planFromContract = (id) => {
+    // Redirige vers interventions.html avec contract_id en query
+    window.location.href = 'interventions.html?contract=' + id;
+  };
+})();
+</script>
+</body>
+</html>
