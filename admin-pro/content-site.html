@@ -393,22 +393,54 @@
               Aperçu en direct
             </div>
             <div class="cs-preview-frame" id="previewFrame">
-              <!-- Hero preview (default) -->
-              <div class="cs-prev-hero" id="prevHero">
+              <!-- Bannière urgence (textes) -->
+              <div class="cs-prev-banner" id="prevBanner" style="display:none"></div>
+
+              <!-- HERO -->
+              <div class="cs-prev-hero" id="prev-hero" data-prev-section="hero">
                 <span class="phone" id="prevPhone">📞 —</span>
                 <h1 id="prevTitle">—</h1>
                 <p id="prevSubtitle">—</p>
                 <span class="cta" id="prevCta">—</span>
               </div>
-              <div class="cs-prev-section" id="prevAbout" style="display:none">
-                <h3>À propos</h3>
-                <p style="font-size:.78rem;color:var(--ink-700);line-height:1.5" id="prevAboutText">—</p>
+
+              <!-- COORDONNÉES -->
+              <div class="cs-prev-section" id="prev-contact" data-prev-section="contact">
+                <h3>📞 Coordonnées</h3>
+                <div class="cs-prev-contact-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg> <strong>Saint-Omer :</strong> <span id="prevContactPhoneAudo">—</span></div>
+                <div class="cs-prev-contact-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg> <strong>Dunkerque :</strong> <span id="prevContactPhoneDk">—</span></div>
+                <div class="cs-prev-contact-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> <strong>Email :</strong> <span id="prevContactEmail">—</span></div>
+                <div class="cs-prev-contact-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> <strong>Adresse :</strong> <span id="prevContactAddress">—</span></div>
+                <div class="cs-prev-hours" id="prevContactHours" style="display:none"></div>
               </div>
-              <div class="cs-prev-metiers" id="prevMetiers"></div>
-              <div class="cs-prev-footer" id="prevFooter">
+
+              <!-- TEXTES PHARES -->
+              <div class="cs-prev-section" id="prev-texts" data-prev-section="texts">
+                <h3>💬 Textes phares</h3>
+                <p class="cs-prev-slogan" id="prevSlogan">—</p>
+                <p style="font-size:.78rem;color:var(--ink-700);line-height:1.55;margin:10px 0 0;display:none" id="prevAboutText"></p>
+                <div class="cs-prev-garantie" id="prevGarantie" style="display:none"></div>
+              </div>
+
+              <!-- MÉTIERS -->
+              <div class="cs-prev-metiers" id="prev-metiers" data-prev-section="metiers"></div>
+
+              <!-- ZONES -->
+              <div class="cs-prev-section" id="prev-zones" data-prev-section="zones">
+                <h3>📍 Zones d'intervention</h3>
+                <div class="cs-prev-zones-list">
+                  <div><strong>Saint-Omer</strong><span id="prevZonesAudo">—</span></div>
+                  <div><strong>Dunkerque</strong><span id="prevZonesDk">—</span></div>
+                </div>
+                <div class="cs-prev-zones-radius" id="prevZonesRadius">—</div>
+              </div>
+
+              <!-- FOOTER -->
+              <div class="cs-prev-footer" id="prev-footer" data-prev-section="footer">
                 <strong id="prevRaisonSociale">—</strong><br>
                 <span id="prevReseau">—</span><br>
                 <span id="prevSiren">—</span> · <span id="prevRcs">—</span>
+                <div class="rs-row" id="prevRsRow"></div>
               </div>
             </div>
             <p style="font-size:.72rem;color:rgba(255,255,255,.5);margin:10px 0 0;text-align:center">Le rendu se met à jour quand tu écris. Pour voir sur le vrai site, clique sur "Voir mon site" en haut.</p>
@@ -488,13 +520,37 @@ let dirty = false;
     });
   });
 
-  // ─── Navigation par cartes ────────────────────────
+  // ─── Navigation par cartes + scroll de la preview ─
+  // Mapping section éditeur → section preview
+  const PREV_TARGET = {
+    hero:    '#prev-hero',
+    contact: '#prev-contact',
+    metiers: '#prev-metiers',
+    zones:   '#prev-zones',
+    texts:   '#prev-texts',
+    footer:  '#prev-footer'
+  };
   document.querySelectorAll('.cs-block').forEach(b => {
     b.addEventListener('click', () => {
       document.querySelectorAll('.cs-block').forEach(x => x.classList.remove('active'));
       document.querySelectorAll('.cs-panel').forEach(x => x.classList.remove('active'));
       b.classList.add('active');
       document.querySelector('[data-panel="' + b.dataset.section + '"]').classList.add('active');
+
+      // Scroll + flash sur la section preview correspondante
+      const sel = PREV_TARGET[b.dataset.section];
+      if (sel) {
+        const target = document.querySelector(sel);
+        const frame = document.getElementById('previewFrame');
+        if (target && frame) {
+          // Scroll DANS le cadre preview (pas dans la fenêtre globale)
+          const top = target.offsetTop - frame.offsetTop;
+          frame.scrollTo({ top: Math.max(0, top - 8), behavior: 'smooth' });
+          // Flash visuel
+          target.classList.add('flash');
+          setTimeout(() => target.classList.remove('flash'), 900);
+        }
+      }
     });
   });
 
