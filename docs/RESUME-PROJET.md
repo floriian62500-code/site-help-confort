@@ -1,7 +1,54 @@
 # 📋 Résumé du projet — Site HELP! Confort Saint-Omer
 
 > **À coller au début d'une nouvelle conversation Cowork** pour reprendre le travail sans repartir de zéro.
-> Mise à jour : **12 mai 2026 — Vague S** (UX globale back-office · presets visuel HC officiels · 14 templates posts · états vides ludiques · greeting adaptatif · CSS d'animations)
+> Mise à jour : **12 mai 2026 — Vague T** (audit complet + SEO sprint majeur + UX 5 pages métiers + nettoyage repo + auto-push permanent)
+
+## 🆕 Vague T — 12 mai 2026 (gros sprint SEO + UX + automation)
+
+### Référencement (SEO)
+- ✅ **Schema.org Article** ajouté sur les 17 actualités (avec image, dateModified, author, publisher, articleSection)
+- ✅ **Schema.org TechArticle** ajouté sur les 4 guides + **HowTo** sur guide-fuite-eau (5 étapes)
+- ✅ **Schema.org FAQPage** ajouté sur les 5 pages métiers (5 Q/R par page, JSON-LD valide)
+- ✅ **Twitter Cards** complétées sur 32 pages (title/description/image — étaient absentes partout sauf 1 balise twitter:card)
+- ✅ **Sitemap.xml** nettoyé : URL fantôme `2026-02-17-votre-reel.html` retirée + ajout `zones-intervention.html` + dates lastmod actualisées
+- ✅ **404.html** passée en `noindex, follow` (était indexable — dilution SEO)
+- ✅ **realisation.html** (template dynamique) passé en `noindex` par défaut
+- ✅ **mentions-legales.html** : canonical + OG tags ajoutés (étaient absents)
+- ✅ **zones-intervention.html** : titre 115→56 chars, description 264→154 chars (étaient tronqués en SERP)
+- ✅ **robots.txt** durci : ajout Disallow `/docs/`, `/tools/`, `/scripts/`, `*.command`, `*.sh`, `*.md`, `*.docx`, `realisation.html`
+- ✅ **17 actualités** : ajout twitter:title/description/image + robots index sur celles qui en manquaient
+
+### UX / Design (pages métiers)
+- ✅ **Bug pill « Réseaux »** corrigé sur plombier hero (overlap mascotte → repositionné à top:62%/left:4%)
+- ✅ **Section « Nos prestations » plombier** : 6 icônes SVG remplacées par 6 photos Unsplash (lazy-loaded, fallback gradient)
+- ✅ **Module chantiers + avis** : fusionnés en 2 colonnes sans scroll sur les 5 pages métiers (plombier + 4 autres), 2 témoignages métier-spécifiques par page
+- ✅ **Grille « Nos prestations »** (style plombier) ajoutée sur les 4 anciennes pages métiers (chauffagiste, électricien, serrurier, travaux) — 6 photos prestations par page
+
+### Repo / Organisation
+- ✅ **Nettoyage racine** : créé `docs/` (10 fichiers .md/.docx) + `tools/` (7 scripts .command + obsolètes archivés)
+- ✅ **Références mises à jour** dans `scripts/README.md`, `admin-pro/setup.html`, `admin-pro/wizard-ga4.html`
+
+### Automation
+- ✅ **Auto-push permanent** via launchd : daemon `com.helpconfort.autopush` push toutes les 60 sec via `~/Library/Application Support/HelpConfort/autopush.sh` (zone non protégée macOS)
+- ✅ **Scripts utilitaires** dans `tools/` : Push-Express, Push-Auto, Setup-Git-Auth, Install-AutoPush, Fix-AutoPush, Uninstall-Auto-Push-Daemon, Débloquer-Git
+- ⚠️ **Auth GitHub** : credential.helper = osxkeychain. Token PAT stocké au login `floriian62500-code` (avec 2 'i' à la fin, attention au typo). Si push refuse plus tard → relancer `tools/Setup-Git-Auth.command`
+
+### Documents livrés
+- ✅ **`docs/Audit-Site-HELP-Confort.docx`** : rapport d'audit complet (8 sections, 282 paragraphes) avec score SEO/perf/UX, problèmes, corrections appliquées, roadmap priorisée, inventaire 33 pages.
+
+### À FAIRE côté Florian (que je ne peux pas faire moi-même)
+1. **Activer GA4** : remplacer `G-XXXXXXXXXX` par le vrai ID (5 min, sinon tracking inactif)
+2. **Supprimer 3 fichiers vidéo inutiles** : `videos/hero-metier.mp4.original` + `hero-metier-OLD.mp4` + `hero-metier-NOAUDIO-bak.mp4` = **274 Mo libérés**
+3. **Recompresser** `hero-metier.mp4` : 15 Mo → ≤ 5 Mo (HandBrake CRF 28, sans audio, 720p)
+4. **Compresser les 3 PNG mascotte** : 2,9 Mo cumulés → ≤ 250 Ko (Squoosh ou TinyPNG)
+5. **Soumettre le nouveau sitemap** dans Google Search Console
+6. **Supprimer `scripts/README.md.bak`** (résidu de sed)
+7. **Remplacer les photos Unsplash** des grilles "Nos prestations" par photos chantiers locaux (au moment opportun)
+
+---
+
+## 🔙 Vague S — Vague précédente
+> Vague S (UX globale back-office · presets visuel HC officiels · 14 templates posts · états vides ludiques · greeting adaptatif · CSS d'animations)
 
 ---
 

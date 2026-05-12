@@ -1,12 +1,34 @@
 User-agent: *
 Allow: /
 
-# Bloquer le back-office de l'indexation
+# Bloquer le back-office et zones admin
 Disallow: /admin/
 Disallow: /admin-pro/
 
-# Bloquer les fichiers techniques
+# Bloquer la documentation interne et les outils
+Disallow: /docs/
+Disallow: /tools/
+Disallow: /scripts/
+Disallow: /logs/
+
+# Bloquer les sources de données et fichiers techniques
 Disallow: /*.json$
+Disallow: /*.md$
+Disallow: /*.command$
+Disallow: /*.sh$
+Disallow: /*.docx$
+Disallow: /*.pdf$
 Disallow: /content/
+Disallow: /supabase/
+Disallow: /assets/
+
+# Bloquer template de réalisation (rendu dynamique côté client)
+Disallow: /realisation.html
+Disallow: /realisation.html?*
+
+# Bloquer fichiers cachés
+Disallow: /.autopush/
+Disallow: /.env
+Disallow: /.git/
 
 Sitemap: https://www.helpconfort-saintomer.fr/sitemap.xml
