@@ -421,6 +421,14 @@ let activeCat = '';
     });
     document.getElementById('tpCount').textContent = filtered.length + ' modèle' + (filtered.length>1?'s':'') + ' disponible' + (filtered.length>1?'s':'');
 
+    // Compteurs par catégorie sur les filtres
+    document.querySelectorAll('.tp-filter').forEach(btn => {
+      const cat = btn.dataset.cat;
+      const n = cat ? _templates.filter(t => t.category === cat).length : _templates.length;
+      const cntEl = btn.querySelector('.cnt');
+      if (cntEl) cntEl.textContent = n > 0 ? n : '';
+    });
+
     // Palette métier HC (synchro charte couleurs officielle)
     const METIER = {
       plomberie:    { color: '#0DA0CF', soft: 'rgba(13,160,207,.10)',  label: 'Plomberie' },
