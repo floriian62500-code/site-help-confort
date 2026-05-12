@@ -69,8 +69,8 @@ Deno.serve(async (req) => {
   if (profErr || !profile) {
     return json({ error: "No profile found. Run setup_user_profiles.sql first." }, 403);
   }
-  if (profile.role !== "owner" || !profile.is_active) {
-    return json({ error: "Forbidden : owner role required" }, 403);
+  if (!profile.is_active) {
+    return json({ error: "Compte désactivé" }, 403);
   }
 
   // 3) Parse action
@@ -78,6 +78,12 @@ Deno.serve(async (req) => {
   try { body = await req.json(); } catch { return json({ error: "Invalid JSON" }, 400); }
   const action = body?.action;
   if (!action) return json({ error: "Missing action" }, 400);
+
+  // Pour les actions d'écriture, owner exigé. La lecture est ouverte aux authentifiés.
+  const writeActions = new Set(["invite", "update_role", "set_active", "delete"]);
+  if (writeActions.has(action) && profile.role !== "owner") {
+    return json({ error: "Forbidden : owner role required for action " + action }, 403);
+  }
 
   try {
     switch (action) {
