@@ -14,7 +14,7 @@ pip3 install requests python-dotenv
 
 ### Configuration
 
-1. Suis le guide **`../SETUP-API-FACEBOOK.md`** pour obtenir ton **Page Access Token**
+1. Suis le guide **`../docs/SETUP-API-FACEBOOK.md`** pour obtenir ton **Page Access Token**
 2. Copie `../.env.example` en `../.env` et remplis tes valeurs
 3. Vérifie que `.env` est bien dans `.gitignore` (déjà fait)
 
