@@ -349,7 +349,7 @@ let _editingId = null;
     const wrap = document.getElementById('ivAgenda');
     if (!filtered.length) {
       wrap.innerHTML = `<div class="hc-empty" style="padding:36px 20px"><div class="hc-empty-icon">🗓️</div>
-        <h3>${_all.length === 0 ? 'Pas encore d\\'intervention' : 'Aucune intervention sur ce filtre'}</h3>
+        <h3>${_all.length === 0 ? "Pas encore d'intervention" : "Aucune intervention sur ce filtre"}</h3>
         <p>${_all.length === 0 ? 'Clique sur "Nouvelle intervention" pour planifier ton premier RDV.' : 'Change le filtre ou la recherche.'}</p></div>`;
       return;
     }
