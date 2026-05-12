@@ -175,6 +175,7 @@
             <li class="setup-step is-loading" data-step="fn-publish-scheduled"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>publish-scheduled</strong><span>Cron — exécute les publications planifiées</span></div></div></li>
             <li class="setup-step is-loading" data-step="fn-sync-facebook-posts"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>sync-facebook-posts</strong><span>Import automatique des nouveaux posts FB</span></div></div></li>
             <li class="setup-step is-loading" data-step="fn-auto-publish-from-photos"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>auto-publish-from-photos</strong><span>Magic Dropzone IA : photos → publication auto</span></div></div></li>
+            <li class="setup-step is-loading" data-step="fn-manage-users"><span class="setup-step-mark"></span><div class="setup-step-body"><div class="setup-step-text"><strong>manage-users</strong><span>Gestion équipe : invite, change rôle, désactive</span></div></div></li>
           </ul>
         </div>
 
@@ -296,6 +297,9 @@ const checks = {
   't_app_settings':      { critical: true,  weight: 3, fixUrl: 'https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/sql/new', fixLabel: 'Exécuter setup_app_settings.sql' },
   't_leads':             { critical: false, weight: 2, fixUrl: 'https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/sql/new', fixLabel: 'Exécuter setup_leads.sql' },
   't_reviews':           { critical: false, weight: 2, fixUrl: 'https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/sql/new', fixLabel: 'Exécuter setup_reviews.sql' },
+  't_user_profiles':     { critical: false, weight: 3, fixUrl: 'https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/sql/new', fixLabel: 'Exécuter setup_user_profiles.sql' },
+  't_contracts':         { critical: false, weight: 2, fixUrl: 'https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/sql/new', fixLabel: 'Exécuter setup_contracts_interventions.sql' },
+  't_interventions':     { critical: false, weight: 2, fixUrl: 'https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/sql/new', fixLabel: 'Exécuter setup_contracts_interventions.sql' },
   'storage':             { critical: false, weight: 2, fixUrl: 'https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/storage/buckets', fixLabel: 'Créer le bucket' },
 
   'fn-generate-content': { critical: false, weight: 2, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
@@ -312,6 +316,7 @@ const checks = {
   'fn-publish-scheduled':{ critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
   'fn-sync-facebook-posts':{ critical: false, weight: 1, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
   'fn-auto-publish-from-photos':{ critical: false, weight: 2, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer' },
+  'fn-manage-users':     { critical: false, weight: 2, fixUrl: '../guides/deploy-edge-functions.md', fixLabel: 'Déployer manage-users' },
 
   'int-anthropic':       { critical: false, weight: 2, fixUrl: 'settings.html#section-anthropic', fixLabel: 'Configurer' },
   'int-meta':            { critical: false, weight: 1, fixUrl: 'settings.html#section-meta', fixLabel: 'Configurer' },
@@ -377,6 +382,10 @@ function updateScoreAndPriorities() {
     't_app_settings':      ['Créer la table app_settings', 'Sans ça, aucune intégration ne peut se sauvegarder'],
     't_leads':             ['Créer la table leads', 'Sans ça, les formulaires ne capturent rien'],
     't_reviews':           ['Créer la table reviews', 'Sans ça, pas de synchro avis Google'],
+    't_user_profiles':     ['Créer la table user_profiles', 'Sans ça, impossible de gérer assistantes et permissions'],
+    't_contracts':         ['Créer la table contracts', 'Sans ça, page Contrats vide'],
+    't_interventions':     ['Créer la table interventions', 'Sans ça, page Interventions vide'],
+    'fn-manage-users':     ['Déployer manage-users', 'Sans ça, la page Utilisateurs ne peut ni lister ni inviter'],
     'storage':             ['Créer le bucket Storage', 'Sans ça, impossible d\'uploader les photos'],
     'fn-generate-content': ['Déployer generate-content', 'Pour activer l\'assistant IA Claude'],
     'fn-publish-meta':     ['Déployer publish-meta', 'Pour publier vers Facebook + Instagram'],
@@ -476,6 +485,9 @@ function actionLink(key, isPrimary) {
   await checkTable('t_app_settings', 'app_settings', 'Table app_settings');
   await checkTable('t_leads', 'leads', 'Table leads');
   await checkTable('t_reviews', 'reviews', 'Table reviews');
+  await checkTable('t_user_profiles', 'user_profiles', 'Table user_profiles');
+  await checkTable('t_contracts', 'contracts', 'Table contracts');
+  await checkTable('t_interventions', 'interventions', 'Table interventions');
 
   // ─── 3. Storage bucket ─────────────────────────
   try {
