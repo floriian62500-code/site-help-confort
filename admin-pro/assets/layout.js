@@ -3,49 +3,135 @@
 // Injecte sidebar + topbar dynamiquement, met à jour le badge nav
 // ═══════════════════════════════════════════════════════════════
 window.HCLayout = (function() {
-  function sidebarHTML(activePage) {
-    const items = [
-      { section: 'Pilotage', links: [
-        { id:'dashboard', href:'index.html', label:'Dashboard', icon:'<rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/>' },
+  // ═════════════════════════════════════════════════════════
+  // Architecture sidebar — 5 sections + Dashboard épinglé
+  // Accordéons repliables : seule la section contenant la page
+  // active est ouverte par défaut. État persisté en localStorage.
+  // ═════════════════════════════════════════════════════════
+  const SIDEBAR_STATE_KEY = 'hc-sidebar-sections-v2';
+
+  // Item Dashboard épinglé seul tout en haut
+  const PINNED_ITEM = {
+    id:'dashboard', href:'index.html', label:'Dashboard',
+    icon:'<rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/>'
+  };
+
+  // 5 sections accordéons
+  const SECTIONS = [
+    { id:'activity', label:'Mon activité',
+      sectionIcon:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+      links: [
         { id:'leads', href:'leads.html', label:'Demandes clients', icon:'<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>', badge:'<span class="admin-nav-item-badge alert" id="navLeadsCount" style="display:none"></span>' },
-        { id:'reviews', href:'reviews.html', label:'Avis clients', icon:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>' }
-      ]},
-      { section: 'Clients & terrain', links: [
-        { id:'contracts', href:'contracts.html', label:'Contrats d\'entretien', icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>' },
+        { id:'reviews', href:'reviews.html', label:'Avis clients', icon:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>' },
+        { id:'contracts', href:'contracts.html', label:'Contrats d\'entretien', icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>' },
         { id:'interventions', href:'interventions.html', label:'Interventions / RDV', icon:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="16" r="2"/>' }
-      ]},
-      { section: 'Contenu du site', links: [
+      ]
+    },
+    { id:'content', label:'Contenu & posts',
+      sectionIcon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
+      links: [
         { id:'content-site', href:'content-site.html', label:'Pages du site', icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/>' },
         { id:'realisations', href:'realisations.html', label:'Chantiers (Réalisations)', icon:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>', badge:'<span class="admin-nav-item-badge" id="navRealCount">—</span>' },
-        { id:'medias', href:'medias.html', label:'Médiathèque', icon:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>' }
-      ]},
-      { section: 'Publication', links: [
+        { id:'medias', href:'medias.html', label:'Médiathèque', icon:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>' },
         { id:'publications', href:'publications.html', label:'Pile de publication', icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>' },
         { id:'calendar', href:'calendar.html', label:'Calendrier éditorial', icon:'<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>' },
-        { id:'social', href:'social.html', label:'Connexions réseaux', icon:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>' }
-      ]},
-      { section: 'IA & Outils', links: [
-        { id:'magic', href:'magic.html', label:'Studio IA (photos &rarr; post)', icon:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' },
-        { id:'visuel', href:'visuel.html', label:'Générateur visuel avant/après', icon:'<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/>' },
+        { id:'magic', href:'magic.html', label:'Studio IA (photos → post)', icon:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' },
         { id:'templates', href:'templates.html', label:'Modèles de posts', icon:'<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/>' },
+        { id:'visuel', href:'visuel.html', label:'Générateur visuel', icon:'<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/>' }
+      ]
+    },
+    { id:'perf', label:'Performance & IA',
+      sectionIcon:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
+      links: [
+        { id:'analytics', href:'analytics.html', label:'SEO & Analytics', icon:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>' },
         { id:'ai', href:'ai.html', label:'Chat IA', icon:'<path d="M12 8V4H8"/><rect x="2" y="2" width="20" height="8" rx="2"/><path d="M2 12h20"/><path d="M2 16h20"/><path d="M2 20h20"/>' },
-        { id:'analytics', href:'analytics.html', label:'SEO & Analytics', icon:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>' }
-      ]},
-      { section: 'Assistants de connexion', links: [
-        { id:'wizard-google', href:'wizard-google.html', label:'Google Business Profile', icon:'<path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>' },
+        { id:'alerts', href:'alerts.html', label:'Alertes & Monitoring', icon:'<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/>' }
+      ]
+    },
+    { id:'connexions', label:'Connexions',
+      sectionIcon:'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+      links: [
+        { id:'social', href:'social.html', label:'Vue d\'ensemble', icon:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>' },
+        { id:'wizard-google', href:'wizard-google.html', label:'Google Business', icon:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>' },
         { id:'wizard-meta', href:'wizard-meta.html', label:'Facebook + Instagram', icon:'<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>' },
         { id:'wizard-linkedin', href:'wizard-linkedin.html', label:'LinkedIn', icon:'<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>' },
-        { id:'wizard-ga4', href:'wizard-ga4.html', label:'Google Analytics 4', icon:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>' }
-      ]},
-      { section: 'Système', links: [
+        { id:'wizard-ga4', href:'wizard-ga4.html', label:'Google Analytics 4', icon:'<path d="M22 12c0 5.5-4.5 10-10 10S2 17.5 2 12 6.5 2 12 2"/><path d="M22 4 12 14.01l-3-3"/>' }
+      ]
+    },
+    { id:'config', label:'Réglages',
+      sectionIcon:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+      links: [
+        { id:'users', href:'users.html', label:'Équipe & permissions', icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
+        { id:'settings', href:'settings.html', label:'Paramètres', icon:'<circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 10v6m11-11h-6M7 12H1m17.36 6.36-4.24-4.24M9.88 9.88 5.64 5.64m12.72 0-4.24 4.24M9.88 14.12l-4.24 4.24"/>' },
         { id:'maintenance', href:'maintenance.html', label:'Santé & Maintenance', icon:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>' },
-        { id:'setup', href:'setup.html', label:'Diagnostic', icon:'<polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>' },
-        { id:'alerts', href:'alerts.html', label:'Alertes', icon:'<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/>' },
-        { id:'users', href:'users.html', label:'Utilisateurs', icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>' },
-        { id:'settings', href:'settings.html', label:'Paramètres', icon:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>' }
-      ]}
-    ];
-    let html = `
+        { id:'setup', href:'setup.html', label:'Diagnostic setup', icon:'<polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>' }
+      ]
+    }
+  ];
+
+  // CSS pour les accordéons — injecté une seule fois
+  const SIDEBAR_ACCORDION_CSS = `
+    .admin-sidebar-nav { padding: 10px 12px; }
+    .admin-nav-pinned { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .admin-nav-section { margin-bottom: 4px; border-radius: 10px; overflow: hidden; }
+    .admin-nav-section-header {
+      display: flex; align-items: center; gap: 10px;
+      width: 100%; padding: 9px 10px;
+      background: transparent; border: none;
+      color: rgba(255,255,255,.55); font-size: .78rem; font-weight: 700;
+      letter-spacing: .04em; text-transform: uppercase;
+      cursor: pointer; border-radius: 9px;
+      transition: background .15s, color .15s;
+      font-family: inherit;
+    }
+    .admin-nav-section-header:hover { background: rgba(255,255,255,.04); color: rgba(255,255,255,.85); }
+    .admin-nav-section-header .admin-nav-section-icon {
+      width: 16px; height: 16px; flex-shrink: 0; opacity: .65;
+    }
+    .admin-nav-section-header .admin-nav-section-label { flex: 1; text-align: left; }
+    .admin-nav-section-header .admin-nav-section-chevron {
+      width: 14px; height: 14px; opacity: .5;
+      transition: transform .2s cubic-bezier(.16,1,.3,1);
+    }
+    .admin-nav-section.is-open .admin-nav-section-header .admin-nav-section-chevron { transform: rotate(90deg); }
+    .admin-nav-section.has-active .admin-nav-section-header { color: rgba(255,255,255,.9); }
+    .admin-nav-section.has-active .admin-nav-section-header .admin-nav-section-icon { opacity: .95; color: var(--hc-primary-light, #7DD3FC); }
+    .admin-nav-section-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height .25s cubic-bezier(.16,1,.3,1);
+      padding: 0 2px;
+    }
+    .admin-nav-section.is-open .admin-nav-section-body {
+      max-height: 600px;
+      padding: 2px 2px 8px 2px;
+    }
+    .admin-nav-section .admin-nav-item {
+      padding-left: 32px; font-size: .85rem;
+    }
+    .admin-nav-section .admin-nav-item.is-active::before { left: -4px; }
+    .admin-nav-pinned .admin-nav-item { font-weight: 600; }
+    @media (prefers-reduced-motion: reduce) {
+      .admin-nav-section-body, .admin-nav-section-chevron { transition: none; }
+    }
+  `;
+
+  function sidebarHTML(activePage) {
+    // Determine which section contains the active page
+    let activeSectionId = null;
+    SECTIONS.forEach(sec => {
+      if (sec.links.some(l => l.id === activePage)) activeSectionId = sec.id;
+    });
+
+    // Read collapsed state from localStorage
+    let userState = {};
+    try { userState = JSON.parse(localStorage.getItem(SIDEBAR_STATE_KEY) || '{}'); } catch(e) {}
+
+    function renderItem(l, indent) {
+      const active = l.id === activePage ? ' is-active' : '';
+      return `<a href="${l.href}" class="admin-nav-item${active}"><svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${l.icon}</svg>${l.label}${l.badge || ''}</a>`;
+    }
+
+    let html = `<style>${SIDEBAR_ACCORDION_CSS}</style>
       <div class="admin-sidebar-brand">
         <div class="admin-brand-logo">H!</div>
         <div class="admin-brand-text">
@@ -53,15 +139,32 @@ window.HCLayout = (function() {
           <span>Back-Office Pro</span>
         </div>
       </div>
-      <nav class="admin-sidebar-nav">`;
-    items.forEach(grp => {
-      html += `<div class="admin-nav-section"><div class="admin-nav-section-title">${grp.section}</div>`;
-      grp.links.forEach(l => {
-        const active = l.id === activePage ? ' is-active' : '';
-        html += `<a href="${l.href}" class="admin-nav-item${active}"><svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${l.icon}</svg>${l.label}${l.badge || ''}</a>`;
-      });
-      html += '</div>';
+      <nav class="admin-sidebar-nav" data-sidebar-nav>`;
+
+    // Pinned Dashboard
+    html += `<div class="admin-nav-pinned">${renderItem(PINNED_ITEM)}</div>`;
+
+    // Sections accordéon
+    SECTIONS.forEach(sec => {
+      const hasActive = sec.id === activeSectionId;
+      // Section is open if: contains active page, OR user explicitly opened it (state===1).
+      // If user explicitly closed it (state===0), keep closed even if active — but only if state was set deliberately.
+      // Simpler rule: hasActive forces open; otherwise honour user state (default closed).
+      const userPref = userState[sec.id]; // undefined | 0 | 1
+      const isOpen = hasActive || userPref === 1;
+      const openClass = isOpen ? ' is-open' : '';
+      const activeClass = hasActive ? ' has-active' : '';
+      html += `<div class="admin-nav-section${openClass}${activeClass}" data-section="${sec.id}">
+        <button type="button" class="admin-nav-section-header" data-section-toggle="${sec.id}" aria-expanded="${isOpen ? 'true' : 'false'}">
+          <svg class="admin-nav-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${sec.sectionIcon}</svg>
+          <span class="admin-nav-section-label">${sec.label}</span>
+          <svg class="admin-nav-section-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <div class="admin-nav-section-body">`;
+      sec.links.forEach(l => { html += renderItem(l); });
+      html += `</div></div>`;
     });
+
     html += '</nav>';
     html += `<div class="admin-sidebar-foot">
       <div class="admin-user-card" data-logout title="Cliquer pour déconnexion">
@@ -74,6 +177,29 @@ window.HCLayout = (function() {
       </div>
     </div>`;
     return html;
+  }
+
+  // Activate accordion toggle behaviour on the just-rendered sidebar.
+  function setupSidebarAccordion() {
+    const nav = document.querySelector('[data-sidebar-nav]');
+    if (!nav || nav.dataset.accordionReady === '1') return;
+    nav.dataset.accordionReady = '1';
+    nav.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-section-toggle]');
+      if (!btn) return;
+      const secId = btn.dataset.sectionToggle;
+      const section = btn.closest('.admin-nav-section');
+      if (!section) return;
+      const willOpen = !section.classList.contains('is-open');
+      section.classList.toggle('is-open', willOpen);
+      btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      // Persist user preference
+      try {
+        const state = JSON.parse(localStorage.getItem(SIDEBAR_STATE_KEY) || '{}');
+        state[secId] = willOpen ? 1 : 0;
+        localStorage.setItem(SIDEBAR_STATE_KEY, JSON.stringify(state));
+      } catch(err) {}
+    });
   }
 
   function topbarHTML(title) {
@@ -798,6 +924,7 @@ window.HCLayout = (function() {
         const html = sidebarHTML(activePage);
         if (!html || html.length < 100) throw new Error('Empty sidebar HTML');
         sb.innerHTML = html;
+        setupSidebarAccordion();
       } catch (e) {
         console.error('[HCLayout] sidebarHTML failed:', e);
         sb.innerHTML = fallbackSidebar(activePage);
@@ -864,6 +991,7 @@ window.HCLayout = (function() {
         const html = sidebarHTML(activePage);
         if (!html || html.length < 100) throw new Error('Empty sidebar HTML');
         sb.innerHTML = html;
+        setupSidebarAccordion();
       } catch (e) {
         console.error('[HCLayout] sidebarHTML failed:', e);
         sb.innerHTML = fallbackSidebar(activePage);
