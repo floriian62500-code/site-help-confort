@@ -85,9 +85,12 @@
 .tp-color-grid button.selected{border-color:var(--ink-900);box-shadow:0 0 0 2px #fff}
 
 /* Filtres par catégorie */
-.tp-filter{padding:7px 14px;border-radius:999px;border:1px solid var(--ink-100);background:#fff;color:var(--ink-700);font:inherit;font-size:.82rem;font-weight:600;cursor:pointer;transition:.15s;white-space:nowrap}
+.tp-filter{padding:7px 14px;border-radius:999px;border:1px solid var(--ink-100);background:#fff;color:var(--ink-700);font:inherit;font-size:.82rem;font-weight:600;cursor:pointer;transition:.15s;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
 .tp-filter:hover{border-color:var(--hc-primary);color:var(--hc-primary)}
 .tp-filter.active{background:var(--hc-primary);color:#fff;border-color:var(--hc-primary);box-shadow:0 4px 12px rgba(13,160,207,.25)}
+.tp-filter .cnt{font-size:.68rem;font-weight:800;background:var(--ink-50);color:var(--ink-500);padding:1px 7px;border-radius:9px;min-width:18px;text-align:center}
+.tp-filter.active .cnt{background:rgba(255,255,255,.22);color:#fff}
+.tp-filter .cnt:empty{display:none}
 
 /* (Le bloc hover-preview a été remplacé par .tp-post visible en permanence) */
 
@@ -122,16 +125,16 @@
         </button>
       </div>
 
-      <!-- Filtres par catégorie -->
+      <!-- Filtres par catégorie (compteur dynamique injecté par JS) -->
       <div class="tp-filters" id="tpFilters" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
-        <button class="tp-filter active" data-cat="">Tout</button>
-        <button class="tp-filter" data-cat="promo">🎁 Promo</button>
-        <button class="tp-filter" data-cat="metier">🔧 Métier</button>
-        <button class="tp-filter" data-cat="alerte">⚠️ Alerte</button>
-        <button class="tp-filter" data-cat="recrutement">👷 Recrutement</button>
-        <button class="tp-filter" data-cat="ferie">🎄 Fêtes</button>
-        <button class="tp-filter" data-cat="info">ℹ️ Info</button>
-        <button class="tp-filter" data-cat="temoignage">⭐ Témoignage</button>
+        <button class="tp-filter active" data-cat=""><span class="lbl">Tout</span> <span class="cnt"></span></button>
+        <button class="tp-filter" data-cat="promo"><span class="lbl">🎁 Promo</span> <span class="cnt"></span></button>
+        <button class="tp-filter" data-cat="metier"><span class="lbl">🔧 Métier</span> <span class="cnt"></span></button>
+        <button class="tp-filter" data-cat="alerte"><span class="lbl">⚠️ Alerte</span> <span class="cnt"></span></button>
+        <button class="tp-filter" data-cat="recrutement"><span class="lbl">👷 Recrutement</span> <span class="cnt"></span></button>
+        <button class="tp-filter" data-cat="ferie"><span class="lbl">🎄 Fêtes</span> <span class="cnt"></span></button>
+        <button class="tp-filter" data-cat="info"><span class="lbl">ℹ️ Info</span> <span class="cnt"></span></button>
+        <button class="tp-filter" data-cat="temoignage"><span class="lbl">⭐ Témoignage</span> <span class="cnt"></span></button>
       </div>
 
       <div class="tp-grid" id="tpGrid"></div>
