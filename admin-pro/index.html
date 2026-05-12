@@ -216,6 +216,33 @@
         </div>
       </div>
 
+      <!-- TERRAIN — Interventions du jour + Contrats échéants -->
+      <div id="terrainWidget" class="grid grid-2" style="gap:16px;margin-bottom:24px;display:none">
+        <!-- Interventions aujourd'hui -->
+        <div class="card" style="padding:0;overflow:hidden">
+          <div style="background:linear-gradient(135deg,#FF6B1A,#FFB400);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <strong style="font-size:.94rem;display:block">🗓️ Interventions aujourd'hui</strong>
+              <span id="todayCount" style="font-size:.78rem;opacity:.96">—</span>
+            </div>
+            <a href="interventions.html" style="background:rgba(255,255,255,.20);color:#fff;text-decoration:none;padding:6px 12px;border-radius:7px;font-size:.78rem;font-weight:700">Tout voir →</a>
+          </div>
+          <div id="todayList" style="padding:6px"></div>
+        </div>
+
+        <!-- Contrats à renouveler -->
+        <div class="card" style="padding:0;overflow:hidden">
+          <div style="background:linear-gradient(135deg,#0DA0CF,#5fc7e5);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <strong style="font-size:.94rem;display:block">📄 Contrats à renouveler (30j)</strong>
+              <span id="ctSoonCount" style="font-size:.78rem;opacity:.96">—</span>
+            </div>
+            <a href="contracts.html" style="background:rgba(255,255,255,.20);color:#fff;text-decoration:none;padding:6px 12px;border-radius:7px;font-size:.78rem;font-weight:700">Tout voir →</a>
+          </div>
+          <div id="ctSoonList" style="padding:6px"></div>
+        </div>
+      </div>
+
       <!-- ASSISTANTS DE CONNEXION — bouchons visibles, masqués si tous configurés -->
       <div id="connectorWidget" style="display:none;background:#fff;border:1px solid var(--ink-100);border-radius:14px;padding:18px 22px;margin-bottom:24px;box-shadow:0 1px 2px rgba(11,18,32,.04)">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
@@ -733,6 +760,79 @@
       }).join('');
     }
   } catch (e) { console.warn('Connector widget failed:', e); }
+
+  // ─── WIDGET TERRAIN : Interventions du jour + Contrats à renouveler ──
+  try {
+    const today = new Date(); today.setHours(0,0,0,0);
+    const endOfToday = new Date(today); endOfToday.setHours(23,59,59,999);
+    const in30 = new Date(today); in30.setDate(in30.getDate() + 30);
+
+    const [ivRes, ctRes] = await Promise.all([
+      c.from('interventions')
+        .select('id, scheduled_at, duration_minutes, type, metier, technician, status, is_urgent, client_first_name, client_last_name, client_phone, client_city')
+        .gte('scheduled_at', today.toISOString())
+        .lte('scheduled_at', endOfToday.toISOString())
+        .not('status', 'in', '(cancelled,no_show)')
+        .order('scheduled_at', { ascending: true })
+        .limit(10),
+      c.from('contracts')
+        .select('id, client_first_name, client_last_name, client_phone, type, metier, monthly_amount, next_intervention_date')
+        .eq('status', 'active')
+        .not('next_intervention_date', 'is', null)
+        .lte('next_intervention_date', in30.toISOString().slice(0,10))
+        .order('next_intervention_date', { ascending: true })
+        .limit(10)
+    ]);
+
+    const hasData = (ivRes.data && ivRes.data.length) || (ctRes.data && ctRes.data.length);
+    // Si AUCUNE des 2 tables n'existe (erreurs sur les 2), on cache le widget entier
+    if (!ivRes.error || !ctRes.error || hasData) {
+      document.getElementById('terrainWidget').style.display = '';
+    }
+
+    const METIER_COLORS = { plomberie:'#0DA0CF', chauffage:'#FF6B1A', electricite:'#FFB400', serrurerie:'#7C3AED', vitrerie:'#22C55E', renovation:'#E11D48', menuiserie:'#92501A', volets:'#6366F1', pmr:'#14B8A6', multiservice:'#64748b' };
+
+    // INTERVENTIONS
+    const ivList = ivRes.data || [];
+    document.getElementById('todayCount').textContent =
+      ivList.length === 0 ? 'Aucun RDV planifié' : ivList.length + ' RDV planifié' + (ivList.length>1?'s':'');
+    document.getElementById('todayList').innerHTML = ivList.length === 0
+      ? '<div style="padding:30px 18px;text-align:center;color:var(--ink-400);font-size:.86rem">Journée calme — profite-en pour rattraper l\'admin 😉</div>'
+      : ivList.map(x => {
+          const t = new Date(x.scheduled_at);
+          const time = t.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+          const name = (x.client_first_name ? x.client_first_name + ' ' : '') + (x.client_last_name || '');
+          const mc = METIER_COLORS[x.metier] || '#64748b';
+          return `<a href="interventions.html?edit=${x.id}" style="display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:9px;text-decoration:none;color:inherit;transition:.15s" onmouseover="this.style.background='#FAFCFD'" onmouseout="this.style.background=''">
+            <div style="background:${mc};color:#fff;font-weight:800;font-size:.78rem;padding:4px 9px;border-radius:7px;flex-shrink:0;min-width:54px;text-align:center">${time}</div>
+            <div style="flex:1;min-width:0">
+              <strong style="display:block;color:var(--ink-900);font-size:.86rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${(x.is_urgent?'🚨 ':'') + (name || '—')}</strong>
+              <span style="font-size:.72rem;color:var(--ink-500)">${(x.type||'')} · ${(x.technician || 'À assigner')} · ${(x.client_city||'—')}</span>
+            </div>
+          </a>`;
+        }).join('');
+
+    // CONTRATS
+    const ctList = ctRes.data || [];
+    document.getElementById('ctSoonCount').textContent =
+      ctList.length === 0 ? 'Aucune échéance dans 30 jours' : ctList.length + ' contrat' + (ctList.length>1?'s':'') + ' arrive' + (ctList.length>1?'nt':'') + ' à échéance';
+    document.getElementById('ctSoonList').innerHTML = ctList.length === 0
+      ? '<div style="padding:30px 18px;text-align:center;color:var(--ink-400);font-size:.86rem">Tous tes contrats actifs sont à jour ✅</div>'
+      : ctList.map(x => {
+          const next = new Date(x.next_intervention_date);
+          const days = Math.ceil((next - today) / 86400000);
+          const dueCls = days <= 0 ? 'color:#d92d20;font-weight:800' : days <= 7 ? 'color:#FF6B1A;font-weight:700' : 'color:var(--ink-700)';
+          const name = (x.client_first_name ? x.client_first_name + ' ' : '') + (x.client_last_name || '');
+          return `<a href="interventions.html?contract=${x.id}" style="display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:9px;text-decoration:none;color:inherit;transition:.15s" onmouseover="this.style.background='#FAFCFD'" onmouseout="this.style.background=''">
+            <div style="background:#0DA0CF;color:#fff;font-weight:800;font-size:.74rem;padding:4px 9px;border-radius:7px;flex-shrink:0;min-width:54px;text-align:center">${(x.type||'').toUpperCase()}</div>
+            <div style="flex:1;min-width:0">
+              <strong style="display:block;color:var(--ink-900);font-size:.86rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${name || '—'}</strong>
+              <span style="font-size:.72rem;${dueCls}">${days <= 0 ? '⚠️ En retard' : days <= 7 ? 'Dans ' + days + 'j' : next.toLocaleDateString('fr-FR',{day:'2-digit',month:'short'})}</span>
+            </div>
+            <span style="font-size:.74rem;color:var(--ink-400);flex-shrink:0">${Number(x.monthly_amount||0).toFixed(0)} €/mois</span>
+          </a>`;
+        }).join('');
+  } catch (e) { console.warn('Widget terrain failed:', e); }
 
 })();
 </script>
