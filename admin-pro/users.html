@@ -11,17 +11,87 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/admin.css">
 <style>
-.user-card{display:flex;align-items:center;gap:14px;padding:14px;background:#fff;border:1px solid var(--ink-100);border-radius:12px;margin-bottom:8px}
-.user-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--hc-primary-light),var(--hc-primary));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;flex-shrink:0}
-.user-info{flex:1;min-width:0}
-.user-info strong{display:block;font-size:.92rem;color:var(--ink-900)}
-.user-info span{font-size:.78rem;color:var(--ink-500)}
-.user-meta{font-size:.78rem;color:var(--ink-400);text-align:right}
-.note-box{background:linear-gradient(135deg,rgba(255,184,0,.06),#fff);border:1px solid rgba(255,184,0,.30);border-radius:14px;padding:16px 18px;margin-bottom:20px;display:flex;gap:12px;align-items:flex-start}
-.note-box svg{flex-shrink:0;width:22px;height:22px;color:#FFB400}
-.note-box strong{display:block;color:var(--ink-900);margin-bottom:4px}
-.note-box span{color:var(--ink-500);font-size:.86rem;line-height:1.5}
-.note-box a{color:var(--hc-primary);font-weight:600;text-decoration:none}
+/* === Hero === */
+.us-hero{background:linear-gradient(135deg,#0DA0CF 0%,#5fc7e5 60%,#FFB400 130%);color:#fff;border-radius:18px;padding:26px 28px;margin-bottom:22px;box-shadow:0 14px 40px rgba(13,160,207,.25);display:flex;align-items:center;gap:18px}
+.us-hero .emoji{font-size:2.4rem;flex-shrink:0}
+.us-hero h1{font-size:1.55rem;font-weight:800;margin:0 0 5px 0;line-height:1.2}
+.us-hero p{font-size:.94rem;opacity:.96;margin:0;line-height:1.5;max-width:680px}
+
+/* === Toolbar === */
+.us-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.us-toolbar h2{font-size:1.04rem;font-weight:800;color:var(--ink-900);margin:0;flex:1}
+.us-search{flex:1;max-width:300px;display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fff;border:1px solid var(--ink-100);border-radius:10px}
+.us-search svg{width:16px;height:16px;color:var(--ink-400)}
+.us-search input{flex:1;border:none;background:transparent;outline:none;font:inherit;font-size:.88rem}
+
+/* === Stats === */
+.us-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+.us-stat{background:#fff;border:1px solid var(--ink-100);border-radius:12px;padding:14px 16px}
+.us-stat .label{font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.us-stat .value{font-size:1.6rem;font-weight:800;color:var(--ink-900);line-height:1}
+.us-stat .value small{font-size:.78rem;color:var(--ink-400);font-weight:600;margin-left:6px}
+
+/* === Filtres === */
+.us-filter{padding:7px 14px;border-radius:999px;border:1px solid var(--ink-100);background:#fff;color:var(--ink-700);font:inherit;font-size:.82rem;font-weight:600;cursor:pointer;transition:.15s;white-space:nowrap}
+.us-filter:hover{border-color:var(--hc-primary);color:var(--hc-primary)}
+.us-filter.active{background:var(--hc-primary);color:#fff;border-color:var(--hc-primary);box-shadow:0 4px 12px rgba(13,160,207,.25)}
+
+/* === User cards === */
+.us-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:14px}
+.us-card{background:#fff;border:1px solid var(--ink-100);border-radius:14px;padding:14px;display:flex;align-items:flex-start;gap:14px;transition:.2s;position:relative;overflow:hidden}
+.us-card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(11,18,32,.08);border-color:var(--hc-primary)}
+.us-card.inactive{opacity:.58;background:#FAFCFD}
+.us-card .role-band{position:absolute;top:0;left:0;bottom:0;width:4px;background:var(--role-color,#94a3b8)}
+.us-card .avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--role-color,#94a3b8),var(--role-color-dark,#475569));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.2rem;flex-shrink:0;margin-left:6px}
+.us-card .info{flex:1;min-width:0}
+.us-card .info .name-line{display:flex;align-items:center;gap:7px;margin-bottom:3px;flex-wrap:wrap}
+.us-card .info strong{font-size:.96rem;color:var(--ink-900);font-weight:800;line-height:1.2}
+.us-card .info .me-tag{font-size:.62rem;background:rgba(13,160,207,.10);color:var(--hc-primary);font-weight:800;padding:1px 7px;border-radius:4px;letter-spacing:.04em;text-transform:uppercase}
+.us-card .info .email{font-size:.78rem;color:var(--ink-500);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.us-card .info .meta{display:flex;gap:10px;margin-top:9px;font-size:.72rem;color:var(--ink-400);flex-wrap:wrap}
+.us-card .info .meta strong{font-size:.72rem;font-weight:700;color:var(--ink-700)}
+.us-card .role-chip{font-size:.66rem;font-weight:800;color:var(--role-color);background:var(--role-color-soft);padding:3px 8px;border-radius:5px;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+.us-card .status-dot{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;font-weight:700}
+.us-card .status-dot .dot{width:8px;height:8px;border-radius:50%}
+.us-card .status-dot.on{color:#00aa50}.us-card .status-dot.on .dot{background:#00aa50;box-shadow:0 0 0 3px rgba(0,170,80,.16)}
+.us-card .status-dot.off{color:#94a3b8}.us-card .status-dot.off .dot{background:#94a3b8}
+
+.us-actions{display:flex;flex-direction:column;gap:5px;flex-shrink:0}
+.us-actions button{background:#fff;border:1px solid var(--ink-100);color:var(--ink-700);width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s}
+.us-actions button:hover{border-color:var(--hc-primary);color:var(--hc-primary)}
+.us-actions button.danger:hover{border-color:#d92d20;color:#d92d20}
+.us-actions button svg{width:13px;height:13px}
+
+/* === Modale === */
+.us-modal{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(10,20,40,.55);backdrop-filter:blur(4px)}
+.us-modal.open{display:flex}
+.us-modal-sheet{background:#fff;border-radius:16px;width:100%;max-width:520px;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 30px 70px rgba(0,0,0,.32);overflow:hidden}
+.us-modal-head{padding:18px 22px 14px 22px;border-bottom:1px solid var(--ink-100);display:flex;align-items:center;gap:12px}
+.us-modal-head h2{font-size:1.05rem;font-weight:800;color:var(--ink-900);margin:0;flex:1}
+.us-modal-head .close{width:30px;height:30px;border-radius:50%;background:var(--ink-50);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-500)}
+.us-modal-body{padding:18px 22px;overflow-y:auto;flex:1;display:grid;gap:14px}
+.us-modal-body label{font-size:.78rem;font-weight:700;color:var(--ink-700);display:block;margin-bottom:5px;letter-spacing:.02em}
+.us-modal-body input, .us-modal-body select{width:100%;padding:10px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;font-size:.88rem;color:var(--ink-900);background:#fff}
+.us-modal-foot{padding:14px 22px;border-top:1px solid var(--ink-100);background:#FAFCFD;display:flex;gap:10px}
+.us-modal-foot .right{margin-left:auto;display:flex;gap:8px}
+
+.role-pick{display:grid;gap:8px}
+.role-opt{display:flex;align-items:flex-start;gap:11px;padding:11px 13px;border:1px solid var(--ink-100);border-radius:10px;cursor:pointer;transition:.15s;background:#fff}
+.role-opt:hover{border-color:var(--hc-primary)}
+.role-opt input{display:none}
+.role-opt input:checked + .role-radio{background:var(--hc-primary);border-color:var(--hc-primary)}
+.role-opt input:checked + .role-radio::after{transform:scale(1)}
+.role-opt:has(input:checked){border-color:var(--hc-primary);background:rgba(13,160,207,.04)}
+.role-radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--ink-300);position:relative;flex-shrink:0;margin-top:2px}
+.role-radio::after{content:'';position:absolute;inset:3px;background:#fff;border-radius:50%;transform:scale(0);transition:.15s}
+.role-opt .role-info{flex:1}
+.role-opt .role-info strong{display:block;font-size:.9rem;color:var(--ink-900);font-weight:800;margin-bottom:2px}
+.role-opt .role-info span{font-size:.76rem;color:var(--ink-500);line-height:1.45}
+
+.toast-stack{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:2000;pointer-events:none}
+.toast{background:#fff;border:1px solid var(--ink-100);border-radius:10px;padding:11px 14px;box-shadow:0 8px 24px rgba(11,18,32,.16);font-size:.86rem;font-weight:600;color:var(--ink-900);pointer-events:auto;min-width:240px}
+.toast.ok{border-left:3px solid #00aa50}
+.toast.err{border-left:3px solid #d92d20}
 </style>
 </head>
 <body>
@@ -31,86 +101,408 @@
   <main class="admin-main">
     <header class="admin-topbar"></header>
     <div class="admin-content">
-      <div class="breadcrumb">
-        <a href="index.html">Dashboard</a>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-        <strong>Utilisateurs</strong>
-      </div>
-      <div class="admin-page-head">
-        <div>
-          <h1>Utilisateurs</h1>
-          <p>Comptes admins du back-office HELP! Confort.</p>
-        </div>
-        <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/auth/users" target="_blank" rel="noopener" class="btn btn-primary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Ajouter un utilisateur
-        </a>
-      </div>
 
-      <div class="note-box">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <div class="us-hero">
+        <div class="emoji">👥</div>
         <div>
-          <strong>Création de comptes via Supabase</strong>
-          <span>Pour des raisons de sécurité, la création/suppression d'utilisateurs se fait directement dans <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/auth/users" target="_blank">Supabase → Authentication → Users</a>. Cliquez "Add user" → "Create new user" → activer "Auto Confirm User".</span>
+          <h1>Équipe & permissions</h1>
+          <p>Gère les accès au back-office HELP! Confort. Invite tes assistantes par email, définis leurs droits, désactive un compte à tout moment.</p>
         </div>
       </div>
 
-      <div id="usersGrid">
-        <div class="user-card" style="justify-content:center;color:var(--ink-400)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Chargement…
+      <!-- Stats -->
+      <div class="us-stats" id="usStats"></div>
+
+      <!-- Toolbar -->
+      <div class="us-toolbar">
+        <h2 id="usCount">— utilisateur·rice·s</h2>
+        <div class="us-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="searchInput" type="search" placeholder="Chercher un user…">
         </div>
+        <button class="btn btn-primary" id="btnInvite">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M19 8v6"/><path d="M22 11h-6"/><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+          Inviter une personne
+        </button>
       </div>
+
+      <!-- Filtres rôle -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px" id="usFilters">
+        <button class="us-filter active" data-role="">Tout</button>
+        <button class="us-filter" data-role="owner">👑 Owner</button>
+        <button class="us-filter" data-role="assistant">🛠️ Assistant·e</button>
+        <button class="us-filter" data-role="viewer">👁️ Lecture seule</button>
+        <button class="us-filter" data-role="inactive">⏸️ Désactivés</button>
+      </div>
+
+      <!-- Grid -->
+      <div class="us-grid" id="usGrid"></div>
+
     </div>
   </main>
 </div>
+
+<!-- Modale Inviter -->
+<div class="us-modal" id="inviteModal">
+  <div class="us-modal-sheet">
+    <div class="us-modal-head">
+      <h2>Inviter une personne</h2>
+      <button class="close" id="inviteClose">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="us-modal-body">
+      <div>
+        <label>Nom complet (optionnel)</label>
+        <input id="inv_name" type="text" placeholder="Ex : Sophie Martin">
+      </div>
+      <div>
+        <label>Adresse email *</label>
+        <input id="inv_email" type="email" placeholder="sophie@helpconfort.com" required>
+        <p style="font-size:.74rem;color:var(--ink-500);margin:5px 0 0;line-height:1.4">Un email avec un lien magique sera envoyé. La personne choisit son mot de passe à la 1ʳᵉ connexion.</p>
+      </div>
+      <div>
+        <label>Rôle</label>
+        <div class="role-pick" id="invRolePick">
+          <label class="role-opt">
+            <input type="radio" name="inv_role" value="assistant" checked>
+            <span class="role-radio"></span>
+            <div class="role-info">
+              <strong>🛠️ Assistant·e</strong>
+              <span>Peut créer/éditer chantiers, leads, avis, planifier des posts. Ne peut PAS modifier la config API, ni gérer les utilisateurs.</span>
+            </div>
+          </label>
+          <label class="role-opt">
+            <input type="radio" name="inv_role" value="viewer">
+            <span class="role-radio"></span>
+            <div class="role-info">
+              <strong>👁️ Lecture seule</strong>
+              <span>Peut consulter le dashboard, voir les stats, leads, avis. Ne peut rien modifier ni publier.</span>
+            </div>
+          </label>
+          <label class="role-opt">
+            <input type="radio" name="inv_role" value="owner">
+            <span class="role-radio"></span>
+            <div class="role-info">
+              <strong>👑 Owner</strong>
+              <span>Accès total, comme toi. Peut gérer les autres utilisateurs et la config sensible. À donner uniquement à un cogérant.</span>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="us-modal-foot">
+      <button class="btn" id="inviteCancel">Annuler</button>
+      <div class="right">
+        <button class="btn btn-primary" id="inviteSend">Envoyer l'invitation</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modale Changer le rôle -->
+<div class="us-modal" id="roleModal">
+  <div class="us-modal-sheet">
+    <div class="us-modal-head">
+      <h2>Changer le rôle</h2>
+      <button class="close" id="roleClose">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="us-modal-body">
+      <p id="roleTargetInfo" style="font-size:.86rem;color:var(--ink-700);margin:0">—</p>
+      <div>
+        <label>Nouveau rôle</label>
+        <div class="role-pick" id="rolePick">
+          <label class="role-opt"><input type="radio" name="new_role" value="assistant"><span class="role-radio"></span><div class="role-info"><strong>🛠️ Assistant·e</strong><span>Édition courante, pas la config sensible.</span></div></label>
+          <label class="role-opt"><input type="radio" name="new_role" value="viewer"><span class="role-radio"></span><div class="role-info"><strong>👁️ Lecture seule</strong><span>Consultation uniquement.</span></div></label>
+          <label class="role-opt"><input type="radio" name="new_role" value="owner"><span class="role-radio"></span><div class="role-info"><strong>👑 Owner</strong><span>Accès total + gestion des users.</span></div></label>
+        </div>
+      </div>
+    </div>
+    <div class="us-modal-foot">
+      <button class="btn" id="roleCancel">Annuler</button>
+      <div class="right">
+        <button class="btn btn-primary" id="roleSave">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
 
 <script src="assets/supabase.js"></script>
 <script src="assets/admin.js"></script>
 <script src="assets/layout.js"></script>
 <script>
-(async function() {
+function toast(msg, type='ok', d=2600){
+  const stack = document.getElementById('toastStack');
+  const t = document.createElement('div'); t.className='toast '+type;
+  t.textContent = msg;
+  stack.appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),200); }, d);
+}
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+const ROLE_META = {
+  owner:     { color: '#0DA0CF', dark: '#0a7fa3', soft: 'rgba(13,160,207,.10)',  label: 'Owner',         emoji: '👑' },
+  assistant: { color: '#FF6B1A', dark: '#c44d10', soft: 'rgba(255,107,26,.10)',  label: 'Assistant·e',   emoji: '🛠️' },
+  viewer:    { color: '#64748b', dark: '#475569', soft: 'rgba(100,116,139,.12)', label: 'Lecture seule', emoji: '👁️' }
+};
+
+let _users = [];
+let _me = null;
+let _myRole = 'viewer';
+let _filter = '';
+let _q = '';
+
+(async function(){
   await HCSupabase.init();
   const session = await HCAdmin.requireAuth();
   if (!session) return;
   await HCLayout.mount('users', 'Utilisateurs');
-
-  // Affiche au moins l'utilisateur courant.
-  // Note : lister TOUS les utilisateurs Supabase Auth nécessite le service_role key (côté serveur).
-  // En client-side, on n'a accès qu'à soi-même via auth.getUser().
   const c = await HCSupabase.init();
-  const { data: { user } } = await c.auth.getUser();
 
-  const grid = document.getElementById('usersGrid');
-  if (user) {
-    const initial = (user.user_metadata?.name || user.email)[0].toUpperCase();
-    const name = user.user_metadata?.name || user.email.split('@')[0];
-    const role = user.user_metadata?.role || 'Administrateur';
-    const lastSignIn = user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleDateString('fr-FR') : '—';
-    grid.innerHTML = `
-      <div class="user-card">
-        <div class="user-avatar">${initial}</div>
-        <div class="user-info">
-          <strong>${name} (vous)</strong>
-          <span>${user.email} · ${role}</span>
-        </div>
-        <div class="user-meta">
-          <div>Dernière connexion</div>
-          <strong style="color:var(--ink-700);font-weight:700">${lastSignIn}</strong>
-        </div>
-      </div>
-      <div class="note-box" style="margin-top:14px;background:linear-gradient(135deg,rgba(13,160,207,.04),#fff);border-color:rgba(13,160,207,.18)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--hc-primary)"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/></svg>
-        <div>
-          <strong>Liste complète des admins</strong>
-          <span>Pour afficher tous les utilisateurs avec leurs rôles, une Edge Function Supabase utilisant le <em>service_role</em> sera ajoutée. En attendant, gérez-les directement dans <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/auth/users" target="_blank">Supabase Authentication</a>.</span>
-        </div>
-      </div>
-    `;
-  } else {
-    grid.innerHTML = '<div class="hc-empty"><div class="hc-empty-icon">👤</div><h3>Personne n\'est connecté</h3><p>Les sessions actives apparaîtront ici dès qu\'un utilisateur se connecte.</p></div>';
-  }
+  // Identité du caller
+  const { data:{user} } = await c.auth.getUser();
+  _me = user;
+
+  // Mon rôle (depuis user_profiles, fallback viewer)
+  try {
+    const { data } = await c.from('user_profiles').select('role').eq('user_id', user.id).single();
+    _myRole = data?.role || 'viewer';
+  } catch(e){ _myRole = 'viewer'; }
+
+  // Charger la liste (passe par Edge Function manage-users)
+  await loadUsers();
+
+  // ─── Évènements
+  document.getElementById('searchInput').oninput = e => { _q = e.target.value.toLowerCase(); render(); };
+  document.querySelectorAll('.us-filter').forEach(b => {
+    b.onclick = () => {
+      document.querySelectorAll('.us-filter').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      _filter = b.dataset.role;
+      render();
+    };
+  });
+  document.getElementById('btnInvite').onclick = openInvite;
+  document.getElementById('inviteClose').onclick = () => closeInvite();
+  document.getElementById('inviteCancel').onclick = () => closeInvite();
+  document.getElementById('inviteSend').onclick = sendInvite;
+  document.getElementById('roleClose').onclick = () => document.getElementById('roleModal').classList.remove('open');
+  document.getElementById('roleCancel').onclick = () => document.getElementById('roleModal').classList.remove('open');
+  document.getElementById('roleSave').onclick = saveRole;
 })();
+
+async function callEdge(action, body={}) {
+  const headers = await HCSupabase.authHeaders();
+  const r = await fetch(HCSupabase.fnUrl('manage-users'), {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ action, ...body })
+  });
+  const data = await r.json().catch(()=>({}));
+  if (!r.ok) throw new Error(data?.error || ('HTTP ' + r.status));
+  return data;
+}
+
+async function loadUsers() {
+  const grid = document.getElementById('usGrid');
+  grid.innerHTML = '<div class="hc-skeleton" style="grid-column:1/-1;height:80px;border-radius:14px"></div>'.repeat(3);
+  try {
+    const data = await callEdge('list');
+    _users = data.users || [];
+    render();
+  } catch (e) {
+    grid.innerHTML = `<div class="hc-empty" style="grid-column:1/-1">
+      <div class="hc-empty-icon">⚠️</div>
+      <h3>Impossible de charger les utilisateurs</h3>
+      <p>${escapeHtml(e.message)}</p>
+      <p style="font-size:.78rem;color:var(--ink-400);margin-top:10px">
+        Vérifie que le script SQL <code>setup_user_profiles.sql</code> a été exécuté dans Supabase,<br>
+        et que l'Edge Function <code>manage-users</code> est bien déployée.
+      </p>
+    </div>`;
+  }
+}
+
+function render() {
+  // Filtrage
+  const filtered = _users.filter(u => {
+    let okF = true;
+    if (_filter === 'inactive') okF = !u.is_active;
+    else if (_filter) okF = u.role === _filter && u.is_active;
+    const txt = (u.full_name + ' ' + (u.email||'') + ' ' + u.role).toLowerCase();
+    const okQ = !_q || txt.includes(_q);
+    return okF && okQ;
+  });
+
+  // Stats globales
+  const total = _users.length;
+  const owners = _users.filter(u => u.role === 'owner' && u.is_active).length;
+  const assistants = _users.filter(u => u.role === 'assistant' && u.is_active).length;
+  const viewers = _users.filter(u => u.role === 'viewer' && u.is_active).length;
+  const inactive = _users.filter(u => !u.is_active).length;
+  document.getElementById('usStats').innerHTML = `
+    <div class="us-stat"><div class="label">Total</div><div class="value">${total}</div></div>
+    <div class="us-stat"><div class="label">👑 Owners</div><div class="value" style="color:#0DA0CF">${owners}</div></div>
+    <div class="us-stat"><div class="label">🛠️ Assistant·e·s</div><div class="value" style="color:#FF6B1A">${assistants}</div></div>
+    <div class="us-stat"><div class="label">👁️ Lecture seule</div><div class="value" style="color:#64748b">${viewers}</div></div>
+    <div class="us-stat"><div class="label">⏸️ Désactivés</div><div class="value" style="color:#94a3b8">${inactive}</div></div>
+  `;
+
+  document.getElementById('usCount').textContent =
+    filtered.length + ' utilisateur' + (filtered.length>1?'·rice·s':'·rice') + ' affiché' + (filtered.length>1?'·e·s':'·e');
+
+  const grid = document.getElementById('usGrid');
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="hc-empty" style="grid-column:1/-1">
+      <div class="hc-empty-icon">🔍</div>
+      <h3>Personne ne matche</h3>
+      <p>Modifie ta recherche ou ton filtre.</p>
+    </div>`;
+    return;
+  }
+
+  const canManage = _myRole === 'owner';
+  grid.innerHTML = filtered.map(u => {
+    const meta = ROLE_META[u.role] || ROLE_META.viewer;
+    const initial = (u.full_name || u.email || '?')[0].toUpperCase();
+    const isMe = u.user_id === _me?.id;
+    const lastSeen = u.last_sign_in_at
+      ? new Date(u.last_sign_in_at).toLocaleDateString('fr-FR', { day:'2-digit', month:'short' }) +
+        ' à ' + new Date(u.last_sign_in_at).toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' })
+      : 'Jamais';
+    const cssVars = `--role-color:${meta.color};--role-color-dark:${meta.dark};--role-color-soft:${meta.soft};`;
+    return `
+      <div class="us-card ${u.is_active ? '' : 'inactive'}" style="${cssVars}">
+        <div class="role-band"></div>
+        <div class="avatar">${escapeHtml(initial)}</div>
+        <div class="info">
+          <div class="name-line">
+            <strong>${escapeHtml(u.full_name || '(sans nom)')}</strong>
+            ${isMe ? '<span class="me-tag">Vous</span>' : ''}
+            <span class="role-chip">${meta.emoji} ${meta.label}</span>
+          </div>
+          <span class="email">${escapeHtml(u.email || '—')}</span>
+          <div class="meta">
+            <span class="status-dot ${u.is_active ? 'on' : 'off'}"><span class="dot"></span>${u.is_active ? 'Actif' : 'Désactivé'}</span>
+            <span><strong>Dernière connexion :</strong> ${lastSeen}</span>
+          </div>
+        </div>
+        ${canManage ? `
+        <div class="us-actions">
+          <button title="Changer le rôle" onclick="openRoleModal('${u.user_id}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </button>
+          ${isMe ? '' : `
+          <button title="${u.is_active ? 'Désactiver' : 'Réactiver'}" onclick="toggleActive('${u.user_id}', ${!u.is_active})">
+            ${u.is_active
+              ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>'
+              : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>'}
+          </button>
+          <button class="danger" title="Supprimer" onclick="deleteUser('${u.user_id}', '${escapeHtml(u.email||'')}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg>
+          </button>`}
+        </div>` : ''}
+      </div>`;
+  }).join('');
+}
+
+// ─── Invite ──────────────────────────────────────────
+function openInvite() {
+  if (_myRole !== 'owner') { toast('Seul un owner peut inviter', 'err'); return; }
+  document.getElementById('inv_name').value = '';
+  document.getElementById('inv_email').value = '';
+  document.querySelector('input[name="inv_role"][value="assistant"]').checked = true;
+  document.getElementById('inviteModal').classList.add('open');
+}
+function closeInvite() { document.getElementById('inviteModal').classList.remove('open'); }
+
+async function sendInvite() {
+  const email = document.getElementById('inv_email').value.trim();
+  const full_name = document.getElementById('inv_name').value.trim();
+  const role = document.querySelector('input[name="inv_role"]:checked')?.value || 'assistant';
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    toast('Email invalide', 'err'); return;
+  }
+  const btn = document.getElementById('inviteSend');
+  btn.disabled = true; btn.textContent = 'Envoi en cours…';
+  try {
+    await callEdge('invite', { email, full_name, role });
+    toast('Invitation envoyée à ' + email);
+    closeInvite();
+    await loadUsers();
+  } catch (e) {
+    toast('Erreur : ' + e.message, 'err', 4500);
+  } finally {
+    btn.disabled = false; btn.textContent = "Envoyer l'invitation";
+  }
+}
+
+// ─── Changer rôle ────────────────────────────────────
+let _roleTargetId = null;
+function openRoleModal(userId) {
+  if (_myRole !== 'owner') { toast('Seul un owner peut changer un rôle', 'err'); return; }
+  const u = _users.find(x => x.user_id === userId);
+  if (!u) return;
+  _roleTargetId = userId;
+  document.getElementById('roleTargetInfo').innerHTML =
+    `<strong>${escapeHtml(u.full_name || u.email)}</strong><br>
+     <span style="font-size:.78rem;color:var(--ink-500)">${escapeHtml(u.email||'')}</span>`;
+  const r = document.querySelector('input[name="new_role"][value="' + u.role + '"]');
+  if (r) r.checked = true;
+  document.getElementById('roleModal').classList.add('open');
+}
+
+async function saveRole() {
+  const role = document.querySelector('input[name="new_role"]:checked')?.value;
+  if (!_roleTargetId || !role) return;
+  const btn = document.getElementById('roleSave');
+  btn.disabled = true; btn.textContent = 'Enregistrement…';
+  try {
+    await callEdge('update_role', { user_id: _roleTargetId, role });
+    toast('Rôle mis à jour');
+    document.getElementById('roleModal').classList.remove('open');
+    await loadUsers();
+  } catch (e) {
+    toast('Erreur : ' + e.message, 'err', 4500);
+  } finally {
+    btn.disabled = false; btn.textContent = 'Enregistrer';
+  }
+}
+
+// ─── Toggle actif ─────────────────────────────────────
+async function toggleActive(userId, active) {
+  const u = _users.find(x => x.user_id === userId);
+  if (!u) return;
+  if (!confirm((active ? 'Réactiver' : 'Désactiver') + ' ' + (u.full_name || u.email) + ' ?')) return;
+  try {
+    await callEdge('set_active', { user_id: userId, active });
+    toast(active ? 'Compte réactivé' : 'Compte désactivé');
+    await loadUsers();
+  } catch (e) {
+    toast('Erreur : ' + e.message, 'err', 4500);
+  }
+}
+
+// ─── Supprimer ────────────────────────────────────────
+async function deleteUser(userId, email) {
+  if (!confirm('Supprimer définitivement ' + email + ' ?\n\nCette action est IRRÉVERSIBLE et déconnectera immédiatement la personne.')) return;
+  try {
+    await callEdge('delete', { user_id: userId });
+    toast('Utilisateur supprimé');
+    await loadUsers();
+  } catch (e) {
+    toast('Erreur : ' + e.message, 'err', 4500);
+  }
+}
+
+// Expose pour les onclick inline
+window.openRoleModal = openRoleModal;
+window.toggleActive = toggleActive;
+window.deleteUser = deleteUser;
 </script>
 </body>
 </html>
