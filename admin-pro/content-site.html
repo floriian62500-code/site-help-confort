@@ -595,34 +595,85 @@ let dirty = false;
     renderPreview();
   };
 
-  // ─── Preview live ─────────────────────────────────
+  // ─── Preview live (TOUTES les sections) ───────────
   function renderPreview() {
-    document.getElementById('prevTitle').innerHTML = (getDeep(siteContent, 'hero.title') || 'Un dépannage. Une rénovation.<br>Une seule équipe.').replace(/\n/g, '<br>');
+    // === HERO ===
+    const heroTitle = getDeep(siteContent, 'hero.title') || 'Un dépannage. Une rénovation.\nUne seule équipe.';
+    document.getElementById('prevTitle').innerHTML = escapeHtml(heroTitle).replace(/\n/g, '<br>');
     document.getElementById('prevSubtitle').textContent = getDeep(siteContent, 'hero.subtitle') || 'À Saint-Omer / Dunkerque, nos techniciens salariés interviennent chaque jour…';
     document.getElementById('prevCta').textContent = getDeep(siteContent, 'hero.cta') || 'Demander un devis gratuit';
-    const phone = getDeep(siteContent, 'hero.phone') || getDeep(siteContent, 'contact.phone_audo');
-    document.getElementById('prevPhone').innerHTML = phone ? '📞 ' + escapeHtml(phone) : '';
+    const heroPhone = getDeep(siteContent, 'hero.phone') || getDeep(siteContent, 'contact.phone_audo');
+    document.getElementById('prevPhone').innerHTML = heroPhone ? '📞 ' + escapeHtml(heroPhone) : '';
 
-    // À propos
+    // === COORDONNÉES ===
+    document.getElementById('prevContactPhoneAudo').textContent = getDeep(siteContent, 'contact.phone_audo') || '—';
+    document.getElementById('prevContactPhoneDk').textContent   = getDeep(siteContent, 'contact.phone_dk')   || '—';
+    const email    = getDeep(siteContent, 'contact.email');
+    const emailUrg = getDeep(siteContent, 'contact.email_urgence');
+    document.getElementById('prevContactEmail').textContent = email || emailUrg ? [email, emailUrg].filter(Boolean).join(' · ') : '—';
+    const adAudo = getDeep(siteContent, 'contact.address_audo');
+    const adDk   = getDeep(siteContent, 'contact.address_dk');
+    document.getElementById('prevContactAddress').textContent = [adAudo, adDk].filter(Boolean).join(' · ') || '—';
+    const hours = getDeep(siteContent, 'contact.hours');
+    const hoursEl = document.getElementById('prevContactHours');
+    if (hours) { hoursEl.style.display = ''; hoursEl.textContent = hours; }
+    else { hoursEl.style.display = 'none'; }
+
+    // === TEXTES PHARES ===
+    const banner = getDeep(siteContent, 'texts.banner_urgence');
+    const bannerEl = document.getElementById('prevBanner');
+    if (banner) { bannerEl.style.display = ''; bannerEl.textContent = banner; }
+    else { bannerEl.style.display = 'none'; }
+
+    const slogan = getDeep(siteContent, 'texts.slogan');
+    document.getElementById('prevSlogan').textContent = slogan || '« Votre slogan apparaîtra ici »';
+
     const about = getDeep(siteContent, 'texts.about');
-    document.getElementById('prevAbout').style.display = about ? '' : 'none';
-    document.getElementById('prevAboutText').textContent = about || '';
+    const aboutEl = document.getElementById('prevAboutText');
+    if (about) { aboutEl.style.display = ''; aboutEl.textContent = about; }
+    else { aboutEl.style.display = 'none'; }
 
-    // Métiers
-    const mEl = document.getElementById('prevMetiers');
+    const garantie = getDeep(siteContent, 'texts.garantie');
+    const garantieEl = document.getElementById('prevGarantie');
+    if (garantie) { garantieEl.style.display = ''; garantieEl.textContent = '✓ ' + garantie; }
+    else { garantieEl.style.display = 'none'; }
+
+    // === MÉTIERS ===
+    const mEl = document.getElementById('prev-metiers');
     mEl.innerHTML = metiers.slice(0, 6).map(m => `
       <div class="cs-prev-metier">
         <div class="ic">${escapeHtml(m.icon || '🔧')}</div>
         <strong>${escapeHtml(m.name || 'Service')}</strong>
         <span>${escapeHtml((m.desc || '').slice(0, 32))}${(m.desc||'').length > 32 ? '…' : ''}</span>
       </div>
-    `).join('');
+    `).join('') || '<div style="grid-column:1/-1;text-align:center;color:var(--ink-400);font-size:.78rem;padding:14px">Aucun métier configuré</div>';
 
-    // Footer
+    // === ZONES ===
+    const zAudo = (getDeep(siteContent, 'zones.audo') || '').split('\n').filter(Boolean);
+    const zDk   = (getDeep(siteContent, 'zones.dk')   || '').split('\n').filter(Boolean);
+    document.getElementById('prevZonesAudo').textContent = zAudo.length ? zAudo.slice(0, 8).join(' · ') + (zAudo.length > 8 ? ' …' : '') : '—';
+    document.getElementById('prevZonesDk').textContent   = zDk.length   ? zDk.slice(0, 8).join(' · ')   + (zDk.length   > 8 ? ' …' : '') : '—';
+    const radius = getDeep(siteContent, 'zones.radius');
+    document.getElementById('prevZonesRadius').textContent = radius || '';
+    document.getElementById('prevZonesRadius').style.display = radius ? '' : 'none';
+
+    // === FOOTER ===
     document.getElementById('prevRaisonSociale').textContent = getDeep(siteContent, 'footer.raison_sociale') || 'SARL Dépan\'Audo';
-    document.getElementById('prevReseau').textContent = getDeep(siteContent, 'footer.reseau') || 'Membre du réseau HELP! Confort';
-    document.getElementById('prevSiren').textContent = getDeep(siteContent, 'footer.siren') || 'SIREN 898 196 159';
-    document.getElementById('prevRcs').textContent = getDeep(siteContent, 'footer.rcs') || 'RCS Boulogne';
+    document.getElementById('prevReseau').textContent       = getDeep(siteContent, 'footer.reseau')          || 'Membre du réseau HELP! Confort';
+    document.getElementById('prevSiren').textContent        = getDeep(siteContent, 'footer.siren')           || 'SIREN 898 196 159';
+    document.getElementById('prevRcs').textContent          = getDeep(siteContent, 'footer.rcs')             || 'RCS Boulogne';
+
+    // Liens RS du footer
+    const fb     = getDeep(siteContent, 'footer.fb_url');
+    const ln     = getDeep(siteContent, 'footer.linkedin_url');
+    const mp     = getDeep(siteContent, 'footer.maps_url');
+    const tv     = getDeep(siteContent, 'footer.trustville_url');
+    const rs = [];
+    if (fb) rs.push(`<a href="${escapeHtml(fb)}" target="_blank" rel="noopener">Facebook</a>`);
+    if (ln) rs.push(`<a href="${escapeHtml(ln)}" target="_blank" rel="noopener">LinkedIn</a>`);
+    if (mp) rs.push(`<a href="${escapeHtml(mp)}" target="_blank" rel="noopener">Google Maps</a>`);
+    if (tv) rs.push(`<a href="${escapeHtml(tv)}" target="_blank" rel="noopener">Trustville</a>`);
+    document.getElementById('prevRsRow').innerHTML = rs.join('');
   }
   renderPreview();
 
