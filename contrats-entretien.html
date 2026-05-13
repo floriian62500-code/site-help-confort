@@ -1338,64 +1338,78 @@ if (document.fonts && document.fonts.ready) {
       <input type="hidden" name="formule" id="f-formule">
       <input type="hidden" name="prix" id="f-prix">
 
-      <!-- 1. Champ caché agence — détecté automatiquement via le code postal -->
+      <!-- Champ caché agence -->
       <input type="hidden" name="agence" id="f-agence" value="Saint-Omer">
 
-      <!-- Pastille de détection agence (s'affiche dès que le CP est saisi) -->
-      <div id="agency-detected" style="display:none;margin-bottom:18px;padding:12px 16px;background:linear-gradient(135deg,rgba(31,196,240,.10),rgba(31,196,240,.04));border:1px solid rgba(31,196,240,.30);border-radius:12px;align-items:center;gap:10px;font-size:.88rem">
-        <div style="width:36px;height:36px;border-radius:10px;background:#1FC4F0;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <!-- ═══ BARRE DE PROGRESSION ═══ -->
+      <div class="sw-progress" aria-hidden="true">
+        <div class="sw-progress-track">
+          <div class="sw-progress-fill" id="swProgressFill" style="width:20%"></div>
         </div>
-        <div style="flex:1;line-height:1.3">
-          <div style="font-size:.7rem;color:#0DA0CF;font-weight:800;letter-spacing:1px;text-transform:uppercase">Agence rattachée à votre adresse</div>
-          <div style="color:#0A1428;font-weight:700;font-size:.98rem;margin-top:2px"><span id="agency-name">Saint-Omer</span> · <span id="agency-zone" style="color:#64748b;font-weight:500">Pas-de-Calais 62</span></div>
+        <div class="sw-progress-steps">
+          <div class="sw-pstep is-active" data-pstep="1"><span class="sw-pstep-circle">1</span><span class="sw-pstep-lbl">Coords</span></div>
+          <div class="sw-pstep" data-pstep="2"><span class="sw-pstep-circle">2</span><span class="sw-pstep-lbl">Adresse</span></div>
+          <div class="sw-pstep" data-pstep="3"><span class="sw-pstep-circle">3</span><span class="sw-pstep-lbl">Logement</span></div>
+          <div class="sw-pstep" data-pstep="4"><span class="sw-pstep-circle">4</span><span class="sw-pstep-lbl">Équipement</span></div>
+          <div class="sw-pstep" data-pstep="5"><span class="sw-pstep-circle">5</span><span class="sw-pstep-lbl">Valider</span></div>
         </div>
       </div>
 
-      <!-- 2. Coordonnées -->
-      <div style="margin-bottom:18px">
-        <h4 style="font-size:.78rem;font-weight:800;color:#0DA0CF;margin:0 0 12px;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:6px">
-          <span style="width:18px;height:18px;border-radius:50%;background:#1FC4F0;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900">1</span>
-          Vos coordonnées
-        </h4>
+      <!-- ═══════════ ÉTAPE 1 — Coordonnées ═══════════ -->
+      <div class="sous-step is-active" data-step="1">
+        <div class="sw-intro">
+          <h4 class="sw-step-title">Vos coordonnées</h4>
+          <p class="sw-step-hint">Pour vous rappeler sous 24h et envoyer votre contrat.</p>
+        </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-          <input type="text" name="prenom" placeholder="Prénom *" required class="sous-inp">
-          <input type="text" name="nom" placeholder="Nom *" required class="sous-inp">
+          <input type="text" name="prenom" placeholder="Prénom *" required class="sous-inp" data-validate="required">
+          <input type="text" name="nom" placeholder="Nom *" required class="sous-inp" data-validate="required">
         </div>
-        <input type="email" name="email" placeholder="Email *" required class="sous-inp" style="margin-bottom:10px">
-        <input type="tel" name="telephone" placeholder="Téléphone *" required class="sous-inp">
+        <input type="email" name="email" placeholder="Email *" required class="sous-inp" style="margin-bottom:10px" data-validate="email">
+        <input type="tel" name="telephone" placeholder="Téléphone *" required class="sous-inp" data-validate="tel">
       </div>
 
-      <!-- 3. Adresse -->
-      <div style="margin-bottom:18px">
-        <h4 style="font-size:.78rem;font-weight:800;color:#0DA0CF;margin:0 0 12px;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:6px">
-          <span style="width:18px;height:18px;border-radius:50%;background:#1FC4F0;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900">2</span>
-          Adresse de l'installation
-        </h4>
+      <!-- ═══════════ ÉTAPE 2 — Adresse ═══════════ -->
+      <div class="sous-step" data-step="2">
+        <div class="sw-intro">
+          <h4 class="sw-step-title">Adresse de l'installation</h4>
+          <p class="sw-step-hint">Commencez à taper votre adresse, on vous propose la liste.</p>
+        </div>
+
+        <div id="agency-detected" style="display:none;margin-bottom:14px;padding:12px 16px;background:linear-gradient(135deg,rgba(31,196,240,.10),rgba(31,196,240,.04));border:1px solid rgba(31,196,240,.30);border-radius:12px;align-items:center;gap:10px;font-size:.88rem">
+          <div style="width:36px;height:36px;border-radius:10px;background:#1FC4F0;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div style="flex:1;line-height:1.3">
+            <div style="font-size:.7rem;color:#0DA0CF;font-weight:800;letter-spacing:1px;text-transform:uppercase">Agence rattachée à votre adresse</div>
+            <div style="color:#0A1428;font-weight:700;font-size:.98rem;margin-top:2px"><span id="agency-name">Saint-Omer</span> · <span id="agency-zone" style="color:#64748b;font-weight:500">Pas-de-Calais 62</span></div>
+          </div>
+        </div>
+
         <div class="sous-addr-wrap" style="position:relative;margin-bottom:10px">
-          <input type="text" id="sousAdresse" name="adresse" placeholder="N°, rue *" required class="sous-inp" autocomplete="off">
+          <input type="text" id="sousAdresse" name="adresse" placeholder="N°, rue *" required class="sous-inp" autocomplete="off" data-validate="required">
           <div id="sousAdresseList" class="sous-addr-list" role="listbox" hidden></div>
         </div>
         <div style="display:grid;grid-template-columns:120px 1fr;gap:10px">
-          <input type="text" id="sousCp" name="cp" placeholder="Code postal *" required class="sous-inp" pattern="[0-9]{5}" maxlength="5">
-          <input type="text" id="sousVille" name="ville" placeholder="Ville *" required class="sous-inp">
+          <input type="text" id="sousCp" name="cp" placeholder="Code postal *" required class="sous-inp" pattern="[0-9]{5}" maxlength="5" data-validate="cp">
+          <input type="text" id="sousVille" name="ville" placeholder="Ville *" required class="sous-inp" data-validate="required">
         </div>
       </div>
 
-      <!-- 4. Logement -->
-      <div style="margin-bottom:18px">
-        <h4 style="font-size:.78rem;font-weight:800;color:#0DA0CF;margin:0 0 12px;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:6px">
-          <span style="width:18px;height:18px;border-radius:50%;background:#1FC4F0;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900">3</span>
-          Votre logement
-        </h4>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-          <select name="type_logement" required class="sous-inp">
+      <!-- ═══════════ ÉTAPE 3 — Logement ═══════════ -->
+      <div class="sous-step" data-step="3">
+        <div class="sw-intro">
+          <h4 class="sw-step-title">Votre logement</h4>
+          <p class="sw-step-hint">Quelques informations sur le bien à entretenir.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <select name="type_logement" required class="sous-inp" data-validate="required">
             <option value="">Type de logement *</option>
             <option>Maison individuelle</option>
             <option>Appartement</option>
             <option>Local commercial / pro</option>
           </select>
-          <select name="statut" required class="sous-inp">
+          <select name="statut" required class="sous-inp" data-validate="required">
             <option value="">Statut *</option>
             <option>Propriétaire occupant</option>
             <option>Propriétaire bailleur</option>
@@ -1405,12 +1419,56 @@ if (document.fonts && document.fonts.ready) {
         </div>
       </div>
 
-      <!-- 5. Équipement (Gaz / Fioul / Adoucisseur) -->
-      <div style="margin-bottom:22px" id="f-equipement-block">
-        <h4 style="font-size:.78rem;font-weight:800;color:#0DA0CF;margin:0 0 12px;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:6px">
-          <span style="width:18px;height:18px;border-radius:50%;background:#1FC4F0;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900">4</span>
-          Votre équipement
-        </h4>
+      <!-- ═══════════ ÉTAPE 4 — Équipement (avec aide visuelle) ═══════════ -->
+      <div class="sous-step" data-step="4" id="f-equipement-block">
+        <div class="sw-intro">
+          <h4 class="sw-step-title">Votre équipement</h4>
+          <p class="sw-step-hint">Ces infos nous aident à préparer votre intervention. <strong>Tout est facultatif</strong> — si vous ne savez pas, passez à la suite.</p>
+        </div>
+
+        <!-- Aide visuelle : où trouver les infos -->
+        <details class="sw-help">
+          <summary>
+            <span class="sw-help-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </span>
+            <span class="sw-help-text">Où trouver ces informations ?</span>
+            <span class="sw-help-chevron">▾</span>
+          </summary>
+          <div class="sw-help-body">
+            <div class="sw-help-illust" aria-hidden="true">
+              <svg viewBox="0 0 240 160" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <rect x="50" y="20" width="140" height="120" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="2"/>
+                <rect x="62" y="32" width="116" height="14" rx="3" fill="#0DA0CF" opacity=".15"/>
+                <text x="120" y="42" text-anchor="middle" font-family="Inter, Arial" font-size="9" font-weight="700" fill="#0DA0CF">SAUNIER DUVAL</text>
+                <rect x="62" y="52" width="116" height="78" rx="3" fill="#fff" stroke="#CBD5E1"/>
+                <line x1="68" y1="64" x2="172" y2="64" stroke="#E5E7EB"/>
+                <text x="72" y="62" font-family="Inter, Arial" font-size="6.5" fill="#64748B">Modèle :</text>
+                <text x="170" y="62" text-anchor="end" font-family="Inter, Arial" font-size="7" font-weight="700" fill="#0A1428">THEMA C 25</text>
+                <line x1="68" y1="76" x2="172" y2="76" stroke="#E5E7EB"/>
+                <text x="72" y="74" font-family="Inter, Arial" font-size="6.5" fill="#64748B">N° série :</text>
+                <text x="170" y="74" text-anchor="end" font-family="Inter, Arial" font-size="7" fill="#0A1428">7821-XX</text>
+                <line x1="68" y1="88" x2="172" y2="88" stroke="#E5E7EB"/>
+                <text x="72" y="86" font-family="Inter, Arial" font-size="6.5" fill="#64748B">Année :</text>
+                <text x="170" y="86" text-anchor="end" font-family="Inter, Arial" font-size="7" font-weight="700" fill="#FF6B1A">2019</text>
+                <line x1="68" y1="100" x2="172" y2="100" stroke="#E5E7EB"/>
+                <text x="72" y="98" font-family="Inter, Arial" font-size="6.5" fill="#64748B">Puissance :</text>
+                <text x="170" y="98" text-anchor="end" font-family="Inter, Arial" font-size="7" fill="#0A1428">24 kW</text>
+                <circle cx="195" cy="55" r="14" fill="#FF6B1A" opacity=".18"/>
+                <circle cx="195" cy="55" r="9" fill="#FF6B1A"/>
+                <text x="195" y="58" text-anchor="middle" font-family="Inter, Arial" font-size="9" font-weight="900" fill="#fff">!</text>
+                <path d="M180 55 Q195 75 215 70" stroke="#FF6B1A" stroke-width="1.8" fill="none" stroke-dasharray="3 3"/>
+              </svg>
+            </div>
+            <ul class="sw-help-list">
+              <li><strong>Étiquette signalétique</strong> — généralement collée sur le côté ou sous la chaudière / le ballon. Vous y trouverez la marque, le modèle, le numéro de série et l'année de fabrication.</li>
+              <li><strong>Carnet d'entretien</strong> — votre dernier rapport d'intervention indique aussi toutes ces informations.</li>
+              <li><strong>Facture d'achat ou d'installation</strong> — la facture du constructeur ou de l'installateur d'origine.</li>
+              <li>👉 Si vous ne trouvez pas, <strong>passez à l'étape suivante</strong> : notre technicien relèvera tout lors de la 1ʳᵉ visite.</li>
+            </ul>
+          </div>
+        </details>
+
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
           <input type="text" name="marque" placeholder="Marque (ex : Saunier Duval)" class="sous-inp">
           <input type="text" name="modele" placeholder="Modèle (si connu)" class="sous-inp">
@@ -1421,27 +1479,42 @@ if (document.fonts && document.fonts.ready) {
         </div>
       </div>
 
-      <!-- 6. Date souhaitée + commentaire -->
-      <div style="margin-bottom:22px">
-        <h4 style="font-size:.78rem;font-weight:800;color:#0DA0CF;margin:0 0 12px;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:6px">
-          <span style="width:18px;height:18px;border-radius:50%;background:#1FC4F0;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900">5</span>
-          Date souhaitée &amp; précisions
-        </h4>
+      <!-- ═══════════ ÉTAPE 5 — Date + récap + consentement ═══════════ -->
+      <div class="sous-step" data-step="5">
+        <div class="sw-intro">
+          <h4 class="sw-step-title">Date souhaitée &amp; validation</h4>
+          <p class="sw-step-hint">Dernière étape ! Précisez quand vous voulez commencer, puis envoyez.</p>
+        </div>
         <input type="text" name="date_debut" placeholder="Date de début souhaitée (ex : 1er du mois prochain)" class="sous-inp" style="margin-bottom:10px">
-        <textarea name="commentaire" placeholder="Précisions complémentaires (accessibilité, horaires, contraintes, etc.)" rows="3" class="sous-inp" style="resize:vertical;min-height:70px"></textarea>
+        <textarea name="commentaire" placeholder="Précisions complémentaires (accessibilité, horaires, contraintes, etc.)" rows="3" class="sous-inp" style="resize:vertical;min-height:70px;margin-bottom:14px"></textarea>
+
+        <!-- Récap rapide -->
+        <div class="sw-recap" id="swRecap" aria-live="polite"></div>
+
+        <label style="display:flex;align-items:flex-start;gap:10px;margin:14px 0 6px;font-size:.86rem;color:#475569;line-height:1.5;cursor:pointer">
+          <input type="checkbox" name="cgv" required style="margin-top:3px;flex-shrink:0;width:18px;height:18px;accent-color:#1FC4F0" data-validate="checked">
+          <span>J'accepte d'être contacté(e) sous 24h pour finaliser mon contrat et je reconnais que ce formulaire constitue une <strong>demande de souscription</strong>, non un engagement définitif. *</span>
+        </label>
       </div>
 
-      <!-- 7. Acceptation -->
-      <label style="display:flex;align-items:flex-start;gap:10px;margin-bottom:20px;font-size:.86rem;color:#475569;line-height:1.5;cursor:pointer">
-        <input type="checkbox" name="cgv" required style="margin-top:3px;flex-shrink:0;width:18px;height:18px;accent-color:#1FC4F0">
-        <span>J'accepte d'être contacté(e) sous 24h pour finaliser mon contrat et je reconnais que ce formulaire constitue une <strong>demande de souscription</strong>, non un engagement définitif. *</span>
-      </label>
+      <!-- ═══ ZONE NAVIGATION + ERREURS ═══ -->
+      <div id="swError" class="sw-error" hidden></div>
 
-      <!-- Submit -->
-      <button type="submit" style="width:100%;background:linear-gradient(135deg,#FF6B1A,#E55510);color:#fff;border:0;padding:15px 24px;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 12px 28px rgba(255,107,26,.32);transition:all .25s ease">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M22 12v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-        Envoyer ma demande de souscription
-      </button>
+      <div class="sw-nav">
+        <button type="button" class="sw-btn sw-btn-prev" id="swPrev" hidden>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Précédent
+        </button>
+        <div class="sw-step-counter" id="swCounter">Étape 1 sur 5</div>
+        <button type="button" class="sw-btn sw-btn-next" id="swNext">
+          Suivant
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <button type="submit" class="sw-btn sw-btn-submit" id="swSubmit" hidden>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M22 12v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Envoyer ma demande
+        </button>
+      </div>
 
       <p style="margin:14px 0 0;font-size:.78rem;color:#64748b;text-align:center;line-height:1.5">
         🛡️ Vos données restent confidentielles. Aucun engagement ni paiement à ce stade — un conseiller vous rappelle pour finaliser.
