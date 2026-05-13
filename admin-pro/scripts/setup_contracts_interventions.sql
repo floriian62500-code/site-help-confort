@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS public.interventions (
 
   -- Liens optionnels
   contract_id         uuid REFERENCES public.contracts(id)    ON DELETE SET NULL,
-  lead_id             bigint REFERENCES public.leads(id)      ON DELETE SET NULL,
+  lead_id             uuid   REFERENCES public.leads(id)      ON DELETE SET NULL,
   realisation_id      uuid REFERENCES public.realisations(id) ON DELETE SET NULL,
 
   -- Client (peut être autonome, sans contrat)
