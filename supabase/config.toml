@@ -55,3 +55,7 @@ verify_jwt = false
 
 [functions.notify-order]
 verify_jwt = false
+
+# generate-post-from-prompt : appelable depuis l'admin (anon JWT suffit, RLS protège la lecture des settings)
+[functions.generate-post-from-prompt]
+verify_jwt = false

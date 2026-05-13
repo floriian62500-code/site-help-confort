@@ -322,15 +322,122 @@ Précise : ton, longueur, format, hashtags à inclure"></textarea></div>
     }
   });
 
-  function generateWithAI(topic) {
+  async function generateWithAI(topic) {
+    openGenModal(topic);
+    await runGeneration(topic.ai_prompt, topic);
+  }
+
+  function openGenModal(topic) {
+    let gm = document.getElementById('genModal');
+    if (!gm) {
+      gm = document.createElement('div');
+      gm.id = 'genModal';
+      gm.className = 'tp-modal';
+      gm.innerHTML = `
+        <div class="tp-modal-sheet" style="max-width:720px">
+          <div class="tp-mh">
+            <h2 id="gmTitle">Génération IA</h2>
+            <button class="close" type="button" id="gmClose">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          <div class="tp-mb">
+            <div class="tp-info" id="gmPrompt"></div>
+            <div id="gmResult" style="min-height:200px;padding:18px;background:#fafcfd;border:1px solid var(--ink-100);border-radius:10px;font-size:.92rem;line-height:1.6;color:var(--ink-900);white-space:pre-wrap"></div>
+            <div id="gmMeta" style="font-size:.74rem;color:var(--ink-400);text-align:right"></div>
+          </div>
+          <div class="tp-mf">
+            <button type="button" class="secondary" id="gmRegen" disabled>↻ Régénérer</button>
+            <button type="button" class="secondary" id="gmCopy" disabled>📋 Copier</button>
+            <span class="grow"></span>
+            <button type="button" class="secondary" id="gmCancel">Fermer</button>
+            <button type="button" class="primary" id="gmSend" disabled>→ Envoyer vers Pile de publication</button>
+          </div>
+        </div>`;
+      document.body.appendChild(gm);
+
+      const close = () => gm.classList.remove('is-open');
+      document.getElementById('gmClose').onclick = close;
+      document.getElementById('gmCancel').onclick = close;
+      gm.addEventListener('click', e => { if (e.target === gm) close(); });
+    }
+
+    document.getElementById('gmTitle').textContent = topic.icon + ' ' + topic.title;
+    document.getElementById('gmPrompt').innerHTML = `<strong>Prompt envoyé à l'IA :</strong><br>${escapeHtml(topic.ai_prompt)}`;
+    document.getElementById('gmResult').textContent = '⏳ Génération en cours…';
+    document.getElementById('gmMeta').textContent = '';
+    document.getElementById('gmRegen').disabled = true;
+    document.getElementById('gmCopy').disabled = true;
+    document.getElementById('gmSend').disabled = true;
+    gm.classList.add('is-open');
+
+    // Bind regenerate
+    document.getElementById('gmRegen').onclick = () => runGeneration(topic.ai_prompt, topic);
+    // Bind copy
+    document.getElementById('gmCopy').onclick = () => {
+      const txt = document.getElementById('gmResult').textContent;
+      navigator.clipboard.writeText(txt).then(() => {
+        const b = document.getElementById('gmCopy');
+        b.textContent = '✓ Copié !';
+        setTimeout(() => b.textContent = '📋 Copier', 1500);
+      });
+    };
+    // Bind send → publications.html avec le texte
+    document.getElementById('gmSend').onclick = async () => {
+      const txt = document.getElementById('gmResult').textContent;
+      try {
+        const ins = await sb.from('scheduled_publications').insert({
+          platform: 'facebook',
+          status: 'draft',
+          content: txt,
+          metadata: { source_topic_id: topic.id, source_topic_slug: topic.slug, generated_at: new Date().toISOString() }
+        }).select().single();
+        if (ins.error) throw ins.error;
+        window.location.href = 'publications.html?focus=' + ins.data.id;
+      } catch(err) {
+        alert('Erreur sauvegarde : ' + (err.message || err));
+      }
+    };
+  }
+
+  async function runGeneration(prompt, topic) {
+    const result = document.getElementById('gmResult');
+    const meta = document.getElementById('gmMeta');
+    document.getElementById('gmRegen').disabled = true;
+    document.getElementById('gmCopy').disabled = true;
+    document.getElementById('gmSend').disabled = true;
+    result.textContent = '⏳ Génération en cours… (5-15 sec)';
+    meta.textContent = '';
+
+    const SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+    const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0Y2Jqd3FpaXZocHdvc3pvbWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzExNzI3MTcsImV4cCI6MjA0Njc0ODcxN30.GpdsoXVcZSZpKzlSO1cYRgJzKQ73Y_lc24w5eu_3VuI';
+
     try {
-      sessionStorage.setItem('hc-ai-prefill', JSON.stringify({
-        topic_id: topic.id, topic_slug: topic.slug, title: topic.title,
-        prompt: topic.ai_prompt, category: topic.category, metier: topic.metier,
-        timestamp: Date.now()
-      }));
-    } catch(e) {}
-    window.location.href = `magic.html?prefill=${encodeURIComponent(topic.slug)}`;
+      const r = await fetch(`${SUPABASE_URL}/functions/v1/generate-post-from-prompt`, {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json', 'Authorization':`Bearer ${ANON}` },
+        body: JSON.stringify({ prompt })
+      });
+      const d = await r.json();
+      if (!r.ok || d.error) {
+        if (d.error === 'anthropic_key_missing') {
+          result.innerHTML = `<div style="color:#7a5500"><strong>⚠️ Clé Anthropic manquante</strong><br>Configure-la dans <a href="settings.html#section-anthropic" style="color:var(--hc-primary);font-weight:700">Settings → Anthropic</a>, puis reviens ici.</div>`;
+        } else {
+          result.innerHTML = `<div style="color:#9F1239"><strong>❌ Erreur :</strong> ${escapeHtml(d.error || 'inconnue')}${d.detail ? '<br><small>' + escapeHtml(d.detail.slice(0,300)) + '</small>' : ''}</div>`;
+        }
+        return;
+      }
+      result.textContent = d.post || '(post vide)';
+      const tokensIn = d.usage?.input_tokens || 0;
+      const tokensOut = d.usage?.output_tokens || 0;
+      const cost = (tokensIn * 0.0000008 + tokensOut * 0.000004).toFixed(4);
+      meta.textContent = `${d.model || 'claude-haiku'} · ${tokensIn}→${tokensOut} tokens · ~$${cost}`;
+      document.getElementById('gmRegen').disabled = false;
+      document.getElementById('gmCopy').disabled = false;
+      document.getElementById('gmSend').disabled = false;
+    } catch(err) {
+      result.innerHTML = `<div style="color:#9F1239"><strong>❌ Erreur réseau</strong><br>${escapeHtml(err.message || err)}</div>`;
+    }
   }
 
   const modal = document.getElementById('tpModal');
