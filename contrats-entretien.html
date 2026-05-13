@@ -471,152 +471,15 @@
       <label for="en-eau" role="tab">💧 Adoucisseur</label>
     </div>
 
-    <div class="energy-content">
-
-      <!-- ============ GAZ ============ -->
+    <div class="energy-content" id="contractOffersRoot">
+      <!-- Les 3 panes (gaz / fioul / eau) sont injectés dynamiquement depuis Supabase
+           via le script en bas de page. Cf. table contract_offers.
+           Modifier les offres : back-office → Contrats → onglet "Offres" -->
       <div class="energy-pane" id="pane-gaz">
-        <div class="formula-grid">
-
-          <div class="formula-card basic">
-            <div class="formula-eyebrow">Formule Gaz</div>
-            <h2 class="formula-name">BASIC</h2>
-            <div class="formula-price-block">
-              <div class="formula-price">9&nbsp;€&nbsp;HT<small> /mois</small></div>
-              <div class="formula-price-year">soit 108&nbsp;€&nbsp;HT/an</div>
-            </div>
-            <p class="formula-baseline">L'essentiel pour rester en règle.</p>
-            <ul class="formula-list">
-              <li class="yes">Visite annuelle &amp; attestation officielle</li>
-              <li class="yes">Rappel automatique 1 mois avant la date</li>
-              <li class="no">Dépannages facturés en sus</li>
-              <li class="no">Pièces de rechange non incluses</li>
-            </ul>
-            <button type="button" class="formula-cta" data-energie="Gaz" data-formule="BASIC" data-prix="9 € HT/mois — 108 €/an" onclick="openSouscriptionModal(this)">Souscrire</button>
-          </div>
-
-          <div class="formula-card confort">
-            <span class="formula-badge">★ Le plus choisi</span>
-            <div class="formula-eyebrow">Formule Gaz</div>
-            <h2 class="formula-name">CONFORT</h2>
-            <div class="formula-price-block">
-              <div class="formula-price">13&nbsp;€&nbsp;HT<small> /mois</small></div>
-              <div class="formula-price-year">soit 156&nbsp;€&nbsp;HT/an</div>
-            </div>
-            <p class="formula-baseline">Sérénité au quotidien.</p>
-            <ul class="formula-list">
-              <li class="yes">Tout BASIC inclus</li>
-              <li class="yes"><strong>2 dépannages/an</strong> (MO + déplacement)</li>
-              <li class="yes">Intervention sous 48h max</li>
-              <li class="no">Pièces de rechange non incluses</li>
-            </ul>
-            <button type="button" class="formula-cta" data-energie="Gaz" data-formule="CONFORT" data-prix="13 € HT/mois — 156 €/an" onclick="openSouscriptionModal(this)">Souscrire</button>
-          </div>
-
-          <div class="formula-card securite">
-            <div class="formula-eyebrow">Formule Gaz</div>
-            <h2 class="formula-name">SÉCURITÉ</h2>
-            <div class="formula-price-block">
-              <div class="formula-price">23&nbsp;€&nbsp;HT<small> /mois</small></div>
-              <div class="formula-price-year">soit 276&nbsp;€&nbsp;HT/an</div>
-            </div>
-            <p class="formula-baseline">Tranquillité totale.</p>
-            <ul class="formula-list">
-              <li class="yes">Tout CONFORT inclus</li>
-              <li class="yes"><strong>Pièces incluses</strong> sans frais</li>
-              <li class="yes">Intervention sous 24h max</li>
-            </ul>
-            <small class="formula-note">Réservée aux chaudières &lt; 5 ans, après contrôle technique. Hors corps de chauffe, échangeur principal, ballon ECS et pièces non disponibles fabricant.</small>
-            <button type="button" class="formula-cta" style="margin-top:14px" data-energie="Gaz" data-formule="SÉCURITÉ" data-prix="23 € HT/mois — 276 €/an" onclick="openSouscriptionModal(this)">Souscrire</button>
-          </div>
-
-        </div>
+        <div class="formula-grid"><div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#94a3b8;font-size:.92rem">Chargement des formules…</div></div>
       </div>
-
-      <!-- ============ FIOUL ============ -->
-      <div class="energy-pane" id="pane-fioul">
-        <div class="formula-grid">
-
-          <div class="formula-card basic">
-            <div class="formula-eyebrow">Formule Fioul</div>
-            <h2 class="formula-name">BASIC</h2>
-            <div class="formula-price-block">
-              <div class="formula-price">12&nbsp;€&nbsp;HT<small> /mois</small></div>
-              <div class="formula-price-year">soit 140&nbsp;€&nbsp;HT/an</div>
-            </div>
-            <p class="formula-baseline">L'essentiel pour rester en règle.</p>
-            <ul class="formula-list">
-              <li class="yes">Visite annuelle &amp; attestation officielle</li>
-              <li class="yes">Rappel automatique 1 mois avant</li>
-              <li class="yes">Statut prioritaire</li>
-              <li class="no">Dépannages facturés en sus</li>
-              <li class="no">Pièces de rechange non incluses</li>
-            </ul>
-            <button type="button" class="formula-cta" data-energie="Fioul" data-formule="BASIC" data-prix="12 € HT/mois — 140 €/an" onclick="openSouscriptionModal(this)">Souscrire</button>
-          </div>
-
-          <div class="formula-card confort">
-            <span class="formula-badge">★ Le plus choisi</span>
-            <div class="formula-eyebrow">Formule Fioul</div>
-            <h2 class="formula-name">CONFORT</h2>
-            <div class="formula-price-block">
-              <div class="formula-price">16&nbsp;€&nbsp;HT<small> /mois</small></div>
-              <div class="formula-price-year">soit 190&nbsp;€&nbsp;HT/an</div>
-            </div>
-            <p class="formula-baseline">Sérénité au quotidien.</p>
-            <ul class="formula-list">
-              <li class="yes">Tout BASIC inclus</li>
-              <li class="yes"><strong>2 dépannages/an</strong> (MO + déplacement)</li>
-              <li class="yes">Intervention sous 48h max</li>
-              <li class="no">Pièces de rechange non incluses</li>
-            </ul>
-            <button type="button" class="formula-cta" data-energie="Fioul" data-formule="CONFORT" data-prix="16 € HT/mois — 190 €/an" onclick="openSouscriptionModal(this)">Souscrire</button>
-          </div>
-
-          <div class="formula-card securite">
-            <div class="formula-eyebrow">Formule Fioul</div>
-            <h2 class="formula-name">SÉCURITÉ</h2>
-            <div class="formula-price-block">
-              <div class="formula-price">27&nbsp;€&nbsp;HT<small> /mois</small></div>
-              <div class="formula-price-year">soit 320&nbsp;€&nbsp;HT/an</div>
-            </div>
-            <p class="formula-baseline">Tranquillité totale.</p>
-            <ul class="formula-list">
-              <li class="yes">Tout CONFORT inclus</li>
-              <li class="yes"><strong>Pièces jusqu'à 1&nbsp;000&nbsp;€&nbsp;HT</strong></li>
-              <li class="yes">Au-delà&nbsp;: devis remplacement</li>
-              <li class="yes">Intervention sous 24h max</li>
-            </ul>
-            <small class="formula-note">Réservée aux chaudières &lt; 5 ans, après contrôle technique.</small>
-            <button type="button" class="formula-cta" style="margin-top:14px" data-energie="Fioul" data-formule="SÉCURITÉ" data-prix="27 € HT/mois — 320 €/an" onclick="openSouscriptionModal(this)">Souscrire</button>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- ============ ADOUCISSEUR ============ -->
-      <div class="energy-pane" id="pane-eau">
-        <div class="formula-grid" style="grid-template-columns:1fr;max-width:680px">
-          <div class="formula-card confort" style="border-color:#1FC4F0">
-            <span class="formula-badge">Eau douce</span>
-            <div class="formula-eyebrow">Adoucisseur d'eau</div>
-            <h2 class="formula-name">Contrat Adoucisseur</h2>
-            <div class="formula-price-block">
-              <div class="formula-price">à partir de 8&nbsp;€&nbsp;HT<small> /mois</small></div>
-              <div class="formula-price-year">tarif selon modèle &amp; volume</div>
-            </div>
-            <p class="formula-baseline">Une eau saine, des canalisations protégées.</p>
-            <ul class="formula-list">
-              <li class="yes">Visite annuelle de contrôle &amp; régénération</li>
-              <li class="yes">Vérification dureté de l'eau (TH)</li>
-              <li class="yes">Réapprovisionnement sel et résines</li>
-              <li class="yes">Option <strong>extension de garantie 10 ans Waterpro</strong></li>
-              <li class="yes">Intervention prioritaire en cas de panne</li>
-            </ul>
-            <button type="button" class="formula-cta" data-energie="Sur-mesure" data-formule="Devis personnalisé" data-prix="à devis" onclick="openSouscriptionModal(this)">Demander un devis personnalisé</button>
-          </div>
-        </div>
-      </div>
-
+      <div class="energy-pane" id="pane-fioul"><div class="formula-grid"></div></div>
+      <div class="energy-pane" id="pane-eau"><div class="formula-grid"></div></div>
     </div>
 
     <div class="legal-strip">
