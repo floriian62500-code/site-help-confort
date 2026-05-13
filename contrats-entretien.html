@@ -1825,7 +1825,7 @@ if (document.fonts && document.fonts.ready) {
       }
       var sb = window.supabase.createClient(
         'https://btcbjwqiivhpwoszomhg.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0Y2Jqd3FpaXZocHdvc3pvbWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzExNzI3MTcsImV4cCI6MjA0Njc0ODcxN30.GpdsoXVcZSZpKzlSO1cYRgJzKQ73Y_lc24w5eu_3VuI'
+        'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2'
       );
 
       // Mapping formule → tier DB
@@ -1878,7 +1878,7 @@ if (document.fonts && document.fonts.ready) {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0Y2Jqd3FpaXZocHdvc3pvbWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzExNzI3MTcsImV4cCI6MjA0Njc0ODcxN30.GpdsoXVcZSZpKzlSO1cYRgJzKQ73Y_lc24w5eu_3VuI'
+            'Authorization': 'Bearer sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2'
           },
           body: JSON.stringify({ contract_id: ins.data.id, agence: payload.agence })
         });
