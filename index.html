@@ -331,12 +331,12 @@ function scheduleClose() {
 }
 navLinks.forEach(function(link) {
   link.addEventListener('mouseenter', cancelCloseMenus);
-  link.addEventListener('mouseleave', scheduleClose);
+  /* retiré : mouseleave fermait le menu trop tôt et bloquait les clicks */
   link.addEventListener('click', cancelCloseMenus);
 });
 megaMenus.forEach(function(menu) {
   menu.addEventListener('mouseenter', cancelCloseMenus);
-  menu.addEventListener('mouseleave', scheduleClose);
+  /* retiré : mouseleave fermait le menu trop tôt et bloquait les clicks */
 });
 // Click outside ferme le menu
 document.addEventListener('click', function(e) {
