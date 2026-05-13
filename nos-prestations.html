@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nos prestations en ligne · Forfaits transparents | HELP! Confort Saint-Omer</title>
+<meta name="description" content="Catalogue de prestations à prix fixe : chauffe-eau, plomberie, dépannage. Réservez en ligne avec acompte 40%. Devis gratuit sous 48h pour vos projets sur mesure. Saint-Omer & Dunkerque.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.helpconfort-saintomer.fr/nos-prestations.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Forfaits HELP! Confort — Prix transparents, réservation en ligne">
+<meta property="og:description" content="Chauffe-eau, plomberie, dépannage : forfaits clés en main à prix fixe TTC. Acompte 40% en ligne, intervention rapide.">
+<meta property="og:url" content="https://www.helpconfort-saintomer.fr/nos-prestations.html">
+<meta property="og:locale" content="fr_FR">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://btcbjwqiivhpwoszomhg.supabase.co" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20260513">
+
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+
+<style>
+  /* ═══════════════════════════════════════════════════════════
+     Page Nos Prestations — Catalogue e-commerce pro
+     ═══════════════════════════════════════════════════════════ */
+
+  /* HERO */
+  .nv-hero{background:linear-gradient(180deg,#f8fcff 0%,#fff 100%);padding:64px 0 24px;position:relative;overflow:hidden}
+  .nv-hero::before{content:"";position:absolute;top:-120px;right:-120px;width:480px;height:480px;background:radial-gradient(circle,rgba(31,196,240,.10),transparent 60%);pointer-events:none}
+  .nv-hero::after{content:"";position:absolute;bottom:-200px;left:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(255,180,0,.05),transparent 60%);pointer-events:none}
+  .nv-hero-inner{max-width:1480px;margin:0 auto;padding:0 clamp(20px,4vw,64px);position:relative;z-index:1}
+  .nv-bc{font-size:.88rem;color:#6b7384;margin-bottom:20px}
+  .nv-bc a{color:#6b7384;text-decoration:none}
+  .nv-bc a:hover{color:#0DA0CF}
+  .nv-eyebrow{display:inline-block;background:linear-gradient(135deg,rgba(31,196,240,.15),rgba(13,160,207,.05));color:#0DA0CF;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:18px}
+  .nv-hero h1{font-size:clamp(2.2rem,5.5vw,4rem);line-height:1.02;letter-spacing:-.04em;font-weight:800;margin:0 0 18px;max-width:900px;color:#0A1428}
+  .nv-hero h1 em{font-style:italic;font-weight:500;color:#0DA0CF;font-family:'Playfair Display',Georgia,serif}
+  .nv-hero .nv-lead{font-size:clamp(1.05rem,1.4vw,1.2rem);color:#475569;max-width:720px;line-height:1.55;margin:0}
+  .nv-trust{display:flex;flex-wrap:wrap;gap:18px 28px;margin-top:32px;padding:20px 24px;background:#fff;border:1px solid rgba(10,20,40,.06);border-radius:18px;box-shadow:0 4px 12px rgba(10,20,40,.04)}
+  .nv-trust-item{display:flex;align-items:center;gap:10px;font-size:.9rem;color:#0A1428;font-weight:600}
+  .nv-trust-item svg{width:20px;height:20px;color:#1aa260;flex-shrink:0}
+
+  /* FILTERS */
+  .nv-filters{position:sticky;top:64px;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid rgba(229,237,243,.6);padding:14px 0;margin-bottom:32px}
+  .nv-filters-inner{max-width:1480px;margin:0 auto;padding:0 clamp(20px,4vw,64px);display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+  .nv-filters-inner::-webkit-scrollbar{display:none}
+  .nv-filter{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:1.5px solid #e5edf3;background:#fff;color:#0A1428;border-radius:999px;font-size:.88rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s ease;font-family:inherit}
+  .nv-filter:hover{border-color:#0DA0CF;color:#0DA0CF}
+  .nv-filter.is-active{background:#0A1428;color:#fff;border-color:#0A1428}
+  .nv-filter svg{width:14px;height:14px}
+  .nv-filter .nv-count{background:rgba(10,20,40,.08);color:inherit;padding:1px 8px;border-radius:999px;font-size:.72rem;font-weight:800}
+  .nv-filter.is-active .nv-count{background:rgba(255,255,255,.18)}
+
+  /* CATALOG */
+  .nv-catalog{max-width:1480px;margin:0 auto;padding:0 clamp(20px,4vw,64px) 80px}
+  .nv-catalog-section{margin-bottom:56px;scroll-margin-top:120px}
+  .nv-cat-head{display:flex;align-items:center;gap:18px;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid #E5EDF3}
+  .nv-cat-icon{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#1FC4F0,#0DA0CF);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 16px rgba(13,160,207,.25)}
+  .nv-cat-icon svg{width:24px;height:24px}
+  .nv-cat-head h2{margin:0;font-size:1.6rem;font-weight:800;letter-spacing:-.02em;color:#0A1428}
+  .nv-cat-head p{margin:2px 0 0;font-size:.92rem;color:#6b7384;font-weight:500}
+
+  .nv-grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+
+  /* CARD */
+  .nv-card{background:#fff;border:1px solid #E5EDF3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:all .25s cubic-bezier(.16,1,.3,1);box-shadow:0 2px 8px rgba(10,20,40,.04)}
+  .nv-card:hover{transform:translateY(-4px);box-shadow:0 24px 48px -16px rgba(10,20,40,.12);border-color:rgba(13,160,207,.20)}
+  .nv-card-visual{position:relative;aspect-ratio:16/10;background:linear-gradient(135deg,#0A1428 0%,#1a2742 100%);overflow:hidden}
+  .nv-card-visual::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(31,196,240,.30),transparent 60%);pointer-events:none}
+  .nv-card-visual svg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:88px;height:88px;color:rgba(255,255,255,.18);stroke-width:1.2}
+  .nv-card-badge{position:absolute;top:14px;left:14px;padding:5px 12px;background:#FFB400;color:#0A1428;border-radius:999px;font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;z-index:2;box-shadow:0 4px 10px rgba(255,180,0,.4)}
+  .nv-card-cat{position:absolute;top:14px;right:14px;padding:5px 11px;background:rgba(255,255,255,.92);color:#0A1428;border-radius:999px;font-size:.72rem;font-weight:700;z-index:2;backdrop-filter:blur(8px)}
+  .nv-card-body{padding:22px;display:flex;flex-direction:column;flex:1}
+  .nv-card-name{font-size:1.18rem;font-weight:800;color:#0A1428;line-height:1.25;letter-spacing:-.01em;margin:0 0 8px}
+  .nv-card-short{font-size:.92rem;color:#6b7384;line-height:1.5;margin:0 0 18px}
+  .nv-card-meta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px;font-size:.78rem;color:#475569}
+  .nv-card-meta-item{display:inline-flex;align-items:center;gap:5px}
+  .nv-card-meta-item svg{width:13px;height:13px;color:#94a3b8}
+  .nv-card-includes{margin:0 0 20px;padding:14px;background:#f8fcff;border-radius:12px}
+  .nv-card-includes-title{font-size:.72rem;font-weight:700;color:#0DA0CF;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+  .nv-card-includes ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+  .nv-card-includes li{display:flex;gap:8px;font-size:.85rem;color:#0A1428;line-height:1.4}
+  .nv-card-includes li::before{content:"✓";color:#1aa260;font-weight:800;flex-shrink:0}
+  .nv-card-includes li.more{color:#0DA0CF;font-weight:600;font-size:.82rem;cursor:pointer}
+  .nv-card-includes li.more::before{content:"+";color:#0DA0CF}
+  .nv-card-price{padding:18px 0;border-top:1px solid #E5EDF3;margin-top:auto}
+  .nv-price-from{font-size:.78rem;color:#6b7384;font-weight:600;margin-bottom:2px}
+  .nv-price-main{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .nv-price-amount{font-size:1.9rem;font-weight:900;color:#0A1428;letter-spacing:-.03em;line-height:1}
+  .nv-price-currency{font-size:1.1rem;font-weight:700;color:#0A1428}
+  .nv-price-tax{font-size:.78rem;color:#6b7384;font-weight:500}
+  .nv-price-deposit{margin-top:6px;font-size:.82rem;color:#FF6B1A;font-weight:600}
+  .nv-card-actions{display:flex;gap:8px;margin-top:16px}
+  .nv-btn-primary{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;background:#0A1428;color:#fff;border:none;border-radius:11px;text-decoration:none;font-weight:700;font-size:.92rem;cursor:pointer;transition:all .2s ease;font-family:inherit}
+  .nv-btn-primary:hover{background:#0DA0CF;transform:translateY(-1px);box-shadow:0 8px 20px rgba(13,160,207,.30)}
+  .nv-btn-secondary{display:inline-flex;align-items:center;justify-content:center;padding:13px;background:#fff;color:#0A1428;border:1.5px solid #E5EDF3;border-radius:11px;text-decoration:none;font-weight:700;font-size:.92rem;cursor:pointer;transition:all .2s ease;font-family:inherit}
+  .nv-btn-secondary:hover{border-color:#0A1428}
+  .nv-btn-secondary svg{width:18px;height:18px}
+
+  /* CTA Devis sur mesure (full-width card) */
+  .nv-card-custom{grid-column:1/-1;background:linear-gradient(135deg,#0A1428 0%,#1a2742 100%);color:#fff;padding:48px;border-radius:24px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;position:relative;overflow:hidden}
+  .nv-card-custom::before{content:"";position:absolute;top:-50px;right:-50px;width:300px;height:300px;background:radial-gradient(circle,rgba(255,180,0,.20),transparent 60%);pointer-events:none}
+  .nv-card-custom-text h3{margin:0 0 8px;font-size:1.6rem;font-weight:800;letter-spacing:-.02em}
+  .nv-card-custom-text p{margin:0;color:rgba(255,255,255,.75);font-size:1rem;max-width:520px;line-height:1.5}
+  .nv-card-custom .nv-btn-cta{display:inline-flex;align-items:center;gap:10px;padding:16px 28px;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#0A1428;border-radius:12px;text-decoration:none;font-weight:800;font-size:1rem;box-shadow:0 8px 24px rgba(255,107,26,.30);transition:all .2s ease;position:relative;z-index:1}
+  .nv-card-custom .nv-btn-cta:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,107,26,.40)}
+
+  /* LOADING / EMPTY STATES */
+  .nv-loading{padding:80px;text-align:center;color:#6b7384}
+  .nv-loading svg{width:36px;height:36px;color:#0DA0CF;animation:nvspin 1.2s linear infinite}
+  @keyframes nvspin{to{transform:rotate(360deg)}}
+  .nv-empty{padding:60px 20px;text-align:center;color:#6b7384}
+
+  /* MODAL DE RÉSERVATION */
+  .nv-modal{position:fixed;inset:0;background:rgba(10,20,40,.55);backdrop-filter:blur(6px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;animation:nvfade .25s ease}
+  .nv-modal.is-open{display:flex}
+  @keyframes nvfade{from{opacity:0}to{opacity:1}}
+  .nv-modal-sheet{background:#fff;border-radius:24px;width:100%;max-width:640px;max-height:92vh;overflow:auto;box-shadow:0 40px 80px rgba(0,0,0,.32);animation:nvslide .35s cubic-bezier(.16,1,.3,1)}
+  @keyframes nvslide{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .nv-modal-head{padding:26px 28px 18px;border-bottom:1px solid #E5EDF3;display:flex;gap:16px;align-items:flex-start}
+  .nv-modal-head h2{margin:0;font-size:1.35rem;font-weight:800;color:#0A1428;letter-spacing:-.02em;flex:1}
+  .nv-modal-close{background:#f4f7fb;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#475569;transition:all .15s;flex-shrink:0}
+  .nv-modal-close:hover{background:#e5edf3;color:#0A1428}
+  .nv-modal-body{padding:24px 28px}
+  .nv-summary{background:linear-gradient(135deg,#f8fcff,#eef9ff);border:1px solid rgba(13,160,207,.18);border-radius:14px;padding:18px;margin-bottom:24px}
+  .nv-summary-name{font-weight:700;color:#0A1428;font-size:1rem;margin-bottom:8px}
+  .nv-summary-price{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px dashed rgba(13,160,207,.25);font-size:.9rem}
+  .nv-summary-price strong{color:#0A1428;font-size:1.2rem;font-weight:900;letter-spacing:-.02em}
+  .nv-summary-deposit{font-size:.82rem;color:#FF6B1A;font-weight:600;margin-top:4px;display:block}
+
+  .nv-variant-pick{display:grid;gap:10px;margin-bottom:18px}
+  .nv-variant-opt{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border:1.5px solid #E5EDF3;border-radius:12px;cursor:pointer;transition:all .15s;background:#fff}
+  .nv-variant-opt:hover{border-color:#0DA0CF;background:#f8fcff}
+  .nv-variant-opt input{margin-top:3px;accent-color:#0DA0CF;width:18px;height:18px;flex-shrink:0;cursor:pointer}
+  .nv-variant-opt:has(input:checked){border-color:#0DA0CF;background:#f8fcff;box-shadow:0 0 0 3px rgba(13,160,207,.08)}
+  .nv-variant-label{flex:1}
+  .nv-variant-label strong{display:block;font-size:.95rem;color:#0A1428;font-weight:700;margin-bottom:2px}
+  .nv-variant-label small{font-size:.82rem;color:#6b7384;line-height:1.4}
+  .nv-variant-price{font-weight:800;color:#0A1428;font-size:1rem;white-space:nowrap}
+
+  .nv-form-grid{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+  .nv-form-grid .nv-form-full{grid-column:1/-1}
+  .nv-form-field label{display:block;font-size:.78rem;font-weight:700;color:#0A1428;margin-bottom:5px;letter-spacing:.02em}
+  .nv-form-field input,.nv-form-field textarea,.nv-form-field select{width:100%;padding:11px 13px;border:1px solid #E5EDF3;border-radius:10px;font:inherit;font-size:.92rem;color:#0A1428;background:#fff;transition:all .15s}
+  .nv-form-field input:focus,.nv-form-field textarea:focus,.nv-form-field select:focus{outline:none;border-color:#0DA0CF;box-shadow:0 0 0 3px rgba(13,160,207,.12)}
+  .nv-form-field textarea{resize:vertical;min-height:80px}
+
+  .nv-deposit-info{margin:20px 0 0;padding:14px 16px;background:#fff8eb;border:1px solid rgba(255,180,0,.25);border-radius:12px;font-size:.86rem;color:#7a5500;line-height:1.5}
+  .nv-deposit-info strong{color:#0A1428}
+
+  .nv-modal-foot{padding:18px 28px 24px;border-top:1px solid #E5EDF3;display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:#fafcfd;border-radius:0 0 24px 24px}
+  .nv-modal-foot .nv-foot-tel{font-size:.84rem;color:#6b7384}
+  .nv-modal-foot .nv-foot-tel a{color:#0A1428;font-weight:700;text-decoration:none}
+  .nv-modal-foot .nv-cta-submit{margin-left:auto;display:inline-flex;align-items:center;gap:8px;padding:13px 24px;background:linear-gradient(135deg,#1FC4F0,#0DA0CF);color:#fff;border:none;border-radius:12px;font-weight:800;font-size:.94rem;cursor:pointer;box-shadow:0 6px 18px rgba(13,160,207,.30);transition:all .2s}
+  .nv-modal-foot .nv-cta-submit:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(13,160,207,.40)}
+  .nv-modal-foot .nv-cta-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+
+  .nv-success{padding:48px 32px;text-align:center}
+  .nv-success-icon{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#1aa260,#22c55e);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 8px 24px rgba(26,162,96,.30)}
+  .nv-success-icon svg{width:36px;height:36px;stroke-width:3}
+  .nv-success h3{margin:0 0 10px;font-size:1.4rem;font-weight:800;color:#0A1428}
+  .nv-success p{margin:0 0 20px;color:#475569;line-height:1.5}
+  .nv-success .nv-order-num{display:inline-block;padding:6px 14px;background:#f4f7fb;border-radius:8px;font-family:monospace;font-weight:700;color:#0A1428;margin:8px 0}
+
+  /* MOBILE */
+  @media (max-width:768px){
+    .nv-hero{padding:32px 0 16px}
+    .nv-trust{flex-direction:column;gap:12px}
+    .nv-cat-head h2{font-size:1.3rem}
+    .nv-card-custom{padding:32px 24px;flex-direction:column;align-items:flex-start}
+    .nv-modal-sheet{max-height:96vh}
+    .nv-form-grid{grid-template-columns:1fr}
+    .nv-modal-foot{flex-direction:column;align-items:stretch}
+    .nv-modal-foot .nv-cta-submit{margin-left:0;width:100%;justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR globale -->
+<div class="hc-topbar" role="complementary" aria-label="Agence et zones d'intervention">
+  <div class="hc-topbar-inner">
+    <span class="hctb-pill">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      Agence officielle Réseau HELP! Confort
+    </span>
+    <span class="hctb-divider" aria-hidden="true"></span>
+    <span class="hctb-zones">
+      <a href="depannage-saint-omer.html" class="hctb-zone"><span class="hctb-pulse"></span><strong>Saint-Omer</strong></a>
+      <span class="hctb-plus">+</span>
+      <a href="depannage-dunkerque.html" class="hctb-zone"><strong>Dunkerque</strong></a>
+      <span class="hctb-bullet">·</span>
+      <span class="hctb-hours"><strong>Lun-Sam · 8h-18h</strong></span>
+    </span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="hc-header" id="hcHeader">
+  <div class="hc-header-row">
+    <a href="index.html" class="hc-logo"><img src="logo-officiel.jpg" alt="HELP! Confort" width="200" height="60"></a>
+    <nav class="hc-nav">
+      <a href="index.html" class="hc-nav-link">Accueil</a>
+      <a href="index.html#hc-metiers" class="hc-nav-link">Métiers</a>
+      <a href="nos-prestations.html" class="hc-nav-link" style="color:#0DA0CF;font-weight:700">Nos prestations</a>
+      <a href="contrats-entretien.html" class="hc-nav-link">Contrats</a>
+      <a href="realisations.html" class="hc-nav-link">Réalisations</a>
+      <a href="contact.html" class="hc-nav-link">Contact</a>
+    </nav>
+    <div class="hc-header-actions">
+      <a href="tel:+33366100134" class="hc-btn-tel">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span class="hc-btn-tel-num">03 66 10 01 34</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="nv-hero">
+    <div class="nv-hero-inner">
+      <nav class="nv-bc" aria-label="Fil d'ariane"><a href="index.html">Accueil</a> · Nos prestations</nav>
+      <span class="nv-eyebrow">Forfaits transparents · Réservation en ligne</span>
+      <h1>Nos prestations <em>au prix juste</em>, sans surprise.</h1>
+      <p class="nv-lead">Forfaits clés en main avec fourniture, pose, déplacement et garantie inclus. Réservez en ligne en 2 minutes avec un acompte de 40 %, le solde à la fin de l'intervention. Pour les projets sur mesure, devis gratuit sous 48 h.</p>
+
+      <div class="nv-trust">
+        <div class="nv-trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Prix tout compris TTC affiché
+        </div>
+        <div class="nv-trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Assurance décennale MAAF
+        </div>
+        <div class="nv-trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Garantie pièces &amp; main d'œuvre
+        </div>
+        <div class="nv-trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          TVA 10 % (rénovation &gt; 2 ans)
+        </div>
+        <div class="nv-trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Intervention sous 24-72 h
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTRES STICKY -->
+  <nav class="nv-filters" aria-label="Filtrer par catégorie">
+    <div class="nv-filters-inner" id="filtersBar">
+      <button class="nv-filter is-active" data-filter="all">Toutes les prestations <span class="nv-count" id="cntAll">—</span></button>
+    </div>
+  </nav>
+
+  <!-- CATALOGUE -->
+  <div class="nv-catalog" id="catalogRoot">
+    <div class="nv-loading">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9" stroke-opacity=".2"/><path d="M21 12a9 9 0 0 0-9-9"/></svg>
+      <p style="margin-top:14px">Chargement du catalogue…</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- MODAL RÉSERVATION -->
+<div class="nv-modal" id="nvModal" role="dialog" aria-modal="true" aria-labelledby="nvModalTitle">
+  <div class="nv-modal-sheet" id="nvModalSheet">
+    <!-- contenu injecté dynamiquement -->
+  </div>
+</div>
+
+<!-- FOOTER simplifié (le footer global est rendu sur le site existant) -->
+<footer style="background:#0A1428;color:#fff;padding:48px 24px;margin-top:64px">
+  <div style="max-width:1480px;margin:0 auto;text-align:center">
+    <p style="margin:0 0 12px;font-size:.9rem;opacity:.7">HELP! Confort Saint-Omer · SARL DEPAN'AUDO · 242 Route de Boulogne, 62500 Saint Martin Lez Tatinghem</p>
+    <p style="margin:0;font-size:.82rem;opacity:.5">SIRET 89819615900013 · TVA FR75898196159 · Assurance décennale MAAF n° 162295792 A</p>
+  </div>
+</footer>
+
+<!-- SUPABASE + LOGIC -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(async function() {
+  const SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0Y2Jqd3FpaXZocHdvc3pvbWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzExNzI3MTcsImV4cCI6MjA0Njc0ODcxN30.GpdsoXVcZSZpKzlSO1cYRgJzKQ73Y_lc24w5eu_3VuI';
+
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  const root = document.getElementById('catalogRoot');
+  const filtersBar = document.getElementById('filtersBar');
+
+  // Icônes catégories (mapping vers SVG inline)
+  const CAT_ICONS = {
+    'plomberie':   '<path d="M22 12h-7l-2 4-3-8-2 4H2"/>',
+    'chauffe-eau': '<path d="M14 13.5a2.5 2.5 0 1 1-3 0V5l3-3v11.5z"/><path d="M11 5h3"/><path d="M16 12c1.5 0 3 .5 3 2v6a2 2 0 0 1-2 2h-3"/>',
+    'chauffage':   '<path d="M12 2c1 4-2 4 0 8 2 4 4 4 0 12-1-4 2-4 0-8-2-4-4-4 0-12z"/>',
+    'electricite': '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+    'serrurerie':  '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+    'vitrerie':    '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/>',
+    'sur-mesure':  '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>'
+  };
+  const SVG_ATTRS = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
+  const escapeHtml = (s) => String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const eurFmt = (n) => new Intl.NumberFormat('fr-FR', { style:'currency', currency:'EUR', minimumFractionDigits: 2 }).format(n);
+
+  // Charger services + catégories
+  const { data: services, error } = await sb
+    .from('v_services_public')
+    .select('*');
+
+  if (error || !services) {
+    root.innerHTML = `<div class="nv-empty"><h3>Catalogue indisponible</h3><p>Un problème de connexion empêche l'affichage des prestations. Appelez-nous au <a href="tel:+33366100134" style="color:#0DA0CF;font-weight:700">03 66 10 01 34</a>.</p></div>`;
+    console.error('[catalog] load error:', error);
+    return;
+  }
+
+  // Grouper par catégorie
+  const grouped = {};
+  services.forEach(s => {
+    const key = s.category_slug || 'autre';
+    if (!grouped[key]) grouped[key] = { name: s.category_name || 'Autre', icon: s.category_icon, slug: key, items: [] };
+    grouped[key].items.push(s);
+  });
+
+  // Filtres
+  document.getElementById('cntAll').textContent = services.length;
+  Object.values(grouped).forEach(g => {
+    const btn = document.createElement('button');
+    btn.className = 'nv-filter';
+    btn.dataset.filter = g.slug;
+    btn.innerHTML = `<svg width="14" height="14" ${SVG_ATTRS}>${CAT_ICONS[g.slug] || CAT_ICONS['sur-mesure']}</svg>${escapeHtml(g.name)} <span class="nv-count">${g.items.length}</span>`;
+    btn.onclick = () => {
+      document.querySelectorAll('.nv-filter').forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      const target = document.getElementById('sec-' + g.slug);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    filtersBar.appendChild(btn);
+  });
+
+  document.querySelector('[data-filter="all"]').onclick = () => {
+    document.querySelectorAll('.nv-filter').forEach(b => b.classList.remove('is-active'));
+    document.querySelector('[data-filter="all"]').classList.add('is-active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Rendu du catalogue
+  root.innerHTML = Object.values(grouped).map(g => `
+    <section class="nv-catalog-section" id="sec-${g.slug}">
+      <div class="nv-cat-head">
+        <div class="nv-cat-icon"><svg ${SVG_ATTRS}>${CAT_ICONS[g.slug] || CAT_ICONS['sur-mesure']}</svg></div>
+        <div>
+          <h2>${escapeHtml(g.name)}</h2>
+          <p>${g.items.length} prestation${g.items.length > 1 ? 's' : ''} disponible${g.items.length > 1 ? 's' : ''}</p>
+        </div>
+      </div>
+      <div class="nv-grid">
+        ${g.items.map(s => renderCard(s, g.slug)).join('')}
+      </div>
+    </section>
+  `).join('');
+
+  function renderCard(s, catSlug) {
+    if (s.requires_quote) {
+      return `
+        <div class="nv-card-custom">
+          <div class="nv-card-custom-text">
+            <h3>${escapeHtml(s.name)}</h3>
+            <p>${escapeHtml(s.short_desc || '')}</p>
+          </div>
+          <a href="contact.html?service=${encodeURIComponent(s.slug)}" class="nv-btn-cta">
+            Demander un devis gratuit
+            <svg width="18" height="18" ${SVG_ATTRS}><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>`;
+    }
+    const incl = (s.includes || []).slice(0, 4);
+    const more = (s.includes || []).length - incl.length;
+    return `
+      <article class="nv-card" data-service-id="${s.id}">
+        <div class="nv-card-visual">
+          ${s.badge ? `<span class="nv-card-badge">${escapeHtml(s.badge)}</span>` : ''}
+          <span class="nv-card-cat">${escapeHtml(s.category_name || '')}</span>
+          <svg ${SVG_ATTRS}>${CAT_ICONS[catSlug] || CAT_ICONS['sur-mesure']}</svg>
+        </div>
+        <div class="nv-card-body">
+          <h3 class="nv-card-name">${escapeHtml(s.name)}</h3>
+          <p class="nv-card-short">${escapeHtml(s.short_desc || '')}</p>
+          <div class="nv-card-meta">
+            ${s.duration_min ? `<span class="nv-card-meta-item"><svg ${SVG_ATTRS}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>~${Math.round(s.duration_min/60*10)/10} h</span>` : ''}
+            ${s.warranty ? `<span class="nv-card-meta-item"><svg ${SVG_ATTRS}><path d="M9 12l2 2 4-4"/><path d="M21 12c0 5-9 9-9 9s-9-4-9-9V5l9-3 9 3v7z"/></svg>${escapeHtml(s.warranty.split('·')[0].trim())}</span>` : ''}
+            ${s.brand ? `<span class="nv-card-meta-item"><svg ${SVG_ATTRS}><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>${escapeHtml(s.brand)}</span>` : ''}
+          </div>
+          ${incl.length ? `
+            <div class="nv-card-includes">
+              <div class="nv-card-includes-title">Ce qui est inclus</div>
+              <ul>
+                ${incl.map(i => `<li>${escapeHtml(i)}</li>`).join('')}
+                ${more > 0 ? `<li class="more">${more} élément${more > 1 ? 's' : ''} de plus</li>` : ''}
+              </ul>
+            </div>` : ''}
+          <div class="nv-card-price">
+            <div class="nv-price-from">À partir de</div>
+            <div class="nv-price-main">
+              <span class="nv-price-amount">${eurFmt(s.price_ttc).replace('€','').trim()}</span>
+              <span class="nv-price-currency">€</span>
+              <span class="nv-price-tax">TTC&nbsp;· TVA 10%</span>
+            </div>
+            <div class="nv-price-deposit">Acompte ${s.deposit_pct}% à la commande : ${eurFmt(s.deposit_ttc)}</div>
+          </div>
+          <div class="nv-card-actions">
+            <button class="nv-btn-primary" data-action="reserve" data-service-id="${s.id}">
+              Réserver cette prestation
+              <svg width="16" height="16" ${SVG_ATTRS}><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+            <a class="nv-btn-secondary" href="tel:+33366100134" title="Nous appeler" aria-label="Appeler HELP! Confort">
+              <svg ${SVG_ATTRS}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>`;
+  }
+
+  // ─── MODAL RÉSERVATION ────────────────────────────────────────
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-action="reserve"]');
+    if (!btn) return;
+    const svc = services.find(s => s.id === btn.dataset.serviceId);
+    if (svc) openReserveModal(svc);
+  });
+
+  function openReserveModal(svc) {
+    const modal = document.getElementById('nvModal');
+    const sheet = document.getElementById('nvModalSheet');
+    const variants = svc.variants || [];
+    const hasVariants = variants.length > 0;
+
+    sheet.innerHTML = `
+      <div class="nv-modal-head">
+        <h2 id="nvModalTitle">Réserver une intervention</h2>
+        <button class="nv-modal-close" type="button" aria-label="Fermer">
+          <svg width="16" height="16" ${SVG_ATTRS}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="nv-modal-body">
+        <div class="nv-summary">
+          <div class="nv-summary-name">${escapeHtml(svc.name)}</div>
+          ${svc.short_desc ? `<div style="font-size:.86rem;color:#475569;line-height:1.5">${escapeHtml(svc.short_desc)}</div>` : ''}
+          <div class="nv-summary-price">
+            <span>Prix forfait TTC</span>
+            <strong id="nvSummaryPrice">${eurFmt(svc.price_ttc)}</strong>
+          </div>
+          <span class="nv-summary-deposit" id="nvSummaryDeposit">Acompte ${svc.deposit_pct}% : ${eurFmt(svc.deposit_ttc)}</span>
+        </div>
+
+        ${hasVariants ? `
+          <div style="font-size:.86rem;font-weight:700;color:#0A1428;margin-bottom:10px">Gamme</div>
+          <div class="nv-variant-pick" id="nvVariantPick">
+            <label class="nv-variant-opt">
+              <input type="radio" name="variant" value="" checked>
+              <div class="nv-variant-label">
+                <strong>Gamme Éco</strong>
+                <small>${escapeHtml(svc.brand || '')} · qualité standard, rapport qualité/prix optimal</small>
+              </div>
+              <div class="nv-variant-price">${eurFmt(svc.price_ttc)}</div>
+            </label>
+            ${variants.map((v, i) => `
+              <label class="nv-variant-opt">
+                <input type="radio" name="variant" value="${i}">
+                <div class="nv-variant-label">
+                  <strong>${escapeHtml(v.label)}</strong>
+                  <small>${escapeHtml(v.info || '')}</small>
+                </div>
+                <div class="nv-variant-price">${eurFmt(Number(v.price_ht) * (1 + Number(svc.vat_rate)))}</div>
+              </label>
+            `).join('')}
+          </div>
+        ` : ''}
+
+        <form id="nvForm" novalidate>
+          <div class="nv-form-grid">
+            <div class="nv-form-field"><label>Prénom *</label><input name="firstname" required></div>
+            <div class="nv-form-field"><label>Nom *</label><input name="lastname" required></div>
+            <div class="nv-form-field"><label>Email *</label><input name="email" type="email" required></div>
+            <div class="nv-form-field"><label>Téléphone *</label><input name="phone" type="tel" required placeholder="06 12 34 56 78"></div>
+            <div class="nv-form-field nv-form-full"><label>Adresse d'intervention *</label><input name="address" required placeholder="3 Rue du Général Sarrail"></div>
+            <div class="nv-form-field"><label>Code postal *</label><input name="postal_code" required placeholder="62500"></div>
+            <div class="nv-form-field"><label>Ville *</label><input name="city" required placeholder="Saint-Omer"></div>
+            <div class="nv-form-field"><label>Date souhaitée</label><input name="preferred_date" type="date" min="${new Date().toISOString().slice(0,10)}"></div>
+            <div class="nv-form-field"><label>Créneau</label>
+              <select name="preferred_slot">
+                <option value="">Sans préférence</option>
+                <option value="matin">Matin (8h-12h)</option>
+                <option value="apres-midi">Après-midi (13h-18h)</option>
+                <option value="urgent">Urgent (sous 24h)</option>
+              </select>
+            </div>
+            <div class="nv-form-field nv-form-full"><label>Précisions (optionnel)</label><textarea name="notes" placeholder="Marque/modèle actuel, accès particulier, photos disponibles..."></textarea></div>
+          </div>
+
+          <div class="nv-deposit-info">
+            <strong>Comment ça marche :</strong> votre demande nous parvient instantanément. Nous vous rappelons sous 4h ouvrées pour confirmer la date et envoyer le devis détaillé. <strong>L'acompte n'est pas encaissé maintenant</strong> — il sera demandé après confirmation, par virement ou paiement sécurisé.
+          </div>
+
+          <div id="nvFormError" style="display:none;margin-top:14px;padding:10px 14px;background:rgba(225,29,72,.08);color:#9F0E2B;border-radius:10px;font-size:.86rem;border-left:3px solid #E11D48"></div>
+        </form>
+      </div>
+      <div class="nv-modal-foot">
+        <span class="nv-foot-tel">Ou appelez : <a href="tel:+33366100134">03 66 10 01 34</a></span>
+        <button type="button" class="nv-cta-submit" id="nvSubmitBtn">
+          Confirmer ma demande
+          <svg width="16" height="16" ${SVG_ATTRS}><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+      </div>
+    `;
+
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+
+    // Close handlers
+    sheet.querySelector('.nv-modal-close').onclick = closeModal;
+    modal.onclick = (e) => { if (e.target === modal) closeModal(); };
+
+    // Variant change → recalcule prix
+    if (hasVariants) {
+      sheet.querySelectorAll('input[name="variant"]').forEach(r => {
+        r.onchange = () => {
+          let ttc, deposit;
+          if (r.value === '') {
+            ttc = svc.price_ttc;
+            deposit = svc.deposit_ttc;
+          } else {
+            const v = variants[Number(r.value)];
+            ttc = Math.round(Number(v.price_ht) * (1 + Number(svc.vat_rate)) * 100) / 100;
+            deposit = Math.round(ttc * (svc.deposit_pct / 100) * 100) / 100;
+          }
+          document.getElementById('nvSummaryPrice').textContent = eurFmt(ttc);
+          document.getElementById('nvSummaryDeposit').textContent = `Acompte ${svc.deposit_pct}% : ${eurFmt(deposit)}`;
+        };
+      });
+    }
+
+    // Submit
+    document.getElementById('nvSubmitBtn').onclick = async () => {
+      const form = document.getElementById('nvForm');
+      const errBox = document.getElementById('nvFormError');
+      errBox.style.display = 'none';
+
+      const fd = new FormData(form);
+      const data = Object.fromEntries(fd.entries());
+      const required = ['firstname','lastname','email','phone','address','postal_code','city'];
+      const missing = required.filter(k => !data[k] || !data[k].trim());
+      if (missing.length) {
+        errBox.style.display = 'block';
+        errBox.textContent = 'Merci de remplir les champs obligatoires : ' + missing.join(', ');
+        return;
+      }
+
+      // Variant
+      let variantKey = null, variantLabel = null, finalHt = svc.price_ht, finalTtc = svc.price_ttc;
+      const vSel = sheet.querySelector('input[name="variant"]:checked');
+      if (vSel && vSel.value !== '') {
+        const v = variants[Number(vSel.value)];
+        variantKey = v.key; variantLabel = v.label;
+        finalHt = Number(v.price_ht);
+        finalTtc = Math.round(finalHt * (1 + Number(svc.vat_rate)) * 100) / 100;
+      }
+      const deposit = Math.round(finalTtc * (svc.deposit_pct / 100) * 100) / 100;
+
+      const btn = document.getElementById('nvSubmitBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9" stroke-opacity=".3"/><path d="M21 12a9 9 0 0 0-9-9"/></svg> Envoi…';
+
+      const payload = {
+        service_id: svc.id,
+        service_name: svc.name,
+        variant_key: variantKey,
+        variant_label: variantLabel,
+        customer_name: `${data.firstname} ${data.lastname}`,
+        customer_email: data.email,
+        customer_phone: data.phone,
+        address: data.address,
+        postal_code: data.postal_code,
+        city: data.city,
+        notes: data.notes || null,
+        preferred_date: data.preferred_date || null,
+        preferred_slot: data.preferred_slot || null,
+        price_ht: finalHt,
+        vat_rate: Number(svc.vat_rate),
+        price_ttc: finalTtc,
+        deposit_amount: deposit,
+        status: 'pending'
+      };
+
+      const { data: inserted, error: insErr } = await sb.from('service_orders').insert(payload).select().single();
+
+      if (insErr) {
+        btn.disabled = false;
+        btn.innerHTML = 'Confirmer ma demande';
+        errBox.style.display = 'block';
+        errBox.textContent = 'Une erreur est survenue. Réessayez ou appelez-nous au 03 66 10 01 34. (' + (insErr.message || 'erreur inconnue') + ')';
+        console.error('[reserve] insert error', insErr);
+        return;
+      }
+
+      // Succès
+      sheet.innerHTML = `
+        <div class="nv-success">
+          <div class="nv-success-icon">
+            <svg ${SVG_ATTRS}><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3>Demande enregistrée !</h3>
+          <p>Merci ${escapeHtml(data.firstname)}, nous avons bien reçu votre demande.</p>
+          <div class="nv-order-num">N° ${escapeHtml(inserted.order_number)}</div>
+          <p>Nous vous rappelons au <strong>${escapeHtml(data.phone)}</strong> sous <strong>4 h ouvrées</strong> pour confirmer la date d'intervention et vous envoyer le devis détaillé.</p>
+          <p style="margin-top:24px"><button class="nv-btn-primary" onclick="document.getElementById('nvModal').classList.remove('is-open');document.body.style.overflow='';">Fermer</button></p>
+        </div>`;
+    };
+  }
+
+  function closeModal() {
+    document.getElementById('nvModal').classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  // Escape pour fermer
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+})();
+</script>
+
+</body>
+</html>
