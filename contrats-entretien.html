@@ -1532,6 +1532,75 @@ if (document.fonts && document.fonts.ready) {
   .sous-inp{width:100%;padding:11px 14px;border:1.5px solid #E5EDF3;border-radius:10px;background:#F7FBFD;color:#0A1428;font-size:.94rem;font-family:inherit;outline:none;transition:border-color .2s,background .2s;box-sizing:border-box}
   .sous-inp:focus{border-color:#1FC4F0;background:#fff}
 
+  /* ═══ WIZARD MULTI-ÉTAPES ═══ */
+  .sous-step{display:none;animation:swFadeIn .3s ease}
+  .sous-step.is-active{display:block}
+  @keyframes swFadeIn{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
+  .sw-intro{margin-bottom:16px}
+  .sw-step-title{margin:0 0 4px;font-size:1.18rem;font-weight:800;color:#0A1428;letter-spacing:-.01em}
+  .sw-step-hint{margin:0;font-size:.88rem;color:#64748b;line-height:1.5}
+
+  /* Progress bar */
+  .sw-progress{margin:0 0 22px}
+  .sw-progress-track{position:relative;height:4px;background:#E5EDF3;border-radius:99px;overflow:hidden;margin-bottom:8px}
+  .sw-progress-fill{height:100%;background:linear-gradient(90deg,#0DA0CF,#1FC4F0);border-radius:99px;transition:width .35s cubic-bezier(.16,1,.3,1)}
+  .sw-progress-steps{display:flex;justify-content:space-between;align-items:flex-start;gap:4px}
+  .sw-pstep{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:default}
+  .sw-pstep-circle{width:24px;height:24px;border-radius:50%;background:#E5EDF3;color:#94A3B8;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;transition:all .25s ease;border:2px solid transparent}
+  .sw-pstep.is-active .sw-pstep-circle{background:#1FC4F0;color:#fff;border-color:#1FC4F0;box-shadow:0 0 0 4px rgba(31,196,240,.18)}
+  .sw-pstep.is-done .sw-pstep-circle{background:#22C55E;color:#fff;border-color:#22C55E}
+  .sw-pstep.is-done .sw-pstep-circle::before{content:"✓";font-size:.78rem}
+  .sw-pstep.is-done .sw-pstep-circle>*{display:none}
+  .sw-pstep-lbl{font-size:.66rem;color:#94A3B8;font-weight:700;letter-spacing:.04em;text-align:center}
+  .sw-pstep.is-active .sw-pstep-lbl{color:#0DA0CF}
+  .sw-pstep.is-done .sw-pstep-lbl{color:#22C55E}
+
+  /* Aide visuelle (étape équipement) */
+  .sw-help{margin:0 0 16px;background:linear-gradient(135deg,rgba(13,160,207,.06),rgba(31,196,240,.02));border:1px solid rgba(13,160,207,.18);border-radius:12px;overflow:hidden}
+  .sw-help summary{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;list-style:none;color:#0DA0CF;font-size:.88rem;font-weight:700;user-select:none}
+  .sw-help summary::-webkit-details-marker{display:none}
+  .sw-help summary:hover{background:rgba(13,160,207,.05)}
+  .sw-help-icon{display:inline-flex;color:#0DA0CF;flex-shrink:0}
+  .sw-help-text{flex:1}
+  .sw-help-chevron{font-size:.9rem;transition:transform .2s ease;color:#94A3B8}
+  .sw-help[open] .sw-help-chevron{transform:rotate(180deg)}
+  .sw-help-body{padding:0 14px 14px;display:grid;grid-template-columns:160px 1fr;gap:14px;align-items:start}
+  .sw-help-illust{background:#fff;border:1px solid #E5EDF3;border-radius:10px;padding:8px}
+  .sw-help-list{margin:0;padding:0;list-style:none;font-size:.84rem;color:#475569;line-height:1.5}
+  .sw-help-list li{padding:6px 0 6px 18px;position:relative;border-bottom:1px dashed #E5EDF3}
+  .sw-help-list li:last-child{border-bottom:0;color:#0DA0CF;font-weight:600}
+  .sw-help-list li::before{content:"";position:absolute;left:4px;top:13px;width:6px;height:6px;border-radius:50%;background:#1FC4F0}
+  .sw-help-list li:last-child::before{display:none}
+  @media (max-width:540px){
+    .sw-help-body{grid-template-columns:1fr}
+    .sw-help-illust{max-width:200px;margin:0 auto}
+  }
+
+  /* Navigation buttons */
+  .sw-nav{display:flex;align-items:center;gap:12px;margin-top:8px;padding-top:18px;border-top:1px solid #E5EDF3}
+  .sw-step-counter{flex:1;text-align:center;font-size:.78rem;color:#64748b;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .sw-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-weight:700;font-size:.92rem;cursor:pointer;font-family:inherit;border:0;transition:all .2s ease;white-space:nowrap}
+  .sw-btn-prev{background:#F1F5F9;color:#475569}
+  .sw-btn-prev:hover{background:#E2E8F0;color:#0A1428}
+  .sw-btn-next{background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;box-shadow:0 8px 18px rgba(13,160,207,.28)}
+  .sw-btn-next:hover{transform:translateY(-1px);box-shadow:0 12px 24px rgba(13,160,207,.40)}
+  .sw-btn-submit{background:linear-gradient(135deg,#FF6B1A,#E55510);color:#fff;box-shadow:0 12px 28px rgba(255,107,26,.32);padding:13px 22px}
+  .sw-btn-submit:hover{transform:translateY(-1px);box-shadow:0 16px 36px rgba(255,107,26,.42)}
+
+  /* Erreur */
+  .sw-error{margin-top:10px;padding:10px 14px;background:rgba(225,29,72,.08);border:1px solid rgba(225,29,72,.30);border-radius:10px;color:#BE1238;font-size:.86rem;font-weight:600;display:flex;align-items:center;gap:8px}
+  .sw-error::before{content:"⚠";font-size:1rem}
+  .sous-inp.has-error{border-color:#E11D48 !important;background:rgba(225,29,72,.04) !important;animation:swShake .35s ease}
+  @keyframes swShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+  /* Récap final */
+  .sw-recap{background:linear-gradient(135deg,rgba(34,197,94,.06),rgba(34,197,94,.02));border:1px solid rgba(34,197,94,.20);border-radius:12px;padding:14px 16px;font-size:.84rem;color:#0A1428}
+  .sw-recap-title{font-size:.7rem;color:#16A34A;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+  .sw-recap-row{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px dashed rgba(34,197,94,.18);line-height:1.4}
+  .sw-recap-row:last-child{border-bottom:0}
+  .sw-recap-label{color:#64748b;font-weight:600;flex-shrink:0}
+  .sw-recap-value{color:#0A1428;font-weight:700;text-align:right;word-break:break-word}
+
   /* Autocomplete adresse (BAN) */
   .sous-addr-list{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid #E5EDF3;border-radius:10px;box-shadow:0 12px 32px rgba(10,20,40,.12);max-height:280px;overflow-y:auto;z-index:50}
   .sous-addr-list[hidden]{display:none}
@@ -1846,6 +1915,151 @@ if (document.fonts && document.fonts.ready) {
 <script defer src="assets/hc-widgets.js?v=1778686417"></script>
 <script src="assets/hc-leads-capture.js"></script>
 <script src="assets/hc-content.js" defer></script>
+
+<!-- WIZARD MULTI-ÉTAPES SOUSCRIPTION -->
+<script>
+(function(){
+  var TOTAL = 5;
+  var current = 1;
+
+  function $(s, ctx){ return (ctx||document).querySelector(s); }
+  function $$(s, ctx){ return Array.from((ctx||document).querySelectorAll(s)); }
+
+  function showStep(n){
+    current = Math.max(1, Math.min(TOTAL, n));
+    $$('.sous-step').forEach(function(el){
+      el.classList.toggle('is-active', parseInt(el.dataset.step,10) === current);
+    });
+    // Progress bar
+    var fill = $('#swProgressFill');
+    if (fill) fill.style.width = (current / TOTAL * 100) + '%';
+    // Steps pills
+    $$('.sw-pstep').forEach(function(el){
+      var n2 = parseInt(el.dataset.pstep, 10);
+      el.classList.toggle('is-active', n2 === current);
+      el.classList.toggle('is-done', n2 < current);
+    });
+    // Counter
+    var counter = $('#swCounter');
+    if (counter) counter.textContent = 'Étape ' + current + ' sur ' + TOTAL;
+    // Buttons
+    $('#swPrev').hidden = (current === 1);
+    $('#swNext').hidden = (current === TOTAL);
+    $('#swSubmit').hidden = (current !== TOTAL);
+    // Effacer erreur
+    hideError();
+    // Récap sur dernière étape
+    if (current === TOTAL) buildRecap();
+    // Scroll modal au top
+    var sheet = $('.sous-modal-sheet, .sous-card');
+    if (sheet) sheet.scrollTop = 0;
+  }
+
+  function showError(msg){
+    var el = $('#swError');
+    if (!el) return;
+    el.textContent = msg;
+    el.hidden = false;
+  }
+  function hideError(){
+    var el = $('#swError');
+    if (el) el.hidden = true;
+    $$('.sous-inp.has-error').forEach(function(i){ i.classList.remove('has-error'); });
+  }
+
+  function validateStep(n){
+    var step = document.querySelector('.sous-step[data-step="'+n+'"]');
+    if (!step) return true;
+    var inputs = $$('[data-validate]', step);
+    var firstBad = null;
+    var msg = '';
+    inputs.forEach(function(inp){
+      var rule = inp.dataset.validate;
+      var val = (inp.type === 'checkbox') ? inp.checked : (inp.value || '').trim();
+      var bad = false;
+      if (rule === 'required' && !val) { bad = true; msg = msg || 'Merci de remplir tous les champs marqués *.'; }
+      else if (rule === 'email' && (!val || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val))) { bad = true; msg = msg || 'Email invalide.'; }
+      else if (rule === 'tel' && (!val || val.replace(/\D/g,'').length < 8)) { bad = true; msg = msg || 'Numéro de téléphone invalide.'; }
+      else if (rule === 'cp' && (!val || !/^[0-9]{5}$/.test(val))) { bad = true; msg = msg || 'Code postal invalide (5 chiffres).'; }
+      else if (rule === 'checked' && !val) { bad = true; msg = msg || 'Merci d\'accepter la déclaration pour valider.'; }
+      if (bad){
+        inp.classList.add('has-error');
+        if (!firstBad) firstBad = inp;
+      } else {
+        inp.classList.remove('has-error');
+      }
+    });
+    if (firstBad){
+      showError(msg);
+      try { firstBad.focus(); } catch(e){}
+      return false;
+    }
+    hideError();
+    return true;
+  }
+
+  function buildRecap(){
+    var form = $('#sousForm');
+    if (!form) return;
+    var fd = new FormData(form);
+    var rows = [
+      ['Nom',     ((fd.get('prenom')||'') + ' ' + (fd.get('nom')||'')).trim()],
+      ['Email',   fd.get('email') || ''],
+      ['Tél.',    fd.get('telephone') || ''],
+      ['Adresse', [(fd.get('adresse')||''), (fd.get('cp')||''), (fd.get('ville')||'')].filter(Boolean).join(' · ')],
+      ['Logement',[fd.get('type_logement'), fd.get('statut')].filter(Boolean).join(' / ')],
+      ['Équipt.', [fd.get('marque'), fd.get('modele'), fd.get('annee')].filter(Boolean).join(' · ') || '(à préciser sur place)']
+    ];
+    var html = '<div class="sw-recap-title">✓ Récapitulatif de votre demande</div>';
+    rows.forEach(function(r){
+      var v = r[1] || '—';
+      html += '<div class="sw-recap-row"><span class="sw-recap-label">'+r[0]+'</span><span class="sw-recap-value">'+v.replace(/</g,'&lt;')+'</span></div>';
+    });
+    var recap = $('#swRecap');
+    if (recap) recap.innerHTML = html;
+  }
+
+  // Init handlers
+  function init(){
+    var nextBtn = $('#swNext');
+    var prevBtn = $('#swPrev');
+    if (!nextBtn || !prevBtn) return;
+    nextBtn.addEventListener('click', function(){
+      if (validateStep(current)) showStep(current + 1);
+    });
+    prevBtn.addEventListener('click', function(){
+      showStep(current - 1);
+    });
+    // Submit handler dans le form : valide la dernière étape
+    var form = $('#sousForm');
+    if (form){
+      form.addEventListener('submit', function(e){
+        if (!validateStep(TOTAL)){
+          e.preventDefault();
+          return false;
+        }
+      });
+    }
+    // ENTER avance d'une étape (au lieu de submit)
+    form && form.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && current !== TOTAL){
+        e.preventDefault();
+        nextBtn.click();
+      }
+    });
+    // Quand modal ouvre, reset au step 1
+    document.addEventListener('souscription:opened', function(){ showStep(1); });
+    // Init à step 1
+    showStep(1);
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
 
 <!-- AUTOCOMPLETE ADRESSE (BAN — api-adresse.data.gouv.fr) -->
 <script>
