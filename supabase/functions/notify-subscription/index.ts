@@ -1,5 +1,6 @@
 // ═══════════════════════════════════════════════════════════════════════════
 // notify-subscription — Envoi d'email à la souscription d'un contrat
+// v1.0.1 — publique (no JWT verify) pour appels depuis le site
 // ═══════════════════════════════════════════════════════════════════════════
 // Appelée depuis le client public (contrats-entretien.html) APRÈS l'insert
 // dans la table contracts. Lit le RESEND_API_KEY depuis les secrets Supabase.
