@@ -103,13 +103,17 @@ def scan_file(path: Path, root: Path) -> dict:
     # `if(id==='G-XXXXXXXXXX')return;` qui les rend inertes : pas de crash
     # mais aucune analytics. On les classe "important" (à activer quand prêt)
     # plutôt que "critical" (qui casserait le site).
+    # Exception : les pages wizard-*.html sont des guides d'activation
+    # qui mentionnent volontairement les placeholders comme texte d'exemple.
     TRACKING_PLACEHOLDERS = ("G-XXXXXXXXXX", "GTM-XXXXXXX")
-    for ph in PLACEHOLDERS:
-        if ph in text:
-            sev = "important" if ph in TRACKING_PLACEHOLDERS else "critical"
-            code = "TRACKING_INACTIVE" if ph in TRACKING_PLACEHOLDERS else "PLACEHOLDER"
-            findings.append({"severity": sev, "code": code,
-                             "msg": f"Placeholder à remplacer : {ph}"})
+    is_activation_wizard = bool(re.match(r"admin-pro/wizard-.*\.html$", rel))
+    if not is_activation_wizard:
+        for ph in PLACEHOLDERS:
+            if ph in text:
+                sev = "important" if ph in TRACKING_PLACEHOLDERS else "critical"
+                code = "TRACKING_INACTIVE" if ph in TRACKING_PLACEHOLDERS else "PLACEHOLDER"
+                findings.append({"severity": sev, "code": code,
+                                 "msg": f"Placeholder à remplacer : {ph}"})
 
     # Console.*
     cm = CONSOLE_RX.findall(text)
