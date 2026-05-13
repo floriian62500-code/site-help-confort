@@ -1613,7 +1613,7 @@
     }
   });
 
-  function submitSouscription(e){
+  async function submitSouscription(e){
     e.preventDefault();
     var form = e.target;
     var data = new FormData(form);
@@ -1622,52 +1622,108 @@
     var cp = data.get('cp') || '';
     var agency = detectAgency(cp);
     var agence = agency.name;
-    var emailDestinataire = agency.email;
-    // On surcharge le hidden input agence avec la valeur détectée (au cas où)
     data.set('agence', agence);
 
-    // Construction du sujet et du corps
     var energie = data.get('energie');
     var formule = data.get('formule');
     var prix = data.get('prix');
-    var subject = '🔧 Souscription contrat ' + energie + ' ' + formule + ' — Agence ' + agence;
 
-    var body = '';
-    body += '═══════════════════════════════════════\n';
-    body += '  NOUVELLE DEMANDE DE SOUSCRIPTION\n';
-    body += '═══════════════════════════════════════\n\n';
-    body += '🏢 AGENCE : ' + agence + '\n';
-    body += '🔧 CONTRAT : ' + energie + ' — Formule ' + formule + '\n';
-    body += '💰 TARIF : ' + prix + '\n\n';
-    body += '─── COORDONNÉES ───\n';
-    body += 'Nom : ' + (data.get('prenom') || '') + ' ' + (data.get('nom') || '') + '\n';
-    body += 'Email : ' + (data.get('email') || '') + '\n';
-    body += 'Téléphone : ' + (data.get('telephone') || '') + '\n\n';
-    body += '─── ADRESSE INSTALLATION ───\n';
-    body += (data.get('adresse') || '') + '\n';
-    body += (data.get('cp') || '') + ' ' + (data.get('ville') || '') + '\n\n';
-    body += '─── LOGEMENT ───\n';
-    body += 'Type : ' + (data.get('type_logement') || '') + '\n';
-    body += 'Statut : ' + (data.get('statut') || '') + '\n\n';
-    body += '─── ÉQUIPEMENT ───\n';
-    body += 'Marque : ' + (data.get('marque') || 'Non renseigné') + '\n';
-    body += 'Modèle : ' + (data.get('modele') || 'Non renseigné') + '\n';
-    body += 'Année installation : ' + (data.get('annee') || 'Non renseigné') + '\n';
-    body += 'Dernier entretien : ' + (data.get('dernier_entretien') || 'Non renseigné') + '\n\n';
-    body += '─── DATE & PRÉCISIONS ───\n';
-    body += 'Date début souhaitée : ' + (data.get('date_debut') || 'À définir') + '\n';
-    body += 'Commentaire : ' + (data.get('commentaire') || 'Aucun') + '\n\n';
-    body += '═══════════════════════════════════════\n';
-    body += 'CGV acceptées : OUI · Date demande : ' + new Date().toLocaleString('fr-FR') + '\n';
-    body += '═══════════════════════════════════════';
+    // Désactive le bouton submit
+    var btn = form.querySelector('button[type="submit"]');
+    var btnOriginalHTML = btn ? btn.innerHTML : '';
+    if (btn) { btn.disabled = true; btn.innerHTML = 'Envoi en cours…'; btn.style.opacity = '.7'; }
 
-    // Mailto
-    var mailto = 'mailto:' + emailDestinataire + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    window.location.href = mailto;
+    // ── 1. INSERT en DB Supabase (table contracts, status='prospect') ───
+    try {
+      if (!window.supabase) {
+        // Charge dynamiquement si la lib n'est pas déjà là
+        await new Promise((res, rej) => {
+          var s = document.createElement('script');
+          s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+          s.onload = res; s.onerror = rej;
+          document.head.appendChild(s);
+        });
+      }
+      var sb = window.supabase.createClient(
+        'https://btcbjwqiivhpwoszomhg.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0Y2Jqd3FpaXZocHdvc3pvbWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzExNzI3MTcsImV4cCI6MjA0Njc0ODcxN30.GpdsoXVcZSZpKzlSO1cYRgJzKQ73Y_lc24w5eu_3VuI'
+      );
 
-    // Confirmation visuelle
-    var card = document.querySelector('.sous-card');
-    card.innerHTML = '<div style="padding:60px 32px;text-align:center"><div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#22A06B,#16a34a);margin:0 auto 22px;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 32px rgba(34,160,107,.30)"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><h3 style="margin:0 0 12px;color:#0A1428;font-size:1.4rem;font-weight:800">✅ Demande envoyée !</h3><p style="margin:0 0 20px;color:#475569;line-height:1.55">Votre demande a été envoyée à l\'agence <strong>' + agence + '</strong>.<br>Un conseiller vous rappelle <strong>sous 24h</strong> pour finaliser votre contrat.</p><button type="button" onclick="closeSouscriptionModal();location.reload()" style="background:#0A1428;color:#fff;border:0;padding:11px 24px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.92rem;font-family:inherit">Fermer</button></div>';
+      // Mapping formule → tier DB
+      var tier = formule.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z]/g,'');
+      if (!['basic','confort','securite','custom'].includes(tier)) tier = 'custom';
+
+      // Extrait le prix mensuel HT depuis le label (ex: "9 € HT/mois — 108 €/an" → 9)
+      var monthlyMatch = /([\d.,]+)\s*€\s*(?:HT)?\s*\/?\s*mois/i.exec(prix || '');
+      var monthly = monthlyMatch ? parseFloat(monthlyMatch[1].replace(',','.')) : 0;
+
+      var payload = {
+        status: 'prospect',
+        subscription_source: 'public_form',
+        type: tier,
+        metier: (energie || '').toLowerCase() === 'fioul' ? 'chauffage' : ((energie||'').toLowerCase() === 'gaz' ? 'chauffage' : 'multiservice'),
+        agence: agence ? agence.toLowerCase().replace(/[^a-z-]/g, '-').replace(/-+/g,'-').replace(/^-|-$/g,'') : null,
+        monthly_amount: monthly,
+        client_first_name: data.get('prenom') || null,
+        client_last_name:  data.get('nom') || 'Sans nom',
+        client_phone:      data.get('telephone') || '',
+        client_email:      data.get('email') || null,
+        client_address:    data.get('adresse') || null,
+        client_postal_code: cp || null,
+        client_city:       data.get('ville') || null,
+        notes:             data.get('commentaire') || null,
+        metadata: {
+          energie: energie,
+          formule_label: formule,
+          prix_label: prix,
+          type_logement: data.get('type_logement') || null,
+          statut_logement: data.get('statut') || null,
+          marque: data.get('marque') || null,
+          modele: data.get('modele') || null,
+          annee: data.get('annee') || null,
+          dernier_entretien: data.get('dernier_entretien') || null,
+          date_debut_souhaitee: data.get('date_debut') || null,
+          commentaire: data.get('commentaire') || null,
+          cgv_accepted_at: new Date().toISOString(),
+          user_agent: navigator.userAgent,
+          referrer: document.referrer || null
+        }
+      };
+
+      var ins = await sb.from('contracts').insert(payload).select('id').single();
+      if (ins.error) throw new Error('insert: ' + ins.error.message);
+
+      // ── 2. Déclenche l'envoi d'email (best effort, ne bloque pas si fail) ──
+      try {
+        await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/notify-subscription', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0Y2Jqd3FpaXZocHdvc3pvbWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzExNzI3MTcsImV4cCI6MjA0Njc0ODcxN30.GpdsoXVcZSZpKzlSO1cYRgJzKQ73Y_lc24w5eu_3VuI'
+          },
+          body: JSON.stringify({ contract_id: ins.data.id, agence: payload.agence })
+        });
+      } catch (mailErr) {
+        console.warn('[souscription] notify-subscription failed:', mailErr);
+        // Pas grave : la souscription est en DB, Florian la voit dans l'admin
+      }
+
+      // ── 3. Confirmation visuelle ───────────────────────────────────────
+      var card = document.querySelector('.sous-card');
+      card.innerHTML = '<div style="padding:60px 32px;text-align:center"><div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#22A06B,#16a34a);margin:0 auto 22px;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 32px rgba(34,160,107,.30)"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><h3 style="margin:0 0 12px;color:#0A1428;font-size:1.4rem;font-weight:800">✅ Demande enregistrée !</h3><p style="margin:0 0 20px;color:#475569;line-height:1.55">Votre demande de souscription <strong>' + energie + ' ' + formule + '</strong> est bien arrivée à l\'agence <strong>' + agence + '</strong>.<br><br>Un conseiller vous rappelle au <strong>' + (data.get('telephone') || '') + '</strong> sous <strong>24h ouvrées</strong> pour finaliser votre contrat.</p><button type="button" onclick="closeSouscriptionModal();location.reload()" style="background:#0A1428;color:#fff;border:0;padding:11px 24px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.92rem;font-family:inherit">Fermer</button></div>';
+
+    } catch (err) {
+      console.error('[souscription] error:', err);
+      if (btn) { btn.disabled = false; btn.innerHTML = btnOriginalHTML; btn.style.opacity = ''; }
+      var errBox = form.querySelector('[data-form-error]');
+      if (!errBox) {
+        errBox = document.createElement('div');
+        errBox.dataset.formError = '1';
+        errBox.style.cssText = 'margin-top:14px;padding:11px 14px;background:rgba(217,45,32,.08);border-left:3px solid #d92d20;border-radius:8px;color:#9F0E2B;font-size:.86rem';
+        form.appendChild(errBox);
+      }
+      errBox.innerHTML = '❌ Une erreur est survenue : ' + (err.message || 'inconnue') + '<br>Vous pouvez réessayer ou nous appeler au <a href="tel:+33366100134" style="color:#0DA0CF;font-weight:700">03 66 10 01 34</a>.';
+    }
 
     return false;
   }

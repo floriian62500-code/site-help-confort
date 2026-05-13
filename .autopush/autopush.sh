@@ -66,8 +66,9 @@ if [ "$LOCAL" = "$REMOTE" ]; then
   exit 0
 fi
 
-# ─── Détection des migrations Supabase modifiées ─────────────────────
+# ─── Détection des migrations + Edge Functions Supabase modifiées ────
 MIGRATIONS_CHANGED=$(git diff --name-only "$REMOTE..$LOCAL" 2>/dev/null | grep -E '^supabase/migrations/.*\.sql$' || true)
+FUNCTIONS_CHANGED=$(git diff --name-only "$REMOTE..$LOCAL" 2>/dev/null | grep -E '^supabase/functions/[^/]+/.*\.ts$' | awk -F'/' '{print $3}' | sort -u || true)
 
 # ─── PUSH avec retry (3 tentatives, délai 2s entre chaque) ───────────
 PUSH_OK=0
@@ -104,6 +105,24 @@ if [ "$PUSH_OK" = "1" ]; then
       dlog "✅ Migrations déployées"
     else
       dlog "❌ Échec deploy migrations"
+    fi
+  fi
+
+  # ─── Auto-deploy Edge Functions si modifiées ──────────────────────
+  if [ -n "$FUNCTIONS_CHANGED" ]; then
+    dlog "⚡ Edge Functions modifiées :"
+    echo "$FUNCTIONS_CHANGED" | sed 's/^/  - /' >> "$DEPLOY_LOG"
+
+    if command -v supabase >/dev/null 2>&1; then
+      while IFS= read -r fn; do
+        [ -z "$fn" ] && continue
+        [[ "$fn" == _* ]] && continue   # skip _shared, etc.
+        if supabase functions deploy "$fn" --project-ref btcbjwqiivhpwoszomhg >>"$DEPLOY_LOG" 2>&1; then
+          dlog "✅ Function '$fn' déployée"
+        else
+          dlog "❌ Échec deploy '$fn'"
+        fi
+      done <<< "$FUNCTIONS_CHANGED"
     fi
   fi
 else
