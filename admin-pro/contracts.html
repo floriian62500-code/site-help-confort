@@ -98,6 +98,56 @@
 .toast-stack{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:2000;pointer-events:none}
 .toast{background:#fff;border:1px solid var(--ink-100);border-radius:10px;padding:11px 14px;box-shadow:0 8px 24px rgba(11,18,32,.16);font-size:.86rem;font-weight:600;color:var(--ink-900);pointer-events:auto;min-width:240px}
 .toast.ok{border-left:3px solid #00aa50}.toast.err{border-left:3px solid #d92d20}
+
+/* ═══ Tabs Contrats / Offres ═══ */
+.ct-tabs{display:flex;gap:4px;align-items:center;margin-bottom:22px;border-bottom:1px solid var(--ink-100)}
+.ct-tab{padding:12px 18px;background:transparent;border:none;color:var(--ink-500);font:inherit;font-size:.92rem;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:.15s;display:inline-flex;align-items:center;gap:8px}
+.ct-tab:hover{color:var(--ink-900)}
+.ct-tab.is-active{color:var(--hc-primary);border-bottom-color:var(--hc-primary)}
+.ct-tab-count{padding:1px 9px;background:rgba(13,160,207,.14);color:var(--hc-primary);border-radius:999px;font-size:.72rem;font-weight:800}
+.ct-tab-link{margin-left:auto;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;color:var(--ink-500);text-decoration:none;font-size:.84rem;font-weight:600;border-radius:8px;transition:.15s}
+.ct-tab-link:hover{background:var(--ink-50);color:var(--ink-900)}
+.ct-pane{display:none}.ct-pane.is-active{display:block}
+
+/* Aide */
+.of-help{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid rgba(13,160,207,.20);border-radius:12px;margin-bottom:24px;font-size:.86rem;color:#0a4858;line-height:1.5}
+.of-help svg{color:var(--hc-primary);flex-shrink:0;margin-top:1px}
+.of-help a{color:var(--hc-primary);font-weight:700;text-decoration:underline}
+
+/* Grille offres */
+.of-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.of-card{background:#fff;border:1.5px solid var(--ink-100);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:.2s;position:relative}
+.of-card:hover{border-color:rgba(13,160,207,.30);box-shadow:0 6px 20px rgba(13,160,207,.08)}
+.of-card.is-inactive{opacity:.55;background:#fafafa}
+.of-card.is-recommended{border-color:#1FC4F0;box-shadow:0 4px 14px rgba(31,196,240,.15)}
+.of-card.is-recommended::before{content:'★ Recommandée';position:absolute;top:-9px;right:14px;padding:2px 9px;background:linear-gradient(135deg,#1FC4F0,#0DA0CF);color:#fff;font-size:.66rem;font-weight:800;letter-spacing:.05em;border-radius:999px;text-transform:uppercase}
+.of-cat-row{display:flex;align-items:center;gap:8px}
+.of-energy{padding:3px 8px;background:rgba(255,180,0,.14);color:#b87900;font-size:.7rem;font-weight:800;border-radius:6px;text-transform:uppercase;letter-spacing:.04em}
+.of-energy.gaz{background:rgba(255,107,26,.12);color:#c04416}
+.of-energy.fioul{background:rgba(40,40,40,.10);color:#1f2937}
+.of-energy.adoucisseur{background:rgba(13,160,207,.14);color:#0a7fa3}
+.of-tier-name{font-size:1.12rem;font-weight:800;color:var(--ink-900);letter-spacing:-.01em}
+.of-price{display:flex;align-items:baseline;gap:6px;padding:10px 0;border-top:1px solid var(--ink-50);border-bottom:1px solid var(--ink-50)}
+.of-price strong{font-size:1.6rem;font-weight:900;color:var(--ink-900);letter-spacing:-.02em;line-height:1}
+.of-price small{font-size:.8rem;color:var(--ink-500);font-weight:500}
+.of-price-year{font-size:.74rem;color:var(--ink-400);margin-top:2px}
+.of-feat-count{font-size:.78rem;color:var(--ink-500)}
+.of-feat-count strong{color:var(--ink-900)}
+.of-actions{display:flex;gap:6px;margin-top:auto;padding-top:8px}
+.of-actions .btn-edit{flex:1;padding:8px 12px;background:#0A1428;color:#fff;border:none;border-radius:8px;font:inherit;font-weight:700;font-size:.82rem;cursor:pointer;transition:.15s}
+.of-actions .btn-edit:hover{background:var(--hc-primary)}
+.of-actions .btn-toggle{padding:8px 10px;background:#fff;color:var(--ink-500);border:1px solid var(--ink-100);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.of-actions .btn-toggle:hover{border-color:var(--hc-primary);color:var(--hc-primary)}
+.of-actions .btn-toggle svg{width:14px;height:14px}
+
+/* Modal offre */
+.of-feat-row{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.of-feat-row select{width:130px;padding:7px 10px;border:1px solid var(--ink-100);border-radius:8px;font:inherit;font-size:.84rem;background:#fff;flex-shrink:0}
+.of-feat-row input{flex:1;padding:7px 10px;border:1px solid var(--ink-100);border-radius:8px;font:inherit;font-size:.84rem}
+.of-feat-row button{background:none;border:none;color:#d92d20;cursor:pointer;padding:5px;border-radius:6px}
+.of-feat-row button:hover{background:rgba(217,45,32,.08)}
+.of-add-feat{margin-top:6px;padding:7px 12px;background:#fff;color:var(--hc-primary);border:1px dashed var(--hc-primary);border-radius:8px;font:inherit;font-size:.82rem;font-weight:700;cursor:pointer}
+.of-add-feat:hover{background:rgba(13,160,207,.05)}
 </style>
 </head>
 <body>
@@ -116,40 +166,68 @@
         </div>
       </div>
 
-      <div class="ct-stats" id="ctStats"></div>
+      <!-- ═══ Onglets ═══ -->
+      <div class="ct-tabs">
+        <button class="ct-tab is-active" data-tab="contracts">Contrats clients <span class="ct-tab-count" id="cntClients">—</span></button>
+        <button class="ct-tab" data-tab="offers">Offres &amp; tarifs <span class="ct-tab-count" id="cntOffers">—</span></button>
+        <a href="../contrats-entretien.html" target="_blank" rel="noopener" class="ct-tab-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Page publique
+        </a>
+      </div>
 
-      <div class="ct-toolbar">
-        <h2 id="ctCount">— contrats</h2>
-        <div class="ct-search">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input id="searchInput" type="search" placeholder="Chercher un client, n° contrat…">
+      <!-- ═══ TAB 1 : Contrats clients (existant) ═══ -->
+      <div class="ct-pane is-active" id="paneContracts">
+        <div class="ct-stats" id="ctStats"></div>
+
+        <div class="ct-toolbar">
+          <h2 id="ctCount">— contrats</h2>
+          <div class="ct-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input id="searchInput" type="search" placeholder="Chercher un client, n° contrat…">
+          </div>
+          <button class="btn btn-primary" id="btnNew" data-require-perm="create">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nouveau contrat
+          </button>
         </div>
-        <button class="btn btn-primary" id="btnNew" data-require-perm="create">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Nouveau contrat
-        </button>
-      </div>
 
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
-        <button class="ct-filter active" data-status="">Tous</button>
-        <button class="ct-filter" data-status="active">🟢 Actifs</button>
-        <button class="ct-filter" data-status="due">⏰ Échéance proche</button>
-        <button class="ct-filter" data-status="suspended">⏸️ Suspendus</button>
-        <button class="ct-filter" data-status="prospect">💡 Prospects</button>
-        <button class="ct-filter" data-status="cancelled">❌ Résiliés</button>
-      </div>
-
-      <div class="ct-table" id="ctTable">
-        <div class="ct-row head">
-          <div>Client</div>
-          <div>Type</div>
-          <div>Métier</div>
-          <div>Prochaine échéance</div>
-          <div>Montant / mois</div>
-          <div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
+          <button class="ct-filter active" data-status="">Tous</button>
+          <button class="ct-filter" data-status="active">🟢 Actifs</button>
+          <button class="ct-filter" data-status="due">⏰ Échéance proche</button>
+          <button class="ct-filter" data-status="suspended">⏸️ Suspendus</button>
+          <button class="ct-filter" data-status="prospect">💡 Prospects</button>
+          <button class="ct-filter" data-status="cancelled">❌ Résiliés</button>
         </div>
-        <div id="ctBody"></div>
+
+        <div class="ct-table" id="ctTable">
+          <div class="ct-row head">
+            <div>Client</div>
+            <div>Type</div>
+            <div>Métier</div>
+            <div>Prochaine échéance</div>
+            <div>Montant / mois</div>
+            <div></div>
+          </div>
+          <div id="ctBody"></div>
+        </div>
       </div>
+
+      <!-- ═══ TAB 2 : Offres & tarifs ═══ -->
+      <div class="ct-pane" id="paneOffers">
+        <div class="of-help">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <div>
+            <strong>Ces offres pilotent la page publique <a href="../contrats-entretien.html" target="_blank" rel="noopener">/contrats-entretien.html</a></strong> — chaque modification est visible côté client en quelques secondes (cache CDN).
+          </div>
+        </div>
+
+        <div class="of-grid" id="offersGrid">
+          <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--ink-500)">Chargement…</div>
+        </div>
+      </div>
+
     </div>
   </main>
 </div>
