@@ -1372,10 +1372,13 @@ if (document.fonts && document.fonts.ready) {
           <span style="width:18px;height:18px;border-radius:50%;background:#1FC4F0;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900">2</span>
           Adresse de l'installation
         </h4>
-        <input type="text" name="adresse" placeholder="N°, rue *" required class="sous-inp" style="margin-bottom:10px">
+        <div class="sous-addr-wrap" style="position:relative;margin-bottom:10px">
+          <input type="text" id="sousAdresse" name="adresse" placeholder="N°, rue *" required class="sous-inp" autocomplete="off">
+          <div id="sousAdresseList" class="sous-addr-list" role="listbox" hidden></div>
+        </div>
         <div style="display:grid;grid-template-columns:120px 1fr;gap:10px">
-          <input type="text" name="cp" placeholder="Code postal *" required class="sous-inp" pattern="[0-9]{5}" maxlength="5">
-          <input type="text" name="ville" placeholder="Ville *" required class="sous-inp">
+          <input type="text" id="sousCp" name="cp" placeholder="Code postal *" required class="sous-inp" pattern="[0-9]{5}" maxlength="5">
+          <input type="text" id="sousVille" name="ville" placeholder="Ville *" required class="sous-inp">
         </div>
       </div>
 
@@ -1455,6 +1458,16 @@ if (document.fonts && document.fonts.ready) {
 
   .sous-inp{width:100%;padding:11px 14px;border:1.5px solid #E5EDF3;border-radius:10px;background:#F7FBFD;color:#0A1428;font-size:.94rem;font-family:inherit;outline:none;transition:border-color .2s,background .2s;box-sizing:border-box}
   .sous-inp:focus{border-color:#1FC4F0;background:#fff}
+
+  /* Autocomplete adresse (BAN) */
+  .sous-addr-list{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid #E5EDF3;border-radius:10px;box-shadow:0 12px 32px rgba(10,20,40,.12);max-height:280px;overflow-y:auto;z-index:50}
+  .sous-addr-list[hidden]{display:none}
+  .sous-addr-item{display:block;padding:10px 14px;cursor:pointer;border-bottom:1px solid #F1F5F9;transition:background .15s ease}
+  .sous-addr-item:last-child{border-bottom:0}
+  .sous-addr-item:hover,.sous-addr-item.is-active{background:rgba(31,196,240,.08)}
+  .sous-addr-item .saa-label{display:block;color:#0A1428;font-size:.92rem;font-weight:600;line-height:1.25}
+  .sous-addr-item .saa-ctx{display:block;color:#64748b;font-size:.78rem;margin-top:2px}
+  .sous-addr-empty{padding:12px 14px;color:#64748b;font-size:.85rem;font-style:italic}
   select.sous-inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
 
   /* Agence radio cards */
