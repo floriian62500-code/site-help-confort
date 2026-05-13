@@ -36,7 +36,8 @@
 .hc-nav-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; color: #0A1428; text-decoration: none; font-size: .92rem; font-weight: 500; border-radius: 8px; transition: all .15s ease; cursor: pointer; }
 .hc-nav-link:hover { color: #0DA0CF; background: rgba(13,160,207,.06); }
 .hc-megamenu { position: absolute !important; top: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(-6px); background: #fff; border: 1px solid #E5EDF3; border-radius: 18px; padding: 14px; min-width: 380px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; box-shadow: 0 24px 48px rgba(10,20,40,.10); opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transition: opacity .2s ease, visibility .2s ease, transform .2s ease; z-index: 50; }
-.hc-megamenu::before { content: ''; position: absolute; top: -14px; left: 0; right: 0; height: 14px; }
+.hc-megamenu::before { content: ''; position: absolute; top: -6px; left: 20%; right: 20%; height: 6px; }
+.hc-megamenu.mm-force-closed { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transform: translateX(-50%) translateY(-6px) !important; }
 .hc-nav-link[data-has-menu="metiers"]:hover ~ .hc-megamenu[data-menu="metiers"],
 .hc-nav-link[data-has-menu="zones"]:hover ~ .hc-megamenu[data-menu="zones"],
 .hc-megamenu:hover { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; transform: translateX(-50%) translateY(0); }
