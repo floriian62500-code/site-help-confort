@@ -1436,6 +1436,95 @@
   }
 </style>
 
+<!-- ═══════════ Chargement dynamique des offres depuis Supabase ═══════════ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(async function loadContractOffers() {
+  const SUPABASE_URL  = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0Y2Jqd3FpaXZocHdvc3pvbWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzExNzI3MTcsImV4cCI6MjA0Njc0ODcxN30.GpdsoXVcZSZpKzlSO1cYRgJzKQ73Y_lc24w5eu_3VuI';
+  if (!window.supabase) return;
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  const { data: offers, error } = await sb.from('v_contract_offers').select('*');
+  if (error || !offers) {
+    console.error('[contract_offers] load error:', error);
+    return; // garde le fallback "Chargement…" si pas accessible
+  }
+
+  // Pas d'offres en DB : laisse les panes vides
+  if (offers.length === 0) {
+    document.querySelectorAll('.energy-pane .formula-grid').forEach(g => {
+      g.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:#94a3b8">Offres en cours de configuration.</div>';
+    });
+    return;
+  }
+
+  const escapeHtml = (s) => String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  // On autorise <strong> dans les features (déjà encodé en jsonb) → on encode tout sauf <strong>...</strong>
+  function safeFeature(text) {
+    return String(text || '').replace(/<(?!\/?strong>)/g, '&lt;');
+  }
+
+  // Group by energy
+  const byEnergy = { gaz: [], fioul: [], adoucisseur: [] };
+  offers.forEach(o => {
+    if (byEnergy[o.energy]) byEnergy[o.energy].push(o);
+  });
+
+  // Map energy → pane DOM id
+  const PANE_ID = { gaz: 'pane-gaz', fioul: 'pane-fioul', adoucisseur: 'pane-eau' };
+
+  Object.keys(byEnergy).forEach(energyKey => {
+    const list = byEnergy[energyKey];
+    const pane = document.getElementById(PANE_ID[energyKey]);
+    if (!pane) return;
+    const grid = pane.querySelector('.formula-grid');
+    if (!grid) return;
+
+    // Adoucisseur : 1 seule colonne large
+    if (energyKey === 'adoucisseur') {
+      grid.style.gridTemplateColumns = '1fr';
+      grid.style.maxWidth = '680px';
+    }
+
+    grid.innerHTML = list.map(o => {
+      const featuresArr = Array.isArray(o.features) ? o.features : [];
+      const featuresHtml = featuresArr.map(f =>
+        `<li class="${f.included === false ? 'no' : 'yes'}">${safeFeature(f.text)}</li>`
+      ).join('');
+      const priceStr = o.price_label ? escapeHtml(o.price_label) : `${o.price_ht_month}&nbsp;€&nbsp;HT`;
+      const yearStr = o.price_label
+        ? '<div class="formula-price-year">tarif selon modèle &amp; volume</div>'
+        : (o.price_ht_year ? `<div class="formula-price-year">soit ${o.price_ht_year}&nbsp;€&nbsp;HT/an</div>` : '');
+      // Tier → classe CSS pour styler la card
+      const tierClass = { basic:'basic', confort:'confort', securite:'securite', custom:'confort' }[o.tier] || 'basic';
+      const dataPrix = o.price_label
+        ? `${o.price_label} /mois`
+        : `${o.price_ht_month} € HT/mois — ${o.price_ht_year || (o.price_ht_month*12)} €/an`;
+
+      return `
+        <div class="formula-card ${tierClass}"${o.is_recommended && energyKey==='adoucisseur' ? ' style="border-color:#1FC4F0"' : ''}>
+          ${o.badge ? `<span class="formula-badge">${escapeHtml(o.badge)}</span>` : ''}
+          <div class="formula-eyebrow">Formule ${escapeHtml(o.energy_label)}</div>
+          <h2 class="formula-name">${escapeHtml(o.tier_label)}</h2>
+          <div class="formula-price-block">
+            <div class="formula-price">${priceStr}<small> /mois</small></div>
+            ${yearStr}
+          </div>
+          <p class="formula-baseline">${escapeHtml(o.baseline || '')}</p>
+          <ul class="formula-list">${featuresHtml}</ul>
+          ${o.legal_note ? `<small class="formula-note">${escapeHtml(o.legal_note)}</small>` : ''}
+          <button type="button" class="formula-cta"${o.legal_note ? ' style="margin-top:14px"' : ''}
+            data-energie="${escapeHtml(o.energy_label)}"
+            data-formule="${escapeHtml(o.tier_label)}"
+            data-prix="${escapeHtml(dataPrix)}"
+            onclick="openSouscriptionModal(this)">${escapeHtml(o.cta_label || 'Souscrire')}</button>
+        </div>`;
+    }).join('');
+  });
+})();
+</script>
+
 <script>
   // ===== Modal souscription contrat =====
   function openSouscriptionModal(btn){
