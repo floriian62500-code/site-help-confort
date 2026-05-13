@@ -512,5 +512,298 @@ let _editingId = null;
   };
 })();
 </script>
+
+<!-- ═════════════════════════════════════════════════════════════════════
+     ONGLET "Offres & tarifs" — CRUD contract_offers
+     Sync direct avec la page publique /contrats-entretien.html
+     ════════════════════════════════════════════════════════════════════ -->
+<script>
+(async function offersTab() {
+  // Attend que Supabase soit init via le script principal au-dessus
+  while (!window.HCSupabase || !document.getElementById('offersGrid')) {
+    await new Promise(r => setTimeout(r, 100));
+  }
+  const sb = await window.HCSupabase.init();
+  const grid = document.getElementById('offersGrid');
+  const cntOffers = document.getElementById('cntOffers');
+  const cntClients = document.getElementById('cntClients');
+  let allOffers = [];
+
+  const escapeHtml = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const eurFmt = (n) => new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR'}).format(Number(n)||0);
+
+  // ─── Tabs switch ────────────────────────────────────────────
+  document.querySelectorAll('.ct-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.ct-tab').forEach(t => t.classList.remove('is-active'));
+      document.querySelectorAll('.ct-pane').forEach(p => p.classList.remove('is-active'));
+      tab.classList.add('is-active');
+      const paneId = 'pane' + tab.dataset.tab.charAt(0).toUpperCase() + tab.dataset.tab.slice(1);
+      document.getElementById(paneId).classList.add('is-active');
+      if (tab.dataset.tab === 'offers' && allOffers.length === 0) loadOffers();
+    });
+  });
+
+  // Compteur clients (depuis ctBody déjà chargé par le script principal)
+  setTimeout(() => {
+    const rows = document.querySelectorAll('#ctBody > div').length;
+    if (cntClients) cntClients.textContent = rows;
+  }, 1500);
+
+  // ─── Charger offres ─────────────────────────────────────────
+  async function loadOffers() {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--ink-500)">Chargement…</div>';
+    const { data, error } = await sb.from('contract_offers').select('*').order('position');
+    if (error) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#d92d20">Erreur : ${error.message}</div>`;
+      return;
+    }
+    allOffers = data || [];
+    cntOffers.textContent = allOffers.length;
+    renderOffers();
+  }
+
+  function renderOffers() {
+    if (allOffers.length === 0) {
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--ink-500)">Aucune offre. Crée la première via la migration SQL ou clique « Nouvelle offre ».</div>';
+      return;
+    }
+    grid.innerHTML = allOffers.map(o => {
+      const featuresCount = Array.isArray(o.features) ? o.features.length : 0;
+      const priceStr = o.price_label || `${o.price_ht_month} € HT`;
+      const yearStr = o.price_ht_year ? `${o.price_ht_year} € HT/an` : '';
+      return `
+        <div class="of-card ${!o.active ? 'is-inactive' : ''} ${o.is_recommended ? 'is-recommended' : ''}" data-id="${o.id}">
+          <div class="of-cat-row">
+            <span class="of-energy ${escapeHtml(o.energy)}">${escapeHtml(o.energy_label)}</span>
+            <span style="font-size:.74rem;color:var(--ink-400)">${escapeHtml(o.slug)}</span>
+          </div>
+          <div class="of-tier-name">${escapeHtml(o.tier_label)}</div>
+          ${o.baseline ? `<div style="font-size:.82rem;color:var(--ink-500);line-height:1.4">${escapeHtml(o.baseline)}</div>` : ''}
+          <div class="of-price">
+            <strong>${escapeHtml(priceStr)}</strong>
+            <small>/ mois</small>
+          </div>
+          ${yearStr ? `<div class="of-price-year">soit ${yearStr}</div>` : ''}
+          <div class="of-feat-count"><strong>${featuresCount}</strong> caractéristique${featuresCount > 1 ? 's' : ''}${o.badge ? ` · Badge : <strong>${escapeHtml(o.badge)}</strong>` : ''}</div>
+          <div class="of-actions">
+            <button class="btn-edit" data-edit="${o.id}">Modifier</button>
+            <button class="btn-toggle" data-toggle="${o.id}" title="${o.active ? 'Désactiver' : 'Activer'}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                ${o.active
+                  ? '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'
+                  : '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'}
+              </svg>
+            </button>
+          </div>
+        </div>`;
+    }).join('');
+
+    // Bind actions
+    grid.querySelectorAll('[data-edit]').forEach(btn => {
+      btn.onclick = () => openOfferModal(btn.dataset.edit);
+    });
+    grid.querySelectorAll('[data-toggle]').forEach(btn => {
+      btn.onclick = async () => {
+        const id = btn.dataset.toggle;
+        const offer = allOffers.find(o => o.id === id);
+        const { error } = await sb.from('contract_offers').update({ active: !offer.active }).eq('id', id);
+        if (error) { window.toast?.('Erreur : ' + error.message, 'err'); return; }
+        offer.active = !offer.active;
+        renderOffers();
+        window.toast?.(`Offre ${offer.active ? 'activée' : 'désactivée'}`, 'ok');
+      };
+    });
+  }
+
+  // ─── Modal édition ──────────────────────────────────────────
+  function openOfferModal(id) {
+    const offer = allOffers.find(o => o.id === id);
+    if (!offer) return;
+
+    // Construit modal à la volée (réutilise la structure ct-modal)
+    let modal = document.getElementById('ofModal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'ofModal';
+      modal.className = 'ct-modal';
+      document.body.appendChild(modal);
+    }
+    const features = Array.isArray(offer.features) ? offer.features : [];
+
+    modal.innerHTML = `
+      <div class="ct-modal-sheet">
+        <div class="ct-modal-head">
+          <h2>Modifier l'offre — ${escapeHtml(offer.energy_label)} ${escapeHtml(offer.tier_label)}</h2>
+          <button class="close" type="button" id="ofCloseBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="ct-modal-body">
+          <div class="ct-row-2">
+            <div><label>Énergie</label>
+              <select id="of_energy">
+                <option value="gaz"${offer.energy==='gaz'?' selected':''}>Gaz</option>
+                <option value="fioul"${offer.energy==='fioul'?' selected':''}>Fioul</option>
+                <option value="adoucisseur"${offer.energy==='adoucisseur'?' selected':''}>Adoucisseur</option>
+                <option value="autre"${offer.energy==='autre'?' selected':''}>Autre</option>
+              </select>
+            </div>
+            <div><label>Label affiché énergie</label><input id="of_energy_label" type="text" value="${escapeHtml(offer.energy_label)}"></div>
+          </div>
+          <div class="ct-row-2">
+            <div><label>Tier</label>
+              <select id="of_tier">
+                <option value="basic"${offer.tier==='basic'?' selected':''}>Basic</option>
+                <option value="confort"${offer.tier==='confort'?' selected':''}>Confort</option>
+                <option value="securite"${offer.tier==='securite'?' selected':''}>Sécurité</option>
+                <option value="custom"${offer.tier==='custom'?' selected':''}>Custom</option>
+              </select>
+            </div>
+            <div><label>Label affiché tier (ex: BASIC)</label><input id="of_tier_label" type="text" value="${escapeHtml(offer.tier_label)}"></div>
+          </div>
+          <div class="ct-row-3">
+            <div><label>Prix HT / mois (€)</label><input id="of_price_month" type="number" step="0.01" value="${offer.price_ht_month}"></div>
+            <div><label>Prix HT / an (€)</label><input id="of_price_year" type="number" step="0.01" value="${offer.price_ht_year || ''}" placeholder="auto = ×12"></div>
+            <div><label>TVA</label>
+              <select id="of_vat">
+                <option value="0.100"${Number(offer.vat_rate)===0.1?' selected':''}>10 %</option>
+                <option value="0.200"${Number(offer.vat_rate)===0.2?' selected':''}>20 %</option>
+                <option value="0.055"${Number(offer.vat_rate)===0.055?' selected':''}>5,5 %</option>
+              </select>
+            </div>
+          </div>
+          <div><label>Label prix custom (ex: "à partir de 8 € HT")</label><input id="of_price_label" type="text" value="${escapeHtml(offer.price_label || '')}" placeholder="vide = utilise prix_ht_month"></div>
+          <div><label>Tagline (sous le titre)</label><input id="of_baseline" type="text" value="${escapeHtml(offer.baseline || '')}"></div>
+          <div class="ct-row-2">
+            <div><label>Badge (ex: "Le plus choisi")</label><input id="of_badge" type="text" value="${escapeHtml(offer.badge || '')}"></div>
+            <div><label>Action bouton</label>
+              <select id="of_cta_action">
+                <option value="subscribe"${offer.cta_action==='subscribe'?' selected':''}>Souscrire</option>
+                <option value="quote"${offer.cta_action==='quote'?' selected':''}>Demander un devis</option>
+              </select>
+            </div>
+          </div>
+          <div><label>Texte du bouton</label><input id="of_cta_label" type="text" value="${escapeHtml(offer.cta_label || 'Souscrire')}"></div>
+          <div><label>Mention légale (sous les features)</label><textarea id="of_legal" placeholder="ex: Réservée aux chaudières &lt; 5 ans, après contrôle technique.">${escapeHtml(offer.legal_note || '')}</textarea></div>
+
+          <div class="ct-section-title">Caractéristiques (features)</div>
+          <div id="of_features"></div>
+          <button type="button" class="of-add-feat" id="of_add_feat">+ Ajouter une caractéristique</button>
+
+          <div class="ct-row-3" style="margin-top:8px">
+            <div><label>Position (tri)</label><input id="of_position" type="number" value="${offer.position || 0}"></div>
+            <div>
+              <label>Recommandée ★</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;padding-top:8px">
+                <input type="checkbox" id="of_recommended" ${offer.is_recommended ? 'checked' : ''} style="width:auto;cursor:pointer"> Mettre en avant
+              </label>
+            </div>
+            <div>
+              <label>Active</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;padding-top:8px">
+                <input type="checkbox" id="of_active" ${offer.active ? 'checked' : ''} style="width:auto;cursor:pointer"> Visible publiquement
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="ct-modal-foot">
+          <button type="button" id="ofDelBtn" style="padding:9px 14px;background:#fff;color:#d92d20;border:1px solid rgba(217,45,32,.3);border-radius:8px;font:inherit;font-weight:600;font-size:.84rem;cursor:pointer">Supprimer</button>
+          <div class="right">
+            <button type="button" id="ofCancelBtn" style="padding:9px 16px;background:#fff;color:var(--ink-700);border:1px solid var(--ink-100);border-radius:8px;font:inherit;font-weight:600;font-size:.84rem;cursor:pointer">Annuler</button>
+            <button type="button" id="ofSaveBtn" class="btn btn-primary" style="padding:9px 18px">Enregistrer</button>
+          </div>
+        </div>
+      </div>`;
+
+    function renderFeatures(list) {
+      const root = document.getElementById('of_features');
+      root.innerHTML = list.map((f, i) => `
+        <div class="of-feat-row">
+          <select data-feat-idx="${i}" data-feat-field="included">
+            <option value="true"${f.included !== false ? ' selected' : ''}>✓ Inclus</option>
+            <option value="false"${f.included === false ? ' selected' : ''}>– Non inclus</option>
+          </select>
+          <input type="text" placeholder="Texte (HTML &lt;strong&gt; autorisé)" value="${escapeHtml(f.text || '')}" data-feat-idx="${i}" data-feat-field="text">
+          <button type="button" data-feat-del="${i}" title="Supprimer">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>`).join('');
+    }
+    function readFeatures() {
+      const rows = {};
+      document.querySelectorAll('[data-feat-idx]').forEach(el => {
+        const i = el.dataset.featIdx;
+        if (!rows[i]) rows[i] = {};
+        rows[i][el.dataset.featField] = el.dataset.featField === 'included' ? (el.value === 'true') : el.value;
+      });
+      return Object.values(rows).filter(r => r.text && r.text.trim());
+    }
+    renderFeatures(features);
+
+    document.getElementById('of_add_feat').onclick = () => {
+      renderFeatures([...readFeatures(), { text: '', included: true }]);
+    };
+    document.getElementById('of_features').addEventListener('click', e => {
+      const btn = e.target.closest('[data-feat-del]');
+      if (!btn) return;
+      const cur = readFeatures();
+      cur.splice(Number(btn.dataset.featDel), 1);
+      renderFeatures(cur);
+    });
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    const close = () => { modal.classList.remove('open'); document.body.style.overflow = ''; };
+    document.getElementById('ofCloseBtn').onclick = close;
+    document.getElementById('ofCancelBtn').onclick = close;
+
+    document.getElementById('ofSaveBtn').onclick = async () => {
+      const payload = {
+        energy: document.getElementById('of_energy').value,
+        energy_label: document.getElementById('of_energy_label').value.trim(),
+        tier: document.getElementById('of_tier').value,
+        tier_label: document.getElementById('of_tier_label').value.trim(),
+        price_ht_month: Number(document.getElementById('of_price_month').value || 0),
+        price_ht_year: document.getElementById('of_price_year').value ? Number(document.getElementById('of_price_year').value) : null,
+        price_label: document.getElementById('of_price_label').value.trim() || null,
+        vat_rate: Number(document.getElementById('of_vat').value),
+        baseline: document.getElementById('of_baseline').value.trim() || null,
+        badge: document.getElementById('of_badge').value.trim() || null,
+        cta_label: document.getElementById('of_cta_label').value.trim() || 'Souscrire',
+        cta_action: document.getElementById('of_cta_action').value,
+        legal_note: document.getElementById('of_legal').value.trim() || null,
+        features: readFeatures(),
+        position: Number(document.getElementById('of_position').value || 0),
+        is_recommended: document.getElementById('of_recommended').checked,
+        active: document.getElementById('of_active').checked
+      };
+      const { data, error } = await sb.from('contract_offers').update(payload).eq('id', id).select().single();
+      if (error) { window.toast?.('Erreur : ' + error.message, 'err'); return; }
+      const idx = allOffers.findIndex(o => o.id === id);
+      if (idx >= 0) allOffers[idx] = data;
+      renderOffers();
+      close();
+      window.toast?.('Offre mise à jour — visible sur le site', 'ok');
+    };
+
+    document.getElementById('ofDelBtn').onclick = async () => {
+      if (!confirm(`Supprimer l'offre "${offer.energy_label} ${offer.tier_label}" ? Action irréversible.`)) return;
+      const { error } = await sb.from('contract_offers').delete().eq('id', id);
+      if (error) { window.toast?.('Erreur : ' + error.message, 'err'); return; }
+      allOffers = allOffers.filter(o => o.id !== id);
+      cntOffers.textContent = allOffers.length;
+      renderOffers();
+      close();
+      window.toast?.('Offre supprimée', 'ok');
+    };
+  }
+
+  // Chargement initial pour le compteur
+  const { count } = await sb.from('contract_offers').select('id', { count: 'exact', head: true });
+  if (cntOffers && count != null) cntOffers.textContent = count;
+})();
+</script>
 </body>
 </html>
