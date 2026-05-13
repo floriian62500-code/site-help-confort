@@ -315,6 +315,32 @@ document.body.style.overflow = '';
 var navLinks = document.querySelectorAll('.hc-nav-link[data-has-menu]');
 var megaMenus = document.querySelectorAll('.hc-megamenu');
 var closeTimer = null;
+
+// ═══════════════════════════════════════════════════════════════
+// FIX POSITION : aligner chaque megamenu sous SON trigger link
+// (le CSS left:50% centrait sur la nav entière au lieu du lien)
+// ═══════════════════════════════════════════════════════════════
+function positionMegamenus() {
+  navLinks.forEach(function(link) {
+    var menuId = link.getAttribute('data-has-menu');
+    var menu = document.querySelector('.hc-megamenu[data-menu="' + menuId + '"]');
+    if (!menu) return;
+    var nav = link.closest('.hc-nav');
+    if (!nav) return;
+    var linkRect = link.getBoundingClientRect();
+    var navRect = nav.getBoundingClientRect();
+    var linkCenterRelToNav = (linkRect.left + linkRect.width / 2) - navRect.left;
+    menu.style.left = linkCenterRelToNav + 'px';
+  });
+}
+positionMegamenus();
+window.addEventListener('resize', positionMegamenus);
+window.addEventListener('load', positionMegamenus);
+// Re-position si polices chargent en retard (peut changer la largeur du lien)
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(positionMegamenus);
+}
+
 function forceCloseMenus() {
   megaMenus.forEach(function(m) {
     m.classList.add('mm-force-closed');
