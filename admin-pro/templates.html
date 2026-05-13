@@ -5,99 +5,100 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Templates de posts · Back-Office HELP! Confort</title>
+<title>Sujets de posts · Back-Office HELP! Confort</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/admin.css">
 <style>
-.tp-hero{background:linear-gradient(135deg,#0DA0CF 0%,#5fc7e5 60%,#FFB400 130%);color:#fff;border-radius:18px;padding:28px 30px;margin-bottom:22px;box-shadow:0 14px 40px rgba(13,160,207,.25)}
-.tp-hero h1{font-size:1.62rem;font-weight:800;margin:0 0 6px 0;line-height:1.2}
-.tp-hero p{font-size:.96rem;opacity:.96;margin:0;line-height:1.5;max-width:680px}
+  /* ═══ Hero épuré ═══ */
+  .tp-hero{display:flex;gap:18px;align-items:center;background:#fff;border:1px solid var(--ink-100);border-radius:14px;padding:22px 26px;margin-bottom:24px}
+  .tp-hero-icon{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#FFB400,#FF6B1A);display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0}
+  .tp-hero h1{font-size:1.34rem;font-weight:800;color:var(--ink-900);margin:0 0 4px;letter-spacing:-.01em}
+  .tp-hero p{font-size:.92rem;color:var(--ink-500);margin:0;line-height:1.45;max-width:700px}
 
-.tp-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
-.tp-toolbar h2{font-size:1.04rem;font-weight:800;color:var(--ink-900);margin:0;flex:1}
-.tp-search{flex:1;max-width:340px;display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fff;border:1px solid var(--ink-100);border-radius:10px}
-.tp-search svg{width:16px;height:16px;color:var(--ink-400)}
-.tp-search input{flex:1;border:none;background:transparent;outline:none;font:inherit;font-size:.88rem}
+  /* ═══ Toolbar ═══ */
+  .tp-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+  .tp-cats{display:flex;gap:6px;flex-wrap:wrap;overflow-x:auto}
+  .tp-cat{padding:7px 13px;background:#fff;border:1px solid var(--ink-100);border-radius:999px;font:inherit;font-size:.84rem;font-weight:600;color:var(--ink-700);cursor:pointer;white-space:nowrap;transition:.15s}
+  .tp-cat:hover{border-color:var(--hc-primary);color:var(--hc-primary)}
+  .tp-cat.is-active{background:#0A1428;color:#fff;border-color:#0A1428}
+  .tp-cat .cnt{margin-left:6px;padding:1px 7px;background:rgba(255,255,255,.18);border-radius:999px;font-size:.7rem;font-weight:800}
+  .tp-cat:not(.is-active) .cnt{background:rgba(10,20,40,.08);color:var(--ink-500)}
 
-/* === GRID === */
-.tp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
+  .tp-search{flex:1;min-width:240px;max-width:340px;display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fff;border:1px solid var(--ink-100);border-radius:10px}
+  .tp-search svg{width:16px;height:16px;color:var(--ink-400)}
+  .tp-search input{flex:1;border:none;background:transparent;outline:none;font:inherit;font-size:.88rem}
 
-/* === CARD : mockup post réaliste === */
-.tp-card{background:#fff;border:1px solid var(--ink-100);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:.22s;box-shadow:0 1px 2px rgba(11,18,32,.04);position:relative}
-.tp-card:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(11,18,32,.10);border-color:var(--metier-color,var(--hc-primary))}
+  .tp-new-btn{margin-left:auto;display:inline-flex;align-items:center;gap:8px;padding:9px 18px;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;border:none;border-radius:10px;font:inherit;font-weight:800;font-size:.86rem;cursor:pointer;box-shadow:0 4px 14px rgba(255,107,26,.30)}
+  .tp-new-btn:hover{filter:brightness(1.05);transform:translateY(-1px)}
 
-/* Bande métier en haut */
-.tp-metier-band{height:5px;background:var(--metier-color,#94a3b8)}
+  /* ═══ Liste de sujets épurée ═══ */
+  .tp-list{background:#fff;border:1px solid var(--ink-100);border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(11,18,32,.04)}
+  .tp-row{display:flex;align-items:center;gap:16px;padding:16px 20px;border-bottom:1px solid var(--ink-50);transition:.12s;cursor:pointer}
+  .tp-row:last-child{border-bottom:none}
+  .tp-row:hover{background:#f8fcff}
+  .tp-row-icon{width:42px;height:42px;border-radius:11px;background:var(--cat-color-soft,rgba(13,160,207,.08));display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+  .tp-row-main{flex:1;min-width:0}
+  .tp-row-title{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:3px}
+  .tp-row-title strong{font-size:.96rem;font-weight:700;color:var(--ink-900)}
+  .tp-row-cat{font-size:.66rem;font-weight:800;padding:2px 8px;border-radius:5px;text-transform:uppercase;letter-spacing:.04em;background:var(--cat-color-soft,rgba(13,160,207,.10));color:var(--cat-color,#0DA0CF)}
+  .tp-row-season{font-size:.66rem;font-weight:600;color:var(--ink-400);padding:2px 8px;border-radius:5px;background:rgba(10,20,40,.04)}
+  .tp-row-desc{font-size:.82rem;color:var(--ink-500);line-height:1.4}
+  .tp-row-actions{display:flex;gap:6px;flex-shrink:0}
+  .tp-btn-gen{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border:none;border-radius:9px;font:inherit;font-weight:700;font-size:.82rem;cursor:pointer;box-shadow:0 3px 10px rgba(124,58,237,.25);transition:.15s}
+  .tp-btn-gen:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 6px 16px rgba(124,58,237,.35)}
+  .tp-btn-gen svg{width:14px;height:14px}
+  .tp-btn-edit{padding:9px 11px;background:#fff;color:var(--ink-500);border:1px solid var(--ink-100);border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .tp-btn-edit:hover{border-color:var(--ink-300);color:var(--ink-900)}
+  .tp-btn-edit svg{width:14px;height:14px}
 
-/* Header card */
-.tp-card-head{padding:13px 14px 8px 14px;display:flex;align-items:flex-start;gap:11px}
-.tp-card-head .emoji-box{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.45rem;background:var(--metier-color-soft,rgba(100,116,139,.10))}
-.tp-card-head .title-block{flex:1;min-width:0}
-.tp-card-head h3{font-size:.95rem;font-weight:800;color:var(--ink-900);margin:0;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.tp-card-head .desc{font-size:.74rem;color:var(--ink-500);margin-top:4px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
-.tp-card-head .cat-pill{font-size:.62rem;font-weight:800;color:#fff;background:var(--metier-color,#64748b);padding:3px 7px;border-radius:5px;flex-shrink:0;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+  /* Couleurs par catégorie */
+  .tp-row[data-cat="promo"]      {--cat-color:#FF6B1A;--cat-color-soft:rgba(255,107,26,.10)}
+  .tp-row[data-cat="metier"]     {--cat-color:#0DA0CF;--cat-color-soft:rgba(13,160,207,.10)}
+  .tp-row[data-cat="alerte"]     {--cat-color:#d92d20;--cat-color-soft:rgba(217,45,32,.08)}
+  .tp-row[data-cat="urgence"]    {--cat-color:#d92d20;--cat-color-soft:rgba(217,45,32,.08)}
+  .tp-row[data-cat="recrutement"]{--cat-color:#7c3aed;--cat-color-soft:rgba(124,58,237,.10)}
+  .tp-row[data-cat="ferie"]      {--cat-color:#dc2626;--cat-color-soft:rgba(220,38,38,.10)}
+  .tp-row[data-cat="info"]       {--cat-color:#0891b2;--cat-color-soft:rgba(8,145,178,.10)}
+  .tp-row[data-cat="temoignage"] {--cat-color:#FFB400;--cat-color-soft:rgba(255,180,0,.12)}
+  .tp-row[data-cat="realisation"]{--cat-color:#16a34a;--cat-color-soft:rgba(22,163,74,.10)}
+  .tp-row[data-cat="sur-mesure"] {--cat-color:#64748b;--cat-color-soft:rgba(100,116,139,.10)}
 
-/* Post preview (mockup IG/FB) */
-.tp-post{margin:4px 14px 12px 14px;padding:12px 13px 0 13px;background:#F7F9FC;border:1px solid #E5EBF1;border-radius:10px;position:relative;overflow:hidden;flex:1;min-height:140px;max-height:185px;display:flex;flex-direction:column;gap:8px}
-.tp-post .pp-mock-head{display:flex;align-items:center;gap:8px;padding-bottom:7px;border-bottom:1px solid #E5EBF1}
-.tp-post .pp-avatar{width:26px;height:26px;border-radius:50%;background:var(--metier-color,#0DA0CF);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.66rem;font-weight:900;flex-shrink:0;letter-spacing:.02em}
-.tp-post .pp-meta{font-size:.72rem;font-weight:700;color:var(--ink-800);line-height:1.2}
-.tp-post .pp-meta .sub{display:block;font-weight:500;color:var(--ink-400);font-size:.62rem;margin-top:1px}
-.tp-post .pp-text{font-size:.76rem;color:var(--ink-800);line-height:1.55;white-space:pre-line;margin:0;flex:1;overflow:hidden}
-.tp-post .pp-fade{position:absolute;left:0;right:0;bottom:0;height:42px;pointer-events:none;background:linear-gradient(to bottom,rgba(247,249,252,0),rgba(247,249,252,1) 92%)}
+  .tp-row.is-custom .tp-row-title strong::after{content:' · Personnalisé';margin-left:0;font-size:.7rem;color:var(--ink-400);font-weight:500}
 
-/* Tags row */
-.tp-tags-row{padding:0 14px 11px 14px;display:flex;gap:5px;flex-wrap:wrap;align-items:center}
-.tp-tags-row .metier-chip{font-size:.64rem;font-weight:800;color:var(--metier-color,#64748b);background:var(--metier-color-soft,rgba(100,116,139,.10));padding:3px 8px;border-radius:5px;text-transform:uppercase;letter-spacing:.05em}
-.tp-tags-row .tag{font-size:.68rem;color:var(--ink-600);background:var(--ink-50);padding:2px 7px;border-radius:5px;font-weight:600}
-.tp-tags-row .tag-more{font-size:.68rem;color:var(--ink-400);font-weight:700;margin-left:2px}
+  .tp-empty{padding:60px 30px;text-align:center;color:var(--ink-500)}
+  .tp-empty svg{width:48px;height:48px;color:var(--ink-300);margin-bottom:12px}
+  .tp-empty h3{margin:0 0 6px;font-size:1.05rem;color:var(--ink-900)}
+  .tp-empty p{margin:0;font-size:.88rem}
 
-/* Footer */
-.tp-card-foot{padding:10px 14px 12px 14px;display:flex;gap:6px;border-top:1px solid var(--ink-50);background:#FAFCFD}
-.tp-card-foot .btn{flex:1;padding:9px 12px;border-radius:9px;font-size:.82rem;font-weight:700;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:5px;transition:.15s}
-.tp-card-foot .btn-use{background:var(--hc-primary);color:#fff;flex:2}
-.tp-card-foot .btn-use:hover{background:#0a8db6}
-.tp-card-foot .btn-edit{background:#fff;color:var(--ink-700);border:1px solid var(--ink-100)}
-.tp-card-foot .btn-edit:hover{border-color:var(--hc-primary);color:var(--hc-primary)}
-.tp-card-foot .btn-del{background:#fff;color:#d92d20;border:1px solid var(--ink-100);width:36px;padding:9px;flex:0 0 36px}
-.tp-card-foot .btn-del:hover{background:#d92d20;color:#fff;border-color:#d92d20}
-.tp-card-foot .btn svg{width:13px;height:13px}
+  /* Modal */
+  .tp-modal{position:fixed;inset:0;background:rgba(10,20,40,.55);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
+  .tp-modal.is-open{display:flex}
+  .tp-modal-sheet{background:#fff;border-radius:18px;width:100%;max-width:600px;max-height:92vh;overflow:auto;box-shadow:0 30px 70px rgba(0,0,0,.32);animation:tpSlide .25s cubic-bezier(.16,1,.3,1)}
+  @keyframes tpSlide{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .tp-mh{padding:22px 26px 16px;border-bottom:1px solid var(--ink-100);display:flex;gap:12px;align-items:center}
+  .tp-mh h2{flex:1;margin:0;font-size:1.18rem;font-weight:800;color:var(--ink-900)}
+  .tp-mh .close{background:#F4F7FB;border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-500)}
+  .tp-mh .close:hover{background:#E5EDF3}
+  .tp-mb{padding:22px 26px;display:grid;gap:14px}
+  .tp-mb label{font-size:.74rem;font-weight:800;color:var(--ink-900);letter-spacing:.02em;display:block;margin-bottom:5px;text-transform:uppercase}
+  .tp-mb input,.tp-mb textarea,.tp-mb select{width:100%;padding:11px 13px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;font-size:.92rem;color:var(--ink-900);background:#fff}
+  .tp-mb input:focus,.tp-mb textarea:focus,.tp-mb select:focus{outline:none;border-color:var(--hc-primary);box-shadow:0 0 0 3px rgba(13,160,207,.12)}
+  .tp-mb textarea{min-height:120px;resize:vertical;font-family:inherit;line-height:1.5}
+  .tp-mb-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .tp-mb-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  .tp-mf{padding:14px 26px;border-top:1px solid var(--ink-100);display:flex;gap:10px;background:#FAFCFD;border-radius:0 0 18px 18px;align-items:center}
+  .tp-mf .grow{flex:1}
+  .tp-mf button{padding:10px 18px;border-radius:10px;font:inherit;font-weight:700;font-size:.86rem;cursor:pointer;border:none}
+  .tp-mf .secondary{background:#fff;color:var(--ink-700);border:1px solid var(--ink-100)}
+  .tp-mf .primary{background:#0A1428;color:#fff}
+  .tp-mf .primary:hover{background:var(--hc-primary)}
+  .tp-mf .danger{background:#fff;color:#d92d20;border:1px solid rgba(217,45,32,.30)}
+  .tp-mf .danger:hover{background:rgba(217,45,32,.05)}
 
-/* Modale */
-.tp-modal{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(10,20,40,.55);backdrop-filter:blur(4px)}
-.tp-modal.open{display:flex}
-.tp-modal-sheet{background:#fff;border-radius:16px;width:100%;max-width:600px;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 30px 70px rgba(0,0,0,.32);overflow:hidden}
-.tp-modal-head{padding:18px 22px 14px 22px;border-bottom:1px solid var(--ink-100);display:flex;align-items:center;gap:12px}
-.tp-modal-head h2{font-size:1.05rem;font-weight:800;color:var(--ink-900);margin:0;flex:1}
-.tp-modal-head .close{width:30px;height:30px;border-radius:50%;background:var(--ink-50);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-500)}
-.tp-modal-body{padding:18px 22px;overflow-y:auto;flex:1;display:grid;gap:14px}
-.tp-modal-body label{font-size:.78rem;font-weight:700;color:var(--ink-700);display:block;margin-bottom:5px;letter-spacing:.02em}
-.tp-modal-body input, .tp-modal-body select, .tp-modal-body textarea{width:100%;padding:10px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;font-size:.88rem;color:var(--ink-900);background:#fff}
-.tp-modal-body textarea{min-height:90px;resize:vertical}
-.tp-modal-foot{padding:14px 22px;border-top:1px solid var(--ink-100);background:#FAFCFD;display:flex;gap:10px}
-.tp-modal-foot .right{margin-left:auto;display:flex;gap:8px}
-
-/* Color presets */
-.tp-color-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
-.tp-color-grid button{width:100%;aspect-ratio:1;border-radius:9px;border:2px solid transparent;cursor:pointer}
-.tp-color-grid button.selected{border-color:var(--ink-900);box-shadow:0 0 0 2px #fff}
-
-/* Filtres par catégorie */
-.tp-filter{padding:7px 14px;border-radius:999px;border:1px solid var(--ink-100);background:#fff;color:var(--ink-700);font:inherit;font-size:.82rem;font-weight:600;cursor:pointer;transition:.15s;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
-.tp-filter:hover{border-color:var(--hc-primary);color:var(--hc-primary)}
-.tp-filter.active{background:var(--hc-primary);color:#fff;border-color:var(--hc-primary);box-shadow:0 4px 12px rgba(13,160,207,.25)}
-.tp-filter .cnt{font-size:.68rem;font-weight:800;background:var(--ink-50);color:var(--ink-500);padding:1px 7px;border-radius:9px;min-width:18px;text-align:center}
-.tp-filter.active .cnt{background:rgba(255,255,255,.22);color:#fff}
-.tp-filter .cnt:empty{display:none}
-
-/* (Le bloc hover-preview a été remplacé par .tp-post visible en permanence) */
-
-.toast-stack{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:2000;pointer-events:none}
-.toast{background:#fff;border:1px solid var(--ink-100);border-radius:10px;padding:11px 14px;box-shadow:0 8px 24px rgba(11,18,32,.16);font-size:.86rem;font-weight:600;color:var(--ink-900);pointer-events:auto;min-width:240px}
-.toast.ok{border-left:3px solid #00aa50}
-.toast.err{border-left:3px solid #d92d20}
+  .tp-info{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid rgba(13,160,207,.20);border-radius:10px;padding:11px 14px;font-size:.84rem;color:#0a4858;line-height:1.5}
+  .tp-info strong{color:var(--hc-primary)}
 </style>
 </head>
 <body>
@@ -109,514 +110,301 @@
     <div class="admin-content">
 
       <div class="tp-hero">
-        <h1>📋 Templates de posts</h1>
-        <p>Bibliothèque de modèles réutilisables pour gagner du temps : promo saisonnière, recrutement, alerte météo, jours fériés, voeux… Clique sur "Utiliser" pour ouvrir la création express avec le contenu pré-rempli.</p>
+        <div class="tp-hero-icon">✨</div>
+        <div>
+          <h1>Sujets de posts — Générateur IA</h1>
+          <p>Une liste de sujets prêts à l'emploi. Clique sur <strong>"Générer avec l'IA"</strong> pour qu'un post adapté à HC Saint-Omer soit rédigé en 5 secondes. Tu valides, ajustes, programmes.</p>
+        </div>
       </div>
 
       <div class="tp-toolbar">
-        <h2 id="tpCount">— modèles disponibles</h2>
+        <div class="tp-cats" id="catFilters">
+          <button class="tp-cat is-active" data-cat="">Tous <span class="cnt" id="cntAll">—</span></button>
+        </div>
         <div class="tp-search">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input id="searchInput" type="search" placeholder="Chercher un template…">
+          <input type="search" id="searchInput" placeholder="Chercher un sujet…">
         </div>
-        <button class="btn btn-primary" id="btnNew">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Nouveau template
+        <button class="tp-new-btn" id="btnNew">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nouveau sujet
         </button>
       </div>
 
-      <!-- Filtres par catégorie (compteur dynamique injecté par JS) -->
-      <div class="tp-filters" id="tpFilters" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
-        <button class="tp-filter active" data-cat=""><span class="lbl">Tout</span> <span class="cnt"></span></button>
-        <button class="tp-filter" data-cat="promo"><span class="lbl">🎁 Promo</span> <span class="cnt"></span></button>
-        <button class="tp-filter" data-cat="metier"><span class="lbl">🔧 Métier</span> <span class="cnt"></span></button>
-        <button class="tp-filter" data-cat="alerte"><span class="lbl">⚠️ Alerte</span> <span class="cnt"></span></button>
-        <button class="tp-filter" data-cat="recrutement"><span class="lbl">👷 Recrutement</span> <span class="cnt"></span></button>
-        <button class="tp-filter" data-cat="ferie"><span class="lbl">🎄 Fêtes</span> <span class="cnt"></span></button>
-        <button class="tp-filter" data-cat="info"><span class="lbl">ℹ️ Info</span> <span class="cnt"></span></button>
-        <button class="tp-filter" data-cat="temoignage"><span class="lbl">⭐ Témoignage</span> <span class="cnt"></span></button>
+      <div class="tp-list" id="tpList">
+        <div class="tp-empty"><div>Chargement…</div></div>
       </div>
-
-      <div class="tp-grid" id="tpGrid"></div>
-
     </div>
   </main>
 </div>
 
-<!-- Modale Édition -->
-<div class="tp-modal" id="editModal">
+<div class="tp-modal" id="tpModal">
   <div class="tp-modal-sheet">
-    <div class="tp-modal-head">
-      <h2 id="editTitle">Nouveau template</h2>
-      <button class="close" id="editClose">
+    <div class="tp-mh">
+      <h2 id="tpModalTitle">Nouveau sujet</h2>
+      <button class="close" type="button" id="tpModalClose">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
-    <div class="tp-modal-body">
-      <div>
-        <label>Nom du template *</label>
-        <input id="ed_name" type="text" placeholder="Ex : Promo printemps">
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div>
-          <label>Catégorie</label>
-          <select id="ed_category">
-            <option value="promo">Promo / Offre</option>
-            <option value="recrutement">Recrutement</option>
-            <option value="alerte">Alerte / Urgence</option>
-            <option value="ferie">Jour férié / Voeux</option>
-            <option value="metier">Mise en avant métier</option>
-            <option value="info">Information</option>
-            <option value="autre">Autre</option>
-          </select>
+    <form id="tpForm">
+      <div class="tp-mb">
+        <div class="tp-info">
+          <strong>💡 Astuce</strong> — Le "prompt IA" est l'instruction donnée à l'IA pour générer le post. Plus tu es précis, mieux c'est : mentionne ton de voix, longueur, format (Facebook/Instagram), émojis, hashtags…
         </div>
-        <div>
-          <label>Icône emoji</label>
-          <input id="ed_icon" type="text" maxlength="3" placeholder="🎁">
+        <div class="tp-mb-row">
+          <div><label>Icône (emoji)</label><input name="icon" maxlength="4" placeholder="🔥" style="text-align:center;font-size:1.4rem"></div>
+          <div><label>Catégorie</label><select name="category">
+            <option value="promo">📣 Promo</option>
+            <option value="metier">🔧 Métier</option>
+            <option value="alerte">⚠️ Alerte</option>
+            <option value="urgence">🚨 Urgence</option>
+            <option value="recrutement">👷 Recrutement</option>
+            <option value="ferie">🎄 Fêtes</option>
+            <option value="info">ℹ️ Info</option>
+            <option value="temoignage">⭐ Témoignage</option>
+            <option value="realisation">📸 Réalisation</option>
+            <option value="sur-mesure">✨ Sur mesure</option>
+          </select></div>
         </div>
-      </div>
-      <div>
-        <label>Description courte (pour le catalogue)</label>
-        <input id="ed_desc" type="text" maxlength="120" placeholder="Ex : Promo de printemps sur les fenêtres double vitrage">
-      </div>
-      <div>
-        <label>Titre du chantier (pré-rempli) *</label>
-        <input id="ed_title" type="text" placeholder="Ex : Profitez du printemps pour rénover vos fenêtres">
-      </div>
-      <div>
-        <label>Texte de la publication (pré-rempli)</label>
-        <textarea id="ed_content" rows="5" placeholder="Ex : 🌸 Le printemps est arrivé ! C'est le moment idéal pour rénover vos fenêtres avec du double vitrage performant. Help Confort vous accompagne…"></textarea>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div>
-          <label>Métier par défaut</label>
-          <select id="ed_metier">
-            <option value="">— Choisir au moment de l'utilisation —</option>
-            <option value="plomberie">Plomberie</option>
+        <div><label>Titre du sujet</label><input name="title" required maxlength="80" placeholder="Ex : Promo entretien chaudière avant hiver"></div>
+        <div><label>Description courte</label><input name="description" maxlength="120" placeholder="1 ligne qui résume le sujet"></div>
+        <div><label>Prompt IA (instruction donnée à l'IA)</label><textarea name="ai_prompt" required placeholder="Écris un post Facebook pour HELP! Confort qui…
+
+Précise : ton, longueur, format, hashtags à inclure"></textarea></div>
+        <div class="tp-mb-row-3">
+          <div><label>Métier</label><select name="metier">
+            <option value="">—</option>
             <option value="chauffage">Chauffage</option>
+            <option value="plomberie">Plomberie</option>
             <option value="electricite">Électricité</option>
             <option value="serrurerie">Serrurerie</option>
             <option value="vitrerie">Vitrerie</option>
-            <option value="menuiserie">Menuiserie</option>
-            <option value="renovation">Rénovation</option>
-            <option value="pmr">Adaptation PMR</option>
-            <option value="volets">Volets</option>
-            <option value="multiservice">Multi-services</option>
-          </select>
+            <option value="pmr">PMR</option>
+            <option value="multiservice">Multiservice</option>
+          </select></div>
+          <div><label>Saison</label><select name="seasonal">
+            <option value="">Toute l'année</option>
+            <option value="printemps">🌸 Printemps</option>
+            <option value="ete">☀️ Été</option>
+            <option value="automne">🍂 Automne</option>
+            <option value="hiver">❄️ Hiver</option>
+            <option value="noel">🎄 Noël</option>
+          </select></div>
+          <div><label>Position</label><input name="position" type="number" value="999" min="0"></div>
         </div>
         <div>
-          <label>Hashtags</label>
-          <input id="ed_hashtags" type="text" placeholder="#promo #printemps #helpconfort">
+          <label style="text-transform:none;font-weight:500;font-size:.88rem;display:flex;align-items:center;gap:10px">
+            <input type="checkbox" name="active" checked style="width:auto"> Actif (visible dans la liste)
+          </label>
         </div>
       </div>
-    </div>
-    <div class="tp-modal-foot">
-      <button class="btn" id="editCancel">Annuler</button>
-      <div class="right">
-        <button class="btn btn-primary" id="editSave">Enregistrer</button>
+      <div class="tp-mf">
+        <button type="button" class="danger" id="tpDelete" style="display:none">Supprimer</button>
+        <span class="grow"></span>
+        <button type="button" class="secondary" id="tpCancel">Annuler</button>
+        <button type="submit" class="primary">Enregistrer</button>
       </div>
-    </div>
+    </form>
   </div>
 </div>
 
-<div class="toast-stack" id="toastStack"></div>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="assets/supabase.js"></script>
 <script src="assets/admin.js"></script>
 <script src="assets/layout.js"></script>
 <script>
-function toast(msg, type='ok', d=2400){
-  const stack = document.getElementById('toastStack');
-  const t = document.createElement('div'); t.className='toast '+type;
-  t.textContent = msg;
-  stack.appendChild(t);
-  setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),200); }, d);
-}
-
-// Templates par défaut (fournis avec le système)
-const DEFAULT_TEMPLATES = [
-  {
-    id: 'default-promo-printemps',
-    name: 'Promo printemps fenêtres',
-    category: 'promo',
-    icon: '🌸',
-    desc: 'Offre printemps sur la rénovation de fenêtres',
-    title: 'Profitez du printemps pour rénover vos fenêtres',
-    content: '🌸 Le printemps est là ! C\'est le moment idéal pour remplacer vos vieilles fenêtres par du double vitrage performant.\n\n✔️ Devis gratuit et sans engagement\n✔️ Pose par nos techniciens salariés\n✔️ Économies d\'énergie immédiates\n\n📞 Contactez Help Confort Saint-Omer pour votre projet.',
-    metier: 'vitrerie',
-    hashtags: '#promo #printemps #fenetres #renovation #helpconfort #saintomer'
-  },
-  {
-    id: 'default-hiver-chauffage',
-    name: 'Entretien chauffage avant hiver',
-    category: 'metier',
-    icon: '🔥',
-    desc: 'Rappel entretien chaudière + désembouage',
-    title: 'L\'hiver approche : pensez à l\'entretien de votre chauffage',
-    content: '🔥 Avant les premiers froids, Help Confort vous recommande :\n\n✔️ Entretien annuel de votre chaudière (obligatoire)\n✔️ Désembouage du circuit (tous les 5 ans)\n✔️ Vérification du circulateur\n\nUn chauffage entretenu = jusqu\'à 15% d\'économies sur votre facture.\n\n📞 Prenez RDV dès maintenant.',
-    metier: 'chauffage',
-    hashtags: '#chauffage #entretien #hiver #chaudiere #desembouage #helpconfort'
-  },
-  {
-    id: 'default-recrutement',
-    name: 'Recrutement technicien',
-    category: 'recrutement',
-    icon: '👷',
-    desc: 'Offre d\'emploi technicien polyvalent',
-    title: 'Help Confort recrute un technicien polyvalent (H/F)',
-    content: '👷 Nous recrutons !\n\nHelp Confort renforce son équipe et cherche un(e) technicien(ne) polyvalent(e) en CDI.\n\n✔️ CDI temps plein, salaire selon expérience\n✔️ Véhicule de service fourni\n✔️ Formation continue\n✔️ Mutuelle, tickets restaurant\n\nMétiers : plomberie, électricité, chauffage, serrurerie.\n\n📧 Envoyez votre CV à contact@helpconfort.com',
-    metier: 'multiservice',
-    hashtags: '#recrutement #emploi #saintomer #technicien #cdi #helpconfort'
-  },
-  {
-    id: 'default-meteo-froid',
-    name: 'Alerte froid / gel canalisations',
-    category: 'alerte',
-    icon: '❄️',
-    desc: 'Conseil prévention gel pour clients',
-    title: 'Vague de froid : protégez vos canalisations',
-    content: '❄️ Alerte vague de froid !\n\nQuelques gestes simples pour éviter le gel de vos canalisations :\n\n✔️ Coupez l\'eau et purgez les robinets extérieurs\n✔️ Maintenez vos pièces à minimum 8°C\n✔️ Calorifugez les tuyaux apparents\n\nEn cas de fuite ou de canalisation gelée, Help Confort intervient 7j/7.\n\n📞 Saint-Omer & Dunkerque',
-    metier: 'plomberie',
-    hashtags: '#alerte #froid #gel #plomberie #urgence #helpconfort #saintomer #dunkerque'
-  },
-  {
-    id: 'default-fete-noel',
-    name: 'Vœux Noël / Nouvel An',
-    category: 'ferie',
-    icon: '🎄',
-    desc: 'Vœux de fin d\'année + permanence urgences',
-    title: 'Toute l\'équipe Help Confort vous souhaite de joyeuses fêtes',
-    content: '🎄 Toute l\'équipe Help Confort Saint-Omer & Dunkerque vous souhaite de très joyeuses fêtes de fin d\'année !\n\nMerci à nos clients, nos partenaires et nos salariés pour cette belle année à vos côtés.\n\n⚠️ Permanence urgences plomberie / chauffage maintenue les 24, 25, 31 décembre et 1er janvier.\n\n📞 N\'hésitez pas en cas de panne.',
-    metier: 'multiservice',
-    hashtags: '#noel #voeux #fetes #helpconfort #saintomer #dunkerque'
-  },
-  {
-    id: 'default-pmr',
-    name: 'Aménagement PMR (douche italienne)',
-    category: 'metier',
-    icon: '🚿',
-    desc: 'Promo douche italienne et PMR',
-    title: 'Transformez votre baignoire en douche italienne sécurisée',
-    content: '🚿 Help Confort spécialiste de l\'adaptation PMR (Personnes à Mobilité Réduite).\n\nNotre prestation clé en main :\n✔️ Dépose baignoire\n✔️ Pose douche italienne anti-dérapante\n✔️ Barre de maintien, siège mural\n✔️ Devis gratuit éligible aux aides MaPrimeAdapt\'\n\nProfitez d\'aides financières jusqu\'à 70% du devis.',
-    metier: 'pmr',
-    hashtags: '#pmr #douche #adaptation #maprimeadapt #seniors #helpconfort #saintomer'
-  },
-  {
-    id: 'default-temoignage-client',
-    name: 'Témoignage client 5 étoiles',
-    category: 'temoignage',
-    icon: '⭐',
-    desc: 'Mise en avant d\'un avis client positif',
-    title: 'Merci à Madame X pour cet avis 5 étoiles !',
-    content: '⭐⭐⭐⭐⭐\n\n« [Citation de l\'avis client - à remplacer] »\n— Madame X, Saint-Omer\n\nMerci pour ce retour qui fait chaud au cœur ! Notre équipe se mobilise chaque jour pour vous offrir un service irréprochable.\n\n👉 Vous aussi, contactez-nous pour vos travaux.',
-    metier: 'multiservice',
-    hashtags: '#avisclient #merci #helpconfort #saintomer #temoignage'
-  },
-  {
-    id: 'default-urgence-fuite',
-    name: 'Urgence fuite d\'eau 24/7',
-    category: 'alerte',
-    icon: '🚨',
-    desc: 'Rappel astreinte fuite d\'eau',
-    title: 'Une fuite d\'eau ? On intervient sous 1 heure',
-    content: '🚨 Une fuite chez vous ? Ne perdez pas une minute.\n\nHelp Confort intervient en urgence 7j/7 sur Saint-Omer & Dunkerque.\n\n✔️ Plombier qualifié sous 1h\n✔️ Localisation précise sans casse\n✔️ Devis transparent avant intervention\n✔️ Astreinte week-end et jours fériés\n\n📞 03 66 10 01 34 — appelez maintenant',
-    metier: 'plomberie',
-    hashtags: '#urgence #fuite #plombier #depannage #saintomer #dunkerque #helpconfort'
-  },
-  {
-    id: 'default-chantier-fini',
-    name: 'Chantier terminé — partage',
-    category: 'metier',
-    icon: '✅',
-    desc: 'Partage d\'un chantier finalisé avec avant/après',
-    title: 'Chantier terminé ! Avant / Après',
-    content: '✅ Encore un beau chantier livré par nos équipes !\n\n📍 [Ville]\n🛠️ [Type de travaux]\n👷 Technicien : [Prénom]\n⏱️ Durée : [X jours]\n\nNotre client peut désormais profiter de [bénéfice principal].\n\nVous aussi, racontez-nous votre projet : devis gratuit en 24h.',
-    metier: 'multiservice',
-    hashtags: '#chantier #avantapres #helpconfort #saintomer #renovation'
-  },
-  {
-    id: 'default-conseil-saison',
-    name: 'Conseil saisonnier (rentrée)',
-    category: 'info',
-    icon: '🍂',
-    desc: 'Tip utile pour les clients (préparation hiver)',
-    title: '5 vérifications à faire avant l\'hiver',
-    content: '🍂 La rentrée est là, l\'hiver approche. Voici 5 vérifications express pour éviter les galères :\n\n1️⃣ Faire entretenir sa chaudière (obligatoire chaque année)\n2️⃣ Vérifier l\'étanchéité des fenêtres et joints\n3️⃣ Tester les détecteurs de fumée et CO\n4️⃣ Faire un check radiateurs (purger, désembouage si besoin)\n5️⃣ Calorifuger les canalisations exposées au gel\n\n💡 Help Confort peut s\'occuper de tout ça en une seule visite. 📞',
-    metier: 'multiservice',
-    hashtags: '#conseil #hiver #entretien #helpconfort #saintomer #astuces'
-  },
-  {
-    id: 'default-jour-ferie',
-    name: 'Information jour férié',
-    category: 'ferie',
-    icon: '📅',
-    desc: 'Fermeture exceptionnelle / permanence',
-    title: 'Fermeture exceptionnelle le [date]',
-    content: '📅 Information à nos clients :\n\nL\'agence Help Confort sera fermée le [date] à l\'occasion de [motif].\n\nNous reprenons normalement le [date de reprise].\n\n⚠️ Notre service d\'astreinte urgences (plomberie / chauffage) reste actif 7j/7 :\n📞 03 66 10 01 34\n\nMerci de votre compréhension. À très vite !',
-    metier: 'multiservice',
-    hashtags: '#fermeture #helpconfort #saintomer #information'
-  },
-  {
-    id: 'default-promo-contrat',
-    name: 'Promo contrat entretien gaz',
-    category: 'promo',
-    icon: '🔥',
-    desc: 'Mise en avant des contrats annuels',
-    title: 'Contrats d\'entretien gaz : à partir de 9€/mois',
-    content: '🔥 Votre tranquillité au quotidien, à petit prix.\n\nNos contrats d\'entretien chaudière gaz :\n\n💙 BASIC — 9€/mois\n  Entretien annuel obligatoire\n\n💚 CONFORT — 13€/mois\n  Entretien + dépannage prioritaire\n\n💛 SÉCURITÉ — 23€/mois\n  Entretien + dépannage + pièces incluses\n\n✔️ Sans engagement, résiliable à tout moment\n✔️ Technicien Help Confort dédié\n\n📞 Souscrivez en 5 minutes',
-    metier: 'chauffage',
-    hashtags: '#contrat #chaudiere #gaz #entretien #helpconfort #abonnement'
-  },
-  {
-    id: 'default-portrait-team',
-    name: 'Portrait d\'équipe — Nouveau salarié',
-    category: 'info',
-    icon: '🤝',
-    desc: 'Présentation d\'un membre de l\'équipe',
-    title: 'Bienvenue à [Prénom], nouveau technicien Help Confort !',
-    content: '🤝 L\'équipe Help Confort s\'agrandit !\n\nNous accueillons [Prénom], notre nouveau technicien polyvalent.\n\n👷 Spécialités : [métiers]\n📍 Zone : Saint-Omer & Dunkerque\n⭐ Son objectif : continuer à offrir un service de qualité dans la lignée de l\'équipe.\n\nN\'hésitez pas à le saluer si tu le croises sur un chantier ! 👋',
-    metier: 'multiservice',
-    hashtags: '#equipe #recrutement #welcome #helpconfort #saintomer'
-  }
-];
-
-// Pré-init avec les 13 defaults : ils s'affichent INSTANTANÉMENT
-// sans attendre Supabase/auth/layout (sinon, si l'un de ces awaits hang
-// ou si app_settings.templates contient une structure cassée, on perdait
-// l'affichage complet du catalogue).
-let _templates = [...DEFAULT_TEMPLATES];
-let activeCat = '';
-
-(async function(){
+(async function() {
   await HCSupabase.init();
   const session = await HCAdmin.requireAuth();
   if (!session) return;
-  await HCLayout.mount('templates', 'Templates de posts');
-  const c = await HCSupabase.init();
+  HCLayout.mount('templates', 'Sujets de posts');
 
-  // Render immédiat : on garantit l'affichage des 13 modèles
-  // de base AVANT toute requête réseau.
-  render();
+  const sb = await HCSupabase.init();
+  const escapeHtml = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const slugify = (s) => (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').replace(/-+/g,'-').slice(0,80);
 
-  // Puis on hydrate avec les templates user en arrière-plan.
-  try {
-    const { data } = await c.from('app_settings').select('value').eq('key', 'templates').single();
-    const raw = data?.value?.list;
-    const userTemplates = Array.isArray(raw) ? raw : [];
-    if (userTemplates.length) {
-      _templates = [...DEFAULT_TEMPLATES, ...userTemplates];
-      render(document.getElementById('searchInput').value);
-    }
-  } catch(e) {
-    // On garde les defaults — déjà affichés.
-  }
-
-  function render(filter = '') {
-    const grid = document.getElementById('tpGrid');
-    const q = filter.toLowerCase();
-    const filtered = _templates.filter(t => {
-      const okQ = !q || (t.name + ' ' + t.desc + ' ' + t.content + ' ' + (t.hashtags || '')).toLowerCase().includes(q);
-      const okCat = !activeCat || t.category === activeCat;
-      return okQ && okCat;
-    });
-    document.getElementById('tpCount').textContent = filtered.length + ' modèle' + (filtered.length>1?'s':'') + ' disponible' + (filtered.length>1?'s':'');
-
-    // Compteurs par catégorie sur les filtres
-    document.querySelectorAll('.tp-filter').forEach(btn => {
-      const cat = btn.dataset.cat;
-      const n = cat ? _templates.filter(t => t.category === cat).length : _templates.length;
-      const cntEl = btn.querySelector('.cnt');
-      if (cntEl) cntEl.textContent = n > 0 ? n : '';
-    });
-
-    // Palette métier HC (synchro charte couleurs officielle)
-    const METIER = {
-      plomberie:    { color: '#0DA0CF', soft: 'rgba(13,160,207,.10)',  label: 'Plomberie' },
-      chauffage:    { color: '#FF6B1A', soft: 'rgba(255,107,26,.10)',  label: 'Chauffage' },
-      electricite:  { color: '#FFB400', soft: 'rgba(255,180,0,.14)',   label: 'Électricité' },
-      serrurerie:   { color: '#7C3AED', soft: 'rgba(124,58,237,.10)',  label: 'Serrurerie' },
-      vitrerie:     { color: '#22C55E', soft: 'rgba(34,197,94,.10)',   label: 'Vitrerie' },
-      renovation:   { color: '#E11D48', soft: 'rgba(225,29,72,.08)',   label: 'Rénovation' },
-      menuiserie:   { color: '#92501A', soft: 'rgba(146,80,26,.10)',   label: 'Menuiserie' },
-      volets:       { color: '#6366F1', soft: 'rgba(99,102,241,.10)',  label: 'Volets' },
-      pmr:          { color: '#14B8A6', soft: 'rgba(20,184,166,.10)',  label: 'PMR' },
-      multiservice: { color: '#64748b', soft: 'rgba(100,116,139,.12)', label: 'Multi-services' }
-    };
-    const CAT_LABELS = {
-      promo: 'Promo', recrutement: 'Recrutement', alerte: 'Alerte',
-      ferie: 'Férié', metier: 'Métier', info: 'Info', autre: 'Autre',
-      temoignage: 'Témoignage'
-    };
-
-    if (filtered.length === 0) {
-      grid.innerHTML = `<div class="hc-empty" style="grid-column:1/-1">
-        <div class="hc-empty-icon">🔍</div>
-        <h3>Aucun template ne matche</h3>
-        <p>Essaie de modifier ta recherche ou ton filtre catégorie.</p>
-      </div>`;
-    } else {
-      grid.innerHTML = filtered.map(t => {
-        const isDefault = t.id && t.id.startsWith('default-');
-        const m = METIER[t.metier] || METIER.multiservice;
-        const cssVars = `--metier-color:${m.color};--metier-color-soft:${m.soft};`;
-        const previewText = (t.content || t.title || '').slice(0, 360);
-        const tags = (t.hashtags || '').split(' ').filter(Boolean);
-        const visibleTags = tags.slice(0, 3);
-        const moreTags = tags.length - visibleTags.length;
-        return `
-          <div class="tp-card" data-id="${t.id}" style="${cssVars}">
-            <div class="tp-metier-band"></div>
-            <div class="tp-card-head">
-              <div class="emoji-box">${t.icon || '📋'}</div>
-              <div class="title-block">
-                <h3>${escapeHtml(t.name)}</h3>
-                ${t.desc ? `<div class="desc">${escapeHtml(t.desc)}</div>` : ''}
-              </div>
-              <span class="cat-pill">${CAT_LABELS[t.category] || t.category}</span>
-            </div>
-            <div class="tp-post">
-              <div class="pp-mock-head">
-                <div class="pp-avatar">HC</div>
-                <div class="pp-meta">Help Confort<span class="sub">Saint-Omer · Dunkerque</span></div>
-              </div>
-              <div class="pp-text">${escapeHtml(previewText)}</div>
-              <div class="pp-fade"></div>
-            </div>
-            <div class="tp-tags-row">
-              <span class="metier-chip">${m.label}</span>
-              ${visibleTags.map(h => '<span class="tag">' + escapeHtml(h) + '</span>').join('')}
-              ${moreTags > 0 ? `<span class="tag-more">+${moreTags}</span>` : ''}
-            </div>
-            <div class="tp-card-foot">
-              <button class="btn btn-use" data-use="${t.id}">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                Utiliser
-              </button>
-              ${!isDefault ? `<button class="btn btn-edit" data-edit="${t.id}" title="Éditer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>` : ''}
-              ${!isDefault ? `<button class="btn btn-del" data-del="${t.id}" title="Supprimer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg></button>` : ''}
-            </div>
-          </div>`;
-      }).join('');
-    }
-
-    grid.querySelectorAll('[data-use]').forEach(b => b.onclick = () => useTemplate(b.dataset.use));
-    grid.querySelectorAll('[data-edit]').forEach(b => b.onclick = () => openEdit(b.dataset.edit));
-    grid.querySelectorAll('[data-del]').forEach(b => b.onclick = () => deleteTemplate(b.dataset.del));
-  }
-
-  function useTemplate(id) {
-    const t = _templates.find(x => x.id === id);
-    if (!t) return;
-    // Stocker temporairement dans localStorage et ouvrir la modale création express via le FAB
-    sessionStorage.setItem('hcq-template', JSON.stringify({
-      title: t.title,
-      desc: t.content,
-      metier: t.metier,
-      hashtags: t.hashtags
-    }));
-    toast('Template chargé — ouverture de la création express…', 'ok', 1800);
-    setTimeout(() => {
-      if (window.HCLayout && window.HCLayout.openQuickModal) {
-        window.HCLayout.openQuickModal();
-        // Pré-remplir les champs
-        setTimeout(() => {
-          const data = JSON.parse(sessionStorage.getItem('hcq-template') || '{}');
-          if (data.title && document.getElementById('hcqTitle')) document.getElementById('hcqTitle').value = data.title;
-          if (data.desc && document.getElementById('hcqDesc')) document.getElementById('hcqDesc').value = data.desc;
-          if (data.metier && document.getElementById('hcqMetier')) document.getElementById('hcqMetier').value = data.metier;
-          sessionStorage.removeItem('hcq-template');
-        }, 80);
-      }
-    }, 100);
-  }
-
-  function openEdit(id) {
-    const t = id ? _templates.find(x => x.id === id) : null;
-    document.getElementById('editTitle').textContent = t ? 'Éditer le template' : 'Nouveau template';
-    document.getElementById('editModal').dataset.id = id || '';
-    document.getElementById('ed_name').value = t?.name || '';
-    document.getElementById('ed_category').value = t?.category || 'promo';
-    document.getElementById('ed_icon').value = t?.icon || '🎁';
-    document.getElementById('ed_desc').value = t?.desc || '';
-    document.getElementById('ed_title').value = t?.title || '';
-    document.getElementById('ed_content').value = t?.content || '';
-    document.getElementById('ed_metier').value = t?.metier || '';
-    document.getElementById('ed_hashtags').value = t?.hashtags || '';
-    document.getElementById('editModal').classList.add('open');
-  }
-
-  document.getElementById('btnNew').onclick = () => openEdit();
-  document.getElementById('editClose').onclick = () => document.getElementById('editModal').classList.remove('open');
-  document.getElementById('editCancel').onclick = () => document.getElementById('editModal').classList.remove('open');
-
-  document.getElementById('editSave').onclick = async () => {
-    const name = document.getElementById('ed_name').value.trim();
-    const title = document.getElementById('ed_title').value.trim();
-    if (!name || !title) { toast('Nom et titre obligatoires', 'err'); return; }
-    const id = document.getElementById('editModal').dataset.id || 'user-' + Date.now();
-    const t = {
-      id,
-      name,
-      category: document.getElementById('ed_category').value,
-      icon: document.getElementById('ed_icon').value.trim() || '📋',
-      desc: document.getElementById('ed_desc').value.trim(),
-      title,
-      content: document.getElementById('ed_content').value.trim(),
-      metier: document.getElementById('ed_metier').value,
-      hashtags: document.getElementById('ed_hashtags').value.trim()
-    };
-
-    // Mettre à jour la liste user (sans les defaults)
-    const userList = _templates.filter(x => !x.id.startsWith('default-') && x.id !== id);
-    userList.push(t);
-
-    try {
-      const { error } = await c.from('app_settings').upsert({
-        key: 'templates',
-        value: { list: userList },
-        updated_by: session.email
-      }, { onConflict: 'key' });
-      if (error) throw error;
-      _templates = [...DEFAULT_TEMPLATES, ...userList];
-      toast('Template enregistré');
-      document.getElementById('editModal').classList.remove('open');
-      render(document.getElementById('searchInput').value);
-    } catch (e) {
-      toast('Erreur : ' + e.message, 'err', 4500);
-    }
+  const CAT_LABELS = {
+    promo:'📣 Promo', metier:'🔧 Métier', alerte:'⚠️ Alerte', urgence:'🚨 Urgence',
+    recrutement:'👷 Recrutement', ferie:'🎄 Fêtes', info:'ℹ️ Info',
+    temoignage:'⭐ Témoignage', realisation:'📸 Réalisation', 'sur-mesure':'✨ Sur mesure'
   };
+  const SEASON_LABELS = { printemps:'🌸 Printemps', ete:'☀️ Été', automne:'🍂 Automne', hiver:'❄️ Hiver', noel:'🎄 Noël' };
 
-  async function deleteTemplate(id) {
-    if (!confirm('Supprimer ce template ?')) return;
-    const userList = _templates.filter(x => !x.id.startsWith('default-') && x.id !== id);
-    try {
-      const { error } = await c.from('app_settings').upsert({
-        key: 'templates',
-        value: { list: userList },
-        updated_by: session.email
-      }, { onConflict: 'key' });
-      if (error) throw error;
-      _templates = [...DEFAULT_TEMPLATES, ...userList];
-      toast('Template supprimé');
-      render(document.getElementById('searchInput').value);
-    } catch (e) {
-      toast('Erreur : ' + e.message, 'err', 4500);
+  let allTopics = [];
+  let currentCat = '';
+  let editingId = null;
+
+  async function load() {
+    const { data, error } = await sb.from('post_topics').select('*').order('position').order('title');
+    if (error) {
+      document.getElementById('tpList').innerHTML = `<div class="tp-empty"><h3>Erreur</h3><p>${escapeHtml(error.message)}</p><p style="font-size:.76rem;margin-top:8px;color:var(--ink-400)">Vérifie que la migration <code>20260513210000_post_topics.sql</code> est appliquée.</p></div>`;
+      return;
     }
+    allTopics = data || [];
+    renderFilters();
+    render();
   }
 
-  document.getElementById('searchInput').oninput = (e) => render(e.target.value);
+  function renderFilters() {
+    const cats = {};
+    allTopics.forEach(t => { cats[t.category] = (cats[t.category] || 0) + 1; });
+    const filters = document.getElementById('catFilters');
+    document.getElementById('cntAll').textContent = allTopics.length;
+    [...filters.querySelectorAll('.tp-cat:not([data-cat=""])')].forEach(n => n.remove());
+    Object.entries(cats).forEach(([cat, count]) => {
+      const btn = document.createElement('button');
+      btn.className = 'tp-cat';
+      btn.dataset.cat = cat;
+      btn.innerHTML = `${escapeHtml(CAT_LABELS[cat] || cat)} <span class="cnt">${count}</span>`;
+      btn.onclick = () => { currentCat = cat; updateActiveFilter(); render(); };
+      filters.appendChild(btn);
+    });
+  }
+  function updateActiveFilter() {
+    document.querySelectorAll('.tp-cat').forEach(b => b.classList.toggle('is-active', b.dataset.cat === currentCat));
+  }
+  document.querySelector('.tp-cat[data-cat=""]').onclick = () => { currentCat=''; updateActiveFilter(); render(); };
 
-  // Filtres par catégorie
-  document.querySelectorAll('.tp-filter').forEach(btn => {
-    btn.onclick = () => {
-      document.querySelectorAll('.tp-filter').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeCat = btn.dataset.cat;
-      render(document.getElementById('searchInput').value);
-    };
+  function render() {
+    const search = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+    let rows = allTopics;
+    if (currentCat) rows = rows.filter(t => t.category === currentCat);
+    if (search) rows = rows.filter(t =>
+      (t.title || '').toLowerCase().includes(search) ||
+      (t.description || '').toLowerCase().includes(search) ||
+      (t.ai_prompt || '').toLowerCase().includes(search)
+    );
+
+    const list = document.getElementById('tpList');
+    if (rows.length === 0) {
+      list.innerHTML = `<div class="tp-empty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <h3>Aucun sujet ne correspond</h3>
+        <p>Essaie d'autres filtres ou crée un nouveau sujet.</p>
+      </div>`;
+      return;
+    }
+    list.innerHTML = rows.map(t => `
+      <div class="tp-row${!t.is_builtin ? ' is-custom' : ''}" data-cat="${escapeHtml(t.category)}" data-id="${t.id}">
+        <div class="tp-row-icon">${escapeHtml(t.icon || '✨')}</div>
+        <div class="tp-row-main">
+          <div class="tp-row-title">
+            <strong>${escapeHtml(t.title)}</strong>
+            ${t.seasonal ? `<span class="tp-row-season">${escapeHtml(SEASON_LABELS[t.seasonal] || t.seasonal)}</span>` : ''}
+          </div>
+          <div class="tp-row-desc">${escapeHtml(t.description || '')}</div>
+        </div>
+        <div class="tp-row-actions">
+          <button class="tp-btn-gen" data-action="generate" data-id="${t.id}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Générer avec l'IA
+          </button>
+          <button class="tp-btn-edit" data-action="edit" data-id="${t.id}" title="Modifier">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+        </div>
+      </div>`).join('');
+  }
+
+  document.getElementById('tpList').addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-action]');
+    if (btn) {
+      const topic = allTopics.find(t => t.id === btn.dataset.id);
+      if (!topic) return;
+      if (btn.dataset.action === 'generate') generateWithAI(topic);
+      else if (btn.dataset.action === 'edit') openModal(topic);
+      return;
+    }
+    const row = e.target.closest('.tp-row[data-id]');
+    if (row) {
+      const topic = allTopics.find(t => t.id === row.dataset.id);
+      if (topic) generateWithAI(topic);
+    }
   });
 
-  function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  function generateWithAI(topic) {
+    try {
+      sessionStorage.setItem('hc-ai-prefill', JSON.stringify({
+        topic_id: topic.id, topic_slug: topic.slug, title: topic.title,
+        prompt: topic.ai_prompt, category: topic.category, metier: topic.metier,
+        timestamp: Date.now()
+      }));
+    } catch(e) {}
+    window.location.href = `magic.html?prefill=${encodeURIComponent(topic.slug)}`;
+  }
+
+  const modal = document.getElementById('tpModal');
+  const closeModal = () => modal.classList.remove('is-open');
+  document.getElementById('tpModalClose').onclick = closeModal;
+  document.getElementById('tpCancel').onclick = closeModal;
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+  function openModal(topic) {
+    editingId = topic?.id || null;
+    document.getElementById('tpModalTitle').textContent = topic ? 'Modifier le sujet' : 'Nouveau sujet';
+    document.getElementById('tpDelete').style.display = topic && !topic.is_builtin ? '' : 'none';
+    const form = document.getElementById('tpForm');
+    form.reset();
+    if (topic) {
+      form.icon.value = topic.icon || '✨';
+      form.title.value = topic.title || '';
+      form.description.value = topic.description || '';
+      form.ai_prompt.value = topic.ai_prompt || '';
+      form.category.value = topic.category || 'metier';
+      form.metier.value = topic.metier || '';
+      form.seasonal.value = topic.seasonal || '';
+      form.position.value = topic.position ?? 999;
+      form.active.checked = !!topic.active;
+    } else {
+      form.icon.value = '✨';
+      form.category.value = 'metier';
+      form.active.checked = true;
+    }
+    modal.classList.add('is-open');
+  }
+  document.getElementById('btnNew').onclick = () => openModal();
+
+  document.getElementById('tpForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const data = {
+      icon: fd.get('icon')?.trim() || '✨',
+      title: fd.get('title').trim(),
+      description: fd.get('description')?.trim() || null,
+      ai_prompt: fd.get('ai_prompt').trim(),
+      category: fd.get('category'),
+      metier: fd.get('metier') || null,
+      seasonal: fd.get('seasonal') || null,
+      position: Number(fd.get('position') || 999),
+      active: !!fd.get('active')
+    };
+    if (!editingId) {
+      data.slug = slugify(data.title) + '-' + Date.now().toString(36).slice(-4);
+      data.is_builtin = false;
+    }
+    const res = editingId
+      ? await sb.from('post_topics').update(data).eq('id', editingId).select().single()
+      : await sb.from('post_topics').insert(data).select().single();
+    if (res.error) { alert('Erreur : ' + res.error.message); return; }
+    if (editingId) {
+      const idx = allTopics.findIndex(t => t.id === editingId);
+      if (idx >= 0) allTopics[idx] = res.data;
+    } else allTopics.unshift(res.data);
+    renderFilters(); render(); closeModal();
+  });
+
+  document.getElementById('tpDelete').onclick = async () => {
+    if (!editingId) return;
+    if (!confirm('Supprimer ce sujet définitivement ?')) return;
+    const { error } = await sb.from('post_topics').delete().eq('id', editingId);
+    if (error) { alert(error.message); return; }
+    allTopics = allTopics.filter(t => t.id !== editingId);
+    renderFilters(); render(); closeModal();
+  };
+
+  document.getElementById('searchInput').addEventListener('input', render);
+
+  load();
 })();
 </script>
 </body>
