@@ -6,7 +6,7 @@ On insère le bloc 'positionMegamenus()' juste après la déclaration de closeTi
 import re
 import pathlib
 
-ROOT = pathlib.Path('/Users/HP/Documents/Claude/Projects/SITE INTERNET')
+ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 PATTERN = re.compile(r'(\bvar closeTimer = null;\n)')
 
