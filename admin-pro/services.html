@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catalogue des prestations · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+  .sv-tabs{display:flex;gap:4px;margin-bottom:24px;border-bottom:1px solid var(--ink-100)}
+  .sv-tab{padding:12px 18px;background:transparent;border:none;color:var(--ink-500);font:inherit;font-size:.92rem;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:.15s}
+  .sv-tab:hover{color:var(--ink-900)}
+  .sv-tab.is-active{color:var(--hc-primary);border-bottom-color:var(--hc-primary)}
+  .sv-tab .badge{margin-left:6px;padding:1px 8px;background:rgba(13,160,207,.15);color:var(--hc-primary);border-radius:999px;font-size:.72rem;font-weight:800}
+  .sv-pane{display:none}.sv-pane.is-active{display:block}
+
+  .sv-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
+  .sv-toolbar .grow{flex:1}
+  .sv-toolbar input,.sv-toolbar select{padding:9px 13px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;font-size:.88rem;background:#fff}
+  .sv-toolbar input:focus,.sv-toolbar select:focus{outline:none;border-color:var(--hc-primary);box-shadow:0 0 0 3px rgba(13,160,207,.10)}
+  .sv-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;border:none;border-radius:10px;font:inherit;font-weight:800;font-size:.88rem;cursor:pointer;box-shadow:0 4px 14px rgba(255,107,26,.25)}
+  .sv-cta:hover{filter:brightness(1.05)}
+
+  .sv-table{width:100%;background:#fff;border:1px solid var(--ink-100);border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(11,18,32,.04)}
+  .sv-table table{width:100%;border-collapse:collapse}
+  .sv-table th{padding:12px 16px;text-align:left;font-size:.74rem;font-weight:800;color:var(--ink-500);letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--ink-100);background:#FAFCFD}
+  .sv-table td{padding:14px 16px;border-bottom:1px solid var(--ink-50);font-size:.88rem;color:var(--ink-900);vertical-align:middle}
+  .sv-table tr:last-child td{border-bottom:none}
+  .sv-table tr:hover td{background:#F8FAFC}
+  .sv-row-name{display:flex;align-items:center;gap:12px}
+  .sv-row-name strong{font-weight:700;font-size:.92rem;color:var(--ink-900);display:block;margin-bottom:2px}
+  .sv-row-name small{font-size:.78rem;color:var(--ink-500)}
+  .sv-cat-pill{display:inline-block;padding:3px 10px;background:rgba(13,160,207,.10);color:var(--hc-primary);border-radius:999px;font-size:.74rem;font-weight:700}
+  .sv-toggle{display:inline-flex;align-items:center;cursor:pointer}
+  .sv-toggle input{display:none}
+  .sv-toggle-track{width:36px;height:20px;background:#cbd5e1;border-radius:999px;position:relative;transition:.2s}
+  .sv-toggle-track::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.20)}
+  .sv-toggle input:checked + .sv-toggle-track{background:#1aa260}
+  .sv-toggle input:checked + .sv-toggle-track::after{transform:translateX(16px)}
+  .sv-actions-cell{display:flex;gap:6px;justify-content:flex-end}
+  .sv-icon-btn{width:32px;height:32px;border:none;background:#F4F7FB;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:var(--ink-500);transition:.15s}
+  .sv-icon-btn:hover{background:#E5EDF3;color:var(--ink-900)}
+  .sv-icon-btn.danger:hover{background:rgba(225,29,72,.10);color:#E11D48}
+
+  /* Modal édition prestation */
+  .sv-modal{position:fixed;inset:0;background:rgba(10,20,40,.55);backdrop-filter:blur(4px);z-index:900;display:none;align-items:center;justify-content:center;padding:20px}
+  .sv-modal.is-open{display:flex}
+  .sv-modal-sheet{background:#fff;border-radius:18px;width:100%;max-width:760px;max-height:92vh;overflow:auto;box-shadow:0 30px 70px rgba(0,0,0,.32);animation:svSlide .25s cubic-bezier(.16,1,.3,1)}
+  @keyframes svSlide{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .sv-mh{padding:22px 26px 16px;border-bottom:1px solid var(--ink-100);display:flex;align-items:center;gap:12px}
+  .sv-mh h2{margin:0;font-size:1.2rem;font-weight:800;flex:1;color:var(--ink-900)}
+  .sv-mh .close{background:#F4F7FB;border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-500)}
+  .sv-mh .close:hover{background:#E5EDF3}
+  .sv-mb{padding:22px 26px;display:grid;gap:14px}
+  .sv-mb label{font-size:.74rem;font-weight:800;color:var(--ink-900);letter-spacing:.02em;display:block;margin-bottom:5px;text-transform:uppercase}
+  .sv-mb input,.sv-mb textarea,.sv-mb select{width:100%;padding:10px 12px;border:1px solid var(--ink-100);border-radius:9px;font:inherit;font-size:.9rem;color:var(--ink-900)}
+  .sv-mb input:focus,.sv-mb textarea:focus,.sv-mb select:focus{outline:none;border-color:var(--hc-primary);box-shadow:0 0 0 3px rgba(13,160,207,.10)}
+  .sv-mb textarea{resize:vertical;min-height:70px;font-family:inherit}
+  .sv-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .sv-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  .sv-mf{padding:14px 26px;border-top:1px solid var(--ink-100);display:flex;gap:10px;align-items:center;background:#FAFCFD;border-radius:0 0 18px 18px}
+  .sv-mf .grow{flex:1}
+  .sv-mf .danger{padding:9px 16px;background:#fff;color:#E11D48;border:1px solid rgba(225,29,72,.30);border-radius:9px;font:inherit;font-weight:700;font-size:.84rem;cursor:pointer}
+  .sv-mf .danger:hover{background:rgba(225,29,72,.06)}
+  .sv-mf .secondary{padding:9px 16px;background:#fff;color:var(--ink-500);border:1px solid var(--ink-100);border-radius:9px;font:inherit;font-weight:700;font-size:.84rem;cursor:pointer}
+  .sv-mf .primary{padding:9px 20px;background:#0A1428;color:#fff;border:none;border-radius:9px;font:inherit;font-weight:800;font-size:.86rem;cursor:pointer}
+  .sv-mf .primary:hover{background:#0DA0CF}
+
+  /* Variants editor */
+  .sv-variants{border:1px dashed var(--ink-100);border-radius:10px;padding:12px;background:#FAFCFD}
+  .sv-var-row{display:grid;grid-template-columns:1fr 1.5fr 100px 32px;gap:8px;align-items:center;margin-bottom:8px}
+  .sv-var-row:last-of-type{margin-bottom:0}
+  .sv-var-row input{padding:7px 10px;font-size:.84rem}
+  .sv-var-add{margin-top:8px;padding:7px 12px;background:#fff;color:var(--hc-primary);border:1px dashed var(--hc-primary);border-radius:8px;font:inherit;font-size:.82rem;font-weight:700;cursor:pointer}
+  .sv-var-add:hover{background:rgba(13,160,207,.05)}
+
+  /* Includes editor */
+  .sv-includes{display:flex;flex-direction:column;gap:6px}
+  .sv-inc-row{display:flex;gap:8px;align-items:center}
+  .sv-inc-row input{flex:1;padding:7px 10px;font-size:.84rem}
+
+  /* Commandes */
+  .sv-order-status{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:.74rem;font-weight:700}
+  .sv-order-status.pending{background:rgba(255,180,0,.15);color:#7a5500}
+  .sv-order-status.confirmed{background:rgba(13,160,207,.15);color:#0DA0CF}
+  .sv-order-status.scheduled{background:rgba(124,58,237,.12);color:#5b21b6}
+  .sv-order-status.done{background:rgba(26,162,96,.15);color:#1aa260}
+  .sv-order-status.cancelled{background:rgba(225,29,72,.12);color:#E11D48}
+  .sv-order-status::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+
+  .sv-empty{padding:60px 20px;text-align:center;color:var(--ink-500);background:#fff;border:1px dashed var(--ink-100);border-radius:14px}
+  .sv-empty svg{width:40px;height:40px;color:var(--ink-300);margin-bottom:12px}
+  .sv-empty h3{margin:0 0 6px;font-size:1rem;color:var(--ink-900)}
+  .sv-empty p{margin:0;font-size:.86rem}
+</style>
+</head>
+<body>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar"><!-- Injecté par HCLayout.mountSidebar() --></aside>
+  <main class="admin-main">
+    <header class="admin-topbar"></header>
+
+    <div class="admin-content">
+      <div class="admin-page-head">
+        <h1>Catalogue de prestations</h1>
+        <p>Gère ton catalogue de prestations achetables en ligne et les commandes entrantes.</p>
+      </div>
+
+      <div class="sv-tabs" id="svTabs">
+        <button class="sv-tab is-active" data-tab="catalog">Catalogue <span class="badge" id="cntCatalog">—</span></button>
+        <button class="sv-tab" data-tab="orders">Commandes <span class="badge" id="cntOrders">—</span></button>
+      </div>
+
+      <!-- ═══ TAB CATALOGUE ═══ -->
+      <div class="sv-pane is-active" id="paneCatalog">
+        <div class="sv-toolbar">
+          <select id="filterCat"><option value="">Toutes catégories</option></select>
+          <select id="filterStatus">
+            <option value="">Tous les statuts</option>
+            <option value="active">Actives</option>
+            <option value="inactive">Désactivées</option>
+            <option value="featured">Mises en avant</option>
+            <option value="quote">Sur devis</option>
+          </select>
+          <input type="search" id="searchSvc" placeholder="Rechercher une prestation…" class="grow">
+          <a class="sv-cta" href="../nos-prestations.html" target="_blank" rel="noopener" style="background:#fff;color:var(--ink-900);border:1px solid var(--ink-100);box-shadow:none">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Voir page publique
+          </a>
+          <button class="sv-cta" id="btnNewSvc">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nouvelle prestation
+          </button>
+        </div>
+
+        <div class="sv-table" id="svTable">
+          <table>
+            <thead><tr>
+              <th>Prestation</th>
+              <th>Catégorie</th>
+              <th>Prix TTC</th>
+              <th>Variantes</th>
+              <th style="width:90px;text-align:center">Actif</th>
+              <th style="width:90px;text-align:center">Phare</th>
+              <th style="width:120px;text-align:right">Actions</th>
+            </tr></thead>
+            <tbody id="svTbody"><tr><td colspan="7" style="padding:40px;text-align:center;color:var(--ink-500)">Chargement…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ═══ TAB COMMANDES ═══ -->
+      <div class="sv-pane" id="paneOrders">
+        <div class="sv-toolbar">
+          <select id="filterOrderStatus">
+            <option value="">Tous les statuts</option>
+            <option value="pending">En attente</option>
+            <option value="confirmed">Confirmées</option>
+            <option value="scheduled">Programmées</option>
+            <option value="done">Terminées</option>
+            <option value="cancelled">Annulées</option>
+          </select>
+          <input type="search" id="searchOrder" placeholder="Rechercher (client, n° commande, ville)…" class="grow">
+        </div>
+
+        <div class="sv-table">
+          <table>
+            <thead><tr>
+              <th>N° / Date</th>
+              <th>Client</th>
+              <th>Prestation</th>
+              <th>Quand</th>
+              <th>Montant</th>
+              <th>Statut</th>
+              <th style="width:90px;text-align:right">Actions</th>
+            </tr></thead>
+            <tbody id="ordersTbody"><tr><td colspan="7" style="padding:40px;text-align:center;color:var(--ink-500)">Chargement…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- MODAL EDITION PRESTATION -->
+<div class="sv-modal" id="svModal" role="dialog" aria-modal="true">
+  <div class="sv-modal-sheet">
+    <div class="sv-mh">
+      <h2 id="svModalTitle">Nouvelle prestation</h2>
+      <button class="close" type="button" id="svModalClose" aria-label="Fermer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <form id="svForm">
+      <div class="sv-mb">
+        <div class="sv-grid-2">
+          <div><label>Nom *</label><input name="name" required maxlength="120"></div>
+          <div><label>Slug (URL) *</label><input name="slug" required maxlength="80" pattern="[a-z0-9-]+" placeholder="nom-en-kebab-case"></div>
+        </div>
+        <div class="sv-grid-2">
+          <div><label>Catégorie *</label><select name="category_id" id="svCat" required></select></div>
+          <div><label>Marque(s)</label><input name="brand" placeholder="Atlantic, Geberit…"></div>
+        </div>
+        <div><label>Description courte (affichée sur la card)</label><input name="short_desc" maxlength="180" placeholder="Une phrase d'accroche claire"></div>
+        <div><label>Description longue (markdown supporté)</label><textarea name="description" rows="3"></textarea></div>
+
+        <div>
+          <label>Ce qui est inclus dans la prestation</label>
+          <div class="sv-includes" id="svIncludes"></div>
+          <button type="button" class="sv-var-add" id="addIncludeBtn">+ Ajouter un élément</button>
+        </div>
+
+        <div class="sv-grid-3">
+          <div><label>Prix HT (€) *</label><input name="price_ht" type="number" step="0.01" min="0" required></div>
+          <div><label>TVA</label><select name="vat_rate"><option value="0.100" selected>10% (rénovation)</option><option value="0.200">20% (neuf)</option><option value="0.055">5,5% (énergétique)</option><option value="0">Exonéré</option></select></div>
+          <div><label>Acompte (%)</label><input name="deposit_pct" type="number" step="1" min="0" max="100" value="40"></div>
+        </div>
+
+        <div class="sv-grid-3">
+          <div><label>Durée estimée (min)</label><input name="duration_min" type="number" min="0" placeholder="60"></div>
+          <div><label>Garantie</label><input name="warranty" placeholder="Garantie 5 ans cuve"></div>
+          <div><label>Badge (optionnel)</label><input name="badge" maxlength="20" placeholder="Best-seller"></div>
+        </div>
+
+        <div>
+          <label>Variantes (gamme alternative, premium, options)</label>
+          <div class="sv-variants" id="svVariants"></div>
+          <button type="button" class="sv-var-add" id="addVariantBtn">+ Ajouter une variante</button>
+        </div>
+
+        <div class="sv-grid-3">
+          <div>
+            <label style="text-transform:none;font-weight:500;font-size:.88rem;display:flex;align-items:center;gap:10px">
+              <input type="checkbox" name="active" checked style="width:auto"> Actif (visible sur le site)
+            </label>
+          </div>
+          <div>
+            <label style="text-transform:none;font-weight:500;font-size:.88rem;display:flex;align-items:center;gap:10px">
+              <input type="checkbox" name="featured" style="width:auto"> Mis en avant
+            </label>
+          </div>
+          <div>
+            <label style="text-transform:none;font-weight:500;font-size:.88rem;display:flex;align-items:center;gap:10px">
+              <input type="checkbox" name="requires_quote" style="width:auto"> Devis sur mesure (pas de prix fixe)
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="sv-mf">
+        <button type="button" class="danger" id="svDelete" style="display:none">Supprimer</button>
+        <span class="grow"></span>
+        <button type="button" class="secondary" id="svCancel">Annuler</button>
+        <button type="submit" class="primary">Enregistrer</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL DETAIL COMMANDE -->
+<div class="sv-modal" id="ordModal" role="dialog" aria-modal="true">
+  <div class="sv-modal-sheet" id="ordSheet"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+(async function() {
+  await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+  HCLayout.mount('services', 'Catalogue des prestations');
+
+  const sb = await HCSupabase.init();
+  const escapeHtml = (s) => String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const eurFmt = (n) => new Intl.NumberFormat('fr-FR', { style:'currency', currency:'EUR', minimumFractionDigits: 2 }).format(Number(n)||0);
+  const slugify = (s) => (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').replace(/-+/g,'-').slice(0,80);
+
+  let allCats = [], allServices = [], allOrders = [];
+
+  // ─── Tabs ────────────────────────────────────────────────
+  document.querySelectorAll('.sv-tab').forEach(tab => {
+    tab.onclick = () => {
+      document.querySelectorAll('.sv-tab').forEach(t => t.classList.remove('is-active'));
+      document.querySelectorAll('.sv-pane').forEach(p => p.classList.remove('is-active'));
+      tab.classList.add('is-active');
+      document.getElementById('pane' + tab.dataset.tab.charAt(0).toUpperCase() + tab.dataset.tab.slice(1)).classList.add('is-active');
+      if (tab.dataset.tab === 'orders' && !allOrders.length) loadOrders();
+    };
+  });
+
+  // ─── Chargement initial ──────────────────────────────────
+  async function loadAll() {
+    const [catsRes, svcRes] = await Promise.all([
+      sb.from('service_categories').select('*').order('position'),
+      sb.from('services').select('*').order('position')
+    ]);
+    if (catsRes.error || svcRes.error) {
+      document.getElementById('svTbody').innerHTML = `<tr><td colspan="7" style="padding:40px;text-align:center;color:#E11D48">Erreur : ${catsRes.error?.message || svcRes.error?.message}.<br><small>Vérifie que la migration <code>setup_services_catalog.sql</code> a été exécutée dans Supabase.</small></td></tr>`;
+      return;
+    }
+    allCats = catsRes.data || [];
+    allServices = svcRes.data || [];
+
+    // Filters
+    const filterCat = document.getElementById('filterCat');
+    filterCat.innerHTML = '<option value="">Toutes catégories</option>' + allCats.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');
+
+    // Cat select dans modal
+    const svCat = document.getElementById('svCat');
+    svCat.innerHTML = allCats.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');
+
+    document.getElementById('cntCatalog').textContent = allServices.length;
+    renderTable();
+  }
+
+  function renderTable() {
+    const search = document.getElementById('searchSvc').value.toLowerCase().trim();
+    const catFilter = document.getElementById('filterCat').value;
+    const statusFilter = document.getElementById('filterStatus').value;
+
+    let rows = allServices.filter(s => {
+      if (catFilter && s.category_id !== catFilter) return false;
+      if (statusFilter === 'active' && !s.active) return false;
+      if (statusFilter === 'inactive' && s.active) return false;
+      if (statusFilter === 'featured' && !s.featured) return false;
+      if (statusFilter === 'quote' && !s.requires_quote) return false;
+      if (search && !(s.name.toLowerCase().includes(search) || (s.short_desc||'').toLowerCase().includes(search))) return false;
+      return true;
+    });
+
+    const tbody = document.getElementById('svTbody');
+    if (!rows.length) {
+      tbody.innerHTML = `<tr><td colspan="7"><div class="sv-empty" style="margin:0;border:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <h3>Aucune prestation</h3>
+        <p>Aucune prestation ne correspond aux filtres actuels.</p>
+      </div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = rows.map(s => {
+      const cat = allCats.find(c => c.id === s.category_id);
+      const ttc = Math.round(s.price_ht * (1 + s.vat_rate) * 100) / 100;
+      const nbVar = Array.isArray(s.variants) ? s.variants.length : 0;
+      return `
+        <tr data-id="${s.id}">
+          <td>
+            <div class="sv-row-name">
+              <div>
+                <strong>${escapeHtml(s.name)}</strong>
+                <small>${escapeHtml((s.short_desc||'').slice(0,80))}${s.short_desc && s.short_desc.length>80?'…':''}</small>
+              </div>
+            </div>
+          </td>
+          <td><span class="sv-cat-pill">${escapeHtml(cat?.name || '—')}</span></td>
+          <td>${s.requires_quote ? '<small style="color:var(--ink-500)">Sur devis</small>' : `<strong>${eurFmt(ttc)}</strong><br><small style="color:var(--ink-500)">${eurFmt(s.price_ht)} HT</small>`}</td>
+          <td>${nbVar ? `<span class="sv-cat-pill">${nbVar} variante${nbVar>1?'s':''}</span>` : '<small style="color:var(--ink-400)">—</small>'}</td>
+          <td style="text-align:center">
+            <label class="sv-toggle">
+              <input type="checkbox" data-toggle="active" ${s.active?'checked':''}>
+              <span class="sv-toggle-track"></span>
+            </label>
+          </td>
+          <td style="text-align:center">
+            <label class="sv-toggle">
+              <input type="checkbox" data-toggle="featured" ${s.featured?'checked':''}>
+              <span class="sv-toggle-track"></span>
+            </label>
+          </td>
+          <td>
+            <div class="sv-actions-cell">
+              <button class="sv-icon-btn" data-action="edit" title="Modifier">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+              <button class="sv-icon-btn danger" data-action="delete" title="Supprimer">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+              </button>
+            </div>
+          </td>
+        </tr>`;
+    }).join('');
+  }
+
+  // Filters bind
+  ['searchSvc','filterCat','filterStatus'].forEach(id => {
+    document.getElementById(id).addEventListener('input', renderTable);
+  });
+
+  // Table actions delegation
+  document.getElementById('svTbody').addEventListener('click', async (e) => {
+    const tr = e.target.closest('tr[data-id]');
+    if (!tr) return;
+    const id = tr.dataset.id;
+    const svc = allServices.find(s => s.id === id);
+    if (!svc) return;
+
+    // Toggle active/featured
+    const toggle = e.target.closest('input[data-toggle]');
+    if (toggle) {
+      const field = toggle.dataset.toggle;
+      const val = toggle.checked;
+      const { error } = await sb.from('services').update({ [field]: val }).eq('id', id);
+      if (error) { toggle.checked = !val; alert('Erreur : ' + error.message); }
+      else { svc[field] = val; }
+      return;
+    }
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    if (btn.dataset.action === 'edit') openModal(svc);
+    if (btn.dataset.action === 'delete') {
+      if (!confirm(`Supprimer définitivement "${svc.name}" ?`)) return;
+      const { error } = await sb.from('services').delete().eq('id', id);
+      if (error) alert('Erreur : ' + error.message);
+      else { allServices = allServices.filter(s => s.id !== id); renderTable(); document.getElementById('cntCatalog').textContent = allServices.length; }
+    }
+  });
+
+  // ─── Modal ───────────────────────────────────────────────
+  document.getElementById('btnNewSvc').onclick = () => openModal();
+  document.getElementById('svModalClose').onclick = closeModal;
+  document.getElementById('svCancel').onclick = closeModal;
+  function closeModal() { document.getElementById('svModal').classList.remove('is-open'); }
+
+  let editingId = null;
+
+  function openModal(svc) {
+    editingId = svc?.id || null;
+    document.getElementById('svModalTitle').textContent = svc ? 'Modifier la prestation' : 'Nouvelle prestation';
+    document.getElementById('svDelete').style.display = svc ? '' : 'none';
+    const form = document.getElementById('svForm');
+    form.reset();
+    if (svc) {
+      form.name.value = svc.name || '';
+      form.slug.value = svc.slug || '';
+      form.category_id.value = svc.category_id || '';
+      form.brand.value = svc.brand || '';
+      form.short_desc.value = svc.short_desc || '';
+      form.description.value = svc.description || '';
+      form.price_ht.value = svc.price_ht || 0;
+      form.vat_rate.value = svc.vat_rate || 0.100;
+      form.deposit_pct.value = svc.deposit_pct ?? 40;
+      form.duration_min.value = svc.duration_min || '';
+      form.warranty.value = svc.warranty || '';
+      form.badge.value = svc.badge || '';
+      form.active.checked = !!svc.active;
+      form.featured.checked = !!svc.featured;
+      form.requires_quote.checked = !!svc.requires_quote;
+      renderIncludes(svc.includes || []);
+      renderVariants(svc.variants || []);
+    } else {
+      renderIncludes([]);
+      renderVariants([]);
+    }
+    document.getElementById('svModal').classList.add('is-open');
+  }
+
+  // Auto-slug
+  document.querySelector('input[name="name"]').addEventListener('input', (e) => {
+    const slugField = document.querySelector('input[name="slug"]');
+    if (!editingId && !slugField.dataset.manualEdit) slugField.value = slugify(e.target.value);
+  });
+  document.querySelector('input[name="slug"]').addEventListener('input', (e) => { e.target.dataset.manualEdit = '1'; });
+
+  // Includes editor
+  function renderIncludes(list) {
+    const root = document.getElementById('svIncludes');
+    root.innerHTML = list.map((v, i) => `
+      <div class="sv-inc-row">
+        <input type="text" value="${escapeHtml(v)}" data-include-idx="${i}">
+        <button type="button" class="sv-icon-btn danger" data-remove-include="${i}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>`).join('');
+  }
+  function getIncludes() { return [...document.querySelectorAll('[data-include-idx]')].map(i => i.value.trim()).filter(Boolean); }
+  document.getElementById('addIncludeBtn').onclick = () => { renderIncludes([...getIncludes(), '']); };
+  document.getElementById('svIncludes').addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-remove-include]');
+    if (!btn) return;
+    const idx = Number(btn.dataset.removeInclude);
+    const cur = getIncludes();
+    cur.splice(idx, 1);
+    renderIncludes(cur);
+  });
+
+  // Variants editor
+  function renderVariants(list) {
+    const root = document.getElementById('svVariants');
+    root.innerHTML = list.map((v, i) => `
+      <div class="sv-var-row">
+        <input type="text" placeholder="key (ex: premium)" value="${escapeHtml(v.key||'')}" data-var-idx="${i}" data-var-field="key">
+        <input type="text" placeholder="Label affiché" value="${escapeHtml(v.label||'')}" data-var-idx="${i}" data-var-field="label">
+        <input type="number" step="0.01" placeholder="Prix HT" value="${v.price_ht||''}" data-var-idx="${i}" data-var-field="price_ht">
+        <button type="button" class="sv-icon-btn danger" data-remove-var="${i}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <input type="text" placeholder="Info / description (optionnel)" value="${escapeHtml(v.info||'')}" data-var-idx="${i}" data-var-field="info" style="grid-column:1/-1">
+      </div>`).join('');
+  }
+  function getVariants() {
+    const map = {};
+    document.querySelectorAll('[data-var-idx]').forEach(el => {
+      const i = el.dataset.varIdx;
+      if (!map[i]) map[i] = {};
+      map[i][el.dataset.varField] = el.dataset.varField === 'price_ht' ? Number(el.value || 0) : el.value;
+    });
+    return Object.values(map).filter(v => v.key && v.label);
+  }
+  document.getElementById('addVariantBtn').onclick = () => { renderVariants([...getVariants(), {key:'',label:'',price_ht:0,info:''}]); };
+  document.getElementById('svVariants').addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-remove-var]');
+    if (!btn) return;
+    const cur = getVariants();
+    cur.splice(Number(btn.dataset.removeVar), 1);
+    renderVariants(cur);
+  });
+
+  // Submit
+  document.getElementById('svForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const data = {
+      name: fd.get('name').trim(),
+      slug: fd.get('slug').trim() || slugify(fd.get('name')),
+      category_id: fd.get('category_id') || null,
+      brand: fd.get('brand') || null,
+      short_desc: fd.get('short_desc') || null,
+      description: fd.get('description') || null,
+      includes: getIncludes(),
+      price_ht: Number(fd.get('price_ht') || 0),
+      vat_rate: Number(fd.get('vat_rate') || 0.10),
+      deposit_pct: Number(fd.get('deposit_pct') || 40),
+      duration_min: fd.get('duration_min') ? Number(fd.get('duration_min')) : null,
+      warranty: fd.get('warranty') || null,
+      badge: fd.get('badge') || null,
+      variants: getVariants(),
+      active: !!fd.get('active'),
+      featured: !!fd.get('featured'),
+      requires_quote: !!fd.get('requires_quote')
+    };
+    let res;
+    if (editingId) {
+      res = await sb.from('services').update(data).eq('id', editingId).select().single();
+    } else {
+      res = await sb.from('services').insert(data).select().single();
+    }
+    if (res.error) { alert('Erreur : ' + res.error.message); return; }
+    if (editingId) {
+      const idx = allServices.findIndex(s => s.id === editingId);
+      if (idx >= 0) allServices[idx] = res.data;
+    } else {
+      allServices.push(res.data);
+    }
+    document.getElementById('cntCatalog').textContent = allServices.length;
+    renderTable();
+    closeModal();
+  });
+
+  document.getElementById('svDelete').onclick = async () => {
+    if (!editingId) return;
+    if (!confirm('Supprimer définitivement cette prestation ?')) return;
+    const { error } = await sb.from('services').delete().eq('id', editingId);
+    if (error) { alert(error.message); return; }
+    allServices = allServices.filter(s => s.id !== editingId);
+    document.getElementById('cntCatalog').textContent = allServices.length;
+    renderTable();
+    closeModal();
+  };
+
+  // ─── Commandes ────────────────────────────────────────────
+  async function loadOrders() {
+    const { data, error } = await sb.from('service_orders').select('*').order('created_at', { ascending: false }).limit(200);
+    if (error) {
+      document.getElementById('ordersTbody').innerHTML = `<tr><td colspan="7" style="padding:40px;text-align:center;color:#E11D48">Erreur : ${error.message}</td></tr>`;
+      return;
+    }
+    allOrders = data || [];
+    document.getElementById('cntOrders').textContent = allOrders.length;
+    renderOrders();
+  }
+  function renderOrders() {
+    const search = (document.getElementById('searchOrder').value || '').toLowerCase().trim();
+    const statusFilter = document.getElementById('filterOrderStatus').value;
+    const rows = allOrders.filter(o => {
+      if (statusFilter && o.status !== statusFilter) return false;
+      if (search) {
+        const blob = `${o.order_number} ${o.customer_name} ${o.city} ${o.customer_email}`.toLowerCase();
+        if (!blob.includes(search)) return false;
+      }
+      return true;
+    });
+    const tbody = document.getElementById('ordersTbody');
+    if (!rows.length) {
+      tbody.innerHTML = `<tr><td colspan="7"><div class="sv-empty" style="margin:0;border:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <h3>Aucune commande</h3>
+        <p>Les réservations apparaîtront ici dès qu'un client commandera depuis votre site.</p>
+      </div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = rows.map(o => {
+      const d = new Date(o.created_at);
+      const when = d.toLocaleDateString('fr-FR') + ' ' + d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+      const preferred = o.preferred_date ? new Date(o.preferred_date).toLocaleDateString('fr-FR') + (o.preferred_slot ? ` (${o.preferred_slot})` : '') : '<small style="color:var(--ink-400)">Sans préf</small>';
+      return `
+        <tr data-id="${o.id}" data-action="open-order" style="cursor:pointer">
+          <td><strong>${escapeHtml(o.order_number)}</strong><br><small style="color:var(--ink-500)">${when}</small></td>
+          <td><strong>${escapeHtml(o.customer_name)}</strong><br><small style="color:var(--ink-500)">${escapeHtml(o.city || '')}</small></td>
+          <td>${escapeHtml(o.service_name)}${o.variant_label?`<br><small style="color:var(--ink-500)">${escapeHtml(o.variant_label)}</small>`:''}</td>
+          <td>${preferred}</td>
+          <td><strong>${eurFmt(o.price_ttc)}</strong><br><small style="color:var(--ink-500)">Ac. ${eurFmt(o.deposit_amount||0)}</small></td>
+          <td><span class="sv-order-status ${o.status}">${labelStatus(o.status)}</span></td>
+          <td style="text-align:right"><button class="sv-icon-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button></td>
+        </tr>`;
+    }).join('');
+  }
+  function labelStatus(s) {
+    return {pending:'En attente',confirmed:'Confirmée',scheduled:'Programmée',done:'Terminée',cancelled:'Annulée'}[s] || s;
+  }
+  ['searchOrder','filterOrderStatus'].forEach(id => {
+    document.getElementById(id).addEventListener('input', renderOrders);
+  });
+
+  document.getElementById('ordersTbody').addEventListener('click', (e) => {
+    const tr = e.target.closest('tr[data-id]');
+    if (!tr) return;
+    const o = allOrders.find(x => x.id === tr.dataset.id);
+    if (o) openOrderModal(o);
+  });
+
+  function openOrderModal(o) {
+    const sheet = document.getElementById('ordSheet');
+    sheet.innerHTML = `
+      <div class="sv-mh">
+        <h2>Commande ${escapeHtml(o.order_number)}</h2>
+        <button class="close" type="button" onclick="document.getElementById('ordModal').classList.remove('is-open')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+      <div class="sv-mb">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div><label>Statut</label>
+            <select id="ordStatus">
+              <option value="pending"${o.status==='pending'?' selected':''}>En attente</option>
+              <option value="confirmed"${o.status==='confirmed'?' selected':''}>Confirmée</option>
+              <option value="scheduled"${o.status==='scheduled'?' selected':''}>Programmée</option>
+              <option value="done"${o.status==='done'?' selected':''}>Terminée</option>
+              <option value="cancelled"${o.status==='cancelled'?' selected':''}>Annulée</option>
+            </select>
+          </div>
+          <div><label>Acompte payé</label>
+            <select id="ordDeposit">
+              <option value="false"${!o.deposit_paid?' selected':''}>Non</option>
+              <option value="true"${o.deposit_paid?' selected':''}>Oui</option>
+            </select>
+          </div>
+        </div>
+        <div style="background:#FAFCFD;padding:16px;border-radius:10px;border:1px solid var(--ink-100)">
+          <div style="font-size:.78rem;font-weight:800;color:var(--ink-500);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px">Prestation</div>
+          <div style="font-weight:700;color:var(--ink-900);margin-bottom:4px">${escapeHtml(o.service_name)}</div>
+          ${o.variant_label?`<div style="font-size:.86rem;color:var(--ink-500);margin-bottom:8px">${escapeHtml(o.variant_label)}</div>`:''}
+          <div style="display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid var(--ink-100);margin-top:8px">
+            <span style="color:var(--ink-500);font-size:.86rem">Montant TTC</span>
+            <strong style="font-size:1.1rem">${eurFmt(o.price_ttc)}</strong>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:.86rem;margin-top:4px">
+            <span style="color:#FF6B1A;font-weight:600">Acompte 40%</span>
+            <span style="color:#FF6B1A;font-weight:700">${eurFmt(o.deposit_amount||0)}</span>
+          </div>
+        </div>
+        <div style="background:#FAFCFD;padding:16px;border-radius:10px;border:1px solid var(--ink-100)">
+          <div style="font-size:.78rem;font-weight:800;color:var(--ink-500);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px">Client</div>
+          <div style="font-weight:700;margin-bottom:6px">${escapeHtml(o.customer_name)}</div>
+          <div style="display:flex;gap:14px;font-size:.86rem;flex-wrap:wrap">
+            <a href="tel:${escapeHtml(o.customer_phone||'')}" style="color:var(--hc-primary);text-decoration:none;font-weight:600">📞 ${escapeHtml(o.customer_phone||'—')}</a>
+            <a href="mailto:${escapeHtml(o.customer_email||'')}" style="color:var(--hc-primary);text-decoration:none;font-weight:600">✉ ${escapeHtml(o.customer_email||'')}</a>
+          </div>
+          <div style="margin-top:8px;font-size:.86rem;color:var(--ink-700)">
+            ${escapeHtml(o.address||'')}<br>${escapeHtml(o.postal_code||'')} ${escapeHtml(o.city||'')}
+          </div>
+        </div>
+        ${o.preferred_date?`<div><label>Date souhaitée</label><div>${new Date(o.preferred_date).toLocaleDateString('fr-FR')} · ${escapeHtml(o.preferred_slot||'sans préférence')}</div></div>`:''}
+        ${o.notes?`<div><label>Notes du client</label><div style="background:#FAFCFD;padding:12px;border-radius:8px;font-size:.88rem;color:var(--ink-700);white-space:pre-wrap">${escapeHtml(o.notes)}</div></div>`:''}
+      </div>
+      <div class="sv-mf">
+        <span class="grow"></span>
+        <button type="button" class="secondary" onclick="document.getElementById('ordModal').classList.remove('is-open')">Fermer</button>
+        <button type="button" class="primary" id="ordSave">Enregistrer</button>
+      </div>`;
+    document.getElementById('ordModal').classList.add('is-open');
+    document.getElementById('ordSave').onclick = async () => {
+      const status = document.getElementById('ordStatus').value;
+      const deposit_paid = document.getElementById('ordDeposit').value === 'true';
+      const { error } = await sb.from('service_orders').update({ status, deposit_paid }).eq('id', o.id);
+      if (error) { alert(error.message); return; }
+      o.status = status; o.deposit_paid = deposit_paid;
+      renderOrders();
+      document.getElementById('ordModal').classList.remove('is-open');
+    };
+  }
+
+  loadAll();
+})();
+</script>
+</body>
+</html>
