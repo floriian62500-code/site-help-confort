@@ -1,48 +1,94 @@
 #!/bin/bash
-# Auto-push silencieux : pousse origin/main si HEAD diffère
-# + Auto-deploy des migrations Supabase si elles ont changé
-set -e
+# ═══════════════════════════════════════════════════════════════
+# AUTO-PUSH ROBUSTE — HELP! Confort
+# ═══════════════════════════════════════════════════════════════
+# Daemon launchd : toutes les 60 sec
+# Features :
+#   - Cleanup automatique des locks Git
+#   - Auto-commit des fichiers modifiés (data daemon plus passif)
+#   - Retry 3× sur push failed (avec délai)
+#   - Notification macOS si échec persistant (3 échecs consécutifs)
+#   - Auto-deploy Supabase si migrations changées
+#   - Log détaillé avec rotation
+# ═══════════════════════════════════════════════════════════════
 
 REPO="/Users/HP/Documents/Claude/Projects/SITE INTERNET"
 LOG="$REPO/.autopush/autopush.log"
 DEPLOY_LOG="$REPO/.autopush/supabase-deploy.log"
 ENV_FILE="$REPO/.autopush/.env"
+STATE_FILE="$REPO/.autopush/state"   # compte les échecs consécutifs
 
-cd "$REPO" || exit 0
+cd "$REPO" 2>/dev/null || exit 0
+[ -d .git ] || exit 0
 
-# Rotation log si > 1 Mo
-if [ -f "$LOG" ] && [ "$(stat -f%z "$LOG" 2>/dev/null || stat -c%s "$LOG" 2>/dev/null || echo 0)" -gt 1048576 ]; then
-  tail -200 "$LOG" > "$LOG.tmp" 2>/dev/null && mv "$LOG.tmp" "$LOG"
-fi
-if [ -f "$DEPLOY_LOG" ] && [ "$(stat -f%z "$DEPLOY_LOG" 2>/dev/null || stat -c%s "$DEPLOY_LOG" 2>/dev/null || echo 0)" -gt 1048576 ]; then
-  tail -200 "$DEPLOY_LOG" > "$DEPLOY_LOG.tmp" 2>/dev/null && mv "$DEPLOY_LOG.tmp" "$DEPLOY_LOG"
-fi
+# ─── Rotation log si > 1 Mo ──────────────────────────────────────────
+for f in "$LOG" "$DEPLOY_LOG"; do
+  if [ -f "$f" ] && [ "$(stat -f%z "$f" 2>/dev/null || stat -c%s "$f" 2>/dev/null || echo 0)" -gt 1048576 ]; then
+    tail -200 "$f" > "$f.tmp" 2>/dev/null && mv "$f.tmp" "$f"
+  fi
+done
 
 log()  { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> "$LOG"; }
 dlog() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> "$DEPLOY_LOG"; }
 
-# Fetch silencieux pour comparer HEAD à origin/main
-git fetch origin main --quiet 2>/dev/null || { log "fetch failed"; exit 0; }
+# ─── Notification macOS (uniquement si échec persistant) ─────────────
+notify() {
+  osascript -e "display notification \"$2\" with title \"$1\" sound name \"Glass\"" 2>/dev/null || true
+}
+
+# ─── Cleanup des locks Git (au cas où) ───────────────────────────────
+rm -f .git/index.lock .git/HEAD.lock .git/config.lock .git/packed-refs.lock 2>/dev/null
+# tmp_obj_* résiduels (résidus d'un git add interrompu)
+find .git/objects -name "tmp_obj_*" -mmin +5 -delete 2>/dev/null
+
+# ─── Auto-commit des fichiers modifiés (s'il y en a) ─────────────────
+if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
+  CHANGED=$(git status --porcelain | wc -l | tr -d ' ')
+  git add -A 2>>"$LOG"
+  if git commit -m "Auto-push $(date '+%Y-%m-%d %H:%M') — $CHANGED fichier(s)" >/dev/null 2>>"$LOG"; then
+    log "📝 commit auto ($CHANGED fichiers)"
+  fi
+fi
+
+# ─── Fetch silencieux pour comparer HEAD à origin/main ───────────────
+if ! git fetch origin main --quiet 2>>"$LOG"; then
+  log "⚠ fetch failed (network ou auth)"
+  # On n'incrémente pas l'échec ici — pourrait être un souci réseau temporaire
+  exit 0
+fi
 
 LOCAL=$(git rev-parse HEAD 2>/dev/null)
 REMOTE=$(git rev-parse origin/main 2>/dev/null)
 
-# Rien à pousser : silence total
-[ "$LOCAL" = "$REMOTE" ] && exit 0
+# ─── Rien à pousser : reset compteur d'échec, silence total ──────────
+if [ "$LOCAL" = "$REMOTE" ]; then
+  echo "0" > "$STATE_FILE" 2>/dev/null
+  exit 0
+fi
 
-# Détection des migrations Supabase modifiées dans les commits qu'on va pousser
+# ─── Détection des migrations Supabase modifiées ─────────────────────
 MIGRATIONS_CHANGED=$(git diff --name-only "$REMOTE..$LOCAL" 2>/dev/null | grep -E '^supabase/migrations/.*\.sql$' || true)
 
-# Push (sortie capturée en log, jamais stdout)
-if git push origin main --quiet 2>>"$LOG"; then
-  log "✅ push $LOCAL"
+# ─── PUSH avec retry (3 tentatives, délai 2s entre chaque) ───────────
+PUSH_OK=0
+for attempt in 1 2 3; do
+  if git push origin main --quiet 2>>"$LOG"; then
+    PUSH_OK=1
+    break
+  fi
+  log "⏳ push tentative $attempt/3 échouée, retry…"
+  sleep 2
+done
 
-  # ─── Auto-deploy Supabase si nouvelles migrations ─────────────────────
+if [ "$PUSH_OK" = "1" ]; then
+  log "✅ push $LOCAL"
+  echo "0" > "$STATE_FILE" 2>/dev/null  # reset compteur
+
+  # ─── Auto-deploy Supabase si nouvelles migrations ─────────────────
   if [ -n "$MIGRATIONS_CHANGED" ]; then
     dlog "🔧 Nouvelles migrations détectées :"
     echo "$MIGRATIONS_CHANGED" | sed 's/^/  - /' >> "$DEPLOY_LOG"
 
-    # Charge .env si présent (peut définir SUPABASE_DB_PASSWORD)
     if [ -f "$ENV_FILE" ]; then
       set -a
       # shellcheck disable=SC1090
@@ -50,27 +96,30 @@ if git push origin main --quiet 2>>"$LOG"; then
       set +a
     fi
 
-    # Vérif que supabase CLI est dispo
     if ! command -v supabase >/dev/null 2>&1; then
-      dlog "⚠ supabase CLI non trouvé dans le PATH (essayez : brew install supabase/tap/supabase)"
-      exit 0
-    fi
-
-    # Vérif que SUPABASE_DB_PASSWORD est défini
-    if [ -z "$SUPABASE_DB_PASSWORD" ]; then
-      dlog "⚠ SUPABASE_DB_PASSWORD non défini. Crée $ENV_FILE avec : SUPABASE_DB_PASSWORD=ton_mot_de_passe"
-      exit 0
-    fi
-
-    # Push les migrations (idempotent : ne réapplique pas celles déjà en base)
-    if supabase db push --linked --password "$SUPABASE_DB_PASSWORD" --yes >>"$DEPLOY_LOG" 2>&1; then
-      dlog "✅ Migrations déployées sur Supabase"
+      dlog "⚠ supabase CLI non trouvé (brew install supabase/tap/supabase)"
+    elif [ -z "$SUPABASE_DB_PASSWORD" ]; then
+      dlog "⚠ SUPABASE_DB_PASSWORD non défini dans $ENV_FILE"
+    elif supabase db push --linked --password "$SUPABASE_DB_PASSWORD" --yes >>"$DEPLOY_LOG" 2>&1; then
+      dlog "✅ Migrations déployées"
     else
-      dlog "❌ Échec deploy migrations (voir détails ci-dessus)"
+      dlog "❌ Échec deploy migrations"
     fi
   fi
 else
-  log "❌ push failed ($LOCAL)"
+  # ─── 3 échecs consécutifs → notification macOS ─────────────────────
+  FAIL_COUNT=$(cat "$STATE_FILE" 2>/dev/null || echo "0")
+  FAIL_COUNT=$((FAIL_COUNT + 1))
+  echo "$FAIL_COUNT" > "$STATE_FILE" 2>/dev/null
+  log "❌ push failed ($LOCAL) — échec consécutif #$FAIL_COUNT"
+
+  if [ "$FAIL_COUNT" = "3" ]; then
+    notify "Auto-push HELP! Confort" "⚠️ 3 échecs consécutifs de push. Vérifiez votre auth GitHub (PAT expiré ?). Détails : ~/Library/Application Support/HelpConfort/autopush.log"
+    log "🔔 Notification envoyée (3 échecs)"
+  fi
+  if [ "$FAIL_COUNT" = "10" ]; then
+    notify "Auto-push HELP! Confort" "🚨 10 échecs. Daemon en attente. Relancez tools/Setup-Git-Auth.command pour refixer l'auth."
+  fi
 fi
 
 exit 0
