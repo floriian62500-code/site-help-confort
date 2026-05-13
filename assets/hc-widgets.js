@@ -294,18 +294,30 @@
     "</button>";
   document.body.appendChild(fab);
 
-  // === Textes dynamiques rotatifs dans la bulle FAB ===
+  // === Textes dynamiques rotatifs dans la bulle FAB (contextuels par page) ===
   (function rotateBubbleText() {
     var bubble = fab.querySelector('.hcfb-text');
     if (!bubble) return;
-    var msgs = [
-      'Une question ?',
-      'Une fuite ?',
-      'Besoin d\'un devis ?',
-      'Plus de chauffage ?',
-      'Urgence serrurerie ?',
-      'On vous rappelle ?'
-    ];
+    var path = (location.pathname || '').toLowerCase();
+    var MSGS_BY_CONTEXT = {
+      plombier:    ['Une fuite ?', 'Débouchage urgent ?', 'Chauffe-eau HS ?', 'Besoin d\'un devis ?', 'On vous rappelle ?'],
+      chauffagiste:['Plus de chauffage ?', 'Chaudière en panne ?', 'Entretien à prévoir ?', 'Besoin d\'un devis ?', 'On vous rappelle ?'],
+      electricien: ['Panne de courant ?', 'Tableau électrique HS ?', 'Mise aux normes ?', 'Besoin d\'un devis ?', 'On vous rappelle ?'],
+      serrurier:   ['Porte claquée ?', 'Serrure HS ?', 'Bris de glace ?', 'Besoin d\'un devis ?', 'On vous rappelle ?'],
+      travaux:     ['Projet rénovation ?', 'Devis sur mesure ?', 'Une question travaux ?', 'On vous rappelle ?'],
+      contrats:    ['Un contrat sur mesure ?', 'Quelle formule ?', 'Une question ?', 'On vous rappelle ?'],
+      contact:     ['Une question ?', 'Demande de devis ?', 'On vous rappelle ?'],
+      'default':   ['Une question ?', 'Une fuite ?', 'Besoin d\'un devis ?', 'Plus de chauffage ?', 'Urgence serrurerie ?', 'On vous rappelle ?']
+    };
+    var key = 'default';
+    if (path.indexOf('plombier') >= 0 || path.indexOf('fuite') >= 0)              key = 'plombier';
+    else if (path.indexOf('chauffag') >= 0 || path.indexOf('chaudiere') >= 0)     key = 'chauffagiste';
+    else if (path.indexOf('electric') >= 0)                                       key = 'electricien';
+    else if (path.indexOf('serrur') >= 0)                                         key = 'serrurier';
+    else if (path.indexOf('travaux') >= 0 || path.indexOf('renovation') >= 0)     key = 'travaux';
+    else if (path.indexOf('contrats') >= 0)                                       key = 'contrats';
+    else if (path.indexOf('contact') >= 0)                                        key = 'contact';
+    var msgs = MSGS_BY_CONTEXT[key] || MSGS_BY_CONTEXT['default'];
     var i = 0;
     setInterval(function() {
       i = (i + 1) % msgs.length;
