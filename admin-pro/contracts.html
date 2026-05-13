@@ -170,10 +170,53 @@
       <div class="ct-tabs">
         <button class="ct-tab is-active" data-tab="contracts">Contrats clients <span class="ct-tab-count" id="cntClients">—</span></button>
         <button class="ct-tab" data-tab="offers">Offres &amp; tarifs <span class="ct-tab-count" id="cntOffers">—</span></button>
+        <button class="ct-tab-link" type="button" id="btnTestSouscription" style="background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;border:none;cursor:pointer">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Tester le pipeline
+        </button>
         <a href="../contrats-entretien.html" target="_blank" rel="noopener" class="ct-tab-link">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           Page publique
         </a>
+      </div>
+
+      <!-- ═══ Modal de test ═══ -->
+      <div id="testModal" class="ct-modal">
+        <div class="ct-modal-sheet" style="max-width:540px">
+          <div class="ct-modal-head">
+            <h2>🧪 Test du pipeline souscription</h2>
+            <button class="close" type="button" id="testClose">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          <div class="ct-modal-body">
+            <div style="background:#f8fcff;border:1px solid rgba(13,160,207,.18);border-radius:10px;padding:14px 16px;font-size:.86rem;color:#0A1428;line-height:1.5">
+              Ce test simule une souscription d'un faux client <strong>Jean Test</strong>.<br>
+              Il va : <br>① insérer une ligne dans la table <code>contracts</code><br>
+              ② déclencher l'Edge Function <code>notify-subscription</code><br>
+              ③ envoyer un email à <strong id="testEmailRecipient">…</strong>
+            </div>
+
+            <div class="ct-row-2" style="margin-top:14px">
+              <div><label>Email destinataire (pour le test)</label><input id="testEmail" type="email" value="florian.dhaillecourt@helpconfort.com"></div>
+              <div><label>Formule</label>
+                <select id="testTier">
+                  <option value="gaz-confort">Gaz CONFORT — 13 €/mois</option>
+                  <option value="gaz-basic">Gaz BASIC — 9 €/mois</option>
+                  <option value="gaz-securite">Gaz SÉCURITÉ — 23 €/mois</option>
+                  <option value="fioul-confort">Fioul CONFORT — 16 €/mois</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="testResult" style="display:none;margin-top:14px;padding:14px;border-radius:10px;font-size:.86rem;line-height:1.5"></div>
+          </div>
+          <div class="ct-modal-foot">
+            <span class="grow"></span>
+            <button type="button" class="secondary" id="testCancel" style="padding:9px 16px;background:#fff;color:var(--ink-700);border:1px solid var(--ink-100);border-radius:8px;font:inherit;font-weight:600;font-size:.84rem;cursor:pointer">Fermer</button>
+            <button type="button" class="primary btn-primary" id="testRun" style="padding:9px 20px">▶ Lancer le test</button>
+          </div>
+        </div>
       </div>
 
       <!-- ═══ TAB 1 : Contrats clients (existant) ═══ -->
@@ -803,6 +846,133 @@ let _editingId = null;
   // Chargement initial pour le compteur
   const { count } = await sb.from('contract_offers').select('id', { count: 'exact', head: true });
   if (cntOffers && count != null) cntOffers.textContent = count;
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // BOUTON DE TEST — simule une souscription complète pour vérifier le pipeline
+  // ═══════════════════════════════════════════════════════════════════════
+  const SUPABASE_URL  = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0Y2Jqd3FpaXZocHdvc3pvbWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzExNzI3MTcsImV4cCI6MjA0Njc0ODcxN30.GpdsoXVcZSZpKzlSO1cYRgJzKQ73Y_lc24w5eu_3VuI';
+
+  const testBtn = document.getElementById('btnTestSouscription');
+  const testModal = document.getElementById('testModal');
+  if (testBtn && testModal) {
+    testBtn.onclick = () => {
+      // Précharge l'email destinataire depuis app_settings
+      sb.from('app_settings').select('value').eq('key','notification_emails').single().then(({data}) => {
+        const recipient = data?.value?.subscriptions_to || 'florian.dhaillecourt@helpconfort.com';
+        document.getElementById('testEmailRecipient').textContent = recipient;
+        document.getElementById('testEmail').value = recipient;
+      });
+      testModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('testResult').style.display = 'none';
+    };
+    const closeTest = () => { testModal.classList.remove('open'); document.body.style.overflow = ''; };
+    document.getElementById('testClose').onclick = closeTest;
+    document.getElementById('testCancel').onclick = closeTest;
+
+    document.getElementById('testRun').onclick = async () => {
+      const btn = document.getElementById('testRun');
+      const result = document.getElementById('testResult');
+      btn.disabled = true; btn.textContent = '⏳ Test en cours…';
+      result.style.display = 'block';
+      result.style.background = '#f8fcff';
+      result.style.color = '#0A1428';
+      result.style.border = '1px solid rgba(13,160,207,.20)';
+      result.innerHTML = '<strong>Étape 1/3 :</strong> insertion en DB…';
+
+      const tier = document.getElementById('testTier').value;
+      const [energy, tierName] = tier.split('-');
+      const offer = allOffers.find(o => o.slug === tier);
+      const priceLabel = offer ? `${offer.price_ht_month} € HT/mois — ${offer.price_ht_year || (offer.price_ht_month*12)} €/an` : '13 €/mois';
+      const testEmail = document.getElementById('testEmail').value.trim();
+
+      // Pour le test, on utilise le service role via la session admin authentifiée (RLS admin_all)
+      // → on peut insérer même status='prospect' depuis l'admin
+      const payload = {
+        status: 'prospect',
+        subscription_source: 'public_form',
+        type: tierName,
+        metier: 'chauffage',
+        agence: 'saint-omer',
+        monthly_amount: offer?.price_ht_month || 0,
+        client_first_name: 'Jean',
+        client_last_name:  '[TEST]',
+        client_phone:      '06 00 00 00 00',
+        client_email:      testEmail || 'test@example.com',
+        client_address:    '1 rue du Test',
+        client_postal_code: '62500',
+        client_city:       'Saint-Omer',
+        notes:             '✋ SOUSCRIPTION TEST — peut être supprimée',
+        metadata: {
+          energie: energy,
+          formule_label: tierName.toUpperCase(),
+          prix_label: priceLabel,
+          type_logement: 'Maison',
+          statut_logement: 'Propriétaire',
+          marque: 'Saunier Duval',
+          modele: 'Thelia 23',
+          annee: '2019',
+          dernier_entretien: '2025-09',
+          date_debut_souhaitee: new Date().toISOString().slice(0,10),
+          commentaire: 'Ceci est un test du pipeline — généré depuis le back-office',
+          cgv_accepted_at: new Date().toISOString(),
+          is_test: true
+        }
+      };
+
+      const insRes = await sb.from('contracts').insert(payload).select('id').single();
+      if (insRes.error) {
+        result.style.background = 'rgba(217,45,32,.08)';
+        result.style.color = '#9F0E2B';
+        result.style.border = '1px solid rgba(217,45,32,.30)';
+        result.innerHTML = `<strong>❌ Étape 1/3 ÉCHEC :</strong> ${insRes.error.message}<br><small>Code: ${insRes.error.code || 'n/a'}</small>`;
+        btn.disabled = false; btn.textContent = '▶ Lancer le test';
+        return;
+      }
+      const contractId = insRes.data.id;
+      result.innerHTML += `<br><strong>✓ Étape 1/3 OK :</strong> contrat inséré (id: <code>${contractId.slice(0,8)}…</code>)<br><strong>Étape 2/3 :</strong> appel Edge Function notify-subscription…`;
+
+      // Étape 2 : déclenche la fonction
+      try {
+        const fnRes = await fetch(`${SUPABASE_URL}/functions/v1/notify-subscription`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_ANON}` },
+          body: JSON.stringify({ contract_id: contractId, agence: 'saint-omer' })
+        });
+        const fnData = await fnRes.json().catch(() => ({ error: 'response not JSON' }));
+
+        if (!fnRes.ok) {
+          result.innerHTML += `<br><strong>⚠ Étape 2/3 :</strong> Edge Function a répondu ${fnRes.status} — ${JSON.stringify(fnData)}`;
+          result.style.background = 'rgba(255,180,0,.10)';
+          result.style.border = '1px solid rgba(255,180,0,.30)';
+        } else if (fnData.email_sent) {
+          result.innerHTML += `<br><strong>✓ Étape 2/3 OK :</strong> Edge Function exécutée<br><strong>✅ Étape 3/3 OK :</strong> email envoyé via Resend (id: <code>${fnData.email_id?.slice(0,12) || 'n/a'}…</code>) à <strong>${fnData.to}</strong>`;
+          result.style.background = 'rgba(34,160,107,.08)';
+          result.style.color = '#15803d';
+          result.style.border = '1px solid rgba(34,160,107,.30)';
+          result.innerHTML += `<div style="margin-top:10px;padding:10px;background:#fff;border-radius:6px;color:#0A1428;font-size:.8rem"><strong>📬 Vérifie ta boîte mail !</strong> Tu devrais recevoir l'email dans les 10s.</div>`;
+        } else {
+          result.innerHTML += `<br><strong>⚠ Étape 2/3 :</strong> Edge Function OK mais email non envoyé<br><strong>Raison :</strong> ${fnData.reason || 'inconnue'}`;
+          if (fnData.reason === 'no_api_key') {
+            result.innerHTML += `<div style="margin-top:10px;padding:10px;background:#fff8eb;border-radius:6px;color:#7a5500;font-size:.82rem"><strong>👉 Action requise :</strong> ajoute la clé Resend : <code>supabase secrets set RESEND_API_KEY=re_xxx --project-ref btcbjwqiivhpwoszomhg</code><br>Cf. <a href="../SETUP-EMAIL-RESEND.md" target="_blank" style="color:#0DA0CF;font-weight:700">SETUP-EMAIL-RESEND.md</a></div>`;
+          }
+          result.style.background = 'rgba(255,180,0,.10)';
+          result.style.color = '#7a5500';
+          result.style.border = '1px solid rgba(255,180,0,.30)';
+        }
+
+        result.innerHTML += `<div style="margin-top:12px"><a href="contracts.html" onclick="document.querySelector('.ct-tab[data-tab=contracts]').click();location.hash='#prospects';return false" style="color:#0DA0CF;font-weight:700">→ Voir la souscription dans Contrats clients (Prospects)</a></div>`;
+      } catch (e) {
+        result.style.background = 'rgba(217,45,32,.08)';
+        result.style.color = '#9F0E2B';
+        result.style.border = '1px solid rgba(217,45,32,.30)';
+        result.innerHTML += `<br><strong>❌ Erreur :</strong> ${e.message}`;
+      }
+
+      btn.disabled = false; btn.textContent = '▶ Relancer le test';
+    };
+  }
 })();
 </script>
 </body>
