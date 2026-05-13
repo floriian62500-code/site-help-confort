@@ -148,6 +148,7 @@ CREATE POLICY service_orders_admin_update ON public.service_orders
 
 -- ───────────────────────────────────────────────────────────────
 -- 5. Données seed (extraites de tes devis du 12/05/2026)
+-- ⚠ Chaque gamme (Éco / Stéatite, Nicoll / Geberit) = 1 prestation distincte
 -- ───────────────────────────────────────────────────────────────
 INSERT INTO public.service_categories (slug, name, icon, description, position) VALUES
   ('plomberie',  'Plomberie & Sanitaires',       'Wrench',     'Fuites, robinetterie, mécanismes WC, débouchage', 10),
@@ -160,129 +161,246 @@ INSERT INTO public.service_categories (slug, name, icon, description, position) 
 ON CONFLICT (slug) DO UPDATE
   SET name=EXCLUDED.name, icon=EXCLUDED.icon, description=EXCLUDED.description, position=EXCLUDED.position;
 
--- Prestation 1 : Remplacement mécanisme chasse d'eau
+-- Nettoyage : on supprime les anciens slugs (version précédente avec variantes)
+-- pour repartir sur les 12 prestations distinctes ci-dessous.
+DELETE FROM public.services WHERE slug IN (
+  'remplacement-mecanisme-chasse-eau',
+  'remplacement-chauffe-eau-100l',
+  'remplacement-chauffe-eau-150l',
+  'remplacement-chauffe-eau-200l-mural',
+  'remplacement-chauffe-eau-200l-sol',
+  'remplacement-chauffe-eau-300l-sol'
+);
+
+-- ═══════════════ PLOMBERIE — 2 prestations ═══════════════════════════
+
+-- 1. Mécanisme chasse d'eau STANDARD (Nicoll)
 INSERT INTO public.services
-  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, variants, duration_min, warranty, brand, position, featured)
+  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, duration_min, warranty, brand, position, featured)
 SELECT
   (SELECT id FROM public.service_categories WHERE slug='plomberie'),
-  'remplacement-mecanisme-chasse-eau',
-  'Remplacement mécanisme chasse d''eau',
-  'Mécanisme défaillant ? On le remplace en 1 h par un modèle fiable.',
-  E'**Intervention rapide** pour remplacer le mécanisme de votre chasse d''eau qui fuit, ne se remplit plus ou consomme trop d''eau.\n\nNotre technicien intervient avec le matériel adapté, dépose l''ancien mécanisme, installe le nouveau et vérifie l''étanchéité complète.',
-  '["Dépose de l''ancien mécanisme","Fourniture mécanisme neuf Nicoll","Pose et raccordement","Test étanchéité + réglage débit","Traitement des déchets","Déplacement (≤55 km)"]'::jsonb,
+  'mecanisme-chasse-eau-standard',
+  'Mécanisme de chasse d''eau — Standard (Nicoll)',
+  'WC suspendu ou bâti-support. Pose en 1 h, modèle Nicoll fiable.',
+  E'**Intervention rapide** pour remplacer le mécanisme de votre chasse d''eau sur WC suspendu ou avec bâti-support.\n\nFourniture mécanisme **Nicoll** complet. Notre technicien dépose l''ancien mécanisme, installe le nouveau et vérifie l''étanchéité complète.',
+  '["Dépose de l''ancien mécanisme","Fourniture mécanisme complet Nicoll","Pose et raccordement","Test étanchéité + réglage débit","Traitement des déchets","Déplacement (≤55 km)"]'::jsonb,
   'Express 1h',
-  169.65, 0.100,
-  '[{"key":"premium","label":"Variante WC classique au sol (Geberit)","price_ht":184.55,"info":"Pour WC classique au sol avec mécanisme Geberit haut de gamme"}]'::jsonb,
-  60,
-  'Garantie pièce 2 ans · main d''œuvre 1 an',
-  'Nicoll, Geberit',
+  169.65, 0.100, 60,
+  'Garantie pièce 2 ans · main d''œuvre 1 an', 'Nicoll',
   10, true
 ON CONFLICT (slug) DO UPDATE
-  SET price_ht=EXCLUDED.price_ht, variants=EXCLUDED.variants, includes=EXCLUDED.includes,
-      description=EXCLUDED.description, short_desc=EXCLUDED.short_desc, updated_at=now();
+  SET price_ht=EXCLUDED.price_ht, includes=EXCLUDED.includes, description=EXCLUDED.description,
+      short_desc=EXCLUDED.short_desc, badge=EXCLUDED.badge, brand=EXCLUDED.brand, updated_at=now();
 
--- Prestation 2 : Chauffe-eau 100L mural/trépied
+-- 2. Mécanisme chasse d'eau WC AU SOL (Geberit)
 INSERT INTO public.services
-  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, variants, duration_min, warranty, brand, position, featured)
+  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, duration_min, warranty, brand, position, featured)
+SELECT
+  (SELECT id FROM public.service_categories WHERE slug='plomberie'),
+  'mecanisme-chasse-eau-wc-au-sol',
+  'Mécanisme de chasse d''eau — WC au sol (Geberit)',
+  'WC classique au sol. Mécanisme Geberit haut de gamme.',
+  E'**Intervention rapide** pour remplacer le mécanisme de votre chasse d''eau sur WC classique posé au sol.\n\nFourniture mécanisme **Geberit** haut de gamme, plus durable et silencieux. Notre technicien dépose l''ancien mécanisme, installe le nouveau et vérifie l''étanchéité.',
+  '["Dépose de l''ancien mécanisme","Fourniture mécanisme complet Geberit","Pose et raccordement","Test étanchéité + réglage débit","Traitement des déchets","Déplacement (≤55 km)"]'::jsonb,
+  null,
+  184.55, 0.100, 60,
+  'Garantie pièce 2 ans · main d''œuvre 1 an', 'Geberit',
+  11, false
+ON CONFLICT (slug) DO UPDATE
+  SET price_ht=EXCLUDED.price_ht, includes=EXCLUDED.includes, description=EXCLUDED.description,
+      short_desc=EXCLUDED.short_desc, brand=EXCLUDED.brand, updated_at=now();
+
+-- ═══════════════ CHAUFFE-EAU 100L — 2 prestations ═══════════════════════
+
+-- 3. Chauffe-eau 100L mural/trépied — Gamme ÉCO (blindée)
+INSERT INTO public.services
+  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, duration_min, warranty, brand, position, featured)
 SELECT
   (SELECT id FROM public.service_categories WHERE slug='chauffe-eau'),
-  'remplacement-chauffe-eau-100l',
-  'Remplacement chauffe-eau 100L (mural ou trépied)',
-  'Pour 1 à 2 personnes. Pose comprise, 2 techniciens.',
-  E'**Forfait complet** pour remplacer votre chauffe-eau électrique 100L installé au mur ou sur trépied.\n\nDeux gammes au choix :\n- **Éco** : résistance blindée Atlantic, idéale pour eau peu calcaire\n- **Stéatite** : résistance protégée + anode magnésium, durée de vie prolongée, idéale en zone calcaire',
-  '["Dépose de l''ancien appareil","Fourniture du chauffe-eau Atlantic","Raccordements hydrauliques EF/ECS","Raccordement électrique conforme NFC 15-100","Groupe de sécurité SFR 3/4 + siphon","Petite fourniture plomberie","Mise en service et vérification","Forfait pose 2 techniciens","Déplacement (≤55 km) + traitement déchets"]'::jsonb,
-  null,
-  701.18, 0.100,
-  '[{"key":"premium","label":"Gamme Stéatite (anode magnésium)","price_ht":765.14,"info":"Résistance stéatite protégée par fourreau, anode magnésium, durée de vie prolongée"}]'::jsonb,
-  150,
-  'Garantie 5 ans cuve · 2 ans pièces',
-  'Atlantic',
+  'chauffe-eau-100l-eco',
+  'Chauffe-eau 100L mural — Gamme Éco (résistance blindée)',
+  'Pour 1-2 pers. Atlantic blindée, idéal eau peu calcaire.',
+  E'**Forfait complet** pour remplacer votre chauffe-eau électrique 100L installé au mur ou sur trépied.\n\nGamme **Éco** : résistance blindée Atlantic en contact direct avec l''eau.\n\n✔ Rapport qualité/prix optimal\n⚠ Sensible au calcaire — préférez la gamme Stéatite si votre eau est dure',
+  '["Dépose de l''ancien appareil","Fourniture chauffe-eau Atlantic 100L blindé","Raccordements hydrauliques EF/ECS","Raccordement électrique conforme NFC 15-100","Groupe de sécurité SFR 3/4 + siphon","Petite fourniture plomberie","Mise en service et vérification","Forfait pose 2 techniciens","Déplacement (≤55 km) + traitement déchets"]'::jsonb,
+  'Best-seller',
+  701.18, 0.100, 150,
+  'Garantie 5 ans cuve · 2 ans pièces', 'Atlantic',
   20, true
 ON CONFLICT (slug) DO UPDATE
-  SET price_ht=EXCLUDED.price_ht, variants=EXCLUDED.variants, includes=EXCLUDED.includes,
-      description=EXCLUDED.description, updated_at=now();
+  SET price_ht=EXCLUDED.price_ht, includes=EXCLUDED.includes, description=EXCLUDED.description,
+      short_desc=EXCLUDED.short_desc, badge=EXCLUDED.badge, updated_at=now();
 
--- Prestation 3 : Chauffe-eau 150L mural/trépied
+-- 4. Chauffe-eau 100L mural/trépied — Gamme STÉATITE
 INSERT INTO public.services
-  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, variants, duration_min, warranty, brand, position, featured)
+  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, duration_min, warranty, brand, position, featured)
 SELECT
   (SELECT id FROM public.service_categories WHERE slug='chauffe-eau'),
-  'remplacement-chauffe-eau-150l',
-  'Remplacement chauffe-eau 150L (mural ou trépied)',
-  'Pour 2 à 3 personnes. Pose comprise, 2 techniciens.',
-  E'**Forfait complet** pour remplacer votre chauffe-eau électrique 150L installé au mur ou sur trépied.\n\nDeux gammes au choix : Éco (résistance blindée) ou Stéatite (anode magnésium, anti-calcaire).',
-  '["Dépose de l''ancien appareil","Fourniture du chauffe-eau Atlantic 150L","Raccordements hydrauliques EF/ECS","Raccordement électrique conforme NFC 15-100","Groupe de sécurité + siphon","Petite fourniture plomberie","Mise en service","Forfait pose 2 techniciens","Déplacement + traitement déchets"]'::jsonb,
+  'chauffe-eau-100l-steatite',
+  'Chauffe-eau 100L mural — Gamme Stéatite (anti-calcaire)',
+  'Pour 1-2 pers. Résistance protégée + anode magnésium.',
+  E'**Forfait complet** pour remplacer votre chauffe-eau électrique 100L installé au mur ou sur trépied.\n\nGamme **Stéatite** : résistance protégée par un fourreau (pas de contact direct avec l''eau) + **anode magnésium** pour une durée de vie prolongée.\n\n✔ Idéal en zone calcaire\n✔ Durée de vie significativement plus longue\n✔ Entretien facilité',
+  '["Dépose de l''ancien appareil","Fourniture chauffe-eau Atlantic 100L Stéatite","Anode magnésium intégrée","Raccordements hydrauliques EF/ECS","Raccordement électrique conforme NFC 15-100","Groupe de sécurité SFR 3/4 + siphon","Petite fourniture plomberie","Mise en service et vérification","Forfait pose 2 techniciens","Déplacement (≤55 km) + traitement déchets"]'::jsonb,
+  'Anti-calcaire',
+  765.14, 0.100, 150,
+  'Garantie 5 ans cuve · 2 ans pièces', 'Atlantic',
+  21, false
+ON CONFLICT (slug) DO UPDATE
+  SET price_ht=EXCLUDED.price_ht, includes=EXCLUDED.includes, description=EXCLUDED.description,
+      short_desc=EXCLUDED.short_desc, badge=EXCLUDED.badge, updated_at=now();
+
+-- ═══════════════ CHAUFFE-EAU 150L — 2 prestations ═══════════════════════
+
+-- 5. Chauffe-eau 150L mural/trépied — Gamme ÉCO
+INSERT INTO public.services
+  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, duration_min, warranty, brand, position, featured)
+SELECT
+  (SELECT id FROM public.service_categories WHERE slug='chauffe-eau'),
+  'chauffe-eau-150l-eco',
+  'Chauffe-eau 150L mural — Gamme Éco (résistance blindée)',
+  'Pour 2-3 pers. Atlantic blindée, eau peu calcaire.',
+  E'**Forfait complet** pour remplacer votre chauffe-eau électrique 150L installé au mur ou sur trépied.\n\nGamme **Éco** : résistance blindée Atlantic. Rapport qualité/prix optimal pour foyer de 2 à 3 personnes en eau peu calcaire.',
+  '["Dépose de l''ancien appareil","Fourniture chauffe-eau Atlantic 150L blindé","Raccordements hydrauliques EF/ECS","Raccordement électrique conforme NFC 15-100","Groupe de sécurité + siphon","Petite fourniture plomberie","Mise en service","Forfait pose 2 techniciens","Déplacement + traitement déchets"]'::jsonb,
   null,
-  761.22, 0.100,
-  '[{"key":"premium","label":"Gamme Stéatite (anode magnésium)","price_ht":831.56,"info":"Résistance stéatite + anode pour durée de vie prolongée"}]'::jsonb,
-  150,
-  'Garantie 5 ans cuve · 2 ans pièces',
-  'Atlantic',
+  761.22, 0.100, 150,
+  'Garantie 5 ans cuve · 2 ans pièces', 'Atlantic',
   30, false
 ON CONFLICT (slug) DO UPDATE
-  SET price_ht=EXCLUDED.price_ht, variants=EXCLUDED.variants, updated_at=now();
+  SET price_ht=EXCLUDED.price_ht, includes=EXCLUDED.includes, description=EXCLUDED.description,
+      short_desc=EXCLUDED.short_desc, updated_at=now();
 
--- Prestation 4 : Chauffe-eau 200L mural/trépied
+-- 6. Chauffe-eau 150L mural/trépied — Gamme STÉATITE
 INSERT INTO public.services
-  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, variants, duration_min, warranty, brand, position, featured)
+  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, duration_min, warranty, brand, position, featured)
 SELECT
   (SELECT id FROM public.service_categories WHERE slug='chauffe-eau'),
-  'remplacement-chauffe-eau-200l-mural',
-  'Remplacement chauffe-eau 200L (mural ou trépied)',
-  'Pour 3 à 4 personnes. Pose comprise, 2 techniciens.',
-  E'**Forfait complet** pour remplacer votre chauffe-eau électrique 200L installé au mur ou sur trépied.\n\nIdéal pour foyer de 3-4 personnes. Deux gammes au choix.',
-  '["Dépose de l''ancien appareil","Fourniture du chauffe-eau Atlantic 200L","Raccordements hydrauliques EF/ECS","Raccordement électrique conforme NFC 15-100","Groupe de sécurité + siphon","Petite fourniture plomberie","Mise en service","Forfait pose 2 techniciens","Déplacement + traitement déchets"]'::jsonb,
+  'chauffe-eau-150l-steatite',
+  'Chauffe-eau 150L mural — Gamme Stéatite (anti-calcaire)',
+  'Pour 2-3 pers. Résistance protégée + anode magnésium.',
+  E'**Forfait complet** pour remplacer votre chauffe-eau électrique 150L installé au mur ou sur trépied.\n\nGamme **Stéatite** : résistance protégée + anode magnésium. Idéal en zone calcaire, durée de vie prolongée.',
+  '["Dépose de l''ancien appareil","Fourniture chauffe-eau Atlantic 150L Stéatite","Anode magnésium intégrée","Raccordements hydrauliques EF/ECS","Raccordement électrique conforme NFC 15-100","Groupe de sécurité + siphon","Petite fourniture plomberie","Mise en service","Forfait pose 2 techniciens","Déplacement + traitement déchets"]'::jsonb,
+  'Anti-calcaire',
+  831.56, 0.100, 150,
+  'Garantie 5 ans cuve · 2 ans pièces', 'Atlantic',
+  31, false
+ON CONFLICT (slug) DO UPDATE
+  SET price_ht=EXCLUDED.price_ht, includes=EXCLUDED.includes, description=EXCLUDED.description,
+      short_desc=EXCLUDED.short_desc, badge=EXCLUDED.badge, updated_at=now();
+
+-- ═══════════════ CHAUFFE-EAU 200L mural — 2 prestations ═════════════════
+
+-- 7. Chauffe-eau 200L mural/trépied — Gamme ÉCO
+INSERT INTO public.services
+  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, duration_min, warranty, brand, position, featured)
+SELECT
+  (SELECT id FROM public.service_categories WHERE slug='chauffe-eau'),
+  'chauffe-eau-200l-mural-eco',
+  'Chauffe-eau 200L mural — Gamme Éco (résistance blindée)',
+  'Pour 3-4 pers. Atlantic blindée mural/trépied.',
+  E'**Forfait complet** pour remplacer votre chauffe-eau électrique 200L installé au mur ou sur trépied.\n\nGamme **Éco** : résistance blindée Atlantic. Idéal pour foyer de 3 à 4 personnes en eau peu calcaire.',
+  '["Dépose de l''ancien appareil","Fourniture chauffe-eau Atlantic 200L blindé","Raccordements hydrauliques EF/ECS","Raccordement électrique conforme NFC 15-100","Groupe de sécurité + siphon","Petite fourniture plomberie","Mise en service","Forfait pose 2 techniciens","Déplacement + traitement déchets"]'::jsonb,
   null,
-  824.42, 0.100,
-  '[{"key":"premium","label":"Gamme Stéatite (anode magnésium)","price_ht":905.54,"info":"Résistance stéatite + anode pour durée de vie prolongée"}]'::jsonb,
-  180,
-  'Garantie 5 ans cuve · 2 ans pièces',
-  'Atlantic',
+  824.42, 0.100, 180,
+  'Garantie 5 ans cuve · 2 ans pièces', 'Atlantic',
   40, false
 ON CONFLICT (slug) DO UPDATE
-  SET price_ht=EXCLUDED.price_ht, variants=EXCLUDED.variants, updated_at=now();
+  SET price_ht=EXCLUDED.price_ht, includes=EXCLUDED.includes, description=EXCLUDED.description,
+      short_desc=EXCLUDED.short_desc, updated_at=now();
 
--- Prestation 5 : Chauffe-eau 200L au sol
+-- 8. Chauffe-eau 200L mural/trépied — Gamme STÉATITE
 INSERT INTO public.services
-  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, variants, duration_min, warranty, brand, position, featured)
+  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, duration_min, warranty, brand, position, featured)
 SELECT
   (SELECT id FROM public.service_categories WHERE slug='chauffe-eau'),
-  'remplacement-chauffe-eau-200l-sol',
-  'Remplacement chauffe-eau 200L au sol',
-  'Pour 3 à 4 personnes. Pose au sol, 2 techniciens.',
-  E'**Forfait complet** pour remplacer votre chauffe-eau électrique 200L installé au sol (stable, sans trépied).\n\nDeux gammes au choix.',
-  '["Dépose de l''ancien appareil","Fourniture du chauffe-eau Atlantic 200L au sol","Raccordements hydrauliques EF/ECS","Raccordement électrique conforme NFC 15-100","Groupe de sécurité + siphon","Petite fourniture plomberie","Mise en service","Forfait pose 2 techniciens","Déplacement + traitement déchets"]'::jsonb,
+  'chauffe-eau-200l-mural-steatite',
+  'Chauffe-eau 200L mural — Gamme Stéatite (anti-calcaire)',
+  'Pour 3-4 pers. Mural/trépied + anode magnésium.',
+  E'**Forfait complet** pour remplacer votre chauffe-eau électrique 200L installé au mur ou sur trépied.\n\nGamme **Stéatite** : résistance protégée + anode magnésium. Durée de vie prolongée en zone calcaire.',
+  '["Dépose de l''ancien appareil","Fourniture chauffe-eau Atlantic 200L Stéatite","Anode magnésium intégrée","Raccordements hydrauliques EF/ECS","Raccordement électrique conforme NFC 15-100","Groupe de sécurité + siphon","Petite fourniture plomberie","Mise en service","Forfait pose 2 techniciens","Déplacement + traitement déchets"]'::jsonb,
+  'Anti-calcaire',
+  905.54, 0.100, 180,
+  'Garantie 5 ans cuve · 2 ans pièces', 'Atlantic',
+  41, false
+ON CONFLICT (slug) DO UPDATE
+  SET price_ht=EXCLUDED.price_ht, includes=EXCLUDED.includes, description=EXCLUDED.description,
+      short_desc=EXCLUDED.short_desc, badge=EXCLUDED.badge, updated_at=now();
+
+-- ═══════════════ CHAUFFE-EAU 200L au sol — 2 prestations ════════════════
+
+-- 9. Chauffe-eau 200L au sol — Gamme ÉCO
+INSERT INTO public.services
+  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, duration_min, warranty, brand, position, featured)
+SELECT
+  (SELECT id FROM public.service_categories WHERE slug='chauffe-eau'),
+  'chauffe-eau-200l-sol-eco',
+  'Chauffe-eau 200L au sol — Gamme Éco (résistance blindée)',
+  'Pour 3-4 pers. Pose stable au sol, sans trépied.',
+  E'**Forfait complet** pour remplacer votre chauffe-eau électrique 200L installé au sol (sans trépied, plus stable).\n\nGamme **Éco** : résistance blindée Atlantic. Pour foyer de 3 à 4 personnes.',
+  '["Dépose de l''ancien appareil","Fourniture chauffe-eau Atlantic 200L au sol","Raccordements hydrauliques EF/ECS","Raccordement électrique conforme NFC 15-100","Groupe de sécurité + siphon","Petite fourniture plomberie","Mise en service","Forfait pose 2 techniciens","Déplacement + traitement déchets"]'::jsonb,
   null,
-  1212.14, 0.100,
-  '[{"key":"premium","label":"Gamme Stéatite (anode magnésium)","price_ht":1325.40,"info":"Résistance stéatite + anode pour durée de vie prolongée"}]'::jsonb,
-  180,
-  'Garantie 5 ans cuve · 2 ans pièces',
-  'Atlantic',
+  1212.14, 0.100, 180,
+  'Garantie 5 ans cuve · 2 ans pièces', 'Atlantic',
   50, false
 ON CONFLICT (slug) DO UPDATE
-  SET price_ht=EXCLUDED.price_ht, variants=EXCLUDED.variants, updated_at=now();
+  SET price_ht=EXCLUDED.price_ht, includes=EXCLUDED.includes, description=EXCLUDED.description,
+      short_desc=EXCLUDED.short_desc, updated_at=now();
 
--- Prestation 6 : Chauffe-eau 300L au sol
+-- 10. Chauffe-eau 200L au sol — Gamme STÉATITE
 INSERT INTO public.services
-  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, variants, duration_min, warranty, brand, position, featured)
+  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, duration_min, warranty, brand, position, featured)
 SELECT
   (SELECT id FROM public.service_categories WHERE slug='chauffe-eau'),
-  'remplacement-chauffe-eau-300l-sol',
-  'Remplacement chauffe-eau 300L au sol',
-  'Grande famille (5+). Pose au sol, 2 techniciens.',
-  E'**Forfait complet** pour remplacer votre chauffe-eau électrique 300L installé au sol.\n\nIdéal pour famille nombreuse ou usage intensif. Deux gammes au choix.',
-  '["Dépose de l''ancien appareil","Fourniture du chauffe-eau Atlantic 300L au sol","Raccordements hydrauliques EF/ECS","Raccordement électrique conforme NFC 15-100","Groupe de sécurité + siphon","Petite fourniture plomberie","Mise en service","Forfait pose 2 techniciens","Déplacement + traitement déchets"]'::jsonb,
+  'chauffe-eau-200l-sol-steatite',
+  'Chauffe-eau 200L au sol — Gamme Stéatite (anti-calcaire)',
+  'Pour 3-4 pers. Pose au sol + anode magnésium.',
+  E'**Forfait complet** pour remplacer votre chauffe-eau électrique 200L installé au sol.\n\nGamme **Stéatite** : résistance protégée + anode magnésium. Idéal en zone calcaire.',
+  '["Dépose de l''ancien appareil","Fourniture chauffe-eau Atlantic 200L Stéatite au sol","Anode magnésium intégrée","Raccordements hydrauliques EF/ECS","Raccordement électrique conforme NFC 15-100","Groupe de sécurité + siphon","Petite fourniture plomberie","Mise en service","Forfait pose 2 techniciens","Déplacement + traitement déchets"]'::jsonb,
+  'Anti-calcaire',
+  1325.40, 0.100, 180,
+  'Garantie 5 ans cuve · 2 ans pièces', 'Atlantic',
+  51, false
+ON CONFLICT (slug) DO UPDATE
+  SET price_ht=EXCLUDED.price_ht, includes=EXCLUDED.includes, description=EXCLUDED.description,
+      short_desc=EXCLUDED.short_desc, badge=EXCLUDED.badge, updated_at=now();
+
+-- ═══════════════ CHAUFFE-EAU 300L au sol — 2 prestations ════════════════
+
+-- 11. Chauffe-eau 300L au sol — Gamme ÉCO
+INSERT INTO public.services
+  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, duration_min, warranty, brand, position, featured)
+SELECT
+  (SELECT id FROM public.service_categories WHERE slug='chauffe-eau'),
+  'chauffe-eau-300l-sol-eco',
+  'Chauffe-eau 300L au sol — Gamme Éco (résistance blindée)',
+  'Famille 5+. Grande capacité, pose au sol.',
+  E'**Forfait complet** pour remplacer votre chauffe-eau électrique 300L installé au sol.\n\nGamme **Éco** : résistance blindée Atlantic. Idéal famille nombreuse (5 personnes et +) ou usage intensif.',
+  '["Dépose de l''ancien appareil","Fourniture chauffe-eau Atlantic 300L au sol","Raccordements hydrauliques EF/ECS","Raccordement électrique conforme NFC 15-100","Groupe de sécurité + siphon","Petite fourniture plomberie","Mise en service","Forfait pose 2 techniciens","Déplacement + traitement déchets"]'::jsonb,
   'Famille XL',
-  1104.08, 0.100,
-  '[{"key":"premium","label":"Gamme Stéatite (anode magnésium)","price_ht":1295.08,"info":"Résistance stéatite + anode pour durée de vie prolongée"}]'::jsonb,
-  240,
-  'Garantie 5 ans cuve · 2 ans pièces',
-  'Atlantic',
+  1104.08, 0.100, 240,
+  'Garantie 5 ans cuve · 2 ans pièces', 'Atlantic',
   60, false
 ON CONFLICT (slug) DO UPDATE
-  SET price_ht=EXCLUDED.price_ht, variants=EXCLUDED.variants, updated_at=now();
+  SET price_ht=EXCLUDED.price_ht, includes=EXCLUDED.includes, description=EXCLUDED.description,
+      short_desc=EXCLUDED.short_desc, badge=EXCLUDED.badge, updated_at=now();
 
--- Prestation "Devis sur mesure" (catch-all)
+-- 12. Chauffe-eau 300L au sol — Gamme STÉATITE
+INSERT INTO public.services
+  (category_id, slug, name, short_desc, description, includes, badge, price_ht, vat_rate, duration_min, warranty, brand, position, featured)
+SELECT
+  (SELECT id FROM public.service_categories WHERE slug='chauffe-eau'),
+  'chauffe-eau-300l-sol-steatite',
+  'Chauffe-eau 300L au sol — Gamme Stéatite (anti-calcaire)',
+  'Famille 5+. Grande capacité + anode magnésium.',
+  E'**Forfait complet** pour remplacer votre chauffe-eau électrique 300L installé au sol.\n\nGamme **Stéatite** : résistance protégée + anode magnésium. Pour famille nombreuse en zone calcaire, durée de vie maximale.',
+  '["Dépose de l''ancien appareil","Fourniture chauffe-eau Atlantic 300L Stéatite au sol","Anode magnésium intégrée","Raccordements hydrauliques EF/ECS","Raccordement électrique conforme NFC 15-100","Groupe de sécurité + siphon","Petite fourniture plomberie","Mise en service","Forfait pose 2 techniciens","Déplacement + traitement déchets"]'::jsonb,
+  'Anti-calcaire',
+  1295.08, 0.100, 240,
+  'Garantie 5 ans cuve · 2 ans pièces', 'Atlantic',
+  61, false
+ON CONFLICT (slug) DO UPDATE
+  SET price_ht=EXCLUDED.price_ht, includes=EXCLUDED.includes, description=EXCLUDED.description,
+      short_desc=EXCLUDED.short_desc, badge=EXCLUDED.badge, updated_at=now();
+
+-- ═══════════════ DEVIS SUR MESURE ═══════════════════════════════════════
 INSERT INTO public.services
   (category_id, slug, name, short_desc, description, includes, price_ht, vat_rate, requires_quote, deposit_pct, position, active, featured)
 SELECT
