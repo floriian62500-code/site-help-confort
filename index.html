@@ -1071,7 +1071,7 @@ return '<a href="'+escHtml(url)+'" class="hc-mini-card">'+photo+'<div class="bod
 });
 setupMini('hc-mini-actu-track','content/actualites/index.json',function(a){
 var url=a.url||'actualites.html';var photo='';
-if(a.image){photo='<div class="photo"><img src="'+a.image+'" loading="lazy"></div>';}
+if(a.image){photo='<div class="photo"><img src="'+a.image+'" loading="lazy" alt="'+(a.title?a.title.replace(/"/g,"&quot;"):"Actualité HELP! Confort")+'"></div>';}
 else if(a.source_facebook){var fb='https://www.facebook.com/plugins/post.php?href='+encodeURIComponent(a.source_facebook)+'&show_text=false&width=400';photo='<div class="photo"><iframe src="'+fb+'" loading="lazy" scrolling="no" frameborder="0"></iframe><span class="fb-tag">Facebook</span></div>';}
 else photo='<div class="photo"></div>';
 return '<a href="'+escHtml(url)+'" class="hc-mini-card">'+photo+'<div class="body"><div class="meta"><span class="tag-a">'+escHtml(a.categorie||'Article')+'</span></div><h5>'+escHtml(a.title)+'</h5><p>'+escHtml((a.resume||'').slice(0,80))+'</p></div></a>';
