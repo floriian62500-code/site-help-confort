@@ -117,8 +117,15 @@ if [ "$PUSH_OK" = "1" ]; then
       while IFS= read -r fn; do
         [ -z "$fn" ] && continue
         [[ "$fn" == _* ]] && continue   # skip _shared, etc.
-        if supabase functions deploy "$fn" --project-ref btcbjwqiivhpwoszomhg >>"$DEPLOY_LOG" 2>&1; then
-          dlog "✅ Function '$fn' déployée"
+
+        # Detect verify_jwt = false dans config.toml → fonction publique
+        local_flag=""
+        if grep -A2 "^\[functions\.$fn\]" "$REPO/supabase/config.toml" 2>/dev/null | grep -q "verify_jwt = false"; then
+          local_flag="--no-verify-jwt"
+        fi
+
+        if supabase functions deploy "$fn" --project-ref btcbjwqiivhpwoszomhg $local_flag >>"$DEPLOY_LOG" 2>&1; then
+          dlog "✅ Function '$fn' déployée${local_flag:+ (publique)}"
         else
           dlog "❌ Échec deploy '$fn'"
         fi

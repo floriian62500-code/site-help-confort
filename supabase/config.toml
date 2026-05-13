@@ -47,3 +47,11 @@ enable_confirmations = false
 [edge_runtime]
 enabled = true
 inspector_port = 8083
+
+# ─── Edge Functions publiques (callable depuis le site sans JWT) ────────────
+# verify_jwt = false permet les appels anonymes depuis les pages publiques
+[functions.notify-subscription]
+verify_jwt = false
+
+[functions.notify-order]
+verify_jwt = false
