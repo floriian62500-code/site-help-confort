@@ -112,28 +112,46 @@
           <div class="gw-step-time">15 min · async</div>
         </div>
         <div class="gw-step-body">
+
+          <!-- Bandeau « pas bloquant » -->
+          <div style="background:linear-gradient(135deg,#E8F5E9,#FFF8E1);border:1px solid #c8e6c9;border-radius:12px;padding:14px 18px;margin-bottom:14px;display:flex;gap:12px;align-items:flex-start">
+            <div style="font-size:1.4rem;line-height:1;flex-shrink:0">💡</div>
+            <div style="font-size:.92rem;line-height:1.5;color:#1B5E20">
+              <strong>Cette étape ne te bloque PAS.</strong> Google approuve sous 1-3 jours ouvrés.
+              <strong>Pendant ce temps, continue les étapes 4 à 8</strong> — quand l'approbation arrive, tout fonctionnera automatiquement.
+              <div style="margin-top:8px"><button type="button" data-next class="gw-cta" style="background:linear-gradient(135deg,#43A047,#1B5E20);font-size:.86rem;padding:8px 16px;margin:0">Passer à l'étape 4 maintenant <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div>
+            </div>
+          </div>
+
           <div class="gw-warn-box">
             <strong>⏱️ Délai d'approbation Google : 1 à 3 jours ouvrés</strong>
-            Tu peux continuer la suite des étapes en parallèle, mais sans cette approbation, les API renverront des erreurs 403.
+            Sans cette approbation, les API renverront des erreurs 403. Mais le reste (OAuth, IDs, tokens) marche en parallèle.
           </div>
-          <p>Remplis le formulaire d'accès en utilisant ces informations :</p>
+
+          <p style="margin-top:14px"><strong>📋 Étape A : remplis le formulaire avec ces infos toutes prêtes</strong></p>
           <ul>
             <li><strong>Organisation</strong> : HELP! Confort Saint-Omer</li>
             <li><strong>Nom du contact</strong> : Florian Dhaillecourt</li>
-            <li><strong>Numéro du projet</strong> : ouvre <a href="https://console.cloud.google.com/home/dashboard" target="_blank">le tableau de bord</a> → tu trouveras un nombre à 12 chiffres "Numéro du projet"</li>
-            <li><strong>Cas d'usage</strong> :
-              <pre style="white-space:pre-wrap;font-size:.78em">Synchronisation des avis Google Business Profile de nos 2 fiches (Help Confort Saint-Omer et Help Confort Dunkerque) dans notre back-office interne, pour permettre à notre équipe de répondre aux avis depuis un point central. Volume estimé : ~500 avis/an et ~50 réponses/mois.</pre>
+            <li><strong>Email</strong> : florian.dhaillecourt@helpconfort.com</li>
+            <li><strong>Numéro du projet</strong> : ouvre <a href="https://console.cloud.google.com/home/dashboard" target="_blank" rel="noopener" style="color:#0DA0CF;font-weight:600">le tableau de bord GCP</a> → en haut, copie le nombre à 12 chiffres après "Numéro du projet"</li>
+            <li><strong>Cas d'usage</strong> (à copier-coller tel quel) :
+              <pre style="white-space:pre-wrap;font-size:.78em;background:#f4f7fb;padding:10px 12px;border-radius:8px;border-left:3px solid #0DA0CF;margin-top:6px;user-select:all;cursor:text" onclick="this.select && this.select();if(window.getSelection){const r=document.createRange();r.selectNodeContents(this);const s=window.getSelection();s.removeAllRanges();s.addRange(r);}">Synchronisation des avis Google Business Profile de nos 2 fiches (Help Confort Saint-Omer et Help Confort Dunkerque) dans notre back-office interne, pour permettre à notre équipe de répondre aux avis depuis un point central. Volume estimé : ~500 avis/an et ~50 réponses/mois.</pre>
+              <small style="color:#64748b;font-size:.74rem">↑ Clique sur le texte pour le sélectionner, puis Cmd+C</small>
             </li>
           </ul>
-          <a href="https://support.google.com/business/contact/api_default" target="_blank" rel="noopener" class="gw-cta">
-            Ouvrir le formulaire d'accès
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+
+          <p style="margin-top:14px"><strong>🌐 Étape B : ouvre le formulaire Google</strong></p>
+          <a href="https://support.google.com/business/contact/api_default" target="_blank" rel="noopener" class="gw-cta" style="font-size:1rem;padding:13px 22px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Ouvrir le formulaire d'accès Google
           </a>
-          <div class="gw-check"><input type="checkbox" id="ch3"><label for="ch3">J'ai envoyé la demande à Google</label></div>
+          <div style="font-size:.78rem;color:#64748b;margin-top:6px;line-height:1.4">↑ Le formulaire s'ouvre dans un nouvel onglet. Reviens ici une fois envoyé.</div>
+
+          <div class="gw-check" style="margin-top:14px"><input type="checkbox" id="ch3"><label for="ch3">✅ J'ai envoyé la demande à Google (je verrai un mail de Google sous 1-3 jours)</label></div>
         </div>
         <div class="gw-nav">
           <button class="btn" data-prev>← Précédent</button>
-          <div class="right"><button class="btn btn-primary" data-next>Suivant →</button></div>
+          <div class="right"><button class="btn btn-primary" data-next>Suivant : OAuth →</button></div>
         </div>
       </div>
 

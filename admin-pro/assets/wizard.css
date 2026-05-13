@@ -68,14 +68,15 @@
 .gw-warn-box strong{color:#9A6B0A;display:block;margin-bottom:3px}
 .gw-ok-box{background:linear-gradient(135deg,rgba(0,170,80,.06),#fff);border:1px solid rgba(0,170,80,.20);border-left:3px solid #00aa50;border-radius:10px;padding:12px 14px;margin:10px 0;font-size:.84rem;color:#007033;line-height:1.5}
 
-.gw-cta{
-  display:inline-flex;align-items:center;gap:6px;padding:10px 18px;
+.gw-cta, a.gw-cta, button.gw-cta{
+  display:inline-flex;align-items:center;gap:8px;padding:11px 20px;
   background:linear-gradient(135deg, var(--wz-primary,#4285F4), var(--wz-primary-dark,#1A237E));
-  color:#fff;border:none;border-radius:10px;font:inherit;font-weight:700;text-decoration:none;cursor:pointer;font-size:.86rem;margin-top:6px;transition:.15s;
-  box-shadow:0 4px 14px color-mix(in srgb, var(--wz-primary,#4285F4) 30%, transparent)
+  color:#fff !important;border:none;border-radius:10px;font:inherit;font-weight:700;text-decoration:none;cursor:pointer;font-size:.92rem;margin-top:6px;transition:.15s;
+  box-shadow:0 6px 18px color-mix(in srgb, var(--wz-primary,#4285F4) 35%, transparent)
 }
-.gw-cta:hover{transform:translateY(-1px);box-shadow:0 8px 22px color-mix(in srgb, var(--wz-primary,#4285F4) 40%, transparent)}
-.gw-cta svg{width:14px;height:14px}
+.gw-cta:visited, a.gw-cta:visited{color:#fff !important}
+.gw-cta:hover{transform:translateY(-1px);box-shadow:0 10px 26px color-mix(in srgb, var(--wz-primary,#4285F4) 45%, transparent);filter:brightness(1.05)}
+.gw-cta svg{width:16px;height:16px;color:#fff}
 
 .gw-nav{display:flex;align-items:center;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid var(--ink-100)}
 .gw-nav .btn{padding:9px 16px;font-size:.86rem}
