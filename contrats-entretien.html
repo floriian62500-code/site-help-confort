@@ -2494,11 +2494,13 @@ if (document.fonts && document.fonts.ready) {
     });
   }
 
-  if (document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', initAddrAutocomplete);
-  } else {
-    initAddrAutocomplete();
-  }
+  // DÉSACTIVÉ : conflit avec le script global hc-address-autocomplete.js
+  // (le bandeau restait ouvert à cause des 2 systèmes en parallèle)
+  // if (document.readyState === 'loading'){
+  //   document.addEventListener('DOMContentLoaded', initAddrAutocomplete);
+  // } else {
+  //   initAddrAutocomplete();
+  // }
 })();
 </script>
 <script src="assets/hc-address-autocomplete.js" defer></script>
