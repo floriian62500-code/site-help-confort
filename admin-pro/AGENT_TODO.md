@@ -14,8 +14,8 @@
 
 ## P1 — Pages secondaires : refonte visuelle (CTA premium + picto)
 
-- [ ] **`nos-prestations.html`** — refonte complète avec catalogue multi-métiers issu de la base produits (Plomberie / Chauffage / Électricité / Serrurerie / Vitrerie / Travaux). Format : 6 sections, chacune avec 4-6 cards tarif (vrais prix base produits). CTA premium en bas.
-- [ ] **`processus.html`** — refonte : ajouter picto métier + timeline visuelle des 7 étapes (icônes + couleurs) + CTA "Demander un devis" final.
+- [x] **`nos-prestations.html`** — refonte complète avec catalogue multi-métiers issu de la base produits (Plomberie / Chauffage / Électricité / Serrurerie / Vitrerie / Travaux). Format : 6 sections, chacune avec 4-6 cards tarif (vrais prix base produits). CTA premium en bas. *(fait 14/05 12:50 — catalogue 6 catégories déjà rendu via JS Supabase ; ajout CTA premium .np-cta-premium avec phone + devis + 4 trust-pills)*
+- [x] **`processus.html`** — refonte : ajouter picto métier + timeline visuelle des 7 étapes (icônes + couleurs) + CTA "Demander un devis" final. *(fait 14/05 12:50 — style block complet, 7 pictos SVG par étape, gradient nth-child couleurs distinctes, CTA double phone+devis)*
 - [ ] **`aides.html`** — refonte : picto + cards des aides éligibles (MaPrimeRénov', MaPrimeAdapt', CEE, TVA réduite) avec lien vers contact.
 - [ ] **`sinistres.html`** — refonte : picto sinistre + cards "Que faire en cas de…" (dégât eaux, vol, incendie) + CTA "Nous contacter pour expertise".
 - [ ] **`pro.html`** — refonte : picto pro + section partenaires (assurances, bailleurs, syndics) + CTA "Devenir partenaire".
