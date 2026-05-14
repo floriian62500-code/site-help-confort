@@ -190,14 +190,15 @@
 
 <div class="toast-stack" id="toastStack"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script src="assets/admin-config.js"></script>
-<script src="assets/admin-shell.js"></script>
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script src="assets/layout.js"></script>
 <script>
 let allConversations = [];
 let currentFilter = 'all';
 let currentConv = null;
 let currentRating = 0;
+let sb = null;
 
 function toast(msg, type) {
   type = type || 'ok';
@@ -229,12 +230,19 @@ function ago(iso) {
 async function loadConversations() {
   document.getElementById('cvList').innerHTML = '<div class="empty-state">Chargement…</div>';
   try {
-    const { data, error } = await window.sb
+    if (!sb) sb = await HCSupabase.init();
+    const { data, error } = await sb
       .from('chat_conversations')
       .select('*')
       .order('updated_at', { ascending: false })
       .limit(500);
-    if (error) throw error;
+    if (error) {
+      if (error.code === '42P01') {
+        document.getElementById('cvList').innerHTML = '<div class="empty-state">⚠️ Table <code>chat_conversations</code> absente.<br>Exécutez <code>admin-pro/scripts/setup_chat_conversations.sql</code> dans Supabase.</div>';
+        return;
+      }
+      throw error;
+    }
     allConversations = data || [];
     renderStats();
     renderList();
@@ -369,7 +377,8 @@ async function saveRating() {
   if (!currentConv) return;
   var notes = document.getElementById('rateNotes').value.trim();
   try {
-    const { error } = await window.sb
+    if (!sb) sb = await HCSupabase.init();
+    const { error } = await sb
       .from('chat_conversations')
       .update({ rating: currentRating || null, rating_notes: notes || null })
       .eq('id', currentConv.id);
@@ -410,11 +419,26 @@ document.getElementById('cvModal').addEventListener('click', function(e){
   if (e.target === this) closeModal();
 });
 
-// Initial load
-loadConversations();
-
-// Auto-refresh toutes les 60s
-setInterval(loadConversations, 60000);
+// Initial load + mount du shell admin (auth, sidebar, topbar)
+(async function(){
+  try {
+    await HCSupabase.init();
+    if (window.HCAdmin && HCAdmin.requireAuth) {
+      const session = await HCAdmin.requireAuth();
+      if (!session) return;
+    }
+    if (window.HCLayout && HCLayout.mount) {
+      await HCLayout.mount('chat-conversations', 'Conversations chatbot IA');
+    }
+    sb = await HCSupabase.init();
+    loadConversations();
+    // Auto-refresh toutes les 60s
+    setInterval(loadConversations, 60000);
+  } catch (e) {
+    console.error('Init error:', e);
+    document.getElementById('cvList').innerHTML = '<div class="empty-state">Erreur d\'initialisation : ' + e.message + '</div>';
+  }
+})();
 </script>
 </body>
 </html>
