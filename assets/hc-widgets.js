@@ -446,10 +446,142 @@
     fab.classList.add('chat-open');
     if (!hasOpenedChat) {
       hasOpenedChat = true;
-      addMsg(TREE.start.msg, 'bot');
-      showOpts(TREE.start.opts);
+      initAiChat();
+    }
+    // Focus l'input après ouverture
+    setTimeout(function(){ var inp = document.getElementById('hcChatInput'); if (inp) inp.focus(); }, 250);
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // CHAT IA (Claude) — Mémoire + persistance par session_id
+  // ═══════════════════════════════════════════════════════════════
+  var SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+  var SESSION_KEY  = 'hc_chat_session_id';
+  var SESSION_TTL  = 'hc_chat_history';
+
+  function getSessionId(){
+    try {
+      var sid = localStorage.getItem(SESSION_KEY);
+      if (!sid){
+        sid = 'sid-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,10);
+        localStorage.setItem(SESSION_KEY, sid);
+      }
+      return sid;
+    } catch(_) {
+      return 'sid-tmp-' + Date.now();
     }
   }
+
+  function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]); }); }
+
+  function appendBubble(role, text){
+    var b = document.getElementById('hcChatBody');
+    if (!b) return;
+    var who = role === 'user' ? 'user' : 'bot';
+    var av  = role === 'user' ? 'V' : '✨';
+    var html = '<div class="hc-chat-msg hc-chat-msg-' + who + '">'
+      + '<span class="av-mini">' + av + '</span>'
+      + '<div class="hc-chat-bubble">' + escapeHtml(text).replace(/\n/g,'<br>') + '</div>'
+      + '</div>';
+    b.insertAdjacentHTML('beforeend', html);
+    b.scrollTop = b.scrollHeight;
+  }
+
+  function showTyping(){
+    var b = document.getElementById('hcChatBody');
+    if (!b) return;
+    var html = '<div class="hc-chat-msg hc-chat-msg-bot" id="hcChatTyping">'
+      + '<span class="av-mini">✨</span>'
+      + '<div class="hc-chat-typing"><span></span><span></span><span></span></div>'
+      + '</div>';
+    b.insertAdjacentHTML('beforeend', html);
+    b.scrollTop = b.scrollHeight;
+  }
+  function hideTyping(){ var t = document.getElementById('hcChatTyping'); if (t) t.remove(); }
+
+  function initAiChat(){
+    var body = document.getElementById('hcChatBody');
+    if (!body) return;
+    body.innerHTML = '';
+    // Charger historique local (rendu instantané)
+    var local = [];
+    try { local = JSON.parse(localStorage.getItem(SESSION_TTL) || '[]'); } catch(_) {}
+    if (local.length){
+      local.forEach(function(m){ appendBubble(m.role, m.content); });
+    } else {
+      appendBubble('assistant', 'Bonjour 👋 Je suis l\'assistant HELP! Confort. Décrivez-moi votre situation (panne, devis, contrat d\'entretien) — un conseiller vous rappellera sous 24h. Si c\'est une urgence, appelez le ' + PHONE_DISPLAY + '.');
+    }
+  }
+
+  async function sendChatMessage(text){
+    if (!text || !text.trim()) return;
+    var sendBtn = document.getElementById('hcChatSend');
+    var input   = document.getElementById('hcChatInput');
+    if (sendBtn) sendBtn.disabled = true;
+    if (input) { input.value = ''; input.style.height = ''; }
+
+    appendBubble('user', text);
+    // Sauvegarde locale
+    try {
+      var hist = JSON.parse(localStorage.getItem(SESSION_TTL) || '[]');
+      hist.push({ role: 'user', content: text });
+      localStorage.setItem(SESSION_TTL, JSON.stringify(hist.slice(-30)));
+    } catch(_) {}
+
+    showTyping();
+
+    try {
+      var r = await fetch(SUPABASE_URL + '/functions/v1/chat-assistant', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          session_id: getSessionId(),
+          message: text,
+          page_url: location.href,
+          user_agent: navigator.userAgent
+        })
+      });
+      var data = await r.json();
+      hideTyping();
+      if (!r.ok || !data.reply){
+        appendBubble('assistant', 'Je rencontre un souci technique. Vous pouvez appeler directement au ' + PHONE_DISPLAY + '.');
+        return;
+      }
+      appendBubble('assistant', data.reply);
+      // Persistance locale
+      try {
+        var hist2 = JSON.parse(localStorage.getItem(SESSION_TTL) || '[]');
+        hist2.push({ role: 'assistant', content: data.reply });
+        localStorage.setItem(SESSION_TTL, JSON.stringify(hist2.slice(-30)));
+      } catch(_) {}
+    } catch(e){
+      hideTyping();
+      appendBubble('assistant', 'Connexion impossible. Appelez le ' + PHONE_DISPLAY + ' — on prend le relais.');
+    } finally {
+      if (sendBtn) sendBtn.disabled = false;
+      if (input) input.focus();
+    }
+  }
+
+  // Listeners input + bouton send
+  (function bindChatInput(){
+    var input = document.getElementById('hcChatInput');
+    var btn   = document.getElementById('hcChatSend');
+    if (!input || !btn) return;
+    // Auto-resize textarea
+    input.addEventListener('input', function(){
+      input.style.height = 'auto';
+      input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+    });
+    // Enter envoie, Shift+Enter = nouvelle ligne
+    input.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' && !e.shiftKey){
+        e.preventDefault();
+        sendChatMessage(input.value);
+      }
+    });
+    btn.addEventListener('click', function(){ sendChatMessage(input.value); });
+  })();
   fab.querySelector('.hc-chat-head .back').addEventListener('click', function() {
     fab.classList.remove('chat-open');
   });
