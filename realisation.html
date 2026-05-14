@@ -176,14 +176,14 @@
   if (r.image_before && r.image_after) {
     photosHTML = `
       <div class="real-photos">
-        <div class="real-photo before"><span class="tag">Avant</span><img src="${r.image_before}" alt="Avant — ${escapeHtml(r.title)}"></div>
-        <div class="real-photo after"><span class="tag">Après</span><img src="${r.image_after}" alt="Après — ${escapeHtml(r.title)}"></div>
+        <div class="real-photo before"><span class="tag">Avant</span><img loading="lazy" decoding="async" src="${r.image_before}" alt="Avant — ${escapeHtml(r.title)}"></div>
+        <div class="real-photo after"><span class="tag">Après</span><img loading="lazy" decoding="async" src="${r.image_after}" alt="Après — ${escapeHtml(r.title)}"></div>
       </div>`;
   } else if (photo) {
     photosHTML = `
       <div class="real-single-photo real-photo ${r.image_after ? 'after' : ''}">
         <span class="tag">${r.image_after ? 'Après' : 'Avant'}</span>
-        <img src="${photo}" alt="${escapeHtml(r.title)}">
+        <img loading="lazy" decoding="async" src="${photo}" alt="${escapeHtml(r.title)}">
       </div>`;
   }
 

@@ -700,7 +700,7 @@ btn.addEventListener('click', function(){
 var key = btn.getAttribute('data-label');
 var data = labels[key];
 if (!data) return;
-modalLogo.innerHTML = '<img src="'+data.logo+'" alt="">';
+modalLogo.innerHTML = '<img loading="lazy" decoding="async" src="'+data.logo+'" alt="">';
 modalEyebrow.textContent = data.eyebrow;
 modalTitle.textContent = data.title;
 modalContent.innerHTML = data.content;
@@ -1305,7 +1305,7 @@ var stepsContent = document.querySelectorAll('.hc-resa-step[data-step]');
       var isVideo = p.type && p.type.startsWith('video/');
       var thumb = isVideo
         ? '<div style="width:80px;height:80px;background:#0A1428;color:#fff;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:.7rem;font-weight:700">🎥 VIDÉO</div>'
-        : '<img src="'+p.dataUrl+'" alt="Photo '+(i+1)+'" style="width:80px;height:80px;object-fit:cover;border-radius:10px;border:1px solid #E5EDF3">';
+        : '<img loading="lazy" decoding="async" src="'+p.dataUrl+'" alt="Photo '+(i+1)+'" style="width:80px;height:80px;object-fit:cover;border-radius:10px;border:1px solid #E5EDF3">';
       return '<div style="position:relative;display:inline-block">'
         + thumb
         + '<button type="button" data-rm="'+i+'" aria-label="Retirer" style="position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;background:#E11D48;color:#fff;border:0;cursor:pointer;font-size:.8rem;line-height:1;display:flex;align-items:center;justify-content:center">×</button>'

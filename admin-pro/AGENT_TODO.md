@@ -43,7 +43,7 @@
 
 - [x] **`netlify.toml`** — ajouter Content Security Policy (CSP), HSTS, X-Frame-Options, Referrer-Policy. *(fait 14/05 12:00 — CSP complète + COOP, HSTS/XFO/CTO/RP/PP déjà présents)*
 - [ ] **Compression** — vérifier que toutes les images PNG sont optimisées (passes via TinyPNG-like si présence d'outil dans le sandbox).
-- [ ] **Lazy-loading** — auditer que toutes les `<img>` sans `loading="lazy"` (hors above-the-fold) en aient un.
+- [x] **Lazy-loading** — auditer que toutes les `<img>` sans `loading="lazy"` (hors above-the-fold) en aient un. *(fait 14/05 12:10 — 12 images patchées sur 9 fichiers)*
 - [ ] **Preconnect/dns-prefetch** — vérifier que toutes les pages ont preconnect vers `https://btcbjwqiivhpwoszomhg.supabase.co`, `https://fonts.googleapis.com`, `https://fonts.gstatic.com`.
 - [ ] **Service Worker** — créer un SW basique de cache pour les pages métier (cache-first sur les images, network-first sur le HTML).
 
@@ -73,7 +73,7 @@
 ## P8 — Tests & qualité
 
 - [ ] **Audit Lighthouse** simulé : checker performance/SEO/a11y des pages clés via curl + analyseur HTML basique.
-- [ ] **Broken links** : crawler local des `href=` internes et vérifier que les fichiers cibles existent.
+- [x] **Broken links** : crawler local des `href=` internes et vérifier que les fichiers cibles existent. *(fait 14/05 12:08 — 2124 liens vérifiés, 0 cassé ✅)*
 - [ ] **Schema.org Validator** : valider via curl le JSON-LD de chaque page métier auprès de https://validator.schema.org.
 - [ ] **HTML5 validation** : passer chaque page publique au validateur W3C (via curl) et corriger les erreurs.
 

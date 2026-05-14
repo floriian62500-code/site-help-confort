@@ -2374,7 +2374,7 @@ if (document.fonts && document.fonts.ready) {
         photosData.forEach(function(p, i){
           var item = document.createElement('div');
           item.className = 'sw-photo-preview-item';
-          item.innerHTML = '<img src="' + p.data + '" alt="' + p.name + '">' +
+          item.innerHTML = '<img loading="lazy" decoding="async" src="' + p.data + '" alt="' + p.name + '">' +
             '<button type="button" class="sw-photo-rm" data-i="' + i + '" aria-label="Supprimer">×</button>';
           preview.appendChild(item);
         });
