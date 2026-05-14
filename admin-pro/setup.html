@@ -321,7 +321,7 @@ const checks = {
 
   'int-anthropic':       { critical: false, weight: 2, fixUrl: 'settings.html#section-anthropic', fixLabel: 'Configurer' },
   'int-meta':            { critical: false, weight: 1, fixUrl: 'settings.html#section-meta', fixLabel: 'Configurer' },
-  'int-linkedin':        { critical: false, weight: 1, fixUrl: 'settings.html#section-linkedin', fixLabel: 'Configurer' },
+  'int-linkedin':        { critical: false, weight: 0, fixUrl: 'settings.html#section-linkedin', fixLabel: 'Configurer (B2B uniquement)', skipInScore: true },
   'int-gbp':             { critical: false, weight: 1, fixUrl: 'settings.html#section-gbp', fixLabel: 'Configurer' },
   'int-ga4':             { critical: false, weight: 1, fixUrl: 'settings.html#section-ga4', fixLabel: 'Configurer' },
 
@@ -357,7 +357,8 @@ function updateScoreAndPriorities() {
   if (!allDone) return;
 
   const priorityBox = document.getElementById('priorityBox');
-  const fails = allKeys.filter(k => results[k] === 'fail' || results[k] === 'warn');
+  // On exclut les items "skipInScore" (ex: LinkedIn B2B optionnel) des priorités
+  const fails = allKeys.filter(k => (results[k] === 'fail' || results[k] === 'warn') && !checks[k].skipInScore);
 
   if (fails.length === 0) {
     priorityBox.innerHTML = `
@@ -404,7 +405,7 @@ function updateScoreAndPriorities() {
     'fn-auto-publish-from-photos':['Déployer auto-publish-from-photos', 'Pour le Magic Dropzone IA (photos → publication auto)'],
     'int-anthropic':       ['Ajouter la clé Anthropic Claude', 'Bloque toute la génération IA'],
     'int-meta':            ['Configurer Meta', 'Sans ça, pas de cross-post Facebook/Instagram'],
-    'int-linkedin':        ['Configurer LinkedIn', 'Sans ça, pas de cross-post LinkedIn'],
+    'int-linkedin':        ['LinkedIn (optionnel B2B)', 'À configurer uniquement quand l\'offre Pro sera lancée — ta cible actuelle est B2C, donc non bloquant'],
     'int-gbp':             ['Configurer Google Business', 'Sans ça, pas de cross-post + pas d\'avis Google'],
     'int-ga4':             ['Configurer GA4', 'Sans ça, pas de stats visiteurs dans le dashboard'],
     'cnt-reals':           ['Créer ton premier chantier', 'C\'est la matière première du back-office'],
