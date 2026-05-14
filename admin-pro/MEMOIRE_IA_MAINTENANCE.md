@@ -280,6 +280,7 @@ Ce document recense tous les bugs trouvés manuellement pendant la session du 13
 15. **Sonde 42P01** : `.from().select()` sans gestion d'erreur table manquante.
 16. **Sonde Feedback-loop** : features IA sans mécanisme de notation+amélioration.
 17. **Sonde JSON-images-vides** : JSON statique avec >50% d'entrées sans image → alerte de pipeline d'enrichissement cassé.
+18. **Sonde Payload-schema** : croiser les clés de chaque payload INSERT REST avec les colonnes réelles de la table cible.
 
 ---
 
