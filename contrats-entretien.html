@@ -1328,7 +1328,7 @@ if (document.fonts && document.fonts.ready) {
     </div>
 
     <!-- Form -->
-    <form id="sousForm" onsubmit="return submitSouscription(event)" style="padding:24px 28px 28px" data-hc-lead="souscription">
+    <form id="sousForm" onsubmit="return submitSouscription(event)" style="padding:24px 28px 28px" data-hc-lead="souscription" novalidate>
       <input type="hidden" name="energie" id="f-energie">
       <input type="hidden" name="formule" id="f-formule">
       <input type="hidden" name="prix" id="f-prix">
@@ -1970,9 +1970,9 @@ if (document.fonts && document.fonts.ready) {
     var agence = agency.name;
     data.set('agence', agence);
 
-    var energie = data.get('energie');
-    var formule = data.get('formule');
-    var prix = data.get('prix');
+    var energie = data.get('energie') || 'gaz';
+    var formule = data.get('formule') || 'CONFORT';
+    var prix = data.get('prix') || '';
 
     // Désactive le bouton submit
     var btn = form.querySelector('button[type="submit"]');
