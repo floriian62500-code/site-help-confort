@@ -1505,9 +1505,48 @@ if (document.fonts && document.fonts.ready) {
             <option value="">Modèle * (sélectionnez d'abord la marque)</option>
           </select>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-          <input type="text" name="annee" placeholder="Année d'installation *" required class="sous-inp" pattern="(19|20)[0-9]{2}" maxlength="4" inputmode="numeric" data-validate="required">
-          <input type="text" name="dernier_entretien" placeholder="Dernier entretien (MM/AAAA) *" required class="sous-inp" pattern="(0[1-9]|1[0-2])/(19|20)[0-9]{2}" maxlength="7" inputmode="numeric" data-validate="required">
+        <!-- Année d'installation : SELECT + zone texte libre -->
+        <div class="sw-date-block">
+          <label class="sw-date-label">Année d'installation *</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <select name="annee" id="eqAnnee" required class="sous-inp" data-validate="required">
+              <option value="">— Choisir l'année —</option>
+              <option>2026</option><option>2025</option><option>2024</option><option>2023</option>
+              <option>2022</option><option>2021</option><option>2020</option><option>2019</option>
+              <option>2018</option><option>2017</option><option>2016</option><option>2015</option>
+              <option>2014</option><option>2013</option><option>2012</option><option>2011</option>
+              <option>2010</option><option>2005-2009</option><option>2000-2004</option>
+              <option>1995-1999</option><option>1990-1994</option><option>Avant 1990</option>
+              <option disabled>──────────</option>
+              <option>Je ne sais pas</option>
+            </select>
+            <input type="text" name="annee_precision" placeholder="Préciser (facultatif)" class="sous-inp">
+          </div>
+        </div>
+
+        <!-- Dernier entretien : SELECT mois + SELECT année + zone texte -->
+        <div class="sw-date-block" style="margin-top:14px">
+          <label class="sw-date-label">Dernier entretien *</label>
+          <div style="display:grid;grid-template-columns:1.2fr 1fr 1.4fr;gap:10px">
+            <select name="dernier_entretien_mois" id="eqEntretienMois" class="sous-inp">
+              <option value="">— Mois —</option>
+              <option value="01">Janvier</option><option value="02">Février</option>
+              <option value="03">Mars</option><option value="04">Avril</option>
+              <option value="05">Mai</option><option value="06">Juin</option>
+              <option value="07">Juillet</option><option value="08">Août</option>
+              <option value="09">Septembre</option><option value="10">Octobre</option>
+              <option value="11">Novembre</option><option value="12">Décembre</option>
+            </select>
+            <select name="dernier_entretien_annee" id="eqEntretienAnnee" required class="sous-inp" data-validate="required">
+              <option value="">— Année —</option>
+              <option>2026</option><option>2025</option><option>2024</option><option>2023</option>
+              <option>2022</option><option>2021</option><option>Avant 2021</option>
+              <option disabled>──────────</option>
+              <option>Jamais entretenu</option>
+              <option>Je ne sais pas</option>
+            </select>
+            <input type="text" name="dernier_entretien" id="eqEntretienTexte" placeholder="Précisions (facultatif)" class="sous-inp">
+          </div>
         </div>
 
         <!-- Upload PHOTO chaudière -->
