@@ -1441,6 +1441,87 @@ var habitatEl = document.getElementById('resa-habitat');
 if (habitatEl) habitatEl.addEventListener('change', function(e) { state.habitat = e.target.value; });
 btnBack.addEventListener('click', function() { gotoStep(current - 1); });
 btnNext.addEventListener('click', function() { gotoStep(current + 1); });
+
+// ═══════════════════════════════════════════════════════════════
+// AUTOCOMPLETE BAN sur le champ adresse — pré-remplit CP + ville
+// ═══════════════════════════════════════════════════════════════
+(function bindAddressAutocomplete(){
+  var input = document.getElementById('resa-adresse');
+  var box   = document.getElementById('resa-adresse-suggest');
+  if (!input || !box) return;
+  var cpInput = document.getElementById('resa-cp');
+  var debounceTimer = null;
+  var lastResults = [];
+  var focusIdx = -1;
+
+  function hideBox(){ box.hidden = true; box.innerHTML = ''; focusIdx = -1; }
+  function showBox(items){
+    if (!items.length){ hideBox(); return; }
+    box.innerHTML = items.map(function(it, i){
+      var p = it.properties || {};
+      var lib = p.label || (p.name + ' ' + (p.postcode || '') + ' ' + (p.city || ''));
+      var sub = (p.postcode || '') + ' ' + (p.city || '') + (p.context ? ' · ' + p.context : '');
+      return '<div class="resa-addr-suggest-item' + (i === focusIdx ? ' is-focus' : '') + '" data-idx="' + i + '">' +
+        '<strong>' + (p.name || lib) + '</strong>' +
+        '<small>' + sub + '</small></div>';
+    }).join('');
+    box.hidden = false;
+    lastResults = items;
+  }
+
+  function selectItem(it){
+    if (!it) return;
+    var p = it.properties || {};
+    input.value = p.label || (p.name + ', ' + (p.postcode || '') + ' ' + (p.city || ''));
+    state.adresse = input.value;
+    if (cpInput && p.postcode) {
+      cpInput.value = p.postcode;
+      state.cp = p.postcode;
+      cpInput.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    hideBox();
+    refreshNext();
+  }
+
+  input.addEventListener('input', function(){
+    var q = input.value.trim();
+    state.adresse = q;
+    refreshNext();
+    if (debounceTimer) clearTimeout(debounceTimer);
+    if (q.length < 3){ hideBox(); return; }
+    debounceTimer = setTimeout(async function(){
+      try {
+        var url = 'https://api-adresse.data.gouv.fr/search/?limit=6&q=' + encodeURIComponent(q);
+        var r = await fetch(url);
+        var d = await r.json();
+        focusIdx = -1;
+        showBox((d && d.features) || []);
+      } catch(e){ hideBox(); }
+    }, 220);
+  });
+
+  // Clavier : flèches + entrée + échap
+  input.addEventListener('keydown', function(e){
+    if (box.hidden) return;
+    if (e.key === 'ArrowDown'){ e.preventDefault(); focusIdx = Math.min(focusIdx + 1, lastResults.length - 1); showBox(lastResults); }
+    else if (e.key === 'ArrowUp'){ e.preventDefault(); focusIdx = Math.max(focusIdx - 1, 0); showBox(lastResults); }
+    else if (e.key === 'Enter' && focusIdx >= 0){ e.preventDefault(); selectItem(lastResults[focusIdx]); }
+    else if (e.key === 'Escape'){ hideBox(); }
+  });
+
+  // Clic sur item
+  box.addEventListener('click', function(e){
+    var item = e.target.closest('.resa-addr-suggest-item');
+    if (!item) return;
+    var idx = parseInt(item.dataset.idx, 10);
+    selectItem(lastResults[idx]);
+  });
+
+  // Fermer si on clique en dehors
+  document.addEventListener('click', function(e){
+    if (e.target !== input && !box.contains(e.target)) hideBox();
+  });
+})();
 function detectAgence(cp) {
 if (!cp) return 'Saint-Omer';
 var dpt = cp.substring(0, 2);
