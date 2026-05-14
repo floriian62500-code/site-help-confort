@@ -1319,10 +1319,11 @@ return state.prenom.trim() && state.nom.trim() && state.tel.trim() &&
 return false;
 }
 function refreshNext() { btnNext.disabled = !canGoNext(); }
-document.querySelectorAll('.resa-need, .metier-btn').forEach(function(b) {
+document.querySelectorAll('.resa-need, .metier-btn, .mq-card[data-presta]').forEach(function(b) {
 b.addEventListener('click', function() {
-document.querySelectorAll('.resa-need, .metier-btn').forEach(function(x){x.classList.remove('selected')});
+document.querySelectorAll('.resa-need, .metier-btn, .mq-card[data-presta]').forEach(function(x){x.classList.remove('selected');x.classList.remove('is-selected')});
 b.classList.add('selected');
+b.classList.add('is-selected');
 state.presta = b.dataset.presta;
 state.flow   = b.dataset.flow;
 refreshNext();
