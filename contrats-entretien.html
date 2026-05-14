@@ -1597,8 +1597,9 @@ if (document.fonts && document.fonts.ready) {
   .sw-recap-label{color:#64748b;font-weight:600;flex-shrink:0}
   .sw-recap-value{color:#0A1428;font-weight:700;text-align:right;word-break:break-word}
 
-  /* Autocomplete adresse (BAN) — z-index très haut + ! pour sortir du modal overflow:hidden */
+  /* Autocomplete adresse (BAN) — z-index très haut + sous-card overflow:visible pour ne pas couper la liste */
   .sous-card{overflow:visible !important}
+  .sous-card > div:first-child{border-radius:20px 20px 0 0}
   .sous-addr-wrap{position:relative}
   .sous-addr-list{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid #E5EDF3;border-radius:10px;box-shadow:0 12px 32px rgba(10,20,40,.18);max-height:240px;overflow-y:auto;z-index:9999}
   .sous-addr-list[hidden]{display:none}
