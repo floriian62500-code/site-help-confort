@@ -79,7 +79,7 @@
 - **Téléphone** : 03 66 10 01 34
 - **Slogan officiel** : « Un seul interlocuteur pour tous vos travaux. » / « Quand ça lâche, on répond. Et on règle. »
 - **Note Google** : 4,7/5 sur 343 avis
-- **Domaine cible** : `https://www.helpconfort-saintomer.fr`
+- **Domaine cible** : `https://www.depan59-62.fr`
 
 ---
 
@@ -307,7 +307,7 @@ Le push échoue avec `Password authentication is not supported for Git operation
 ### 🟡 IMPORTANT
 5. **Connecter API Trustville + Google Places** pour synchronisation automatique des avis (actuellement les notes sont en dur)
 6. **Activer API Facebook Graph** pour sync auto des nouveaux posts (suit `SETUP-API-FACEBOOK.md`)
-7. **Brancher le domaine `helpconfort-saintomer.fr`** dans Netlify
+7. **Brancher le domaine `depan59-62.fr`** dans Netlify
 
 ### 🟢 OPTIONNEL
 8. **Augmenter les contrastes** sur certaines petites typos (.hcv-body p, .urg-btn span)

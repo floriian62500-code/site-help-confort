@@ -10,7 +10,7 @@
 ## 🎯 Ce que tu vas obtenir
 
 À la fin de ce guide :
-- ✅ Une URL **`https://www.helpconfort-saintomer.fr/admin/`** où tu te connectes avec ton email
+- ✅ Une URL **`https://www.depan59-62.fr/admin/`** où tu te connectes avec ton email
 - ✅ Un éditeur visuel pour publier **articles d'actualité** et **photos chantiers** (avant/après)
 - ✅ Tes contributions apparaissent automatiquement sur **`/actualites`** et **`/realisations`**
 - ✅ Tout est **gratuit** (Netlify + Decap CMS, pas de carte bancaire)
@@ -143,7 +143,7 @@ Tu vois dans le menu de gauche :
 ## 🌍 ÉTAPE 8 — Brancher ton vrai nom de domaine
 
 Dans Netlify : **Site configuration** → **Domain management** → **Add custom domain**
-- Entre `helpconfort-saintomer.fr`
+- Entre `depan59-62.fr`
 - Suis les instructions DNS (à configurer chez ton registraire de domaine — OVH, Gandi…)
 
 > ⚠️ Si tu n'as pas encore de domaine, tu peux laisser l'URL Netlify (`xxx.netlify.app`) en attendant.

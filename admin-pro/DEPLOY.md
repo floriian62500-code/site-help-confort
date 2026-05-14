@@ -72,7 +72,7 @@ values ('anthropic', jsonb_build_object(
 À faire après les étapes 1 et 2 :
 
 ### Test chatbot IA
-1. Ouvrir la home `https://www.helpconfort-saintomer.fr`
+1. Ouvrir la home `https://www.depan59-62.fr`
 2. Cliquer sur la bulle de chat en bas à droite
 3. Écrire « j'ai une fuite sous l'évier »
 4. L'IA doit répondre en 2-4 secondes

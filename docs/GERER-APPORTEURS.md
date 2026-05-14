@@ -4,7 +4,7 @@ Tu peux désormais ajouter, modifier et supprimer les apporteurs d'affaires (hom
 
 ## Accéder au back-office
 
-1. Va sur `https://www.helpconfort-saintomer.fr/admin/` (ou en local : `http://localhost:8000/admin/`)
+1. Va sur `https://www.depan59-62.fr/admin/` (ou en local : `http://localhost:8000/admin/`)
 2. Connecte-toi avec ton identifiant Netlify Identity
 3. Tu vois la liste des collections dans le menu de gauche
 

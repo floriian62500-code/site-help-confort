@@ -5,7 +5,7 @@ Le code de tracking est déjà installé sur **toutes les pages** du site, mais 
 ## 1. Google Analytics 4 (GA4) — gratuit
 
 1. Va sur [analytics.google.com](https://analytics.google.com), connecte-toi avec ton compte Google.
-2. Crée une propriété GA4 pour `helpconfort-saintomer.fr`.
+2. Crée une propriété GA4 pour `depan59-62.fr`.
 3. Récupère l'**ID de mesure** : il commence par `G-` (ex : `G-ABC1234XYZ`).
 4. Dans **tous les fichiers HTML** du site, remplace `G-XXXXXXXXXX` par ton ID.
 
@@ -17,7 +17,7 @@ grep -rl "G-XXXXXXXXXX" --include="*.html" . | xargs sed -i '' 's/G-XXXXXXXXXX/G
 ## 2. Google Tag Manager (GTM) — gratuit
 
 1. Va sur [tagmanager.google.com](https://tagmanager.google.com).
-2. Crée un conteneur pour `helpconfort-saintomer.fr` (type : Web).
+2. Crée un conteneur pour `depan59-62.fr` (type : Web).
 3. Récupère l'**ID GTM** : il commence par `GTM-` (ex : `GTM-ABCDEF1`).
 4. Remplace `GTM-XXXXXXX` par ton ID dans tous les fichiers HTML.
 
@@ -28,7 +28,7 @@ grep -rl "GTM-XXXXXXX" --include="*.html" . | xargs sed -i '' 's/GTM-XXXXXXX/GTM
 ## 3. Microsoft Clarity — gratuit (heatmaps, replays)
 
 1. Va sur [clarity.microsoft.com](https://clarity.microsoft.com), connecte-toi.
-2. Crée un projet pour `helpconfort-saintomer.fr`.
+2. Crée un projet pour `depan59-62.fr`.
 3. Récupère l'**ID de projet** (ex : `abc123xyz`).
 4. Remplace `CLARITY_ID` par ton ID dans tous les fichiers HTML.
 

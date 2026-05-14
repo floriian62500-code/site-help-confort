@@ -54,12 +54,12 @@ C'est tout. À partir de maintenant :
 ### Tu ne reçois pas l'email
 - Vérifie dans Supabase → Edge Functions → `notify-subscription` → logs : tu verras la raison
 - Vérifie que `RESEND_API_KEY` est bien configurée : `supabase secrets list --project-ref btcbjwqiivhpwoszomhg`
-- Vérifie tes spams (Resend envoie depuis `noreply@helpconfort-saintomer.fr` au démarrage)
+- Vérifie tes spams (Resend envoie depuis `noreply@depan59-62.fr` au démarrage)
 
 ### Tu veux personnaliser l'expéditeur
-Pour envoyer depuis ton **propre domaine** (ex. `contact@helpconfort-saintomer.fr` au lieu de `onboarding@resend.dev`) :
+Pour envoyer depuis ton **propre domaine** (ex. `contact@depan59-62.fr` au lieu de `onboarding@resend.dev`) :
 
-1. Dans Resend → **Domains** → Add domain → `helpconfort-saintomer.fr`
+1. Dans Resend → **Domains** → Add domain → `depan59-62.fr`
 2. Resend te donne 3 enregistrements DNS (SPF, DKIM, return-path) → ajoute-les chez ton registrar
 3. Verification automatique sous quelques heures
 4. Modifie ensuite la valeur `from_email` dans `app_settings` (table Supabase) sans toucher au code

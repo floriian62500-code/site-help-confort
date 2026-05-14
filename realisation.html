@@ -7,7 +7,7 @@
 <title id="pageTitle">Chantier · HELP! Confort</title>
 <meta name="description" id="pageDesc" content="Réalisation HELP! Confort à Saint-Omer ou Dunkerque — avant/après, durée, technicien.">
 <meta name="robots" content="noindex, follow" id="pageRobots">
-<link rel="canonical" id="pageCanonical" href="https://www.helpconfort-saintomer.fr/realisation.html">
+<link rel="canonical" id="pageCanonical" href="https://www.depan59-62.fr/realisation.html">
 <meta property="og:type" content="article">
 <meta property="og:title" id="ogTitle" content="">
 <meta property="og:description" id="ogDesc" content="">
@@ -151,7 +151,7 @@
   // Meta SEO
   document.getElementById('pageTitle').textContent = r.title + ' · HELP! Confort';
   document.getElementById('pageDesc').setAttribute('content', (r.description || r.title).slice(0, 160));
-  document.getElementById('pageCanonical').setAttribute('href', 'https://www.helpconfort-saintomer.fr/realisation.html?slug=' + encodeURIComponent(slug));
+  document.getElementById('pageCanonical').setAttribute('href', 'https://www.depan59-62.fr/realisation.html?slug=' + encodeURIComponent(slug));
   document.getElementById('ogTitle').setAttribute('content', r.title);
   document.getElementById('ogDesc').setAttribute('content', (r.description || r.title).slice(0, 200));
   if (photo) document.getElementById('ogImage').setAttribute('content', photo);
@@ -166,7 +166,7 @@
     "image": photo ? [photo] : [],
     "datePublished": r.published_at || r.created_at,
     "author": { "@type": "Organization", "name": agenceLabel },
-    "publisher": { "@type": "Organization", "name": "HELP! Confort", "logo": { "@type": "ImageObject", "url": "https://www.helpconfort-saintomer.fr/logo-help-confort.png" }},
+    "publisher": { "@type": "Organization", "name": "HELP! Confort", "logo": { "@type": "ImageObject", "url": "https://www.depan59-62.fr/logo-help-confort.png" }},
     "description": r.description || r.title
   });
   document.head.appendChild(jsonLd);

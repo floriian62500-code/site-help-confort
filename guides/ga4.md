@@ -21,7 +21,7 @@ Affiche dans le dashboard les **vraies statistiques visiteurs** du site :
 
 Aller sur **https://analytics.google.com/**
 
-Si tu vois `helpconfort-saintomer.fr` dans la liste des propriétés → c'est OK, passe à l'étape 1.
+Si tu vois `depan59-62.fr` dans la liste des propriétés → c'est OK, passe à l'étape 1.
 
 Sinon :
 - Créer une propriété "Help Confort"
