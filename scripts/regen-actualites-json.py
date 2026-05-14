@@ -52,6 +52,19 @@ for html in sorted(ACTUS_DIR.glob('*.html'), reverse=True):
     desc_m = re.search(r'<meta\s+name="description"\s+content="([^"]+)"', text)
     resume = desc_m.group(1).strip() if desc_m else title
 
+    # Image og:image
+    og_m = re.search(r'<meta\s+property="og:image"\s+content="([^"]+)"', text)
+    og_image = og_m.group(1).strip() if og_m else ''
+    # Première image dans le contenu si pas d'og:image
+    if not og_image:
+        img_m = re.search(r'<img[^>]+src="([^"]+)"', text)
+        if img_m:
+            og_image = img_m.group(1).strip()
+
+    # Source Facebook (cherche un lien vers facebook.com)
+    fb_m = re.search(r'href="(https://(?:www\.)?facebook\.com/[^"]+)"', text)
+    source_facebook = fb_m.group(1).strip() if fb_m else ''
+
     url = f'actualites/{html.name}'
     prev = existing.get(url, {})
 
@@ -61,10 +74,10 @@ for html in sorted(ACTUS_DIR.glob('*.html'), reverse=True):
         'categorie': categorie,
         'zone': prev.get('zone', 'Les deux'),
         'resume': resume,
-        'image': prev.get('image', ''),
+        'image': prev.get('image') or og_image,
         'url': url,
         'published': True,
-        'source_facebook': prev.get('source_facebook', ''),
+        'source_facebook': prev.get('source_facebook') or source_facebook,
         'stats': prev.get('stats', {'vues': 0, 'reactions': 0, 'partages': 0})
     })
 
