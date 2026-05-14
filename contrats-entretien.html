@@ -1575,6 +1575,7 @@ if (document.fonts && document.fonts.ready) {
   .sw-nav{display:flex;align-items:center;gap:12px;margin-top:8px;padding-top:18px;border-top:1px solid #E5EDF3}
   .sw-step-counter{flex:1;text-align:center;font-size:.78rem;color:#64748b;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
   .sw-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-weight:700;font-size:.92rem;cursor:pointer;font-family:inherit;border:0;transition:all .2s ease;white-space:nowrap}
+  .sw-btn[hidden],.sous-step:not(.is-active),#swError[hidden]{display:none !important}
   .sw-btn-prev{background:#F1F5F9;color:#475569}
   .sw-btn-prev:hover{background:#E2E8F0;color:#0A1428}
   .sw-btn-next{background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;box-shadow:0 8px 18px rgba(13,160,207,.28)}
@@ -1596,8 +1597,10 @@ if (document.fonts && document.fonts.ready) {
   .sw-recap-label{color:#64748b;font-weight:600;flex-shrink:0}
   .sw-recap-value{color:#0A1428;font-weight:700;text-align:right;word-break:break-word}
 
-  /* Autocomplete adresse (BAN) */
-  .sous-addr-list{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid #E5EDF3;border-radius:10px;box-shadow:0 12px 32px rgba(10,20,40,.12);max-height:280px;overflow-y:auto;z-index:50}
+  /* Autocomplete adresse (BAN) — z-index très haut + ! pour sortir du modal overflow:hidden */
+  .sous-card{overflow:visible !important}
+  .sous-addr-wrap{position:relative}
+  .sous-addr-list{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid #E5EDF3;border-radius:10px;box-shadow:0 12px 32px rgba(10,20,40,.18);max-height:240px;overflow-y:auto;z-index:9999}
   .sous-addr-list[hidden]{display:none}
   .sous-addr-item{display:block;padding:10px 14px;cursor:pointer;border-bottom:1px solid #F1F5F9;transition:background .15s ease}
   .sous-addr-item:last-child{border-bottom:0}
