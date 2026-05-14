@@ -2031,6 +2031,16 @@ if (document.fonts && document.fonts.ready) {
             var json = document.getElementById('eqPhotosJson');
             try { return JSON.parse(json ? json.value : '[]').length; } catch(_){ return 0; }
           })(),
+          rib_uploaded: (function(){
+            var ri = document.getElementById('docRib');
+            return ri && ri.files && ri.files[0] ? { name: ri.files[0].name, size_kb: Math.round(ri.files[0].size/1024) } : null;
+          })(),
+          facture_entretien_uploaded: (function(){
+            var fi = document.getElementById('docFacture');
+            return fi && fi.files && fi.files[0] ? { name: fi.files[0].name, size_kb: Math.round(fi.files[0].size/1024) } : null;
+          })(),
+          sepa_principe_accepted: !!data.get('sepa_principe'),
+          visite_technique_required: true,
           cgv_accepted_at: new Date().toISOString(),
           user_agent: navigator.userAgent,
           referrer: document.referrer || null
