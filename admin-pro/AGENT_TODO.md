@@ -16,8 +16,8 @@
 
 - [x] **`nos-prestations.html`** — refonte complète avec catalogue multi-métiers issu de la base produits (Plomberie / Chauffage / Électricité / Serrurerie / Vitrerie / Travaux). Format : 6 sections, chacune avec 4-6 cards tarif (vrais prix base produits). CTA premium en bas. *(fait 14/05 12:50 — catalogue 6 catégories déjà rendu via JS Supabase ; ajout CTA premium .np-cta-premium avec phone + devis + 4 trust-pills)*
 - [x] **`processus.html`** — refonte : ajouter picto métier + timeline visuelle des 7 étapes (icônes + couleurs) + CTA "Demander un devis" final. *(fait 14/05 12:50 — style block complet, 7 pictos SVG par étape, gradient nth-child couleurs distinctes, CTA double phone+devis)*
-- [ ] **`aides.html`** — refonte : picto + cards des aides éligibles (MaPrimeRénov', MaPrimeAdapt', CEE, TVA réduite) avec lien vers contact.
-- [ ] **`sinistres.html`** — refonte : picto sinistre + cards "Que faire en cas de…" (dégât eaux, vol, incendie) + CTA "Nous contacter pour expertise".
+- [x] **`aides.html`** — refonte : picto + cards des aides éligibles (MaPrimeRénov', MaPrimeAdapt', CEE, TVA réduite) avec lien vers contact. *(fait 14/05 13:10 — ajout section .aid-cta-fin premium avant footer : eyebrow vert, h2 italique, double CTA tel+devis, 4 pills RGE/Handibat/étude/zone)*
+- [x] **`sinistres.html`** — refonte : picto sinistre + cards "Que faire en cas de…" (dégât eaux, vol, incendie) + CTA "Nous contacter pour expertise". *(fait 14/05 13:11 — ajout section .sin-cta-fin premium avant footer : palette rouge sinistre, double CTA tel+form, 4 pills photos/devis/syndic/garantie)*
 - [ ] **`pro.html`** — refonte : picto pro + section partenaires (assurances, bailleurs, syndics) + CTA "Devenir partenaire".
 - [ ] **`carrieres.html`** — refonte : picto équipe + cards postes à pourvoir + CTA "Postuler".
 
