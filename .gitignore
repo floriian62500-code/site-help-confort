@@ -44,7 +44,9 @@ supabase/.branches/
 .autopush/.db-password
 
 # Secrets locaux (credentials Google/OAuth/etc — JAMAIS commité)
-secrets/
+# Exception : on garde le README.md pour expliquer le dossier
+secrets/*
+!secrets/README.md
 *.client_secret*.json
 client_secret_*.json
 *-credentials.json
