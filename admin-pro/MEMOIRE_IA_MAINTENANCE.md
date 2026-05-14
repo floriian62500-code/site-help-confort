@@ -169,20 +169,123 @@ Ce document recense tous les bugs trouvés manuellement pendant la session du 13
 
 ---
 
-## ✅ Plan d'action proposé à l'agent IA
+## 🔵 ADDENDUM — Bugs trouvés sur seconde passe (14 mai 2026)
 
-À chaque scan quotidien, ajouter ces 7 sondes prioritaires :
+### 21. Bouton désactivé sans message d'aide
+- **Symptôme** : L'utilisateur tape "dez" (3 caractères) dans la description d'un wizard, le bouton "Continuer →" reste désactivé en gris. Aucun message, aucun feedback. L'utilisateur ne sait pas quoi faire.
+- **Cause** : `canGoNext()` exigeait `state.desc.trim().length > 5` sans aucun hint visuel à côté du bouton.
+- **Règle de scan à ajouter** :
+  - Pour chaque bouton avec `disabled` au render initial OU `disabled` géré dynamiquement, vérifier qu'un élément texte adjacent (frère ou cousin proche) contient un hint qui explique la condition manquante.
+  - Si bouton désactivé sans texte explicatif à moins de 3 niveaux DOM → ALERTE UX.
 
-1. **Sonde RLS** : INSERT anon test sur chaque table publique.
-2. **Sonde Form** : simuler submit complet sur chaque `<form>` public et vérifier la requête sortante.
-3. **Sonde Selector** : croiser JS `querySelector` ↔ HTML.
-4. **Sonde Table** : croiser `supabase.from('...')` ↔ `information_schema.tables`.
-5. **Sonde Function** : croiser appels `/functions/v1/...` ↔ functions déployées.
-6. **Sonde Cron** : lister edge functions périodiques attendues ↔ `cron.job`.
-7. **Sonde Clé** : tester chaque JWT hardcodé.
+### 22. Multi-select sans state JS
+- **Symptôme** : Des `<input type="checkbox">` dans un groupe de chips multi-choix laissent l'utilisateur cocher visuellement, mais aucune variable JS ne capture la sélection. À la soumission, l'info se perd.
+- **Cause** : Aucun `addEventListener('change', …)` n'est attaché aux checkboxes du groupe.
+- **Règle de scan à ajouter** :
+  - Pour chaque groupe `<input type="checkbox" name="…[]">` (notation tableau), vérifier qu'il existe un listener `change` qui les lit collectivement.
+  - Si le payload final (submit/mailto) ne référence pas le nom du groupe → ALERTE.
+
+### 23. Page admin référençant des scripts inexistants
+- **Symptôme** : Console error "Failed to load resource: assets/admin-config.js" + page blanche.
+- **Cause** : Copie d'un template d'une autre stack ; les noms de scripts ne matchent pas ceux du projet.
+- **Règle de scan à ajouter** :
+  - Pour chaque `<script src="…">` local d'une page admin, vérifier que le fichier existe.
+  - Si 404 → ALERTE CRITIQUE.
+
+### 24. Widget chatbot manquant sur certaines pages publiques
+- **Symptôme** : Le chatbot n'apparaît pas sur `realisation.html` et `nos-prestations.html`.
+- **Cause** : `<script src="assets/hc-widgets.js">` oublié au moment de la création/refonte de ces pages.
+- **Règle de scan à ajouter** :
+  - Lister toutes les pages publiques `.html` (exclut admin-pro et 404).
+  - Vérifier que `hc-widgets.js` est référencé sur chaque.
+  - Si manquant → ALERTE.
+
+### 25. Inputs `required` et `pattern` dans un wizard non-form
+- **Symptôme** : Aucun effet runtime, mais c'est trompeur en lecture de code et risque de bugger plus tard si on enveloppe le wizard dans un `<form>`.
+- **Cause** : Copie de markup form classique sans nettoyage.
+- **Règle de scan à ajouter** :
+  - Détecter les `required` / `pattern` sur des inputs qui ne sont PAS descendants d'un `<form>`.
+  - Suggérer de les retirer ou de valider en JS.
+
+### 26. URL hardcodée d'edge function (couplage projet Supabase)
+- **Symptôme** : Si le projet Supabase change de ref (`btcbjwqiivhpwoszomhg`), tout le front casse silencieusement.
+- **Cause** : URL `https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/…` répétée dans plusieurs fichiers.
+- **Règle de scan à ajouter** :
+  - Détecter les chaînes URL Supabase répétées dans plusieurs fichiers.
+  - Recommander de centraliser dans une seule constante (`SUPABASE_URL` ou un fichier `config.js`).
+
+### 27. Modal de chargement sans bouton d'annulation
+- **Symptôme** : Quand l'IA met 20s à répondre, l'utilisateur ne peut pas fermer la modale "Analyse en cours…" → impression de blocage.
+- **Cause** : L'animation de chargement n'est pas accompagnée d'un bouton "Annuler".
+- **Règle de scan à ajouter** :
+  - Pour chaque modale qui attend un fetch async > 5s typiquement, vérifier qu'un bouton de fermeture reste accessible pendant l'attente.
+
+### 28. Pas de gestion d'erreur RLS sur lecture publique
+- **Symptôme** : Si la table n'existe pas encore (script SQL non exécuté), la page affiche une erreur Supabase brute incompréhensible.
+- **Cause** : Pas de catch sur `error.code === '42P01'` (table missing).
+- **Règle de scan à ajouter** :
+  - Pour chaque `from('…').select`, vérifier qu'un test `error.code === '42P01'` est présent OU qu'un fallback explicite est affiché.
+  - Sinon → ALERTE UX (message d'erreur trop technique pour le user).
+
+### 29. URL hardcodée pour edge function dans plusieurs places
+- **Symptôme** : Risque de fork de version si une URL est mise à jour à un endroit et oubliée ailleurs.
+- **Cause** : Cf. #26, généralisation.
+- **Règle de scan à ajouter** :
+  - Pour chaque `/functions/v1/<name>`, lister les fichiers source qui contiennent cette chaîne. Si > 2 fichiers → suggestion de factoriser.
+
+### 30. Manque de boucle d'amélioration sur features IA
+- **Symptôme** : Un chatbot IA déployé sans mécanisme de retour qualité finit par stagner.
+- **Solution implémentée cette session** :
+  - Table `chat_conversations` avec colonnes `rating` (1-5) et `rating_notes`.
+  - Edge function `suggest-prompt-improvement` qui analyse les conversations notées ≤3/5 et propose des améliorations concrètes au system prompt.
+  - Bouton ✨ dans l'admin pour déclencher l'analyse à la demande.
+- **Règle générique pour le scan** :
+  - Pour chaque feature IA déployée, vérifier qu'il existe :
+    a) Un mécanisme de notation utilisateur ou admin.
+    b) Un mécanisme d'analyse des sessions ratées.
+    c) Une boucle de feedback documentée dans le code.
+
+---
+
+## 🆕 Sondes additionnelles pour le scan IA (v2)
+
+À ajouter aux 7 sondes initiales :
+
+8. **Sonde Hint** : pour chaque bouton désactivé au render, exiger un message d'aide adjacent.
+9. **Sonde Multi-select** : pour chaque groupe de checkboxes `name="x[]"`, vérifier le listener `change` + l'inclusion dans le payload.
+10. **Sonde Script-404** : pour chaque `<script src>` local, vérifier l'existence du fichier.
+11. **Sonde Widget-coverage** : tous les `hc-widgets.js`, `hc-address-autocomplete.js`, etc. sur les pages publiques attendues.
+12. **Sonde Required-orphan** : `required`/`pattern` hors `<form>`.
+13. **Sonde URL-DRY** : URLs d'edge functions répétées > 2 fichiers.
+14. **Sonde Modal-escape** : modales async sans bouton de fermeture.
+15. **Sonde 42P01** : `.from().select()` sans gestion d'erreur table manquante.
+16. **Sonde Feedback-loop** : features IA sans mécanisme de notation+amélioration.
+
+---
+
+## ✅ Plan d'action proposé à l'agent IA (v2)
+
+À chaque scan quotidien, ajouter ces **16 sondes** prioritaires :
+
+1. **Sonde RLS** — INSERT anon test sur chaque table publique
+2. **Sonde Form** — simuler submit complet et vérifier la requête sortante
+3. **Sonde Selector** — croiser JS `querySelector` ↔ HTML
+4. **Sonde Table** — croiser `supabase.from('...')` ↔ `information_schema.tables`
+5. **Sonde Function** — croiser appels `/functions/v1/...` ↔ functions déployées
+6. **Sonde Cron** — lister edge functions périodiques attendues ↔ `cron.job`
+7. **Sonde Clé** — tester chaque JWT hardcodé
+8. **Sonde Hint** — bouton désactivé sans texte d'aide
+9. **Sonde Multi-select** — groupes de checkboxes sans listener `change`
+10. **Sonde Script-404** — `<script src>` local invalide
+11. **Sonde Widget-coverage** — JS attendu manquant sur certaines pages
+12. **Sonde Required-orphan** — `required`/`pattern` hors `<form>`
+13. **Sonde URL-DRY** — URLs d'edge functions répétées
+14. **Sonde Modal-escape** — modales async sans fermeture possible
+15. **Sonde 42P01** — `select()` sans fallback table manquante
+16. **Sonde Feedback-loop** — features IA sans notation+analyse
 
 Chaque sonde retourne ✅ / ⚠️ / ❌ + le snippet incriminé + une suggestion de fix.
 
 ---
 
-*Document généré le 14 mai 2026 — à intégrer dans la base de mémoire de l'agent.*
+*Document généré le 14 mai 2026 — version 2 enrichie le même jour avec 10 nouveaux bugs et 9 nouvelles sondes.*

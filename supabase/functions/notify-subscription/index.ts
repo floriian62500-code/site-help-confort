@@ -53,9 +53,9 @@ serve(async (req) => {
     const agences = cfg.agences || {};
     const agenceCfg = agences[contract.agence || agence || ''] || {};
     const to = agenceCfg.email || cfg.subscriptions_to || 'florian.dhaillecourt@helpconfort.com';
-    const fromName = cfg.from_name || 'HELP! Confort';
-    const fromEmail = cfg.from_email || 'noreply@helpconfort-saintomer.fr';
-    const replyTo = cfg.reply_to || 'saint-omer@helpconfort.com';
+    const fromName = cfg.from_name || 'HELP! Confort — Site';
+    const fromEmail = cfg.from_email || 'noreply@depan59-62.fr';
+    const replyTo = cfg.reply_to || 'florian.dhaillecourt@helpconfort.com';
 
     const subject = `🔧 Nouvelle souscription contrat — ${contract.metadata?.energie || ''} ${(contract.type || '').toUpperCase()}`;
     const html = buildEmailHtml(contract);
