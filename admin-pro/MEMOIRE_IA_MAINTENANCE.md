@@ -233,6 +233,23 @@ Ce document recense tous les bugs trouvés manuellement pendant la session du 13
 - **Règle de scan à ajouter** :
   - Pour chaque `/functions/v1/<name>`, lister les fichiers source qui contiennent cette chaîne. Si > 2 fichiers → suggestion de factoriser.
 
+### 30decies. Catalogue métier pollué par d'autres métiers (cohérence sémantique cassée)
+- **Symptôme** : La page plomberie affichait des prestations chauffage (entretien chaudière, désembouage radiateur). Le client cherche du dépannage plomberie, voit des cards chauffage → confusion.
+- **Cause** : Sélection des prestations vedettes basée sur l'univers "plomberie" + mots-clés trop larges. Beaucoup d'opérations chauffage sont rangées dans l'univers "plomberie" de la base produits.
+- **Correctif appliqué** : Filtrage strict par exclusion (chauffage/chaudière/radiateur/désembouage exclus de plomberie) + sélection manuelle des prestations vedettes par métier.
+- **Règle de scan à ajouter** :
+  - Pour chaque page métier, lister les noms de prestations affichées.
+  - Détecter les mots-clés "d'un autre métier" (ex : "chaudière" sur la page plomberie, "ouverture porte" sur la page chauffage).
+  - Si > 10% des cards utilisent du vocabulaire d'un autre métier → ALERTE cohérence.
+
+### 30nonies. Bouton "Réserver" sans choix devis/paiement
+- **Symptôme** : Le bouton Réserver des cards tarifs envoyait directement vers contact.html, sans distinguer "je veux juste un devis" de "je veux acheter en ligne".
+- **Cause** : Lien direct unique. L'intention du clic n'était pas captée.
+- **Correctif appliqué** : Modale globale `hc-reserve-modal.js` qui intercepte les clics et propose 2 voies (devis vs réservation+paiement), avec UI distincte côté contact.html.
+- **Règle de scan à ajouter** :
+  - Pour chaque bouton de réservation/achat sur une page commerciale, vérifier qu'il existe un branchement clair entre "demande d'info" et "intention d'achat".
+  - Sinon → suggérer une modale ou un splitter de tunnel de conversion.
+
 ### 30octies. 🚨 CRITIQUE — Tarifs inventés par IA en production
 - **Symptôme** : Catalogue plomberie affichait "89 € TTC", "149 € TTC", "119 € TTC", "187-203 € TTC"… alors qu'AUCUNE source officielle ne fournissait ces prix.
 - **Cause racine** : L'agent IA (moi) a inventé des fourchettes "plausibles" pour le secteur, sans valider avec le client.
@@ -331,6 +348,9 @@ Ce document recense tous les bugs trouvés manuellement pendant la session du 13
 21. **Sonde CTA-doublon-fixed** : élément `position:fixed` qui duplique un CTA déjà présent dans le header sticky → alerte de redondance + risque de débordement viewport.
 22. **Sonde Composant-stable** : capturer `offsetHeight` de chaque composant partagé sur chaque page à largeur fixe, alerter si divergence > 5%.
 23. **🚨 Sonde Tarif-orphelin (PRIORITÉ ABSOLUE)** : tout montant `\d+\s*€` ou `\d+,\d+\s*€` ou `\d+\s*€\s*TTC` détecté dans une page publique doit être rattaché à une source de vérité (table `services`, `app_settings.validated_prices`, ou attribut `data-source`). Sinon : ALERTE rouge, halte recommandée du déploiement.
+24. **Sonde Cohérence métier** : sur chaque page métier, vérifier que ≥ 90% des prestations affichées utilisent le vocabulaire du métier déclaré. Détecter les contaminations croisées (ex : chaudière sur la page plomberie).
+25. **Sonde Tunnel de conversion** : tout bouton CTA d'achat/réservation doit proposer un branchement clair entre "demande d'info" et "intention d'achat" — pas de lien unique flou.
+26. **Sonde Mégamenu sticky** : un mégamenu sans `mouseleave` programmé reste ouvert et bloque les clics sur le contenu sous-jacent. Vérifier la présence d'un `setTimeout` de fermeture après hover-out.
 
 ---
 

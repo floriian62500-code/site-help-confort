@@ -504,18 +504,42 @@ if (document.fonts && document.fonts.ready) {
             'reseaux': '🔧 Réseaux'
           };
           var label = labels[presta] || presta.replace(/-/g, ' ');
+          var action = params.get('action'); // "paiement" ou null
+          var isPaiement = action === 'paiement';
           var banner = document.getElementById('prestaBanner');
           var labelEl = document.getElementById('prestaLabel');
           var hidden = document.getElementById('presta-hidden');
           if (banner && labelEl) {
             labelEl.textContent = label;
+            if (isPaiement) {
+              banner.style.background = 'linear-gradient(135deg,rgba(255,107,26,.10),rgba(255,180,0,.08))';
+              banner.style.borderColor = 'rgba(255,107,26,.30)';
+              banner.querySelector('strong').innerHTML = '💳 Demande de réservation & paiement pour :';
+              banner.querySelector('strong').style.color = '#FF6B1A';
+              // Ajoute une note paiement
+              if (!banner.querySelector('.pay-note')) {
+                var n = document.createElement('div');
+                n.className = 'pay-note';
+                n.style.cssText = 'margin-top:8px;padding:10px 12px;background:#fff;border-radius:8px;font-size:.82rem;color:#475569;border:1px dashed rgba(255,107,26,.25)';
+                n.innerHTML = '⏱️ <strong>Étape suivante :</strong> nous vous envoyons un lien de paiement sécurisé par email après validation rapide de votre demande (sous 2h ouvrées).';
+                banner.appendChild(n);
+              }
+            } else {
+              banner.querySelector('strong').innerHTML = '📌 Demande de devis pour :';
+            }
             banner.style.display = 'block';
           }
-          if (hidden) hidden.value = presta + ' | ' + label;
+          if (hidden) hidden.value = (isPaiement ? '[PAIEMENT] ' : '[DEVIS] ') + presta + ' | ' + label;
           // Préremplir le champ message si présent
           setTimeout(function(){
             var msg = document.getElementById('message');
-            if (msg && !msg.value) msg.value = 'Bonjour, je souhaite un devis pour : ' + label.replace(/^[^\s]+ /, '') + '\n\n';
+            if (msg && !msg.value) {
+              if (isPaiement) {
+                msg.value = 'Bonjour, je souhaite réserver et payer en ligne pour : ' + label.replace(/^[^\s]+ /, '') + '\n\nMerci de m\'envoyer le lien de paiement sécurisé.\n\n';
+              } else {
+                msg.value = 'Bonjour, je souhaite un devis pour : ' + label.replace(/^[^\s]+ /, '') + '\n\n';
+              }
+            }
           }, 100);
         })();
         </script>
