@@ -39,11 +39,32 @@ function guessMetier(text: string): string {
   if (/électr|electric|tableau|disjoncteur|prise|interrupteur/.test(t)) return "electricite";
   if (/serrur|clé|verrou|cylindre|porte blind/.test(t)) return "serrurerie";
   if (/vitr|vitrage|double vitrage|bris de glace|insert/.test(t)) return "vitrerie";
-  if (/menuiser|panneau pvc|porte (de service|pvc)|fenêtre/.test(t)) return "menuiserie";
+  if (/menuiser|panneau pvc|porte (de service|pvc|garage)|fenêtre/.test(t)) return "menuiserie";
   if (/volet|volet roulant/.test(t)) return "volets";
   if (/pmr|hand|baignoire.*douche|adapt/.test(t)) return "pmr";
   if (/plafond|peinture|rénovation|sol|carrelage|enduit/.test(t)) return "renovation";
   return "multiservice";
+}
+
+// 🎯 Détecte si le post FB est une ACTUALITÉ/COMMUNICATION (pas un chantier réel)
+// Retourne true pour : vœux, joyeuses fêtes, anniversaire, recrutement, événement marketing
+function isActualite(text: string): boolean {
+  const t = (text || "").toLowerCase();
+  // Vœux / fêtes
+  if (/vœux|voeux|joyeuses?\s+fêtes|bonne année|meilleurs?\s+vœux|noël|nouvelle année/.test(t)) return true;
+  // Communication marketing pure
+  if (/recrutement|nous recrutons|cherchons (un|une)|rejoignez|stage|alternance/.test(t)) return true;
+  if (/^(✨|🎄|🎅|🎁|🎉|🥂|🍾)/.test(text || "")) return true; // emojis fêtes au début
+  // Pub TV / événement
+  if (/écran|télé|invite (sur|à)|émission|reportage|salon (du|des)|portes ouvertes/.test(t)) return true;
+  // Communication interne
+  if (/annonce|communiqué|info(rmation)? importante|à noter|fermeture|congés/.test(t)) return true;
+  return false;
+}
+
+// Type final : 'realisation' (chantier) ou 'actualite' (communication)
+function guessType(text: string): "realisation" | "actualite" {
+  return isActualite(text) ? "actualite" : "realisation";
 }
 
 // Devine l'agence à partir du texte
@@ -122,6 +143,7 @@ Deno.serve(async (req: Request) => {
 
       const title = extractTitle(post.message);
       const metier = guessMetier(post.message);
+      const postType = guessType(post.message);  // 🎯 actualite vs realisation
       const { ville, agence } = guessAgence(post.message);
 
       // Slug unique : titre + suffixe court
