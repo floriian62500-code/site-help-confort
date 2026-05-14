@@ -458,9 +458,13 @@ let _editingId = null;
       }
       const nextStr = next ? next.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'2-digit'}) : '—';
       const name = (x.client_first_name ? x.client_first_name + ' ' : '') + (x.client_last_name || '');
+      const imported = !!x.imported_to_crm_at;
+      const importedBadge = imported
+        ? `<span title="Importé dans CRM le ${new Date(x.imported_to_crm_at).toLocaleDateString('fr-FR')}" style="background:#DCFCE7;color:#15803D;font-size:.66rem;padding:2px 7px;border-radius:999px;font-weight:800;letter-spacing:.04em">✓ CRM</span>`
+        : `<span style="background:#FFF7ED;color:#C2410C;font-size:.66rem;padding:2px 7px;border-radius:999px;font-weight:800;letter-spacing:.04em">📥 À IMPORTER</span>`;
       return `<div class="ct-row" onclick="window.editCt('${x.id}')">
         <div class="ct-cell-client">
-          <strong>${escapeHtml(name)}</strong>
+          <strong>${escapeHtml(name)} ${importedBadge}</strong>
           <span>${escapeHtml((x.client_phone || x.client_email || x.client_city) || '—')}</span>
         </div>
         <div><span class="ct-type-badge ct-type-${x.type}">${(x.type||'').toUpperCase()}</span></div>
@@ -468,6 +472,7 @@ let _editingId = null;
         <div class="ct-next ${nextCls}">${nextStr}</div>
         <div class="ct-amount">${Number(x.monthly_amount||0).toLocaleString('fr-FR',{minimumFractionDigits:2})}<small>€/mois</small></div>
         <div class="ct-actions" onclick="event.stopPropagation()">
+          ${!imported ? `<button title="Marquer comme importé dans le CRM" onclick="window.markCrmImported('${x.id}')" style="background:#FFB400;color:#0A1428;border:none;border-radius:7px;padding:5px 9px;font-weight:700;font-size:.74rem;cursor:pointer">📥 Importé</button>` : ''}
           <button title="Éditer" onclick="window.editCt('${x.id}')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
           </button>
@@ -556,6 +561,40 @@ let _editingId = null;
     // Redirige vers interventions.html avec contract_id en query
     window.location.href = 'interventions.html?contract=' + id;
   };
+
+  // ─── Marquer une souscription comme importée dans le CRM ────────
+  window.markCrmImported = async (id) => {
+    const ct = _all.find(x => x.id === id);
+    if (!ct) return;
+    const name = (ct.client_first_name||'') + ' ' + (ct.client_last_name||'');
+    const externalId = prompt(`Souscription "${name.trim()}"\n\nID du contrat dans ton CRM (facultatif) :`, '');
+    if (externalId === null) return; // annulé
+    try {
+      const { error } = await sb.from('contracts')
+        .update({
+          imported_to_crm_at: new Date().toISOString(),
+          crm_external_id: externalId || null
+        })
+        .eq('id', id);
+      if (error) throw error;
+      toast('✓ Marqué comme importé dans le CRM', 'ok', 2500);
+      await load();
+    } catch (e) { toast('Erreur : ' + e.message, 'err', 4500); }
+  };
+
+  // ─── Auto-action depuis l'URL : ?import=ID lance le mark ────────
+  (function handleUrlAction() {
+    const params = new URLSearchParams(window.location.search);
+    const importId = params.get('import');
+    if (importId) {
+      // Filtre sur "à importer" + scroll vers la ligne
+      _filter = 'to_import';
+      setTimeout(() => {
+        document.querySelectorAll('.ct-filter').forEach(b => b.classList.toggle('active', b.dataset.status === 'to_import'));
+        render();
+      }, 300);
+    }
+  })();
 })();
 </script>
 
