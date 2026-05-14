@@ -109,13 +109,23 @@ values ('anthropic', jsonb_build_object(
 - `supabase/functions/suggest-prompt-improvement/index.ts` — analyse des conv. mal notées
 - `admin-pro/chat-conversations.html` — page admin modération chat
 - `admin-pro/MEMOIRE_IA_MAINTENANCE.md` — rapport des bugs pour agent scan
+- `admin-pro/TARIFS_REFERENCE.md` — source de vérité des tarifs (base produits 14/05/2026)
 - `admin-pro/scripts/setup_chat_conversations.sql`
 - `admin-pro/scripts/setup_actualites_table.sql`
 - `admin-pro/scripts/setup_cron_sync_facebook.sql`
 - `admin-pro/scripts/upgrade_services_langage_client.sql`
 - `admin-pro/scripts/fix_rls_contracts_public_insert.sql` ✅ déjà appliqué
-- `images/marques/atlantic.svg`, `hansgrohe.svg`, `rs-ramon-soler.svg`
-- `images/marques/quare-design.svg`, `kinedo.svg` (placeholders en attente de logo officiel)
+- `images/marques/atlantic.svg`, `hansgrohe.svg`, `rs-ramon-soler.svg`, `kinedo.svg`, `quare-design.svg`
+- `assets/hc-reserve-modal.js` — modale 2 voies devis/paiement sur boutons "Réserver →"
+
+### Chantier 12 — refonte 4 pages métier (chauffage, électricité, serrurerie, travaux)
+Toutes les pages utilisent maintenant le même template que `plombier-saint-omer.html` :
+- Hero avec mascotte 3D + speech bubble adaptée au métier
+- 6 chips orbitants cliquables vers prestations/guides spécifiques
+- 8 cartes catalogue avec **vrais tarifs** issus de `Base_produits_2026-05-14`
+- Couleur palette unique par métier (cyan/orange/ambre/violet/vert)
+- Picto métier officiel dans le hero (drop-shadow assorti)
+- SEO complet : title/description/canonical/JSON-LD Schema.org spécifiques au métier
 
 ### Modifiés majeurs
 - `index.html` — refonte step 1 wizard (3 cards multi-métiers), step 2 chips multi-choix, fix validation
