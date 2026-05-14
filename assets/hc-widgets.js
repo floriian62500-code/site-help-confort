@@ -260,13 +260,19 @@
   fab.innerHTML =
     "<div class='hc-chat-panel' role='dialog' aria-label='Assistant HELP! Confort'>" +
       "<div class='hc-chat-head'>" +
-        "<div class='av'>HC</div>" +
-        "<div class='info'><h4>Assistant HELP! Confort</h4><span>En ligne — réponse immédiate</span></div>" +
+        "<div class='av' style='background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff'>✨</div>" +
+        "<div class='info'><h4>Assistant HELP! Confort</h4><span class='hc-chat-status'><span class='hc-chat-dot'></span>En ligne · IA + équipe humaine</span></div>" +
         "<button class='back' aria-label='Retour menu'>‹ Menu</button>" +
       "</div>" +
       "<div class='hc-chat-body' id='hcChatBody'></div>" +
       "<div class='hc-quick' id='hcChatQuick'></div>" +
-      "<div class='hc-chat-foot'>Urgence ? <a href='tel:" + PHONE + "'>" + PHONE_DISPLAY + "</a></div>" +
+      "<div class='hc-chat-input-row' id='hcChatInputRow'>" +
+        "<textarea id='hcChatInput' class='hc-chat-input' placeholder='Décrivez votre situation…' rows='1' maxlength='1000'></textarea>" +
+        "<button type='button' id='hcChatSend' class='hc-chat-send' aria-label='Envoyer'>" +
+          "<svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><line x1='22' y1='2' x2='11' y2='13'/><polygon points='22 2 15 22 11 13 2 9 22 2'/></svg>" +
+        "</button>" +
+      "</div>" +
+      "<div class='hc-chat-foot'>Urgence ? <a href='tel:" + PHONE + "'>" + PHONE_DISPLAY + "</a> · <span style='color:#94a3b8'>Réponses IA basées sur votre historique</span></div>" +
     "</div>" +
     "<div class='hc-menu' role='menu'>" +
       "<div class='hc-menu-head'><span>HELP! Confort</span><span class='live'>En ligne</span></div>" +
