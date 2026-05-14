@@ -27,12 +27,28 @@ const STATIC_PAGES = [
   { path: "/travaux-saint-omer.html", priority: 0.9, freq: "monthly" },
   { path: "/depannage-saint-omer.html", priority: 0.9, freq: "monthly" },
   { path: "/depannage-dunkerque.html", priority: 0.9, freq: "monthly" },
-  // Services
-  { path: "/contrats-entretien.html", priority: 0.7, freq: "monthly" },
+  // Zones locales (SEO local)
+  { path: "/depannage-longuenesse.html", priority: 0.8, freq: "monthly" },
+  { path: "/depannage-arques.html", priority: 0.8, freq: "monthly" },
+  { path: "/depannage-saint-martin-lez-tatinghem.html", priority: 0.8, freq: "monthly" },
+  { path: "/depannage-bergues.html", priority: 0.8, freq: "monthly" },
+  { path: "/depannage-gravelines.html", priority: 0.8, freq: "monthly" },
+  // Services & catalogue
+  { path: "/nos-prestations.html", priority: 0.9, freq: "weekly" },
+  { path: "/contrats-entretien.html", priority: 0.85, freq: "monthly" },
   { path: "/sinistres.html", priority: 0.7, freq: "monthly" },
   { path: "/pro.html", priority: 0.7, freq: "monthly" },
+  { path: "/processus.html", priority: 0.6, freq: "monthly" },
+  { path: "/aides.html", priority: 0.7, freq: "monthly" },
+  // Guides (contenu SEO long form)
+  { path: "/guides.html", priority: 0.7, freq: "monthly" },
+  { path: "/guide-fuite-eau.html", priority: 0.7, freq: "monthly" },
+  { path: "/guide-entretien-chaudiere.html", priority: 0.7, freq: "monthly" },
+  { path: "/guide-mise-aux-normes-electriques.html", priority: 0.7, freq: "monthly" },
+  { path: "/guide-adaptation-pmr.html", priority: 0.7, freq: "monthly" },
+  // Pages support
   { path: "/carrieres.html", priority: 0.6, freq: "monthly" },
-  { path: "/espace-client.html", priority: 0.6, freq: "monthly" },
+  { path: "/espace-client.html", priority: 0.5, freq: "monthly" },
   { path: "/mentions-legales.html", priority: 0.3, freq: "yearly" }
 ];
 
@@ -48,6 +64,17 @@ Deno.serve(async (req: Request) => {
       .select("slug,published_at,updated_at")
       .eq("status", "publie")
       .order("published_at", { ascending: false });
+
+    // Charger les actualités publiées (table optionnelle)
+    let actus: any[] = [];
+    try {
+      const r = await sb
+        .from("actualites")
+        .select("slug,published_at,updated_at")
+        .eq("status", "publie")
+        .order("published_at", { ascending: false });
+      actus = r.data || [];
+    } catch (_) { /* table optionnelle */ }
 
     const urls: string[] = [];
 
@@ -65,6 +92,17 @@ Deno.serve(async (req: Request) => {
       const lastmod = (r.updated_at || r.published_at || "").slice(0, 10);
       urls.push(`  <url>
     <loc>${SITE_URL}/realisation.html?slug=${encodeURIComponent(r.slug)}</loc>
+    ${lastmod ? `<lastmod>${lastmod}</lastmod>` : ""}
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>`);
+    });
+
+    // Pages détail actualités (si la table existe)
+    actus.forEach(a => {
+      const lastmod = (a.updated_at || a.published_at || "").slice(0, 10);
+      urls.push(`  <url>
+    <loc>${SITE_URL}/actualites/${encodeURIComponent(a.slug)}.html</loc>
     ${lastmod ? `<lastmod>${lastmod}</lastmod>` : ""}
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
