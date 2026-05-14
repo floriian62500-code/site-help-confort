@@ -1918,6 +1918,19 @@ if (document.fonts && document.fonts.ready) {
           dernier_entretien: data.get('dernier_entretien') || null,
           date_debut_souhaitee: data.get('date_debut') || null,
           commentaire: data.get('commentaire') || null,
+          photos: (function(){
+            var json = document.getElementById('eqPhotosJson');
+            if (!json) return [];
+            try {
+              var arr = JSON.parse(json.value || '[]');
+              // On ne stocke que name (data url trop gros pour metadata)
+              return arr.map(function(p){ return { name: p.name, size_kb: Math.round((p.data || '').length * 3 / 4 / 1024) }; });
+            } catch(_){ return []; }
+          })(),
+          photos_count: (function(){
+            var json = document.getElementById('eqPhotosJson');
+            try { return JSON.parse(json ? json.value : '[]').length; } catch(_){ return 0; }
+          })(),
           cgv_accepted_at: new Date().toISOString(),
           user_agent: navigator.userAgent,
           referrer: document.referrer || null

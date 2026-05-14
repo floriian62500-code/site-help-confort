@@ -41,12 +41,28 @@ rm -f .git/index.lock .git/HEAD.lock .git/config.lock .git/packed-refs.lock 2>/d
 # tmp_obj_* résiduels (résidus d'un git add interrompu)
 find .git/objects -name "tmp_obj_*" -mmin +5 -delete 2>/dev/null
 
-# ─── Auto-commit des fichiers modifiés (s'il y en a) ─────────────────
+# ─── Auto-commit des fichiers modifiés — avec DEBOUNCE 5 min ──────────
+# Pour économiser les crédits Netlify : ne commit/push que si le dernier
+# fichier modifié date d'au moins 5 minutes (= batch les changements
+# au lieu de pusher 60 fois par heure).
 if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
+  # Trouve le fichier modifié le plus récent (en secondes depuis epoch)
+  NEWEST_MODIFIED=$(git status --porcelain | awk '{print $2}' | while read f; do
+    [ -f "$f" ] && stat -f "%m" "$f" 2>/dev/null || stat -c "%Y" "$f" 2>/dev/null
+  done | sort -nr | head -1)
+  NOW=$(date +%s)
+  AGE_SEC=$((NOW - NEWEST_MODIFIED))
+
+  if [ "$AGE_SEC" -lt 300 ]; then
+    # < 5 min → on attend que Florian/Claude finisse d'éditer
+    log "⏸ debounce : dernière modif il y a ${AGE_SEC}s (< 300s), j'attends"
+    exit 0
+  fi
+
   CHANGED=$(git status --porcelain | wc -l | tr -d ' ')
   git add -A 2>>"$LOG"
   if git commit -m "Auto-push $(date '+%Y-%m-%d %H:%M') — $CHANGED fichier(s)" >/dev/null 2>>"$LOG"; then
-    log "📝 commit auto ($CHANGED fichiers)"
+    log "📝 commit auto ($CHANGED fichiers, batch de ${AGE_SEC}s)"
   fi
 fi
 
