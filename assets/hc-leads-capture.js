@@ -38,9 +38,11 @@
     return utm;
   }
 
-  // Hook tous les formulaires marqués
+  // Hook tous les formulaires marqués (sauf ceux qui ont leur propre handler onsubmit)
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('form[data-hc-lead]').forEach(form => {
+      // SKIP : formulaires qui ont déjà leur propre handler (ex : sousForm wizard)
+      if (form.hasAttribute('onsubmit') || form.dataset.hcLeadSkip === '1') return;
       form.addEventListener('submit', async function(e) {
         e.preventDefault();
         const formData = new FormData(form);
