@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════
-// Edge Function : auto-publish-from-photos
+// Edge Function : auto-publish-from-photos  (v2026-05-14 — redeploy)
 // Pipeline complet : photos → analyse IA → chantier → publication FB
 // ═══════════════════════════════════════════════════════════════
 // Déploiement : supabase functions deploy auto-publish-from-photos --no-verify-jwt
