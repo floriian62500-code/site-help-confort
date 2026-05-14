@@ -108,11 +108,14 @@
         <strong>Conversations chatbot</strong>
       </div>
 
-      <div class="page-head">
+      <div class="page-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
         <div>
           <h1>Conversations chatbot IA</h1>
           <p class="page-subtitle">Lire les échanges, noter la qualité, améliorer le prompt système.</p>
         </div>
+        <button id="btnImprovePrompt" class="btn-primary" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#7C3AED,#A855F7);box-shadow:0 4px 12px rgba(124,58,237,.30)">
+          <span style="font-size:1.1rem">✨</span> Analyser les notes basses & suggérer des améliorations
+        </button>
       </div>
 
       <!-- Stats -->
@@ -169,6 +172,26 @@
       </div>
     </div>
   </main>
+</div>
+
+<!-- Modal suggestions IA -->
+<div class="modal-backdrop" id="improveModal">
+  <div class="modal-panel" style="max-width:760px">
+    <div class="modal-head" style="background:linear-gradient(135deg,rgba(124,58,237,.06),rgba(168,85,247,.04))">
+      <h2>✨ Suggestions d'amélioration du prompt système</h2>
+      <button class="modal-close" onclick="document.getElementById('improveModal').classList.remove('is-open')">✕</button>
+    </div>
+    <div class="modal-body" id="improveBody">
+      <div style="text-align:center;padding:40px 20px;color:var(--ink-500)">
+        <div style="font-size:2rem;margin-bottom:12px">🧠</div>
+        <div style="font-size:.95rem">Analyse en cours… Claude lit les conversations notées ≤3/5 et identifie les patterns d'échec.</div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ghost" onclick="document.getElementById('improveModal').classList.remove('is-open')">Fermer</button>
+      <button class="btn-primary" id="btnCopySugg" style="display:none">📋 Copier toutes les suggestions</button>
+    </div>
+  </div>
 </div>
 
 <!-- Modal détail -->
