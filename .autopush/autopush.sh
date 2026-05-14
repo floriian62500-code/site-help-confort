@@ -41,10 +41,13 @@ rm -f .git/index.lock .git/HEAD.lock .git/config.lock .git/packed-refs.lock 2>/d
 # tmp_obj_* résiduels (résidus d'un git add interrompu)
 find .git/objects -name "tmp_obj_*" -mmin +5 -delete 2>/dev/null
 
-# ─── Auto-commit des fichiers modifiés — avec DEBOUNCE 5 min ──────────
+# ─── Auto-commit des fichiers modifiés — avec DEBOUNCE 15 min ─────────
 # Pour économiser les crédits Netlify : ne commit/push que si le dernier
-# fichier modifié date d'au moins 5 minutes (= batch les changements
+# fichier modifié date d'au moins 15 minutes (= batch les changements
 # au lieu de pusher 60 fois par heure).
+# → ~4 deploys/heure max au lieu de 60 (économie ~95% de crédits).
+# Pour pusher tout de suite, fais "cd repo && git add -A && git commit -m ... && git push"
+# manuellement depuis ton terminal.
 if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
   # Trouve le fichier modifié le plus récent (en secondes depuis epoch)
   NEWEST_MODIFIED=$(git status --porcelain | awk '{print $2}' | while read f; do
@@ -52,10 +55,11 @@ if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
   done | sort -nr | head -1)
   NOW=$(date +%s)
   AGE_SEC=$((NOW - NEWEST_MODIFIED))
+  MIN_AGE=900   # 15 minutes = 900 secondes
 
-  if [ "$AGE_SEC" -lt 300 ]; then
-    # < 5 min → on attend que Florian/Claude finisse d'éditer
-    log "⏸ debounce : dernière modif il y a ${AGE_SEC}s (< 300s), j'attends"
+  if [ "$AGE_SEC" -lt "$MIN_AGE" ]; then
+    # < 15 min → on attend que Florian/Claude finisse d'éditer
+    log "⏸ debounce : dernière modif il y a ${AGE_SEC}s (< ${MIN_AGE}s), j'attends"
     exit 0
   fi
 
