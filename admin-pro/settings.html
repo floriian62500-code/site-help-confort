@@ -123,6 +123,11 @@
             CRM externe
             <span class="conn-dot" data-status="crm"></span>
           </a>
+          <a href="#section-notifications">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Notifications email
+            <span class="conn-dot" data-status="notification_emails"></span>
+          </a>
         </nav>
 
         <div>
@@ -356,6 +361,55 @@
                 <div class="right">
                   <button type="button" class="btn" data-test="ga4">Tester</button>
                   <button type="button" class="btn btn-primary" data-save="ga4">Enregistrer</button>
+                </div>
+              </div>
+            </form>
+          </section>
+
+          <section class="settings-section" id="section-notifications">
+            <div class="settings-section-head">
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Notifications email
+              </h3>
+              <span class="head-status" data-head-status="notification_emails">À configurer</span>
+            </div>
+            <p class="section-desc">Adresses email qui reçoivent les notifs quand un client soumet une souscription, commande ou demande de devis depuis le site public. La clé <code>RESEND_API_KEY</code> doit être configurée dans <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/functions/secrets" target="_blank" rel="noopener">Supabase Secrets</a> pour que les emails partent réellement.</p>
+            <form class="settings-form" data-section="notification_emails">
+              <div class="field-row">
+                <label>Destinataire des souscriptions contrats</label>
+                <input type="email" name="subscriptions_to" placeholder="saint-omer@helpconfort.com">
+                <small style="display:block;color:var(--ink-500);font-size:.76rem;margin-top:3px">Reçoit un email à chaque souscription de contrat d'entretien (BASIC/CONFORT/SÉCURITÉ).</small>
+              </div>
+              <div class="field-row">
+                <label>Destinataire des commandes de prestations</label>
+                <input type="email" name="orders_to" placeholder="saint-omer@helpconfort.com">
+                <small style="display:block;color:var(--ink-500);font-size:.76rem;margin-top:3px">Reçoit un email à chaque commande de prestation (catalogue Services).</small>
+              </div>
+              <div class="field-row">
+                <label>Destinataire des leads</label>
+                <input type="email" name="leads_to" placeholder="saint-omer@helpconfort.com">
+                <small style="display:block;color:var(--ink-500);font-size:.76rem;margin-top:3px">Reçoit un email à chaque formulaire de contact / demande de devis.</small>
+              </div>
+              <div class="field-row">
+                <label>Adresse de réponse (reply-to)</label>
+                <input type="email" name="reply_to" placeholder="saint-omer@helpconfort.com">
+                <small style="display:block;color:var(--ink-500);font-size:.76rem;margin-top:3px">Si tu réponds à un email de notif, ta réponse partira vers cette adresse (utile pour rediriger les retours dans la bonne boîte).</small>
+              </div>
+              <div class="field-row">
+                <label>Nom expéditeur</label>
+                <input type="text" name="from_name" placeholder="HELP! Confort — Site">
+                <small style="display:block;color:var(--ink-500);font-size:.76rem;margin-top:3px">Affiché en expéditeur des emails de notif (avant l'adresse).</small>
+              </div>
+              <div class="field-row">
+                <label>Adresse expéditeur</label>
+                <input type="email" name="from_email" placeholder="noreply@depan59-62.fr">
+                <small style="display:block;color:var(--ink-500);font-size:.76rem;margin-top:3px">Doit être sur un domaine vérifié dans <a href="https://resend.com/domains" target="_blank" rel="noopener">Resend</a>. <code>depan59-62.fr</code> est déjà configuré côté DNS (DKIM Resend présent).</small>
+              </div>
+              <div class="settings-actions">
+                <span class="hint" data-saved-meta>Non sauvegardé</span>
+                <div class="right">
+                  <button type="button" class="btn btn-primary" data-save="notification_emails">Enregistrer</button>
                 </div>
               </div>
             </form>
