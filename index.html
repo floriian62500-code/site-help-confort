@@ -932,6 +932,28 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
           <h3>Parlez-nous de votre situation</h3>
           <p class="resa-step-hint">Plus c'est précis, plus on est efficace. Nos techniciens préparent votre intervention avant même de venir.</p>
 
+          <!-- Choix du / des métier(s) concerné(s) (multi-choix) -->
+          <div class="form-row">
+            <label>Quelle prestation ? <span class="opt" style="font-weight:500;color:#94a3b8;font-size:.78rem;margin-left:4px">— plusieurs choix possibles</span></label>
+            <div class="resa-metier-chips" role="group" aria-label="Sélection des métiers">
+              <label class="resa-chip"><input type="checkbox" name="resa-metiers[]" value="Plomberie"><span>🔧 Plomberie</span></label>
+              <label class="resa-chip"><input type="checkbox" name="resa-metiers[]" value="Chauffage"><span>🔥 Chauffage</span></label>
+              <label class="resa-chip"><input type="checkbox" name="resa-metiers[]" value="Électricité"><span>⚡ Électricité</span></label>
+              <label class="resa-chip"><input type="checkbox" name="resa-metiers[]" value="Serrurerie"><span>🔒 Serrurerie</span></label>
+              <label class="resa-chip"><input type="checkbox" name="resa-metiers[]" value="Vitrerie"><span>🪟 Vitrerie</span></label>
+              <label class="resa-chip"><input type="checkbox" name="resa-metiers[]" value="Travaux / rénovation"><span>🏠 Travaux / rénovation</span></label>
+              <label class="resa-chip"><input type="checkbox" name="resa-metiers[]" value="Autre / Je ne sais pas"><span>❓ Je ne sais pas</span></label>
+            </div>
+            <style>
+              .resa-metier-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+              .resa-chip{position:relative;display:inline-flex;align-items:center;cursor:pointer;font-size:.86rem;font-weight:500;color:#0A1428;background:#F7FBFD;border:1.5px solid #E5EDF3;border-radius:999px;padding:7px 14px;transition:all .2s ease;user-select:none}
+              .resa-chip input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+              .resa-chip:hover{border-color:#0DA0CF;color:#0DA0CF;background:rgba(13,160,207,.05)}
+              .resa-chip:has(input:checked){background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;border-color:#0DA0CF;box-shadow:0 4px 12px rgba(13,160,207,.30);font-weight:700}
+              .resa-chip:has(input:checked) span::before{content:"✓ ";font-weight:900;margin-right:2px}
+            </style>
+          </div>
+
           <div class="form-row">
             <label for="resa-desc">Décrivez en quelques mots <span class="req">*</span></label>
             <textarea id="resa-desc" rows="4" placeholder="Ex : « Fuite sous l'évier de la cuisine depuis hier soir » ou « Chaudière qui ne s'allume plus, voyant rouge »…" required></textarea>

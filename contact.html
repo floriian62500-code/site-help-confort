@@ -456,17 +456,39 @@ if (document.fonts && document.fonts.ready) {
             <input id="ville" name="ville" type="text" autocomplete="address-level2" placeholder="Saint-Omer, Longuenesse...">
           </div>
           <div class="form-group">
-            <label for="service">Service concerné</label>
-            <select id="service" name="service">
-              <option value="">— Sélectionnez —</option>
-              <option>Plomberie</option>
-              <option>Chauffage</option>
-              <option>Électricité</option>
-              <option>Serrurerie / vitrerie</option>
-              <option>Travaux / rénovation</option>
-              <option>Sinistre assurance</option>
-              <option>Autre</option>
-            </select>
+            <label>Service(s) concerné(s) <span class="opt" style="font-weight:500;color:#94a3b8;font-size:.78rem;margin-left:4px">— plusieurs choix possibles</span></label>
+            <div class="svc-chips" role="group" aria-label="Sélection des services">
+              <label class="svc-chip"><input type="checkbox" name="services[]" value="Plomberie"><span>🔧 Plomberie</span></label>
+              <label class="svc-chip"><input type="checkbox" name="services[]" value="Chauffage"><span>🔥 Chauffage</span></label>
+              <label class="svc-chip"><input type="checkbox" name="services[]" value="Électricité"><span>⚡ Électricité</span></label>
+              <label class="svc-chip"><input type="checkbox" name="services[]" value="Serrurerie / vitrerie"><span>🔒 Serrurerie / vitrerie</span></label>
+              <label class="svc-chip"><input type="checkbox" name="services[]" value="Travaux / rénovation"><span>🏠 Travaux / rénovation</span></label>
+              <label class="svc-chip"><input type="checkbox" name="services[]" value="Sinistre assurance"><span>📋 Sinistre assurance</span></label>
+              <label class="svc-chip"><input type="checkbox" name="services[]" value="Contrat entretien"><span>🛡️ Contrat entretien</span></label>
+              <label class="svc-chip"><input type="checkbox" name="services[]" value="Autre"><span>❓ Autre</span></label>
+            </div>
+            <!-- Champ caché pour conserver la compat backend (legacy single-value) -->
+            <input type="hidden" id="service" name="service" value="">
+            <style>
+              .svc-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+              .svc-chip{position:relative;display:inline-flex;align-items:center;cursor:pointer;font-size:.86rem;font-weight:500;color:#0A1428;background:#F7FBFD;border:1.5px solid #E5EDF3;border-radius:999px;padding:7px 14px 7px 14px;transition:all .2s ease;user-select:none}
+              .svc-chip input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+              .svc-chip:hover{border-color:#0DA0CF;color:#0DA0CF;background:rgba(13,160,207,.05)}
+              .svc-chip:has(input:checked){background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;border-color:#0DA0CF;box-shadow:0 4px 12px rgba(13,160,207,.30);font-weight:700}
+              .svc-chip:has(input:checked) span::before{content:"✓ ";font-weight:900;margin-right:2px}
+            </style>
+            <script>
+              // Sync les checkboxes vers le champ "service" (legacy single string) pour backend compat
+              (function(){
+                var chips = document.querySelectorAll('.svc-chip input[type=checkbox]');
+                var hidden = document.getElementById('service');
+                function syncHidden(){
+                  var vals = Array.from(chips).filter(c => c.checked).map(c => c.value);
+                  if (hidden) hidden.value = vals.join(', ');
+                }
+                chips.forEach(c => c.addEventListener('change', syncHidden));
+              })();
+            </script>
           </div>
         </div>
 
