@@ -1839,12 +1839,12 @@ if (document.fonts && document.fonts.ready) {
   var success = document.getElementById('m-modal-success');
   var priceEl = document.getElementById('m-modal-price');
 
-  // Tarifs internes (révélés après submit)
+  // Tarifs : sur devis annoncé avant intervention (les vrais prix viendront du catalogue admin)
   var TARIFS = {
-    'Déplacement & diagnostic': 'à partir de 89 € TTC',
-    'Débouchage simple': 'à partir de 120 € TTC',
-    'Recherche de fuite simple': 'à partir de 250 € TTC',
-    'Remplacement joint / mitigeur': 'à partir de 95 € TTC'
+    'Déplacement & diagnostic': 'sur devis · annoncé avant intervention',
+    'Débouchage simple': 'sur devis · annoncé avant intervention',
+    'Recherche de fuite simple': 'sur devis · annoncé avant intervention',
+    'Remplacement joint / mitigeur': 'sur devis · annoncé avant intervention'
   };
 
   function open(presta){
