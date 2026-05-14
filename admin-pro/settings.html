@@ -518,6 +518,7 @@ function toast(msg, type='ok', d=2800) {
       case 'gbp':       return !!data.refresh_token && !!data.client_id && !!data.client_secret && !!data.account_id_audo;
       case 'ga4':       return !!data.property_id && (!!data.service_account_json || !!data.service_account_key);
       case 'crm':       return !!data.url;
+      case 'notification_emails': return !!data.subscriptions_to;
       case 'company':   return !!data.raison_sociale;
       default: return false;
     }

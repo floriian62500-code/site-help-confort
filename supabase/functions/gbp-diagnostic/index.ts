@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════
-// Edge Function : gbp-diagnostic
+// Edge Function : gbp-diagnostic  (v2026-05-14 — redeploy)
 // Teste end-to-end la connexion Google Business Profile :
 //   1. Credentials présents (client_id, client_secret, refresh_token)
 //   2. Access token valide (auto-refresh si expiré)
