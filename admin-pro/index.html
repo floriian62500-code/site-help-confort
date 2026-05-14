@@ -149,6 +149,33 @@
         </div>
       </div>
 
+      <!-- POSTS PROGRAMMÉS + AVIS RÉCENTS -->
+      <div id="pubReviewsWidget" class="grid grid-2" style="gap:16px;margin-bottom:24px;display:none">
+        <!-- Posts programmés -->
+        <div class="card" style="padding:0;overflow:hidden">
+          <div style="background:linear-gradient(135deg,#7C3AED,#A78BFA);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <strong style="font-size:.94rem;display:block">📅 Publications programmées</strong>
+              <span id="pubCount" style="font-size:.78rem;opacity:.96">—</span>
+            </div>
+            <a href="planning.html" style="background:rgba(255,255,255,.20);color:#fff;text-decoration:none;padding:6px 12px;border-radius:7px;font-size:.78rem;font-weight:700">Voir le planning →</a>
+          </div>
+          <div id="pubList" style="padding:6px"></div>
+        </div>
+
+        <!-- Avis Google récents -->
+        <div class="card" style="padding:0;overflow:hidden">
+          <div style="background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <strong style="font-size:.94rem;display:block">⭐ Derniers avis Google</strong>
+              <span id="reviewsCount" style="font-size:.78rem;opacity:.96">—</span>
+            </div>
+            <a href="reviews.html" style="background:rgba(255,255,255,.20);color:#fff;text-decoration:none;padding:6px 12px;border-radius:7px;font-size:.78rem;font-weight:700">Tous les avis →</a>
+          </div>
+          <div id="reviewsList" style="padding:6px"></div>
+        </div>
+      </div>
+
       <!-- ASSISTANTS DE CONNEXION — bouchons visibles, masqués si tous configurés -->
       <div id="connectorWidget" style="display:none;background:#fff;border:1px solid var(--ink-100);border-radius:14px;padding:18px 22px;margin-bottom:24px;box-shadow:0 1px 2px rgba(11,18,32,.04)">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
@@ -374,28 +401,69 @@
 
   const c = await HCSupabase.init();
 
-  // Récupère toutes les réalisations en une requête
-  const { data: reals, error } = await c.from('realisations').select('id,title,metier,ville,status,pinned,created_at,published_at,ai_generated,image_before,image_after');
-  if (error) { console.error('Dashboard load error:', error); return; }
-  const all = reals || [];
+  // ─── Calcul des bornes temporelles 30j + 30j précédents ──
+  const NOW = new Date();
+  const D30 = new Date(NOW.getTime() - 30*86400000);
+  const D60 = new Date(NOW.getTime() - 60*86400000);
 
-  // ─── KPI 1 : Réalisations totales ─────────────────────────
-  const total = all.length;
-  setKpi('reals-total', total, total === 1 ? '1 chantier' : `${total} chantiers`, 'dans Supabase');
+  // Lance toutes les requêtes en parallèle pour rapidité
+  const [realsRes, leadsRes, leadsPrevRes, contractsRes, ordersRes, ordersPrevRes, reviewsRes] = await Promise.all([
+    c.from('realisations').select('id,title,metier,ville,status,pinned,created_at,published_at,ai_generated,image_before,image_after'),
+    c.from('leads').select('id,nom,metier,ville,status,created_at,estimated_value').gte('created_at', D30.toISOString()),
+    c.from('leads').select('id', { count: 'exact', head: true }).gte('created_at', D60.toISOString()).lt('created_at', D30.toISOString()),
+    c.from('contracts').select('id,type,metier,status,monthly_amount,client_first_name,client_last_name,created_at'),
+    c.from('service_orders').select('id,order_number,service_name,customer_name,city,status,price_ttc,created_at,preferred_date').gte('created_at', D30.toISOString()).order('created_at', { ascending: false }),
+    c.from('service_orders').select('id', { count: 'exact', head: true }).gte('created_at', D60.toISOString()).lt('created_at', D30.toISOString()),
+    c.from('reviews').select('id,source,author_name,rating,comment,created_at,published_at,status').order('created_at', { ascending: false }).limit(50)
+  ]);
 
-  // ─── KPI 2 : Chantiers publiés ────────────────────────────
-  const published = all.filter(r => r.status === 'publie').length;
-  const pct = total ? Math.round(published / total * 100) : 0;
-  setKpi('reals-published', published, pct + '%', 'du catalogue');
+  const all = realsRes.data || [];
+  if (realsRes.error) console.warn('reals load error:', realsRes.error.message);
 
-  // ─── KPI 3 : En attente (brouillons + à valider) ──────────
-  const pending = all.filter(r => r.status === 'brouillon' || r.status === 'validation').length;
-  setKpi('reals-draft', pending, pending === 0 ? '✓ à jour' : `${pending} à traiter`, 'brouillons + à valider');
+  // ─── KPI 1 : Leads (30j) avec trend vs 30j précédents ────
+  const leads30 = leadsRes.data || [];
+  const leadsCount = leads30.length;
+  const leadsPrev = (leadsPrevRes.count != null) ? leadsPrevRes.count : 0;
+  const leadsTrend = leadsPrev > 0
+    ? Math.round(((leadsCount - leadsPrev) / leadsPrev) * 100)
+    : (leadsCount > 0 ? 100 : 0);
+  const leadsTrendStr = (leadsTrend >= 0 ? '+' : '') + leadsTrend + '%';
+  const leadsMeta = leadsPrev === 0 ? 'pas de données 30j-60j' : `vs ${leadsPrev} sur 30j-60j`;
+  setKpi('leads-30d', leadsCount, leadsTrendStr, leadsMeta);
+  if (leadsRes.error) console.warn('leads error:', leadsRes.error.message);
 
-  // ─── KPI 4 : Couverture IA (chantiers avec titre + description) ──
-  const aiReady = all.filter(r => r.title && r.title.length > 10).length; // proxy : titre rempli
-  const coverage = total ? Math.round(aiReady / total * 100) : 0;
-  setKpi('ai-coverage', coverage + '%', aiReady + '/' + total, 'titre + description');
+  // ─── KPI 2 : Contrats actifs + CA récurrent ──────────────
+  const contracts = contractsRes.data || [];
+  const activeContracts = contracts.filter(x => x.status === 'active' || x.status === 'actif');
+  const mrr = activeContracts.reduce((s, x) => s + Number(x.monthly_amount || 0), 0);
+  setKpi('contracts-active', activeContracts.length, mrr.toLocaleString('fr-FR') + ' €', 'CA récurrent /mois');
+  if (contractsRes.error) console.warn('contracts error:', contractsRes.error.message);
+
+  // ─── KPI 3 : Commandes (30j) + statut ────────────────────
+  const orders30 = ordersRes.data || [];
+  const ordersCount = orders30.length;
+  const ordersPending = orders30.filter(o => o.status === 'pending' || o.status === 'nouveau' || o.status === 'pending_payment').length;
+  const ordersPrev = (ordersPrevRes.count != null) ? ordersPrevRes.count : 0;
+  const ordersTrend = ordersPrev > 0
+    ? Math.round(((ordersCount - ordersPrev) / ordersPrev) * 100)
+    : (ordersCount > 0 ? 100 : 0);
+  const ordersTrendStr = ordersPending > 0
+    ? `${ordersPending} à traiter`
+    : (ordersCount > 0 ? '✓ à jour' : '—');
+  setKpi('orders-30d', ordersCount, ordersTrendStr, ordersPrev === 0 ? `${ordersTrend >= 0 ? '+' : ''}${ordersTrend}%` : `vs ${ordersPrev} sur 30j-60j`);
+  if (ordersRes.error) console.warn('orders error:', ordersRes.error.message);
+
+  // ─── KPI 4 : Note Google (avg rating) ────────────────────
+  const reviews = reviewsRes.data || [];
+  const googleReviews = reviews.filter(r => r.source === 'google');
+  const reviewsAvg = googleReviews.length > 0
+    ? (googleReviews.reduce((s, r) => s + Number(r.rating || 0), 0) / googleReviews.length)
+    : null;
+  setKpi('ai-coverage',
+    reviewsAvg !== null ? reviewsAvg.toFixed(1) + ' ★' : '—',
+    googleReviews.length + ' avis',
+    googleReviews.length > 0 ? 'sur Google' : 'aucun avis');
+  if (reviewsRes.error) console.warn('reviews error:', reviewsRes.error.message);
 
   // ─── GA4 stats (si configuré) ───────────────────────────
   try {
