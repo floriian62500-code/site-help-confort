@@ -237,6 +237,7 @@
 
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
           <button class="ct-filter active" data-status="">Tous</button>
+          <button class="ct-filter" data-status="to_import" style="background:#FFF7ED;border-color:#FFB400;color:#C2410C;font-weight:800">📥 À importer dans CRM</button>
           <button class="ct-filter" data-status="active">🟢 Actifs</button>
           <button class="ct-filter" data-status="due">⏰ Échéance proche</button>
           <button class="ct-filter" data-status="suspended">⏸️ Suspendus</button>
@@ -426,6 +427,8 @@ let _editingId = null;
     let filtered = _all;
     if (_filter === 'due') {
       filtered = _all.filter(x => x.status === 'active' && x.next_intervention_date && new Date(x.next_intervention_date) <= in30);
+    } else if (_filter === 'to_import') {
+      filtered = _all.filter(x => !x.imported_to_crm_at);
     } else if (_filter) {
       filtered = _all.filter(x => x.status === _filter);
     }
