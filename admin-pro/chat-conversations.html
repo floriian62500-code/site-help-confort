@@ -441,6 +441,63 @@ document.getElementById('cvFilterStatus').addEventListener('change', renderList)
 document.getElementById('cvModal').addEventListener('click', function(e){
   if (e.target === this) closeModal();
 });
+document.getElementById('improveModal').addEventListener('click', function(e){
+  if (e.target === this) this.classList.remove('is-open');
+});
+
+// Bouton "Suggérer améliorations"
+document.getElementById('btnImprovePrompt').addEventListener('click', async function(){
+  var modal = document.getElementById('improveModal');
+  var body = document.getElementById('improveBody');
+  modal.classList.add('is-open');
+  body.innerHTML = '<div style="text-align:center;padding:40px 20px;color:var(--ink-500)"><div style="font-size:2rem;margin-bottom:12px">🧠</div><div>Analyse en cours… Claude lit les conversations notées ≤3/5.</div><div style="margin-top:10px;font-size:.78rem;color:var(--ink-400)">Cela peut prendre 10-20 secondes.</div></div>';
+  document.getElementById('btnCopySugg').style.display = 'none';
+
+  try {
+    const url = 'https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/suggest-prompt-improvement';
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ min_rating: 3, limit: 30 })
+    });
+    const data = await resp.json();
+    if (data.error) throw new Error(data.error);
+
+    if (!data.analyzed_count) {
+      body.innerHTML = '<div style="text-align:center;padding:40px 20px;color:var(--ink-500)"><div style="font-size:2rem;margin-bottom:12px">📭</div><div>' + escapeHtml(data.summary || 'Aucune conversation notée.') + '</div></div>';
+      return;
+    }
+
+    var html = '<div style="padding:12px 14px;background:rgba(124,58,237,.06);border-left:3px solid #7C3AED;border-radius:8px;margin-bottom:18px"><strong>Patterns détectés (' + data.analyzed_count + ' conversations) :</strong><br>' + escapeHtml(data.summary) + '</div>';
+
+    html += '<h4 style="font-size:.95rem;font-weight:800;margin:0 0 10px">📝 Instructions à ajouter au system prompt :</h4>';
+    html += '<ol style="margin:0;padding-left:20px;font-size:.88rem;line-height:1.55">' +
+      (data.suggestions || []).map(function(s){
+        return '<li style="margin-bottom:10px"><strong>' + escapeHtml(s.instruction) + '</strong>' +
+          (s.rationale ? '<br><span style="font-size:.8rem;color:var(--ink-500)">→ ' + escapeHtml(s.rationale) + '</span>' : '') +
+          '</li>';
+      }).join('') + '</ol>';
+
+    if (data.expected_impact) {
+      html += '<div style="margin-top:18px;padding:10px 12px;background:rgba(0,170,80,.06);border-left:3px solid #00aa50;border-radius:8px;font-size:.86rem"><strong>Impact attendu :</strong> ' + escapeHtml(data.expected_impact) + '</div>';
+    }
+
+    body.innerHTML = html;
+
+    // Bouton copier
+    var btnCopy = document.getElementById('btnCopySugg');
+    btnCopy.style.display = 'inline-block';
+    btnCopy.onclick = function(){
+      var text = (data.suggestions || []).map(function(s, i){
+        return (i+1) + '. ' + s.instruction + (s.rationale ? '\n   (raison: ' + s.rationale + ')' : '');
+      }).join('\n\n');
+      navigator.clipboard.writeText(text);
+      toast('Suggestions copiées ✓');
+    };
+  } catch (e) {
+    body.innerHTML = '<div style="text-align:center;padding:30px 20px;color:#d92d20"><div style="font-size:1.6rem;margin-bottom:10px">⚠️</div><div>Erreur : ' + escapeHtml(e.message) + '</div><div style="margin-top:10px;font-size:.78rem;color:var(--ink-400)">Vérifiez que l\'edge function <code>suggest-prompt-improvement</code> est déployée.</div></div>';
+  }
+});
 
 // Initial load + mount du shell admin (auth, sidebar, topbar)
 (async function(){

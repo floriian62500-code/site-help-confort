@@ -32,6 +32,9 @@ supabase functions deploy chat-assistant --no-verify-jwt
 
 # Générateur IA de contenu service (SEO + FAQ + posts) — déjà déployée
 supabase functions deploy generate-service-content --no-verify-jwt
+
+# Analyseur IA des conversations mal notées (suggère des améliorations au system prompt)
+supabase functions deploy suggest-prompt-improvement --no-verify-jwt
 ```
 
 Si la CLI n'est pas installée :
@@ -103,6 +106,7 @@ values ('anthropic', jsonb_build_object(
 ### Nouveaux
 - `supabase/functions/chat-assistant/index.ts` — chatbot IA Claude + mémoire
 - `supabase/functions/generate-service-content/index.ts` — générateur SEO
+- `supabase/functions/suggest-prompt-improvement/index.ts` — analyse des conv. mal notées
 - `admin-pro/chat-conversations.html` — page admin modération chat
 - `admin-pro/MEMOIRE_IA_MAINTENANCE.md` — rapport des bugs pour agent scan
 - `admin-pro/scripts/setup_chat_conversations.sql`
