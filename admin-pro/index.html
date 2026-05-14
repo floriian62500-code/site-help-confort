@@ -489,6 +489,10 @@
     }
   } catch (e) { /* GA4 non configuré ou erreur — KPI couverture IA reste affichée */ }
 
+  // ─── Stats chantiers (pour alertes + badge nav) ──────────
+  const total = all.length;
+  const pending = all.filter(r => r.status === 'brouillon' || r.status === 'validation').length;
+
   // ─── Badge nav "Réalisations" ────────────────────────────
   const navBadge = document.getElementById('navRealCount');
   if (navBadge) navBadge.textContent = total;
@@ -537,6 +541,47 @@
         <div>
           <strong style="display: block; margin-bottom: 2px;">${pending} chantier${pending>1?'s':''} en attente</strong>
           <a href="realisations.html?filter=brouillon" style="color: var(--hc-primary); font-weight: 700;">Compléter et publier →</a>
+        </div>
+      </div>
+    `);
+  }
+
+  // Commandes en attente de traitement (à expédier ou planifier)
+  if (ordersPending > 0) {
+    alerts.push(`
+      <div class="alert warning">
+        <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11H7l5-9 5 9h-2"/><path d="M5 21h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2z"/></svg>
+        <div>
+          <strong style="display: block; margin-bottom: 2px;">${ordersPending} commande${ordersPending>1?'s':''} à traiter</strong>
+          Planifie ou contacte le client — <a href="services.html#orders" style="color: #B45309; font-weight: 700;">voir les commandes →</a>
+        </div>
+      </div>
+    `);
+  }
+
+  // Leads nouveaux à qualifier
+  const newLeads = leads30.filter(l => l.status === 'nouveau').length;
+  if (newLeads > 0) {
+    alerts.push(`
+      <div class="alert info">
+        <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <div>
+          <strong style="display: block; margin-bottom: 2px;">${newLeads} lead${newLeads>1?'s':''} à qualifier</strong>
+          <a href="leads.html?filter=nouveau" style="color: var(--hc-primary); font-weight: 700;">Qualifier maintenant →</a>
+        </div>
+      </div>
+    `);
+  }
+
+  // Avis non répondus
+  const unansweredReviews = (reviewsRes.data || []).filter(r => r.source === 'google' && !r.published_at && Number(r.rating) >= 1).length;
+  if (unansweredReviews > 0) {
+    alerts.push(`
+      <div class="alert warning">
+        <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <div>
+          <strong style="display: block; margin-bottom: 2px;">${unansweredReviews} avis Google à répondre</strong>
+          Booste ta réputation locale — <a href="reviews.html" style="color: #B45309; font-weight: 700;">répondre →</a>
         </div>
       </div>
     `);
