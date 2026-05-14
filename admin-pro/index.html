@@ -122,30 +122,34 @@
         </a>
       </div>
 
-      <!-- TERRAIN — Interventions du jour + Contrats échéants -->
-      <div id="terrainWidget" class="grid grid-2" style="gap:16px;margin-bottom:24px;display:none">
-        <!-- Interventions aujourd'hui -->
-        <div class="card" style="padding:0;overflow:hidden">
-          <div style="background:linear-gradient(135deg,#FF6B1A,#FFB400);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between">
-            <div>
-              <strong style="font-size:.94rem;display:block">🗓️ Interventions aujourd'hui</strong>
-              <span id="todayCount" style="font-size:.78rem;opacity:.96">—</span>
+      <!-- PASSERELLE CRM — interventions + contrats gérés dans le CRM externe -->
+      <div id="crmGateway" class="card" style="padding:0;overflow:hidden;margin-bottom:24px;border:1px solid rgba(13,160,207,.18)">
+        <div style="background:linear-gradient(135deg,#0A1428 0%,#0DA0CF 100%);color:#fff;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:14px;flex:1;min-width:240px">
+            <div style="width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
             </div>
-            <a href="interventions.html" style="background:rgba(255,255,255,.20);color:#fff;text-decoration:none;padding:6px 12px;border-radius:7px;font-size:.78rem;font-weight:700">Tout voir →</a>
+            <div style="min-width:0">
+              <strong style="font-size:1rem;display:block;line-height:1.2">Mon CRM</strong>
+              <span style="font-size:.82rem;opacity:.92;display:block;margin-top:2px">Interventions, planning chantiers et contrats clients sont gérés dans ton CRM. Le dashboard sert de passerelle.</span>
+            </div>
           </div>
-          <div id="todayList" style="padding:6px"></div>
+          <a id="crmOpenBtn" href="#" target="_blank" rel="noopener" style="background:#FFB400;color:#0A1428;text-decoration:none;padding:11px 20px;border-radius:10px;font-size:.92rem;font-weight:800;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(255,180,0,.30);white-space:nowrap;flex-shrink:0">
+            <span>Ouvrir mon CRM</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
         </div>
-
-        <!-- Contrats à renouveler -->
-        <div class="card" style="padding:0;overflow:hidden">
-          <div style="background:linear-gradient(135deg,#0DA0CF,#5fc7e5);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between">
-            <div>
-              <strong style="font-size:.94rem;display:block">📄 Contrats à renouveler (30j)</strong>
-              <span id="ctSoonCount" style="font-size:.78rem;opacity:.96">—</span>
+        <!-- Inbox : souscriptions reçues du site public à importer dans le CRM -->
+        <div id="crmInbox" style="padding:0;display:none">
+          <div style="padding:11px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--ink-100);background:#FFF7ED">
+            <div style="display:flex;align-items:center;gap:10px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C2410C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+              <strong style="color:#C2410C;font-size:.86rem">Souscriptions à importer dans le CRM</strong>
+              <span id="crmInboxCount" style="background:#FFB400;color:#0A1428;font-size:.74rem;padding:1px 8px;border-radius:999px;font-weight:800"></span>
             </div>
-            <a href="contracts.html" style="background:rgba(255,255,255,.20);color:#fff;text-decoration:none;padding:6px 12px;border-radius:7px;font-size:.78rem;font-weight:700">Tout voir →</a>
+            <a href="contracts.html" style="font-size:.78rem;color:var(--hc-primary);font-weight:700;text-decoration:none">Voir le détail →</a>
           </div>
-          <div id="ctSoonList" style="padding:6px"></div>
+          <div id="crmInboxList" style="padding:6px"></div>
         </div>
       </div>
 

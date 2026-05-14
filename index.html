@@ -800,35 +800,102 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
 
         
         <div class="hc-resa-step active" data-step="1">
-          <h3>De quoi avez-vous besoin ?</h3>
-          <p class="resa-step-hint">Choisissez le besoin qui correspond à votre situation. Notre équipe adapte le parcours en conséquence.</p>
+          <h3>Quel est votre besoin ?</h3>
+          <p class="resa-step-hint">3 voies selon votre situation. Le bon parcours vous fait gagner du temps — et nous évitons les mauvais diagnostics.</p>
 
-          <div class="resa-need-grid">
-            <button type="button" class="resa-need" data-presta="depannage" data-flow="simple">
-              <span class="rn-icon" data-color="urgent">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <div class="resa-need-grid resa-need-grid-v2">
+            <button type="button" class="resa-need rn-card rn-card-urgent" data-presta="depannage" data-flow="simple">
+              <span class="rn-icon-v2">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
               </span>
-              <strong>Dépannage / urgence</strong>
-              <span>Fuite, panne, effraction, situation à traiter</span>
-              <span class="rn-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+              <span class="rn-pill rn-pill-urgent">⚡ Réservable en ligne</span>
+              <strong class="rn-title">Dépannage rapide</strong>
+              <span class="rn-desc">Vous avez un problème <em>là, maintenant</em>.</span>
+              <ul class="rn-list">
+                <li>💧 Fuite, robinet qui goutte</li>
+                <li>🚽 WC, évier, douche bouchés</li>
+                <li>🔥 Plus d'eau chaude</li>
+                <li>🔍 Recherche de fuite</li>
+              </ul>
+              <span class="rn-foot"><span class="rn-tag">Prix transparents</span><span class="rn-cta">Choisir →</span></span>
             </button>
-            <button type="button" class="resa-need" data-presta="devis-travaux" data-flow="complex">
-              <span class="rn-icon" data-color="primary">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+
+            <button type="button" class="resa-need rn-card rn-card-install" data-presta="devis-travaux" data-flow="complex">
+              <span class="rn-icon-v2">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 13.5a2.5 2.5 0 1 1-3 0V5l3-3v11.5z"/><path d="M11 5h3"/><path d="M16 12c1.5 0 3 .5 3 2v6a2 2 0 0 1-2 2h-3"/></svg>
               </span>
-              <strong>Devis / travaux</strong>
-              <span>Rénovation, remplacement, projet</span>
-              <span class="rn-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+              <span class="rn-pill rn-pill-install">✏️ Devis sous 48h</span>
+              <strong class="rn-title">Devis / travaux</strong>
+              <span class="rn-desc">Rénovation, remplacement, <em>projet à étudier</em>.</span>
+              <ul class="rn-list">
+                <li>♨️ Chauffe-eau, chaudière</li>
+                <li>🛁 Salle de bain, douche italienne</li>
+                <li>🚰 Robinetterie, sanitaires</li>
+                <li>♿ Adaptation PMR</li>
+              </ul>
+              <span class="rn-foot"><span class="rn-tag">Étude personnalisée</span><span class="rn-cta">Choisir →</span></span>
             </button>
-            <button type="button" class="resa-need" data-presta="contrat-entretien" data-flow="simple">
-              <span class="rn-icon" data-color="trust">
+
+            <button type="button" class="resa-need rn-card rn-card-contract" data-presta="contrat-entretien" data-flow="simple">
+              <span class="rn-icon-v2">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
               </span>
-              <strong>Contrat / entretien</strong>
-              <span>Entretien chaudière, contrats annuels</span>
-              <span class="rn-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+              <span class="rn-pill rn-pill-contract">🛡️ Visite annuelle</span>
+              <strong class="rn-title">Contrat d'entretien</strong>
+              <span class="rn-desc">Tranquillité <em>toute l'année</em>.</span>
+              <ul class="rn-list">
+                <li>🔥 Chaudière gaz / fioul</li>
+                <li>📋 Attestation légale</li>
+                <li>⚡ Dépannages inclus (formule)</li>
+                <li>📅 Rappel automatique 1 mois avant</li>
+              </ul>
+              <span class="rn-foot"><span class="rn-tag">Dès 9 € HT/mois</span><span class="rn-cta">Choisir →</span></span>
             </button>
           </div>
+
+          <!-- Bandeau urgence sous les 3 cards -->
+          <div class="rn-urgence">
+            <span class="rn-urg-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </span>
+            <span class="rn-urg-txt"><strong>Dégât des eaux, fuite importante, plus d'eau du tout ?</strong> Appelez directement, on prend en charge en priorité.</span>
+            <a href="tel:+33366100134" class="rn-urg-cta">03 66 10 01 34</a>
+          </div>
+
+          <style>
+            .resa-need-grid-v2{display:grid;gap:18px;grid-template-columns:1fr;margin:0 0 8px}
+            @media(min-width:720px){.resa-need-grid-v2{grid-template-columns:repeat(3,1fr)}}
+            .rn-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:left;background:#fff;border:1.5px solid #E5EDF3;border-radius:18px;padding:22px 20px 16px;cursor:pointer;font-family:inherit;color:inherit;transition:all .3s cubic-bezier(.16,1,.3,1);overflow:hidden}
+            .rn-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--rn-c,#0DA0CF),var(--rn-c2,#1FC4F0));transform:scaleX(0);transform-origin:left;transition:transform .35s ease}
+            .rn-card:hover,.rn-card.is-selected{transform:translateY(-4px);border-color:var(--rn-c,#0DA0CF);box-shadow:0 16px 36px -10px rgba(10,20,40,.16)}
+            .rn-card:hover::before,.rn-card.is-selected::before{transform:scaleX(1)}
+            .rn-card-urgent{--rn-c:#E11D48;--rn-c2:#FF4D6D}
+            .rn-card-install{--rn-c:#0DA0CF;--rn-c2:#1FC4F0}
+            .rn-card-contract{--rn-c:#16A34A;--rn-c2:#22C55E}
+            .rn-icon-v2{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(135deg,var(--rn-c,#0DA0CF),var(--rn-c2,#1FC4F0));margin-bottom:12px;box-shadow:0 8px 16px -4px color-mix(in srgb,var(--rn-c,#0DA0CF) 35%,transparent)}
+            .rn-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.04em;margin-bottom:8px;width:fit-content}
+            .rn-pill-urgent{background:rgba(225,29,72,.10);color:#BE1238}
+            .rn-pill-install{background:rgba(13,160,207,.10);color:#0A7FA3}
+            .rn-pill-contract{background:rgba(22,163,74,.10);color:#15803D}
+            .rn-title{font-size:1.1rem;font-weight:800;color:#0A1428;letter-spacing:-.01em;line-height:1.2;margin:0 0 6px}
+            .rn-desc{display:block;font-size:.86rem;color:#64748b;line-height:1.4;margin-bottom:12px}
+            .rn-desc em{font-style:normal;color:#0A1428;font-weight:700}
+            .rn-list{list-style:none;padding:0;margin:0 0 14px;display:flex;flex-direction:column;gap:5px;width:100%}
+            .rn-list li{font-size:.82rem;color:#0A1428;line-height:1.3;font-weight:400}
+            .rn-foot{display:flex;justify-content:space-between;align-items:center;width:100%;padding-top:10px;border-top:1px solid #F1F5F9;margin-top:auto}
+            .rn-tag{font-size:.72rem;color:#64748b;font-weight:600}
+            .rn-cta{font-size:.82rem;font-weight:800;color:var(--rn-c,#0DA0CF);transition:transform .2s ease}
+            .rn-card:hover .rn-cta{transform:translateX(3px)}
+            .rn-card .rn-arrow{display:none}
+            .rn-urgence{margin-top:18px;display:flex;align-items:center;gap:14px;padding:14px 18px;background:linear-gradient(135deg,rgba(225,29,72,.06),rgba(225,29,72,.02));border:1.5px solid rgba(225,29,72,.20);border-radius:14px;flex-wrap:wrap}
+            .rn-urg-ico{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:11px;background:#E11D48;color:#fff;flex-shrink:0;box-shadow:0 6px 14px rgba(225,29,72,.30);animation:rnRing 1.8s ease-in-out infinite}
+            @keyframes rnRing{0%,100%{box-shadow:0 6px 14px rgba(225,29,72,.30),0 0 0 0 rgba(225,29,72,.40)}50%{box-shadow:0 6px 14px rgba(225,29,72,.40),0 0 0 8px rgba(225,29,72,0)}}
+            .rn-urg-txt{flex:1;font-size:.85rem;color:#0A1428;line-height:1.4;min-width:200px}
+            .rn-urg-txt strong{display:block;color:#0A1428;font-weight:800;font-size:.92rem;margin-bottom:2px}
+            .rn-urg-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:linear-gradient(135deg,#E11D48,#BE1238);color:#fff;text-decoration:none;border-radius:10px;font-weight:800;font-size:.95rem;box-shadow:0 6px 16px rgba(225,29,72,.30);transition:all .2s ease;flex-shrink:0}
+            .rn-urg-cta:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(225,29,72,.42)}
+            @media(max-width:720px){.rn-urgence{flex-direction:column;text-align:center}.rn-urg-txt{min-width:0}.rn-urg-cta{width:100%;justify-content:center}}
+          </style>
         </div>
 
         
