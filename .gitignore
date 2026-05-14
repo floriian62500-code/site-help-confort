@@ -42,3 +42,9 @@ supabase/.branches/
 # Autopush local config (contient SUPABASE_DB_PASSWORD)
 .autopush/.env
 .autopush/.db-password
+
+# Secrets locaux (credentials Google/OAuth/etc — JAMAIS commité)
+secrets/
+*.client_secret*.json
+client_secret_*.json
+*-credentials.json
