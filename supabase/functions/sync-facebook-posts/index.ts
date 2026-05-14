@@ -158,6 +158,32 @@ Deno.serve(async (req: Request) => {
       const imageAfter = post.full_picture || null;
       const datePart = (post.created_time || "").slice(0, 10);
 
+      // ROUTAGE : actualité → table actualites, sinon table realisations
+      if (postType === "actualite") {
+        const actuPayload: any = {
+          title,
+          slug,
+          content: post.message,
+          excerpt: post.message.slice(0, 200),
+          categorie: "Agence",
+          zone: ville,
+          published: false,  // À valider manuellement
+          source_facebook: post.permalink_url,
+          image_url: imageAfter,
+          created_by: isCron ? "cron_fb_sync" : "manual_fb_sync"
+        };
+        try {
+          const { data: ins, error: actuErr } = await sb.from("actualites").insert(actuPayload).select("id,title,slug").single();
+          if (actuErr) {
+            // table absente ou autre erreur → fallback en realisation flagged
+            skipped.push(post.id + " (actu fallback: " + actuErr.message + ")");
+          } else {
+            created.push({ id: ins.id, title: ins.title, slug: ins.slug, type: "actualite", fb: post.permalink_url });
+            continue;
+          }
+        } catch (_e) { /* fallback en realisation */ }
+      }
+
       const payload = {
         title,
         slug,
@@ -174,6 +200,7 @@ Deno.serve(async (req: Request) => {
           source_fb: post.permalink_url,
           fb_post_id: post.id,
           agence,
+          post_type: postType,  // 'realisation' ou 'actualite' (utile si fallback)
           imported_at: new Date().toISOString()
         },
         created_by: isCron ? "cron_fb_sync" : "manual_fb_sync",
@@ -186,7 +213,7 @@ Deno.serve(async (req: Request) => {
         skipped.push(post.id + " (db error: " + insErr.message + ")");
         continue;
       }
-      created.push({ id: inserted.id, title: inserted.title, slug: inserted.slug, fb: post.permalink_url });
+      created.push({ id: inserted.id, title: inserted.title, slug: inserted.slug, type: "realisation", fb: post.permalink_url });
     }
 
     return json({
