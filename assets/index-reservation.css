@@ -1281,6 +1281,46 @@
     .resa-legal-mini a { color: #0DA0CF; text-decoration: none; }
     .resa-legal-mini a:hover { text-decoration: underline; }
 
+    /* === Cards proposition de prestation (étape 4) === */
+    #presta-proposals { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 14px; }
+    .pp-card {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+      padding: 14px 16px; background: #fff; border: 1.5px solid #E5EDF3; border-radius: 12px;
+      cursor: pointer; text-align: left; transition: all .18s ease; font-family: inherit;
+      position: relative;
+    }
+    .pp-card:hover { border-color: #0DA0CF; transform: translateY(-2px); box-shadow: 0 8px 18px rgba(13, 160, 207, .12); }
+    .pp-card.pp-selected {
+      border-color: #0DA0CF; background: linear-gradient(135deg, rgba(13, 160, 207, .06), rgba(31, 196, 240, .04));
+      box-shadow: 0 4px 12px rgba(13, 160, 207, .15);
+    }
+    .pp-card.pp-selected::after {
+      content: "✓"; position: absolute; top: 8px; right: 10px; width: 22px; height: 22px;
+      background: #0DA0CF; color: #fff; border-radius: 50%; font-size: .82rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pp-icon { font-size: 1.5rem; line-height: 1; }
+    .pp-label { font-size: .92rem; font-weight: 700; color: #0A1428; }
+    .pp-metier { font-size: .72rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+    .pp-card.pp-other { background: #F7FBFD; border-style: dashed; }
+    .pp-card.pp-other:hover { background: rgba(13, 160, 207, .04); }
+
+    /* === Modale "toutes les prestations" === */
+    .apm-backdrop {
+      position: fixed; inset: 0; background: rgba(11, 18, 32, .50); backdrop-filter: blur(4px);
+      z-index: 1000; display: none; align-items: flex-start; justify-content: center; padding: 28px 16px; overflow-y: auto;
+    }
+    .apm-backdrop.is-open { display: flex; }
+    .apm-panel { background: #fff; border-radius: 16px; width: 100%; max-width: 720px; box-shadow: 0 24px 60px rgba(11, 18, 32, .30); }
+    .apm-head { padding: 18px 22px; border-bottom: 1px solid #E5EDF3; display: flex; align-items: center; justify-content: space-between; font-size: 1.05rem; font-weight: 800; }
+    .apm-close { background: #F4F7FB; border: none; width: 34px; height: 34px; border-radius: 10px; cursor: pointer; font-size: 1rem; color: #475569; }
+    .apm-body { padding: 18px 22px; }
+    .apm-group { margin-bottom: 18px; }
+    .apm-group h4 { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: #475569; margin: 0 0 8px; }
+    .apm-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
+    .apm-item { padding: 10px 14px; background: #F7FBFD; border: 1px solid #E5EDF3; border-radius: 10px; font: inherit; font-size: .88rem; color: #0A1428; cursor: pointer; text-align: left; transition: .15s; }
+    .apm-item:hover { background: rgba(13, 160, 207, .08); border-color: #0DA0CF; color: #0DA0CF; }
+
     /* === Carte récap (étape 4) === */
     .resa-quote-card {
       background: linear-gradient(180deg, #fff, #FBFCFD);

@@ -1746,6 +1746,8 @@ priceEl.innerHTML = presta.price.toFixed(0).replace('.', ',') + ' € TTC <small
 priceEl.textContent = 'Sur devis';
 }
 simpleBlock.hidden = false;
+// Génère les cards de proposition de prestation
+renderPrestaProposals();
 } else {
 document.getElementById('resa-presta-name-c').textContent = presta.label;
 document.getElementById('resa-agence-name-c').textContent = detectAgence(state.cp);
