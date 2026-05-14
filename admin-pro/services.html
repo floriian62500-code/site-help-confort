@@ -422,7 +422,85 @@
       if (error) alert('Erreur : ' + error.message);
       else { allServices = allServices.filter(s => s.id !== id); renderTable(); document.getElementById('cntCatalog').textContent = allServices.length; }
     }
+    if (btn.dataset.action === 'ai') {
+      await runAiGenerate(svc, btn);
+    }
   });
+
+  // ═══════════════════════════════════════════════════════════════
+  // ✨ IA — Génération SEO + FAQ + posts via edge function
+  // ═══════════════════════════════════════════════════════════════
+  async function runAiGenerate(svc, btn) {
+    const originalHTML = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="9" stroke-opacity=".3"/><path d="M12 3a9 9 0 0 1 9 9"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur=".8s" repeatCount="indefinite"/></path></svg>';
+
+    try {
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) { alert('Session expirée — reconnecte-toi.'); return; }
+
+      const r = await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/generate-service-content', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + session.access_token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ service_id: svc.id })
+      });
+      const data = await r.json();
+      if (!r.ok || data.error) {
+        alert('Erreur IA : ' + (data.error || r.status));
+        return;
+      }
+      // Maj locale du service (ai_generated rempli côté serveur)
+      const idx = allServices.findIndex(s => s.id === svc.id);
+      if (idx >= 0) allServices[idx].ai_generated = { ...(data.content || {}), generated_at: new Date().toISOString() };
+      // Affiche la modal résultat
+      showAiResultModal(svc.name, data.content || {});
+    } catch (e) {
+      alert('Erreur réseau : ' + e.message);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = originalHTML;
+    }
+  }
+
+  function showAiResultModal(serviceName, content) {
+    let modal = document.getElementById('aiResultModal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'aiResultModal';
+      modal.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(10,20,40,.55);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:24px';
+      modal.innerHTML = `
+        <div style="background:#fff;border-radius:18px;max-width:780px;width:100%;max-height:90vh;overflow-y:auto;padding:28px 32px;box-shadow:0 40px 80px rgba(10,20,40,.30)">
+          <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:18px;gap:16px">
+            <div>
+              <h3 id="aiResTitle" style="margin:0 0 4px;font-size:1.4rem;color:#0A1428">Contenu IA généré</h3>
+              <p id="aiResSubtitle" style="margin:0;color:#64748b;font-size:.9rem"></p>
+            </div>
+            <button id="aiResClose" style="background:#F1F5F9;border:0;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:1.4rem;line-height:1">×</button>
+          </div>
+          <div id="aiResBody"></div>
+        </div>`;
+      document.body.appendChild(modal);
+      document.getElementById('aiResClose').onclick = () => modal.remove();
+      modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+    }
+    document.getElementById('aiResSubtitle').textContent = serviceName;
+    const sectionStyle = 'margin-bottom:18px;padding:14px 16px;background:#F7FBFD;border-left:3px solid #A855F7;border-radius:0 10px 10px 0';
+    const copyBtn = (text) => `<button onclick="navigator.clipboard.writeText(this.dataset.text); this.textContent='✓ Copié'; setTimeout(()=>this.textContent='📋 Copier',1500)" data-text="${(text||'').replace(/"/g,'&quot;')}" style="background:#0DA0CF;color:#fff;border:0;border-radius:6px;padding:4px 10px;font-size:.78rem;cursor:pointer;margin-left:8px">📋 Copier</button>`;
+    const html = `
+      <div style="${sectionStyle}"><div style="font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#A855F7;margin-bottom:6px">🎯 SEO TITLE ${copyBtn(content.seo_title)}</div><div>${(content.seo_title||'').replace(/</g,'&lt;')}</div></div>
+      <div style="${sectionStyle}"><div style="font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#A855F7;margin-bottom:6px">📝 META DESCRIPTION ${copyBtn(content.seo_description)}</div><div>${(content.seo_description||'').replace(/</g,'&lt;')}</div></div>
+      <div style="${sectionStyle}"><div style="font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#A855F7;margin-bottom:6px">💬 RÉSUMÉ CLIENT ${copyBtn(content.client_summary)}</div><div>${(content.client_summary||'').replace(/</g,'&lt;')}</div></div>
+      <div style="${sectionStyle}"><div style="font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#A855F7;margin-bottom:6px">❓ FAQ (3)</div>${(content.faqs||[]).map(f => `<div style="margin-bottom:10px;padding-bottom:8px;border-bottom:1px dashed #E5EDF3"><strong>Q. ${(f.q||'').replace(/</g,'&lt;')}</strong><br><span style="color:#475569">${(f.a||'').replace(/</g,'&lt;')}</span></div>`).join('')}</div>
+      <div style="${sectionStyle}"><div style="font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#A855F7;margin-bottom:6px">🏷️ HASHTAGS ${copyBtn((content.hashtags||[]).join(' '))}</div><div>${(content.hashtags||[]).join(' ')}</div></div>
+      <div style="${sectionStyle}"><div style="font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#A855F7;margin-bottom:6px">📘 POST FACEBOOK ${copyBtn(content.fb_post)}</div><div style="white-space:pre-wrap">${(content.fb_post||'').replace(/</g,'&lt;')}</div></div>
+      <div style="${sectionStyle}"><div style="font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#A855F7;margin-bottom:6px">📸 POST INSTAGRAM ${copyBtn(content.insta_post)}</div><div style="white-space:pre-wrap">${(content.insta_post||'').replace(/</g,'&lt;')}</div></div>
+      <div style="${sectionStyle}"><div style="font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#A855F7;margin-bottom:6px">🔍 MOTS-CLÉS SEO INTERNES ${copyBtn((content.internal_keywords||[]).join(', '))}</div><div>${(content.internal_keywords||[]).join(', ')}</div></div>
+      <p style="margin:16px 0 0;font-size:.78rem;color:#64748b;text-align:center">✅ Stocké dans <code>services.ai_generated</code> en BDD.</p>`;
+    document.getElementById('aiResBody').innerHTML = html;
+  }
 
   // ─── Modal ───────────────────────────────────────────────
   document.getElementById('btnNewSvc').onclick = () => openModal();
