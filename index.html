@@ -1218,6 +1218,7 @@ var current = 1;
 var state = {
 presta: null, flow: null,
 urg: null, desc: '',
+metiers: [],
 prenom: '', nom: '', tel: '', email: '', cp: '', adresse: '', habitat: ''
 };
 var stepper = document.querySelectorAll('.hc-resa-stepper .step');
@@ -1342,7 +1343,37 @@ return state.prenom.trim() && state.nom.trim() && state.tel.trim() &&
 }
 return false;
 }
-function refreshNext() { btnNext.disabled = !canGoNext(); }
+function refreshNext() {
+  btnNext.disabled = !canGoNext();
+  // Hint visuel : message d'aide si le bouton est bloqué
+  var hint = document.getElementById('resa-next-hint');
+  if (!hint) {
+    hint = document.createElement('div');
+    hint.id = 'resa-next-hint';
+    hint.style.cssText = 'font-size:.78rem;color:#d97706;font-weight:600;text-align:right;margin-top:6px;display:none';
+    if (btnNext.parentNode) btnNext.parentNode.insertAdjacentElement('afterend', hint);
+  }
+  if (btnNext.disabled && current === 2 && state.flow !== 'callback') {
+    var need = state.desc ? state.desc.trim().length : 0;
+    if (need < 3) {
+      hint.textContent = '💡 Tapez quelques mots de plus pour décrire votre situation';
+      hint.style.display = 'block';
+    } else { hint.style.display = 'none'; }
+  } else if (btnNext.disabled && current === 3) {
+    hint.textContent = '💡 Renseignez vos coordonnées complètes (nom, téléphone, email, code postal)';
+    hint.style.display = 'block';
+  } else {
+    hint.style.display = 'none';
+  }
+}
+// Chips multi-choix métier : ne pas écraser state.presta, juste alimenter state.metiers[]
+document.querySelectorAll('.resa-metier-chips input[type="checkbox"]').forEach(function(cb){
+  cb.addEventListener('change', function(){
+    var checked = Array.from(document.querySelectorAll('.resa-metier-chips input[type="checkbox"]:checked')).map(function(x){return x.value;});
+    state.metiers = checked;
+    refreshNext();
+  });
+});
 document.querySelectorAll('.resa-need, .metier-btn, .mq-card[data-presta]').forEach(function(b) {
 b.addEventListener('click', function() {
 document.querySelectorAll('.resa-need, .metier-btn, .mq-card[data-presta]').forEach(function(x){x.classList.remove('selected');x.classList.remove('is-selected')});
@@ -1451,6 +1482,7 @@ var presta = PRESTAS[state.presta] || {};
 return [
 'Prestation : ' + (presta.label || state.presta),
 'Flow : ' + (presta.flow || ''),
+'Métiers concernés : ' + ((state.metiers && state.metiers.length) ? state.metiers.join(', ') : '—'),
 'Urgence : ' + (URG_LABELS[state.urg] || ''),
 'Description : ' + state.desc,
 '',
