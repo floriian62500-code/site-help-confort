@@ -424,9 +424,92 @@ if (document.fonts && document.fonts.ready) {
         </div>
       </div>
 
-      <form class="contact-form" action="javascript:void(0)" method="post" enctype="text/plain" novalidate data-hc-lead="contact">
+      <form id="form" class="contact-form" action="javascript:void(0)" method="post" enctype="text/plain" novalidate data-hc-lead="contact">
         <h2 style="margin-top:0">Demander un devis</h2>
+        <!-- Bandeau dynamique : prestation pré-sélectionnée via ?presta=XXX -->
+        <div id="prestaBanner" style="display:none;padding:14px 16px;margin:0 0 18px;background:linear-gradient(135deg,rgba(13,160,207,.08),rgba(255,107,26,.06));border:1px solid rgba(13,160,207,.20);border-radius:12px;font-size:.92rem">
+          <strong style="color:#0DA0CF;display:block;margin-bottom:4px">📌 Demande de devis pour :</strong>
+          <span id="prestaLabel" style="font-weight:700;color:#0A1428"></span>
+        </div>
         <p style="color:var(--gray-700);margin-bottom:24px">Vous décrivez votre besoin, nous vous rappelons sous 24h ouvrées. Pour une urgence, appelez le 03 66 10 01 34.</p>
+        <input type="hidden" id="presta-hidden" name="prestation_demandee">
+        <script>
+        (function(){
+          // Lecture du param ?presta= dans l'URL
+          var params = new URLSearchParams(location.search);
+          var presta = params.get('presta');
+          if (!presta) return;
+          // Mapping slug → label lisible
+          var labels = {
+            'recherche-fuite': '🔍 Recherche de fuite visuelle — 148 € TTC',
+            'desengorgement': '🚿 Désengorgement canalisation — 165 € TTC',
+            'debouchage': '🚿 Débouchage canalisation — 165 € TTC',
+            'mecanisme-chasse-eau': '🚽 Remplacement mécanisme chasse d\'eau — 131 € TTC',
+            'robinetterie-t2': '🚰 Réparation robinetterie samedi/soir — 125 € TTC',
+            'mitigeur': '🚰 Remplacement mitigeur / robinet',
+            'pose-chauffe-eau-petit': '♨️ Pose chauffe-eau < 100 L — 86 € TTC',
+            'remplacement-chauffe-eau': '♨️ Remplacement chauffe-eau à l\'identique — 297 € TTC',
+            'chauffe-eau': '♨️ Chauffe-eau / cumulus',
+            'wc-suspendu': '🚽 Pose WC suspendu (neuf) — 275 € TTC',
+            'detartrage': '🧪 Détartrage installation sanitaire — 237 € TTC',
+            'entretien-chaudiere': '🔥 Entretien annuel chaudière gaz — 121 € TTC',
+            'desembouage': '🔥 Désembouage radiateur — 105 € TTC / radiateur',
+            'chaudiere': '🔥 Dépannage chaudière',
+            'depannage-t1': '🔥 Dépannage chauffage (semaine, sans fourniture) — 75 € TTC',
+            'remplacement-chaudiere': '🔥 Remplacement chaudière gaz',
+            'pac': '🔥 Pompe à chaleur',
+            'eau-chaude': '♨️ Production eau chaude',
+            'radiateur': '🌡️ Radiateur',
+            'recherche-panne': '⚡ Recherche de panne électrique — 107 € TTC',
+            'depannage-elec-t1': '⚡ Dépannage électrique (semaine) — 75 € TTC',
+            'tableau': '⚡ Dépose/pose tableau électrique — 1 080 € TTC',
+            'disjoncteur': '⚡ Dépose/pose disjoncteur — 76 € TTC',
+            'extracteur': '⚡ Installation extracteur d\'air (neuf) — 110 € TTC',
+            'carottage': '⚡ Carottage mur/sol — 119 € TTC',
+            'renovation-elec': '⚡ Rénovation électrique complète',
+            'prises': '⚡ Prises / interrupteurs',
+            'vmc': '💨 VMC / extracteur d\'air',
+            'ouverture-porte': '🔒 Ouverture de porte',
+            'ouverture-simple': '🔒 Ouverture porte simple — 108 € TTC',
+            'ouverture-claquee': '🔒 Ouverture porte claquée — 176 € TTC',
+            'ouverture-cle': '🔒 Ouverture porte fermée à clé — 228 € TTC',
+            'ouverture-securite': '🔒 Ouverture porte sécurité — 314 € TTC',
+            'serrure': '🔑 Remplacement serrure',
+            'cylindre': '🔑 Changement verrou / cylindre — 55 € TTC',
+            'mo-weekend': '🔒 Main d\'œuvre week-end serrurerie — 88 € TTC/h',
+            'blindage': '🔒 Blindage de porte',
+            'coffre': '🔒 Coffre-fort / sécurisation',
+            'peinture-plafond': '🎨 Peinture plafond — 19 € TTC/m²',
+            'platrerie-plafond': '🏠 Plâtrerie plafond — 75 € TTC/m²',
+            'demolition-carrelage': '🧱 Démolition carrelage — 34 € TTC/m²',
+            'meuble-sdb': '🛁 Dépose/pose meuble SDB — 275 € TTC',
+            'pmr': '♿ Adaptation PMR — 58 € TTC/h',
+            'renovation-sdb': '🛁 Rénovation salle de bain complète',
+            'renovation-cuisine': '🍳 Rénovation cuisine complète',
+            'cuisine': '🍳 Cuisine équipée',
+            'salle-de-bain': '🛁 Salle de bain',
+            'peinture': '🎨 Peinture',
+            'carrelage': '🧱 Carrelage',
+            'sanitaire': '🚰 Sanitaire',
+            'reseaux-plomberie': '🔧 Réseaux plomberie',
+            'reseaux': '🔧 Réseaux'
+          };
+          var label = labels[presta] || presta.replace(/-/g, ' ');
+          var banner = document.getElementById('prestaBanner');
+          var labelEl = document.getElementById('prestaLabel');
+          var hidden = document.getElementById('presta-hidden');
+          if (banner && labelEl) {
+            labelEl.textContent = label;
+            banner.style.display = 'block';
+          }
+          if (hidden) hidden.value = presta + ' | ' + label;
+          // Préremplir le champ message si présent
+          setTimeout(function(){
+            var msg = document.getElementById('message');
+            if (msg && !msg.value) msg.value = 'Bonjour, je souhaite un devis pour : ' + label.replace(/^[^\s]+ /, '') + '\n\n';
+          }, 100);
+        })();
+        </script>
 
         <div class="form-row two">
           <div class="form-group">
