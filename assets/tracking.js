@@ -31,7 +31,7 @@
 
   // ─── Google Analytics 4 ────────────────────────────────────────────
   (function () {
-    var id = 'G-XXXXXXXXXX';
+    var id = 'G-YH9GXW6H70';
     if (id === 'G-XXXXXXXXXX') return; // placeholder → tracking inerte
     var s = document.createElement('script');
     s.async = true;
