@@ -233,6 +233,16 @@ Ce document recense tous les bugs trouvés manuellement pendant la session du 13
 - **Règle de scan à ajouter** :
   - Pour chaque `/functions/v1/<name>`, lister les fichiers source qui contiennent cette chaîne. Si > 2 fichiers → suggestion de factoriser.
 
+### 30bis. Images vides dans JSON statique → placeholder générique partout
+- **Symptôme** : Sur la home, le carousel "Nos dernières actualités" affiche systématiquement un placeholder "❓ HELP! Confort" au lieu d'images de chantiers.
+- **Cause racine** : Toutes les entrées de `content/actualites/index.json` ont `"image": ""` ET `"source_facebook": ""`. Le code passe au fallback générique.
+- **Cause amont** : La sync Facebook qui devait peupler ces champs ne tourne pas (cf. bug #9 cron non configuré).
+- **Correctif court terme** : Améliorer le placeholder pour qu'il devine le métier depuis le titre (`mitigeur` → 💧 Plomberie, `vitrage` → 🪟 Vitrerie, `panneau PVC` → 🚪 Menuiserie) avec un gradient et une icône appropriée. Ajout `onerror` sur `<img>` pour fallback gracieux.
+- **Règle de scan à ajouter** :
+  - Pour chaque JSON statique du site (`content/**/*.json`), compter les entrées avec champ image vide.
+  - Si plus de 50% des entrées ont une image vide ET un fallback placeholder existe → ALERTE INFO + suggérer d'enrichir.
+  - Vérifier en parallèle que la source amont (cron sync, scraper FB) tourne bien.
+
 ### 30. Manque de boucle d'amélioration sur features IA
 - **Symptôme** : Un chatbot IA déployé sans mécanisme de retour qualité finit par stagner.
 - **Solution implémentée cette session** :
@@ -260,6 +270,7 @@ Ce document recense tous les bugs trouvés manuellement pendant la session du 13
 14. **Sonde Modal-escape** : modales async sans bouton de fermeture.
 15. **Sonde 42P01** : `.from().select()` sans gestion d'erreur table manquante.
 16. **Sonde Feedback-loop** : features IA sans mécanisme de notation+amélioration.
+17. **Sonde JSON-images-vides** : JSON statique avec >50% d'entrées sans image → alerte de pipeline d'enrichissement cassé.
 
 ---
 
