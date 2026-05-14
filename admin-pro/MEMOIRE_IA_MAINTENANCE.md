@@ -233,6 +233,20 @@ Ce document recense tous les bugs trouvés manuellement pendant la session du 13
 - **Règle de scan à ajouter** :
   - Pour chaque `/functions/v1/<name>`, lister les fichiers source qui contiennent cette chaîne. Si > 2 fichiers → suggestion de factoriser.
 
+### 30octies. 🚨 CRITIQUE — Tarifs inventés par IA en production
+- **Symptôme** : Catalogue plomberie affichait "89 € TTC", "149 € TTC", "119 € TTC", "187-203 € TTC"… alors qu'AUCUNE source officielle ne fournissait ces prix.
+- **Cause racine** : L'agent IA (moi) a inventé des fourchettes "plausibles" pour le secteur, sans valider avec le client.
+- **Impact** : Engagement légal envers les clients qui réservent au prix affiché. Risque de plainte, de mauvaise réputation et de non-respect de l'obligation d'information précontractuelle (Code de la consommation, art. L. 111-1).
+- **Correctif appliqué** : Remplacement de tous les tarifs inventés par "sur devis · annoncé avant intervention". Le vrai pricing viendra du catalogue admin (table `services` colonnes `price_ht` + `vat_rate`).
+- **Règle de scan À AJOUTER EN PRIORITÉ 1** :
+  - Scanner tous les fichiers `.html` publics pour détecter les motifs `\d+\s*€` ou `\d+,\d+\s*€` ou `\d+\s*€\s*TTC`.
+  - Pour chaque tarif trouvé, vérifier qu'il provient d'une source authoritaire :
+    a) soit lu via `fetch` depuis la table `services` (prix dynamique),
+    b) soit présent dans `app_settings` avec une clé `validated_prices.<service_slug>`,
+    c) soit explicitement marqué `data-source="<reference>"`.
+  - Si AUCUNE source → ALERTE CRITIQUE rouge.
+  - Le scan doit refuser de laisser passer un site en prod avec des tarifs "orphelins" non rattachés à une source de vérité.
+
 ### 30sexies. Bouton mobile flottant qui déborde du viewport
 - **Symptôme** : Un bouton CTA fixed `bottom:14px;left:14px;right:14px` apparaît sur les pages métier alors qu'un bouton tel équivalent existe déjà dans le header sticky → doublon visible + déborde du viewport sur certaines largeurs (entre 980 et 1100px) car la media-query de masquage est `min-width:1100px`.
 - **Cause** : Élément `.sticky-call` historique ajouté avant que le header sticky n'embarque le bouton tel.
@@ -316,6 +330,7 @@ Ce document recense tous les bugs trouvés manuellement pendant la session du 13
 20. **Sonde Partial-orphan** : un même header/footer/slogan textuel répété > 5 fichiers → suggestion d'extraire en partial.
 21. **Sonde CTA-doublon-fixed** : élément `position:fixed` qui duplique un CTA déjà présent dans le header sticky → alerte de redondance + risque de débordement viewport.
 22. **Sonde Composant-stable** : capturer `offsetHeight` de chaque composant partagé sur chaque page à largeur fixe, alerter si divergence > 5%.
+23. **🚨 Sonde Tarif-orphelin (PRIORITÉ ABSOLUE)** : tout montant `\d+\s*€` ou `\d+,\d+\s*€` ou `\d+\s*€\s*TTC` détecté dans une page publique doit être rattaché à une source de vérité (table `services`, `app_settings.validated_prices`, ou attribut `data-source`). Sinon : ALERTE rouge, halte recommandée du déploiement.
 
 ---
 
