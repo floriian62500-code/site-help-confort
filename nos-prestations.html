@@ -439,6 +439,77 @@
   const root = document.getElementById('catalogRoot');
   const filtersBar = document.getElementById('filtersBar');
 
+  // ═══════════════════════════════════════════════════════════════
+  // LEAD-GATE : Active le verrou des prix tant que coords pas remplies
+  // ═══════════════════════════════════════════════════════════════
+  const LG_KEY = 'hc_leadgate_unlocked_v1';
+  function isUnlocked(){ try { return localStorage.getItem(LG_KEY) === '1'; } catch(_) { return false; } }
+  function unlock(){ try { localStorage.setItem(LG_KEY, '1'); } catch(_) {} document.body.classList.remove('is-locked'); }
+  function lock(){ document.body.classList.add('is-locked'); }
+  function showLgModal(){ document.getElementById('nvLeadgateModal').hidden = false; document.body.style.overflow = 'hidden'; }
+  function hideLgModal(){ document.getElementById('nvLeadgateModal').hidden = true; document.body.style.overflow = ''; }
+
+  // Au chargement : si pas unlocked, on lock
+  if (!isUnlocked()) lock();
+
+  // Click sur "Voir le tarif" (bouton réserver locked) ou prix → ouvre modal
+  document.addEventListener('click', function(e){
+    if (!document.body.classList.contains('is-locked')) return;
+    var t = e.target.closest('.nv-card-price, .nv-btn-primary[data-action="reserve"]');
+    if (t) { e.preventDefault(); e.stopPropagation(); showLgModal(); }
+  }, true);
+
+  // Modal close handlers
+  document.getElementById('nvLgClose').addEventListener('click', hideLgModal);
+  document.querySelector('.nv-leadgate-overlay').addEventListener('click', hideLgModal);
+
+  // Submit du formulaire lead-gate
+  document.getElementById('nvLgForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    var form = e.target;
+    var btn = document.getElementById('nvLgSubmit');
+    var fd = new FormData(form);
+    // Validation rapide
+    var bad = false;
+    form.querySelectorAll('input[required]').forEach(function(i){
+      if (!i.value.trim()) { i.classList.add('has-error'); bad = true; }
+      else { i.classList.remove('has-error'); }
+    });
+    if (bad) return;
+
+    btn.disabled = true; btn.innerHTML = 'Envoi…';
+
+    // Insert lead dans Supabase (table leads ou contracts avec status='lead')
+    try {
+      var payload = {
+        status: 'prospect',
+        subscription_source: 'leadgate_prestations',
+        type: 'custom',
+        metier: 'multiservice',
+        client_first_name: fd.get('prenom') || '',
+        client_last_name: fd.get('nom') || 'Sans nom',
+        client_phone: fd.get('telephone') || '',
+        client_email: fd.get('email') || '',
+        client_city: fd.get('ville') || '',
+        notes: 'Lead-gate déclenché sur consultation tarifs nos-prestations',
+        metadata: {
+          source: 'leadgate_prestations',
+          page: location.pathname,
+          captured_at: new Date().toISOString(),
+          user_agent: navigator.userAgent
+        }
+      };
+      await sb.from('contracts').insert(payload);
+    } catch(err) {
+      console.warn('[leadgate] insert failed (non bloquant):', err);
+      // On débloque quand même côté UI
+    }
+
+    unlock();
+    hideLgModal();
+    btn.disabled = false; btn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg> Voir les tarifs';
+  });
+
   // Icônes catégories (mapping vers SVG inline)
   const CAT_ICONS = {
     'plomberie':   '<path d="M22 12h-7l-2 4-3-8-2 4H2"/>',
