@@ -1388,13 +1388,77 @@ if (document.fonts && document.fonts.ready) {
     </div>
 
     <div class="m-tarifs-grid" id="plomberieServicesGrid">
-      <!-- Chargé dynamiquement depuis Supabase table services (catégorie: plomberie) -->
-      <div class="m-tarif-loading" style="grid-column:1/-1;text-align:center;padding:40px;color:#94a3b8">
-        <div class="m-tarif-spinner" style="display:inline-block;width:28px;height:28px;border:3px solid #E5EDF3;border-top-color:#0DA0CF;border-radius:50%;animation:msvcspin .8s linear infinite"></div>
-        <div style="margin-top:10px;font-size:.86rem">Chargement du catalogue…</div>
-      </div>
-      <style>@keyframes msvcspin{to{transform:rotate(360deg)}}</style>
+      <!-- Catalogue plomberie : fallback hardcodé complet, enrichi via Supabase si disponible -->
+
+      <article class="m-tarif-card" data-presta="Déplacement & diagnostic">
+        <div class="m-tarif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <h3>Déplacement &amp; diagnostic</h3>
+        <p>Technicien sur place, état des lieux, devis détaillé annoncé avant tout travail.</p>
+        <div class="m-tarif-price">89 € TTC <small>· prise en charge</small></div>
+        <a href="contact.html?presta=diagnostic#form" class="m-tarif-action">Réserver →</a>
+      </article>
+
+      <article class="m-tarif-card" data-presta="Recherche de fuite">
+        <div class="m-tarif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <h3>Recherche de fuite</h3>
+        <p>Caméra thermique, gaz traceur, écoute acoustique. Sans casse inutile.</p>
+        <div class="m-tarif-price">à partir de 149 € TTC</div>
+        <a href="guide-fuite-eau.html" class="m-tarif-action">Voir détail →</a>
+      </article>
+
+      <article class="m-tarif-card" data-presta="Débouchage simple">
+        <div class="m-tarif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M6 8v8"/><path d="M18 8v8"/><path d="M12 6v12"/></svg></div>
+        <h3>Débouchage canalisation</h3>
+        <p>WC, évier, douche. Furet électrique ou hydrocurage. Sans produits agressifs.</p>
+        <div class="m-tarif-price">à partir de 119 € TTC</div>
+        <a href="contact.html?presta=debouchage#form" class="m-tarif-action">Réserver →</a>
+      </article>
+
+      <article class="m-tarif-card" data-presta="Mitigeur / robinet">
+        <div class="m-tarif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg></div>
+        <h3>Remplacement mitigeur / robinet</h3>
+        <p>Robinet qui goutte, mitigeur HS, joint usé. Pose rapide chez vous.</p>
+        <div class="m-tarif-price">à partir de 95 € TTC</div>
+        <a href="contact.html?presta=mitigeur#form" class="m-tarif-action">Réserver →</a>
+      </article>
+
+      <article class="m-tarif-card" data-presta="Chasse d'eau">
+        <div class="m-tarif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M9 8h6"/><path d="M9 12h6"/></svg></div>
+        <h3>Mécanisme chasse d'eau</h3>
+        <p>Standard Nicoll ou WC au sol Geberit. Pose en 1 h, garantie.</p>
+        <div class="m-tarif-price">187 - 203 € TTC</div>
+        <a href="contact.html?presta=chasse-eau#form" class="m-tarif-action">Réserver →</a>
+      </article>
+
+      <article class="m-tarif-card complex" data-presta="Chauffe-eau">
+        <div class="m-tarif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+        <h3>Chauffe-eau / cumulus</h3>
+        <p>Étude des besoins, conseil modèle (Éco / Stéatite / thermo), dépose &amp; pose.</p>
+        <div class="m-tarif-price">sur devis</div>
+        <a href="contact.html?presta=chauffe-eau#form" class="m-tarif-action">Demander un devis →</a>
+      </article>
+
+      <article class="m-tarif-card complex" data-presta="WC complet">
+        <div class="m-tarif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v18"/><path d="M15 3v18"/><path d="M3 12h18"/></svg></div>
+        <h3>WC suspendu / bâti-support</h3>
+        <p>Installation complète, raccordement, finitions.</p>
+        <div class="m-tarif-price">sur devis</div>
+        <a href="contact.html?presta=wc-suspendu#form" class="m-tarif-action">Demander un devis →</a>
+      </article>
+
+      <article class="m-tarif-card complex" data-presta="Rénovation SDB">
+        <div class="m-tarif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/></svg></div>
+        <h3>Rénovation salle de bain</h3>
+        <p>Visite technique gratuite. Devis détaillé sous 5 jours. Clés en main.</p>
+        <div class="m-tarif-price">sur devis</div>
+        <a href="travaux-saint-omer.html" class="m-tarif-action">Voir nos rénovations →</a>
+      </article>
     </div>
+
+    <style>
+      .m-tarifs-grid .m-tarif-price { font-weight: 800; color: var(--m-color, #0DA0CF); font-size: 1.1rem; margin: 8px 0 14px; letter-spacing: -.01em; }
+      .m-tarifs-grid .m-tarif-price small { font-weight: 500; color: #94a3b8; font-size: .78rem; letter-spacing: 0; }
+    </style>
 
     <script>
     (async function loadPlomberieServices(){
