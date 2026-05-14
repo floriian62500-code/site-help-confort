@@ -233,6 +233,15 @@ Ce document recense tous les bugs trouvés manuellement pendant la session du 13
 - **Règle de scan à ajouter** :
   - Pour chaque `/functions/v1/<name>`, lister les fichiers source qui contiennent cette chaîne. Si > 2 fichiers → suggestion de factoriser.
 
+### 30ter. Payload INSERT avec colonnes inexistantes ou NOT NULL vidé
+- **Symptôme** : Un fetch POST vers Supabase REST renvoie un 4xx silencieux (best-effort, ne bloque pas l'UX) → aucun lead enregistré.
+- **Cause** : Le payload JS contenait une clé `meta` qui n'existe pas dans le schéma de `leads` (la vraie colonne est `utm`/`tags`/`notes_internes`). Et `nom` était `null` alors qu'il est `NOT NULL` en BDD.
+- **Règle de scan à ajouter** :
+  - Pour chaque appel `fetch('/rest/v1/<table>', { method: 'POST', body: JSON.stringify(...) })`, extraire les clés du payload et croiser avec `information_schema.columns` pour la table.
+  - Si une clé envoyée n'existe pas dans la table → ALERTE.
+  - Si une colonne `NOT NULL` est absente du payload OU envoyée à `null` → ALERTE.
+  - Bonus : si une colonne a une `CHECK` constraint, vérifier que la valeur envoyée respecte la contrainte.
+
 ### 30bis. Images vides dans JSON statique → placeholder générique partout
 - **Symptôme** : Sur la home, le carousel "Nos dernières actualités" affiche systématiquement un placeholder "❓ HELP! Confort" au lieu d'images de chantiers.
 - **Cause racine** : Toutes les entrées de `content/actualites/index.json` ont `"image": ""` ET `"source_facebook": ""`. Le code passe au fallback générique.

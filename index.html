@@ -1806,23 +1806,30 @@ async function persistLeadToSupabase(source){
     var SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
     var ANON_KEY = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
     var sug = state.suggested_presta || {};
+    var fullName = ((state.prenom || '') + ' ' + (state.nom || '')).trim();
     var payload = {
-      nom: ((state.prenom || '') + ' ' + (state.nom || '')).trim() || null,
+      nom: fullName || 'Visiteur (wizard home)',          // not null
       email: state.email || null,
       telephone: state.tel || null,
-      ville: null,
       code_postal: state.cp || null,
       adresse: state.adresse || null,
       metier: sug.metier || (state.metiers && state.metiers[0]) || null,
+      type_demande: (sug.metier === 'Travaux') ? 'devis' : 'urgence',
       message: (sug.label ? '[' + sug.label + '] ' : '') + (state.desc || ''),
       source: source || 'home_wizard',
+      source_page: location.href,
       status: 'nouveau',
-      meta: {
-        habitat: state.habitat || null,
+      tags: [
+        'wizard-home',
+        sug.id || 'presta-' + (sug.label || 'unknown'),
+        state.habitat ? 'habitat:' + state.habitat : null
+      ].filter(Boolean),
+      utm: {
         metiers_selectionnes: state.metiers || [],
         flow: (PRESTAS[state.presta] && PRESTAS[state.presta].flow) || null,
         presta_key: state.presta || null,
-        urgence: state.urg || null
+        urgence: state.urg || null,
+        habitat: state.habitat || null
       }
     };
     await fetch(SUPABASE_URL + '/rest/v1/leads', {
