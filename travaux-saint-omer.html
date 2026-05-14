@@ -935,11 +935,12 @@ if (document.fonts && document.fonts.ready) {
     position: relative;
   }
   .m-tarif-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--m-color); opacity: 0; transition: opacity .25s ease; border-radius: 16px 16px 0 0; }
-  .m-tarif-card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px var(--m-glow); border-color: var(--m-color); }
+  .m-tarif-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(10,20,40,.08); }
   .m-tarif-card:hover::before { opacity: 1 }
-  .m-tarif-icon { width: 44px; height: 44px; border-radius: 11px;
-    background: var(--m-soft); color: var(--m-color-dark);
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .m-tarif-icon { width: 48px; height: 48px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--m-color), var(--m-color-dark)); color: #fff;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    box-shadow: 0 4px 10px var(--m-glow); }
   .m-tarif-icon svg { width: 22px; height: 22px }
   .m-tarif-card h3 { margin: 0; font-size: 1rem; font-weight: 800; color: #0A1428; }
   .m-tarif-card p { margin: 0; font-size: .84rem; line-height: 1.5; color: #475569; flex: 1; }
