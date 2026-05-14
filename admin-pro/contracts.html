@@ -975,14 +975,19 @@ let _editingId = null;
       const contractId = insRes.data.id;
       result.innerHTML += `<br><strong>✓ Étape 1/3 OK :</strong> contrat inséré (id: <code>${contractId.slice(0,8)}…</code>)<br><strong>Étape 2/3 :</strong> appel Edge Function notify-subscription…`;
 
-      // Étape 2 : déclenche la fonction
+      // Étape 2 : déclenche la fonction via le SDK Supabase
+      // (le SDK gère automatiquement la nouvelle auth publishable_key
+      // et bypass les soucis UNAUTHORIZED_LEGACY_JWT du fetch direct)
       try {
-        const fnRes = await fetch(`${SUPABASE_URL}/functions/v1/notify-subscription`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_ANON}` },
-          body: JSON.stringify({ contract_id: contractId, agence: 'saint-omer' })
+        const invokeRes = await sb.functions.invoke('notify-subscription', {
+          body: { contract_id: contractId, agence: 'saint-omer' }
         });
-        const fnData = await fnRes.json().catch(() => ({ error: 'response not JSON' }));
+        const fnErr = invokeRes.error;
+        const fnData = invokeRes.data || (fnErr ? { error: fnErr.message, raw: String(fnErr) } : {});
+        const fnRes = {
+          ok: !fnErr,
+          status: fnErr ? (fnErr.context?.status || 401) : 200
+        };
 
         if (!fnRes.ok) {
           result.innerHTML += `<br><strong>⚠ Étape 2/3 :</strong> Edge Function a répondu ${fnRes.status} — ${JSON.stringify(fnData)}`;
