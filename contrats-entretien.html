@@ -1693,6 +1693,33 @@ if (document.fonts && document.fonts.ready) {
   .sw-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-weight:700;font-size:.92rem;cursor:pointer;font-family:inherit;border:0;transition:all .2s ease;white-space:nowrap}
   .sw-btn[hidden],.sous-step:not(.is-active),#swError[hidden]{display:none !important}
 
+  /* ═══ DOCUMENTS JURIDIQUES (RIB, SEPA, facture) ═══ */
+  .sw-info-box{display:flex;gap:14px;padding:16px 18px;background:linear-gradient(135deg,rgba(255,180,0,.10),rgba(255,107,26,.04));border:1.5px solid rgba(255,180,0,.30);border-radius:14px;margin-bottom:22px;align-items:flex-start}
+  .sw-info-icon{flex-shrink:0;width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(255,180,0,.30)}
+  .sw-info-text{flex:1;line-height:1.45;font-size:.88rem;color:#0A1428}
+  .sw-info-text strong{display:block;color:#0A1428;font-weight:800;font-size:.95rem;margin-bottom:4px}
+  .sw-info-text span{display:block;color:#475569;font-size:.85rem}
+  .sw-info-text span strong{display:inline;font-weight:700;color:#C2510A}
+
+  .sw-doc-row{padding:16px 18px;background:#fff;border:1.5px solid #E5EDF3;border-radius:14px;margin-bottom:14px;transition:border-color .2s ease}
+  .sw-doc-row:hover{border-color:rgba(13,160,207,.35)}
+  .sw-doc-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+  .sw-doc-num{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.82rem;box-shadow:0 4px 10px rgba(13,160,207,.25)}
+  .sw-doc-title{display:block;color:#0A1428;font-weight:800;font-size:.95rem;margin-bottom:2px}
+  .sw-doc-required{color:#E11D48;font-weight:900;margin-left:3px}
+  .sw-doc-opt{color:#64748b;font-weight:600;font-size:.78rem;margin-left:6px;padding:1px 8px;background:#F1F5F9;border-radius:6px}
+  .sw-doc-hint{display:block;color:#64748b;font-size:.82rem;line-height:1.4}
+  .sw-doc-upload{display:flex;align-items:center;gap:12px;padding:12px 14px;background:linear-gradient(135deg,rgba(31,196,240,.06),rgba(13,160,207,.02));border:1.5px dashed rgba(13,160,207,.40);border-radius:10px;cursor:pointer;color:#0DA0CF;transition:all .2s ease}
+  .sw-doc-upload:hover{background:linear-gradient(135deg,rgba(31,196,240,.12),rgba(13,160,207,.04));border-color:#0DA0CF}
+  .sw-doc-upload-text{display:flex;flex-direction:column;line-height:1.3;flex:1}
+  .sw-doc-upload-text strong{color:#0A1428;font-weight:800;font-size:.9rem}
+  .sw-doc-upload-text span{color:#64748b;font-size:.78rem;margin-top:2px}
+  .sw-doc-status{margin-top:10px;padding:8px 12px;border-radius:8px;font-size:.85rem;display:flex;align-items:center;gap:8px}
+  .sw-doc-status.ok{background:rgba(34,197,94,.10);color:#16A34A;font-weight:600}
+  .sw-doc-status.ok::before{content:"✓ "}
+  .sw-doc-checkbox{display:flex;align-items:flex-start;gap:10px;padding:10px 0;cursor:pointer;font-size:.86rem;color:#0A1428;line-height:1.4}
+  .sw-doc-checkbox input{margin-top:3px;flex-shrink:0;width:18px;height:18px;accent-color:#1FC4F0}
+
   /* ═══ UPLOAD PHOTOS chaudière ═══ */
   .sw-photo-wrap{margin-top:6px}
   .sw-photo-label{display:flex;align-items:center;gap:14px;padding:18px 20px;border:1.5px dashed rgba(13,160,207,.40);background:linear-gradient(135deg,rgba(31,196,240,.06),rgba(13,160,207,.02));border-radius:14px;cursor:pointer;transition:all .25s ease}
@@ -2083,6 +2110,8 @@ if (document.fonts && document.fonts.ready) {
     // Counter
     var counter = $('#swCounter');
     if (counter) counter.textContent = 'Étape ' + current + ' sur ' + TOTAL;
+    var stepLabels = ['', 'Coordonnées', 'Adresse', 'Logement', 'Équipement', 'Documents', 'Envoi'];
+    if (counter) counter.innerHTML = '<strong>Étape ' + current + '/' + TOTAL + '</strong> · ' + (stepLabels[current] || '');
     // Buttons (hidden + style.display pour bulletproof)
     var bPrev = $('#swPrev'), bNext = $('#swNext'), bSub = $('#swSubmit');
     if (bPrev) { bPrev.hidden = (current === 1); bPrev.style.display = (current === 1) ? 'none' : ''; }
@@ -2128,6 +2157,12 @@ if (document.fonts && document.fonts.ready) {
         var json = document.getElementById('eqPhotosJson');
         var photos = json ? (function(){ try { return JSON.parse(json.value || '[]'); } catch(_){ return []; } })() : [];
         if (photos.length === 0) { bad = true; msg = msg || 'Merci d\'ajouter au moins une photo de votre chaudière.'; }
+      }
+      else if (rule === 'files-rib') {
+        var ribInput = document.getElementById('docRib');
+        if (!ribInput || !ribInput.files || ribInput.files.length === 0) {
+          bad = true; msg = msg || 'Merci de téléverser votre RIB (obligatoire).';
+        }
       }
       if (bad){
         inp.classList.add('has-error');
@@ -2267,6 +2302,33 @@ if (document.fonts && document.fonts.ready) {
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initEquipement);
   else initEquipement();
+
+  // ═══════════════════════════════════════════════════════════════
+  // DOCUMENTS étape 5 : RIB + facture entretien — feedback upload
+  // ═══════════════════════════════════════════════════════════════
+  function initDocuments(){
+    function bindFile(inputId, statusId, label){
+      var input = document.getElementById(inputId);
+      var status = document.getElementById(statusId);
+      if (!input || !status) return;
+      input.addEventListener('change', function(){
+        var f = input.files && input.files[0];
+        if (!f) { status.hidden = true; return; }
+        if (f.size > 5 * 1024 * 1024) {
+          alert(f.name + ' dépasse 5 Mo. Choisissez un fichier plus léger.');
+          input.value = '';
+          return;
+        }
+        status.className = 'sw-doc-status ok';
+        status.textContent = label + ' : ' + f.name + ' (' + Math.round(f.size/1024) + ' Ko)';
+        status.hidden = false;
+      });
+    }
+    bindFile('docRib', 'ribStatus', 'RIB téléversé');
+    bindFile('docFacture', 'factureStatus', 'Facture téléversée');
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initDocuments);
+  else initDocuments();
 
   // Init handlers
   function init(){
