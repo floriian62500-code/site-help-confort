@@ -1346,7 +1346,8 @@ if (document.fonts && document.fonts.ready) {
           <div class="sw-pstep" data-pstep="2"><span class="sw-pstep-circle">2</span><span class="sw-pstep-lbl">Adresse</span></div>
           <div class="sw-pstep" data-pstep="3"><span class="sw-pstep-circle">3</span><span class="sw-pstep-lbl">Logement</span></div>
           <div class="sw-pstep" data-pstep="4"><span class="sw-pstep-circle">4</span><span class="sw-pstep-lbl">Équipement</span></div>
-          <div class="sw-pstep" data-pstep="5"><span class="sw-pstep-circle">5</span><span class="sw-pstep-lbl">Valider</span></div>
+          <div class="sw-pstep" data-pstep="5"><span class="sw-pstep-circle">5</span><span class="sw-pstep-lbl">Documents</span></div>
+          <div class="sw-pstep" data-pstep="6"><span class="sw-pstep-circle">6</span><span class="sw-pstep-lbl">Envoyer</span></div>
         </div>
       </div>
 
@@ -1517,21 +1518,93 @@ if (document.fonts && document.fonts.ready) {
         </div>
       </div>
 
-      <!-- ═══════════ ÉTAPE 5 — Date + récap + consentement ═══════════ -->
+      <!-- ═══════════ ÉTAPE 5 — Documents juridiques (RIB, SEPA, facture entretien) ═══════════ -->
       <div class="sous-step" data-step="5">
         <div class="sw-intro">
-          <h4 class="sw-step-title">Date souhaitée &amp; validation</h4>
-          <p class="sw-step-hint">Dernière étape ! Précisez quand vous voulez commencer, puis envoyez.</p>
+          <h4 class="sw-step-title">Documents juridiques &amp; bancaires</h4>
+          <p class="sw-step-hint">Pour finaliser votre dossier, nous avons besoin de quelques documents.<br><strong>Tous les formats acceptés</strong> : PDF, JPG, PNG (max 5 Mo par fichier).</p>
         </div>
-        <input type="text" name="date_debut" placeholder="Date de début souhaitée (ex : 1er du mois prochain)" class="sous-inp" style="margin-bottom:10px">
-        <textarea name="commentaire" placeholder="Précisions complémentaires (accessibilité, horaires, contraintes, etc.)" rows="3" class="sous-inp" style="resize:vertical;min-height:70px;margin-bottom:14px"></textarea>
+
+        <!-- Bandeau visite obligatoire -->
+        <div class="sw-info-box">
+          <div class="sw-info-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <div class="sw-info-text">
+            <strong>Important — Visite technique obligatoire</strong>
+            <span>Avant la <strong>signature définitive</strong> du contrat, un technicien HELP! Confort se déplace gratuitement chez vous pour valider l'état de votre installation. Cette visite ne vous engage à rien — vous pouvez encore renoncer après.</span>
+          </div>
+        </div>
+
+        <!-- RIB obligatoire -->
+        <div class="sw-doc-row">
+          <div class="sw-doc-head">
+            <span class="sw-doc-num">1</span>
+            <div>
+              <strong class="sw-doc-title">Votre RIB <span class="sw-doc-required">*</span></strong>
+              <span class="sw-doc-hint">Pour le prélèvement automatique mensuel ou annuel.</span>
+            </div>
+          </div>
+          <label for="docRib" class="sw-doc-upload">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span class="sw-doc-upload-text"><strong>Téléverser mon RIB</strong><span>PDF, JPG ou PNG · 5 Mo max</span></span>
+            <input type="file" id="docRib" name="rib" accept="image/jpeg,image/png,image/webp,application/pdf" required hidden data-validate="files-rib">
+          </label>
+          <div class="sw-doc-status" id="ribStatus" hidden></div>
+        </div>
+
+        <!-- Dernière facture entretien (recommandé) -->
+        <div class="sw-doc-row">
+          <div class="sw-doc-head">
+            <span class="sw-doc-num">2</span>
+            <div>
+              <strong class="sw-doc-title">Dernière facture d'entretien <span class="sw-doc-opt">(recommandé)</span></strong>
+              <span class="sw-doc-hint">Nous permet d'historiser votre installation et d'adapter le contrat.</span>
+            </div>
+          </div>
+          <label for="docFacture" class="sw-doc-upload">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <span class="sw-doc-upload-text"><strong>Téléverser la facture</strong><span>PDF, JPG ou PNG · 5 Mo max</span></span>
+            <input type="file" id="docFacture" name="facture_entretien" accept="image/jpeg,image/png,image/webp,application/pdf" hidden>
+          </label>
+          <div class="sw-doc-status" id="factureStatus" hidden></div>
+        </div>
+
+        <!-- Mandat SEPA - signature en ligne ou téléchargement -->
+        <div class="sw-doc-row">
+          <div class="sw-doc-head">
+            <span class="sw-doc-num">3</span>
+            <div>
+              <strong class="sw-doc-title">Mandat SEPA <span class="sw-doc-opt">(signé après visite technique)</span></strong>
+              <span class="sw-doc-hint">Vous acceptez le principe du prélèvement automatique. Le mandat SEPA officiel vous sera transmis par email <strong>après la visite technique</strong>, à signer électroniquement (DocuSign / Yousign).</span>
+            </div>
+          </div>
+          <label class="sw-doc-checkbox">
+            <input type="checkbox" name="sepa_principe" required data-validate="checked">
+            <span>J'accepte le principe du prélèvement SEPA (signature ferme après visite technique uniquement).</span>
+          </label>
+        </div>
+
+        <!-- Date souhaitée + précisions -->
+        <div style="margin-top:18px">
+          <input type="text" name="date_debut" placeholder="Date de début souhaitée (ex : 1er du mois prochain)" class="sous-inp" style="margin-bottom:10px">
+          <textarea name="commentaire" placeholder="Précisions complémentaires (accessibilité, horaires, contraintes, etc.)" rows="2" class="sous-inp" style="resize:vertical;min-height:60px"></textarea>
+        </div>
+      </div>
+
+      <!-- ═══════════ ÉTAPE 6 — Récapitulatif + acceptation finale ═══════════ -->
+      <div class="sous-step" data-step="6">
+        <div class="sw-intro">
+          <h4 class="sw-step-title">Récapitulatif &amp; envoi</h4>
+          <p class="sw-step-hint">Vérifiez les informations puis envoyez votre demande. Un conseiller vous rappelle sous 24h pour planifier la visite technique.</p>
+        </div>
 
         <!-- Récap rapide -->
         <div class="sw-recap" id="swRecap" aria-live="polite"></div>
 
-        <label style="display:flex;align-items:flex-start;gap:10px;margin:14px 0 6px;font-size:.86rem;color:#475569;line-height:1.5;cursor:pointer">
+        <label style="display:flex;align-items:flex-start;gap:10px;margin:18px 0 6px;font-size:.86rem;color:#475569;line-height:1.5;cursor:pointer">
           <input type="checkbox" name="cgv" required style="margin-top:3px;flex-shrink:0;width:18px;height:18px;accent-color:#1FC4F0" data-validate="checked">
-          <span>J'accepte d'être contacté(e) sous 24h pour finaliser mon contrat et je reconnais que ce formulaire constitue une <strong>demande de souscription</strong>, non un engagement définitif. *</span>
+          <span>J'accepte d'être contacté(e) sous 24h pour finaliser mon contrat. Je reconnais que ce formulaire constitue une <strong>demande de souscription</strong>, non un engagement définitif. La signature ferme du contrat aura lieu <strong>après la visite technique gratuite</strong>. *</span>
         </label>
       </div>
 
@@ -1987,7 +2060,7 @@ if (document.fonts && document.fonts.ready) {
 <!-- WIZARD MULTI-ÉTAPES SOUSCRIPTION -->
 <script>
 (function(){
-  var TOTAL = 5;
+  var TOTAL = 6;
   var current = 1;
 
   function $(s, ctx){ return (ctx||document).querySelector(s); }
