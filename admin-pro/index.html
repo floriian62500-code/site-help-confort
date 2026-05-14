@@ -82,16 +82,16 @@
           </div>
         </a>
 
-        <a href="contracts.html" class="stat-card" data-kpi="contracts-active" style="text-decoration:none;color:inherit;cursor:pointer">
+        <a href="contracts.html" class="stat-card" data-kpi="subscriptions-30d" style="text-decoration:none;color:inherit;cursor:pointer">
           <div class="stat-card-icon orange">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-7l-2 4-3-8-2 4H2"/><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
           </div>
-          <div class="stat-card-label">Contrats actifs</div>
+          <div class="stat-card-label">Souscriptions (30j)</div>
           <p class="stat-card-value" data-kpi-value>—</p>
           <div class="stat-card-trend up">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
             <span data-kpi-trend>—</span>
-            <span class="stat-card-trend-meta" data-kpi-meta>CA récurrent /mois</span>
+            <span class="stat-card-trend-meta" data-kpi-meta>à importer dans CRM</span>
           </div>
         </a>
 
@@ -415,7 +415,7 @@
     c.from('realisations').select('id,title,metier,ville,status,pinned,created_at,published_at,ai_generated,image_before,image_after'),
     c.from('leads').select('id,nom,metier,ville,status,created_at,estimated_value').gte('created_at', D30.toISOString()),
     c.from('leads').select('id', { count: 'exact', head: true }).gte('created_at', D60.toISOString()).lt('created_at', D30.toISOString()),
-    c.from('contracts').select('id,type,metier,status,monthly_amount,client_first_name,client_last_name,created_at'),
+    c.from('contracts').select('id,type,metier,status,monthly_amount,client_first_name,client_last_name,created_at,imported_to_crm_at'),
     c.from('service_orders').select('id,order_number,service_name,customer_name,city,status,price_ttc,created_at,preferred_date').gte('created_at', D30.toISOString()).order('created_at', { ascending: false }),
     c.from('service_orders').select('id', { count: 'exact', head: true }).gte('created_at', D60.toISOString()).lt('created_at', D30.toISOString()),
     c.from('reviews').select('id,source,author_name,rating,comment,created_at,published_at,status').order('created_at', { ascending: false }).limit(50)
@@ -436,11 +436,14 @@
   setKpi('leads-30d', leadsCount, leadsTrendStr, leadsMeta);
   if (leadsRes.error) console.warn('leads error:', leadsRes.error.message);
 
-  // ─── KPI 2 : Contrats actifs + CA récurrent ──────────────
+  // ─── KPI 2 : Souscriptions reçues 30j (contrats.status=pending_import ou created_at récent) ──
   const contracts = contractsRes.data || [];
-  const activeContracts = contracts.filter(x => x.status === 'active' || x.status === 'actif');
-  const mrr = activeContracts.reduce((s, x) => s + Number(x.monthly_amount || 0), 0);
-  setKpi('contracts-active', activeContracts.length, mrr.toLocaleString('fr-FR') + ' €', 'CA récurrent /mois');
+  const subs30 = contracts.filter(x => new Date(x.created_at) >= D30);
+  const toImport = contracts.filter(x => !x.imported_to_crm_at);
+  setKpi('subscriptions-30d',
+    subs30.length,
+    toImport.length > 0 ? toImport.length + ' à importer' : '✓ tout importé',
+    toImport.length > 0 ? 'Inbox → CRM' : 'aucun import en attente');
   if (contractsRes.error) console.warn('contracts error:', contractsRes.error.message);
 
   // ─── KPI 3 : Commandes (30j) + statut ────────────────────
@@ -784,78 +787,44 @@
     }
   } catch (e) { console.warn('Connector widget failed:', e); }
 
-  // ─── WIDGET TERRAIN : Interventions du jour + Contrats à renouveler ──
+  // ─── PASSERELLE CRM : bouton + inbox des souscriptions à importer ──
   try {
-    const today = new Date(); today.setHours(0,0,0,0);
-    const endOfToday = new Date(today); endOfToday.setHours(23,59,59,999);
-    const in30 = new Date(today); in30.setDate(in30.getDate() + 30);
-
-    const [ivRes, ctRes] = await Promise.all([
-      c.from('interventions')
-        .select('id, scheduled_at, duration_minutes, type, metier, technician, status, is_urgent, client_first_name, client_last_name, client_phone, client_city')
-        .gte('scheduled_at', today.toISOString())
-        .lte('scheduled_at', endOfToday.toISOString())
-        .not('status', 'in', '(cancelled,no_show)')
-        .order('scheduled_at', { ascending: true })
-        .limit(10),
-      c.from('contracts')
-        .select('id, client_first_name, client_last_name, client_phone, type, metier, monthly_amount, next_intervention_date')
-        .eq('status', 'active')
-        .not('next_intervention_date', 'is', null)
-        .lte('next_intervention_date', in30.toISOString().slice(0,10))
-        .order('next_intervention_date', { ascending: true })
-        .limit(10)
-    ]);
-
-    const hasData = (ivRes.data && ivRes.data.length) || (ctRes.data && ctRes.data.length);
-    // Si AUCUNE des 2 tables n'existe (erreurs sur les 2), on cache le widget entier
-    if (!ivRes.error || !ctRes.error || hasData) {
-      document.getElementById('terrainWidget').style.display = '';
+    // Récupère l'URL CRM depuis app_settings (configurée dans settings.html)
+    const { data: crmSetting } = await c.from('app_settings').select('value').eq('key','crm').maybeSingle();
+    const crmUrl = crmSetting?.value?.url || '';
+    const crmBtn = document.getElementById('crmOpenBtn');
+    if (crmUrl) {
+      crmBtn.href = crmUrl;
+    } else {
+      crmBtn.href = 'settings.html#crm';
+      crmBtn.querySelector('span').textContent = 'Configurer mon CRM';
+      crmBtn.target = '_self';
     }
 
-    const METIER_COLORS = { plomberie:'#0DA0CF', chauffage:'#FF6B1A', electricite:'#FFB400', serrurerie:'#7C3AED', vitrerie:'#22C55E', renovation:'#E11D48', menuiserie:'#92501A', volets:'#6366F1', pmr:'#14B8A6', multiservice:'#64748b' };
+    // Inbox des souscriptions reçues (status=pending_import ou nouveau, non encore importées dans le CRM)
+    const { data: inbox, error: inboxErr } = await c.from('contracts')
+      .select('id, client_first_name, client_last_name, client_phone, client_email, type, metier, monthly_amount, created_at, status, imported_to_crm_at')
+      .or('imported_to_crm_at.is.null,status.eq.pending_import')
+      .order('created_at', { ascending: false })
+      .limit(8);
 
-    // INTERVENTIONS
-    const ivList = ivRes.data || [];
-    document.getElementById('todayCount').textContent =
-      ivList.length === 0 ? 'Aucun RDV planifié' : ivList.length + ' RDV planifié' + (ivList.length>1?'s':'');
-    document.getElementById('todayList').innerHTML = ivList.length === 0
-      ? '<div style="padding:30px 18px;text-align:center;color:var(--ink-400);font-size:.86rem">Journée calme — profite-en pour rattraper l\'admin 😉</div>'
-      : ivList.map(x => {
-          const t = new Date(x.scheduled_at);
-          const time = t.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
-          const name = (x.client_first_name ? x.client_first_name + ' ' : '') + (x.client_last_name || '');
-          const mc = METIER_COLORS[x.metier] || '#64748b';
-          return `<a href="interventions.html?edit=${x.id}" style="display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:9px;text-decoration:none;color:inherit;transition:.15s" onmouseover="this.style.background='#FAFCFD'" onmouseout="this.style.background=''">
-            <div style="background:${mc};color:#fff;font-weight:800;font-size:.78rem;padding:4px 9px;border-radius:7px;flex-shrink:0;min-width:54px;text-align:center">${time}</div>
-            <div style="flex:1;min-width:0">
-              <strong style="display:block;color:var(--ink-900);font-size:.86rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${(x.is_urgent?'🚨 ':'') + (name || '—')}</strong>
-              <span style="font-size:.72rem;color:var(--ink-500)">${(x.type||'')} · ${(x.technician || 'À assigner')} · ${(x.client_city||'—')}</span>
-            </div>
-          </a>`;
-        }).join('');
-
-    // CONTRATS
-    const ctList = ctRes.data || [];
-    document.getElementById('ctSoonCount').textContent =
-      ctList.length === 0 ? 'Aucune échéance dans 30 jours' : ctList.length + ' contrat' + (ctList.length>1?'s':'') + ' arrive' + (ctList.length>1?'nt':'') + ' à échéance';
-    document.getElementById('ctSoonList').innerHTML = ctList.length === 0
-      ? '<div style="padding:30px 18px;text-align:center;color:var(--ink-400);font-size:.86rem">Tous tes contrats actifs sont à jour ✅</div>'
-      : ctList.map(x => {
-          const next = new Date(x.next_intervention_date);
-          const days = Math.ceil((next - today) / 86400000);
-          const dueCls = days <= 0 ? 'color:#d92d20;font-weight:800' : days <= 7 ? 'color:#FF6B1A;font-weight:700' : 'color:var(--ink-700)';
-          const name = (x.client_first_name ? x.client_first_name + ' ' : '') + (x.client_last_name || '');
-          return `<a href="interventions.html?contract=${x.id}" style="display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:9px;text-decoration:none;color:inherit;transition:.15s" onmouseover="this.style.background='#FAFCFD'" onmouseout="this.style.background=''">
-            <div style="background:#0DA0CF;color:#fff;font-weight:800;font-size:.74rem;padding:4px 9px;border-radius:7px;flex-shrink:0;min-width:54px;text-align:center">${(x.type||'').toUpperCase()}</div>
-            <div style="flex:1;min-width:0">
-              <strong style="display:block;color:var(--ink-900);font-size:.86rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${name || '—'}</strong>
-              <span style="font-size:.72rem;${dueCls}">${days <= 0 ? '⚠️ En retard' : days <= 7 ? 'Dans ' + days + 'j' : next.toLocaleDateString('fr-FR',{day:'2-digit',month:'short'})}</span>
-            </div>
-            <span style="font-size:.74rem;color:var(--ink-400);flex-shrink:0">${Number(x.monthly_amount||0).toFixed(0)} €/mois</span>
-          </a>`;
-        }).join('');
-  } catch (e) { console.warn('Widget terrain failed:', e); }
+    if (!inboxErr && inbox && inbox.length > 0) {
+      document.getElementById('crmInbox').style.display = '';
+      document.getElementById('crmInboxCount').textContent = inbox.length;
+      document.getElementById('crmInboxList').innerHTML = inbox.map(x => {
+        const name = (x.client_first_name ? x.client_first_name + ' ' : '') + (x.client_last_name || '');
+        const when = timeAgo(x.created_at);
+        return `<a href="contracts.html?import=${x.id}" style="display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:9px;text-decoration:none;color:inherit;transition:.15s" onmouseover="this.style.background='#FAFCFD'" onmouseout="this.style.background=''">
+          <div style="background:#FFB400;color:#0A1428;font-weight:800;font-size:.74rem;padding:4px 9px;border-radius:7px;flex-shrink:0;min-width:60px;text-align:center">${escapeHtml((x.type||'').toUpperCase())}</div>
+          <div style="flex:1;min-width:0">
+            <strong style="display:block;color:var(--ink-900);font-size:.86rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(name || '—')}</strong>
+            <span style="font-size:.72rem;color:var(--ink-500)">${escapeHtml(x.client_phone || x.client_email || '')} · ${when}</span>
+          </div>
+          <span style="font-size:.74rem;color:var(--ink-400);flex-shrink:0">${Number(x.monthly_amount||0).toFixed(0)} €/mois</span>
+        </a>`;
+      }).join('');
+    }
+  } catch (e) { console.warn('Passerelle CRM failed:', e); }
 
   // ─── WIDGET PUBLICATIONS PROGRAMMÉES + AVIS RÉCENTS ──────
   try {
