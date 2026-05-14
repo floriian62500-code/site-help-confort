@@ -139,13 +139,22 @@ if [ "$PUSH_OK" = "1" ]; then
         [[ "$fn" == _* ]] && continue   # skip _shared, etc.
 
         # Detect verify_jwt = false dans config.toml → fonction publique
+        # Méthode robuste : extrait toute la section [functions.$fn] jusqu'à
+        # la prochaine section [...] ou EOF, puis cherche verify_jwt = false
         local_flag=""
-        if grep -A2 "^\[functions\.$fn\]" "$REPO/supabase/config.toml" 2>/dev/null | grep -q "verify_jwt = false"; then
+        section=$(awk -v fn="[functions.$fn]" '
+          $0 == fn { found=1; next }
+          found && /^\[/ { exit }
+          found { print }
+        ' "$REPO/supabase/config.toml" 2>/dev/null)
+
+        if echo "$section" | grep -qE "verify_jwt[[:space:]]*=[[:space:]]*false"; then
           local_flag="--no-verify-jwt"
+          dlog "🔓 Function '$fn' : verify_jwt=false détecté → flag --no-verify-jwt"
         fi
 
         if supabase functions deploy "$fn" --project-ref btcbjwqiivhpwoszomhg $local_flag >>"$DEPLOY_LOG" 2>&1; then
-          dlog "✅ Function '$fn' déployée${local_flag:+ (publique)}"
+          dlog "✅ Function '$fn' déployée${local_flag:+ (publique --no-verify-jwt)}"
         else
           dlog "❌ Échec deploy '$fn'"
         fi
