@@ -426,8 +426,17 @@ if (document.fonts && document.fonts.ready) {
   function forceCloseMenus() { megaMenus.forEach(function(m) { m.classList.add('mm-force-closed'); }); }
   function cancelCloseMenus() { megaMenus.forEach(function(m) { m.classList.remove('mm-force-closed'); }); if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; } }
   function scheduleClose() { if (closeTimer) clearTimeout(closeTimer); closeTimer = setTimeout(forceCloseMenus, 300); }
-  navLinks.forEach(function(link) { link.addEventListener('mouseenter', cancelCloseMenus); /* retiré : mouseleave fermait le menu trop tôt et bloquait les clicks */ link.addEventListener('click', cancelCloseMenus); });
-  megaMenus.forEach(function(menu) { menu.addEventListener('mouseenter', cancelCloseMenus); /* retiré : mouseleave fermait le menu trop tôt et bloquait les clicks */ });
+  navLinks.forEach(function(link) {
+    link.addEventListener('mouseenter', cancelCloseMenus);
+    link.addEventListener('mouseleave', scheduleClose);
+    link.addEventListener('click', cancelCloseMenus);
+  });
+  megaMenus.forEach(function(menu) {
+    menu.addEventListener('mouseenter', cancelCloseMenus);
+    menu.addEventListener('mouseleave', scheduleClose);
+    /* Click dans la zone vide du mégamenu (pas sur un lien) → ferme aussi */
+    menu.addEventListener('click', function(e){ if (!e.target.closest('a')) forceCloseMenus(); });
+  });
   document.addEventListener('click', function(e) { if (!e.target.closest('.hc-megamenu') && !e.target.closest('.hc-nav-link[data-has-menu]')) { forceCloseMenus(); } });
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape') forceCloseMenus(); });
   window.addEventListener('scroll', function() { if (!document.querySelector('.hc-megamenu:hover')) { forceCloseMenus(); } }, { passive: true });
