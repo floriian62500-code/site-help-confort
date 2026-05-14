@@ -233,6 +233,21 @@ Ce document recense tous les bugs trouvés manuellement pendant la session du 13
 - **Règle de scan à ajouter** :
   - Pour chaque `/functions/v1/<name>`, lister les fichiers source qui contiennent cette chaîne. Si > 2 fichiers → suggestion de factoriser.
 
+### 30sexies. Bouton mobile flottant qui déborde du viewport
+- **Symptôme** : Un bouton CTA fixed `bottom:14px;left:14px;right:14px` apparaît sur les pages métier alors qu'un bouton tel équivalent existe déjà dans le header sticky → doublon visible + déborde du viewport sur certaines largeurs (entre 980 et 1100px) car la media-query de masquage est `min-width:1100px`.
+- **Cause** : Élément `.sticky-call` historique ajouté avant que le header sticky n'embarque le bouton tel.
+- **Correctif appliqué** : `display:none !important` sur `.sticky-call`.
+- **Règle de scan à ajouter** :
+  - Détecter les éléments `position:fixed` qui dupliquent un CTA déjà présent dans le header.
+  - Vérifier la cohérence des breakpoints d'apparition/masquage entre éléments fixed de la même intention.
+
+### 30septies. Topbar paraît changer de dimensions entre pages
+- **Symptôme** : L'utilisateur perçoit que la barre orange du haut a une taille différente selon la page consultée.
+- **Cause potentielle** : `.hc-topbar` a `flex-wrap:wrap`, donc le contenu (Saint-Omer + Dunkerque + horaires) peut wrapper sur 1 ou 2 lignes selon la largeur disponible. Le CSS est identique sur toutes les pages, mais des CSS additionnels (`index-hero.css`, `index-reservation.css`) sur certaines pages peuvent décaler le contenu et provoquer un wrap différent.
+- **Règle de scan à ajouter** :
+  - Pour chaque composant partagé (header, footer, topbar), capturer son `offsetHeight` à largeur fixe sur chaque page et alerter si les hauteurs divergent de plus de 5%.
+  - Vérifier que chaque page charge la même liste de CSS dans le même ordre.
+
 ### 30quinquies. Duplication de logique entre home et page liste (DRY violé)
 - **Symptôme** : Le placeholder amélioré (icône métier + gradient) est appliqué sur `index.html` mais PAS sur `actualites.html`. Résultat : la page de liste affiche encore les vieilles cards génériques "Article" alors que la home a la version améliorée.
 - **Cause** : Deux moteurs de rendu d'actualités vivent dans deux fichiers HTML séparés, avec leur propre code JS de génération de card. Aucune fonction partagée.
@@ -299,6 +314,8 @@ Ce document recense tous les bugs trouvés manuellement pendant la session du 13
 18. **Sonde Payload-schema** : croiser les clés de chaque payload INSERT REST avec les colonnes réelles de la table cible.
 19. **Sonde DRY-UI** : détecter les blocs HTML strictement identiques ou les fonctions de rendu UI dupliquées entre plusieurs fichiers — alerter quand un fix UI sur un fichier laisse les autres dans l'état précédent.
 20. **Sonde Partial-orphan** : un même header/footer/slogan textuel répété > 5 fichiers → suggestion d'extraire en partial.
+21. **Sonde CTA-doublon-fixed** : élément `position:fixed` qui duplique un CTA déjà présent dans le header sticky → alerte de redondance + risque de débordement viewport.
+22. **Sonde Composant-stable** : capturer `offsetHeight` de chaque composant partagé sur chaque page à largeur fixe, alerter si divergence > 5%.
 
 ---
 
