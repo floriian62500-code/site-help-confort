@@ -1051,7 +1051,47 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
               <h3 id="resa-recap-title-simple">Prestation cadrée</h3>
               <div class="resa-quote-card">
                 <div class="resa-quote-row">
-                  <span>Prestation</span><strong id="resa-presta-name">—</strong>
+                  <span>Prestation</span>
+                  <span style="display:flex;align-items:center;gap:8px">
+                    <strong id="resa-presta-name">—</strong>
+                    <button type="button" id="resa-presta-edit" style="background:none;border:none;color:#0DA0CF;cursor:pointer;font-size:.78rem;text-decoration:underline;font-weight:600">modifier</button>
+                  </span>
+                </div>
+                <div class="resa-quote-row" id="resa-presta-picker-row" hidden>
+                  <span>Changer pour</span>
+                  <select id="resa-presta-picker" style="padding:7px 10px;border:1px solid #E5EDF3;border-radius:8px;font:inherit;font-size:.86rem;max-width:260px">
+                    <option value="">— Choisir une autre prestation —</option>
+                    <optgroup label="Plomberie">
+                      <option data-icon="💧" data-metier="Plomberie">Recherche & réparation de fuite</option>
+                      <option data-icon="🚿" data-metier="Plomberie">Débouchage canalisation</option>
+                      <option data-icon="♨️" data-metier="Plomberie">Dépannage / remplacement chauffe-eau</option>
+                      <option data-icon="🚰" data-metier="Plomberie">Réparation robinetterie / sanitaires</option>
+                      <option data-icon="🔧" data-metier="Plomberie">Dépannage plomberie (autre)</option>
+                    </optgroup>
+                    <optgroup label="Chauffage">
+                      <option data-icon="🔥" data-metier="Chauffage">Dépannage chaudière / chauffage</option>
+                      <option data-icon="🌡️" data-metier="Chauffage">Désembouage circuit chauffage</option>
+                      <option data-icon="🛠️" data-metier="Chauffage">Entretien annuel chaudière</option>
+                    </optgroup>
+                    <optgroup label="Électricité">
+                      <option data-icon="⚡" data-metier="Électricité">Dépannage électrique</option>
+                      <option data-icon="🔌" data-metier="Électricité">Tableau électrique / mise aux normes</option>
+                    </optgroup>
+                    <optgroup label="Serrurerie">
+                      <option data-icon="🔒" data-metier="Serrurerie">Ouverture de porte (claquée/forcée)</option>
+                      <option data-icon="🗝️" data-metier="Serrurerie">Changement de serrure / cylindre</option>
+                    </optgroup>
+                    <optgroup label="Vitrerie">
+                      <option data-icon="🪟" data-metier="Vitrerie">Remplacement vitrage / bris de glace</option>
+                      <option data-icon="🏠" data-metier="Vitrerie">Double vitrage / insert</option>
+                    </optgroup>
+                    <optgroup label="Travaux">
+                      <option data-icon="🏠" data-metier="Travaux">Devis travaux / rénovation</option>
+                      <option data-icon="🛁" data-metier="Travaux">Salle de bain / douche italienne</option>
+                      <option data-icon="🍳" data-metier="Travaux">Cuisine équipée</option>
+                      <option data-icon="♿" data-metier="Travaux">Adaptation PMR</option>
+                    </optgroup>
+                  </select>
                 </div>
                 <div class="resa-quote-row">
                   <span>Réactivité</span><strong id="resa-urg-name">—</strong>
@@ -1630,19 +1670,83 @@ return [
 'Agence rattachée : ' + detectAgence(state.cp)
 ].join('\n');
 }
+// Sélecteur "modifier la prestation"
+(function bindPrestaEditor(){
+  var btnEdit = document.getElementById('resa-presta-edit');
+  var pickerRow = document.getElementById('resa-presta-picker-row');
+  var picker = document.getElementById('resa-presta-picker');
+  if (!btnEdit || !picker) return;
+  btnEdit.addEventListener('click', function(){
+    pickerRow.hidden = !pickerRow.hidden;
+    btnEdit.textContent = pickerRow.hidden ? 'modifier' : 'fermer';
+  });
+  picker.addEventListener('change', function(){
+    var opt = picker.options[picker.selectedIndex];
+    if (!opt || !opt.value) return;
+    var icon = opt.dataset.icon || '🛠️';
+    var label = opt.text;
+    var metier = opt.dataset.metier || '—';
+    state.suggested_presta = { icon: icon, label: label, metier: metier };
+    document.getElementById('resa-presta-name').innerHTML = icon + ' ' + label + ' <small style="font-weight:500;color:#94a3b8">· ' + metier + '</small>';
+    pickerRow.hidden = true;
+    btnEdit.textContent = 'modifier';
+  });
+})();
+
+// Persistance Supabase (best-effort, ne bloque pas le mailto)
+async function persistLeadToSupabase(source){
+  try {
+    var SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+    var ANON_KEY = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
+    var sug = state.suggested_presta || {};
+    var payload = {
+      nom: ((state.prenom || '') + ' ' + (state.nom || '')).trim() || null,
+      email: state.email || null,
+      telephone: state.tel || null,
+      ville: null,
+      code_postal: state.cp || null,
+      adresse: state.adresse || null,
+      metier: sug.metier || (state.metiers && state.metiers[0]) || null,
+      message: (sug.label ? '[' + sug.label + '] ' : '') + (state.desc || ''),
+      source: source || 'home_wizard',
+      status: 'nouveau',
+      meta: {
+        habitat: state.habitat || null,
+        metiers_selectionnes: state.metiers || [],
+        flow: (PRESTAS[state.presta] && PRESTAS[state.presta].flow) || null,
+        presta_key: state.presta || null,
+        urgence: state.urg || null
+      }
+    };
+    await fetch(SUPABASE_URL + '/rest/v1/leads', {
+      method: 'POST',
+      headers: {
+        'apikey': ANON_KEY,
+        'Authorization': 'Bearer ' + ANON_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    });
+  } catch (e) { /* best-effort */ }
+}
+
 var sendComplex = document.getElementById('resa-send-complex');
-if (sendComplex) sendComplex.addEventListener('click', function() {
+if (sendComplex) sendComplex.addEventListener('click', async function() {
+persistLeadToSupabase('home_wizard_callback');
 var subject = encodeURIComponent('[Demande] ' + (PRESTAS[state.presta] && PRESTAS[state.presta].label));
 var to = state.cp && state.cp.substring(0,2) === '59'
 ? 'dunkerque@helpconfort.com' : 'saint-omer@helpconfort.com';
 window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + encodeURIComponent(buildMailBody());
 });
 var payBtn = document.getElementById('resa-pay');
-if (payBtn) payBtn.addEventListener('click', function() {
-var subject = encodeURIComponent('[Réservation] ' + (PRESTAS[state.presta] && PRESTAS[state.presta].label));
+if (payBtn) payBtn.addEventListener('click', async function() {
+persistLeadToSupabase('home_wizard_reservation');
+var sug = state.suggested_presta || {};
+var subject = encodeURIComponent('[Réservation] ' + (sug.label || (PRESTAS[state.presta] && PRESTAS[state.presta].label)));
 var to = state.cp && state.cp.substring(0,2) === '59'
 ? 'dunkerque@helpconfort.com' : 'saint-omer@helpconfort.com';
-window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + encodeURIComponent(buildMailBody() + '\n\n[Demande de paiement en ligne — à confirmer par l’agence]');
+window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + encodeURIComponent(buildMailBody() + '\n\n[Demande de paiement en ligne — à confirmer par l\'agence]');
 });
 gotoStep(1);
 })();
