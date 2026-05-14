@@ -1414,11 +1414,11 @@ if (document.fonts && document.fonts.ready) {
         </div>
       </div>
 
-      <!-- ═══════════ ÉTAPE 4 — Équipement (avec aide visuelle) ═══════════ -->
+      <!-- ═══════════ ÉTAPE 4 — Équipement (sélecteurs intelligents + photo) ═══════════ -->
       <div class="sous-step" data-step="4" id="f-equipement-block">
         <div class="sw-intro">
           <h4 class="sw-step-title">Votre équipement</h4>
-          <p class="sw-step-hint">Ces infos nous aident à préparer votre intervention. <strong>Tout est facultatif</strong> — si vous ne savez pas, passez à la suite.</p>
+          <p class="sw-step-hint">Ces infos nous aident à préparer votre intervention. <strong>Tous les champs sont obligatoires</strong>. La photo de votre chaudière nous fait gagner un temps précieux.</p>
         </div>
 
         <!-- Aide visuelle : où trouver les infos -->
@@ -1465,12 +1465,55 @@ if (document.fonts && document.fonts.ready) {
         </details>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-          <input type="text" name="marque" placeholder="Marque (ex : Saunier Duval)" class="sous-inp">
-          <input type="text" name="modele" placeholder="Modèle (si connu)" class="sous-inp">
+          <select name="marque" id="eqMarque" required class="sous-inp" data-validate="required">
+            <option value="">Marque de votre chaudière *</option>
+            <option>Saunier Duval</option>
+            <option>De Dietrich</option>
+            <option>Frisquet</option>
+            <option>Vaillant</option>
+            <option>Viessmann</option>
+            <option>ELM Leblanc</option>
+            <option>Chappée</option>
+            <option>Atlantic</option>
+            <option>Bosch / Junkers</option>
+            <option>Wolf</option>
+            <option>Buderus</option>
+            <option>Riello</option>
+            <option>Ferroli</option>
+            <option>Acleis</option>
+            <option>Auer</option>
+            <option>Oertli</option>
+            <option>Cuenod</option>
+            <option>Geminox</option>
+            <option>Heatae Sadia</option>
+            <option>Atlantic Sofath</option>
+            <option>Daikin</option>
+            <option>Mitsubishi Electric</option>
+            <option>Panasonic</option>
+            <option>Autre / Je ne sais pas</option>
+          </select>
+          <select name="modele" id="eqModele" required class="sous-inp" data-validate="required">
+            <option value="">Modèle * (sélectionnez d'abord la marque)</option>
+          </select>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <input type="text" name="annee" placeholder="Année d'installation" class="sous-inp" pattern="[0-9]{4}" maxlength="4">
-          <input type="text" name="dernier_entretien" placeholder="Dernier entretien (mois/année)" class="sous-inp">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+          <input type="text" name="annee" placeholder="Année d'installation *" required class="sous-inp" pattern="(19|20)[0-9]{2}" maxlength="4" inputmode="numeric" data-validate="required">
+          <input type="text" name="dernier_entretien" placeholder="Dernier entretien (MM/AAAA) *" required class="sous-inp" pattern="(0[1-9]|1[0-2])/(19|20)[0-9]{2}" maxlength="7" inputmode="numeric" data-validate="required">
+        </div>
+
+        <!-- Upload PHOTO chaudière -->
+        <div class="sw-photo-wrap">
+          <label for="eqPhotos" class="sw-photo-label">
+            <div class="sw-photo-icon">
+              <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </div>
+            <div class="sw-photo-text">
+              <strong>📸 Photo de votre chaudière (1 à 3 photos)</strong>
+              <span>Étiquette signalétique + vue d'ensemble — JPG/PNG, 5 Mo max par photo</span>
+            </div>
+            <input type="file" id="eqPhotos" name="photos" accept="image/jpeg,image/png,image/webp" multiple required data-validate="files" hidden>
+          </label>
+          <div class="sw-photo-preview" id="eqPhotosPreview"></div>
         </div>
       </div>
 
@@ -1576,6 +1619,19 @@ if (document.fonts && document.fonts.ready) {
   .sw-step-counter{flex:1;text-align:center;font-size:.78rem;color:#64748b;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
   .sw-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-weight:700;font-size:.92rem;cursor:pointer;font-family:inherit;border:0;transition:all .2s ease;white-space:nowrap}
   .sw-btn[hidden],.sous-step:not(.is-active),#swError[hidden]{display:none !important}
+
+  /* ═══ UPLOAD PHOTOS chaudière ═══ */
+  .sw-photo-wrap{margin-top:6px}
+  .sw-photo-label{display:flex;align-items:center;gap:14px;padding:18px 20px;border:1.5px dashed rgba(13,160,207,.40);background:linear-gradient(135deg,rgba(31,196,240,.06),rgba(13,160,207,.02));border-radius:14px;cursor:pointer;transition:all .25s ease}
+  .sw-photo-label:hover{border-color:#0DA0CF;background:linear-gradient(135deg,rgba(31,196,240,.10),rgba(13,160,207,.04))}
+  .sw-photo-icon{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;flex-shrink:0;box-shadow:0 6px 14px rgba(13,160,207,.25)}
+  .sw-photo-text{flex:1;line-height:1.4}
+  .sw-photo-text strong{display:block;color:#0A1428;font-weight:800;font-size:.96rem;margin-bottom:3px}
+  .sw-photo-text span{display:block;color:#64748b;font-size:.82rem}
+  .sw-photo-preview{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+  .sw-photo-preview-item{position:relative;width:90px;height:90px;border-radius:10px;overflow:hidden;border:1.5px solid #E5EDF3;background:#F7FBFD}
+  .sw-photo-preview-item img{width:100%;height:100%;object-fit:cover}
+  .sw-photo-preview-item .sw-photo-rm{position:absolute;top:4px;right:4px;width:22px;height:22px;border:0;border-radius:50%;background:rgba(225,29,72,.92);color:#fff;cursor:pointer;font-size:.85rem;line-height:1;font-family:inherit;display:flex;align-items:center;justify-content:center}
   .sw-btn-prev{background:#F1F5F9;color:#475569}
   .sw-btn-prev:hover{background:#E2E8F0;color:#0A1428}
   .sw-btn-next{background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;box-shadow:0 8px 18px rgba(13,160,207,.28)}
