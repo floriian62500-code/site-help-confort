@@ -464,7 +464,8 @@ function actionLink(key, isPrimary) {
   // ─── 2. Tables ─────────────────────────────────
   async function checkTable(stepKey, table, label) {
     try {
-      const { error, count } = await c.from(table).select('id', { count:'exact', head:true });
+      // SELECT * + head:true → ne ramène aucun row, juste compte (rapide, pas de PK requise)
+      const { error, count } = await c.from(table).select('*', { count:'exact', head:true });
       if (error) {
         if (/does not exist|relation/i.test(error.message)) {
           setStep(stepKey, 'fail', label + ' absente', 'Exécute le script SQL correspondant', actionLink(stepKey, true));
