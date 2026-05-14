@@ -1102,6 +1102,80 @@ prenom: '', nom: '', tel: '', email: '', cp: '', adresse: '', habitat: ''
 };
 var stepper = document.querySelectorAll('.hc-resa-stepper .step');
 var stepsContent = document.querySelectorAll('.hc-resa-step[data-step]');
+
+// ═══════════════════════════════════════════════════════════════
+// UPLOAD PHOTOS — click forcé + preview + drag&drop
+// ═══════════════════════════════════════════════════════════════
+(function(){
+  var input = document.getElementById('resa-photos-input');
+  var zone  = document.getElementById('resaDropZone');
+  var preview = document.getElementById('resaPhotosPreview');
+  if (!input || !zone) return;
+  var collected = []; // Array of {file, dataUrl}
+
+  // Click sur la zone → ouvre file picker (fallback si label ne marche pas)
+  zone.addEventListener('click', function(e){
+    if (e.target.tagName === 'INPUT') return;
+    e.preventDefault();
+    input.click();
+  });
+
+  // Drag & drop
+  ['dragenter','dragover'].forEach(function(ev){
+    zone.addEventListener(ev, function(e){ e.preventDefault(); e.stopPropagation(); zone.style.borderColor = '#FF6B1A'; zone.style.background = 'linear-gradient(135deg,#FFF1E6,#FFE7D2)'; });
+  });
+  ['dragleave','drop'].forEach(function(ev){
+    zone.addEventListener(ev, function(e){ e.preventDefault(); e.stopPropagation(); zone.style.borderColor = ''; zone.style.background = ''; });
+  });
+  zone.addEventListener('drop', function(e){
+    var files = (e.dataTransfer && e.dataTransfer.files) ? Array.from(e.dataTransfer.files) : [];
+    handleFiles(files);
+  });
+
+  // File picker change
+  input.addEventListener('change', function(e){
+    handleFiles(Array.from(e.target.files || []));
+  });
+
+  function handleFiles(files){
+    files.forEach(function(f){
+      if (collected.length >= 3) return; // max 3 photos
+      if (f.size > 10 * 1024 * 1024) { alert(f.name + ' dépasse 10 Mo'); return; }
+      var reader = new FileReader();
+      reader.onload = function(ev){
+        collected.push({ name: f.name, type: f.type, dataUrl: ev.target.result });
+        renderPreview();
+      };
+      reader.readAsDataURL(f);
+    });
+  }
+
+  function renderPreview(){
+    if (!collected.length) { preview.innerHTML = ''; return; }
+    preview.innerHTML = collected.map(function(p, i){
+      var isVideo = p.type && p.type.startsWith('video/');
+      var thumb = isVideo
+        ? '<div style="width:80px;height:80px;background:#0A1428;color:#fff;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:.7rem;font-weight:700">🎥 VIDÉO</div>'
+        : '<img src="'+p.dataUrl+'" alt="Photo '+(i+1)+'" style="width:80px;height:80px;object-fit:cover;border-radius:10px;border:1px solid #E5EDF3">';
+      return '<div style="position:relative;display:inline-block">'
+        + thumb
+        + '<button type="button" data-rm="'+i+'" aria-label="Retirer" style="position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;background:#E11D48;color:#fff;border:0;cursor:pointer;font-size:.8rem;line-height:1;display:flex;align-items:center;justify-content:center">×</button>'
+        + '</div>';
+    }).join('');
+    // Bouton de suppression
+    preview.querySelectorAll('[data-rm]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var idx = parseInt(b.dataset.rm, 10);
+        collected.splice(idx, 1);
+        renderPreview();
+      });
+    });
+  }
+
+  // Expose pour le submit
+  window.__resaPhotos = collected;
+})();
+
 var btnBack = document.getElementById('resa-back');
 var btnNext = document.getElementById('resa-next');
 var PRESTAS = {
