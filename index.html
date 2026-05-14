@@ -1332,8 +1332,8 @@ function canGoNext() {
 if (current === 1) return !!state.presta;
 if (current === 2) {
 if (state.flow === 'callback') return true;
-// Description suffisamment précise (≥ 5 caractères). Le sélecteur d'urgence ayant été retiré, on ne le requiert plus.
-return !!state.desc && state.desc.trim().length > 5;
+// Description : au moins 3 caractères pour éviter les soumissions vides.
+return !!state.desc && state.desc.trim().length >= 3;
 }
 if (current === 3) {
 return state.prenom.trim() && state.nom.trim() && state.tel.trim() &&
