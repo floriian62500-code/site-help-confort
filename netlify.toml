@@ -29,6 +29,10 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(self)"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    # Content Security Policy — Adaptée au site (Supabase, BAN, Fonts, iframes FB/Maps)
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://*.supabase.co https://api-adresse.data.gouv.fr https://api.anthropic.com https://www.google-analytics.com; frame-src https://www.facebook.com https://www.google.com https://www.google.com/maps/ https://www.youtube.com; frame-ancestors 'self'; form-action 'self' mailto:; base-uri 'self'; upgrade-insecure-requests"
+    # COOP/COEP relax pour permettre les iframes Facebook
+    Cross-Origin-Opener-Policy = "same-origin-allow-popups"
 
 # Cache long pour assets statiques (images, fonts, css, js)
 [[headers]]
