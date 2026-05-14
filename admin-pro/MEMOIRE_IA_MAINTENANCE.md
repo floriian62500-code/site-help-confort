@@ -233,6 +233,22 @@ Ce document recense tous les bugs trouvés manuellement pendant la session du 13
 - **Règle de scan à ajouter** :
   - Pour chaque `/functions/v1/<name>`, lister les fichiers source qui contiennent cette chaîne. Si > 2 fichiers → suggestion de factoriser.
 
+### 30quinquies. Duplication de logique entre home et page liste (DRY violé)
+- **Symptôme** : Le placeholder amélioré (icône métier + gradient) est appliqué sur `index.html` mais PAS sur `actualites.html`. Résultat : la page de liste affiche encore les vieilles cards génériques "Article" alors que la home a la version améliorée.
+- **Cause** : Deux moteurs de rendu d'actualités vivent dans deux fichiers HTML séparés, avec leur propre code JS de génération de card. Aucune fonction partagée.
+- **Règle de scan à ajouter** :
+  - Détecter les patterns de génération de card (`function*Card`, `.actu-card`, `.hc-mini-card`) qui apparaissent dans plus d'un fichier HTML.
+  - Suggérer d'extraire la logique dans `assets/hc-card-renderer.js` partagé.
+  - Quand un fix UI est appliqué à un fichier, alerter si d'autres fichiers partagent la même structure non patchée.
+
+### 30quater. Slogan / contenu marketing dupliqué sur 30+ fichiers HTML
+- **Symptôme** : Quand le client veut supprimer un slogan, il faut éditer 30 fichiers. Une seule oubli = incohérence visible.
+- **Cause** : Le site est un site statique sans système d'include/partial pour les composants partagés (header, footer).
+- **Règle de scan à ajouter** :
+  - Détecter les blocs HTML strictement identiques (par hash) répétés > 5 fichiers (typiquement header, footer, bandeau).
+  - Suggérer d'extraire en partial chargé via fetch côté client OU build-time include.
+  - Pour les sites Netlify, suggérer l'usage d'Edge Functions ou de `data-include` JS.
+
 ### 30ter. Payload INSERT avec colonnes inexistantes ou NOT NULL vidé
 - **Symptôme** : Un fetch POST vers Supabase REST renvoie un 4xx silencieux (best-effort, ne bloque pas l'UX) → aucun lead enregistré.
 - **Cause** : Le payload JS contenait une clé `meta` qui n'existe pas dans le schéma de `leads` (la vraie colonne est `utm`/`tags`/`notes_internes`). Et `nom` était `null` alors qu'il est `NOT NULL` en BDD.
@@ -281,6 +297,8 @@ Ce document recense tous les bugs trouvés manuellement pendant la session du 13
 16. **Sonde Feedback-loop** : features IA sans mécanisme de notation+amélioration.
 17. **Sonde JSON-images-vides** : JSON statique avec >50% d'entrées sans image → alerte de pipeline d'enrichissement cassé.
 18. **Sonde Payload-schema** : croiser les clés de chaque payload INSERT REST avec les colonnes réelles de la table cible.
+19. **Sonde DRY-UI** : détecter les blocs HTML strictement identiques ou les fonctions de rendu UI dupliquées entre plusieurs fichiers — alerter quand un fix UI sur un fichier laisse les autres dans l'état précédent.
+20. **Sonde Partial-orphan** : un même header/footer/slogan textuel répété > 5 fichiers → suggestion d'extraire en partial.
 
 ---
 
