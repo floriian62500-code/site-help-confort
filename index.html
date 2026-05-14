@@ -799,102 +799,131 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
       <div class="hc-resa-body">
 
         
-        <div class="hc-resa-step active" data-step="1">
-          <h3>Quel est votre besoin ?</h3>
-          <p class="resa-step-hint">3 voies selon votre situation. Le bon parcours vous fait gagner du temps — et nous évitons les mauvais diagnostics.</p>
+        <div class="hc-resa-step active hc-resa-step--qualif" data-step="1">
+          <div class="mq-head">
+            <span class="mq-eyebrow">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Aide à la décision
+            </span>
+            <h3 class="mq-title">Quel est votre <em>besoin</em> ?</h3>
+            <p class="mq-lead">3 voies selon votre situation. Le bon parcours vous fait gagner du temps — et nous évitons les mauvais diagnostics.</p>
+          </div>
 
-          <div class="resa-need-grid resa-need-grid-v2">
-            <button type="button" class="resa-need rn-card rn-card-urgent" data-presta="depannage" data-flow="simple">
-              <span class="rn-icon-v2">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-              </span>
-              <span class="rn-pill rn-pill-urgent">⚡ Réservable en ligne</span>
-              <strong class="rn-title">Dépannage rapide</strong>
-              <span class="rn-desc">Vous avez un problème <em>là, maintenant</em>.</span>
-              <ul class="rn-list">
+          <div class="mq-grid">
+            <button type="button" class="mq-card mq-card-urgent" data-presta="depannage" data-flow="simple">
+              <div class="mq-card-icon">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <div class="mq-card-pill mq-pill-urgent">⚡ Réservable en ligne</div>
+              <h3 class="mq-card-title">Dépannage rapide</h3>
+              <p class="mq-card-desc">Vous avez un problème <strong>là, maintenant</strong>.</p>
+              <ul class="mq-card-list">
                 <li>💧 Fuite, robinet qui goutte</li>
                 <li>🚽 WC, évier, douche bouchés</li>
                 <li>🔥 Plus d'eau chaude</li>
                 <li>🔍 Recherche de fuite</li>
+                <li>🔧 Mécanisme WC défectueux</li>
               </ul>
-              <span class="rn-foot"><span class="rn-tag">Prix transparents</span><span class="rn-cta">Choisir →</span></span>
+              <div class="mq-card-foot">
+                <span class="mq-card-tag">Prix transparents</span>
+                <span class="mq-card-cta">Voir les interventions →</span>
+              </div>
             </button>
 
-            <button type="button" class="resa-need rn-card rn-card-install" data-presta="devis-travaux" data-flow="complex">
-              <span class="rn-icon-v2">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 13.5a2.5 2.5 0 1 1-3 0V5l3-3v11.5z"/><path d="M11 5h3"/><path d="M16 12c1.5 0 3 .5 3 2v6a2 2 0 0 1-2 2h-3"/></svg>
-              </span>
-              <span class="rn-pill rn-pill-install">✏️ Devis sous 48h</span>
-              <strong class="rn-title">Devis / travaux</strong>
-              <span class="rn-desc">Rénovation, remplacement, <em>projet à étudier</em>.</span>
-              <ul class="rn-list">
-                <li>♨️ Chauffe-eau, chaudière</li>
-                <li>🛁 Salle de bain, douche italienne</li>
-                <li>🚰 Robinetterie, sanitaires</li>
+            <button type="button" class="mq-card mq-card-install" data-presta="devis-travaux" data-flow="complex">
+              <div class="mq-card-icon">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 13.5a2.5 2.5 0 1 1-3 0V5l3-3v11.5z"/><path d="M11 5h3"/><path d="M16 12c1.5 0 3 .5 3 2v6a2 2 0 0 1-2 2h-3"/></svg>
+              </div>
+              <div class="mq-card-pill mq-pill-install">✏️ Devis sous 48h</div>
+              <h3 class="mq-card-title">Installation &amp; remplacement</h3>
+              <p class="mq-card-desc">Un équipement à <strong>poser ou remplacer</strong>.</p>
+              <ul class="mq-card-list">
+                <li>♨️ Chauffe-eau (gaz, élec, thermo)</li>
+                <li>🚽 WC suspendu, lavabo, douche</li>
+                <li>🚰 Robinetterie, mitigeur</li>
+                <li>🪣 Adoucisseur, ballon</li>
+                <li>🔄 Mise aux normes réseau</li>
+              </ul>
+              <div class="mq-card-foot">
+                <span class="mq-card-tag">Étude personnalisée</span>
+                <span class="mq-card-cta">Demander un devis →</span>
+              </div>
+            </button>
+
+            <button type="button" class="mq-card mq-card-renov" data-presta="contrat-entretien" data-flow="simple">
+              <div class="mq-card-icon">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <div class="mq-card-pill mq-pill-renov">🏗️ Visite technique</div>
+              <h3 class="mq-card-title">Travaux &amp; rénovation</h3>
+              <p class="mq-card-desc">Un <strong>projet complet</strong> à concevoir.</p>
+              <ul class="mq-card-list">
+                <li>🛁 Salle de bain clés en main</li>
+                <li>🚿 Douche à l'italienne</li>
                 <li>♿ Adaptation PMR</li>
+                <li>🏠 Création de réseau</li>
+                <li>🛠️ Rénovation plomberie complète</li>
               </ul>
-              <span class="rn-foot"><span class="rn-tag">Étude personnalisée</span><span class="rn-cta">Choisir →</span></span>
-            </button>
-
-            <button type="button" class="resa-need rn-card rn-card-contract" data-presta="contrat-entretien" data-flow="simple">
-              <span class="rn-icon-v2">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-              </span>
-              <span class="rn-pill rn-pill-contract">🛡️ Visite annuelle</span>
-              <strong class="rn-title">Contrat d'entretien</strong>
-              <span class="rn-desc">Tranquillité <em>toute l'année</em>.</span>
-              <ul class="rn-list">
-                <li>🔥 Chaudière gaz / fioul</li>
-                <li>📋 Attestation légale</li>
-                <li>⚡ Dépannages inclus (formule)</li>
-                <li>📅 Rappel automatique 1 mois avant</li>
-              </ul>
-              <span class="rn-foot"><span class="rn-tag">Dès 9 € HT/mois</span><span class="rn-cta">Choisir →</span></span>
+              <div class="mq-card-foot">
+                <span class="mq-card-tag">Acc. de A à Z</span>
+                <span class="mq-card-cta">Étudier mon projet →</span>
+              </div>
             </button>
           </div>
 
-          <!-- Bandeau urgence sous les 3 cards -->
-          <div class="rn-urgence">
-            <span class="rn-urg-ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            </span>
-            <span class="rn-urg-txt"><strong>Dégât des eaux, fuite importante, plus d'eau du tout ?</strong> Appelez directement, on prend en charge en priorité.</span>
-            <a href="tel:+33366100134" class="rn-urg-cta">03 66 10 01 34</a>
+          <div class="mq-urgence">
+            <div class="mq-urgence-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="mq-urgence-text">
+              <strong>Dégât des eaux, fuite importante, plus d'eau du tout ?</strong>
+              <span>Appelez directement, on prend en charge en priorité.</span>
+            </div>
+            <a href="tel:+33366100134" class="mq-urgence-cta">03 66 10 01 34</a>
           </div>
 
           <style>
-            .resa-need-grid-v2{display:grid;gap:18px;grid-template-columns:1fr;margin:0 0 8px}
-            @media(min-width:720px){.resa-need-grid-v2{grid-template-columns:repeat(3,1fr)}}
-            .rn-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:left;background:#fff;border:1.5px solid #E5EDF3;border-radius:18px;padding:22px 20px 16px;cursor:pointer;font-family:inherit;color:inherit;transition:all .3s cubic-bezier(.16,1,.3,1);overflow:hidden}
-            .rn-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--rn-c,#0DA0CF),var(--rn-c2,#1FC4F0));transform:scaleX(0);transform-origin:left;transition:transform .35s ease}
-            .rn-card:hover,.rn-card.is-selected{transform:translateY(-4px);border-color:var(--rn-c,#0DA0CF);box-shadow:0 16px 36px -10px rgba(10,20,40,.16)}
-            .rn-card:hover::before,.rn-card.is-selected::before{transform:scaleX(1)}
-            .rn-card-urgent{--rn-c:#E11D48;--rn-c2:#FF4D6D}
-            .rn-card-install{--rn-c:#0DA0CF;--rn-c2:#1FC4F0}
-            .rn-card-contract{--rn-c:#16A34A;--rn-c2:#22C55E}
-            .rn-icon-v2{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(135deg,var(--rn-c,#0DA0CF),var(--rn-c2,#1FC4F0));margin-bottom:12px;box-shadow:0 8px 16px -4px color-mix(in srgb,var(--rn-c,#0DA0CF) 35%,transparent)}
-            .rn-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.04em;margin-bottom:8px;width:fit-content}
-            .rn-pill-urgent{background:rgba(225,29,72,.10);color:#BE1238}
-            .rn-pill-install{background:rgba(13,160,207,.10);color:#0A7FA3}
-            .rn-pill-contract{background:rgba(22,163,74,.10);color:#15803D}
-            .rn-title{font-size:1.1rem;font-weight:800;color:#0A1428;letter-spacing:-.01em;line-height:1.2;margin:0 0 6px}
-            .rn-desc{display:block;font-size:.86rem;color:#64748b;line-height:1.4;margin-bottom:12px}
-            .rn-desc em{font-style:normal;color:#0A1428;font-weight:700}
-            .rn-list{list-style:none;padding:0;margin:0 0 14px;display:flex;flex-direction:column;gap:5px;width:100%}
-            .rn-list li{font-size:.82rem;color:#0A1428;line-height:1.3;font-weight:400}
-            .rn-foot{display:flex;justify-content:space-between;align-items:center;width:100%;padding-top:10px;border-top:1px solid #F1F5F9;margin-top:auto}
-            .rn-tag{font-size:.72rem;color:#64748b;font-weight:600}
-            .rn-cta{font-size:.82rem;font-weight:800;color:var(--rn-c,#0DA0CF);transition:transform .2s ease}
-            .rn-card:hover .rn-cta{transform:translateX(3px)}
-            .rn-card .rn-arrow{display:none}
-            .rn-urgence{margin-top:18px;display:flex;align-items:center;gap:14px;padding:14px 18px;background:linear-gradient(135deg,rgba(225,29,72,.06),rgba(225,29,72,.02));border:1.5px solid rgba(225,29,72,.20);border-radius:14px;flex-wrap:wrap}
-            .rn-urg-ico{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:11px;background:#E11D48;color:#fff;flex-shrink:0;box-shadow:0 6px 14px rgba(225,29,72,.30);animation:rnRing 1.8s ease-in-out infinite}
-            @keyframes rnRing{0%,100%{box-shadow:0 6px 14px rgba(225,29,72,.30),0 0 0 0 rgba(225,29,72,.40)}50%{box-shadow:0 6px 14px rgba(225,29,72,.40),0 0 0 8px rgba(225,29,72,0)}}
-            .rn-urg-txt{flex:1;font-size:.85rem;color:#0A1428;line-height:1.4;min-width:200px}
-            .rn-urg-txt strong{display:block;color:#0A1428;font-weight:800;font-size:.92rem;margin-bottom:2px}
-            .rn-urg-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:linear-gradient(135deg,#E11D48,#BE1238);color:#fff;text-decoration:none;border-radius:10px;font-weight:800;font-size:.95rem;box-shadow:0 6px 16px rgba(225,29,72,.30);transition:all .2s ease;flex-shrink:0}
-            .rn-urg-cta:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(225,29,72,.42)}
-            @media(max-width:720px){.rn-urgence{flex-direction:column;text-align:center}.rn-urg-txt{min-width:0}.rn-urg-cta{width:100%;justify-content:center}}
+            /* Step qualif : on neutralise les padding du parent wizard pour aérer */
+            .hc-resa-step--qualif{padding:8px 0 0}
+            .hc-resa-step--qualif h3{display:none}
+            .hc-resa-step--qualif .resa-step-hint{display:none}
+            .mq-head{text-align:center;max-width:720px;margin:0 auto clamp(28px,4vw,44px)}
+            .mq-eyebrow{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:linear-gradient(135deg,rgba(13,160,207,.12),rgba(31,196,240,.08));color:#0DA0CF;border-radius:999px;font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+            .mq-title{font-size:clamp(1.7rem,3.2vw,2.4rem);font-weight:800;color:#0A1428;letter-spacing:-.02em;margin:0 0 10px;line-height:1.1}
+            .mq-title em{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:500;color:#0DA0CF}
+            .mq-lead{font-size:clamp(.96rem,1.1vw,1.06rem);color:#475569;line-height:1.55;margin:0}
+            .mq-grid{display:grid;gap:22px;grid-template-columns:1fr;max-width:1240px;margin:0 auto}
+            @media(min-width:760px){.mq-grid{grid-template-columns:repeat(3,1fr)}}
+            .mq-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:left;background:#fff;border:1.5px solid #E5EDF3;border-radius:22px;padding:28px 26px 24px;cursor:pointer;font-family:inherit;color:inherit;box-shadow:0 4px 16px rgba(10,20,40,.04);transition:all .3s cubic-bezier(.16,1,.3,1);overflow:hidden}
+            .mq-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--mq-c,#0DA0CF),var(--mq-c2,#1FC4F0));transform:scaleX(0);transform-origin:left;transition:transform .35s ease}
+            .mq-card:hover,.mq-card.is-selected{transform:translateY(-6px);border-color:var(--mq-c,#0DA0CF);box-shadow:0 24px 48px -12px rgba(10,20,40,.14)}
+            .mq-card:hover::before,.mq-card.is-selected::before{transform:scaleX(1)}
+            .mq-card-urgent{--mq-c:#E11D48;--mq-c2:#FF4D6D}
+            .mq-card-install{--mq-c:#0DA0CF;--mq-c2:#1FC4F0}
+            .mq-card-renov{--mq-c:#FF6B1A;--mq-c2:#FF8F4D}
+            .mq-card-icon{width:56px;height:56px;border-radius:16px;display:inline-flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(135deg,var(--mq-c,#0DA0CF),var(--mq-c2,#1FC4F0));margin-bottom:18px;box-shadow:0 8px 18px -4px color-mix(in srgb,var(--mq-c,#0DA0CF) 35%,transparent)}
+            .mq-card-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:.72rem;font-weight:800;letter-spacing:.04em;margin-bottom:12px;width:fit-content}
+            .mq-pill-urgent{background:rgba(225,29,72,.10);color:#BE1238}
+            .mq-pill-install{background:rgba(13,160,207,.10);color:#0A7FA3}
+            .mq-pill-renov{background:rgba(255,107,26,.12);color:#C2510A}
+            .mq-card-title{font-size:1.35rem;font-weight:800;color:#0A1428;letter-spacing:-.01em;margin:0 0 8px;line-height:1.2}
+            .mq-card-desc{font-size:.96rem;color:#475569;line-height:1.5;margin:0 0 18px}
+            .mq-card-desc strong{color:#0A1428;font-weight:700}
+            .mq-card-list{list-style:none;margin:0 0 22px;padding:0;display:flex;flex-direction:column;gap:9px;flex:1;width:100%}
+            .mq-card-list li{font-size:.92rem;color:#0A1428;line-height:1.35;padding-left:4px}
+            .mq-card-foot{display:flex;align-items:center;justify-content:space-between;width:100%;padding-top:16px;border-top:1px solid #F1F5F9;gap:8px;flex-wrap:wrap}
+            .mq-card-tag{font-size:.76rem;color:#64748b;font-weight:600}
+            .mq-card-cta{font-size:.9rem;font-weight:800;color:var(--mq-c,#0DA0CF);letter-spacing:-.01em;transition:transform .2s ease}
+            .mq-card:hover .mq-card-cta{transform:translateX(4px)}
+            .mq-urgence{max-width:980px;margin:clamp(24px,3vw,40px) auto 0;display:flex;align-items:center;gap:18px;padding:18px 24px;background:linear-gradient(135deg,rgba(225,29,72,.06),rgba(225,29,72,.02));border:1.5px solid rgba(225,29,72,.20);border-radius:18px;flex-wrap:wrap}
+            .mq-urgence-icon{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:12px;background:#E11D48;color:#fff;flex-shrink:0;box-shadow:0 6px 16px rgba(225,29,72,.30);animation:mqRingPulse 1.8s ease-in-out infinite}
+            @keyframes mqRingPulse{0%,100%{box-shadow:0 6px 16px rgba(225,29,72,.30),0 0 0 0 rgba(225,29,72,.40)}50%{box-shadow:0 6px 16px rgba(225,29,72,.40),0 0 0 10px rgba(225,29,72,0)}}
+            .mq-urgence-text{flex:1;line-height:1.35;min-width:200px}
+            .mq-urgence-text strong{display:block;color:#0A1428;font-weight:800;font-size:.98rem;margin-bottom:2px}
+            .mq-urgence-text span{display:block;color:#64748b;font-size:.86rem}
+            .mq-urgence-cta{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:linear-gradient(135deg,#E11D48,#BE1238);color:#fff;text-decoration:none;border-radius:12px;font-weight:800;font-size:1rem;letter-spacing:.02em;box-shadow:0 8px 22px rgba(225,29,72,.32);transition:all .25s ease;flex-shrink:0}
+            .mq-urgence-cta:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(225,29,72,.42)}
+            @media(max-width:720px){.mq-urgence{flex-direction:column;text-align:center;padding:20px 18px}.mq-urgence-text{min-width:0}.mq-urgence-cta{width:100%;justify-content:center}}
           </style>
         </div>
 
