@@ -1048,50 +1048,15 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
             
             <div class="resa-result-simple" data-result="simple" hidden>
               <div class="ia-badge"><span class="hc-pulse-dot"></span>Votre prise en charge</div>
-              <h3 id="resa-recap-title-simple">Prestation cadrée</h3>
+              <h3 id="resa-recap-title-simple">Choisissez la prestation qui correspond</h3>
+
+              <!-- BLOC PROPOSITION DE PRESTATIONS — visible et choisi par défaut -->
+              <div id="presta-proposals" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:14px"></div>
+
               <div class="resa-quote-card">
                 <div class="resa-quote-row">
-                  <span>Prestation</span>
-                  <span style="display:flex;align-items:center;gap:8px">
-                    <strong id="resa-presta-name">—</strong>
-                    <button type="button" id="resa-presta-edit" style="background:none;border:none;color:#0DA0CF;cursor:pointer;font-size:.78rem;text-decoration:underline;font-weight:600">modifier</button>
-                  </span>
-                </div>
-                <div class="resa-quote-row" id="resa-presta-picker-row" hidden>
-                  <span>Changer pour</span>
-                  <select id="resa-presta-picker" style="padding:7px 10px;border:1px solid #E5EDF3;border-radius:8px;font:inherit;font-size:.86rem;max-width:260px">
-                    <option value="">— Choisir une autre prestation —</option>
-                    <optgroup label="Plomberie">
-                      <option data-icon="💧" data-metier="Plomberie">Recherche & réparation de fuite</option>
-                      <option data-icon="🚿" data-metier="Plomberie">Débouchage canalisation</option>
-                      <option data-icon="♨️" data-metier="Plomberie">Dépannage / remplacement chauffe-eau</option>
-                      <option data-icon="🚰" data-metier="Plomberie">Réparation robinetterie / sanitaires</option>
-                      <option data-icon="🔧" data-metier="Plomberie">Dépannage plomberie (autre)</option>
-                    </optgroup>
-                    <optgroup label="Chauffage">
-                      <option data-icon="🔥" data-metier="Chauffage">Dépannage chaudière / chauffage</option>
-                      <option data-icon="🌡️" data-metier="Chauffage">Désembouage circuit chauffage</option>
-                      <option data-icon="🛠️" data-metier="Chauffage">Entretien annuel chaudière</option>
-                    </optgroup>
-                    <optgroup label="Électricité">
-                      <option data-icon="⚡" data-metier="Électricité">Dépannage électrique</option>
-                      <option data-icon="🔌" data-metier="Électricité">Tableau électrique / mise aux normes</option>
-                    </optgroup>
-                    <optgroup label="Serrurerie">
-                      <option data-icon="🔒" data-metier="Serrurerie">Ouverture de porte (claquée/forcée)</option>
-                      <option data-icon="🗝️" data-metier="Serrurerie">Changement de serrure / cylindre</option>
-                    </optgroup>
-                    <optgroup label="Vitrerie">
-                      <option data-icon="🪟" data-metier="Vitrerie">Remplacement vitrage / bris de glace</option>
-                      <option data-icon="🏠" data-metier="Vitrerie">Double vitrage / insert</option>
-                    </optgroup>
-                    <optgroup label="Travaux">
-                      <option data-icon="🏠" data-metier="Travaux">Devis travaux / rénovation</option>
-                      <option data-icon="🛁" data-metier="Travaux">Salle de bain / douche italienne</option>
-                      <option data-icon="🍳" data-metier="Travaux">Cuisine équipée</option>
-                      <option data-icon="♿" data-metier="Travaux">Adaptation PMR</option>
-                    </optgroup>
-                  </select>
+                  <span>Prestation retenue</span>
+                  <strong id="resa-presta-name" style="color:#0DA0CF">—</strong>
                 </div>
                 <div class="resa-quote-row">
                   <span>Réactivité</span><strong id="resa-urg-name">—</strong>
