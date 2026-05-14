@@ -1,9 +1,24 @@
 {
-  "scanned_at": "2026-05-14T04:53:15",
-  "duration_ms": 1896,
-  "pages_scanned": 80,
-  "total_findings": 0,
-  "by_severity": {},
-  "health_score": 100,
-  "findings": []
+  "scanned_at": "2026-05-14T20:04:23",
+  "duration_ms": 1701,
+  "pages_scanned": 81,
+  "total_findings": 2,
+  "by_severity": {
+    "optimisation": 2
+  },
+  "health_score": 99,
+  "findings": [
+    {
+      "file": "index.html",
+      "severity": "optimisation",
+      "code": "HEAVY_HTML",
+      "msg": "Page lourde : 181 KB"
+    },
+    {
+      "file": "contrats-entretien.html",
+      "severity": "optimisation",
+      "code": "HEAVY_HTML",
+      "msg": "Page lourde : 151 KB"
+    }
+  ]
 }
