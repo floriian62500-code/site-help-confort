@@ -2038,6 +2038,11 @@ if (document.fonts && document.fonts.ready) {
       else if (rule === 'tel' && (!val || val.replace(/\D/g,'').length < 8)) { bad = true; msg = msg || 'Numéro de téléphone invalide.'; }
       else if (rule === 'cp' && (!val || !/^[0-9]{5}$/.test(val))) { bad = true; msg = msg || 'Code postal invalide (5 chiffres).'; }
       else if (rule === 'checked' && !val) { bad = true; msg = msg || 'Merci d\'accepter la déclaration pour valider.'; }
+      else if (rule === 'files') {
+        var json = document.getElementById('eqPhotosJson');
+        var photos = json ? (function(){ try { return JSON.parse(json.value || '[]'); } catch(_){ return []; } })() : [];
+        if (photos.length === 0) { bad = true; msg = msg || 'Merci d\'ajouter au moins une photo de votre chaudière.'; }
+      }
       if (bad){
         inp.classList.add('has-error');
         if (!firstBad) firstBad = inp;
@@ -2074,6 +2079,108 @@ if (document.fonts && document.fonts.ready) {
     var recap = $('#swRecap');
     if (recap) recap.innerHTML = html;
   }
+
+  // ═══════════════════════════════════════════════════════════════
+  // ÉQUIPEMENT : Modèles dynamiques selon marque + Upload photo + validation
+  // ═══════════════════════════════════════════════════════════════
+  var MODELES_PAR_MARQUE = {
+    'Saunier Duval': ['Thema F / C', 'Thema Plus Condens', 'Themis', 'Themaclassic', 'Isofast', 'Isotwin', 'Semia Condens', 'Semia 25/30', 'Genia Air (PAC)', 'Renova Plus', 'Autre modèle'],
+    'De Dietrich':   ['Vivadens', 'Naneo', 'Innovens', 'Modulens', 'C 230 Eco', 'Olifix', 'Pluton', 'Mura', 'GTU C', 'Autre modèle'],
+    'Frisquet':      ['Hydroconfort Visio', 'Hydromotrix Tradition', 'Prestige Condensation', 'Eco Radio System Visio', 'Autre modèle'],
+    'Vaillant':      ['ecoTEC plus', 'ecoTEC pure', 'turboTEC', 'atmoTEC plus', 'auroCOMPACT', 'recoVAIR', 'Autre modèle'],
+    'Viessmann':     ['Vitodens 100-W', 'Vitodens 200-W', 'Vitodens 222-F', 'Vitoladens 300-C', 'Vitogas', 'Vitorondens', 'Autre modèle'],
+    'ELM Leblanc':   ['Egalis Condens', 'Mégalis Condens', 'Acleis Sit', 'Aris', 'Odealis', 'Autre modèle'],
+    'Chappée':       ['Initia Plus HTE', 'Luna Duo-tec MP', 'Initia Pure', 'Ad', 'Autre modèle'],
+    'Atlantic':      ['Pleïade', 'Naïa Duo', 'Idra', 'Perfinox', 'Calypso (PAC)', 'Alféa Excellia (PAC)', 'Autre modèle'],
+    'Bosch / Junkers': ['Condens 5000W', 'Condens 7000', 'Condens 8000', 'Cerapur Smart', 'Cerapur Comfort', 'Ceramini', 'Autre modèle'],
+    'Wolf':          ['CGB-2', 'CGB Murale', 'CGW Combi', 'TGB Sol', 'KGE Bois', 'Autre modèle'],
+    'Buderus':       ['Logamax plus GB172', 'Logamax plus GB132', 'Logamax plus GB162', 'Logamax U042', 'WPS (PAC)', 'Autre modèle'],
+    'Riello':        ['Family Condens', 'Plus Condens', 'Tau N Condens', 'Aria (PAC)', 'Autre modèle'],
+    'Ferroli':       ['Diva F', 'Bluehelix Tech', 'EconCEL', 'Pegasus', 'Energy Top W', 'Autre modèle'],
+    'Acleis':        ['Acleis 23', 'Acleis 32', 'Autre modèle'],
+    'Auer':          ['Edel', 'EasyLife', 'Autre modèle'],
+    'Oertli':        ['OE-tronic', 'OEnovia', 'Autre modèle'],
+    'Cuenod':        ['NC', 'Nuway', 'Autre modèle'],
+    'Geminox':       ['THRi', 'THRs', 'Autre modèle'],
+    'Heatae Sadia':  ['Megaflo', 'Premier Plus', 'Autre modèle'],
+    'Atlantic Sofath': ['Caliane', 'Aérolia', 'Autre modèle'],
+    'Daikin':        ['Altherma 3', 'Altherma EHT', 'Daikin Emura', 'Autre modèle'],
+    'Mitsubishi Electric': ['Ecodan', 'Zubadan', 'Autre modèle'],
+    'Panasonic':     ['Aquarea', 'Etherea', 'Autre modèle'],
+    'Autre / Je ne sais pas': ['Je ne sais pas', 'Autre — je préciserai par téléphone']
+  };
+
+  function initEquipement(){
+    var marqueSel = $('#eqMarque');
+    var modeleSel = $('#eqModele');
+    if (!marqueSel || !modeleSel) return;
+
+    marqueSel.addEventListener('change', function(){
+      var brand = marqueSel.value;
+      modeleSel.innerHTML = '<option value="">Modèle * — sélectionnez</option>';
+      var models = MODELES_PAR_MARQUE[brand] || ['Je ne sais pas'];
+      models.forEach(function(m){
+        var opt = document.createElement('option');
+        opt.value = m;
+        opt.textContent = m;
+        modeleSel.appendChild(opt);
+      });
+    });
+
+    // PHOTO upload + preview
+    var photoInput = $('#eqPhotos');
+    var preview    = $('#eqPhotosPreview');
+    var photosData = []; // base64 array, max 3
+
+    if (photoInput && preview) {
+      photoInput.addEventListener('change', function(e){
+        var files = Array.from(e.target.files || []).slice(0, 3 - photosData.length);
+        files.forEach(function(file){
+          if (!file.type.startsWith('image/')) return;
+          if (file.size > 5 * 1024 * 1024) {
+            alert(file.name + ' dépasse 5 Mo');
+            return;
+          }
+          var reader = new FileReader();
+          reader.onload = function(ev){
+            photosData.push({ name: file.name, data: ev.target.result });
+            renderPreview();
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+
+      function renderPreview(){
+        preview.innerHTML = '';
+        photosData.forEach(function(p, i){
+          var item = document.createElement('div');
+          item.className = 'sw-photo-preview-item';
+          item.innerHTML = '<img src="' + p.data + '" alt="' + p.name + '">' +
+            '<button type="button" class="sw-photo-rm" data-i="' + i + '" aria-label="Supprimer">×</button>';
+          preview.appendChild(item);
+        });
+        // Stocker en hidden field (JSON) pour récupération côté submit
+        var hid = $('#eqPhotosJson');
+        if (!hid){
+          hid = document.createElement('input');
+          hid.type = 'hidden';
+          hid.name = 'photos_json';
+          hid.id = 'eqPhotosJson';
+          photoInput.parentElement.appendChild(hid);
+        }
+        hid.value = JSON.stringify(photosData);
+      }
+
+      preview.addEventListener('click', function(e){
+        var btn = e.target.closest('.sw-photo-rm');
+        if (!btn) return;
+        photosData.splice(parseInt(btn.dataset.i, 10), 1);
+        renderPreview();
+      });
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initEquipement);
+  else initEquipement();
 
   // Init handlers
   function init(){
