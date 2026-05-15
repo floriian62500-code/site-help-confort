@@ -1173,29 +1173,33 @@ let _editingId = null;
           result.style.border = '1px solid rgba(255,180,0,.30)';
         }
 
-        result.innerHTML += `<div style="margin-top:12px"><a href="#" id="goSeeSubscription" style="color:#0DA0CF;font-weight:700">→ Voir la souscription dans Contrats clients (filtre À importer)</a></div>`;
-        // Attache un handler propre après injection HTML
-        setTimeout(() => {
-          const link = document.getElementById('goSeeSubscription');
-          if (link) link.addEventListener('click', (ev) => {
-            ev.preventDefault();
-            // 1. Ferme la modale (use la bonne classe .open)
-            const modal = document.getElementById('testModal');
-            if (modal) { modal.classList.remove('open'); document.body.style.overflow = ''; }
-            // 2. Active l'onglet "contracts" si on est sur l'onglet "offers"
-            const tab = document.querySelector('.ct-tab[data-tab="contracts"]');
-            if (tab && !tab.classList.contains('active')) tab.click();
-            // 3. Active le filtre "À importer dans CRM"
-            setTimeout(() => {
-              const filter = document.querySelector('.ct-filter[data-status="to_import"]') ||
-                             document.querySelector('.ct-filter[data-status="prospect"]');
-              if (filter) filter.click();
-              // 4. Scroll vers la liste
-              const list = document.getElementById('ctBody');
-              if (list) list.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 150);
-          });
-        }, 50);
+        // Lien direct vers la page filtrée — la cible (contracts.html?import=ID)
+        // a déjà la logique pour auto-appliquer le filtre "to_import" via la query param
+        result.innerHTML += `<div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <a href="contracts.html?import=${contractId}" style="color:#0DA0CF;font-weight:700;text-decoration:none">→ Voir dans Contrats clients</a>
+          <button type="button" id="btnDeleteTestContract" data-id="${contractId}" style="background:transparent;border:1px solid #fee2e2;color:#B91C1C;padding:4px 10px;border-radius:6px;font:inherit;font-size:.74rem;font-weight:700;cursor:pointer">🗑 Supprimer ce contrat test</button>
+        </div>`;
+        // Auto-cleanup : 30 sec après le test, propose de supprimer le contrat test
+        // (Florian peut cliquer "Supprimer" tout de suite ou laisser faire)
+        const delBtn = document.getElementById('btnDeleteTestContract');
+        if (delBtn) {
+          delBtn.onclick = async () => {
+            const id = delBtn.dataset.id;
+            try {
+              const { error } = await sb.from('contracts').delete().eq('id', id);
+              if (error) throw error;
+              delBtn.disabled = true;
+              delBtn.textContent = '✓ Contrat test supprimé';
+              delBtn.style.background = '#DCFCE7';
+              delBtn.style.color = '#15803D';
+              delBtn.style.borderColor = '#86EFAC';
+              // Recharge la liste pour qu'il disparaisse
+              if (typeof load === 'function') await load();
+            } catch (e) {
+              alert('Erreur suppression : ' + e.message);
+            }
+          };
+        }
       } catch (e) {
         result.style.background = 'rgba(217,45,32,.08)';
         result.style.color = '#9F0E2B';
