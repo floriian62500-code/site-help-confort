@@ -1,24 +1,20 @@
-# 🔦 Audit Lighthouse local — 2026-05-15 11:49
+# 🔦 Audit Lighthouse local — 2026-05-15 11:50
 
-**37 pages auditées** · **0 erreurs** · **8 warnings** · **Score moyen 99/100**
+**37 pages auditées** · **0 erreurs** · **2 warnings** · **Score moyen 100/100**
 
 ## 📊 Résumé par page
 
 | Page | Score | Erreurs | Warnings |
 |------|------:|--------:|---------:|
 | `realisation.html` | **92/100** | 0 | 2 |
-| `contact.html` | **96/100** | 0 | 1 |
-| `contrats-entretien.html` | **96/100** | 0 | 1 |
-| `devis-express.html` | **96/100** | 0 | 1 |
-| `index.html` | **96/100** | 0 | 1 |
-| `nos-prestations.html` | **96/100** | 0 | 1 |
-| `temoignages.html` | **96/100** | 0 | 1 |
 | `a-propos.html` | **100/100** | 0 | 0 |
 | `actualites.html` | **100/100** | 0 | 0 |
 | `aides.html` | **100/100** | 0 | 0 |
 | `avant-apres.html` | **100/100** | 0 | 0 |
 | `carrieres.html` | **100/100** | 0 | 0 |
 | `chauffagiste-saint-omer.html` | **100/100** | 0 | 0 |
+| `contact.html` | **100/100** | 0 | 0 |
+| `contrats-entretien.html` | **100/100** | 0 | 0 |
 | `depannage-arques.html` | **100/100** | 0 | 0 |
 | `depannage-bergues.html` | **100/100** | 0 | 0 |
 | `depannage-dunkerque.html` | **100/100** | 0 | 0 |
@@ -26,6 +22,7 @@
 | `depannage-longuenesse.html` | **100/100** | 0 | 0 |
 | `depannage-saint-martin-lez-tatinghem.html` | **100/100** | 0 | 0 |
 | `depannage-saint-omer.html` | **100/100** | 0 | 0 |
+| `devis-express.html` | **100/100** | 0 | 0 |
 | `electricien-saint-omer.html` | **100/100** | 0 | 0 |
 | `espace-client.html` | **100/100** | 0 | 0 |
 | `faq.html` | **100/100** | 0 | 0 |
@@ -34,13 +31,16 @@
 | `guide-fuite-eau.html` | **100/100** | 0 | 0 |
 | `guide-mise-aux-normes-electriques.html` | **100/100** | 0 | 0 |
 | `guides.html` | **100/100** | 0 | 0 |
+| `index.html` | **100/100** | 0 | 0 |
 | `mentions-legales.html` | **100/100** | 0 | 0 |
+| `nos-prestations.html` | **100/100** | 0 | 0 |
 | `plombier-saint-omer.html` | **100/100** | 0 | 0 |
 | `pro.html` | **100/100** | 0 | 0 |
 | `processus.html` | **100/100** | 0 | 0 |
 | `realisations.html` | **100/100** | 0 | 0 |
 | `serrurier-saint-omer.html` | **100/100** | 0 | 0 |
 | `sinistres.html` | **100/100** | 0 | 0 |
+| `temoignages.html` | **100/100** | 0 | 0 |
 | `travaux-saint-omer.html` | **100/100** | 0 | 0 |
 | `zones-intervention.html` | **100/100** | 0 | 0 |
 
@@ -52,36 +52,6 @@
 - ⚠️ SEO title court (24 chars, idéal 30–65)
 - ⚠️ 3 <h1> trouvés (devrait être 1)
 
-### contact.html — 96/100
-
-**Warnings :**
-- ⚠️ 8 <input> sans id/label/aria-label
-
-### contrats-entretien.html — 96/100
-
-**Warnings :**
-- ⚠️ 2 <input> sans id/label/aria-label
-
-### devis-express.html — 96/100
-
-**Warnings :**
-- ⚠️ SEO title long (69 chars)
-
-### index.html — 96/100
-
-**Warnings :**
-- ⚠️ 7 <input> sans id/label/aria-label
-
-### nos-prestations.html — 96/100
-
-**Warnings :**
-- ⚠️ 2 <input> sans id/label/aria-label
-
-### temoignages.html — 96/100
-
-**Warnings :**
-- ⚠️ SEO title long (79 chars)
-
 ## ✅ Pages parfaites (100/100)
 
 - a-propos.html
@@ -90,6 +60,8 @@
 - avant-apres.html
 - carrieres.html
 - chauffagiste-saint-omer.html
+- contact.html
+- contrats-entretien.html
 - depannage-arques.html
 - depannage-bergues.html
 - depannage-dunkerque.html
@@ -97,6 +69,7 @@
 - depannage-longuenesse.html
 - depannage-saint-martin-lez-tatinghem.html
 - depannage-saint-omer.html
+- devis-express.html
 - electricien-saint-omer.html
 - espace-client.html
 - faq.html
@@ -105,13 +78,16 @@
 - guide-fuite-eau.html
 - guide-mise-aux-normes-electriques.html
 - guides.html
+- index.html
 - mentions-legales.html
+- nos-prestations.html
 - plombier-saint-omer.html
 - pro.html
 - processus.html
 - realisations.html
 - serrurier-saint-omer.html
 - sinistres.html
+- temoignages.html
 - travaux-saint-omer.html
 - zones-intervention.html
 

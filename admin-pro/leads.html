@@ -303,6 +303,151 @@ let _filterStatusOverride = null;
     list.querySelectorAll('.lead-card').forEach(c => c.addEventListener('click', e => { if (!e.target.closest('[data-open]')) openLead(c.dataset.id); }));
   }
 
+  // ─── VUE KANBAN ──────────────────────────────────────────────
+  // Colonnes par statut, drag-drop natif HTML5 pour changer le statut
+  const KANBAN_COLUMNS = [
+    { key: 'nouveau',       label: '🆕 Nouveau',         color: '#0DA0CF', bg: 'rgba(13,160,207,.06)' },
+    { key: 'en_cours',      label: '⏳ En cours',        color: '#F59E0B', bg: 'rgba(245,158,11,.06)' },
+    { key: 'qualifie',      label: '✓ Qualifié',         color: '#7C3AED', bg: 'rgba(124,58,237,.06)' },
+    { key: 'devis_envoye',  label: '📤 Devis envoyé',    color: '#06B6D4', bg: 'rgba(6,182,212,.06)' },
+    { key: 'gagne',         label: '🎉 Gagné',           color: '#22A06B', bg: 'rgba(34,160,107,.06)' },
+    { key: 'perdu',         label: '❌ Perdu',           color: '#B91C1C', bg: 'rgba(185,28,28,.06)' },
+    { key: 'archive',       label: '📦 Archivé',         color: '#64748b', bg: 'rgba(100,116,139,.06)' }
+  ];
+
+  function renderKanban(){
+    const mFilter = document.getElementById('filterMetier').value;
+    const q = document.getElementById('search').value.toLowerCase().trim();
+    const filtered = _all.filter(l => {
+      if (mFilter && l.metier !== mFilter) return false;
+      if (q) {
+        const hay = [l.nom,l.email,l.telephone,l.ville,l.message,l.metier].filter(Boolean).join(' ').toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+
+    // Group par statut
+    const byStatus = {};
+    KANBAN_COLUMNS.forEach(c => byStatus[c.key] = []);
+    filtered.forEach(l => {
+      const key = byStatus[l.status] ? l.status : 'nouveau';
+      byStatus[key].push(l);
+    });
+
+    const kanban = document.getElementById('leadsKanban');
+    kanban.innerHTML = `
+      <div style="display:flex;gap:12px;min-width:max-content;padding-bottom:8px">
+        ${KANBAN_COLUMNS.map(col => `
+          <div class="kanban-column" data-status="${col.key}" style="flex:0 0 280px;background:${col.bg};border:1px solid ${col.color}22;border-radius:12px;padding:10px;display:flex;flex-direction:column;max-height:calc(100vh - 280px);overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 4px 10px;border-bottom:2px solid ${col.color}33;margin-bottom:8px">
+              <strong style="font-size:.84rem;color:${col.color};font-weight:800">${col.label}</strong>
+              <span style="background:${col.color};color:#fff;font-size:.66rem;padding:2px 7px;border-radius:999px;font-weight:800;letter-spacing:.04em">${byStatus[col.key].length}</span>
+            </div>
+            <div class="kanban-cards" data-drop="${col.key}" style="display:flex;flex-direction:column;gap:7px;overflow-y:auto;flex:1;padding:2px 4px">
+              ${byStatus[col.key].length === 0
+                ? '<div style="padding:18px 8px;text-align:center;font-size:.74rem;color:var(--ink-400);font-style:italic">Aucune demande</div>'
+                : byStatus[col.key].map(l => {
+                    const isSouscription = l.source === 'souscription';
+                    const isUrgent = l.priority === 'urgente';
+                    const dot = isUrgent ? '#B91C1C' : isSouscription ? '#1E40AF' : '#94A3B8';
+                    return `
+                      <div class="kanban-card" draggable="true" data-id="${l.id}" data-status="${l.status}" style="background:#fff;border:1px solid var(--ink-100);border-radius:9px;padding:9px 11px;cursor:grab;transition:.15s;box-shadow:0 1px 2px rgba(0,0,0,.03)">
+                        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+                          <span style="width:7px;height:7px;border-radius:50%;background:${dot};flex-shrink:0"></span>
+                          <strong style="font-size:.82rem;color:var(--ink-900);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(l.nom)}</strong>
+                        </div>
+                        <div style="font-size:.72rem;color:var(--ink-500);margin-bottom:4px">${METIER_LABELS[l.metier] || l.metier || '—'}${l.ville ? ' · ' + escapeHtml(l.ville) : ''}</div>
+                        ${l.message ? '<div style="font-size:.7rem;color:var(--ink-400);font-style:italic;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:4px">« ' + escapeHtml(l.message.slice(0,60)) + (l.message.length>60?'…':'') + ' »</div>' : ''}
+                        <div style="display:flex;justify-content:space-between;align-items:center;font-size:.66rem;color:var(--ink-400);margin-top:5px">
+                          <span>${timeAgo(l.created_at)}</span>
+                          ${l.quote_amount ? '<span style="font-weight:700;color:#15803D">' + Number(l.quote_amount).toFixed(0) + ' €</span>' : ''}
+                        </div>
+                      </div>
+                    `;
+                  }).join('')
+              }
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+
+    // ─── Bind drag-drop natif HTML5 ──────────
+    let dragId = null;
+    kanban.querySelectorAll('.kanban-card').forEach(card => {
+      card.addEventListener('dragstart', (e) => {
+        dragId = card.dataset.id;
+        card.style.opacity = '.5';
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', dragId);
+      });
+      card.addEventListener('dragend', () => { card.style.opacity = '1'; dragId = null; });
+      // Clic = ouvre la modale
+      card.addEventListener('click', () => openLead(card.dataset.id));
+    });
+
+    kanban.querySelectorAll('.kanban-cards').forEach(zone => {
+      zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.style.background = 'rgba(13,160,207,.10)'; });
+      zone.addEventListener('dragleave', () => { zone.style.background = ''; });
+      zone.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        zone.style.background = '';
+        const id = e.dataTransfer.getData('text/plain') || dragId;
+        const newStatus = zone.dataset.drop;
+        if (!id || !newStatus) return;
+        const lead = _all.find(x => x.id === id);
+        if (!lead || lead.status === newStatus) return;
+        // Update DB
+        try {
+          const update = { status: newStatus };
+          if (newStatus === 'gagne' || newStatus === 'perdu' || newStatus === 'archive') {
+            update.closed_at = new Date().toISOString();
+          }
+          const { error } = await c.from('leads').update(update).eq('id', id);
+          if (error) throw error;
+          lead.status = newStatus;
+          if (update.closed_at) lead.closed_at = update.closed_at;
+          renderKanban();
+          renderStats();
+          toast('Statut mis à jour', 'ok', 1500);
+        } catch (err) {
+          toast('Erreur : ' + err.message, 'err', 3500);
+        }
+      });
+    });
+  }
+
+  // ─── Toggle vue Liste / Kanban ──────────
+  function setViewMode(mode) {
+    const listBtn = document.getElementById('viewModeList');
+    const kanBtn = document.getElementById('viewModeKanban');
+    const list = document.getElementById('leadsList');
+    const kanban = document.getElementById('leadsKanban');
+    if (!listBtn || !kanBtn || !list || !kanban) return;
+    if (mode === 'kanban') {
+      kanBtn.style.background = 'var(--hc-primary)'; kanBtn.style.color = '#fff';
+      listBtn.style.background = '#fff'; listBtn.style.color = 'var(--ink-700)';
+      list.style.display = 'none';
+      kanban.style.display = '';
+      renderKanban();
+    } else {
+      listBtn.style.background = 'var(--hc-primary)'; listBtn.style.color = '#fff';
+      kanBtn.style.background = '#fff'; kanBtn.style.color = 'var(--ink-700)';
+      list.style.display = '';
+      kanban.style.display = 'none';
+      renderList();
+    }
+    try { localStorage.setItem('hc-leads-view', mode); } catch(_) {}
+  }
+  document.getElementById('viewModeList').onclick = () => setViewMode('list');
+  document.getElementById('viewModeKanban').onclick = () => setViewMode('kanban');
+  // Restore last view from localStorage
+  try {
+    const saved = localStorage.getItem('hc-leads-view');
+    if (saved === 'kanban') setTimeout(() => setViewMode('kanban'), 100);
+  } catch(_) {}
+
   async function openLead(id){
     const l = _all.find(x => x.id === id);
     if (!l) return;

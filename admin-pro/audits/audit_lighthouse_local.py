@@ -87,13 +87,18 @@ def audit_page(path):
     else:      res['pass'].append('Tous les <img> ont un alt')
 
     # Inputs sans label/aria-label/placeholder
+    # On EXCLUT : hidden, submit, button, reset, checkbox/radio (value sert de label visible),
+    # ainsi que les inputs ayant un <label> associé via for=
     inputs = re.findall(r'<input\b([^>]*?)>', c, re.I)
-    no_lab = [i for i in inputs if (
-        'type="hidden"' not in i and 'type="submit"' not in i
-        and not re.search(r'\bid="([^"]+)"', i)
-        and not re.search(r'\baria-label=', i, re.I)
-    )]
-    if no_lab: res['warnings'].append(f'{len(no_lab)} <input> sans id/label/aria-label')
+    skip_types = re.compile(r'\btype=["\'](hidden|submit|button|reset|checkbox|radio|range|color|file)["\']', re.I)
+    no_lab = []
+    for i in inputs:
+        if skip_types.search(i): continue
+        if re.search(r'\bid=', i): continue
+        if re.search(r'\baria-label=', i, re.I): continue
+        if re.search(r'\baria-labelledby=', i, re.I): continue
+        no_lab.append(i)
+    if no_lab: res['warnings'].append(f'{len(no_lab)} <input> sans label')
 
     # === PERFORMANCE ===
     # DOCTYPE
