@@ -47,9 +47,10 @@
     <p class="sub" id="statusLine">Vérification de la config Meta…</p>
   </div>
 
-  <div class="card" style="text-align:center">
+  <div class="card" style="text-align:center;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
     <button class="cta" id="btnSync" disabled>🚀 Lancer la sync maintenant</button>
-    <p class="sub" style="margin-top:10px;font-size:.82rem">Idempotent — relancer ne crée pas de doublons (déduplication par URL FB).</p>
+    <button class="cta" id="btnAutoPublish" style="background:linear-gradient(135deg,#15803D,#22C55E);box-shadow:0 4px 14px rgba(34,197,94,.30)" disabled>🟢 Auto-valider tous les imports FB en attente</button>
+    <p class="sub" style="flex-basis:100%;margin-top:10px;font-size:.82rem">Idempotent — relancer ne crée pas de doublons. Auto-validation = passe tous les <code>status='validation'</code> importés de FB en <code>status='publie'</code>.</p>
   </div>
 
   <div class="card">
@@ -286,6 +287,37 @@
   }
 
   document.getElementById('btnSync').onclick = runSync;
+
+  // ─── Auto-publish des imports FB déjà en base avec status=validation ───
+  async function autoPublishPending(){
+    logClear();
+    log('🟢 Recherche des imports FB en statut validation…', 'info');
+    const { data: pending, error } = await sb.from('realisations')
+      .select('id,title,ai_generated,status')
+      .eq('status','validation');
+    if (error) { log('❌ ' + error.message, 'err'); return; }
+    const fbPending = (pending||[]).filter(r => {
+      const f = r.ai_generated?.imported_from;
+      return f === 'facebook_scrape' || f === 'facebook_scrape_auto';
+    });
+    log(`  ${fbPending.length} import(s) FB en attente de validation`, 'info');
+    if (!fbPending.length) {
+      log('✓ Rien à publier — tout est déjà validé.', 'ok');
+      return;
+    }
+    const ids = fbPending.map(r => r.id);
+    const nowIso = new Date().toISOString();
+    const { error: e2, data: updated } = await sb.from('realisations')
+      .update({ status:'publie', published_at: nowIso })
+      .in('id', ids)
+      .select('id,title');
+    if (e2) { log('❌ Update : ' + e2.message, 'err'); return; }
+    log(`✓ ${updated.length} publication(s) auto-validée(s) :`, 'ok');
+    updated.forEach(r => log(`  · ${r.title}`, 'ok'));
+    log('\n→ Recharge https://depan59-62.fr/realisations.html pour voir le résultat sur le site public.', 'info');
+  }
+  document.getElementById('btnAutoPublish').onclick = autoPublishPending;
+  document.getElementById('btnAutoPublish').disabled = false;
 })();
 </script>
 </body>
