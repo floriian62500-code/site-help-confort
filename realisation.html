@@ -85,8 +85,10 @@
   <meta name="theme-color" content="#0DA0CF">
   <script src="/assets/hc-consent.js" defer></script>
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style id="hc-skip-style">.hc-skip-link{position:absolute;top:-100px;left:0;background:#0A1428;color:#fff;padding:10px 18px;text-decoration:none;font-weight:700;font-size:.92rem;border-radius:0 0 8px 0;z-index:10000}.hc-skip-link:focus{top:0}</style>
 </head>
 <body>
+<a href="#main-content" class="hc-skip-link">Aller au contenu principal</a>
 
 <!-- Header partagé (à charger depuis includes/header.html via le template) -->
 <header id="hcHeader" style="background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(229,237,243,.5);padding:12px clamp(20px,4vw,64px);position:sticky;top:0;z-index:100">
@@ -100,7 +102,7 @@
   </div>
 </header>
 
-<main class="real-page">
+<main class="real-page" id="main-content">
   <div id="realContent" class="real-loading">
     <div class="spinner"></div>
     <div style="margin-top:14px">Chargement du chantier…</div>
