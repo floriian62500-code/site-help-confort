@@ -35,8 +35,8 @@
 
 - [ ] **Schema.org enrichi** sur les 5 pages métier : ajouter `LocalBusiness` complet (opening hours, geo, ratings agrégés, aggregateRating), `Service` pour chaque prestation avec `priceRange`.
 - [ ] **Open Graph images** — créer un script qui génère des PNG 1200×630 pour chaque page principale (titre + métier + logo HC) — utiliser SVG → PNG via canvas dans une edge function.
-- [ ] **JSON-LD breadcrumbs** sur les 4 guides (article + breadcrumb list).
-- [ ] **Meta description optimisée** pour chaque page locale `depannage-*` avec ville + tarif anchor.
+- [x] **JSON-LD breadcrumbs** sur les 4 guides (article + breadcrumb list). *(fait 15/05 — audit : les 4 guides ont déjà Article+BreadcrumbList+TechArticle ; ✅ rien à ajouter)*
+- [x] **Meta description optimisée** pour chaque page locale `depannage-*` avec ville + tarif anchor. *(fait 15/05 — 7 pages : meta + og:description harmonisés "ville (CP) + 58€/h TTC + ☎")*
 - [ ] **Sitemap.xml local** régénéré avec toutes les pages actuelles (audit complet, 49 actuelles à vérifier).
 
 ## P4 — Sécurité & performance
@@ -68,7 +68,7 @@
 - [ ] **Cleanup CSS mort** : supprimer les règles `.m-cta-final*` des 5 pages métier (HTML déjà retiré).
 - [x] **404.html** — refonte avec design unifié + bouton "Retour à l'accueil" + chatbot. *(fait 15/05 — style inline complet : gradient h1 Playfair, picto loupe, double CTA, 8 quick-links métiers)*
 - [ ] **`mentions-legales.html`** — vérifier que toutes les infos sont à jour (SIRET, RCS, médiation conso).
-- [ ] **Favicon** — vérifier que toutes les pages chargent le bon favicon `logo.svg`.
+- [x] **Favicon** — vérifier que toutes les pages chargent le bon favicon `logo.svg`. *(fait 15/05 — audit 34 pages : 1 manquait (realisation.html) → favicon logo.svg ajouté ; toutes OK)*
 
 ## P8 — Tests & qualité
 
