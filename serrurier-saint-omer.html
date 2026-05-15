@@ -141,7 +141,7 @@
   "@type": "Locksmith",
   "@id": "https://www.depan59-62.fr/serrurier-saint-omer.html#business",
   "name": "HELP! Confort — Serrurier Saint-Omer & Dunkerque",
-  "description": "Serrurier à Saint-Omer&nbsp;: ouverture de porte (simple / claquée / fermée à clé / sécurité), remplacement de cylindre, vitrerie mise en sécurité. Intervention rapide audomarois + littoral Dunkerque.",
+  "description": "Serrurier à Saint-Omer : ouverture de porte (simple / claquée / fermée à clé / sécurité), remplacement de cylindre, vitrerie mise en sécurité. Intervention rapide audomarois + littoral Dunkerque.",
   "image": "https://www.depan59-62.fr/logo-officiel.jpg",
   "logo": "https://www.depan59-62.fr/logo.svg",
   "telephone": "+33366100134",
@@ -400,8 +400,8 @@
     burger.addEventListener('click', function() {
       var open = burger.classList.toggle('is-open');
       navMobile.classList.toggle('is-open', open);
-      burger.setAttribute('aria-expanded', open&nbsp;? 'true' : 'false');
-      document.body.style.overflow = open&nbsp;? 'hidden' : '';
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
     });
     navMobile.querySelectorAll('a').forEach(function(a) {
       a.addEventListener('click', function() {
@@ -423,7 +423,7 @@
   var closeTimer = null;
 
 // ═══════════════════════════════════════════════════════════════
-// FIX POSITION&nbsp;: aligner chaque megamenu sous SON trigger link
+// FIX POSITION : aligner chaque megamenu sous SON trigger link
 // (le CSS left:50% centrait sur la nav entière au lieu du lien)
 // ═══════════════════════════════════════════════════════════════
 function positionMegamenus() {
@@ -1500,7 +1500,7 @@ if (document.fonts && document.fonts.ready) {
       .then(function(r){return r.ok?r.json():Promise.reject()})
       .then(function(list){
         var plomb = list.filter(function(r){
-          return r.published&nbsp;!== false && (r.metier === 'Serrurerie' || /plomb/i.test(r.metier||''));
+          return r.published !== false && (r.metier === 'Serrurerie' || /plomb/i.test(r.metier||''));
         }).slice(0, 2);
         if(!plomb.length) return; // garde le fallback statique
         track.innerHTML = plomb.map(function(r){
@@ -1783,7 +1783,7 @@ if (document.fonts && document.fonts.ready) {
   var success = document.getElementById('m-modal-success');
   var priceEl = document.getElementById('m-modal-price');
 
-  // Tarifs&nbsp;: sur devis annoncé avant intervention (les vrais prix viendront du catalogue admin)
+  // Tarifs : sur devis annoncé avant intervention (les vrais prix viendront du catalogue admin)
   var TARIFS = {
     'Déplacement & diagnostic': 'sur devis · annoncé avant intervention',
     'Débouchage simple': 'sur devis · annoncé avant intervention',
@@ -1792,7 +1792,7 @@ if (document.fonts && document.fonts.ready) {
   };
 
   function open(presta){
-    titleEl.textContent = 'Réserver&nbsp;: ' + presta;
+    titleEl.textContent = 'Réserver : ' + presta;
     prestaInput.value = presta;
     form.style.display = '';
     success.style.display = 'none';
@@ -1821,7 +1821,7 @@ if (document.fonts && document.fonts.ready) {
     var presta = data.get('presta');
 
     // TODO: brancher sur Netlify Forms ou backend
-    // Pour l'instant&nbsp;: affichage succès + tarif révélé
+    // Pour l'instant : affichage succès + tarif révélé
     priceEl.textContent = TARIFS[presta] || 'sur devis';
     form.style.display = 'none';
     success.style.display = 'block';
@@ -1906,23 +1906,23 @@ if (document.fonts && document.fonts.ready) {
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Combien coûte une ouverture de porte à Saint-Omer&nbsp;?",
+      "name": "Combien coûte une ouverture de porte à Saint-Omer ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Les tarifs dépendent du type de fermeture&nbsp;: 108 € TTC pour une porte simple, 176 € TTC pour une porte claquée, 228 € TTC si elle est fermée à clé, et 314 € TTC pour une porte de sécurité (multipoints, blindée). Tarif annoncé avant intervention, ouverture non-destructive privilégiée."
+        "text": "Les tarifs dépendent du type de fermeture : 108 € TTC pour une porte simple, 176 € TTC pour une porte claquée, 228 € TTC si elle est fermée à clé, et 314 € TTC pour une porte de sécurité (multipoints, blindée). Tarif annoncé avant intervention, ouverture non-destructive privilégiée."
       }
     },
     {
       "@type": "Question",
-      "name": "Intervenez-vous en urgence le week-end ou la nuit&nbsp;?",
+      "name": "Intervenez-vous en urgence le week-end ou la nuit ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Oui, notre astreinte 7j/7 couvre les urgences serrurerie (porte claquée, clé cassée dans la serrure, perte de clés, effraction) à Saint-Omer, Longuenesse, Arques et toute la zone audomaroise. Tarif majoré urgence&nbsp;: 69 €/h TTC."
+        "text": "Oui, notre astreinte 7j/7 couvre les urgences serrurerie (porte claquée, clé cassée dans la serrure, perte de clés, effraction) à Saint-Omer, Longuenesse, Arques et toute la zone audomaroise. Tarif majoré urgence : 69 €/h TTC."
       }
     },
     {
       "@type": "Question",
-      "name": "Faites-vous des devis gratuits pour la pose de serrure ou le blindage&nbsp;?",
+      "name": "Faites-vous des devis gratuits pour la pose de serrure ou le blindage ?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Oui, tous nos devis pour pose de serrure multipoints, changement de cylindre, blindage de porte ou installation de verrou supplémentaire sont gratuits et sans engagement. Devis détaillé après visite, planning ferme à la signature."
@@ -1930,15 +1930,15 @@ if (document.fonts && document.fonts.ready) {
     },
     {
       "@type": "Question",
-      "name": "Pouvez-vous changer le cylindre après une perte de clés ou un cambriolage&nbsp;?",
+      "name": "Pouvez-vous changer le cylindre après une perte de clés ou un cambriolage ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Oui, le remplacement de cylindre (standard, anti-effraction, breveté) est une de nos interventions courantes. Le tarif dépend du cylindre choisi&nbsp;: sur devis en fonction de la marque (Vachette, Bricard, Picard) et du niveau de sécurité. Devis remis sur place avant intervention. En cas de cambriolage, nous délivrons une facture détaillée pour votre assurance."
+        "text": "Oui, le remplacement de cylindre (standard, anti-effraction, breveté) est une de nos interventions courantes. Le tarif dépend du cylindre choisi : sur devis en fonction de la marque (Vachette, Bricard, Picard) et du niveau de sécurité. Devis remis sur place avant intervention. En cas de cambriolage, nous délivrons une facture détaillée pour votre assurance."
       }
     },
     {
       "@type": "Question",
-      "name": "Êtes-vous certifiés et assurés en serrurerie&nbsp;?",
+      "name": "Êtes-vous certifiés et assurés en serrurerie ?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Oui, HELP! Confort Saint-Omer est couverte par une assurance responsabilité civile professionnelle et délivre une facture conforme aux exigences des assureurs en cas de sinistre (vol, effraction). Nos serruriers sont formés aux serrures certifiées A2P et nos interventions respectent les normes en vigueur."
@@ -2645,11 +2645,11 @@ if (document.fonts && document.fonts.ready) {
       var prec = document.getElementById('chatPrec').value.trim();
       // Construct mailto / formspree fallback
       var subject = encodeURIComponent('🚨 Demande urgente HELP! Confort — ' + svcField.value);
-      var bodyTxt = encodeURIComponent('Service&nbsp;: ' + svcField.value + '\nTéléphone&nbsp;: ' + tel + '\nPrécision&nbsp;: ' + prec);
+      var bodyTxt = encodeURIComponent('Service : ' + svcField.value + '\nTéléphone : ' + tel + '\nPrécision : ' + prec);
       // Append confirmation
       var confirm = document.createElement('div');
       confirm.className = 'chat-msg chat-msg-bot';
-      confirm.innerHTML = '<p>✅ Merci&nbsp;! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
+      confirm.innerHTML = '<p>✅ Merci ! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
       body.appendChild(confirm);
       form.style.display = 'none';
       body.scrollTop = body.scrollHeight;

@@ -248,23 +248,23 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Que comprend exactement la visite annuelle&nbsp;?",
+      "name": "Que comprend exactement la visite annuelle ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Pour une chaudière gaz&nbsp;: nettoyage du brûleur et de l'échangeur, contrôle des organes de sécurité et de régulation, vérification de l'étanchéité du circuit gaz, mesures de combustion (CO, CO₂, tirage), évaluation visuelle de l'installation, et délivrance de l'attestation d'entretien obligatoire. Pour une chaudière fioul&nbsp;: démontage, nettoyage et réglage du brûleur fioul, nettoyage du foyer et de la chambre de combustion, vérification des électrodes et de la sécurité de flamme, contrôle de la pompe fioul et du gicleur, vérification des dispositifs de sécurité, mesures de combustion, et délivrance de l'attestation."
+        "text": "Pour une chaudière gaz : nettoyage du brûleur et de l'échangeur, contrôle des organes de sécurité et de régulation, vérification de l'étanchéité du circuit gaz, mesures de combustion (CO, CO₂, tirage), évaluation visuelle de l'installation, et délivrance de l'attestation d'entretien obligatoire. Pour une chaudière fioul : démontage, nettoyage et réglage du brûleur fioul, nettoyage du foyer et de la chambre de combustion, vérification des électrodes et de la sécurité de flamme, contrôle de la pompe fioul et du gicleur, vérification des dispositifs de sécurité, mesures de combustion, et délivrance de l'attestation."
       }
     },
     {
       "@type": "Question",
-      "name": "Quelles prestations sont exclues du contrat&nbsp;?",
+      "name": "Quelles prestations sont exclues du contrat ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Sauf mention contraire&nbsp;: ramonage du conduit de fumée, désembouage du circuit, détartrage, remplacement complet de la chaudière, réparations liées à un défaut d'utilisation ou à une installation non conforme, conséquences d'un combustible non conforme."
+        "text": "Sauf mention contraire : ramonage du conduit de fumée, désembouage du circuit, détartrage, remplacement complet de la chaudière, réparations liées à un défaut d'utilisation ou à une installation non conforme, conséquences d'un combustible non conforme."
       }
     },
     {
       "@type": "Question",
-      "name": "Comment résilier mon contrat&nbsp;?",
+      "name": "Comment résilier mon contrat ?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Le contrat est conclu pour 1 an et se reconduit tacitement. Vous pouvez résilier à chaque échéance annuelle par lettre recommandée avec accusé de réception, avec un préavis d'un mois. La loi Chatel impose une information préalable de notre part avant chaque reconduction."
@@ -272,7 +272,7 @@
     },
     {
       "@type": "Question",
-      "name": "Puis-je passer d'une formule à une autre en cours d'année&nbsp;?",
+      "name": "Puis-je passer d'une formule à une autre en cours d'année ?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Le passage d'une formule moins étendue à une formule plus complète (BASIC → CONFORT, CONFORT → SÉCURITÉ) est possible à tout moment sur simple demande, avec ajustement du prélèvement. Le passage inverse se fait à l'échéance annuelle."
@@ -426,8 +426,8 @@
     burger.addEventListener('click', function() {
       var open = burger.classList.toggle('is-open');
       navMobile.classList.toggle('is-open', open);
-      burger.setAttribute('aria-expanded', open&nbsp;? 'true' : 'false');
-      document.body.style.overflow = open&nbsp;? 'hidden' : '';
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
     });
     navMobile.querySelectorAll('a').forEach(function(a) {
       a.addEventListener('click', function() {
@@ -449,7 +449,7 @@
   var closeTimer = null;
 
 // ═══════════════════════════════════════════════════════════════
-// FIX POSITION&nbsp;: aligner chaque megamenu sous SON trigger link
+// FIX POSITION : aligner chaque megamenu sous SON trigger link
 // (le CSS left:50% centrait sur la nav entière au lieu du lien)
 // ═══════════════════════════════════════════════════════════════
 function positionMegamenus() {
@@ -1291,11 +1291,11 @@ if (document.fonts && document.fonts.ready) {
       var prec = document.getElementById('chatPrec').value.trim();
       // Construct mailto / formspree fallback
       var subject = encodeURIComponent('🚨 Demande urgente HELP! Confort — ' + svcField.value);
-      var bodyTxt = encodeURIComponent('Service&nbsp;: ' + svcField.value + '\nTéléphone&nbsp;: ' + tel + '\nPrécision&nbsp;: ' + prec);
+      var bodyTxt = encodeURIComponent('Service : ' + svcField.value + '\nTéléphone : ' + tel + '\nPrécision : ' + prec);
       // Append confirmation
       var confirm = document.createElement('div');
       confirm.className = 'chat-msg chat-msg-bot';
-      confirm.innerHTML = '<p>✅ Merci&nbsp;! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
+      confirm.innerHTML = '<p>✅ Merci ! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
       body.appendChild(confirm);
       form.style.display = 'none';
       body.scrollTop = body.scrollHeight;
@@ -1880,7 +1880,7 @@ if (document.fonts && document.fonts.ready) {
     return; // garde le fallback "Chargement…" si pas accessible
   }
 
-  // Pas d'offres en DB&nbsp;: laisse les panes vides
+  // Pas d'offres en DB : laisse les panes vides
   if (offers.length === 0) {
     document.querySelectorAll('.energy-pane .formula-grid').forEach(g => {
       g.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:#94a3b8">Offres en cours de configuration.</div>';
@@ -1910,21 +1910,21 @@ if (document.fonts && document.fonts.ready) {
     const grid = pane.querySelector('.formula-grid');
     if (!grid) return;
 
-    // Adoucisseur&nbsp;: 1 seule colonne large
+    // Adoucisseur : 1 seule colonne large
     if (energyKey === 'adoucisseur') {
       grid.style.gridTemplateColumns = '1fr';
       grid.style.maxWidth = '680px';
     }
 
     grid.innerHTML = list.map(o => {
-      const featuresArr = Array.isArray(o.features)&nbsp;? o.features&nbsp;: [];
+      const featuresArr = Array.isArray(o.features) ? o.features : [];
       const featuresHtml = featuresArr.map(f =>
         `<li class="${f.included === false ? 'no' : 'yes'}">${safeFeature(f.text)}</li>`
       ).join('');
-      const priceStr = o.price_label&nbsp;? escapeHtml(o.price_label)&nbsp;: `${o.price_ht_month}&nbsp;€&nbsp;HT`;
+      const priceStr = o.price_label ? escapeHtml(o.price_label) : `${o.price_ht_month} € HT`;
       const yearStr = o.price_label
         ? '<div class="formula-price-year">tarif selon modèle &amp; volume</div>'
-        : (o.price_ht_year&nbsp;? `<div class="formula-price-year">soit ${o.price_ht_year}&nbsp;€&nbsp;HT/an</div>` : '');
+        : (o.price_ht_year ? `<div class="formula-price-year">soit ${o.price_ht_year} € HT/an</div>` : '');
       // Tier → classe CSS pour styler la card
       const tierClass = { basic:'basic', confort:'confort', securite:'securite', custom:'confort' }[o.tier] || 'basic';
       const dataPrix = o.price_label
@@ -1933,7 +1933,7 @@ if (document.fonts && document.fonts.ready) {
 
       return `
         <div class="formula-card ${tierClass}"${o.is_recommended && energyKey==='adoucisseur' ? ' style="border-color:#1FC4F0"' : ''}>
-          ${o.badge&nbsp;? `<span class="formula-badge">${escapeHtml(o.badge)}</span>` : ''}
+          ${o.badge ? `<span class="formula-badge">${escapeHtml(o.badge)}</span>` : ''}
           <div class="formula-eyebrow">Formule ${escapeHtml(o.energy_label)}</div>
           <h2 class="formula-name">${escapeHtml(o.tier_label)}</h2>
           <div class="formula-price-block">
@@ -1942,7 +1942,7 @@ if (document.fonts && document.fonts.ready) {
           </div>
           <p class="formula-baseline">${escapeHtml(o.baseline || '')}</p>
           <ul class="formula-list">${featuresHtml}</ul>
-          ${o.legal_note&nbsp;? `<small class="formula-note">${escapeHtml(o.legal_note)}</small>` : ''}
+          ${o.legal_note ? `<small class="formula-note">${escapeHtml(o.legal_note)}</small>` : ''}
           <button type="button" class="formula-cta"${o.legal_note ? ' style="margin-top:14px"' : ''}
             data-energie="${escapeHtml(o.energy_label)}"
             data-formule="${escapeHtml(o.tier_label)}"
@@ -1989,7 +1989,7 @@ if (document.fonts && document.fonts.ready) {
   }
 
   // ===== Détection automatique de l'agence en fonction du code postal =====
-  // Règles&nbsp;:
+  // Règles :
   // - 59xxx (Nord) → Dunkerque
   // - 62xxx (Pas-de-Calais) → Saint-Omer (couvre aussi Boulogne, Calais, et alentours)
   // - Autre → Saint-Omer par défaut
@@ -1997,7 +1997,7 @@ if (document.fonts && document.fonts.ready) {
     var clean = (cp || '').replace(/\s/g,'').substring(0,2);
     if (clean === '59') return {name:'Dunkerque', zone:'Nord 59 — littoral', email:'dunkerque@helpconfort.com'};
     if (clean === '62') return {name:'Saint-Omer', zone:'Pas-de-Calais 62', email:'saint-omer@helpconfort.com'};
-    // Par défaut (autre département)&nbsp;: Saint-Omer
+    // Par défaut (autre département) : Saint-Omer
     return {name:'Saint-Omer', zone:'Pas-de-Calais 62', email:'saint-omer@helpconfort.com'};
   }
 
@@ -2045,7 +2045,7 @@ if (document.fonts && document.fonts.ready) {
 
     // Désactive le bouton submit
     var btn = form.querySelector('button[type="submit"]');
-    var btnOriginalHTML = btn&nbsp;? btn.innerHTML&nbsp;: '';
+    var btnOriginalHTML = btn ? btn.innerHTML : '';
     if (btn) { btn.disabled = true; btn.innerHTML = 'Envoi en cours…'; btn.style.opacity = '.7'; }
 
     // ── 1. INSERT en DB Supabase (table contracts, status='prospect') ───
@@ -2070,14 +2070,14 @@ if (document.fonts && document.fonts.ready) {
 
       // Extrait le prix mensuel HT depuis le label (ex: "9 € HT/mois — 108 €/an" → 9)
       var monthlyMatch = /([\d.,]+)\s*€\s*(?:HT)?\s*\/?\s*mois/i.exec(prix || '');
-      var monthly = monthlyMatch&nbsp;? parseFloat(monthlyMatch[1].replace(',','.'))&nbsp;: 0;
+      var monthly = monthlyMatch ? parseFloat(monthlyMatch[1].replace(',','.')) : 0;
 
       var payload = {
         status: 'prospect',
         subscription_source: 'public_form',
         type: tier,
         metier: (energie || '').toLowerCase() === 'fioul' ? 'chauffage' : ((energie||'').toLowerCase() === 'gaz' ? 'chauffage' : 'multiservice'),
-        agence: agence&nbsp;? agence.toLowerCase().replace(/[^a-z-]/g, '-').replace(/-+/g,'-').replace(/^-|-$/g,'')&nbsp;: null,
+        agence: agence ? agence.toLowerCase().replace(/[^a-z-]/g, '-').replace(/-+/g,'-').replace(/^-|-$/g,'') : null,
         monthly_amount: monthly,
         client_first_name: data.get('prenom') || null,
         client_last_name:  data.get('nom') || 'Sans nom',
@@ -2110,7 +2110,7 @@ if (document.fonts && document.fonts.ready) {
           })(),
           photos_count: (function(){
             var json = document.getElementById('eqPhotosJson');
-            try { return JSON.parse(json&nbsp;? json.value&nbsp;: '[]').length; } catch(_){ return 0; }
+            try { return JSON.parse(json ? json.value : '[]').length; } catch(_){ return 0; }
           })(),
           rib_uploaded: (function(){
             var ri = document.getElementById('docRib');
@@ -2139,12 +2139,12 @@ if (document.fonts && document.fonts.ready) {
         });
       } catch (mailErr) {
         console.warn('[souscription] notify-subscription failed:', mailErr);
-        // Pas grave&nbsp;: la souscription est en DB, Florian la voit dans l'admin
+        // Pas grave : la souscription est en DB, Florian la voit dans l'admin
       }
 
       // ── 3. Confirmation visuelle ───────────────────────────────────────
       var card = document.querySelector('.sous-card');
-      card.innerHTML = '<div style="padding:60px 32px;text-align:center"><div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#22A06B,#16a34a);margin:0 auto 22px;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 32px rgba(34,160,107,.30)"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><h3 style="margin:0 0 12px;color:#0A1428;font-size:1.4rem;font-weight:800">✅ Demande enregistrée&nbsp;!</h3><p style="margin:0 0 20px;color:#475569;line-height:1.55">Votre demande de souscription <strong>' + energie + ' ' + formule + '</strong> est bien arrivée à l\'agence <strong>' + agence + '</strong>.<br><br>Un conseiller vous rappelle au <strong>' + (data.get('telephone') || '') + '</strong> sous <strong>24h ouvrées</strong> pour finaliser votre contrat.</p><button type="button" onclick="closeSouscriptionModal();location.reload()" style="background:#0A1428;color:#fff;border:0;padding:11px 24px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.92rem;font-family:inherit">Fermer</button></div>';
+      card.innerHTML = '<div style="padding:60px 32px;text-align:center"><div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#22A06B,#16a34a);margin:0 auto 22px;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 32px rgba(34,160,107,.30)"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><h3 style="margin:0 0 12px;color:#0A1428;font-size:1.4rem;font-weight:800">✅ Demande enregistrée !</h3><p style="margin:0 0 20px;color:#475569;line-height:1.55">Votre demande de souscription <strong>' + energie + ' ' + formule + '</strong> est bien arrivée à l\'agence <strong>' + agence + '</strong>.<br><br>Un conseiller vous rappelle au <strong>' + (data.get('telephone') || '') + '</strong> sous <strong>24h ouvrées</strong> pour finaliser votre contrat.</p><button type="button" onclick="closeSouscriptionModal();location.reload()" style="background:#0A1428;color:#fff;border:0;padding:11px 24px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.92rem;font-family:inherit">Fermer</button></div>';
 
     } catch (err) {
       console.error('[souscription] error:', err);
@@ -2156,7 +2156,7 @@ if (document.fonts && document.fonts.ready) {
         errBox.style.cssText = 'margin-top:14px;padding:11px 14px;background:rgba(217,45,32,.08);border-left:3px solid #d92d20;border-radius:8px;color:#9F0E2B;font-size:.86rem';
         form.appendChild(errBox);
       }
-      errBox.innerHTML = '❌ Une erreur est survenue&nbsp;: ' + (err.message || 'inconnue') + '<br>Vous pouvez réessayer ou nous appeler au <a href="tel:+33366100134" style="color:#0DA0CF;font-weight:700">03 66 10 01 34</a>.';
+      errBox.innerHTML = '❌ Une erreur est survenue : ' + (err.message || 'inconnue') + '<br>Vous pouvez réessayer ou nous appeler au <a href="tel:+33366100134" style="color:#0DA0CF;font-weight:700">03 66 10 01 34</a>.';
     }
 
     return false;
@@ -2201,9 +2201,9 @@ if (document.fonts && document.fonts.ready) {
     if (counter) counter.innerHTML = '<strong>Étape ' + current + '/' + TOTAL + '</strong> · ' + (stepLabels[current] || '');
     // Buttons (hidden + style.display pour bulletproof)
     var bPrev = $('#swPrev'), bNext = $('#swNext'), bSub = $('#swSubmit');
-    if (bPrev) { bPrev.hidden = (current === 1); bPrev.style.display = (current === 1)&nbsp;? 'none' : ''; }
-    if (bNext) { bNext.hidden = (current === TOTAL); bNext.style.display = (current === TOTAL)&nbsp;? 'none' : ''; }
-    if (bSub)  { bSub.hidden = (current&nbsp;!== TOTAL); bSub.style.display = (current&nbsp;!== TOTAL)&nbsp;? 'none' : ''; }
+    if (bPrev) { bPrev.hidden = (current === 1); bPrev.style.display = (current === 1) ? 'none' : ''; }
+    if (bNext) { bNext.hidden = (current === TOTAL); bNext.style.display = (current === TOTAL) ? 'none' : ''; }
+    if (bSub)  { bSub.hidden = (current !== TOTAL); bSub.style.display = (current !== TOTAL) ? 'none' : ''; }
     // Effacer erreur
     hideError();
     // Récap sur dernière étape
@@ -2233,7 +2233,7 @@ if (document.fonts && document.fonts.ready) {
     var msg = '';
     inputs.forEach(function(inp){
       var rule = inp.dataset.validate;
-      var val = (inp.type === 'checkbox')&nbsp;? inp.checked&nbsp;: (inp.value || '').trim();
+      var val = (inp.type === 'checkbox') ? inp.checked : (inp.value || '').trim();
       var bad = false;
       if (rule === 'required' && !val) { bad = true; msg = msg || 'Merci de remplir tous les champs marqués *.'; }
       else if (rule === 'email' && (!val || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val))) { bad = true; msg = msg || 'Email invalide.'; }
@@ -2289,7 +2289,7 @@ if (document.fonts && document.fonts.ready) {
   }
 
   // ═══════════════════════════════════════════════════════════════
-  // ÉQUIPEMENT&nbsp;: Modèles dynamiques selon marque + Upload photo + validation
+  // ÉQUIPEMENT : Modèles dynamiques selon marque + Upload photo + validation
   // ═══════════════════════════════════════════════════════════════
   var MODELES_PAR_MARQUE = {
     'Saunier Duval': ['Thema F / C', 'Thema Plus Condens', 'Themis Condens', 'Themaclassic', 'Themacondens F AS', 'Isofast Condens', 'Isotwin Condens', 'Semia Condens', 'Semia 25/30', 'Renova Plus', 'Combiplus 25', 'Combiplus 30', 'Duomax F 28', 'Initia Plus', 'Autre modèle'],
@@ -2398,7 +2398,7 @@ if (document.fonts && document.fonts.ready) {
   else initEquipement();
 
   // ═══════════════════════════════════════════════════════════════
-  // DOCUMENTS étape 5&nbsp;: RIB + facture entretien — feedback upload
+  // DOCUMENTS étape 5 : RIB + facture entretien — feedback upload
   // ═══════════════════════════════════════════════════════════════
   function initDocuments(){
     function bindFile(inputId, statusId, label){
@@ -2435,7 +2435,7 @@ if (document.fonts && document.fonts.ready) {
     prevBtn.addEventListener('click', function(){
       showStep(current - 1);
     });
-    // Submit handler dans le form&nbsp;: valide la dernière étape
+    // Submit handler dans le form : valide la dernière étape
     var form = $('#sousForm');
     if (form){
       form.addEventListener('submit', function(e){
@@ -2447,7 +2447,7 @@ if (document.fonts && document.fonts.ready) {
     }
     // ENTER avance d'une étape (au lieu de submit)
     form && form.addEventListener('keydown', function(e){
-      if (e.key === 'Enter' && e.target.tagName&nbsp;!== 'TEXTAREA' && current&nbsp;!== TOTAL){
+      if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && current !== TOTAL){
         e.preventDefault();
         nextBtn.click();
       }
@@ -2493,7 +2493,7 @@ if (document.fonts && document.fonts.ready) {
       list.innerHTML = items.map(function(f, i){
         var p = f.properties;
         var label = p.name || '';
-        var ctx = (p.postcode || '') + ' ' + (p.city || '') + (p.context&nbsp;? ' · ' + p.context&nbsp;: '');
+        var ctx = (p.postcode || '') + ' ' + (p.city || '') + (p.context ? ' · ' + p.context : '');
         return '<div class="sous-addr-item" role="option" data-i="'+i+'"><span class="saa-label">'+label.replace(/</g,'&lt;')+'</span><span class="saa-ctx">'+ctx.replace(/</g,'&lt;')+'</span></div>';
       }).join('');
       list.hidden = false;
@@ -2559,7 +2559,7 @@ if (document.fonts && document.fonts.ready) {
     });
   }
 
-  // DÉSACTIVÉ&nbsp;: conflit avec le script global hc-address-autocomplete.js
+  // DÉSACTIVÉ : conflit avec le script global hc-address-autocomplete.js
   // (le bandeau restait ouvert à cause des 2 systèmes en parallèle)
   // if (document.readyState === 'loading'){
   //   document.addEventListener('DOMContentLoaded', initAddrAutocomplete);

@@ -219,7 +219,7 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Intervenez-vous dans le centre historique piéton de Bergues&nbsp;?",
+      "name": "Intervenez-vous dans le centre historique piéton de Bergues ?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Oui. Nous arrivons à pied avec le matériel pour les interventions du centre intra-muros (accès véhicule restreint). Aucune surfacturation pour cette contrainte — c'est intégré dans notre tarif standard."
@@ -227,7 +227,7 @@
     },
     {
       "@type": "Question",
-      "name": "Travaillez-vous sur les maisons classées ou en zone protégée&nbsp;?",
+      "name": "Travaillez-vous sur les maisons classées ou en zone protégée ?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Oui, fréquemment. Nous respectons les contraintes du PLU et de la zone protégée Vauban. Pour toute intervention modifiant l'aspect extérieur, nous orientons vers l'ABF (Architecte des Bâtiments de France) si nécessaire."
@@ -235,7 +235,7 @@
     },
     {
       "@type": "Question",
-      "name": "Faites-vous les communes voisines (Hoymille, Quaëdypre, Bissezeele)&nbsp;?",
+      "name": "Faites-vous les communes voisines (Hoymille, Quaëdypre, Bissezeele) ?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Oui — ces communes sont sur notre tournée régulière. Couverture identique à Bergues."
@@ -403,8 +403,8 @@
     burger.addEventListener('click', function() {
       var open = burger.classList.toggle('is-open');
       navMobile.classList.toggle('is-open', open);
-      burger.setAttribute('aria-expanded', open&nbsp;? 'true' : 'false');
-      document.body.style.overflow = open&nbsp;? 'hidden' : '';
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
     });
     navMobile.querySelectorAll('a').forEach(function(a) {
       a.addEventListener('click', function() {
@@ -426,7 +426,7 @@
   var closeTimer = null;
 
 // ═══════════════════════════════════════════════════════════════
-// FIX POSITION&nbsp;: aligner chaque megamenu sous SON trigger link
+// FIX POSITION : aligner chaque megamenu sous SON trigger link
 // (le CSS left:50% centrait sur la nav entière au lieu du lien)
 // ═══════════════════════════════════════════════════════════════
 function positionMegamenus() {

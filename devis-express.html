@@ -203,7 +203,7 @@
     window.scrollTo({top:0,behavior:'smooth'});
   }
 
-  // Étape 1&nbsp;: choix métier
+  // Étape 1 : choix métier
   form.querySelectorAll('[data-metier]').forEach(function(b){
     b.addEventListener('click', function(){
       state.metier = b.dataset.metier;
@@ -213,7 +213,7 @@
     });
   });
 
-  // Étape 2&nbsp;: urgence
+  // Étape 2 : urgence
   form.querySelectorAll('[data-urg]').forEach(function(b){
     b.addEventListener('click', function(){
       state.urg = b.dataset.urg;
@@ -236,7 +236,7 @@
     b.addEventListener('click', function(){ goto(state.step - 1); });
   });
 
-  // Étape 3&nbsp;: validation live
+  // Étape 3 : validation live
   var tel = document.getElementById('dxTel');
   var nom = document.getElementById('dxNom');
   var cp = document.getElementById('dxCp');
@@ -270,7 +270,7 @@
           code_postal: state.cp,
           metier: state.metier,
           type_demande: state.urg === 'urgent' ? 'urgence' : 'devis',
-          message: '[DEVIS EXPRESS] ' + state.metier + ' · ' + (state.urg === 'urgent' ? 'URGENT' : 'planifié') + (state.desc&nbsp;? '\n\n' + state.desc&nbsp;: ''),
+          message: '[DEVIS EXPRESS] ' + state.metier + ' · ' + (state.urg === 'urgent' ? 'URGENT' : 'planifié') + (state.desc ? '\n\n' + state.desc : ''),
           source: 'devis-express',
           source_page: location.href,
           status: 'nouveau',
@@ -278,7 +278,7 @@
           utm: { metier: state.metier, urgence: state.urg, ref: ref }
         })
       });
-    } catch(err) { /* fallback&nbsp;: on enregistre rien, mais on continue */ }
+    } catch(err) { /* fallback : on enregistre rien, mais on continue */ }
 
     // Affiche le succès
     form.style.display = 'none';

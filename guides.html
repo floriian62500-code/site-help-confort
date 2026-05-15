@@ -282,8 +282,8 @@
     burger.addEventListener('click', function() {
       var open = burger.classList.toggle('is-open');
       navMobile.classList.toggle('is-open', open);
-      burger.setAttribute('aria-expanded', open&nbsp;? 'true' : 'false');
-      document.body.style.overflow = open&nbsp;? 'hidden' : '';
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
     });
     navMobile.querySelectorAll('a').forEach(function(a) {
       a.addEventListener('click', function() {
@@ -305,7 +305,7 @@
   var closeTimer = null;
 
 // ═══════════════════════════════════════════════════════════════
-// FIX POSITION&nbsp;: aligner chaque megamenu sous SON trigger link
+// FIX POSITION : aligner chaque megamenu sous SON trigger link
 // (le CSS left:50% centrait sur la nav entière au lieu du lien)
 // ═══════════════════════════════════════════════════════════════
 function positionMegamenus() {
@@ -395,7 +395,7 @@ if (document.fonts && document.fonts.ready) {
             var cat = c.dataset.cat;
             document.querySelectorAll('.gd-card').forEach(function(card) {
               var href = card.getAttribute('href');
-              card.style.display = (cat === 'all' || (map[cat] && map[cat].indexOf(href) > -1))&nbsp;? '' : 'none';
+              card.style.display = (cat === 'all' || (map[cat] && map[cat].indexOf(href) > -1)) ? '' : 'none';
             });
           });
         });

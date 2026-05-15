@@ -151,9 +151,9 @@
 
   const r = data;
   const metierLabel = METIER_LABELS[r.metier] || r.metier || 'Chantier';
-  const agence = (r.ai_generated && r.ai_generated.agence) || (['Dunkerque','Grande-Synthe','Coudekerque-Branche','Téteghem','Cappelle-la-Grande','Saint-Pol-sur-Mer'].includes(r.ville)&nbsp;? 'depan-dk' : 'depan-audo');
+  const agence = (r.ai_generated && r.ai_generated.agence) || (['Dunkerque','Grande-Synthe','Coudekerque-Branche','Téteghem','Cappelle-la-Grande','Saint-Pol-sur-Mer'].includes(r.ville) ? 'depan-dk' : 'depan-audo');
   const agenceLabel = AGENCE_LABELS[agence] || "Help! Confort";
-  const dateStr = r.date_intervention&nbsp;? new Date(r.date_intervention).toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' })&nbsp;: '';
+  const dateStr = r.date_intervention ? new Date(r.date_intervention).toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' }) : '';
   const photo = r.image_after || r.image_before;
   const fbUrl = r.ai_generated && r.ai_generated.source_fb;
 
@@ -172,7 +172,7 @@
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": r.title,
-    "image": photo&nbsp;? [photo] : [],
+    "image": photo ? [photo] : [],
     "datePublished": r.published_at || r.created_at,
     "author": { "@type": "Organization", "name": agenceLabel },
     "publisher": { "@type": "Organization", "name": "HELP! Confort", "logo": { "@type": "ImageObject", "url": "https://www.depan59-62.fr/logo-help-confort.png" }},
@@ -191,7 +191,7 @@
   } else if (photo) {
     photosHTML = `
       <div class="real-single-photo real-photo ${r.image_after ? 'after' : ''}">
-        <span class="tag">${r.image_after&nbsp;? 'Après' : 'Avant'}</span>
+        <span class="tag">${r.image_after ? 'Après' : 'Avant'}</span>
         <img loading="lazy" decoding="async" src="${photo}" alt="${escapeHtml(r.title)}">
       </div>`;
   }
@@ -205,15 +205,15 @@
     <div class="real-meta">
       <span class="real-meta-tag metier">${metierLabel}</span>
       <span class="real-meta-tag ville">📍 ${escapeHtml(r.ville)}</span>
-      ${dateStr&nbsp;? `<span class="real-meta-tag date">${dateStr}</span>` : ''}
+      ${dateStr ? `<span class="real-meta-tag date">${dateStr}</span>` : ''}
       <span class="real-meta-tag agence">${agenceLabel}</span>
     </div>
     <h1 class="real-h1">${escapeHtml(r.title)}</h1>
-    ${r.description&nbsp;? `<p class="real-lead">${escapeHtml(r.description)}</p>` : ''}
+    ${r.description ? `<p class="real-lead">${escapeHtml(r.description)}</p>` : ''}
     ${photosHTML}
     <div class="real-content">
       <div class="real-body">
-        ${r.description_long&nbsp;? formatBody(r.description_long)&nbsp;: '<p>Détails du chantier à venir.</p>'}
+        ${r.description_long ? formatBody(r.description_long) : '<p>Détails du chantier à venir.</p>'}
       </div>
       <aside class="real-side">
         <h3>Cette intervention</h3>
@@ -221,8 +221,8 @@
           <div><span class="label">Métier</span><strong>${metierLabel}</strong></div>
           <div><span class="label">Ville</span><strong>${escapeHtml(r.ville)}</strong></div>
           <div><span class="label">Agence</span><strong>${agenceLabel}</strong></div>
-          ${r.technicien&nbsp;? `<div><span class="label">Technicien</span><strong>${escapeHtml(r.technicien)}</strong></div>` : ''}
-          ${dateStr&nbsp;? `<div><span class="label">Date</span><strong>${dateStr}</strong></div>` : ''}
+          ${r.technicien ? `<div><span class="label">Technicien</span><strong>${escapeHtml(r.technicien)}</strong></div>` : ''}
+          ${dateStr ? `<div><span class="label">Date</span><strong>${dateStr}</strong></div>` : ''}
         </div>
         <div class="real-side-cta">
           <a href="tel:+33366100134" class="real-cta-btn real-cta-phone" aria-label="Appeler le 03 66 10 01 34">
@@ -233,7 +233,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             Demander un devis
           </a>
-          ${fbUrl&nbsp;? `<a href="${fbUrl}" target="_blank" rel="noopener" class="real-cta-btn real-cta-fb">
+          ${fbUrl ? `<a href="${fbUrl}" target="_blank" rel="noopener" class="real-cta-btn real-cta-fb">
             <svg viewBox="0 0 24 24" fill="#1877F2"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
             Voir sur Facebook
           </a>` : ''}
@@ -264,7 +264,7 @@
       const m = METIER_LABELS[s.metier] || s.metier;
       return `
         <a href="realisation.html?slug=${encodeURIComponent(s.slug)}" class="real-similar-card">
-          <div class="photo">${p&nbsp;? `<img decoding="async" src="${p}" alt="" loading="lazy">` : ''}</div>
+          <div class="photo">${p ? `<img decoding="async" src="${p}" alt="" loading="lazy">` : ''}</div>
           <div class="body">
             <h4>${escapeHtml(s.title)}</h4>
             <div class="meta">${m} · ${escapeHtml(s.ville)}</div>

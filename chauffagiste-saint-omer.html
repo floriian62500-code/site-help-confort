@@ -141,7 +141,7 @@
   "@type": "HVACBusiness",
   "@id": "https://www.depan59-62.fr/chauffagiste-saint-omer.html#business",
   "name": "HELP! Confort — Chauffagiste Saint-Omer & Dunkerque",
-  "description": "Chauffagiste à Saint-Omer&nbsp;: entretien chaudière gaz, désembouage radiateurs, dépannage chauffage, contrats annuels Basic / Confort / Sécurité. Intervention rapide audomarois + littoral Dunkerque.",
+  "description": "Chauffagiste à Saint-Omer : entretien chaudière gaz, désembouage radiateurs, dépannage chauffage, contrats annuels Basic / Confort / Sécurité. Intervention rapide audomarois + littoral Dunkerque.",
   "image": "https://www.depan59-62.fr/logo-officiel.jpg",
   "logo": "https://www.depan59-62.fr/logo.svg",
   "telephone": "+33366100134",
@@ -408,8 +408,8 @@
     burger.addEventListener('click', function() {
       var open = burger.classList.toggle('is-open');
       navMobile.classList.toggle('is-open', open);
-      burger.setAttribute('aria-expanded', open&nbsp;? 'true' : 'false');
-      document.body.style.overflow = open&nbsp;? 'hidden' : '';
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
     });
     navMobile.querySelectorAll('a').forEach(function(a) {
       a.addEventListener('click', function() {
@@ -431,7 +431,7 @@
   var closeTimer = null;
 
 // ═══════════════════════════════════════════════════════════════
-// FIX POSITION&nbsp;: aligner chaque megamenu sous SON trigger link
+// FIX POSITION : aligner chaque megamenu sous SON trigger link
 // (le CSS left:50% centrait sur la nav entière au lieu du lien)
 // ═══════════════════════════════════════════════════════════════
 function positionMegamenus() {
@@ -1508,7 +1508,7 @@ if (document.fonts && document.fonts.ready) {
       .then(function(r){return r.ok?r.json():Promise.reject()})
       .then(function(list){
         var plomb = list.filter(function(r){
-          return r.published&nbsp;!== false && (r.metier === 'Chauffage' || /plomb/i.test(r.metier||''));
+          return r.published !== false && (r.metier === 'Chauffage' || /plomb/i.test(r.metier||''));
         }).slice(0, 2);
         if(!plomb.length) return; // garde le fallback statique
         track.innerHTML = plomb.map(function(r){
@@ -1791,7 +1791,7 @@ if (document.fonts && document.fonts.ready) {
   var success = document.getElementById('m-modal-success');
   var priceEl = document.getElementById('m-modal-price');
 
-  // Tarifs&nbsp;: sur devis annoncé avant intervention (les vrais prix viendront du catalogue admin)
+  // Tarifs : sur devis annoncé avant intervention (les vrais prix viendront du catalogue admin)
   var TARIFS = {
     'Déplacement & diagnostic': 'sur devis · annoncé avant intervention',
     'Débouchage simple': 'sur devis · annoncé avant intervention',
@@ -1800,7 +1800,7 @@ if (document.fonts && document.fonts.ready) {
   };
 
   function open(presta){
-    titleEl.textContent = 'Réserver&nbsp;: ' + presta;
+    titleEl.textContent = 'Réserver : ' + presta;
     prestaInput.value = presta;
     form.style.display = '';
     success.style.display = 'none';
@@ -1829,7 +1829,7 @@ if (document.fonts && document.fonts.ready) {
     var presta = data.get('presta');
 
     // TODO: brancher sur Netlify Forms ou backend
-    // Pour l'instant&nbsp;: affichage succès + tarif révélé
+    // Pour l'instant : affichage succès + tarif révélé
     priceEl.textContent = TARIFS[presta] || 'sur devis';
     form.style.display = 'none';
     success.style.display = 'block';
@@ -1914,39 +1914,39 @@ if (document.fonts && document.fonts.ready) {
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Combien coûte l'entretien annuel d'une chaudière gaz à Saint-Omer&nbsp;?",
+      "name": "Combien coûte l'entretien annuel d'une chaudière gaz à Saint-Omer ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Notre entretien annuel chaudière gaz est facturé 121 € TTC (visite obligatoire selon décret 2009-649). La prestation comprend&nbsp;: contrôle complet, nettoyage, mesure de combustion, attestation d'entretien remise sous 15 jours. Pour un dépannage T1 (semaine, sans fourniture)&nbsp;: 75 € TTC."
+        "text": "Notre entretien annuel chaudière gaz est facturé 121 € TTC (visite obligatoire selon décret 2009-649). La prestation comprend : contrôle complet, nettoyage, mesure de combustion, attestation d'entretien remise sous 15 jours. Pour un dépannage T1 (semaine, sans fourniture) : 75 € TTC."
       }
     },
     {
       "@type": "Question",
-      "name": "Proposez-vous des contrats d'entretien chaudière&nbsp;?",
+      "name": "Proposez-vous des contrats d'entretien chaudière ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Oui, 3 formules au choix selon votre besoin de tranquillité. Basic (entretien annuel)&nbsp;: 9 €/mois (gaz) — 12 €/mois (fioul). Confort (entretien + dépannage prioritaire)&nbsp;: 13 €/mois (gaz) — 16 €/mois (fioul). Sécurité (tout compris + pièces)&nbsp;: 23 €/mois (gaz) — 27 €/mois (fioul). Visite annuelle, dépannage 7j/7, mise en service incluse."
+        "text": "Oui, 3 formules au choix selon votre besoin de tranquillité. Basic (entretien annuel) : 9 €/mois (gaz) — 12 €/mois (fioul). Confort (entretien + dépannage prioritaire) : 13 €/mois (gaz) — 16 €/mois (fioul). Sécurité (tout compris + pièces) : 23 €/mois (gaz) — 27 €/mois (fioul). Visite annuelle, dépannage 7j/7, mise en service incluse."
       }
     },
     {
       "@type": "Question",
-      "name": "Intervenez-vous en urgence panne de chauffage le week-end&nbsp;?",
+      "name": "Intervenez-vous en urgence panne de chauffage le week-end ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Oui, notre astreinte 7j/7 couvre les urgences chauffage (chaudière en panne, plus d'eau chaude, fuite circuit, plus de chauffage en hiver) à Saint-Omer, Longuenesse, Arques et toute la zone audomaroise. Tarif majoré urgence&nbsp;: 69 €/h TTC. Clients en contrat Confort/Sécurité&nbsp;: intervention prioritaire."
+        "text": "Oui, notre astreinte 7j/7 couvre les urgences chauffage (chaudière en panne, plus d'eau chaude, fuite circuit, plus de chauffage en hiver) à Saint-Omer, Longuenesse, Arques et toute la zone audomaroise. Tarif majoré urgence : 69 €/h TTC. Clients en contrat Confort/Sécurité : intervention prioritaire."
       }
     },
     {
       "@type": "Question",
-      "name": "Mes radiateurs chauffent mal — proposez-vous le désembouage&nbsp;?",
+      "name": "Mes radiateurs chauffent mal — proposez-vous le désembouage ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Oui, le désembouage (élimination des boues dans le circuit) est facturé 105 € TTC par radiateur. Il améliore la diffusion de la chaleur, réduit votre consommation et prolonge la durée de vie de la chaudière. Sur installation ancienne ou très encombrée&nbsp;: devis personnalisé après diagnostic."
+        "text": "Oui, le désembouage (élimination des boues dans le circuit) est facturé 105 € TTC par radiateur. Il améliore la diffusion de la chaleur, réduit votre consommation et prolonge la durée de vie de la chaudière. Sur installation ancienne ou très encombrée : devis personnalisé après diagnostic."
       }
     },
     {
       "@type": "Question",
-      "name": "Êtes-vous Professionnel du Gaz (PG) et habilités RGE&nbsp;?",
+      "name": "Êtes-vous Professionnel du Gaz (PG) et habilités RGE ?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Oui, HELP! Confort Saint-Omer est habilitée Professionnel du Gaz® (chaudières gaz, chauffe-eau gaz, certificats de conformité) et RGE QualiPAC / QualiBois selon la prestation. Vous pouvez donc bénéficier des aides MaPrimeRénov' et CEE sur le remplacement de chaudière, l'installation d'une PAC ou d'un poêle à granulés."
@@ -2653,11 +2653,11 @@ if (document.fonts && document.fonts.ready) {
       var prec = document.getElementById('chatPrec').value.trim();
       // Construct mailto / formspree fallback
       var subject = encodeURIComponent('🚨 Demande urgente HELP! Confort — ' + svcField.value);
-      var bodyTxt = encodeURIComponent('Service&nbsp;: ' + svcField.value + '\nTéléphone&nbsp;: ' + tel + '\nPrécision&nbsp;: ' + prec);
+      var bodyTxt = encodeURIComponent('Service : ' + svcField.value + '\nTéléphone : ' + tel + '\nPrécision : ' + prec);
       // Append confirmation
       var confirm = document.createElement('div');
       confirm.className = 'chat-msg chat-msg-bot';
-      confirm.innerHTML = '<p>✅ Merci&nbsp;! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
+      confirm.innerHTML = '<p>✅ Merci ! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
       body.appendChild(confirm);
       form.style.display = 'none';
       body.scrollTop = body.scrollHeight;

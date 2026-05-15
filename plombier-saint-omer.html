@@ -141,7 +141,7 @@
   "@type": "Plumber",
   "@id": "https://www.depan59-62.fr/plombier-saint-omer.html#business",
   "name": "HELP! Confort — Plombier Saint-Omer & Dunkerque",
-  "description": "Plombier à Saint-Omer&nbsp;: recherche de fuite, dégorgement, mécanisme chasse d'eau, détartrage sanitaire, ballon d'eau chaude. Intervention rapide audomarois + littoral Dunkerque.",
+  "description": "Plombier à Saint-Omer : recherche de fuite, dégorgement, mécanisme chasse d'eau, détartrage sanitaire, ballon d'eau chaude. Intervention rapide audomarois + littoral Dunkerque.",
   "image": "https://www.depan59-62.fr/logo-officiel.jpg",
   "logo": "https://www.depan59-62.fr/logo.svg",
   "telephone": "+33366100134",
@@ -400,8 +400,8 @@
     burger.addEventListener('click', function() {
       var open = burger.classList.toggle('is-open');
       navMobile.classList.toggle('is-open', open);
-      burger.setAttribute('aria-expanded', open&nbsp;? 'true' : 'false');
-      document.body.style.overflow = open&nbsp;? 'hidden' : '';
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
     });
     navMobile.querySelectorAll('a').forEach(function(a) {
       a.addEventListener('click', function() {
@@ -423,7 +423,7 @@
   var closeTimer = null;
 
 // ═══════════════════════════════════════════════════════════════
-// FIX POSITION&nbsp;: aligner chaque megamenu sous SON trigger link
+// FIX POSITION : aligner chaque megamenu sous SON trigger link
 // (le CSS left:50% centrait sur la nav entière au lieu du lien)
 // ═══════════════════════════════════════════════════════════════
 function positionMegamenus() {
@@ -1518,7 +1518,7 @@ if (document.fonts && document.fonts.ready) {
       .then(function(r){return r.ok?r.json():Promise.reject()})
       .then(function(list){
         var plomb = list.filter(function(r){
-          return r.published&nbsp;!== false && (r.metier === 'Plomberie' || /plomb/i.test(r.metier||''));
+          return r.published !== false && (r.metier === 'Plomberie' || /plomb/i.test(r.metier||''));
         }).slice(0, 2);
         if(!plomb.length) return; // garde le fallback statique
         track.innerHTML = plomb.map(function(r){
@@ -1801,7 +1801,7 @@ if (document.fonts && document.fonts.ready) {
   var success = document.getElementById('m-modal-success');
   var priceEl = document.getElementById('m-modal-price');
 
-  // Tarifs&nbsp;: sur devis annoncé avant intervention (les vrais prix viendront du catalogue admin)
+  // Tarifs : sur devis annoncé avant intervention (les vrais prix viendront du catalogue admin)
   var TARIFS = {
     'Déplacement & diagnostic': 'sur devis · annoncé avant intervention',
     'Débouchage simple': 'sur devis · annoncé avant intervention',
@@ -1810,7 +1810,7 @@ if (document.fonts && document.fonts.ready) {
   };
 
   function open(presta){
-    titleEl.textContent = 'Réserver&nbsp;: ' + presta;
+    titleEl.textContent = 'Réserver : ' + presta;
     prestaInput.value = presta;
     form.style.display = '';
     success.style.display = 'none';
@@ -1839,7 +1839,7 @@ if (document.fonts && document.fonts.ready) {
     var presta = data.get('presta');
 
     // TODO: brancher sur Netlify Forms ou backend
-    // Pour l'instant&nbsp;: affichage succès + tarif révélé
+    // Pour l'instant : affichage succès + tarif révélé
     priceEl.textContent = TARIFS[presta] || 'sur devis';
     form.style.display = 'none';
     success.style.display = 'block';
@@ -1924,15 +1924,15 @@ if (document.fonts && document.fonts.ready) {
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Combien coûte une recherche de fuite à Saint-Omer&nbsp;?",
+      "name": "Combien coûte une recherche de fuite à Saint-Omer ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Notre recherche de fuite par caméra thermique, gaz traceur ou écoute acoustique est facturée 383 € TTC (forfait recherche technique). Le diagnostic comprend la localisation précise (au mm), un rapport remis à votre assurance et un devis pour la réparation. Pour une recherche visuelle simple&nbsp;: 148 € TTC. Pas de casse inutile, intervention propre."
+        "text": "Notre recherche de fuite par caméra thermique, gaz traceur ou écoute acoustique est facturée 383 € TTC (forfait recherche technique). Le diagnostic comprend la localisation précise (au mm), un rapport remis à votre assurance et un devis pour la réparation. Pour une recherche visuelle simple : 148 € TTC. Pas de casse inutile, intervention propre."
       }
     },
     {
       "@type": "Question",
-      "name": "Intervenez-vous en urgence le week-end ou la nuit&nbsp;?",
+      "name": "Intervenez-vous en urgence le week-end ou la nuit ?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Oui, notre astreinte 7j/7 couvre les urgences plomberie (fuite majeure, dégât des eaux, plus d'eau chaude) à Saint-Omer, Longuenesse, Arques et toute la zone. "
@@ -1940,7 +1940,7 @@ if (document.fonts && document.fonts.ready) {
     },
     {
       "@type": "Question",
-      "name": "Faites-vous des devis gratuits pour la plomberie&nbsp;?",
+      "name": "Faites-vous des devis gratuits pour la plomberie ?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Oui, tous nos devis pour travaux de plomberie (salle de bain, raccordement, remplacement chauffe-eau, sanitaire) sont gratuits et sans engagement. Devis détaillé après visite, planning ferme à la signature."
@@ -1948,15 +1948,15 @@ if (document.fonts && document.fonts.ready) {
     },
     {
       "@type": "Question",
-      "name": "Quel est le prix d'un débouchage de canalisation&nbsp;?",
+      "name": "Quel est le prix d'un débouchage de canalisation ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Forfait désengorgement de canalisation&nbsp;: 165 € TTC (WC, évier, lavabo, siphon). Pour les bouchons profonds nécessitant furet motorisé ou hydrocurage haute pression&nbsp;: sur devis selon difficulté et longueur. Tarif annoncé avant intervention, aucune surprise."
+        "text": "Forfait désengorgement de canalisation : 165 € TTC (WC, évier, lavabo, siphon). Pour les bouchons profonds nécessitant furet motorisé ou hydrocurage haute pression : sur devis selon difficulté et longueur. Tarif annoncé avant intervention, aucune surprise."
       }
     },
     {
       "@type": "Question",
-      "name": "Êtes-vous Professionnel du Gaz (PG)&nbsp;?",
+      "name": "Êtes-vous Professionnel du Gaz (PG) ?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Oui, HELP! Confort Saint-Omer est habilitée Professionnel du Gaz®, ce qui nous autorise à intervenir sur les chaudières gaz, chauffe-eau gaz, et à délivrer les certificats de conformité après installation."
@@ -2663,11 +2663,11 @@ if (document.fonts && document.fonts.ready) {
       var prec = document.getElementById('chatPrec').value.trim();
       // Construct mailto / formspree fallback
       var subject = encodeURIComponent('🚨 Demande urgente HELP! Confort — ' + svcField.value);
-      var bodyTxt = encodeURIComponent('Service&nbsp;: ' + svcField.value + '\nTéléphone&nbsp;: ' + tel + '\nPrécision&nbsp;: ' + prec);
+      var bodyTxt = encodeURIComponent('Service : ' + svcField.value + '\nTéléphone : ' + tel + '\nPrécision : ' + prec);
       // Append confirmation
       var confirm = document.createElement('div');
       confirm.className = 'chat-msg chat-msg-bot';
-      confirm.innerHTML = '<p>✅ Merci&nbsp;! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
+      confirm.innerHTML = '<p>✅ Merci ! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
       body.appendChild(confirm);
       form.style.display = 'none';
       body.scrollTop = body.scrollHeight;

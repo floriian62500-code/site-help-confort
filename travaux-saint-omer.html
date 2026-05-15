@@ -141,7 +141,7 @@
   "@type": "GeneralContractor",
   "@id": "https://www.depan59-62.fr/travaux-saint-omer.html#business",
   "name": "HELP! Confort — Travaux & Rénovation Saint-Omer & Dunkerque",
-  "description": "Travaux tous corps d'état à Saint-Omer&nbsp;: rénovation salle de bain, rénovation cuisine, adaptation PMR, tableau électrique complet, blindage de porte. Devis personnalisé.",
+  "description": "Travaux tous corps d'état à Saint-Omer : rénovation salle de bain, rénovation cuisine, adaptation PMR, tableau électrique complet, blindage de porte. Devis personnalisé.",
   "image": "https://www.depan59-62.fr/logo-officiel.jpg",
   "logo": "https://www.depan59-62.fr/logo.svg",
   "telephone": "+33366100134",
@@ -395,8 +395,8 @@
     burger.addEventListener('click', function() {
       var open = burger.classList.toggle('is-open');
       navMobile.classList.toggle('is-open', open);
-      burger.setAttribute('aria-expanded', open&nbsp;? 'true' : 'false');
-      document.body.style.overflow = open&nbsp;? 'hidden' : '';
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
     });
     navMobile.querySelectorAll('a').forEach(function(a) {
       a.addEventListener('click', function() {
@@ -418,7 +418,7 @@
   var closeTimer = null;
 
 // ═══════════════════════════════════════════════════════════════
-// FIX POSITION&nbsp;: aligner chaque megamenu sous SON trigger link
+// FIX POSITION : aligner chaque megamenu sous SON trigger link
 // (le CSS left:50% centrait sur la nav entière au lieu du lien)
 // ═══════════════════════════════════════════════════════════════
 function positionMegamenus() {
@@ -1495,7 +1495,7 @@ if (document.fonts && document.fonts.ready) {
       .then(function(r){return r.ok?r.json():Promise.reject()})
       .then(function(list){
         var plomb = list.filter(function(r){
-          return r.published&nbsp;!== false && (r.metier === 'Travaux' || /plomb/i.test(r.metier||''));
+          return r.published !== false && (r.metier === 'Travaux' || /plomb/i.test(r.metier||''));
         }).slice(0, 2);
         if(!plomb.length) return; // garde le fallback statique
         track.innerHTML = plomb.map(function(r){
@@ -1778,7 +1778,7 @@ if (document.fonts && document.fonts.ready) {
   var success = document.getElementById('m-modal-success');
   var priceEl = document.getElementById('m-modal-price');
 
-  // Tarifs&nbsp;: sur devis annoncé avant intervention (les vrais prix viendront du catalogue admin)
+  // Tarifs : sur devis annoncé avant intervention (les vrais prix viendront du catalogue admin)
   var TARIFS = {
     'Déplacement & diagnostic': 'sur devis · annoncé avant intervention',
     'Débouchage simple': 'sur devis · annoncé avant intervention',
@@ -1787,7 +1787,7 @@ if (document.fonts && document.fonts.ready) {
   };
 
   function open(presta){
-    titleEl.textContent = 'Réserver&nbsp;: ' + presta;
+    titleEl.textContent = 'Réserver : ' + presta;
     prestaInput.value = presta;
     form.style.display = '';
     success.style.display = 'none';
@@ -1816,7 +1816,7 @@ if (document.fonts && document.fonts.ready) {
     var presta = data.get('presta');
 
     // TODO: brancher sur Netlify Forms ou backend
-    // Pour l'instant&nbsp;: affichage succès + tarif révélé
+    // Pour l'instant : affichage succès + tarif révélé
     priceEl.textContent = TARIFS[presta] || 'sur devis';
     form.style.display = 'none';
     success.style.display = 'block';
@@ -1901,23 +1901,23 @@ if (document.fonts && document.fonts.ready) {
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Combien coûte une rénovation de salle de bain à Saint-Omer&nbsp;?",
+      "name": "Combien coûte une rénovation de salle de bain à Saint-Omer ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Une rénovation de salle de bain est toujours traitée sur devis car le prix dépend de la surface, du niveau d'équipement (douche à l'italienne, baignoire, mobilier sur mesure) et des finitions (faïence, carrelage, peinture). Visite gratuite, devis détaillé sous 5 jours, planning ferme à la signature. Aides possibles&nbsp;: MaPrimeAdapt' (PMR), TVA réduite 10 % (logement de + 2 ans)."
+        "text": "Une rénovation de salle de bain est toujours traitée sur devis car le prix dépend de la surface, du niveau d'équipement (douche à l'italienne, baignoire, mobilier sur mesure) et des finitions (faïence, carrelage, peinture). Visite gratuite, devis détaillé sous 5 jours, planning ferme à la signature. Aides possibles : MaPrimeAdapt' (PMR), TVA réduite 10 % (logement de + 2 ans)."
       }
     },
     {
       "@type": "Question",
-      "name": "Intervenez-vous en urgence pour sécuriser un chantier le week-end&nbsp;?",
+      "name": "Intervenez-vous en urgence pour sécuriser un chantier le week-end ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Oui, notre astreinte 7j/7 couvre les urgences travaux (fuite majeure pendant un chantier, dégât des eaux, mise en sécurité après sinistre, bâche provisoire toiture) à Saint-Omer, Longuenesse, Arques et toute la zone audomaroise. Tarif majoré urgence&nbsp;: 69 €/h TTC."
+        "text": "Oui, notre astreinte 7j/7 couvre les urgences travaux (fuite majeure pendant un chantier, dégât des eaux, mise en sécurité après sinistre, bâche provisoire toiture) à Saint-Omer, Longuenesse, Arques et toute la zone audomaroise. Tarif majoré urgence : 69 €/h TTC."
       }
     },
     {
       "@type": "Question",
-      "name": "Faites-vous des devis gratuits pour des travaux multi-corps d'état&nbsp;?",
+      "name": "Faites-vous des devis gratuits pour des travaux multi-corps d'état ?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Oui, tous nos devis pour rénovation complète (salle de bain, cuisine, adaptation PMR, mise aux normes), travaux multi-corps d'état et aménagement intérieur sont gratuits et sans engagement. Devis détaillé sous 5 jours après visite technique, planning ferme à la signature. Un interlocuteur unique pour piloter tous les corps de métier."
@@ -1933,7 +1933,7 @@ if (document.fonts && document.fonts.ready) {
     },
     {
       "@type": "Question",
-      "name": "Êtes-vous couverts par une garantie décennale&nbsp;?",
+      "name": "Êtes-vous couverts par une garantie décennale ?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Oui, tous nos chantiers sont couverts par une garantie décennale (10 ans sur le gros œuvre et les éléments d'équipement indissociables) et une garantie biennale (2 ans sur les équipements dissociables). Attestation d'assurance remise systématiquement avec le devis. Réception de chantier avec PV signé contradictoirement."
@@ -2640,11 +2640,11 @@ if (document.fonts && document.fonts.ready) {
       var prec = document.getElementById('chatPrec').value.trim();
       // Construct mailto / formspree fallback
       var subject = encodeURIComponent('🚨 Demande urgente HELP! Confort — ' + svcField.value);
-      var bodyTxt = encodeURIComponent('Service&nbsp;: ' + svcField.value + '\nTéléphone&nbsp;: ' + tel + '\nPrécision&nbsp;: ' + prec);
+      var bodyTxt = encodeURIComponent('Service : ' + svcField.value + '\nTéléphone : ' + tel + '\nPrécision : ' + prec);
       // Append confirmation
       var confirm = document.createElement('div');
       confirm.className = 'chat-msg chat-msg-bot';
-      confirm.innerHTML = '<p>✅ Merci&nbsp;! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
+      confirm.innerHTML = '<p>✅ Merci ! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
       body.appendChild(confirm);
       form.style.display = 'none';
       body.scrollTop = body.scrollHeight;

@@ -309,8 +309,8 @@
     burger.addEventListener('click', function() {
       var open = burger.classList.toggle('is-open');
       navMobile.classList.toggle('is-open', open);
-      burger.setAttribute('aria-expanded', open&nbsp;? 'true' : 'false');
-      document.body.style.overflow = open&nbsp;? 'hidden' : '';
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
     });
     navMobile.querySelectorAll('a').forEach(function(a) {
       a.addEventListener('click', function() {
@@ -332,7 +332,7 @@
   var closeTimer = null;
 
 // ═══════════════════════════════════════════════════════════════
-// FIX POSITION&nbsp;: aligner chaque megamenu sous SON trigger link
+// FIX POSITION : aligner chaque megamenu sous SON trigger link
 // (le CSS left:50% centrait sur la nav entière au lieu du lien)
 // ═══════════════════════════════════════════════════════════════
 function positionMegamenus() {
@@ -528,30 +528,30 @@ if (document.fonts && document.fonts.ready) {
             if (isPaiement) {
               banner.style.background = 'linear-gradient(135deg,rgba(255,107,26,.10),rgba(255,180,0,.08))';
               banner.style.borderColor = 'rgba(255,107,26,.30)';
-              banner.querySelector('strong').innerHTML = '💳 Demande de réservation & paiement pour&nbsp;:';
+              banner.querySelector('strong').innerHTML = '💳 Demande de réservation & paiement pour :';
               banner.querySelector('strong').style.color = '#FF6B1A';
               // Ajoute une note paiement
               if (!banner.querySelector('.pay-note')) {
                 var n = document.createElement('div');
                 n.className = 'pay-note';
                 n.style.cssText = 'margin-top:8px;padding:10px 12px;background:#fff;border-radius:8px;font-size:.82rem;color:#475569;border:1px dashed rgba(255,107,26,.25)';
-                n.innerHTML = '⏱️ <strong>Étape suivante&nbsp;:</strong> nous vous envoyons un lien de paiement sécurisé par email après validation rapide de votre demande (rapidement).';
+                n.innerHTML = '⏱️ <strong>Étape suivante :</strong> nous vous envoyons un lien de paiement sécurisé par email après validation rapide de votre demande (rapidement).';
                 banner.appendChild(n);
               }
             } else {
-              banner.querySelector('strong').innerHTML = '📌 Demande de devis pour&nbsp;:';
+              banner.querySelector('strong').innerHTML = '📌 Demande de devis pour :';
             }
             banner.style.display = 'block';
           }
-          if (hidden) hidden.value = (isPaiement&nbsp;? '[PAIEMENT] ' : '[DEVIS] ') + presta + ' | ' + label;
+          if (hidden) hidden.value = (isPaiement ? '[PAIEMENT] ' : '[DEVIS] ') + presta + ' | ' + label;
           // Préremplir le champ message si présent
           setTimeout(function(){
             var msg = document.getElementById('message');
             if (msg && !msg.value) {
               if (isPaiement) {
-                msg.value = 'Bonjour, je souhaite réserver et payer en ligne pour&nbsp;: ' + label.replace(/^[^\s]+ /, '') + '\n\nMerci de m\'envoyer le lien de paiement sécurisé.\n\n';
+                msg.value = 'Bonjour, je souhaite réserver et payer en ligne pour : ' + label.replace(/^[^\s]+ /, '') + '\n\nMerci de m\'envoyer le lien de paiement sécurisé.\n\n';
               } else {
-                msg.value = 'Bonjour, je souhaite un devis pour&nbsp;: ' + label.replace(/^[^\s]+ /, '') + '\n\n';
+                msg.value = 'Bonjour, je souhaite un devis pour : ' + label.replace(/^[^\s]+ /, '') + '\n\n';
               }
             }
           }, 100);
@@ -1239,11 +1239,11 @@ if (document.fonts && document.fonts.ready) {
       var prec = document.getElementById('chatPrec').value.trim();
       // Construct mailto / formspree fallback
       var subject = encodeURIComponent('🚨 Demande urgente HELP! Confort — ' + svcField.value);
-      var bodyTxt = encodeURIComponent('Service&nbsp;: ' + svcField.value + '\nTéléphone&nbsp;: ' + tel + '\nPrécision&nbsp;: ' + prec);
+      var bodyTxt = encodeURIComponent('Service : ' + svcField.value + '\nTéléphone : ' + tel + '\nPrécision : ' + prec);
       // Append confirmation
       var confirm = document.createElement('div');
       confirm.className = 'chat-msg chat-msg-bot';
-      confirm.innerHTML = '<p>✅ Merci&nbsp;! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
+      confirm.innerHTML = '<p>✅ Merci ! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
       body.appendChild(confirm);
       form.style.display = 'none';
       body.scrollTop = body.scrollHeight;
