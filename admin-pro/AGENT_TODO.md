@@ -37,7 +37,7 @@
 - [ ] **Open Graph images** — créer un script qui génère des PNG 1200×630 pour chaque page principale (titre + métier + logo HC) — utiliser SVG → PNG via canvas dans une edge function.
 - [x] **JSON-LD breadcrumbs** sur les 4 guides (article + breadcrumb list). *(fait 15/05 — audit : les 4 guides ont déjà Article+BreadcrumbList+TechArticle ; ✅ rien à ajouter)*
 - [x] **Meta description optimisée** pour chaque page locale `depannage-*` avec ville + tarif anchor. *(fait 15/05 — 7 pages : meta + og:description harmonisés "ville (CP) + 58€/h TTC + ☎")*
-- [ ] **Sitemap.xml local** régénéré avec toutes les pages actuelles (audit complet, 49 actuelles à vérifier).
+- [x] **Sitemap.xml local** régénéré avec toutes les pages actuelles (audit complet, 49 actuelles à vérifier). *(fait 15/05 — 32 pages root + 17 articles = 49 URLs ; lastmod recalculés via git log ; chantiers vs articles auto-triés)*
 
 ## P4 — Sécurité & performance
 
@@ -53,7 +53,7 @@
 - [ ] **`admin-pro/leads.html`** — ajouter export CSV.
 - [ ] **`admin-pro/contracts.html`** — ajouter filtres par formule + recherche par nom client.
 - [ ] **`admin-pro/services.html`** — ajouter colonne data-source pour traçabilité tarif.
-- [ ] **Page admin "Tarifs"** — créer `admin-pro/tarifs.html` qui affiche `TARIFS_REFERENCE.md` parsé en table.
+- [x] **Page admin "Tarifs"** — créer `admin-pro/tarifs.html` qui affiche `TARIFS_REFERENCE.md` parsé en table. *(fait 15/05 — 5 onglets (Métiers/Horaire/Contrats/Devis/Pending), entry sidebar 'Tarifs de référence', tous prix croisés avec TARIFS_REFERENCE)*
 
 ## P6 — Contenu marketing
 

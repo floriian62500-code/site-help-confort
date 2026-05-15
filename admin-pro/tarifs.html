@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Tarifs de référence · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+  .tarif-hero{display:flex;gap:14px;align-items:flex-start;background:linear-gradient(135deg,#FFF7E6,#FFF1D6);border:1px solid #FFE0A8;border-radius:14px;padding:16px 20px;margin-bottom:24px}
+  .tarif-hero svg{flex-shrink:0;width:36px;height:36px;color:#B45309}
+  .tarif-hero h3{margin:0 0 4px;font-size:1rem;font-weight:800;color:#7A4A00}
+  .tarif-hero p{margin:0;font-size:.86rem;color:#8B5A12;line-height:1.5}
+  .tarif-hero code{background:#fff;padding:1px 6px;border-radius:4px;font-size:.78rem;color:#B45309;font-weight:700}
+
+  .tarif-tabs{display:flex;gap:6px;margin-bottom:22px;border-bottom:1px solid var(--ink-100);flex-wrap:wrap}
+  .tarif-tab{padding:10px 16px;background:transparent;border:none;color:var(--ink-500);font:inherit;font-size:.88rem;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:.15s;display:inline-flex;align-items:center;gap:7px}
+  .tarif-tab:hover{color:var(--ink-900)}
+  .tarif-tab.is-active{color:var(--hc-primary);border-bottom-color:var(--hc-primary)}
+  .tarif-tab .tab-emoji{font-size:1.05rem}
+  .tarif-pane{display:none;animation:fadeIn .25s ease}
+  .tarif-pane.is-active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+  .tarif-section{background:#fff;border:1px solid var(--ink-100);border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(11,18,32,.04);margin-bottom:22px}
+  .tarif-section h2{margin:0;padding:16px 20px;font-size:1rem;font-weight:800;color:var(--ink-900);background:linear-gradient(180deg,#FAFCFD,#F4F7FB);border-bottom:1px solid var(--ink-100);display:flex;align-items:center;gap:10px}
+  .tarif-section h2 .emoji{font-size:1.2rem}
+  .tarif-section h2 .badge-count{margin-left:auto;background:rgba(13,160,207,.12);color:var(--hc-primary);padding:3px 10px;border-radius:999px;font-size:.74rem;font-weight:800}
+
+  .tarif-table{width:100%;border-collapse:collapse}
+  .tarif-table th{padding:11px 20px;text-align:left;font-size:.72rem;font-weight:800;color:var(--ink-500);letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--ink-100);background:#FAFCFD}
+  .tarif-table td{padding:13px 20px;border-bottom:1px solid var(--ink-50);font-size:.9rem;color:var(--ink-900);vertical-align:middle}
+  .tarif-table tr:last-child td{border-bottom:none}
+  .tarif-table tr:hover td{background:#F8FAFC}
+  .tarif-table .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+  .tarif-table .num.ttc{color:#0DA0CF;font-size:.95rem}
+  .tarif-table .ref{font-family:'JetBrains Mono', ui-monospace, monospace;font-size:.78rem;color:var(--ink-500);background:#F4F7FB;padding:2px 8px;border-radius:4px}
+  .tarif-table .prest-name{font-weight:600}
+  .tarif-table .formula-name{display:inline-flex;align-items:center;gap:7px;font-weight:700}
+  .formula-dot{width:8px;height:8px;border-radius:50%}
+  .formula-basic .formula-dot{background:#94a3b8}
+  .formula-confort .formula-dot{background:#0DA0CF}
+  .formula-securite .formula-dot{background:#FFB400}
+
+  .pending-list{padding:18px 22px;background:#fff;border:1px solid var(--ink-100);border-radius:14px;margin-bottom:22px}
+  .pending-list h3{margin:0 0 10px;font-size:.94rem;font-weight:800;color:var(--ink-900);display:flex;align-items:center;gap:8px}
+  .pending-list h4{margin:14px 0 6px;font-size:.82rem;font-weight:700;color:var(--hc-primary)}
+  .pending-list ul{margin:0;padding-left:22px;font-size:.85rem;color:var(--ink-500);line-height:1.7}
+  .pending-list li{padding-left:4px}
+
+  .devis-only{background:#fff;border:1px solid var(--ink-100);border-radius:14px;padding:18px 22px;margin-bottom:22px}
+  .devis-only h3{margin:0 0 12px;font-size:.94rem;font-weight:800;color:var(--ink-900);display:flex;align-items:center;gap:8px}
+  .devis-tags{display:flex;flex-wrap:wrap;gap:8px}
+  .devis-tag{padding:5px 12px;background:rgba(225,29,72,.08);color:#9F1239;border-radius:999px;font-size:.8rem;font-weight:600;border:1px solid rgba(225,29,72,.15)}
+
+  .rules-card{background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border:1px solid #BFDBFE;border-radius:14px;padding:16px 20px;margin-top:18px}
+  .rules-card h3{margin:0 0 10px;font-size:.92rem;font-weight:800;color:#1E3A8A;display:flex;align-items:center;gap:8px}
+  .rules-card ol{margin:0;padding-left:22px;font-size:.86rem;color:#1E40AF;line-height:1.7}
+  .rules-card code{background:#fff;padding:1px 6px;border-radius:4px;font-size:.78rem;color:#1E3A8A;font-weight:700;border:1px solid #BFDBFE}
+
+  .tarif-meta{display:flex;gap:18px;font-size:.78rem;color:var(--ink-500);margin-bottom:18px;flex-wrap:wrap}
+  .tarif-meta strong{color:var(--ink-900)}
+  .tarif-cta-update{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;background:#fff;color:var(--hc-primary);border:1px solid var(--hc-primary);border-radius:8px;font:inherit;font-size:.82rem;font-weight:700;cursor:pointer;text-decoration:none}
+  .tarif-cta-update:hover{background:rgba(13,160,207,.05)}
+
+  .empty-state{padding:60px 24px;text-align:center;color:var(--ink-500);background:#fff;border:1px dashed var(--ink-100);border-radius:14px}
+  .empty-state h3{margin:0 0 8px;font-size:1rem;color:var(--ink-900)}
+  .empty-state p{margin:0;font-size:.88rem}
+
+  @media (max-width: 720px) {
+    .tarif-table th, .tarif-table td{padding:10px 12px;font-size:.82rem}
+    .tarif-section h2{font-size:.92rem;padding:14px 16px}
+  }
+</style>
+</head>
+<body>
+
+<div class="admin-overlay"></div>
+<div class="admin-shell">
+
+  <aside class="admin-sidebar"><!-- Injecté par HCLayout.mountSidebar() --></aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar"></header>
+
+    <div class="admin-content">
+
+      <div class="admin-page-head">
+        <h1>Tarifs de référence</h1>
+        <p>Source de vérité unique pour tous les prix affichés sur le site public. Croiser tout montant avec ce document avant publication.</p>
+      </div>
+
+      <div class="tarif-meta">
+        <span>📋 Source : <strong>TARIFS_REFERENCE.md</strong></span>
+        <span>📅 Dernière maj : <strong id="lastUpdate">15 mai 2026</strong></span>
+        <span>✅ Validé par : <strong>Florian</strong></span>
+        <span style="margin-left:auto">
+          <a href="https://github.com/" class="tarif-cta-update" id="btnEditMd" title="Modifier TARIFS_REFERENCE.md">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Éditer le .md
+          </a>
+        </span>
+      </div>
+
+      <div class="tarif-hero">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div>
+          <h3>Règle d'or — sonde IA #23</h3>
+          <p>Tout montant <code>\d+\s*€</code> affiché sur une page publique <strong>DOIT</strong> figurer dans cette table OU porter l'attribut <code>data-source="base-produits-2026-05"</code>. Sinon : alerte rouge sur le scan quotidien.</p>
+        </div>
+      </div>
+
+      <!-- ═══ TABS ═══ -->
+      <div class="tarif-tabs" id="tarifTabs">
+        <button class="tarif-tab is-active" data-tab="metiers"><span class="tab-emoji">🔧</span>Forfaits métiers</button>
+        <button class="tarif-tab" data-tab="horaire"><span class="tab-emoji">🕐</span>Main d'œuvre</button>
+        <button class="tarif-tab" data-tab="contrats"><span class="tab-emoji">📝</span>Contrats</button>
+        <button class="tarif-tab" data-tab="devis"><span class="tab-emoji">📞</span>Sur devis</button>
+        <button class="tarif-tab" data-tab="pending"><span class="tab-emoji">⏳</span>En attente</button>
+      </div>
+
+      <!-- ═══ PANE MÉTIERS ═══ -->
+      <div class="tarif-pane is-active" id="paneMetiers"></div>
+
+      <!-- ═══ PANE HORAIRE ═══ -->
+      <div class="tarif-pane" id="paneHoraire"></div>
+
+      <!-- ═══ PANE CONTRATS ═══ -->
+      <div class="tarif-pane" id="paneContrats"></div>
+
+      <!-- ═══ PANE DEVIS ═══ -->
+      <div class="tarif-pane" id="paneDevis"></div>
+
+      <!-- ═══ PANE PENDING ═══ -->
+      <div class="tarif-pane" id="panePending"></div>
+
+      <div class="rules-card">
+        <h3>📖 Règle pour l'agent IA et les rédacteurs</h3>
+        <ol>
+          <li>Tout montant affiché sur une page publique <strong>doit</strong> apparaître dans cette table.</li>
+          <li>Sinon : marquer clairement <code>estimation marché</code> / <code>exemple non engageant</code>.</li>
+          <li>Ou ajouter l'attribut HTML <code>data-source="base-produits-2026-05"</code>.</li>
+          <li>Toute modif des prix passe par <code>TARIFS_REFERENCE.md</code> (validation Florian requise).</li>
+        </ol>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+(async function() {
+  await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+  HCLayout.mount('tarifs', 'Tarifs de référence');
+
+  // ──────────────────────────────────────────────────────────────
+  // Données issues de TARIFS_REFERENCE.md (15/05/2026)
+  // ⚠ Toute modif des prix doit être faite dans le .md ET ici.
+  // ──────────────────────────────────────────────────────────────
+  const DATA = {
+    horaire: [
+      { name: "Main d'œuvre tous métiers",                 ht: 53, ttc: 58, unit: "/h" },
+      { name: "Main d'œuvre urgence (intervention <1h)",   ht: 63, ttc: 69, unit: "/h" },
+      { name: "Main d'œuvre week-end",                     ht: 80, ttc: 88, unit: "/h" },
+      { name: "Déplacement audomarois",                    ht: 45, ttc: 50, unit: "forfait" },
+      { name: "Déplacement Dunkerque (forfait)",           ht: 80, ttc: 88, unit: "forfait" }
+    ],
+    plomberie: [
+      { name: "Recherche de fuite visuelle",                                   ttc: 148, ref: "FRFV" },
+      { name: "Recherche de fuite technique (caméra / gaz / acoustique)",      ttc: 383, ref: "FRFT" },
+      { name: "Désengorgement canalisation",                                   ttc: 165, ref: "—" },
+      { name: "Mécanisme chasse d'eau (T1 semaine)",                           ttc: 131, ref: "T1" },
+      { name: "Détartrage installation sanitaire",                             ttc: 237, ref: "—" }
+    ],
+    chauffage: [
+      { name: "Entretien annuel chaudière gaz",          ttc: 121 },
+      { name: "Désembouage par radiateur",               ttc: 105 },
+      { name: "Dépannage T1 (semaine, sans fourniture)", ttc:  75 }
+    ],
+    electricite: [
+      { name: "Recherche de panne électrique",                ttc: 107 },
+      { name: "Forfait T1 panne sans fourniture (semaine)",   ttc:  75 }
+    ],
+    serrurerie: [
+      { name: "Ouverture porte simple",         ttc: 108 },
+      { name: "Ouverture porte claquée",        ttc: 176 },
+      { name: "Ouverture porte fermée à clé",   ttc: 228 },
+      { name: "Ouverture porte sécurité",       ttc: 314 }
+    ],
+    vitrerie: [
+      { name: "Mise en sécurité ouverture extérieur",   ttc: 120, unit: "/m²" },
+      { name: "Réalisation gabarit",                    ttc: 184 }
+    ],
+    contrats: [
+      { formula: "Basic",    cls: "basic",    gaz: { mois:  9, an: 108 }, fioul: { mois: 12, an: 140 } },
+      { formula: "Confort",  cls: "confort",  gaz: { mois: 13, an: 156 }, fioul: { mois: 16, an: 190 } },
+      { formula: "Sécurité", cls: "securite", gaz: { mois: 23, an: 276 }, fioul: { mois: 27, an: 320 } }
+    ],
+    pending: {
+      "Plomberie": [
+        "Pose chauffe-eau (par tranche de litres)",
+        "Remplacement chauffe-eau à l'identique",
+        "Pose WC suspendu / au sol neuf",
+        "Réparation/remplacement mitigeur semaine",
+        "Réparation fuite simple (raccord, joint)"
+      ],
+      "Chauffage": [
+        "Entretien chaudière FIOUL",
+        "Vidange + remplissage installation",
+        "Remplacement vase d'expansion",
+        "Remplacement circulateur"
+      ],
+      "Électricité": [
+        "Remplacement disjoncteur seul",
+        "Remplacement prise / interrupteur",
+        "Pose luminaire simple",
+        "Diagnostic électrique avant vente / location"
+      ],
+      "Serrurerie": [
+        "Changement cylindre standard"
+      ],
+      "Vitrerie": [
+        "Remplacement vitre simple (selon dimensions)"
+      ]
+    },
+    devis: [
+      "Tableau électrique complet",
+      "Pompe à chaleur (PAC)",
+      "Rénovation salle de bain",
+      "Rénovation cuisine",
+      "Adaptation PMR globale",
+      "Blindage de porte",
+      "Travaux tous corps d'état"
+    ]
+  };
+
+  // ──────────────────────────────────────────────────────────────
+  // Rendu
+  // ──────────────────────────────────────────────────────────────
+  const fmt = (n) => new Intl.NumberFormat('fr-FR', { style:'currency', currency:'EUR', minimumFractionDigits:0, maximumFractionDigits:0 }).format(n);
+
+  function renderMetierTable(title, emoji, items, hasRef) {
+    const rows = items.map(it => `
+      <tr>
+        <td class="prest-name">${it.name}</td>
+        <td class="num ttc">${fmt(it.ttc)}${it.unit ? ' <span style="font-weight:500;color:#64748b">'+it.unit+'</span>' : ''}</td>
+        ${hasRef ? `<td><span class="ref">${it.ref || '—'}</span></td>` : ''}
+      </tr>`).join('');
+    return `
+      <div class="tarif-section">
+        <h2><span class="emoji">${emoji}</span>${title} <span class="badge-count">${items.length} forfait${items.length>1?'s':''}</span></h2>
+        <table class="tarif-table">
+          <thead><tr>
+            <th>Prestation</th>
+            <th style="text-align:right">Tarif TTC</th>
+            ${hasRef ? '<th>Réf.</th>' : ''}
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`;
+  }
+
+  // Pane Métiers (5 métiers)
+  document.getElementById('paneMetiers').innerHTML =
+      renderMetierTable("Plomberie",   "🔧", DATA.plomberie,   true)
+    + renderMetierTable("Chauffage",   "🔥", DATA.chauffage,   false)
+    + renderMetierTable("Électricité", "⚡", DATA.electricite, false)
+    + renderMetierTable("Serrurerie",  "🔒", DATA.serrurerie,  false)
+    + renderMetierTable("Vitrerie",    "🪟", DATA.vitrerie,    false);
+
+  // Pane Horaire
+  const horaireRows = DATA.horaire.map(it => `
+    <tr>
+      <td class="prest-name">${it.name}</td>
+      <td class="num">${fmt(it.ht)} <span style="font-weight:500;color:#64748b">${it.unit || ''}</span></td>
+      <td class="num ttc">${fmt(it.ttc)} <span style="font-weight:500;color:#64748b">${it.unit || ''}</span></td>
+    </tr>`).join('');
+  document.getElementById('paneHoraire').innerHTML = `
+    <div class="tarif-section">
+      <h2><span class="emoji">🕐</span>Tarif horaire universel (tous métiers) <span class="badge-count">${DATA.horaire.length} lignes</span></h2>
+      <table class="tarif-table">
+        <thead><tr>
+          <th>Type d'intervention</th>
+          <th style="text-align:right">Prix HT</th>
+          <th style="text-align:right">Prix TTC</th>
+        </tr></thead>
+        <tbody>${horaireRows}</tbody>
+      </table>
+    </div>`;
+
+  // Pane Contrats
+  const contratRows = DATA.contrats.map(c => `
+    <tr>
+      <td><span class="formula-name formula-${c.cls}"><span class="formula-dot"></span>${c.formula}</span></td>
+      <td class="num">${fmt(c.gaz.mois)}/mois</td>
+      <td class="num ttc">${fmt(c.gaz.an)}/an</td>
+      <td class="num">${fmt(c.fioul.mois)}/mois</td>
+      <td class="num ttc">${fmt(c.fioul.an)}/an</td>
+    </tr>`).join('');
+  document.getElementById('paneContrats').innerHTML = `
+    <div class="tarif-section">
+      <h2><span class="emoji">📝</span>Contrats annuels d'entretien chaudière <span class="badge-count">3 formules</span></h2>
+      <table class="tarif-table">
+        <thead><tr>
+          <th>Formule</th>
+          <th colspan="2" style="text-align:center;border-left:1px solid var(--ink-100)">Gaz</th>
+          <th colspan="2" style="text-align:center;border-left:1px solid var(--ink-100)">Fioul</th>
+        </tr><tr>
+          <th></th>
+          <th style="text-align:right;border-left:1px solid var(--ink-100)">Mois</th>
+          <th style="text-align:right">An</th>
+          <th style="text-align:right;border-left:1px solid var(--ink-100)">Mois</th>
+          <th style="text-align:right">An</th>
+        </tr></thead>
+        <tbody>${contratRows}</tbody>
+      </table>
+    </div>`;
+
+  // Pane Devis-only
+  const devisTags = DATA.devis.map(d => `<span class="devis-tag">${d}</span>`).join('');
+  document.getElementById('paneDevis').innerHTML = `
+    <div class="devis-only">
+      <h3>🚫 Toujours en "sur devis"</h3>
+      <p style="margin:0 0 14px;color:var(--ink-500);font-size:.86rem">Ces prestations sont trop variables pour afficher un tarif fixe. Toujours proposer un devis personnalisé après visite ou diagnostic.</p>
+      <div class="devis-tags">${devisTags}</div>
+    </div>`;
+
+  // Pane Pending
+  let pendingHtml = '<div class="pending-list"><h3>⏳ En attente de validation Florian</h3><p style="margin:0 0 8px;color:var(--ink-500);font-size:.84rem">Prestations citées sur le site mais sans tarif validé. À compléter au prochain audit.</p>';
+  Object.entries(DATA.pending).forEach(([metier, items]) => {
+    pendingHtml += `<h4>${metier}</h4><ul>${items.map(i => `<li>${i}</li>`).join('')}</ul>`;
+  });
+  pendingHtml += '</div>';
+  document.getElementById('panePending').innerHTML = pendingHtml;
+
+  // ──────────────────────────────────────────────────────────────
+  // Tabs navigation
+  // ──────────────────────────────────────────────────────────────
+  document.querySelectorAll('.tarif-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      document.querySelectorAll('.tarif-tab').forEach(b => b.classList.toggle('is-active', b === btn));
+      document.querySelectorAll('.tarif-pane').forEach(p => {
+        const id = p.id.replace('pane','').toLowerCase();
+        p.classList.toggle('is-active', id === target);
+      });
+    });
+  });
+
+  // ──────────────────────────────────────────────────────────────
+  // Lien éditeur (placeholder — pointe sur le dossier admin-pro local)
+  // ──────────────────────────────────────────────────────────────
+  const btn = document.getElementById('btnEditMd');
+  if (btn) {
+    btn.href = 'javascript:void(0)';
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      alert("Pour modifier les tarifs :\n\n1. Éditer admin-pro/TARIFS_REFERENCE.md\n2. Mettre à jour le bloc DATA dans tarifs.html\n3. Validation par Florian requise");
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
