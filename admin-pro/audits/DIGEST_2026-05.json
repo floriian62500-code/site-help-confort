@@ -1,0 +1,129 @@
+{
+  "month": "2026-05",
+  "generated_at": "2026-05-15T13:50:15",
+  "total_findings": 15,
+  "entries": [
+    {
+      "audit": "audit_liens_externes",
+      "file": "audit_liens_externes_report.md",
+      "title": "🔗 Audit liens externes cassés — P10",
+      "generated": "2026-05-15 13:47",
+      "findings": 13,
+      "size_bytes": 3330,
+      "summary": "**Pages scannées** : 39 **URLs externes uniques testés** : 13 **URLs OK (2xx/3xx)** : 0 **URLs cassés (4xx/5xx/timeout/DNS)** : **13** **URLs social-network ignorés** : 2 (whitelist : facebook/instagram/linkedin/twitter/tiktok/youtube/whatsapp)"
+    },
+    {
+      "audit": "audit_robots",
+      "file": "audit_robots_report.md",
+      "title": "🤖 Audit robots.txt + sitemap.xml — P10",
+      "generated": "2026-05-15 13:49",
+      "findings": 1,
+      "size_bytes": 1921,
+      "summary": "**Findings totaux** : 1 (0 critical, 0 high, 1 med, 0 low) **Vérifications OK** : 5 **Vérifications skipped** : 2"
+    },
+    {
+      "audit": "audit_tarifs",
+      "file": "audit_tarifs_report.md",
+      "title": "Audit Tarifs — Sonde IA #28",
+      "generated": "2026-05-15 12:47",
+      "findings": 1,
+      "size_bytes": 7734,
+      "summary": "_Généré le 2026-05-15 12:47 — `admin-pro/audits/audit_tarifs.py`_"
+    },
+    {
+      "audit": "audit_aria",
+      "file": "audit_aria_report.md",
+      "title": "Audit ARIA / a11y — HELP! Confort",
+      "generated": "",
+      "findings": 0,
+      "size_bytes": 9935,
+      "summary": "_Généré par `admin-pro/audits/audit_aria.py` — 39 pages scannées._"
+    },
+    {
+      "audit": "audit_catalogue_sync",
+      "file": "audit_catalogue_sync_report.md",
+      "title": "🔄 Audit synchronisation wizard ↔ catalogue — Sonde IA #59",
+      "generated": "2026-05-15 13:12",
+      "findings": 0,
+      "size_bytes": 1222,
+      "summary": "**Wizard home (`ALL_PRESTAS` d'index.html)** : 32 prestations **Catalogue (`LOCAL_CATALOG` de nos-prestations.html)** : 30 prestations **Slugs communs** : 30 **Slugs wizard tolérés (fourre-tout)** : 2 **Alertes totales** : **0**"
+    },
+    {
+      "audit": "audit_csp",
+      "file": "audit_csp_report.md",
+      "title": "🛡️ Audit CSP whitelist — Sonde IA #41",
+      "generated": "2026-05-15 13:09",
+      "findings": 0,
+      "size_bytes": 2016,
+      "summary": "**Pages scannées** : 40 **Hosts externes distincts détectés** : 7 **Directives CSP parsées** : base-uri, connect-src, default-src, font-src, form-action, frame-ancestors, frame-src, img-src, script-src, style-src, upgrade-insecure-requests **Alertes …"
+    },
+    {
+      "audit": "audit_datasource",
+      "file": "audit_datasource_report.md",
+      "title": "Audit data-source — Sonde IA #29",
+      "generated": "2026-05-15 11:30",
+      "findings": 0,
+      "size_bytes": 1021,
+      "summary": "_Généré le 2026-05-15 11:30 — `admin-pro/audits/audit_datasource.py`_"
+    },
+    {
+      "audit": "audit_delais",
+      "file": "audit_delais_report.md",
+      "title": "⏱️ Audit délais d'intervention promis — Sonde IA #43",
+      "generated": "2026-05-15 13:09",
+      "findings": 0,
+      "size_bytes": 7919,
+      "summary": "**Pages scannées** : 40 **Findings (promesses commerciales détectées)** : **31** **Pages concernées** : 17"
+    },
+    {
+      "audit": "audit_html5",
+      "file": "audit_html5_report.md",
+      "title": "Audit HTML5 — 2026-05-15 13:30",
+      "generated": "",
+      "findings": 0,
+      "size_bytes": 5874,
+      "summary": "> Audit local rapide HTML5 + a11y de base. Lancement : `python3 admin-pro/audits/audit_html5.py` > ⚠️ Ce n'est pas un substitut au validateur W3C officiel, mais il pré-filtre les erreurs évidentes."
+    },
+    {
+      "audit": "audit_images",
+      "file": "audit_images_report.md",
+      "title": "Audit images perf — 2026-05-15 13:30",
+      "generated": "",
+      "findings": 0,
+      "size_bytes": 1394,
+      "summary": "> Sonde performance HELP! Confort — détecte les images > 200 KB et > alerte si elles sont au-dessus du fold ou utilisées sur ≥ 5 pages. > Lancement : `python3 admin-pro/audits/audit_images.py`"
+    },
+    {
+      "audit": "audit_jsonld",
+      "file": "audit_jsonld_report.md",
+      "title": "Audit JSON-LD — 2026-05-15 10:50",
+      "generated": "",
+      "findings": 0,
+      "size_bytes": 27792,
+      "summary": "> Audit local des blocs `<script type=\"application/ld+json\">` de chaque page HTML. > Lancement : `python3 admin-pro/audits/audit_jsonld.py`"
+    },
+    {
+      "audit": "audit_lighthouse_local",
+      "file": "audit_lighthouse_local_report.md",
+      "title": "🔦 Audit Lighthouse local — 2026-05-15 13:47",
+      "generated": "",
+      "findings": 0,
+      "size_bytes": 3393,
+      "summary": "**39 pages auditées** · **0 erreurs** · **4 warnings** · **Score moyen 100/100**"
+    }
+  ],
+  "deltas": {
+    "audit_liens_externes": null,
+    "audit_robots": null,
+    "audit_tarifs": null,
+    "audit_aria": null,
+    "audit_catalogue_sync": null,
+    "audit_csp": null,
+    "audit_datasource": null,
+    "audit_delais": null,
+    "audit_html5": null,
+    "audit_images": null,
+    "audit_jsonld": null,
+    "audit_lighthouse_local": null
+  }
+}
