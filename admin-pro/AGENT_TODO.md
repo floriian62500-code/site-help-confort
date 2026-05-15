@@ -8,6 +8,8 @@
 > 🎉 **TODO P1-P9 épuisé le 2026-05-15**. P10 (monitoring + audits dérivés) ouvert le 2026-05-15 PM ; 3/12 items déjà cochés.
 >
 > 🎉 **TODO P10 épuisé le 2026-05-15 PM** (12/12). P11 (post-épuisement, monitoring continu) ajouté en fin de fichier — items orientés exécution récurrente des audits + nouvelles sondes dérivées des rapports.
+>
+> 🎉 **TODO P11 épuisé le 2026-05-15 soir** (10/10 dont 2 [?] sandbox-bloqués). P12 ouvert — nouvelles sondes #42/45/47/48/49/52/53 + Schema/FAQPage en scripts d'audit.
 
 # 🤖 Agent TODO — Travail autonome HELP! Confort
 
