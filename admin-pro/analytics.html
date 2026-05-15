@@ -57,12 +57,13 @@
 
   const c = await HCSupabase.init();
 
-  // Stats Supabase — multi-sources pour avoir de la data même sans réalisations publiées
+  // Stats Supabase — chaque fetch wrappé dans .catch pour éviter qu'une erreur bloque tout
+  const safe = (p) => p.then(r => r).catch(e => { console.warn('[analytics] fetch err:', e && e.message); return { data: [], error: e }; });
   const [realsRes, leadsRes, contractsRes, ordersRes] = await Promise.all([
-    c.from('realisations').select('metier,ville,status,seo_title,seo_description,description,description_long'),
-    c.from('leads').select('metier,ville,status,created_at'),
-    c.from('contracts').select('metier,client_city,client_postal_code,monthly_amount,created_at,status'),
-    c.from('service_orders').select('service_name,city,postal_code,price_ttc,created_at,status').catch(() => ({ data: [] }))
+    safe(c.from('realisations').select('metier,ville,status,seo_title,seo_description,description,description_long')),
+    safe(c.from('leads').select('metier,ville,status,created_at')),
+    safe(c.from('contracts').select('metier,client_city,client_postal_code,monthly_amount,created_at,status')),
+    safe(c.from('service_orders').select('service_name,city,postal_code,price_ttc,created_at,status'))
   ]);
 
   const reals = realsRes.data || [];
