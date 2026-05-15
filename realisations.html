@@ -395,6 +395,7 @@
     });
   }
 })();
+</script>
 
 <!-- FIX MEGAMENU : fermeture forcée sur click outside + Escape + scroll -->
 <script>
@@ -445,7 +446,6 @@ if (document.fonts && document.fonts.ready) {
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape') forceCloseMenus(); });
   window.addEventListener('scroll', function() { if (!document.querySelector('.hc-megamenu:hover')) { forceCloseMenus(); } }, { passive: true });
 })();
-</script>
 </script>
 
 
