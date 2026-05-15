@@ -48,6 +48,14 @@ TOLERANCE = 0.05   # ±5%
 # Pages exclues du scan (admin, reset, 404…)
 EXCLUDE = {"reset.html", "404.html"}
 
+# Hôtes considérés comme « notre site » : on essaie de résoudre vers le disque
+SELF_HOSTS = {
+    "depan59-62.fr",
+    "www.depan59-62.fr",
+    "depan59-62.netlify.app",
+    "remarkable-dragon-364e2b.netlify.app",
+}
+
 # Extraction OG / Twitter image
 RE_OG_IMG    = re.compile(r'<meta[^>]+property\s*=\s*["\']og:image["\'][^>]*?\bcontent\s*=\s*["\']([^"\']+)["\']', re.I)
 RE_OG_W      = re.compile(r'<meta[^>]+property\s*=\s*["\']og:image:width["\'][^>]*?\bcontent\s*=\s*["\']([^"\']+)["\']', re.I)
@@ -55,16 +63,31 @@ RE_OG_H      = re.compile(r'<meta[^>]+property\s*=\s*["\']og:image:height["\'][^
 RE_TW_IMG    = re.compile(r'<meta[^>]+name\s*=\s*["\']twitter:image["\'][^>]*?\bcontent\s*=\s*["\']([^"\']+)["\']', re.I)
 
 
-def is_external(url: str) -> bool:
-    u = url.strip().lower()
-    return u.startswith("http://") or u.startswith("https://") or u.startswith("//") or u.startswith("data:")
+_HOST_RE = re.compile(r"^https?://([^/]+)(/.*)?$", re.I)
 
 
-def resolve(url: str) -> pathlib.Path:
-    u = url.strip().split("?", 1)[0].split("#", 1)[0]
-    if u.startswith("/"):
-        u = u.lstrip("/")
-    return ROOT / u
+def classify(url: str) -> tuple[str, str | None]:
+    """Retourne (kind, local_path_relatif) où kind ∈ {self, external, data, relative}.
+    Pour self/relative, local_path_relatif = chemin relatif au repo (sans leading /)."""
+    u = url.strip()
+    if u.startswith("data:"):
+        return ("data", None)
+    if u.startswith("//"):
+        u = "https:" + u
+    m = _HOST_RE.match(u)
+    if m:
+        host = m.group(1).lower()
+        path = (m.group(2) or "/").split("?", 1)[0].split("#", 1)[0].lstrip("/")
+        if host in SELF_HOSTS:
+            return ("self", path)
+        return ("external", None)
+    # URL relative
+    rel = u.split("?", 1)[0].split("#", 1)[0].lstrip("/")
+    return ("relative", rel)
+
+
+def resolve_local(rel: str) -> pathlib.Path:
+    return ROOT / rel
 
 
 def parse_int(s: str | None) -> int | None:
