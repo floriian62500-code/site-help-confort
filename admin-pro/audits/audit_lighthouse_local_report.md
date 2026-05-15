@@ -1,11 +1,12 @@
-# 🔦 Audit Lighthouse local — 2026-05-15 12:32
+# 🔦 Audit Lighthouse local — 2026-05-15 13:14
 
-**38 pages auditées** · **0 erreurs** · **2 warnings** · **Score moyen 100/100**
+**39 pages auditées** · **1 erreurs** · **6 warnings** · **Score moyen 99/100**
 
 ## 📊 Résumé par page
 
 | Page | Score | Erreurs | Warnings |
 |------|------:|--------:|---------:|
+| `reset.html` | **69/100** | 1 | 4 |
 | `realisation.html` | **92/100** | 0 | 2 |
 | `a-propos.html` | **100/100** | 0 | 0 |
 | `actualites.html` | **100/100** | 0 | 0 |
@@ -46,6 +47,17 @@
 | `zones-intervention.html` | **100/100** | 0 | 0 |
 
 ## 🔍 Détails par page
+
+### reset.html — 69/100
+
+**Erreurs :**
+- ❌ meta description manquante
+
+**Warnings :**
+- ⚠️ SEO title court (27 chars, idéal 30–65)
+- ⚠️ <link rel="canonical"> manquant
+- ⚠️ og:image manquant
+- ⚠️ Aucun rel=preconnect
 
 ### realisation.html — 92/100
 
