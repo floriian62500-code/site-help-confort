@@ -41,6 +41,20 @@ Tout devis HELP! Confort comprend systématiquement :
 | Mécanisme chasse d'eau **Geberit** (tout compris, WC sol) | **203 €** | devis 15/05 |
 | Détartrage installation sanitaire | **237 €** | — |
 
+### 💧 Chauffe-eau Atlantic (tout compris : fourniture + pose 2 techniciens + accessoires + déchets + déplacement + frais)
+| Volume | Pose | Gamme Éco (blindé) | Gamme Stéatite |
+|--------|------|---------------------|----------------|
+| **100 L** | mural / trépied | **817 €** | **887 €** |
+| **150 L** | mural / trépied | **884 €** | **961 €** |
+| **200 L** | au sol | **1 332 €** | **~1 456 €** (à vérifier) |
+
+Accessoires inclus dans chaque pose : trépied · groupe de sécurité SFR 3/4 · siphon · petite fourniture. Garantie 5 ans cuve + 2 ans pièces.
+
+### 📄 Contrat entretien chauffe-eau
+| | TTC |
+|--|----|
+| Contrat annuel (détartrage cuve + vérif groupe sécurité + anode + joints) | **220 €** |
+
 ## 🔥 Chauffage (3 forfaits + 6 contrats)
 
 | Prestation | Tarif TTC |

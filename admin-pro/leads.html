@@ -380,22 +380,31 @@ let _filterStatusOverride = null;
       </div>
     ` : '';
 
-    const photosBlock = photos.length > 0 ? `
+    const photosBlock = `
       <div style="margin-top:18px">
-        <h4 style="margin:0 0 10px 0;font-size:.96rem;font-weight:800;color:#0A1428;display:flex;align-items:center;gap:8px">
-          📸 Photos liées
-          <span style="font-size:.74rem;font-weight:600;color:var(--ink-500)">(${photos.length})</span>
+        <h4 style="margin:0 0 10px 0;font-size:.96rem;font-weight:800;color:#0A1428;display:flex;align-items:center;gap:8px;justify-content:space-between">
+          <span>📸 Photos liées <span style="font-size:.74rem;font-weight:600;color:var(--ink-500)">(${photos.length})</span></span>
+          <label style="background:var(--hc-primary);color:#fff;font-size:.72rem;padding:5px 11px;border-radius:7px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Ajouter
+            <input type="file" id="leadPhotoUpload" accept="image/*" multiple style="display:none">
+          </label>
         </h4>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px">
-          ${photos.map(p => `
-            <a href="${p.url}" target="_blank" rel="noopener" style="display:block;aspect-ratio:1;border-radius:10px;overflow:hidden;background:#f5f7fa;position:relative;border:1px solid var(--ink-100);text-decoration:none">
-              <img src="${p.url}" alt="${escapeHtml(p.label)}" style="width:100%;height:100%;object-fit:cover;display:block">
-              <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.6));color:#fff;padding:14px 8px 6px;font-size:.72rem;font-weight:700">${escapeHtml(p.label)}</div>
-            </a>
+        <div id="leadPhotosGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px">
+          ${photos.length === 0 ? '<div style="grid-column:1/-1;padding:24px;border:2px dashed var(--ink-100);border-radius:12px;text-align:center;color:var(--ink-400);font-size:.86rem">Aucune photo. Clique sur <strong style="color:var(--ink-700)">+ Ajouter</strong> ou drag-drop des fichiers ici.</div>' : ''}
+          ${photos.map((p, idx) => `
+            <div style="position:relative;aspect-ratio:1">
+              <a href="${p.url}" target="_blank" rel="noopener" style="display:block;width:100%;height:100%;border-radius:10px;overflow:hidden;background:#f5f7fa;border:1px solid var(--ink-100);text-decoration:none">
+                <img src="${p.url}" alt="${escapeHtml(p.label)}" style="width:100%;height:100%;object-fit:cover;display:block">
+                <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.6));color:#fff;padding:14px 8px 6px;font-size:.72rem;font-weight:700">${escapeHtml(p.label)}${p.fromClient ? ' <span style="background:#FFB400;color:#0A1428;font-size:.6rem;padding:1px 4px;border-radius:3px;font-weight:800">CLIENT</span>' : ''}</div>
+              </a>
+              ${p.fromClient && idx >= (photos.length - (l.photos?.length||0)) ? `<button type="button" data-photo-idx="${idx - (photos.length - (l.photos?.length||0))}" title="Supprimer cette photo" style="position:absolute;top:5px;right:5px;background:rgba(0,0,0,.7);color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:.7rem;font-weight:800;display:flex;align-items:center;justify-content:center" onclick="event.preventDefault();event.stopPropagation();if(!confirm('Supprimer cette photo ?'))return;window.__deleteLeadPhoto('${l.id}', ${idx - (photos.length - (l.photos?.length||0))});">✕</button>` : ''}
+            </div>
           `).join('')}
         </div>
+        <div id="leadPhotoStatus" style="margin-top:8px;font-size:.78rem;color:var(--ink-500);display:none"></div>
       </div>
-    ` : '';
+    `;
 
     // ─── Bloc Caractéristiques techniques (depuis utm/metadata) ──
     const caracs = [];
@@ -567,6 +576,86 @@ let _filterStatusOverride = null;
     };
     document.getElementById('leadModal').classList.add('is-open');
     document.body.style.overflow = 'hidden';
+
+    // ─── Upload photos sur ce lead (Storage bucket realisations/leads/{id}/) ──
+    const uploadInput = document.getElementById('leadPhotoUpload');
+    const photoStatus = document.getElementById('leadPhotoStatus');
+    const grid = document.getElementById('leadPhotosGrid');
+
+    async function uploadLeadPhoto(file) {
+      photoStatus.style.display = '';
+      photoStatus.textContent = `Upload de ${file.name}…`;
+      photoStatus.style.color = 'var(--ink-500)';
+      try {
+        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_').toLowerCase();
+        const path = `leads/${l.id}/${Date.now()}-${safeName}`;
+        // Upload dans le bucket realisations (déjà créé et public read)
+        const { error: upErr } = await c.storage.from('realisations').upload(path, file, {
+          cacheControl: '31536000',
+          upsert: false,
+          contentType: file.type || 'image/jpeg'
+        });
+        if (upErr) throw upErr;
+        // Récupère l'URL publique
+        const { data: pub } = c.storage.from('realisations').getPublicUrl(path);
+        const url = pub.publicUrl;
+        // Append à leads.photos
+        const newPhotos = Array.isArray(l.photos) ? [...l.photos] : [];
+        newPhotos.push({ url, label: file.name, uploaded_at: new Date().toISOString() });
+        const { error: upDbErr } = await c.from('leads').update({ photos: newPhotos }).eq('id', l.id);
+        if (upDbErr) throw upDbErr;
+        l.photos = newPhotos;
+        photoStatus.textContent = `✓ ${file.name} ajouté`;
+        photoStatus.style.color = '#15803D';
+        // Recharge la modale pour voir la nouvelle photo
+        setTimeout(() => openLead(l.id), 500);
+      } catch (e) {
+        photoStatus.textContent = `❌ Erreur : ${e.message}`;
+        photoStatus.style.color = '#B91C1C';
+      }
+    }
+
+    if (uploadInput) {
+      uploadInput.addEventListener('change', async (ev) => {
+        const files = Array.from(ev.target.files || []);
+        for (const f of files) await uploadLeadPhoto(f);
+        ev.target.value = ''; // reset pour permettre re-upload du même fichier
+      });
+    }
+
+    // Drag & drop sur la grid
+    if (grid) {
+      grid.addEventListener('dragover', (e) => { e.preventDefault(); grid.style.background = '#FAFCFD'; });
+      grid.addEventListener('dragleave', () => { grid.style.background = ''; });
+      grid.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        grid.style.background = '';
+        const files = Array.from(e.dataTransfer.files || []).filter(f => f.type.startsWith('image/'));
+        for (const f of files) await uploadLeadPhoto(f);
+      });
+    }
+
+    // Handler global pour supprimer une photo (appelé depuis l'onclick inline)
+    window.__deleteLeadPhoto = async (leadId, photoIdx) => {
+      try {
+        const cur = Array.isArray(l.photos) ? [...l.photos] : [];
+        const removed = cur.splice(photoIdx, 1)[0];
+        const { error } = await c.from('leads').update({ photos: cur }).eq('id', leadId);
+        if (error) throw error;
+        // Tentative de suppression du fichier dans Storage (best-effort)
+        try {
+          if (removed && removed.url && removed.url.includes('/realisations/')) {
+            const m = removed.url.match(/realisations\/(.+)$/);
+            if (m && m[1]) await c.storage.from('realisations').remove([m[1].split('?')[0]]);
+          }
+        } catch (_) {}
+        l.photos = cur;
+        toast('Photo supprimée', 'ok', 2000);
+        openLead(leadId);
+      } catch (e) {
+        toast('Erreur : ' + e.message, 'err', 4000);
+      }
+    };
   }
 
   function closeLead(){
