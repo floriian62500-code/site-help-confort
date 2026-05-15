@@ -25,8 +25,9 @@ window.HCLayout = (function() {
         { id:'chat-conversations', href:'chat-conversations.html', label:'Conversations chatbot', icon:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>', badge:'<span class="admin-nav-item-badge" id="navChatCount" style="display:none"></span>' },
         { id:'reviews', href:'reviews.html', label:'Avis clients', icon:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>' },
         { id:'services', href:'services.html', label:'Catalogue prestations', icon:'<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>', badge:'<span class="admin-nav-item-badge alert" id="navOrdersCount" style="display:none"></span>' },
-        { id:'contracts', href:'contracts.html', label:'Contrats d\'entretien', icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>' },
-        { id:'interventions', href:'interventions.html', label:'Interventions / RDV', icon:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="16" r="2"/>' }
+        { id:'contracts', href:'contracts.html', label:'Contrats (à importer)', icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>', badge:'<span class="admin-nav-item-badge alert" id="navContractsCount" style="display:none"></span>' },
+        // Interventions/RDV : géré dans le CRM externe (Apogée), donc lien direct vers le CRM
+        { id:'crm-external', href:'#open-crm', label:'Mon CRM (interventions)', icon:'<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>', dataAttrs:'data-action="open-crm"' }
       ]
     },
     { id:'content', label:'Contenu & posts',

@@ -462,22 +462,34 @@ let _editingId = null;
       const importedBadge = imported
         ? `<span title="Importé dans CRM le ${new Date(x.imported_to_crm_at).toLocaleDateString('fr-FR')}" style="background:#DCFCE7;color:#15803D;font-size:.66rem;padding:2px 7px;border-radius:999px;font-weight:800;letter-spacing:.04em">✓ CRM</span>`
         : `<span style="background:#FFF7ED;color:#C2410C;font-size:.66rem;padding:2px 7px;border-radius:999px;font-weight:800;letter-spacing:.04em">📥 À IMPORTER</span>`;
+      // Détails depuis metadata jsonb
+      const m = x.metadata || {};
+      const energie = m.energie || x.metier || '';
+      const equipement = m.marque ? (escapeHtml(m.marque) + (m.modele ? ' ' + escapeHtml(m.modele) : '')) : '';
+      const createdStr = new Date(x.created_at).toLocaleDateString('fr-FR',{day:'2-digit',month:'short'});
+
       return `<div class="ct-row" onclick="window.editCt('${x.id}')">
         <div class="ct-cell-client">
           <strong>${escapeHtml(name)} ${importedBadge}</strong>
           <span>${escapeHtml((x.client_phone || x.client_email || x.client_city) || '—')}</span>
         </div>
-        <div><span class="ct-type-badge ct-type-${x.type}">${(x.type||'').toUpperCase()}</span></div>
-        <div style="font-size:.82rem;color:var(--ink-700)">${escapeHtml(METIER_LABEL[x.metier] || x.metier || '')}</div>
-        <div class="ct-next ${nextCls}">${nextStr}</div>
+        <div>
+          <span class="ct-type-badge ct-type-${x.type}">${(x.type||'').toUpperCase()}</span>
+          ${energie ? `<div style="font-size:.7rem;color:var(--ink-500);margin-top:3px;text-transform:capitalize">${escapeHtml(energie)}</div>` : ''}
+        </div>
+        <div style="font-size:.82rem;color:var(--ink-700)">
+          ${escapeHtml(METIER_LABEL[x.metier] || x.metier || '')}
+          ${equipement ? `<div style="font-size:.7rem;color:var(--ink-400);margin-top:2px;font-weight:400">${equipement}</div>` : ''}
+        </div>
+        <div class="ct-next ${nextCls}">
+          ${nextStr}
+          <div style="font-size:.7rem;color:var(--ink-400);font-weight:400;margin-top:2px">souscrit ${createdStr}</div>
+        </div>
         <div class="ct-amount">${Number(x.monthly_amount||0).toLocaleString('fr-FR',{minimumFractionDigits:2})}<small>€/mois</small></div>
         <div class="ct-actions" onclick="event.stopPropagation()">
           ${!imported ? `<button title="Marquer comme importé dans le CRM" onclick="window.markCrmImported('${x.id}')" style="background:#FFB400;color:#0A1428;border:none;border-radius:7px;padding:5px 9px;font-weight:700;font-size:.74rem;cursor:pointer">📥 Importé</button>` : ''}
           <button title="Éditer" onclick="window.editCt('${x.id}')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          </button>
-          <button title="Planifier intervention" onclick="window.planFromContract('${x.id}')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           </button>
         </div>
       </div>`;
