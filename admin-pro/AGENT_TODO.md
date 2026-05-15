@@ -16,6 +16,8 @@
 > 🎉 **TODO épuisé le 2026-05-15 soir** — P13 ouvert (8 items dérivés des sondes MEMOIRE #11/#13/#20/#24/#25/#51/#55/#56 pas encore scriptées).
 >
 > 🎉 **TODO P13 épuisé le 2026-05-15 nuit** (8/8). Les 3 derniers audits (`audit_cta_coherence.py`, `audit_json_freshness.py`, `audit_hotlink_cdn.py`) ajoutés au workflow nightly. Prochaine session : monitoring continu / nouveaux items.
+>
+> 🎉 **TODO P13 épuisé** — P14 ouvert le 2026-05-15 soir (agent autonome) — 8 items SEO/qualité dérivés des manques détectés dans les rapports d'audit (canonical mismatch, duplicates titres, scripts non-async, robots noindex, fonts blocking, poids HTML, og:url, schema BreadcrumbList).
 
 # 🤖 Agent TODO — Travail autonome HELP! Confort
 
