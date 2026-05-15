@@ -490,3 +490,29 @@ Deux scripts d'audit Python ont été ajoutés sous `admin-pro/audits/` pour mat
 40. **Sonde PWA manifest** : vérifier qu'`every` page publique a `<link rel="manifest">` ET `<meta name="theme-color">` ET `<link rel="apple-touch-icon">`. Vérifier que manifest.json contient icons 192/512 PNG. Si manquant → ALERTE.
 
 *Addendum v8 généré le 15 mai 2026 par l'agent autonome — 3 nouvelles sondes (ARIA, Consent RGPD, PWA manifest) + script `audit_aria.py`.*
+
+---
+
+### Sondes additionnelles v9 (15 mai 2026 — session Claude A→Z compactée)
+
+41. **Sonde CSP whitelist** : vérifier que `netlify.toml` Content-Security-Policy contient les domaines de TOUS les `<script src="https://...">` et `<link href="https://...">` utilisés sur le site. Pattern : extraire les hosts de toutes les balises `<script>` et `<link rel="stylesheet">` de toutes les pages racine, puis grep dans `netlify.toml` `script-src`/`style-src`. Si un host manque → ALERTE CRITIQUE *CSP block* (révélé par bug "map beuguer" 15/05 — `unpkg.com` chargé sur zones-intervention.html mais absent du CSP, donc Leaflet bloqué).
+
+42. **Sonde Leaflet map init** : si la page contient `L.map(` ou `new L.Map(`, vérifier la présence d'un `setTimeout(() => map.invalidateSize(), 250)` OU d'un `window.addEventListener('load', ...)` après init. Sans cela, les conteneurs avec `aspect-ratio` ou `display:none` initial rendent des tuiles grises (bug "carte vide" récurrent).
+
+43. **Sonde délais d'intervention** : pour les pages publiques racine, alerter sur les patterns commerciaux non engageables : `sous \d+\s*h(?!eures)`, `rappel sous`, `réponse sous`, `intervention sous \d`, `en moins de \d+`, `Délai moyen`, `remise en service en \d`. Ces patterns créent un engagement contractuel non tenable et exposent juridiquement HC (cf. décision Florian 15/05 : "retirer tous les délais présent sur le site"). Tolérer `7j/7`, `Lun-Sam 8h-18h`, `24h/24` (info structurelle, pas un délai promis).
+
+44. **Sonde balises </head> et <body>** : pour chaque page publique, vérifier la présence des deux balises de fermeture/ouverture. Bug constaté 15/05 sur aides.html et processus.html — un fichier sans `</head>` ni `<body>` est toléré par les navigateurs mais déclenche le mode "quirks-lite" et peut casser le parseur JSON-LD de Google. Pattern : `grep -c '</head>\|<body'` doit retourner ≥ 2 chacun.
+
+45. **Sonde Open Graph image** : chaque page publique doit avoir `<meta property="og:image" content="...">` ET le fichier référencé doit exister sur disque. Vérifier également les dimensions (`og:image:width` 1200, `og:image:height` 630). Sans OG image, Facebook/LinkedIn/Twitter génèrent un visuel par défaut désastreux (logo cropé, texte non lisible).
+
+46. **Sonde aria-label sur inputs** : pour chaque `<input>` qui n'est pas `type="hidden|submit|button|reset|checkbox|radio|range|color|file"` ET qui n'a pas d'`id=`, vérifier la présence d'un `aria-label` OU d'un `aria-labelledby` OU d'un `<label>` parent. Le placeholder seul ne suffit pas (lecteurs d'écran l'ignorent une fois rempli). Mapping standard : `name="prenom"` → `aria-label="Prénom"`, `name="tel"` → `aria-label="Téléphone"`, etc. — voir `scripts/gen_og_images.py` style NAME_LABELS pour le dictionnaire.
+
+47. **Sonde Service Worker version cache** : à chaque release d'assets (images, CSS, JS, OG), incrémenter `VERSION` dans `sw.js`. Pattern : `grep "const VERSION" sw.js` → si la version est ancienne (> 7 jours) ET qu'il y a eu push d'assets entre-temps → ALERTE *SW cache obsolète*. Sans bump, les utilisateurs récurrents continuent de servir l'ancienne version cached.
+
+48. **Sonde sitemap pages manquantes** : croiser les `*.html` publics racine (hors `404.html` et `test-*`) avec les `<loc>` du `sitemap.xml`. Toute page absente → ALERTE *sitemap incomplet*. Bug constaté 15/05 : faq, témoignages, avant-après, devis-express absents du sitemap après leur création récente.
+
+49. **Sonde catalogue dynamique avec fallback local** : pour les pages qui chargent leur contenu depuis Supabase (nos-prestations, témoignages, avant-après), vérifier la présence d'un `LOCAL_CATALOG`/`FALLBACK_DATA` hardcodé dans le `<script>` JS. Sans fallback, une coupure Supabase ou une RLS bloquée affiche une page vide et fait perdre 100% des leads. Pattern : grep `LOCAL_CATALOG|FALLBACK_` dans les fichiers concernés ; si Supabase fetch sans fallback → ALERTE.
+
+50. **Sonde audit Lighthouse local** : exécuter `python3 admin-pro/audits/audit_lighthouse_local.py` quotidiennement et alerter si score moyen < 95/100 ou si nouvelles erreurs (par rapport au dernier rapport). Ce script vérifie title/description length, og:image, canonical, h1 unique, html lang, alt, viewport, charset, DOCTYPE, preconnect, lazy-loading.
+
+*Addendum v9 généré le 15 mai 2026 par Claude (session A→Z) — 10 nouvelles sondes critiques (#41–#50) couvrant CSP/Leaflet/délais/HTML5/OG/A11y/SW/Sitemap/Fallback/Lighthouse.*
