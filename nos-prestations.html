@@ -336,7 +336,7 @@
       <a href="index.html#hc-metiers" class="hc-nav-link">Métiers</a>
       <a href="nos-prestations.html" class="hc-nav-link" style="color:#0DA0CF;font-weight:700">Nos prestations</a>
       <a href="contrats-entretien.html" class="hc-nav-link">Contrats</a>
-      <a href="realisations.html" class="hc-nav-link">Réalisations</a>
+      <a href="realisations.html" class="hc-nav-link">Actu &amp; réalisations</a>
       <a href="contact.html" class="hc-nav-link">Contact</a>
     </nav>
     <div class="hc-header-actions">
@@ -792,7 +792,7 @@
     const btn = document.createElement('button');
     btn.className = 'nv-filter';
     btn.dataset.filter = g.slug;
-    btn.innerHTML = `<svg width="14" height="14" ${SVG_ATTRS}>${CAT_ICONS[g.slug] || CAT_ICONS['sur-mesure']}</svg>${escapeHtml(g.name)} <span class="nv-count">${g.items.length}</span>`;
+    btn.innerHTML = `${pictoTag(g.slug, 18)} ${escapeHtml(g.name)} <span class="nv-count">${g.items.length}</span>`;
     btn.onclick = () => {
       document.querySelectorAll('.nv-filter').forEach(b => b.classList.remove('is-active'));
       btn.classList.add('is-active');
