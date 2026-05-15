@@ -77,8 +77,8 @@
 
 - [ ] **Audit Lighthouse** simulé : checker performance/SEO/a11y des pages clés via curl + analyseur HTML basique.
 - [x] **Broken links** : crawler local des `href=` internes et vérifier que les fichiers cibles existent. *(fait 14/05 12:08 — 2124 liens vérifiés, 0 cassé ✅)*
-- [ ] **Schema.org Validator** : valider via curl le JSON-LD de chaque page métier auprès de https://validator.schema.org.
-- [ ] **HTML5 validation** : passer chaque page publique au validateur W3C (via curl) et corriger les erreurs.
+- [x] **Schema.org Validator** : valider via curl le JSON-LD de chaque page métier auprès de https://validator.schema.org. *(fait 15/05 — audit local Python `admin-pro/audits/audit_jsonld.py` (pré-filtre, 0 dépendance) ; 0 erreurs syntaxe / 173 warnings sur 35 pages ; rapport `admin-pro/audits/audit_jsonld_report.md` ; 3 pages dynamiques sans JSON-LD repérées (avant-apres/devis-express/realisation))*
+- [x] **HTML5 validation** : passer chaque page publique au validateur W3C (via curl) et corriger les erreurs. *(fait 15/05 — audit local Python `admin-pro/audits/audit_html5.py` (DOCTYPE/lang/charset/title/desc/viewport/canonical/h1/alt/ids) ; 0 erreurs / 31 warnings sur 38 pages ; rapport `admin-pro/audits/audit_html5_report.md`)*
 
 ---
 
