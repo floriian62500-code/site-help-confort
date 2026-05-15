@@ -639,13 +639,19 @@
  </div>
  </section>
  `).join('');
- // Active par défaut le 1er filtre (Plomberie)
+ // Active par défaut le 1er filtre (Plomberie) — OU si hash #sec-<slug> est présent, activer ce filtre
  setTimeout(() => {
- var firstCat = Object.values(grouped)[0];
- if (firstCat) {
+ var hashSlug = (location.hash || '').replace('#sec-', '');
+ var targetSlug = hashSlug && grouped[hashSlug] ? hashSlug : (Object.values(grouped)[0] || {}).slug;
+ if (!targetSlug) return;
  document.querySelectorAll('.nv-filter').forEach(b => b.classList.remove('is-active'));
- var firstBtn = document.querySelector('.nv-filter[data-filter="' + firstCat.slug + '"]');
- if (firstBtn) firstBtn.classList.add('is-active');
+ document.querySelectorAll('.nv-catalog-section').forEach(s => s.style.display = 'none');
+ var btn = document.querySelector('.nv-filter[data-filter="' + targetSlug + '"]');
+ if (btn) btn.classList.add('is-active');
+ var sec = document.getElementById('sec-' + targetSlug);
+ if (sec) {
+ sec.style.display = '';
+ if (hashSlug) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
  }
  }, 50);
 

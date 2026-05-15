@@ -16,6 +16,12 @@ __pycache__/
 *-bak.*
 *-OLD.*
 
+# Backup PNG (compression du 15/05/2026) — pas servi en prod
+# cf. images/_backup_png/README.md ; pour purger l'historique :
+#   git rm -r --cached images/_backup_png/
+images/_backup_png/*
+!images/_backup_png/README.md
+
 # Logs
 *.log
 
