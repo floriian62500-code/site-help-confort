@@ -95,7 +95,7 @@
       </div>
 
       <div class="tarif-meta">
-        <span>📋 Source : <strong>TARIFS_REFERENCE.md</strong></span>
+        <span>📋 Source : <strong id="tarifSource">Sync live Supabase + TARIFS_REFERENCE.md</strong></span>
         <span>📅 Dernière maj : <strong id="lastUpdate">15 mai 2026</strong></span>
         <span>✅ Validé par : <strong>Florian</strong></span>
         <span style="margin-left:auto">
@@ -308,11 +308,14 @@
 
   // Pane Métiers (5 métiers)
   document.getElementById('paneMetiers').innerHTML =
-      renderMetierTable("Plomberie",   "🔧", DATA.plomberie,   true)
-    + renderMetierTable("Chauffage",   "🔥", DATA.chauffage,   false)
-    + renderMetierTable("Électricité", "⚡", DATA.electricite, false)
-    + renderMetierTable("Serrurerie",  "🔒", DATA.serrurerie,  false)
-    + renderMetierTable("Vitrerie",    "🪟", DATA.vitrerie,    false);
+      // Si Supabase a chargé des données live, on les préfère
+      // Sinon on retombe sur le hardcode TARIFS_REFERENCE.md
+      renderMetierTable("Plomberie",   "🔧", (liveData?.plomberie?.length ? liveData.plomberie : DATA.plomberie),   true)
+    + renderMetierTable("Chauffe-eau", "💧", (liveData?.['chauffe-eau']?.length ? liveData['chauffe-eau'] : []),    false)
+    + renderMetierTable("Chauffage",   "🔥", (liveData?.chauffage?.length ? liveData.chauffage : DATA.chauffage),   false)
+    + renderMetierTable("Électricité", "⚡", (liveData?.electricite?.length ? liveData.electricite : DATA.electricite), false)
+    + renderMetierTable("Serrurerie",  "🔒", (liveData?.serrurerie?.length ? liveData.serrurerie : DATA.serrurerie), false)
+    + renderMetierTable("Vitrerie",    "🪟", (liveData?.vitrerie?.length ? liveData.vitrerie : DATA.vitrerie),       false);
 
   // Pane Horaire
   const horaireRows = DATA.horaire.map(it => `
