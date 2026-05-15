@@ -77,6 +77,7 @@ window.HCLayout = (function() {
     { id:'outils', label:'Outils maintenance',
       sectionIcon:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
       links: [
+        { id:'finalize-config', href:'finalize-config.html', label:'⚡ Finaliser config', icon:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>' },
         { id:'sync-fb', href:'sync-fb.html', label:'Sync Facebook', icon:'<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>' },
         { id:'sync-google-reviews', href:'sync-google-reviews.html', label:'Sync avis Google', icon:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>' },
         { id:'sync-ga4', href:'sync-ga4.html', label:'Test GA4', icon:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>' },
