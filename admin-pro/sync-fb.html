@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Sync Facebook · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<link rel="manifest" href="/admin-pro/manifest.webmanifest">
+<meta name="theme-color" content="#0DA0CF">
+<style>
+  body{font-family:Inter,sans-serif;background:#FAFCFD;margin:0;padding:24px}
+  .wrap{max-width:980px;margin:0 auto}
+  h1{font-size:1.5rem;margin:0 0 8px;display:flex;align-items:center;gap:10px}
+  .sub{color:#64748b;margin-bottom:24px}
+  .card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px;margin-bottom:18px;box-shadow:0 1px 2px rgba(11,18,32,.04)}
+  .cta{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;background:linear-gradient(135deg,#1877F2,#5996F2);color:#fff;border:none;border-radius:10px;font:inherit;font-weight:800;font-size:.96rem;cursor:pointer;box-shadow:0 4px 14px rgba(24,119,242,.30)}
+  .cta:disabled{opacity:.55;cursor:not-allowed}
+  .log{background:#0A1428;color:#A7F3D0;padding:16px 20px;border-radius:10px;font-family:Menlo,Monaco,monospace;font-size:.82rem;max-height:540px;overflow:auto;white-space:pre-wrap;line-height:1.55}
+  .log .ok{color:#22c55e}
+  .log .warn{color:#FFB400}
+  .log .err{color:#fda4af}
+  .log .info{color:#A7C7E7}
+  table{width:100%;border-collapse:collapse;font-size:.86rem;margin-top:14px}
+  th,td{padding:8px 10px;border-bottom:1px solid #f1f5f9;text-align:left}
+  th{background:#FAFCFD;color:#64748b;font-size:.74rem;text-transform:uppercase;letter-spacing:.04em}
+  .pill{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.74rem;font-weight:700}
+  .pill.imp{background:#dcfce7;color:#15803d}
+  .pill.skip{background:#fef3c7;color:#92400e}
+  .pill.actu{background:#dbeafe;color:#1e40af}
+  a.back{color:#0DA0CF;text-decoration:none;font-size:.84rem;font-weight:600}
+  .stat{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:#eff6ff;color:#0DA0CF;border-radius:999px;font-size:.78rem;font-weight:700;margin-right:6px}
+  img.thumb{width:60px;height:60px;object-fit:cover;border-radius:6px;border:1px solid #e2e8f0;background:#FAFCFD}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="realisations.html">← Retour aux réalisations</a>
+  <h1>📡 Sync Facebook → Réalisations</h1>
+  <p class="sub">Importe les 25 derniers posts de la page Facebook <strong>Help Confort ST OMER</strong>. Les posts détectés comme chantiers atterrissent dans <code>realisations</code> en statut <strong>"validation"</strong> (à valider manuellement). Les vœux/recrutement/communication vont dans <code>actualites</code>.</p>
+
+  <div class="card">
+    <strong style="font-size:1rem">État</strong>
+    <p class="sub" id="statusLine">Vérification de la config Meta…</p>
+  </div>
+
+  <div class="card" style="text-align:center">
+    <button class="cta" id="btnSync" disabled>🚀 Lancer la sync maintenant</button>
+    <p class="sub" style="margin-top:10px;font-size:.82rem">Idempotent — relancer ne crée pas de doublons (déduplication par URL FB).</p>
+  </div>
+
+  <div class="card">
+    <strong style="font-size:1rem">📋 Log d'exécution</strong>
+    <div class="log" id="log" style="margin-top:10px">En attente — clique sur le bouton pour démarrer.</div>
+  </div>
+
+  <div class="card" id="resultCard" style="display:none">
+    <strong style="font-size:1rem">📥 Récap de l'import</strong>
+    <div id="resultArea" style="margin-top:10px"></div>
+  </div>
+</div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script>
+(async function(){
+  const sb = await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+
+  const GRAPH = 'https://graph.facebook.com/v21.0';
+  const logEl = document.getElementById('log');
+  function log(msg, cls=''){ logEl.innerHTML += `<span class="${cls}">${msg}</span>\n`; logEl.scrollTop = logEl.scrollHeight; }
+  function logClear(){ logEl.innerHTML = ''; }
+
+  // ─── Helpers ─────────────────────────────────────────────────
+  function slugify(s){
+    return (s||'').toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g,'')
+      .replace(/[^a-z0-9\s-]/g,'')
+      .trim().replace(/\s+/g,'-').replace(/-+/g,'-').slice(0,80);
+  }
+  function guessMetier(text){
+    const t = (text||'').toLowerCase();
+    if (/plomb|fuite|mitigeur|sanitaire|robinet|chasse d.eau|wc/.test(t)) return 'plomberie';
+    if (/chauffage|chaudière|radiateur|gaz|circulateur|brûleur|soupape|d[ée]semboua/.test(t)) return 'chauffage';
+    if (/électr|electric|tableau|disjoncteur|prise|interrupteur/.test(t)) return 'electricite';
+    if (/serrur|clé|verrou|cylindre|porte blind/.test(t)) return 'serrurerie';
+    if (/vitr|vitrage|double vitrage|bris de glace|insert/.test(t)) return 'vitrerie';
+    if (/menuiser|panneau pvc|porte (de service|pvc|garage)|fenêtre/.test(t)) return 'menuiserie';
+    if (/volet/.test(t)) return 'volets';
+    if (/pmr|hand|baignoire.*douche|adapt/.test(t)) return 'pmr';
+    if (/plafond|peinture|rénovation|sol|carrelage|enduit/.test(t)) return 'renovation';
+    return 'multiservice';
+  }
+  function isActualite(text){
+    const t = (text||'').toLowerCase();
+    if (/vœux|voeux|joyeuses?\s+fêtes|bonne année|meilleurs?\s+vœux|noël|nouvelle année/.test(t)) return true;
+    if (/recrutement|nous recrutons|cherchons (un|une)|rejoignez|stage|alternance/.test(t)) return true;
+    if (/^(✨|🎄|🎅|🎁|🎉|🥂|🍾)/.test(text||'')) return true;
+    if (/écran|télé|invite (sur|à)|émission|reportage|salon (du|des)|portes ouvertes/.test(t)) return true;
+    if (/annonce|communiqué|info(rmation)? importante|à noter|fermeture|congés/.test(t)) return true;
+    return false;
+  }
+  function guessAgence(text){
+    const t = (text||'').toLowerCase();
+    if (/dunkerque|dk\b|dunkerquois/.test(t)) return { ville: 'Dunkerque', agence: 'depan-dk' };
+    return { ville: 'Saint-Omer', agence: 'depan-audo' };
+  }
+  function extractTitle(message){
+    if (!message) return 'Intervention Help Confort';
+    const first = message.split(/[\n.!?]/)[0].trim();
+    if (first.length > 5 && first.length < 120) return first;
+    return message.slice(0, 100).trim() + (message.length > 100 ? '…' : '');
+  }
+
+  // ─── Init : check config Meta ────────────────────────────────
+  let cfg = {};
+  try {
+    const { data, error } = await sb.from('app_settings').select('value').eq('key','meta').single();
+    if (error) throw error;
+    cfg = data?.value || {};
+  } catch(e) {
+    document.getElementById('statusLine').innerHTML = `<span style="color:#B91C1C">❌ Erreur lecture config Meta : ${e.message}</span>`;
+    return;
+  }
+  const token = cfg.page_access_token;
+  const pageId = cfg.fb_page_id;
+  if (!token || !pageId) {
+    document.getElementById('statusLine').innerHTML = `<span style="color:#B91C1C">❌ Config Meta incomplète. <a href="settings.html#meta" style="color:#0DA0CF">Configure d'abord Settings → Meta</a></span>`;
+    return;
+  }
+  document.getElementById('statusLine').innerHTML = `✅ Config Meta OK — Page ID <code>${pageId}</code>. Token chargé. Prêt à syncer.`;
+  document.getElementById('btnSync').disabled = false;
+
+  // ─── SYNC : récupère les posts FB et les insère ──────────────
+  async function runSync(){
+    logClear();
+    document.getElementById('btnSync').disabled = true;
+    log('🚀 Démarrage de la sync Facebook…', 'info');
+    log(`📡 Appel Graph API : /${pageId}/posts (25 derniers)…`, 'info');
+
+    const url = `${GRAPH}/${pageId}/posts?fields=id,message,created_time,permalink_url,full_picture,attachments{media,subattachments{media,target}}&limit=25&access_token=${encodeURIComponent(token)}`;
+    let fb;
+    try {
+      const r = await fetch(url);
+      fb = await r.json();
+      if (!r.ok || fb.error) throw new Error(fb.error?.message || 'HTTP ' + r.status);
+    } catch(e){
+      log(`❌ Erreur Graph API : ${e.message}`, 'err');
+      document.getElementById('btnSync').disabled = false;
+      return;
+    }
+    const posts = fb.data || [];
+    log(`✓ ${posts.length} post(s) récupéré(s) depuis Facebook`, 'ok');
+
+    if (posts.length === 0) {
+      log('ℹ Aucun post trouvé sur la page.', 'warn');
+      document.getElementById('btnSync').disabled = false;
+      return;
+    }
+
+    // Charge ce qui est déjà importé (dédupe par source_fb)
+    log('\n🔍 Vérification des doublons…', 'info');
+    const { data: existing } = await sb.from('realisations').select('slug,ai_generated');
+    const knownFbUrls = new Set((existing||[]).map(r => r.ai_generated?.source_fb).filter(Boolean));
+    const knownSlugs = new Set((existing||[]).map(r => r.slug));
+    log(`  ${knownFbUrls.size} URL FB déjà importée(s)`, 'info');
+
+    const results = { created: [], skipped: [], errors: [] };
+
+    for (const post of posts) {
+      if (!post.message) { results.skipped.push({ id: post.id, reason: 'pas de message' }); continue; }
+      if (knownFbUrls.has(post.permalink_url)) { results.skipped.push({ id: post.id, reason: 'déjà importé', preview: post.message.slice(0,60) }); continue; }
+
+      const title = extractTitle(post.message);
+      const metier = guessMetier(post.message);
+      const postType = isActualite(post.message) ? 'actualite' : 'realisation';
+      const { ville, agence } = guessAgence(post.message);
+      let slug = slugify(title);
+      let i = 0;
+      while (knownSlugs.has(slug)) { i++; slug = slugify(title) + '-' + i; }
+      knownSlugs.add(slug);
+
+      const imageAfter = post.full_picture || null;
+      const datePart = (post.created_time||'').slice(0,10);
+
+      // Try actualités first if it's a communication
+      if (postType === 'actualite') {
+        try {
+          const { data: ins, error } = await sb.from('actualites').insert({
+            title, slug, content: post.message,
+            excerpt: post.message.slice(0,200),
+            categorie: 'Agence', zone: ville,
+            published: false,
+            source_facebook: post.permalink_url,
+            image_url: imageAfter,
+            created_by: 'manual_fb_sync_' + session.email
+          }).select('id,title').single();
+          if (error) throw error;
+          results.created.push({ ...ins, type:'actualite', title, image: imageAfter, fb: post.permalink_url });
+          log(`  ✓ [ACTU] ${title.slice(0,70)}`, 'ok');
+          continue;
+        } catch(e) {
+          log(`  ⚠ Actualité fallback (${e.message}) — bascule en réalisation`, 'warn');
+        }
+      }
+
+      // Insert dans realisations
+      try {
+        const { data: ins, error } = await sb.from('realisations').insert({
+          title, slug,
+          description: post.message.slice(0,250),
+          description_long: post.message,
+          metier, ville,
+          date_intervention: datePart,
+          status: 'validation',
+          pinned: false,
+          publish_targets: { site: true, facebook: false, instagram: false, linkedin: false, gbp: false },
+          ai_generated: {
+            imported_from: 'facebook_scrape',
+            source_fb: post.permalink_url,
+            fb_post_id: post.id,
+            agence,
+            post_type: postType,
+            imported_at: new Date().toISOString(),
+            imported_by: session.email
+          },
+          created_by: 'manual_fb_sync',
+          image_after: imageAfter,
+          published_at: null
+        }).select('id,title,slug').single();
+        if (error) throw error;
+        results.created.push({ ...ins, type: postType, title, image: imageAfter, fb: post.permalink_url });
+        log(`  ✓ [${metier.toUpperCase()}] ${title.slice(0,70)}`, 'ok');
+      } catch(e) {
+        results.errors.push({ id: post.id, error: e.message, title });
+        log(`  ❌ ${title.slice(0,60)} : ${e.message}`, 'err');
+      }
+    }
+
+    // Récap
+    log(`\n📊 Sync terminée :`, 'ok');
+    log(`   • ${results.created.length} créée(s)`, 'ok');
+    log(`   • ${results.skipped.length} skippée(s) (doublons)`, 'warn');
+    if (results.errors.length) log(`   • ${results.errors.length} erreur(s)`, 'err');
+
+    // Affichage tableau récap
+    if (results.created.length) {
+      let html = `<table><thead><tr><th></th><th>Type</th><th>Titre</th><th>Action</th></tr></thead><tbody>`;
+      results.created.forEach(c => {
+        const pillClass = c.type === 'actualite' ? 'actu' : 'imp';
+        const editLink = c.type === 'actualite' ? `editor.html?actu_id=${c.id}` : `editor.html?id=${c.id}`;
+        html += `<tr>
+          <td>${c.image ? `<img class="thumb" src="${c.image}">` : '—'}</td>
+          <td><span class="pill ${pillClass}">${c.type === 'actualite' ? '📰 Actu' : '🛠 Chantier'}</span></td>
+          <td><strong>${c.title}</strong><br><small style="color:#94a3b8">slug : <code>${c.slug}</code></small></td>
+          <td><a href="${editLink}" style="color:#0DA0CF;font-weight:700;text-decoration:none">Valider →</a></td>
+        </tr>`;
+      });
+      html += '</tbody></table>';
+      document.getElementById('resultArea').innerHTML = html;
+      document.getElementById('resultCard').style.display = 'block';
+    }
+
+    document.getElementById('btnSync').disabled = false;
+    document.getElementById('btnSync').textContent = `🔁 Re-syncer (${results.created.length} nouvelle${results.created.length>1?'s':''})`;
+  }
+
+  document.getElementById('btnSync').onclick = runSync;
+})();
+</script>
+</body>
+</html>
