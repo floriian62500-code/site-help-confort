@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Purge données de test · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+  body{font-family:Inter,sans-serif;background:#FAFCFD;margin:0;padding:24px}
+  .wrap{max-width:1020px;margin:0 auto}
+  h1{font-size:1.5rem;margin:0 0 8px;display:flex;align-items:center;gap:10px}
+  .sub{color:#64748b;margin-bottom:24px}
+  .card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px;margin-bottom:18px;box-shadow:0 1px 2px rgba(11,18,32,.04)}
+  .cta{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;color:#fff;border:none;border-radius:10px;font:inherit;font-weight:800;font-size:.96rem;cursor:pointer}
+  .cta.danger{background:linear-gradient(135deg,#DC2626,#B91C1C);box-shadow:0 4px 14px rgba(220,38,38,.30)}
+  .cta:disabled{opacity:.55;cursor:not-allowed}
+  .log{background:#0A1428;color:#A7F3D0;padding:16px 20px;border-radius:10px;font-family:Menlo,Monaco,monospace;font-size:.82rem;max-height:480px;overflow:auto;white-space:pre-wrap;line-height:1.55}
+  .log .ok{color:#22c55e}.log .warn{color:#FFB400}.log .err{color:#fda4af}.log .info{color:#A7C7E7}
+  table{width:100%;border-collapse:collapse;font-size:.86rem;margin-top:14px}
+  th,td{padding:8px 10px;border-bottom:1px solid #f1f5f9;text-align:left;vertical-align:top}
+  th{background:#FAFCFD;color:#64748b;font-size:.74rem;text-transform:uppercase;letter-spacing:.04em}
+  .pill{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.74rem;font-weight:700}
+  .pill.del{background:#fee2e2;color:#991b1b}
+  .pill.kp{background:#dcfce7;color:#15803d}
+  a.back{color:#0DA0CF;text-decoration:none;font-size:.84rem;font-weight:600}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:768px){.grid2{grid-template-columns:1fr}}
+  .count-badge{display:inline-block;padding:3px 10px;border-radius:999px;font-weight:800;font-size:.86rem}
+  .count-badge.del{background:#fee2e2;color:#991b1b}
+  .count-badge.kp{background:#dcfce7;color:#15803d}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Retour au dashboard</a>
+  <h1>🧹 Purge données de test</h1>
+  <p class="sub">Détecte et supprime les <strong>leads + contrats de test</strong> insérés pendant le développement (noms contenant test/demo/wizard, montant 0, téléphones bidons). Idempotent — peut être relancé.</p>
+
+  <div class="card" style="background:linear-gradient(135deg,#FEF2F2,#fff);border-color:rgba(220,38,38,.30)">
+    <strong style="color:#991B1B;font-size:1rem">⚠️ Avertissement</strong>
+    <p style="margin:8px 0 0;font-size:.88rem;color:#7f1d1d">
+      Cette page supprime <strong>définitivement</strong> les entrées détectées comme tests. <strong>Aucune corbeille</strong> — la suppression est immédiate. Vérifie la liste avant de cliquer Purger.
+    </p>
+  </div>
+
+  <div class="card">
+    <strong style="font-size:1rem">📊 Diagnostic</strong>
+    <p class="sub" id="diagLine" style="margin:4px 0 14px">Chargement…</p>
+    <div class="grid2">
+      <div>
+        <h3 style="margin:0 0 10px;font-size:.96rem">📋 Contrats</h3>
+        <div id="contractsArea">—</div>
+      </div>
+      <div>
+        <h3 style="margin:0 0 10px;font-size:.96rem">💬 Demandes (leads)</h3>
+        <div id="leadsArea">—</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="text-align:center;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <button class="cta danger" id="btnPurgeContracts" disabled>🗑 Purger contrats test</button>
+    <button class="cta danger" id="btnPurgeLeads" disabled>🗑 Purger leads test</button>
+    <button class="cta danger" id="btnPurgeAll" style="background:linear-gradient(135deg,#7f1d1d,#450a0a)" disabled>🔥 Tout purger d'un coup</button>
+  </div>
+
+  <div class="card">
+    <strong style="font-size:1rem">📋 Log d'exécution</strong>
+    <div class="log" id="log" style="margin-top:10px">Diagnostic en cours…</div>
+  </div>
+</div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script>
+(async function(){
+  const sb = await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+
+  const logEl = document.getElementById('log');
+  function log(msg, cls=''){ logEl.innerHTML += `<span class="${cls}">${msg}</span>\n`; logEl.scrollTop = logEl.scrollHeight; }
+  function logClear(){ logEl.innerHTML=''; }
+  function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+  // ─── Détection des entrées "test" ─────────────────────────
+  function isTestContract(c){
+    const fn = (c.client_first_name||'').toLowerCase();
+    const ln = (c.client_last_name||'').toLowerCase();
+    const ph = (c.client_phone||'').replace(/\s/g,'');
+    const em = (c.client_email||'').toLowerCase();
+    if (/test|demo|wizard|exemple|sample|toto|titi|fake/.test(fn+' '+ln)) return true;
+    if (em && /test@|demo@|@test\.|@example|exemple@/.test(em)) return true;
+    if (ph && /^0?(6|7)0{8}$|^0?(6|7)1234|^1234|0000000000$/.test(ph)) return true;
+    if (Number(c.monthly_amount||0) === 0) return true;
+    return false;
+  }
+  function isTestLead(l){
+    const nm = (l.nom||'').toLowerCase();
+    const ph = (l.telephone||l.phone||'').replace(/\s/g,'');
+    const em = (l.email||'').toLowerCase();
+    if (/test|demo|wizard|exemple|sample|toto|titi|fake|^lead\s*\d+$/.test(nm)) return true;
+    if (em && /test@|demo@|@test\.|@example|exemple@/.test(em)) return true;
+    if (ph && /^0?(6|7)0{8}$|^0?(6|7)1234|^1234|0000000000$/.test(ph)) return true;
+    return false;
+  }
+
+  // ─── Diagnostic ───────────────────────────────────────────
+  let allContracts = [], allLeads = [];
+  let testContracts = [], testLeads = [];
+  let keptContracts = [], keptLeads = [];
+
+  async function diagnose(){
+    logClear();
+    log('🔍 Lecture des contrats et leads…', 'info');
+
+    const [contractsRes, leadsRes] = await Promise.all([
+      sb.from('contracts').select('*').order('created_at', { ascending: false }),
+      sb.from('leads').select('*').order('created_at', { ascending: false })
+    ]);
+    if (contractsRes.error) { log('❌ Erreur contracts : ' + contractsRes.error.message, 'err'); return; }
+    if (leadsRes.error) { log('❌ Erreur leads : ' + leadsRes.error.message, 'err'); return; }
+
+    allContracts = contractsRes.data || [];
+    allLeads = leadsRes.data || [];
+    testContracts = allContracts.filter(isTestContract);
+    keptContracts = allContracts.filter(c => !isTestContract(c));
+    testLeads = allLeads.filter(isTestLead);
+    keptLeads = allLeads.filter(l => !isTestLead(l));
+
+    log(`✓ ${allContracts.length} contrat(s) lu(s) → ${testContracts.length} test, ${keptContracts.length} conservé(s)`, 'ok');
+    log(`✓ ${allLeads.length} lead(s) lu(s) → ${testLeads.length} test, ${keptLeads.length} conservé(s)`, 'ok');
+
+    document.getElementById('diagLine').innerHTML = `
+      <span class="count-badge del">${testContracts.length + testLeads.length} à purger</span>
+      &nbsp;<span class="count-badge kp">${keptContracts.length + keptLeads.length} à conserver</span>
+    `;
+
+    // Affichage contrats
+    let htmlC = '';
+    if (testContracts.length === 0) htmlC = '<p style="color:#15803d;font-size:.86rem">✓ Aucun contrat de test détecté.</p>';
+    else {
+      htmlC = '<table><thead><tr><th>Client</th><th>Type</th><th>Montant</th></tr></thead><tbody>';
+      testContracts.forEach(c => {
+        htmlC += `<tr>
+          <td><strong>${esc((c.client_first_name||'')+' '+(c.client_last_name||''))}</strong><br><small style="color:#94a3b8">${esc(c.client_email||c.client_phone||'')}</small></td>
+          <td>${esc(c.type||c.metier||'—')}</td>
+          <td>${Number(c.monthly_amount||0).toFixed(2)} €</td>
+        </tr>`;
+      });
+      htmlC += '</tbody></table>';
+    }
+    document.getElementById('contractsArea').innerHTML = htmlC;
+
+    // Affichage leads
+    let htmlL = '';
+    if (testLeads.length === 0) htmlL = '<p style="color:#15803d;font-size:.86rem">✓ Aucun lead de test détecté.</p>';
+    else {
+      htmlL = '<table><thead><tr><th>Nom</th><th>Métier</th><th>Contact</th></tr></thead><tbody>';
+      testLeads.forEach(l => {
+        htmlL += `<tr>
+          <td><strong>${esc(l.nom||'(sans nom)')}</strong></td>
+          <td>${esc(l.metier||'—')}</td>
+          <td><small style="color:#94a3b8">${esc(l.email||l.telephone||l.phone||'')}</small></td>
+        </tr>`;
+      });
+      htmlL += '</tbody></table>';
+    }
+    document.getElementById('leadsArea').innerHTML = htmlL;
+
+    document.getElementById('btnPurgeContracts').disabled = testContracts.length === 0;
+    document.getElementById('btnPurgeLeads').disabled = testLeads.length === 0;
+    document.getElementById('btnPurgeAll').disabled = (testContracts.length + testLeads.length) === 0;
+    document.getElementById('btnPurgeContracts').textContent = testContracts.length === 0 ? '✓ Aucun contrat à purger' : `🗑 Purger ${testContracts.length} contrat(s) test`;
+    document.getElementById('btnPurgeLeads').textContent = testLeads.length === 0 ? '✓ Aucun lead à purger' : `🗑 Purger ${testLeads.length} lead(s) test`;
+    document.getElementById('btnPurgeAll').textContent = `🔥 Tout purger (${testContracts.length + testLeads.length})`;
+  }
+
+  // ─── Purge ────────────────────────────────────────────────
+  async function purgeContracts(){
+    if (!testContracts.length) return;
+    if (!confirm(`Supprimer DÉFINITIVEMENT ${testContracts.length} contrats de test ? Cette action est irréversible.`)) return;
+    log(`\n🔥 Suppression de ${testContracts.length} contrat(s)…`, 'warn');
+    const ids = testContracts.map(c => c.id);
+    const { error } = await sb.from('contracts').delete().in('id', ids);
+    if (error) { log('❌ ' + error.message, 'err'); return; }
+    log(`✓ ${ids.length} contrat(s) supprimé(s) définitivement`, 'ok');
+    await diagnose();
+  }
+  async function purgeLeads(){
+    if (!testLeads.length) return;
+    if (!confirm(`Supprimer DÉFINITIVEMENT ${testLeads.length} leads de test ? Cette action est irréversible.`)) return;
+    log(`\n🔥 Suppression de ${testLeads.length} lead(s)…`, 'warn');
+    const ids = testLeads.map(l => l.id);
+    const { error } = await sb.from('leads').delete().in('id', ids);
+    if (error) { log('❌ ' + error.message, 'err'); return; }
+    log(`✓ ${ids.length} lead(s) supprimé(s) définitivement`, 'ok');
+    await diagnose();
+  }
+  async function purgeAll(){
+    const total = testContracts.length + testLeads.length;
+    if (!total) return;
+    if (!confirm(`Supprimer DÉFINITIVEMENT ${total} entrées (${testContracts.length} contrats + ${testLeads.length} leads) de test ? Action irréversible.`)) return;
+    log(`\n🔥 Purge complète…`, 'warn');
+    if (testContracts.length) {
+      const { error } = await sb.from('contracts').delete().in('id', testContracts.map(c=>c.id));
+      if (error) log('❌ Contracts : ' + error.message, 'err');
+      else log(`✓ ${testContracts.length} contrat(s) supprimé(s)`, 'ok');
+    }
+    if (testLeads.length) {
+      const { error } = await sb.from('leads').delete().in('id', testLeads.map(l=>l.id));
+      if (error) log('❌ Leads : ' + error.message, 'err');
+      else log(`✓ ${testLeads.length} lead(s) supprimé(s)`, 'ok');
+    }
+    await diagnose();
+  }
+
+  document.getElementById('btnPurgeContracts').onclick = purgeContracts;
+  document.getElementById('btnPurgeLeads').onclick = purgeLeads;
+  document.getElementById('btnPurgeAll').onclick = purgeAll;
+
+  await diagnose();
+})();
+</script>
+</body>
+</html>
