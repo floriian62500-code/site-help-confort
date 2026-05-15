@@ -124,52 +124,12 @@
         </a>
       </div>
 
-      <!-- ═══ AUJOURD'HUI EN LIVE — leads jour · convs chat · top presta ═══ -->
-      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:24px" aria-label="Activité du jour">
-
-        <div class="card" style="padding:18px 20px;background:linear-gradient(135deg,#EFF6FF,#fff);border:1px solid rgba(13,160,207,.20)">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-            <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#0DA0CF,#0884AE);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            </div>
-            <div style="flex:1;min-width:0">
-              <div style="font-size:.7rem;font-weight:700;color:#0884AE;text-transform:uppercase;letter-spacing:1px">📡 Live aujourd'hui</div>
-              <strong style="font-size:.94rem;color:var(--ink-900);display:block">Leads du jour</strong>
-            </div>
-          </div>
-          <p style="margin:0;font-size:2rem;font-weight:800;color:var(--ink-900);line-height:1" id="liveLeadsToday">—</p>
-          <p style="margin:6px 0 0;font-size:.78rem;color:var(--ink-500)" id="liveLeadsTodayMeta">Chargement…</p>
-        </div>
-
-        <div class="card" style="padding:18px 20px;background:linear-gradient(135deg,#F5F3FF,#fff);border:1px solid rgba(124,58,237,.20)">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-            <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#A78BFA,#7C3AED);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            </div>
-            <div style="flex:1;min-width:0">
-              <div style="font-size:.7rem;font-weight:700;color:#7C3AED;text-transform:uppercase;letter-spacing:1px">🤖 Chat IA</div>
-              <strong style="font-size:.94rem;color:var(--ink-900);display:block">Conversations 24 h</strong>
-            </div>
-          </div>
-          <p style="margin:0;font-size:2rem;font-weight:800;color:var(--ink-900);line-height:1" id="liveChatToday">—</p>
-          <p style="margin:6px 0 0;font-size:.78rem;color:var(--ink-500)" id="liveChatTodayMeta">Chargement…</p>
-        </div>
-
-        <div class="card" style="padding:18px 20px;background:linear-gradient(135deg,#FFF7ED,#fff);border:1px solid rgba(255,107,26,.20)">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-            <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#FFB400,#FF6B1A);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            </div>
-            <div style="flex:1;min-width:0">
-              <div style="font-size:.7rem;font-weight:700;color:#C2410C;text-transform:uppercase;letter-spacing:1px">🏆 Top 30 j</div>
-              <strong style="font-size:.94rem;color:var(--ink-900);display:block">Prestation demandée</strong>
-            </div>
-          </div>
-          <p style="margin:0;font-size:1.05rem;font-weight:800;color:var(--ink-900);line-height:1.2;overflow:hidden;text-overflow:ellipsis" id="liveTopPresta">—</p>
-          <p style="margin:6px 0 0;font-size:.78rem;color:var(--ink-500)" id="liveTopPrestaMeta">Chargement…</p>
-        </div>
+      <!-- Placeholders cachés (IDs requis par les scripts existants — masqués pour épurer le dashboard) -->
+      <div style="display:none">
+        <span id="liveLeadsToday"></span><span id="liveLeadsTodayMeta"></span>
+        <span id="liveChatToday"></span><span id="liveChatTodayMeta"></span>
+        <span id="liveTopPresta"></span><span id="liveTopPrestaMeta"></span>
       </div>
-      <!-- /HC-LIVE-TODAY-V1 -->
 
       <!-- PASSERELLE CRM — interventions + contrats gérés dans le CRM externe -->
       <div id="crmGateway" class="card" style="padding:0;overflow:hidden;margin-bottom:24px;border:1px solid rgba(13,160,207,.18)">

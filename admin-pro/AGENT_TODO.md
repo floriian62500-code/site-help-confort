@@ -1,11 +1,11 @@
 # 🎉 Tout est fait — HELP! Confort Saint-Omer
 
-> **Mise à jour 15 mai 2026 — 14:30 (agent autonome)** — Tous les items P1 à P9 sont cochés (dernier : Reviews Google scrap).
+> **Mise à jour 15 mai 2026 — PM (agent autonome session 2)** — P1 à P9 cochés ; P10 ajouté (12 items monitoring/audits) dont 3 déjà cochés via audit live.
 > L'agent peut désormais s'occuper exclusivement de monitoring (nouveaux bugs, ajout contenu).
 >
 > Restera à faire à la main : validation tarifs en attente (cf. `TARIFS_REFERENCE.md` § "En attente de validation Florian").
 >
-> 🎉 **TODO épuisé le 2026-05-15**. Une section `## P10 — Auto-générés` peut être ajoutée par la prochaine session autonome si besoin (cf. instructions scheduled-task).
+> 🎉 **TODO P1-P9 épuisé le 2026-05-15**. P10 (monitoring + audits dérivés) ouvert le 2026-05-15 PM ; 3/12 items déjà cochés.
 
 # 🤖 Agent TODO — Travail autonome HELP! Confort
 
