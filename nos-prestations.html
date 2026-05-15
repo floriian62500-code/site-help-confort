@@ -862,7 +862,7 @@
         <div class="nv-card-visual" data-cat="${escapeHtml(catSlug)}">
           ${s.badge ? `<span class="nv-card-badge">${escapeHtml(s.badge)}</span>` : ''}
           <span class="nv-card-cat">${escapeHtml(s.category_name || '')}</span>
-          <svg ${SVG_ATTRS}>${CAT_ICONS[catSlug] || CAT_ICONS['sur-mesure']}</svg>
+          ${pictoTag(catSlug, 64)}
         </div>
         <div class="nv-card-body">
           <h3 class="nv-card-name">${escapeHtml(s.name)}</h3>
