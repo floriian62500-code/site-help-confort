@@ -65,7 +65,7 @@ METIER_PREFIX = [
     ('plombier-',     ('Plomberie',     '#0DA0CF')),
     ('chauffagiste-', ('Chauffage',     '#FF6B1A')),
     ('electricien-',  ('Électricité',   '#FFB400')),
-    ('serrurier-',    ('Serrurerie',    '#7C3AED')),
+    ('serrurier-',    ('Serrurerie',    '#EC4899')),
     ('travaux-',      ('Travaux',       '#22A06B')),
     ('depannage-',    ('Dépannage',     '#0DA0CF')),
     ('guide-',        ('Guide',         '#0DA0CF')),
