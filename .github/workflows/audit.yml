@@ -79,6 +79,7 @@ jobs:
             audit_sw_version.py
             audit_fallback_supabase.py
             audit_typo_fr.py
+            audit_leaflet_init.py
           )
           for a in "${AUDITS[@]}"; do
             f="admin-pro/audits/$a"

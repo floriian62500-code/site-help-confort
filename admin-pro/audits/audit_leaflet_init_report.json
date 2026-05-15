@@ -1,0 +1,21 @@
+{
+  "audit": "leaflet_init",
+  "generated_at": "2026-05-15 18:07",
+  "pages_scanned": 39,
+  "pages_with_leaflet": 1,
+  "alerts_count": 0,
+  "alerts": [],
+  "all_entries": [
+    {
+      "page": "zones-intervention.html",
+      "init_count": 1,
+      "first_init_line": 807,
+      "has_invalidate_size": true,
+      "guards_found": [
+        "setTimeout\\s*\\([^{]*\\{[^}]*invalidateSize\\s*\\(",
+        "window\\.addEventListener\\s*\\(\\s*['\"]load['\"][^)]*\\)"
+      ],
+      "status": "ok"
+    }
+  ]
+}
