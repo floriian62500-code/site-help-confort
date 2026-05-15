@@ -88,6 +88,8 @@ jobs:
             audit_cta_coherence.py
             audit_json_freshness.py
             audit_hotlink_cdn.py
+            audit_canonical_url_match.py
+            audit_duplicate_titles.py
           )
           for a in "${AUDITS[@]}"; do
             f="admin-pro/audits/$a"
