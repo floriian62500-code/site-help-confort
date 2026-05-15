@@ -1140,47 +1140,7 @@ if (document.fonts && document.fonts.ready) {
   }
   .m-zone-compact a:hover { border-color: var(--m-color); }
 
-  /* ─── CTA FINAL SIMPLE ─── */
-  .m-cta-final {
-    padding: clamp(50px, 6vw, 80px) 0; text-align: center;
-    background: linear-gradient(135deg, #0A1428 0%, #0E2240 100%);
-    color: #fff; position: relative; overflow: hidden;
-  }
-  .m-cta-final::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse 60% 60% at 50% 50%, var(--m-glow), transparent 70%);
-    pointer-events: none;
-  }
-  .m-cta-final-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); }
-  .m-cta-final h2 {
-    font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800;
-    letter-spacing: -.02em; line-height: 1.15; margin: 0 0 10px;
-  }
-  .m-cta-final-tagline {
-    font-size: .94rem; color: rgba(255,255,255,.72); margin: 0 0 24px;
-  }
-  .m-cta-final-tagline strong { color: var(--m-color-light); font-weight: 700; }
-  .m-cta-final-btns { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-  .m-cta-final-tel {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 14px 22px; border-radius: 12px;
-    background: #fff; color: #0A1428;
-    font-weight: 800; font-size: 1rem; text-decoration: none;
-    transition: all .25s ease; box-shadow: 0 10px 24px rgba(0,0,0,.20);
-  }
-  .m-cta-final-tel:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(0,0,0,.30) }
-  .m-cta-final-q {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 14px 22px; border-radius: 12px;
-    background: linear-gradient(135deg, var(--m-color), var(--m-color-dark));
-    color: #fff; font-weight: 800; font-size: 1rem; text-decoration: none;
-    transition: all .25s ease; box-shadow: 0 10px 24px var(--m-glow);
-  }
-  .m-cta-final-q:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(13,160,207,.45) }
-  .m-cta-final svg { width: 18px; height: 18px }
-  .m-cta-final-info {
-    margin-top: 20px; font-size: .82rem; color: rgba(255,255,255,.55);
-  }
+  /* CSS .m-cta-final* retiré 15/05/2026 — HTML correspondant supprimé en P1 */
 
   @media (max-width: 640px) {
     .m-modal-row { grid-template-columns: 1fr; }
