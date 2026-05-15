@@ -133,109 +133,112 @@
 <!-- HC-TRACKING-V2 (centralisé dans assets/tracking.js) -->
 <script src="/assets/tracking.js" defer></script>
 
-<!-- HC-SERVICE-SCHEMA-V1 -->
+<!-- HC-SERVICE-SCHEMA-V2 (enrichi geo + Offer.price 2026-05-15) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Plumber",
-  "name": "Plomberie Saint-Omer & Dunkerque",
-  "description": "Dépannage plomberie, fuite, dégorgement, ballon d'eau chaude, recherche de fuite à la caméra thermique. Intervention rapide à Saint-Omer, Longuenesse, Arques, Aire-sur-la-Lys, Dunkerque, Gravelines, Bergues.",
+  "@id": "https://www.depan59-62.fr/plombier-saint-omer.html#business",
+  "name": "HELP! Confort — Plombier Saint-Omer & Dunkerque",
+  "description": "Plombier à Saint-Omer : recherche de fuite, dégorgement, mécanisme chasse d'eau, détartrage sanitaire, ballon d'eau chaude. Intervention rapide audomarois + littoral Dunkerque.",
   "image": "https://www.depan59-62.fr/logo-officiel.jpg",
+  "logo": "https://www.depan59-62.fr/logo.svg",
   "telephone": "+33366100134",
   "email": "saint-omer@helpconfort.com",
   "url": "https://www.depan59-62.fr/plombier-saint-omer.html",
   "priceRange": "€€",
+  "currenciesAccepted": "EUR",
+  "paymentAccepted": "Carte bancaire, Virement, Chèque, Espèces",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "242 route de Boulogne",
     "addressLocality": "Saint-Martin-lez-Tatinghem",
     "postalCode": "62500",
+    "addressRegion": "Hauts-de-France",
     "addressCountry": "FR"
   },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 50.7506,
+    "longitude": 2.2367
+  },
   "areaServed": [
-    {
-      "@type": "City",
-      "name": "Saint-Omer"
-    },
-    {
-      "@type": "City",
-      "name": "Longuenesse"
-    },
-    {
-      "@type": "City",
-      "name": "Arques"
-    },
-    {
-      "@type": "City",
-      "name": "Saint-Martin-lez-Tatinghem"
-    },
-    {
-      "@type": "City",
-      "name": "Aire-sur-la-Lys"
-    },
-    {
-      "@type": "City",
-      "name": "Lumbres"
-    },
-    {
-      "@type": "City",
-      "name": "Dunkerque"
-    },
-    {
-      "@type": "City",
-      "name": "Gravelines"
-    },
-    {
-      "@type": "City",
-      "name": "Bergues"
-    }
+    {"@type": "City", "name": "Saint-Omer"},
+    {"@type": "City", "name": "Longuenesse"},
+    {"@type": "City", "name": "Arques"},
+    {"@type": "City", "name": "Saint-Martin-lez-Tatinghem"},
+    {"@type": "City", "name": "Aire-sur-la-Lys"},
+    {"@type": "City", "name": "Lumbres"},
+    {"@type": "City", "name": "Dunkerque"},
+    {"@type": "City", "name": "Gravelines"},
+    {"@type": "City", "name": "Bergues"}
   ],
   "openingHoursSpecification": [
     {
       "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ],
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
       "opens": "08:00",
       "closes": "18:00"
     }
   ],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
-    "name": "Plomberie",
+    "name": "Prestations Plomberie",
     "itemListElement": [
       {
         "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Dépannage Plomberie"
-        }
+        "price": "148.00",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {"@type": "Service", "name": "Recherche de fuite visuelle", "serviceType": "Plomberie"}
       },
       {
         "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Installation Plomberie"
-        }
+        "price": "383.00",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {"@type": "Service", "name": "Recherche de fuite technique (caméra / gaz / acoustique)", "serviceType": "Plomberie"}
       },
       {
         "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Entretien Plomberie"
-        }
+        "price": "165.00",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {"@type": "Service", "name": "Désengorgement canalisation", "serviceType": "Plomberie"}
+      },
+      {
+        "@type": "Offer",
+        "price": "131.00",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {"@type": "Service", "name": "Mécanisme chasse d'eau (T1 semaine)", "serviceType": "Plomberie"}
+      },
+      {
+        "@type": "Offer",
+        "price": "237.00",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {"@type": "Service", "name": "Détartrage installation sanitaire", "serviceType": "Plomberie"}
+      },
+      {
+        "@type": "Offer",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "58.00",
+          "priceCurrency": "EUR",
+          "unitCode": "HUR",
+          "referenceQuantity": {"@type": "QuantitativeValue", "value": 1, "unitCode": "HUR"}
+        },
+        "itemOffered": {"@type": "Service", "name": "Main d'œuvre plomberie (heure)", "serviceType": "Plomberie"}
       }
     ]
   },
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.7",
-    "reviewCount": "343"
+    "reviewCount": "343",
+    "bestRating": "5",
+    "worstRating": "1"
   }
 }
 </script>
