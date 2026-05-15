@@ -335,6 +335,23 @@ let _filterStatusOverride = null;
       } catch(e) {}
     }
 
+    // ─── Photos uploadées par le client lui-même (formulaire wizard) ───
+    if (Array.isArray(l.photos) && l.photos.length > 0) {
+      l.photos.forEach((p, i) => {
+        const url = typeof p === 'string' ? p : p.url;
+        const label = (typeof p === 'object' ? p.label : null) || `Client ${i+1}`;
+        if (url) photos.push({ url, label, fromClient: true });
+      });
+    }
+    // ─── Photos dans metadata (souscriptions) ──────────────────────
+    const mPhotos = contract?.metadata?.photos || l.utm?.photos;
+    if (Array.isArray(mPhotos)) {
+      mPhotos.slice(0,8).forEach((p, i) => {
+        const url = typeof p === 'string' ? p : p.url;
+        if (url) photos.push({ url, label: `Équipement ${i+1}`, fromClient: true });
+      });
+    }
+
     const m = contract?.metadata || {};
     const utm = l.utm || {};
     const hasUtm = utm && Object.keys(utm).length > 0;
