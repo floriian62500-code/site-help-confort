@@ -255,7 +255,7 @@ let _filterStatusOverride = null;
     list.querySelectorAll('.lead-card').forEach(c => c.addEventListener('click', e => { if (!e.target.closest('[data-open]')) openLead(c.dataset.id); }));
   }
 
-  function openLead(id){
+  async function openLead(id){
     const l = _all.find(x => x.id === id);
     if (!l) return;
     document.getElementById('leadTitle').textContent = 'Demande de ' + l.nom;
@@ -263,18 +263,116 @@ let _filterStatusOverride = null;
     const phoneVal = l.telephone ? `<a href="tel:${l.telephone}">${escapeHtml(l.telephone)}</a>` : '—';
     const emailVal = l.email ? `<a href="mailto:${l.email}">${escapeHtml(l.email)}</a>` : '—';
 
+    // ─── Si c'est une souscription, on cherche le contract joint pour les détails ───
+    let contract = null, photos = [];
+    if (l.source === 'souscription' || (l.type_demande && l.type_demande.includes('contrat'))) {
+      try {
+        if (l.email) {
+          const { data } = await c.from('contracts')
+            .select('*')
+            .eq('client_email', l.email)
+            .order('created_at', { ascending: false })
+            .limit(1);
+          if (data && data[0]) contract = data[0];
+        }
+      } catch(e) { /* table contracts peut être inaccessible */ }
+    }
+
+    // ─── Si lead lié à une réalisation, charger les photos ───
+    if (l.realisation_id) {
+      try {
+        const { data } = await c.from('realisations')
+          .select('id,title,image_before,image_after,photos')
+          .eq('id', l.realisation_id)
+          .single();
+        if (data) {
+          if (data.image_before) photos.push({ url: data.image_before, label: 'Avant' });
+          if (data.image_after)  photos.push({ url: data.image_after,  label: 'Après' });
+          if (Array.isArray(data.photos)) data.photos.slice(0,6).forEach((p,i) => photos.push({ url: p.url || p, label: `Photo ${i+1}` }));
+        }
+      } catch(e) {}
+    }
+
+    const m = contract?.metadata || {};
+    const utm = l.utm || {};
+    const hasUtm = utm && Object.keys(utm).length > 0;
+
+    const addressLine = [l.adresse, l.code_postal, l.ville].filter(Boolean).join(' · ') || '—';
+
+    const contractBlock = contract ? `
+      <div style="margin-top:18px;padding:14px;background:linear-gradient(135deg,rgba(13,160,207,.05),rgba(13,160,207,.02));border:1px solid rgba(13,160,207,.20);border-radius:12px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:10px;flex-wrap:wrap">
+          <h4 style="margin:0;font-size:.96rem;font-weight:800;color:#0A1428;display:flex;align-items:center;gap:8px">
+            📄 Souscription contrat
+            <span style="background:#0DA0CF;color:#fff;font-size:.66rem;padding:2px 8px;border-radius:999px;font-weight:800;letter-spacing:.04em">${escapeHtml((contract.type||'').toUpperCase())}</span>
+            ${contract.imported_to_crm_at ? '<span style="background:#DCFCE7;color:#15803D;font-size:.66rem;padding:2px 8px;border-radius:999px;font-weight:800">✓ CRM</span>' : '<span style="background:#FFF7ED;color:#C2410C;font-size:.66rem;padding:2px 8px;border-radius:999px;font-weight:800">📥 À IMPORTER</span>'}
+          </h4>
+          <a href="contracts.html?import=${contract.id}" style="font-size:.78rem;color:var(--hc-primary);font-weight:700;text-decoration:none">Voir dans Contrats →</a>
+        </div>
+        <div class="lead-info-grid" style="margin-bottom:0">
+          <div class="lead-info-cell"><div class="lbl">Énergie</div><div class="val">${escapeHtml(m.energie || contract.metier || '—').charAt(0).toUpperCase() + escapeHtml(m.energie || contract.metier || '—').slice(1)}</div></div>
+          <div class="lead-info-cell"><div class="lbl">Montant mensuel</div><div class="val">${Number(contract.monthly_amount||0).toFixed(2)} €<span style="font-size:.74rem;color:var(--ink-500);font-weight:500"> /mois</span></div></div>
+          ${m.type_logement ? `<div class="lead-info-cell"><div class="lbl">Logement</div><div class="val">${escapeHtml(m.type_logement)}${m.statut_logement ? ' · ' + escapeHtml(m.statut_logement) : ''}</div></div>` : ''}
+          ${m.date_debut_souhaitee ? `<div class="lead-info-cell"><div class="lbl">Début souhaité</div><div class="val">${new Date(m.date_debut_souhaitee).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'})}</div></div>` : ''}
+          ${m.marque ? `<div class="lead-info-cell full"><div class="lbl">Équipement</div><div class="val">${escapeHtml(m.marque)}${m.modele ? ' ' + escapeHtml(m.modele) : ''}${m.annee ? ' (' + escapeHtml(String(m.annee)) + ')' : ''}${m.dernier_entretien ? ' · Dernier entretien : ' + escapeHtml(m.dernier_entretien) : ''}</div></div>` : ''}
+          ${m.commentaire ? `<div class="lead-info-cell full"><div class="lbl">Commentaire client</div><div class="val" style="font-weight:400;line-height:1.5">${escapeHtml(m.commentaire)}</div></div>` : ''}
+          ${m.cgv_accepted_at ? `<div class="lead-info-cell full"><div class="lbl">CGV acceptées</div><div class="val" style="font-weight:400;font-size:.78rem;color:#15803D">✓ Le ${new Date(m.cgv_accepted_at).toLocaleString('fr-FR')}</div></div>` : ''}
+        </div>
+      </div>
+    ` : '';
+
+    const photosBlock = photos.length > 0 ? `
+      <div style="margin-top:18px">
+        <h4 style="margin:0 0 10px 0;font-size:.96rem;font-weight:800;color:#0A1428;display:flex;align-items:center;gap:8px">
+          📸 Photos liées
+          <span style="font-size:.74rem;font-weight:600;color:var(--ink-500)">(${photos.length})</span>
+        </h4>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px">
+          ${photos.map(p => `
+            <a href="${p.url}" target="_blank" rel="noopener" style="display:block;aspect-ratio:1;border-radius:10px;overflow:hidden;background:#f5f7fa;position:relative;border:1px solid var(--ink-100);text-decoration:none">
+              <img src="${p.url}" alt="${escapeHtml(p.label)}" style="width:100%;height:100%;object-fit:cover;display:block">
+              <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.6));color:#fff;padding:14px 8px 6px;font-size:.72rem;font-weight:700">${escapeHtml(p.label)}</div>
+            </a>
+          `).join('')}
+        </div>
+      </div>
+    ` : '';
+
+    const utmBlock = hasUtm ? `
+      <div style="margin-top:14px;padding:10px 12px;background:#FAFCFD;border:1px solid var(--ink-100);border-radius:10px;font-size:.78rem">
+        <div style="font-weight:700;color:var(--ink-700);margin-bottom:4px">📊 Tracking UTM</div>
+        <div style="color:var(--ink-500)">${Object.entries(utm).map(([k,v]) => `<strong>${escapeHtml(k)}</strong>: ${escapeHtml(String(v))}`).join(' · ')}</div>
+      </div>
+    ` : '';
+
     document.getElementById('leadBody').innerHTML = `
       <div class="lead-info-grid">
-        <div class="lead-info-cell"><div class="lbl">Nom</div><div class="val">${escapeHtml(l.nom)}</div></div>
-        <div class="lead-info-cell"><div class="lbl">Statut</div><div class="val"><span class="lead-status ${l.status}">${STATUS_LABELS[l.status]}</span></div></div>
+        <div class="lead-info-cell"><div class="lbl">Nom complet</div><div class="val">${escapeHtml(l.nom)}</div></div>
+        <div class="lead-info-cell"><div class="lbl">Statut</div><div class="val"><span class="lead-status ${l.status}">${STATUS_LABELS[l.status]}</span>${l.priority && l.priority !== 'normale' ? ` <span style="background:#FFEDD5;color:#C2410C;font-size:.66rem;padding:1px 6px;border-radius:4px;font-weight:800;margin-left:4px">${escapeHtml(l.priority.toUpperCase())}</span>` : ''}</div></div>
         <div class="lead-info-cell"><div class="lbl">Téléphone</div><div class="val">${phoneVal}</div></div>
         <div class="lead-info-cell"><div class="lbl">Email</div><div class="val">${emailVal}</div></div>
-        <div class="lead-info-cell"><div class="lbl">Ville</div><div class="val">${escapeHtml(l.ville || '—')}</div></div>
-        <div class="lead-info-cell"><div class="lbl">Métier demandé</div><div class="val">${METIER_LABELS[l.metier] || l.metier || '—'}</div></div>
-        ${l.message ? `<div class="lead-info-cell full"><div class="lbl">Message</div><div class="val">${escapeHtml(l.message)}</div></div>` : ''}
-        <div class="lead-info-cell"><div class="lbl">Source</div><div class="val" style="font-weight:400;font-size:.82rem">${escapeHtml(l.source || '—')}${l.source_page ? '<br>' + escapeHtml(l.source_page) : ''}</div></div>
-        <div class="lead-info-cell"><div class="lbl">Reçu</div><div class="val" style="font-weight:400;font-size:.82rem">${new Date(l.created_at).toLocaleString('fr-FR')}</div></div>
+        <div class="lead-info-cell full"><div class="lbl">Adresse complète</div><div class="val">${escapeHtml(addressLine)}</div></div>
+        <div class="lead-info-cell"><div class="lbl">Métier / domaine</div><div class="val">${METIER_LABELS[l.metier] || l.metier || '—'}</div></div>
+        <div class="lead-info-cell"><div class="lbl">Type de demande</div><div class="val">${escapeHtml(l.type_demande || '—')}</div></div>
+        ${l.budget ? `<div class="lead-info-cell"><div class="lbl">Budget estimé</div><div class="val">${escapeHtml(l.budget)}</div></div>` : ''}
+        ${l.estimated_value ? `<div class="lead-info-cell"><div class="lbl">Valeur estimée</div><div class="val">${Number(l.estimated_value).toFixed(0)} €</div></div>` : ''}
+        ${l.message ? `<div class="lead-info-cell full"><div class="lbl">Message client</div><div class="val" style="font-weight:400;line-height:1.5;padding:8px 10px;background:#FAFCFD;border-radius:8px;border:1px solid var(--ink-100)">${escapeHtml(l.message)}</div></div>` : ''}
       </div>
+
+      ${contractBlock}
+      ${photosBlock}
+
+      <div style="margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;font-size:.78rem;color:var(--ink-500)">
+        <div><strong style="color:var(--ink-700)">Source :</strong> ${escapeHtml(l.source || '—')}</div>
+        ${l.source_page ? `<div><strong style="color:var(--ink-700)">Page :</strong> <span style="word-break:break-all">${escapeHtml(l.source_page)}</span></div>` : ''}
+        ${l.source_referer ? `<div><strong style="color:var(--ink-700)">Referer :</strong> <span style="word-break:break-all">${escapeHtml(l.source_referer)}</span></div>` : ''}
+        <div><strong style="color:var(--ink-700)">Reçu :</strong> ${new Date(l.created_at).toLocaleString('fr-FR')}</div>
+        ${l.last_contact_at ? `<div><strong style="color:var(--ink-700)">Dernier contact :</strong> ${new Date(l.last_contact_at).toLocaleString('fr-FR')}</div>` : ''}
+        ${l.next_action_at ? `<div><strong style="color:var(--ink-700)">Prochaine action :</strong> ${new Date(l.next_action_at).toLocaleString('fr-FR')}${l.next_action_desc ? ' — ' + escapeHtml(l.next_action_desc) : ''}</div>` : ''}
+        ${l.assigned_to ? `<div><strong style="color:var(--ink-700)">Assigné à :</strong> ${escapeHtml(l.assigned_to)}</div>` : ''}
+      </div>
+
+      ${utmBlock}
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
         ${l.telephone ? `<a class="btn btn-primary" href="tel:${l.telephone}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Appeler</a>` : ''}
         ${l.email ? `<a class="btn" href="mailto:${l.email}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</a>` : ''}
