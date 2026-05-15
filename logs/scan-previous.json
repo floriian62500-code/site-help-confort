@@ -1,24 +1,31 @@
 {
-  "scanned_at": "2026-05-14T20:04:23",
-  "duration_ms": 1701,
-  "pages_scanned": 81,
-  "total_findings": 2,
+  "scanned_at": "2026-05-15T20:02:58",
+  "duration_ms": 2123,
+  "pages_scanned": 94,
+  "total_findings": 3,
   "by_severity": {
-    "optimisation": 2
+    "optimisation": 1,
+    "important": 2
   },
-  "health_score": 99,
+  "health_score": 98,
   "findings": [
     {
       "file": "index.html",
       "severity": "optimisation",
       "code": "HEAVY_HTML",
-      "msg": "Page lourde : 181 KB"
+      "msg": "Page lourde : 179 KB"
     },
     {
-      "file": "contrats-entretien.html",
-      "severity": "optimisation",
-      "code": "HEAVY_HTML",
-      "msg": "Page lourde : 151 KB"
+      "severity": "important",
+      "code": "HEAVY_IMG",
+      "file": "images/mascotte.tmp.png",
+      "msg": "Image 688 KB (>500 KB)"
+    },
+    {
+      "severity": "important",
+      "code": "HEAVY_IMG",
+      "file": "images/mascotte-opt.tmp.png",
+      "msg": "Image 688 KB (>500 KB)"
     }
   ]
 }
