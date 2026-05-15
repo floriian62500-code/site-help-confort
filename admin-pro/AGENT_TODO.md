@@ -58,7 +58,7 @@
 ## P6 — Contenu marketing
 
 - [x] **Page FAQ globale** — créer `faq.html` qui agrège toutes les FAQ de chaque métier en un seul endroit indexable. *(fait 15/05 — 18 questions/réponses en 4 catégories + recherche live + JSON-LD FAQPage Schema.org + CTA contact)*
-- [ ] **Page "Avant/Après"** — créer `avant-apres.html` qui montre des photos de chantiers (placeholder pour l'instant, données depuis `realisations` Supabase).
+- [x] **Page "Avant/Après"** — créer `avant-apres.html` qui montre des photos de chantiers (placeholder pour l'instant, données depuis `realisations` Supabase). *(fait 15/05 — galerie filtrable 6 catégories + fetch Supabase + fallback JSON local + placeholders thématiques + CTA devis)*
 - [ ] **Page "Témoignages"** — créer `temoignages.html` qui agrège tous les avis 5★ avec photos clients (anonymisés).
 - [x] **Page "Devis express"** — créer `devis-express.html` avec un formulaire ultra-court (3 questions max) pour conversion mobile. *(fait 15/05 — 3 steps mobile-first, métier/urgence/coordonnées, progress bar, persistance Supabase, ref auto-générée)*
 

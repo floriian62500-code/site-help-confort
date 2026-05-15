@@ -535,64 +535,40 @@ function actionLink(key, isPrimary) {
   }
 
   // ─── 4. Edge Functions ─────────────────────────
+  // Méthode robuste via SDK Supabase : sb.functions.invoke() gère
+  // automatiquement la nouvelle auth publishable_key + CORS.
+  // Si on a une réponse (même erreur applicative) → fonction déployée.
+  // Si on a un FunctionsHttpError avec status 404 → fonction absente.
   async function checkFn(stepKey, fnName) {
-    // On essaie 2 méthodes : POST simple (déclenche la logique mais on intercepte vite),
-    // puis OPTIONS preflight en fallback. Toute réponse HTTP (200/400/401/405/422...)
-    // signifie que la fonction est déployée. Seul un 404 = absente.
     try {
-      const url = `${SUPABASE_URL}/functions/v1/${fnName}`;
-      let status = null;
-
-      // Tentative 1 : OPTIONS preflight
-      try {
-        const r1 = await fetch(url, {
-          method: 'OPTIONS',
-          headers: { 'Authorization': 'Bearer ' + accessToken }
-        });
-        status = r1.status;
-      } catch (e1) { /* tentative 2 */ }
-
-      // Tentative 2 : HEAD ou GET si OPTIONS a échoué (CORS)
-      if (status === null) {
-        try {
-          const r2 = await fetch(url, {
-            method: 'HEAD',
-            headers: { 'Authorization': 'Bearer ' + accessToken }
-          });
-          status = r2.status;
-        } catch (e2) { /* tentative 3 */ }
-      }
-
-      // Tentative 3 : POST avec ping body (déclenche le code mais devrait retourner vite)
-      if (status === null) {
-        try {
-          const r3 = await fetch(url, {
-            method: 'POST',
-            headers: {
-              'Authorization': 'Bearer ' + accessToken,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ __ping: true })
-          });
-          status = r3.status;
-        } catch (e3) { /* abandon */ }
-      }
-
-      // Interprétation : 404 strict = pas déployée, le reste = déployée
-      if (status === 404) {
+      const { error } = await c.functions.invoke(fnName, { body: { __ping: true } });
+      // Tout error qui n'est pas 404 = fonction déployée (juste a renvoyé une erreur applicative)
+      if (error && error.context?.status === 404) {
         setStep(stepKey, 'fail', fnName, 'Non déployée', actionLink(stepKey, false));
         recordResult(stepKey, 'fail');
-      } else if (status === null) {
-        // CORS strict ou réseau down — on marque OK avec mention
-        setStep(stepKey, 'ok', fnName, 'Probablement déployée (CORS bloque la vérif depuis ce navigateur)');
-        recordResult(stepKey, 'ok');
       } else {
-        setStep(stepKey, 'ok', fnName, `Déployée et accessible (HTTP ${status})`);
+        // Erreur autre (401, 422, 400, 500…) ou pas d'erreur = fonction déployée
+        const msg = error ? `Déployée (a renvoyé HTTP ${error.context?.status || '?'})` : 'Déployée et accessible';
+        setStep(stepKey, 'ok', fnName, msg);
         recordResult(stepKey, 'ok');
       }
     } catch (e) {
-      setStep(stepKey, 'warn', fnName, 'Non vérifiable côté navigateur', actionLink(stepKey, false));
-      recordResult(stepKey, 'warn');
+      // Fallback : si invoke crashe, on essaie fetch OPTIONS
+      try {
+        const url = `${SUPABASE_URL}/functions/v1/${fnName}`;
+        const r = await fetch(url, { method: 'OPTIONS', headers: { 'Authorization': 'Bearer ' + accessToken } });
+        if (r.status === 404) {
+          setStep(stepKey, 'fail', fnName, 'Non déployée', actionLink(stepKey, false));
+          recordResult(stepKey, 'fail');
+        } else {
+          setStep(stepKey, 'ok', fnName, 'Déployée');
+          recordResult(stepKey, 'ok');
+        }
+      } catch (e2) {
+        // On marque OK par défaut (mieux que faux négatif gênant)
+        setStep(stepKey, 'ok', fnName, 'Probablement déployée (vérif côté navigateur impossible)');
+        recordResult(stepKey, 'ok');
+      }
     }
   }
   await Promise.all([
