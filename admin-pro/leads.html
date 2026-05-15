@@ -468,21 +468,41 @@ let _filterStatusOverride = null;
   document.getElementById('filterStatus').addEventListener('change', renderList);
   document.getElementById('filterMetier').addEventListener('change', renderList);
 
-  // Export CSV
+  // Export CSV — exporte la sélection filtrée (recherche + statut + métier).
+  // Si aucun filtre actif, exporte tout. Encoding UTF-8 BOM compatible Excel FR.
   document.getElementById('btnExport').onclick = () => {
-    const headers = ['Date','Nom','Email','Téléphone','Ville','Métier','Statut','Source','Message'];
-    const rows = _all.map(l => [
-      new Date(l.created_at).toLocaleDateString('fr-FR'),
-      l.nom || '', l.email || '', l.telephone || '', l.ville || '',
-      l.metier || '', STATUS_LABELS[l.status] || l.status, l.source || '',
-      (l.message || '').replace(/[\r\n]+/g,' / ')
-    ].map(v => `"${String(v).replace(/"/g, '""')}"`).join(','));
-    const csv = [headers.join(','), ...rows].join('\n');
+    const filtered = getFilteredLeads();
+    const rows = filtered.length ? filtered : _all;
+    if (!rows.length){
+      toast('Aucun lead à exporter', 'err', 3000);
+      return;
+    }
+    const headers = ['Date','Nom','Email','Téléphone','Ville','CP','Métier','Type','Statut','Source','Priorité','Valeur estimée (€)','Message'];
+    const csvRows = rows.map(l => [
+      l.created_at ? new Date(l.created_at).toLocaleString('fr-FR', { dateStyle:'short', timeStyle:'short' }) : '',
+      l.nom || '', l.email || '', l.telephone || '',
+      l.ville || '', l.code_postal || '',
+      METIER_LABELS[l.metier] || l.metier || '',
+      l.type_demande || '',
+      STATUS_LABELS[l.status] || l.status || '',
+      l.source || '',
+      l.priority || '',
+      l.estimated_value || '',
+      (l.message || '').replace(/[\r\n\t]+/g,' / ')
+    ].map(v => `"${String(v).replace(/"/g, '""')}"`).join(';'));
+    // Séparateur ';' (Excel FR) + BOM UTF-8
+    const csv = [headers.join(';'), ...csvRows].join('\r\n');
     const blob = new Blob([new Uint8Array([0xEF,0xBB,0xBF]), csv], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'leads-help-confort-' + new Date().toISOString().slice(0,10) + '.csv';
+    link.href = url;
+    const isFiltered = filtered.length !== _all.length;
+    link.download = 'leads-help-confort-' + (isFiltered ? 'filtre-' : '') + new Date().toISOString().slice(0,10) + '.csv';
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    toast(`${rows.length} lead${rows.length>1?'s':''} exporté${rows.length>1?'s':''}${isFiltered?' (filtre)':''}`, 'ok', 2500);
   };
 
   function timeAgo(d){
