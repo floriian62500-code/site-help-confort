@@ -55,22 +55,54 @@
 
   const c = await HCSupabase.init();
 
-  // Stats Supabase (couverture SEO contenu)
-  const { data: all } = await c.from('realisations').select('metier,ville,status,seo_title,seo_description,description,description_long');
-  const list = all || [];
+  // Stats Supabase — multi-sources pour avoir de la data même sans réalisations publiées
+  const [realsRes, leadsRes, contractsRes, ordersRes] = await Promise.all([
+    c.from('realisations').select('metier,ville,status,seo_title,seo_description,description,description_long'),
+    c.from('leads').select('metier,ville,status,created_at'),
+    c.from('contracts').select('metier,client_city,client_postal_code,monthly_amount,created_at,status'),
+    c.from('service_orders').select('service_name,city,postal_code,price_ttc,created_at,status').catch(() => ({ data: [] }))
+  ]);
 
+  const reals = realsRes.data || [];
+  const leads = leadsRes.data || [];
+  const contracts = contractsRes.data || [];
+  const orders = (ordersRes.data) || [];
+
+  // Répartition métiers : combine réalisations + leads (les 2 sources les plus parlantes)
   const byMetier = {};
   const byVille = {};
-  list.forEach(r => {
-    byMetier[r.metier] = (byMetier[r.metier] || 0) + 1;
-    byVille[r.ville] = (byVille[r.ville] || 0) + 1;
+  reals.forEach(r => {
+    if (r.metier) byMetier[r.metier] = (byMetier[r.metier] || 0) + 1;
+    if (r.ville)  byVille[r.ville]   = (byVille[r.ville] || 0)   + 1;
   });
-  const totalSEO = list.filter(r => r.seo_title && r.seo_description).length;
-  const totalLongDesc = list.filter(r => r.description_long && r.description_long.length > 200).length;
-  const total = list.length;
+  leads.forEach(l => {
+    if (l.metier) byMetier[l.metier] = (byMetier[l.metier] || 0) + 1;
+    if (l.ville)  byVille[l.ville]   = (byVille[l.ville] || 0)   + 1;
+  });
+  contracts.forEach(ct => {
+    if (ct.metier) byMetier[ct.metier] = (byMetier[ct.metier] || 0) + 1;
+    if (ct.client_city) byVille[ct.client_city] = (byVille[ct.client_city] || 0) + 1;
+  });
+
+  const totalSEO = reals.filter(r => r.seo_title && r.seo_description).length;
+  const totalLongDesc = reals.filter(r => r.description_long && r.description_long.length > 200).length;
+  const total = reals.length;
 
   const { data: settings } = await c.from('app_settings').select('value').eq('key','ga4').single();
   const ga4Ready = !!(settings?.value?.property_id);
+
+  // ─── Tentative d'appel à l'Edge Function ga4-stats pour les vraies données GA4 ──
+  let ga4Stats = null;
+  if (ga4Ready) {
+    try {
+      const { data, error } = await c.functions.invoke('ga4-stats', { body: { period: '30d' } });
+      if (!error && data && data.success && data.kpi) {
+        ga4Stats = data.kpi;
+      } else if (!error && data) {
+        ga4Stats = data;
+      }
+    } catch (e) { /* GA4 stats indispo, on affichera juste "configuré ✓" */ }
+  }
 
   function distrib(obj, max=10) {
     const sorted = Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0,max);
@@ -87,13 +119,37 @@
 
   document.getElementById('anContent').innerHTML = `
     <div class="an-card">
-      <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Trafic visiteurs (GA4)</h3>
-      ${ga4Ready ?
-        '<p style="font-size:.88rem;color:var(--ink-500)">GA4 configuré ✓ — l\'affichage des sessions, sources, pages vues sera implémenté via Edge Function GA4 dans une prochaine vague.</p>' :
+      <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Trafic visiteurs (GA4) — 30 derniers jours</h3>
+      ${!ga4Ready ?
         `<div class="an-empty" style="padding:24px">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
           <p style="margin:0 0 12px;color:var(--ink-700)">GA4 non configuré</p>
           <div style="display:flex;gap:8px;justify-content:center"><a href="../guides/ga4.md" target="_blank" class="btn">📖 Guide</a><a href="settings.html#section-ga4" class="btn btn-primary">Configurer →</a></div>
+        </div>`
+        : ga4Stats ?
+        `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px">
+          <div style="padding:13px;background:#FAFCFD;border:1px solid var(--ink-100);border-radius:10px">
+            <div style="font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">👥 Visiteurs uniques</div>
+            <div style="font-size:1.5rem;font-weight:800;color:#0A1428;line-height:1.1">${(ga4Stats.users||ga4Stats.totalUsers||0).toLocaleString('fr-FR')}</div>
+          </div>
+          <div style="padding:13px;background:#FAFCFD;border:1px solid var(--ink-100);border-radius:10px">
+            <div style="font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">📊 Sessions</div>
+            <div style="font-size:1.5rem;font-weight:800;color:#0A1428;line-height:1.1">${(ga4Stats.sessions||0).toLocaleString('fr-FR')}</div>
+          </div>
+          <div style="padding:13px;background:#FAFCFD;border:1px solid var(--ink-100);border-radius:10px">
+            <div style="font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">📄 Pages vues</div>
+            <div style="font-size:1.5rem;font-weight:800;color:#0A1428;line-height:1.1">${(ga4Stats.page_views||ga4Stats.screenPageViews||0).toLocaleString('fr-FR')}</div>
+          </div>
+          <div style="padding:13px;background:#FAFCFD;border:1px solid var(--ink-100);border-radius:10px">
+            <div style="font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">⏱ Durée moyenne</div>
+            <div style="font-size:1.5rem;font-weight:800;color:#0A1428;line-height:1.1">${ga4Stats.avg_duration_sec ? Math.floor(ga4Stats.avg_duration_sec/60)+':'+String(ga4Stats.avg_duration_sec%60).padStart(2,'0') : '—'}</div>
+          </div>
+        </div>
+        <p style="margin-top:14px;font-size:.78rem;color:var(--ink-400)">Données récupérées via l'Edge Function ga4-stats · property ${escapeHtml(settings?.value?.property_id||'')}</p>`
+        :
+        `<div style="padding:18px;background:#FAFCFD;border:1px dashed var(--ink-100);border-radius:10px">
+          <p style="margin:0;font-size:.88rem;color:var(--ink-700)"><strong>GA4 configuré ✓</strong></p>
+          <p style="margin:6px 0 0;font-size:.82rem;color:var(--ink-500)">L'Edge Function <code>ga4-stats</code> n'a pas répondu (Service Account Google probablement en attente de propagation — délai 4-6h après création). Re-déploiement non requis, attends que Google active le SA puis recharge cette page.</p>
         </div>`
       }
     </div>
