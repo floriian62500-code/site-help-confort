@@ -31,7 +31,7 @@ RE_SLUG_FIELD = re.compile(r"""\bslug\s*:\s*['"]([a-z0-9\-]+)['"]""", re.I)
 RE_LABEL      = re.compile(r"""\b(?:label|name)\s*:\s*['"]([^'"]+)['"]""", re.I)
 RE_METIER     = re.compile(r"""\b(?:metier|category_name|category_slug)\s*:\s*['"]([^'"]+)['"]""", re.I)
 RE_PRICE      = re.compile(r"""\b(?:price|price_ttc)\s*:\s*(\d+(?:\.\d+)?)""", re.I)
-RE_QUOTE      = re.compile(r"""\bquote\s*:\s*(true)""", re.I)
+RE_QUOTE      = re.compile(r"""\b(?:quote|requires_quote)\s*:\s*(true)""", re.I)
 
 
 def extract_block(text: str, marker: str) -> str | None:
@@ -138,9 +138,14 @@ def main() -> int:
     wiz_slugs = {e["slug"]: e for e in wiz}
     cat_slugs = {e["slug"]: e for e in cat}
 
-    only_wiz = sorted(set(wiz_slugs) - set(cat_slugs))
+    # Slugs "fourre-tout" du wizard — convention UX, ne sont pas dans le catalogue
+    # (option "autre" qui redirige vers contact pour un devis manuel)
+    WIZARD_ONLY_TOLERATED = {"plomberie-sur-devis", "travaux-renovation"}
+
+    only_wiz = sorted(set(wiz_slugs) - set(cat_slugs) - WIZARD_ONLY_TOLERATED)
     only_cat = sorted(set(cat_slugs) - set(wiz_slugs))
     common = sorted(set(wiz_slugs) & set(cat_slugs))
+    tolerated = sorted((set(wiz_slugs) - set(cat_slugs)) & WIZARD_ONLY_TOLERATED)
 
     # Détecte les écarts de prix sur les slugs communs
     price_diffs = []
@@ -175,6 +180,7 @@ def main() -> int:
         f"**Wizard home (`ALL_PRESTAS` d'index.html)** : {len(wiz)} prestations",
         f"**Catalogue (`LOCAL_CATALOG` de nos-prestations.html)** : {len(cat)} prestations",
         f"**Slugs communs** : {len(common)}",
+        f"**Slugs wizard tolérés (fourre-tout)** : {len(tolerated)}",
         f"**Alertes totales** : **{nb_alertes}**",
         "",
         "## 🚨 Prestations dans wizard mais ABSENTES du catalogue",

@@ -1,35 +1,24 @@
 # 🔄 Audit synchronisation wizard ↔ catalogue — Sonde IA #59
 
-*Généré le 2026-05-15 13:11 — `admin-pro/audits/audit_catalogue_sync.py`*
+*Généré le 2026-05-15 13:12 — `admin-pro/audits/audit_catalogue_sync.py`*
 
-**Wizard home (`ALL_PRESTAS` d'index.html)** : 30 prestations
+**Wizard home (`ALL_PRESTAS` d'index.html)** : 32 prestations
 **Catalogue (`LOCAL_CATALOG` de nos-prestations.html)** : 30 prestations
-**Slugs communs** : 28
-**Alertes totales** : **9**
+**Slugs communs** : 30
+**Slugs wizard tolérés (fourre-tout)** : 2
+**Alertes totales** : **0**
 
 ## 🚨 Prestations dans wizard mais ABSENTES du catalogue
 
-| Slug | Label wizard | Métier | Prix |
-|------|--------------|--------|------|
-| `plomberie-sur-devis` | Autre dépannage plomberie | Plomberie | sur devis |
-| `travaux-renovation` | Devis travaux / rénovation | Travaux | sur devis |
+✅ Aucun écart — tous les slugs wizard existent dans le catalogue.
 
 ## 🚨 Prestations dans catalogue mais ABSENTES du wizard
 
-| Slug | Label catalogue | Métier | Prix |
-|------|-----------------|--------|------|
-| `chauffe-eau-100-st` | Chauffe-eau 100 L Stéatite (mural) | chauffe-eau | 887.0 € |
-| `chauffe-eau-150-st` | Chauffe-eau 150 L Stéatite (mural) | chauffe-eau | 961.0 € |
+✅ Aucun écart — tous les slugs catalogue existent dans le wizard.
 
 ## ⚠️ Écarts de prix sur slugs communs
 
-| Slug | Wizard | Catalogue |
-|------|--------|-----------|
-| `adaptation-pmr` | quote=True | quote=False |
-| `blindage-porte` | quote=True | quote=False |
-| `pompe-a-chaleur` | quote=True | quote=False |
-| `renovation-salle-de-bain` | quote=True | quote=False |
-| `tableau-electrique` | quote=True | quote=False |
+✅ Tous les prix communs concordent.
 
 ## 🛠️ Procédure de correction
 
