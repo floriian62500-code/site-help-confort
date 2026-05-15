@@ -444,7 +444,7 @@ window.addEventListener('scroll', function() {
             </span>
             <span class="hcv-text">
               <strong>Urgence — Appel direct</strong>
-              <span>Réponse sous 2h · 7j/7</span>
+              <span>Réponse rapide 7j/7</span>
             </span>
             <span class="hcv-arrow">→</span>
           </button>
@@ -456,7 +456,7 @@ window.addEventListener('scroll', function() {
             </span>
             <span class="hcv-text">
               <strong>Demander un rappel</strong>
-              <span>Réponse garantie sous 1h ouvrée</span>
+              <span>Réponse rapide</span>
             </span>
             <span class="hcv-arrow">→</span>
           </a>
@@ -826,7 +826,7 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
               <div class="mq-card-icon">
                 <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
               </div>
-              <div class="mq-card-pill mq-pill-install">✏️ Devis sous 48h</div>
+              <div class="mq-card-pill mq-pill-install">✏️ Devis rapide</div>
               <h3 class="mq-card-title">Devis &amp; travaux</h3>
               <p class="mq-card-desc">Chaudière, salle de bain, électricité, cuisine, PMR… <strong>projet complet à étudier</strong>.</p>
               <div class="mq-card-foot">
@@ -1698,7 +1698,7 @@ var urgLabel = URG_LABELS[state.urg];
 if (!urgLabel) {
   var d = (state.desc || '').toLowerCase();
   if (/urgent|immédiat|tout de suite|fuite|inonda|plus de chauffage|porte claquée|nuit/.test(d)) urgLabel = 'Urgent — dans la journée';
-  else urgLabel = 'Sous 48h ouvrées';
+  else urgLabel = 'Rapidement';
 }
 document.getElementById('resa-urg-name').textContent = urgLabel;
 document.getElementById('resa-agence-name').textContent = detectAgence(state.cp);
@@ -2159,7 +2159,7 @@ bubble.parentElement.style.animation = 'chatBubbleIn .4s cubic-bezier(.34,1.56,.
     <div class="chat-urg-body" id="chatUrgBody">
       <div class="chat-msg chat-msg-bot">
         <p>👋 Bonjour ! Comment pouvons-nous vous aider ?</p>
-        <p>Décrivez votre besoin en 1 clic — un conseiller vous rappelle <strong>sous 1h en horaires d'ouverture</strong>.</p>
+        <p>Décrivez votre besoin en 1 clic — un conseiller vous rappelle rapidement.</p>
       </div>
 
       <div class="chat-quick" id="chatQuick">
@@ -2268,7 +2268,7 @@ body.scrollTop = body.scrollHeight;
         Demande prioritaire
       </div>
       <h3 id="urgenceTitle" style="margin:0;font-size:1.4rem;font-weight:800;line-height:1.2">Une urgence ? On vous rappelle.</h3>
-      <p style="margin:6px 0 0;font-size:.92rem;color:rgba(255,255,255,.92);font-weight:500">Décrivez votre situation. On revient vers vous dans l'heure (Lun-Sam 8h-18h · urgences 7j/7).</p>
+      <p style="margin:6px 0 0;font-size:.92rem;color:rgba(255,255,255,.92);font-weight:500">Décrivez votre situation. On revient vers vous rapidement (Lun-Sam 8h-18h · urgences 7j/7).</p>
     </div>
 
     
@@ -2322,7 +2322,7 @@ body.scrollTop = body.scrollHeight;
 
       
       <p style="margin:14px 0 0;font-size:.78rem;color:#64748b;text-align:center;line-height:1.4">
-        Vous serez rappelé en moyenne <strong style="color:#0A1428">sous 1h</strong> en horaires d'ouverture.<br>
+        Vous serez rappelé rapidement en horaires d'ouverture.<br>
         Hors horaires : votre demande est priorisée pour le lendemain matin.
       </p>
     </form>

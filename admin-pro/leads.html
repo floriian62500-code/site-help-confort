@@ -113,9 +113,15 @@
           <option value="renovation">Rénovation</option>
           <option value="autre">Autre</option>
         </select>
+        <!-- Toggle Liste / Kanban -->
+        <div style="display:inline-flex;background:#fff;border:1px solid var(--ink-100);border-radius:9px;overflow:hidden;margin-left:auto;align-self:center">
+          <button type="button" id="viewModeList" class="view-mode-btn is-active" style="padding:7px 11px;font-size:.78rem;font-weight:700;background:var(--hc-primary);color:#fff;border:0;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Liste</button>
+          <button type="button" id="viewModeKanban" class="view-mode-btn" style="padding:7px 11px;font-size:.78rem;font-weight:700;background:#fff;color:var(--ink-700);border:0;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="18"/><rect x="14" y="3" width="7" height="11"/></svg>Kanban</button>
+        </div>
       </div>
 
       <div id="leadsList"></div>
+      <div id="leadsKanban" style="display:none;overflow-x:auto;padding-bottom:14px"></div>
     </div>
   </main>
 </div>
