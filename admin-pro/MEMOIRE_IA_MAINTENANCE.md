@@ -407,4 +407,28 @@ Chaque sonde retourne ✅ / ⚠️ / ❌ + le snippet incriminé + une suggestio
 
 ---
 
+### 33. Schema.org `@type` = "Plumber" copié-collé sur les 5 pages métier
+- **Symptôme** : `chauffagiste-saint-omer.html`, `electricien-saint-omer.html`, `serrurier-saint-omer.html`, `travaux-saint-omer.html` déclaraient toutes `@type: "Plumber"` dans le bloc `HC-SERVICE-SCHEMA-V1`. Description identique à celle de plombier ("dépannage… fuite… dégorgement… ballon d'eau chaude") sur toutes les pages. Google déduit que le site est un plombier qui propose aussi du chauffage/électricité plutôt qu'un multi-métier — pénalisant pour les requêtes type "électricien Saint-Omer".
+- **Cause** : Template copié sans changer `@type`/`description` lors de la duplication des pages métier.
+- **Correctif appliqué (15/05)** : Migration vers `HC-SERVICE-SCHEMA-V2` avec `@type` spécifique par métier (`HVACBusiness`, `Electrician`, `Locksmith`, `GeneralContractor`), description rewrites + `geo` + offres détaillées avec prix réels base produits.
+- **Règle de scan à ajouter** :
+  - Pour chaque page `*-saint-omer.html` métier, croiser `@type` JSON-LD avec le nom du métier dans le slug. Mapping attendu : plombier→Plumber, chauffagiste→HVACBusiness, electricien→Electrician, serrurier→Locksmith, travaux→GeneralContractor.
+  - Si mismatch → ALERTE.
+
+### 34. URLs JSON-LD malformées (accent + espace dans `url`)
+- **Symptôme** : 
+  - `electricien-saint-omer.html` déclarait `"url": "https://www.depan59-62.fr/électricien-saint-omer.html"` (accent é alors que le fichier est sans accent).
+  - `travaux-saint-omer.html` déclarait `"url": "https://www.depan59-62.fr/expert travaux-saint-omer.html"` (espace + préfixe inexistant).
+- **Cause** : Champ `url` rédigé à la main sans vérifier le slug réel.
+- **Correctif appliqué (15/05)** : URLs normalisées dans `HC-SERVICE-SCHEMA-V2`.
+- **Règle de scan à ajouter** :
+  - Pour chaque JSON-LD à la racine du site, extraire `url` ; vérifier qu'il pointe vers un fichier réellement existant (HEAD 200) et que le slug correspond au filename (pas d'accent, pas d'espace, pas de préfixe parasite).
+
+### Sondes additionnelles v4 (à intégrer au scan IA)
+29. **Sonde Schema-@type-métier** : sur pages `<métier>-saint-omer.html`, vérifier que `@type` correspond au mapping attendu (Plumber/HVACBusiness/Electrician/Locksmith/GeneralContractor).
+30. **Sonde JSON-LD-URL-valide** : valider chaque `url` JSON-LD avec un HEAD HTTP + cohérence slug.
+
+---
+
 *Addendum v3 généré le 15 mai 2026 par l'agent autonome — 2 nouveaux bugs + 2 nouvelles sondes.*
+*Addendum v4 généré le 15 mai 2026 par l'agent autonome — 2 bugs schema.org + 2 nouvelles sondes.*
