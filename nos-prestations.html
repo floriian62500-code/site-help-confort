@@ -588,15 +588,30 @@
     btn.disabled = false; btn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg> Voir les tarifs';
   });
 
-  // Icônes catégories (mapping vers SVG inline)
+  // Icônes catégories — vrais pictos HC (images dans /images/)
+  const CAT_PICTOS = {
+    'plomberie':   '/images/picto-plomberie.png',
+    'chauffe-eau': '/images/picto-plomberie.png',
+    'chauffage':   '/images/picto-chauffage.svg',
+    'electricite': '/images/picto-electricite.png',
+    'serrurerie':  '/images/picto-serrurerie.png',
+    'vitrerie':    '/images/picto-vitrerie.png',
+    'sur-mesure':  '/images/picto-renovation.png'
+  };
+  function pictoTag(slug, size){
+    var src = CAT_PICTOS[slug] || CAT_PICTOS['sur-mesure'];
+    var s = size || 22;
+    return '<img src="' + src + '" alt="" loading="lazy" decoding="async" style="width:' + s + 'px;height:' + s + 'px;object-fit:contain">';
+  }
+  // Compat : ancien CAT_ICONS + SVG_ATTRS conservés mais on n'utilisera plus que pictoTag
   const CAT_ICONS = {
     'plomberie':   '<path d="M22 12h-7l-2 4-3-8-2 4H2"/>',
-    'chauffe-eau': '<path d="M14 13.5a2.5 2.5 0 1 1-3 0V5l3-3v11.5z"/><path d="M11 5h3"/><path d="M16 12c1.5 0 3 .5 3 2v6a2 2 0 0 1-2 2h-3"/>',
+    'chauffe-eau': '<path d="M14 13.5a2.5 2.5 0 1 1-3 0V5l3-3v11.5z"/>',
     'chauffage':   '<path d="M12 2c1 4-2 4 0 8 2 4 4 4 0 12-1-4 2-4 0-8-2-4-4-4 0-12z"/>',
     'electricite': '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
     'serrurerie':  '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
-    'vitrerie':    '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/>',
-    'sur-mesure':  '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>'
+    'vitrerie':    '<rect x="3" y="3" width="18" height="18" rx="2"/>',
+    'sur-mesure':  '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>'
   };
   const SVG_ATTRS = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
   const escapeHtml = (s) => String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
