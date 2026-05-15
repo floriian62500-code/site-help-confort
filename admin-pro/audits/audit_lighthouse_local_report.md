@@ -1,4 +1,4 @@
-# 🔦 Audit Lighthouse local — 2026-05-15 13:14
+# 🔦 Audit Lighthouse local — 2026-05-15 13:23
 
 **39 pages auditées** · **1 erreurs** · **6 warnings** · **Score moyen 99/100**
 
