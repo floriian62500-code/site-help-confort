@@ -225,13 +225,13 @@
             <p class="section-desc">Une seule app Meta gère Facebook et Instagram. <a href="wizard-meta.html">Assistant pas-à-pas (~25 min)</a> · <a href="../guides/meta.md" target="_blank">Guide manuel</a></p>
 
             <div class="guide-box" style="margin-bottom:14px">
-              <strong>📖 Étapes résumées :</strong>
+              <strong>📖 Méthode rapide (5 min) :</strong>
               <ol style="margin:6px 0 0 18px;padding:0;line-height:1.7">
-                <li>Aller sur <a href="https://developers.facebook.com/apps" target="_blank">developers.facebook.com/apps</a> → Créer une app type "Business"</li>
-                <li>Ajouter les produits <strong>Pages API</strong> + <strong>Instagram Graph API</strong></li>
-                <li>Récupérer <strong>App ID</strong> + <strong>App Secret</strong> (Settings → Basic)</li>
-                <li>Obtenir un User Access Token court via <a href="https://developers.facebook.com/tools/explorer/" target="_blank">Graph API Explorer</a></li>
-                <li>Saisir tout ci-dessous → cliquer <strong>"⚡ Auto-récupérer Page Access Token"</strong> → tu obtiendras un token <strong>permanent</strong> (à vie tant que tu es admin de la page)</li>
+                <li>Va sur <a href="https://developers.facebook.com/tools/explorer/" target="_blank"><strong>Graph API Explorer</strong></a> → coche pages_show_list / pages_read_engagement / pages_manage_posts → Generate Access Token</li>
+                <li>Tape <code>me/accounts</code> dans la barre URL → <strong>Envoyer</strong></li>
+                <li>Sélectionne tout le JSON de réponse (Cmd+A + Cmd+C) → colle ci-dessous dans <strong>"🪄 Méthode rapide"</strong> → clique <strong>"📥 Extraire automatiquement"</strong></li>
+                <li>(Optionnel pour token <strong>permanent</strong>) Ajoute App ID + App Secret depuis <a href="https://developers.facebook.com/apps" target="_blank">developers.facebook.com/apps</a> → Settings → Basic</li>
+                <li><strong>Enregistrer</strong> → <strong>Tester</strong> pour valider la connexion</li>
               </ol>
             </div>
 
