@@ -17,6 +17,16 @@ Tous les tarifs affichés sur le site doivent être croisés avec ce document. T
 | **Main d'œuvre week-end** | 80 €/h | **88 €/h** |
 | **Déplacement audomarois** | 45 € | **50 €** |
 | **Déplacement Dunkerque (forfait)** | 80 € | **88 €** |
+| **Frais de dossier** (systématique) | 5 € | **5,50 €** |
+| **Traitement des déchets** (forfait obligatoire) | 1,67 € | **1,84 €** |
+
+### 🧮 Base d'un devis « tout compris »
+Tout devis HELP! Confort comprend systématiquement :
+- Main d'œuvre (53 €/h HT)
+- Déplacement (45 € HT)
+- Frais de dossier (5 € HT)
+- Traitement déchets (1,67 € HT)
+- = **104,67 € HT base** (≈ **115 € TTC**) auxquels on ajoute la fourniture éventuelle + MO supplémentaire si > 1h.
 
 ---
 
@@ -27,7 +37,8 @@ Tous les tarifs affichés sur le site doivent être croisés avec ce document. T
 | Recherche de fuite visuelle | **148 €** | FRFV |
 | Recherche de fuite technique (caméra/gaz/acoustique) | **383 €** | FRFT |
 | Désengorgement canalisation | **165 €** | — |
-| Mécanisme chasse d'eau (T1 semaine) | **131 €** | T1 |
+| Mécanisme chasse d'eau **Nicoll** (tout compris) | **187 €** | devis 15/05 |
+| Mécanisme chasse d'eau **Geberit** (tout compris, WC sol) | **203 €** | devis 15/05 |
 | Détartrage installation sanitaire | **237 €** | — |
 
 ## 🔥 Chauffage (3 forfaits + 6 contrats)
