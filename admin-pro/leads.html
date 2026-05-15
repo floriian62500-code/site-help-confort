@@ -397,9 +397,70 @@ let _filterStatusOverride = null;
       </div>
     ` : '';
 
-    const utmBlock = hasUtm ? `
+    // ─── Bloc Caractéristiques techniques (depuis utm/metadata) ──
+    const caracs = [];
+    if (utm.habitat) caracs.push({ label: 'Habitat', val: utm.habitat, icon: '🏠' });
+    if (utm.urgence) caracs.push({ label: 'Urgence', val: utm.urgence, icon: '🔥' });
+    if (utm.metiers_selectionnes) caracs.push({ label: 'Métiers cochés', val: utm.metiers_selectionnes, icon: '🛠️' });
+    if (utm.presta_key) caracs.push({ label: 'Type prestation', val: utm.presta_key, icon: '📋' });
+    if (utm.flow) caracs.push({ label: 'Parcours', val: utm.flow, icon: '🧭' });
+    const caracBlock = caracs.length > 0 ? `
+      <div style="margin-top:14px">
+        <h4 style="margin:0 0 10px 0;font-size:.96rem;font-weight:800;color:#0A1428">🔍 Caractéristiques de la demande</h4>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px">
+          ${caracs.map(c => `<div style="padding:9px 12px;background:#FAFCFD;border:1px solid var(--ink-100);border-radius:9px"><div style="font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px">${c.icon} ${escapeHtml(c.label)}</div><div style="font-size:.86rem;color:var(--ink-900);font-weight:600;word-break:break-word">${escapeHtml(String(c.val))}</div></div>`).join('')}
+        </div>
+      </div>
+    ` : '';
+
+    // ─── Bloc Statut commercial (devis / acompte / facture) ──────
+    const formatEur = v => v != null ? Number(v).toFixed(2).replace('.',',') + ' €' : '—';
+    const formatDate = v => v ? new Date(v).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'}) : '—';
+    const hasQuote = l.quote_sent_at || l.quote_amount;
+    const hasDeposit = l.deposit_paid_at || l.deposit_amount;
+    const hasInvoice = l.invoiced_at || l.invoice_amount;
+    const paymentBlock = `
+      <div style="margin-top:18px;padding:14px;background:linear-gradient(135deg,rgba(34,160,107,.04),rgba(34,160,107,.01));border:1px solid rgba(34,160,107,.18);border-radius:12px">
+        <h4 style="margin:0 0 12px 0;font-size:.96rem;font-weight:800;color:#0A1428;display:flex;align-items:center;gap:8px;justify-content:space-between">
+          <span>💰 Suivi commercial</span>
+          ${hasInvoice ? '<span style="background:#DCFCE7;color:#15803D;font-size:.66rem;padding:2px 8px;border-radius:999px;font-weight:800">✓ FACTURÉ</span>' : hasDeposit ? '<span style="background:#DBEAFE;color:#1E40AF;font-size:.66rem;padding:2px 8px;border-radius:999px;font-weight:800">⏳ ACOMPTE PAYÉ</span>' : hasQuote ? '<span style="background:#FEF3C7;color:#92400E;font-size:.66rem;padding:2px 8px;border-radius:999px;font-weight:800">📤 DEVIS ENVOYÉ</span>' : '<span style="background:#F1F5F9;color:#475569;font-size:.66rem;padding:2px 8px;border-radius:999px;font-weight:800">À TRAITER</span>'}
+        </h4>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:.82rem">
+          <div>
+            <div style="font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">📤 Devis</div>
+            <div><strong>${formatEur(l.quote_amount)}</strong></div>
+            <div style="color:var(--ink-500);font-size:.74rem">${l.quote_sent_at ? 'envoyé le ' + formatDate(l.quote_sent_at) : 'non envoyé'}</div>
+          </div>
+          <div>
+            <div style="font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">💳 Acompte</div>
+            <div><strong>${formatEur(l.deposit_amount)}</strong></div>
+            <div style="color:${l.deposit_paid_at?'#15803D':'var(--ink-500)'};font-size:.74rem">${l.deposit_paid_at ? '✓ payé le ' + formatDate(l.deposit_paid_at) : 'non payé'}</div>
+          </div>
+          <div>
+            <div style="font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">🧾 Facture finale</div>
+            <div><strong>${formatEur(l.invoice_amount)}</strong></div>
+            <div style="color:${l.invoiced_at?'#15803D':'var(--ink-500)'};font-size:.74rem">${l.invoiced_at ? '✓ facturé le ' + formatDate(l.invoiced_at) : 'non facturé'}</div>
+          </div>
+          ${l.intervention_date ? `<div><div style="font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">📅 Intervention</div><div><strong>${formatDate(l.intervention_date)}</strong></div></div>` : ''}
+        </div>
+        <details style="margin-top:12px">
+          <summary style="cursor:pointer;font-size:.78rem;color:var(--hc-primary);font-weight:700">✏️ Modifier les montants / dates</summary>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-top:10px;padding:10px;background:#fff;border-radius:8px;border:1px solid var(--ink-100)">
+            <label style="font-size:.74rem">Devis HT (€) <input type="number" step="0.01" id="leadEditQuoteAmount" value="${l.quote_amount || ''}" style="width:100%;padding:6px;border:1px solid var(--ink-100);border-radius:6px;font:inherit;font-size:.82rem"></label>
+            <label style="font-size:.74rem">Date devis <input type="date" id="leadEditQuoteSent" value="${l.quote_sent_at ? l.quote_sent_at.slice(0,10) : ''}" style="width:100%;padding:6px;border:1px solid var(--ink-100);border-radius:6px;font:inherit;font-size:.82rem"></label>
+            <label style="font-size:.74rem">Acompte (€) <input type="number" step="0.01" id="leadEditDepositAmount" value="${l.deposit_amount || ''}" style="width:100%;padding:6px;border:1px solid var(--ink-100);border-radius:6px;font:inherit;font-size:.82rem"></label>
+            <label style="font-size:.74rem">Date acompte <input type="date" id="leadEditDepositPaid" value="${l.deposit_paid_at ? l.deposit_paid_at.slice(0,10) : ''}" style="width:100%;padding:6px;border:1px solid var(--ink-100);border-radius:6px;font:inherit;font-size:.82rem"></label>
+            <label style="font-size:.74rem">Facture TTC (€) <input type="number" step="0.01" id="leadEditInvoiceAmount" value="${l.invoice_amount || ''}" style="width:100%;padding:6px;border:1px solid var(--ink-100);border-radius:6px;font:inherit;font-size:.82rem"></label>
+            <label style="font-size:.74rem">Date facture <input type="date" id="leadEditInvoiced" value="${l.invoiced_at ? l.invoiced_at.slice(0,10) : ''}" style="width:100%;padding:6px;border:1px solid var(--ink-100);border-radius:6px;font:inherit;font-size:.82rem"></label>
+            <label style="font-size:.74rem">Date intervention <input type="date" id="leadEditIntervention" value="${l.intervention_date || ''}" style="width:100%;padding:6px;border:1px solid var(--ink-100);border-radius:6px;font:inherit;font-size:.82rem"></label>
+          </div>
+        </details>
+      </div>
+    `;
+
+    const utmBlock = hasUtm && caracs.length === 0 ? `
       <div style="margin-top:14px;padding:10px 12px;background:#FAFCFD;border:1px solid var(--ink-100);border-radius:10px;font-size:.78rem">
-        <div style="font-weight:700;color:var(--ink-700);margin-bottom:4px">📊 Tracking UTM</div>
+        <div style="font-weight:700;color:var(--ink-700);margin-bottom:4px">📊 Tracking UTM brut</div>
         <div style="color:var(--ink-500)">${Object.entries(utm).map(([k,v]) => `<strong>${escapeHtml(k)}</strong>: ${escapeHtml(String(v))}`).join(' · ')}</div>
       </div>
     ` : '';
@@ -419,6 +480,8 @@ let _filterStatusOverride = null;
       </div>
 
       ${contractBlock}
+      ${caracBlock}
+      ${paymentBlock}
       ${photosBlock}
 
       <div style="margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;font-size:.78rem;color:var(--ink-500)">
@@ -456,9 +519,41 @@ let _filterStatusOverride = null;
       const newNotes = document.getElementById('newNotes').value.trim() || null;
       const update = { status: newStatus, notes_internes: newNotes };
       if (newStatus === 'gagne' || newStatus === 'perdu' || newStatus === 'archive') update.closed_at = new Date().toISOString();
+
+      // Champs paiement / devis / facture (depuis le details ouvrable)
+      const grab = (id) => { const el = document.getElementById(id); return el && el.value !== '' ? el.value : null; };
+      const qA = grab('leadEditQuoteAmount');
+      const qD = grab('leadEditQuoteSent');
+      const dA = grab('leadEditDepositAmount');
+      const dD = grab('leadEditDepositPaid');
+      const iA = grab('leadEditInvoiceAmount');
+      const iD = grab('leadEditInvoiced');
+      const intD = grab('leadEditIntervention');
+      if (qA !== null) update.quote_amount = Number(qA);
+      if (qD !== null) update.quote_sent_at = qD;
+      if (dA !== null) update.deposit_amount = Number(dA);
+      if (dD !== null) update.deposit_paid_at = dD;
+      if (iA !== null) update.invoice_amount = Number(iA);
+      if (iD !== null) update.invoiced_at = iD;
+      if (intD !== null) update.intervention_date = intD;
+
       const { error } = await c.from('leads').update(update).eq('id', l.id);
-      if (error) { toast('Erreur : '+error.message,'err',3500); return; }
-      toast('Demande mise à jour');
+      if (error) {
+        // Si erreur sur colonnes manquantes (migration pas encore passée), retry sans
+        if (error.message && error.message.includes('column')) {
+          delete update.quote_amount; delete update.quote_sent_at;
+          delete update.deposit_amount; delete update.deposit_paid_at;
+          delete update.invoice_amount; delete update.invoiced_at;
+          delete update.intervention_date;
+          const retry = await c.from('leads').update(update).eq('id', l.id);
+          if (retry.error) { toast('Erreur : '+retry.error.message,'err',3500); return; }
+          toast('Statut/notes mis à jour (les champs financiers seront actifs après déploiement de la migration)', 'ok', 4500);
+        } else {
+          toast('Erreur : '+error.message,'err',3500); return;
+        }
+      } else {
+        toast('Demande mise à jour');
+      }
       closeLead();
       await load();
     };
