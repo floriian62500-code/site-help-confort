@@ -1,22 +1,22 @@
-# Audit HTML5 — 2026-05-15 10:50
+# Audit HTML5 — 2026-05-15 12:13
 
 > Audit local rapide HTML5 + a11y de base. Lancement : `python3 admin-pro/audits/audit_html5.py`
 > ⚠️ Ce n'est pas un substitut au validateur W3C officiel, mais il pré-filtre les erreurs évidentes.
 
 ## Synthèse
 
-- Pages auditées : **38**
+- Pages auditées : **39**
 - Pages avec erreurs : **0**
-- Pages avec warnings : **30**
+- Pages avec warnings : **29**
 - Total erreurs : **0**
-- Total warnings : **31**
+- Total warnings : **30**
 
 ## Détail par page (pages problématiques uniquement)
 
 ### `index.html`
 
 - ⚠️ 3 <button> sans texte ni aria-label
-- ⚠️ balisage déséquilibré (indicatif) : <div> 163↗ / 164↘, <a> 86↗ / 87↘
+- ⚠️ balisage déséquilibré (indicatif) : <div> 164↗ / 165↘, <a> 86↗ / 87↘
 - ℹ️ 18 <img> avec alt vide (OK si décoratif)
 
 ### `a-propos.html`
@@ -94,10 +94,6 @@
 - ⚠️ balisage déséquilibré (indicatif) : <div> 60↗ / 61↘, <a> 68↗ / 69↘
 - ℹ️ 7 <img> avec alt vide (OK si décoratif)
 
-### `faq.html`
-
-- ⚠️ <title> long (88 chars, >70 recommandé)
-
 ### `guide-adaptation-pmr.html`
 
 - ⚠️ balisage déséquilibré (indicatif) : <div> 31↗ / 32↘, <a> 71↗ / 72↘
@@ -125,7 +121,7 @@
 
 ### `mentions-legales.html`
 
-- ⚠️ balisage déséquilibré (indicatif) : <div> 34↗ / 35↘, <a> 76↗ / 77↘
+- ⚠️ balisage déséquilibré (indicatif) : <div> 34↗ / 35↘, <a> 77↗ / 78↘
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `plombier-saint-omer.html`
@@ -163,6 +159,10 @@
 - ⚠️ balisage déséquilibré (indicatif) : <div> 101↗ / 102↘, <a> 83↗ / 84↘
 - ℹ️ 16 <img> avec alt vide (OK si décoratif)
 
+### `blog.html`
+
+- ℹ️ 7 <img> avec alt vide (OK si décoratif)
+
 ### `realisation.html`
 
 - ℹ️ aucun <h1> statique — injecté par JS (page dynamique)
@@ -172,7 +172,9 @@
 - `404.html`
 - `aides.html`
 - `avant-apres.html`
+- `blog.html`
 - `devis-express.html`
+- `faq.html`
 - `nos-prestations.html`
 - `processus.html`
 - `realisation.html`
