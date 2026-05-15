@@ -743,13 +743,27 @@
     return;
   }
 
-  // Grouper par catégorie
+  // Grouper par catégorie (ordre déterministe : Plo, ECS, Chauf, Élec, Serr, Vit, Sur-mesure)
+  const CAT_ORDER = ['plomberie','chauffe-eau','chauffage','electricite','serrurerie','vitrerie','sur-mesure'];
+  const CAT_LABELS = {
+    'plomberie':'Plomberie & Sanitaires',
+    'chauffe-eau':'Chauffe-eau & Production ECS',
+    'chauffage':'Chauffage',
+    'electricite':'Électricité',
+    'serrurerie':'Serrurerie',
+    'vitrerie':'Vitrerie',
+    'sur-mesure':'Devis sur mesure'
+  };
   const grouped = {};
+  // Pré-initialiser les catégories pour qu'elles apparaissent dans l'ordre voulu
+  CAT_ORDER.forEach(slug => { grouped[slug] = { name: CAT_LABELS[slug], icon: slug, slug, items: [] }; });
   services.forEach(s => {
-    const key = s.category_slug || 'autre';
+    const key = s.category_slug || 'sur-mesure';
     if (!grouped[key]) grouped[key] = { name: s.category_name || 'Autre', icon: s.category_icon, slug: key, items: [] };
     grouped[key].items.push(s);
   });
+  // Retirer les catégories vides
+  Object.keys(grouped).forEach(k => { if (!grouped[k].items.length) delete grouped[k]; });
 
   // Filtres
   document.getElementById('cntAll').textContent = services.length;
