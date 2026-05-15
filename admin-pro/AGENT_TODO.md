@@ -66,7 +66,7 @@
 
 - [ ] **Vérifier les `data-source`** sur tous les tarifs des 5 pages métier (sonde IA #23).
 - [ ] **Cleanup CSS mort** : supprimer les règles `.m-cta-final*` des 5 pages métier (HTML déjà retiré).
-- [ ] **404.html** — refonte avec design unifié + bouton "Retour à l'accueil" + chatbot.
+- [x] **404.html** — refonte avec design unifié + bouton "Retour à l'accueil" + chatbot. *(fait 15/05 — style inline complet : gradient h1 Playfair, picto loupe, double CTA, 8 quick-links métiers)*
 - [ ] **`mentions-legales.html`** — vérifier que toutes les infos sont à jour (SIRET, RCS, médiation conso).
 - [ ] **Favicon** — vérifier que toutes les pages chargent le bon favicon `logo.svg`.
 
