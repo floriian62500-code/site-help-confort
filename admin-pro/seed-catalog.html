@@ -161,6 +161,55 @@
     const btn = document.getElementById('btnSeed');
     btn.disabled = totalMissing === 0;
     btn.textContent = totalMissing === 0 ? '✅ Rien à seeder' : `🌱 Seeder ${totalMissing} entrée(s)`;
+
+    // Bouton fusion Chauffe-eau → Plomberie : visible si catégorie chauffe-eau existe encore
+    const chauffeCat = d.catBySlug.get(CHAUFFE_EAU_DEPRECATED_SLUG);
+    const btnMerge = document.getElementById('btnMergeChauffeEau');
+    if (chauffeCat) {
+      const svcInCh = d.existingSvc.filter(s => s.category_id === chauffeCat.id);
+      btnMerge.style.display = 'inline-flex';
+      btnMerge.textContent = `🔀 Fusionner Chauffe-eau → Plomberie (${svcInCh.length} prestation${svcInCh.length>1?'s':''} à déplacer)`;
+    } else {
+      btnMerge.style.display = 'none';
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // FUSION : Chauffe-eau → Plomberie & Sanitaires
+  // ═══════════════════════════════════════════════════════════════
+  async function mergeChauffeEau() {
+    logClear();
+    log('🔀 Fusion Chauffe-eau → Plomberie & Sanitaires…');
+
+    // 1) Récupère les 2 catégories
+    const { data: cats, error: ec } = await sb.from('service_categories').select('*');
+    if (ec) { log('❌ Lecture catégories : ' + ec.message, 'err'); return; }
+    const ch = cats.find(c => c.slug === CHAUFFE_EAU_DEPRECATED_SLUG);
+    const pl = cats.find(c => c.slug === 'plomberie-sanitaires');
+    if (!ch) { log('ℹ Pas de catégorie chauffe-eau à fusionner, rien à faire.', 'warn'); return; }
+    if (!pl) { log('❌ Catégorie plomberie-sanitaires introuvable. Seede d\'abord.', 'err'); return; }
+
+    // 2) UPDATE services chauffe-eau → plomberie
+    const { data: moved, error: em } = await sb.from('services')
+      .update({ category_id: pl.id })
+      .eq('category_id', ch.id)
+      .select('id,name');
+    if (em) { log('❌ Update services : ' + em.message, 'err'); return; }
+    log(`  ✓ ${moved.length} prestation(s) déplacée(s) vers Plomberie & Sanitaires :`, 'ok');
+    moved.forEach(s => log(`    · ${s.name}`, 'ok'));
+
+    // 3) Désactive la catégorie chauffe-eau (on garde la ligne pour historique)
+    const { error: ed } = await sb.from('service_categories')
+      .update({ active: false, name: 'Chauffe-eau (fusionné dans Plomberie)' })
+      .eq('id', ch.id);
+    if (ed) { log('⚠ Désactivation catégorie : ' + ed.message, 'warn'); }
+    else log('  ✓ Catégorie chauffe-eau désactivée (gardée pour historique)', 'ok');
+
+    log('\n✅ Fusion terminée. Le catalogue n\'affiche plus que Plomberie & Sanitaires pour tous ces produits.', 'ok');
+    setTimeout(async () => {
+      const d2 = await diagnose();
+      if (d2) renderDiff(d2);
+    }, 800);
   }
 
   // ═══════════════════════════════════════════════════════════════
@@ -236,6 +285,10 @@
   document.getElementById('btnSeed').onclick = async () => {
     const d2 = await diagnose();
     if (d2) await seed(d2);
+  };
+  document.getElementById('btnMergeChauffeEau').onclick = async () => {
+    if (!confirm('Confirmer la fusion ? Toutes les prestations Chauffe-eau seront déplacées dans Plomberie & Sanitaires. La catégorie Chauffe-eau sera masquée mais conservée en historique.')) return;
+    await mergeChauffeEau();
   };
 })();
 </script>
