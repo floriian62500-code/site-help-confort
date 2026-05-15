@@ -133,109 +133,112 @@
 <!-- HC-TRACKING-V2 (centralisé dans assets/tracking.js) -->
 <script src="/assets/tracking.js" defer></script>
 
-<!-- HC-SERVICE-SCHEMA-V1 -->
+<!-- HC-SERVICE-SCHEMA-V2 (enrichi @type Locksmith + geo + Offer.price 2026-05-15) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Plumber",
-  "name": "Serrurerie Saint-Omer & Dunkerque",
-  "description": "Dépannage serrurerie, fuite, dégorgement, ballon d'eau chaude, recherche de fuite à la caméra thermique. Intervention rapide à Saint-Omer, Longuenesse, Arques, Aire-sur-la-Lys, Dunkerque, Gravelines, Bergues.",
+  "@type": "Locksmith",
+  "@id": "https://www.depan59-62.fr/serrurier-saint-omer.html#business",
+  "name": "HELP! Confort — Serrurier Saint-Omer & Dunkerque",
+  "description": "Serrurier à Saint-Omer : ouverture de porte (simple / claquée / fermée à clé / sécurité), remplacement de cylindre, vitrerie mise en sécurité. Intervention rapide audomarois + littoral Dunkerque.",
   "image": "https://www.depan59-62.fr/logo-officiel.jpg",
+  "logo": "https://www.depan59-62.fr/logo.svg",
   "telephone": "+33366100134",
   "email": "saint-omer@helpconfort.com",
   "url": "https://www.depan59-62.fr/serrurier-saint-omer.html",
   "priceRange": "€€",
+  "currenciesAccepted": "EUR",
+  "paymentAccepted": "Carte bancaire, Virement, Chèque, Espèces",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "242 route de Boulogne",
     "addressLocality": "Saint-Martin-lez-Tatinghem",
     "postalCode": "62500",
+    "addressRegion": "Hauts-de-France",
     "addressCountry": "FR"
   },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 50.7506,
+    "longitude": 2.2367
+  },
   "areaServed": [
-    {
-      "@type": "City",
-      "name": "Saint-Omer"
-    },
-    {
-      "@type": "City",
-      "name": "Longuenesse"
-    },
-    {
-      "@type": "City",
-      "name": "Arques"
-    },
-    {
-      "@type": "City",
-      "name": "Saint-Martin-lez-Tatinghem"
-    },
-    {
-      "@type": "City",
-      "name": "Aire-sur-la-Lys"
-    },
-    {
-      "@type": "City",
-      "name": "Lumbres"
-    },
-    {
-      "@type": "City",
-      "name": "Dunkerque"
-    },
-    {
-      "@type": "City",
-      "name": "Gravelines"
-    },
-    {
-      "@type": "City",
-      "name": "Bergues"
-    }
+    {"@type": "City", "name": "Saint-Omer"},
+    {"@type": "City", "name": "Longuenesse"},
+    {"@type": "City", "name": "Arques"},
+    {"@type": "City", "name": "Saint-Martin-lez-Tatinghem"},
+    {"@type": "City", "name": "Aire-sur-la-Lys"},
+    {"@type": "City", "name": "Lumbres"},
+    {"@type": "City", "name": "Dunkerque"},
+    {"@type": "City", "name": "Gravelines"},
+    {"@type": "City", "name": "Bergues"}
   ],
   "openingHoursSpecification": [
     {
       "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ],
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
       "opens": "08:00",
       "closes": "18:00"
     }
   ],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
-    "name": "Serrurerie",
+    "name": "Prestations Serrurerie & Vitrerie",
     "itemListElement": [
       {
         "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Dépannage Serrurerie"
-        }
+        "price": "108.00",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {"@type": "Service", "name": "Ouverture porte simple", "serviceType": "Serrurerie"}
       },
       {
         "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Installation Serrurerie"
-        }
+        "price": "176.00",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {"@type": "Service", "name": "Ouverture porte claquée", "serviceType": "Serrurerie"}
       },
       {
         "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Entretien Serrurerie"
-        }
+        "price": "228.00",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {"@type": "Service", "name": "Ouverture porte fermée à clé", "serviceType": "Serrurerie"}
+      },
+      {
+        "@type": "Offer",
+        "price": "314.00",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {"@type": "Service", "name": "Ouverture porte sécurité", "serviceType": "Serrurerie"}
+      },
+      {
+        "@type": "Offer",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "120.00",
+          "priceCurrency": "EUR",
+          "unitCode": "MTK",
+          "referenceQuantity": {"@type": "QuantitativeValue", "value": 1, "unitCode": "MTK"}
+        },
+        "itemOffered": {"@type": "Service", "name": "Mise en sécurité ouverture extérieur (vitrerie, au m²)", "serviceType": "Vitrerie"}
+      },
+      {
+        "@type": "Offer",
+        "price": "184.00",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {"@type": "Service", "name": "Réalisation gabarit (vitrerie)", "serviceType": "Vitrerie"}
       }
     ]
   },
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.7",
-    "reviewCount": "343"
+    "reviewCount": "343",
+    "bestRating": "5",
+    "worstRating": "1"
   }
 }
 </script>
