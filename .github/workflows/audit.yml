@@ -1,0 +1,135 @@
+name: Audits nightly — HELP! Confort
+
+# Exécute tous les audits Python sous admin-pro/audits/ chaque nuit à 3h UTC
+# (4h Paris l'hiver, 5h l'été) et commit les rapports régénérés si delta.
+#
+# Pré-requis : runner Linux avec accès Internet (pour audit_liens_externes.py
+# et audit_robots.py qui font des HEAD HTTP sur le web).
+
+on:
+  schedule:
+    # 03:00 UTC tous les jours
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+    inputs:
+      commit_reports:
+        description: 'Commiter les rapports régénérés (par défaut: true)'
+        required: false
+        default: 'true'
+
+# Évite que 2 runs nightly se chevauchent
+concurrency:
+  group: audits-nightly
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  audits:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Installer Pillow (audits images/OG)
+        run: |
+          python -m pip install --upgrade pip
+          pip install Pillow
+
+      - name: Exécuter tous les audits zero-dep
+        id: run_audits
+        continue-on-error: true
+        run: |
+          set +e
+          mkdir -p admin-pro/audits
+          status=0
+          # Liste explicite — on garde l'ordre pour que le digest mensuel
+          # voie tous les rapports régénérés AVANT son propre run.
+          AUDITS=(
+            audit_html5.py
+            audit_aria.py
+            audit_jsonld.py
+            audit_tarifs.py
+            audit_datasource.py
+            audit_csp.py
+            audit_delais.py
+            audit_catalogue_sync.py
+            audit_images.py
+            audit_favicons.py
+            audit_duplicate_ids.py
+            audit_liens_internes_sitemap.py
+            audit_lighthouse_local.py
+            audit_liens_externes.py
+            audit_robots.py
+          )
+          for a in "${AUDITS[@]}"; do
+            f="admin-pro/audits/$a"
+            if [ ! -f "$f" ]; then
+              echo "::warning::Audit $a introuvable — skip"
+              continue
+            fi
+            echo "═══════════════════════════════════════════"
+            echo "▶ $a"
+            echo "═══════════════════════════════════════════"
+            python3 "$f" || status=$?
+          done
+          # Digest mensuel en dernier (agrège les .md des autres)
+          if [ -f "admin-pro/audits/digest_mensuel.py" ]; then
+            echo "═══════════════════════════════════════════"
+            echo "▶ digest_mensuel.py"
+            echo "═══════════════════════════════════════════"
+            python3 admin-pro/audits/digest_mensuel.py || true
+          fi
+          # On ne fait pas échouer le workflow sur un audit unique
+          # (les rapports sont la source de vérité, pas l'exit code)
+          echo "status=$status" >> $GITHUB_OUTPUT
+          exit 0
+
+      - name: Détecter delta dans les rapports
+        id: delta
+        run: |
+          # Liste les fichiers modifiés/ajoutés sous admin-pro/audits/
+          # qui sont des rapports (.md ou .json)
+          git add -N admin-pro/audits/ 2>/dev/null || true
+          changed=$(git status --porcelain admin-pro/audits/ \
+                      | grep -E '\.(md|json)$' \
+                      | wc -l | tr -d ' ')
+          echo "changed_files=$changed" >> $GITHUB_OUTPUT
+          if [ "$changed" -gt 0 ]; then
+            echo "▶ $changed rapport(s) modifié(s)"
+            git status --short admin-pro/audits/
+          else
+            echo "▶ Aucun delta — pas de commit"
+          fi
+
+      - name: Commit & push rapports
+        if: ${{ steps.delta.outputs.changed_files != '0' && (github.event_name == 'schedule' || github.event.inputs.commit_reports != 'false') }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add admin-pro/audits/*.md admin-pro/audits/*.json 2>/dev/null || true
+          git commit -m "chore(audits): rapports nightly $(date -u +%Y-%m-%d) [skip ci]" || {
+            echo "Rien à commit après filtrage"
+            exit 0
+          }
+          git push
+
+      - name: Récap
+        if: always()
+        run: |
+          echo "═══════════════════════════════════════════"
+          echo "Audits nightly terminés"
+          echo "Date UTC : $(date -u +'%Y-%m-%d %H:%M')"
+          echo "Rapports modifiés : ${{ steps.delta.outputs.changed_files }}"
+          echo "═══════════════════════════════════════════"
+          ls -1 admin-pro/audits/*.md 2>/dev/null | head -20
