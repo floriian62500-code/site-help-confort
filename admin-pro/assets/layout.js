@@ -258,32 +258,92 @@ window.HCLayout = (function() {
     try {
       const c = await window.HCSupabase.init();
       const lastSeen = localStorage.getItem(LEAD_NOTIF_KEY) || new Date(Date.now() - 5*60*1000).toISOString();
-      const { data, error } = await c.from('leads')
-        .select('id,nom,metier,ville,telephone,created_at')
+
+      // ─── 1. Leads ─────────────────────────────────────────────
+      const leadsRes = await c.from('leads')
+        .select('id,nom,metier,ville,telephone,priority,created_at')
         .eq('status','nouveau')
         .gt('created_at', lastSeen)
         .order('created_at',{ascending:false})
         .limit(5);
-      if (error || !data || !data.length) return;
+      const newLeads = leadsRes.data || [];
 
-      // Mettre à jour le badge nav
+      // ─── 2. Souscriptions (contracts à importer dans CRM) ──────
+      const ctRes = await c.from('contracts')
+        .select('id,client_first_name,client_last_name,client_phone,type,metier,monthly_amount,created_at')
+        .is('imported_to_crm_at', null)
+        .gt('created_at', lastSeen)
+        .order('created_at',{ascending:false})
+        .limit(5);
+      const newContracts = ctRes.data || [];
+
+      // ─── 3. Avis Google négatifs (1-2 étoiles) ─────────────────
+      const rvRes = await c.from('reviews')
+        .select('id,source,author_name,rating,comment,created_at')
+        .eq('source','google')
+        .lte('rating', 2)
+        .gt('created_at', lastSeen)
+        .order('created_at',{ascending:false})
+        .limit(3);
+      const newNegReviews = rvRes.data || [];
+
+      const total = newLeads.length + newContracts.length + newNegReviews.length;
+      if (total === 0) return;
+
+      // Mettre à jour les badges nav
       const leadsEl = document.getElementById('navLeadsCount');
-      if (leadsEl) {
-        const newCount = parseInt(leadsEl.textContent || '0', 10) + data.length;
+      if (leadsEl && newLeads.length > 0) {
+        const newCount = parseInt(leadsEl.textContent || '0', 10) + newLeads.length;
         leadsEl.textContent = newCount;
         leadsEl.style.display = '';
       }
+      const ctEl = document.getElementById('navContractsCount');
+      if (ctEl && newContracts.length > 0) {
+        const newCount = parseInt(ctEl.textContent || '0', 10) + newContracts.length;
+        ctEl.textContent = newCount;
+        ctEl.style.display = '';
+      }
 
       // Notif navigateur si autorisée
-      if (localStorage.getItem(LEAD_NOTIF_ENABLED) === '1' && 'Notification' in window && Notification.permission === 'granted') {
-        data.forEach(l => {
-          const n = new Notification('🔔 Nouveau lead — HELP! Confort', {
-            body: `${l.nom}${l.metier ? ' · ' + l.metier : ''}${l.ville ? ' · ' + l.ville : ''}${l.telephone ? '\n📞 ' + l.telephone : ''}`,
+      const notifsOn = localStorage.getItem(LEAD_NOTIF_ENABLED) === '1' && 'Notification' in window && Notification.permission === 'granted';
+      if (notifsOn) {
+        // 🔔 Notifs LEADS — priorité différenciée si urgent
+        newLeads.forEach(l => {
+          const isUrgent = l.priority === 'urgente';
+          const n = new Notification(
+            isUrgent ? '🔥 LEAD URGENT — HELP! Confort' : '🔔 Nouveau lead — HELP! Confort',
+            {
+              body: `${l.nom}${l.metier ? ' · ' + l.metier : ''}${l.ville ? ' · ' + l.ville : ''}${l.telephone ? '\n📞 ' + l.telephone : ''}`,
+              icon: '/logo-help-confort.png',
+              tag: 'hc-lead-' + l.id,
+              requireInteraction: isUrgent
+            }
+          );
+          n.onclick = () => { window.focus(); location.href = 'leads.html'; };
+        });
+
+        // 📥 Notifs SOUSCRIPTIONS — à importer dans Apogée
+        newContracts.forEach(ct => {
+          const name = (ct.client_first_name || '') + ' ' + (ct.client_last_name || '');
+          const n = new Notification('📥 Nouvelle souscription contrat', {
+            body: `${name.trim()} · ${(ct.type || '').toUpperCase()}${ct.monthly_amount ? ' · ' + Number(ct.monthly_amount).toFixed(0) + ' €/mois' : ''}\nÀ importer dans Apogée`,
             icon: '/logo-help-confort.png',
-            tag: 'hc-lead-' + l.id,
+            tag: 'hc-ct-' + ct.id,
             requireInteraction: false
           });
-          n.onclick = () => { window.focus(); location.href = 'leads.html'; };
+          n.onclick = () => { window.focus(); location.href = 'contracts.html?filter=to_import'; };
+        });
+
+        // ⚠️ Notifs AVIS NÉGATIFS — toujours marquer "requireInteraction"
+        newNegReviews.forEach(rv => {
+          const stars = '★'.repeat(rv.rating) + '☆'.repeat(5 - rv.rating);
+          const n = new Notification('⚠️ Avis Google négatif — Réponse urgente', {
+            body: `${stars} de ${rv.author_name || 'Anonyme'}\n${(rv.comment || '').slice(0,100)}${(rv.comment||'').length>100?'…':''}`,
+            icon: '/logo-help-confort.png',
+            tag: 'hc-rv-' + rv.id,
+            requireInteraction: true
+          });
+          n.onclick = () => { window.focus(); location.href = 'reviews.html'; };
         });
       }
 
@@ -303,7 +363,7 @@ window.HCLayout = (function() {
     btn.style.cssText = 'width:100%;margin-top:8px;padding:8px 10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:8px;color:rgba(255,255,255,.7);font:inherit;font-size:.78rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;text-align:left;transition:.15s';
     btn.innerHTML = `
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-      <span style="flex:1">${enabled ? 'Notifs leads : ON' : 'Activer notifs leads'}</span>
+      <span style="flex:1">${enabled ? 'Notifs ON : leads · souscriptions · avis' : 'Activer notifs'}</span>
       <span style="width:6px;height:6px;border-radius:50%;background:${enabled ? '#00aa50' : '#666'}"></span>
     `;
     btn.onclick = async () => {
