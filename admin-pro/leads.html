@@ -671,31 +671,63 @@ let _filterStatusOverride = null;
     document.getElementById('leadFoot').innerHTML = `
       <button class="btn" style="margin-right:auto" id="btnDeleteLead" data-id="${l.id}">Supprimer</button>
       <button class="btn" id="btnExportPdfLead" data-id="${l.id}" title="Exporter cette fiche en PDF imprimable">📄 Fiche PDF</button>
-      <button class="btn btn-primary" id="btnGenerateQuote" data-id="${l.id}" title="Générer un devis client à partir de cette demande" style="background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;border:0">💰 Créer devis</button>
+      <button class="btn" id="btnOpenInCrm" data-id="${l.id}" title="Ouvrir le CRM Apogée pour créer le devis / contact" style="background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;border:0">🚀 Ouvrir dans le CRM</button>
       <button class="btn" id="btnCancelLead">Annuler</button>
       <button class="btn btn-primary" id="btnSaveLead" data-id="${l.id}">Enregistrer</button>
     `;
     document.getElementById('btnCancelLead').onclick = closeLead;
 
     // ─── Export PDF de la fiche lead (impression navigateur) ──────
-    // ─── Bouton "💰 Créer devis" ──────────────────────────────────
-    // Génère un devis chiffré basé sur le lead, ouvre une nouvelle fenêtre
-    // imprimable (PDF via navigateur), sauvegarde le montant dans leads.quote_*
-    document.getElementById('btnGenerateQuote').onclick = async () => {
-      // Demande montant + description courte au minimum
+    // ─── Bouton "🚀 Ouvrir dans le CRM" ──────────────────────────
+    // Le back-office est une PASSERELLE — les devis et factures se font
+    // dans Apogée (le CRM). Ce bouton ouvre simplement le CRM dans un
+    // nouvel onglet + propose à Florian de saisir rapidement le montant
+    // du devis pour traçabilité côté HC.
+    document.getElementById('btnOpenInCrm').onclick = async () => {
+      // 1. Récupère l'URL du CRM configurée dans app_settings
+      let crmUrl = null;
+      try {
+        const { data } = await c.from('app_settings').select('value').eq('key','crm').maybeSingle();
+        crmUrl = data?.value?.url;
+      } catch(_) {}
+
+      // 2. Saisie rapide montant devis pour traçabilité (optionnel)
       const defaultAmount = l.quote_amount ? Number(l.quote_amount) : '';
       const amountStr = prompt(
-        `💰 Création d'un devis pour ${l.nom}\n\nMontant HT proposé (€) :`,
+        `🚀 Ouvrir le CRM pour créer le devis de ${l.nom}\n\nMontant HT du devis (€) — pour traçabilité dans le back-office\n(laisse vide si tu ne veux pas l'enregistrer côté HC) :`,
         defaultAmount
       );
-      if (amountStr === null) return;
-      const amountHT = Number(amountStr.replace(',','.'));
-      if (isNaN(amountHT) || amountHT <= 0) { alert('Montant invalide'); return; }
-      const description = prompt(
-        'Description courte du devis (1-2 phrases) :\n\nElle apparaîtra en titre du PDF.',
-        l.message?.slice(0,100) || `Intervention ${l.metier || 'multi-services'}`
-      );
-      if (description === null) return;
+      if (amountStr === null) return; // annulé
+      const amountHT = amountStr.trim() ? Number(amountStr.replace(',','.')) : null;
+
+      // 3. Sauvegarde dans leads.quote_* (mirror read-only du CRM)
+      if (amountHT && amountHT > 0) {
+        try {
+          await c.from('leads').update({
+            quote_amount: amountHT,
+            quote_sent_at: new Date().toISOString(),
+            status: l.status === 'nouveau' ? 'devis_envoye' : l.status
+          }).eq('id', l.id);
+          toast('Devis tracé côté HC — finalise dans Apogée', 'ok', 3000);
+        } catch(e) { /* pas grave */ }
+      }
+
+      // 4. Ouvre le CRM dans un nouvel onglet (ou redirige vers config si pas d'URL)
+      if (crmUrl) {
+        window.open(crmUrl, '_blank', 'noopener');
+      } else {
+        if (confirm('URL du CRM Apogée non configurée. Aller dans Réglages pour la définir ?')) {
+          window.location.href = 'settings.html#section-crm';
+        }
+      }
+    };
+
+    // ─── Bouton "📄 Fiche PDF" (rappel: passerelle, juste fiche client interne) ──
+    // [Conservé tel quel pour les besoins internes Florian — pas un devis officiel]
+    // Mock used only — actual handler defined further below for btnExportPdfLead
+    if (false) {  // dead code : empêche redéclaration du handler PDF en double
+      const _ = '';
+      const __ = '';
 
       const TVA = 0.10;
       const amountTTC = Math.round(amountHT * (1 + TVA) * 100) / 100;
