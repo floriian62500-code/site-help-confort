@@ -90,7 +90,7 @@
     border-color:rgba(255,107,26,.5);
   }
 
-  /* Photo : iframe FB OU image locale OU comparateur avant/après */
+  /* Photo&nbsp;: iframe FB OU image locale OU comparateur avant/après */
   .real-card .photo{
     position:relative; width:100%; aspect-ratio:4/3;
     background:linear-gradient(135deg,#FFF1E5 0%,#FFE5D0 100%);
@@ -383,8 +383,8 @@
     burger.addEventListener('click', function() {
       var open = burger.classList.toggle('is-open');
       navMobile.classList.toggle('is-open', open);
-      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-      document.body.style.overflow = open ? 'hidden' : '';
+      burger.setAttribute('aria-expanded', open&nbsp;? 'true' : 'false');
+      document.body.style.overflow = open&nbsp;? 'hidden' : '';
     });
     navMobile.querySelectorAll('a').forEach(function(a) {
       a.addEventListener('click', function() {
@@ -406,7 +406,7 @@
   var closeTimer = null;
 
 // ═══════════════════════════════════════════════════════════════
-// FIX POSITION : aligner chaque megamenu sous SON trigger link
+// FIX POSITION&nbsp;: aligner chaque megamenu sous SON trigger link
 // (le CSS left:50% centrait sur la nav entière au lieu du lien)
 // ═══════════════════════════════════════════════════════════════
 function positionMegamenus() {
@@ -455,7 +455,7 @@ if (document.fonts && document.fonts.ready) {
   <div class="container">
     <span style="display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:800;letter-spacing:2px;color:#FF6B1A;text-transform:uppercase;background:#fff;padding:7px 14px;border-radius:999px;border:1px solid rgba(255,107,26,.30);margin-bottom:14px">🛠 Galerie de chantiers</span>
     <h1>Nos réalisations <span class="accent">avant / après.</span></h1>
-    <p>Salles de bain transformées, dépannages d'urgence, rénovations complètes : la preuve par les photos. Saint-Omer, Dunkerque et tout le Nord / Pas-de-Calais.</p>
+    <p>Salles de bain transformées, dépannages d'urgence, rénovations complètes&nbsp;: la preuve par les photos. Saint-Omer, Dunkerque et tout le Nord / Pas-de-Calais.</p>
   </div>
 </section>
 
@@ -865,21 +865,21 @@ if (document.fonts && document.fonts.ready) {
           date: r.date_intervention || r.published_at || r.created_at,
           metier: METIER_LABELS[r.metier] || r.metier || 'Multi-métiers',
           ville: r.ville,
-          zone: r.ville && r.ville.toLowerCase().indexOf('dunkerque') !== -1 ? 'Dunkerque' : 'Saint-Omer',
+          zone: r.ville && r.ville.toLowerCase().indexOf('dunkerque')&nbsp;!== -1&nbsp;? 'Dunkerque' : 'Saint-Omer',
           photo_avant: r.image_before || '',
           photo_apres: r.image_after || '',
           description: r.description || '',
           duree: '',
           published: true,
-          url: r.slug ? 'realisation/' + r.slug + '.html' : '#',
+          url: r.slug&nbsp;? 'realisation/' + r.slug + '.html' : '#',
           source_facebook: fbUrl
         };
       });
       supabaseOk = true;
-      console.info('[HC] Réalisations chargées depuis Supabase :', allRealisations.length);
+      console.info('[HC] Réalisations chargées depuis Supabase&nbsp;:', allRealisations.length);
     }
   } catch(e) {
-    console.warn('[HC] Supabase indispo, fallback JSON :', e.message);
+    console.warn('[HC] Supabase indispo, fallback JSON&nbsp;:', e.message);
   }
 
   // 2. Fallback JSON statique si Supabase n'a rien renvoyé
@@ -895,8 +895,8 @@ if (document.fonts && document.fonts.ready) {
   }
 
   function render(){
-    var realisations = allRealisations.filter(r => r.published !== false);
-    if (currentMetier !== 'all') realisations = realisations.filter(r => r.metier === currentMetier);
+    var realisations = allRealisations.filter(r => r.published&nbsp;!== false);
+    if (currentMetier&nbsp;!== 'all') realisations = realisations.filter(r => r.metier === currentMetier);
     if (currentZone) realisations = realisations.filter(r => r.zone === currentZone);
     realisations = realisations.sort((a,b) => new Date(b.date) - new Date(a.date));
 
@@ -908,7 +908,7 @@ if (document.fonts && document.fonts.ready) {
     grid.innerHTML = realisations.map(function(r){
       var dateStr = new Date(r.date).toLocaleDateString('fr-FR', {month:'long', year:'numeric'});
 
-      // PHOTO : 4 cas par ordre de priorité
+      // PHOTO&nbsp;: 4 cas par ordre de priorité
       var photoHtml;
       if (r.photo_avant && r.photo_apres){
         // 1. Comparateur avant/après (legacy, photos uploadées CMS)
@@ -937,7 +937,7 @@ if (document.fonts && document.fonts.ready) {
             '<span class="fb-tag"><svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>Facebook</span>' +
           '</div>';
       } else {
-        // 4. Fallback : icône appareil photo discret
+        // 4. Fallback&nbsp;: icône appareil photo discret
         photoHtml =
           '<div class="photo">' +
             '<div class="ph-fallback">' +
@@ -958,7 +958,7 @@ if (document.fonts && document.fonts.ready) {
           '</div>' +
           '<h3>'+r.title+'</h3>' +
           '<p>'+(r.description||'')+'</p>' +
-          (r.duree ? '<div class="duree">⏱ '+r.duree+'</div>' : '') +
+          (r.duree&nbsp;? '<div class="duree">⏱ '+r.duree+'</div>' : '') +
           '<span class="read-more">Voir le chantier →</span>' +
         '</div>' +
       '</a>';
@@ -974,9 +974,9 @@ if (document.fonts && document.fonts.ready) {
       currentMetier = metier;
     } else if (zone){
       this.classList.toggle('active');
-      currentZone = this.classList.contains('active') ? zone : null;
+      currentZone = this.classList.contains('active')&nbsp;? zone&nbsp;: null;
       // toggle off other zone
-      filters.forEach(x => { if(x !== this && x.hasAttribute('data-zone')) x.classList.remove('active'); });
+      filters.forEach(x => { if(x&nbsp;!== this && x.hasAttribute('data-zone')) x.classList.remove('active'); });
     }
     render();
   }));
@@ -1040,7 +1040,7 @@ document.addEventListener('keydown', function(e){
     <!-- Body : messages -->
     <div class="chat-urg-body" id="chatUrgBody">
       <div class="chat-msg chat-msg-bot">
-        <p>👋 Bonjour ! Comment pouvons-nous vous aider ?</p>
+        <p>👋 Bonjour&nbsp;! Comment pouvons-nous vous aider&nbsp;?</p>
         <p>Décrivez votre besoin en 1 clic — un conseiller vous rappelle rapidement.</p>
       </div>
 
@@ -1261,11 +1261,11 @@ document.addEventListener('keydown', function(e){
       var prec = document.getElementById('chatPrec').value.trim();
       // Construct mailto / formspree fallback
       var subject = encodeURIComponent('🚨 Demande urgente HELP! Confort — ' + svcField.value);
-      var bodyTxt = encodeURIComponent('Service : ' + svcField.value + '\nTéléphone : ' + tel + '\nPrécision : ' + prec);
+      var bodyTxt = encodeURIComponent('Service&nbsp;: ' + svcField.value + '\nTéléphone&nbsp;: ' + tel + '\nPrécision&nbsp;: ' + prec);
       // Append confirmation
       var confirm = document.createElement('div');
       confirm.className = 'chat-msg chat-msg-bot';
-      confirm.innerHTML = '<p>✅ Merci ! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
+      confirm.innerHTML = '<p>✅ Merci&nbsp;! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
       body.appendChild(confirm);
       form.style.display = 'none';
       body.scrollTop = body.scrollHeight;

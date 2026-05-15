@@ -123,7 +123,7 @@
     <!-- STEP 1 : Métier -->
     <div class="step active" data-step="1">
       <div class="step-num">Étape 1 / 3</div>
-      <h2>Quel est votre besoin ?</h2>
+      <h2>Quel est votre besoin&nbsp;?</h2>
       <div class="options">
         <button type="button" class="opt-btn" data-metier="Plomberie"><span class="ico">💧</span><span class="lbl">Plomberie<br><small style="color:#94a3b8;font-weight:400;font-size:.74rem">Fuite, WC, chauffe-eau</small></span></button>
         <button type="button" class="opt-btn" data-metier="Chauffage"><span class="ico">🔥</span><span class="lbl">Chauffage<br><small style="color:#94a3b8;font-weight:400;font-size:.74rem">Chaudière, radiateur</small></span></button>
@@ -137,7 +137,7 @@
     <!-- STEP 2 : Urgence + description -->
     <div class="step" data-step="2">
       <div class="step-num">Étape 2 / 3</div>
-      <h2>C'est urgent ou planifié ?</h2>
+      <h2>C'est urgent ou planifié&nbsp;?</h2>
       <div class="options" style="grid-template-columns:1fr 1fr;margin-bottom:20px">
         <button type="button" class="opt-btn" data-urg="urgent"><span class="ico">🚨</span><span class="lbl">Urgent<br><small style="color:#94a3b8;font-weight:400;font-size:.74rem">Aujourd'hui</small></span></button>
         <button type="button" class="opt-btn" data-urg="planifie"><span class="ico">📅</span><span class="lbl">Planifié<br><small style="color:#94a3b8;font-weight:400;font-size:.74rem">Sous 7 jours</small></span></button>
@@ -153,7 +153,7 @@
     <!-- STEP 3 : Coordonnées -->
     <div class="step" data-step="3">
       <div class="step-num">Étape 3 / 3</div>
-      <h2>Où vous rappeler ?</h2>
+      <h2>Où vous rappeler&nbsp;?</h2>
       <label for="dxTel">Téléphone <span style="color:#E11D48">*</span></label>
       <input type="tel" id="dxTel" autocomplete="tel" placeholder="06 12 34 56 78" required>
       <label for="dxNom" style="margin-top:14px">Votre prénom</label>
@@ -175,13 +175,13 @@
     <h2>Demande envoyée ✨</h2>
     <p>Un conseiller vous rappelle <strong>rapidement</strong> (Lun-Sam 8h-18h).</p>
     <div class="ref" id="dxRef">HC-—</div>
-    <p style="font-size:.88rem">En cas d'urgence immédiate :</p>
+    <p style="font-size:.88rem">En cas d'urgence immédiate&nbsp;:</p>
     <a href="tel:+33366100134" class="btn btn-prim" style="max-width:280px;margin:0 auto">📞 Appeler le 03 66 10 01 34</a>
   </div>
 
   <div class="urgence-bar">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E11D48" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>
-    <span><strong>Urgence ?</strong> Appelez directement</span>
+    <span><strong>Urgence&nbsp;?</strong> Appelez directement</span>
     <a href="tel:+33366100134">03 66 10 01 34</a>
   </div>
 </main>
@@ -200,7 +200,7 @@
     window.scrollTo({top:0,behavior:'smooth'});
   }
 
-  // Étape 1 : choix métier
+  // Étape 1&nbsp;: choix métier
   form.querySelectorAll('[data-metier]').forEach(function(b){
     b.addEventListener('click', function(){
       state.metier = b.dataset.metier;
@@ -210,7 +210,7 @@
     });
   });
 
-  // Étape 2 : urgence
+  // Étape 2&nbsp;: urgence
   form.querySelectorAll('[data-urg]').forEach(function(b){
     b.addEventListener('click', function(){
       state.urg = b.dataset.urg;
@@ -233,7 +233,7 @@
     b.addEventListener('click', function(){ goto(state.step - 1); });
   });
 
-  // Étape 3 : validation live
+  // Étape 3&nbsp;: validation live
   var tel = document.getElementById('dxTel');
   var nom = document.getElementById('dxNom');
   var cp = document.getElementById('dxCp');
@@ -267,7 +267,7 @@
           code_postal: state.cp,
           metier: state.metier,
           type_demande: state.urg === 'urgent' ? 'urgence' : 'devis',
-          message: '[DEVIS EXPRESS] ' + state.metier + ' · ' + (state.urg === 'urgent' ? 'URGENT' : 'planifié') + (state.desc ? '\n\n' + state.desc : ''),
+          message: '[DEVIS EXPRESS] ' + state.metier + ' · ' + (state.urg === 'urgent' ? 'URGENT' : 'planifié') + (state.desc&nbsp;? '\n\n' + state.desc&nbsp;: ''),
           source: 'devis-express',
           source_page: location.href,
           status: 'nouveau',
@@ -275,7 +275,7 @@
           utm: { metier: state.metier, urgence: state.urg, ref: ref }
         })
       });
-    } catch(err) { /* fallback : on enregistre rien, mais on continue */ }
+    } catch(err) { /* fallback&nbsp;: on enregistre rien, mais on continue */ }
 
     // Affiche le succès
     form.style.display = 'none';

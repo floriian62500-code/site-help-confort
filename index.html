@@ -295,8 +295,8 @@ if (burger && navMobile) {
 burger.addEventListener('click', function() {
 var open = burger.classList.toggle('is-open');
 navMobile.classList.toggle('is-open', open);
-burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-document.body.style.overflow = open ? 'hidden' : '';
+burger.setAttribute('aria-expanded', open&nbsp;? 'true' : 'false');
+document.body.style.overflow = open&nbsp;? 'hidden' : '';
 });
 navMobile.querySelectorAll('a').forEach(function(a) {
 a.addEventListener('click', function() {
@@ -309,7 +309,7 @@ document.body.style.overflow = '';
 }
 
 // ═══════════════════════════════════════════════════════════════
-// FIX MEGAMENU : fermeture forcée sur click outside + Escape + mouseleave timer
+// FIX MEGAMENU&nbsp;: fermeture forcée sur click outside + Escape + mouseleave timer
 // (corrige le bug du menu Métiers qui restait ouvert et masquait le tunnel)
 // ═══════════════════════════════════════════════════════════════
 var navLinks = document.querySelectorAll('.hc-nav-link[data-has-menu]');
@@ -317,7 +317,7 @@ var megaMenus = document.querySelectorAll('.hc-megamenu');
 var closeTimer = null;
 
 // ═══════════════════════════════════════════════════════════════
-// FIX POSITION : aligner chaque megamenu sous SON trigger link
+// FIX POSITION&nbsp;: aligner chaque megamenu sous SON trigger link
 // (le CSS left:50% centrait sur la nav entière au lieu du lien)
 // ═══════════════════════════════════════════════════════════════
 function positionMegamenus() {
@@ -400,7 +400,7 @@ window.addEventListener('scroll', function() {
         </h1>
 
         <p class="hero4-lead" data-content="hero.subtitle">
-          À Saint-Omer / Dunkerque, nos <strong>techniciens salariés</strong> interviennent chaque jour avec un seul engagement : diagnostic clair, devis transparent, travail soigné.
+          À Saint-Omer / Dunkerque, nos <strong>techniciens salariés</strong> interviennent chaque jour avec un seul engagement&nbsp;: diagnostic clair, devis transparent, travail soigné.
         </p>
 
         
@@ -542,7 +542,7 @@ var v = document.getElementById('hc-hero-video');
 var btn = document.getElementById('hc-hero-sound');
 var play = document.getElementById('hc-hero-play');
 function formatRating(r) {
-if (typeof r !== 'number') return r;
+if (typeof r&nbsp;!== 'number') return r;
 return r.toFixed(1).replace('.', ',') + '/5';
 }
 function buildStars(rating) {
@@ -572,7 +572,7 @@ var r = el.querySelector('[data-rating]');
 var m = el.querySelector('[data-meta]');
 if (s) s.innerHTML = buildStars(data.trustville.rating);
 if (r) r.textContent = formatRating(data.trustville.rating);
-if (m) m.textContent = (data.trustville.count > 0 ? data.trustville.count + ' avis' : 'Avis') + ' Trustville';
+if (m) m.textContent = (data.trustville.count > 0&nbsp;? data.trustville.count + ' avis' : 'Avis') + ' Trustville';
 }
 });
 var consNum = document.querySelector('.hcr-num strong');
@@ -581,7 +581,7 @@ if (consNum && data.consolidated) consNum.textContent = String(data.consolidated
 if (consMeta && data.consolidated) consMeta.innerHTML = 'sur <strong>' + data.consolidated.count_total + '</strong> ' + data.consolidated.label;
 }
 fetch('content/config/reviews.json?v=' + Date.now())
-.then(function(r) { return r.ok ? r.json() : null; })
+.then(function(r) { return r.ok&nbsp;? r.json()&nbsp;: null; })
 .then(applyReviews)
 .catch(function(e) { console.warn('Reviews fetch failed', e); });
 if (v) {
@@ -590,7 +590,7 @@ var iconMuted = btn.querySelector('.ico-muted');
 var iconOn = btn.querySelector('.ico-on');
 function setSoundState(on) {
 v.muted = !on;
-v.volume = on ? 0.65 : 0;
+v.volume = on&nbsp;? 0.65&nbsp;: 0;
 if (on) {
 btn.classList.add('is-on');
 if (iconMuted) iconMuted.style.display = 'none';
@@ -680,19 +680,19 @@ var labels = {
 logo: 'images/labels/20210810-084335.png',
 eyebrow: 'Rénovation énergétique',
 title: 'Éco Artisan® RGE',
-content: '<p><strong>RGE</strong> = Reconnu Garant de l\'Environnement, qualification accordée par l\'État aux artisans formés à la rénovation énergétique.</p><p><strong>Éco Artisan®</strong> est la branche bâtiment, délivrée par <strong>Qualibat</strong> et la <strong>CAPEB</strong>.</p><p><strong>Ce que ça vous garantit :</strong></p><ul><li>Travaux d\'économie d\'énergie réalisés selon les normes thermiques en vigueur</li><li>Éligibilité de votre chantier aux <strong>aides de l\'État</strong> : MaPrimeRénov\', Certificats d\'Économie d\'Énergie (CEE), éco-PTZ</li><li>TVA réduite à 5,5% sur les travaux de rénovation énergétique</li><li>Conseils techniques et bilan énergétique avant chantier</li></ul>'
+content: '<p><strong>RGE</strong> = Reconnu Garant de l\'Environnement, qualification accordée par l\'État aux artisans formés à la rénovation énergétique.</p><p><strong>Éco Artisan®</strong> est la branche bâtiment, délivrée par <strong>Qualibat</strong> et la <strong>CAPEB</strong>.</p><p><strong>Ce que ça vous garantit&nbsp;:</strong></p><ul><li>Travaux d\'économie d\'énergie réalisés selon les normes thermiques en vigueur</li><li>Éligibilité de votre chantier aux <strong>aides de l\'État</strong> : MaPrimeRénov\', Certificats d\'Économie d\'Énergie (CEE), éco-PTZ</li><li>TVA réduite à 5,5% sur les travaux de rénovation énergétique</li><li>Conseils techniques et bilan énergétique avant chantier</li></ul>'
 },
 'handibat': {
 logo: 'images/labels/nos-actualites-handibat-silverbat.png',
 eyebrow: 'Accessibilité & maintien à domicile',
 title: 'Handibat® & Silverbat®',
-content: '<p><strong>Handibat®</strong> est la marque de la CAPEB qui certifie les artisans formés à l\'<strong>aménagement du logement pour personnes en situation de handicap</strong>.</p><p><strong>Silverbat®</strong> est la marque dédiée à l\'<strong>adaptation des logements pour les seniors</strong> (perte d\'autonomie, prévention des chutes, maintien à domicile).</p><p><strong>Nos interventions Handibat / Silverbat :</strong></p><ul><li>Salles de bain adaptées (douche italienne, barres d\'appui, siège mural)</li><li>Élargissement de portes, suppression de seuils, rampes d\'accès</li><li>WC surélevés, monte-escaliers, éclairage adapté</li><li>Aménagement cuisine accessible</li></ul><p>Vos travaux sont éligibles aux aides <strong>MaPrimeAdapt\'</strong>, ANAH, caisses de retraite, et au crédit d\'impôt.</p>'
+content: '<p><strong>Handibat®</strong> est la marque de la CAPEB qui certifie les artisans formés à l\'<strong>aménagement du logement pour personnes en situation de handicap</strong>.</p><p><strong>Silverbat®</strong> est la marque dédiée à l\'<strong>adaptation des logements pour les seniors</strong> (perte d\'autonomie, prévention des chutes, maintien à domicile).</p><p><strong>Nos interventions Handibat / Silverbat&nbsp;:</strong></p><ul><li>Salles de bain adaptées (douche italienne, barres d\'appui, siège mural)</li><li>Élargissement de portes, suppression de seuils, rampes d\'accès</li><li>WC surélevés, monte-escaliers, éclairage adapté</li><li>Aménagement cuisine accessible</li></ul><p>Vos travaux sont éligibles aux aides <strong>MaPrimeAdapt\'</strong>, ANAH, caisses de retraite, et au crédit d\'impôt.</p>'
 },
 'pg': {
 logo: 'images/labels/pro-gaz.png',
 eyebrow: 'Sécurité gaz',
 title: 'Professionnel du Gaz®',
-content: '<p><strong>Professionnel du Gaz® (PG)</strong> est l\'appellation officielle attribuée aux artisans qualifiés pour l\'<strong>installation et l\'entretien des appareils gaz</strong>.</p><p><strong>Ce que ça implique :</strong></p><ul><li>Habilitation à intervenir sur chaudières, chauffe-eau, plaques et inserts gaz</li><li>Respect strict des normes de sécurité (NF DTU 61.1, arrêté du 23 février 2018)</li><li>Délivrance de certificats de conformité après installation</li><li>Maintenance annuelle obligatoire des chaudières gaz (loi)</li></ul><p>Faire appel à un <strong>PG</strong> est essentiel pour votre <strong>sécurité</strong> et votre assurance habitation.</p>'
+content: '<p><strong>Professionnel du Gaz® (PG)</strong> est l\'appellation officielle attribuée aux artisans qualifiés pour l\'<strong>installation et l\'entretien des appareils gaz</strong>.</p><p><strong>Ce que ça implique&nbsp;:</strong></p><ul><li>Habilitation à intervenir sur chaudières, chauffe-eau, plaques et inserts gaz</li><li>Respect strict des normes de sécurité (NF DTU 61.1, arrêté du 23 février 2018)</li><li>Délivrance de certificats de conformité après installation</li><li>Maintenance annuelle obligatoire des chaudières gaz (loi)</li></ul><p>Faire appel à un <strong>PG</strong> est essentiel pour votre <strong>sécurité</strong> et votre assurance habitation.</p>'
 }
 };
 var modal = document.getElementById('hctslModal');
@@ -856,7 +856,7 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
 
 
           <style>
-            /* Step qualif : on neutralise les padding du parent wizard pour aérer */
+            /* Step qualif&nbsp;: on neutralise les padding du parent wizard pour aérer */
             .hc-resa-step--qualif{padding:8px 0 0}
             .hc-resa-step--qualif h3{display:none}
             .hc-resa-step--qualif .resa-step-hint{display:none}
@@ -907,7 +907,7 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
 
           <!-- Choix du / des métier(s) concerné(s) (multi-choix) -->
           <div class="form-row">
-            <label>Quel(s) métier(s) concerné(s) ? <span class="req">*</span> <span class="opt" style="font-weight:500;color:#94a3b8;font-size:.78rem;margin-left:4px">— plusieurs choix possibles</span></label>
+            <label>Quel(s) métier(s) concerné(s)&nbsp;? <span class="req">*</span> <span class="opt" style="font-weight:500;color:#94a3b8;font-size:.78rem;margin-left:4px">— plusieurs choix possibles</span></label>
             <div style="font-size:.82rem;color:#475569;margin-bottom:6px;background:#F7FBFD;padding:8px 12px;border-left:3px solid #0DA0CF;border-radius:6px">💡 Cochez le(s) métier(s) pour recevoir des prestations adaptées au step suivant.</div>
             <div class="resa-metier-chips" role="group" aria-label="Sélection des métiers">
               <label class="resa-chip"><input type="checkbox" name="resa-metiers[]" value="Plomberie"><span>🔧 Plomberie</span></label>
@@ -1055,7 +1055,7 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
               </div>
 
               <div class="resa-legal-strong">
-                <strong>Important :</strong> vous réservez ici une <strong>prise en charge</strong> (déplacement, diagnostic et prestation cadrée).
+                <strong>Important&nbsp;:</strong> vous réservez ici une <strong>prise en charge</strong> (déplacement, diagnostic et prestation cadrée).
                 <strong>Le diagnostic sur place fera foi.</strong> Toute intervention complémentaire (pièces, réparation supplémentaire, gros travaux) fera l'objet d'un <strong>devis ou d'une validation préalable</strong> avant exécution.
               </div>
 
@@ -1241,7 +1241,7 @@ var stepsContent = document.querySelectorAll('.hc-resa-step[data-step]');
     zone.addEventListener(ev, function(e){ e.preventDefault(); e.stopPropagation(); zone.style.borderColor = ''; zone.style.background = ''; });
   });
   zone.addEventListener('drop', function(e){
-    var files = (e.dataTransfer && e.dataTransfer.files) ? Array.from(e.dataTransfer.files) : [];
+    var files = (e.dataTransfer && e.dataTransfer.files)&nbsp;? Array.from(e.dataTransfer.files)&nbsp;: [];
     handleFiles(files);
   });
 
@@ -1329,10 +1329,10 @@ section.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 }
 function canGoNext() {
-if (current === 1) return !!state.presta;
+if (current === 1) return&nbsp;!!state.presta;
 if (current === 2) {
 if (state.flow === 'callback') return true;
-// Description : au moins 3 caractères + au moins UN métier coché + au moins UNE photo
+// Description&nbsp;: au moins 3 caractères + au moins UN métier coché + au moins UNE photo
 var hasDesc = !!state.desc && state.desc.trim().length >= 3;
 var hasMetier = (state.metiers || []).length > 0;
 var hasPhoto = !!(window.__resaPhotos && window.__resaPhotos.length > 0);
@@ -1347,7 +1347,7 @@ return false;
 }
 function refreshNext() {
   btnNext.disabled = !canGoNext();
-  // Hint visuel : message d'aide si le bouton est bloqué
+  // Hint visuel&nbsp;: message d'aide si le bouton est bloqué
   var hint = document.getElementById('resa-next-hint');
   if (!hint) {
     hint = document.createElement('div');
@@ -1355,8 +1355,8 @@ function refreshNext() {
     hint.style.cssText = 'font-size:.78rem;color:#d97706;font-weight:600;text-align:right;margin-top:6px;display:none';
     if (btnNext.parentNode) btnNext.parentNode.insertAdjacentElement('afterend', hint);
   }
-  if (btnNext.disabled && current === 2 && state.flow !== 'callback') {
-    var need = state.desc ? state.desc.trim().length : 0;
+  if (btnNext.disabled && current === 2 && state.flow&nbsp;!== 'callback') {
+    var need = state.desc&nbsp;? state.desc.trim().length&nbsp;: 0;
     var hasMetier = (state.metiers || []).length > 0;
     var hasPhoto = !!(window.__resaPhotos && window.__resaPhotos.length > 0);
     if (need < 3) {
@@ -1520,7 +1520,7 @@ btnNext.addEventListener('click', function() { gotoStep(current + 1); });
 
   // Fermer si on clique en dehors
   document.addEventListener('click', function(e){
-    if (e.target !== input && !box.contains(e.target)) hideBox();
+    if (e.target&nbsp;!== input && !box.contains(e.target)) hideBox();
   });
 })();
 function detectAgence(cp) {
@@ -1550,8 +1550,8 @@ var ALL_PRESTAS = [
   { id:'c-entretien',   slug:'entretien-chaudiere-gaz',     icon:'🛠️', label:'Entretien annuel chaudière gaz', metier:'Chauffage', price:121, match: /entretien|contrôle|maintenance|annuel/ },
   { id:'c-desembouage', slug:'desembouage-radiateur',       icon:'🌡️', label:'Désembouage par radiateur',      metier:'Chauffage', price:105, match: /radiateur|circuit|désembou|desembou/ },
   { id:'c-depan',       slug:'depannage-chaudiere-t1',      icon:'🔥', label:'Dépannage chaudière (T1 semaine)', metier:'Chauffage', price:75, match: /chaudi[èe]re|brûleur|fioul|gaz(?! et)|pas de chauf|plus de chauf|froid maison|eau chaude/ },
-  { id:'c-contrat-b',   slug:'contrat-chauffage-basic',     icon:'📅', label:'Contrat chauffage Basic (gaz)', metier:'Chauffage', price:108, match: /contrat basic|9 ?€/ },
-  { id:'c-contrat-c',   slug:'contrat-chauffage-confort',   icon:'📅', label:'Contrat chauffage Confort (gaz)', metier:'Chauffage', price:156, match: /contrat confort|13 ?€/ },
+  { id:'c-contrat-b',   slug:'contrat-chauffage-basic',     icon:'📅', label:'Contrat chauffage Basic (gaz)', metier:'Chauffage', price:108, match: /contrat basic|9&nbsp;?€/ },
+  { id:'c-contrat-c',   slug:'contrat-chauffage-confort',   icon:'📅', label:'Contrat chauffage Confort (gaz)', metier:'Chauffage', price:156, match: /contrat confort|13&nbsp;?€/ },
 
   // ─── ÉLECTRICITÉ ────────────────────────────────────────────
   { id:'e-panne',       slug:'recherche-panne-elec',        icon:'⚡', label:'Recherche de panne électrique', metier:'Électricité', price:107, match: /[ée]lectric|courant|disjonct|coupure|panne courant|prise/ },
@@ -1577,7 +1577,7 @@ var ALL_PRESTAS = [
 ];
 
 // Renvoie jusqu'à 4 prestations suggérées + une option "autre"
-// FILTRE STRICT : seules les prestations du/des métier(s) coché(s) en step 2 sont proposées
+// FILTRE STRICT&nbsp;: seules les prestations du/des métier(s) coché(s) en step 2 sont proposées
 function proposePrestations() {
   var d = (state.desc || '').toLowerCase();
   var metiers = state.metiers || [];
@@ -1596,7 +1596,7 @@ function proposePrestations() {
   scored.sort(function(a, b){ return b.score - a.score; });
   var top = scored.slice(0, 4).map(function(x){ return x.presta; });
 
-  // 3. Fallback si aucun métier coché : 4 prestations vedette par métier
+  // 3. Fallback si aucun métier coché&nbsp;: 4 prestations vedette par métier
   if (top.length === 0) {
     top = [
       ALL_PRESTAS.find(function(p){ return p.id === 'p-fuite'; }),
@@ -1619,7 +1619,7 @@ function renderPrestaProposals() {
   if (!container) return;
   var proposals = proposePrestations();
   var html = proposals.map(function(p, idx){
-    var sel = (idx === 0) ? 'pp-card pp-selected' : 'pp-card';
+    var sel = (idx === 0)&nbsp;? 'pp-card pp-selected' : 'pp-card';
     return '<button type="button" class="' + sel + '" data-presta-id="' + p.id + '">' +
       '<span class="pp-icon">' + p.icon + '</span>' +
       '<span class="pp-label">' + p.label + '</span>' +
@@ -1742,11 +1742,11 @@ complexBlock.hidden = false;
 return;
 }
 if (presta.flow === 'simple') {
-// Prestation suggérée : icone + label + métier (depuis ALL_PRESTAS — synchro nos-prestations.html)
+// Prestation suggérée&nbsp;: icone + label + métier (depuis ALL_PRESTAS — synchro nos-prestations.html)
 var sug = detectDetailedPresta();
 state.suggested_presta = sug;
-document.getElementById('resa-presta-name').innerHTML = sug.icon + ' ' + sug.label + (sug.metier !== '—' ? ' <small style="font-weight:500;color:#94a3b8">· ' + sug.metier + '</small>' : '');
-// Réactivité : si pas défini, on déduit depuis description
+document.getElementById('resa-presta-name').innerHTML = sug.icon + ' ' + sug.label + (sug.metier&nbsp;!== '—' ? ' <small style="font-weight:500;color:#94a3b8">· ' + sug.metier + '</small>' : '');
+// Réactivité&nbsp;: si pas défini, on déduit depuis description
 var urgLabel = URG_LABELS[state.urg];
 if (!urgLabel) {
   var d = (state.desc || '').toLowerCase();
@@ -1756,8 +1756,8 @@ if (!urgLabel) {
 document.getElementById('resa-urg-name').textContent = urgLabel;
 document.getElementById('resa-agence-name').textContent = detectAgence(state.cp);
 var priceEl = document.getElementById('resa-price');
-// PRIX : on prend celui de la prestation sélectionnée dans le catalogue (sug.price)
-// Source unique : ALL_PRESTAS aligné sur TARIFS_REFERENCE.md (BAREME AGENCE)
+// PRIX&nbsp;: on prend celui de la prestation sélectionnée dans le catalogue (sug.price)
+// Source unique&nbsp;: ALL_PRESTAS aligné sur TARIFS_REFERENCE.md (BAREME AGENCE)
 if (sug && sug.quote) {
   priceEl.innerHTML = 'Sur devis <small style="font-weight:500;color:#94a3b8">· prestation sur mesure</small>';
 } else if (sug && typeof sug.price === 'number') {
@@ -1783,20 +1783,20 @@ complexBlock.hidden = false;
 function buildMailBody() {
 var presta = PRESTAS[state.presta] || {};
 return [
-'Prestation : ' + (presta.label || state.presta),
-'Flow : ' + (presta.flow || ''),
-'Métiers concernés : ' + ((state.metiers && state.metiers.length) ? state.metiers.join(', ') : '—'),
-'Urgence : ' + (URG_LABELS[state.urg] || ''),
-'Description : ' + state.desc,
+'Prestation&nbsp;: ' + (presta.label || state.presta),
+'Flow&nbsp;: ' + (presta.flow || ''),
+'Métiers concernés&nbsp;: ' + ((state.metiers && state.metiers.length)&nbsp;? state.metiers.join(', ')&nbsp;: '—'),
+'Urgence&nbsp;: ' + (URG_LABELS[state.urg] || ''),
+'Description&nbsp;: ' + state.desc,
 '',
 '— Coordonnées —',
-'Nom : ' + state.prenom + ' ' + state.nom,
-'Tél : ' + state.tel,
-'Email : ' + state.email,
-'CP : ' + state.cp,
-'Habitat : ' + state.habitat,
-'Adresse : ' + state.adresse,
-'Agence rattachée : ' + detectAgence(state.cp)
+'Nom&nbsp;: ' + state.prenom + ' ' + state.nom,
+'Tél&nbsp;: ' + state.tel,
+'Email&nbsp;: ' + state.email,
+'CP&nbsp;: ' + state.cp,
+'Habitat&nbsp;: ' + state.habitat,
+'Adresse&nbsp;: ' + state.adresse,
+'Agence rattachée&nbsp;: ' + detectAgence(state.cp)
 ].join('\n');
 }
 // Sélecteur "modifier la prestation"
@@ -1807,7 +1807,7 @@ return [
   if (!btnEdit || !picker) return;
   btnEdit.addEventListener('click', function(){
     pickerRow.hidden = !pickerRow.hidden;
-    btnEdit.textContent = pickerRow.hidden ? 'modifier' : 'fermer';
+    btnEdit.textContent = pickerRow.hidden&nbsp;? 'modifier' : 'fermer';
   });
   picker.addEventListener('change', function(){
     var opt = picker.options[picker.selectedIndex];
@@ -1836,15 +1836,15 @@ async function persistLeadToSupabase(source){
       code_postal: state.cp || null,
       adresse: state.adresse || null,
       metier: sug.metier || (state.metiers && state.metiers[0]) || null,
-      type_demande: (sug.metier === 'Travaux') ? 'devis' : 'urgence',
-      message: (sug.label ? '[' + sug.label + '] ' : '') + (state.desc || ''),
+      type_demande: (sug.metier === 'Travaux')&nbsp;? 'devis' : 'urgence',
+      message: (sug.label&nbsp;? '[' + sug.label + '] ' : '') + (state.desc || ''),
       source: source || 'home_wizard',
       source_page: location.href,
       status: 'nouveau',
       tags: [
         'wizard-home',
         sug.id || 'presta-' + (sug.label || 'unknown'),
-        state.habitat ? 'habitat:' + state.habitat : null
+        state.habitat&nbsp;? 'habitat:' + state.habitat&nbsp;: null
       ].filter(Boolean),
       utm: {
         metiers_selectionnes: state.metiers || [],
@@ -1974,22 +1974,21 @@ var badgeLabel = portee === 'national' ? 'National' : 'Local';
 var nom = escapeHtml(a.nom);
 var cat = escapeHtml(a.categorie || 'Partenaire');
 var code = catCode(a.categorie);
-var darkClass = a.bg_dark === true ? ' is-dark' : '';
+var darkClass = a.bg_dark === true&nbsp;? ' is-dark' : '';
 var inner =
 '<span class="cat">' + cat + '</span>' +
 '<div class="logo-wrap"><img src="' + escapeHtml(a.logo) + '" alt="' + nom + '" loading="lazy"></div>' +
 '<span class="scope">' + badgeLabel + '</span>';
-var tag = (a.url && a.url.trim().length > 0) ? 'a' : 'div';
-var attrs = (tag === 'a')
-? ' href="' + escapeHtml(a.url) + '" target="_blank" rel="noopener" title="' + nom + ' — Site partenaire"'
+var tag = (a.url && a.url.trim().length > 0)&nbsp;? 'a' : 'div';
+var attrs = (tag === 'a')&nbsp;? ' href="' + escapeHtml(a.url) + '" target="_blank" rel="noopener" title="' + nom + ' — Site partenaire"'
 : ' title="' + nom + '"';
 return '<' + tag + ' class="hc-logo-card' + darkClass + '" data-cat="' + code + '"' + attrs + '>' + inner + '</' + tag + '>';
 }
 fetch('content/apporteurs/index.json?v=' + Date.now())
-.then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
+.then(function(r) { return r.ok&nbsp;? r.json()&nbsp;: Promise.reject(r.status); })
 .then(function(data) {
 var list = (data.apporteurs || [])
-.filter(function(a) { return a.published !== false; })
+.filter(function(a) { return a.published&nbsp;!== false; })
 .sort(function(a, b) { return (a.ordre || 100) - (b.ordre || 100); });
 if (list.length === 0) {
 track1.innerHTML = '<div class="hc-logo-card" style="display:none"></div>';
@@ -2009,7 +2008,7 @@ track1.innerHTML = cards.join('') + cards.join('') + cards.join('');
 });
 })
 .catch(function(err) {
-console.warn('Apporteurs : impossible de charger content/apporteurs/index.json', err);
+console.warn('Apporteurs&nbsp;: impossible de charger content/apporteurs/index.json', err);
 track1.innerHTML = '<div class="hc-logo-card"><span class="cat">Réseau</span><strong>HELP! Confort</strong></div>'.repeat(6);
 });
 })();
@@ -2178,7 +2177,7 @@ track1.innerHTML = '<div class="hc-logo-card"><span class="cat">Réseau</span><s
   <script>(function(){
 var bubble = document.getElementById('chatUrgBubbleText');
 if (!bubble) return;
-var msgs = ['Une fuite ?', 'Plus de chauffage ?', 'Besoin d’un devis ?', 'On vous rappelle ?', 'Vitre cassée ?', 'Panne électrique ?'];
+var msgs = ['Une fuite&nbsp;?', 'Plus de chauffage&nbsp;?', 'Besoin d’un devis&nbsp;?', 'On vous rappelle&nbsp;?', 'Vitre cassée&nbsp;?', 'Panne électrique&nbsp;?'];
 var i = 0;
 setInterval(function(){
 i = (i + 1) % msgs.length;
@@ -2215,7 +2214,7 @@ bubble.parentElement.style.animation = 'chatBubbleIn .4s cubic-bezier(.34,1.56,.
     
     <div class="chat-urg-body" id="chatUrgBody">
       <div class="chat-msg chat-msg-bot">
-        <p>👋 Bonjour ! Comment pouvons-nous vous aider ?</p>
+        <p>👋 Bonjour&nbsp;! Comment pouvons-nous vous aider&nbsp;?</p>
         <p>Décrivez votre besoin en 1 clic — un conseiller vous rappelle rapidement.</p>
       </div>
 
@@ -2290,10 +2289,10 @@ e.preventDefault();
 var tel = document.getElementById('chatTel').value.trim();
 var prec = document.getElementById('chatPrec').value.trim();
 var subject = encodeURIComponent('🚨 Demande urgente HELP! Confort — ' + svcField.value);
-var bodyTxt = encodeURIComponent('Service : ' + svcField.value + '\nTéléphone : ' + tel + '\nPrécision : ' + prec);
+var bodyTxt = encodeURIComponent('Service&nbsp;: ' + svcField.value + '\nTéléphone&nbsp;: ' + tel + '\nPrécision&nbsp;: ' + prec);
 var confirm = document.createElement('div');
 confirm.className = 'chat-msg chat-msg-bot';
-confirm.innerHTML = '<p>✅ Merci ! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
+confirm.innerHTML = '<p>✅ Merci&nbsp;! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
 body.appendChild(confirm);
 form.style.display = 'none';
 body.scrollTop = body.scrollHeight;
@@ -2324,7 +2323,7 @@ body.scrollTop = body.scrollHeight;
         <span style="width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.25)"></span>
         Demande prioritaire
       </div>
-      <h3 id="urgenceTitle" style="margin:0;font-size:1.4rem;font-weight:800;line-height:1.2">Une urgence ? On vous rappelle.</h3>
+      <h3 id="urgenceTitle" style="margin:0;font-size:1.4rem;font-weight:800;line-height:1.2">Une urgence&nbsp;? On vous rappelle.</h3>
       <p style="margin:6px 0 0;font-size:.92rem;color:rgba(255,255,255,.92);font-weight:500">Décrivez votre situation. On revient vers vous rapidement (Lun-Sam 8h-18h · urgences 7j/7).</p>
     </div>
 
@@ -2380,7 +2379,7 @@ body.scrollTop = body.scrollHeight;
       
       <p style="margin:14px 0 0;font-size:.78rem;color:#64748b;text-align:center;line-height:1.4">
         Vous serez rappelé rapidement en horaires d'ouverture.<br>
-        Hors horaires : votre demande est priorisée pour le lendemain matin.
+        Hors horaires&nbsp;: votre demande est priorisée pour le lendemain matin.
       </p>
     </form>
   </div>

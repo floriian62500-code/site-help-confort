@@ -142,8 +142,8 @@
 </main>
 
 <div class="tm-cta">
-  <h2>Et si <em>vous</em> étiez notre prochain témoin ?</h2>
-  <p>Une intervention récente avec HELP! Confort ? Partagez votre expérience sur Google. 30 secondes, ça compte beaucoup pour nous.</p>
+  <h2>Et si <em>vous</em> étiez notre prochain témoin&nbsp;?</h2>
+  <p>Une intervention récente avec HELP! Confort&nbsp;? Partagez votre expérience sur Google. 30 secondes, ça compte beaucoup pour nous.</p>
   <a href="https://maps.app.goo.gl/B4BPVTiRp5rDp26fA" target="_blank" rel="noopener" class="g">⭐ Laisser un avis Google</a>
   <a href="contact.html#form">✉️ Nous écrire</a>
 </div>
@@ -166,13 +166,13 @@
     if (resp.ok) allReviews = await resp.json();
   } catch(e) { console.warn('Fetch reviews échoué', e); }
 
-  // Fallback : avis exemple statiques pour démonstration
+  // Fallback&nbsp;: avis exemple statiques pour démonstration
   if (!allReviews.length) {
     allReviews = [
       {author_name:'Sophie M.', rating:5, text:"Intervention rapide pour une fuite sous l'évier un samedi matin. Technicien sympa et compétent, devis annoncé avant les travaux et respecté à l'euro. Je recommande sans hésiter.", metier:'plomberie', ville:'Saint-Omer', source:'Google', published_at:'2026-04-22'},
       {author_name:'Christophe L.', rating:5, text:"Entretien annuel chaudière gaz parfait. Le technicien a pris le temps de tout expliquer et m'a même donné des conseils pour optimiser ma consommation. Vraiment professionnels.", metier:'chauffage', ville:'Longuenesse', source:'Google', published_at:'2026-04-15'},
       {author_name:'Marie D.', rating:5, text:"Porte claquée un dimanche soir, on m'a ouvert en 20 minutes sans abîmer la serrure. Tarif annoncé au téléphone, respecté. Service au top.", metier:'serrurerie', ville:'Arques', source:'Google', published_at:'2026-04-08'},
-      {author_name:'Jean-Paul B.', rating:5, text:"Rénovation salle de bain complète : douche italienne, faïence, plomberie, électricité. Travail soigné, équipe à l'écoute, délais respectés. Bravo !", metier:'travaux', ville:'Saint-Martin-lez-Tatinghem', source:'Google', published_at:'2026-03-28'},
+      {author_name:'Jean-Paul B.', rating:5, text:"Rénovation salle de bain complète&nbsp;: douche italienne, faïence, plomberie, électricité. Travail soigné, équipe à l'écoute, délais respectés. Bravo&nbsp;!", metier:'travaux', ville:'Saint-Martin-lez-Tatinghem', source:'Google', published_at:'2026-03-28'},
       {author_name:'Aurélie F.', rating:5, text:"Tableau électrique remplacé suite à un sinistre. Tout a été géré avec l'assurance, dossier monté par eux, je n'ai rien eu à faire. Très pro.", metier:'electricite', ville:'Dunkerque', source:'Google', published_at:'2026-03-15'},
       {author_name:'Pierre R.', rating:5, text:"Cumulus changé en urgence. Devis envoyé dans la journée, pose le lendemain. Atlantic stéatite installé avec un trépied solide, propre, garantie. Parfait.", metier:'plomberie', ville:'Bergues', source:'Google', published_at:'2026-03-02'},
       {author_name:'Nathalie G.', rating:5, text:"Adaptation salle de bain pour ma mère âgée. L'équipe Handibat a tout pris en charge, y compris le dossier MaPrimeAdapt'. Reste à charge réduit, finition impeccable.", metier:'travaux', ville:'Saint-Omer', source:'Google', published_at:'2026-02-18'},
@@ -209,9 +209,9 @@
           '<div class="tm-card-info">' +
             '<div class="tm-card-name">' + escapeHtml(r.author_name) + '</div>' +
             '<div class="tm-card-meta">' +
-              (r.metier ? '<span class="badge">' + r.metier + '</span>' : '') +
-              (r.ville ? '<span>📍 ' + escapeHtml(r.ville) + '</span>' : '') +
-              (date ? '<span>· ' + date + '</span>' : '') +
+              (r.metier&nbsp;? '<span class="badge">' + r.metier + '</span>' : '') +
+              (r.ville&nbsp;? '<span>📍 ' + escapeHtml(r.ville) + '</span>' : '') +
+              (date&nbsp;? '<span>· ' + date + '</span>' : '') +
             '</div>' +
           '</div>' +
         '</div>' +

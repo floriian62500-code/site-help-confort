@@ -129,7 +129,7 @@
     if (resp.ok) allChantiers = await resp.json();
   } catch(e) { console.warn('Fetch réalisations échoué', e); }
 
-  // Fallback : utiliser le JSON local si Supabase vide
+  // Fallback&nbsp;: utiliser le JSON local si Supabase vide
   if (!allChantiers.length) {
     try {
       var r = await fetch('content/realisations/index.json?v=' + Date.now());
@@ -153,7 +153,7 @@
       var photos = c.photos || [];
       var img = '';
       if (Array.isArray(photos) && photos[0]) {
-        var src = (typeof photos[0] === 'string') ? photos[0] : (photos[0].url || photos[0].after || photos[0].src);
+        var src = (typeof photos[0] === 'string')&nbsp;? photos[0] : (photos[0].url || photos[0].after || photos[0].src);
         if (src) img = '<img src="' + src + '" alt="' + (c.title || '') + '" loading="lazy" decoding="async">';
       }
       if (!img) {
@@ -173,14 +173,14 @@
       return '<a href="realisation.html?slug=' + (c.slug || c.id) + '" class="aa-card">' +
         '<div class="aa-card-img">' + img +
           '<span class="tag">' + (c.metier || 'Chantier') + '</span>' +
-          (Array.isArray(photos) && photos.length > 1 ? '<span class="badge-ap">AVANT/APRÈS</span>' : '') +
+          (Array.isArray(photos) && photos.length > 1&nbsp;? '<span class="badge-ap">AVANT/APRÈS</span>' : '') +
         '</div>' +
         '<div class="aa-card-body">' +
           '<h3>' + (c.title || 'Chantier') + '</h3>' +
-          '<p>' + ((c.description || '').slice(0, 110)) + (c.description && c.description.length > 110 ? '…' : '') + '</p>' +
+          '<p>' + ((c.description || '').slice(0, 110)) + (c.description && c.description.length > 110&nbsp;? '…' : '') + '</p>' +
           '<div class="aa-card-meta">' +
-            (c.ville ? '<span>📍 ' + c.ville + '</span>' : '') +
-            (dateStr ? '<span>· ' + dateStr + '</span>' : '') +
+            (c.ville&nbsp;? '<span>📍 ' + c.ville + '</span>' : '') +
+            (dateStr&nbsp;? '<span>· ' + dateStr + '</span>' : '') +
           '</div>' +
         '</div>' +
       '</a>';

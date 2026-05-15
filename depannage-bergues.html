@@ -219,7 +219,7 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Intervenez-vous dans le centre historique piéton de Bergues ?",
+      "name": "Intervenez-vous dans le centre historique piéton de Bergues&nbsp;?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Oui. Nous arrivons à pied avec le matériel pour les interventions du centre intra-muros (accès véhicule restreint). Aucune surfacturation pour cette contrainte — c'est intégré dans notre tarif standard."
@@ -227,7 +227,7 @@
     },
     {
       "@type": "Question",
-      "name": "Travaillez-vous sur les maisons classées ou en zone protégée ?",
+      "name": "Travaillez-vous sur les maisons classées ou en zone protégée&nbsp;?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Oui, fréquemment. Nous respectons les contraintes du PLU et de la zone protégée Vauban. Pour toute intervention modifiant l'aspect extérieur, nous orientons vers l'ABF (Architecte des Bâtiments de France) si nécessaire."
@@ -235,7 +235,7 @@
     },
     {
       "@type": "Question",
-      "name": "Faites-vous les communes voisines (Hoymille, Quaëdypre, Bissezeele) ?",
+      "name": "Faites-vous les communes voisines (Hoymille, Quaëdypre, Bissezeele)&nbsp;?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Oui — ces communes sont sur notre tournée régulière. Couverture identique à Bergues."
@@ -404,8 +404,8 @@
     burger.addEventListener('click', function() {
       var open = burger.classList.toggle('is-open');
       navMobile.classList.toggle('is-open', open);
-      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-      document.body.style.overflow = open ? 'hidden' : '';
+      burger.setAttribute('aria-expanded', open&nbsp;? 'true' : 'false');
+      document.body.style.overflow = open&nbsp;? 'hidden' : '';
     });
     navMobile.querySelectorAll('a').forEach(function(a) {
       a.addEventListener('click', function() {
@@ -427,7 +427,7 @@
   var closeTimer = null;
 
 // ═══════════════════════════════════════════════════════════════
-// FIX POSITION : aligner chaque megamenu sous SON trigger link
+// FIX POSITION&nbsp;: aligner chaque megamenu sous SON trigger link
 // (le CSS left:50% centrait sur la nav entière au lieu du lien)
 // ═══════════════════════════════════════════════════════════════
 function positionMegamenus() {
@@ -487,7 +487,7 @@ if (document.fonts && document.fonts.ready) {
       <span class="city-accent">Plomberie, chauffage, électricité — intervention rapide</span>
     </h1>
 
-    <p class="lead">Vous habitez Bergues, la « Bruges flamande » ? Notre équipe HELP! Confort Dunkerque intervient sur Bergues et les communes voisines (Hoymille, Quaëdypre, Bissezeele) rapidement. Plomberie, chauffage, électricité, serrurerie, vitrerie.</p>
+    <p class="lead">Vous habitez Bergues, la « Bruges flamande&nbsp;» ? Notre équipe HELP! Confort Dunkerque intervient sur Bergues et les communes voisines (Hoymille, Quaëdypre, Bissezeele) rapidement. Plomberie, chauffage, électricité, serrurerie, vitrerie.</p>
 
     <!-- Pictos multi-métier -->
     <div class="loc-hero-pictos" aria-label="Cinq métiers couverts">
@@ -538,7 +538,7 @@ if (document.fonts && document.fonts.ready) {
     <div style="max-width:780px">
       <span class="sec-eyebrow"><span style="width:6px;height:6px;border-radius:50%;background:#FF6B1A"></span>Intervention à Bergues</span>
       <h2>Bergues, <span class='accent'>cité d'art et d'histoire.</span></h2>
-      <p style="color:#475569;line-height:1.7;font-size:1rem">Bergues, c'est un patrimoine bâti unique : <strong>remparts Vauban, beffroi UNESCO, maisons à pignons flamands en brique jaune</strong>. Le bâti historique du centre demande beaucoup de soin et de respect — nos techniciens connaissent les contraintes des bâtiments classés et des rues étroites pavées.</p>
+      <p style="color:#475569;line-height:1.7;font-size:1rem">Bergues, c'est un patrimoine bâti unique&nbsp;: <strong>remparts Vauban, beffroi UNESCO, maisons à pignons flamands en brique jaune</strong>. Le bâti historique du centre demande beaucoup de soin et de respect — nos techniciens connaissent les contraintes des bâtiments classés et des rues étroites pavées.</p>
       <p style="color:#475569;line-height:1.7;font-size:1rem">Du centre intra-muros aux quartiers périphériques (Faubourg de Cassel, Faubourg de Bierne), des fermes flamandes des environs aux logements collectifs récents, nous adaptons l'approche selon le bâti. Et nous savons faire avec les contraintes d'accès véhicule du centre historique.</p>
 
       <div class="anecdote">
@@ -620,9 +620,9 @@ if (document.fonts && document.fonts.ready) {
     <span class="sec-eyebrow"><span style="width:6px;height:6px;border-radius:50%;background:#FF6B1A"></span>Questions fréquentes — Bergues</span>
     <h2 style="font-size:clamp(1.5rem,2.6vw,2rem);line-height:1.2;color:#0A1428;margin:0 0 28px;font-weight:800">Vos questions, <span class="accent" style="font-family:'Playfair Display',Georgia,serif;font-style:italic;color:#0DA0CF">nos réponses concrètes.</span></h2>
 
-    <details class="faq-item"><summary>Intervenez-vous dans le centre historique piéton de Bergues ?</summary><div class="content">Oui. Nous arrivons à pied avec le matériel pour les interventions du centre intra-muros (accès véhicule restreint). Aucune surfacturation pour cette contrainte — c'est intégré dans notre tarif standard.</div></details>
-    <details class="faq-item"><summary>Travaillez-vous sur les maisons classées ou en zone protégée ?</summary><div class="content">Oui, fréquemment. Nous respectons les contraintes du PLU et de la zone protégée Vauban. Pour toute intervention modifiant l'aspect extérieur, nous orientons vers l'ABF (Architecte des Bâtiments de France) si nécessaire.</div></details>
-    <details class="faq-item"><summary>Faites-vous les communes voisines (Hoymille, Quaëdypre, Bissezeele) ?</summary><div class="content">Oui — ces communes sont sur notre tournée régulière. Couverture identique à Bergues.</div></details>
+    <details class="faq-item"><summary>Intervenez-vous dans le centre historique piéton de Bergues&nbsp;?</summary><div class="content">Oui. Nous arrivons à pied avec le matériel pour les interventions du centre intra-muros (accès véhicule restreint). Aucune surfacturation pour cette contrainte — c'est intégré dans notre tarif standard.</div></details>
+    <details class="faq-item"><summary>Travaillez-vous sur les maisons classées ou en zone protégée&nbsp;?</summary><div class="content">Oui, fréquemment. Nous respectons les contraintes du PLU et de la zone protégée Vauban. Pour toute intervention modifiant l'aspect extérieur, nous orientons vers l'ABF (Architecte des Bâtiments de France) si nécessaire.</div></details>
+    <details class="faq-item"><summary>Faites-vous les communes voisines (Hoymille, Quaëdypre, Bissezeele)&nbsp;?</summary><div class="content">Oui — ces communes sont sur notre tournée régulière. Couverture identique à Bergues.</div></details>
   </div>
 </section>
 
@@ -642,7 +642,7 @@ if (document.fonts && document.fonts.ready) {
   <div style="display:flex;align-items:flex-start;gap:12px">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
     <div style="font-size:.84rem;color:#78350F;line-height:1.5">
-      <strong>Note pour la mise en ligne :</strong> les pictogrammes ci-dessous sont des illustrations temporaires. Ils seront remplacés par les <strong>logos officiels des organismes certificateurs</strong> (Éco Artisan®, Professionnel du Gaz®, Handibat®, Silverbat®) après validation des numéros d'agrément et respect strict des chartes graphiques de chaque label.
+      <strong>Note pour la mise en ligne&nbsp;:</strong> les pictogrammes ci-dessous sont des illustrations temporaires. Ils seront remplacés par les <strong>logos officiels des organismes certificateurs</strong> (Éco Artisan®, Professionnel du Gaz®, Handibat®, Silverbat®) après validation des numéros d'agrément et respect strict des chartes graphiques de chaque label.
     </div>
   </div>
 </div>
@@ -663,7 +663,7 @@ if (document.fonts && document.fonts.ready) {
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
       Une équipe basée à Dunkerque, intervient à Bergues
     </span>
-    <h2>Une urgence à Bergues ?<br><span class="accent">On respecte votre patrimoine.</span></h2>
+    <h2>Une urgence à Bergues&nbsp;?<br><span class="accent">On respecte votre patrimoine.</span></h2>
     <p>Diagnostic clair, devis avant travaux, photos avant/après. <strong style="color:#fff">Une seule équipe pour tous vos métiers</strong> — habitués aux contraintes du centre Vauban et des bâtiments classés.</p>
     <div class="cta-actions">
       <a href="tel:+33366100134" class="btn btn-primary" data-tracking="cta-loc-bergues-tel">

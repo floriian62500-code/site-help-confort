@@ -37,7 +37,7 @@
     {
       "@type": "OfferCatalog",
       "name": "Catalogue de prestations HELP! Confort Saint-Omer",
-      "description": "Forfaits prix fixe : plomberie, chauffe-eau, dépannage, devis sur mesure",
+      "description": "Forfaits prix fixe&nbsp;: plomberie, chauffe-eau, dépannage, devis sur mesure",
       "provider": {
         "@type": "LocalBusiness",
         "name": "HELP! Confort Saint-Omer",
@@ -402,7 +402,7 @@
     <div class="np-cta-inner">
       <span class="np-cta-eye">
         <span class="np-cta-pulse"></span>
-        Une question sur un tarif ? On répond en 5 min
+        Une question sur un tarif&nbsp;? On répond en 5 min
       </span>
       <h2 class="np-cta-title">Vous ne trouvez pas votre prestation <span class="np-cta-accent">dans le catalogue&nbsp;?</span></h2>
       <p class="np-cta-lead">Toutes nos interventions sur-mesure (travaux, rénovation, gros sinistres) passent par un devis détaillé <strong>gratuit en zone</strong>.</p>
@@ -515,7 +515,7 @@
   const filtersBar = document.getElementById('filtersBar');
 
   // ═══════════════════════════════════════════════════════════════
-  // LEAD-GATE : Active le verrou des prix tant que coords pas remplies
+  // LEAD-GATE&nbsp;: Active le verrou des prix tant que coords pas remplies
   // ═══════════════════════════════════════════════════════════════
   const LG_KEY = 'hc_leadgate_unlocked_v1';
   function isUnlocked(){ try { return localStorage.getItem(LG_KEY) === '1'; } catch(_) { return false; } }
@@ -524,7 +524,7 @@
   function showLgModal(){ document.getElementById('nvLeadgateModal').hidden = false; document.body.style.overflow = 'hidden'; }
   function hideLgModal(){ document.getElementById('nvLeadgateModal').hidden = true; document.body.style.overflow = ''; }
 
-  // Au chargement : si pas unlocked, on lock
+  // Au chargement&nbsp;: si pas unlocked, on lock
   if (!isUnlocked()) lock();
 
   // Click sur "Voir le tarif" (bouton réserver locked) ou prix → ouvre modal
@@ -732,7 +732,7 @@
       short_desc:"PAC air/eau, air/air. Étude dimensionnement + aides MaPrimeRénov' incluses." },
     { id:'loc-dev-blindage', slug:'blindage-porte', name:"Blindage de porte", requires_quote:true,
       category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure',
-      short_desc:"Renforcement complet : plaque acier + serrure A2P + cornière. Devis après visite." }
+      short_desc:"Renforcement complet&nbsp;: plaque acier + serrure A2P + cornière. Devis après visite." }
   ];
 
   // Charger services + catégories (Supabase) + fusion avec catalogue local
@@ -742,7 +742,7 @@
     if (!error && Array.isArray(data)) services = data;
   } catch(e) { console.warn('[catalog] Supabase indisponible — fallback local'); }
 
-  // Fusion : on garde les services Supabase + on ajoute les locaux qui ne sont pas déjà présents (par slug)
+  // Fusion&nbsp;: on garde les services Supabase + on ajoute les locaux qui ne sont pas déjà présents (par slug)
   const supaSlugs = new Set(services.map(s => s.slug));
   LOCAL_CATALOG.forEach(loc => { if (!supaSlugs.has(loc.slug)) services.push(loc); });
 
@@ -751,7 +751,7 @@
     return;
   }
 
-  // Grouper par catégorie (ordre déterministe : Plo, ECS, Chauf, Élec, Serr, Vit, Sur-mesure)
+  // Grouper par catégorie (ordre déterministe&nbsp;: Plo, ECS, Chauf, Élec, Serr, Vit, Sur-mesure)
   const CAT_ORDER = ['plomberie','chauffe-eau','chauffage','electricite','serrurerie','vitrerie','sur-mesure'];
   const CAT_LABELS = {
     'plomberie':'Plomberie & Sanitaires',
@@ -802,7 +802,7 @@
         <div class="nv-cat-icon"><svg ${SVG_ATTRS}>${CAT_ICONS[g.slug] || CAT_ICONS['sur-mesure']}</svg></div>
         <div>
           <h2>${escapeHtml(g.name)}</h2>
-          <p>${g.items.length} prestation${g.items.length > 1 ? 's' : ''} disponible${g.items.length > 1 ? 's' : ''}</p>
+          <p>${g.items.length} prestation${g.items.length > 1&nbsp;? 's' : ''} disponible${g.items.length > 1&nbsp;? 's' : ''}</p>
         </div>
       </div>
       <div class="nv-grid">
@@ -830,7 +830,7 @@
     return `
       <article class="nv-card" data-service-id="${s.id}">
         <div class="nv-card-visual" data-cat="${escapeHtml(catSlug)}">
-          ${s.badge ? `<span class="nv-card-badge">${escapeHtml(s.badge)}</span>` : ''}
+          ${s.badge&nbsp;? `<span class="nv-card-badge">${escapeHtml(s.badge)}</span>` : ''}
           <span class="nv-card-cat">${escapeHtml(s.category_name || '')}</span>
           <svg ${SVG_ATTRS}>${CAT_ICONS[catSlug] || CAT_ICONS['sur-mesure']}</svg>
         </div>
@@ -838,16 +838,16 @@
           <h3 class="nv-card-name">${escapeHtml(s.name)}</h3>
           <p class="nv-card-short">${escapeHtml(s.short_desc || '')}</p>
           <div class="nv-card-meta">
-            ${s.duration_min ? `<span class="nv-card-meta-item"><svg ${SVG_ATTRS}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>~${Math.round(s.duration_min/60*10)/10} h</span>` : ''}
-            ${s.warranty ? `<span class="nv-card-meta-item"><svg ${SVG_ATTRS}><path d="M9 12l2 2 4-4"/><path d="M21 12c0 5-9 9-9 9s-9-4-9-9V5l9-3 9 3v7z"/></svg>${escapeHtml(s.warranty.split('·')[0].trim())}</span>` : ''}
-            ${s.brand ? `<span class="nv-card-meta-item"><svg ${SVG_ATTRS}><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>${escapeHtml(s.brand)}</span>` : ''}
+            ${s.duration_min&nbsp;? `<span class="nv-card-meta-item"><svg ${SVG_ATTRS}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>~${Math.round(s.duration_min/60*10)/10} h</span>` : ''}
+            ${s.warranty&nbsp;? `<span class="nv-card-meta-item"><svg ${SVG_ATTRS}><path d="M9 12l2 2 4-4"/><path d="M21 12c0 5-9 9-9 9s-9-4-9-9V5l9-3 9 3v7z"/></svg>${escapeHtml(s.warranty.split('·')[0].trim())}</span>` : ''}
+            ${s.brand&nbsp;? `<span class="nv-card-meta-item"><svg ${SVG_ATTRS}><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>${escapeHtml(s.brand)}</span>` : ''}
           </div>
-          ${incl.length ? `
+          ${incl.length&nbsp;? `
             <div class="nv-card-includes">
               <div class="nv-card-includes-title">Ce qui est inclus</div>
               <ul>
                 ${incl.map(i => `<li>${escapeHtml(i)}</li>`).join('')}
-                ${more > 0 ? `<li class="more">${more} élément${more > 1 ? 's' : ''} de plus</li>` : ''}
+                ${more > 0&nbsp;? `<li class="more">${more} élément${more > 1&nbsp;? 's' : ''} de plus</li>` : ''}
               </ul>
             </div>` : ''}
           <div class="nv-card-price">
@@ -857,7 +857,7 @@
               <span class="nv-price-currency">€</span>
               <span class="nv-price-tax">TTC&nbsp;· TVA 10%</span>
             </div>
-            <div class="nv-price-deposit">Acompte ${s.deposit_pct}% à la commande : ${eurFmt(s.deposit_ttc)}</div>
+            <div class="nv-price-deposit">Acompte ${s.deposit_pct}% à la commande&nbsp;: ${eurFmt(s.deposit_ttc)}</div>
           </div>
           <div class="nv-card-actions">
             <button class="nv-btn-primary" data-action="reserve" data-service-id="${s.id}">
@@ -896,7 +896,7 @@
       <div class="nv-modal-body">
         <div class="nv-summary">
           <div class="nv-summary-name">${escapeHtml(svc.name)}</div>
-          ${svc.short_desc ? `<div style="font-size:.86rem;color:#475569;line-height:1.5">${escapeHtml(svc.short_desc)}</div>` : ''}
+          ${svc.short_desc&nbsp;? `<div style="font-size:.86rem;color:#475569;line-height:1.5">${escapeHtml(svc.short_desc)}</div>` : ''}
           <div class="nv-summary-price">
             <span>Prix forfait TTC</span>
             <strong id="nvSummaryPrice">${eurFmt(svc.price_ttc)}</strong>
@@ -904,7 +904,7 @@
           <span class="nv-summary-deposit" id="nvSummaryDeposit">Acompte ${svc.deposit_pct}% : ${eurFmt(svc.deposit_ttc)}</span>
         </div>
 
-        ${hasVariants ? `
+        ${hasVariants&nbsp;? `
           <div style="font-size:.86rem;font-weight:700;color:#0A1428;margin-bottom:10px">Gamme</div>
           <div class="nv-variant-pick" id="nvVariantPick">
             <label class="nv-variant-opt">
@@ -950,14 +950,14 @@
           </div>
 
           <div class="nv-deposit-info">
-            <strong>Comment ça marche :</strong> votre demande nous parvient instantanément. Nous vous rappelons rapidement pour confirmer la date et envoyer le devis détaillé. <strong>L'acompte n'est pas encaissé maintenant</strong> — il sera demandé après confirmation, par virement ou paiement sécurisé.
+            <strong>Comment ça marche&nbsp;:</strong> votre demande nous parvient instantanément. Nous vous rappelons rapidement pour confirmer la date et envoyer le devis détaillé. <strong>L'acompte n'est pas encaissé maintenant</strong> — il sera demandé après confirmation, par virement ou paiement sécurisé.
           </div>
 
           <div id="nvFormError" style="display:none;margin-top:14px;padding:10px 14px;background:rgba(225,29,72,.08);color:#9F0E2B;border-radius:10px;font-size:.86rem;border-left:3px solid #E11D48"></div>
         </form>
       </div>
       <div class="nv-modal-foot">
-        <span class="nv-foot-tel">Ou appelez : <a href="tel:+33366100134">03 66 10 01 34</a></span>
+        <span class="nv-foot-tel">Ou appelez&nbsp;: <a href="tel:+33366100134">03 66 10 01 34</a></span>
         <button type="button" class="nv-cta-submit" id="nvSubmitBtn">
           Confirmer ma demande
           <svg width="16" height="16" ${SVG_ATTRS}><polyline points="20 6 9 17 4 12"/></svg>
@@ -1003,14 +1003,14 @@
       const missing = required.filter(k => !data[k] || !data[k].trim());
       if (missing.length) {
         errBox.style.display = 'block';
-        errBox.textContent = 'Merci de remplir les champs obligatoires : ' + missing.join(', ');
+        errBox.textContent = 'Merci de remplir les champs obligatoires&nbsp;: ' + missing.join(', ');
         return;
       }
 
       // Variant
       let variantKey = null, variantLabel = null, finalHt = svc.price_ht, finalTtc = svc.price_ttc;
       const vSel = sheet.querySelector('input[name="variant"]:checked');
-      if (vSel && vSel.value !== '') {
+      if (vSel && vSel.value&nbsp;!== '') {
         const v = variants[Number(vSel.value)];
         variantKey = v.key; variantLabel = v.label;
         finalHt = Number(v.price_ht);
@@ -1060,7 +1060,7 @@
           <div class="nv-success-icon">
             <svg ${SVG_ATTRS}><polyline points="20 6 9 17 4 12"/></svg>
           </div>
-          <h3>Demande enregistrée !</h3>
+          <h3>Demande enregistrée&nbsp;!</h3>
           <p>Merci ${escapeHtml(data.firstname)}, nous avons bien reçu votre demande.</p>
           <div class="nv-order-num">N° ${escapeHtml(inserted.order_number)}</div>
           <p>Nous vous rappelons au <strong>${escapeHtml(data.phone)}</strong> sous <strong>4 h ouvrées</strong> pour confirmer la date d'intervention et vous envoyer le devis détaillé.</p>
