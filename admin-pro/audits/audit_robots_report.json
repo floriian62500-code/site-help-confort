@@ -1,0 +1,45 @@
+{
+  "robots_present": true,
+  "sitemap_present": true,
+  "sitemap_urls_count": 54,
+  "robots_sitemaps_directives": [
+    "https://www.depan59-62.fr/sitemap.xml"
+  ],
+  "missing_from_sitemap": [
+    "realisation.html",
+    "reset.html"
+  ],
+  "blocked_public": [],
+  "findings": [
+    {
+      "sev": "MED",
+      "msg": "2 page(s) racine absente(s) du sitemap",
+      "details": [
+        "realisation.html",
+        "reset.html"
+      ]
+    }
+  ],
+  "checks_ok": [
+    "robots.txt présent",
+    "User-agent: * présent",
+    "14 pages publiques principales autorisées",
+    "Sitemap référencé dans robots.txt : 1",
+    "sitemap.xml présent + bien formé (54 URLs)"
+  ],
+  "prod_http_tests": {
+    "/robots.txt": {
+      "status": 0,
+      "content_type": "",
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
+      "tested": true
+    },
+    "/sitemap.xml": {
+      "status": 0,
+      "content_type": "",
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
+      "tested": true
+    }
+  },
+  "generated_at": "2026-05-15T13:49:06"
+}

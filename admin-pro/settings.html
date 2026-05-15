@@ -267,7 +267,8 @@
                 <input type="text" name="ig_business_account_id" placeholder="17841401234567890" autocomplete="off" data-1p-ignore data-lpignore="true" inputmode="numeric" pattern="[0-9]*">
               </div>
               <div class="settings-actions" style="flex-direction:column;align-items:stretch;gap:10px">
-                <button type="button" id="btnRefreshMetaToken" class="btn" style="background:linear-gradient(135deg,#1877F2,#3B82F6);color:#fff;border:0;padding:11px 16px;border-radius:9px;font-weight:800;font-size:.92rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>⚡ Auto-récupérer Page Access Token (permanent)</button>
+                <!-- Bouton Auto-récupérer désactivé (Edge Function non déployée) — masqué pour éviter la confusion. Le parseur JSON ci-dessus fait le job. -->
+                <button type="button" id="btnRefreshMetaToken" class="btn" style="display:none">⚡ Auto-récupérer Page Access Token (permanent)</button>
                 <div id="refreshMetaResult" style="display:none;padding:10px;border-radius:8px;font-size:.82rem"></div>
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
                   <span class="hint" data-saved-meta>Non sauvegardé</span>
