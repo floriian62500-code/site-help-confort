@@ -142,8 +142,19 @@ def scan_file(p: pathlib.Path, generic: bool = False) -> list[dict]:
 
 
 def is_image_url(url: str) -> bool:
-    u = url.lower().split("?")[0].split("#")[0]
-    return u.endswith((".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".avif", ".ico"))
+    u = url.lower()
+    # 1) Extension explicite
+    path = u.split("?")[0].split("#")[0]
+    if path.endswith((".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".avif", ".ico")):
+        return True
+    # 2) Patterns CDN image (Unsplash, Cloudinary, Imgix)
+    host = urlparse(u).netloc
+    if host.endswith("unsplash.com") or host.endswith("cloudinary.com") or "imgix.net" in host:
+        return True
+    # 3) Hint par query param (fm=jpg/png/webp)
+    if re.search(r"[?&]fm=(jpg|png|webp|avif)\b", u):
+        return True
+    return False
 
 
 def main() -> int:

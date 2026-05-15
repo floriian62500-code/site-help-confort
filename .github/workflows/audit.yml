@@ -85,6 +85,9 @@ jobs:
             audit_required_orphan.py
             audit_alt_strict.py
             audit_nav_doublon.py
+            audit_cta_coherence.py
+            audit_json_freshness.py
+            audit_hotlink_cdn.py
           )
           for a in "${AUDITS[@]}"; do
             f="admin-pro/audits/$a"

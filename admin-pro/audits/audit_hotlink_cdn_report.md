@@ -1,6 +1,6 @@
 # 🖼️ Audit images hot-linkées CDN tiers — sonde #13
 
-_Généré le 2026-05-15 19:10_
+_Généré le 2026-05-15 19:11_
 
 - Pages HTML scannées : **38**
 - Fichiers JS scannés : **9**
@@ -20,7 +20,7 @@ Fichiers concernés : `zones-intervention.html`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
-### 📄 `images.unsplash.com` — 3 occurrence(s) (0 image(s))
+### 🖼️ `images.unsplash.com` — 3 occurrence(s) (3 image(s))
 
 Fichiers concernés : `plombier-saint-omer.html`
 
@@ -28,7 +28,7 @@ Fichiers concernés : `plombier-saint-omer.html`
 - `plombier-saint-omer.html` → `https://images.unsplash.com/photo-1744869524920-f0efc925b82f?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop`
 - `plombier-saint-omer.html` → `https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop`
 
-→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
+→ **Recommandation** : télécharger les assets critiques dans `/images/` pour garantir le contrôle, le cache et la conformité CSP.
 
 ### 📄 `maps.app.goo.gl` — 34 occurrence(s) (0 image(s))
 
@@ -42,7 +42,7 @@ Fichiers concernés : `a-propos.html`, `actualites.html`, `aides.html`, `assets/
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
-### 📄 `plus.unsplash.com` — 3 occurrence(s) (0 image(s))
+### 🖼️ `plus.unsplash.com` — 3 occurrence(s) (3 image(s))
 
 Fichiers concernés : `plombier-saint-omer.html`
 
@@ -50,7 +50,7 @@ Fichiers concernés : `plombier-saint-omer.html`
 - `plombier-saint-omer.html` → `https://plus.unsplash.com/premium_photo-1661301068444-8ac48208d017?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop`
 - `plombier-saint-omer.html` → `https://plus.unsplash.com/premium_photo-1661884973994-d7625e52631a?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop`
 
-→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
+→ **Recommandation** : télécharger les assets critiques dans `/images/` pour garantir le contrôle, le cache et la conformité CSP.
 
 ### 📄 `quaredesign.fr` — 5 occurrence(s) (0 image(s))
 
@@ -218,9 +218,9 @@ Fichiers concernés : `zones-intervention.html`
 | `connect.facebook.net` | ⚪ trusted | 1 | 0 |
 | `fonts.googleapis.com` | ⚪ trusted | 76 | 0 |
 | `fonts.gstatic.com` | ⚪ trusted | 38 | 0 |
-| `images.unsplash.com` | 🔴 external | 3 | 0 |
+| `images.unsplash.com` | 🔴 external | 3 | 3 |
 | `maps.app.goo.gl` | 🔴 external | 34 | 0 |
-| `plus.unsplash.com` | 🔴 external | 3 | 0 |
+| `plus.unsplash.com` | 🔴 external | 3 | 3 |
 | `quaredesign.fr` | 🔴 external | 5 | 0 |
 | `rsramonsoler.com` | 🔴 external | 5 | 0 |
 | `trustville.com` | 🔴 external | 6 | 0 |
