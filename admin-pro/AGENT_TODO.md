@@ -68,6 +68,7 @@
 - [x] **Cleanup CSS mort** : supprimer les règles `.m-cta-final*` des 5 pages métier (HTML déjà retiré). *(fait 15/05 — 42 lignes CSS retirées sur 5 pages saint-omer, remplacées par commentaire trace)*
 - [x] **404.html** — refonte avec design unifié + bouton "Retour à l'accueil" + chatbot. *(fait 15/05 — style inline complet : gradient h1 Playfair, picto loupe, double CTA, 8 quick-links métiers)*
 - [ ] **`mentions-legales.html`** — vérifier que toutes les infos sont à jour (SIRET, RCS, médiation conso).
+- [ ] **FAQ par métier** — rewriter les `<details>` FAQ sur `electricien-saint-omer.html`, `serrurier-saint-omer.html`, `chauffagiste-saint-omer.html`, `travaux-saint-omer.html` (questions actuelles 100% plomberie ; cf. bug #31 MEMOIRE). Synchroniser JSON-LD `FAQPage`.
 - [x] **Favicon** — vérifier que toutes les pages chargent le bon favicon `logo.svg`. *(fait 15/05 — audit 34 pages : 1 manquait (realisation.html) → favicon logo.svg ajouté ; toutes OK)*
 
 ## P8 — Tests & qualité

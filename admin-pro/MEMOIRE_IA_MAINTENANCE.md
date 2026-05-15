@@ -380,3 +380,31 @@ Chaque sonde retourne ✅ / ⚠️ / ❌ + le snippet incriminé + une suggestio
 ---
 
 *Document généré le 14 mai 2026 — version 2 enrichie le même jour avec 10 nouveaux bugs et 9 nouvelles sondes.*
+
+---
+
+## 🔵 ADDENDUM v3 — Bugs trouvés sur troisième passe (15 mai 2026)
+
+### 31. FAQ partagée non métier-specific sur 5 pages saint-omer
+- **Symptôme** : Les pages `electricien-saint-omer.html`, `serrurier-saint-omer.html`, `chauffagiste-saint-omer.html`, `travaux-saint-omer.html` contiennent toutes la même FAQ avec des questions plomberie ("recherche de fuite", "débouchage de canalisation", "Professionnel du Gaz®"). Sur la page électricien, un client cherchant "tarif tableau électrique" tombe sur du contenu plomberie → confusion + cohérence métier cassée (sonde #24).
+- **Cause** : Bloc FAQ copié-collé tel quel lors de la création des pages métier sans rewrite par métier. Seule la mention "urgences X" change (substitution naïve), pas le contenu des réponses.
+- **Correctif appliqué** : Tarifs FAQ corrigés (sonde #23) MAIS contenu non rewrité — le rewrite par métier reste à faire.
+- **Règle de scan à renforcer** :
+  - Sonde #24 (Cohérence métier) doit s'étendre aux blocs FAQ : si plus de 50% des questions FAQ d'une page métier X utilisent du vocabulaire d'un autre métier Y → ALERTE.
+  - Détecter les blocs FAQ identiques (hash) entre plusieurs pages métier différentes → suggérer rewrite spécifique.
+
+### 32. JSON-LD FAQPage doublonné non synchronisé avec le HTML
+- **Symptôme** : Si un développeur édite la FAQ HTML (le `<details>`) mais oublie de mettre à jour le JSON-LD `FAQPage` correspondant (~70 lignes plus bas), Google indexe une version désynchronisée du contenu.
+- **Cause** : Le contenu de chaque réponse FAQ est dupliqué entre `<div class="faq-answer">` et le bloc JSON-LD `"acceptedAnswer": { "text": "..." }` sans mécanisme de génération automatique.
+- **Règle de scan à ajouter** :
+  - Pour chaque page avec un `script type="application/ld+json"` typé `FAQPage`, croiser le texte de chaque `acceptedAnswer.text` avec le contenu textuel des `.faq-answer` du HTML.
+  - Si divergence → ALERTE (peut être un fix oublié).
+  - Suggérer d'extraire les FAQ dans un JSON externe + rendu HTML+JSON-LD partagé.
+
+### Sondes additionnelles v3 (à intégrer au scan IA)
+27. **Sonde FAQ-cohérence-métier** : détecter les blocs FAQ partagés entre pages métier différentes ; alerter si >50% du vocabulaire est hors métier de la page.
+28. **Sonde FAQ-JSON-LD-sync** : croiser texte HTML `.faq-answer` ↔ `acceptedAnswer.text` JSON-LD ; alerter en cas de divergence.
+
+---
+
+*Addendum v3 généré le 15 mai 2026 par l'agent autonome — 2 nouveaux bugs + 2 nouvelles sondes.*
