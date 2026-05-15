@@ -661,6 +661,73 @@ florian.dhaillecourt@helpconfort.com`;
       }
     };
   }
+
+  // ═══════════════════════════════════════════════════════════════
+  // PARSEUR JSON Meta /me/accounts → extrait Page Access Token + IDs
+  // ═══════════════════════════════════════════════════════════════
+  const btnParse = document.getElementById('btnParseMetaJson');
+  if (btnParse) {
+    btnParse.onclick = () => {
+      const ta = document.getElementById('metaJsonPaste');
+      const out = document.getElementById('metaJsonResult');
+      const raw = (ta.value || '').trim();
+      out.style.display = 'block';
+      if (!raw) {
+        out.style.background = 'rgba(255,180,0,.10)';
+        out.style.color = '#92400E';
+        out.innerHTML = '⚠️ Colle la réponse JSON de Graph Explorer dans la zone ci-dessus.';
+        return;
+      }
+      // Cas 1 : full JSON object
+      let token = null, pageId = null, pageName = null, igId = null;
+      try {
+        const j = JSON.parse(raw);
+        const arr = Array.isArray(j) ? j : (j.data || (j.access_token ? [j] : []));
+        if (arr.length) {
+          const first = arr[0];
+          token = first.access_token || first.token || null;
+          pageId = first.id || null;
+          pageName = first.name || null;
+          igId = first.instagram_business_account?.id || null;
+        }
+      } catch(e) {
+        // Cas 2 : regex fallback sur la chaîne brute
+        const mTok = raw.match(/"access_token"\s*:\s*"(EAA[^"]+)"/);
+        const mId  = raw.match(/"id"\s*:\s*"(\d{10,})"/);
+        const mNm  = raw.match(/"name"\s*:\s*"([^"]+)"/);
+        const mIg  = raw.match(/"instagram_business_account"[\s\S]{0,80}"id"\s*:\s*"(\d{10,})"/);
+        if (mTok) token = mTok[1];
+        if (mId) pageId = mId[1];
+        if (mNm) pageName = mNm[1];
+        if (mIg) igId = mIg[1];
+      }
+      if (!token) {
+        out.style.background = 'rgba(185,28,28,.08)';
+        out.style.color = '#B91C1C';
+        out.innerHTML = '❌ Aucun <code>access_token</code> trouvé dans le JSON. Vérifie que tu as bien appelé <code>/me/accounts</code> dans Graph Explorer.';
+        return;
+      }
+      // Remplit les champs du formulaire
+      const form = btnParse.closest('form');
+      const fTok = form.querySelector('[name="page_access_token"]');
+      const fPid = form.querySelector('[name="fb_page_id"]');
+      const fIg  = form.querySelector('[name="ig_business_account_id"]');
+      if (fTok) fTok.value = token;
+      if (fPid && pageId) fPid.value = pageId;
+      if (fIg && igId) fIg.value = igId;
+
+      out.style.background = 'rgba(34,160,107,.10)';
+      out.style.color = '#15803D';
+      out.innerHTML = `✅ <strong>Token + Page ID extraits</strong><br>
+        Page : <strong>${escapeHtml(pageName || '(inconnu)')}</strong> (ID <code>${escapeHtml(pageId || '—')}</code>)<br>
+        Token : ${token.slice(0,12)}…${token.slice(-6)} (${token.length} car.) — collé dans le champ ci-dessous<br>
+        ${igId ? `Instagram Business ID : <code>${igId}</code> trouvé et collé ✅` : '<em>Pas d\'Instagram Business Account dans cette réponse (normal si pas relié).</em>'}<br>
+        <strong style="color:#0A1428">→ Clique maintenant sur <em>Enregistrer</em> en bas pour sauvegarder.</strong>`;
+      // Vide la zone collée pour éviter de la laisser traîner
+      setTimeout(() => { ta.value = ''; }, 400);
+    };
+  }
+
   function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
   // Enregistrer
