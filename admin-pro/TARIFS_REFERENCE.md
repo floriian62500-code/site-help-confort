@@ -18,15 +18,17 @@ Tous les tarifs affichés sur le site doivent être croisés avec ce document. T
 | **Déplacement audomarois** | 45 € | **50 €** |
 | **Déplacement Dunkerque (forfait)** | 80 € | **88 €** |
 | **Frais de dossier** (systématique) | 5 € | **5,50 €** |
-| **Traitement des déchets** (forfait obligatoire) | 1,67 € | **1,84 €** |
+| **Traitement des déchets** (% obligatoire) | **1 % du HT** | **1 % du HT** |
 
 ### 🧮 Base d'un devis « tout compris »
 Tout devis HELP! Confort comprend systématiquement :
 - Main d'œuvre (53 €/h HT)
 - Déplacement (45 € HT)
 - Frais de dossier (5 € HT)
-- Traitement déchets (1,67 € HT)
-- = **104,67 € HT base** (≈ **115 € TTC**) auxquels on ajoute la fourniture éventuelle + MO supplémentaire si > 1h.
+- Traitement déchets = **1 % du HT total** (calculé automatiquement après les autres lignes)
+- = **103 € HT** + 1,03 € déchets = **104,03 € HT base** (≈ **114,40 € TTC**) auxquels on ajoute la fourniture éventuelle + MO supplémentaire si > 1h.
+
+> ⚠️ **Règle métier** (depuis 2026-05-15 — décision Florian) : le traitement des déchets n'est plus un montant fixe mais **1 % du montant HT du forfait commandé**. Sur un forfait à 1 000 € HT → 10 € de déchets. Sur un mécanisme Nicoll à 170 € HT → 1,70 € de déchets. Calculé en bout de chaîne et affiché en ligne séparée sur le devis.
 
 ---
 
