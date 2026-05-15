@@ -321,6 +321,46 @@
     renderTable();
   }
 
+  // ─── Mapping catégorie → icône SVG + couleur ──────────────────
+  // Permet d'afficher visuellement le métier de chaque prestation
+  const CAT_VISUAL = {
+    'plomberie': { color: '#0DA0CF', bg: 'linear-gradient(135deg,#0A4F6E,#1FC4F0)', icon: '<path d="M22 12h-7l-2 4-3-8-2 4H2"/>' },
+    'plomberie-sanitaires': { color: '#0DA0CF', bg: 'linear-gradient(135deg,#0A4F6E,#1FC4F0)', icon: '<path d="M22 12h-7l-2 4-3-8-2 4H2"/>' },
+    'chauffe-eau': { color: '#FF8A3D', bg: 'linear-gradient(135deg,#0A4F6E,#FFB400)', icon: '<path d="M14 13.5a2.5 2.5 0 1 1-3 0V5l3-3v11.5z"/><path d="M11 5h3"/>' },
+    'chauffe-eau-production-ecs': { color: '#FF8A3D', bg: 'linear-gradient(135deg,#0A4F6E,#FFB400)', icon: '<path d="M14 13.5a2.5 2.5 0 1 1-3 0V5l3-3v11.5z"/><path d="M11 5h3"/>' },
+    'chauffage': { color: '#FF6B1A', bg: 'linear-gradient(135deg,#7A1F0A,#FF6B1A)', icon: '<path d="M12 2c1 4-2 4 0 8 2 4 4 4 0 12-1-4 2-4 0-8-2-4-4-4 0-12z"/>' },
+    'electricite': { color: '#FFB400', bg: 'linear-gradient(135deg,#5A4500,#FFB400)', icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' },
+    'serrurerie': { color: '#7C3AED', bg: 'linear-gradient(135deg,#3A1A6E,#7C3AED)', icon: '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>' },
+    'vitrerie': { color: '#22C55E', bg: 'linear-gradient(135deg,#0A4F38,#22C55E)', icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/>' },
+    'devis-sur-mesure': { color: '#A855F7', bg: 'linear-gradient(135deg,#0A1428,#FF6B1A)', icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>' }
+  };
+  const SVG_ATTRS = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
+  function visualForCat(cat) {
+    if (!cat) return { color: '#64748b', bg: 'linear-gradient(135deg,#1a2742,#0DA0CF)', icon: '<rect x="3" y="3" width="18" height="18" rx="2"/>' };
+    return CAT_VISUAL[cat.slug] || CAT_VISUAL[cat.slug?.replace(/_/g,'-')] || { color: '#64748b', bg: 'linear-gradient(135deg,#1a2742,#0DA0CF)', icon: '<rect x="3" y="3" width="18" height="18" rx="2"/>' };
+  }
+
+  // ─── Chips filtres rapides par catégorie ─────────────────────
+  function renderCatChips() {
+    const chipsHost = document.getElementById('svCatChips');
+    if (!chipsHost) return;
+    const catFilter = document.getElementById('filterCat').value;
+    const allCount = allServices.length;
+    let html = `<button type="button" class="sv-chip ${!catFilter?'is-active':''}" data-cat="" style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:.78rem;font-weight:700;border:1px solid var(--ink-100);background:${!catFilter?'#0A1428':'#fff'};color:${!catFilter?'#fff':'var(--ink-700)'};cursor:pointer;font:inherit">Toutes <span style="opacity:.7;font-size:.7rem">${allCount}</span></button>`;
+    allCats.forEach(cat => {
+      const count = allServices.filter(s => s.category_id === cat.id).length;
+      if (count === 0) return;
+      const v = visualForCat(cat);
+      const isActive = catFilter === cat.id;
+      html += `<button type="button" class="sv-chip ${isActive?'is-active':''}" data-cat="${cat.id}" style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:.78rem;font-weight:700;border:1px solid ${isActive?v.color:'var(--ink-100)'};background:${isActive?v.color:'#fff'};color:${isActive?'#fff':'var(--ink-700)'};cursor:pointer;font:inherit"><svg width="12" height="12" ${SVG_ATTRS} style="color:${isActive?'#fff':v.color}">${v.icon}</svg>${escapeHtml(cat.name)} <span style="opacity:.7;font-size:.7rem">${count}</span></button>`;
+    });
+    chipsHost.innerHTML = html;
+    chipsHost.querySelectorAll('.sv-chip').forEach(b => b.onclick = () => {
+      document.getElementById('filterCat').value = b.dataset.cat;
+      renderTable();
+    });
+  }
+
   function renderTable() {
     const search = document.getElementById('searchSvc').value.toLowerCase().trim();
     const catFilter = document.getElementById('filterCat').value;
@@ -336,6 +376,9 @@
       return true;
     });
 
+    // Render chips après filter
+    renderCatChips();
+
     const tbody = document.getElementById('svTbody');
     if (!rows.length) {
       tbody.innerHTML = `<tr><td colspan="8"><div class="sv-empty" style="margin:0;border:none">
@@ -345,7 +388,56 @@
       </div></td></tr>`;
       return;
     }
-    tbody.innerHTML = rows.map(s => {
+
+    // ─── Tri par catégorie pour grouper visuellement ──
+    rows.sort((a,b) => {
+      const ca = allCats.find(c => c.id === a.category_id);
+      const cb = allCats.find(c => c.id === b.category_id);
+      const pa = ca?.position ?? 999;
+      const pb = cb?.position ?? 999;
+      if (pa !== pb) return pa - pb;
+      return (a.name || '').localeCompare(b.name || '');
+    });
+
+    // Grouper par cat_id
+    const groups = [];
+    let curCatId = null, curGroup = null;
+    rows.forEach(s => {
+      if (s.category_id !== curCatId) {
+        curCatId = s.category_id;
+        curGroup = { cat_id: curCatId, items: [] };
+        groups.push(curGroup);
+      }
+      curGroup.items.push(s);
+    });
+
+    // Build HTML : un header par catégorie + ses rows
+    let html = '';
+    groups.forEach(g => {
+      const cat = allCats.find(c => c.id === g.cat_id);
+      const v = visualForCat(cat);
+      // Header de catégorie (uniquement si pas filtré sur une seule cat ou s'il y a plusieurs groupes)
+      if (groups.length > 1 || !catFilter) {
+        html += `<tr class="sv-cat-header"><td colspan="8" style="padding:14px 14px 8px;background:#fafcfd;border-top:1px solid var(--ink-100);position:sticky;top:0;z-index:5">
+          <div style="display:flex;align-items:center;gap:11px">
+            <div style="width:34px;height:34px;border-radius:9px;background:${v.bg};color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 10px ${v.color}33">
+              <svg width="17" height="17" ${SVG_ATTRS}>${v.icon}</svg>
+            </div>
+            <div style="flex:1">
+              <div style="font-size:.96rem;font-weight:800;color:#0A1428;line-height:1.2">${escapeHtml(cat?.name || 'Sans catégorie')}</div>
+              <div style="font-size:.74rem;color:var(--ink-500);margin-top:1px">${g.items.length} prestation${g.items.length>1?'s':''} · ${g.items.filter(x=>x.active).length} active${g.items.filter(x=>x.active).length>1?'s':''} · ${g.items.filter(x=>x.featured).length} mise${g.items.filter(x=>x.featured).length>1?'s':''} en avant</div>
+            </div>
+          </div>
+        </td></tr>`;
+      }
+      g.items.forEach(s => {
+        html += renderRow(s);
+      });
+    });
+    tbody.innerHTML = html;
+  }
+
+  function renderRow(s) {
       const cat = allCats.find(c => c.id === s.category_id);
       const ttc = Math.round(s.price_ht * (1 + s.vat_rate) * 100) / 100;
       const nbVar = Array.isArray(s.variants) ? s.variants.length : 0;
@@ -393,7 +485,6 @@
             </div>
           </td>
         </tr>`;
-    }).join('');
   }
 
   // Filters bind
