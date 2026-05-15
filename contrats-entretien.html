@@ -2570,7 +2570,7 @@ if (document.fonts && document.fonts.ready) {
 </script>
 <script src="assets/hc-address-autocomplete.js" defer></script>
 <script>
-if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(e){console.warn('SW reg failed',e);});});}
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){r.unregister();});if('caches' in window)caches.keys().then(function(ks){ks.forEach(function(k){caches.delete(k);});});});});});}
 </script>
 <!-- HC-SW-KILL-V1 — Force désinstallation du SW si actif (déployé 15/05 PM) -->
 <script>
