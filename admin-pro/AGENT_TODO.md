@@ -6,6 +6,8 @@
 > Restera à faire à la main : validation tarifs en attente (cf. `TARIFS_REFERENCE.md` § "En attente de validation Florian").
 >
 > 🎉 **TODO P1-P9 épuisé le 2026-05-15**. P10 (monitoring + audits dérivés) ouvert le 2026-05-15 PM ; 3/12 items déjà cochés.
+>
+> 🎉 **TODO P10 épuisé le 2026-05-15 PM** (12/12). P11 (post-épuisement, monitoring continu) ajouté en fin de fichier — items orientés exécution récurrente des audits + nouvelles sondes dérivées des rapports.
 
 # 🤖 Agent TODO — Travail autonome HELP! Confort
 
@@ -122,9 +124,27 @@
 - [x] **Audit liens externes cassés** — crawler tous les `<a href="https://...">` du site (hors social network), tester un HEAD HTTP avec timeout 5s, lister les 4xx/5xx dans `admin-pro/audits/audit_links_externes_report.md`. *(fait 15/05 PM — `audit_liens_externes.py` + report.md/json ; zéro-dep urllib, whitelist FB/IG/LI/X/TikTok/YT/WA, HEAD→GET fallback ; 13 URLs uniques scannées)*
 - [x] **Sonde #44 (HTML5 `</head>` + `<body>`)** — audit que chaque page publique racine a bien les 2 balises. À ajouter à `audit_html5.py` (déjà existant) en code BODY-HEAD-MISSING. *(fait 15/05 PM — code BODY-HEAD-MISSING ajouté à `audit_html5.py` ; trouvé 1 vrai bug sur 404.html — `</head>` + `<body>` absents — patché immédiatement)*
 - [x] **Sonde #46 (aria-label sur inputs sans id)** — audit ARIA renforcé : `<input>` (type=text/email/tel/...) sans `id` doit avoir `aria-label` OU `aria-labelledby`. Étendre `audit_aria.py` avec code `INPUT-NO-ARIA-LABEL`. *(fait 15/05 PM — code INPUT-NO-ARIA-LABEL ajouté à `audit_aria.py` ; 39 pages, findings passent de 35 à 107 — décision Florian sur correctifs)*
-- [ ] **Crawler de robots.txt + sitemap fetch** — vérifier que `robots.txt` à la racine renvoie 200 et autorise `sitemap.xml`. Vérifier que `sitemap.xml` est bien `application/xml`. Reporter dans `admin-pro/audits/audit_robots_report.md`.
+- [x] **Crawler de robots.txt + sitemap fetch** — vérifier que `robots.txt` à la racine renvoie 200 et autorise `sitemap.xml`. Vérifier que `sitemap.xml` est bien `application/xml`. Reporter dans `admin-pro/audits/audit_robots_report.md`. *(fait 15/05 PM — `audit_robots.py` + report.md/json ; parse robots, test allow/disallow sur 14 pages clés, parse sitemap.xml, croise local↔sitemap, test HTTP prod best-effort ; 1 finding MED (realisation/reset.html absents — attendu) ; 5 checks OK)*
 - [x] **Sonde performance images > 200 KB** — crawl `images/` et lister les PNG/JPG > 200 KB. Croiser avec leur usage `<img src=...>` ; si image lourde au-dessus du fold (hero) → ALERTE perf. *(fait 15/05 PM — `audit_images.py` + report.md/json ; 84 images scannées (6.3 MB), 6 > 200 KB toutes non référencées (mascotte PNG legacy + .tmp.png) ; seul `mascotte.webp` est utilisé → 1.6 MB de PNG morts à supprimer)*
-- [ ] **Synthèse mensuelle automatique** — script `admin-pro/audits/digest_mensuel.py` qui concatène les `*_report.md` les plus récents en 1 seul rapport `admin-pro/audits/DIGEST_2026-05.md` avec compteur de findings, évolution vs mois précédent.
+- [x] **Synthèse mensuelle automatique** — script `admin-pro/audits/digest_mensuel.py` qui concatène les `*_report.md` les plus récents en 1 seul rapport `admin-pro/audits/DIGEST_2026-05.md` avec compteur de findings, évolution vs mois précédent. *(fait 15/05 PM — `digest_mensuel.py` + `DIGEST_2026-05.md/.json` ; 12 audits agrégés, 15 findings cumulés, comparaison vs mois N-1 via DIGEST_YYYY-MM.json, deltas + signal "🆕 nouveaux audits")*
+
+---
+
+## P11 — Auto-générés (TODO P10 épuisé le 15 mai 2026 PM)
+
+> Section ouverte après épuisement complet P1-P10. Items orientés exécution récurrente des audits, nouvelles sondes dérivées des rapports, et dette technique mineure.
+> Tout item engageant un montant ou un contenu marketing → `[?]` (attendre Florian).
+
+- [ ] **Lancer `audit_liens_externes.py` en prod** — exécuter une fois avec un environnement qui a accès Internet (machine Florian ou GitHub Action) et committer le rapport. Le run sandbox n'a pas pu tester (DNS bloqué).
+- [ ] **Lancer `audit_robots.py` en prod** — idem, pour valider les content-type prod et le statut HTTP 200 effectif sur Netlify.
+- [ ] **Affiner regex digest_mensuel.py** — l'heuristique de comptage `findings` retourne 0 pour `audit_aria` (35 findings réels), `audit_jsonld` (173 warnings) et `audit_lighthouse_local`. Ajouter des patterns spécifiques type `(\d+)\s*findings`, `(\d+)\s*warnings?`, `(\d+)\s*erreur`.
+- [ ] **GitHub Action audit nightly** — créer `.github/workflows/audit.yml` qui exécute tous les `admin-pro/audits/*.py` chaque nuit à 3h UTC + commit rapport si delta. Pré-requis : runner Linux avec accès Internet (pour audit_liens_externes).
+- [ ] **Sonde #61 — links vers anciennes pages** — détecter dans toutes les pages les `href="..."` qui pointent vers un `.html` racine qui n'existe pas (variante du broken-links interne, mais en croisant avec sitemap.xml comme source de vérité).
+- [ ] **Sonde #62 — favicon/apple-touch-icon HTTP HEAD** — vérifier que les chemins déclarés dans `<link rel="icon">` et `<link rel="apple-touch-icon">` existent vraiment sur le disque (équivalent script-404 mais pour les icônes).
+- [ ] **Sonde #63 — duplicate IDs cross-page** — détecter le même `id="X"` apparaissant dans plus de N pages (suggère un copy-paste de template à factoriser).
+- [ ] **Audit consent vs tracking.js** — vérifier sur les 38 pages que `assets/tracking.js` est bien chargé APRÈS `assets/hc-consent.js` (sinon GA4 part avant la garde RGPD).
+- [ ] **Cleanup `images/_backup_png/`** — vérifier que le backup PNG (créé lors de la compression du 15/05) ne contient plus rien d'utilisé en prod ; si OK, le déplacer hors du repo ou créer un `.gitignore` pour ce dossier.
+- [ ] **Audit `data-source` obsolète** — étendre `audit_datasource.py` avec la sous-règle de la sonde #37 : alerter quand `base-produits-YYYY-MM` ou `devis YYYY-MM-DD` a plus de 12 mois (source potentiellement périmée).
 
 ---
 
