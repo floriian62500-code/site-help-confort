@@ -88,30 +88,39 @@ def audit_file(path: pathlib.Path) -> dict:
     elif len(tm.group(1).strip()) > 80:
         res["warnings"].append(f"<title> long ({len(tm.group(1).strip())} chars, >70 recommandé)")
 
-    # ─── 5. meta description
-    md = re.search(r'<meta\s+name="description"\s+content="([^"]*)"', raw, re.I)
-    if not md or not md.group(1).strip():
+    # ─── 5. meta description (parsing attributs order-agnostic)
+    desc_val = None
+    for mm in re.finditer(r'<meta\b([^>]*)>', raw, re.I):
+        attrs = parse_attrs(mm.group(1))
+        if attrs.get("name", "").lower() == "description":
+            desc_val = attrs.get("content", "")
+            break
+    if desc_val is None or not desc_val.strip():
         res["errors"].append('<meta name="description"> manquant ou vide')
-    elif len(md.group(1)) > 170:
-        res["warnings"].append(f'meta description longue ({len(md.group(1))} chars, >170 → tronquée)')
-    elif len(md.group(1)) < 60:
-        res["warnings"].append(f'meta description courte ({len(md.group(1))} chars, <60)')
+    elif len(desc_val) > 170:
+        res["warnings"].append(f'meta description longue ({len(desc_val)} chars, >170 → tronquée)')
+    elif len(desc_val) < 60:
+        res["warnings"].append(f'meta description courte ({len(desc_val)} chars, <60)')
 
     # ─── 6. viewport
     if not re.search(r'<meta\s+name="viewport"', raw, re.I):
         res["errors"].append('<meta name="viewport"> manquant')
 
-    # ─── 7. canonical
-    if not re.search(r'<link\s+rel="canonical"', raw, re.I):
+    # ─── 7. canonical (sauf si noindex — auquel cas c'est intentionnel)
+    is_noindex = bool(re.search(r'<meta\s+name="robots"\s+content="[^"]*noindex', raw, re.I))
+    if not re.search(r'<link\s+rel="canonical"', raw, re.I) and not is_noindex:
         res["warnings"].append('<link rel="canonical"> manquant')
 
     # Nettoyer pour audit balisage
     html = strip_comments_and_scripts(raw)
 
-    # ─── 8. h1
+    # ─── 8. h1 — on accepte aussi un h1 injecté par JS (template string)
     h1s = re.findall(r"<h1\b[^>]*>(.*?)</h1>", html, re.I|re.S)
-    if len(h1s) == 0:
+    has_h1_in_js = bool(re.search(r"<h1\b", raw))  # cherche aussi dans scripts
+    if len(h1s) == 0 and not has_h1_in_js:
         res["errors"].append("aucun <h1>")
+    elif len(h1s) == 0 and has_h1_in_js:
+        res["info"].append("aucun <h1> statique — injecté par JS (page dynamique)")
     elif len(h1s) > 1:
         res["warnings"].append(f"{len(h1s)} <h1> trouvés (1 seul recommandé)")
 
