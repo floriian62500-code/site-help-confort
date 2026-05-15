@@ -553,6 +553,21 @@
     `);
   }
 
+  // Souscriptions reçues à importer dans le CRM (priorité TOP)
+  const subsToImport = contracts.filter(x => !x.imported_to_crm_at);
+  if (subsToImport.length > 0) {
+    const totalMRR = subsToImport.reduce((s,x) => s + Number(x.monthly_amount||0), 0);
+    alerts.push(`
+      <div class="alert warning" style="grid-column:1/-1;border-left:4px solid #FFB400">
+        <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+        <div>
+          <strong style="display: block; margin-bottom: 2px;">📥 ${subsToImport.length} souscription${subsToImport.length>1?'s':''} à importer dans le CRM${totalMRR > 0 ? ` · <span style="color:#15803D;">${totalMRR.toFixed(0)} € CA récurrent attendu</span>` : ''}</strong>
+          Importe-les dans Apogée pour démarrer le suivi commercial — <a href="contracts.html?filter=to_import" style="color: #B45309; font-weight: 700;">voir l'inbox →</a>
+        </div>
+      </div>
+    `);
+  }
+
   // Commandes en attente de traitement (à expédier ou planifier)
   if (ordersPending > 0) {
     alerts.push(`
