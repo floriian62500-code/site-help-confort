@@ -229,21 +229,54 @@ let _filterStatusOverride = null;
     }
     list.innerHTML = filtered.map(l => {
       const when = timeAgo(l.created_at);
-      const phoneOk = l.telephone ? '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> ' + escapeHtml(l.telephone) : '';
+      const phoneIcon = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+
+      // Détecte le type de demande pour badge coloré
+      const isSouscription = l.source === 'souscription' || (l.type_demande && /contrat|souscription/i.test(l.type_demande));
+      const isUrgent = l.priority === 'urgente' || (l.type_demande && /urgence|fuite|panne/i.test(l.type_demande));
+      const isDevis = !isSouscription && !isUrgent && (l.type_demande === 'devis' || !l.type_demande);
+
+      let typeBadge = '';
+      if (isUrgent) {
+        typeBadge = `<span style="background:#FEE2E2;color:#B91C1C;font-size:.68rem;padding:2px 8px;border-radius:4px;font-weight:800;letter-spacing:.04em">🔥 URGENCE</span>`;
+      } else if (isSouscription) {
+        typeBadge = `<span style="background:#DBEAFE;color:#1E40AF;font-size:.68rem;padding:2px 8px;border-radius:4px;font-weight:800;letter-spacing:.04em">📄 SOUSCRIPTION</span>`;
+      } else if (isDevis) {
+        typeBadge = `<span style="background:#F1F5F9;color:#475569;font-size:.68rem;padding:2px 8px;border-radius:4px;font-weight:800;letter-spacing:.04em">💬 DEVIS</span>`;
+      } else {
+        typeBadge = `<span style="background:#F1F5F9;color:#475569;font-size:.68rem;padding:2px 8px;border-radius:4px;font-weight:700;letter-spacing:.04em">${escapeHtml((l.type_demande||'').toUpperCase())}</span>`;
+      }
+
+      // Adresse compacte
+      const cityLine = [l.ville, l.code_postal].filter(Boolean).join(' · ') || '';
+      // Métier en titre
+      const metierStr = l.metier ? ' — ' + (METIER_LABELS[l.metier] || l.metier) : '';
+      // Valeur si présente
+      const valueStr = l.estimated_value ? ` · 💶 ${Number(l.estimated_value).toFixed(0)} €` : (l.budget ? ` · 💶 ${escapeHtml(l.budget)}` : '');
+
+      // Message en preview (140 chars max)
+      const msgPreview = l.message ? escapeHtml(l.message.slice(0,140)) + (l.message.length>140?'…':'') : '';
+
       return `
         <div class="lead-card" data-id="${l.id}">
           <span class="lead-status ${l.status}">${STATUS_LABELS[l.status] || l.status}</span>
           <div class="lead-body">
-            <h3>${escapeHtml(l.nom)}${l.metier ? ' — ' + (METIER_LABELS[l.metier] || l.metier) : ''}</h3>
-            <div class="meta">
-              ${l.ville ? '📍 ' + escapeHtml(l.ville) : ''}
-              ${l.email ? '· ' + escapeHtml(l.email) : ''}
-              ${phoneOk ? '· ' + phoneOk : ''}
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;flex-wrap:wrap">
+              ${typeBadge}
+              <h3 style="margin:0;display:inline">${escapeHtml(l.nom)}${metierStr}</h3>
             </div>
+            <div class="meta">
+              ${cityLine ? '📍 ' + escapeHtml(cityLine) : ''}
+              ${l.email ? '· <a href="mailto:'+escapeHtml(l.email)+'" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">' + escapeHtml(l.email) + '</a>' : ''}
+              ${l.telephone ? '· <a href="tel:'+escapeHtml(l.telephone)+'" style="color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:3px" onclick="event.stopPropagation()">' + phoneIcon + ' ' + escapeHtml(l.telephone) + '</a>' : ''}
+              ${valueStr}
+            </div>
+            ${msgPreview ? '<div style="margin-top:6px;font-size:.78rem;color:var(--ink-500);font-style:italic;line-height:1.4;max-width:62ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">« ' + msgPreview + ' »</div>' : ''}
           </div>
           <div class="lead-meta-cell">
-            <div>${l.priority === 'urgente' ? '🔥 Urgent' : l.type_demande || 'Devis'}</div>
+            ${l.priority === 'urgente' ? '<div style="color:#B91C1C;font-weight:700">🔥 Urgent</div>' : '<div>&nbsp;</div>'}
             <div class="when">${when}</div>
+            ${l.assigned_to ? '<div style="font-size:.7rem;color:var(--ink-400);margin-top:2px">👤 ' + escapeHtml(l.assigned_to) + '</div>' : ''}
           </div>
           <div class="lead-actions">
             <button class="btn" data-open="${l.id}">Ouvrir</button>
