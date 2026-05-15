@@ -64,8 +64,8 @@
 
 ## P7 — Polish & cleanup
 
-- [ ] **Vérifier les `data-source`** sur tous les tarifs des 5 pages métier (sonde IA #23).
-- [ ] **Cleanup CSS mort** : supprimer les règles `.m-cta-final*` des 5 pages métier (HTML déjà retiré).
+- [x] **Vérifier les `data-source`** sur tous les tarifs des 5 pages métier (sonde IA #23). *(fait 15/05 — 12 tarifs FAQ orphelins corrigés (250→383€/148€, 120→165€, 280→sur devis) + data-source ajoutés sur 5 pages saint-omer)*
+- [x] **Cleanup CSS mort** : supprimer les règles `.m-cta-final*` des 5 pages métier (HTML déjà retiré). *(fait 15/05 — 42 lignes CSS retirées sur 5 pages saint-omer, remplacées par commentaire trace)*
 - [x] **404.html** — refonte avec design unifié + bouton "Retour à l'accueil" + chatbot. *(fait 15/05 — style inline complet : gradient h1 Playfair, picto loupe, double CTA, 8 quick-links métiers)*
 - [ ] **`mentions-legales.html`** — vérifier que toutes les infos sont à jour (SIRET, RCS, médiation conso).
 - [x] **Favicon** — vérifier que toutes les pages chargent le bon favicon `logo.svg`. *(fait 15/05 — audit 34 pages : 1 manquait (realisation.html) → favicon logo.svg ajouté ; toutes OK)*
