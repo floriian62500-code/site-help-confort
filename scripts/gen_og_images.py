@@ -58,6 +58,7 @@ METIER_EXACT = {
     'nos-prestations': ('Prestations',    '#0DA0CF'),
     'zones-intervention':('Zones',        '#0DA0CF'),
     'guides':          ('Guides',         '#0DA0CF'),
+    'blog':            ('Blog',           '#0DA0CF'),
     'contrats-entretien':('Contrats',     '#22A06B'),
 }
 METIER_PREFIX = [
