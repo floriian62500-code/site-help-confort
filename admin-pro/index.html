@@ -272,6 +272,49 @@
       <!-- ALERTES — branchées sur l'état réel -->
       <div id="dashAlerts" class="grid grid-2" style="margin-bottom: 24px;"></div>
 
+      <!-- SYNTHÈSE COMMERCIALE — CA + conversion + top métiers/villes -->
+      <div id="bizSynth" class="card" style="margin-bottom:24px;display:none">
+        <div class="card-head">
+          <div>
+            <h3 class="card-title">📊 Synthèse commerciale (30 derniers jours)</h3>
+            <p class="card-subtitle">Activité business consolidée — leads, devis, signatures</p>
+          </div>
+          <a href="leads.html" style="font-size:.8rem;color:var(--hc-primary);font-weight:700;text-decoration:none">Voir les leads →</a>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:18px">
+          <div style="padding:14px;background:linear-gradient(135deg,#FAFCFD,#fff);border:1px solid var(--ink-100);border-radius:12px">
+            <div style="font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">💰 CA facturé</div>
+            <div id="bizSyCA" style="font-size:1.4rem;font-weight:800;color:#0A1428;line-height:1.1">— €</div>
+            <div id="bizSyCAMeta" style="font-size:.72rem;color:var(--ink-500);margin-top:2px">—</div>
+          </div>
+          <div style="padding:14px;background:linear-gradient(135deg,#FAFCFD,#fff);border:1px solid var(--ink-100);border-radius:12px">
+            <div style="font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">📤 Devis envoyés</div>
+            <div id="bizSyDevis" style="font-size:1.4rem;font-weight:800;color:#0A1428;line-height:1.1">—</div>
+            <div id="bizSyDevisMeta" style="font-size:.72rem;color:var(--ink-500);margin-top:2px">—</div>
+          </div>
+          <div style="padding:14px;background:linear-gradient(135deg,#FAFCFD,#fff);border:1px solid var(--ink-100);border-radius:12px">
+            <div style="font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">✅ Taux conversion</div>
+            <div id="bizSyConv" style="font-size:1.4rem;font-weight:800;color:#15803D;line-height:1.1">—%</div>
+            <div id="bizSyConvMeta" style="font-size:.72rem;color:var(--ink-500);margin-top:2px">leads → gagnés</div>
+          </div>
+          <div style="padding:14px;background:linear-gradient(135deg,#FAFCFD,#fff);border:1px solid var(--ink-100);border-radius:12px">
+            <div style="font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">⏱ Délai moyen</div>
+            <div id="bizSyDelay" style="font-size:1.4rem;font-weight:800;color:#0A1428;line-height:1.1">— j</div>
+            <div id="bizSyDelayMeta" style="font-size:.72rem;color:var(--ink-500);margin-top:2px">lead → facture</div>
+          </div>
+        </div>
+        <div class="grid grid-2" style="gap:14px">
+          <div>
+            <h4 style="margin:0 0 8px 0;font-size:.86rem;font-weight:700;color:var(--ink-700)">🛠 Top métiers (30j)</h4>
+            <div id="bizSyTopMetiers" style="font-size:.82rem"></div>
+          </div>
+          <div>
+            <h4 style="margin:0 0 8px 0;font-size:.86rem;font-weight:700;color:var(--ink-700)">📍 Top villes (30j)</h4>
+            <div id="bizSyTopVilles" style="font-size:.82rem"></div>
+          </div>
+        </div>
+      </div>
+
       <!-- GRAPHIQUES — Analytics interne -->
       <div class="grid grid-2" style="margin-bottom: 24px;">
         <div class="card">
@@ -950,6 +993,70 @@
           </a>`;
         }).join('');
   } catch (e) { console.warn('Widget pub+reviews failed:', e); }
+
+  // ─── WIDGET SYNTHÈSE COMMERCIALE (30 derniers jours) ──────
+  try {
+    // Cherche tous les leads des 30 derniers jours avec leur statut + montants facturés
+    const { data: leadsBiz, error: leadsBizErr } = await c.from('leads')
+      .select('id, status, metier, ville, quote_amount, quote_sent_at, deposit_amount, deposit_paid_at, invoice_amount, invoiced_at, closed_at, created_at')
+      .gte('created_at', D30.toISOString());
+
+    if (!leadsBizErr && leadsBiz) {
+      const widget = document.getElementById('bizSynth');
+      widget.style.display = '';
+
+      // CA facturé = somme invoice_amount
+      const facturés = leadsBiz.filter(x => x.invoice_amount && x.invoiced_at);
+      const totalCA = facturés.reduce((s,x) => s + Number(x.invoice_amount||0), 0);
+      document.getElementById('bizSyCA').textContent = totalCA.toLocaleString('fr-FR', {minimumFractionDigits:0,maximumFractionDigits:0}) + ' €';
+      document.getElementById('bizSyCAMeta').textContent = `${facturés.length} facture${facturés.length>1?'s':''}`;
+
+      // Devis envoyés
+      const devis = leadsBiz.filter(x => x.quote_sent_at);
+      const totalDevis = devis.reduce((s,x) => s + Number(x.quote_amount||0), 0);
+      document.getElementById('bizSyDevis').textContent = devis.length;
+      document.getElementById('bizSyDevisMeta').textContent = devis.length > 0 ? totalDevis.toLocaleString('fr-FR', {minimumFractionDigits:0,maximumFractionDigits:0}) + ' € HT total' : '0 € envoyé';
+
+      // Taux de conversion (gagne / total)
+      const totalLeads = leadsBiz.length;
+      const gagnés = leadsBiz.filter(x => x.status === 'gagne').length;
+      const conversion = totalLeads > 0 ? Math.round(gagnés / totalLeads * 100) : 0;
+      document.getElementById('bizSyConv').textContent = conversion + '%';
+      document.getElementById('bizSyConvMeta').textContent = `${gagnés}/${totalLeads} leads gagnés`;
+
+      // Délai moyen lead → facture (en jours)
+      const delays = facturés
+        .filter(x => x.created_at && x.invoiced_at)
+        .map(x => (new Date(x.invoiced_at) - new Date(x.created_at)) / 86400000);
+      const avgDelay = delays.length > 0 ? Math.round(delays.reduce((a,b) => a+b, 0) / delays.length) : null;
+      document.getElementById('bizSyDelay').textContent = avgDelay !== null ? avgDelay + ' j' : '—';
+      document.getElementById('bizSyDelayMeta').textContent = delays.length > 0 ? `sur ${delays.length} cas` : 'pas assez de data';
+
+      // Top métiers
+      const byMetier = {};
+      leadsBiz.forEach(x => { if (x.metier) byMetier[x.metier] = (byMetier[x.metier]||0)+1; });
+      const topMetiers = Object.entries(byMetier).sort((a,b)=>b[1]-a[1]).slice(0,5);
+      const METIER_COLORS = { plomberie:'#0DA0CF', chauffage:'#FF6B1A', electricite:'#FFB400', serrurerie:'#7C3AED', vitrerie:'#22C55E', renovation:'#E11D48' };
+      document.getElementById('bizSyTopMetiers').innerHTML = topMetiers.length === 0
+        ? '<div style="color:var(--ink-400);font-size:.8rem">Pas de données</div>'
+        : topMetiers.map(([m,n]) => {
+            const pct = Math.round(n / totalLeads * 100);
+            const color = METIER_COLORS[m] || '#64748b';
+            return `<div style="margin-bottom:6px"><div style="display:flex;justify-content:space-between;font-size:.78rem;margin-bottom:2px"><span style="color:var(--ink-700);font-weight:600;text-transform:capitalize">${escapeHtml(m)}</span><span style="color:var(--ink-500)">${n} (${pct}%)</span></div><div style="height:5px;background:var(--ink-100);border-radius:3px;overflow:hidden"><div style="width:${pct}%;height:100%;background:${color}"></div></div></div>`;
+          }).join('');
+
+      // Top villes
+      const byVille = {};
+      leadsBiz.forEach(x => { if (x.ville) byVille[x.ville] = (byVille[x.ville]||0)+1; });
+      const topVilles = Object.entries(byVille).sort((a,b)=>b[1]-a[1]).slice(0,5);
+      document.getElementById('bizSyTopVilles').innerHTML = topVilles.length === 0
+        ? '<div style="color:var(--ink-400);font-size:.8rem">Pas de données</div>'
+        : topVilles.map(([v,n]) => {
+            const pct = Math.round(n / totalLeads * 100);
+            return `<div style="margin-bottom:6px"><div style="display:flex;justify-content:space-between;font-size:.78rem;margin-bottom:2px"><span style="color:var(--ink-700);font-weight:600">📍 ${escapeHtml(v)}</span><span style="color:var(--ink-500)">${n} (${pct}%)</span></div><div style="height:5px;background:var(--ink-100);border-radius:3px;overflow:hidden"><div style="width:${pct}%;height:100%;background:#0DA0CF"></div></div></div>`;
+          }).join('');
+    }
+  } catch (e) { console.warn('Widget synthèse commerciale failed:', e); }
 
 })();
 </script>
