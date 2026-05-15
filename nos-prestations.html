@@ -302,6 +302,7 @@
 </style>
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#0DA0CF">
+  <script src="/assets/hc-consent.js" defer></script>
 </head>
 <body>
 
@@ -924,14 +925,14 @@
 
         <form id="nvForm" novalidate>
           <div class="nv-form-grid">
-            <div class="nv-form-field"><label>Prénom *</label><input name="firstname" required></div>
-            <div class="nv-form-field"><label>Nom *</label><input name="lastname" required></div>
-            <div class="nv-form-field"><label>Email *</label><input name="email" type="email" required></div>
+            <div class="nv-form-field"><label>Prénom *</label><input aria-label="Firstname" name="firstname" required></div>
+            <div class="nv-form-field"><label>Nom *</label><input aria-label="Lastname" name="lastname" required></div>
+            <div class="nv-form-field"><label>Email *</label><input aria-label="Email" name="email" type="email" required></div>
             <div class="nv-form-field"><label>Téléphone *</label><input aria-label="06 12 34 56 78" name="phone" type="tel" required placeholder="06 12 34 56 78"></div>
             <div class="nv-form-field nv-form-full"><label>Adresse d'intervention *</label><input aria-label="3 Rue du Général Sarrail" name="address" required placeholder="3 Rue du Général Sarrail"></div>
             <div class="nv-form-field"><label>Code postal *</label><input aria-label="62500" name="postal_code" required placeholder="62500"></div>
             <div class="nv-form-field"><label>Ville *</label><input aria-label="Saint-Omer" name="city" required placeholder="Saint-Omer"></div>
-            <div class="nv-form-field"><label>Date souhaitée</label><input name="preferred_date" type="date" min="${new Date().toISOString().slice(0,10)}"></div>
+            <div class="nv-form-field"><label>Date souhaitée</label><input aria-label="Preferred_date" name="preferred_date" type="date" min="${new Date().toISOString().slice(0,10)}"></div>
             <div class="nv-form-field"><label>Créneau</label>
               <select aria-label="preferred_slot" name="preferred_slot">
                 <option value="">Sans préférence</option>

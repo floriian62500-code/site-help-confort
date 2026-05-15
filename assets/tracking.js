@@ -16,6 +16,23 @@
 (function () {
   'use strict';
 
+  // ─── Garde de consentement RGPD (HC-CONSENT-V1, 15/05/2026) ────────
+  // Aucune analytics ne tourne tant que l'utilisateur n'a pas explicitement
+  // accepté via le banner (assets/hc-consent.js). Sans consent → return.
+  try {
+    var consent = (window.localStorage && localStorage.getItem('hc-consent')) || '';
+    if (consent !== 'granted') {
+      // Si l'utilisateur accepte plus tard, on relance ce script à chaud.
+      window.addEventListener('hc-consent-granted', function () {
+        var s = document.createElement('script');
+        s.src = '/assets/tracking.js?reload=' + Date.now();
+        s.async = true;
+        document.head.appendChild(s);
+      }, { once: true });
+      return;
+    }
+  } catch (e) { return; }
+
   // ─── Google Tag Manager ────────────────────────────────────────────
   (function (w, d, s, l, i) {
     if (i === 'GTM-XXXXXXX') return; // placeholder → tracking inerte

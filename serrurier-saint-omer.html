@@ -131,6 +131,7 @@
 </style>
 
 <!-- HC-TRACKING-V2 (centralisé dans assets/tracking.js) -->
+<script src="/assets/hc-consent.js" defer></script>
 <script src="/assets/tracking.js" defer></script>
 
 <!-- HC-SERVICE-SCHEMA-V2 (enrichi @type Locksmith + geo + Offer.price 2026-05-15) -->
@@ -1743,16 +1744,16 @@ if (document.fonts && document.fonts.ready) {
       <form class="m-modal-form" id="m-reserve-form" data-hc-lead="reservation">
         <input type="hidden" name="presta" id="m-modal-presta">
         <div class="m-modal-row">
-          <div class="m-modal-field"><label>Prénom *</label><input type="text" name="prenom" required autocomplete="given-name"></div>
-          <div class="m-modal-field"><label>Nom *</label><input type="text" name="nom" required autocomplete="family-name"></div>
+          <div class="m-modal-field"><label>Prénom *</label><input aria-label="Prénom" type="text" name="prenom" required autocomplete="given-name"></div>
+          <div class="m-modal-field"><label>Nom *</label><input aria-label="Nom" type="text" name="nom" required autocomplete="family-name"></div>
         </div>
         <div class="m-modal-row">
-          <div class="m-modal-field"><label>Téléphone *</label><input type="tel" name="tel" required autocomplete="tel" pattern="[0-9 +.-]{10,}"></div>
-          <div class="m-modal-field"><label>Email *</label><input type="email" name="email" required autocomplete="email"></div>
+          <div class="m-modal-field"><label>Téléphone *</label><input aria-label="Téléphone" type="tel" name="tel" required autocomplete="tel" pattern="[0-9 +.-]{10,}"></div>
+          <div class="m-modal-field"><label>Email *</label><input aria-label="Email" type="email" name="email" required autocomplete="email"></div>
         </div>
         <div class="m-modal-row">
-          <div class="m-modal-field"><label>Code postal *</label><input type="text" name="cp" required autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5"></div>
-          <div class="m-modal-field"><label>Ville *</label><input type="text" name="ville" required autocomplete="address-level2"></div>
+          <div class="m-modal-field"><label>Code postal *</label><input aria-label="Code postal" type="text" name="cp" required autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5"></div>
+          <div class="m-modal-field"><label>Ville *</label><input aria-label="Ville" type="text" name="ville" required autocomplete="address-level2"></div>
         </div>
         <div class="m-modal-field"><label>Décrivez votre situation</label><textarea name="message" rows="2"></textarea></div>
         <button type="submit" class="m-modal-submit">Voir le tarif &amp; valider</button>
