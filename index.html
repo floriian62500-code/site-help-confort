@@ -934,7 +934,7 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
           </div>
 
           <div class="form-row">
-            <div style="display:block;font-size:.84rem;font-weight:700;color:#0A1428;margin-bottom:8px;letter-spacing:-.005em">Ajoutez 1 ou 2 photos <span class="opt">— optionnel mais conseillé</span></div>
+            <div style="display:block;font-size:.84rem;font-weight:700;color:#0A1428;margin-bottom:8px;letter-spacing:-.005em">Ajoutez au moins 1 photo <span class="req">*</span></div>
             <input type="file" id="resa-photos-input" accept="image/*,video/*" multiple style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
             <label for="resa-photos-input" class="photo-drop-v2" id="resaDropZone">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0DA0CF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -942,6 +942,7 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
               <span>JPEG, PNG, MP4 · max 10 Mo par fichier</span>
             </label>
             <div id="resaPhotosPreview" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"></div>
+            <div id="resaPhotosError" style="display:none;margin-top:8px;padding:8px 12px;background:rgba(225,29,72,.08);border-left:3px solid #E11D48;border-radius:6px;color:#9F1239;font-size:.82rem;font-weight:600">⚠ Merci d'ajouter au moins 1 photo pour qu'on puisse diagnostiquer.</div>
           </div>
 
           <div class="resa-tip">
@@ -1257,6 +1258,11 @@ var stepsContent = document.querySelectorAll('.hc-resa-step[data-step]');
       reader.onload = function(ev){
         collected.push({ name: f.name, type: f.type, dataUrl: ev.target.result });
         renderPreview();
+        // Notifier le wizard pour mettre à jour le bouton "Continuer"
+        try { window.__resaPhotos = collected; } catch(e){}
+        if (typeof refreshNext === 'function') try { refreshNext(); } catch(e){}
+        var err = document.getElementById('resaPhotosError');
+        if (err) err.style.display = 'none';
       };
       reader.readAsDataURL(f);
     });
@@ -1280,6 +1286,8 @@ var stepsContent = document.querySelectorAll('.hc-resa-step[data-step]');
         var idx = parseInt(b.dataset.rm, 10);
         collected.splice(idx, 1);
         renderPreview();
+        try { window.__resaPhotos = collected; } catch(e){}
+        if (typeof refreshNext === 'function') try { refreshNext(); } catch(e){}
       });
     });
   }
@@ -1324,10 +1332,11 @@ function canGoNext() {
 if (current === 1) return !!state.presta;
 if (current === 2) {
 if (state.flow === 'callback') return true;
-// Description : au moins 3 caractères + au moins UN métier coché pour filtrer step 4
+// Description : au moins 3 caractères + au moins UN métier coché + au moins UNE photo
 var hasDesc = !!state.desc && state.desc.trim().length >= 3;
 var hasMetier = (state.metiers || []).length > 0;
-return hasDesc && hasMetier;
+var hasPhoto = !!(window.__resaPhotos && window.__resaPhotos.length > 0);
+return hasDesc && hasMetier && hasPhoto;
 }
 if (current === 3) {
 return state.prenom.trim() && state.nom.trim() && state.tel.trim() &&
@@ -1348,8 +1357,16 @@ function refreshNext() {
   }
   if (btnNext.disabled && current === 2 && state.flow !== 'callback') {
     var need = state.desc ? state.desc.trim().length : 0;
+    var hasMetier = (state.metiers || []).length > 0;
+    var hasPhoto = !!(window.__resaPhotos && window.__resaPhotos.length > 0);
     if (need < 3) {
       hint.textContent = '💡 Tapez quelques mots de plus pour décrire votre situation';
+      hint.style.display = 'block';
+    } else if (!hasMetier) {
+      hint.textContent = '💡 Cochez au moins un métier concerné';
+      hint.style.display = 'block';
+    } else if (!hasPhoto) {
+      hint.textContent = '📸 Ajoutez au moins 1 photo pour qu\'on puisse diagnostiquer';
       hint.style.display = 'block';
     } else { hint.style.display = 'none'; }
   } else if (btnNext.disabled && current === 3) {
