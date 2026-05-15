@@ -550,6 +550,101 @@
   setKpi('orders-30d', ordersCount, ordersTrendStr, ordersPrev === 0 ? `${ordersTrend >= 0 ? '+' : ''}${ordersTrend}%` : `vs ${ordersPrev} sur 30j-60j`);
   if (ordersRes.error) console.warn('orders error:', ordersRes.error.message);
 
+  // ═══════════════════════════════════════════════════════════════
+  // HC-LIVE-TODAY-V1 — Leads du jour · Chat 24h · Top prestation 30j
+  // ═══════════════════════════════════════════════════════════════
+  (async function liveToday(){
+    try {
+      const dayStart = new Date(); dayStart.setHours(0,0,0,0);
+      const yesterdayStart = new Date(dayStart.getTime() - 86400000);
+      const last24h = new Date(Date.now() - 86400000);
+
+      // 1) Leads du jour
+      const elLeads = document.getElementById('liveLeadsToday');
+      const elLeadsMeta = document.getElementById('liveLeadsTodayMeta');
+      if (elLeads) {
+        const leadsToday = leads30.filter(l => new Date(l.created_at) >= dayStart).length;
+        const leadsYesterday = leads30.filter(l => {
+          const d = new Date(l.created_at);
+          return d >= yesterdayStart && d < dayStart;
+        }).length;
+        elLeads.textContent = leadsToday;
+        const diff = leadsToday - leadsYesterday;
+        const trend = diff > 0 ? `+${diff}` : (diff < 0 ? `${diff}` : '=');
+        elLeadsMeta.textContent = leadsYesterday === 0
+          ? (leadsToday > 0 ? 'Premier lead du jour 🎯' : 'Aucun lead aujourd\'hui')
+          : `${trend} vs hier (${leadsYesterday})`;
+      }
+
+      // 2) Conversations chat 24h
+      const elChat = document.getElementById('liveChatToday');
+      const elChatMeta = document.getElementById('liveChatTodayMeta');
+      if (elChat) {
+        try {
+          const { data: chats, error: errCh } = await c
+            .from('chat_conversations')
+            .select('id, metier, lead_captured, status, created_at')
+            .gte('created_at', last24h.toISOString());
+          if (errCh) throw errCh;
+          const chatsArr = chats || [];
+          elChat.textContent = chatsArr.length;
+          const captured = chatsArr.filter(x => x.lead_captured).length;
+          // top metier
+          const metierCounts = {};
+          chatsArr.forEach(c => { if (c.metier) metierCounts[c.metier] = (metierCounts[c.metier]||0) + 1; });
+          const topMetier = Object.entries(metierCounts).sort((a,b) => b[1] - a[1])[0];
+          let metaParts = [];
+          if (captured > 0) metaParts.push(`${captured} lead${captured>1?'s':''} capté${captured>1?'s':''}`);
+          if (topMetier) metaParts.push(`Top : ${topMetier[0]}`);
+          if (metaParts.length === 0 && chatsArr.length === 0) metaParts.push('Aucune conversation 24 h');
+          else if (metaParts.length === 0) metaParts.push('Pas de métier identifié');
+          elChatMeta.textContent = metaParts.join(' · ');
+        } catch(e){
+          console.warn('[live-today] chat fetch:', e.message);
+          elChat.textContent = '—';
+          elChatMeta.textContent = 'Table chat_conversations indisponible';
+        }
+      }
+
+      // 3) Top prestation demandée 30 j (depuis service_orders + leads)
+      const elTop = document.getElementById('liveTopPresta');
+      const elTopMeta = document.getElementById('liveTopPrestaMeta');
+      if (elTop) {
+        try {
+          const counts = {};
+          // service_orders.service_name : signal le plus fort
+          (orders30 || []).forEach(o => {
+            const k = (o.service_name || '').trim();
+            if (k) counts[k] = (counts[k] || 0) + 2; // x2 car commande confirmée
+          });
+          // leads.metier comme fallback (signal plus faible)
+          (leads30 || []).forEach(l => {
+            const k = (l.metier || '').trim();
+            if (k) counts[k] = (counts[k] || 0) + 1;
+          });
+          const ranked = Object.entries(counts).sort((a,b) => b[1] - a[1]);
+          if (ranked.length === 0) {
+            elTop.textContent = '—';
+            elTopMeta.textContent = 'Pas assez de données';
+          } else {
+            const [name, score] = ranked[0];
+            // Tronquer si > 36 chars
+            elTop.textContent = name.length > 36 ? name.slice(0, 33) + '…' : name;
+            const total = ranked.reduce((s, [,n]) => s + n, 0);
+            const pct = total > 0 ? Math.round((score / total) * 100) : 0;
+            elTopMeta.textContent = `${score} signal${score>1?'aux':''} · ${pct}% du flux`;
+          }
+        } catch(e){
+          console.warn('[live-today] top presta:', e.message);
+          elTop.textContent = '—';
+          elTopMeta.textContent = 'Calcul indisponible';
+        }
+      }
+    } catch(e){
+      console.warn('[live-today] global error:', e.message);
+    }
+  })();
+
   // ─── KPI 4 : Note Google (avg rating) ────────────────────
   const reviews = reviewsRes.data || [];
   const googleReviews = reviews.filter(r => r.source === 'google');
