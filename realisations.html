@@ -279,6 +279,8 @@
  <a href="tel:+33366100134" class="hc-nav-m-tel">
  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0.7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
  03 66 10 01 34
+ </a>
+ </div>
  </nav>
 </header>
 
@@ -799,17 +801,23 @@ if (document.fonts && document.fonts.ready) {
  );
  var sbRes = await sb.from('realisations').select('title,slug,description,description_long,metier,ville,date_intervention,image_before,image_after,pinned,ai_generated,published_at,created_at').eq('status','publie').order('pinned',{ascending:false}).order('published_at',{ascending:false,nullsFirst:false}).order('created_at',{ascending:false});
  if (sbRes.error) throw sbRes.error;
- // ─── FILTRE ANTI-ACTUS : ne garder que les vrais chantiers (avant+après OU description+métier précis) ───
- // Les imports Facebook (vœux, posts saisonniers) n'ont pas de paire avant/après et finissent dans la grille — on les exclut.
+ // ─── FILTRE ANTI-ACTUS : ne garder que les vrais chantiers ───
+ // Règle (révisée 2026-05-15) : on accepte les imports FB SANS paire avant/après
+ // si le titre/description contient des mots-clés métier précis (= vrai chantier monophoto).
+ // On exclut seulement les actualités saisonnières et les communications pures.
  if (sbRes.data) {
  sbRes.data = sbRes.data.filter(function(r){
+ var t = (r.title || '').toLowerCase();
+ var d = (r.description || '').toLowerCase();
+ var blob = t + ' ' + d;
+ // Exclusions absolues : actus saisonnières, vœux, recrutement, communication marketing
+ if (/vœux|voeux|meilleurs vœux|fin d'année|bonne année|nouvel an|joyeuses fêtes|noël|s'invite sur vos écrans|patient zero|recrutement|nous recrutons|stage|alternance|portes ouvertes|salon (du|des)|émission|reportage/.test(blob)) return false;
+ // Mots-clés métier précis : si présents, c'est un vrai chantier même sans paire avant/après
+ var hasMetierKeyword = /remplacement|installation|pose|d[ée]pannage|r[ée]paration|d[ée]bouchage|d[ée]sengorgement|d[ée]semboua|d[ée]tartrage|entretien|d[ée]pannage|ouverture|fuite|chaudière|chauffe-eau|radiateur|mitigeur|robinet|chasse d'eau|wc|porte (de garage|d'entr[ée]e|fenêtre)|volet|vitrage|insert|cylindre/.test(blob);
  var isFbImport = r.ai_generated && r.ai_generated.imported_from === 'facebook_scrape';
  var hasBeforeAfter = !!(r.image_before && r.image_after);
- // Exclure les imports FB qui n'ont PAS de paire avant/après (= vraies actus)
- if (isFbImport && !hasBeforeAfter) return false;
- // Exclure aussi par titre les patterns typiques d'actualités saisonnières
- var t = (r.title || '').toLowerCase();
- if (/vœux|voeux|meilleurs vœux|fin d'année|bonne année|nouvel an|joyeuses fêtes|noël|s'invite sur vos écrans|patient zero/.test(t)) return false;
+ // Import FB sans paire avant/après ET sans mot-clé métier = exclu (probable actu/com)
+ if (isFbImport && !hasBeforeAfter && !hasMetierKeyword) return false;
  return true;
  });
  }
