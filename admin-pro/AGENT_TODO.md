@@ -12,6 +12,8 @@
 > 🎉 **TODO P11 épuisé le 2026-05-15 soir** (10/10 dont 2 [?] sandbox-bloqués). P12 ouvert — nouvelles sondes #42/45/47/48/49/52/53 + Schema/FAQPage en scripts d'audit.
 >
 > 🎉 **TODO P12 épuisé le 2026-05-15 nuit** (11/11). Toutes les sondes P12 sont scriptées + intégrées au workflow nightly. Prochaine session : monitoring continu / nouveaux items au fil de l'eau.
+>
+> 🎉 **TODO épuisé le 2026-05-15 soir** — P13 ouvert (8 items dérivés des sondes MEMOIRE #11/#13/#20/#24/#25/#51/#55/#56 pas encore scriptées).
 
 # 🤖 Agent TODO — Travail autonome HELP! Confort
 
