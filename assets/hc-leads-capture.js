@@ -49,6 +49,16 @@
         const submitBtn = form.querySelector('button[type="submit"],input[type="submit"]');
         const origBtn = submitBtn ? submitBtn.innerHTML : '';
 
+        // ─── Anti-bot honeypot : si le champ caché "website" est rempli, c'est un bot ───
+        const honeypot = (formData.get('website') || '').toString().trim();
+        if (honeypot) {
+          console.warn('[hc-leads] Bot détecté via honeypot (website rempli)');
+          // On simule un succès silencieusement (pour ne pas révéler le piège)
+          showMessage(form, true, 'Demande envoyée avec succès !');
+          form.reset();
+          return;
+        }
+
         // Construire le payload
         const payload = {
           nom: (formData.get('nom') || formData.get('name') || formData.get('prenom_nom') || '').toString().trim() || 'Anonyme',
@@ -82,7 +92,7 @@
           if (typeof window.onHCLeadSubmit === 'function') window.onHCLeadSubmit(payload);
         } catch (err) {
           console.error('Lead submit error:', err);
-          showMessage(form, false, 'Erreur d\'envoi. Veuillez nous appeler directement au 03 21 38 27 56.');
+          showMessage(form, false, 'Erreur d\'envoi. Veuillez nous appeler directement au 03 66 10 01 34.');
         } finally {
           if (submitBtn) {
             submitBtn.disabled = false;

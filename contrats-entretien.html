@@ -1093,6 +1093,8 @@ if (document.fonts && document.fonts.ready) {
 
     <!-- Step 2 : formulaire (caché tant que pas de selection) -->
     <form id="chatUrgForm" action="javascript:void(0)" class="chat-urg-form" style="display:none" data-hc-lead="urgence">
+            <!-- Anti-bot honeypot — laisser vide -->
+            <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" value="">
       <div class="chat-msg chat-msg-bot" id="chatStep2Msg">
         <p>OK 👌 — laissez-moi votre <strong>numéro</strong> et un <strong>mot clé</strong>, je transfère immédiatement au technicien.</p>
       </div>
@@ -1342,6 +1344,8 @@ if (document.fonts && document.fonts.ready) {
 
     <!-- Form -->
     <form id="sousForm" onsubmit="return submitSouscription(event)" style="padding:24px 28px 28px" data-hc-lead="souscription" novalidate>
+            <!-- Anti-bot honeypot — laisser vide -->
+            <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" value="">
       <input type="hidden" name="energie" id="f-energie">
       <input type="hidden" name="formule" id="f-formule">
       <input type="hidden" name="prix" id="f-prix">

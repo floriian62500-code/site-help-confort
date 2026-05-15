@@ -479,6 +479,8 @@
     <h3 id="nvLgTitle" class="nv-lg-title">Voyez nos tarifs en 10 secondes</h3>
     <p class="nv-lg-lead">Pour vous montrer les prix exacts adaptés à votre zone, on a besoin de quelques infos. <strong>Aucun engagement</strong>, aucune carte demandée.</p>
     <form id="nvLgForm" class="nv-lg-form" autocomplete="on">
+            <!-- Anti-bot honeypot — laisser vide -->
+            <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" value="">
       <div class="nv-lg-row">
         <input aria-label="Prénom" type="text" name="prenom" placeholder="Prénom *" required autocomplete="given-name" class="nv-lg-inp">
         <input aria-label="Nom" type="text" name="nom" placeholder="Nom *" required autocomplete="family-name" class="nv-lg-inp">
@@ -929,6 +931,8 @@
         ` : ''}
 
         <form id="nvForm" novalidate>
+            <!-- Anti-bot honeypot — laisser vide -->
+            <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" value="">
           <div class="nv-form-grid">
             <div class="nv-form-field"><label>Prénom *</label><input aria-label="Firstname" name="firstname" required></div>
             <div class="nv-form-field"><label>Nom *</label><input aria-label="Lastname" name="lastname" required></div>
