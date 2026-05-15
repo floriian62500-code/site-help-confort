@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Seed catalogue · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<link rel="manifest" href="/admin-pro/manifest.webmanifest">
+<meta name="theme-color" content="#0DA0CF">
+<style>
+  body{font-family:Inter,sans-serif;background:#FAFCFD;margin:0;padding:24px}
+  .wrap{max-width:920px;margin:0 auto}
+  h1{font-size:1.5rem;margin:0 0 8px}
+  .sub{color:var(--ink-500,#64748b);margin-bottom:24px}
+  .card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px;margin-bottom:18px;box-shadow:0 1px 2px rgba(11,18,32,.04)}
+  .cta{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;border:none;border-radius:10px;font:inherit;font-weight:800;font-size:.96rem;cursor:pointer;box-shadow:0 4px 14px rgba(255,107,26,.30)}
+  .cta:disabled{opacity:.55;cursor:not-allowed}
+  .log{background:#0A1428;color:#A7F3D0;padding:16px 20px;border-radius:10px;font-family:Menlo,Monaco,monospace;font-size:.82rem;max-height:480px;overflow:auto;white-space:pre-wrap;line-height:1.55}
+  .log .ok{color:#22c55e}
+  .log .warn{color:#FFB400}
+  .log .err{color:#fda4af}
+  .badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.76rem;font-weight:700;background:#eff6ff;color:#0DA0CF}
+  table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:14px}
+  th,td{padding:8px 10px;border-bottom:1px solid #f1f5f9;text-align:left}
+  th{background:#FAFCFD;color:#64748b;font-size:.74rem;text-transform:uppercase;letter-spacing:.04em}
+  .pill{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.74rem;font-weight:700}
+  .pill.exist{background:#dcfce7;color:#15803d}
+  .pill.miss{background:#fef3c7;color:#92400e}
+  .pill.err{background:#fee2e2;color:#991b1b}
+  a.back{color:#0DA0CF;text-decoration:none;font-size:.84rem;font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="services.html">← Retour au catalogue</a>
+  <h1 style="margin-top:10px">🌱 Seed catalogue prestations</h1>
+  <p class="sub">Ce script ajoute toutes les catégories métiers manquantes (Chauffage, Électricité, Serrurerie, Vitrerie) et leurs prestations dans Supabase, avec pictos et tarifs alignés sur <code>TARIFS_REFERENCE.md</code>. Idempotent — peut être relancé sans risque (vérifie avant d'insérer).</p>
+
+  <div class="card">
+    <strong style="font-size:1rem">État actuel</strong>
+    <p class="sub" id="statusLine">Chargement…</p>
+    <div id="diffArea"></div>
+  </div>
+
+  <div class="card" style="text-align:center">
+    <button class="cta" id="btnSeed" disabled>🌱 Seeder maintenant</button>
+    <p class="sub" style="margin-top:10px;font-size:.82rem">Tu peux relancer plusieurs fois — les doublons sont évités par slug unique.</p>
+  </div>
+
+  <div class="card">
+    <strong style="font-size:1rem">Log d'exécution</strong>
+    <div class="log" id="log" style="margin-top:10px">En attente…</div>
+  </div>
+</div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script>
+(async function(){
+  const sb = await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+
+  const logEl = document.getElementById('log');
+  function log(msg, cls='') { logEl.innerHTML += `<span class="${cls}">${msg}</span>\n`; logEl.scrollTop = logEl.scrollHeight; }
+  function logClear(){ logEl.innerHTML = ''; }
+
+  // ═══════════════════════════════════════════════════════════════
+  // RÉFÉRENTIEL : Catégories + Prestations à seeder
+  // ═══════════════════════════════════════════════════════════════
+  const REF_CATS = [
+    { slug:'plomberie-sanitaires', name:'Plomberie & Sanitaires', position:1 },
+    { slug:'chauffe-eau-production-ecs', name:'Chauffe-eau & Production ECS', position:2 },
+    { slug:'chauffage', name:'Chauffage', position:3 },
+    { slug:'electricite', name:'Électricité', position:4 },
+    { slug:'serrurerie', name:'Serrurerie', position:5 },
+    { slug:'vitrerie', name:'Vitrerie', position:6 },
+    { slug:'devis-sur-mesure', name:'Devis sur mesure', position:99 }
+  ];
+
+  // Prestations : prix_ht calculé depuis prix_ttc / 1.10 (TVA 10% par défaut)
+  const TVA = 0.10;
+  const ht = ttc => Math.round((ttc / (1+TVA)) * 100) / 100;
+
+  const REF_SERVICES = [
+    // PLOMBERIE & SANITAIRES — recherche de fuite + désengorgement
+    { cat:'plomberie-sanitaires', slug:'recherche-fuite-visuelle', name:'Recherche de fuite visuelle', price_ht:ht(148), vat_rate:TVA, short_desc:'Inspection visuelle complète des points de fuite. 1ʳᵉ étape diagnostic.', position:10 },
+    { cat:'plomberie-sanitaires', slug:'recherche-fuite-technique', name:'Recherche de fuite technique', price_ht:ht(383), vat_rate:TVA, short_desc:'Caméra thermique + fumigène + gaz traceur. Fuite enterrée ou encastrée.', position:11 },
+    { cat:'plomberie-sanitaires', slug:'desengorgement', name:'Désengorgement canalisation', price_ht:ht(165), vat_rate:TVA, short_desc:'Furet ou pompe haute pression. Évacuation, WC, lavabo.', position:12 },
+
+    // CHAUFFAGE
+    { cat:'chauffage', slug:'entretien-chaudiere-gaz', name:'Entretien chaudière gaz', price_ht:ht(121), vat_rate:TVA, short_desc:'Entretien annuel obligatoire. Certificat fourni.', position:1 },
+    { cat:'chauffage', slug:'desembouage-radiateur', name:'Désembouage radiateur', price_ht:ht(105), vat_rate:TVA, short_desc:'Nettoyage circuit + ajout produit anti-corrosion. Par radiateur.', position:2 },
+    { cat:'chauffage', slug:'detartrage-circuit', name:'Détartrage circuit chauffage', price_ht:ht(237), vat_rate:TVA, short_desc:'Détartrage complet circuit primaire. Chaudière + tuyaux.', position:3 },
+
+    // ÉLECTRICITÉ
+    { cat:'electricite', slug:'panne-electrique', name:'Diagnostic panne électrique', price_ht:ht(107), vat_rate:TVA, short_desc:'Recherche cause panne, mise en sécurité, devis réparation.', position:1 },
+    { cat:'electricite', slug:'tarif-horaire-electricite', name:'T1 — heure de main d\'œuvre électricité', price_ht:ht(75), vat_rate:TVA, short_desc:'Tarif horaire électricien qualifié, hors recherche panne.', position:2 },
+
+    // SERRURERIE
+    { cat:'serrurerie', slug:'ouverture-porte-claquee', name:'Ouverture porte claquée', price_ht:ht(176), vat_rate:TVA, short_desc:'Porte fermée sans tour de clé. Ouverture non destructive.', position:1 },
+    { cat:'serrurerie', slug:'ouverture-porte-fermee', name:'Ouverture porte fermée à clé', price_ht:ht(228), vat_rate:TVA, short_desc:'Porte verrouillée à clé. Crochetage ou perçage cylindre.', position:2 },
+    { cat:'serrurerie', slug:'mise-securite-porte', name:'Mise en sécurité porte', price_ht:ht(314), vat_rate:TVA, short_desc:'Remplacement cylindre + sécurisation après effraction.', position:3 },
+
+    // VITRERIE
+    { cat:'vitrerie', slug:'mise-securite-vitre-m2', name:'Mise en sécurité vitre (au m²)', price_ht:ht(120), vat_rate:TVA, short_desc:'Pose plaque OSB ou polycarbonate après bris. Prix au m².', position:1 },
+    { cat:'vitrerie', slug:'gabarit-vitrerie', name:'Prise de gabarit vitrerie', price_ht:ht(184), vat_rate:TVA, short_desc:'Relevé précis avant commande vitrage spécial.', position:2 }
+  ];
+
+  // ═══════════════════════════════════════════════════════════════
+  // DIAGNOSTIC : compare référentiel vs base
+  // ═══════════════════════════════════════════════════════════════
+  async function diagnose() {
+    const [catsRes, svcRes] = await Promise.all([
+      sb.from('service_categories').select('*'),
+      sb.from('services').select('*')
+    ]);
+    if (catsRes.error) { log('❌ Erreur lecture catégories : ' + catsRes.error.message, 'err'); return null; }
+    if (svcRes.error) { log('❌ Erreur lecture services : ' + svcRes.error.message, 'err'); return null; }
+
+    const existingCats = catsRes.data || [];
+    const existingSvc = svcRes.data || [];
+
+    // Diff catégories
+    const catBySlug = new Map(existingCats.map(c => [c.slug, c]));
+    const missingCats = REF_CATS.filter(rc => !catBySlug.has(rc.slug));
+
+    // Diff services (par slug)
+    const svcBySlug = new Map(existingSvc.map(s => [s.slug, s]));
+    const missingSvc = REF_SERVICES.filter(rs => !svcBySlug.has(rs.slug));
+
+    return { existingCats, existingSvc, missingCats, missingSvc, catBySlug };
+  }
+
+  function renderDiff(d) {
+    let html = `<table><thead><tr><th>Type</th><th>Slug</th><th>Nom</th><th>État</th></tr></thead><tbody>`;
+    REF_CATS.forEach(rc => {
+      const exists = d.catBySlug.has(rc.slug);
+      html += `<tr><td><span class="badge">CAT</span></td><td><code>${rc.slug}</code></td><td>${rc.name}</td><td><span class="pill ${exists?'exist':'miss'}">${exists?'✓ existe':'⚠ à créer'}</span></td></tr>`;
+    });
+    REF_SERVICES.forEach(rs => {
+      const exists = d.existingSvc.some(s => s.slug === rs.slug);
+      html += `<tr><td><span class="badge" style="background:#fff7ed;color:#C2410C">PRESTA</span></td><td><code>${rs.slug}</code></td><td>${rs.name} <small style="color:#94a3b8">(${rs.cat})</small></td><td><span class="pill ${exists?'exist':'miss'}">${exists?'✓ existe':'⚠ à créer'}</span></td></tr>`;
+    });
+    html += '</tbody></table>';
+    document.getElementById('diffArea').innerHTML = html;
+
+    const totalMissing = d.missingCats.length + d.missingSvc.length;
+    document.getElementById('statusLine').innerHTML = totalMissing === 0
+      ? '✅ Toutes les catégories et prestations du référentiel existent déjà.'
+      : `<strong>${d.missingCats.length}</strong> catégorie(s) et <strong>${d.missingSvc.length}</strong> prestation(s) à créer.`;
+
+    const btn = document.getElementById('btnSeed');
+    btn.disabled = totalMissing === 0;
+    btn.textContent = totalMissing === 0 ? '✅ Rien à seeder' : `🌱 Seeder ${totalMissing} entrée(s)`;
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // SEED : insère catégories puis services
+  // ═══════════════════════════════════════════════════════════════
+  async function seed(d) {
+    logClear();
+    log('🌱 Démarrage du seed…');
+
+    // 1) Catégories manquantes
+    if (d.missingCats.length) {
+      log(`\n📂 Création de ${d.missingCats.length} catégorie(s)…`);
+      const payload = d.missingCats.map(c => ({ slug:c.slug, name:c.name, position:c.position, active:true }));
+      const { data, error } = await sb.from('service_categories').insert(payload).select();
+      if (error) { log('❌ Insert categories: ' + error.message, 'err'); return; }
+      data.forEach(c => log(`  ✓ ${c.name} (${c.slug})`, 'ok'));
+      // Mettre à jour la map
+      data.forEach(c => d.catBySlug.set(c.slug, c));
+    }
+
+    // 2) Recharger la map des catégories pour avoir les UUIDs
+    const { data: allCats } = await sb.from('service_categories').select('*');
+    const catBySlug = new Map((allCats||[]).map(c => [c.slug, c]));
+
+    // 3) Services manquants
+    if (d.missingSvc.length) {
+      log(`\n🛠 Création de ${d.missingSvc.length} prestation(s)…`);
+      const payload = d.missingSvc.map(s => {
+        const cat = catBySlug.get(s.cat);
+        if (!cat) { log(`  ⚠ ${s.slug} : catégorie "${s.cat}" introuvable, skip`, 'warn'); return null; }
+        return {
+          category_id: cat.id,
+          slug: s.slug,
+          name: s.name,
+          short_desc: s.short_desc || null,
+          price_ht: s.price_ht,
+          vat_rate: s.vat_rate,
+          position: s.position || 99,
+          active: true,
+          featured: false,
+          requires_quote: false,
+          price_source: 'BAREME AGENCE'
+        };
+      }).filter(Boolean);
+
+      // Insert par lots de 5 pour bien logger
+      for (let i=0; i<payload.length; i+=5) {
+        const chunk = payload.slice(i, i+5);
+        const { data, error } = await sb.from('services').insert(chunk).select('slug,name');
+        if (error) {
+          log(`  ❌ Insert chunk ${i}: ${error.message}`, 'err');
+          // Si erreur de doublon, on continue
+          if (!String(error.message).includes('duplicate')) continue;
+        } else {
+          data.forEach(s => log(`  ✓ ${s.name}`, 'ok'));
+        }
+      }
+    }
+
+    log('\n✅ Seed terminé. Rechargement du diagnostic…', 'ok');
+    setTimeout(async () => {
+      const d2 = await diagnose();
+      if (d2) renderDiff(d2);
+    }, 800);
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // INIT
+  // ═══════════════════════════════════════════════════════════════
+  const d = await diagnose();
+  if (d) renderDiff(d);
+
+  document.getElementById('btnSeed').onclick = async () => {
+    const d2 = await diagnose();
+    if (d2) await seed(d2);
+  };
+})();
+</script>
+</body>
+</html>
