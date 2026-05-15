@@ -437,6 +437,14 @@
               </h3>
               <span class="head-status" data-head-status="crm">Non configuré</span>
             </div>
+            <div style="margin-bottom:14px;padding:12px 14px;background:linear-gradient(135deg,rgba(13,160,207,.06),rgba(13,160,207,.02));border:1px solid rgba(13,160,207,.20);border-radius:10px">
+              <div style="font-size:.86rem;color:#0A1428;margin-bottom:8px">🚀 <strong>Demande d'intégration Apogée</strong> — pour automatiser l'import des leads dans ton CRM via webhook</div>
+              <a id="btnMailDynoco" href="#" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;text-decoration:none;padding:8px 14px;border-radius:8px;font-size:.84rem;font-weight:800;box-shadow:0 4px 10px rgba(255,107,26,.25)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                📧 Envoyer la demande à Dynoco (1 clic)
+              </a>
+              <a href="../docs/INTEGRATION-APOGEE-DYNOCO.md" target="_blank" style="margin-left:10px;font-size:.78rem;color:var(--hc-primary)">📄 Voir le mail complet</a>
+            </div>
             <p class="section-desc">Tu gères tes interventions et contrats clients dans un CRM séparé. Le dashboard sert juste de passerelle : le bouton « Ouvrir mon CRM » du dashboard pointera vers l'URL renseignée ici.</p>
             <form class="settings-form" data-section="crm">
               <div class="field-row">
@@ -547,6 +555,55 @@ function toast(msg, type='ok', d=2800) {
       head.textContent = ok ? 'Configuré' : (section === 'company' ? 'À compléter' : 'Non configuré');
     }
   }
+
+  // ─── Bouton Auto-refresh Meta Token ──────────────────────────
+  const btnRefreshMeta = document.getElementById('btnRefreshMetaToken');
+  if (btnRefreshMeta) {
+    btnRefreshMeta.onclick = async () => {
+      const result = document.getElementById('refreshMetaResult');
+      result.style.display = '';
+      result.style.background = '#FAFCFD';
+      result.style.color = 'var(--ink-700)';
+      result.innerHTML = '⏳ Appel de l\'Edge Function refresh-meta-token…';
+      btnRefreshMeta.disabled = true;
+
+      // 1. D'abord on sauvegarde les valeurs actuelles du formulaire dans Supabase
+      // pour que la Edge Function ait accès aux dernières valeurs saisies
+      const form = btnRefreshMeta.closest('form');
+      const payload = {};
+      form.querySelectorAll('[name]').forEach(input => {
+        const v = input.value.trim();
+        if (v) payload[input.name] = v;
+      });
+      try {
+        await c.from('app_settings').upsert({ key: 'meta', value: payload, updated_by: session.email }, { onConflict: 'key' });
+      } catch(_) {}
+
+      // 2. Appel Edge Function
+      try {
+        const { data, error } = await c.functions.invoke('refresh-meta-token', { body: {} });
+        if (error) throw new Error(error.message || 'Edge Function error');
+        if (data && data.ok && data.refreshed) {
+          result.style.background = 'rgba(34,160,107,.08)';
+          result.style.color = '#15803D';
+          result.innerHTML = `✅ <strong>Page Access Token obtenu et sauvegardé</strong><br>Source : <code>${data.token_source}</code> · ${data.message || 'Token permanent maintenant en base'}<br>Tu n'auras plus besoin de le renouveler manuellement.`;
+          // Recharge la page pour montrer le nouveau token
+          setTimeout(() => location.reload(), 2500);
+        } else {
+          result.style.background = 'rgba(255,180,0,.10)';
+          result.style.color = '#92400E';
+          result.innerHTML = `⚠️ <strong>${data?.error || 'Impossible de récupérer un Page Access Token'}</strong><br>${data?.action_required || 'Vérifie ton token et tes credentials Meta.'}<br>${data?.wizard_url ? `<a href="${data.wizard_url}" style="color:var(--hc-primary);font-weight:700">Assistant guidé →</a>` : ''}<details style="margin-top:8px;font-size:.74rem"><summary style="cursor:pointer">Détails techniques</summary><pre style="background:#fff;padding:8px;border-radius:6px;overflow:auto;font-size:.72rem">${escapeHtml(JSON.stringify(data?.debug || data, null, 2))}</pre></details>`;
+        }
+      } catch (e) {
+        result.style.background = 'rgba(185,28,28,.08)';
+        result.style.color = '#B91C1C';
+        result.innerHTML = `❌ Erreur appel Edge Function : ${e.message}`;
+      } finally {
+        btnRefreshMeta.disabled = false;
+      }
+    };
+  }
+  function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
   // Enregistrer
   document.querySelectorAll('[data-save]').forEach(btn => {
