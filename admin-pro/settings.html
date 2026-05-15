@@ -738,6 +738,9 @@ florian.dhaillecourt@helpconfort.com`;
   function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
   // Enregistrer
+  // ⚠ FIX CRITIQUE (2026-05-15) : on MERGE avec la valeur actuelle en base.
+  // Sans ça, les champs password vides (affichés vides pour la sécurité) écrasaient
+  // les valeurs en base → token Facebook "disparaissait" après chaque save.
   document.querySelectorAll('[data-save]').forEach(btn => {
     btn.addEventListener('click', async () => {
       const key = btn.dataset.save;
@@ -751,12 +754,17 @@ florian.dhaillecourt@helpconfort.com`;
       const orig = btn.innerHTML;
       btn.innerHTML = 'Sauvegarde…';
       try {
+        // 1) Charger la valeur actuelle en base
+        const { data: current } = await c.from('app_settings').select('value').eq('key', key).maybeSingle();
+        const currentVal = (current && current.value) ? current.value : {};
+        // 2) Merge : on garde les anciennes valeurs et on écrase avec les nouvelles (non vides)
+        const merged = { ...currentVal, ...payload };
         const { error } = await c.from('app_settings').upsert({
-          key, value: payload, updated_by: session.email
+          key, value: merged, updated_by: session.email
         }, { onConflict: 'key' });
         if (error) throw error;
-        toast('Section ' + key + ' enregistrée');
-        updateSectionStatus(key, payload);
+        toast('Section ' + key + ' enregistrée (' + Object.keys(merged).length + ' champ' + (Object.keys(merged).length>1?'s':'') + ')');
+        updateSectionStatus(key, merged);
         const meta = form.querySelector('[data-saved-meta]');
         if (meta) meta.textContent = 'Sauvegardé · ' + new Date().toLocaleTimeString('fr-FR');
       } catch(e) {
