@@ -172,6 +172,22 @@
 
 ---
 
+## P13 — Auto-générés (TODO P12 épuisé le 2026-05-15 soir)
+
+> Section ouverte après épuisement complet P1-P12. Items orientés matérialisation en script Python des sondes MEMOIRE #11/#13/#20/#24/#25/#51/#55/#56 documentées mais pas encore exécutables.
+> Tout item engageant un montant ou un contenu marketing → `[?]` (attendre Florian).
+
+- [x] **Sonde #24 — Audit couverture chatbot widget** — créer `admin-pro/audits/audit_chatbot_widget.py` qui scanne toutes les pages publiques racine (hors `404.html`, `reset.html`, admin) et alerte si `assets/hc-widgets.js` (ou équivalent chatbot d'urgence) n'est pas chargé. Rapport `.md` + `.json`. À ajouter au workflow nightly. *(fait 15/05 soir — script + report.md/json ; 38 pages scannées, 38/38 chargent `hc-widgets.js` ✓ 0 alerte ; à ajouter au workflow nightly)*
+- [ ] **Sonde #56 — Audit CLS prevention (img width/height)** — créer `admin-pro/audits/audit_cls_prevention.py` qui détecte les `<img>` sans attributs `width` ET `height` explicites (cause directe de CLS layout shift, mauvais score Lighthouse). Tolérer les `<img>` dans `<picture>` qui ont des `<source>` avec dimensions. Rapport `.md` + `.json`.
+- [ ] **Sonde #51 — Audit double nav identique** — créer `admin-pro/audits/audit_nav_doublon.py` qui détecte si 2 entrées de la nav principale (`<nav class="hc-nav">` ou équivalent) pointent vers des pages au contenu sémantique similaire (titres H1 proches, descriptions overlap > 70%). Rapport `.md`.
+- [ ] **Sonde #55 — Audit image alt vide strict** — créer `admin-pro/audits/audit_alt_strict.py` qui détecte les `<img alt="">` dont le parent `<a>` ou `<button>` n'a PAS de texte visible adjacent ET qui n'ont pas `aria-hidden="true"` / `role="presentation"`. Alerte WCAG 1.1.1. Rapport `.md`.
+- [ ] **Sonde #20 — Audit CTA cohérence URL** — créer `admin-pro/audits/audit_cta_coherence.py` qui liste tous les boutons "Demander un devis" / "Devis gratuit" / "Estimation" / "Réserver" du site et vérifie qu'ils pointent vers la même URL (cohérence funnel de conversion). Rapport `.md`.
+- [ ] **Sonde #25 — Audit `required`/`pattern` hors `<form>`** — créer `admin-pro/audits/audit_required_orphan.py` qui détecte les inputs avec `required` ou `pattern` dont aucun ancêtre n'est un `<form>`. Suggère retrait ou validation JS. Rapport `.md`.
+- [ ] **Sonde #11 — Audit JSON statique vs BDD** — créer `admin-pro/audits/audit_json_freshness.py` qui pour chaque `content/**/*.json` compte les entrées, et compare avec la table Supabase correspondante (si accessible). Si écart > 10% → ALERTE *JSON désynchronisé*. Sans accès Supabase → log uniquement count local. Rapport `.md`.
+- [ ] **Sonde #13 — Audit images hot-linkées CDN tiers** — créer `admin-pro/audits/audit_hotlink_cdn.py` qui liste tous les `<img src="https://..."` non-same-origin et non-`data:`. Pour chaque domaine externe, recommander téléchargement local des assets critiques (logos marques, etc.). Rapport `.md`.
+
+---
+
 ## Comment l'agent doit gérer cette liste
 
 À chaque déclenchement de scheduled task :
