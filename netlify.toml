@@ -8,6 +8,8 @@
   # Pas de build process — site statique HTML
   publish = "."
   command = ""
+  # Ignore les commits qui ne modifient que les fichiers d'audit / docs / scripts (pas de redéploiement nécessaire)
+  ignore = "git diff --quiet HEAD^ HEAD -- ':(exclude)admin-pro/audits/*' ':(exclude)admin-pro/AGENT_TODO.md' ':(exclude)admin-pro/MEMOIRE_IA_MAINTENANCE.md' ':(exclude)admin-pro/TARIFS_REFERENCE.md' ':(exclude).autopush/*' ':(exclude)scripts/*' ':(exclude)docs/*' ':(exclude)*.md'"
 
 # ═══════════════════════════════════════════════════════════════════
 # Pretty URLs : /plombier-saint-omer → /plombier-saint-omer.html

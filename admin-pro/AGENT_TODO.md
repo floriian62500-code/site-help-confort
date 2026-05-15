@@ -108,6 +108,26 @@
 
 ---
 
+## P10 — Auto-générés (session 15 mai 2026 PM — agent autonome)
+
+> Section générée par la 2ᵉ vague autonome (P9 épuisé). Items orientés monitoring + dette technique à faible enjeu business.
+> Tout item engageant un montant ou un contenu marketing → `[?]` (attendre Florian).
+
+- [x] **Sonde #54 (honeypot anti-bot)** — auditer tous les `<form data-hc-lead>` pour vérifier la présence du champ `name="website"` hidden. *(fait 15/05 PM — audit live : 27 forms publics scannés, 0 manquant ✓)*
+- [x] **Sonde #58 (sitemap lastmod < 90 jours)** — vérifier qu'aucune entrée sitemap n'a un `<lastmod>` > 90 jours. *(fait 15/05 PM — 54 URLs scannées, 0 dépassement ✓)*
+- [x] **Sonde #57 (target=_blank sans noopener)** — audit live de toutes les pages racine. *(fait 15/05 PM — 5 fichiers avec target=_blank, 0 sans noopener ✓)*
+- [ ] **Sonde #41 (CSP whitelist)** — extraire tous les hosts externes (`<script src="https://...">`, `<link href="https://...">`) des pages racine et croiser avec `netlify.toml` script-src/style-src/img-src/connect-src. Reporter dans `admin-pro/audits/audit_csp_report.md`. Tout host manquant → ALERTE CRITIQUE (CSP block silencieux).
+- [ ] **Sonde #43 (délais d'intervention promis)** — créer `admin-pro/audits/audit_delais.py` qui grep `sous \d+\s*h(?!eures)`, `rappel sous`, `intervention sous \d`, `Délai moyen` sur les pages publiques. Tolérer `7j/7`, `24h/24`, `Lun-Sam 8h-18h`. Rapport listant fichier:ligne pour décision Florian (suppression manuelle des promesses).
+- [ ] **Sonde #59 (catalogue sync wizard ↔ prestations)** — script qui extrait `var ALL_PRESTAS` d'`index.html` et `const LOCAL_CATALOG` de `nos-prestations.html`, croise les slugs, alerte si écart. À ajouter aux audits récurrents.
+- [ ] **Audit liens externes cassés** — crawler tous les `<a href="https://...">` du site (hors social network), tester un HEAD HTTP avec timeout 5s, lister les 4xx/5xx dans `admin-pro/audits/audit_links_externes_report.md`.
+- [ ] **Sonde #44 (HTML5 `</head>` + `<body>`)** — audit que chaque page publique racine a bien les 2 balises. À ajouter à `audit_html5.py` (déjà existant) en code BODY-HEAD-MISSING.
+- [ ] **Sonde #46 (aria-label sur inputs sans id)** — audit ARIA renforcé : `<input>` (type=text/email/tel/...) sans `id` doit avoir `aria-label` OU `aria-labelledby`. Étendre `audit_aria.py` avec code `INPUT-NO-ARIA-LABEL`.
+- [ ] **Crawler de robots.txt + sitemap fetch** — vérifier que `robots.txt` à la racine renvoie 200 et autorise `sitemap.xml`. Vérifier que `sitemap.xml` est bien `application/xml`. Reporter dans `admin-pro/audits/audit_robots_report.md`.
+- [ ] **Sonde performance images > 200 KB** — crawl `images/` et lister les PNG/JPG > 200 KB. Croiser avec leur usage `<img src=...>` ; si image lourde au-dessus du fold (hero) → ALERTE perf.
+- [ ] **Synthèse mensuelle automatique** — script `admin-pro/audits/digest_mensuel.py` qui concatène les `*_report.md` les plus récents en 1 seul rapport `admin-pro/audits/DIGEST_2026-05.md` avec compteur de findings, évolution vs mois précédent.
+
+---
+
 ## Comment l'agent doit gérer cette liste
 
 À chaque déclenchement de scheduled task :
