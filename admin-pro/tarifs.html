@@ -171,12 +171,13 @@
   // TARIFS_REFERENCE.md reste la doc de validation.
   // ──────────────────────────────────────────────────────────────
   const sb = await HCSupabase.init();
+  const safe = (p) => p.then(r => r).catch(e => { console.warn('[admin] fetch err:', e && e.message); return { data: [], error: e }; });
   let liveData = null;
   try {
     const [svcRes, catRes] = await Promise.all([
-      sb.from('services').select('*').eq('active', true).order('position'),
-      sb.from('service_categories').select('*').eq('active', true).order('position')
-    ]);
+      safe(sb.from('services').select('*').eq('active', true).order('position')),
+      safe(sb.from('service_categories').select('*').eq('active', true).order('position'))
+  ]);
     if (!svcRes.error && svcRes.data) {
       const services = svcRes.data;
       const cats = (catRes.data || []).reduce((acc, c) => { acc[c.id] = c; return acc; }, {});

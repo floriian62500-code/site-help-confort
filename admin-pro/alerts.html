@@ -70,15 +70,16 @@
   await HCLayout.mount('alerts', 'Alertes & Monitoring');
 
   const c = await HCSupabase.init();
+  const safe = (p) => p.then(r => r).catch(e => { console.warn('[admin] fetch err:', e && e.message); return { data: [], error: e }; });
 
   // Charger données pour calcul des alertes — multi-sources
   const D30 = new Date(Date.now() - 30*86400000);
   const [reals, settings, leads, contracts, reviews] = await Promise.all([
-    c.from('realisations').select('id,title,status,image_before,image_after,created_at').limit(500),
-    c.from('app_settings').select('*'),
-    c.from('leads').select('id,status,created_at,priority').gte('created_at', D30.toISOString()),
-    c.from('contracts').select('id,imported_to_crm_at,monthly_amount,created_at').is('imported_to_crm_at', null),
-    c.from('reviews').select('id,source,rating,status,published_at').eq('source','google').order('created_at',{ascending:false}).limit(20)
+    safe(c.from('realisations').select('id,title,status,image_before,image_after,created_at').limit(500)),
+    safe(c.from('app_settings').select('*')),
+    safe(c.from('leads').select('id,status,created_at,priority').gte('created_at', D30.toISOString())),
+    safe(c.from('contracts').select('id,imported_to_crm_at,monthly_amount,created_at').is('imported_to_crm_at', null)),
+    safe(c.from('reviews').select('id,source,rating,status,published_at').eq('source','google').order('created_at',{ascending:false}).limit(20))
   ]);
   const all = reals.data || [];
   const leadsList = leads.data || [];

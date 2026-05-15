@@ -325,6 +325,7 @@
   HCLayout.mount('services', 'Catalogue des prestations');
 
   const sb = await HCSupabase.init();
+  const safe = (p) => p.then(r => r).catch(e => { console.warn('[admin] fetch err:', e && e.message); return { data: [], error: e }; });
   const escapeHtml = (s) => String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const eurFmt = (n) => new Intl.NumberFormat('fr-FR', { style:'currency', currency:'EUR', minimumFractionDigits: 2 }).format(Number(n)||0);
   const slugify = (s) => (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').replace(/-+/g,'-').slice(0,80);
@@ -345,9 +346,9 @@
   // ─── Chargement initial ──────────────────────────────────
   async function loadAll() {
     const [catsRes, svcRes] = await Promise.all([
-      sb.from('service_categories').select('*').order('position'),
-      sb.from('services').select('*').order('position')
-    ]);
+      safe(sb.from('service_categories').select('*').order('position')),
+      safe(sb.from('services').select('*').order('position'))
+  ]);
     if (catsRes.error || svcRes.error) {
       document.getElementById('svTbody').innerHTML = `<tr><td colspan="8" style="padding:40px;text-align:center;color:#E11D48">Erreur : ${catsRes.error?.message || svcRes.error?.message}.<br><small>Vérifie que la migration <code>setup_services_catalog.sql</code> a été exécutée dans Supabase.</small></td></tr>`;
       return;

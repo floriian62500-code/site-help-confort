@@ -692,14 +692,21 @@ florian.dhaillecourt@helpconfort.com`;
         }
       } catch(e) {
         // Cas 2 : regex fallback sur la chaîne brute
+        // ⚠ ATTENTION : dans /me/accounts, category_list contient des objets {"id":..., "name":...}
+        // AVANT le {"name":..., "id":...} de la page elle-même.
+        // → On capture spécifiquement le pattern "name" PUIS "id" (ordre page) pour ne PAS attraper l'id d'une catégorie.
         const mTok = raw.match(/"access_token"\s*:\s*"(EAA[^"]+)"/);
-        const mId  = raw.match(/"id"\s*:\s*"(\d{10,})"/);
-        const mNm  = raw.match(/"name"\s*:\s*"([^"]+)"/);
+        const mPage = raw.match(/"name"\s*:\s*"([^"]+)"\s*,\s*"id"\s*:\s*"(\d{10,})"/);
         const mIg  = raw.match(/"instagram_business_account"[\s\S]{0,80}"id"\s*:\s*"(\d{10,})"/);
         if (mTok) token = mTok[1];
-        if (mId) pageId = mId[1];
-        if (mNm) pageName = mNm[1];
+        if (mPage) { pageName = mPage[1]; pageId = mPage[2]; }
         if (mIg) igId = mIg[1];
+      }
+      // Sécurité supplémentaire : si pageId == début de category_list (cas où JSON.parse aurait foiré
+      // et qu'on tombe sur le mauvais ID), tenter le pattern page-level
+      if (pageId && pageId !== '107405408058063' && raw.includes('107405408058063') && raw.includes('Help Confort')) {
+        const fixedMatch = raw.match(/"name"\s*:\s*"(Help[^"]+)"\s*,\s*"id"\s*:\s*"(\d{10,})"/i);
+        if (fixedMatch) { pageName = fixedMatch[1]; pageId = fixedMatch[2]; }
       }
       if (!token) {
         out.style.background = 'rgba(185,28,28,.08)';
