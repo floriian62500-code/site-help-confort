@@ -1006,10 +1006,12 @@ if (document.fonts && document.fonts.ready) {
       <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
       <script>
       (function(){
-        if (!window.L) return;
-        var mapEl = document.getElementById('zones-leaflet-map');
-        if (!mapEl) return;
-
+        function initMap(){
+          if (!window.L) { console.warn('[HC-MAP] Leaflet non chargé'); return; }
+          var mapEl = document.getElementById('zones-leaflet-map');
+          if (!mapEl) return;
+          if (mapEl.dataset.hcInit === '1') return;
+          mapEl.dataset.hcInit = '1';
         // Init carte centrée entre les 2 agences
         var map = L.map(mapEl, {
           center: [50.89, 2.30],
@@ -1091,6 +1093,21 @@ if (document.fonts && document.fonts.ready) {
         // Fit bounds aux 2 agences + marge
         var bounds = L.latLngBounds([[50.6, 1.55], [51.12, 2.62]]);
         map.fitBounds(bounds, { padding: [20, 20] });
+
+        // Safety : forcer le redimensionnement après layout (évite le bug "tuiles grises")
+        setTimeout(function(){ try { map.invalidateSize(); } catch(e){} }, 250);
+        setTimeout(function(){ try { map.invalidateSize(); } catch(e){} }, 800);
+        window.addEventListener('load', function(){ try { map.invalidateSize(); } catch(e){} }, { once: true });
+        }
+        // Init dès que possible : si Leaflet est déjà là, on lance ; sinon on attend
+        if (window.L) { initMap(); }
+        else {
+          var t0 = Date.now();
+          var iv = setInterval(function(){
+            if (window.L) { clearInterval(iv); initMap(); }
+            else if (Date.now() - t0 > 8000) { clearInterval(iv); console.warn('[HC-MAP] timeout chargement Leaflet'); }
+          }, 100);
+        }
       })();
       </script>
       <!-- Fallback SVG si JS désactivé (caché si Leaflet charge) -->
