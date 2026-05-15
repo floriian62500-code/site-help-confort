@@ -229,6 +229,14 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <input id="searchInput" type="search" placeholder="Chercher un client, n° contrat…">
           </div>
+          <button class="btn" id="btnExportCsv" title="Exporter en CSV (compatible Excel)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            CSV
+          </button>
+          <button class="btn" id="btnMarkAllImported" title="Marquer toutes les souscriptions visibles comme importées dans le CRM" style="background:#FFB400;color:#0A1428;border:none">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="20 6 9 17 4 12"/></svg>
+            Tout marquer importé
+          </button>
           <button class="btn btn-primary" id="btnNew" data-require-perm="create">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Nouveau contrat
@@ -386,6 +394,80 @@ let _editingId = null;
     render();
   });
   document.getElementById('btnNew').onclick = () => openModal();
+
+  // ─── Export CSV ────────────────────────────────────────────────────────
+  document.getElementById('btnExportCsv').onclick = () => {
+    const today = new Date(); today.setHours(0,0,0,0);
+    const in30 = new Date(today); in30.setDate(in30.getDate()+30);
+    let rows = _all;
+    // Applique le filtre actif
+    if (_filter === 'due') {
+      rows = _all.filter(x => x.status === 'active' && x.next_intervention_date && new Date(x.next_intervention_date) <= in30);
+    } else if (_filter === 'to_import') {
+      rows = _all.filter(x => !x.imported_to_crm_at);
+    } else if (_filter) {
+      rows = _all.filter(x => x.status === _filter);
+    }
+    if (_q) {
+      rows = rows.filter(x => (
+        (x.client_last_name||'') + ' ' + (x.client_first_name||'') + ' ' +
+        (x.client_phone||'') + ' ' + (x.client_email||'') + ' ' +
+        (x.contract_number||'') + ' ' + (x.client_city||'')
+      ).toLowerCase().includes(_q));
+    }
+
+    const headers = ['Date','N° Contrat','Type','Métier','Énergie','Nom','Prénom','Téléphone','Email','Adresse','CP','Ville','Montant /mois','Prochaine échéance','Statut','Importé CRM','ID CRM externe'];
+    const lines = rows.map(x => {
+      const m = x.metadata || {};
+      return [
+        new Date(x.created_at).toLocaleDateString('fr-FR'),
+        x.contract_number || x.id.slice(0,8),
+        (x.type||'').toUpperCase(),
+        x.metier || '',
+        m.energie || '',
+        x.client_last_name || '',
+        x.client_first_name || '',
+        x.client_phone || '',
+        x.client_email || '',
+        x.client_address || '',
+        x.client_postal_code || '',
+        x.client_city || '',
+        Number(x.monthly_amount||0).toFixed(2).replace('.', ','),
+        x.next_intervention_date || '',
+        x.status || '',
+        x.imported_to_crm_at ? new Date(x.imported_to_crm_at).toLocaleDateString('fr-FR') : 'NON',
+        x.crm_external_id || ''
+      ].map(v => `"${String(v).replace(/"/g, '""')}"`).join(';'); // ; séparateur Excel FR
+    });
+    const csv = [headers.join(';'), ...lines].join('\r\n');
+    // BOM UTF-8 pour Excel
+    const blob = new Blob([new Uint8Array([0xEF,0xBB,0xBF]), csv], { type: 'text/csv;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `contrats-help-confort-${new Date().toISOString().slice(0,10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+    toast(`✓ ${rows.length} contrat${rows.length>1?'s':''} exporté${rows.length>1?'s':''}`, 'ok', 2500);
+  };
+
+  // ─── Marquer tout comme importé (visible dans le filtre actif) ────────
+  document.getElementById('btnMarkAllImported').onclick = async () => {
+    const toImport = _all.filter(x => !x.imported_to_crm_at);
+    if (toImport.length === 0) {
+      toast('Aucun contrat à marquer — tout est déjà importé ✓', 'ok', 3000);
+      return;
+    }
+    if (!confirm(`Marquer ${toImport.length} contrat${toImport.length>1?'s':''} comme importé${toImport.length>1?'s':''} dans le CRM ?\n\nÀ faire uniquement après avoir importé ces souscriptions dans Apogée manuellement.`)) return;
+    try {
+      const ids = toImport.map(x => x.id);
+      const { error } = await sb.from('contracts')
+        .update({ imported_to_crm_at: new Date().toISOString() })
+        .in('id', ids);
+      if (error) throw error;
+      toast(`✓ ${toImport.length} contrat${toImport.length>1?'s':''} marqué${toImport.length>1?'s':''} importé${toImport.length>1?'s':''}`, 'ok', 3000);
+      await load();
+    } catch (e) { toast('Erreur : ' + e.message, 'err', 4500); }
+  };
   document.getElementById('ctClose').onclick = closeModal;
   document.getElementById('ctCancel').onclick = closeModal;
   document.getElementById('ctSave').onclick = save;
