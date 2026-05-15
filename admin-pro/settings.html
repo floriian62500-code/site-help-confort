@@ -556,6 +556,53 @@ function toast(msg, type='ok', d=2800) {
     }
   }
 
+  // ─── Bouton "Envoyer la demande à Dynoco" (mailto pré-rempli) ──
+  const btnMailDynoco = document.getElementById('btnMailDynoco');
+  if (btnMailDynoco) {
+    btnMailDynoco.addEventListener('click', (e) => {
+      e.preventDefault();
+      const subject = 'Petit projet d\'intégration entre notre nouveau site et Apogée';
+      const body = `Salut,
+
+J'espère que tout va bien chez vous !
+
+Je te contacte pour un petit projet : on vient de mettre en ligne notre nouveau site internet, https://depan59-62.fr, et il y a un formulaire public de souscription aux contrats d'entretien (gaz, fioul, adoucisseur).
+
+Pour l'instant, les souscriptions arrivent dans une base intermédiaire et je dois les ré-saisir manuellement dans Apogée. C'est typiquement le genre de tâche qu'on veut éviter — perte de temps + risque d'erreur.
+
+Ce que j'aimerais : que dès qu'un client soumet le formulaire sur le site, le lead remonte tout seul dans Apogée, comme un nouveau contact / prospect.
+
+Concrètement, vous pourriez me mettre en place :
+- soit un endpoint webhook sur mon instance Apogée → mon site lui envoie un POST JSON avec les infos du client
+- soit une API d'import où je crée des leads en REST
+- soit (option simple) une adresse email d'import vers laquelle mon site enverrait un mail structuré que Apogée parse pour créer le contact
+
+Les données à transmettre seraient classiques : nom, prénom, email, téléphone, adresse, CP, ville, type de contrat choisi (BASIC / CONFORT / SÉCURITÉ), énergie (gaz / fioul), montant mensuel, date.
+
+Tu peux me dire ce qui est faisable de ton côté + un ordre d'idée délai + budget ?
+
+Pas urgent urgent, mais c'est dans la roadmap des 30 prochains jours idéalement.
+
+J'ai aussi préparé une spec technique complète si tu veux la regarder : https://depan59-62.fr/docs/INTEGRATION-APOGEE-DYNOCO.md
+
+Merci d'avance, et à bientôt 👍
+
+Florian
+03 66 10 01 34
+florian.dhaillecourt@helpconfort.com`;
+
+      // Plusieurs adresses Dynoco connues : nous-contacter ou direct
+      const to = 'contact@dynoco.fr';
+      const mailto = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      // Ouvre le client mail (Mail.app ou Outlook ou webmail défini par OS)
+      window.location.href = mailto;
+      // Fallback : afficher un toast si rien ne se passe en 2 sec
+      setTimeout(() => {
+        if (typeof toast === 'function') toast('Si rien ne s\'est ouvert, copie le mail depuis docs/INTEGRATION-APOGEE-DYNOCO.md', 'info', 5000);
+      }, 2000);
+    });
+  }
+
   // ─── Bouton Auto-refresh Meta Token ──────────────────────────
   const btnRefreshMeta = document.getElementById('btnRefreshMetaToken');
   if (btnRefreshMeta) {
