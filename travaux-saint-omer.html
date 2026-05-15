@@ -939,7 +939,7 @@ if (document.fonts && document.fonts.ready) {
 
  <!-- Mascotte centrale -->
  <div class="m-hero-mascotte-wrap">
- <img decoding="async" height="1500" width="503" src="images/mascotte.webp" alt="Conducteur de travaux HELP! Confort" class="m-hero-mascotte" loading="eager">
+ <picture><source srcset="images/mascotte.webp" type="image/webp"><img decoding="async" height="1500" width="503" src="images/mascotte.png" alt="Conducteur de travaux HELP! Confort" class="m-hero-mascotte" loading="eager" onerror="this.onerror=null;this.src='images/mascotte-opt.png'"></picture>
  </div>
 
  <!-- Services qui orbitent autour de la mascotte — liens cliquables vers prestation ou devis -->
