@@ -59,7 +59,7 @@ WARNINGS_PATTERNS = [
     re.compile(r"\*\*(\d+)\s+warnings?\*\*", re.I),
     re.compile(r"Warnings?\s*:\s*\*\*(\d+)\*\*", re.I),
     re.compile(r"\*\*URLs\s+cassés?[^*]*\*\*\s*:\s*\*\*?(\d+)", re.I),
-    re.compile(r"\*\*Findings\*\*\s*:\s*\*?\*?(\d+)", re.I),
+    re.compile(r"\*\*Findings[^*]*\*\*\s*:\s*\*?\*?(\d+)", re.I),
     re.compile(r"^[\-\*]?\s*Findings?[^:\n]*:\s*\*\*(\d+)\*\*", re.I | re.M),
 ]
 

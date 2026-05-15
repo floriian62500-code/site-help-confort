@@ -1,7 +1,7 @@
 {
   "month": "2026-05",
-  "generated_at": "2026-05-15T14:09:53",
-  "total_findings": 355,
+  "generated_at": "2026-05-15T14:10:18",
+  "total_findings": 386,
   "entries": [
     {
       "audit": "audit_jsonld",
@@ -20,6 +20,15 @@
       "findings": 107,
       "size_bytes": 9935,
       "summary": "_Généré par `admin-pro/audits/audit_aria.py` — 39 pages scannées._"
+    },
+    {
+      "audit": "audit_delais",
+      "file": "audit_delais_report.md",
+      "title": "⏱️ Audit délais d'intervention promis — Sonde IA #43",
+      "generated": "2026-05-15 13:09",
+      "findings": 31,
+      "size_bytes": 7919,
+      "summary": "**Pages scannées** : 40 **Findings (promesses commerciales détectées)** : **31** **Pages concernées** : 17"
     },
     {
       "audit": "audit_html5",
@@ -103,15 +112,6 @@
       "summary": "_Généré le 2026-05-15 11:30 — `admin-pro/audits/audit_datasource.py`_"
     },
     {
-      "audit": "audit_delais",
-      "file": "audit_delais_report.md",
-      "title": "⏱️ Audit délais d'intervention promis — Sonde IA #43",
-      "generated": "2026-05-15 13:09",
-      "findings": 0,
-      "size_bytes": 7919,
-      "summary": "**Pages scannées** : 40 **Findings (promesses commerciales détectées)** : **31** **Pages concernées** : 17"
-    },
-    {
       "audit": "audit_favicons",
       "file": "audit_favicons_report.md",
       "title": "Audit favicons / apple-touch-icon / manifest — 2026-05-15 14:08",
@@ -124,6 +124,7 @@
   "deltas": {
     "audit_jsonld": null,
     "audit_aria": null,
+    "audit_delais": null,
     "audit_html5": null,
     "audit_tarifs": null,
     "audit_liens_externes": null,
@@ -133,7 +134,6 @@
     "audit_catalogue_sync": null,
     "audit_csp": null,
     "audit_datasource": null,
-    "audit_delais": null,
     "audit_favicons": null
   }
 }
