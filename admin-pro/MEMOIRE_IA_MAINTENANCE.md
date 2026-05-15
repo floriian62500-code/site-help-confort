@@ -516,3 +516,32 @@ Deux scripts d'audit Python ont été ajoutés sous `admin-pro/audits/` pour mat
 50. **Sonde audit Lighthouse local** : exécuter `python3 admin-pro/audits/audit_lighthouse_local.py` quotidiennement et alerter si score moyen < 95/100 ou si nouvelles erreurs (par rapport au dernier rapport). Ce script vérifie title/description length, og:image, canonical, h1 unique, html lang, alt, viewport, charset, DOCTYPE, preconnect, lazy-loading.
 
 *Addendum v9 généré le 15 mai 2026 par Claude (session A→Z) — 10 nouvelles sondes critiques (#41–#50) couvrant CSP/Leaflet/délais/HTML5/OG/A11y/SW/Sitemap/Fallback/Lighthouse.*
+
+---
+
+### Sondes additionnelles v10 (15 mai 2026 PM — session A→Z autonome)
+
+51. **Sonde double nav identique** : si le menu nav contient 2 entrées qui pointent vers des pages au contenu similaire (ex. Réalisations + Actualités), fusionner en 1 entrée + ajouter une section dans la page cible. Bug fix 15/05 : nav passait de 7 à 6 liens, gain visuel en topbar.
+
+52. **Sonde ponctuation FR typographie** : pour chaque page publique, compter les occurrences de ?!:;» NON précédés d'un `&nbsp;` ou espace insécable. Si > 5 → ALERTE *typographie FR non conforme*. Bug fix 15/05 : 870+ &nbsp; ajoutés sur 37 pages.
+
+53. **Sonde heading hierarchy** : vérifier qu'il n'y a pas de skip de niveau (h1→h3, h2→h4, etc.). Pattern : extraire la séquence de `<h[1-6]>` dans body (hors script/svg) ; un saut de plus d'1 niveau = ALERTE. Bug fix 15/05 : 29 pages avec skips résolus (footer h4→h3, processus h4→h3, carrieres h5→h4→h3).
+
+54. **Sonde honeypot anti-bot** : pour chaque `<form data-hc-lead="X">`, vérifier la présence d'un champ caché `name="website"` avec `aria-hidden="true"` et `tabindex="-1"`. Sans honeypot → ALERTE *formulaire exposé au spam*. Patch 15/05 : 30 forms protégés sur 21 pages + JS `assets/hc-leads-capture.js` détecte et silencieusement bloque les soumissions de bots.
+
+55. **Sonde image alt vide + parent sans texte** : audit strict d'accessibilité. Une `<img alt="">` est OK seulement si :
+    - Le parent `<a>` ou `<button>` contient du texte visible (label adjacent), OU
+    - L'image a `aria-hidden="true"` ou `role="presentation"`.
+    Sinon → ALERTE *image non accessible*. Audit 15/05 : 0 cas problématique.
+
+56. **Sonde CLS prevention** : chaque `<img>` doit avoir `width` et `height` attributs explicites (ou être en flex/grid contenu). Sans dimensions, le navigateur reflows le layout pendant le chargement. Patch 15/05 : 259 `<img>` patchées via `scripts/gen_og_images.py` style (lecture dimensions disque PIL).
+
+57. **Sonde target=_blank sans noopener** : pour chaque `<a target="_blank">`, vérifier `rel="noopener noreferrer"`. Sans → ALERTE *fuite window.opener (XSS reverse-tabnabbing)*.
+
+58. **Sonde sitemap lastmod obsolète** : pour chaque `<url>` du sitemap.xml, vérifier que `<lastmod>` est < 90 jours. Au-delà → ALERTE *lastmod périmé* (mauvais pour SEO crawl).
+
+59. **Sonde corrélation home wizard ↔ catalogue prestations** : croiser les slugs de `var ALL_PRESTAS` dans `index.html` avec les slugs de `const LOCAL_CATALOG` dans `nos-prestations.html`. Toute prestation qui apparaît dans le wizard mais pas dans nos-prestations (ou inverse) = ALERTE *catalogue désynchronisé*.
+
+60. **Sonde photo obligatoire wizard home** : vérifier que la step 2 du wizard `<form data-hc-lead="reservation_home">` impose une photo (input file required + JS qui bloque le passage à step 3 sans `window.__resaPhotos.length > 0`). Bug fix 15/05 : photo passée d'optionnel à obligatoire (Florian a explicitement demandé).
+
+*Addendum v10 généré le 15 mai 2026 par Claude (session A→Z autonome) — 10 nouvelles sondes #51-#60 couvrant Nav fusion / Typo FR / Headings / Honeypot / Alt strict / CLS / target_blank / sitemap / catalogue sync / photo obligatoire.*

@@ -723,12 +723,9 @@ let _filterStatusOverride = null;
     };
 
     // ─── Bouton "📄 Fiche PDF" (rappel: passerelle, juste fiche client interne) ──
-    // [Conservé tel quel pour les besoins internes Florian — pas un devis officiel]
-    // Mock used only — actual handler defined further below for btnExportPdfLead
-    if (false) {  // dead code : empêche redéclaration du handler PDF en double
-      const _ = '';
-      const __ = '';
-
+    // Note : pas de générateur de devis ici — les devis sont créés dans Apogée (CRM).
+    // Voir mémoire `project_crm_passerelle.md` : back-office = passerelle, pas un outil CRUD.
+    /* dead code start
       const TVA = 0.10;
       const amountTTC = Math.round(amountHT * (1 + TVA) * 100) / 100;
       const depositPct = 0.30;
@@ -861,12 +858,7 @@ let _filterStatusOverride = null;
 <scr${''}ipt>setTimeout(()=>window.print(),500);</scr${''}ipt>
 </body></html>`;
 
-      const w = window.open('', '_blank');
-      if (!w) { toast("Le navigateur a bloqué l'ouverture du devis — autorise les popups", 'err', 5000); return; }
-      w.document.open();
-      w.document.write(quoteHTML);
-      w.document.close();
-    };
+    dead code end */
 
     document.getElementById('btnExportPdfLead').onclick = () => {
       const fmtEur = v => v != null ? Number(v).toFixed(2).replace('.',',') + ' €' : '—';
