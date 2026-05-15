@@ -1,4 +1,4 @@
-# 🔦 Audit Lighthouse local — 2026-05-15 11:00
+# 🔦 Audit Lighthouse local — 2026-05-15 11:47
 
 **37 pages auditées** · **0 erreurs** · **13 warnings** · **Score moyen 99/100**
 
@@ -65,7 +65,7 @@
 ### contrats-entretien.html — 96/100
 
 **Warnings :**
-- ⚠️ 8 <input> sans id/label/aria-label
+- ⚠️ 2 <input> sans id/label/aria-label
 
 ### devis-express.html — 96/100
 
@@ -85,7 +85,7 @@
 ### nos-prestations.html — 96/100
 
 **Warnings :**
-- ⚠️ 15 <input> sans id/label/aria-label
+- ⚠️ 6 <input> sans id/label/aria-label
 
 ### plombier-saint-omer.html — 96/100
 

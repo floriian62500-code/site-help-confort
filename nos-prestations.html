@@ -101,7 +101,7 @@
 </style>
 
 <link rel="icon" type="image/svg+xml" href="logo.svg">
-<link rel="apple-touch-icon" sizes="180x180" href="/logo-officiel.jpg">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
 
 <style>
   /* ═══════════════════════════════════════════════════════════
@@ -300,6 +300,8 @@
     .nv-modal-foot .nv-cta-submit{margin-left:0;width:100%;justify-content:center}
   }
 </style>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0DA0CF">
 </head>
 <body>
 
@@ -477,12 +479,12 @@
     <p class="nv-lg-lead">Pour vous montrer les prix exacts adaptés à votre zone, on a besoin de quelques infos. <strong>Aucun engagement</strong>, aucune carte demandée.</p>
     <form id="nvLgForm" class="nv-lg-form" autocomplete="on">
       <div class="nv-lg-row">
-        <input type="text" name="prenom" placeholder="Prénom *" required autocomplete="given-name" class="nv-lg-inp">
-        <input type="text" name="nom" placeholder="Nom *" required autocomplete="family-name" class="nv-lg-inp">
+        <input aria-label="Prénom" type="text" name="prenom" placeholder="Prénom *" required autocomplete="given-name" class="nv-lg-inp">
+        <input aria-label="Nom" type="text" name="nom" placeholder="Nom *" required autocomplete="family-name" class="nv-lg-inp">
       </div>
-      <input type="tel" name="telephone" placeholder="Téléphone *" required autocomplete="tel" pattern="[0-9 +.\-]{10,}" class="nv-lg-inp">
-      <input type="email" name="email" placeholder="Email *" required autocomplete="email" class="nv-lg-inp">
-      <input type="text" name="ville" placeholder="Ville *" required autocomplete="address-level2" class="nv-lg-inp">
+      <input aria-label="Téléphone" type="tel" name="telephone" placeholder="Téléphone *" required autocomplete="tel" pattern="[0-9 +.\-]{10,}" class="nv-lg-inp">
+      <input aria-label="Email" type="email" name="email" placeholder="Email *" required autocomplete="email" class="nv-lg-inp">
+      <input aria-label="Ville" type="text" name="ville" placeholder="Ville *" required autocomplete="address-level2" class="nv-lg-inp">
       <button type="submit" class="nv-lg-submit" id="nvLgSubmit">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
         Voir les tarifs
@@ -925,20 +927,20 @@
             <div class="nv-form-field"><label>Prénom *</label><input name="firstname" required></div>
             <div class="nv-form-field"><label>Nom *</label><input name="lastname" required></div>
             <div class="nv-form-field"><label>Email *</label><input name="email" type="email" required></div>
-            <div class="nv-form-field"><label>Téléphone *</label><input name="phone" type="tel" required placeholder="06 12 34 56 78"></div>
-            <div class="nv-form-field nv-form-full"><label>Adresse d'intervention *</label><input name="address" required placeholder="3 Rue du Général Sarrail"></div>
-            <div class="nv-form-field"><label>Code postal *</label><input name="postal_code" required placeholder="62500"></div>
-            <div class="nv-form-field"><label>Ville *</label><input name="city" required placeholder="Saint-Omer"></div>
+            <div class="nv-form-field"><label>Téléphone *</label><input aria-label="06 12 34 56 78" name="phone" type="tel" required placeholder="06 12 34 56 78"></div>
+            <div class="nv-form-field nv-form-full"><label>Adresse d'intervention *</label><input aria-label="3 Rue du Général Sarrail" name="address" required placeholder="3 Rue du Général Sarrail"></div>
+            <div class="nv-form-field"><label>Code postal *</label><input aria-label="62500" name="postal_code" required placeholder="62500"></div>
+            <div class="nv-form-field"><label>Ville *</label><input aria-label="Saint-Omer" name="city" required placeholder="Saint-Omer"></div>
             <div class="nv-form-field"><label>Date souhaitée</label><input name="preferred_date" type="date" min="${new Date().toISOString().slice(0,10)}"></div>
             <div class="nv-form-field"><label>Créneau</label>
-              <select name="preferred_slot">
+              <select aria-label="preferred_slot" name="preferred_slot">
                 <option value="">Sans préférence</option>
                 <option value="matin">Matin (8h-12h)</option>
                 <option value="apres-midi">Après-midi (13h-18h)</option>
                 <option value="urgent">Urgent (sous 24h)</option>
               </select>
             </div>
-            <div class="nv-form-field nv-form-full"><label>Précisions (optionnel)</label><textarea name="notes" placeholder="Marque/modèle actuel, accès particulier, photos disponibles..."></textarea></div>
+            <div class="nv-form-field nv-form-full"><label>Précisions (optionnel)</label><textarea aria-label="Marque/modèle actuel, accès particulier, photos disponibles..." name="notes" placeholder="Marque/modèle actuel, accès particulier, photos disponibles..."></textarea></div>
           </div>
 
           <div class="nv-deposit-info">
