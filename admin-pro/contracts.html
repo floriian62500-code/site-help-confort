@@ -1021,17 +1021,29 @@ let _editingId = null;
           result.style.border = '1px solid rgba(255,180,0,.30)';
         }
 
-        result.innerHTML += `<div style="margin-top:12px"><a href="#" onclick="
-          try {
-            const tab = document.querySelector('.ct-tab[data-tab=contracts]');
-            if (tab) tab.click();
-            const filter = document.querySelector('.ct-filter[data-status=prospect]') || document.querySelector('.ct-filter[data-status=to_import]');
-            if (filter) filter.click();
-            const modal = document.getElementById('testModal') || document.querySelector('.modal');
-            if (modal) modal.style.display='none';
-          } catch(e) {}
-          return false;
-        " style="color:#0DA0CF;font-weight:700">→ Voir la souscription dans Contrats clients (filtre À importer)</a></div>`;
+        result.innerHTML += `<div style="margin-top:12px"><a href="#" id="goSeeSubscription" style="color:#0DA0CF;font-weight:700">→ Voir la souscription dans Contrats clients (filtre À importer)</a></div>`;
+        // Attache un handler propre après injection HTML
+        setTimeout(() => {
+          const link = document.getElementById('goSeeSubscription');
+          if (link) link.addEventListener('click', (ev) => {
+            ev.preventDefault();
+            // 1. Ferme la modale (use la bonne classe .open)
+            const modal = document.getElementById('testModal');
+            if (modal) { modal.classList.remove('open'); document.body.style.overflow = ''; }
+            // 2. Active l'onglet "contracts" si on est sur l'onglet "offers"
+            const tab = document.querySelector('.ct-tab[data-tab="contracts"]');
+            if (tab && !tab.classList.contains('active')) tab.click();
+            // 3. Active le filtre "À importer dans CRM"
+            setTimeout(() => {
+              const filter = document.querySelector('.ct-filter[data-status="to_import"]') ||
+                             document.querySelector('.ct-filter[data-status="prospect"]');
+              if (filter) filter.click();
+              // 4. Scroll vers la liste
+              const list = document.getElementById('ctBody');
+              if (list) list.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 150);
+          });
+        }, 50);
       } catch (e) {
         result.style.background = 'rgba(217,45,32,.08)';
         result.style.color = '#9F0E2B';
