@@ -276,6 +276,7 @@
 </script>
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#0DA0CF">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
 <!-- TOPBAR globale : badge réseau + zones + horaires (visible toutes pages) -->
@@ -322,14 +323,14 @@
       <a href="contact.html" class="hc-nav-link">Contact</a>
 
       <div class="hc-megamenu" data-menu="metiers" role="menu">
-        <a href="plombier-saint-omer.html"><img height="695" width="694" src="images/picto-renovation.png" alt="" loading="lazy">Travaux</a>
+        <a href="plombier-saint-omer.html"><img decoding="async" height="695" width="694" src="images/picto-renovation.png" alt="" loading="lazy">Travaux</a>
         <a href="chauffagiste-saint-omer.html"><span class="hc-mm-svg" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#E76B2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 4-2 4 0 8 2 4 4 4 0 12-1-4 2-4 0-8-2-4-4-4 0-12z"/></svg></span>Chauffage</a>
-        <a href="electricien-saint-omer.html"><img height="437" width="437" src="images/picto-electricite.png" alt="" loading="lazy">Électricité</a>
-        <a href="serrurier-saint-omer.html"><img height="437" width="437" src="images/picto-serrurerie.png" alt="" loading="lazy">Serrurerie</a>
-        <a href="serrurier-saint-omer.html"><img height="437" width="437" src="images/picto-vitrerie.png" alt="" loading="lazy">Vitrerie</a>
-        <a href="travaux-saint-omer.html"><img height="695" width="694" src="images/picto-renovation.png" alt="" loading="lazy">Rénovation</a>
-        <a href="travaux-saint-omer.html"><img height="437" width="437" src="images/picto-volets.png" alt="" loading="lazy">Volets</a>
-        <a href="guide-adaptation-pmr.html"><img height="686" width="686" src="images/picto-pmr.png" alt="" loading="lazy">Adaptation PMR</a>
+        <a href="electricien-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-electricite.png" alt="" loading="lazy">Électricité</a>
+        <a href="serrurier-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-serrurerie.png" alt="" loading="lazy">Serrurerie</a>
+        <a href="serrurier-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-vitrerie.png" alt="" loading="lazy">Vitrerie</a>
+        <a href="travaux-saint-omer.html"><img decoding="async" height="695" width="694" src="images/picto-renovation.png" alt="" loading="lazy">Rénovation</a>
+        <a href="travaux-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-volets.png" alt="" loading="lazy">Volets</a>
+        <a href="guide-adaptation-pmr.html"><img decoding="async" height="686" width="686" src="images/picto-pmr.png" alt="" loading="lazy">Adaptation PMR</a>
         <a href="contrats-entretien.html" class="hc-mm-foot">Contrats d&apos;entretien →</a>
       </div>
 
@@ -1119,7 +1120,7 @@ if (document.fonts && document.fonts.ready) {
         Saint-Omer / Dunkerque
       </span>
       <div style="display:flex;align-items:center;gap:14px;margin:8px 0 0;flex-wrap:wrap">
-        <img src="images/picto-renovation.png" alt="Travaux HELP! Confort" width="64" height="64" style="object-fit:contain;flex-shrink:0;filter:drop-shadow(0 4px 12px rgba(13,160,207,.18))" loading="eager">
+        <img decoding="async" src="images/picto-renovation.png" alt="Travaux HELP! Confort" width="64" height="64" style="object-fit:contain;flex-shrink:0;filter:drop-shadow(0 4px 12px rgba(13,160,207,.18))" loading="eager">
         <h1 class="m-hero-h1" style="margin:0">Travaux tous corps d'état à <em>Saint-Omer</em> et <em>Dunkerque</em></h1>
       </div>
       <p class="m-hero-lead">Rénovation, salle de bain, cuisine, peinture, menuiserie, adaptation PMR&nbsp;: un <strong>seul interlocuteur pour piloter</strong> votre projet du devis à la livraison.</p>
@@ -1201,7 +1202,7 @@ if (document.fonts && document.fonts.ready) {
 
       <!-- Mascotte centrale -->
       <div class="m-hero-mascotte-wrap">
-        <img height="1500" width="503" src="images/mascotte.webp" alt="Conducteur de travaux HELP! Confort" class="m-hero-mascotte" loading="eager">
+        <img decoding="async" height="1500" width="503" src="images/mascotte.webp" alt="Conducteur de travaux HELP! Confort" class="m-hero-mascotte" loading="eager">
       </div>
 
       <!-- Services qui orbitent autour de la mascotte — liens cliquables vers prestation ou devis -->
@@ -1501,7 +1502,7 @@ if (document.fonts && document.fonts.ready) {
           var url = r.url || 'realisations.html';
           var img = '';
           if(r.image){
-            img = '<img src="'+r.image+'" alt="'+r.title+'" loading="lazy">';
+            img = '<img decoding="async" src="'+r.image+'" alt="'+r.title+'" loading="lazy">';
           } else if(r.source_facebook){
             var fb = 'https://www.facebook.com/plugins/post.php?href='+encodeURIComponent(r.source_facebook)+'&show_text=false&width=380';
             img = '<iframe src="'+fb+'" loading="lazy" scrolling="no" frameborder="0"></iframe>';
@@ -2054,7 +2055,7 @@ if (document.fonts && document.fonts.ready) {
       <!-- Brand + contact -->
       <div class="fv3-brand">
         <a href="index.html" class="fv3-logo" aria-label="HELP! Confort Saint-Omer & Dunkerque">
-          <img src="logo-officiel.jpg" alt="HELP! Confort — réseau officiel" width="200" height="60" loading="lazy">
+          <img decoding="async" src="logo-officiel.jpg" alt="HELP! Confort — réseau officiel" width="200" height="60" loading="lazy">
         </a>
         <div class="fv3-zones">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>

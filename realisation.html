@@ -84,6 +84,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
   <meta name="theme-color" content="#0DA0CF">
   <script src="/assets/hc-consent.js" defer></script>
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
 
@@ -91,7 +92,7 @@
 <header id="hcHeader" style="background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(229,237,243,.5);padding:12px clamp(20px,4vw,64px);position:sticky;top:0;z-index:100">
   <div style="max-width:1480px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px">
     <a href="/" style="display:flex;align-items:center;text-decoration:none">
-      <img src="logo-help-confort.png" alt="HELP! Confort" style="height:48px">
+      <img decoding="async" loading="lazy" src="logo-help-confort.png" alt="HELP! Confort" style="height:48px">
     </a>
     <nav style="display:flex;align-items:center;gap:12px">
       <a href="realisations.html" style="color:#0DA0CF;font-weight:600;text-decoration:none;font-size:.92rem">← Toutes les réalisations</a>
@@ -263,7 +264,7 @@
       const m = METIER_LABELS[s.metier] || s.metier;
       return `
         <a href="realisation.html?slug=${encodeURIComponent(s.slug)}" class="real-similar-card">
-          <div class="photo">${p&nbsp;? `<img src="${p}" alt="" loading="lazy">` : ''}</div>
+          <div class="photo">${p&nbsp;? `<img decoding="async" src="${p}" alt="" loading="lazy">` : ''}</div>
           <div class="body">
             <h4>${escapeHtml(s.title)}</h4>
             <div class="meta">${m} · ${escapeHtml(s.ville)}</div>
