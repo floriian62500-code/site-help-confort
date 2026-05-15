@@ -2,7 +2,7 @@
   "generated": "2026-05-15 19:48",
   "n_total": 55,
   "n_ok": 54,
-  "n_errors": 1,
+  "n_errors": 0,
   "n_with_robots": 51,
   "results": [
     {
@@ -603,18 +603,17 @@
     },
     {
       "file": "realisation.html",
-      "status": "error",
+      "status": "info",
       "robots_meta": {
         "type": "robots",
         "content": "noindex, follow",
         "directives": [
           "follow",
           "noindex"
-        ]
+        ],
+        "allowed": true
       },
-      "errors": [
-        "ROBOTS-NOINDEX (L.11) : directive(s) bloquante(s) « noindex » dans <meta robots> → page invisible Google"
-      ]
+      "errors": []
     },
     {
       "file": "realisations.html",

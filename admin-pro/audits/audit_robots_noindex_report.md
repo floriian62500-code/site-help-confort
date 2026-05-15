@@ -7,11 +7,7 @@ _Généré le 2026-05-15 19:48_
 - Pages scannées : **55**
 - Pages avec `<meta robots>` : **51**
 - ✅ OK (indexables) : **54**
-- ❌ Erreurs (noindex/none) : **1**
+- ℹ️ noindex légitime (pages dynamiques) : **1**
+- ❌ Erreurs (noindex/none non attendu) : **0**
 
-## ❌ Pages bloquées pour Google
-
-Ces pages ont une directive `noindex` ou `none` — elles ne remonteront PAS dans les résultats Google. Vérifier qu'il s'agit bien d'une intention.
-
-### `realisation.html`
-- ❌ ROBOTS-NOINDEX (L.11) : directive(s) bloquante(s) « noindex » dans <meta robots> → page invisible Google
+_✅ Aucune page publique n'est bloquée pour Google._

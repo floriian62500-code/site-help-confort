@@ -100,12 +100,18 @@ def audit_file(path: pathlib.Path) -> dict:
             blocking = directives & BLOCKING_TOKENS
             if blocking:
                 line_no = raw.count("\n", 0, m.start()) + 1
-                res["status"] = "error"
-                res["errors"].append(
-                    f"ROBOTS-NOINDEX (L.{line_no}) : "
-                    f"directive(s) bloquante(s) « {', '.join(sorted(blocking))} » "
-                    f"dans <meta {label}> → page invisible Google"
-                )
+                if path.name in NOINDEX_ALLOWED:
+                    # Page dynamique : noindex attendu, on log en info
+                    res["status"] = "info"
+                    res["errors"] = []  # vide pour ne pas alerter
+                    res["robots_meta"]["allowed"] = True
+                else:
+                    res["status"] = "error"
+                    res["errors"].append(
+                        f"ROBOTS-NOINDEX (L.{line_no}) : "
+                        f"directive(s) bloquante(s) « {', '.join(sorted(blocking))} » "
+                        f"dans <meta {label}> → page invisible Google"
+                    )
     return res
 
 
@@ -115,7 +121,8 @@ def main():
 
     n_total = len(results)
     n_err = sum(1 for r in results if r["status"] == "error")
-    n_ok = n_total - n_err
+    n_info = sum(1 for r in results if r["status"] == "info")
+    n_ok = n_total - n_err - n_info
     n_with_robots = sum(1 for r in results if r["robots_meta"])
 
     now = datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -129,7 +136,8 @@ def main():
         f"- Pages scannées : **{n_total}**",
         f"- Pages avec `<meta robots>` : **{n_with_robots}**",
         f"- ✅ OK (indexables) : **{n_ok}**",
-        f"- ❌ Erreurs (noindex/none) : **{n_err}**",
+        f"- ℹ️ noindex légitime (pages dynamiques) : **{n_info}**",
+        f"- ❌ Erreurs (noindex/none non attendu) : **{n_err}**",
         "",
     ]
 
