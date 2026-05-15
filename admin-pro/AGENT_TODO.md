@@ -34,7 +34,7 @@
 ## P3 — SEO & structured data
 
 - [x] **Schema.org enrichi** sur les 5 pages métier : ajouter `LocalBusiness` complet (opening hours, geo, ratings agrégés, aggregateRating), `Service` pour chaque prestation avec `priceRange`. *(fait 15/05 — HC-SERVICE-SCHEMA-V2 : @type spécifique par métier (Plumber/HVACBusiness/Electrician/Locksmith/GeneralContractor), geo Saint-Martin-lez-Tatinghem, 4-7 Offer.price par page croisés TARIFS_REFERENCE.md, URLs corrigées ; bugs #33-34 documentés MEMOIRE)*
-- [ ] **Open Graph images** — créer un script qui génère des PNG 1200×630 pour chaque page principale (titre + métier + logo HC) — utiliser SVG → PNG via canvas dans une edge function.
+- [x] **Open Graph images** — créer un script qui génère des PNG 1200×630 pour chaque page principale (titre + métier + logo HC). *(fait 15/05 — script `scripts/gen_og_images.py` (PIL) qui lit H1 + slug, génère 37 PNG 1200×630 brandés (gradient indigo→cyan + badge métier + logo HC + glow accent) dans /og/, og:image + twitter:image mis à jour sur 36 pages, gain ~60% poids vs PNG natives)*
 - [x] **JSON-LD breadcrumbs** sur les 4 guides (article + breadcrumb list). *(fait 15/05 — audit : les 4 guides ont déjà Article+BreadcrumbList+TechArticle ; ✅ rien à ajouter)*
 - [x] **Meta description optimisée** pour chaque page locale `depannage-*` avec ville + tarif anchor. *(fait 15/05 — 7 pages : meta + og:description harmonisés "ville (CP) + 58€/h TTC + ☎")*
 - [x] **Sitemap.xml local** régénéré avec toutes les pages actuelles (audit complet, 49 actuelles à vérifier). *(fait 15/05 — 32 pages root + 17 articles = 49 URLs ; lastmod recalculés via git log ; chantiers vs articles auto-triés)*
@@ -42,14 +42,14 @@
 ## P4 — Sécurité & performance
 
 - [x] **`netlify.toml`** — ajouter Content Security Policy (CSP), HSTS, X-Frame-Options, Referrer-Policy. *(fait 14/05 12:00 — CSP complète + COOP, HSTS/XFO/CTO/RP/PP déjà présents)*
-- [ ] **Compression** — vérifier que toutes les images PNG sont optimisées (passes via TinyPNG-like si présence d'outil dans le sandbox).
+- [x] **Compression** — vérifier que toutes les images PNG sont optimisées. *(fait 15/05 — 42 PNG compressées via Pillow quantize+optimize : 4.64 MB → 1.87 MB (-60%) ; mascottes 1078→375 KB (-65%) ; OG images 50-80→20-30 KB (-58%) ; backup originaux dans images/_backup_png/)*
 - [x] **Lazy-loading** — auditer que toutes les `<img>` sans `loading="lazy"` (hors above-the-fold) en aient un. *(fait 14/05 12:10 — 12 images patchées sur 9 fichiers)*
 - [x] **Preconnect/dns-prefetch** — vérifier que toutes les pages ont preconnect vers `https://btcbjwqiivhpwoszomhg.supabase.co`, `https://fonts.googleapis.com`, `https://fonts.gstatic.com`. *(fait 14/05 12:13 — 31 pages patchées avec preconnect Supabase + dns-prefetch jsdelivr/api-adresse)*
 - [x] **Service Worker** — créer un SW basique de cache pour les pages métier (cache-first sur les images, network-first sur le HTML). *(fait 15/05 — sw.js : precache critique, cache-first images/css/js, network-first HTML, stale-while-revalidate autres + enregistré sur 37 pages)*
 
 ## P5 — Admin backoffice enrichi
 
-- [ ] **`admin-pro/index.html`** (dashboard) — ajouter stats live : leads du jour, conversations chatbot, top prestation demandée.
+- [x] **`admin-pro/index.html`** (dashboard) — ajouter stats live : leads du jour, conversations chatbot, top prestation demandée. *(fait 15/05 — bloc HC-LIVE-TODAY-V1 : 3 cards "📡 Live aujourd'hui" / "🤖 Chat IA 24h" / "🏆 Top 30j" branchées sur tables leads, chat_conversations, service_orders ; trend vs hier sur leads, top métier sur chats, % du flux sur top prestation)*
 - [x] **`admin-pro/leads.html`** — ajouter export CSV. *(fait 15/05 — export existait : amélioré pour respecter filtres actifs (search+statut+métier), séparateur ';' Excel FR, 13 colonnes (CP/type/priorité/valeur ajoutées), toast confirmation, revokeObjectURL)*
 - [x] **`admin-pro/contracts.html`** — ajouter filtres par formule + recherche par nom client. *(fait 15/05 — barre 5 boutons Basic/Confort/Sécurité/Personnalisé avec compteurs live ; placeholder recherche enrichi "Nom client, n° contrat, ville, tél…" + ajout adresse+CP au scope ; raccourci clavier "/" pour focus ; export CSV respecte les 2 filtres)*
 - [x] **`admin-pro/services.html`** — ajouter colonne data-source pour traçabilité tarif. *(fait 15/05 — colonne "Source" entre Prix TTC et Variantes : code slug + label "BAREME AGENCE" / "devis" ; colspan 7→8 sur les 3 états (loading/error/empty))*

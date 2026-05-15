@@ -1,22 +1,21 @@
 # 🔦 Audit Lighthouse local — 2026-05-15 11:00
 
-**37 pages auditées** · **0 erreurs** · **17 warnings** · **Score moyen 98/100**
+**37 pages auditées** · **0 erreurs** · **13 warnings** · **Score moyen 99/100**
 
 ## 📊 Résumé par page
 
 | Page | Score | Erreurs | Warnings |
 |------|------:|--------:|---------:|
-| `electricien-saint-omer.html` | **92/100** | 0 | 2 |
-| `faq.html` | **92/100** | 0 | 2 |
 | `realisation.html` | **92/100** | 0 | 2 |
-| `serrurier-saint-omer.html` | **92/100** | 0 | 2 |
 | `chauffagiste-saint-omer.html` | **96/100** | 0 | 1 |
 | `contact.html` | **96/100** | 0 | 1 |
 | `contrats-entretien.html` | **96/100** | 0 | 1 |
 | `devis-express.html` | **96/100** | 0 | 1 |
+| `electricien-saint-omer.html` | **96/100** | 0 | 1 |
 | `index.html` | **96/100** | 0 | 1 |
 | `nos-prestations.html` | **96/100** | 0 | 1 |
 | `plombier-saint-omer.html` | **96/100** | 0 | 1 |
+| `serrurier-saint-omer.html` | **96/100** | 0 | 1 |
 | `temoignages.html` | **96/100** | 0 | 1 |
 | `travaux-saint-omer.html` | **96/100** | 0 | 1 |
 | `a-propos.html` | **100/100** | 0 | 0 |
@@ -32,6 +31,7 @@
 | `depannage-saint-martin-lez-tatinghem.html` | **100/100** | 0 | 0 |
 | `depannage-saint-omer.html` | **100/100** | 0 | 0 |
 | `espace-client.html` | **100/100** | 0 | 0 |
+| `faq.html` | **100/100** | 0 | 0 |
 | `guide-adaptation-pmr.html` | **100/100** | 0 | 0 |
 | `guide-entretien-chaudiere.html` | **100/100** | 0 | 0 |
 | `guide-fuite-eau.html` | **100/100** | 0 | 0 |
@@ -46,29 +46,11 @@
 
 ## 🔍 Détails par page
 
-### electricien-saint-omer.html — 92/100
-
-**Warnings :**
-- ⚠️ SEO title long (69 chars)
-- ⚠️ 6 <input> sans id/label/aria-label
-
-### faq.html — 92/100
-
-**Warnings :**
-- ⚠️ SEO title long (88 chars)
-- ⚠️ meta description longue (163 chars)
-
 ### realisation.html — 92/100
 
 **Warnings :**
 - ⚠️ SEO title court (24 chars, idéal 30–65)
 - ⚠️ 3 <h1> trouvés (devrait être 1)
-
-### serrurier-saint-omer.html — 92/100
-
-**Warnings :**
-- ⚠️ SEO title long (66 chars)
-- ⚠️ 6 <input> sans id/label/aria-label
 
 ### chauffagiste-saint-omer.html — 96/100
 
@@ -90,6 +72,11 @@
 **Warnings :**
 - ⚠️ SEO title long (69 chars)
 
+### electricien-saint-omer.html — 96/100
+
+**Warnings :**
+- ⚠️ 6 <input> sans id/label/aria-label
+
 ### index.html — 96/100
 
 **Warnings :**
@@ -101,6 +88,11 @@
 - ⚠️ 15 <input> sans id/label/aria-label
 
 ### plombier-saint-omer.html — 96/100
+
+**Warnings :**
+- ⚠️ 6 <input> sans id/label/aria-label
+
+### serrurier-saint-omer.html — 96/100
 
 **Warnings :**
 - ⚠️ 6 <input> sans id/label/aria-label
@@ -130,6 +122,7 @@
 - depannage-saint-martin-lez-tatinghem.html
 - depannage-saint-omer.html
 - espace-client.html
+- faq.html
 - guide-adaptation-pmr.html
 - guide-entretien-chaudiere.html
 - guide-fuite-eau.html
