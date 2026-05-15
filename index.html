@@ -1657,9 +1657,23 @@ function renderPrestaProposals() {
         state.suggested_presta = p;
         var nameEl = document.getElementById('resa-presta-name');
         if (nameEl) nameEl.innerHTML = p.icon + ' ' + p.label;
+        updateSelectedPrestaPrice(p);
       }
     });
   });
+}
+
+// Met à jour l'affichage prix step 4 en fonction de la prestation sélectionnée
+function updateSelectedPrestaPrice(p) {
+  var priceEl = document.getElementById('resa-price');
+  if (!priceEl || !p) return;
+  if (p.quote) {
+    priceEl.innerHTML = 'Sur devis <small style="font-weight:500;color:#94a3b8">· prestation sur mesure</small>';
+  } else if (typeof p.price === 'number') {
+    priceEl.innerHTML = p.price.toFixed(0).replace('.', ',') + ' € TTC <small style="font-weight:500;color:#94a3b8">· tarif catalogue</small>';
+  } else {
+    priceEl.textContent = 'Sur devis';
+  }
 }
 
 function showAllPrestasModal() {
@@ -1693,6 +1707,7 @@ function showAllPrestasModal() {
       state.suggested_presta = p;
       var nameEl = document.getElementById('resa-presta-name');
       if (nameEl) nameEl.innerHTML = p.icon + ' ' + p.label;
+      updateSelectedPrestaPrice(p);
       // Remplace la 1ère card de proposals visuellement
       var container = document.getElementById('presta-proposals');
       if (container) {
