@@ -630,6 +630,57 @@ if (document.fonts && document.fonts.ready) {
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     CTA PREMIUM finale — postuler / rejoindre l'équipe (refonte P1)
+═══════════════════════════════════════════════════════════════ -->
+<style id="hc-car-cta-style">
+  .car-cta-fin { position: relative; padding: clamp(56px, 7vw, 88px) clamp(20px, 4vw, 48px); background: linear-gradient(135deg, #0A1428 0%, #1A1028 55%, #0A1428 100%); color: #fff; overflow: hidden; }
+  .car-cta-fin::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 50% at 20% 30%, rgba(255,107,26,.24), transparent 60%), radial-gradient(ellipse 50% 50% at 80% 80%, rgba(245,158,11,.16), transparent 60%); pointer-events: none; }
+  .car-cta-fin .container { position: relative; max-width: 880px; margin: 0 auto; text-align: center; }
+  .car-cta-fin .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(255,107,26,.18); border: 1px solid rgba(255,107,26,.42); border-radius: 999px; color: #FFB48A; font-size: .82rem; font-weight: 600; margin-bottom: 18px; }
+  .car-cta-fin h2 { margin: 0 0 14px; font-size: clamp(1.7rem, 3.4vw, 2.4rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; }
+  .car-cta-fin h2 .accent { display: inline-block; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 500; background: linear-gradient(135deg, #FFB48A 0%, #FF6B1A 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .car-cta-fin p { margin: 0 auto 26px; max-width: 640px; color: rgba(255,255,255,.78); font-size: 1rem; line-height: 1.6; }
+  .car-cta-fin .car-cta-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+  .car-cta-fin .btn { display: inline-flex; align-items: center; gap: 10px; padding: 16px 26px; border-radius: 12px; font-weight: 800; font-size: 1.02rem; text-decoration: none; transition: transform .2s ease, box-shadow .25s ease; }
+  .car-cta-fin .btn-primary { background: #fff; color: #0A1428; box-shadow: 0 10px 26px rgba(0,0,0,.25); }
+  .car-cta-fin .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(0,0,0,.35); }
+  .car-cta-fin .btn-secondary { background: linear-gradient(135deg, #FF6B1A 0%, #E55A0A 100%); color: #fff; box-shadow: 0 10px 26px rgba(255,107,26,.40); }
+  .car-cta-fin .btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(255,107,26,.55); }
+  .car-cta-fin .pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 28px; }
+  .car-cta-fin .pills span { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); border-radius: 999px; font-size: .82rem; font-weight: 500; color: rgba(255,255,255,.82); }
+  .car-cta-fin .pills span svg { color: #FFB48A; flex-shrink: 0; }
+  .car-cta-fin .foot { margin-top: 22px; font-size: .82rem; color: rgba(255,255,255,.55); }
+  @media (max-width: 640px) { .car-cta-fin .btn { width: 100%; justify-content: center; } }
+</style>
+<section class="car-cta-fin">
+  <div class="container">
+    <span class="eyebrow">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Rejoindre l'équipe HELP! Confort
+    </span>
+    <h2>Construisons<span class="accent"> votre parcours chez nous.</span></h2>
+    <p>Plombier, chauffagiste, électricien, serrurier, vitrier ou chargé(e) clientèle : envoyez-nous votre candidature, même sans poste ouvert affiché. <strong style="color:#fff">Formations internes, véhicule de service, ambiance familiale</strong> — on étudie chaque profil sérieusement.</p>
+    <div class="car-cta-actions">
+      <a href="tel:+33366100134" class="btn btn-primary" data-tracking="cta-car-tel">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        03 66 10 01 34
+      </a>
+      <a href="#candidature" class="btn btn-secondary" data-tracking="cta-car-form">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+        Postuler maintenant
+      </a>
+    </div>
+    <div class="pills">
+      <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>CDI &amp; alternance</span>
+      <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Véhicule de service</span>
+      <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Formations internes</span>
+      <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Saint-Omer &amp; Dunkerque</span>
+    </div>
+    <p class="foot">📧 saint-omer@helpconfort.com · Réponse sous 5 jours ouvrés</p>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer class="footer footer-v3">
   <div class="footer-v3-wrap">
