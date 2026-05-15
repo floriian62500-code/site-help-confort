@@ -8,8 +8,10 @@
   # Pas de build process — site statique HTML
   publish = "."
   command = ""
-  # Ignore les commits qui ne modifient que les fichiers d'audit / docs / scripts (pas de redéploiement nécessaire)
-  ignore = "git diff --quiet HEAD^ HEAD -- ':(exclude)admin-pro/audits/*' ':(exclude)admin-pro/AGENT_TODO.md' ':(exclude)admin-pro/MEMOIRE_IA_MAINTENANCE.md' ':(exclude)admin-pro/TARIFS_REFERENCE.md' ':(exclude).autopush/*' ':(exclude)scripts/*' ':(exclude)docs/*' ':(exclude)*.md'"
+  # Ignore les commits qui ne touchent QUE des fichiers non-publiés en prod.
+  # Retourne 0 (skip build) si le diff HEAD^..HEAD est entièrement contenu dans les paths exclus.
+  # → admin-pro/audits/ (rapports IA), .md (docs), .autopush/, scripts/, content/, supabase/, logs, _backup
+  ignore = "git diff --quiet HEAD^ HEAD -- . ':!admin-pro/audits/' ':!admin-pro/AGENT_TODO.md' ':!admin-pro/MEMOIRE_IA_MAINTENANCE.md' ':!admin-pro/TARIFS_REFERENCE.md' ':!admin-pro/URGENT.md' ':!admin-pro/DEPLOY.md' ':!.autopush/' ':!scripts/' ':!docs/' ':!logs/' ':!images/_backup_png/' ':!**/*.md' ':!**/*.log'"
 
 # ═══════════════════════════════════════════════════════════════════
 # Pretty URLs : /plombier-saint-omer → /plombier-saint-omer.html
