@@ -1000,16 +1000,38 @@ let _editingId = null;
           result.style.border = '1px solid rgba(34,160,107,.30)';
           result.innerHTML += `<div style="margin-top:10px;padding:10px;background:#fff;border-radius:6px;color:#0A1428;font-size:.8rem"><strong>📬 Vérifie ta boîte mail !</strong> Tu devrais recevoir l'email dans les 10s.</div>`;
         } else {
-          result.innerHTML += `<br><strong>⚠ Étape 2/3 :</strong> Edge Function OK mais email non envoyé<br><strong>Raison :</strong> ${fnData.reason || 'inconnue'}`;
+          // L'Edge Function a répondu, mais l'email n'est pas parti.
+          // 3 cas possibles : pas de API key, Resend a renvoyé une erreur, autre
+          const reason = fnData.reason || fnData.error || 'inconnue';
+          result.innerHTML += `<br><strong>⚠ Étape 2/3 :</strong> Edge Function OK mais email non envoyé<br><strong>Détail :</strong> <code style="font-size:.78rem">${typeof reason === 'string' ? reason.slice(0,400) : JSON.stringify(reason).slice(0,400)}</code>`;
+          if (fnData.status) {
+            result.innerHTML += `<br><strong>HTTP Resend :</strong> ${fnData.status}`;
+          }
           if (fnData.reason === 'no_api_key') {
-            result.innerHTML += `<div style="margin-top:10px;padding:10px;background:#fff8eb;border-radius:6px;color:#7a5500;font-size:.82rem"><strong>👉 Action requise :</strong> ajoute la clé Resend : <code>supabase secrets set RESEND_API_KEY=re_xxx --project-ref btcbjwqiivhpwoszomhg</code><br>Cf. <a href="../SETUP-EMAIL-RESEND.md" target="_blank" style="color:#0DA0CF;font-weight:700">SETUP-EMAIL-RESEND.md</a></div>`;
+            result.innerHTML += `<div style="margin-top:10px;padding:10px;background:#fff8eb;border-radius:6px;color:#7a5500;font-size:.82rem"><strong>👉 Action requise :</strong> ajoute <code>RESEND_API_KEY</code> dans <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/settings/functions" target="_blank" style="color:#0DA0CF;font-weight:700">Supabase Secrets</a></div>`;
+          } else if (reason && (String(reason).includes('domain') || String(reason).includes('verified'))) {
+            result.innerHTML += `<div style="margin-top:10px;padding:10px;background:#fff8eb;border-radius:6px;color:#7a5500;font-size:.82rem"><strong>👉 Domaine non vérifié dans Resend :</strong> va sur <a href="https://resend.com/domains" target="_blank" style="color:#0DA0CF;font-weight:700">resend.com/domains</a> et vérifie que <code>depan59-62.fr</code> apparaît en <strong>Verified</strong>. Les DKIM/SPF sont déjà chez Gandi, donc la validation devrait passer en quelques minutes.</div>`;
+          } else if (reason && String(reason).includes('from')) {
+            result.innerHTML += `<div style="margin-top:10px;padding:10px;background:#fff8eb;border-radius:6px;color:#7a5500;font-size:.82rem"><strong>👉 Adresse expéditeur invalide :</strong> change <code>from_email</code> dans <a href="settings.html#section-notifications" style="color:#0DA0CF;font-weight:700">Paramètres → Notifications email</a></div>`;
+          } else {
+            result.innerHTML += `<div style="margin-top:10px;padding:10px;background:#fff8eb;border-radius:6px;color:#7a5500;font-size:.82rem"><strong>👉 Pour voir le détail exact</strong>, regarde les logs Resend : <a href="https://resend.com/emails" target="_blank" style="color:#0DA0CF;font-weight:700">resend.com/emails</a></div>`;
           }
           result.style.background = 'rgba(255,180,0,.10)';
           result.style.color = '#7a5500';
           result.style.border = '1px solid rgba(255,180,0,.30)';
         }
 
-        result.innerHTML += `<div style="margin-top:12px"><a href="contracts.html" onclick="document.querySelector('.ct-tab[data-tab=contracts]').click();location.hash='#prospects';return false" style="color:#0DA0CF;font-weight:700">→ Voir la souscription dans Contrats clients (Prospects)</a></div>`;
+        result.innerHTML += `<div style="margin-top:12px"><a href="#" onclick="
+          try {
+            const tab = document.querySelector('.ct-tab[data-tab=contracts]');
+            if (tab) tab.click();
+            const filter = document.querySelector('.ct-filter[data-status=prospect]') || document.querySelector('.ct-filter[data-status=to_import]');
+            if (filter) filter.click();
+            const modal = document.getElementById('testModal') || document.querySelector('.modal');
+            if (modal) modal.style.display='none';
+          } catch(e) {}
+          return false;
+        " style="color:#0DA0CF;font-weight:700">→ Voir la souscription dans Contrats clients (filtre À importer)</a></div>`;
       } catch (e) {
         result.style.background = 'rgba(217,45,32,.08)';
         result.style.color = '#9F0E2B';

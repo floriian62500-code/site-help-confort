@@ -19,7 +19,7 @@
 - [x] **`aides.html`** — refonte : picto + cards des aides éligibles (MaPrimeRénov', MaPrimeAdapt', CEE, TVA réduite) avec lien vers contact. *(fait 14/05 13:10 — ajout section .aid-cta-fin premium avant footer : eyebrow vert, h2 italique, double CTA tel+devis, 4 pills RGE/Handibat/étude/zone)*
 - [x] **`sinistres.html`** — refonte : picto sinistre + cards "Que faire en cas de…" (dégât eaux, vol, incendie) + CTA "Nous contacter pour expertise". *(fait 14/05 13:11 — ajout section .sin-cta-fin premium avant footer : palette rouge sinistre, double CTA tel+form, 4 pills photos/devis/syndic/garantie)*
 - [x] **`pro.html`** — refonte : picto pro + section partenaires (assurances, bailleurs, syndics) + CTA "Devenir partenaire". *(fait par agent autonome 14/05 ~22h — section .pro-cta-fin gradient sombre + eyebrow + 4 pills + double CTA)*
-- [ ] **`carrieres.html`** — refonte : picto équipe + cards postes à pourvoir + CTA "Postuler".
+- [x] **`carrieres.html`** — refonte : picto équipe + cards postes à pourvoir + CTA "Postuler". *(fait par agent autonome 14/05 ~22h — CTA premium intégré)*
 
 ## P2 — Pages locales depannage (cohérence inter-villes)
 
