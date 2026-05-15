@@ -93,18 +93,104 @@
 
   const { data: settings } = await c.from('app_settings').select('value').eq('key','ga4').single();
   const ga4Ready = !!(settings?.value?.property_id);
+  const saJsonStr = settings?.value?.service_account_json;
 
-  // ─── Tentative d'appel à l'Edge Function ga4-stats pour les vraies données GA4 ──
+  // ─── Appel CLIENT-SIDE direct à GA4 (plus de dépendance Edge Function) ──
   let ga4Stats = null;
-  if (ga4Ready) {
+  let ga4Error = null;
+  let topSources = [];
+  let topPages = [];
+
+  // Helpers crypto pour JWT RS256
+  function pemToArrayBuffer(pem){
+    const b64 = String(pem||'').replace(/-----BEGIN PRIVATE KEY-----/g,'').replace(/-----END PRIVATE KEY-----/g,'').replace(/\s+/g,'');
+    const binary = atob(b64);
+    const bytes = new Uint8Array(binary.length);
+    for (let i=0; i<binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    return bytes.buffer;
+  }
+  function b64u(s){ return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }
+  function b64uBuf(buf){
+    const b = new Uint8Array(buf); let s=''; for (let i=0;i<b.byteLength;i++) s += String.fromCharCode(b[i]);
+    return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  }
+  async function ga4SignAndCall(sa, body){
+    const now = Math.floor(Date.now()/1000);
+    const header = { alg:'RS256', typ:'JWT', kid: sa.private_key_id };
+    const payload = { iss: sa.client_email, scope:'https://www.googleapis.com/auth/analytics.readonly',
+      aud: sa.token_uri || 'https://oauth2.googleapis.com/token', exp: now+3600, iat: now };
+    const data = b64u(JSON.stringify(header)) + '.' + b64u(JSON.stringify(payload));
+    const key = await crypto.subtle.importKey('pkcs8', pemToArrayBuffer(sa.private_key),
+      { name:'RSASSA-PKCS1-v1_5', hash:'SHA-256' }, false, ['sign']);
+    const sig = await crypto.subtle.sign('RSASSA-PKCS1-v1_5', key, new TextEncoder().encode(data));
+    const jwt = data + '.' + b64uBuf(sig);
+    const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+      method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body: new URLSearchParams({ grant_type:'urn:ietf:params:oauth:grant-type:jwt-bearer', assertion: jwt }).toString()
+    });
+    const tokenJson = await tokenRes.json();
+    if (!tokenJson.access_token) throw new Error('OAuth : ' + (tokenJson.error_description || tokenJson.error || 'token error'));
+    const r = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${settings.value.property_id}:runReport`, {
+      method:'POST', headers:{ 'Authorization':'Bearer '+tokenJson.access_token, 'Content-Type':'application/json' },
+      body: JSON.stringify(body)
+    });
+    const j = await r.json();
+    if (j.error) throw new Error('GA4 : ' + j.error.message);
+    return j;
+  }
+
+  if (ga4Ready && saJsonStr) {
     try {
-      const { data, error } = await c.functions.invoke('ga4-stats', { body: { period: '30d' } });
-      if (!error && data && data.success && data.kpi) {
-        ga4Stats = data.kpi;
-      } else if (!error && data) {
-        ga4Stats = data;
+      const sa = typeof saJsonStr === 'string' ? JSON.parse(saJsonStr) : saJsonStr;
+      if (!sa.client_email || !sa.private_key || !String(sa.private_key).includes('BEGIN PRIVATE KEY')) {
+        throw new Error('Service Account JSON incomplet (manque client_email ou private_key valide)');
       }
-    } catch (e) { /* GA4 stats indispo, on affichera juste "configuré ✓" */ }
+      // KPI principaux 30j
+      const main = await ga4SignAndCall(sa, {
+        dateRanges:[{ startDate:'30daysAgo', endDate:'today' }],
+        metrics:[{name:'sessions'},{name:'totalUsers'},{name:'newUsers'},{name:'screenPageViews'},{name:'averageSessionDuration'},{name:'engagementRate'}]
+      });
+      const row = main.rows?.[0]?.metricValues || [];
+      ga4Stats = {
+        sessions: Number(row[0]?.value||0),
+        users: Number(row[1]?.value||0),
+        newUsers: Number(row[2]?.value||0),
+        page_views: Number(row[3]?.value||0),
+        avg_duration_sec: Math.round(Number(row[4]?.value||0)),
+        engagement_rate: Number(row[5]?.value||0)
+      };
+      // Top sources 30j
+      try {
+        const s = await ga4SignAndCall(sa, {
+          dateRanges:[{startDate:'30daysAgo',endDate:'today'}],
+          dimensions:[{name:'sessionSourceMedium'}],
+          metrics:[{name:'sessions'},{name:'totalUsers'}],
+          limit: 8, orderBys:[{metric:{metricName:'sessions'},desc:true}]
+        });
+        topSources = (s.rows||[]).map(r => ({
+          source: r.dimensionValues[0]?.value || '(direct)',
+          sessions: Number(r.metricValues[0]?.value||0),
+          users: Number(r.metricValues[1]?.value||0)
+        }));
+      } catch(_){}
+      // Top pages 30j
+      try {
+        const p = await ga4SignAndCall(sa, {
+          dateRanges:[{startDate:'30daysAgo',endDate:'today'}],
+          dimensions:[{name:'pagePath'}],
+          metrics:[{name:'screenPageViews'},{name:'totalUsers'}],
+          limit: 10, orderBys:[{metric:{metricName:'screenPageViews'},desc:true}]
+        });
+        topPages = (p.rows||[]).map(r => ({
+          path: r.dimensionValues[0]?.value || '/',
+          views: Number(r.metricValues[0]?.value||0),
+          users: Number(r.metricValues[1]?.value||0)
+        }));
+      } catch(_){}
+    } catch (e) {
+      ga4Error = e.message || 'Erreur inconnue';
+      console.warn('[analytics] GA4 client-side fail:', ga4Error);
+    }
   }
 
   function distrib(obj, max=10) {
