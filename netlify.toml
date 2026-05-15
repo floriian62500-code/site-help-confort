@@ -66,6 +66,13 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
+# Service Worker : NEVER cache pour permettre la mise à jour immédiate
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Service-Worker-Allowed = "/"
+
 # ═══════════════════════════════════════════════════════════════════
 # Redirections (en complément du fichier _redirects)
 # Pretty URLs automatiques + 404 fallback

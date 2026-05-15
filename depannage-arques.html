@@ -1019,21 +1019,30 @@ if (document.fonts && document.fonts.ready) {
 <script>
 if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){r.unregister();});if('caches' in window)caches.keys().then(function(ks){ks.forEach(function(k){caches.delete(k);});});});});});}
 </script>
-<!-- HC-SW-KILL-V1 — Force désinstallation du SW si actif (déployé 15/05 PM) -->
+<!-- HC-SW-KILL-V2 — désinscription SW + purge caches + reload (15/05 PM) -->
 <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(function(regs){
-    // Si un SW est enregistré, on force la mise à jour (récupère le nouveau sw.js qui purge tous les caches)
-    regs.forEach(function(r){ r.update(); });
+(function(){
+  if (!('serviceWorker' in navigator)) return;
+  var hadSW = false;
+  navigator.serviceWorker.getRegistrations().then(function(rs){
+    if (rs.length > 0) hadSW = true;
+    rs.forEach(function(r){ r.unregister(); });
   });
-  // Bonus : si le SW kill-switch est actif et qu'il y a un controller, on recharge la page 1 fois (silencieux)
-  navigator.serviceWorker.addEventListener('controllerchange', function(){
-    if (!window.__hc_reloaded) {
-      window.__hc_reloaded = true;
-      window.location.reload();
-    }
-  });
-}
+  if ('caches' in window) {
+    caches.keys().then(function(ks){
+      ks.forEach(function(k){ caches.delete(k); });
+    });
+  }
+  // Si on avait un SW actif et qu'on n'a pas encore rechargé une fois, force le reload (sans boucle)
+  setTimeout(function(){
+    try {
+      if (hadSW && !sessionStorage.getItem('__hc_sw_reset')) {
+        sessionStorage.setItem('__hc_sw_reset', '1');
+        location.reload(true);
+      }
+    } catch(_){}
+  }, 500);
+})();
 </script>
 </body>
 </html>
