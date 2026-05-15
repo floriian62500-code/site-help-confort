@@ -204,12 +204,12 @@ let _filterStatusOverride = null;
     });
   }
 
-  function renderList(){
-    const q = document.getElementById('search').value.toLowerCase().trim();
+  // Filtre commun, réutilisé par renderList ET l'export CSV
+  function getFilteredLeads(){
+    const q = (document.getElementById('search').value || '').toLowerCase().trim();
     const sFilter = document.getElementById('filterStatus').value || _filterStatusOverride;
     const mFilter = document.getElementById('filterMetier').value;
-
-    const filtered = _all.filter(l => {
+    return _all.filter(l => {
       if (sFilter && sFilter !== 'all' && l.status !== sFilter) return false;
       if (mFilter && l.metier !== mFilter) return false;
       if (q){
@@ -218,6 +218,10 @@ let _filterStatusOverride = null;
       }
       return true;
     });
+  }
+
+  function renderList(){
+    const filtered = getFilteredLeads();
 
     const list = document.getElementById('leadsList');
     if (!filtered.length){
