@@ -638,7 +638,7 @@ ${l.assigned_to ? `<div class="row"><strong>Assigné à</strong><span>${escapeHt
 
       // Ouvre dans une nouvelle fenêtre + déclenche print
       const w = window.open('', '_blank');
-      if (!w) { toast('Le navigateur a bloqué l\\'ouverture du PDF — autorise les popups pour ce site', 'err', 5000); return; }
+      if (!w) { toast("Le navigateur a bloqué l'ouverture du PDF — autorise les popups pour ce site", 'err', 5000); return; }
       w.document.open();
       w.document.write(pdfHTML);
       w.document.close();
