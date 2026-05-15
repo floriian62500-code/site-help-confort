@@ -28,31 +28,69 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 AUDITS_DIR = ROOT / "admin-pro" / "audits"
 
 # Compteurs de findings — heuristiques regex sur le contenu MD
-FINDING_PATTERNS = [
-    re.compile(r"\*\*Findings totaux\*\*\s*:\s*(\d+)", re.I),
-    re.compile(r"\*\*Alertes(?:\s*\(?[^)]*\)?)\*\*\s*:\s*\*\*?(\d+)", re.I),
-    re.compile(r"\*\*Alertes\*\*\s*:\s*(\d+)", re.I),
-    re.compile(r"\*\*Findings\*\*\s*:\s*(\d+)", re.I),
-    re.compile(r"\*\*Erreurs\*\*\s*:\s*(\d+)", re.I),
-    re.compile(r"\*\*Warnings?\*\*\s*:\s*(\d+)", re.I),
-    re.compile(r"\*\*Alertes \w[^*]*\*\*\s*:\s*\*?\*?(\d+)", re.I),
-    re.compile(r"\*\*URLs cassés[^*]*\*\*\s*:\s*\*\*?(\d+)", re.I),
+#
+# Stratégie en cascade (la 1ʳᵉ qui matche gagne) :
+#   1) Compteur "total" explicite (Findings totaux / Total findings)
+#   2) Somme erreurs + warnings (lighthouse, html5, aria)
+#   3) Compteur unitaire (Alertes / Avertissements / URLs cassés / Findings)
+#   4) Comptage de glyphes 🚨🔴 en dernier recours
+PRIMARY_TOTAL_PATTERNS = [
+    re.compile(r"\*\*Findings\s+totaux\*\*\s*:\s*\*?\*?(\d+)", re.I),
+    re.compile(r"Findings\s+totaux\s*:\s*\*\*?(\d+)\*\*?", re.I),
+    re.compile(r"\*\*Total\s+findings\*\*\s*:\s*\*?\*?(\d+)", re.I),
+    re.compile(r"Total\s+findings\s*:\s*\*\*(\d+)\*\*", re.I),
 ]
 
-GENERATED_PATTERN = re.compile(r"[Gg]énéré le\s+(\d{4}-\d{2}-\d{2}(?:\s\d{2}:\d{2})?)")
+# Patterns "erreurs" — capturent un compteur explicite d'erreurs
+# Acceptent label en clair OU entouré de `**` (les rapports n'ont pas tous le même style).
+ERRORS_PATTERNS = [
+    re.compile(r"\*\*Erreurs\*\*\s*:\s*\*?\*?(\d+)", re.I),
+    re.compile(r"^[\-\*]?\s*Erreurs?[^:\n]*:\s*\*\*(\d+)\*\*", re.I | re.M),
+    re.compile(r"\*\*(\d+)\s+erreurs?\*\*", re.I),
+    re.compile(r"Pages\s+avec\s*[≥>=]?\s*1\s+erreur\s*:\s*\*\*(\d+)\*\*", re.I),
+]
+
+# Patterns "warnings / alertes / avertissements"
+WARNINGS_PATTERNS = [
+    re.compile(r"\*\*Warnings?\*\*\s*:\s*\*?\*?(\d+)", re.I),
+    re.compile(r"^[\-\*]?\s*Avertissements?[^:\n]*:\s*\*\*(\d+)\*\*", re.I | re.M),
+    re.compile(r"\*\*Alertes(?:\s*\(?[^)]*\)?)?\*\*\s*:\s*\*?\*?(\d+)", re.I),
+    re.compile(r"^[\-\*]?\s*Alertes?[^:\n]*:\s*\*\*(\d+)\*\*", re.I | re.M),
+    re.compile(r"\*\*(\d+)\s+warnings?\*\*", re.I),
+    re.compile(r"Warnings?\s*:\s*\*\*(\d+)\*\*", re.I),
+    re.compile(r"\*\*URLs\s+cassés?[^*]*\*\*\s*:\s*\*\*?(\d+)", re.I),
+    re.compile(r"\*\*Findings\*\*\s*:\s*\*?\*?(\d+)", re.I),
+    re.compile(r"^[\-\*]?\s*Findings?[^:\n]*:\s*\*\*(\d+)\*\*", re.I | re.M),
+]
+
+GENERATED_PATTERN = re.compile(r"[Gg]énéré\s+(?:le\s+|par\s+`[^`]+`\s*[—-]\s*)?(\d{4}-\d{2}-\d{2}(?:\s\d{2}:\d{2})?)")
+
+
+def _first_match(text: str, patterns: list[re.Pattern]) -> int | None:
+    for pat in patterns:
+        m = pat.search(text)
+        if m:
+            try:
+                return int(m.group(1))
+            except (ValueError, IndexError):
+                continue
+    return None
 
 
 def extract_findings(text: str) -> int:
-    """Retourne le 1er compteur trouvé (heuristique)."""
-    for pat in FINDING_PATTERNS:
-        m = pat.search(text)
-        if m:
-            return int(m.group(1))
-    # Sinon, comptage des emojis 🚨🟠🔴 + lignes ALERTE
+    """Retourne le nombre de findings selon une cascade d'heuristiques."""
+    # 1) total explicite
+    total = _first_match(text, PRIMARY_TOTAL_PATTERNS)
+    if total is not None:
+        return total
+    # 2) somme erreurs + warnings (si l'un OU l'autre est trouvé)
+    err = _first_match(text, ERRORS_PATTERNS)
+    warn = _first_match(text, WARNINGS_PATTERNS)
+    if err is not None or warn is not None:
+        return (err or 0) + (warn or 0)
+    # 3) dernier recours — comptage emojis d'alerte
     n = len(re.findall(r"🚨|🔴", text))
-    if n:
-        return n
-    return 0
+    return n
 
 
 def extract_date(text: str) -> str:
