@@ -417,6 +417,20 @@ let _editingId = null;
     _filter = b.dataset.status;
     render();
   });
+  // Filtre par formule (Basic / Confort / Sécurité / Personnalisé)
+  document.querySelectorAll('.ct-tfilter').forEach(b => b.onclick = () => {
+    document.querySelectorAll('.ct-tfilter').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    _typeFilter = b.dataset.type;
+    render();
+  });
+  // Raccourci clavier "/" pour focus recherche (UX standard backoffice)
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) {
+      e.preventDefault();
+      document.getElementById('searchInput').focus();
+    }
+  });
   document.getElementById('btnNew').onclick = () => openModal();
 
   // ─── Export CSV ────────────────────────────────────────────────────────
@@ -424,7 +438,7 @@ let _editingId = null;
     const today = new Date(); today.setHours(0,0,0,0);
     const in30 = new Date(today); in30.setDate(in30.getDate()+30);
     let rows = _all;
-    // Applique le filtre actif
+    // Applique le filtre actif (statut)
     if (_filter === 'due') {
       rows = _all.filter(x => x.status === 'active' && x.next_intervention_date && new Date(x.next_intervention_date) <= in30);
     } else if (_filter === 'to_import') {
@@ -432,11 +446,16 @@ let _editingId = null;
     } else if (_filter) {
       rows = _all.filter(x => x.status === _filter);
     }
+    // Applique le filtre formule
+    if (_typeFilter) {
+      rows = rows.filter(x => x.type === _typeFilter);
+    }
     if (_q) {
       rows = rows.filter(x => (
         (x.client_last_name||'') + ' ' + (x.client_first_name||'') + ' ' +
         (x.client_phone||'') + ' ' + (x.client_email||'') + ' ' +
-        (x.contract_number||'') + ' ' + (x.client_city||'')
+        (x.contract_number||'') + ' ' + (x.client_city||'') + ' ' +
+        (x.client_address||'') + ' ' + (x.client_postal_code||'')
       ).toLowerCase().includes(_q));
     }
 
@@ -529,6 +548,16 @@ let _editingId = null;
       <div class="ct-stat" style="--c:#FFB400"><div class="label">⏰ Échéances 30j</div><div class="value">${dueSoon}</div></div>
     `;
 
+    // Compteurs par formule (calculés AVANT filtrage statut/recherche pour rester stables)
+    const byType = { basic:0, confort:0, securite:0, custom:0 };
+    _all.forEach(x => { if (byType[x.type] !== undefined) byType[x.type]++; });
+    const setCnt = (id,v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    setCnt('cntType_all', _all.length);
+    setCnt('cntType_basic', byType.basic);
+    setCnt('cntType_confort', byType.confort);
+    setCnt('cntType_securite', byType.securite);
+    setCnt('cntType_custom', byType.custom);
+
     // Filtrage
     let filtered = _all;
     if (_filter === 'due') {
@@ -538,11 +567,16 @@ let _editingId = null;
     } else if (_filter) {
       filtered = _all.filter(x => x.status === _filter);
     }
+    // Filtre formule (s'applique en plus du statut)
+    if (_typeFilter) {
+      filtered = filtered.filter(x => x.type === _typeFilter);
+    }
     if (_q) {
       filtered = filtered.filter(x => (
         (x.client_last_name||'') + ' ' + (x.client_first_name||'') + ' ' +
         (x.client_phone||'') + ' ' + (x.client_email||'') + ' ' +
-        (x.contract_number||'') + ' ' + (x.client_city||'')
+        (x.contract_number||'') + ' ' + (x.client_city||'') + ' ' +
+        (x.client_address||'') + ' ' + (x.client_postal_code||'')
       ).toLowerCase().includes(_q));
     }
 

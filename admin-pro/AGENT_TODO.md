@@ -51,7 +51,7 @@
 
 - [ ] **`admin-pro/index.html`** (dashboard) — ajouter stats live : leads du jour, conversations chatbot, top prestation demandée.
 - [x] **`admin-pro/leads.html`** — ajouter export CSV. *(fait 15/05 — export existait : amélioré pour respecter filtres actifs (search+statut+métier), séparateur ';' Excel FR, 13 colonnes (CP/type/priorité/valeur ajoutées), toast confirmation, revokeObjectURL)*
-- [ ] **`admin-pro/contracts.html`** — ajouter filtres par formule + recherche par nom client.
+- [x] **`admin-pro/contracts.html`** — ajouter filtres par formule + recherche par nom client. *(fait 15/05 — barre 5 boutons Basic/Confort/Sécurité/Personnalisé avec compteurs live ; placeholder recherche enrichi "Nom client, n° contrat, ville, tél…" + ajout adresse+CP au scope ; raccourci clavier "/" pour focus ; export CSV respecte les 2 filtres)*
 - [x] **`admin-pro/services.html`** — ajouter colonne data-source pour traçabilité tarif. *(fait 15/05 — colonne "Source" entre Prix TTC et Variantes : code slug + label "BAREME AGENCE" / "devis" ; colspan 7→8 sur les 3 états (loading/error/empty))*
 - [x] **Page admin "Tarifs"** — créer `admin-pro/tarifs.html` qui affiche `TARIFS_REFERENCE.md` parsé en table. *(fait 15/05 — 5 onglets (Métiers/Horaire/Contrats/Devis/Pending), entry sidebar 'Tarifs de référence', tous prix croisés avec TARIFS_REFERENCE)*
 
