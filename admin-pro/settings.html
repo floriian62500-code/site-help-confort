@@ -227,15 +227,25 @@
               <ol style="margin:6px 0 0 18px;padding:0;line-height:1.7">
                 <li>Aller sur <a href="https://developers.facebook.com/apps" target="_blank">developers.facebook.com/apps</a> → Créer une app type "Business"</li>
                 <li>Ajouter les produits <strong>Pages API</strong> + <strong>Instagram Graph API</strong></li>
-                <li>Générer un <strong>Page Access Token longue durée</strong> (60 jours, à régénérer)</li>
-                <li>Récupérer le <strong>Page ID</strong> et l'<strong>Instagram Business Account ID</strong></li>
+                <li>Récupérer <strong>App ID</strong> + <strong>App Secret</strong> (Settings → Basic)</li>
+                <li>Obtenir un User Access Token court via <a href="https://developers.facebook.com/tools/explorer/" target="_blank">Graph API Explorer</a></li>
+                <li>Saisir tout ci-dessous → cliquer <strong>"⚡ Auto-récupérer Page Access Token"</strong> → tu obtiendras un token <strong>permanent</strong> (à vie tant que tu es admin de la page)</li>
               </ol>
             </div>
 
             <form class="settings-form" data-section="meta">
               <div class="field-row">
-                <label>Page Access Token (longue durée)</label>
+                <label>App ID Meta (Settings → Basic)</label>
+                <input type="text" name="app_id" placeholder="1234567890123456">
+              </div>
+              <div class="field-row">
+                <label>App Secret Meta (Settings → Basic, "Show")</label>
+                <input type="password" name="app_secret" placeholder="0a1b2c3d4e5f6a7b..." autocomplete="off">
+              </div>
+              <div class="field-row">
+                <label>Token actuel (User court OU Page Access Token)</label>
                 <input type="password" name="page_access_token" placeholder="EAAxxxxxxxxxxx" autocomplete="off">
+                <small style="display:block;color:var(--ink-500);font-size:.76rem;margin-top:3px">Si tu colles un User Access Token court, mon Edge Function le transformera en Page Access Token permanent.</small>
               </div>
               <div class="field-row">
                 <label>Page ID Facebook</label>
@@ -245,11 +255,15 @@
                 <label>Instagram Business Account ID</label>
                 <input type="text" name="ig_business_account_id" placeholder="17841401234567890">
               </div>
-              <div class="settings-actions">
-                <span class="hint" data-saved-meta>Non sauvegardé</span>
-                <div class="right">
-                  <button type="button" class="btn" data-test="meta">Tester</button>
-                  <button type="button" class="btn btn-primary" data-save="meta">Enregistrer</button>
+              <div class="settings-actions" style="flex-direction:column;align-items:stretch;gap:10px">
+                <button type="button" id="btnRefreshMetaToken" class="btn" style="background:linear-gradient(135deg,#1877F2,#3B82F6);color:#fff;border:0;padding:11px 16px;border-radius:9px;font-weight:800;font-size:.92rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>⚡ Auto-récupérer Page Access Token (permanent)</button>
+                <div id="refreshMetaResult" style="display:none;padding:10px;border-radius:8px;font-size:.82rem"></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+                  <span class="hint" data-saved-meta>Non sauvegardé</span>
+                  <div class="right">
+                    <button type="button" class="btn" data-test="meta">Tester</button>
+                    <button type="button" class="btn btn-primary" data-save="meta">Enregistrer</button>
+                  </div>
                 </div>
               </div>
             </form>
