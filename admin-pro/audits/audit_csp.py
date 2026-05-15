@@ -148,7 +148,7 @@ def extract_hosts_from_html(text: str) -> list[tuple[str, str, str]]:
         host = urlparse(url).hostname or ""
         if host:
             out.append((host, "script", url))
-    # Links (CSS / font / preconnect)
+    # Links (CSS / font / preload as=...) — on ignore preconnect/canonical/icon/manifest
     for m in re.finditer(r"<link\b[^>]*>", text, re.I):
         tag = m.group(0)
         href_m = re.search(r'\bhref\s*=\s*["\'](https?://[^"\']+)["\']', tag, re.I)
@@ -156,8 +156,12 @@ def extract_hosts_from_html(text: str) -> list[tuple[str, str, str]]:
             continue
         url = href_m.group(1)
         host = urlparse(url).hostname or ""
-        if host:
-            out.append((host, detect_link_type(tag), url))
+        if not host:
+            continue
+        kind = detect_link_type(tag)
+        if kind is None:
+            continue  # link non-CSP (canonical / preconnect / icon / manifest…)
+        out.append((host, kind, url))
     # Images
     for url in RE_IMG.findall(text):
         host = urlparse(url).hostname or ""

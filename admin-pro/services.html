@@ -365,6 +365,22 @@
 
     document.getElementById('cntCatalog').textContent = allServices.length;
     renderTable();
+
+    // Bannière auto-seed si catalogue incomplet (<15 prestations OU manque catégories métiers)
+    const expectedCats = ['plomberie-sanitaires','chauffe-eau-production-ecs','chauffage','electricite','serrurerie','vitrerie'];
+    const haveCats = new Set(allCats.map(c => c.slug));
+    const missingCats = expectedCats.filter(s => !haveCats.has(s));
+    if ((allServices.length < 15 || missingCats.length > 0) && !document.getElementById('seedBanner')) {
+      const host = document.querySelector('#paneCatalog .sv-toolbar') || document.querySelector('#paneCatalog');
+      if (host) {
+        const banner = document.createElement('a');
+        banner.id = 'seedBanner';
+        banner.href = 'seed-catalog.html';
+        banner.style.cssText = 'display:flex;align-items:center;gap:12px;padding:12px 16px;background:linear-gradient(135deg,#FFF7ED,#fff);border:1px solid rgba(255,180,0,.35);border-radius:12px;text-decoration:none;color:inherit;margin-bottom:14px;font-size:.86rem';
+        banner.innerHTML = '<span style="font-size:1.3rem">🌱</span><div style="flex:1"><strong style="color:#C2410C">Catalogue incomplet</strong> — '+missingCats.length+' catégorie(s) métier manquante(s) (' + missingCats.join(', ') + '). <span style="color:#0DA0CF;font-weight:700">Auto-seeder maintenant →</span></div>';
+        host.parentNode.insertBefore(banner, host);
+      }
+    }
   }
 
   // ─── Mapping catégorie → icône SVG + couleur ──────────────────

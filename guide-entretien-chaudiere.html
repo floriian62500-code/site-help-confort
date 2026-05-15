@@ -810,7 +810,7 @@ if (document.fonts && document.fonts.ready) {
 <script defer src="assets/hc-widgets.js?v=1778686417"></script>
 <script src="script.js" defer></script>
 <script>
-if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){r.unregister();});if('caches' in window)caches.keys().then(function(ks){ks.forEach(function(k){caches.delete(k);});});});});});}
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){r.unregister();});if('caches' in window)caches.keys().then(function(ks){ks.forEach(function(k){caches.delete(k);});});});});}
 </script>
 <!-- HC-SW-KILL-V2 — désinscription SW + purge caches + reload (15/05 PM) -->
 <script>
