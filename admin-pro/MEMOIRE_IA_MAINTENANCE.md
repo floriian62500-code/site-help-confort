@@ -480,3 +480,13 @@ Deux scripts d'audit Python ont été ajoutés sous `admin-pro/audits/` pour mat
 **Intégration scan quotidien** : ajouter à la suite des autres audits de `admin-pro/audits/` un appel à ces deux scripts ; consolider les rapports dans le digest. Si nb_alertes > 0 sur `audit_tarifs.py` → escalader à Florian (décision éditoriale, ne pas auto-corriger les prix).
 
 *Addendum v7 généré le 15 mai 2026 par l'agent autonome — 2 nouvelles sondes #36-#37 + 2 scripts d'audit exécutables (tarifs + data-source).*
+
+---
+
+### Sondes additionnelles v8 (15 mai 2026 PM — accessibilité + RGPD)
+
+38. **Sonde ARIA / a11y** : `admin-pro/audits/audit_aria.py` scanne 37 pages publiques racine et détecte 5 codes — `BTN-NO-NAME` (erreur), `A-NO-NAME` (warn), `IMG-NO-ALT` (warn), `INPUT-NO-LABEL` (warn), `DIALOG-NO-LABEL` (erreur), plus H1/DUP-ID/HTML-LANG. Première exécution 15/05 PM : **35 findings, 23 pages clean, 7 pages avec erreurs**. Codes à corriger en priorité : `BTN-NO-NAME` (3 occurrences sur index.html) + `DIALOG-NO-LABEL` (7 modales). Intégrer au scan quotidien : si nb_pages_erreur augmente entre deux scans → ALERTE régression a11y.
+39. **Sonde Consent RGPD** : sur chaque page publique, vérifier que `assets/hc-consent.js` est référencé ET que `assets/tracking.js` (si présent) commence par le bloc `HC-CONSENT-V1` (garde `localStorage.getItem('hc-consent') === 'granted'`). Si tracking.js charge GA4/GTM/Clarity sans garde → ALERTE CRITIQUE *RGPD violé* (article 82 LIL).
+40. **Sonde PWA manifest** : vérifier qu'`every` page publique a `<link rel="manifest">` ET `<meta name="theme-color">` ET `<link rel="apple-touch-icon">`. Vérifier que manifest.json contient icons 192/512 PNG. Si manquant → ALERTE.
+
+*Addendum v8 généré le 15 mai 2026 par l'agent autonome — 3 nouvelles sondes (ARIA, Consent RGPD, PWA manifest) + script `audit_aria.py`.*

@@ -69,12 +69,19 @@
 
   const c = await HCSupabase.init();
 
-  // Charger données pour calcul des alertes
-  const [reals, settings] = await Promise.all([
+  // Charger données pour calcul des alertes — multi-sources
+  const D30 = new Date(Date.now() - 30*86400000);
+  const [reals, settings, leads, contracts, reviews] = await Promise.all([
     c.from('realisations').select('id,title,status,image_before,image_after,created_at').limit(500),
-    c.from('app_settings').select('*')
+    c.from('app_settings').select('*'),
+    c.from('leads').select('id,status,created_at,priority').gte('created_at', D30.toISOString()),
+    c.from('contracts').select('id,imported_to_crm_at,monthly_amount,created_at').is('imported_to_crm_at', null),
+    c.from('reviews').select('id,source,rating,status,published_at').eq('source','google').order('created_at',{ascending:false}).limit(20)
   ]);
   const all = reals.data || [];
+  const leadsList = leads.data || [];
+  const toImportCt = contracts.data || [];
+  const unanswered = (reviews.data || []).filter(r => !r.published_at && Number(r.rating) >= 1);
   const byKey = {};
   (settings.data || []).forEach(s => byKey[s.key] = s.value || {});
 
@@ -95,6 +102,42 @@
 
   // Alertes
   const alerts = [];
+
+  // 🔥 PRIORITÉ MAX : Souscriptions à importer dans CRM
+  if (toImportCt.length) {
+    const mrr = toImportCt.reduce((s,x) => s + Number(x.monthly_amount||0), 0);
+    alerts.push({
+      cls:'warn', icon:'<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>',
+      title: `📥 ${toImportCt.length} souscription${toImportCt.length>1?'s':''} à importer dans Apogée${mrr>0?' · '+mrr.toFixed(0)+' € CA récurrent attendu':''}`,
+      body: `Importe-les dans le CRM pour démarrer le suivi commercial. <a href="contracts.html?filter=to_import">Ouvrir l'inbox →</a>`
+    });
+  }
+
+  // 🔥 Leads urgents nouveaux
+  const urgentLeads = leadsList.filter(l => l.priority === 'urgente' && l.status === 'nouveau');
+  if (urgentLeads.length) {
+    alerts.push({
+      cls:'warn', icon:'<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+      title: `🔥 ${urgentLeads.length} lead${urgentLeads.length>1?'s':''} URGENT${urgentLeads.length>1?'S':''} non traité${urgentLeads.length>1?'s':''}`,
+      body: `Rappelle le client en priorité. <a href="leads.html?filter=nouveau">Voir les urgences →</a>`
+    });
+  }
+
+  // Leads nouveaux non urgents
+  const newLeads = leadsList.filter(l => l.status === 'nouveau' && l.priority !== 'urgente');
+  if (newLeads.length) alerts.push({
+    cls:'info', icon:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+    title: `${newLeads.length} lead${newLeads.length>1?'s':''} à qualifier`,
+    body: `Recontacte tes prospects pour les faire avancer. <a href="leads.html?filter=nouveau">Qualifier maintenant →</a>`
+  });
+
+  // Avis non répondus
+  if (unanswered.length) alerts.push({
+    cls:'warn', icon:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+    title: `${unanswered.length} avis Google à répondre`,
+    body: `Booste ta réputation locale en répondant rapidement. <a href="reviews.html">Répondre →</a>`
+  });
+
   const draftsNoPhoto = all.filter(r => r.status === 'brouillon' && !r.image_before && !r.image_after);
   if (draftsNoPhoto.length) alerts.push({
     cls:'warn', icon:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',

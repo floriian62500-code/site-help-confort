@@ -1,9 +1,9 @@
 // ═══════════════════════════════════════════════════════════════
 // Service Worker HELP! Confort — Cache statique + offline fallback
-// Version : 2026-05-15
+// Version : 2026-05-15 (rev C : images compressées + OG)
 // ═══════════════════════════════════════════════════════════════
 
-const VERSION = 'hc-v1-2026-05-15';
+const VERSION = 'hc-v2-2026-05-15-c';
 const CACHE_STATIC = `hc-static-${VERSION}`;
 const CACHE_RUNTIME = `hc-runtime-${VERSION}`;
 
