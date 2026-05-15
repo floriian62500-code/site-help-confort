@@ -1,5 +1,6 @@
 // ═══════════════════════════════════════════════════════════════════════════
 // generate-post-from-prompt — Génère un post à partir d'un sujet/prompt texte
+// v2026-05-14 — redeploy avec --no-verify-jwt forcé
 // ═══════════════════════════════════════════════════════════════════════════
 // Appelée depuis templates.html quand l'utilisateur clique "Générer avec l'IA"
 // sur un sujet de post. Reçoit le prompt, appelle Claude (Anthropic), renvoie

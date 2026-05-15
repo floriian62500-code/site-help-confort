@@ -54,8 +54,9 @@ inspector_port = 8083
 [functions.notify-subscription]
 verify_jwt = false
 
-[functions.notify-order]
-verify_jwt = false
+# notify-order : fonction prévue mais pas encore implémentée (voir TODO)
+# [functions.notify-order]
+# verify_jwt = false
 
 # generate-post-from-prompt : appelable depuis l'admin (anon JWT suffit, RLS protège la lecture des settings)
 [functions.generate-post-from-prompt]
