@@ -209,15 +209,28 @@
         }
       }
 
-      // Insert dans realisations
+      // Récupère TOUTES les photos disponibles dans les attachments
+      // → pour avoir image_before + image_after si le post FB contient ≥ 2 photos
+      let imageBefore = null;
       try {
+        const subs = post.attachments?.data?.[0]?.subattachments?.data || [];
+        const photos = subs.map(s => s.media?.image?.src).filter(Boolean);
+        if (photos.length >= 2) {
+          imageBefore = photos[0];
+          // image_after reste full_picture (qui est généralement la 2ème ou la cover)
+        }
+      } catch(_e){}
+
+      // Insert dans realisations — AUTO-PUBLIÉ (Florian a décidé : pas de validation manuelle pour les imports FB)
+      try {
+        const nowIso = new Date().toISOString();
         const { data: ins, error } = await sb.from('realisations').insert({
           title, slug,
           description: post.message.slice(0,250),
           description_long: post.message,
           metier, ville,
           date_intervention: datePart,
-          status: 'validation',
+          status: 'publie',           // ← auto-validé
           pinned: false,
           publish_targets: { site: true, facebook: false, instagram: false, linkedin: false, gbp: false },
           ai_generated: {
@@ -226,12 +239,14 @@
             fb_post_id: post.id,
             agence,
             post_type: postType,
-            imported_at: new Date().toISOString(),
+            auto_published: true,
+            imported_at: nowIso,
             imported_by: session.email
           },
           created_by: 'manual_fb_sync',
+          image_before: imageBefore,
           image_after: imageAfter,
-          published_at: null
+          published_at: nowIso         // ← timestamp de publication
         }).select('id,title,slug').single();
         if (error) throw error;
         results.created.push({ ...ins, type: postType, title, image: imageAfter, fb: post.permalink_url });
