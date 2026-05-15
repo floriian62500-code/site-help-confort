@@ -65,6 +65,12 @@ FALLBACK_PATTERNS = [
     re.compile(r"\bFALLBACK\s*=\s*[\[{]"),
     re.compile(r"\bDEFAULT_DATA\b"),
     re.compile(r"\bLOCAL_FALLBACK\b"),
+    # Fallback de type "fetch vers un JSON statique local" (chemin relatif)
+    re.compile(r"""fetch\s*\(\s*['"](?!https?:)[^'"]*\.json[^'"]*['"]""", re.I),
+    # Fallback de type "tableau d'exemples hardcodés" (≥ 3 objets littéraux)
+    re.compile(r"""(?:const|let|var)\s+\w+\s*=\s*\[\s*\{[^}]*['"]title['"]""", re.I),
+    # Ré-affectation d'un tableau d'exemples (var declaré + initialisé plus loin)
+    re.compile(r"""\w+\s*=\s*\[\s*\{[^}]*['"](?:author_name|title|nom|categorie|rating|text|metier|name|prestation)['"]""", re.I),
 ]
 
 # On regarde aussi un fallback minimal côté UX : un catch() qui affiche
