@@ -133,109 +133,96 @@
 <!-- HC-TRACKING-V2 (centralisé dans assets/tracking.js) -->
 <script src="/assets/tracking.js" defer></script>
 
-<!-- HC-SERVICE-SCHEMA-V1 -->
+<!-- HC-SERVICE-SCHEMA-V2 (enrichi @type Electrician + geo + Offer.price + URL fix 2026-05-15) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Plumber",
-  "name": "Électricité Saint-Omer & Dunkerque",
-  "description": "Dépannage électricité, fuite, dégorgement, ballon d'eau chaude, recherche de fuite à la caméra thermique. Intervention rapide à Saint-Omer, Longuenesse, Arques, Aire-sur-la-Lys, Dunkerque, Gravelines, Bergues.",
+  "@type": "Electrician",
+  "@id": "https://www.depan59-62.fr/electricien-saint-omer.html#business",
+  "name": "HELP! Confort — Électricien Saint-Omer & Dunkerque",
+  "description": "Électricien à Saint-Omer : recherche de panne électrique, dépannage tableau, mise aux normes, remplacement disjoncteur. Intervention rapide audomarois + littoral Dunkerque.",
   "image": "https://www.depan59-62.fr/logo-officiel.jpg",
+  "logo": "https://www.depan59-62.fr/logo.svg",
   "telephone": "+33366100134",
   "email": "saint-omer@helpconfort.com",
-  "url": "https://www.depan59-62.fr/électricien-saint-omer.html",
+  "url": "https://www.depan59-62.fr/electricien-saint-omer.html",
   "priceRange": "€€",
+  "currenciesAccepted": "EUR",
+  "paymentAccepted": "Carte bancaire, Virement, Chèque, Espèces",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "242 route de Boulogne",
     "addressLocality": "Saint-Martin-lez-Tatinghem",
     "postalCode": "62500",
+    "addressRegion": "Hauts-de-France",
     "addressCountry": "FR"
   },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 50.7506,
+    "longitude": 2.2367
+  },
   "areaServed": [
-    {
-      "@type": "City",
-      "name": "Saint-Omer"
-    },
-    {
-      "@type": "City",
-      "name": "Longuenesse"
-    },
-    {
-      "@type": "City",
-      "name": "Arques"
-    },
-    {
-      "@type": "City",
-      "name": "Saint-Martin-lez-Tatinghem"
-    },
-    {
-      "@type": "City",
-      "name": "Aire-sur-la-Lys"
-    },
-    {
-      "@type": "City",
-      "name": "Lumbres"
-    },
-    {
-      "@type": "City",
-      "name": "Dunkerque"
-    },
-    {
-      "@type": "City",
-      "name": "Gravelines"
-    },
-    {
-      "@type": "City",
-      "name": "Bergues"
-    }
+    {"@type": "City", "name": "Saint-Omer"},
+    {"@type": "City", "name": "Longuenesse"},
+    {"@type": "City", "name": "Arques"},
+    {"@type": "City", "name": "Saint-Martin-lez-Tatinghem"},
+    {"@type": "City", "name": "Aire-sur-la-Lys"},
+    {"@type": "City", "name": "Lumbres"},
+    {"@type": "City", "name": "Dunkerque"},
+    {"@type": "City", "name": "Gravelines"},
+    {"@type": "City", "name": "Bergues"}
   ],
   "openingHoursSpecification": [
     {
       "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ],
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
       "opens": "08:00",
       "closes": "18:00"
     }
   ],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
-    "name": "Électricité",
+    "name": "Prestations Électricité",
     "itemListElement": [
       {
         "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Dépannage Électricité"
-        }
+        "price": "107.00",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {"@type": "Service", "name": "Recherche de panne électrique", "serviceType": "Électricité"}
       },
       {
         "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Installation Électricité"
-        }
+        "price": "75.00",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {"@type": "Service", "name": "Forfait T1 panne sans fourniture (semaine)", "serviceType": "Électricité"}
       },
       {
         "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Entretien Électricité"
-        }
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "58.00",
+          "priceCurrency": "EUR",
+          "unitCode": "HUR",
+          "referenceQuantity": {"@type": "QuantitativeValue", "value": 1, "unitCode": "HUR"}
+        },
+        "itemOffered": {"@type": "Service", "name": "Main d'œuvre électricien (heure)", "serviceType": "Électricité"}
+      },
+      {
+        "@type": "Offer",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {"@type": "Service", "name": "Tableau électrique complet (rénovation/mise aux normes)", "serviceType": "Électricité", "description": "Devis personnalisé selon installation"}
       }
     ]
   },
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.7",
-    "reviewCount": "343"
+    "reviewCount": "343",
+    "bestRating": "5",
+    "worstRating": "1"
   }
 }
 </script>

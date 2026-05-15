@@ -133,109 +133,120 @@
 <!-- HC-TRACKING-V2 (centralisé dans assets/tracking.js) -->
 <script src="/assets/tracking.js" defer></script>
 
-<!-- HC-SERVICE-SCHEMA-V1 -->
+<!-- HC-SERVICE-SCHEMA-V2 (enrichi @type HVACBusiness + geo + Offer.price 2026-05-15) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Plumber",
-  "name": "Chauffage Saint-Omer & Dunkerque",
-  "description": "Dépannage chauffage, fuite, dégorgement, ballon d'eau chaude, recherche de fuite à la caméra thermique. Intervention rapide à Saint-Omer, Longuenesse, Arques, Aire-sur-la-Lys, Dunkerque, Gravelines, Bergues.",
+  "@type": "HVACBusiness",
+  "@id": "https://www.depan59-62.fr/chauffagiste-saint-omer.html#business",
+  "name": "HELP! Confort — Chauffagiste Saint-Omer & Dunkerque",
+  "description": "Chauffagiste à Saint-Omer : entretien chaudière gaz, désembouage radiateurs, dépannage chauffage, contrats annuels Basic / Confort / Sécurité. Intervention rapide audomarois + littoral Dunkerque.",
   "image": "https://www.depan59-62.fr/logo-officiel.jpg",
+  "logo": "https://www.depan59-62.fr/logo.svg",
   "telephone": "+33366100134",
   "email": "saint-omer@helpconfort.com",
   "url": "https://www.depan59-62.fr/chauffagiste-saint-omer.html",
   "priceRange": "€€",
+  "currenciesAccepted": "EUR",
+  "paymentAccepted": "Carte bancaire, Virement, Chèque, Espèces",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "242 route de Boulogne",
     "addressLocality": "Saint-Martin-lez-Tatinghem",
     "postalCode": "62500",
+    "addressRegion": "Hauts-de-France",
     "addressCountry": "FR"
   },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 50.7506,
+    "longitude": 2.2367
+  },
   "areaServed": [
-    {
-      "@type": "City",
-      "name": "Saint-Omer"
-    },
-    {
-      "@type": "City",
-      "name": "Longuenesse"
-    },
-    {
-      "@type": "City",
-      "name": "Arques"
-    },
-    {
-      "@type": "City",
-      "name": "Saint-Martin-lez-Tatinghem"
-    },
-    {
-      "@type": "City",
-      "name": "Aire-sur-la-Lys"
-    },
-    {
-      "@type": "City",
-      "name": "Lumbres"
-    },
-    {
-      "@type": "City",
-      "name": "Dunkerque"
-    },
-    {
-      "@type": "City",
-      "name": "Gravelines"
-    },
-    {
-      "@type": "City",
-      "name": "Bergues"
-    }
+    {"@type": "City", "name": "Saint-Omer"},
+    {"@type": "City", "name": "Longuenesse"},
+    {"@type": "City", "name": "Arques"},
+    {"@type": "City", "name": "Saint-Martin-lez-Tatinghem"},
+    {"@type": "City", "name": "Aire-sur-la-Lys"},
+    {"@type": "City", "name": "Lumbres"},
+    {"@type": "City", "name": "Dunkerque"},
+    {"@type": "City", "name": "Gravelines"},
+    {"@type": "City", "name": "Bergues"}
   ],
   "openingHoursSpecification": [
     {
       "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ],
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
       "opens": "08:00",
       "closes": "18:00"
     }
   ],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
-    "name": "Chauffage",
+    "name": "Prestations Chauffage",
     "itemListElement": [
       {
         "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Dépannage Chauffage"
-        }
+        "price": "121.00",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {"@type": "Service", "name": "Entretien annuel chaudière gaz", "serviceType": "Chauffage"}
       },
       {
         "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Installation Chauffage"
-        }
+        "price": "105.00",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {"@type": "Service", "name": "Désembouage par radiateur", "serviceType": "Chauffage"}
       },
       {
         "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Entretien Chauffage"
-        }
+        "price": "75.00",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {"@type": "Service", "name": "Dépannage chauffage T1 (semaine, sans fourniture)", "serviceType": "Chauffage"}
+      },
+      {
+        "@type": "Offer",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "9.00",
+          "priceCurrency": "EUR",
+          "unitCode": "MON",
+          "referenceQuantity": {"@type": "QuantitativeValue", "value": 1, "unitCode": "MON"}
+        },
+        "itemOffered": {"@type": "Service", "name": "Contrat entretien chaudière gaz — formule Basic", "serviceType": "Chauffage"}
+      },
+      {
+        "@type": "Offer",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "13.00",
+          "priceCurrency": "EUR",
+          "unitCode": "MON",
+          "referenceQuantity": {"@type": "QuantitativeValue", "value": 1, "unitCode": "MON"}
+        },
+        "itemOffered": {"@type": "Service", "name": "Contrat entretien chaudière gaz — formule Confort", "serviceType": "Chauffage"}
+      },
+      {
+        "@type": "Offer",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "23.00",
+          "priceCurrency": "EUR",
+          "unitCode": "MON",
+          "referenceQuantity": {"@type": "QuantitativeValue", "value": 1, "unitCode": "MON"}
+        },
+        "itemOffered": {"@type": "Service", "name": "Contrat entretien chaudière gaz — formule Sécurité", "serviceType": "Chauffage"}
       }
     ]
   },
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.7",
-    "reviewCount": "343"
+    "reviewCount": "343",
+    "bestRating": "5",
+    "worstRating": "1"
   }
 }
 </script>
