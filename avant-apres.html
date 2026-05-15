@@ -192,5 +192,8 @@
 </script>
 
 <script src="assets/hc-widgets.js" defer></script>
+<script>
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(e){console.warn('SW reg failed',e);});});}
+</script>
 </body>
 </html>

@@ -45,7 +45,7 @@
 - [ ] **Compression** — vérifier que toutes les images PNG sont optimisées (passes via TinyPNG-like si présence d'outil dans le sandbox).
 - [x] **Lazy-loading** — auditer que toutes les `<img>` sans `loading="lazy"` (hors above-the-fold) en aient un. *(fait 14/05 12:10 — 12 images patchées sur 9 fichiers)*
 - [x] **Preconnect/dns-prefetch** — vérifier que toutes les pages ont preconnect vers `https://btcbjwqiivhpwoszomhg.supabase.co`, `https://fonts.googleapis.com`, `https://fonts.gstatic.com`. *(fait 14/05 12:13 — 31 pages patchées avec preconnect Supabase + dns-prefetch jsdelivr/api-adresse)*
-- [ ] **Service Worker** — créer un SW basique de cache pour les pages métier (cache-first sur les images, network-first sur le HTML).
+- [x] **Service Worker** — créer un SW basique de cache pour les pages métier (cache-first sur les images, network-first sur le HTML). *(fait 15/05 — sw.js : precache critique, cache-first images/css/js, network-first HTML, stale-while-revalidate autres + enregistré sur 37 pages)*
 
 ## P5 — Admin backoffice enrichi
 
@@ -71,7 +71,7 @@
 - [x] **FAQ par métier** — rewriter les `<details>` FAQ sur `electricien-saint-omer.html`, `serrurier-saint-omer.html`, `chauffagiste-saint-omer.html`, `travaux-saint-omer.html` (questions actuelles 100% plomberie ; cf. bug #31 MEMOIRE). Synchroniser JSON-LD `FAQPage`. *(fait 15/05 — 5 Q&R rewrites métier-spé sur 4 pages, HTML + JSON-LD `FAQPage` synchronisés ; tarifs croisés TARIFS_REFERENCE (107/75/108/176/228/314/121/9/13/23€…) ; nouvelles questions : panne élec/tableau/Consuel/Vachette/A2P/désembouage/contrats/MaPrimeRénov'/garantie décennale/Handibat)*
 - [x] **Favicon** — vérifier que toutes les pages chargent le bon favicon `logo.svg`. *(fait 15/05 — audit 34 pages : 1 manquait (realisation.html) → favicon logo.svg ajouté ; toutes OK)*
 - [x] **FAQPage doublonnée sur 5 pages métier** — fusionner HC-FAQ-SCHEMA-V1 (top) avec FAQ bottom en 1 seul JSON-LD synchro avec les `<details>` HTML (cf. bugs #35-36 MEMOIRE). Concerne plombier/électricien/serrurier/chauffagiste/travaux-saint-omer.html. *(fait 15/05 — bloc top HC-FAQ-SCHEMA-V1 supprimé sur les 5 pages, remplacé par commentaire-trace ; FAQPage bottom déjà synchronisé avec les 5 `<details>` HTML métier-spé (audit sync : ✓ 5/5) — Google ne verra plus qu'un seul bloc FAQPage par URL)*
-- [ ] **Catalogue métier pollué (bug #30decies)** — les 4 pages électricien/serrurier/chauffagiste/travaux-saint-omer.html affichent encore des cards "Recherche de fuite" + "Débouchage" dans la section catalogue (m-services-grid, l. ~1265-1320). Remplacer par 6 prestations vraiment liées au métier.
+- [x] **Catalogue métier pollué (bug #30decies)** — les 4 pages électricien/serrurier/chauffagiste/travaux-saint-omer.html affichent encore des cards "Recherche de fuite" + "Débouchage" dans la section catalogue (m-services-grid, l. ~1265-1320). Remplacer par 6 prestations vraiment liées au métier. *(fait 15/05 — 24 cards remplacées par icônes SVG inline sur gradient ; titres/prix métier-spé croisés TARIFS_REFERENCE ; data-source sur 12 cards tarifées)*
 
 ## P8 — Tests & qualité
 
