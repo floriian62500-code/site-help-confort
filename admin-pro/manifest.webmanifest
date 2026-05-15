@@ -1,0 +1,48 @@
+{
+  "name": "HELP! Confort — Back-Office",
+  "short_name": "HC Admin",
+  "description": "Back-office HELP! Confort — Leads, contrats, catalogue, avis Google, publications sociales",
+  "start_url": "/admin-pro/",
+  "scope": "/admin-pro/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0A1428",
+  "theme_color": "#0DA0CF",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "/logo-help-confort.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo-help-confort.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Demandes clients",
+      "short_name": "Leads",
+      "description": "Voir les demandes reçues",
+      "url": "/admin-pro/leads.html",
+      "icons": [{ "src": "/logo-help-confort.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Contrats",
+      "short_name": "Contrats",
+      "description": "Souscriptions à importer",
+      "url": "/admin-pro/contracts.html?filter=to_import"
+    },
+    {
+      "name": "Avis Google",
+      "short_name": "Avis",
+      "description": "Répondre aux avis",
+      "url": "/admin-pro/reviews.html"
+    }
+  ]
+}
