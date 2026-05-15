@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Sync avis Google · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<link rel="manifest" href="/admin-pro/manifest.webmanifest">
+<meta name="theme-color" content="#0DA0CF">
+<style>
+  body{font-family:Inter,sans-serif;background:#FAFCFD;margin:0;padding:24px}
+  .wrap{max-width:980px;margin:0 auto}
+  h1{font-size:1.5rem;margin:0 0 8px;display:flex;align-items:center;gap:10px}
+  .sub{color:#64748b;margin-bottom:24px}
+  .card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px;margin-bottom:18px;box-shadow:0 1px 2px rgba(11,18,32,.04)}
+  .cta{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;color:#fff;border:none;border-radius:10px;font:inherit;font-weight:800;font-size:.96rem;cursor:pointer;background:linear-gradient(135deg,#4285F4,#34A853);box-shadow:0 4px 14px rgba(66,133,244,.30)}
+  .cta:disabled{opacity:.55;cursor:not-allowed}
+  .log{background:#0A1428;color:#A7F3D0;padding:16px 20px;border-radius:10px;font-family:Menlo,Monaco,monospace;font-size:.82rem;max-height:540px;overflow:auto;white-space:pre-wrap;line-height:1.55}
+  .log .ok{color:#22c55e}.log .warn{color:#FFB400}.log .err{color:#fda4af}.log .info{color:#A7C7E7}
+  a.back{color:#0DA0CF;text-decoration:none;font-size:.84rem;font-weight:600}
+  .stat{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:999px;font-size:.86rem;font-weight:700;margin-right:6px}
+  .stat .num{font-size:1.1rem;color:#0DA0CF}
+  .star{color:#FFB400}
+  .review-card{padding:14px;background:#FAFCFD;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:10px;font-size:.86rem;line-height:1.5}
+  .review-card .meta{font-size:.74rem;color:#64748b;margin-bottom:6px}
+  .review-card.neg{background:linear-gradient(135deg,#FEF2F2,#fff);border-color:rgba(220,38,38,.30)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="reviews.html">← Retour aux avis</a>
+  <h1>⭐ Sync avis Google Business Profile</h1>
+  <p class="sub">Rapatrie tous tes avis Google (343 sur ta fiche <strong>HELP Confort Saint-Omer</strong>) dans la table <code>reviews</code> du back-office. Tu pourras les lire et répondre depuis <a href="reviews.html">la page Avis</a>, et l'agent IA t'alertera sur les ≤ 2 ★.</p>
+
+  <div class="card">
+    <strong style="font-size:1rem">État</strong>
+    <p class="sub" id="statusLine" style="margin:4px 0 0">Chargement de la config GBP…</p>
+  </div>
+
+  <div class="card" style="text-align:center">
+    <button class="cta" id="btnSync" disabled>🚀 Lancer la sync maintenant</button>
+    <p class="sub" style="margin-top:10px;font-size:.82rem">Idempotent — relancer ne crée pas de doublons (déduplication par <code>google_review_id</code>).</p>
+  </div>
+
+  <div class="card">
+    <strong style="font-size:1rem">📋 Log d'exécution</strong>
+    <div class="log" id="log" style="margin-top:10px">En attente — clique sur le bouton pour démarrer.</div>
+  </div>
+
+  <div class="card" id="resultCard" style="display:none">
+    <strong style="font-size:1rem">⭐ Aperçu des derniers avis importés</strong>
+    <div id="resultArea" style="margin-top:10px"></div>
+  </div>
+</div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script>
+(async function(){
+  const sb = await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+
+  const logEl = document.getElementById('log');
+  function log(msg, cls=''){ logEl.innerHTML += `<span class="${cls}">${msg}</span>\n`; logEl.scrollTop = logEl.scrollHeight; }
+  function logClear(){ logEl.innerHTML=''; }
+  function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+  // ─── Init : check config GBP ─────────────────────────────
+  let cfg = {};
+  try {
+    const { data, error } = await sb.from('app_settings').select('value').eq('key','gbp').single();
+    if (error) throw error;
+    cfg = data?.value || {};
+  } catch(e) {
+    document.getElementById('statusLine').innerHTML = `<span style="color:#B91C1C">❌ Erreur lecture config GBP : ${e.message}</span>`;
+    return;
+  }
+  const missing = [];
+  if (!cfg.client_id) missing.push('Client ID');
+  if (!cfg.client_secret) missing.push('Client Secret');
+  if (!cfg.refresh_token) missing.push('Refresh Token');
+  if (missing.length) {
+    document.getElementById('statusLine').innerHTML = `<span style="color:#B91C1C">❌ Config GBP incomplète — manque : ${missing.join(', ')}. <a href="settings.html#gbp" style="color:#0DA0CF">Configure d'abord Settings → GBP</a></span>`;
+    return;
+  }
+  document.getElementById('statusLine').innerHTML = `✅ Config GBP OK — Client ID, Secret, Refresh Token présents. Prêt à syncer.`;
+  document.getElementById('btnSync').disabled = false;
+
+  // ─── Step 1 : refresh Access Token via refresh_token ─────
+  async function refreshAccessToken(){
+    log('🔑 Étape 1/3 : Renouvellement de l\'Access Token Google…', 'info');
+    const params = new URLSearchParams({
+      client_id: cfg.client_id,
+      client_secret: cfg.client_secret,
+      refresh_token: cfg.refresh_token,
+      grant_type: 'refresh_token'
+    });
+    const r = await fetch('https://oauth2.googleapis.com/token', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/x-www-form-urlencoded' },
+      body: params.toString()
+    });
+    const j = await r.json();
+    if (!r.ok || !j.access_token) {
+      throw new Error('Token refresh échoué : ' + (j.error_description || j.error || JSON.stringify(j)));
+    }
+    log(`  ✓ Access Token obtenu (expire dans ${j.expires_in}s)`, 'ok');
+    return j.access_token;
+  }
+
+  // ─── Step 2 : lister les locations (sites GBP) ───────────
+  async function listLocations(accessToken){
+    log('\n📍 Étape 2/3 : Liste des établissements GBP…', 'info');
+    // 2a) Récupère le compte
+    let accountName = cfg.account_id;
+    if (!accountName || accountName.includes('@')) {
+      // Account ID manquant ou invalide (email autofill) → essayer de le retrouver via API
+      const r1 = await fetch('https://mybusinessaccountmanagement.googleapis.com/v1/accounts', {
+        headers: { Authorization: 'Bearer ' + accessToken }
+      });
+      const j1 = await r1.json();
+      if (!r1.ok) throw new Error('Liste comptes : ' + (j1.error?.message || 'HTTP '+r1.status));
+      if (!j1.accounts?.length) throw new Error('Aucun compte GBP trouvé sur ce profil Google');
+      accountName = j1.accounts[0].name; // ex: "accounts/123456789"
+      log(`  ℹ Account ID auto-détecté : ${accountName}`, 'info');
+    }
+    // 2b) Récupère les locations du compte
+    const r2 = await fetch(`https://mybusinessbusinessinformation.googleapis.com/v1/${accountName}/locations?readMask=name,title,storefrontAddress,phoneNumbers`, {
+      headers: { Authorization: 'Bearer ' + accessToken }
+    });
+    const j2 = await r2.json();
+    if (!r2.ok) throw new Error('Liste locations : ' + (j2.error?.message || 'HTTP '+r2.status));
+    const locations = j2.locations || [];
+    log(`  ✓ ${locations.length} établissement(s) trouvé(s)`, 'ok');
+    locations.forEach(l => log(`    · ${l.title} (${l.name})`, 'info'));
+    return { accountName, locations };
+  }
+
+  // ─── Step 3 : récupérer les avis et les insérer ──────────
+  async function fetchAndInsertReviews(accessToken, accountName, locations){
+    log('\n⭐ Étape 3/3 : Récupération des avis et upsert en base…', 'info');
+    // Récupère les avis déjà en base (dédupe par google_review_id)
+    const { data: existing } = await sb.from('reviews').select('external_id').eq('source','google');
+    const knownIds = new Set((existing||[]).map(r => r.external_id).filter(Boolean));
+    log(`  ℹ ${knownIds.size} avis Google déjà en base`, 'info');
+
+    let totalNew = 0, totalUpdated = 0;
+    const allReviews = [];
+
+    for (const loc of locations) {
+      log(`\n  → Avis pour : ${loc.title}`, 'info');
+      let nextPageToken = null;
+      let pageCount = 0;
+      do {
+        const url = `https://mybusiness.googleapis.com/v4/${accountName}/${loc.name}/reviews?pageSize=50` + (nextPageToken ? '&pageToken='+nextPageToken : '');
+        const r = await fetch(url, { headers: { Authorization: 'Bearer ' + accessToken } });
+        const j = await r.json();
+        if (!r.ok) {
+          log(`    ❌ ${loc.title} : ${j.error?.message || 'HTTP '+r.status}`, 'err');
+          break;
+        }
+        const reviews = j.reviews || [];
+        pageCount++;
+        log(`    page ${pageCount} : ${reviews.length} avis`, 'info');
+
+        for (const rev of reviews) {
+          const ratingMap = { ONE:1, TWO:2, THREE:3, FOUR:4, FIVE:5 };
+          const rating = ratingMap[rev.starRating] || 0;
+          const payload = {
+            external_id: rev.reviewId,
+            source: 'google',
+            author_name: rev.reviewer?.displayName || 'Anonyme',
+            author_photo: rev.reviewer?.profilePhotoUrl || null,
+            rating,
+            comment: rev.comment || '',
+            reply_text: rev.reviewReply?.comment || null,
+            reply_at: rev.reviewReply?.updateTime || null,
+            created_at: rev.createTime || new Date().toISOString(),
+            updated_at: rev.updateTime || rev.createTime,
+            location_name: loc.title,
+            location_id: loc.name,
+            status: 'published'
+          };
+          if (knownIds.has(rev.reviewId)) {
+            // Update (réponse ajoutée, etc.)
+            const { error } = await sb.from('reviews').update(payload).eq('external_id', rev.reviewId).eq('source','google');
+            if (!error) totalUpdated++;
+          } else {
+            const { error } = await sb.from('reviews').insert(payload);
+            if (!error) { totalNew++; knownIds.add(rev.reviewId); }
+            else log(`      ⚠ Insert ${rev.reviewId.slice(-8)} : ${error.message}`, 'warn');
+          }
+          allReviews.push({ ...payload, _new: !knownIds.has(rev.reviewId) });
+        }
+        nextPageToken = j.nextPageToken;
+      } while (nextPageToken && pageCount < 10); // safety: max 500 avis par location
+    }
+
+    log(`\n📊 Sync terminée :`, 'ok');
+    log(`   • ${totalNew} nouveau(x)`, 'ok');
+    log(`   • ${totalUpdated} mis à jour`, 'info');
+
+    return allReviews;
+  }
+
+  // ─── MAIN ────────────────────────────────────────────────
+  async function runSync(){
+    logClear();
+    document.getElementById('btnSync').disabled = true;
+    document.getElementById('resultCard').style.display = 'none';
+    try {
+      const accessToken = await refreshAccessToken();
+      const { accountName, locations } = await listLocations(accessToken);
+      if (!locations.length) {
+        log('⚠ Aucune location trouvée. Vérifie que tu es bien gestionnaire d\'au moins 1 fiche GBP.', 'warn');
+        document.getElementById('btnSync').disabled = false;
+        return;
+      }
+      const allReviews = await fetchAndInsertReviews(accessToken, accountName, locations);
+
+      // Aperçu : derniers avis + tous les ≤ 2★
+      const sorted = allReviews.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+      const neg = sorted.filter(r => r.rating <= 2);
+      const lastFew = sorted.slice(0, 5);
+      const preview = [...neg.slice(0, 5), ...lastFew.filter(r => !neg.includes(r))].slice(0, 8);
+
+      if (preview.length) {
+        const html = preview.map(r => `
+          <div class="review-card ${r.rating <= 2 ? 'neg' : ''}">
+            <div class="meta">
+              <strong>${esc(r.author_name)}</strong> ·
+              <span class="star">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span> ·
+              <span>${new Date(r.created_at).toLocaleDateString('fr-FR')}</span> ·
+              <span style="color:#94a3b8">${esc(r.location_name)}</span>
+              ${r.rating <= 2 ? '<strong style="color:#B91C1C;margin-left:6px">⚠ NÉGATIF</strong>' : ''}
+            </div>
+            ${r.comment ? `<div>${esc(r.comment.slice(0,300))}${r.comment.length>300?'…':''}</div>` : '<em style="color:#94a3b8">(pas de commentaire)</em>'}
+            ${r.reply_text ? `<div style="margin-top:8px;padding-top:8px;border-top:1px dashed #cbd5e1;font-size:.82rem"><strong>↪ Ta réponse :</strong> ${esc(r.reply_text.slice(0,200))}</div>` : '<div style="margin-top:6px;font-size:.78rem;color:#FFB400">○ Pas encore répondu</div>'}
+          </div>
+        `).join('');
+        document.getElementById('resultArea').innerHTML = `<p style="font-size:.82rem;color:#64748b;margin:0 0 10px"><strong>${preview.length}</strong> avis affichés (priorité aux ≤ 2★ et plus récents). <a href="reviews.html" style="color:#0DA0CF;font-weight:700">Voir tous les avis →</a></p>` + html;
+        document.getElementById('resultCard').style.display = 'block';
+      }
+    } catch(e) {
+      log('❌ Erreur fatale : ' + e.message, 'err');
+    }
+    document.getElementById('btnSync').disabled = false;
+    document.getElementById('btnSync').textContent = '🔁 Re-syncer';
+  }
+
+  document.getElementById('btnSync').onclick = runSync;
+})();
+</script>
+</body>
+</html>
