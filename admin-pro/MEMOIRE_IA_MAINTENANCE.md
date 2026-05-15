@@ -464,3 +464,19 @@ Chaque sonde retourne ✅ / ⚠️ / ❌ + le snippet incriminé + une suggestio
 35. **Sonde RFC 9116** : vérifier que `.well-known/security.txt` existe ET que la date `Expires:` est dans le futur. Si manquant ou expiré → ALERTE.
 
 *Addendum v6 généré le 15 mai 2026 par l'agent autonome — 3 nouvelles sondes (debug log, tarif inventé, security.txt expiré).*
+
+---
+
+### Sondes additionnelles v7 (15 mai 2026 — scripts d'audit exécutables)
+
+Deux scripts d'audit Python ont été ajoutés sous `admin-pro/audits/` pour matérialiser les sondes #34 (tarif inventé) et la nouvelle #36 (data-source orphelin) :
+
+- `audit_tarifs.py` → rapport `audit_tarifs_report.md` + `.json`. Croise tous les `\d+\s*€` des pages publiques racine avec `TARIFS_REFERENCE.md`. Première exécution 15/05 PM : **38 pages scannées, 45 montants validés reconnus, 25 alertes** (essentiellement guides avec estimations marché non marquées + quelques cards de tarifs sans `data-source`).
+- `audit_datasource.py` → rapport `audit_datasource_report.md` + `.json`. Recense tous les attributs `data-source="..."` et vérifie le format. Première exécution 15/05 PM : **6 pages, 75 occurrences, 0 alerte** après whitelist des widgets non-tarifaires (`google`, `trustville`, `trustpilot`, `facebook`, `avis-verifies`).
+
+36. **Sonde data-source orphelin** : pour chaque attribut `data-source="X"`, vérifier que `X` matche l'un des formats reconnus : `base-produits-YYYY-MM`, `BAREME AGENCE`, `devis YYYY-MM-DD`, `TARIFS_REFERENCE`, `estimation marché`, ou widget-avis (google/trustville/trustpilot/facebook/avis-verifies). Tout autre → ALERTE *source inconnue*.
+37. **Sonde data-source obsolète** : la sous-règle de #36 alerte aussi quand `base-produits-YYYY-MM` ou `devis YYYY-MM-DD` ont plus de 12 mois → ALERTE *source périmée* (recroiser avec la base produits courante).
+
+**Intégration scan quotidien** : ajouter à la suite des autres audits de `admin-pro/audits/` un appel à ces deux scripts ; consolider les rapports dans le digest. Si nb_alertes > 0 sur `audit_tarifs.py` → escalader à Florian (décision éditoriale, ne pas auto-corriger les prix).
+
+*Addendum v7 généré le 15 mai 2026 par l'agent autonome — 2 nouvelles sondes #36-#37 + 2 scripts d'audit exécutables (tarifs + data-source).*
