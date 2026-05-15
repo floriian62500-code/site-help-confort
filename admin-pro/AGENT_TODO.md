@@ -192,6 +192,22 @@
 
 ---
 
+## P14 — Auto-générés (TODO P13 épuisé le 2026-05-15 soir)
+
+> Section ouverte après épuisement complet P1-P13. Items orientés monitoring SEO/qualité — détecter les angles morts non couverts par les 33 audits actuels.
+> Tout item engageant un montant ou un contenu marketing → `[?]` (attendre Florian).
+
+- [x] **Sonde audit_canonical_url_match.py** — pour chaque page racine, extraire `<link rel="canonical" href="...">` et vérifier que l'URL pointée correspond au nom de fichier (`plombier-saint-omer.html` → canonical doit finir par `/plombier-saint-omer.html` ou `/plombier-saint-omer`). Tout mismatch → ALERTE *canonical incorrect* (cause classique de duplicate content + dilution SEO). Rapport `.md` + `.json`. À ajouter au workflow nightly. *(fait 15/05 soir — script + report.md/json ajoutés ; à intégrer workflow audit.yml)*
+- [x] **Sonde audit_duplicate_titles.py** — détecter cross-page les `<title>` strictement identiques (suggère copy-paste de template, mauvais SEO). Idem pour `<meta name="description">`. Whitelist : pages 404/reset/test. Seuil : > 1 occurrence du même titre/desc → ALERTE. Rapport `.md` + `.json`. *(fait 15/05 soir — script + report.md/json ajoutés ; à intégrer workflow audit.yml)*
+- [ ] **Sonde audit_script_async.py** — détecter les `<script src="https://...">` (externes) sans attribut `defer` ou `async` (impact perf direct, render-blocking). Tolérer les scripts `type="application/ld+json"` (data) et inline (sans src). Rapport `.md`.
+- [ ] **Sonde audit_robots_noindex.py** — vérifier qu'aucune page publique racine (hors test/reset) n'a accidentellement `<meta name="robots" content="noindex">`. Si trouvé → ALERTE CRITIQUE (page invisible Google). Rapport `.md`.
+- [ ] **Sonde audit_html_weight.py** — calculer le poids du `.html` (sans assets) de chaque page publique. Alerter si > 250 KB (suspect de pollution `<style>` inline ou template gonflé). Rapport `.md` listant top 10 pages les plus lourdes.
+- [ ] **Sonde audit_og_url_consistency.py** — vérifier que `<meta property="og:url" content="...">` est cohérent avec `<link rel="canonical">` (mismatch → confusion partage social). Rapport `.md`.
+- [ ] **Sonde audit_breadcrumb_schema.py** — vérifier que les pages métier/locales/guides ont un JSON-LD `BreadcrumbList` (déjà coché P3 pour les guides, mais étendre aux 5 pages métier + 7 pages depannage-* + faq/blog). Rapport `.md`.
+- [ ] **Sonde audit_font_display.py** — détecter les `@font-face` (CSS local) ou `<link rel="stylesheet" href="...fonts.googleapis...">` sans `&font-display=swap` (cause de FOIT — Flash Of Invisible Text, impact CLS + perception perf). Rapport `.md`.
+
+---
+
 ## Comment l'agent doit gérer cette liste
 
 À chaque déclenchement de scheduled task :
