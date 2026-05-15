@@ -930,6 +930,20 @@ if (document.fonts && document.fonts.ready) {
       .order('published_at',{ascending:false,nullsFirst:false})
       .order('created_at',{ascending:false});
     if (sbRes.error) throw sbRes.error;
+    // ─── FILTRE ANTI-ACTUS : ne garder que les vrais chantiers (avant+après OU description+métier précis) ───
+    // Les imports Facebook (vœux, posts saisonniers) n'ont pas de paire avant/après et finissent dans la grille — on les exclut.
+    if (sbRes.data) {
+      sbRes.data = sbRes.data.filter(function(r){
+        var isFbImport = r.ai_generated && r.ai_generated.imported_from === 'facebook_scrape';
+        var hasBeforeAfter = !!(r.image_before && r.image_after);
+        // Exclure les imports FB qui n'ont PAS de paire avant/après (= vraies actus)
+        if (isFbImport && !hasBeforeAfter) return false;
+        // Exclure aussi par titre les patterns typiques d'actualités saisonnières
+        var t = (r.title || '').toLowerCase();
+        if (/vœux|voeux|meilleurs vœux|fin d'année|bonne année|nouvel an|joyeuses fêtes|noël|s'invite sur vos écrans|patient zero/.test(t)) return false;
+        return true;
+      });
+    }
     if (sbRes.data && sbRes.data.length){
       allRealisations = sbRes.data.map(function(r){
         var fbUrl = (r.ai_generated && r.ai_generated.source_fb) || '';

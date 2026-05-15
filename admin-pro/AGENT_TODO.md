@@ -1,9 +1,11 @@
 # 🎉 Tout est fait — HELP! Confort Saint-Omer
 
-> **Mise à jour 15 mai 2026 (Claude session A→Z)** — Tous les items P1 à P8 sont cochés.
+> **Mise à jour 15 mai 2026 — 14:30 (agent autonome)** — Tous les items P1 à P9 sont cochés (dernier : Reviews Google scrap).
 > L'agent peut désormais s'occuper exclusivement de monitoring (nouveaux bugs, ajout contenu).
 >
 > Restera à faire à la main : validation tarifs en attente (cf. `TARIFS_REFERENCE.md` § "En attente de validation Florian").
+>
+> 🎉 **TODO épuisé le 2026-05-15**. Une section `## P10 — Auto-générés` peut être ajoutée par la prochaine session autonome si besoin (cf. instructions scheduled-task).
 
 # 🤖 Agent TODO — Travail autonome HELP! Confort
 
@@ -102,7 +104,7 @@
 - [x] **Cookie banner RGPD minimal** — auditer s'il y a un script GA/Meta Pixel qui dépose des cookies. Si oui : créer un mini banner CSS pur (Accept/Refuse) sans dépendance externe. *(fait 15/05 PM — GA4 actif (G-YH9GXW6H70) via assets/tracking.js sur 32 pages → tracking.js gaté sur localStorage.hc-consent==='granted' + `assets/hc-consent.js` banner CSS-pur Accept/Refuse + section #cookies rewrite dans mentions-legales.html (lien `hcConsentReset()` pour rouvrir le choix) + hc-consent.js injecté sur 38 pages)*
 - [x] **PWA `manifest.json`** — auditer le manifest existant : icônes 192/512, `theme_color`, `background_color`, `display: standalone`, `start_url`. Ajouter Apple touch icons HTML. *(fait 15/05 PM — manifest.json enrichi (icons 192/512 PNG maskable, shortcuts devis/prestations/urgence, dir/orientation), 3 icônes générées via PIL (192, 512, apple-touch 180), `rel="manifest"` ajouté sur 35 pages (3 déjà OK), `apple-touch-icon` rerouté de logo-officiel.jpg → /images/apple-touch-icon.png sur 38 pages, `meta theme-color` ajouté sur 35 pages — coverage 38/38)*
 - [x] **Audit ARIA poussé** — scanner toutes les pages pour : `<button>` sans `aria-label`/texte visible, `<img>` sans `alt`, `role="dialog"` sans `aria-labelledby`, formulaires sans `<label for>`. Rapport `admin-pro/audits/audit_aria_report.md`. *(fait 15/05 PM — `admin-pro/audits/audit_aria.py` (HTMLParser, 0 dépendance) + report.md/json ; 37 pages, 35 findings, 23 clean, 7 avec erreur ; codes: BTN-NO-NAME/DIALOG-NO-LABEL/H1-MISSING erreurs ; IMG-NO-ALT/A-NO-NAME/INPUT-NO-LABEL warns ; sonde #38 ARIA à ajouter MEMOIRE v8 ; correctifs à faire en P10)*
-- [ ] **Reviews Google scrap** — script qui re-scrape les nouveaux avis Google Maps via Place ID (déjà en base) et insère dans table `reviews`. À planifier 1×/semaine.
+- [x] **Reviews Google scrap** — script qui re-scrape les nouveaux avis Google Maps via Place ID (déjà en base) et insère dans table `reviews`. À planifier 1×/semaine. *(fait 15/05 14:30 — `scripts/sync-reviews.py` (zéro dépendance) qui POST l'edge function existante `sync-reviews` (déjà cron 6h) : upsert idempotent sur `reviews(source,source_id)` ; modes --dry-run / --quiet / --report-only ; lit `.env` SUPABASE_SERVICE_ROLE_KEY ; affiche delta avant/après + détail par agence (depan-audo / depan-dk) + rating FB agrégé ; exemple cron hebdo macOS en docstring)*
 
 ---
 
