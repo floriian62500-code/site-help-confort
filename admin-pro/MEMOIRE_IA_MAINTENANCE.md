@@ -439,6 +439,7 @@ Chaque sonde retourne ✅ / ⚠️ / ❌ + le snippet incriminé + une suggestio
 - **Symptôme** : Chaque page `<métier>-saint-omer.html` contient 2 blocs `<script type="application/ld+json">` typés `FAQPage` — l'un en haut (HC-FAQ-SCHEMA-V1, 4 questions génériques "tarif/urgence/assurance/chauffe-eau") et l'autre en bas (5 questions liées au métier après rewrite 15/05). Google peut ne retenir qu'un seul des deux, et les deux blocs sont désynchronisés des `<details>` HTML.
 - **Cause** : Le bloc HC-FAQ-SCHEMA-V1 a été ajouté à la création des pages métier sans HTML correspondant ; le bloc bottom a été ajouté plus tard avec ses propres `<details>` HTML.
 - **Correctif à appliquer** : Fusionner en 1 seul bloc JSON-LD `FAQPage` synchronisé avec les `<details>` HTML. Supprimer HC-FAQ-SCHEMA-V1.
+- **Correctif appliqué (15/05 PM)** : Bloc top HC-FAQ-SCHEMA-V1 supprimé sur les 5 pages métier (plombier/électricien/serrurier/chauffagiste/travaux-saint-omer.html), remplacé par un commentaire-trace. Le bloc FAQPage bottom restant est synchronisé avec les `<details>` HTML métier-spé (audit `re.findall` : 5/5 sync OK). Google ne voit plus qu'un seul bloc FAQPage par URL.
 - **Règle de scan à ajouter** :
   - Pour chaque page HTML, compter le nombre de blocs `<script type="application/ld+json">` dont `@type === "FAQPage"`.
   - Si > 1 → ALERTE (Google recommande un seul bloc FAQPage par URL).
@@ -447,6 +448,7 @@ Chaque sonde retourne ✅ / ⚠️ / ❌ + le snippet incriminé + une suggestio
 - **Symptôme** : La Q2 du bloc HC-FAQ-SCHEMA-V1 répond "fuite, ballon HS, canalisation bouchée" sur les pages électricien/serrurier/chauffagiste/travaux. Q4 "Posez-vous des chauffe-eau neufs ?" sur la page serrurier ou électricien.
 - **Cause** : Bug #31 (FAQ partagée) — le rewrite 15/05 a touché uniquement la FAQ HTML bottom, pas le top-FAQ JSON-LD.
 - **Correctif à appliquer** : Voir bug #35 (fusion en 1 seul bloc avec contenu métier-spé).
+- **Correctif appliqué (15/05 PM)** : Résolu par #35 (suppression du bloc top HC-FAQ-SCHEMA-V1).
 
 ### Sondes additionnelles v5
 31. **Sonde FAQPage-doublon** : compter les `<script type="application/ld+json">` typés `FAQPage` sur chaque page ; alerter si > 1.
