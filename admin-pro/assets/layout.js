@@ -132,7 +132,8 @@ window.HCLayout = (function() {
 
     function renderItem(l, indent) {
       const active = l.id === activePage ? ' is-active' : '';
-      return `<a href="${l.href}" class="admin-nav-item${active}"><svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${l.icon}</svg>${l.label}${l.badge || ''}</a>`;
+      const extraAttrs = l.dataAttrs ? ' ' + l.dataAttrs : '';
+      return `<a href="${l.href}" class="admin-nav-item${active}"${extraAttrs}><svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${l.icon}</svg>${l.label}${l.badge || ''}</a>`;
     }
 
     let html = `<style>${SIDEBAR_ACCORDION_CSS}</style>
@@ -189,6 +190,31 @@ window.HCLayout = (function() {
     if (!nav || nav.dataset.accordionReady === '1') return;
     nav.dataset.accordionReady = '1';
     nav.addEventListener('click', (e) => {
+      // ─── Handler "Mon CRM" : ouvre l'URL du CRM externe configurée ──
+      const crmLink = e.target.closest('[data-action="open-crm"]');
+      if (crmLink) {
+        e.preventDefault();
+        // Récupère l'URL du CRM depuis app_settings (configuré dans Réglages → CRM externe)
+        (async () => {
+          if (!window.HCSupabase) return;
+          try {
+            const c = await window.HCSupabase.init();
+            const { data } = await c.from('app_settings').select('value').eq('key','crm').maybeSingle();
+            const url = data?.value?.url;
+            if (url) {
+              window.open(url, '_blank', 'noopener');
+            } else {
+              // Pas configuré → redirige vers les réglages
+              window.location.href = 'settings.html#section-crm';
+            }
+          } catch(err) {
+            window.location.href = 'settings.html#section-crm';
+          }
+        })();
+        return;
+      }
+
+      // ─── Toggle accordion section ──
       const btn = e.target.closest('[data-section-toggle]');
       if (!btn) return;
       const secId = btn.dataset.sectionToggle;
