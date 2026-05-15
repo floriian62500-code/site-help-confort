@@ -670,7 +670,8 @@ let _filterStatusOverride = null;
     `;
     document.getElementById('leadFoot').innerHTML = `
       <button class="btn" style="margin-right:auto" id="btnDeleteLead" data-id="${l.id}">Supprimer</button>
-      <button class="btn" id="btnExportPdfLead" data-id="${l.id}" title="Exporter cette fiche en PDF imprimable">📄 PDF</button>
+      <button class="btn" id="btnExportPdfLead" data-id="${l.id}" title="Exporter cette fiche en PDF imprimable">📄 Fiche PDF</button>
+      <button class="btn btn-primary" id="btnGenerateQuote" data-id="${l.id}" title="Générer un devis client à partir de cette demande" style="background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;border:0">💰 Créer devis</button>
       <button class="btn" id="btnCancelLead">Annuler</button>
       <button class="btn btn-primary" id="btnSaveLead" data-id="${l.id}">Enregistrer</button>
     `;

@@ -1,6 +1,6 @@
-# 🔦 Audit Lighthouse local — 2026-05-15 12:11
+# 🔦 Audit Lighthouse local — 2026-05-15 12:16
 
-**37 pages auditées** · **0 erreurs** · **2 warnings** · **Score moyen 100/100**
+**38 pages auditées** · **0 erreurs** · **2 warnings** · **Score moyen 100/100**
 
 ## 📊 Résumé par page
 
@@ -11,6 +11,7 @@
 | `actualites.html` | **100/100** | 0 | 0 |
 | `aides.html` | **100/100** | 0 | 0 |
 | `avant-apres.html` | **100/100** | 0 | 0 |
+| `blog.html` | **100/100** | 0 | 0 |
 | `carrieres.html` | **100/100** | 0 | 0 |
 | `chauffagiste-saint-omer.html` | **100/100** | 0 | 0 |
 | `contact.html` | **100/100** | 0 | 0 |
@@ -58,6 +59,7 @@
 - actualites.html
 - aides.html
 - avant-apres.html
+- blog.html
 - carrieres.html
 - chauffagiste-saint-omer.html
 - contact.html

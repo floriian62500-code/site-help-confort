@@ -73,7 +73,33 @@ def audit_page(path):
     elif len(h1s) > 1:  res['warnings'].append(f'{len(h1s)} <h1> trouvés (devrait être 1)')
     else:               res['pass'].append('1 <h1> unique')
 
-    # === ACCESSIBILITY ===
+    # === ACCESSIBILITY étendu : boutons & liens sans nom accessible ===
+    body_clean = re.sub(r'<script[^>]*>.*?</script>', '', c, flags=re.S)
+    body_clean = re.sub(r'<svg[^>]*>.*?</svg>', '<SVG/>', body_clean, flags=re.S)
+    btn_bad = 0
+    for mb in re.finditer(r'<button\b([^>]*?)>(.*?)</button>', body_clean, re.S):
+        attrs, inner = mb.group(1), mb.group(2)
+        text = re.sub(r'<[^>]+>','',inner).strip()
+        if text: continue
+        if re.search(r'\baria-(label|labelledby)=', attrs, re.I): continue
+        if re.search(r'\btitle=', attrs): continue
+        # Image alt suffit
+        if re.search(r'<img\b[^>]*\balt="[^"]+"', inner): continue
+        btn_bad += 1
+    if btn_bad > 0: res['warnings'].append(f'{btn_bad} <button> sans nom accessible')
+
+    a_bad = 0
+    for ma in re.finditer(r'<a\b([^>]*?)>(.*?)</a>', body_clean, re.S):
+        attrs, inner = ma.group(1), ma.group(2)
+        text = re.sub(r'<[^>]+>','',inner).strip()
+        if text: continue
+        if re.search(r'\baria-(label|labelledby)=', attrs, re.I): continue
+        if re.search(r'\btitle=', attrs): continue
+        if re.search(r'<img\b[^>]*\balt="[^"]+"', inner): continue
+        a_bad += 1
+    if a_bad > 0: res['warnings'].append(f'{a_bad} <a> sans nom accessible')
+
+    # === ACCESSIBILITY (existant) ===
     # html lang
     if re.search(r'<html[^>]+lang=', c, re.I):
         res['pass'].append('html lang present')
@@ -97,6 +123,8 @@ def audit_page(path):
         if re.search(r'\bid=', i): continue
         if re.search(r'\baria-label=', i, re.I): continue
         if re.search(r'\baria-labelledby=', i, re.I): continue
+        if re.search(r'\baria-hidden="true"', i, re.I): continue  # honeypot, etc.
+        if re.search(r'\bname="(?:website|url|honeypot|nickname)"', i, re.I): continue  # honeypot par convention
         no_lab.append(i)
     if no_lab: res['warnings'].append(f'{len(no_lab)} <input> sans label')
 
