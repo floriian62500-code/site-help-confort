@@ -71,6 +71,9 @@ jobs:
             audit_lighthouse_local.py
             audit_liens_externes.py
             audit_robots.py
+            audit_og_image.py
+            audit_faqpage_doublon.py
+            audit_schema_type_metier.py
           )
           for a in "${AUDITS[@]}"; do
             f="admin-pro/audits/$a"

@@ -1,9 +1,9 @@
-# Audit Open Graph images — 2026-05-15 17:28
+# Audit Open Graph images — 2026-05-15 17:29
 
 - **Pages scannées** : 38
-- **Pages avec og:image OK** : 0
+- **Pages avec og:image OK** : 37
 - **Pages alertées** : 1
-- **OG image externe (non testée)** : 37
+- **OG image externe (non testée)** : 0
 - **Pillow disponible** : oui
 - **Cible** : 1200×630 px ±5%
 
@@ -15,5 +15,5 @@
 
 ## Récap par statut
 
-- **external-skipped** : 37
+- **ok** : 37
 - **MISSING-OG-IMAGE** : 1

@@ -132,12 +132,18 @@ def scan_page(path: pathlib.Path) -> dict:
         return entry
 
     url = entry["og_url"]
-    if is_external(url):
+    kind, rel = classify(url)
+    if kind == "external":
         entry["external"] = True
         entry["status"] = "external-skipped"
         return entry
+    if kind == "data":
+        entry["external"] = True
+        entry["status"] = "data-uri-skipped"
+        return entry
 
-    rp = resolve(url)
+    # self ou relative → on résout sur disque
+    rp = resolve_local(rel)
     entry["resolved"] = str(rp.relative_to(ROOT)) if rp.is_relative_to(ROOT) else str(rp)
 
     if not rp.exists():
