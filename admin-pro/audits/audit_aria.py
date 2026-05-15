@@ -9,6 +9,8 @@ détecter les anti-patterns d'accessibilité les plus fréquents :
   2. <img> sans attribut alt (ou avec alt="" non décoratif suspect)
   3. <a href> sans contenu textuel ni aria-label (lien fantôme)
   4. <input> sans <label for=...> associé ET sans aria-label/placeholder
+     Sonde #46 : INPUT-NO-ARIA-LABEL — input sans id ne peut pas être
+     associé via <label for=...> ; aria-label devient obligatoire.
   5. role="dialog"/role="alertdialog" sans aria-labelledby ni aria-label
   6. <form> sans <label> pour ses champs visibles
   7. <html lang="..."> manquant
@@ -144,6 +146,16 @@ def audit_page(path: Path) -> dict:
         if not has_label and not attrs.get("placeholder"):
             findings.append(("INPUT-NO-LABEL", f'<input type="{attrs.get("type","text")}" name="{attrs.get("name","?")}">', line))
 
+        # Sonde #46 — input sans id DOIT avoir aria-label/aria-labelledby
+        # Le placeholder seul ne suffit pas (lecteurs d'écran l'ignorent
+        # une fois rempli). label[for=...] impossible sans id.
+        if not iid and not attrs.get("aria-label") and not attrs.get("aria-labelledby"):
+            findings.append((
+                "INPUT-NO-ARIA-LABEL",
+                f'<input type="{attrs.get("type","text")}" name="{attrs.get("name","?")}"> sans id',
+                line,
+            ))
+
     # Compter par sévérité
     by_code = Counter(c for c, _, _ in findings)
     return {
@@ -165,6 +177,7 @@ SEVERITY = {
     "IMG-NO-ALT": "avertissement",
     "A-NO-NAME": "avertissement",
     "INPUT-NO-LABEL": "avertissement",
+    "INPUT-NO-ARIA-LABEL": "avertissement",
     "H1-MULTIPLE": "info",
 }
 

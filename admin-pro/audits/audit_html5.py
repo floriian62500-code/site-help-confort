@@ -10,6 +10,7 @@ Vérifie :
   - <meta name="description"> non vide
   - <meta name="viewport"> présent
   - <link rel="canonical"> présent
+  - </head> + <body> obligatoires (Sonde #44, code BODY-HEAD-MISSING)
   - h1 unique par page
   - <img> sans alt
   - <button> sans label texte ni aria-label
@@ -110,6 +111,13 @@ def audit_file(path: pathlib.Path) -> dict:
     is_noindex = bool(re.search(r'<meta\s+name="robots"\s+content="[^"]*noindex', raw, re.I))
     if not re.search(r'<link\s+rel="canonical"', raw, re.I) and not is_noindex:
         res["warnings"].append('<link rel="canonical"> manquant')
+
+    # ─── 7bis. Sonde #44 — </head> + <body> obligatoires (HTML5)
+    # Bug constaté 15/05 sur aides.html + processus.html → "quirks-lite"
+    if not re.search(r"</head\s*>", raw, re.I):
+        res["errors"].append("BODY-HEAD-MISSING : balise </head> introuvable")
+    if not re.search(r"<body\b", raw, re.I):
+        res["errors"].append("BODY-HEAD-MISSING : balise <body> introuvable")
 
     # Nettoyer pour audit balisage
     html = strip_comments_and_scripts(raw)

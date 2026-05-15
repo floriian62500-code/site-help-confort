@@ -46,9 +46,10 @@
     <div id="diffArea"></div>
   </div>
 
-  <div class="card" style="text-align:center">
+  <div class="card" style="text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center">
     <button class="cta" id="btnSeed" disabled>🌱 Seeder maintenant</button>
-    <p class="sub" style="margin-top:10px;font-size:.82rem">Tu peux relancer plusieurs fois — les doublons sont évités par slug unique.</p>
+    <button class="cta" id="btnMergeChauffeEau" style="background:linear-gradient(135deg,#0DA0CF,#0884AE);box-shadow:0 4px 14px rgba(13,160,207,.30);display:none">🔀 Fusionner Chauffe-eau → Plomberie</button>
+    <p class="sub" style="margin-top:10px;font-size:.82rem">Tu peux relancer plusieurs fois — les doublons sont évités par slug unique. Le chauffe-eau est fusionné dans Plomberie & Sanitaires.</p>
   </div>
 
   <div class="card">
@@ -72,15 +73,18 @@
   // ═══════════════════════════════════════════════════════════════
   // RÉFÉRENTIEL : Catégories + Prestations à seeder
   // ═══════════════════════════════════════════════════════════════
+  // NOTE : Chauffe-eau est FUSIONNÉ dans Plomberie & Sanitaires (décision Florian 2026-05-15)
+  // → Plus de catégorie séparée "chauffe-eau-production-ecs". Tout est en Plomberie.
   const REF_CATS = [
     { slug:'plomberie-sanitaires', name:'Plomberie & Sanitaires', position:1 },
-    { slug:'chauffe-eau-production-ecs', name:'Chauffe-eau & Production ECS', position:2 },
-    { slug:'chauffage', name:'Chauffage', position:3 },
-    { slug:'electricite', name:'Électricité', position:4 },
-    { slug:'serrurerie', name:'Serrurerie', position:5 },
-    { slug:'vitrerie', name:'Vitrerie', position:6 },
+    { slug:'chauffage', name:'Chauffage', position:2 },
+    { slug:'electricite', name:'Électricité', position:3 },
+    { slug:'serrurerie', name:'Serrurerie', position:4 },
+    { slug:'vitrerie', name:'Vitrerie', position:5 },
     { slug:'devis-sur-mesure', name:'Devis sur mesure', position:99 }
   ];
+
+  const CHAUFFE_EAU_DEPRECATED_SLUG = 'chauffe-eau-production-ecs';
 
   // Prestations : prix_ht calculé depuis prix_ttc / 1.10 (TVA 10% par défaut)
   const TVA = 0.10;
