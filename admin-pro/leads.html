@@ -519,10 +519,130 @@ let _filterStatusOverride = null;
     `;
     document.getElementById('leadFoot').innerHTML = `
       <button class="btn" style="margin-right:auto" id="btnDeleteLead" data-id="${l.id}">Supprimer</button>
+      <button class="btn" id="btnExportPdfLead" data-id="${l.id}" title="Exporter cette fiche en PDF imprimable">📄 PDF</button>
       <button class="btn" id="btnCancelLead">Annuler</button>
       <button class="btn btn-primary" id="btnSaveLead" data-id="${l.id}">Enregistrer</button>
     `;
     document.getElementById('btnCancelLead').onclick = closeLead;
+
+    // ─── Export PDF de la fiche lead (impression navigateur) ──────
+    document.getElementById('btnExportPdfLead').onclick = () => {
+      const fmtEur = v => v != null ? Number(v).toFixed(2).replace('.',',') + ' €' : '—';
+      const fmtDate = v => v ? new Date(v).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'}) : '—';
+      const cleanContract = contract || {};
+      const cleanMeta = cleanContract.metadata || {};
+
+      const pdfHTML = `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Fiche lead — ${escapeHtml(l.nom)}</title>
+<style>
+  *{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif}
+  body{margin:0;padding:30px 36px;color:#0A1428;line-height:1.5;font-size:13px;background:#fff}
+  h1{margin:0 0 4px;font-size:22px;color:#0DA0CF}
+  h2{margin:24px 0 10px;font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:#FF6B1A;border-bottom:1px solid #e5e7eb;padding-bottom:6px}
+  .header{display:flex;justify-content:space-between;align-items:start;border-bottom:3px solid #FF6B1A;padding-bottom:14px;margin-bottom:18px}
+  .header-right{text-align:right;font-size:11px;color:#64748b}
+  .row{display:grid;grid-template-columns:140px 1fr;gap:6px 14px;font-size:12px;margin:3px 0}
+  .row strong{color:#475569;font-weight:600}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .badge{display:inline-block;padding:2px 9px;border-radius:4px;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;background:#F1F5F9;color:#475569}
+  .badge.success{background:#DCFCE7;color:#15803D}
+  .badge.warning{background:#FEF3C7;color:#92400E}
+  .badge.danger{background:#FEE2E2;color:#B91C1C}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  td,th{padding:6px 8px;text-align:left;border-bottom:1px solid #f1f5f9}
+  th{background:#f8fafc;font-weight:700;font-size:11px;color:#64748b}
+  .photos{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+  .photos img{width:100%;height:120px;object-fit:cover;border-radius:6px;border:1px solid #e5e7eb}
+  .notes{background:#FAFCFD;border:1px solid #e5e7eb;border-radius:8px;padding:10px 12px;font-size:12px}
+  .footer{margin-top:32px;padding-top:14px;border-top:1px solid #e5e7eb;font-size:10px;color:#94a3b8;text-align:center}
+  @media print{body{padding:18px 22px}.no-print{display:none}}
+</style></head><body>
+
+<div class="header">
+  <div>
+    <h1>Fiche client — ${escapeHtml(l.nom)}</h1>
+    <div style="font-size:11px;color:#64748b">Demande reçue le ${fmtDate(l.created_at)} · Statut : <span class="badge ${l.status==='gagne'?'success':l.status==='perdu'?'danger':l.status==='nouveau'?'warning':''}">${STATUS_LABELS[l.status] || l.status}</span></div>
+  </div>
+  <div class="header-right">
+    <div style="font-size:14px;font-weight:800;color:#0A1428">HELP! Confort</div>
+    <div>SARL Dépannage 59-62</div>
+    <div>Saint-Omer · Dunkerque</div>
+    <div>03 66 10 01 34 · saint-omer@helpconfort.com</div>
+  </div>
+</div>
+
+<h2>Identité &amp; Contact</h2>
+<div class="grid2">
+  <div>
+    <div class="row"><strong>Nom complet</strong><span>${escapeHtml(l.nom)}</span></div>
+    <div class="row"><strong>Téléphone</strong><span>${escapeHtml(l.telephone || '—')}</span></div>
+    <div class="row"><strong>Email</strong><span>${escapeHtml(l.email || '—')}</span></div>
+  </div>
+  <div>
+    <div class="row"><strong>Adresse</strong><span>${escapeHtml(l.adresse || '—')}</span></div>
+    <div class="row"><strong>Code postal</strong><span>${escapeHtml(l.code_postal || '—')}</span></div>
+    <div class="row"><strong>Ville</strong><span>${escapeHtml(l.ville || '—')}</span></div>
+  </div>
+</div>
+
+<h2>Demande</h2>
+<div class="row"><strong>Type</strong><span>${escapeHtml(l.type_demande || '—')}</span></div>
+<div class="row"><strong>Métier / Domaine</strong><span>${escapeHtml(METIER_LABELS[l.metier] || l.metier || '—')}</span></div>
+${l.priority && l.priority !== 'normale' ? `<div class="row"><strong>Priorité</strong><span class="badge ${l.priority==='urgente'?'danger':'warning'}">${escapeHtml(l.priority)}</span></div>` : ''}
+${l.message ? `<div style="margin-top:10px"><strong style="color:#475569;font-weight:600;font-size:12px">Message client :</strong><div class="notes" style="margin-top:4px">${escapeHtml(l.message)}</div></div>` : ''}
+
+${cleanContract.id ? `
+<h2>Souscription contrat ${(cleanContract.type||'').toUpperCase()}</h2>
+<table>
+  <tr><th>Énergie</th><td>${escapeHtml(cleanMeta.energie || cleanContract.metier || '—')}</td><th>Montant /mois</th><td>${fmtEur(cleanContract.monthly_amount)}</td></tr>
+  <tr><th>Équipement</th><td>${escapeHtml((cleanMeta.marque||'') + ' ' + (cleanMeta.modele||'')).trim() || '—'}</td><th>Année</th><td>${escapeHtml(String(cleanMeta.annee||'—'))}</td></tr>
+  <tr><th>Logement</th><td>${escapeHtml((cleanMeta.type_logement||'') + ' ' + (cleanMeta.statut_logement||'')).trim() || '—'}</td><th>Début souhaité</th><td>${fmtDate(cleanMeta.date_debut_souhaitee)}</td></tr>
+  <tr><th>Import CRM</th><td colspan="3">${cleanContract.imported_to_crm_at ? '✓ Importé le ' + fmtDate(cleanContract.imported_to_crm_at) : '📥 À importer dans Apogée'}</td></tr>
+</table>
+` : ''}
+
+<h2>Suivi commercial</h2>
+<table>
+  <tr><th>Devis</th><td>${fmtEur(l.quote_amount)}</td><td style="color:#64748b">${l.quote_sent_at ? 'envoyé le ' + fmtDate(l.quote_sent_at) : 'non envoyé'}</td></tr>
+  <tr><th>Acompte</th><td>${fmtEur(l.deposit_amount)}</td><td style="color:#64748b">${l.deposit_paid_at ? '✓ payé le ' + fmtDate(l.deposit_paid_at) : 'non payé'}</td></tr>
+  <tr><th>Facture finale</th><td>${fmtEur(l.invoice_amount)}</td><td style="color:#64748b">${l.invoiced_at ? '✓ facturée le ' + fmtDate(l.invoiced_at) : 'non facturée'}</td></tr>
+  ${l.intervention_date ? `<tr><th>Intervention</th><td colspan="2">${fmtDate(l.intervention_date)}</td></tr>` : ''}
+</table>
+
+${photos.length > 0 ? `
+<h2>Photos jointes (${photos.length})</h2>
+<div class="photos">
+  ${photos.slice(0,9).map(p => `<img src="${p.url}" alt="${escapeHtml(p.label)}">`).join('')}
+</div>
+` : ''}
+
+${l.notes_internes ? `<h2>Notes internes</h2><div class="notes">${escapeHtml(l.notes_internes).replace(/\\n/g,'<br>')}</div>` : ''}
+
+<h2>Tracking</h2>
+<div class="row"><strong>Source</strong><span>${escapeHtml(l.source || '—')}</span></div>
+${l.source_page ? `<div class="row"><strong>Page d'origine</strong><span style="font-size:11px;word-break:break-all">${escapeHtml(l.source_page)}</span></div>` : ''}
+<div class="row"><strong>Reçu le</strong><span>${new Date(l.created_at).toLocaleString('fr-FR')}</span></div>
+${l.assigned_to ? `<div class="row"><strong>Assigné à</strong><span>${escapeHtml(l.assigned_to)}</span></div>` : ''}
+
+<div class="footer">
+  Document généré automatiquement le ${new Date().toLocaleString('fr-FR')} depuis le back-office HELP! Confort · depan59-62.fr<br>
+  SARL Dépannage 59-62 — RCS Saint-Omer
+</div>
+
+<div class="no-print" style="margin-top:30px;text-align:center">
+  <button onclick="window.print()" style="background:#FF6B1A;color:#fff;border:0;padding:11px 28px;border-radius:8px;font:inherit;font-weight:700;cursor:pointer;font-size:14px">🖨️ Imprimer / Enregistrer en PDF</button>
+  <button onclick="window.close()" style="background:#fff;color:#475569;border:1px solid #e5e7eb;padding:11px 28px;border-radius:8px;font:inherit;font-weight:600;cursor:pointer;margin-left:8px">Fermer</button>
+</div>
+
+<scr${''}ipt>setTimeout(()=>window.print(),400);</scr${''}ipt>
+</body></html>`;
+
+      // Ouvre dans une nouvelle fenêtre + déclenche print
+      const w = window.open('', '_blank');
+      if (!w) { toast('Le navigateur a bloqué l\\'ouverture du PDF — autorise les popups pour ce site', 'err', 5000); return; }
+      w.document.open();
+      w.document.write(pdfHTML);
+      w.document.close();
+    };
     document.getElementById('btnSaveLead').onclick = async () => {
       const newStatus = document.getElementById('newStatus').value;
       const newNotes = document.getElementById('newNotes').value.trim() || null;
