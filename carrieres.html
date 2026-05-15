@@ -595,7 +595,7 @@ if (document.fonts && document.fonts.ready) {
         </div>
         <div>
           <label for="tel">Téléphone *</label>
-          <input type="tel" id="tel" name="tel" required>
+          <input type="tel" id="tel" name="tel" required pattern="[0-9 +.\-]{10,}" autocomplete="tel">
         </div>
       </div>
 

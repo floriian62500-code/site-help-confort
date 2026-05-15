@@ -971,7 +971,7 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
           <div class="form-row two">
             <div>
               <label for="resa-tel">Téléphone *</label>
-              <input type="tel" id="resa-tel" autocomplete="tel" placeholder="06 ou 03..." required>
+              <input type="tel" id="resa-tel" autocomplete="tel" placeholder="06 ou 03..." required pattern="[0-9 +.\-]{10,}" autocomplete="tel">
             </div>
             <div>
               <label for="resa-email">Email *</label>
@@ -2231,7 +2231,7 @@ bubble.parentElement.style.animation = 'chatBubbleIn .4s cubic-bezier(.34,1.56,.
         <p>OK 👌 — laissez-moi votre <strong>numéro</strong> et un <strong>mot clé</strong>, je transfère immédiatement au technicien.</p>
       </div>
       <input type="hidden" name="service" id="chatSvcField" value="">
-      <input type="tel" name="telephone" id="chatTel" required placeholder="📞 Votre téléphone" autocomplete="tel">
+      <input type="tel" name="telephone" id="chatTel" required placeholder="📞 Votre téléphone" autocomplete="tel" pattern="[0-9 +.\-]{10,}" autocomplete="tel">
       <input type="text" name="precision" id="chatPrec" placeholder="📝 1 mot (rue, étage, urgence…)" maxlength="80">
       <button type="submit" class="chat-urg-send">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -2353,7 +2353,7 @@ body.scrollTop = body.scrollHeight;
         </div>
         <div>
           <label for="urg-tel" style="display:block;font-size:.78rem;font-weight:700;color:#0A1428;margin-bottom:6px;letter-spacing:.02em">Téléphone *</label>
-          <input id="urg-tel" type="tel" name="telephone" required placeholder="06 12 34 56 78" style="width:100%;padding:11px 14px;border:1.5px solid #E5EDF3;border-radius:10px;background:#F7FBFD;color:#0A1428;font-size:.95rem;font-family:inherit;outline:none;transition:border-color .2s">
+          <input id="urg-tel" type="tel" name="telephone" required placeholder="06 12 34 56 78" style="width:100%;padding:11px 14px;border:1.5px solid #E5EDF3;border-radius:10px;background:#F7FBFD;color:#0A1428;font-size:.95rem;font-family:inherit;outline:none;transition:border-color .2s" pattern="[0-9 +.\-]{10,}" autocomplete="tel">
         </div>
       </div>
 

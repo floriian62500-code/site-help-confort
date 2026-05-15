@@ -1093,7 +1093,7 @@ if (document.fonts && document.fonts.ready) {
         <p>OK 👌 — laissez-moi votre <strong>numéro</strong> et un <strong>mot clé</strong>, je transfère immédiatement au technicien.</p>
       </div>
       <input type="hidden" name="service" id="chatSvcField" value="">
-      <input type="tel" name="telephone" id="chatTel" required placeholder="📞 Votre téléphone" autocomplete="tel">
+      <input type="tel" name="telephone" id="chatTel" required placeholder="📞 Votre téléphone" autocomplete="tel" pattern="[0-9 +.\-]{10,}" autocomplete="tel">
       <input type="text" name="precision" id="chatPrec" placeholder="📝 1 mot (rue, étage, urgence…)" maxlength="80">
       <button type="submit" class="chat-urg-send">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -1373,7 +1373,7 @@ if (document.fonts && document.fonts.ready) {
           <input aria-label="Nom" type="text" name="nom" placeholder="Nom *" required class="sous-inp" data-validate="required">
         </div>
         <input aria-label="Email" type="email" name="email" placeholder="Email *" required class="sous-inp" style="margin-bottom:10px" data-validate="email">
-        <input aria-label="Téléphone" type="tel" name="telephone" placeholder="Téléphone *" required class="sous-inp" data-validate="tel">
+        <input aria-label="Téléphone" type="tel" name="telephone" placeholder="Téléphone *" required class="sous-inp" data-validate="tel" pattern="[0-9 +.\-]{10,}" autocomplete="tel">
       </div>
 
       <!-- ═══════════ ÉTAPE 2 — Adresse ═══════════ -->
