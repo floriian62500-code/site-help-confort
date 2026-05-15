@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Finalisation configuration · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<link rel="manifest" href="/admin-pro/manifest.webmanifest">
+<meta name="theme-color" content="#0DA0CF">
+<style>
+  body{font-family:Inter,sans-serif;background:#FAFCFD;margin:0;padding:24px}
+  .wrap{max-width:920px;margin:0 auto}
+  h1{font-size:1.6rem;margin:0 0 8px;display:flex;align-items:center;gap:10px}
+  .sub{color:#64748b;margin-bottom:24px}
+  .step{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:0 1px 2px rgba(11,18,32,.04)}
+  .step h2{margin:0 0 6px;font-size:1.1rem;display:flex;align-items:center;gap:10px}
+  .step .hint{color:#64748b;font-size:.84rem;margin:0 0 14px;line-height:1.55}
+  .step.done{background:linear-gradient(135deg,#F0FDF4,#fff);border-color:rgba(22,163,74,.35)}
+  .step.done .badge-state{background:#dcfce7;color:#15803d}
+  .step .badge-state{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.74rem;font-weight:800;background:#fef3c7;color:#92400e}
+  textarea{width:100%;padding:11px 13px;border:1px solid #e2e8f0;border-radius:9px;font:inherit;font-size:.84rem;background:#fff;box-sizing:border-box;font-family:Menlo,Monaco,monospace;resize:vertical}
+  input[type=text]{width:100%;padding:11px 13px;border:1px solid #e2e8f0;border-radius:9px;font:inherit;font-size:.92rem;background:#fff;box-sizing:border-box}
+  textarea:focus,input:focus{outline:none;border-color:#0DA0CF;box-shadow:0 0 0 3px rgba(13,160,207,.15)}
+  .cta{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;color:#fff;border:none;border-radius:10px;font:inherit;font-weight:800;font-size:.96rem;cursor:pointer;background:linear-gradient(135deg,#15803D,#22C55E);box-shadow:0 4px 14px rgba(34,197,94,.30)}
+  .cta:disabled{opacity:.55;cursor:not-allowed}
+  .cta-secondary{background:linear-gradient(135deg,#FFB400,#FF6B1A);box-shadow:0 4px 14px rgba(255,107,26,.30)}
+  a.back{color:#0DA0CF;text-decoration:none;font-size:.84rem;font-weight:600}
+  .log{background:#0A1428;color:#A7F3D0;padding:14px 18px;border-radius:10px;font-family:Menlo,Monaco,monospace;font-size:.82rem;max-height:260px;overflow:auto;white-space:pre-wrap;line-height:1.55;margin-top:14px}
+  .log .ok{color:#22c55e}.log .err{color:#fda4af}.log .info{color:#A7C7E7}
+  details{margin-top:8px;font-size:.8rem;color:#64748b}
+  summary{cursor:pointer;font-weight:600}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:768px){.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Retour au dashboard</a>
+  <h1>🚀 Finalisation configuration</h1>
+  <p class="sub">Colle les 3 valeurs manquantes ci-dessous (GA4 JSON + clé Claude IA + SIRET + infos société). Tout sera sauvegardé en base via ta session admin. <strong>Plus rapide qu'aller dans Settings section par section.</strong></p>
+
+  <!-- ───── ÉTAPE 1 : GA4 JSON ───── -->
+  <div class="step" id="step-ga4">
+    <h2>1️⃣ Google Analytics 4 — Service Account JSON <span class="badge-state" id="state-ga4">À COMPLÉTER</span></h2>
+    <p class="hint">Re-télécharge le JSON depuis <a href="https://console.cloud.google.com/iam-admin/serviceaccounts?project=help-confort-back-office" target="_blank">Google Cloud → Comptes de service → ga4-reader</a> → onglet <strong>Clés</strong> → <strong>Ajouter une clé → Créer une clé → JSON</strong>. Ouvre le fichier .json téléchargé, Cmd+A, Cmd+C, puis colle ci-dessous le JSON COMPLET (30 lignes, avec la <code>private_key</code> entière).</p>
+    <textarea id="ga4_json" rows="14" placeholder='{
+  "type": "service_account",
+  "project_id": "help-confort-back-office",
+  "private_key_id": "...",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIE...\n-----END PRIVATE KEY-----\n",
+  "client_email": "ga4-reader@help-confort-back-office.iam.gserviceaccount.com",
+  "client_id": "...",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  ...
+}'></textarea>
+    <details>
+      <summary>📋 Comment retrouver le JSON ?</summary>
+      <p>1. Va sur <a href="https://console.cloud.google.com/iam-admin/serviceaccounts?project=help-confort-back-office" target="_blank">Google Cloud Console → Service accounts</a><br>
+      2. Clique sur <strong>ga4-reader@help-confort-back-office.iam.gserviceaccount.com</strong><br>
+      3. Onglet <strong>"Clés" (Keys)</strong><br>
+      4. <strong>"Ajouter une clé" → "Créer une clé" → JSON</strong><br>
+      5. Un fichier .json est téléchargé. Ouvre-le avec TextEdit. Cmd+A puis Cmd+C → colle ici.</p>
+    </details>
+  </div>
+
+  <!-- ───── ÉTAPE 2 : Clé Claude IA ───── -->
+  <div class="step" id="step-claude">
+    <h2>2️⃣ Clé API Claude IA <span class="badge-state" id="state-claude">À COMPLÉTER</span></h2>
+    <p class="hint">Récupère ta clé sur <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com → API Keys</a>. Format : <code>sk-ant-api03-...</code> (environ 108 caractères).</p>
+    <input type="text" id="claude_key" placeholder="sk-ant-api03-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off" data-1p-ignore data-lpignore="true">
+    <details>
+      <summary>🔑 Cette clé sert à quoi ?</summary>
+      <p>Elle alimente tous les agents IA du back-office :<br>
+      • Génération de posts FB/IG/Google à partir d'une photo de chantier<br>
+      • Réponse automatique aux avis Google ≤ 2★ (brouillons à valider)<br>
+      • Chatbot d'urgence sur le site public<br>
+      • Optimisation SEO des descriptions de prestations<br>
+      • Agents quotidiens (sync, monitoring, etc.)</p>
+    </details>
+  </div>
+
+  <!-- ───── ÉTAPE 3 : Infos société (SIRET + raison sociale + contacts) ───── -->
+  <div class="step" id="step-company">
+    <h2>3️⃣ Informations société <span class="badge-state" id="state-company">À COMPLÉTER</span></h2>
+    <p class="hint">Données utilisées pour le SEO local, les balises meta, JSON-LD, mentions légales et signatures emails. Pré-rempli avec ce que je sais — corrige si besoin.</p>
+    <div class="row">
+      <div>
+        <label style="font-size:.82rem;font-weight:700;color:#0A1428">Raison sociale</label>
+        <input type="text" id="co_name" value="SARL Dépannage 59-62" autocomplete="off">
+      </div>
+      <div>
+        <label style="font-size:.82rem;font-weight:700;color:#0A1428">SIRET (14 chiffres)</label>
+        <input type="text" id="co_siret" placeholder="12345678900001" autocomplete="off" data-1p-ignore data-lpignore="true" inputmode="numeric" pattern="[0-9]{14}">
+      </div>
+      <div>
+        <label style="font-size:.82rem;font-weight:700;color:#0A1428">Téléphone principal</label>
+        <input type="text" id="co_phone" value="03 66 10 01 34" autocomplete="off">
+      </div>
+      <div>
+        <label style="font-size:.82rem;font-weight:700;color:#0A1428">Email principal</label>
+        <input type="text" id="co_email" value="contact@depan59-62.fr" autocomplete="off">
+      </div>
+      <div style="grid-column:1/-1">
+        <label style="font-size:.82rem;font-weight:700;color:#0A1428">URL site public</label>
+        <input type="text" id="co_url" value="https://depan59-62.fr" autocomplete="off">
+      </div>
+    </div>
+  </div>
+
+  <!-- ───── ACTION : Tout enregistrer ───── -->
+  <div class="step" style="text-align:center">
+    <button class="cta" id="btnSaveAll">💾 Tout enregistrer en une fois</button>
+    <p class="sub" style="margin:12px 0 0;font-size:.82rem">Les valeurs déjà en base sont préservées si tu laisses un champ vide (sauf SIRET qui doit être saisi au moins une fois).</p>
+  </div>
+
+  <div class="step" id="logCard" style="display:none">
+    <h2>📋 Log d'exécution</h2>
+    <div class="log" id="log"></div>
+  </div>
+</div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script>
+(async function(){
+  const sb = await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+
+  const logEl = document.getElementById('log');
+  const logCard = document.getElementById('logCard');
+  function log(msg, cls=''){ logCard.style.display=''; logEl.innerHTML += `<span class="${cls}">${msg}</span>\n`; logEl.scrollTop = logEl.scrollHeight; }
+  function setState(stepId, ok, label){
+    const step = document.getElementById('step-' + stepId);
+    const badge = document.getElementById('state-' + stepId);
+    if (ok) { step.classList.add('done'); badge.textContent = label || '✓ ENREGISTRÉ'; }
+    else { step.classList.remove('done'); badge.textContent = label || 'À COMPLÉTER'; }
+  }
+
+  // Pré-charge l'état actuel : si déjà rempli, on indique "déjà en base"
+  try {
+    const { data: rows } = await sb.from('app_settings').select('key,value').in('key', ['ga4','claude','company']);
+    (rows||[]).forEach(r => {
+      if (r.key === 'ga4' && r.value?.service_account_json) {
+        const sa = typeof r.value.service_account_json === 'string' ? r.value.service_account_json : JSON.stringify(r.value.service_account_json);
+        if (sa.length > 500) setState('ga4', true, '✓ DÉJÀ EN BASE — re-coller pour remplacer');
+      }
+      if (r.key === 'claude' && r.value?.api_key) setState('claude', true, '✓ DÉJÀ EN BASE — re-coller pour remplacer');
+      if (r.key === 'company' && r.value?.siret) {
+        setState('company', true, '✓ DÉJÀ EN BASE');
+        if (r.value.name) document.getElementById('co_name').value = r.value.name;
+        if (r.value.siret) document.getElementById('co_siret').value = r.value.siret;
+        if (r.value.phone) document.getElementById('co_phone').value = r.value.phone;
+        if (r.value.email) document.getElementById('co_email').value = r.value.email;
+        if (r.value.url) document.getElementById('co_url').value = r.value.url;
+      }
+    });
+  } catch(_e){}
+
+  // ─── Upsert merge helper ───
+  async function upsertMerge(key, newValues){
+    const { data: cur } = await sb.from('app_settings').select('value').eq('key', key).maybeSingle();
+    const merged = { ...(cur?.value || {}), ...newValues };
+    const { error } = await sb.from('app_settings').upsert({ key, value: merged, updated_by: session.email }, { onConflict:'key' });
+    if (error) throw error;
+    return merged;
+  }
+
+  document.getElementById('btnSaveAll').onclick = async () => {
+    logEl.innerHTML = '';
+    logCard.style.display = '';
+    const btn = document.getElementById('btnSaveAll');
+    btn.disabled = true;
+    btn.textContent = '⏳ Enregistrement…';
+
+    let okCount = 0, skipCount = 0, errCount = 0;
+
+    // ─── 1) GA4 ───
+    const ga4Raw = document.getElementById('ga4_json').value.trim();
+    if (ga4Raw) {
+      log('1️⃣ GA4 — Validation et sauvegarde du JSON…', 'info');
+      try {
+        const parsed = JSON.parse(ga4Raw);
+        if (!parsed.client_email || !parsed.private_key) throw new Error('JSON incomplet : il manque client_email ou private_key');
+        if (!String(parsed.private_key).includes('-----BEGIN PRIVATE KEY-----')) throw new Error('private_key invalide (pas de BEGIN PRIVATE KEY)');
+        await upsertMerge('ga4', { service_account_json: ga4Raw, property_id: '537770890' });
+        log('  ✓ GA4 JSON sauvegardé (' + ga4Raw.length + ' caractères, service account : ' + parsed.client_email + ')', 'ok');
+        setState('ga4', true, '✓ ENREGISTRÉ');
+        okCount++;
+      } catch(e) {
+        log('  ❌ GA4 : ' + e.message, 'err');
+        errCount++;
+      }
+    } else {
+      log('1️⃣ GA4 — Champ vide, valeur en base préservée.', 'info');
+      skipCount++;
+    }
+
+    // ─── 2) Claude IA ───
+    const claudeKey = document.getElementById('claude_key').value.trim();
+    if (claudeKey) {
+      log('\n2️⃣ Claude IA — Validation et sauvegarde de la clé…', 'info');
+      try {
+        if (!/^sk-ant-/.test(claudeKey)) throw new Error('La clé doit commencer par sk-ant-');
+        if (claudeKey.length < 60) throw new Error('La clé semble trop courte (' + claudeKey.length + ' chars, attendu ~108)');
+        await upsertMerge('claude', { api_key: claudeKey, model: 'claude-sonnet-4-6' });
+        log('  ✓ Clé Claude IA sauvegardée (' + claudeKey.length + ' chars, format OK)', 'ok');
+        setState('claude', true, '✓ ENREGISTRÉ');
+        okCount++;
+      } catch(e) {
+        log('  ❌ Claude IA : ' + e.message, 'err');
+        errCount++;
+      }
+    } else {
+      log('\n2️⃣ Claude IA — Champ vide, valeur en base préservée.', 'info');
+      skipCount++;
+    }
+
+    // ─── 3) Infos société ───
+    const co = {
+      name: document.getElementById('co_name').value.trim(),
+      siret: document.getElementById('co_siret').value.trim().replace(/\s/g, ''),
+      phone: document.getElementById('co_phone').value.trim(),
+      email: document.getElementById('co_email').value.trim(),
+      url: document.getElementById('co_url').value.trim()
+    };
+    log('\n3️⃣ Infos société — Sauvegarde…', 'info');
+    if (co.siret && !/^\d{14}$/.test(co.siret)) {
+      log('  ⚠ SIRET doit faire 14 chiffres (actuel : ' + co.siret.length + '). Sauvegarde quand même.', 'info');
+    }
+    try {
+      await upsertMerge('company', co);
+      log('  ✓ Infos société sauvegardées : ' + co.name + ' · SIRET ' + (co.siret||'(vide)') + ' · ' + co.phone, 'ok');
+      setState('company', true, '✓ ENREGISTRÉ');
+      okCount++;
+    } catch(e) {
+      log('  ❌ Société : ' + e.message, 'err');
+      errCount++;
+    }
+
+    log(`\n═══════════════════════════════════════`);
+    log(`✅ ${okCount} section(s) enregistrée(s)`, 'ok');
+    if (skipCount) log(`ℹ ${skipCount} section(s) passée(s) (valeur préservée)`, 'info');
+    if (errCount) log(`❌ ${errCount} erreur(s)`, 'err');
+    log(`═══════════════════════════════════════`);
+
+    if (errCount === 0 && okCount > 0) {
+      log('\n🚀 Prochaines étapes :', 'info');
+      if (okCount >= 2) log('  → Test GA4 : https://depan59-62.fr/admin-pro/sync-ga4.html', 'info');
+      log('  → Settings (vérification) : https://depan59-62.fr/admin-pro/settings.html', 'info');
+    }
+
+    btn.disabled = false;
+    btn.textContent = '💾 Re-enregistrer';
+  };
+})();
+</script>
+</body>
+</html>
