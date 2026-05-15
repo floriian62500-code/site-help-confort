@@ -455,3 +455,12 @@ Chaque sonde retourne ✅ / ⚠️ / ❌ + le snippet incriminé + une suggestio
 32. **Sonde FAQ-top-métier-cohérence** : étendre sonde #27 au bloc HC-FAQ-SCHEMA-V1, pas uniquement aux `<details>` HTML.
 
 *Addendum v5 généré le 15 mai 2026 par l'agent autonome — 2 bugs FAQPage doublonnée + 2 nouvelles sondes.*
+
+---
+
+### Sondes additionnelles v6 (15 mai 2026 PM)
+33. **Sonde console.log résiduels** : `grep -nE "console\.(log|debug|trace)\(" *.html` sur la racine. Seuil : **0** match en prod (toléré sous `admin-pro/` et `scripts/`). Si match → ALERTE *fuite info debug*. Audit 15/05 16h45 : 0 match racine ✓.
+34. **Sonde tarif inventé** : pour chaque match `\d+\s*€` sur les pages publiques racine, croiser avec `TARIFS_REFERENCE.md`. Tout montant non trouvé ET élément sans `data-source` voisin → ALERTE *tarif non sourcé*. Référencer le bug #23 (data-source manquant).
+35. **Sonde RFC 9116** : vérifier que `.well-known/security.txt` existe ET que la date `Expires:` est dans le futur. Si manquant ou expiré → ALERTE.
+
+*Addendum v6 généré le 15 mai 2026 par l'agent autonome — 3 nouvelles sondes (debug log, tarif inventé, security.txt expiré).*

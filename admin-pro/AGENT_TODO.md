@@ -95,7 +95,7 @@
 
 - [x] **`/.well-known/security.txt`** — créer fichier RFC 9116 (contact sécurité, expiration 12 mois, preferred-languages fr/en) pour exposer un canal de divulgation responsable. Mettre à jour `netlify.toml` pour redirect `/security.txt` → `/.well-known/security.txt` si nécessaire. *(fait 15/05 — fichier `.well-known/security.txt` + redirect Netlify ajouté)*
 - [x] **`humans.txt`** — créer fichier racine `humans.txt` (crédits équipe, stack technique, dernière MAJ) — convention web humansTxt.org. *(fait 15/05 — humans.txt racine créé)*
-- [ ] **Sonde IA #27 : console.log() résiduels** — ajouter dans `MEMOIRE_IA_MAINTENANCE.md` une sonde scannant les pages publiques pour `console.log(` non commentés (fuite info debug). Seuil : 0 sur pages racine, toléré dans `/admin-pro/`.
+- [x] **Sonde IA #27 : console.log() résiduels** — ajouter dans `MEMOIRE_IA_MAINTENANCE.md` une sonde scannant les pages publiques pour `console.log(` non commentés (fuite info debug). Seuil : 0 sur pages racine, toléré dans `/admin-pro/`. *(fait 15/05 — Sonde #33 ajoutée MEMOIRE v6 ; audit live : 0 match racine ✓ ; sondes #34-35 bonus tarif-inventé + RFC 9116 expirée)*
 - [ ] **Sonde IA #28 : tarif inventé** — scanner toutes les pages publiques pour `\d+\s*€` et croiser avec `TARIFS_REFERENCE.md`. Tout montant non trouvé → ALERTE. Documenter dans MEMOIRE.
 - [ ] **Sonde IA #29 : `data-source` orphelin** — vérifier que tout élément avec `data-source="..."` pointe vers une source connue (BAREME AGENCE, devis YYYY-MM-DD…). Sinon ALERTE.
 - [ ] **Page `blog.html`** — créer un hub central listant les 4 guides + 3 derniers articles (fetch `articles` Supabase, fallback JSON). Ajout au menu principal. Schema.org `Blog`.
