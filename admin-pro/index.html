@@ -1006,6 +1006,30 @@
             </div>
           </a>`;
         }).join('');
+
+    // Handler du bouton "Synchroniser maintenant" si GBP configuré mais 0 avis
+    const btnSyncReviewsNow = document.getElementById('btnSyncReviewsNow');
+    if (btnSyncReviewsNow) {
+      btnSyncReviewsNow.onclick = async () => {
+        btnSyncReviewsNow.disabled = true;
+        btnSyncReviewsNow.textContent = '⏳ Synchronisation en cours…';
+        try {
+          const { data: syncData, error: syncErr } = await c.functions.invoke('sync-reviews', { body: {} });
+          if (syncErr) throw new Error(syncErr.message || 'Erreur sync');
+          if (syncData?.imported > 0) {
+            btnSyncReviewsNow.textContent = `✓ ${syncData.imported} avis importés — recharge la page`;
+            setTimeout(() => location.reload(), 1500);
+          } else {
+            btnSyncReviewsNow.textContent = '✓ Aucun nouvel avis (page à jour)';
+            btnSyncReviewsNow.style.background = '#22A06B';
+          }
+        } catch (e) {
+          btnSyncReviewsNow.disabled = false;
+          btnSyncReviewsNow.textContent = '⟳ Synchroniser maintenant';
+          alert('Erreur synchronisation : ' + (e.message || e) + '\n\nVérifie que ton token Google Business Profile est valide dans Réglages → Google Business.');
+        }
+      };
+    }
   } catch (e) { console.warn('Widget pub+reviews failed:', e); }
 
   // ─── WIDGET SYNTHÈSE COMMERCIALE (30 derniers jours) ──────
