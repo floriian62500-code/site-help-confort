@@ -70,7 +70,11 @@ FALLBACK_PATTERNS = [
     # Fallback de type "tableau d'exemples hardcodés" (≥ 3 objets littéraux)
     re.compile(r"""(?:const|let|var)\s+\w+\s*=\s*\[\s*\{[^}]*['"]title['"]""", re.I),
     # Ré-affectation d'un tableau d'exemples (var declaré + initialisé plus loin)
-    re.compile(r"""\w+\s*=\s*\[\s*\{[^}]*['"](?:author_name|title|nom|categorie|rating|text|metier|name|prestation)['"]""", re.I),
+    # Accepte les clés JS sans guillemets (shorthand) ET avec guillemets.
+    re.compile(
+        r"""\w+\s*=\s*\[\s*\{[^}]*?["']?(?:author_name|title|nom|categorie|rating|text|metier|name|prestation|service|libelle)["']?\s*:""",
+        re.I | re.S,
+    ),
 ]
 
 # On regarde aussi un fallback minimal côté UX : un catch() qui affiche

@@ -74,6 +74,11 @@ jobs:
             audit_og_image.py
             audit_faqpage_doublon.py
             audit_schema_type_metier.py
+            audit_sitemap_completeness.py
+            audit_heading_hierarchy.py
+            audit_sw_version.py
+            audit_fallback_supabase.py
+            audit_typo_fr.py
           )
           for a in "${AUDITS[@]}"; do
             f="admin-pro/audits/$a"

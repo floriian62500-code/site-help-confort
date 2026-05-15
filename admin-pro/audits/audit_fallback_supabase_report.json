@@ -1,14 +1,14 @@
 {
   "audit": "fallback_supabase",
-  "generated_at": "2026-05-15T17:50:27",
+  "generated_at": "2026-05-15T17:50:48",
   "stats": {
     "pages_audited": 38,
     "pages_using_supabase": 9,
-    "pages_with_fallback": 12,
-    "pages_alerted": 4,
-    "total_findings": 4,
+    "pages_with_fallback": 13,
+    "pages_alerted": 3,
+    "total_findings": 3,
     "code_distribution": {
-      "NO-FALLBACK": 4
+      "NO-FALLBACK": 3
     }
   },
   "results": [
@@ -358,6 +358,7 @@
       ],
       "has_fallback": true,
       "fallback_signatures": [
+        "actus = [\n { slug:'2026-05-07-remplacement-de-panneau-pvc-modele-surinam-3', title:",
         "fetch('content/realisations/index.json'"
       ],
       "soft_fallback_catch": false,
@@ -389,16 +390,12 @@
       "supabase_signatures": [
         "/rest/v1/reviews"
       ],
-      "has_fallback": false,
-      "fallback_signatures": [],
+      "has_fallback": true,
+      "fallback_signatures": [
+        "allReviews = [\n {author_name:"
+      ],
       "soft_fallback_catch": false,
-      "findings": [
-        {
-          "code": "NO-FALLBACK",
-          "severity": "error",
-          "detail": "Page utilise Supabase (1 appel(s) détecté(s)) mais aucun fallback local (`LOCAL_CATALOG`, `FALLBACK_DATA`, …) n'est déclaré dans les <script>. Aucun catch() de secours visible."
-        }
-      ]
+      "findings": []
     },
     {
       "file": "travaux-saint-omer.html",
@@ -417,6 +414,7 @@
       "supabase_signatures": [],
       "has_fallback": true,
       "fallback_signatures": [
+        "cities = [\n { lat: 50.9513, lng: 1.8587, name:",
         "fetch('content/realisations/index.json?t='"
       ],
       "soft_fallback_catch": false,
