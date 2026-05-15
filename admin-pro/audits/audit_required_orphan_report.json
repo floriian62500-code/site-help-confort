@@ -1,0 +1,75 @@
+{
+  "generated_at": "2026-05-15T18:49:45",
+  "scanned": 38,
+  "pages_with_findings": 1,
+  "findings_total": 7,
+  "per_page": {
+    "index.html": [
+      {
+        "tag": "textarea",
+        "line": 867,
+        "type": "",
+        "name": "resa-desc",
+        "triggers": [
+          "required"
+        ]
+      },
+      {
+        "tag": "input",
+        "line": 896,
+        "type": "text",
+        "name": "resa-prenom",
+        "triggers": [
+          "required"
+        ]
+      },
+      {
+        "tag": "input",
+        "line": 900,
+        "type": "text",
+        "name": "resa-nom",
+        "triggers": [
+          "required"
+        ]
+      },
+      {
+        "tag": "input",
+        "line": 907,
+        "type": "tel",
+        "name": "resa-tel",
+        "triggers": [
+          "required",
+          "pattern='[0-9 +.\\\\-]{10,}'"
+        ]
+      },
+      {
+        "tag": "input",
+        "line": 911,
+        "type": "email",
+        "name": "resa-email",
+        "triggers": [
+          "required"
+        ]
+      },
+      {
+        "tag": "input",
+        "line": 917,
+        "type": "text",
+        "name": "resa-adresse",
+        "triggers": [
+          "required"
+        ]
+      },
+      {
+        "tag": "input",
+        "line": 927,
+        "type": "text",
+        "name": "resa-cp",
+        "triggers": [
+          "required",
+          "pattern='[0-9]{5}'"
+        ]
+      }
+    ]
+  }
+}
