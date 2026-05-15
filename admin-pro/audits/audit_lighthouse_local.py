@@ -35,7 +35,7 @@ def audit_page(path):
 
     # === SEO ===
     # Title
-    mt = re.search(r'<title>(.*?)</title>', head, re.I | re.S)
+    mt = re.search(r'<title[^>]*>(.*?)</title>', head, re.I | re.S)
     if mt:
         tlen = len(mt.group(1).strip())
         if tlen < 30:   res['warnings'].append(f'SEO title court ({tlen} chars, idéal 30–65)')
@@ -44,8 +44,9 @@ def audit_page(path):
     else:
         res['errors'].append('SEO <title> manquant')
 
-    # Description
-    md = re.search(r'<meta\s+name="description"\s+content="([^"]+)"', head, re.I)
+    # Description (tolère attributs additionnels comme id=, lang=)
+    md = re.search(r'<meta[^>]*\bname="description"[^>]*\bcontent="([^"]+)"', head, re.I) \
+       or re.search(r'<meta[^>]*\bcontent="([^"]+)"[^>]*\bname="description"', head, re.I)
     if md:
         dlen = len(md.group(1))
         if dlen < 50:    res['warnings'].append(f'meta description courte ({dlen} chars)')

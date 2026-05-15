@@ -1,16 +1,14 @@
-# 🔦 Audit Lighthouse local — 2026-05-15 10:58
+# 🔦 Audit Lighthouse local — 2026-05-15 11:00
 
-**37 pages auditées** · **10 erreurs** · **22 warnings** · **Score moyen 94/100**
+**37 pages auditées** · **0 erreurs** · **17 warnings** · **Score moyen 98/100**
 
 ## 📊 Résumé par page
 
 | Page | Score | Erreurs | Warnings |
 |------|------:|--------:|---------:|
-| `aides.html` | **28/100** | 4 | 3 |
-| `processus.html` | **28/100** | 4 | 3 |
-| `realisation.html` | **66/100** | 2 | 1 |
 | `electricien-saint-omer.html` | **92/100** | 0 | 2 |
 | `faq.html` | **92/100** | 0 | 2 |
+| `realisation.html` | **92/100** | 0 | 2 |
 | `serrurier-saint-omer.html` | **92/100** | 0 | 2 |
 | `chauffagiste-saint-omer.html` | **96/100** | 0 | 1 |
 | `contact.html` | **96/100** | 0 | 1 |
@@ -23,6 +21,7 @@
 | `travaux-saint-omer.html` | **96/100** | 0 | 1 |
 | `a-propos.html` | **100/100** | 0 | 0 |
 | `actualites.html` | **100/100** | 0 | 0 |
+| `aides.html` | **100/100** | 0 | 0 |
 | `avant-apres.html` | **100/100** | 0 | 0 |
 | `carrieres.html` | **100/100** | 0 | 0 |
 | `depannage-arques.html` | **100/100** | 0 | 0 |
@@ -40,46 +39,12 @@
 | `guides.html` | **100/100** | 0 | 0 |
 | `mentions-legales.html` | **100/100** | 0 | 0 |
 | `pro.html` | **100/100** | 0 | 0 |
+| `processus.html` | **100/100** | 0 | 0 |
 | `realisations.html` | **100/100** | 0 | 0 |
 | `sinistres.html` | **100/100** | 0 | 0 |
 | `zones-intervention.html` | **100/100** | 0 | 0 |
 
 ## 🔍 Détails par page
-
-### aides.html — 28/100
-
-**Erreurs :**
-- ❌ SEO <title> manquant
-- ❌ meta description manquante
-- ❌ viewport manquant
-- ❌ charset manquant
-
-**Warnings :**
-- ⚠️ <link rel="canonical"> manquant
-- ⚠️ og:image manquant
-- ⚠️ Aucun rel=preconnect
-
-### processus.html — 28/100
-
-**Erreurs :**
-- ❌ SEO <title> manquant
-- ❌ meta description manquante
-- ❌ viewport manquant
-- ❌ charset manquant
-
-**Warnings :**
-- ⚠️ <link rel="canonical"> manquant
-- ⚠️ og:image manquant
-- ⚠️ Aucun rel=preconnect
-
-### realisation.html — 66/100
-
-**Erreurs :**
-- ❌ SEO <title> manquant
-- ❌ meta description manquante
-
-**Warnings :**
-- ⚠️ 3 <h1> trouvés (devrait être 1)
 
 ### electricien-saint-omer.html — 92/100
 
@@ -92,6 +57,12 @@
 **Warnings :**
 - ⚠️ SEO title long (88 chars)
 - ⚠️ meta description longue (163 chars)
+
+### realisation.html — 92/100
+
+**Warnings :**
+- ⚠️ SEO title court (24 chars, idéal 30–65)
+- ⚠️ 3 <h1> trouvés (devrait être 1)
 
 ### serrurier-saint-omer.html — 92/100
 
@@ -148,6 +119,7 @@
 
 - a-propos.html
 - actualites.html
+- aides.html
 - avant-apres.html
 - carrieres.html
 - depannage-arques.html
@@ -165,6 +137,7 @@
 - guides.html
 - mentions-legales.html
 - pro.html
+- processus.html
 - realisations.html
 - sinistres.html
 - zones-intervention.html
