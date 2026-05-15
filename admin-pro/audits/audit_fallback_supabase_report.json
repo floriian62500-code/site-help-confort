@@ -1,0 +1,422 @@
+{
+  "audit": "fallback_supabase",
+  "generated_at": "2026-05-15T17:49:26",
+  "stats": {
+    "pages_audited": 38,
+    "pages_using_supabase": 9,
+    "pages_with_fallback": 2,
+    "pages_alerted": 7,
+    "total_findings": 7,
+    "code_distribution": {
+      "NO-FALLBACK": 7
+    }
+  },
+  "results": [
+    {
+      "file": "a-propos.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "actualites.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "aides.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "avant-apres.html",
+      "uses_supabase": true,
+      "supabase_signatures": [
+        "/rest/v1/realisations"
+      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": [
+        {
+          "code": "NO-FALLBACK",
+          "severity": "error",
+          "detail": "Page utilise Supabase (1 appel(s) détecté(s)) mais aucun fallback local (`LOCAL_CATALOG`, `FALLBACK_DATA`, …) n'est déclaré dans les <script>. Aucun catch() de secours visible."
+        }
+      ]
+    },
+    {
+      "file": "blog.html",
+      "uses_supabase": true,
+      "supabase_signatures": [
+        "/rest/v1/articles"
+      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": [
+        {
+          "code": "NO-FALLBACK",
+          "severity": "error",
+          "detail": "Page utilise Supabase (1 appel(s) détecté(s)) mais aucun fallback local (`LOCAL_CATALOG`, `FALLBACK_DATA`, …) n'est déclaré dans les <script>. Aucun catch() de secours visible."
+        }
+      ]
+    },
+    {
+      "file": "carrieres.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "chauffagiste-saint-omer.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "contact.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "contrats-entretien.html",
+      "uses_supabase": true,
+      "supabase_signatures": [
+        "createClient("
+      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": [
+        {
+          "code": "NO-FALLBACK",
+          "severity": "warning",
+          "detail": "Page utilise Supabase (2 appel(s) détecté(s)) mais aucun fallback local (`LOCAL_CATALOG`, `FALLBACK_DATA`, …) n'est déclaré dans les <script>. Aucun catch() de secours visible."
+        }
+      ]
+    },
+    {
+      "file": "depannage-arques.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "depannage-bergues.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "depannage-dunkerque.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "depannage-gravelines.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "depannage-longuenesse.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "depannage-saint-martin-lez-tatinghem.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "depannage-saint-omer.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "devis-express.html",
+      "uses_supabase": true,
+      "supabase_signatures": [
+        "/rest/v1/leads"
+      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": [
+        {
+          "code": "NO-FALLBACK",
+          "severity": "error",
+          "detail": "Page utilise Supabase (1 appel(s) détecté(s)) mais aucun fallback local (`LOCAL_CATALOG`, `FALLBACK_DATA`, …) n'est déclaré dans les <script>. Aucun catch() de secours visible."
+        }
+      ]
+    },
+    {
+      "file": "electricien-saint-omer.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "espace-client.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "faq.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "guide-adaptation-pmr.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "guide-entretien-chaudiere.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "guide-fuite-eau.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "guide-mise-aux-normes-electriques.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "guides.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "index.html",
+      "uses_supabase": true,
+      "supabase_signatures": [
+        "/rest/v1/leads"
+      ],
+      "has_fallback": true,
+      "fallback_signatures": [
+        "LOCAL_CATALOG"
+      ],
+      "soft_fallback_catch": true,
+      "findings": []
+    },
+    {
+      "file": "mentions-legales.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "nos-prestations.html",
+      "uses_supabase": true,
+      "supabase_signatures": [
+        "createClient("
+      ],
+      "has_fallback": true,
+      "fallback_signatures": [
+        "LOCAL_CATALOG"
+      ],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "plombier-saint-omer.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "pro.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "processus.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "realisation.html",
+      "uses_supabase": true,
+      "supabase_signatures": [
+        "createClient("
+      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": [
+        {
+          "code": "NO-FALLBACK",
+          "severity": "error",
+          "detail": "Page utilise Supabase (1 appel(s) détecté(s)) mais aucun fallback local (`LOCAL_CATALOG`, `FALLBACK_DATA`, …) n'est déclaré dans les <script>. Aucun catch() de secours visible."
+        }
+      ]
+    },
+    {
+      "file": "realisations.html",
+      "uses_supabase": true,
+      "supabase_signatures": [
+        "createClient("
+      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": [
+        {
+          "code": "NO-FALLBACK",
+          "severity": "warning",
+          "detail": "Page utilise Supabase (2 appel(s) détecté(s)) mais aucun fallback local (`LOCAL_CATALOG`, `FALLBACK_DATA`, …) n'est déclaré dans les <script>. Aucun catch() de secours visible."
+        }
+      ]
+    },
+    {
+      "file": "serrurier-saint-omer.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "sinistres.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "temoignages.html",
+      "uses_supabase": true,
+      "supabase_signatures": [
+        "/rest/v1/reviews"
+      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": [
+        {
+          "code": "NO-FALLBACK",
+          "severity": "error",
+          "detail": "Page utilise Supabase (1 appel(s) détecté(s)) mais aucun fallback local (`LOCAL_CATALOG`, `FALLBACK_DATA`, …) n'est déclaré dans les <script>. Aucun catch() de secours visible."
+        }
+      ]
+    },
+    {
+      "file": "travaux-saint-omer.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "zones-intervention.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    }
+  ]
+}
