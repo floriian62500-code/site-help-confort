@@ -28,8 +28,8 @@
 - [x] **`depannage-saint-martin-lez-tatinghem.html`** — idem. *(fait 15/05 — refonte hero+CTA premium, accent "dépôt sur la commune")*
 - [x] **`depannage-bergues.html`** — idem. *(fait 15/05 — refonte hero pictos + CTA premium gradient sombre, accent "patrimoine Vauban")*
 - [x] **`depannage-gravelines.html`** — idem. *(fait 15/05 — refonte hero pictos + CTA premium, accent "canton Loon-Plage→Hemmes-de-Marck")*
-- [ ] **`depannage-saint-omer.html`** — vérifier cohérence avec les autres + harmonisation CTA.
-- [ ] **`depannage-dunkerque.html`** — idem.
+- [x] **`depannage-saint-omer.html`** — vérifier cohérence avec les autres + harmonisation CTA. *(fait 15/05 — bloc loc-hero-pictos 5 SVG + cta-loc-premium gradient sombre, accent "audomarois")*
+- [x] **`depannage-dunkerque.html`** — idem. *(fait 15/05 — bloc loc-hero-pictos 5 SVG + cta-loc-premium gradient sombre, accent "littoral du Nord")*
 
 ## P3 — SEO & structured data
 
