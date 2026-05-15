@@ -53,10 +53,14 @@ serve(async (req) => {
     const cfg = settings?.value || {};
     const agences = cfg.agences || {};
     const agenceCfg = agences[contract.agence || agence || ''] || {};
-    const to = agenceCfg.email || cfg.subscriptions_to || 'florian.dhaillecourt@helpconfort.com';
+    // ⚠ from_email FORCÉ à noreply@depan59-62.fr (seul domaine vérifié dans Resend)
+    // Ignore app_settings.notification_emails.from_email tant que le domaine
+    // app_settings.value->from_email n'a pas été migré (migration 20260515000000).
+    const FROM_EMAIL_FORCED = 'noreply@depan59-62.fr';
+    const to = agenceCfg.email || cfg.subscriptions_to || 'saint-omer@helpconfort.com';
     const fromName = cfg.from_name || 'HELP! Confort — Site';
-    const fromEmail = cfg.from_email || 'noreply@depan59-62.fr';
-    const replyTo = cfg.reply_to || 'florian.dhaillecourt@helpconfort.com';
+    const fromEmail = FROM_EMAIL_FORCED;  // toujours depan59-62.fr (domaine Resend verified)
+    const replyTo = cfg.reply_to || 'saint-omer@helpconfort.com';
 
     const subject = `🔧 Nouvelle souscription contrat — ${contract.metadata?.energie || ''} ${(contract.type || '').toUpperCase()}`;
     const html = buildEmailHtml(contract);
