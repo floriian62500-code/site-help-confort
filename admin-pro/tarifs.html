@@ -163,9 +163,46 @@
   HCLayout.mount('tarifs', 'Tarifs de référence');
 
   // ──────────────────────────────────────────────────────────────
-  // Données issues de TARIFS_REFERENCE.md (15/05/2026)
-  // ⚠ Toute modif des prix doit être faite dans le .md ET ici.
+  // 🔄 SYNC LIVE depuis Supabase (table services + service_categories)
+  // La page lit en direct les prix de la DB. Toute modif depuis
+  // /admin-pro/services.html se reflète immédiatement ici.
+  // TARIFS_REFERENCE.md reste la doc de validation.
   // ──────────────────────────────────────────────────────────────
+  const sb = await HCSupabase.init();
+  let liveData = null;
+  try {
+    const [svcRes, catRes] = await Promise.all([
+      sb.from('services').select('*').eq('active', true).order('position'),
+      sb.from('service_categories').select('*').eq('active', true).order('position')
+    ]);
+    if (!svcRes.error && svcRes.data) {
+      const services = svcRes.data;
+      const cats = (catRes.data || []).reduce((acc, c) => { acc[c.id] = c; return acc; }, {});
+      // Regroupe par slug de catégorie pour matcher la structure DATA hardcodée
+      const groupBy = (slug) => services.filter(s => {
+        const cat = cats[s.category_id];
+        if (!cat) return false;
+        const catSlug = (cat.slug || '').toLowerCase();
+        return catSlug === slug || catSlug.startsWith(slug + '-') || catSlug.endsWith('-' + slug);
+      }).map(s => ({
+        name: s.name,
+        ht: Number(s.price_ht).toFixed(2),
+        ttc: Math.round(s.price_ht * (1 + s.vat_rate) * 100) / 100,
+        ref: s.slug
+      }));
+      liveData = {
+        plomberie:   groupBy('plomberie'),
+        chauffage:   groupBy('chauffage'),
+        'chauffe-eau': groupBy('chauffe-eau'),
+        electricite: groupBy('electricite'),
+        serrurerie:  groupBy('serrurerie'),
+        vitrerie:    groupBy('vitrerie'),
+        sur_mesure:  groupBy('sur-mesure')
+      };
+    }
+  } catch(e) { console.warn('Supabase services load failed, fallback to DATA hardcoded:', e); }
+
+  // Données issues de TARIFS_REFERENCE.md (fallback si Supabase indisponible)
   const DATA = {
     horaire: [
       { name: "Main d'œuvre tous métiers",                 ht: 53, ttc: 58, unit: "/h" },
