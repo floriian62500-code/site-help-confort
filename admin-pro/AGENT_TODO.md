@@ -23,9 +23,9 @@
 
 ## P2 — Pages locales depannage (cohérence inter-villes)
 
-- [ ] **`depannage-longuenesse.html`** — ajouter picto multi-métier dans hero + CTA premium en bas.
-- [ ] **`depannage-arques.html`** — idem.
-- [ ] **`depannage-saint-martin-lez-tatinghem.html`** — idem.
+- [x] **`depannage-longuenesse.html`** — ajouter picto multi-métier dans hero + CTA premium en bas. *(fait 15/05 — bloc loc-hero-pictos 5 SVG + cta-loc-premium gradient sombre/double CTA + 4 pills)*
+- [x] **`depannage-arques.html`** — idem. *(fait 15/05 — même refonte hero+CTA premium)*
+- [x] **`depannage-saint-martin-lez-tatinghem.html`** — idem. *(fait 15/05 — refonte hero+CTA premium, accent "dépôt sur la commune")*
 - [ ] **`depannage-bergues.html`** — idem.
 - [ ] **`depannage-gravelines.html`** — idem.
 - [ ] **`depannage-saint-omer.html`** — vérifier cohérence avec les autres + harmonisation CTA.
