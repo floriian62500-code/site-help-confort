@@ -46,13 +46,17 @@ THRESHOLD = 10
 # rapport cross-page pour ne pas noyer le signal (ils SONT attendus partout).
 EXPECTED_GLOBAL_IDS = {
     # Header / nav
-    "site-header", "main-nav", "menu-toggle", "mobile-menu",
+    "site-header", "main-nav", "menu-toggle", "mobile-menu", "hcHeader",
     # Footer
-    "site-footer", "footer-nav",
+    "site-footer", "footer-nav", "year",
     # PWA / consent banner
     "hc-consent-banner", "hc-consent-accept", "hc-consent-refuse",
     # Chatbot
     "hc-chatbot", "hc-chat-toggle", "hc-chat-window",
+    # Chatbot d'urgence (form 2-steps présent sur les 15 pages publiques racine)
+    "chatPrec", "chatQuick", "chatStep2Msg", "chatSvcField", "chatTel",
+    "chatUrg", "chatUrgBody", "chatUrgBtn", "chatUrgForm", "chatUrgPanel",
+    "chatUrgTitle",
     # SEO / techniques
     "skip-link", "main-content",
 }
