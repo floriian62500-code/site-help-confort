@@ -80,6 +80,11 @@ jobs:
             audit_fallback_supabase.py
             audit_typo_fr.py
             audit_leaflet_init.py
+            audit_chatbot_widget.py
+            audit_cls_prevention.py
+            audit_required_orphan.py
+            audit_alt_strict.py
+            audit_nav_doublon.py
           )
           for a in "${AUDITS[@]}"; do
             f="admin-pro/audits/$a"
