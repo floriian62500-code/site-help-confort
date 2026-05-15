@@ -2133,15 +2133,11 @@ if (document.fonts && document.fonts.ready) {
       var ins = await sb.from('contracts').insert(payload).select('id').single();
       if (ins.error) throw new Error('insert: ' + ins.error.message);
 
-      // ── 2. Déclenche l'envoi d'email (best effort, ne bloque pas si fail) ──
+      // ── 2. Déclenche l'envoi d'email via le SDK Supabase (gère la nouvelle
+      // auth publishable_key et bypass les soucis UNAUTHORIZED_LEGACY_JWT) ──
       try {
-        await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/notify-subscription', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2'
-          },
-          body: JSON.stringify({ contract_id: ins.data.id, agence: payload.agence })
+        await sb.functions.invoke('notify-subscription', {
+          body: { contract_id: ins.data.id, agence: payload.agence }
         });
       } catch (mailErr) {
         console.warn('[souscription] notify-subscription failed:', mailErr);
