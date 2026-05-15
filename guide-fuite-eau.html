@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <link rel="preconnect" href="https://btcbjwqiivhpwoszomhg.supabase.co" crossorigin>
-  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-  <link rel="dns-prefetch" href="https://api-adresse.data.gouv.fr">
+ <link rel="preconnect" href="https://btcbjwqiivhpwoszomhg.supabase.co" crossorigin>
+ <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+ <link rel="dns-prefetch" href="https://api-adresse.data.gouv.fr">
 
 <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -30,43 +30,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=1778685798">
 <style id="hc-critical-header">
-/* CSS critique — header + megamenu (inline pour garantir le rendu même si cache foireux) */
-.hc-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.92); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(229,237,243,.5); }
-.hc-header-row { display: flex; align-items: center; justify-content: space-between; padding: 12px clamp(20px, 4vw, 64px); max-width: 1480px; margin: 0 auto; gap: 24px; }
-.hc-logo { display: flex; align-items: center; flex-shrink: 0; }
-.hc-logo img { height: 56px; width: auto; max-width: none; display: block; }
-.hc-nav { display: none; }
-@media (min-width: 980px) { .hc-nav { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: center; position: relative; } }
-.hc-nav-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; color: #0A1428; text-decoration: none; font-size: .92rem; font-weight: 500; border-radius: 8px; transition: all .15s ease; cursor: pointer; }
-.hc-nav-link:hover { color: #0DA0CF; background: rgba(13,160,207,.06); }
-.hc-megamenu { position: absolute !important; top: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(-6px); background: #fff; border: 1px solid #E5EDF3; border-radius: 18px; padding: 14px; min-width: 380px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; box-shadow: 0 24px 48px rgba(10,20,40,.10); opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transition: opacity .2s ease, visibility .2s ease, transform .2s ease; z-index: 50; }
-.hc-megamenu::before { content: ''; position: absolute; top: -6px; left: 20%; right: 20%; height: 6px; }
-.hc-megamenu.mm-force-closed { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transform: translateX(-50%) translateY(-6px) !important; }
-.hc-nav-link[data-has-menu="metiers"]:hover ~ .hc-megamenu[data-menu="metiers"],
-.hc-nav-link[data-has-menu="zones"]:hover ~ .hc-megamenu[data-menu="zones"],
-.hc-megamenu:hover { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; transform: translateX(-50%) translateY(0); }
-.hc-megamenu a { display: inline-flex !important; align-items: center; gap: 12px; padding: 12px 14px; color: #0A1428; text-decoration: none; font-size: .94rem; font-weight: 500; border-radius: 10px; line-height: 1.2; transition: background .15s ease; }
-.hc-megamenu a:hover { background: rgba(13,160,207,.08); color: #0DA0CF; }
-.hc-megamenu a img, .hc-megamenu a .hc-mm-svg { width: 24px !important; height: 24px !important; object-fit: contain; flex-shrink: 0; }
-.hc-megamenu .hc-mm-svg svg { width: 22px !important; height: 22px !important; }
-.hc-megamenu .hc-mm-foot { grid-column: 1 / -1; margin-top: 8px; padding: 12px 14px 4px; border-top: 1px solid #E5EDF3; color: #0DA0CF; font-weight: 600; }
-.hc-megamenu-zones { grid-template-columns: 1fr; min-width: 320px; }
-.hc-megamenu-zones a { padding: 14px 16px; }
-.hc-megamenu-zones a strong { display: block; color: #0A1428; font-weight: 700; font-size: .98rem; }
-.hc-megamenu-zones a span { display: block; font-size: .82rem; color: #64748b; }
-.hc-header-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-.hc-btn-tel { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: #0A1428; color: #fff; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: .9rem; transition: background .2s ease; }
-.hc-btn-tel:hover { background: #0DA0CF; }
-.hc-btn-tel-num { letter-spacing: .02em; }
-.hc-burger { display: none; background: transparent; border: 0; padding: 8px; cursor: pointer; }
-@media (max-width: 979px) { .hc-burger { display: flex; flex-direction: column; gap: 4px; } .hc-btn-tel-num { display: none; } }
-.hc-burger span { display: block; width: 22px; height: 2px; background: #0A1428; border-radius: 2px; transition: all .25s ease; }
-.hc-nav-mobile { display: none; }
-.hc-nav-mobile.is-open { display: block; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #fff; z-index: 999; padding: 80px 24px 32px; overflow-y: auto; }
-.hc-nav-mobile-inner > a, .hc-nav-mobile-inner > details { display: block; padding: 14px 0; border-bottom: 1px solid #E5EDF3; color: #0A1428; text-decoration: none; font-weight: 600; font-size: 1.05rem; }
-.hc-nav-mobile-inner details summary { cursor: pointer; padding: 14px 0; }
-.hc-nav-mobile-inner .hc-nav-m-sub a { display: block; padding: 10px 16px; color: #475569; text-decoration: none; font-size: .92rem; }
-.hc-nav-mobile-inner .hc-nav-m-tel { margin-top: 24px; display: inline-flex; padding: 14px 22px; background: #0A1428; color: #fff; border-radius: 10px; gap: 10px; align-items: center; border-bottom: 0; }
+/* CSS critique — header + megamenu (inline pour garantir le rendu même si cache foireux) */.hc-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.92); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(229,237,243,.5); }.hc-header-row { display: flex; align-items: center; justify-content: space-between; padding: 12px clamp(20px, 4vw, 64px); max-width: 1480px; margin: 0 auto; gap: 24px; }.hc-logo { display: flex; align-items: center; flex-shrink: 0; }.hc-logo img { height: 56px; width: auto; max-width: none; display: block; }.hc-nav { display: none; }
+@media (min-width: 980px) {.hc-nav { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: center; position: relative; } }.hc-nav-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; color: #0A1428; text-decoration: none; font-size:.92rem; font-weight: 500; border-radius: 8px; transition: all.15s ease; cursor: pointer; }.hc-nav-link:hover { color: #0DA0CF; background: rgba(13,160,207,.06); }.hc-megamenu { position: absolute !important; top: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(-6px); background: #fff; border: 1px solid #E5EDF3; border-radius: 18px; padding: 14px; min-width: 380px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; box-shadow: 0 24px 48px rgba(10,20,40,.10); opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transition: opacity.2s ease, visibility.2s ease, transform.2s ease; z-index: 50; }.hc-megamenu::before { content: ''; position: absolute; top: -6px; left: 20%; right: 20%; height: 6px; }.hc-megamenu.mm-force-closed { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transform: translateX(-50%) translateY(-6px) !important; }.hc-nav-link[data-has-menu="metiers"]:hover ~.hc-megamenu[data-menu="metiers"],.hc-nav-link[data-has-menu="zones"]:hover ~.hc-megamenu[data-menu="zones"],.hc-megamenu:hover { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; transform: translateX(-50%) translateY(0); }.hc-megamenu a { display: inline-flex !important; align-items: center; gap: 12px; padding: 12px 14px; color: #0A1428; text-decoration: none; font-size:.94rem; font-weight: 500; border-radius: 10px; line-height: 1.2; transition: background.15s ease; }.hc-megamenu a:hover { background: rgba(13,160,207,.08); color: #0DA0CF; }.hc-megamenu a img,.hc-megamenu a.hc-mm-svg { width: 24px !important; height: 24px !important; object-fit: contain; flex-shrink: 0; }.hc-megamenu.hc-mm-svg svg { width: 22px !important; height: 22px !important; }.hc-megamenu.hc-mm-foot { grid-column: 1 / -1; margin-top: 8px; padding: 12px 14px 4px; border-top: 1px solid #E5EDF3; color: #0DA0CF; font-weight: 600; }.hc-megamenu-zones { grid-template-columns: 1fr; min-width: 320px; }.hc-megamenu-zones a { padding: 14px 16px; }.hc-megamenu-zones a strong { display: block; color: #0A1428; font-weight: 700; font-size:.98rem; }.hc-megamenu-zones a span { display: block; font-size:.82rem; color: #64748b; }.hc-header-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }.hc-btn-tel { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: #0A1428; color: #fff; text-decoration: none; border-radius: 10px; font-weight: 700; font-size:.9rem; transition: background.2s ease; }.hc-btn-tel:hover { background: #0DA0CF; }.hc-btn-tel-num { letter-spacing:.02em; }.hc-burger { display: none; background: transparent; border: 0; padding: 8px; cursor: pointer; }
+@media (max-width: 979px) {.hc-burger { display: flex; flex-direction: column; gap: 4px; }.hc-btn-tel-num { display: none; } }.hc-burger span { display: block; width: 22px; height: 2px; background: #0A1428; border-radius: 2px; transition: all.25s ease; }.hc-nav-mobile { display: none; }.hc-nav-mobile.is-open { display: block; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #fff; z-index: 999; padding: 80px 24px 32px; overflow-y: auto; }.hc-nav-mobile-inner > a,.hc-nav-mobile-inner > details { display: block; padding: 14px 0; border-bottom: 1px solid #E5EDF3; color: #0A1428; text-decoration: none; font-weight: 600; font-size: 1.05rem; }.hc-nav-mobile-inner details summary { cursor: pointer; padding: 14px 0; }.hc-nav-mobile-inner.hc-nav-m-sub a { display: block; padding: 10px 16px; color: #475569; text-decoration: none; font-size:.92rem; }.hc-nav-mobile-inner.hc-nav-m-tel { margin-top: 24px; display: inline-flex; padding: 14px 22px; background: #0A1428; color: #fff; border-radius: 10px; gap: 10px; align-items: center; border-bottom: 0; }
 </style>
 
 <link rel="icon" type="image/svg+xml" href="logo.svg">
@@ -75,58 +41,58 @@
 <!-- HC-SCHEMA-V1 -->
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Fuite d'eau : les 5 réflexes immédiats",
-  "description": "Que faire dans les 60 premières secondes en cas de fuite d'eau ? Les bons gestes pour limiter les dégâts. Quand appeler un plombier.",
-  "image": "https://www.depan59-62.fr/logo-officiel.jpg",
-  "url": "https://www.depan59-62.fr/guide-fuite-eau.html",
-  "datePublished": "2026-05-09",
-  "dateModified": "2026-05-09",
-  "author": {
-    "@type": "Organization",
-    "name": "HELP! Confort Saint-Omer & Dunkerque",
-    "url": "https://www.depan59-62.fr/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "HELP! Confort",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://www.depan59-62.fr/logo-officiel.jpg"
-    }
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://www.depan59-62.fr/guide-fuite-eau.html"
-  },
-  "articleSection": "Plomberie"
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Fuite d'eau : les 5 réflexes immédiats",
+ "description": "Que faire dans les 60 premières secondes en cas de fuite d'eau ? Les bons gestes pour limiter les dégâts. Quand appeler un plombier.",
+ "image": "https://www.depan59-62.fr/logo-officiel.jpg",
+ "url": "https://www.depan59-62.fr/guide-fuite-eau.html",
+ "datePublished": "2026-05-09",
+ "dateModified": "2026-05-09",
+ "author": {
+ "@type": "Organization",
+ "name": "HELP! Confort Saint-Omer & Dunkerque",
+ "url": "https://www.depan59-62.fr/"
+ },
+ "publisher": {
+ "@type": "Organization",
+ "name": "HELP! Confort",
+ "logo": {
+ "@type": "ImageObject",
+ "url": "https://www.depan59-62.fr/logo-officiel.jpg"
+ }
+ },
+ "mainEntityOfPage": {
+ "@type": "WebPage",
+ "@id": "https://www.depan59-62.fr/guide-fuite-eau.html"
+ },
+ "articleSection": "Plomberie"
 }
 </script>
 <!-- HC-BREADCRUMB-SCHEMA-V1 -->
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Accueil",
-      "item": "https://www.depan59-62.fr/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Guides & conseils",
-      "item": "https://www.depan59-62.fr/guides.html"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "Réagir à une fuite d'eau"
-    }
-  ]
+ "@context": "https://schema.org",
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+ {
+ "@type": "ListItem",
+ "position": 1,
+ "name": "Accueil",
+ "item": "https://www.depan59-62.fr/"
+ },
+ {
+ "@type": "ListItem",
+ "position": 2,
+ "name": "Guides & conseils",
+ "item": "https://www.depan59-62.fr/guides.html"
+ },
+ {
+ "@type": "ListItem",
+ "position": 3,
+ "name": "Réagir à une fuite d'eau"
+ }
+ ]
 }
 </script>
 
@@ -134,30 +100,7 @@
 <script src="/assets/hc-consent.js" defer></script>
 <script src="/assets/tracking.js" defer></script>
 
-<style>
-  .art-hero{padding:50px 0 30px;background:linear-gradient(180deg,#F7FBFD 0%,#fff 100%)}
-  .art-hero .container{max-width:780px}
-  .breadcrumb{font-size:.84rem;color:#64748b;margin-bottom:20px}
-  .breadcrumb a{color:#0DA0CF;text-decoration:none;font-weight:600}
-  .art-cat{display:inline-block;background:#0DA0CF1A;color:#0DA0CF;padding:5px 12px;border-radius:8px;font-size:.72rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:14px}
-  .art-hero h1{font-size:clamp(1.8rem,3.5vw,2.6rem);line-height:1.1;color:#0A1428;margin:0 0 14px;font-weight:800;letter-spacing:-.025em}
-  .art-meta{display:flex;flex-wrap:wrap;gap:18px;color:#64748b;font-size:.86rem;margin-bottom:24px}
-  .art-meta span{display:inline-flex;align-items:center;gap:5px}
-  .art-intro{font-size:1.05rem;color:#475569;line-height:1.65}
-  .art-content{padding:30px 0 60px;background:#fff}
-  .art-content .container{max-width:780px}
-  .art-content h2{font-size:clamp(1.3rem,2.4vw,1.7rem);color:#0A1428;font-weight:800;line-height:1.2;margin:42px 0 16px}
-  .art-content p{color:#334155;line-height:1.75;font-size:1rem;margin:0 0 16px}
-  .art-content ul{margin:0 0 20px;padding-left:24px;color:#334155;line-height:1.75;font-size:1rem}
-  .art-content ul li{margin-bottom:8px}
-  .art-content strong{color:#0A1428}
-  .art-cta{background:linear-gradient(135deg,#0DA0CF,#0DA0CFCC);color:#fff;border-radius:20px;padding:36px;margin:42px 0 0;text-align:center}
-  .art-cta h3{margin:0 0 10px;font-size:1.3rem;color:#fff;font-weight:800;line-height:1.2}
-  .art-cta p{margin:0 0 20px;color:rgba(255,255,255,.92);font-size:.95rem}
-  .art-cta .btn{display:inline-flex;align-items:center;gap:9px;background:#fff;color:#0DA0CF;padding:13px 26px;border-radius:12px;text-decoration:none;font-weight:800;font-size:.98rem;transition:transform .2s ease}
-  .art-cta .btn:hover{transform:translateY(-2px)}
-  .back-to-guides{margin-top:30px;text-align:center}
-  .back-to-guides a{color:#0DA0CF;font-weight:700;text-decoration:none;font-size:.95rem}
+<style>.art-hero{padding:50px 0 30px;background:linear-gradient(180deg,#F7FBFD 0%,#fff 100%)}.art-hero.container{max-width:780px}.breadcrumb{font-size:.84rem;color:#64748b;margin-bottom:20px}.breadcrumb a{color:#0DA0CF;text-decoration:none;font-weight:600}.art-cat{display:inline-block;background:#0DA0CF1A;color:#0DA0CF;padding:5px 12px;border-radius:8px;font-size:.72rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:14px}.art-hero h1{font-size:clamp(1.8rem,3.5vw,2.6rem);line-height:1.1;color:#0A1428;margin:0 0 14px;font-weight:800;letter-spacing:-.025em}.art-meta{display:flex;flex-wrap:wrap;gap:18px;color:#64748b;font-size:.86rem;margin-bottom:24px}.art-meta span{display:inline-flex;align-items:center;gap:5px}.art-intro{font-size:1.05rem;color:#475569;line-height:1.65}.art-content{padding:30px 0 60px;background:#fff}.art-content.container{max-width:780px}.art-content h2{font-size:clamp(1.3rem,2.4vw,1.7rem);color:#0A1428;font-weight:800;line-height:1.2;margin:42px 0 16px}.art-content p{color:#334155;line-height:1.75;font-size:1rem;margin:0 0 16px}.art-content ul{margin:0 0 20px;padding-left:24px;color:#334155;line-height:1.75;font-size:1rem}.art-content ul li{margin-bottom:8px}.art-content strong{color:#0A1428}.art-cta{background:linear-gradient(135deg,#0DA0CF,#0DA0CFCC);color:#fff;border-radius:20px;padding:36px;margin:42px 0 0;text-align:center}.art-cta h3{margin:0 0 10px;font-size:1.3rem;color:#fff;font-weight:800;line-height:1.2}.art-cta p{margin:0 0 20px;color:rgba(255,255,255,.92);font-size:.95rem}.art-cta.btn{display:inline-flex;align-items:center;gap:9px;background:#fff;color:#0DA0CF;padding:13px 26px;border-radius:12px;text-decoration:none;font-weight:800;font-size:.98rem;transition:transform.2s ease}.art-cta.btn:hover{transform:translateY(-2px)}.back-to-guides{margin-top:30px;text-align:center}.back-to-guides a{color:#0DA0CF;font-weight:700;text-decoration:none;font-size:.95rem}
 </style>
 
 <meta name="twitter:title" content="Fuite d'eau : les 5 réflexes immédiats — Guide HELP! Confort">
@@ -166,102 +109,102 @@
 
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "headline": "Fuite d'eau : les 5 réflexes immédiats",
-  "description": "Que faire dans les 60 premières secondes en cas de fuite d'eau ? Les bons gestes pour limiter les dégâts. Quand appeler un plombier.",
-  "datePublished": "2026-04-15T11:00:00",
-  "dateModified": "2026-05-12T11:00:00",
-  "image": [
-    "https://www.depan59-62.fr/logo-officiel.jpg"
-  ],
-  "author": {
-    "@type": "Organization",
-    "name": "HELP! Confort Saint-Omer",
-    "url": "https://www.depan59-62.fr/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "HELP! Confort",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://www.depan59-62.fr/logo-officiel.jpg"
-    }
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://www.depan59-62.fr/guide-fuite-eau.html"
-  },
-  "articleSection": "Plomberie",
-  "inLanguage": "fr-FR",
-  "audience": {
-    "@type": "Audience",
-    "audienceType": "Particuliers et professionnels du Pas-de-Calais"
-  }
+ "@context": "https://schema.org",
+ "@type": "TechArticle",
+ "headline": "Fuite d'eau : les 5 réflexes immédiats",
+ "description": "Que faire dans les 60 premières secondes en cas de fuite d'eau ? Les bons gestes pour limiter les dégâts. Quand appeler un plombier.",
+ "datePublished": "2026-04-15T11:00:00",
+ "dateModified": "2026-05-12T11:00:00",
+ "image": [
+ "https://www.depan59-62.fr/logo-officiel.jpg"
+ ],
+ "author": {
+ "@type": "Organization",
+ "name": "HELP! Confort Saint-Omer",
+ "url": "https://www.depan59-62.fr/"
+ },
+ "publisher": {
+ "@type": "Organization",
+ "name": "HELP! Confort",
+ "logo": {
+ "@type": "ImageObject",
+ "url": "https://www.depan59-62.fr/logo-officiel.jpg"
+ }
+ },
+ "mainEntityOfPage": {
+ "@type": "WebPage",
+ "@id": "https://www.depan59-62.fr/guide-fuite-eau.html"
+ },
+ "articleSection": "Plomberie",
+ "inLanguage": "fr-FR",
+ "audience": {
+ "@type": "Audience",
+ "audienceType": "Particuliers et professionnels du Pas-de-Calais"
+ }
 }
 </script>
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "HowTo",
-  "name": "Que faire en cas de fuite d'eau : les 5 réflexes immédiats",
-  "description": "Les 5 gestes à effectuer dans les 60 premières secondes pour limiter les dégâts d'une fuite d'eau, par les experts HELP! Confort.",
-  "totalTime": "PT10M",
-  "image": [
-    "https://www.depan59-62.fr/logo-officiel.jpg"
-  ],
-  "supply": [
-    {
-      "@type": "HowToSupply",
-      "name": "Serviettes ou seaux"
-    },
-    {
-      "@type": "HowToSupply",
-      "name": "Téléphone"
-    }
-  ],
-  "tool": [
-    {
-      "@type": "HowToTool",
-      "name": "Téléphone HELP! Confort 03 66 10 01 34"
-    }
-  ],
-  "step": [
-    {
-      "@type": "HowToStep",
-      "position": 1,
-      "name": "Couper l'eau",
-      "text": "Repérez la vanne principale d'arrivée d'eau de votre logement (souvent près du compteur, dans le local technique ou la cuisine). Tournez-la dans le sens des aiguilles d'une montre pour fermer."
-    },
-    {
-      "@type": "HowToStep",
-      "position": 2,
-      "name": "Couper l'électricité si l'eau est près d'une prise",
-      "text": "Si la fuite touche une zone avec prise électrique, plafond ou luminaire, coupez immédiatement le disjoncteur général au tableau électrique. Sécurité avant tout."
-    },
-    {
-      "@type": "HowToStep",
-      "position": 3,
-      "name": "Limiter les dégâts",
-      "text": "Placez des serviettes ou seaux pour absorber l'eau, soulevez les meubles, mettez les objets de valeur à l'abri. Aérez la pièce pour éviter l'humidité."
-    },
-    {
-      "@type": "HowToStep",
-      "position": 4,
-      "name": "Documenter pour l'assurance",
-      "text": "Photographiez la fuite et les dégâts AVANT de toucher quoi que ce soit. Notez l'heure et la nature. Ces preuves serviront pour votre dossier d'assurance."
-    },
-    {
-      "@type": "HowToStep",
-      "position": 5,
-      "name": "Appeler un plombier",
-      "text": "Contactez HELP! Confort au 03 66 10 01 34. Notre équipe intervient en urgence à Saint-Omer, Dunkerque et 55 km à la ronde. Astreinte 7j/7."
-    }
-  ]
+ "@context": "https://schema.org",
+ "@type": "HowTo",
+ "name": "Que faire en cas de fuite d'eau : les 5 réflexes immédiats",
+ "description": "Les 5 gestes à effectuer dans les 60 premières secondes pour limiter les dégâts d'une fuite d'eau, par les experts HELP! Confort.",
+ "totalTime": "PT10M",
+ "image": [
+ "https://www.depan59-62.fr/logo-officiel.jpg"
+ ],
+ "supply": [
+ {
+ "@type": "HowToSupply",
+ "name": "Serviettes ou seaux"
+ },
+ {
+ "@type": "HowToSupply",
+ "name": "Téléphone"
+ }
+ ],
+ "tool": [
+ {
+ "@type": "HowToTool",
+ "name": "Téléphone HELP! Confort 03 66 10 01 34"
+ }
+ ],
+ "step": [
+ {
+ "@type": "HowToStep",
+ "position": 1,
+ "name": "Couper l'eau",
+ "text": "Repérez la vanne principale d'arrivée d'eau de votre logement (souvent près du compteur, dans le local technique ou la cuisine). Tournez-la dans le sens des aiguilles d'une montre pour fermer."
+ },
+ {
+ "@type": "HowToStep",
+ "position": 2,
+ "name": "Couper l'électricité si l'eau est près d'une prise",
+ "text": "Si la fuite touche une zone avec prise électrique, plafond ou luminaire, coupez immédiatement le disjoncteur général au tableau électrique. Sécurité avant tout."
+ },
+ {
+ "@type": "HowToStep",
+ "position": 3,
+ "name": "Limiter les dégâts",
+ "text": "Placez des serviettes ou seaux pour absorber l'eau, soulevez les meubles, mettez les objets de valeur à l'abri. Aérez la pièce pour éviter l'humidité."
+ },
+ {
+ "@type": "HowToStep",
+ "position": 4,
+ "name": "Documenter pour l'assurance",
+ "text": "Photographiez la fuite et les dégâts AVANT de toucher quoi que ce soit. Notez l'heure et la nature. Ces preuves serviront pour votre dossier d'assurance."
+ },
+ {
+ "@type": "HowToStep",
+ "position": 5,
+ "name": "Appeler un plombier",
+ "text": "Contactez HELP! Confort au 03 66 10 01 34. Notre équipe intervient en urgence à Saint-Omer, Dunkerque et 55 km à la ronde. Astreinte."
+ }
+ ]
 }
 </script>
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#0DA0CF">
+ <link rel="manifest" href="/manifest.json">
+ <meta name="theme-color" content="#0DA0CF">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style id="hc-skip-style">.hc-skip-link{position:absolute;top:-100px;left:0;background:#0A1428;color:#fff;padding:10px 18px;text-decoration:none;font-weight:700;font-size:.92rem;border-radius:0 0 8px 0;z-index:10000}.hc-skip-link:focus{top:0}</style>
 </head>
@@ -270,131 +213,131 @@
 <!-- HEADER -->
 <!-- TOPBAR globale : badge réseau + zones + horaires (visible toutes pages) -->
 <div class="hc-topbar" role="complementary" aria-label="Agence et zones d'intervention">
-  <div class="hc-topbar-inner">
-    <span class="hctb-zones">
-      <a href="depannage-saint-omer.html" class="hctb-zone">
-        <span class="hctb-pulse" aria-hidden="true"></span>
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        <strong>Saint-Omer</strong>
-        <em class="hctb-agence">Dépan'Audo</em>
-      </a>
-      <span class="hctb-plus" aria-hidden="true">+</span>
-      <a href="depannage-dunkerque.html" class="hctb-zone">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        <strong>Dunkerque</strong>
-        <em class="hctb-agence">Dépan'DK</em>
-      </a>
-      <span class="hctb-bullet" aria-hidden="true">·</span>
-      <span class="hctb-hours">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <strong>Lun-Sam · 8h-18h</strong>
-      </span>
-    </span>
-  </div>
+ <div class="hc-topbar-inner">
+ <span class="hctb-zones">
+ <a href="depannage-saint-omer.html" class="hctb-zone">
+ <span class="hctb-pulse" aria-hidden="true"></span>
+ <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+ <strong>Saint-Omer</strong>
+ <em class="hctb-agence">Dépan'Audo</em>
+ </a>
+ <span class="hctb-plus" aria-hidden="true">+</span>
+ <a href="depannage-dunkerque.html" class="hctb-zone">
+ <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+ <strong>Dunkerque</strong>
+ <em class="hctb-agence">Dépan'DK</em>
+ </a>
+ <span class="hctb-bullet" aria-hidden="true">·</span>
+ <span class="hctb-hours">
+ <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+ <strong>Lun-Ven 9h-17h · Sam 9h-16h</strong>
+ </span>
+ </span>
+ </div>
 </div>
 
 <header class="hc-header" id="hcHeader">
-  <div class="hc-header-row">
-    <a href="index.html" class="hc-logo" aria-label="HELP! Confort Saint-Omer · Accueil">
-      <img loading="eager" fetchpriority="high" decoding="async" src="logo-officiel.jpg" alt="HELP! Confort" width="200" height="60">
-    </a>
-    <nav class="hc-nav" aria-label="Navigation principale">
-      <a href="index.html" class="hc-nav-link">Accueil</a>
-      <a href="index.html#hc-metiers" class="hc-nav-link" data-has-menu="metiers">
-        Métiers
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-      </a>
-      <a href="zones-intervention.html" class="hc-nav-link">Zones d'intervention</a>
-      <a href="nos-prestations.html" class="hc-nav-link">Nos prestations</a>
-      <a href="realisations.html" class="hc-nav-link">Actu &amp; réalisations</a>
-      <a href="a-propos.html" class="hc-nav-link">À propos</a>
-      <a href="contact.html" class="hc-nav-link">Contact</a>
+ <div class="hc-header-row">
+ <a href="index.html" class="hc-logo" aria-label="HELP! Confort Saint-Omer · Accueil">
+ <img loading="eager" fetchpriority="high" decoding="async" src="logo-officiel.jpg" alt="HELP! Confort" width="200" height="60">
+ </a>
+ <nav class="hc-nav" aria-label="Navigation principale">
+ <a href="index.html" class="hc-nav-link">Accueil</a>
+ <a href="index.html#hc-metiers" class="hc-nav-link" data-has-menu="metiers">
+ Métiers
+ <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+ </a>
+ <a href="zones-intervention.html" class="hc-nav-link">Zones d'intervention</a>
+ <a href="nos-prestations.html" class="hc-nav-link">Nos prestations</a>
+ <a href="realisations.html" class="hc-nav-link">Actu &amp; réalisations</a>
+ <a href="a-propos.html" class="hc-nav-link">À propos</a>
+ <a href="contact.html" class="hc-nav-link">Contact</a>
 
-      <div class="hc-megamenu" data-menu="metiers" role="menu">
-        <a href="plombier-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-plomberie.png" alt="" loading="lazy">Plomberie</a>
-        <a href="chauffagiste-saint-omer.html"><span class="hc-mm-svg" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#E76B2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 4-2 4 0 8 2 4 4 4 0 12-1-4 2-4 0-8-2-4-4-4 0-12z"/></svg></span>Chauffage</a>
-        <a href="electricien-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-electricite.png" alt="" loading="lazy">Électricité</a>
-        <a href="serrurier-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-serrurerie.png" alt="" loading="lazy">Serrurerie</a>
-        <a href="serrurier-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-vitrerie.png" alt="" loading="lazy">Vitrerie</a>
-        <a href="travaux-saint-omer.html"><img decoding="async" height="695" width="694" src="images/picto-renovation.png" alt="" loading="lazy">Rénovation</a>
-        <a href="travaux-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-volets.png" alt="" loading="lazy">Volets</a>
-        <a href="guide-adaptation-pmr.html"><img decoding="async" height="686" width="686" src="images/picto-pmr.png" alt="" loading="lazy">Adaptation PMR</a>
-        <a href="contrats-entretien.html" class="hc-mm-foot">Contrats d&apos;entretien →</a>
-      </div>
+ <div class="hc-megamenu" data-menu="metiers" role="menu">
+ <a href="plombier-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-plomberie.png" alt="" loading="lazy">Plomberie</a>
+ <a href="chauffagiste-saint-omer.html"><span class="hc-mm-svg" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#E76B2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 4-2 4 0 8 2 4 4 4 0 12-1-4 2-4 0-8-2-4-4-4 0-12z"/></svg></span>Chauffage</a>
+ <a href="electricien-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-electricite.png" alt="" loading="lazy">Électricité</a>
+ <a href="serrurier-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-serrurerie.png" alt="" loading="lazy">Serrurerie</a>
+ <a href="serrurier-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-vitrerie.png" alt="" loading="lazy">Vitrerie</a>
+ <a href="travaux-saint-omer.html"><img decoding="async" height="695" width="694" src="images/picto-renovation.png" alt="" loading="lazy">Rénovation</a>
+ <a href="travaux-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-volets.png" alt="" loading="lazy">Volets</a>
+ <a href="guide-adaptation-pmr.html"><img decoding="async" height="686" width="686" src="images/picto-pmr.png" alt="" loading="lazy">Adaptation PMR</a>
+ <a href="contrats-entretien.html" class="hc-mm-foot">Contrats d&apos;entretien →</a>
+ </div>
 
-      
-        </a>
-      </div>
-    </nav>
+ 
+ </a>
+ </div>
+ </nav>
 
-    <div class="hc-header-actions">
-      <a href="tel:+33366100134" class="hc-btn-tel" aria-label="Appeler le 03 66 10 01 34">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        <span class="hc-btn-tel-num">03 66 10 01 34</span>
-      </a>
-      <button class="hc-burger" aria-label="Ouvrir le menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
+ <div class="hc-header-actions">
+ <a href="tel:+33366100134" class="hc-btn-tel" aria-label="Appeler le 03 66 10 01 34">
+ <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0.7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+ <span class="hc-btn-tel-num">03 66 10 01 34</span>
+ </a>
+ <button class="hc-burger" aria-label="Ouvrir le menu" aria-expanded="false">
+ <span></span><span></span><span></span>
+ </button>
+ </div>
+ </div>
 
-  <nav class="hc-nav-mobile" aria-label="Menu mobile">
-    <div class="hc-nav-mobile-inner">
-      <a href="index.html">Accueil</a>
-      <details class="hc-nav-m-section">
-        <summary>Métiers</summary>
-        <div class="hc-nav-m-sub">
-          <a href="plombier-saint-omer.html">Plomberie</a>
-          <a href="chauffagiste-saint-omer.html">Chauffage</a>
-          <a href="electricien-saint-omer.html">Électricité</a>
-          <a href="serrurier-saint-omer.html">Serrurerie</a>
-          <a href="serrurier-saint-omer.html">Vitrerie</a>
-          <a href="travaux-saint-omer.html">Rénovation</a>
-          <a href="travaux-saint-omer.html">Volets &amp; Adaptation</a>
-        </div>
-      </details>
-      <a href="zones-intervention.html">Zones d'intervention</a>
-      <a href="nos-prestations.html">Nos prestations</a>
-      <a href="realisations.html">Actu &amp; réalisations</a>
-      <a href="a-propos.html">À propos</a>
-      <a href="contact.html">Contact</a>
-      <a href="tel:+33366100134" class="hc-nav-m-tel">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        03 66 10 01 34
-      </a>
-    </div>
-  </nav>
+ <nav class="hc-nav-mobile" aria-label="Menu mobile">
+ <div class="hc-nav-mobile-inner">
+ <a href="index.html">Accueil</a>
+ <details class="hc-nav-m-section">
+ <summary>Métiers</summary>
+ <div class="hc-nav-m-sub">
+ <a href="plombier-saint-omer.html">Plomberie</a>
+ <a href="chauffagiste-saint-omer.html">Chauffage</a>
+ <a href="electricien-saint-omer.html">Électricité</a>
+ <a href="serrurier-saint-omer.html">Serrurerie</a>
+ <a href="serrurier-saint-omer.html">Vitrerie</a>
+ <a href="travaux-saint-omer.html">Rénovation</a>
+ <a href="travaux-saint-omer.html">Volets &amp; Adaptation</a>
+ </div>
+ </details>
+ <a href="zones-intervention.html">Zones d'intervention</a>
+ <a href="nos-prestations.html">Nos prestations</a>
+ <a href="realisations.html">Actu &amp; réalisations</a>
+ <a href="a-propos.html">À propos</a>
+ <a href="contact.html">Contact</a>
+ <a href="tel:+33366100134" class="hc-nav-m-tel">
+ <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0.7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+ 03 66 10 01 34
+ </a>
+ </div>
+ </nav>
 </header>
 
 <script>
 (function() {
-  var header = document.getElementById('hcHeader');
-  if (header) {
-    function onScroll() {
-      if (window.scrollY > 8) header.classList.add('is-scrolled');
-      else header.classList.remove('is-scrolled');
-    }
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-  }
-  var burger = document.querySelector('.hc-burger');
-  var navMobile = document.querySelector('.hc-nav-mobile');
-  if (burger && navMobile) {
-    burger.addEventListener('click', function() {
-      var open = burger.classList.toggle('is-open');
-      navMobile.classList.toggle('is-open', open);
-      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-      document.body.style.overflow = open ? 'hidden' : '';
-    });
-    navMobile.querySelectorAll('a').forEach(function(a) {
-      a.addEventListener('click', function() {
-        burger.classList.remove('is-open');
-        navMobile.classList.remove('is-open');
-        burger.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      });
-    });
-  }
+ var header = document.getElementById('hcHeader');
+ if (header) {
+ function onScroll() {
+ if (window.scrollY > 8) header.classList.add('is-scrolled');
+ else header.classList.remove('is-scrolled');
+ }
+ onScroll();
+ window.addEventListener('scroll', onScroll, { passive: true });
+ }
+ var burger = document.querySelector('.hc-burger');
+ var navMobile = document.querySelector('.hc-nav-mobile');
+ if (burger && navMobile) {
+ burger.addEventListener('click', function() {
+ var open = burger.classList.toggle('is-open');
+ navMobile.classList.toggle('is-open', open);
+ burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+ document.body.style.overflow = open ? 'hidden' : '';
+ });
+ navMobile.querySelectorAll('a').forEach(function(a) {
+ a.addEventListener('click', function() {
+ burger.classList.remove('is-open');
+ navMobile.classList.remove('is-open');
+ burger.setAttribute('aria-expanded', 'false');
+ document.body.style.overflow = '';
+ });
+ });
+ }
 })();
 
 </script>
@@ -402,76 +345,76 @@
 <!-- FIX MEGAMENU : fermeture forcée sur click outside + Escape + scroll -->
 <script>
 (function(){
-  var navLinks = document.querySelectorAll('.hc-nav-link[data-has-menu]');
-  var megaMenus = document.querySelectorAll('.hc-megamenu');
-  if (!megaMenus.length) return;
-  var closeTimer = null;
+ var navLinks = document.querySelectorAll('.hc-nav-link[data-has-menu]');
+ var megaMenus = document.querySelectorAll('.hc-megamenu');
+ if (!megaMenus.length) return;
+ var closeTimer = null;
 
 // ═══════════════════════════════════════════════════════════════
 // FIX POSITION : aligner chaque megamenu sous SON trigger link
 // (le CSS left:50% centrait sur la nav entière au lieu du lien)
 // ═══════════════════════════════════════════════════════════════
 function positionMegamenus() {
-  navLinks.forEach(function(link) {
-    var menuId = link.getAttribute('data-has-menu');
-    var menu = document.querySelector('.hc-megamenu[data-menu="' + menuId + '"]');
-    if (!menu) return;
-    var nav = link.closest('.hc-nav');
-    if (!nav) return;
-    var linkRect = link.getBoundingClientRect();
-    var navRect = nav.getBoundingClientRect();
-    var linkCenterRelToNav = (linkRect.left + linkRect.width / 2) - navRect.left;
-    menu.style.left = linkCenterRelToNav + 'px';
-  });
+ navLinks.forEach(function(link) {
+ var menuId = link.getAttribute('data-has-menu');
+ var menu = document.querySelector('.hc-megamenu[data-menu="' + menuId + '"]');
+ if (!menu) return;
+ var nav = link.closest('.hc-nav');
+ if (!nav) return;
+ var linkRect = link.getBoundingClientRect();
+ var navRect = nav.getBoundingClientRect();
+ var linkCenterRelToNav = (linkRect.left + linkRect.width / 2) - navRect.left;
+ menu.style.left = linkCenterRelToNav + 'px';
+ });
 }
 positionMegamenus();
 window.addEventListener('resize', positionMegamenus);
 window.addEventListener('load', positionMegamenus);
 if (document.fonts && document.fonts.ready) {
-  document.fonts.ready.then(positionMegamenus);
+ document.fonts.ready.then(positionMegamenus);
 }
-  function forceCloseMenus() { megaMenus.forEach(function(m) { m.classList.add('mm-force-closed'); }); }
-  function cancelCloseMenus() { megaMenus.forEach(function(m) { m.classList.remove('mm-force-closed'); }); if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; } }
-  function scheduleClose() { if (closeTimer) clearTimeout(closeTimer); closeTimer = setTimeout(forceCloseMenus, 300); }
-  navLinks.forEach(function(link) {
-    link.addEventListener('mouseenter', cancelCloseMenus);
-    link.addEventListener('mouseleave', scheduleClose);
-    link.addEventListener('click', cancelCloseMenus);
-  });
-  megaMenus.forEach(function(menu) {
-    menu.addEventListener('mouseenter', cancelCloseMenus);
-    menu.addEventListener('mouseleave', scheduleClose);
-    /* Click dans la zone vide du mégamenu (pas sur un lien) → ferme aussi */
-    menu.addEventListener('click', function(e){ if (!e.target.closest('a')) forceCloseMenus(); });
-  });
-  document.addEventListener('click', function(e) { if (!e.target.closest('.hc-megamenu') && !e.target.closest('.hc-nav-link[data-has-menu]')) { forceCloseMenus(); } });
-  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') forceCloseMenus(); });
-  window.addEventListener('scroll', function() { if (!document.querySelector('.hc-megamenu:hover')) { forceCloseMenus(); } }, { passive: true });
+ function forceCloseMenus() { megaMenus.forEach(function(m) { m.classList.add('mm-force-closed'); }); }
+ function cancelCloseMenus() { megaMenus.forEach(function(m) { m.classList.remove('mm-force-closed'); }); if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; } }
+ function scheduleClose() { if (closeTimer) clearTimeout(closeTimer); closeTimer = setTimeout(forceCloseMenus, 300); }
+ navLinks.forEach(function(link) {
+ link.addEventListener('mouseenter', cancelCloseMenus);
+ link.addEventListener('mouseleave', scheduleClose);
+ link.addEventListener('click', cancelCloseMenus);
+ });
+ megaMenus.forEach(function(menu) {
+ menu.addEventListener('mouseenter', cancelCloseMenus);
+ menu.addEventListener('mouseleave', scheduleClose);
+ /* Click dans la zone vide du mégamenu (pas sur un lien) → ferme aussi */
+ menu.addEventListener('click', function(e){ if (!e.target.closest('a')) forceCloseMenus(); });
+ });
+ document.addEventListener('click', function(e) { if (!e.target.closest('.hc-megamenu') && !e.target.closest('.hc-nav-link[data-has-menu]')) { forceCloseMenus(); } });
+ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') forceCloseMenus(); });
+ window.addEventListener('scroll', function() { if (!document.querySelector('.hc-megamenu:hover')) { forceCloseMenus(); } }, { passive: true });
 })();
 </script>
 
 
 <section class="art-hero" id="main-content">
-  <div class="container">
-    <nav class="breadcrumb" aria-label="Fil d'ariane">
-      <a href="index.html">Accueil</a>
-      <span style="margin:0 8px">›</span>
-      <a href="guides.html">Guides &amp; conseils</a>
-      <span style="margin:0 8px">›</span>
-      <span>Réagir à une fuite d'eau</span>
-    </nav>
-    <span class="art-cat">Plomberie</span>
-    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin:8px 0 14px">
-      <img decoding="async" src="images/picto-plomberie.png" alt="Plomberie HELP! Confort" width="72" height="72" style="object-fit:contain;flex-shrink:0;filter:drop-shadow(0 4px 14px rgba(13,160,207,.24))" loading="eager">
-      <h1 style="margin:0">Fuite d'eau&nbsp;: les 5 réflexes immédiats</h1>
-    </div>
-    <div class="art-meta">
-      <span>📖 4 min de lecture</span>
-      <span>🆕 Mis à jour Mars 2026</span>
-      <span>✍️ Par l'équipe HELP! Confort</span>
-    </div>
-    <p class="art-intro">Une fuite d'eau, ce n'est jamais le bon moment. Mais ce sont les <strong>premières minutes qui font la différence</strong> entre un petit désagrément et un dégât des eaux qui coûte des milliers d'euros. Voici les 5 réflexes à avoir, dans l'ordre, dès que vous découvrez une fuite.</p>
-  </div>
+ <div class="container">
+ <nav class="breadcrumb" aria-label="Fil d'ariane">
+ <a href="index.html">Accueil</a>
+ <span style="margin:0 8px">›</span>
+ <a href="guides.html">Guides &amp; conseils</a>
+ <span style="margin:0 8px">›</span>
+ <span>Réagir à une fuite d'eau</span>
+ </nav>
+ <span class="art-cat">Plomberie</span>
+ <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin:8px 0 14px">
+ <img decoding="async" src="images/picto-plomberie.png" alt="Plomberie HELP! Confort" width="72" height="72" style="object-fit:contain;flex-shrink:0;filter:drop-shadow(0 4px 14px rgba(13,160,207,.24))" loading="eager">
+ <h1 style="margin:0">Fuite d'eau&nbsp;: les 5 réflexes immédiats</h1>
+ </div>
+ <div class="art-meta">
+ <span>📖 4 min de lecture</span>
+ <span>🆕 Mis à jour Mars 2026</span>
+ <span>✍️ Par l'équipe HELP! Confort</span>
+ </div>
+ <p class="art-intro">Une fuite d'eau, ce n'est jamais le bon moment. Mais ce sont les <strong>premières minutes qui font la différence</strong> entre un petit désagrément et un dégât des eaux qui coûte des milliers d'euros. Voici les 5 réflexes à avoir, dans l'ordre, dès que vous découvrez une fuite.</p>
+ </div>
 </section>
 <section class="art-content"><div class="container">
 <h2>Réflexe 1&nbsp;: Couper l'eau</h2>
@@ -482,395 +425,342 @@ if (document.fonts && document.fonts.ready) {
 <h2>Réflexe 3&nbsp;: Limiter les dégâts</h2>
 <p>Maintenant que l'urgence est sécurisée, vous pouvez limiter les dégâts matériels&nbsp;:</p>
 <ul>
-  <li>Posez des serpillières ou des bassines sous la fuite si elle continue à goutter</li>
-  <li>Déplacez les objets de valeur, papiers, appareils électroniques</li>
-  <li>Soulevez les meubles avec des cales pour qu'ils ne baignent pas dans l'eau</li>
-  <li>Ouvrez les fenêtres pour ventiler et limiter l'humidité ambiante</li>
-  <li>Si plafond ou cloisons gorgés d'eau&nbsp;: ne percez surtout pas, ne montez pas dessus</li>
+ <li>Posez des serpillières ou des bassines sous la fuite si elle continue à goutter</li>
+ <li>Déplacez les objets de valeur, papiers, appareils électroniques</li>
+ <li>Soulevez les meubles avec des cales pour qu'ils ne baignent pas dans l'eau</li>
+ <li>Ouvrez les fenêtres pour ventiler et limiter l'humidité ambiante</li>
+ <li>Si plafond ou cloisons gorgés d'eau&nbsp;: ne percez surtout pas, ne montez pas dessus</li>
 </ul>
 <h2>Réflexe 4&nbsp;: Documenter pour l'assurance</h2>
 <p><strong>Prenez des photos et vidéos</strong> du sinistre, sous tous les angles, AVANT de tout nettoyer. C'est crucial pour votre assurance. Notez aussi&nbsp;:</p>
 <ul>
-  <li>L'heure exacte de la découverte de la fuite</li>
-  <li>L'origine apparente (si vous la voyez)</li>
-  <li>Les biens endommagés (mobilier, sol, mur, plafond)</li>
-  <li>Si la fuite vient de chez vous ou d'un voisin (immeuble)</li>
+ <li>L'heure exacte de la découverte de la fuite</li>
+ <li>L'origine apparente (si vous la voyez)</li>
+ <li>Les biens endommagés (mobilier, sol, mur, plafond)</li>
+ <li>Si la fuite vient de chez vous ou d'un voisin (immeuble)</li>
 </ul>
 <p>Si la fuite touche le voisin du dessous, prévenez-le immédiatement et faites un <strong>constat amiable de dégât des eaux</strong> dès que possible (formulaire fourni par votre assurance, ou sur lassuranceenligne.fr).</p>
 <h2>Réflexe 5&nbsp;: Appeler un pro (au bon moment)</h2>
 <p>Quand appeler un plombier&nbsp;?</p>
 <ul>
-  <li><strong>Tout de suite</strong> si la fuite est continue après coupure de l'eau (rupture importante)</li>
-  <li><strong>Tout de suite</strong> si vous ne trouvez pas la source (fuite encastrée, infiltration mystérieuse)</li>
-  <li><strong>Dès que possible</strong> si vous avez identifié une fuite simple (joint d'évier, mitigeur usé)</li>
-  <li><strong>Sous 24h</strong> dans tous les cas — même si vous avez « réparé&nbsp;» provisoirement</li>
+ <li><strong>Tout de suite</strong> si la fuite est continue après coupure de l'eau (rupture importante)</li>
+ <li><strong>Tout de suite</strong> si vous ne trouvez pas la source (fuite encastrée, infiltration mystérieuse)</li>
+ <li><strong>Dès que possible</strong> si vous avez identifié une fuite simple (joint d'évier, mitigeur usé)</li>
+ <li><strong>Sous 24h</strong> dans tous les cas — même si vous avez « réparé&nbsp;» provisoirement</li>
 </ul>
 <p>Un pro va localiser précisément la fuite (caméra thermique si nécessaire), réparer durablement, et fournir des éléments techniques (devis, photos) que vous pourrez transmettre à votre assurance. <strong>HELP! Confort intervient rapidement</strong> sur Saint-Omer et le secteur.</p>
 
-    <!-- BLOC CTA PREMIUM URGENCE PLOMBERIE -->
-    <div style="margin:32px 0;padding:32px clamp(20px,3vw,40px);background:linear-gradient(135deg,#0A1428 0%,#0A4D6E 50%,#0DA0CF 100%);border-radius:24px;color:#fff;position:relative;overflow:hidden;box-shadow:0 20px 50px rgba(13,160,207,.28)">
-      <div aria-hidden="true" style="position:absolute;top:-60px;right:-60px;width:240px;height:240px;background:radial-gradient(circle,rgba(31,196,240,.45),transparent 70%);pointer-events:none"></div>
-      <div aria-hidden="true" style="position:absolute;bottom:-50px;left:-50px;width:200px;height:200px;background:radial-gradient(circle,rgba(255,107,26,.30),transparent 70%);pointer-events:none"></div>
+ <!-- BLOC CTA PREMIUM URGENCE PLOMBERIE -->
+ <div style="margin:32px 0;padding:32px clamp(20px,3vw,40px);background:linear-gradient(135deg,#0A1428 0%,#0A4D6E 50%,#0DA0CF 100%);border-radius:24px;color:#fff;position:relative;overflow:hidden;box-shadow:0 20px 50px rgba(13,160,207,.28)">
+ <div aria-hidden="true" style="position:absolute;top:-60px;right:-60px;width:240px;height:240px;background:radial-gradient(circle,rgba(31,196,240,.45),transparent 70%);pointer-events:none"></div>
+ <div aria-hidden="true" style="position:absolute;bottom:-50px;left:-50px;width:200px;height:200px;background:radial-gradient(circle,rgba(255,107,26,.30),transparent 70%);pointer-events:none"></div>
 
-      <div style="position:relative;display:grid;grid-template-columns:1fr;gap:24px;max-width:760px;margin:0 auto;text-align:center">
-        <div>
-          <div style="display:inline-flex;align-items:center;gap:8px;padding:7px 14px;background:rgba(255,107,26,.20);border:1px solid rgba(255,107,26,.40);border-radius:999px;font-size:.74rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:14px;color:#FFD3A8">
-            <span style="width:7px;height:7px;border-radius:50%;background:#FF6B1A;box-shadow:0 0 0 4px rgba(255,107,26,.30);animation:pmrPulse 2s ease-in-out infinite"></span>
-            Urgence fuite d'eau
-          </div>
-          <h3 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:700;margin:0 0 12px;line-height:1.2;letter-spacing:-.02em">Une fuite en cours&nbsp;? <em style="font-style:italic;color:#6FDFFF">On intervient maintenant</em></h3>
-          <p style="font-size:.98rem;line-height:1.55;color:rgba(255,255,255,.85);margin:0;max-width:600px;margin-left:auto;margin-right:auto">Recherche de fuite, réparation, sécurisation. <strong style="color:#fff">Devis transparent</strong> annoncé avant toute intervention. Caméra thermique disponible.</p>
-        </div>
+ <div style="position:relative;display:grid;grid-template-columns:1fr;gap:24px;max-width:760px;margin:0 auto;text-align:center">
+ <div>
+ <div style="display:inline-flex;align-items:center;gap:8px;padding:7px 14px;background:rgba(255,107,26,.20);border:1px solid rgba(255,107,26,.40);border-radius:999px;font-size:.74rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:14px;color:#FFD3A8">
+ <span style="width:7px;height:7px;border-radius:50%;background:#FF6B1A;box-shadow:0 0 0 4px rgba(255,107,26,.30);animation:pmrPulse 2s ease-in-out infinite"></span>
+ Urgence fuite d'eau
+ </div>
+ <h3 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:700;margin:0 0 12px;line-height:1.2;letter-spacing:-.02em">Une fuite en cours&nbsp;? <em style="font-style:italic;color:#6FDFFF">On intervient maintenant</em></h3>
+ <p style="font-size:.98rem;line-height:1.55;color:rgba(255,255,255,.85);margin:0;max-width:600px;margin-left:auto;margin-right:auto">Recherche de fuite, réparation, sécurisation. <strong style="color:#fff">Devis transparent</strong> annoncé avant toute intervention. Caméra thermique disponible.</p>
+ </div>
 
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:8px">
-          <a href="tel:+33366100134" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 22px;background:#fff;color:#0A1428;border-radius:14px;text-decoration:none;font-weight:800;font-size:1rem;box-shadow:0 8px 22px rgba(0,0,0,.25)">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1.02 1.02 0 0 0-1.02.24l-2.2 2.2a15.04 15.04 0 0 1-6.59-6.59l2.2-2.2a1.02 1.02 0 0 0 .24-1.02A11.36 11.36 0 0 1 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
-            Appeler — 03 66 10 01 34
-          </a>
-          <a href="contact.html?presta=recherche-fuite#form" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 22px;background:linear-gradient(135deg,#FF8A3D,#FF6B1A);color:#fff;border-radius:14px;text-decoration:none;font-weight:800;font-size:1rem;box-shadow:0 8px 22px rgba(255,107,26,.40)">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            Demander une recherche de fuite
-          </a>
-        </div>
+ <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:8px">
+ <a href="tel:+33366100134" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 22px;background:#fff;color:#0A1428;border-radius:14px;text-decoration:none;font-weight:800;font-size:1rem;box-shadow:0 8px 22px rgba(0,0,0,.25)">
+ <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1.02 1.02 0 0 0-1.02.24l-2.2 2.2a15.04 15.04 0 0 1-6.59-6.59l2.2-2.2a1.02 1.02 0 0 0.24-1.02A11.36 11.36 0 0 1 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1.45-1 1 0 9.39 7.61 17 17 17.55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
+ Appeler — 03 66 10 01 34
+ </a>
+ <a href="contact.html?presta=recherche-fuite#form" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 22px;background:linear-gradient(135deg,#FF8A3D,#FF6B1A);color:#fff;border-radius:14px;text-decoration:none;font-weight:800;font-size:1rem;box-shadow:0 8px 22px rgba(255,107,26,.40)">
+ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+ Demander une recherche de fuite
+ </a>
+ </div>
 
-        <div style="display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:10px;font-size:.82rem;color:rgba(255,255,255,.70)">
-          <span>✓ Intervention rapide</span>
-          <span>✓ Sans casse inutile</span>
-          <span>✓ Devis transparent</span>
-        </div>
-      </div>
-      <style>@keyframes pmrPulse{0%,100%{box-shadow:0 0 0 4px rgba(255,107,26,.30)}50%{box-shadow:0 0 0 8px rgba(255,107,26,.10)}}</style>
-    </div>
-    <div class="back-to-guides">
-      <a href="guides.html">← Tous les guides &amp; conseils</a>
-    </div>
-    
+ <div style="display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:10px;font-size:.82rem;color:rgba(255,255,255,.70)">
+ <span>✓ Intervention rapide</span>
+ <span>✓ Sans casse inutile</span>
+ <span>✓ Devis transparent</span>
+ </div>
+ </div>
+ <style>@keyframes pmrPulse{0%,100%{box-shadow:0 0 0 4px rgba(255,107,26,.30)}50%{box-shadow:0 0 0 8px rgba(255,107,26,.10)}}</style>
+ </div>
+ <div class="back-to-guides">
+ <a href="guides.html">← Tous les guides &amp; conseils</a>
+ </div>
+ 
 </div></section>
 <footer class="footer footer-v3">
-  <div class="footer-v3-wrap">
+ <div class="footer-v3-wrap">
 
-    <!-- ═══ SECTION 1 : Navigation principale (4 colonnes) ═══ -->
-    <div class="fv3-grid">
+ <!-- ═══ SECTION 1 : Navigation principale (4 colonnes) ═══ -->
+ <div class="fv3-grid">
 
-      <!-- Brand + contact -->
-      <div class="fv3-brand">
-        <a href="index.html" class="fv3-logo" aria-label="HELP! Confort Saint-Omer & Dunkerque">
-          <img decoding="async" src="logo-officiel.jpg" alt="HELP! Confort — réseau officiel" width="200" height="60" loading="lazy">
-        </a>
-        <div class="fv3-zones">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span>Agence <strong>Saint-Omer</strong> &amp; <strong>Dunkerque</strong></span>
-        </div>
-        <ul class="fv3-contact">
-          <li>
-            <a href="tel:+33366100134" aria-label="Appeler le 03 66 10 01 34">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              <span><strong>03 66 10 01 34</strong><em>Lun–Sam · urgence 7j/7</em></span>
-            </a>
-          </li>
-          <li>
-            <a href="mailto:saint-omer@helpconfort.com" aria-label="Envoyer un email">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              <span><strong>saint-omer@helpconfort.com</strong></span>
-            </a>
-          </li>
-          <li>
-            <a href="https://maps.app.goo.gl/B4BPVTiRp5rDp26fA" target="_blank" rel="noopener" aria-label="Itinéraire">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              <span><strong>242 route de Boulogne</strong><em>62500 Saint-Martin-lez-Tatinghem</em></span>
-            </a>
-          </li>
-        </ul>
-      </div>
+ <!-- Brand + contact -->
+ <div class="fv3-brand">
+ <a href="index.html" class="fv3-logo" aria-label="HELP! Confort Saint-Omer & Dunkerque">
+ <img decoding="async" src="logo-officiel.jpg" alt="HELP! Confort — réseau officiel" width="200" height="60" loading="lazy">
+ </a>
+ <div class="fv3-zones">
+ <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+ <span>Agence <strong>Saint-Omer</strong> &amp; <strong>Dunkerque</strong></span>
+ </div>
+ <ul class="fv3-contact">
+ <li>
+ <a href="tel:+33366100134" aria-label="Appeler le 03 66 10 01 34">
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0.7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+ <span><strong>03 66 10 01 34</strong><em>Lun–Sam · sur rendez-vous</em></span>
+ </a>
+ </li>
+ <li>
+ <a href="mailto:saint-omer@helpconfort.com" aria-label="Envoyer un email">
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2.9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+ <span><strong>saint-omer@helpconfort.com</strong></span>
+ </a>
+ </li>
+ <li>
+ <a href="https://maps.app.goo.gl/B4BPVTiRp5rDp26fA" target="_blank" rel="noopener" aria-label="Itinéraire">
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+ <span><strong>242 route de Boulogne</strong><em>62500 Saint-Martin-lez-Tatinghem</em></span>
+ </a>
+ </li>
+ </ul>
+ </div>
 
-      <!-- Métiers -->
-      <div class="fv3-col">
-        <h3>Métiers</h3>
-        <ul>
-          <li><a href="plombier-saint-omer.html">Plomberie</a></li>
-          <li><a href="chauffagiste-saint-omer.html">Chauffage</a></li>
-          <li><a href="electricien-saint-omer.html">Électricité</a></li>
-          <li><a href="serrurier-saint-omer.html">Serrurerie &amp; vitrerie</a></li>
-          <li><a href="travaux-saint-omer.html">Rénovation &amp; travaux</a></li>
-          <li><a href="guide-adaptation-pmr.html">Adaptation PMR</a></li>
-        </ul>
-      </div>
+ <!-- Métiers -->
+ <div class="fv3-col">
+ <h3>Métiers</h3>
+ <ul>
+ <li><a href="plombier-saint-omer.html">Plomberie</a></li>
+ <li><a href="chauffagiste-saint-omer.html">Chauffage</a></li>
+ <li><a href="electricien-saint-omer.html">Électricité</a></li>
+ <li><a href="serrurier-saint-omer.html">Serrurerie &amp; vitrerie</a></li>
+ <li><a href="travaux-saint-omer.html">Rénovation &amp; travaux</a></li>
+ <li><a href="guide-adaptation-pmr.html">Adaptation PMR</a></li>
+ </ul>
+ </div>
 
-      <!-- Zones -->
-      <div class="fv3-col">
-        <h3>Zones d'intervention</h3>
-        <ul>
-          <li><a href="depannage-saint-omer.html">Saint-Omer</a></li>
-          <li><a href="depannage-longuenesse.html">Longuenesse</a></li>
-          <li><a href="depannage-arques.html">Arques</a></li>
-          <li><a href="depannage-saint-martin-lez-tatinghem.html">Saint-Martin-lez-Tatinghem</a></li>
-          <li><a href="depannage-dunkerque.html">Dunkerque · littoral</a></li>
-          <li><a href="depannage-bergues.html">Bergues</a></li>
-          <li><a href="depannage-gravelines.html">Gravelines</a></li>
-          <li class="fv3-more">+ Aire-sur-la-Lys, Hazebrouck, Béthune, Wizernes, Lumbres, Blendecques</li>
-        </ul>
-      </div>
+ <!-- Zones -->
+ <div class="fv3-col">
+ <h3>Zones d'intervention</h3>
+ <ul>
+ <li><a href="depannage-saint-omer.html">Saint-Omer</a></li>
+ <li><a href="depannage-longuenesse.html">Longuenesse</a></li>
+ <li><a href="depannage-arques.html">Arques</a></li>
+ <li><a href="depannage-saint-martin-lez-tatinghem.html">Saint-Martin-lez-Tatinghem</a></li>
+ <li><a href="depannage-dunkerque.html">Dunkerque · littoral</a></li>
+ <li><a href="depannage-bergues.html">Bergues</a></li>
+ <li><a href="depannage-gravelines.html">Gravelines</a></li>
+ <li class="fv3-more">+ Aire-sur-la-Lys, Hazebrouck, Béthune, Wizernes, Lumbres, Blendecques</li>
+ </ul>
+ </div>
 
-      <!-- Entreprise -->
-      <div class="fv3-col">
-        <h3>Entreprise</h3>
-        <ul>
-          <li><a href="a-propos.html">À propos</a></li>
-          <li><a href="contact.html">Contact &amp; devis</a></li>
-          <li><a href="contrats-entretien.html">Contrats d'entretien</a></li>
-          <li><a href="aides.html">Aides &amp; financements</a></li>
-          <li><a href="realisations.html">Actu &amp; réalisations</a></li>
-          <li><a href="carrieres.html">Carrières</a></li>
-        </ul>
-      </div>
-    </div>
+ <!-- Entreprise -->
+ <div class="fv3-col">
+ <h3>Entreprise</h3>
+ <ul>
+ <li><a href="a-propos.html">À propos</a></li>
+ <li><a href="contact.html">Contact &amp; devis</a></li>
+ <li><a href="contrats-entretien.html">Contrats d'entretien</a></li>
+ <li><a href="aides.html">Aides &amp; financements</a></li>
+ <li><a href="realisations.html">Actu &amp; réalisations</a></li>
+ <li><a href="carrieres.html">Carrières</a></li>
+ </ul>
+ </div>
+ </div>
 
-    <!-- ═══ SECTION 2 : Réseaux sociaux & avis ═══ -->
-    <div class="fv3-social">
-      <span class="fv3-social-label">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        Suivez-nous
-      </span>
-      <div class="fv3-social-links">
-        <a href="https://www.facebook.com/depanaudo/" target="_blank" rel="noopener" class="fv3-soc fv3-soc-fb" aria-label="Facebook HELP! Confort Saint-Omer">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
-          Facebook
-        </a>
-        <a href="https://www.linkedin.com/in/florian-d-haillecourt-2a67bb207" target="_blank" rel="noopener" class="fv3-soc fv3-soc-li" aria-label="LinkedIn HELP! Confort">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 11.01-4.13 2.06 2.06 0 010 4.13zM3.56 20.45h3.55V9H3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
-          LinkedIn
-        </a>
-        <a href="https://maps.app.goo.gl/B4BPVTiRp5rDp26fA" target="_blank" rel="noopener" class="fv3-soc fv3-soc-go" aria-label="Avis Google">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path fill="#4285F4" d="M22.5 12.27c0-.79-.07-1.55-.2-2.27H12v4.3h5.93c-.26 1.4-1.04 2.58-2.21 3.37v2.8h3.57c2.08-1.92 3.28-4.74 3.28-8.2z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.83z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.83C6.71 7.31 9.14 5.38 12 5.38z"/></svg>
-          <strong>4,7/5</strong><span class="fv3-soc-meta">343 avis Google</span>
-        </a>
-      </div>
-    </div>
+ <!-- ═══ SECTION 2 : Réseaux sociaux & avis ═══ -->
+ <div class="fv3-social">
+ <span class="fv3-social-label">
+ <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+ Suivez-nous
+ </span>
+ <div class="fv3-social-links">
+ <a href="https://www.facebook.com/depanaudo/" target="_blank" rel="noopener" class="fv3-soc fv3-soc-fb" aria-label="Facebook HELP! Confort Saint-Omer">
+ <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1.45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+ Facebook
+ </a>
+ <a href="https://www.linkedin.com/in/florian-d-haillecourt-2a67bb207" target="_blank" rel="noopener" class="fv3-soc fv3-soc-li" aria-label="LinkedIn HELP! Confort">
+ <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 11.01-4.13 2.06 2.06 0 010 4.13zM3.56 20.45h3.55V9H3.56v11.45zM22.22 0H1.77C.79 0 0.77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24.77 23.2 0 22.22 0z"/></svg>
+ LinkedIn
+ </a>
+ <a href="https://maps.app.goo.gl/B4BPVTiRp5rDp26fA" target="_blank" rel="noopener" class="fv3-soc fv3-soc-go" aria-label="Avis Google">
+ <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path fill="#4285F4" d="M22.5 12.27c0-.79-.07-1.55-.2-2.27H12v4.3h5.93c-.26 1.4-1.04 2.58-2.21 3.37v2.8h3.57c2.08-1.92 3.28-4.74 3.28-8.2z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.83z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.83C6.71 7.31 9.14 5.38 12 5.38z"/></svg>
+ <strong>4,7/5</strong><span class="fv3-soc-meta">343 avis Google</span>
+ </a>
+ </div>
+ </div>
 
-    <!-- ═══ SECTION 3 : Bandeau légal compact ═══ -->
-    <div class="fv3-legal">
-      <p class="fv3-legal-line">
-        <span>© <span id="year">2026</span> <strong>SARL Dépan'Audo</strong></span>
-        <span class="fv3-sep">·</span>
-        <span>Membre du réseau <strong>HELP! Confort</strong> (groupe La Poste)</span>
-        <span class="fv3-sep">·</span>
-        <span>SIREN 898 196 159 · RCS Boulogne</span>
-      </p>
-      <nav class="fv3-legal-links" aria-label="Liens légaux">
-        <a href="mentions-legales.html">Mentions légales</a>
-        <a href="mentions-legales.html#cgv">CGV</a>
-        <a href="mentions-legales.html#privacy">Confidentialité</a>
-      </nav>
-    </div>
+ <!-- ═══ SECTION 3 : Bandeau légal compact ═══ -->
+ <div class="fv3-legal">
+ <p class="fv3-legal-line">
+ <span>© <span id="year">2026</span> <strong>SARL Dépan'Audo</strong></span>
+ <span class="fv3-sep">·</span>
+ <span>Membre du réseau <strong>HELP! Confort</strong> (groupe La Poste)</span>
+ <span class="fv3-sep">·</span>
+ <span>SIREN 898 196 159 · RCS Boulogne</span>
+ </p>
+ <nav class="fv3-legal-links" aria-label="Liens légaux">
+ <a href="mentions-legales.html">Mentions légales</a>
+ <a href="mentions-legales.html#cgv">CGV</a>
+ <a href="mentions-legales.html#privacy">Confidentialité</a>
+ </nav>
+ </div>
 
-  </div>
+ </div>
 
-  <style>
-    /* ═══════════════════════════════════════════════════════════════
-       FOOTER V3 — réorganisé, sans doublons, 3 sections distinctes
-    ═══════════════════════════════════════════════════════════════ */
-    .footer-v3 {
-      position: relative;
-      background:
-        radial-gradient(ellipse 80% 60% at 80% 0%, rgba(31,196,240,.06), transparent 65%),
-        radial-gradient(ellipse 60% 50% at 10% 100%, rgba(255,107,26,.035), transparent 65%),
-        linear-gradient(180deg, #0A1428 0%, #060E1D 100%);
-      color: rgba(255,255,255,.82);
-      padding: 56px 0 0;
-      overflow: hidden;
-    }
-    .footer-v3-wrap {
-      width: 100%;
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 clamp(24px, 4vw, 56px);
-      box-sizing: border-box;
-    }
+ <style>
+ /* ═══════════════════════════════════════════════════════════════
+ FOOTER V3 — réorganisé, sans doublons, 3 sections distinctes
+ ═══════════════════════════════════════════════════════════════ */.footer-v3 {
+ position: relative;
+ background:
+ radial-gradient(ellipse 80% 60% at 80% 0%, rgba(31,196,240,.06), transparent 65%),
+ radial-gradient(ellipse 60% 50% at 10% 100%, rgba(255,107,26,.035), transparent 65%),
+ linear-gradient(180deg, #0A1428 0%, #060E1D 100%);
+ color: rgba(255,255,255,.82);
+ padding: 56px 0 0;
+ overflow: hidden;
+ }.footer-v3-wrap {
+ width: 100%;
+ max-width: 1280px;
+ margin: 0 auto;
+ padding: 0 clamp(24px, 4vw, 56px);
+ box-sizing: border-box;
+ }
 
-    /* ═══ SECTION 1 — Grid navigation ═══ */
-    .fv3-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 40px;
-      padding-bottom: 40px;
-    }
-    @media (min-width: 720px)  { .fv3-grid { grid-template-columns: 1fr 1fr; gap: 36px 40px; } }
-    @media (min-width: 1080px) { .fv3-grid { grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 56px; } }
+ /* ═══ SECTION 1 — Grid navigation ═══ */.fv3-grid {
+ display: grid;
+ grid-template-columns: 1fr;
+ gap: 40px;
+ padding-bottom: 40px;
+ }
+ @media (min-width: 720px) {.fv3-grid { grid-template-columns: 1fr 1fr; gap: 36px 40px; } }
+ @media (min-width: 1080px) {.fv3-grid { grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 56px; } }.fv3-brand.fv3-logo {
+ display:inline-block;
+ margin-bottom: 14px;
+ padding: 10px 14px;
+ background: #fff;
+ border-radius: 12px;
+ box-shadow: 0 6px 18px rgba(0,0,0,.20), 0 0 0 1px rgba(255,255,255,.06) inset;
+ transition: transform.2s ease;
+ }.fv3-brand.fv3-logo:hover { transform: translateY(-2px) }.fv3-brand.fv3-logo img {
+ display:block;
+ width: 180px; height: auto;
+ max-height: 56px;
+ object-fit: contain;
+ }.fv3-zones{
+ display:inline-flex; align-items:center; gap:8px;
+ padding: 6px 12px;
+ background: rgba(31,196,240,.08);
+ border: 1px solid rgba(31,196,240,.22);
+ border-radius: 999px;
+ color: rgba(255,255,255,.78);
+ font-size:.82rem;
+ margin-bottom: 16px;
+ }.fv3-zones svg { color:#1FC4F0; flex-shrink:0 }.fv3-zones strong { color:#fff; font-weight:700 }.fv3-tagline {
+ font-size:.95rem; line-height:1.55;
+ color: rgba(255,255,255,.74);
+ margin: 0 0 22px; max-width: 320px;
+ }.fv3-tagline em {
+ font-family:'Playfair Display', Georgia, serif;
+ font-style:italic; font-weight:500;
+ color:#1FC4F0;
+ }.fv3-contact {
+ list-style:none; padding:0; margin:0;
+ display:flex; flex-direction:column; gap:12px;
+ }.fv3-contact li a {
+ display:flex; align-items:flex-start; gap:11px;
+ color: rgba(255,255,255,.82);
+ text-decoration:none;
+ transition: color.15s ease, transform.15s ease;
+ }.fv3-contact li a:hover { color:#1FC4F0; transform:translateX(2px) }.fv3-contact svg { color:#1FC4F0; flex-shrink:0; margin-top:3px; opacity:.9 }.fv3-contact span { display:flex; flex-direction:column; line-height:1.35 }.fv3-contact strong { font-weight:600; font-size:.88rem; color:#fff }.fv3-contact em { font-style:normal; font-size:.74rem; color:rgba(255,255,255,.5); margin-top:2px }
 
-    .fv3-brand .fv3-logo {
-      display:inline-block;
-      margin-bottom: 14px;
-      padding: 10px 14px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(0,0,0,.20), 0 0 0 1px rgba(255,255,255,.06) inset;
-      transition: transform .2s ease;
-    }
-    .fv3-brand .fv3-logo:hover { transform: translateY(-2px) }
-    .fv3-brand .fv3-logo img {
-      display:block;
-      width: 180px; height: auto;
-      max-height: 56px;
-      object-fit: contain;
-    }
-    .fv3-zones{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 6px 12px;
-      background: rgba(31,196,240,.08);
-      border: 1px solid rgba(31,196,240,.22);
-      border-radius: 999px;
-      color: rgba(255,255,255,.78);
-      font-size: .82rem;
-      margin-bottom: 16px;
-    }
-    .fv3-zones svg { color:#1FC4F0; flex-shrink:0 }
-    .fv3-zones strong { color:#fff; font-weight:700 }
-    .fv3-tagline {
-      font-size:.95rem; line-height:1.55;
-      color: rgba(255,255,255,.74);
-      margin: 0 0 22px; max-width: 320px;
-    }
-    .fv3-tagline em {
-      font-family:'Playfair Display', Georgia, serif;
-      font-style:italic; font-weight:500;
-      color:#1FC4F0;
-    }
+ /* Colonnes nav */.fv3-col h4,.fv3-brand h4 {
+ color:#fff;
+ font-size:.74rem;
+ font-weight:700;
+ letter-spacing:1.8px;
+ text-transform:uppercase;
+ margin: 0 0 18px;
+ }.fv3-col ul {
+ list-style:none; padding:0; margin:0;
+ display:flex; flex-direction:column; gap:10px;
+ }.fv3-col li {
+ color: rgba(255,255,255,.6);
+ font-size:.87rem;
+ }.fv3-col li a {
+ color: rgba(255,255,255,.74);
+ text-decoration:none;
+ transition: color.15s ease;
+ }.fv3-col li a:hover { color:#1FC4F0 }.fv3-col li.fv3-more {
+ color: rgba(255,255,255,.45);
+ font-size:.78rem;
+ line-height:1.5;
+ padding-top:6px;
+ border-top:1px dashed rgba(255,255,255,.10);
+ margin-top:4px;
+ }
 
-    .fv3-contact {
-      list-style:none; padding:0; margin:0;
-      display:flex; flex-direction:column; gap:12px;
-    }
-    .fv3-contact li a {
-      display:flex; align-items:flex-start; gap:11px;
-      color: rgba(255,255,255,.82);
-      text-decoration:none;
-      transition: color .15s ease, transform .15s ease;
-    }
-    .fv3-contact li a:hover { color:#1FC4F0; transform:translateX(2px) }
-    .fv3-contact svg { color:#1FC4F0; flex-shrink:0; margin-top:3px; opacity:.9 }
-    .fv3-contact span { display:flex; flex-direction:column; line-height:1.35 }
-    .fv3-contact strong { font-weight:600; font-size:.88rem; color:#fff }
-    .fv3-contact em { font-style:normal; font-size:.74rem; color:rgba(255,255,255,.5); margin-top:2px }
+ /* ═══ SECTION 2 — Réseaux sociaux ═══ */.fv3-social {
+ display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
+ gap: 14px 18px;
+ padding: 22px 0;
+ border-top: 1px solid rgba(255,255,255,.09);
+ border-bottom: 1px solid rgba(255,255,255,.09);
+ }.fv3-social-label {
+ display:inline-flex; align-items:center; gap:8px;
+ color: rgba(255,255,255,.62);
+ font-size:.82rem;
+ font-weight:600;
+ letter-spacing:.01em;
+ }.fv3-social-label svg { color:#1FC4F0; opacity:.85 }.fv3-social-links {
+ display:flex; flex-wrap:wrap; gap:10px;
+ }.fv3-soc {
+ display:inline-flex; align-items:center; gap:8px;
+ padding: 9px 14px;
+ border-radius: 10px;
+ text-decoration:none;
+ font-size:.86rem;
+ font-weight:600;
+ color:#fff;
+ background: rgba(255,255,255,.06);
+ border: 1px solid rgba(255,255,255,.12);
+ transition: transform.2s ease, background.2s ease, border-color.2s ease;
+ }.fv3-soc:hover {
+ transform: translateY(-2px);
+ background: rgba(255,255,255,.10);
+ }.fv3-soc-fb { color:#5996F2 }.fv3-soc-fb:hover { border-color: rgba(89,150,242,.45); background: rgba(24,119,242,.18) }.fv3-soc-li { color:#5B9BDD }.fv3-soc-li:hover { border-color: rgba(91,155,221,.45); background: rgba(10,102,194,.18) }.fv3-soc-go strong { color:#FFC107; font-weight:700 }.fv3-soc-go.fv3-soc-meta { color: rgba(255,255,255,.55); font-weight:500; font-size:.78rem; margin-left:2px }.fv3-soc-go:hover { border-color: rgba(255,193,7,.40); background: rgba(255,193,7,.08) }
 
-    /* Colonnes nav */
-    .fv3-col h4, .fv3-brand h4 {
-      color:#fff;
-      font-size:.74rem;
-      font-weight:700;
-      letter-spacing:1.8px;
-      text-transform:uppercase;
-      margin: 0 0 18px;
-    }
-    .fv3-col ul {
-      list-style:none; padding:0; margin:0;
-      display:flex; flex-direction:column; gap:10px;
-    }
-    .fv3-col li {
-      color: rgba(255,255,255,.6);
-      font-size:.87rem;
-    }
-    .fv3-col li a {
-      color: rgba(255,255,255,.74);
-      text-decoration:none;
-      transition: color .15s ease;
-    }
-    .fv3-col li a:hover { color:#1FC4F0 }
-    .fv3-col li.fv3-more {
-      color: rgba(255,255,255,.45);
-      font-size:.78rem;
-      line-height:1.5;
-      padding-top:6px;
-      border-top:1px dashed rgba(255,255,255,.10);
-      margin-top:4px;
-    }
+ /* ═══ SECTION 3 — Bandeau légal ═══ */.fv3-legal {
+ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
+ gap: 14px;
+ padding: 22px 0 26px;
+ font-size:.78rem;
+ }.fv3-legal-line {
+ margin:0;
+ display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px;
+ color: rgba(255,255,255,.54);
+ line-height:1.5;
+ }.fv3-legal-line strong { color: rgba(255,255,255,.78); font-weight:600 }.fv3-sep { color: rgba(255,255,255,.22); }.fv3-legal-links {
+ display:inline-flex; align-items:center; gap:18px;
+ }.fv3-legal-links a {
+ color: rgba(255,255,255,.62);
+ text-decoration:none;
+ font-size:.78rem;
+ font-weight:500;
+ transition: color.15s ease;
+ position:relative;
+ }.fv3-legal-links a:not(:last-child)::after {
+ content:'·';
+ color: rgba(255,255,255,.22);
+ position:absolute; right:-12px; top:50%; transform:translateY(-50%);
+ pointer-events:none;
+ }.fv3-legal-links a:hover { color:#1FC4F0 }
 
-    /* ═══ SECTION 2 — Réseaux sociaux ═══ */
-    .fv3-social {
-      display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
-      gap: 14px 18px;
-      padding: 22px 0;
-      border-top: 1px solid rgba(255,255,255,.09);
-      border-bottom: 1px solid rgba(255,255,255,.09);
-    }
-    .fv3-social-label {
-      display:inline-flex; align-items:center; gap:8px;
-      color: rgba(255,255,255,.62);
-      font-size:.82rem;
-      font-weight:600;
-      letter-spacing:.01em;
-    }
-    .fv3-social-label svg { color:#1FC4F0; opacity:.85 }
-    .fv3-social-links {
-      display:flex; flex-wrap:wrap; gap:10px;
-    }
-    .fv3-soc {
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 9px 14px;
-      border-radius: 10px;
-      text-decoration:none;
-      font-size:.86rem;
-      font-weight:600;
-      color:#fff;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-      transition: transform .2s ease, background .2s ease, border-color .2s ease;
-    }
-    .fv3-soc:hover {
-      transform: translateY(-2px);
-      background: rgba(255,255,255,.10);
-    }
-    .fv3-soc-fb { color:#5996F2 }
-    .fv3-soc-fb:hover { border-color: rgba(89,150,242,.45); background: rgba(24,119,242,.18) }
-    .fv3-soc-li { color:#5B9BDD }
-    .fv3-soc-li:hover { border-color: rgba(91,155,221,.45); background: rgba(10,102,194,.18) }
-    .fv3-soc-go strong { color:#FFC107; font-weight:700 }
-    .fv3-soc-go .fv3-soc-meta { color: rgba(255,255,255,.55); font-weight:500; font-size:.78rem; margin-left:2px }
-    .fv3-soc-go:hover { border-color: rgba(255,193,7,.40); background: rgba(255,193,7,.08) }
-
-    /* ═══ SECTION 3 — Bandeau légal ═══ */
-    .fv3-legal {
-      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
-      gap: 14px;
-      padding: 22px 0 26px;
-      font-size:.78rem;
-    }
-    .fv3-legal-line {
-      margin:0;
-      display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px;
-      color: rgba(255,255,255,.54);
-      line-height:1.5;
-    }
-    .fv3-legal-line strong { color: rgba(255,255,255,.78); font-weight:600 }
-    .fv3-sep { color: rgba(255,255,255,.22); }
-
-    .fv3-legal-links {
-      display:inline-flex; align-items:center; gap:18px;
-    }
-    .fv3-legal-links a {
-      color: rgba(255,255,255,.62);
-      text-decoration:none;
-      font-size:.78rem;
-      font-weight:500;
-      transition: color .15s ease;
-      position:relative;
-    }
-    .fv3-legal-links a:not(:last-child)::after {
-      content:'·';
-      color: rgba(255,255,255,.22);
-      position:absolute; right:-12px; top:50%; transform:translateY(-50%);
-      pointer-events:none;
-    }
-    .fv3-legal-links a:hover { color:#1FC4F0 }
-
-    @media (max-width: 720px) {
-      .footer-v3 { padding: 40px 0 0 }
-      .fv3-grid { padding-bottom: 28px }
-      .fv3-social { justify-content:flex-start; gap:14px }
-      .fv3-legal { flex-direction:column; align-items:flex-start; gap:12px }
-      .fv3-legal-line { font-size:.74rem }
-    }
-  </style>
-  </footer>
+ @media (max-width: 720px) {.footer-v3 { padding: 40px 0 0 }.fv3-grid { padding-bottom: 28px }.fv3-social { justify-content:flex-start; gap:14px }.fv3-legal { flex-direction:column; align-items:flex-start; gap:12px }.fv3-legal-line { font-size:.74rem }
+ }
+ </style>
+ </footer>
 
 
 <!-- HC-WIDGETS-V1 -->
@@ -882,26 +772,26 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
 <!-- HC-SW-KILL-V2 — désinscription SW + purge caches + reload (15/05 PM) -->
 <script>
 (function(){
-  if (!('serviceWorker' in navigator)) return;
-  var hadSW = false;
-  navigator.serviceWorker.getRegistrations().then(function(rs){
-    if (rs.length > 0) hadSW = true;
-    rs.forEach(function(r){ r.unregister(); });
-  });
-  if ('caches' in window) {
-    caches.keys().then(function(ks){
-      ks.forEach(function(k){ caches.delete(k); });
-    });
-  }
-  // Si on avait un SW actif et qu'on n'a pas encore rechargé une fois, force le reload (sans boucle)
-  setTimeout(function(){
-    try {
-      if (hadSW && !sessionStorage.getItem('__hc_sw_reset')) {
-        sessionStorage.setItem('__hc_sw_reset', '1');
-        location.reload(true);
-      }
-    } catch(_){}
-  }, 500);
+ if (!('serviceWorker' in navigator)) return;
+ var hadSW = false;
+ navigator.serviceWorker.getRegistrations().then(function(rs){
+ if (rs.length > 0) hadSW = true;
+ rs.forEach(function(r){ r.unregister(); });
+ });
+ if ('caches' in window) {
+ caches.keys().then(function(ks){
+ ks.forEach(function(k){ caches.delete(k); });
+ });
+ }
+ // Si on avait un SW actif et qu'on n'a pas encore rechargé une fois, force le reload (sans boucle)
+ setTimeout(function(){
+ try {
+ if (hadSW && !sessionStorage.getItem('__hc_sw_reset')) {
+ sessionStorage.setItem('__hc_sw_reset', '1');
+ location.reload(true);
+ }
+ } catch(_){}
+ }, 500);
 })();
 </script>
 </body>

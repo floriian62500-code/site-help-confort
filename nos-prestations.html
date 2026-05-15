@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-  <link rel="dns-prefetch" href="https://api-adresse.data.gouv.fr">
+ <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+ <link rel="dns-prefetch" href="https://api-adresse.data.gouv.fr">
 
 <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -25,34 +25,34 @@
 
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://www.depan59-62.fr/"},
-        {"@type": "ListItem", "position": 2, "name": "Nos prestations", "item": "https://www.depan59-62.fr/nos-prestations.html"}
-      ]
-    },
-    {
-      "@type": "OfferCatalog",
-      "name": "Catalogue de prestations HELP! Confort Saint-Omer",
-      "description": "Forfaits prix fixe : plomberie, chauffe-eau, dépannage, devis sur mesure",
-      "provider": {
-        "@type": "LocalBusiness",
-        "name": "HELP! Confort Saint-Omer",
-        "telephone": "+33366100134",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "242 route de Boulogne",
-          "postalCode": "62500",
-          "addressLocality": "Saint-Martin-lez-Tatinghem",
-          "addressCountry": "FR"
-        },
-        "areaServed": ["Saint-Omer", "Dunkerque", "Longuenesse", "Arques", "Saint-Martin-lez-Tatinghem", "Bergues", "Gravelines"]
-      }
-    }
-  ]
+ "@context": "https://schema.org",
+ "@graph": [
+ {
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+ {"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://www.depan59-62.fr/"},
+ {"@type": "ListItem", "position": 2, "name": "Nos prestations", "item": "https://www.depan59-62.fr/nos-prestations.html"}
+ ]
+ },
+ {
+ "@type": "OfferCatalog",
+ "name": "Catalogue de prestations HELP! Confort Saint-Omer",
+ "description": "Forfaits prix fixe : plomberie, chauffe-eau, dépannage, devis sur mesure",
+ "provider": {
+ "@type": "LocalBusiness",
+ "name": "HELP! Confort Saint-Omer",
+ "telephone": "+33366100134",
+ "address": {
+ "@type": "PostalAddress",
+ "streetAddress": "242 route de Boulogne",
+ "postalCode": "62500",
+ "addressLocality": "Saint-Martin-lez-Tatinghem",
+ "addressCountry": "FR"
+ },
+ "areaServed": ["Saint-Omer", "Dunkerque", "Longuenesse", "Arques", "Saint-Martin-lez-Tatinghem", "Bergues", "Gravelines"]
+ }
+ }
+ ]
 }
 </script>
 
@@ -63,246 +63,57 @@
 <link rel="stylesheet" href="styles.css?v=1778685798">
 
 <style id="hc-critical-header">
-/* CSS critique — header + megamenu (inline pour garantir le rendu même si cache foireux) */
-.hc-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.92); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(229,237,243,.5); }
-.hc-header-row { display: flex; align-items: center; justify-content: space-between; padding: 12px clamp(20px, 4vw, 64px); max-width: 1480px; margin: 0 auto; gap: 24px; }
-.hc-logo { display: flex; align-items: center; flex-shrink: 0; }
-.hc-logo img { height: 56px; width: auto; max-width: none; display: block; }
-.hc-nav { display: none; }
-@media (min-width: 980px) { .hc-nav { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: center; position: relative; } }
-.hc-nav-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; color: #0A1428; text-decoration: none; font-size: .92rem; font-weight: 500; border-radius: 8px; transition: all .15s ease; cursor: pointer; }
-.hc-nav-link:hover { color: #0DA0CF; background: rgba(13,160,207,.06); }
-.hc-megamenu { position: absolute !important; top: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(-6px); background: #fff; border: 1px solid #E5EDF3; border-radius: 18px; padding: 14px; min-width: 380px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; box-shadow: 0 24px 48px rgba(10,20,40,.10); opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transition: opacity .2s ease, visibility .2s ease, transform .2s ease; z-index: 50; }
-.hc-megamenu::before { content: ''; position: absolute; top: -6px; left: 20%; right: 20%; height: 6px; }
-.hc-megamenu.mm-force-closed { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transform: translateX(-50%) translateY(-6px) !important; }
-.hc-nav-link[data-has-menu="metiers"]:hover ~ .hc-megamenu[data-menu="metiers"],
-.hc-megamenu:hover { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; transform: translateX(-50%) translateY(0); }
-.hc-megamenu a { display: inline-flex !important; align-items: center; gap: 12px; padding: 12px 14px; color: #0A1428; text-decoration: none; font-size: .94rem; font-weight: 500; border-radius: 10px; line-height: 1.2; transition: background .15s ease; }
-.hc-megamenu a:hover { background: rgba(13,160,207,.08); color: #0DA0CF; }
-.hc-megamenu a img, .hc-megamenu a .hc-mm-svg { width: 24px !important; height: 24px !important; object-fit: contain; flex-shrink: 0; }
-.hc-megamenu .hc-mm-svg svg { width: 22px !important; height: 22px !important; }
-.hc-megamenu .hc-mm-foot { grid-column: 1 / -1; margin-top: 8px; padding: 12px 14px 4px; border-top: 1px solid #E5EDF3; color: #0DA0CF; font-weight: 600; }
-.hc-header-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-.hc-btn-tel { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: #0A1428; color: #fff; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: .9rem; transition: background .2s ease; }
-.hc-btn-tel:hover { background: #0DA0CF; }
-.hc-btn-tel-num { letter-spacing: .02em; }
-.hc-burger { display: none; background: transparent; border: 0; padding: 8px; cursor: pointer; }
-@media (max-width: 979px) { .hc-burger { display: flex; flex-direction: column; gap: 4px; } .hc-btn-tel-num { display: none; } }
-.hc-burger span { display: block; width: 22px; height: 2px; background: #0A1428; border-radius: 2px; transition: all .25s ease; }
-.hc-topbar { background: linear-gradient(90deg, #FF6B1A 0%, #FF8A3D 100%); color: #fff; padding: 8px 0; font-size: .82rem; }
-.hc-topbar-inner { max-width: 1480px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 64px); display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
-.hctb-zones { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; }
-.hctb-zone { color: #fff; text-decoration: underline; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; }
-.hctb-pulse { width: 8px; height: 8px; border-radius: 50%; background: #22D48E; box-shadow: 0 0 0 0 rgba(34,212,142,.7); animation: hctbPulse 2s ease-out infinite; flex-shrink: 0; }
-@keyframes hctbPulse { 0% { box-shadow: 0 0 0 0 rgba(34,212,142,.7) } 70% { box-shadow: 0 0 0 6px rgba(34,212,142,0) } 100% { box-shadow: 0 0 0 0 rgba(34,212,142,0) } }
-.hctb-agence { display: inline-block; font-style: normal; font-weight: 800; font-size: .74rem; padding: 2px 8px; margin-left: 5px; border-radius: 6px; background: rgba(255,255,255,.95); color: #E85E15; letter-spacing: .4px; text-transform: uppercase; box-shadow: 0 1px 3px rgba(0,0,0,.08); vertical-align: middle; }
-.hctb-plus, .hctb-bullet { color: rgba(255,255,255,.7); margin: 0 2px; }
-.hctb-hours { color: #fff; }
+/* CSS critique — header + megamenu (inline pour garantir le rendu même si cache foireux) */.hc-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.92); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(229,237,243,.5); }.hc-header-row { display: flex; align-items: center; justify-content: space-between; padding: 12px clamp(20px, 4vw, 64px); max-width: 1480px; margin: 0 auto; gap: 24px; }.hc-logo { display: flex; align-items: center; flex-shrink: 0; }.hc-logo img { height: 56px; width: auto; max-width: none; display: block; }.hc-nav { display: none; }
+@media (min-width: 980px) {.hc-nav { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: center; position: relative; } }.hc-nav-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; color: #0A1428; text-decoration: none; font-size:.92rem; font-weight: 500; border-radius: 8px; transition: all.15s ease; cursor: pointer; }.hc-nav-link:hover { color: #0DA0CF; background: rgba(13,160,207,.06); }.hc-megamenu { position: absolute !important; top: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(-6px); background: #fff; border: 1px solid #E5EDF3; border-radius: 18px; padding: 14px; min-width: 380px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; box-shadow: 0 24px 48px rgba(10,20,40,.10); opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transition: opacity.2s ease, visibility.2s ease, transform.2s ease; z-index: 50; }.hc-megamenu::before { content: ''; position: absolute; top: -6px; left: 20%; right: 20%; height: 6px; }.hc-megamenu.mm-force-closed { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transform: translateX(-50%) translateY(-6px) !important; }.hc-nav-link[data-has-menu="metiers"]:hover ~.hc-megamenu[data-menu="metiers"],.hc-megamenu:hover { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; transform: translateX(-50%) translateY(0); }.hc-megamenu a { display: inline-flex !important; align-items: center; gap: 12px; padding: 12px 14px; color: #0A1428; text-decoration: none; font-size:.94rem; font-weight: 500; border-radius: 10px; line-height: 1.2; transition: background.15s ease; }.hc-megamenu a:hover { background: rgba(13,160,207,.08); color: #0DA0CF; }.hc-megamenu a img,.hc-megamenu a.hc-mm-svg { width: 24px !important; height: 24px !important; object-fit: contain; flex-shrink: 0; }.hc-megamenu.hc-mm-svg svg { width: 22px !important; height: 22px !important; }.hc-megamenu.hc-mm-foot { grid-column: 1 / -1; margin-top: 8px; padding: 12px 14px 4px; border-top: 1px solid #E5EDF3; color: #0DA0CF; font-weight: 600; }.hc-header-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }.hc-btn-tel { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: #0A1428; color: #fff; text-decoration: none; border-radius: 10px; font-weight: 700; font-size:.9rem; transition: background.2s ease; }.hc-btn-tel:hover { background: #0DA0CF; }.hc-btn-tel-num { letter-spacing:.02em; }.hc-burger { display: none; background: transparent; border: 0; padding: 8px; cursor: pointer; }
+@media (max-width: 979px) {.hc-burger { display: flex; flex-direction: column; gap: 4px; }.hc-btn-tel-num { display: none; } }.hc-burger span { display: block; width: 22px; height: 2px; background: #0A1428; border-radius: 2px; transition: all.25s ease; }.hc-topbar { background: linear-gradient(90deg, #FF6B1A 0%, #FF8A3D 100%); color: #fff; padding: 8px 0; font-size:.82rem; }.hc-topbar-inner { max-width: 1480px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 64px); display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }.hctb-zones { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; }.hctb-zone { color: #fff; text-decoration: underline; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; }.hctb-pulse { width: 8px; height: 8px; border-radius: 50%; background: #22D48E; box-shadow: 0 0 0 0 rgba(34,212,142,.7); animation: hctbPulse 2s ease-out infinite; flex-shrink: 0; }
+@keyframes hctbPulse { 0% { box-shadow: 0 0 0 0 rgba(34,212,142,.7) } 70% { box-shadow: 0 0 0 6px rgba(34,212,142,0) } 100% { box-shadow: 0 0 0 0 rgba(34,212,142,0) } }.hctb-agence { display: inline-block; font-style: normal; font-weight: 800; font-size:.74rem; padding: 2px 8px; margin-left: 5px; border-radius: 6px; background: rgba(255,255,255,.95); color: #E85E15; letter-spacing:.4px; text-transform: uppercase; box-shadow: 0 1px 3px rgba(0,0,0,.08); vertical-align: middle; }.hctb-plus,.hctb-bullet { color: rgba(255,255,255,.7); margin: 0 2px; }.hctb-hours { color: #fff; }
 </style>
 
 <link rel="icon" type="image/svg+xml" href="logo.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
 
 <style>
-  /* ═══════════════════════════════════════════════════════════
-     Page Nos Prestations — Catalogue e-commerce pro
-     ═══════════════════════════════════════════════════════════ */
+ /* ═══════════════════════════════════════════════════════════
+ Page Nos Prestations — Catalogue e-commerce pro
+ ═══════════════════════════════════════════════════════════ */
 
-  /* HERO */
-  .nv-hero{background:linear-gradient(180deg,#f8fcff 0%,#fff 100%);padding:64px 0 24px;position:relative;overflow:hidden}
-  .nv-hero::before{content:"";position:absolute;top:-120px;right:-120px;width:480px;height:480px;background:radial-gradient(circle,rgba(31,196,240,.10),transparent 60%);pointer-events:none}
-  .nv-hero::after{content:"";position:absolute;bottom:-200px;left:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(255,180,0,.05),transparent 60%);pointer-events:none}
-  .nv-hero-inner{max-width:1480px;margin:0 auto;padding:0 clamp(20px,4vw,64px);position:relative;z-index:1}
-  .nv-bc{font-size:.88rem;color:#6b7384;margin-bottom:20px}
-  .nv-bc a{color:#6b7384;text-decoration:none}
-  .nv-bc a:hover{color:#0DA0CF}
-  .nv-eyebrow{display:inline-block;background:linear-gradient(135deg,rgba(31,196,240,.15),rgba(13,160,207,.05));color:#0DA0CF;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:18px}
-  .nv-hero h1{font-size:clamp(2.2rem,5.5vw,4rem);line-height:1.02;letter-spacing:-.04em;font-weight:800;margin:0 0 18px;max-width:900px;color:#0A1428}
-  .nv-hero h1 em{font-style:italic;font-weight:500;color:#0DA0CF;font-family:'Playfair Display',Georgia,serif}
-  .nv-hero .nv-lead{font-size:clamp(1.05rem,1.4vw,1.2rem);color:#475569;max-width:720px;line-height:1.55;margin:0}
-  .nv-trust{display:flex;flex-wrap:wrap;gap:18px 28px;margin-top:32px;padding:20px 24px;background:#fff;border:1px solid rgba(10,20,40,.06);border-radius:18px;box-shadow:0 4px 12px rgba(10,20,40,.04)}
-  .nv-trust-item{display:flex;align-items:center;gap:10px;font-size:.9rem;color:#0A1428;font-weight:600}
-  .nv-trust-item svg{width:20px;height:20px;color:#1aa260;flex-shrink:0}
+ /* HERO */.nv-hero{background:linear-gradient(180deg,#f8fcff 0%,#fff 100%);padding:64px 0 24px;position:relative;overflow:hidden}.nv-hero::before{content:"";position:absolute;top:-120px;right:-120px;width:480px;height:480px;background:radial-gradient(circle,rgba(31,196,240,.10),transparent 60%);pointer-events:none}.nv-hero::after{content:"";position:absolute;bottom:-200px;left:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(255,180,0,.05),transparent 60%);pointer-events:none}.nv-hero-inner{max-width:1480px;margin:0 auto;padding:0 clamp(20px,4vw,64px);position:relative;z-index:1}.nv-bc{font-size:.88rem;color:#6b7384;margin-bottom:20px}.nv-bc a{color:#6b7384;text-decoration:none}.nv-bc a:hover{color:#0DA0CF}.nv-eyebrow{display:inline-block;background:linear-gradient(135deg,rgba(31,196,240,.15),rgba(13,160,207,.05));color:#0DA0CF;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:18px}.nv-hero h1{font-size:clamp(2.2rem,5.5vw,4rem);line-height:1.02;letter-spacing:-.04em;font-weight:800;margin:0 0 18px;max-width:900px;color:#0A1428}.nv-hero h1 em{font-style:italic;font-weight:500;color:#0DA0CF;font-family:'Playfair Display',Georgia,serif}.nv-hero.nv-lead{font-size:clamp(1.05rem,1.4vw,1.2rem);color:#475569;max-width:720px;line-height:1.55;margin:0}.nv-trust{display:flex;flex-wrap:wrap;gap:18px 28px;margin-top:32px;padding:20px 24px;background:#fff;border:1px solid rgba(10,20,40,.06);border-radius:18px;box-shadow:0 4px 12px rgba(10,20,40,.04)}.nv-trust-item{display:flex;align-items:center;gap:10px;font-size:.9rem;color:#0A1428;font-weight:600}.nv-trust-item svg{width:20px;height:20px;color:#1aa260;flex-shrink:0}
 
-  /* FILTERS */
-  .nv-filters{position:sticky;top:64px;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid rgba(229,237,243,.6);padding:14px 0;margin-bottom:32px}
-  .nv-filters-inner{max-width:1480px;margin:0 auto;padding:0 clamp(20px,4vw,64px);display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
-  .nv-filters-inner::-webkit-scrollbar{display:none}
-  .nv-filter{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:1.5px solid #e5edf3;background:#fff;color:#0A1428;border-radius:999px;font-size:.88rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s ease;font-family:inherit}
-  .nv-filter:hover{border-color:#0DA0CF;color:#0DA0CF}
-  .nv-filter.is-active{background:#0A1428;color:#fff;border-color:#0A1428}
-  .nv-filter svg{width:14px;height:14px}
-  .nv-filter .nv-count{background:rgba(10,20,40,.08);color:inherit;padding:1px 8px;border-radius:999px;font-size:.72rem;font-weight:800}
-  .nv-filter.is-active .nv-count{background:rgba(255,255,255,.18)}
+ /* FILTERS */.nv-filters{position:sticky;top:64px;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid rgba(229,237,243,.6);padding:14px 0;margin-bottom:32px}.nv-filters-inner{max-width:1480px;margin:0 auto;padding:0 clamp(20px,4vw,64px);display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}.nv-filters-inner::-webkit-scrollbar{display:none}.nv-filter{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:1.5px solid #e5edf3;background:#fff;color:#0A1428;border-radius:999px;font-size:.88rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all.2s ease;font-family:inherit}.nv-filter:hover{border-color:#0DA0CF;color:#0DA0CF}.nv-filter.is-active{background:#0A1428;color:#fff;border-color:#0A1428}.nv-filter svg{width:14px;height:14px}.nv-filter.nv-count{background:rgba(10,20,40,.08);color:inherit;padding:1px 8px;border-radius:999px;font-size:.72rem;font-weight:800}.nv-filter.is-active.nv-count{background:rgba(255,255,255,.18)}
 
-  /* CATALOG */
-  .nv-catalog{max-width:1480px;margin:0 auto;padding:0 clamp(20px,4vw,64px) 80px}
-  .nv-catalog-section{margin-bottom:56px;scroll-margin-top:120px}
-  .nv-cat-head{display:flex;align-items:center;gap:18px;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid #E5EDF3}
-  .nv-cat-icon{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#1FC4F0,#0DA0CF);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 16px rgba(13,160,207,.25)}
-  .nv-cat-icon svg{width:24px;height:24px}
-  .nv-cat-head h2{margin:0;font-size:1.6rem;font-weight:800;letter-spacing:-.02em;color:#0A1428}
-  .nv-cat-head p{margin:2px 0 0;font-size:.92rem;color:#6b7384;font-weight:500}
+ /* CATALOG */.nv-catalog{max-width:1480px;margin:0 auto;padding:0 clamp(20px,4vw,64px) 80px}.nv-catalog-section{margin-bottom:56px;scroll-margin-top:120px}.nv-cat-head{display:flex;align-items:center;gap:18px;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid #E5EDF3}.nv-cat-icon{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#1FC4F0,#0DA0CF);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 16px rgba(13,160,207,.25)}.nv-cat-icon svg{width:24px;height:24px}.nv-cat-head h2{margin:0;font-size:1.6rem;font-weight:800;letter-spacing:-.02em;color:#0A1428}.nv-cat-head p{margin:2px 0 0;font-size:.92rem;color:#6b7384;font-weight:500}.nv-grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
 
-  .nv-grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+ /* CARD */.nv-card{background:#fff;border:1px solid #E5EDF3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:all.25s cubic-bezier(.16,1,.3,1);box-shadow:0 2px 8px rgba(10,20,40,.04)}.nv-card:hover{transform:translateY(-4px);box-shadow:0 24px 48px -16px rgba(10,20,40,.12);border-color:rgba(13,160,207,.20)}.nv-card-visual{position:relative;aspect-ratio:16/10;overflow:hidden;background:linear-gradient(135deg,#0A1428 0%,#1a2742 100%)}.nv-card-visual::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 18% 22%,rgba(255,255,255,.10),transparent 45%),radial-gradient(circle at 82% 78%,rgba(0,0,0,.32),transparent 55%);pointer-events:none}.nv-card-visual::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.045) 1px,transparent 1px);background-size:14px 14px;pointer-events:none;mix-blend-mode:overlay}.nv-card-visual svg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:108px;height:108px;color:rgba(255,255,255,.78);stroke-width:1.4;filter:drop-shadow(0 8px 22px rgba(0,0,0,.30));z-index:1}
+ /* Gradients spécifiques par métier */.nv-card-visual[data-cat="plomberie"]{background:linear-gradient(135deg,#0A4F6E 0%,#1FC4F0 100%)}.nv-card-visual[data-cat="chauffe-eau"]{background:linear-gradient(135deg,#0A4F6E 0%,#FFB400 130%)}.nv-card-visual[data-cat="chauffage"]{background:linear-gradient(135deg,#7A1F0A 0%,#FF6B1A 100%)}.nv-card-visual[data-cat="electricite"]{background:linear-gradient(135deg,#5A4500 0%,#FFB400 100%)}.nv-card-visual[data-cat="serrurerie"]{background:linear-gradient(135deg,#3A1A6E 0%,#7C3AED 100%)}.nv-card-visual[data-cat="vitrerie"]{background:linear-gradient(135deg,#0A4F38 0%,#22C55E 100%)}.nv-card-visual[data-cat="sur-mesure"]{background:linear-gradient(135deg,#0A1428 0%,#FF6B1A 130%)}.nv-card-visual[data-cat="autre"]{background:linear-gradient(135deg,#1a2742 0%,#0DA0CF 100%)}.nv-card-badge{position:absolute;top:14px;left:14px;padding:5px 12px;background:#FFB400;color:#0A1428;border-radius:999px;font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;z-index:2;box-shadow:0 4px 10px rgba(255,180,0,.4)}.nv-card-cat{position:absolute;top:14px;right:14px;padding:5px 11px;background:rgba(255,255,255,.92);color:#0A1428;border-radius:999px;font-size:.72rem;font-weight:700;z-index:2;backdrop-filter:blur(8px)}.nv-card-body{padding:22px;display:flex;flex-direction:column;flex:1}.nv-card-name{font-size:1.18rem;font-weight:800;color:#0A1428;line-height:1.25;letter-spacing:-.01em;margin:0 0 8px}.nv-card-short{font-size:.92rem;color:#6b7384;line-height:1.5;margin:0 0 18px}.nv-card-meta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px;font-size:.78rem;color:#475569}.nv-card-meta-item{display:inline-flex;align-items:center;gap:5px}.nv-card-meta-item svg{width:13px;height:13px;color:#94a3b8}.nv-card-includes{margin:0 0 20px;padding:14px;background:#f8fcff;border-radius:12px}.nv-card-includes-title{font-size:.72rem;font-weight:700;color:#0DA0CF;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}.nv-card-includes ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}.nv-card-includes li{display:flex;gap:8px;font-size:.85rem;color:#0A1428;line-height:1.4}.nv-card-includes li::before{content:"✓";color:#1aa260;font-weight:800;flex-shrink:0}.nv-card-includes li.more{color:#0DA0CF;font-weight:600;font-size:.82rem;cursor:pointer}.nv-card-includes li.more::before{content:"+";color:#0DA0CF}.nv-card-price{padding:18px 0;border-top:1px solid #E5EDF3;margin-top:auto}.nv-price-from{font-size:.78rem;color:#6b7384;font-weight:600;margin-bottom:2px}.nv-price-main{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}.nv-price-amount{font-size:1.9rem;font-weight:900;color:#0A1428;letter-spacing:-.03em;line-height:1}.nv-price-currency{font-size:1.1rem;font-weight:700;color:#0A1428}.nv-price-tax{font-size:.78rem;color:#6b7384;font-weight:500}.nv-price-deposit{margin-top:6px;font-size:.82rem;color:#FF6B1A;font-weight:600}.nv-card-actions{display:flex;gap:8px;margin-top:16px}.nv-btn-primary{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;background:#0A1428;color:#fff;border:none;border-radius:11px;text-decoration:none;font-weight:700;font-size:.92rem;cursor:pointer;transition:all.2s ease;font-family:inherit}.nv-btn-primary:hover{background:#0DA0CF;transform:translateY(-1px);box-shadow:0 8px 20px rgba(13,160,207,.30)}.nv-btn-secondary{display:inline-flex;align-items:center;justify-content:center;padding:13px;background:#fff;color:#0A1428;border:1.5px solid #E5EDF3;border-radius:11px;text-decoration:none;font-weight:700;font-size:.92rem;cursor:pointer;transition:all.2s ease;font-family:inherit}.nv-btn-secondary:hover{border-color:#0A1428}.nv-btn-secondary svg{width:18px;height:18px}
 
-  /* CARD */
-  .nv-card{background:#fff;border:1px solid #E5EDF3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:all .25s cubic-bezier(.16,1,.3,1);box-shadow:0 2px 8px rgba(10,20,40,.04)}
-  .nv-card:hover{transform:translateY(-4px);box-shadow:0 24px 48px -16px rgba(10,20,40,.12);border-color:rgba(13,160,207,.20)}
-  .nv-card-visual{position:relative;aspect-ratio:16/10;overflow:hidden;background:linear-gradient(135deg,#0A1428 0%,#1a2742 100%)}
-  .nv-card-visual::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 18% 22%,rgba(255,255,255,.10),transparent 45%),radial-gradient(circle at 82% 78%,rgba(0,0,0,.32),transparent 55%);pointer-events:none}
-  .nv-card-visual::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.045) 1px,transparent 1px);background-size:14px 14px;pointer-events:none;mix-blend-mode:overlay}
-  .nv-card-visual svg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:108px;height:108px;color:rgba(255,255,255,.78);stroke-width:1.4;filter:drop-shadow(0 8px 22px rgba(0,0,0,.30));z-index:1}
-  /* Gradients spécifiques par métier */
-  .nv-card-visual[data-cat="plomberie"]{background:linear-gradient(135deg,#0A4F6E 0%,#1FC4F0 100%)}
-  .nv-card-visual[data-cat="chauffe-eau"]{background:linear-gradient(135deg,#0A4F6E 0%,#FFB400 130%)}
-  .nv-card-visual[data-cat="chauffage"]{background:linear-gradient(135deg,#7A1F0A 0%,#FF6B1A 100%)}
-  .nv-card-visual[data-cat="electricite"]{background:linear-gradient(135deg,#5A4500 0%,#FFB400 100%)}
-  .nv-card-visual[data-cat="serrurerie"]{background:linear-gradient(135deg,#3A1A6E 0%,#7C3AED 100%)}
-  .nv-card-visual[data-cat="vitrerie"]{background:linear-gradient(135deg,#0A4F38 0%,#22C55E 100%)}
-  .nv-card-visual[data-cat="sur-mesure"]{background:linear-gradient(135deg,#0A1428 0%,#FF6B1A 130%)}
-  .nv-card-visual[data-cat="autre"]{background:linear-gradient(135deg,#1a2742 0%,#0DA0CF 100%)}
-  .nv-card-badge{position:absolute;top:14px;left:14px;padding:5px 12px;background:#FFB400;color:#0A1428;border-radius:999px;font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;z-index:2;box-shadow:0 4px 10px rgba(255,180,0,.4)}
-  .nv-card-cat{position:absolute;top:14px;right:14px;padding:5px 11px;background:rgba(255,255,255,.92);color:#0A1428;border-radius:999px;font-size:.72rem;font-weight:700;z-index:2;backdrop-filter:blur(8px)}
-  .nv-card-body{padding:22px;display:flex;flex-direction:column;flex:1}
-  .nv-card-name{font-size:1.18rem;font-weight:800;color:#0A1428;line-height:1.25;letter-spacing:-.01em;margin:0 0 8px}
-  .nv-card-short{font-size:.92rem;color:#6b7384;line-height:1.5;margin:0 0 18px}
-  .nv-card-meta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px;font-size:.78rem;color:#475569}
-  .nv-card-meta-item{display:inline-flex;align-items:center;gap:5px}
-  .nv-card-meta-item svg{width:13px;height:13px;color:#94a3b8}
-  .nv-card-includes{margin:0 0 20px;padding:14px;background:#f8fcff;border-radius:12px}
-  .nv-card-includes-title{font-size:.72rem;font-weight:700;color:#0DA0CF;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
-  .nv-card-includes ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
-  .nv-card-includes li{display:flex;gap:8px;font-size:.85rem;color:#0A1428;line-height:1.4}
-  .nv-card-includes li::before{content:"✓";color:#1aa260;font-weight:800;flex-shrink:0}
-  .nv-card-includes li.more{color:#0DA0CF;font-weight:600;font-size:.82rem;cursor:pointer}
-  .nv-card-includes li.more::before{content:"+";color:#0DA0CF}
-  .nv-card-price{padding:18px 0;border-top:1px solid #E5EDF3;margin-top:auto}
-  .nv-price-from{font-size:.78rem;color:#6b7384;font-weight:600;margin-bottom:2px}
-  .nv-price-main{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-  .nv-price-amount{font-size:1.9rem;font-weight:900;color:#0A1428;letter-spacing:-.03em;line-height:1}
-  .nv-price-currency{font-size:1.1rem;font-weight:700;color:#0A1428}
-  .nv-price-tax{font-size:.78rem;color:#6b7384;font-weight:500}
-  .nv-price-deposit{margin-top:6px;font-size:.82rem;color:#FF6B1A;font-weight:600}
-  .nv-card-actions{display:flex;gap:8px;margin-top:16px}
-  .nv-btn-primary{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;background:#0A1428;color:#fff;border:none;border-radius:11px;text-decoration:none;font-weight:700;font-size:.92rem;cursor:pointer;transition:all .2s ease;font-family:inherit}
-  .nv-btn-primary:hover{background:#0DA0CF;transform:translateY(-1px);box-shadow:0 8px 20px rgba(13,160,207,.30)}
-  .nv-btn-secondary{display:inline-flex;align-items:center;justify-content:center;padding:13px;background:#fff;color:#0A1428;border:1.5px solid #E5EDF3;border-radius:11px;text-decoration:none;font-weight:700;font-size:.92rem;cursor:pointer;transition:all .2s ease;font-family:inherit}
-  .nv-btn-secondary:hover{border-color:#0A1428}
-  .nv-btn-secondary svg{width:18px;height:18px}
+ /* CTA Devis sur mesure (full-width card) */.nv-card-custom{grid-column:1/-1;background:linear-gradient(135deg,#0A1428 0%,#1a2742 100%);color:#fff;padding:48px;border-radius:24px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;position:relative;overflow:hidden}.nv-card-custom::before{content:"";position:absolute;top:-50px;right:-50px;width:300px;height:300px;background:radial-gradient(circle,rgba(255,180,0,.20),transparent 60%);pointer-events:none}.nv-card-custom-text h3{margin:0 0 8px;font-size:1.6rem;font-weight:800;letter-spacing:-.02em}.nv-card-custom-text p{margin:0;color:rgba(255,255,255,.75);font-size:1rem;max-width:520px;line-height:1.5}.nv-card-custom.nv-btn-cta{display:inline-flex;align-items:center;gap:10px;padding:16px 28px;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#0A1428;border-radius:12px;text-decoration:none;font-weight:800;font-size:1rem;box-shadow:0 8px 24px rgba(255,107,26,.30);transition:all.2s ease;position:relative;z-index:1}.nv-card-custom.nv-btn-cta:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,107,26,.40)}
 
-  /* CTA Devis sur mesure (full-width card) */
-  .nv-card-custom{grid-column:1/-1;background:linear-gradient(135deg,#0A1428 0%,#1a2742 100%);color:#fff;padding:48px;border-radius:24px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;position:relative;overflow:hidden}
-  .nv-card-custom::before{content:"";position:absolute;top:-50px;right:-50px;width:300px;height:300px;background:radial-gradient(circle,rgba(255,180,0,.20),transparent 60%);pointer-events:none}
-  .nv-card-custom-text h3{margin:0 0 8px;font-size:1.6rem;font-weight:800;letter-spacing:-.02em}
-  .nv-card-custom-text p{margin:0;color:rgba(255,255,255,.75);font-size:1rem;max-width:520px;line-height:1.5}
-  .nv-card-custom .nv-btn-cta{display:inline-flex;align-items:center;gap:10px;padding:16px 28px;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#0A1428;border-radius:12px;text-decoration:none;font-weight:800;font-size:1rem;box-shadow:0 8px 24px rgba(255,107,26,.30);transition:all .2s ease;position:relative;z-index:1}
-  .nv-card-custom .nv-btn-cta:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,107,26,.40)}
+ /* LOADING / EMPTY STATES */.nv-loading{padding:80px;text-align:center;color:#6b7384}.nv-loading svg{width:36px;height:36px;color:#0DA0CF;animation:nvspin 1.2s linear infinite}
+ @keyframes nvspin{to{transform:rotate(360deg)}}.nv-empty{padding:60px 20px;text-align:center;color:#6b7384}
 
-  /* LOADING / EMPTY STATES */
-  .nv-loading{padding:80px;text-align:center;color:#6b7384}
-  .nv-loading svg{width:36px;height:36px;color:#0DA0CF;animation:nvspin 1.2s linear infinite}
-  @keyframes nvspin{to{transform:rotate(360deg)}}
-  .nv-empty{padding:60px 20px;text-align:center;color:#6b7384}
+ /* MODAL DE RÉSERVATION */.nv-modal{position:fixed;inset:0;background:rgba(10,20,40,.55);backdrop-filter:blur(6px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;animation:nvfade.25s ease}.nv-modal.is-open{display:flex}
+ @keyframes nvfade{from{opacity:0}to{opacity:1}}.nv-modal-sheet{background:#fff;border-radius:24px;width:100%;max-width:640px;max-height:92vh;overflow:auto;box-shadow:0 40px 80px rgba(0,0,0,.32);animation:nvslide.35s cubic-bezier(.16,1,.3,1)}
+ @keyframes nvslide{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}.nv-modal-head{padding:26px 28px 18px;border-bottom:1px solid #E5EDF3;display:flex;gap:16px;align-items:flex-start}.nv-modal-head h2{margin:0;font-size:1.35rem;font-weight:800;color:#0A1428;letter-spacing:-.02em;flex:1}.nv-modal-close{background:#f4f7fb;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#475569;transition:all.15s;flex-shrink:0}.nv-modal-close:hover{background:#e5edf3;color:#0A1428}.nv-modal-body{padding:24px 28px}.nv-summary{background:linear-gradient(135deg,#f8fcff,#eef9ff);border:1px solid rgba(13,160,207,.18);border-radius:14px;padding:18px;margin-bottom:24px}.nv-summary-name{font-weight:700;color:#0A1428;font-size:1rem;margin-bottom:8px}.nv-summary-price{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px dashed rgba(13,160,207,.25);font-size:.9rem}.nv-summary-price strong{color:#0A1428;font-size:1.2rem;font-weight:900;letter-spacing:-.02em}.nv-summary-deposit{font-size:.82rem;color:#FF6B1A;font-weight:600;margin-top:4px;display:block}.nv-variant-pick{display:grid;gap:10px;margin-bottom:18px}.nv-variant-opt{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border:1.5px solid #E5EDF3;border-radius:12px;cursor:pointer;transition:all.15s;background:#fff}.nv-variant-opt:hover{border-color:#0DA0CF;background:#f8fcff}.nv-variant-opt input{margin-top:3px;accent-color:#0DA0CF;width:18px;height:18px;flex-shrink:0;cursor:pointer}.nv-variant-opt:has(input:checked){border-color:#0DA0CF;background:#f8fcff;box-shadow:0 0 0 3px rgba(13,160,207,.08)}.nv-variant-label{flex:1}.nv-variant-label strong{display:block;font-size:.95rem;color:#0A1428;font-weight:700;margin-bottom:2px}.nv-variant-label small{font-size:.82rem;color:#6b7384;line-height:1.4}.nv-variant-price{font-weight:800;color:#0A1428;font-size:1rem;white-space:nowrap}.nv-form-grid{display:grid;gap:14px;grid-template-columns:1fr 1fr}.nv-form-grid.nv-form-full{grid-column:1/-1}.nv-form-field label{display:block;font-size:.78rem;font-weight:700;color:#0A1428;margin-bottom:5px;letter-spacing:.02em}.nv-form-field input,.nv-form-field textarea,.nv-form-field select{width:100%;padding:11px 13px;border:1px solid #E5EDF3;border-radius:10px;font:inherit;font-size:.92rem;color:#0A1428;background:#fff;transition:all.15s}.nv-form-field input:focus,.nv-form-field textarea:focus,.nv-form-field select:focus{outline:none;border-color:#0DA0CF;box-shadow:0 0 0 3px rgba(13,160,207,.12)}.nv-form-field textarea{resize:vertical;min-height:80px}.nv-deposit-info{margin:20px 0 0;padding:14px 16px;background:#fff8eb;border:1px solid rgba(255,180,0,.25);border-radius:12px;font-size:.86rem;color:#7a5500;line-height:1.5}.nv-deposit-info strong{color:#0A1428}.nv-modal-foot{padding:18px 28px 24px;border-top:1px solid #E5EDF3;display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:#fafcfd;border-radius:0 0 24px 24px}.nv-modal-foot.nv-foot-tel{font-size:.84rem;color:#6b7384}.nv-modal-foot.nv-foot-tel a{color:#0A1428;font-weight:700;text-decoration:none}.nv-modal-foot.nv-cta-submit{margin-left:auto;display:inline-flex;align-items:center;gap:8px;padding:13px 24px;background:linear-gradient(135deg,#1FC4F0,#0DA0CF);color:#fff;border:none;border-radius:12px;font-weight:800;font-size:.94rem;cursor:pointer;box-shadow:0 6px 18px rgba(13,160,207,.30);transition:all.2s}.nv-modal-foot.nv-cta-submit:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(13,160,207,.40)}.nv-modal-foot.nv-cta-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}.nv-success{padding:48px 32px;text-align:center}.nv-success-icon{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#1aa260,#22c55e);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 8px 24px rgba(26,162,96,.30)}.nv-success-icon svg{width:36px;height:36px;stroke-width:3}.nv-success h3{margin:0 0 10px;font-size:1.4rem;font-weight:800;color:#0A1428}.nv-success p{margin:0 0 20px;color:#475569;line-height:1.5}.nv-success.nv-order-num{display:inline-block;padding:6px 14px;background:#f4f7fb;border-radius:8px;font-family:monospace;font-weight:700;color:#0A1428;margin:8px 0}
 
-  /* MODAL DE RÉSERVATION */
-  .nv-modal{position:fixed;inset:0;background:rgba(10,20,40,.55);backdrop-filter:blur(6px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;animation:nvfade .25s ease}
-  .nv-modal.is-open{display:flex}
-  @keyframes nvfade{from{opacity:0}to{opacity:1}}
-  .nv-modal-sheet{background:#fff;border-radius:24px;width:100%;max-width:640px;max-height:92vh;overflow:auto;box-shadow:0 40px 80px rgba(0,0,0,.32);animation:nvslide .35s cubic-bezier(.16,1,.3,1)}
-  @keyframes nvslide{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
-  .nv-modal-head{padding:26px 28px 18px;border-bottom:1px solid #E5EDF3;display:flex;gap:16px;align-items:flex-start}
-  .nv-modal-head h2{margin:0;font-size:1.35rem;font-weight:800;color:#0A1428;letter-spacing:-.02em;flex:1}
-  .nv-modal-close{background:#f4f7fb;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#475569;transition:all .15s;flex-shrink:0}
-  .nv-modal-close:hover{background:#e5edf3;color:#0A1428}
-  .nv-modal-body{padding:24px 28px}
-  .nv-summary{background:linear-gradient(135deg,#f8fcff,#eef9ff);border:1px solid rgba(13,160,207,.18);border-radius:14px;padding:18px;margin-bottom:24px}
-  .nv-summary-name{font-weight:700;color:#0A1428;font-size:1rem;margin-bottom:8px}
-  .nv-summary-price{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px dashed rgba(13,160,207,.25);font-size:.9rem}
-  .nv-summary-price strong{color:#0A1428;font-size:1.2rem;font-weight:900;letter-spacing:-.02em}
-  .nv-summary-deposit{font-size:.82rem;color:#FF6B1A;font-weight:600;margin-top:4px;display:block}
+ /* ═══ LEAD-GATE — Masque les prix tant que coords non renseignées ═══ */
+ body.is-locked.nv-card-price{position:relative;filter:blur(8px) saturate(.6);pointer-events:none;user-select:none;transition:filter.35s ease}
+ body.is-locked.nv-card-price::after{content:"🔒";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2rem;filter:blur(0);opacity:.7}
+ body.is-locked.nv-btn-primary[data-action="reserve"]{background:#0DA0CF !important;color:#fff !important;font-weight:800;font-size:0}
+ body.is-locked.nv-btn-primary[data-action="reserve"] svg{display:none}
+ body.is-locked.nv-btn-primary[data-action="reserve"]::before{content:"🔓 Voir le tarif & réserver";font-size:.94rem}
 
-  .nv-variant-pick{display:grid;gap:10px;margin-bottom:18px}
-  .nv-variant-opt{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border:1.5px solid #E5EDF3;border-radius:12px;cursor:pointer;transition:all .15s;background:#fff}
-  .nv-variant-opt:hover{border-color:#0DA0CF;background:#f8fcff}
-  .nv-variant-opt input{margin-top:3px;accent-color:#0DA0CF;width:18px;height:18px;flex-shrink:0;cursor:pointer}
-  .nv-variant-opt:has(input:checked){border-color:#0DA0CF;background:#f8fcff;box-shadow:0 0 0 3px rgba(13,160,207,.08)}
-  .nv-variant-label{flex:1}
-  .nv-variant-label strong{display:block;font-size:.95rem;color:#0A1428;font-weight:700;margin-bottom:2px}
-  .nv-variant-label small{font-size:.82rem;color:#6b7384;line-height:1.4}
-  .nv-variant-price{font-weight:800;color:#0A1428;font-size:1rem;white-space:nowrap}
+ /* Lead-gate modal */.nv-leadgate-modal{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;padding:20px;animation:nvLgFade.25s ease}.nv-leadgate-modal[hidden]{display:none}
+ @keyframes nvLgFade{from{opacity:0}to{opacity:1}}.nv-leadgate-overlay{position:absolute;inset:0;background:rgba(10,20,40,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}.nv-leadgate-card{position:relative;background:#fff;border-radius:22px;max-width:460px;width:100%;padding:36px 30px 28px;box-shadow:0 40px 80px rgba(10,20,40,.30);animation:nvLgUp.35s cubic-bezier(.16,1,.3,1)}
+ @keyframes nvLgUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}.nv-lg-close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:0;background:#F1F5F9;color:#475569;font-size:1.4rem;cursor:pointer;line-height:1;font-family:inherit;transition:all.2s ease}.nv-lg-close:hover{background:#E2E8F0;color:#0A1428}.nv-lg-icon{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 12px 24px rgba(13,160,207,.30)}.nv-lg-title{margin:0 0 8px;font-size:1.4rem;font-weight:800;color:#0A1428;letter-spacing:-.01em;text-align:center;line-height:1.2}.nv-lg-lead{margin:0 0 20px;font-size:.94rem;color:#475569;line-height:1.5;text-align:center}.nv-lg-lead strong{color:#16A34A;font-weight:700}.nv-lg-form{display:flex;flex-direction:column;gap:10px}.nv-lg-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.nv-lg-inp{padding:11px 14px;border:1.5px solid #E5EDF3;border-radius:10px;background:#F7FBFD;color:#0A1428;font-size:.94rem;font-family:inherit;outline:none;transition:border-color.2s,background.2s;box-sizing:border-box;width:100%}.nv-lg-inp:focus{border-color:#1FC4F0;background:#fff}.nv-lg-inp.has-error{border-color:#E11D48 !important;background:rgba(225,29,72,.04) !important}.nv-lg-submit{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;background:linear-gradient(135deg,#FF6B1A,#E55510);color:#fff;border:0;border-radius:12px;font-weight:800;font-size:1rem;cursor:pointer;font-family:inherit;box-shadow:0 12px 24px rgba(255,107,26,.32);transition:all.25s ease;margin-top:6px}.nv-lg-submit:hover{transform:translateY(-2px);box-shadow:0 18px 36px rgba(255,107,26,.42)}.nv-lg-submit:disabled{opacity:.6;cursor:wait;transform:none}.nv-lg-trust{margin:14px 0 0;font-size:.78rem;color:#64748b;text-align:center;line-height:1.4}.nv-lg-trust a{color:#0DA0CF}
+ @media(max-width:520px){.nv-lg-row{grid-template-columns:1fr}}
 
-  .nv-form-grid{display:grid;gap:14px;grid-template-columns:1fr 1fr}
-  .nv-form-grid .nv-form-full{grid-column:1/-1}
-  .nv-form-field label{display:block;font-size:.78rem;font-weight:700;color:#0A1428;margin-bottom:5px;letter-spacing:.02em}
-  .nv-form-field input,.nv-form-field textarea,.nv-form-field select{width:100%;padding:11px 13px;border:1px solid #E5EDF3;border-radius:10px;font:inherit;font-size:.92rem;color:#0A1428;background:#fff;transition:all .15s}
-  .nv-form-field input:focus,.nv-form-field textarea:focus,.nv-form-field select:focus{outline:none;border-color:#0DA0CF;box-shadow:0 0 0 3px rgba(13,160,207,.12)}
-  .nv-form-field textarea{resize:vertical;min-height:80px}
-
-  .nv-deposit-info{margin:20px 0 0;padding:14px 16px;background:#fff8eb;border:1px solid rgba(255,180,0,.25);border-radius:12px;font-size:.86rem;color:#7a5500;line-height:1.5}
-  .nv-deposit-info strong{color:#0A1428}
-
-  .nv-modal-foot{padding:18px 28px 24px;border-top:1px solid #E5EDF3;display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:#fafcfd;border-radius:0 0 24px 24px}
-  .nv-modal-foot .nv-foot-tel{font-size:.84rem;color:#6b7384}
-  .nv-modal-foot .nv-foot-tel a{color:#0A1428;font-weight:700;text-decoration:none}
-  .nv-modal-foot .nv-cta-submit{margin-left:auto;display:inline-flex;align-items:center;gap:8px;padding:13px 24px;background:linear-gradient(135deg,#1FC4F0,#0DA0CF);color:#fff;border:none;border-radius:12px;font-weight:800;font-size:.94rem;cursor:pointer;box-shadow:0 6px 18px rgba(13,160,207,.30);transition:all .2s}
-  .nv-modal-foot .nv-cta-submit:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(13,160,207,.40)}
-  .nv-modal-foot .nv-cta-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
-
-  .nv-success{padding:48px 32px;text-align:center}
-  .nv-success-icon{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#1aa260,#22c55e);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 8px 24px rgba(26,162,96,.30)}
-  .nv-success-icon svg{width:36px;height:36px;stroke-width:3}
-  .nv-success h3{margin:0 0 10px;font-size:1.4rem;font-weight:800;color:#0A1428}
-  .nv-success p{margin:0 0 20px;color:#475569;line-height:1.5}
-  .nv-success .nv-order-num{display:inline-block;padding:6px 14px;background:#f4f7fb;border-radius:8px;font-family:monospace;font-weight:700;color:#0A1428;margin:8px 0}
-
-  /* ═══ LEAD-GATE — Masque les prix tant que coords non renseignées ═══ */
-  body.is-locked .nv-card-price{position:relative;filter:blur(8px) saturate(.6);pointer-events:none;user-select:none;transition:filter .35s ease}
-  body.is-locked .nv-card-price::after{content:"🔒";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2rem;filter:blur(0);opacity:.7}
-  body.is-locked .nv-btn-primary[data-action="reserve"]{background:#0DA0CF !important;color:#fff !important;font-weight:800;font-size:0}
-  body.is-locked .nv-btn-primary[data-action="reserve"] svg{display:none}
-  body.is-locked .nv-btn-primary[data-action="reserve"]::before{content:"🔓 Voir le tarif & réserver";font-size:.94rem}
-
-  /* Lead-gate modal */
-  .nv-leadgate-modal{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;padding:20px;animation:nvLgFade .25s ease}
-  .nv-leadgate-modal[hidden]{display:none}
-  @keyframes nvLgFade{from{opacity:0}to{opacity:1}}
-  .nv-leadgate-overlay{position:absolute;inset:0;background:rgba(10,20,40,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-  .nv-leadgate-card{position:relative;background:#fff;border-radius:22px;max-width:460px;width:100%;padding:36px 30px 28px;box-shadow:0 40px 80px rgba(10,20,40,.30);animation:nvLgUp .35s cubic-bezier(.16,1,.3,1)}
-  @keyframes nvLgUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-  .nv-lg-close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:0;background:#F1F5F9;color:#475569;font-size:1.4rem;cursor:pointer;line-height:1;font-family:inherit;transition:all .2s ease}
-  .nv-lg-close:hover{background:#E2E8F0;color:#0A1428}
-  .nv-lg-icon{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 12px 24px rgba(13,160,207,.30)}
-  .nv-lg-title{margin:0 0 8px;font-size:1.4rem;font-weight:800;color:#0A1428;letter-spacing:-.01em;text-align:center;line-height:1.2}
-  .nv-lg-lead{margin:0 0 20px;font-size:.94rem;color:#475569;line-height:1.5;text-align:center}
-  .nv-lg-lead strong{color:#16A34A;font-weight:700}
-  .nv-lg-form{display:flex;flex-direction:column;gap:10px}
-  .nv-lg-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .nv-lg-inp{padding:11px 14px;border:1.5px solid #E5EDF3;border-radius:10px;background:#F7FBFD;color:#0A1428;font-size:.94rem;font-family:inherit;outline:none;transition:border-color .2s,background .2s;box-sizing:border-box;width:100%}
-  .nv-lg-inp:focus{border-color:#1FC4F0;background:#fff}
-  .nv-lg-inp.has-error{border-color:#E11D48 !important;background:rgba(225,29,72,.04) !important}
-  .nv-lg-submit{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;background:linear-gradient(135deg,#FF6B1A,#E55510);color:#fff;border:0;border-radius:12px;font-weight:800;font-size:1rem;cursor:pointer;font-family:inherit;box-shadow:0 12px 24px rgba(255,107,26,.32);transition:all .25s ease;margin-top:6px}
-  .nv-lg-submit:hover{transform:translateY(-2px);box-shadow:0 18px 36px rgba(255,107,26,.42)}
-  .nv-lg-submit:disabled{opacity:.6;cursor:wait;transform:none}
-  .nv-lg-trust{margin:14px 0 0;font-size:.78rem;color:#64748b;text-align:center;line-height:1.4}
-  .nv-lg-trust a{color:#0DA0CF}
-  @media(max-width:520px){.nv-lg-row{grid-template-columns:1fr}}
-
-  /* MOBILE */
-  @media (max-width:768px){
-    .nv-hero{padding:32px 0 16px}
-    .nv-trust{flex-direction:column;gap:12px}
-    .nv-cat-head h2{font-size:1.3rem}
-    .nv-card-custom{padding:32px 24px;flex-direction:column;align-items:flex-start}
-    .nv-modal-sheet{max-height:96vh}
-    .nv-form-grid{grid-template-columns:1fr}
-    .nv-modal-foot{flex-direction:column;align-items:stretch}
-    .nv-modal-foot .nv-cta-submit{margin-left:0;width:100%;justify-content:center}
-  }
+ /* MOBILE */
+ @media (max-width:768px){.nv-hero{padding:32px 0 16px}.nv-trust{flex-direction:column;gap:12px}.nv-cat-head h2{font-size:1.3rem}.nv-card-custom{padding:32px 24px;flex-direction:column;align-items:flex-start}.nv-modal-sheet{max-height:96vh}.nv-form-grid{grid-template-columns:1fr}.nv-modal-foot{flex-direction:column;align-items:stretch}.nv-modal-foot.nv-cta-submit{margin-left:0;width:100%;justify-content:center}
+ }
 </style>
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#0DA0CF">
-  <script src="/assets/hc-consent.js" defer></script>
+ <link rel="manifest" href="/manifest.json">
+ <meta name="theme-color" content="#0DA0CF">
+ <script src="/assets/hc-consent.js" defer></script>
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style id="hc-skip-style">.hc-skip-link{position:absolute;top:-100px;left:0;background:#0A1428;color:#fff;padding:10px 18px;text-decoration:none;font-weight:700;font-size:.92rem;border-radius:0 0 8px 0;z-index:10000}.hc-skip-link:focus{top:0}</style>
 </head>
@@ -311,824 +122,802 @@
 
 <!-- TOPBAR globale -->
 <div class="hc-topbar" role="complementary" aria-label="Agence et zones d'intervention">
-  <div class="hc-topbar-inner">
-    <span class="hctb-zones">
-      <a href="depannage-saint-omer.html" class="hctb-zone">
-        <span class="hctb-pulse"></span>
-        <strong>Saint-Omer</strong>
-        <em class="hctb-agence">Dépan'Audo</em>
-      </a>
-      <span class="hctb-plus">+</span>
-      <a href="depannage-dunkerque.html" class="hctb-zone">
-        <strong>Dunkerque</strong>
-        <em class="hctb-agence">Dépan'DK</em>
-      </a>
-      <span class="hctb-bullet">·</span>
-      <span class="hctb-hours"><strong>Lun-Sam · 8h-18h</strong></span>
-    </span>
-  </div>
+ <div class="hc-topbar-inner">
+ <span class="hctb-zones">
+ <a href="depannage-saint-omer.html" class="hctb-zone">
+ <span class="hctb-pulse"></span>
+ <strong>Saint-Omer</strong>
+ <em class="hctb-agence">Dépan'Audo</em>
+ </a>
+ <span class="hctb-plus">+</span>
+ <a href="depannage-dunkerque.html" class="hctb-zone">
+ <strong>Dunkerque</strong>
+ <em class="hctb-agence">Dépan'DK</em>
+ </a>
+ <span class="hctb-bullet">·</span>
+ <span class="hctb-hours"><strong>Lun-Ven 9h-17h · Sam 9h-16h</strong></span>
+ </span>
+ </div>
 </div>
 
 <!-- HEADER -->
 <header class="hc-header" id="hcHeader">
-  <div class="hc-header-row">
-    <a href="index.html" class="hc-logo"><img decoding="async" loading="lazy" src="logo-officiel.jpg" alt="HELP! Confort" width="200" height="60"></a>
-    <nav class="hc-nav">
-      <a href="index.html" class="hc-nav-link">Accueil</a>
-      <a href="index.html#hc-metiers" class="hc-nav-link">Métiers</a>
-      <a href="nos-prestations.html" class="hc-nav-link" style="color:#0DA0CF;font-weight:700">Nos prestations</a>
-      <a href="contrats-entretien.html" class="hc-nav-link">Contrats</a>
-      <a href="realisations.html" class="hc-nav-link">Actu &amp; réalisations</a>
-      <a href="contact.html" class="hc-nav-link">Contact</a>
-    </nav>
-    <div class="hc-header-actions">
-      <a href="tel:+33366100134" class="hc-btn-tel">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        <span class="hc-btn-tel-num">03 66 10 01 34</span>
-      </a>
-    </div>
-  </div>
+ <div class="hc-header-row">
+ <a href="index.html" class="hc-logo"><img decoding="async" loading="lazy" src="logo-officiel.jpg" alt="HELP! Confort" width="200" height="60"></a>
+ <nav class="hc-nav">
+ <a href="index.html" class="hc-nav-link">Accueil</a>
+ <a href="index.html#hc-metiers" class="hc-nav-link">Métiers</a>
+ <a href="nos-prestations.html" class="hc-nav-link" style="color:#0DA0CF;font-weight:700">Nos prestations</a>
+ <a href="contrats-entretien.html" class="hc-nav-link">Contrats</a>
+ <a href="realisations.html" class="hc-nav-link">Actu &amp; réalisations</a>
+ <a href="contact.html" class="hc-nav-link">Contact</a>
+ </nav>
+ <div class="hc-header-actions">
+ <a href="tel:+33366100134" class="hc-btn-tel">
+ <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0.7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+ <span class="hc-btn-tel-num">03 66 10 01 34</span>
+ </a>
+ </div>
+ </div>
 </header>
 
 <main id="main-content">
-  <!-- HERO -->
-  <section class="nv-hero">
-    <div class="nv-hero-inner">
-      <nav class="nv-bc" aria-label="Fil d'ariane"><a href="index.html">Accueil</a> · Nos prestations</nav>
-      <span class="nv-eyebrow">Forfaits transparents · Réservation en ligne</span>
-      <h1>Nos prestations <em>au prix juste</em>, sans surprise.</h1>
-      <p class="nv-lead">Forfaits clés en main avec fourniture, pose, déplacement et garantie inclus. Réservez en ligne en 2 minutes avec un acompte de 40 %, le solde à la fin de l'intervention. Pour les projets sur mesure, devis gratuit.</p>
+ <!-- HERO -->
+ <section class="nv-hero">
+ <div class="nv-hero-inner">
+ <nav class="nv-bc" aria-label="Fil d'ariane"><a href="index.html">Accueil</a> · Nos prestations</nav>
+ <span class="nv-eyebrow">Forfaits transparents · Réservation en ligne</span>
+ <h1>Nos prestations <em>au prix juste</em>, sans surprise.</h1>
+ <p class="nv-lead">Forfaits clés en main avec fourniture, pose, déplacement et garantie inclus. Réservez en ligne en 2 minutes avec un acompte de 40 %, le solde à la fin de l'intervention. Pour les projets sur mesure, devis gratuit.</p>
 
-      <div class="nv-trust">
-        <div class="nv-trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          Prix tout compris TTC affiché
-        </div>
-        <div class="nv-trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          Assurance décennale MAAF
-        </div>
-        <div class="nv-trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          Garantie pièces &amp; main d'œuvre
-        </div>
-        <div class="nv-trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          TVA 10 % (rénovation &gt; 2 ans)
-        </div>
-        <div class="nv-trust-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          Intervention rapide
-        </div>
-      </div>
-    </div>
-  </section>
+ <div class="nv-trust">
+ <div class="nv-trust-item">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+ Prix tout compris TTC affiché
+ </div>
+ <div class="nv-trust-item">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+ Assurance décennale MAAF
+ </div>
+ <div class="nv-trust-item">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+ Garantie pièces &amp; main d'œuvre
+ </div>
+ <div class="nv-trust-item">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+ TVA 10 % (rénovation &gt; 2 ans)
+ </div>
+ <div class="nv-trust-item">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+ Intervention rapide
+ </div>
+ </div>
+ </div>
+ </section>
 
-  <!-- FILTRES STICKY -->
-  <nav class="nv-filters" aria-label="Filtrer par catégorie">
-    <div class="nv-filters-inner" id="filtersBar">
-      <button class="nv-filter is-active" data-filter="all">Toutes les prestations <span class="nv-count" id="cntAll">—</span></button>
-    </div>
-  </nav>
+ <!-- FILTRES STICKY -->
+ <nav class="nv-filters" aria-label="Filtrer par catégorie">
+ <div class="nv-filters-inner" id="filtersBar">
+ <button class="nv-filter is-active" data-filter="all">Toutes les prestations <span class="nv-count" id="cntAll">—</span></button>
+ </div>
+ </nav>
 
-  <!-- CATALOGUE -->
-  <div class="nv-catalog" id="catalogRoot">
-    <div class="nv-loading">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9" stroke-opacity=".2"/><path d="M21 12a9 9 0 0 0-9-9"/></svg>
-      <p style="margin-top:14px">Chargement du catalogue…</p>
-    </div>
-  </div>
+ <!-- CATALOGUE -->
+ <div class="nv-catalog" id="catalogRoot">
+ <div class="nv-loading">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9" stroke-opacity=".2"/><path d="M21 12a9 9 0 0 0-9-9"/></svg>
+ <p style="margin-top:14px">Chargement du catalogue…</p>
+ </div>
+ </div>
 
-  <!-- ═══ CTA PREMIUM EN BAS — réassurance + double action ═══ -->
-  <section class="np-cta-premium" aria-label="Demander un devis ou être rappelé">
-    <div class="np-cta-bg" aria-hidden="true"></div>
-    <div class="np-cta-inner">
-      <span class="np-cta-eye">
-        <span class="np-cta-pulse"></span>
-        Une question sur un tarif&nbsp;? On répond en 5 min
-      </span>
-      <h2 class="np-cta-title">Vous ne trouvez pas votre prestation <span class="np-cta-accent">dans le catalogue&nbsp;?</span></h2>
-      <p class="np-cta-lead">Toutes nos interventions sur-mesure (travaux, rénovation, gros sinistres) passent par un devis détaillé <strong>gratuit en zone</strong>.</p>
-      <div class="np-cta-actions">
-        <a href="tel:+33366100134" class="np-cta-btn np-cta-btn-primary" data-tracking="cta-nos-prestations-tel">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          <span>03&nbsp;66&nbsp;10&nbsp;01&nbsp;34</span>
-        </a>
-        <a href="contact.html" class="np-cta-btn np-cta-btn-secondary" data-tracking="cta-nos-prestations-devis">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
-          <span>Demander un devis</span>
-        </a>
-      </div>
-      <ul class="np-cta-trust" aria-label="Garanties HELP! Confort">
-        <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Devis détaillé gratuit</li>
-        <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> TVA réduite éligible</li>
-        <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Garantie décennale</li>
-        <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Réseau HELP! Confort officiel</li>
-      </ul>
-    </div>
-  </section>
+ <!-- ═══ CTA PREMIUM EN BAS — réassurance + double action ═══ -->
+ <section class="np-cta-premium" aria-label="Demander un devis ou être rappelé">
+ <div class="np-cta-bg" aria-hidden="true"></div>
+ <div class="np-cta-inner">
+ <span class="np-cta-eye">
+ <span class="np-cta-pulse"></span>
+ Une question sur un tarif&nbsp;? On répond en 5 min
+ </span>
+ <h2 class="np-cta-title">Vous ne trouvez pas votre prestation <span class="np-cta-accent">dans le catalogue&nbsp;?</span></h2>
+ <p class="np-cta-lead">Toutes nos interventions sur-mesure (travaux, rénovation, gros sinistres) passent par un devis détaillé <strong>gratuit en zone</strong>.</p>
+ <div class="np-cta-actions">
+ <a href="tel:+33366100134" class="np-cta-btn np-cta-btn-primary" data-tracking="cta-nos-prestations-tel">
+ <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0.7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+ <span>03&nbsp;66&nbsp;10&nbsp;01&nbsp;34</span>
+ </a>
+ <a href="contact.html" class="np-cta-btn np-cta-btn-secondary" data-tracking="cta-nos-prestations-devis">
+ <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+ <span>Demander un devis</span>
+ </a>
+ </div>
+ <ul class="np-cta-trust" aria-label="Garanties HELP! Confort">
+ <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Devis détaillé gratuit</li>
+ <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> TVA réduite éligible</li>
+ <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Garantie décennale</li>
+ <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Réseau HELP! Confort officiel</li>
+ </ul>
+ </div>
+ </section>
 
-  <style>
-    .np-cta-premium { position: relative; margin: 80px 0 0; padding: clamp(56px, 7vw, 96px) clamp(20px, 4vw, 48px); overflow: hidden; background: linear-gradient(135deg, #0A1428 0%, #0E2240 55%, #0A1A38 100%); color: #fff; }
-    .np-cta-bg { position: absolute; inset: 0; pointer-events: none; background:
-      radial-gradient(ellipse 50% 50% at 20% 30%, rgba(13,160,207,.22), transparent 60%),
-      radial-gradient(ellipse 50% 50% at 80% 80%, rgba(255,107,26,.10), transparent 60%); }
-    .np-cta-inner { position: relative; max-width: 880px; margin: 0 auto; text-align: center; }
-    .np-cta-eye { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; background: rgba(13,160,207,.14); border: 1px solid rgba(13,160,207,.32); border-radius: 999px; color: #BFE7F4; font-size: .82rem; font-weight: 600; margin-bottom: 18px; }
-    .np-cta-pulse { width: 8px; height: 8px; border-radius: 50%; background: #22D48E; box-shadow: 0 0 0 0 rgba(34,212,142,.7); animation: npCtaPulse 2s ease-out infinite; }
-    @keyframes npCtaPulse { 0% { box-shadow: 0 0 0 0 rgba(34,212,142,.7) } 70% { box-shadow: 0 0 0 8px rgba(34,212,142,0) } 100% { box-shadow: 0 0 0 0 rgba(34,212,142,0) } }
-    .np-cta-title { margin: 0 0 14px; font-size: clamp(1.7rem, 3.6vw, 2.6rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; }
-    .np-cta-accent { display: inline-block; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 500; background: linear-gradient(135deg, #1FC4F0 0%, #0DA0CF 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-    .np-cta-lead { margin: 0 auto 28px; max-width: 640px; color: rgba(255,255,255,.76); font-size: 1.02rem; line-height: 1.55; }
-    .np-cta-lead strong { color: #fff; font-weight: 600; }
-    .np-cta-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin: 0 0 28px; }
-    .np-cta-btn { display: inline-flex; align-items: center; gap: 10px; padding: 16px 26px; border-radius: 12px; font-weight: 800; font-size: 1.02rem; text-decoration: none; transition: transform .2s ease, box-shadow .25s ease, background .2s ease; }
-    .np-cta-btn:hover { transform: translateY(-2px); }
-    .np-cta-btn-primary { background: #fff; color: #0A1428; box-shadow: 0 10px 26px rgba(0,0,0,.25); }
-    .np-cta-btn-primary:hover { box-shadow: 0 16px 36px rgba(0,0,0,.35); }
-    .np-cta-btn-secondary { background: linear-gradient(135deg, #0DA0CF 0%, #0884AE 100%); color: #fff; box-shadow: 0 10px 26px rgba(13,160,207,.40); }
-    .np-cta-btn-secondary:hover { box-shadow: 0 16px 36px rgba(13,160,207,.55); }
-    .np-cta-trust { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; font-size: .86rem; color: rgba(255,255,255,.65); }
-    .np-cta-trust li { display: inline-flex; align-items: center; gap: 6px; }
-    .np-cta-trust svg { color: #22D48E; flex-shrink: 0; }
-    @media (max-width: 640px) {
-      .np-cta-premium { margin-top: 56px; }
-      .np-cta-btn { width: 100%; justify-content: center; }
-      .np-cta-trust { gap: 8px 14px; font-size: .8rem; }
-    }
-  </style>
+ <style>.np-cta-premium { position: relative; margin: 80px 0 0; padding: clamp(56px, 7vw, 96px) clamp(20px, 4vw, 48px); overflow: hidden; background: linear-gradient(135deg, #0A1428 0%, #0E2240 55%, #0A1A38 100%); color: #fff; }.np-cta-bg { position: absolute; inset: 0; pointer-events: none; background:
+ radial-gradient(ellipse 50% 50% at 20% 30%, rgba(13,160,207,.22), transparent 60%),
+ radial-gradient(ellipse 50% 50% at 80% 80%, rgba(255,107,26,.10), transparent 60%); }.np-cta-inner { position: relative; max-width: 880px; margin: 0 auto; text-align: center; }.np-cta-eye { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; background: rgba(13,160,207,.14); border: 1px solid rgba(13,160,207,.32); border-radius: 999px; color: #BFE7F4; font-size:.82rem; font-weight: 600; margin-bottom: 18px; }.np-cta-pulse { width: 8px; height: 8px; border-radius: 50%; background: #22D48E; box-shadow: 0 0 0 0 rgba(34,212,142,.7); animation: npCtaPulse 2s ease-out infinite; }
+ @keyframes npCtaPulse { 0% { box-shadow: 0 0 0 0 rgba(34,212,142,.7) } 70% { box-shadow: 0 0 0 8px rgba(34,212,142,0) } 100% { box-shadow: 0 0 0 0 rgba(34,212,142,0) } }.np-cta-title { margin: 0 0 14px; font-size: clamp(1.7rem, 3.6vw, 2.6rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; }.np-cta-accent { display: inline-block; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 500; background: linear-gradient(135deg, #1FC4F0 0%, #0DA0CF 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }.np-cta-lead { margin: 0 auto 28px; max-width: 640px; color: rgba(255,255,255,.76); font-size: 1.02rem; line-height: 1.55; }.np-cta-lead strong { color: #fff; font-weight: 600; }.np-cta-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin: 0 0 28px; }.np-cta-btn { display: inline-flex; align-items: center; gap: 10px; padding: 16px 26px; border-radius: 12px; font-weight: 800; font-size: 1.02rem; text-decoration: none; transition: transform.2s ease, box-shadow.25s ease, background.2s ease; }.np-cta-btn:hover { transform: translateY(-2px); }.np-cta-btn-primary { background: #fff; color: #0A1428; box-shadow: 0 10px 26px rgba(0,0,0,.25); }.np-cta-btn-primary:hover { box-shadow: 0 16px 36px rgba(0,0,0,.35); }.np-cta-btn-secondary { background: linear-gradient(135deg, #0DA0CF 0%, #0884AE 100%); color: #fff; box-shadow: 0 10px 26px rgba(13,160,207,.40); }.np-cta-btn-secondary:hover { box-shadow: 0 16px 36px rgba(13,160,207,.55); }.np-cta-trust { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; font-size:.86rem; color: rgba(255,255,255,.65); }.np-cta-trust li { display: inline-flex; align-items: center; gap: 6px; }.np-cta-trust svg { color: #22D48E; flex-shrink: 0; }
+ @media (max-width: 640px) {.np-cta-premium { margin-top: 56px; }.np-cta-btn { width: 100%; justify-content: center; }.np-cta-trust { gap: 8px 14px; font-size:.8rem; }
+ }
+ </style>
 
 </main>
 
 <!-- MODAL RÉSERVATION -->
 <div class="nv-modal" id="nvModal" role="dialog" aria-modal="true" aria-labelledby="nvModalTitle">
-  <div class="nv-modal-sheet" id="nvModalSheet">
-    <!-- contenu injecté dynamiquement -->
-  </div>
+ <div class="nv-modal-sheet" id="nvModalSheet">
+ <!-- contenu injecté dynamiquement -->
+ </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     LEAD-GATE : Modal de capture avant affichage prix
-     Le prix est masqué tant que le client n'a pas renseigné ses coords.
-     Anti-curieux + récupération lead pour relance commerciale.
+ LEAD-GATE : Modal de capture avant affichage prix
+ Le prix est masqué tant que le client n'a pas renseigné ses coords.
+ Anti-curieux + récupération lead pour relance commerciale.
 ═══════════════════════════════════════════════════════════════ -->
 <div class="nv-leadgate-modal" id="nvLeadgateModal" role="dialog" aria-modal="true" aria-labelledby="nvLgTitle" hidden>
-  <div class="nv-leadgate-overlay"></div>
-  <div class="nv-leadgate-card">
-    <button type="button" class="nv-lg-close" id="nvLgClose" aria-label="Fermer">×</button>
-    <div class="nv-lg-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1l3.09 6.26L22 8.27l-5 4.87 1.18 6.88L12 16.77l-6.18 3.25L7 13.14 2 8.27l6.91-1.01L12 1z"/></svg>
-    </div>
-    <h3 id="nvLgTitle" class="nv-lg-title">Voyez nos tarifs en 10 secondes</h3>
-    <p class="nv-lg-lead">Pour vous montrer les prix exacts adaptés à votre zone, on a besoin de quelques infos. <strong>Aucun engagement</strong>, aucune carte demandée.</p>
-    <form id="nvLgForm" class="nv-lg-form" autocomplete="on">
-            <!-- Anti-bot honeypot — laisser vide -->
-            <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" value="">
-      <div class="nv-lg-row">
-        <input aria-label="Prénom" type="text" name="prenom" placeholder="Prénom *" required autocomplete="given-name" class="nv-lg-inp">
-        <input aria-label="Nom" type="text" name="nom" placeholder="Nom *" required autocomplete="family-name" class="nv-lg-inp">
-      </div>
-      <input aria-label="Téléphone" type="tel" name="telephone" placeholder="Téléphone *" required autocomplete="tel" pattern="[0-9 +.\-]{10,}" class="nv-lg-inp">
-      <input aria-label="Email" type="email" name="email" placeholder="Email *" required autocomplete="email" class="nv-lg-inp">
-      <input aria-label="Ville" type="text" name="ville" placeholder="Ville *" required autocomplete="address-level2" class="nv-lg-inp">
-      <button type="submit" class="nv-lg-submit" id="nvLgSubmit">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
-        Voir les tarifs
-      </button>
-      <p class="nv-lg-trust">🛡️ Vos données restent confidentielles. Voir nos <a href="mentions-legales.html" target="_blank" rel="noopener noreferrer">mentions légales</a>.</p>
-    </form>
-  </div>
+ <div class="nv-leadgate-overlay"></div>
+ <div class="nv-leadgate-card">
+ <button type="button" class="nv-lg-close" id="nvLgClose" aria-label="Fermer">×</button>
+ <div class="nv-lg-icon" aria-hidden="true">
+ <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1l3.09 6.26L22 8.27l-5 4.87 1.18 6.88L12 16.77l-6.18 3.25L7 13.14 2 8.27l6.91-1.01L12 1z"/></svg>
+ </div>
+ <h3 id="nvLgTitle" class="nv-lg-title">Voyez nos tarifs en 10 secondes</h3>
+ <p class="nv-lg-lead">Pour vous montrer les prix exacts adaptés à votre zone, on a besoin de quelques infos. <strong>Aucun engagement</strong>, aucune carte demandée.</p>
+ <form id="nvLgForm" class="nv-lg-form" autocomplete="on">
+ <!-- Anti-bot honeypot — laisser vide -->
+ <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" value="">
+ <div class="nv-lg-row">
+ <input aria-label="Prénom" type="text" name="prenom" placeholder="Prénom *" required autocomplete="given-name" class="nv-lg-inp">
+ <input aria-label="Nom" type="text" name="nom" placeholder="Nom *" required autocomplete="family-name" class="nv-lg-inp">
+ </div>
+ <input aria-label="Téléphone" type="tel" name="telephone" placeholder="Téléphone *" required autocomplete="tel" pattern="[0-9 +.\-]{10,}" class="nv-lg-inp">
+ <input aria-label="Email" type="email" name="email" placeholder="Email *" required autocomplete="email" class="nv-lg-inp">
+ <input aria-label="Ville" type="text" name="ville" placeholder="Ville *" required autocomplete="address-level2" class="nv-lg-inp">
+ <button type="submit" class="nv-lg-submit" id="nvLgSubmit">
+ <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+ Voir les tarifs
+ </button>
+ <p class="nv-lg-trust">🛡️ Vos données restent confidentielles. Voir nos <a href="mentions-legales.html" target="_blank" rel="noopener noreferrer">mentions légales</a>.</p>
+ </form>
+ </div>
 </div>
 
 <!-- FOOTER simplifié (le footer global est rendu sur le site existant) -->
 <footer style="background:#0A1428;color:#fff;padding:48px 24px;margin-top:64px">
-  <div style="max-width:1480px;margin:0 auto;text-align:center">
-    <p style="margin:0 0 12px;font-size:.9rem;opacity:.7">HELP! Confort Saint-Omer · SARL DEPAN'AUDO · 242 Route de Boulogne, 62500 Saint Martin Lez Tatinghem</p>
-    <p style="margin:0;font-size:.82rem;opacity:.5">SIRET 89819615900013 · TVA FR75898196159 · Assurance décennale MAAF n° 162295792 A</p>
-  </div>
+ <div style="max-width:1480px;margin:0 auto;text-align:center">
+ <p style="margin:0 0 12px;font-size:.9rem;opacity:.7">HELP! Confort Saint-Omer · SARL DEPAN'AUDO · 242 Route de Boulogne, 62500 Saint Martin Lez Tatinghem</p>
+ <p style="margin:0;font-size:.82rem;opacity:.5">SIRET 89819615900013 · TVA FR75898196159 · Assurance décennale MAAF n° 162295792 A</p>
+ </div>
 </footer>
 
 <!-- SUPABASE + LOGIC -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 (async function() {
-  const SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
-  const SUPABASE_ANON = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
+ const SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+ const SUPABASE_ANON = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
 
-  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
-  const root = document.getElementById('catalogRoot');
-  const filtersBar = document.getElementById('filtersBar');
+ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+ const root = document.getElementById('catalogRoot');
+ const filtersBar = document.getElementById('filtersBar');
 
-  // ═══════════════════════════════════════════════════════════════
-  // LEAD-GATE : Active le verrou des prix tant que coords pas remplies
-  // ═══════════════════════════════════════════════════════════════
-  const LG_KEY = 'hc_leadgate_unlocked_v1';
-  function isUnlocked(){ try { return localStorage.getItem(LG_KEY) === '1'; } catch(_) { return false; } }
-  function unlock(){ try { localStorage.setItem(LG_KEY, '1'); } catch(_) {} document.body.classList.remove('is-locked'); }
-  function lock(){ document.body.classList.add('is-locked'); }
-  function showLgModal(){ document.getElementById('nvLeadgateModal').hidden = false; document.body.style.overflow = 'hidden'; }
-  function hideLgModal(){ document.getElementById('nvLeadgateModal').hidden = true; document.body.style.overflow = ''; }
+ // ═══════════════════════════════════════════════════════════════
+ // LEAD-GATE : Active le verrou des prix tant que coords pas remplies
+ // ═══════════════════════════════════════════════════════════════
+ const LG_KEY = 'hc_leadgate_unlocked_v1';
+ function isUnlocked(){ try { return localStorage.getItem(LG_KEY) === '1'; } catch(_) { return false; } }
+ function unlock(){ try { localStorage.setItem(LG_KEY, '1'); } catch(_) {} document.body.classList.remove('is-locked'); }
+ function lock(){ document.body.classList.add('is-locked'); }
+ function showLgModal(){ document.getElementById('nvLeadgateModal').hidden = false; document.body.style.overflow = 'hidden'; }
+ function hideLgModal(){ document.getElementById('nvLeadgateModal').hidden = true; document.body.style.overflow = ''; }
 
-  // Au chargement : si pas unlocked, on lock
-  if (!isUnlocked()) lock();
+ // Au chargement : si pas unlocked, on lock
+ if (!isUnlocked()) lock();
 
-  // Click sur "Voir le tarif" (bouton réserver locked) ou prix → ouvre modal
-  document.addEventListener('click', function(e){
-    if (!document.body.classList.contains('is-locked')) return;
-    var t = e.target.closest('.nv-card-price, .nv-btn-primary[data-action="reserve"]');
-    if (t) { e.preventDefault(); e.stopPropagation(); showLgModal(); }
-  }, true);
+ // Click sur "Voir le tarif" (bouton réserver locked) ou prix → ouvre modal
+ document.addEventListener('click', function(e){
+ if (!document.body.classList.contains('is-locked')) return;
+ var t = e.target.closest('.nv-card-price,.nv-btn-primary[data-action="reserve"]');
+ if (t) { e.preventDefault(); e.stopPropagation(); showLgModal(); }
+ }, true);
 
-  // Modal close handlers
-  document.getElementById('nvLgClose').addEventListener('click', hideLgModal);
-  document.querySelector('.nv-leadgate-overlay').addEventListener('click', hideLgModal);
+ // Modal close handlers
+ document.getElementById('nvLgClose').addEventListener('click', hideLgModal);
+ document.querySelector('.nv-leadgate-overlay').addEventListener('click', hideLgModal);
 
-  // Submit du formulaire lead-gate
-  document.getElementById('nvLgForm').addEventListener('submit', async function(e){
-    e.preventDefault();
-    var form = e.target;
-    var btn = document.getElementById('nvLgSubmit');
-    var fd = new FormData(form);
-    // Validation rapide
-    var bad = false;
-    form.querySelectorAll('input[required]').forEach(function(i){
-      if (!i.value.trim()) { i.classList.add('has-error'); bad = true; }
-      else { i.classList.remove('has-error'); }
-    });
-    if (bad) return;
+ // Submit du formulaire lead-gate
+ document.getElementById('nvLgForm').addEventListener('submit', async function(e){
+ e.preventDefault();
+ var form = e.target;
+ var btn = document.getElementById('nvLgSubmit');
+ var fd = new FormData(form);
+ // Validation rapide
+ var bad = false;
+ form.querySelectorAll('input[required]').forEach(function(i){
+ if (!i.value.trim()) { i.classList.add('has-error'); bad = true; }
+ else { i.classList.remove('has-error'); }
+ });
+ if (bad) return;
 
-    btn.disabled = true; btn.innerHTML = 'Envoi…';
+ btn.disabled = true; btn.innerHTML = 'Envoi…';
 
-    // Insert lead dans Supabase (table leads ou contracts avec status='lead')
-    try {
-      var payload = {
-        status: 'prospect',
-        subscription_source: 'leadgate_prestations',
-        type: 'custom',
-        metier: 'multiservice',
-        client_first_name: fd.get('prenom') || '',
-        client_last_name: fd.get('nom') || 'Sans nom',
-        client_phone: fd.get('telephone') || '',
-        client_email: fd.get('email') || '',
-        client_city: fd.get('ville') || '',
-        notes: 'Lead-gate déclenché sur consultation tarifs nos-prestations',
-        metadata: {
-          source: 'leadgate_prestations',
-          page: location.pathname,
-          captured_at: new Date().toISOString(),
-          user_agent: navigator.userAgent
-        }
-      };
-      await sb.from('contracts').insert(payload);
-    } catch(err) {
-      console.warn('[leadgate] insert failed (non bloquant):', err);
-      // On débloque quand même côté UI
-    }
+ // Insert lead dans Supabase (table leads ou contracts avec status='lead')
+ try {
+ var payload = {
+ status: 'prospect',
+ subscription_source: 'leadgate_prestations',
+ type: 'custom',
+ metier: 'multiservice',
+ client_first_name: fd.get('prenom') || '',
+ client_last_name: fd.get('nom') || 'Sans nom',
+ client_phone: fd.get('telephone') || '',
+ client_email: fd.get('email') || '',
+ client_city: fd.get('ville') || '',
+ notes: 'Lead-gate déclenché sur consultation tarifs nos-prestations',
+ metadata: {
+ source: 'leadgate_prestations',
+ page: location.pathname,
+ captured_at: new Date().toISOString(),
+ user_agent: navigator.userAgent
+ }
+ };
+ await sb.from('contracts').insert(payload);
+ } catch(err) {
+ console.warn('[leadgate] insert failed (non bloquant):', err);
+ // On débloque quand même côté UI
+ }
 
-    unlock();
-    hideLgModal();
-    btn.disabled = false; btn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg> Voir les tarifs';
-  });
+ unlock();
+ hideLgModal();
+ btn.disabled = false; btn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg> Voir les tarifs';
+ });
 
-  // Icônes catégories — vrais pictos HC (images dans /images/)
-  const CAT_PICTOS = {
-    'plomberie':   '/images/picto-plomberie.png',
-    'chauffe-eau': '/images/picto-plomberie.png',
-    'chauffage':   '/images/picto-chauffage.svg',
-    'electricite': '/images/picto-electricite.png',
-    'serrurerie':  '/images/picto-serrurerie.png',
-    'vitrerie':    '/images/picto-vitrerie.png',
-    'sur-mesure':  '/images/picto-renovation.png'
-  };
-  function pictoTag(slug, size){
-    var src = CAT_PICTOS[slug] || CAT_PICTOS['sur-mesure'];
-    var s = size || 22;
-    return '<img src="' + src + '" alt="" loading="lazy" decoding="async" style="width:' + s + 'px;height:' + s + 'px;object-fit:contain">';
-  }
-  // Compat : ancien CAT_ICONS + SVG_ATTRS conservés mais on n'utilisera plus que pictoTag
-  const CAT_ICONS = {
-    'plomberie':   '<path d="M22 12h-7l-2 4-3-8-2 4H2"/>',
-    'chauffe-eau': '<path d="M14 13.5a2.5 2.5 0 1 1-3 0V5l3-3v11.5z"/>',
-    'chauffage':   '<path d="M12 2c1 4-2 4 0 8 2 4 4 4 0 12-1-4 2-4 0-8-2-4-4-4 0-12z"/>',
-    'electricite': '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
-    'serrurerie':  '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
-    'vitrerie':    '<rect x="3" y="3" width="18" height="18" rx="2"/>',
-    'sur-mesure':  '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>'
-  };
-  const SVG_ATTRS = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
-  const escapeHtml = (s) => String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const eurFmt = (n) => new Intl.NumberFormat('fr-FR', { style:'currency', currency:'EUR', minimumFractionDigits: 2 }).format(n);
+ // Icônes catégories — vrais pictos HC (images dans /images/)
+ const CAT_PICTOS = {
+ 'plomberie': '/images/picto-plomberie.png',
+ 'chauffe-eau': '/images/picto-plomberie.png',
+ 'chauffage': '/images/picto-chauffage.svg',
+ 'electricite': '/images/picto-electricite.png',
+ 'serrurerie': '/images/picto-serrurerie.png',
+ 'vitrerie': '/images/picto-vitrerie.png',
+ 'sur-mesure': '/images/picto-renovation.png'
+ };
+ function pictoTag(slug, size){
+ var src = CAT_PICTOS[slug] || CAT_PICTOS['sur-mesure'];
+ var s = size || 22;
+ return '<img src="' + src + '" alt="" loading="lazy" decoding="async" style="width:' + s + 'px;height:' + s + 'px;object-fit:contain">';
+ }
+ // Compat : ancien CAT_ICONS + SVG_ATTRS conservés mais on n'utilisera plus que pictoTag
+ const CAT_ICONS = {
+ 'plomberie': '<path d="M22 12h-7l-2 4-3-8-2 4H2"/>',
+ 'chauffe-eau': '<path d="M14 13.5a2.5 2.5 0 1 1-3 0V5l3-3v11.5z"/>',
+ 'chauffage': '<path d="M12 2c1 4-2 4 0 8 2 4 4 4 0 12-1-4 2-4 0-8-2-4-4-4 0-12z"/>',
+ 'electricite': '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+ 'serrurerie': '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+ 'vitrerie': '<rect x="3" y="3" width="18" height="18" rx="2"/>',
+ 'sur-mesure': '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>'
+ };
+ const SVG_ATTRS = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
+ const escapeHtml = (s) => String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const eurFmt = (n) => new Intl.NumberFormat('fr-FR', { style:'currency', currency:'EUR', minimumFractionDigits: 2 }).format(n);
 
-  // ═══════════════════════════════════════════════════════════════
-  // CATALOGUE LOCAL (source de vérité — fallback + complément Supabase)
-  // Tous les prix sont validés contre TARIFS_REFERENCE.md (BAREME AGENCE)
-  // ═══════════════════════════════════════════════════════════════
-  const LOCAL_CATALOG = [
-    // ─── PLOMBERIE & SANITAIRES ──────────────────────────────────
-    { id:'loc-plo-1', slug:'recherche-fuite-visuelle', name:"Recherche de fuite visuelle", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie',
-      short_desc:"Localisation rapide d'une fuite apparente sans démontage.", price_ttc:148, deposit_pct:40, deposit_ttc:59.20,
-      duration_min:60, warranty:"Intervention garantie · MO 58 €/h TTC",
-      includes:["Déplacement audomarois","Diagnostic visuel complet","Rapport oral + photos","Frais dossier inclus"] },
-    { id:'loc-plo-1b', slug:'recherche-fuite-technique', name:"Recherche de fuite technique (caméra, gaz traceur, acoustique)", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie',
-      short_desc:"Localisation d'une fuite cachée (encastré, sous chape) sans casse via caméra/gaz traceur/acoustique.", price_ttc:383, deposit_pct:40, deposit_ttc:153.20,
-      duration_min:120, warranty:"Localisation garantie",
-      includes:["Caméra thermique","Gaz traceur hydrogène","Détecteur acoustique","Rapport technique remis"] },
-    
-    { id:'loc-plo-2', slug:'desengorgement', name:"Désengorgement canalisation", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie',
-      short_desc:"Débouchage évier, WC, douche, baignoire ou siphon sans casse.", price_ttc:165, deposit_pct:40, deposit_ttc:66,
-      duration_min:60, warranty:"Pose garantie",
-      includes:["Furet manuel ou électrique","Test étanchéité","Déplacement + déchets","Frais dossier inclus"] },
-    { id:'loc-plo-3', slug:'chasse-nicoll', name:"Mécanisme chasse d'eau — Nicoll", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie',
-      short_desc:"Remplacement complet d'un mécanisme de chasse d'eau standard.", price_ttc:187, deposit_pct:40, deposit_ttc:74.80, brand:"Nicoll",
-      duration_min:60, warranty:"Pièces 2 ans",
-      includes:["Fourniture mécanisme Nicoll","Pose + réglage","Déplacement + frais","Garantie pièces 2 ans"] },
-    { id:'loc-plo-4', slug:'chasse-geberit', name:"Mécanisme chasse d'eau — Geberit WC au sol", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie',
-      short_desc:"Remplacement mécanisme Geberit pour WC au sol (tout compris).", price_ttc:203, deposit_pct:40, deposit_ttc:81.20, brand:"Geberit",
-      duration_min:75, warranty:"Pièces 2 ans",
-      includes:["Mécanisme Geberit","Joints + petite fourniture","Pose 1 technicien","Garantie pièces 2 ans"] },
-    { id:'loc-plo-5', slug:'detartrage-sanitaire', name:"Détartrage installation sanitaire", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie',
-      short_desc:"Nettoyage du calcaire dans une installation sanitaire (cumulus, robinetterie).", price_ttc:237, deposit_pct:40, deposit_ttc:94.80,
-      duration_min:90, warranty:"Intervention garantie",
-      includes:["Produit détartrant pro","Rinçage installation","Vérification étanchéité","Déplacement + déchets"] },
+ // ═══════════════════════════════════════════════════════════════
+ // CATALOGUE LOCAL (source de vérité — fallback + complément Supabase)
+ // Tous les prix sont validés contre TARIFS_REFERENCE.md (BAREME AGENCE)
+ // ═══════════════════════════════════════════════════════════════
+ const LOCAL_CATALOG = [
+ // ─── PLOMBERIE & SANITAIRES ──────────────────────────────────
+ { id:'loc-plo-1', slug:'recherche-fuite-visuelle', name:"Recherche de fuite visuelle", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie',
+ short_desc:"Localisation rapide d'une fuite apparente sans démontage.", price_ttc:148, deposit_pct:40, deposit_ttc:59.20,
+ duration_min:60, warranty:"Intervention garantie · MO 58 €/h TTC",
+ includes:["Déplacement audomarois","Diagnostic visuel complet","Rapport oral + photos","Frais dossier inclus"] },
+ { id:'loc-plo-1b', slug:'recherche-fuite-technique', name:"Recherche de fuite technique (caméra, gaz traceur, acoustique)", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie',
+ short_desc:"Localisation d'une fuite cachée (encastré, sous chape) sans casse via caméra/gaz traceur/acoustique.", price_ttc:383, deposit_pct:40, deposit_ttc:153.20,
+ duration_min:120, warranty:"Localisation garantie",
+ includes:["Caméra thermique","Gaz traceur hydrogène","Détecteur acoustique","Rapport technique remis"] },
+ 
+ { id:'loc-plo-2', slug:'desengorgement', name:"Désengorgement canalisation", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie',
+ short_desc:"Débouchage évier, WC, douche, baignoire ou siphon sans casse.", price_ttc:165, deposit_pct:40, deposit_ttc:66,
+ duration_min:60, warranty:"Pose garantie",
+ includes:["Furet manuel ou électrique","Test étanchéité","Déplacement + déchets","Frais dossier inclus"] },
+ { id:'loc-plo-3', slug:'chasse-nicoll', name:"Mécanisme chasse d'eau — Nicoll", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie',
+ short_desc:"Remplacement complet d'un mécanisme de chasse d'eau standard.", price_ttc:187, deposit_pct:40, deposit_ttc:74.80, brand:"Nicoll",
+ duration_min:60, warranty:"Pièces 2 ans",
+ includes:["Fourniture mécanisme Nicoll","Pose + réglage","Déplacement + frais","Garantie pièces 2 ans"] },
+ { id:'loc-plo-4', slug:'chasse-geberit', name:"Mécanisme chasse d'eau — Geberit WC au sol", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie',
+ short_desc:"Remplacement mécanisme Geberit pour WC au sol (tout compris).", price_ttc:203, deposit_pct:40, deposit_ttc:81.20, brand:"Geberit",
+ duration_min:75, warranty:"Pièces 2 ans",
+ includes:["Mécanisme Geberit","Joints + petite fourniture","Pose 1 technicien","Garantie pièces 2 ans"] },
+ { id:'loc-plo-5', slug:'detartrage-sanitaire', name:"Détartrage installation sanitaire", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie',
+ short_desc:"Nettoyage du calcaire dans une installation sanitaire (cumulus, robinetterie).", price_ttc:237, deposit_pct:40, deposit_ttc:94.80,
+ duration_min:90, warranty:"Intervention garantie",
+ includes:["Produit détartrant pro","Rinçage installation","Vérification étanchéité","Déplacement + déchets"] },
 
-    // ─── CHAUFFE-EAU ATLANTIC ────────────────────────────────────
-    { id:'loc-ce-100eco', slug:'chauffe-eau-100-eco', name:"Chauffe-eau 100 L Éco (mural)", category_slug:'chauffe-eau', category_name:'Chauffe-eau & Production ECS', category_icon:'chauffe-eau',
-      short_desc:"Cumulus Atlantic 100 L blindé, pose murale tout compris.", price_ttc:817, deposit_pct:40, deposit_ttc:326.80, brand:"Atlantic",
-      duration_min:180, warranty:"Cuve 5 ans · Pièces 2 ans",
-      includes:["Cumulus Atlantic 100 L","Pose 2 techniciens","Trépied + groupe sécurité","Siphon + petite fourniture"] },
-    { id:'loc-ce-100st', slug:'chauffe-eau-100-st', name:"Chauffe-eau 100 L Stéatite (mural)", category_slug:'chauffe-eau', category_name:'Chauffe-eau & Production ECS', category_icon:'chauffe-eau',
-      short_desc:"Cumulus Atlantic 100 L stéatite, résistance protégée du calcaire.", price_ttc:887, deposit_pct:40, deposit_ttc:354.80, brand:"Atlantic",
-      duration_min:180, warranty:"Cuve 5 ans · Pièces 2 ans",
-      includes:["Cumulus Stéatite 100 L","Pose 2 techniciens","Trépied + groupe sécurité","Idéal eaux calcaires"] },
-    { id:'loc-ce-150eco', slug:'chauffe-eau-150-eco', name:"Chauffe-eau 150 L Éco (mural)", category_slug:'chauffe-eau', category_name:'Chauffe-eau & Production ECS', category_icon:'chauffe-eau',
-      short_desc:"Cumulus Atlantic 150 L blindé, pose murale tout compris.", price_ttc:884, deposit_pct:40, deposit_ttc:353.60, brand:"Atlantic",
-      duration_min:180, warranty:"Cuve 5 ans · Pièces 2 ans",
-      includes:["Cumulus Atlantic 150 L","Pose 2 techniciens","Trépied + groupe sécurité","Adapté 2 à 3 personnes"] },
-    { id:'loc-ce-150st', slug:'chauffe-eau-150-st', name:"Chauffe-eau 150 L Stéatite (mural)", category_slug:'chauffe-eau', category_name:'Chauffe-eau & Production ECS', category_icon:'chauffe-eau',
-      short_desc:"Cumulus Atlantic 150 L stéatite — eau chaude longue durée.", price_ttc:961, deposit_pct:40, deposit_ttc:384.40, brand:"Atlantic",
-      duration_min:180, warranty:"Cuve 5 ans · Pièces 2 ans",
-      includes:["Cumulus Stéatite 150 L","Pose 2 techniciens","Trépied + groupe sécurité","Idéal eaux dures"] },
-    { id:'loc-ce-200eco', slug:'chauffe-eau-200-eco', name:"Chauffe-eau 200 L Éco (au sol)", category_slug:'chauffe-eau', category_name:'Chauffe-eau & Production ECS', category_icon:'chauffe-eau',
-      short_desc:"Cumulus Atlantic 200 L au sol — famille de 4 personnes et +.", price_ttc:1332, deposit_pct:40, deposit_ttc:532.80, brand:"Atlantic",
-      duration_min:240, warranty:"Cuve 5 ans · Pièces 2 ans",
-      includes:["Cumulus Atlantic 200 L","Pose 2 techniciens","Groupe sécurité + siphon","Évacuation ancien matériel"] },
-    { id:'loc-ce-contrat', slug:'contrat-entretien-chauffe-eau', name:"Contrat entretien chauffe-eau annuel", category_slug:'chauffe-eau', category_name:'Chauffe-eau & Production ECS', category_icon:'chauffe-eau',
-      short_desc:"Visite annuelle pour prolonger la durée de vie de votre cumulus.", price_ttc:220, deposit_pct:40, deposit_ttc:88,
-      duration_min:90, warranty:"Engagement annuel",
-      includes:["Détartrage de la cuve","Vérification groupe sécurité","Contrôle anode + joints","Rapport d'entretien"] },
+ // ─── CHAUFFE-EAU ATLANTIC ────────────────────────────────────
+ { id:'loc-ce-100eco', slug:'chauffe-eau-100-eco', name:"Chauffe-eau 100 L Éco (mural)", category_slug:'chauffe-eau', category_name:'Chauffe-eau & Production ECS', category_icon:'chauffe-eau',
+ short_desc:"Cumulus Atlantic 100 L blindé, pose murale tout compris.", price_ttc:817, deposit_pct:40, deposit_ttc:326.80, brand:"Atlantic",
+ duration_min:180, warranty:"Cuve 5 ans · Pièces 2 ans",
+ includes:["Cumulus Atlantic 100 L","Pose 2 techniciens","Trépied + groupe sécurité","Siphon + petite fourniture"] },
+ { id:'loc-ce-100st', slug:'chauffe-eau-100-st', name:"Chauffe-eau 100 L Stéatite (mural)", category_slug:'chauffe-eau', category_name:'Chauffe-eau & Production ECS', category_icon:'chauffe-eau',
+ short_desc:"Cumulus Atlantic 100 L stéatite, résistance protégée du calcaire.", price_ttc:887, deposit_pct:40, deposit_ttc:354.80, brand:"Atlantic",
+ duration_min:180, warranty:"Cuve 5 ans · Pièces 2 ans",
+ includes:["Cumulus Stéatite 100 L","Pose 2 techniciens","Trépied + groupe sécurité","Idéal eaux calcaires"] },
+ { id:'loc-ce-150eco', slug:'chauffe-eau-150-eco', name:"Chauffe-eau 150 L Éco (mural)", category_slug:'chauffe-eau', category_name:'Chauffe-eau & Production ECS', category_icon:'chauffe-eau',
+ short_desc:"Cumulus Atlantic 150 L blindé, pose murale tout compris.", price_ttc:884, deposit_pct:40, deposit_ttc:353.60, brand:"Atlantic",
+ duration_min:180, warranty:"Cuve 5 ans · Pièces 2 ans",
+ includes:["Cumulus Atlantic 150 L","Pose 2 techniciens","Trépied + groupe sécurité","Adapté 2 à 3 personnes"] },
+ { id:'loc-ce-150st', slug:'chauffe-eau-150-st', name:"Chauffe-eau 150 L Stéatite (mural)", category_slug:'chauffe-eau', category_name:'Chauffe-eau & Production ECS', category_icon:'chauffe-eau',
+ short_desc:"Cumulus Atlantic 150 L stéatite — eau chaude longue durée.", price_ttc:961, deposit_pct:40, deposit_ttc:384.40, brand:"Atlantic",
+ duration_min:180, warranty:"Cuve 5 ans · Pièces 2 ans",
+ includes:["Cumulus Stéatite 150 L","Pose 2 techniciens","Trépied + groupe sécurité","Idéal eaux dures"] },
+ { id:'loc-ce-200eco', slug:'chauffe-eau-200-eco', name:"Chauffe-eau 200 L Éco (au sol)", category_slug:'chauffe-eau', category_name:'Chauffe-eau & Production ECS', category_icon:'chauffe-eau',
+ short_desc:"Cumulus Atlantic 200 L au sol — famille de 4 personnes et +.", price_ttc:1332, deposit_pct:40, deposit_ttc:532.80, brand:"Atlantic",
+ duration_min:240, warranty:"Cuve 5 ans · Pièces 2 ans",
+ includes:["Cumulus Atlantic 200 L","Pose 2 techniciens","Groupe sécurité + siphon","Évacuation ancien matériel"] },
+ { id:'loc-ce-contrat', slug:'contrat-entretien-chauffe-eau', name:"Contrat entretien chauffe-eau annuel", category_slug:'chauffe-eau', category_name:'Chauffe-eau & Production ECS', category_icon:'chauffe-eau',
+ short_desc:"Visite annuelle pour prolonger la durée de vie de votre cumulus.", price_ttc:220, deposit_pct:40, deposit_ttc:88,
+ duration_min:90, warranty:"Engagement annuel",
+ includes:["Détartrage de la cuve","Vérification groupe sécurité","Contrôle anode + joints","Rapport d'entretien"] },
 
-    // ─── CHAUFFAGE ───────────────────────────────────────────────
-    { id:'loc-ch-entretien', slug:'entretien-chaudiere-gaz', name:"Entretien annuel chaudière gaz", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage',
-      short_desc:"Visite annuelle obligatoire pour chaudière à gaz (attestation fournie).", price_ttc:121, deposit_pct:40, deposit_ttc:48.40,
-      duration_min:75, warranty:"Attestation 1 an",
-      includes:["Nettoyage corps de chauffe","Contrôle combustion","Test de sécurité","Attestation d'entretien"] },
-    { id:'loc-ch-desemb', slug:'desembouage-radiateur', name:"Désembouage par radiateur", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage',
-      short_desc:"Nettoyage chimique des boues pour rendement chauffage optimal (prix par radiateur).", price_ttc:105, deposit_pct:40, deposit_ttc:42,
-      duration_min:60, warranty:"Pose garantie",
-      includes:["Produit désembouant pro","Rinçage installation","Vérification équilibrage","Déplacement inclus"] },
-    { id:'loc-ch-depan', slug:'depannage-chaudiere-t1', name:"Dépannage chaudière (T1 semaine, hors fourniture)", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage',
-      short_desc:"Forfait diagnostic + 1ère heure en semaine, sans pièce détachée.", price_ttc:75, deposit_pct:40, deposit_ttc:30,
-      duration_min:60, warranty:"Diagnostic garanti",
-      includes:["Diagnostic complet","1ère heure de MO incluse","Devis pour pièce détachée","Déplacement inclus"] },
-    // ─── Contrats annuels chauffage — sous la section chauffage ─────
-    { id:'loc-ch-contrat-basic-gaz', slug:'contrat-chauffage-basic-gaz', name:"Contrat Basic — chaudière gaz", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage', badge:"Contrat annuel",
-      short_desc:"Entretien annuel obligatoire + attestation. Prélèvement mensuel 9 €/mois.", price_ttc:108, deposit_pct:0, deposit_ttc:0,
-      duration_min:90, warranty:"Engagement 12 mois",
-      includes:["Entretien annuel inclus","Attestation officielle","9 €/mois (108 €/an)","Sans frais cachés"] },
-    { id:'loc-ch-contrat-basic-fioul', slug:'contrat-chauffage-basic-fioul', name:"Contrat Basic — chaudière fioul", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage', badge:"Contrat annuel",
-      short_desc:"Entretien annuel obligatoire fioul + attestation.", price_ttc:140, deposit_pct:0, deposit_ttc:0,
-      duration_min:120, warranty:"Engagement 12 mois",
-      includes:["Entretien annuel fioul","Attestation officielle","12 €/mois (140 €/an)","Sans frais cachés"] },
-    { id:'loc-ch-contrat-confort-gaz', slug:'contrat-chauffage-confort-gaz', name:"Contrat Confort — chaudière gaz", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage', badge:"Contrat annuel",
-      short_desc:"Entretien + dépannage prioritaire MO incluse 7j/7.", price_ttc:156, deposit_pct:0, deposit_ttc:0,
-      duration_min:90, warranty:"Engagement 12 mois",
-      includes:["Entretien annuel","Dépannage prioritaire","13 €/mois (156 €/an)","MO incluse 7j/7"] },
-    { id:'loc-ch-contrat-confort-fioul', slug:'contrat-chauffage-confort-fioul', name:"Contrat Confort — chaudière fioul", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage', badge:"Contrat annuel",
-      short_desc:"Entretien fioul + dépannage prioritaire MO incluse.", price_ttc:190, deposit_pct:0, deposit_ttc:0,
-      duration_min:120, warranty:"Engagement 12 mois",
-      includes:["Entretien annuel fioul","Dépannage prioritaire","16 €/mois (190 €/an)","MO incluse 7j/7"] },
-    { id:'loc-ch-contrat-securite-gaz', slug:'contrat-chauffage-securite-gaz', name:"Contrat Sécurité — chaudière gaz", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage', badge:"Tout compris",
-      short_desc:"Tout compris : entretien + dépannage + pièces 7j/7.", price_ttc:276, deposit_pct:0, deposit_ttc:0,
-      duration_min:90, warranty:"Engagement 12 mois",
-      includes:["Entretien annuel","Dépannage 7j/7 prioritaire","Pièces détachées incluses","23 €/mois (276 €/an)"] },
-    { id:'loc-ch-contrat-securite-fioul', slug:'contrat-chauffage-securite-fioul', name:"Contrat Sécurité — chaudière fioul", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage', badge:"Tout compris",
-      short_desc:"Tout compris fioul : entretien + dépannage + pièces 7j/7.", price_ttc:320, deposit_pct:0, deposit_ttc:0,
-      duration_min:120, warranty:"Engagement 12 mois",
-      includes:["Entretien annuel fioul","Dépannage 7j/7","Pièces détachées incluses","27 €/mois (320 €/an)"] },
+ // ─── CHAUFFAGE ───────────────────────────────────────────────
+ { id:'loc-ch-entretien', slug:'entretien-chaudiere-gaz', name:"Entretien annuel chaudière gaz", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage',
+ short_desc:"Visite annuelle obligatoire pour chaudière à gaz (attestation fournie).", price_ttc:121, deposit_pct:40, deposit_ttc:48.40,
+ duration_min:75, warranty:"Attestation 1 an",
+ includes:["Nettoyage corps de chauffe","Contrôle combustion","Test de sécurité","Attestation d'entretien"] },
+ { id:'loc-ch-desemb', slug:'desembouage-radiateur', name:"Désembouage par radiateur", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage',
+ short_desc:"Nettoyage chimique des boues pour rendement chauffage optimal (prix par radiateur).", price_ttc:105, deposit_pct:40, deposit_ttc:42,
+ duration_min:60, warranty:"Pose garantie",
+ includes:["Produit désembouant pro","Rinçage installation","Vérification équilibrage","Déplacement inclus"] },
+ { id:'loc-ch-depan', slug:'depannage-chaudiere-t1', name:"Dépannage chaudière (T1 semaine, hors fourniture)", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage',
+ short_desc:"Forfait diagnostic + 1ère heure en semaine, sans pièce détachée.", price_ttc:75, deposit_pct:40, deposit_ttc:30,
+ duration_min:60, warranty:"Diagnostic garanti",
+ includes:["Diagnostic complet","1ère heure de MO incluse","Devis pour pièce détachée","Déplacement inclus"] },
+ // ─── Contrats annuels chauffage — sous la section chauffage ─────
+ { id:'loc-ch-contrat-basic-gaz', slug:'contrat-chauffage-basic-gaz', name:"Contrat Basic — chaudière gaz", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage', badge:"Contrat annuel",
+ short_desc:"Entretien annuel obligatoire + attestation. Prélèvement mensuel 9 €/mois.", price_ttc:108, deposit_pct:0, deposit_ttc:0,
+ duration_min:90, warranty:"Engagement 12 mois",
+ includes:["Entretien annuel inclus","Attestation officielle","9 €/mois (108 €/an)","Sans frais cachés"] },
+ { id:'loc-ch-contrat-basic-fioul', slug:'contrat-chauffage-basic-fioul', name:"Contrat Basic — chaudière fioul", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage', badge:"Contrat annuel",
+ short_desc:"Entretien annuel obligatoire fioul + attestation.", price_ttc:140, deposit_pct:0, deposit_ttc:0,
+ duration_min:120, warranty:"Engagement 12 mois",
+ includes:["Entretien annuel fioul","Attestation officielle","12 €/mois (140 €/an)","Sans frais cachés"] },
+ { id:'loc-ch-contrat-confort-gaz', slug:'contrat-chauffage-confort-gaz', name:"Contrat Confort — chaudière gaz", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage', badge:"Contrat annuel",
+ short_desc:"Entretien + dépannage prioritaire MO incluse.", price_ttc:156, deposit_pct:0, deposit_ttc:0,
+ duration_min:90, warranty:"Engagement 12 mois",
+ includes:["Entretien annuel","Dépannage prioritaire","13 €/mois (156 €/an)","MO incluse "] },
+ { id:'loc-ch-contrat-confort-fioul', slug:'contrat-chauffage-confort-fioul', name:"Contrat Confort — chaudière fioul", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage', badge:"Contrat annuel",
+ short_desc:"Entretien fioul + dépannage prioritaire MO incluse.", price_ttc:190, deposit_pct:0, deposit_ttc:0,
+ duration_min:120, warranty:"Engagement 12 mois",
+ includes:["Entretien annuel fioul","Dépannage prioritaire","16 €/mois (190 €/an)","MO incluse "] },
+ { id:'loc-ch-contrat-securite-gaz', slug:'contrat-chauffage-securite-gaz', name:"Contrat Sécurité — chaudière gaz", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage', badge:"Tout compris",
+ short_desc:"Tout compris : entretien + dépannage + pièces.", price_ttc:276, deposit_pct:0, deposit_ttc:0,
+ duration_min:90, warranty:"Engagement 12 mois",
+ includes:["Entretien annuel","Dépannage prioritaire","Pièces détachées incluses","23 €/mois (276 €/an)"] },
+ { id:'loc-ch-contrat-securite-fioul', slug:'contrat-chauffage-securite-fioul', name:"Contrat Sécurité — chaudière fioul", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage', badge:"Tout compris",
+ short_desc:"Tout compris fioul : entretien + dépannage + pièces.", price_ttc:320, deposit_pct:0, deposit_ttc:0,
+ duration_min:120, warranty:"Engagement 12 mois",
+ includes:["Entretien annuel fioul","Dépannage","Pièces détachées incluses","27 €/mois (320 €/an)"] },
 
-    // ─── ÉLECTRICITÉ ─────────────────────────────────────────────
-    { id:'loc-el-panne', slug:'recherche-panne-elec', name:"Recherche de panne électrique", category_slug:'electricite', category_name:'Électricité', category_icon:'electricite',
-      short_desc:"Diagnostic de panne sur disjoncteur, prise, circuit ou éclairage.", price_ttc:107, deposit_pct:40, deposit_ttc:42.80,
-      duration_min:60, warranty:"Diagnostic garanti",
-      includes:["Multimètre + testeur isolement","Identification du défaut","Devis réparation si fourniture","Déplacement inclus"] },
-    // ─── SERRURERIE ──────────────────────────────────────────────
-    { id:'loc-se-1', slug:'ouverture-porte-simple', name:"Ouverture porte simple (non blindée)", category_slug:'serrurerie', category_name:'Serrurerie', category_icon:'serrurerie',
-      short_desc:"Déblocage porte sans destruction de la serrure.", price_ttc:108, deposit_pct:40, deposit_ttc:43.20,
-      duration_min:45, warranty:"Sans casse",
-      includes:["Outils pro non destructifs","Sans dégradation","Déplacement audomarois","Frais dossier"] },
-    { id:'loc-se-2', slug:'ouverture-porte-claquee', name:"Ouverture porte claquée", category_slug:'serrurerie', category_name:'Serrurerie', category_icon:'serrurerie',
-      short_desc:"Ouverture d'une porte refermée sans clé à l'intérieur.", price_ttc:176, deposit_pct:40, deposit_ttc:70.40,
-      duration_min:45, warranty:"Sans casse",
-      includes:["Technique cale + crochet","Sans dégradation","Vérification après pose","Déplacement inclus"] },
-    { id:'loc-se-3', slug:'ouverture-porte-fermee-cle', name:"Ouverture porte fermée à clé", category_slug:'serrurerie', category_name:'Serrurerie', category_icon:'serrurerie',
-      short_desc:"Ouverture sans la clé, sans destruction du cylindre.", price_ttc:228, deposit_pct:40, deposit_ttc:91.20,
-      duration_min:60, warranty:"Sans casse si possible",
-      includes:["Crochet ou impressionning","Réutilisation cylindre","Vérification mécanisme","Déplacement inclus"] },
-    { id:'loc-se-4', slug:'ouverture-porte-securite', name:"Ouverture porte de sécurité (A2P, multipoints)", category_slug:'serrurerie', category_name:'Serrurerie', category_icon:'serrurerie',
-      short_desc:"Ouverture porte blindée, A2P ou multipoints (procédure technique avancée).", price_ttc:314, deposit_pct:40, deposit_ttc:125.60,
-      duration_min:90, warranty:"Devis remplacement si casse",
-      includes:["Outillage spécialisé","Plusieurs méthodes testées","Cylindre remplacé si casse (devis)","Déplacement inclus"] },
+ // ─── ÉLECTRICITÉ ─────────────────────────────────────────────
+ { id:'loc-el-panne', slug:'recherche-panne-elec', name:"Recherche de panne électrique", category_slug:'electricite', category_name:'Électricité', category_icon:'electricite',
+ short_desc:"Diagnostic de panne sur disjoncteur, prise, circuit ou éclairage.", price_ttc:107, deposit_pct:40, deposit_ttc:42.80,
+ duration_min:60, warranty:"Diagnostic garanti",
+ includes:["Multimètre + testeur isolement","Identification du défaut","Devis réparation si fourniture","Déplacement inclus"] },
+ // ─── SERRURERIE ──────────────────────────────────────────────
+ { id:'loc-se-1', slug:'ouverture-porte-simple', name:"Ouverture porte simple (non blindée)", category_slug:'serrurerie', category_name:'Serrurerie', category_icon:'serrurerie',
+ short_desc:"Déblocage porte sans destruction de la serrure.", price_ttc:108, deposit_pct:40, deposit_ttc:43.20,
+ duration_min:45, warranty:"Sans casse",
+ includes:["Outils pro non destructifs","Sans dégradation","Déplacement audomarois","Frais dossier"] },
+ { id:'loc-se-2', slug:'ouverture-porte-claquee', name:"Ouverture porte claquée", category_slug:'serrurerie', category_name:'Serrurerie', category_icon:'serrurerie',
+ short_desc:"Ouverture d'une porte refermée sans clé à l'intérieur.", price_ttc:176, deposit_pct:40, deposit_ttc:70.40,
+ duration_min:45, warranty:"Sans casse",
+ includes:["Technique cale + crochet","Sans dégradation","Vérification après pose","Déplacement inclus"] },
+ { id:'loc-se-3', slug:'ouverture-porte-fermee-cle', name:"Ouverture porte fermée à clé", category_slug:'serrurerie', category_name:'Serrurerie', category_icon:'serrurerie',
+ short_desc:"Ouverture sans la clé, sans destruction du cylindre.", price_ttc:228, deposit_pct:40, deposit_ttc:91.20,
+ duration_min:60, warranty:"Sans casse si possible",
+ includes:["Crochet ou impressionning","Réutilisation cylindre","Vérification mécanisme","Déplacement inclus"] },
+ { id:'loc-se-4', slug:'ouverture-porte-securite', name:"Ouverture porte de sécurité (A2P, multipoints)", category_slug:'serrurerie', category_name:'Serrurerie', category_icon:'serrurerie',
+ short_desc:"Ouverture porte blindée, A2P ou multipoints (procédure technique avancée).", price_ttc:314, deposit_pct:40, deposit_ttc:125.60,
+ duration_min:90, warranty:"Devis remplacement si casse",
+ includes:["Outillage spécialisé","Plusieurs méthodes testées","Cylindre remplacé si casse (devis)","Déplacement inclus"] },
 
-    // ─── VITRERIE ────────────────────────────────────────────────
-    { id:'loc-vi-1', slug:'mise-en-securite-ouverture-ext', name:"Mise en sécurité ouverture extérieure", category_slug:'vitrerie', category_name:'Vitrerie', category_icon:'vitrerie',
-      short_desc:"Sécurisation après bris de vitre (prix au m² — panneau provisoire).", price_ttc:120, deposit_pct:40, deposit_ttc:48,
-      duration_min:60, warranty:"Sécurisation immédiate",
-      includes:["Panneau OSB ou contreplaqué","Fixation propre","120 €/m² TTC","Rapport assurance"] },
-    { id:'loc-vi-2', slug:'gabarit-vitrerie', name:"Réalisation gabarit (vitrage sur mesure)", category_slug:'vitrerie', category_name:'Vitrerie', category_icon:'vitrerie',
-      short_desc:"Prise de mesures précises + gabarit pour vitrage sur mesure.", price_ttc:184, deposit_pct:40, deposit_ttc:73.60,
-      duration_min:60, warranty:"Gabarit conforme",
-      includes:["Mesures précises sur place","Gabarit transmis au vitrier","Validation client","Déplacement inclus"] },
+ // ─── VITRERIE ────────────────────────────────────────────────
+ { id:'loc-vi-1', slug:'mise-en-securite-ouverture-ext', name:"Mise en sécurité ouverture extérieure", category_slug:'vitrerie', category_name:'Vitrerie', category_icon:'vitrerie',
+ short_desc:"Sécurisation après bris de vitre (prix au m² — panneau provisoire).", price_ttc:120, deposit_pct:40, deposit_ttc:48,
+ duration_min:60, warranty:"Sécurisation immédiate",
+ includes:["Panneau OSB ou contreplaqué","Fixation propre","120 €/m² TTC","Rapport assurance"] },
+ { id:'loc-vi-2', slug:'gabarit-vitrerie', name:"Réalisation gabarit (vitrage sur mesure)", category_slug:'vitrerie', category_name:'Vitrerie', category_icon:'vitrerie',
+ short_desc:"Prise de mesures précises + gabarit pour vitrage sur mesure.", price_ttc:184, deposit_pct:40, deposit_ttc:73.60,
+ duration_min:60, warranty:"Gabarit conforme",
+ includes:["Mesures précises sur place","Gabarit transmis au vitrier","Validation client","Déplacement inclus"] },
 
-    // ─── DEVIS SUR MESURE ────────────────────────────────────────
-    { id:'loc-dev-renov', slug:'renovation-salle-de-bain', name:"Rénovation salle de bain complète", requires_quote:true,
-      category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure',
-      short_desc:"De la dépose à la remise en service — tous corps d'état. Devis détaillé après visite." },
-    { id:'loc-dev-pmr', slug:'adaptation-pmr', name:"Adaptation logement PMR / senior", requires_quote:true,
-      category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure',
-      short_desc:"Douche italienne, monte-escalier, barres d'appui, WC surélevés. Devis label Handibat/Silverbat." },
-    { id:'loc-dev-tableau', slug:'tableau-electrique', name:"Tableau électrique complet", requires_quote:true,
-      category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure',
-      short_desc:"Remise aux normes NF C 15-100. Devis après visite avec attestation Consuel." },
-    { id:'loc-dev-pac', slug:'pompe-a-chaleur', name:"Pompe à chaleur (PAC)", requires_quote:true,
-      category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure',
-      short_desc:"PAC air/eau, air/air. Étude dimensionnement + aides MaPrimeRénov' incluses." },
-    { id:'loc-dev-blindage', slug:'blindage-porte', name:"Blindage de porte", requires_quote:true,
-      category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure',
-      short_desc:"Renforcement complet : plaque acier + serrure A2P + cornière. Devis après visite." }
-  ];
+ // ─── DEVIS SUR MESURE ────────────────────────────────────────
+ { id:'loc-dev-renov', slug:'renovation-salle-de-bain', name:"Rénovation salle de bain complète", requires_quote:true,
+ category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure',
+ short_desc:"De la dépose à la remise en service — tous corps d'état. Devis détaillé après visite." },
+ { id:'loc-dev-pmr', slug:'adaptation-pmr', name:"Adaptation logement PMR / senior", requires_quote:true,
+ category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure',
+ short_desc:"Douche italienne, monte-escalier, barres d'appui, WC surélevés. Devis label Handibat/Silverbat." },
+ { id:'loc-dev-tableau', slug:'tableau-electrique', name:"Tableau électrique complet", requires_quote:true,
+ category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure',
+ short_desc:"Remise aux normes NF C 15-100. Devis après visite avec attestation Consuel." },
+ { id:'loc-dev-pac', slug:'pompe-a-chaleur', name:"Pompe à chaleur (PAC)", requires_quote:true,
+ category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure',
+ short_desc:"PAC air/eau, air/air. Étude dimensionnement + aides MaPrimeRénov' incluses." },
+ { id:'loc-dev-blindage', slug:'blindage-porte', name:"Blindage de porte", requires_quote:true,
+ category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure',
+ short_desc:"Renforcement complet : plaque acier + serrure A2P + cornière. Devis après visite." }
+ ];
 
-  // Charger services + catégories (Supabase) + fusion avec catalogue local
-  let services = [];
-  try {
-    const { data, error } = await sb.from('v_services_public').select('*');
-    if (!error && Array.isArray(data)) services = data;
-  } catch(e) { console.warn('[catalog] Supabase indisponible — fallback local'); }
+ // Charger services + catégories (Supabase) + fusion avec catalogue local
+ let services = [];
+ try {
+ const { data, error } = await sb.from('v_services_public').select('*');
+ if (!error && Array.isArray(data)) services = data;
+ } catch(e) { console.warn('[catalog] Supabase indisponible — fallback local'); }
 
-  // Fusion : on garde les services Supabase + on ajoute les locaux qui ne sont pas déjà présents (par slug)
-  const supaSlugs = new Set(services.map(s => s.slug));
-  LOCAL_CATALOG.forEach(loc => { if (!supaSlugs.has(loc.slug)) services.push(loc); });
+ // Fusion : on garde les services Supabase + on ajoute les locaux qui ne sont pas déjà présents (par slug)
+ const supaSlugs = new Set(services.map(s => s.slug));
+ LOCAL_CATALOG.forEach(loc => { if (!supaSlugs.has(loc.slug)) services.push(loc); });
 
-  if (services.length === 0) {
-    root.innerHTML = `<div class="nv-empty"><h3>Catalogue indisponible</h3><p>Un problème de connexion empêche l'affichage des prestations. Appelez-nous au <a href="tel:+33366100134" style="color:#0DA0CF;font-weight:700">03 66 10 01 34</a>.</p></div>`;
-    return;
-  }
+ if (services.length === 0) {
+ root.innerHTML = `<div class="nv-empty"><h3>Catalogue indisponible</h3><p>Un problème de connexion empêche l'affichage des prestations. Appelez-nous au <a href="tel:+33366100134" style="color:#0DA0CF;font-weight:700">03 66 10 01 34</a>.</p></div>`;
+ return;
+ }
 
-  // Grouper par catégorie (ordre déterministe : Plo, ECS, Chauf, Élec, Serr, Vit, Sur-mesure)
-  const CAT_ORDER = ['plomberie','chauffe-eau','chauffage','electricite','serrurerie','vitrerie','sur-mesure'];
-  const CAT_LABELS = {
-    'plomberie':'Plomberie & Sanitaires',
-    'chauffe-eau':'Chauffe-eau & Production ECS',
-    'chauffage':'Chauffage',
-    'electricite':'Électricité',
-    'serrurerie':'Serrurerie',
-    'vitrerie':'Vitrerie',
-    'sur-mesure':'Devis sur mesure'
-  };
-  const grouped = {};
-  // Pré-initialiser les catégories pour qu'elles apparaissent dans l'ordre voulu
-  CAT_ORDER.forEach(slug => { grouped[slug] = { name: CAT_LABELS[slug], icon: slug, slug, items: [] }; });
-  services.forEach(s => {
-    const key = s.category_slug || 'sur-mesure';
-    if (!grouped[key]) grouped[key] = { name: s.category_name || 'Autre', icon: s.category_icon, slug: key, items: [] };
-    grouped[key].items.push(s);
-  });
-  // Retirer les catégories vides
-  Object.keys(grouped).forEach(k => { if (!grouped[k].items.length) delete grouped[k]; });
+ // Grouper par catégorie (ordre déterministe : Plo, ECS, Chauf, Élec, Serr, Vit, Sur-mesure)
+ const CAT_ORDER = ['plomberie','chauffe-eau','chauffage','electricite','serrurerie','vitrerie','sur-mesure'];
+ const CAT_LABELS = {
+ 'plomberie':'Plomberie & Sanitaires',
+ 'chauffe-eau':'Chauffe-eau & Production ECS',
+ 'chauffage':'Chauffage',
+ 'electricite':'Électricité',
+ 'serrurerie':'Serrurerie',
+ 'vitrerie':'Vitrerie',
+ 'sur-mesure':'Devis sur mesure'
+ };
+ const grouped = {};
+ // Pré-initialiser les catégories pour qu'elles apparaissent dans l'ordre voulu
+ CAT_ORDER.forEach(slug => { grouped[slug] = { name: CAT_LABELS[slug], icon: slug, slug, items: [] }; });
+ services.forEach(s => {
+ const key = s.category_slug || 'sur-mesure';
+ if (!grouped[key]) grouped[key] = { name: s.category_name || 'Autre', icon: s.category_icon, slug: key, items: [] };
+ grouped[key].items.push(s);
+ });
+ // Retirer les catégories vides
+ Object.keys(grouped).forEach(k => { if (!grouped[k].items.length) delete grouped[k]; });
 
-  // Filtres
-  document.getElementById('cntAll').textContent = services.length;
-  Object.values(grouped).forEach(g => {
-    const btn = document.createElement('button');
-    btn.className = 'nv-filter';
-    btn.dataset.filter = g.slug;
-    btn.innerHTML = `${pictoTag(g.slug, 18)} ${escapeHtml(g.name)} <span class="nv-count">${g.items.length}</span>`;
-    btn.onclick = () => {
-      document.querySelectorAll('.nv-filter').forEach(b => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      // NEW : masquer toutes les sections et n'afficher que la cliquée
-      document.querySelectorAll('.nv-catalog-section').forEach(s => s.style.display = 'none');
-      const target = document.getElementById('sec-' + g.slug);
-      if (target) {
-        target.style.display = '';
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    };
-    filtersBar.appendChild(btn);
-  });
+ // Filtres
+ document.getElementById('cntAll').textContent = services.length;
+ Object.values(grouped).forEach(g => {
+ const btn = document.createElement('button');
+ btn.className = 'nv-filter';
+ btn.dataset.filter = g.slug;
+ btn.innerHTML = `${pictoTag(g.slug, 18)} ${escapeHtml(g.name)} <span class="nv-count">${g.items.length}</span>`;
+ btn.onclick = () => {
+ document.querySelectorAll('.nv-filter').forEach(b => b.classList.remove('is-active'));
+ btn.classList.add('is-active');
+ // NEW : masquer toutes les sections et n'afficher que la cliquée
+ document.querySelectorAll('.nv-catalog-section').forEach(s => s.style.display = 'none');
+ const target = document.getElementById('sec-' + g.slug);
+ if (target) {
+ target.style.display = '';
+ target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+ }
+ };
+ filtersBar.appendChild(btn);
+ });
 
-  document.querySelector('[data-filter="all"]').onclick = () => {
-    document.querySelectorAll('.nv-filter').forEach(b => b.classList.remove('is-active'));
-    document.querySelector('[data-filter="all"]').classList.add('is-active');
-    // Affiche TOUTES les sections
-    document.querySelectorAll('.nv-catalog-section').forEach(s => s.style.display = '');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+ document.querySelector('[data-filter="all"]').onclick = () => {
+ document.querySelectorAll('.nv-filter').forEach(b => b.classList.remove('is-active'));
+ document.querySelector('[data-filter="all"]').classList.add('is-active');
+ // Affiche TOUTES les sections
+ document.querySelectorAll('.nv-catalog-section').forEach(s => s.style.display = '');
+ window.scrollTo({ top: 0, behavior: 'smooth' });
+ };
 
-  // Rendu du catalogue — par DÉFAUT seulement Plomberie est visible, le reste masqué
-  // (un seul onglet ouvert à la fois pour réduire la longueur de page)
-  root.innerHTML = Object.values(grouped).map((g, i) => `
-    <section class="nv-catalog-section" id="sec-${g.slug}" style="display:${i === 0 ? '' : 'none'}">
-      <div class="nv-cat-head">
-        <div class="nv-cat-icon">${pictoTag(g.slug, 28)}</div>
-        <div>
-          <h2>${escapeHtml(g.name)}</h2>
-          <p>${g.items.length} prestation${g.items.length > 1 ? 's' : ''} disponible${g.items.length > 1 ? 's' : ''}</p>
-        </div>
-      </div>
-      <div class="nv-grid">
-        ${g.items.map(s => renderCard(s, g.slug)).join('')}
-      </div>
-    </section>
-  `).join('');
-  // Active par défaut le 1er filtre (Plomberie)
-  setTimeout(() => {
-    var firstCat = Object.values(grouped)[0];
-    if (firstCat) {
-      document.querySelectorAll('.nv-filter').forEach(b => b.classList.remove('is-active'));
-      var firstBtn = document.querySelector('.nv-filter[data-filter="' + firstCat.slug + '"]');
-      if (firstBtn) firstBtn.classList.add('is-active');
-    }
-  }, 50);
+ // Rendu du catalogue — par DÉFAUT seulement Plomberie est visible, le reste masqué
+ // (un seul onglet ouvert à la fois pour réduire la longueur de page)
+ root.innerHTML = Object.values(grouped).map((g, i) => `
+ <section class="nv-catalog-section" id="sec-${g.slug}" style="display:${i === 0 ? '' : 'none'}">
+ <div class="nv-cat-head">
+ <div class="nv-cat-icon">${pictoTag(g.slug, 28)}</div>
+ <div>
+ <h2>${escapeHtml(g.name)}</h2>
+ <p>${g.items.length} prestation${g.items.length > 1 ? 's' : ''} disponible${g.items.length > 1 ? 's' : ''}</p>
+ </div>
+ </div>
+ <div class="nv-grid">
+ ${g.items.map(s => renderCard(s, g.slug)).join('')}
+ </div>
+ </section>
+ `).join('');
+ // Active par défaut le 1er filtre (Plomberie)
+ setTimeout(() => {
+ var firstCat = Object.values(grouped)[0];
+ if (firstCat) {
+ document.querySelectorAll('.nv-filter').forEach(b => b.classList.remove('is-active'));
+ var firstBtn = document.querySelector('.nv-filter[data-filter="' + firstCat.slug + '"]');
+ if (firstBtn) firstBtn.classList.add('is-active');
+ }
+ }, 50);
 
-  function renderCard(s, catSlug) {
-    if (s.requires_quote) {
-      return `
-        <div class="nv-card-custom">
-          <div class="nv-card-custom-text">
-            <h3>${escapeHtml(s.name)}</h3>
-            <p>${escapeHtml(s.short_desc || '')}</p>
-          </div>
-          <a href="contact.html?service=${encodeURIComponent(s.slug)}" class="nv-btn-cta">
-            Demander un devis gratuit
-            <svg width="18" height="18" ${SVG_ATTRS}><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </div>`;
-    }
-    const incl = (s.includes || []).slice(0, 4);
-    const more = (s.includes || []).length - incl.length;
-    return `
-      <article class="nv-card" data-service-id="${s.id}">
-        <div class="nv-card-visual" data-cat="${escapeHtml(catSlug)}">
-          ${s.badge ? `<span class="nv-card-badge">${escapeHtml(s.badge)}</span>` : ''}
-          <span class="nv-card-cat">${escapeHtml(s.category_name || '')}</span>
-          ${pictoTag(catSlug, 64)}
-        </div>
-        <div class="nv-card-body">
-          <h3 class="nv-card-name">${escapeHtml(s.name)}</h3>
-          <p class="nv-card-short">${escapeHtml(s.short_desc || '')}</p>
-          <div class="nv-card-meta">
-            ${s.duration_min ? `<span class="nv-card-meta-item"><svg ${SVG_ATTRS}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>~${Math.round(s.duration_min/60*10)/10} h</span>` : ''}
-            ${s.warranty ? `<span class="nv-card-meta-item"><svg ${SVG_ATTRS}><path d="M9 12l2 2 4-4"/><path d="M21 12c0 5-9 9-9 9s-9-4-9-9V5l9-3 9 3v7z"/></svg>${escapeHtml(s.warranty.split('·')[0].trim())}</span>` : ''}
-            ${s.brand ? `<span class="nv-card-meta-item"><svg ${SVG_ATTRS}><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>${escapeHtml(s.brand)}</span>` : ''}
-          </div>
-          ${incl.length ? `
-            <div class="nv-card-includes">
-              <div class="nv-card-includes-title">Ce qui est inclus</div>
-              <ul>
-                ${incl.map(i => `<li>${escapeHtml(i)}</li>`).join('')}
-                ${more > 0 ? `<li class="more">${more} élément${more > 1 ? 's' : ''} de plus</li>` : ''}
-              </ul>
-            </div>` : ''}
-          <div class="nv-card-price">
-            <div class="nv-price-from">À partir de</div>
-            <div class="nv-price-main">
-              <span class="nv-price-amount">${eurFmt(s.price_ttc).replace('€','').trim()}</span>
-              <span class="nv-price-currency">€</span>
-              <span class="nv-price-tax">TTC · TVA 10%</span>
-            </div>
-            <div class="nv-price-deposit">Acompte ${s.deposit_pct}% à la commande : ${eurFmt(s.deposit_ttc)}</div>
-          </div>
-          <div class="nv-card-actions">
-            <button class="nv-btn-primary" data-action="reserve" data-service-id="${s.id}">
-              Réserver cette prestation
-              <svg width="16" height="16" ${SVG_ATTRS}><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
-            <a class="nv-btn-secondary" href="tel:+33366100134" title="Nous appeler" aria-label="Appeler HELP! Confort">
-              <svg ${SVG_ATTRS}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            </a>
-          </div>
-        </div>
-      </article>`;
-  }
+ function renderCard(s, catSlug) {
+ if (s.requires_quote) {
+ return `
+ <div class="nv-card-custom">
+ <div class="nv-card-custom-text">
+ <h3>${escapeHtml(s.name)}</h3>
+ <p>${escapeHtml(s.short_desc || '')}</p>
+ </div>
+ <a href="contact.html?service=${encodeURIComponent(s.slug)}" class="nv-btn-cta">
+ Demander un devis gratuit
+ <svg width="18" height="18" ${SVG_ATTRS}><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+ </a>
+ </div>`;
+ }
+ const incl = (s.includes || []).slice(0, 4);
+ const more = (s.includes || []).length - incl.length;
+ return `
+ <article class="nv-card" data-service-id="${s.id}">
+ <div class="nv-card-visual" data-cat="${escapeHtml(catSlug)}">
+ ${s.badge ? `<span class="nv-card-badge">${escapeHtml(s.badge)}</span>` : ''}
+ <span class="nv-card-cat">${escapeHtml(s.category_name || '')}</span>
+ ${pictoTag(catSlug, 64)}
+ </div>
+ <div class="nv-card-body">
+ <h3 class="nv-card-name">${escapeHtml(s.name)}</h3>
+ <p class="nv-card-short">${escapeHtml(s.short_desc || '')}</p>
+ <div class="nv-card-meta">
+ ${s.duration_min ? `<span class="nv-card-meta-item"><svg ${SVG_ATTRS}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>~${Math.round(s.duration_min/60*10)/10} h</span>` : ''}
+ ${s.warranty ? `<span class="nv-card-meta-item"><svg ${SVG_ATTRS}><path d="M9 12l2 2 4-4"/><path d="M21 12c0 5-9 9-9 9s-9-4-9-9V5l9-3 9 3v7z"/></svg>${escapeHtml(s.warranty.split('·')[0].trim())}</span>` : ''}
+ ${s.brand ? `<span class="nv-card-meta-item"><svg ${SVG_ATTRS}><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>${escapeHtml(s.brand)}</span>` : ''}
+ </div>
+ ${incl.length ? `
+ <div class="nv-card-includes">
+ <div class="nv-card-includes-title">Ce qui est inclus</div>
+ <ul>
+ ${incl.map(i => `<li>${escapeHtml(i)}</li>`).join('')}
+ ${more > 0 ? `<li class="more">${more} élément${more > 1 ? 's' : ''} de plus</li>` : ''}
+ </ul>
+ </div>` : ''}
+ <div class="nv-card-price">
+ <div class="nv-price-from">À partir de</div>
+ <div class="nv-price-main">
+ <span class="nv-price-amount">${eurFmt(s.price_ttc).replace('€','').trim()}</span>
+ <span class="nv-price-currency">€</span>
+ <span class="nv-price-tax">TTC · TVA 10%</span>
+ </div>
+ <div class="nv-price-deposit">Acompte ${s.deposit_pct}% à la commande : ${eurFmt(s.deposit_ttc)}</div>
+ </div>
+ <div class="nv-card-actions">
+ <button class="nv-btn-primary" data-action="reserve" data-service-id="${s.id}">
+ Réserver cette prestation
+ <svg width="16" height="16" ${SVG_ATTRS}><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+ </button>
+ <a class="nv-btn-secondary" href="tel:+33366100134" title="Nous appeler" aria-label="Appeler HELP! Confort">
+ <svg ${SVG_ATTRS}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0.7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+ </a>
+ </div>
+ </div>
+ </article>`;
+ }
 
-  // ─── MODAL RÉSERVATION ────────────────────────────────────────
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-action="reserve"]');
-    if (!btn) return;
-    const svc = services.find(s => s.id === btn.dataset.serviceId);
-    if (svc) openReserveModal(svc);
-  });
+ // ─── MODAL RÉSERVATION ────────────────────────────────────────
+ document.addEventListener('click', (e) => {
+ const btn = e.target.closest('[data-action="reserve"]');
+ if (!btn) return;
+ const svc = services.find(s => s.id === btn.dataset.serviceId);
+ if (svc) openReserveModal(svc);
+ });
 
-  function openReserveModal(svc) {
-    const modal = document.getElementById('nvModal');
-    const sheet = document.getElementById('nvModalSheet');
-    const variants = svc.variants || [];
-    const hasVariants = variants.length > 0;
+ function openReserveModal(svc) {
+ const modal = document.getElementById('nvModal');
+ const sheet = document.getElementById('nvModalSheet');
+ const variants = svc.variants || [];
+ const hasVariants = variants.length > 0;
 
-    sheet.innerHTML = `
-      <div class="nv-modal-head">
-        <h2 id="nvModalTitle">Réserver une intervention</h2>
-        <button class="nv-modal-close" type="button" aria-label="Fermer">
-          <svg width="16" height="16" ${SVG_ATTRS}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>
-      <div class="nv-modal-body">
-        <div class="nv-summary">
-          <div class="nv-summary-name">${escapeHtml(svc.name)}</div>
-          ${svc.short_desc ? `<div style="font-size:.86rem;color:#475569;line-height:1.5">${escapeHtml(svc.short_desc)}</div>` : ''}
-          <div class="nv-summary-price">
-            <span>Prix forfait TTC</span>
-            <strong id="nvSummaryPrice">${eurFmt(svc.price_ttc)}</strong>
-          </div>
-          <span class="nv-summary-deposit" id="nvSummaryDeposit">Acompte ${svc.deposit_pct}% : ${eurFmt(svc.deposit_ttc)}</span>
-        </div>
+ sheet.innerHTML = `
+ <div class="nv-modal-head">
+ <h2 id="nvModalTitle">Réserver une intervention</h2>
+ <button class="nv-modal-close" type="button" aria-label="Fermer">
+ <svg width="16" height="16" ${SVG_ATTRS}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+ </button>
+ </div>
+ <div class="nv-modal-body">
+ <div class="nv-summary">
+ <div class="nv-summary-name">${escapeHtml(svc.name)}</div>
+ ${svc.short_desc ? `<div style="font-size:.86rem;color:#475569;line-height:1.5">${escapeHtml(svc.short_desc)}</div>` : ''}
+ <div class="nv-summary-price">
+ <span>Prix forfait TTC</span>
+ <strong id="nvSummaryPrice">${eurFmt(svc.price_ttc)}</strong>
+ </div>
+ <span class="nv-summary-deposit" id="nvSummaryDeposit">Acompte ${svc.deposit_pct}% : ${eurFmt(svc.deposit_ttc)}</span>
+ </div>
 
-        ${hasVariants ? `
-          <div style="font-size:.86rem;font-weight:700;color:#0A1428;margin-bottom:10px">Gamme</div>
-          <div class="nv-variant-pick" id="nvVariantPick">
-            <label class="nv-variant-opt">
-              <input type="radio" name="variant" value="" checked>
-              <div class="nv-variant-label">
-                <strong>Gamme Éco</strong>
-                <small>${escapeHtml(svc.brand || '')} · qualité standard, rapport qualité/prix optimal</small>
-              </div>
-              <div class="nv-variant-price">${eurFmt(svc.price_ttc)}</div>
-            </label>
-            ${variants.map((v, i) => `
-              <label class="nv-variant-opt">
-                <input type="radio" name="variant" value="${i}">
-                <div class="nv-variant-label">
-                  <strong>${escapeHtml(v.label)}</strong>
-                  <small>${escapeHtml(v.info || '')}</small>
-                </div>
-                <div class="nv-variant-price">${eurFmt(Number(v.price_ht) * (1 + Number(svc.vat_rate)))}</div>
-              </label>
-            `).join('')}
-          </div>
-        ` : ''}
+ ${hasVariants ? `
+ <div style="font-size:.86rem;font-weight:700;color:#0A1428;margin-bottom:10px">Gamme</div>
+ <div class="nv-variant-pick" id="nvVariantPick">
+ <label class="nv-variant-opt">
+ <input type="radio" name="variant" value="" checked>
+ <div class="nv-variant-label">
+ <strong>Gamme Éco</strong>
+ <small>${escapeHtml(svc.brand || '')} · qualité standard, rapport qualité/prix optimal</small>
+ </div>
+ <div class="nv-variant-price">${eurFmt(svc.price_ttc)}</div>
+ </label>
+ ${variants.map((v, i) => `
+ <label class="nv-variant-opt">
+ <input type="radio" name="variant" value="${i}">
+ <div class="nv-variant-label">
+ <strong>${escapeHtml(v.label)}</strong>
+ <small>${escapeHtml(v.info || '')}</small>
+ </div>
+ <div class="nv-variant-price">${eurFmt(Number(v.price_ht) * (1 + Number(svc.vat_rate)))}</div>
+ </label>
+ `).join('')}
+ </div>
+ ` : ''}
 
-        <form id="nvForm" novalidate>
-            <!-- Anti-bot honeypot — laisser vide -->
-            <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" value="">
-          <div class="nv-form-grid">
-            <div class="nv-form-field"><label>Prénom *</label><input aria-label="Firstname" name="firstname" required></div>
-            <div class="nv-form-field"><label>Nom *</label><input aria-label="Lastname" name="lastname" required></div>
-            <div class="nv-form-field"><label>Email *</label><input aria-label="Email" name="email" type="email" required></div>
-            <div class="nv-form-field"><label>Téléphone *</label><input aria-label="06 12 34 56 78" name="phone" type="tel" required placeholder="06 12 34 56 78"></div>
-            <div class="nv-form-field nv-form-full"><label>Adresse d'intervention *</label><input aria-label="3 Rue du Général Sarrail" name="address" required placeholder="3 Rue du Général Sarrail"></div>
-            <div class="nv-form-field"><label>Code postal *</label><input aria-label="62500" name="postal_code" required placeholder="62500"></div>
-            <div class="nv-form-field"><label>Ville *</label><input aria-label="Saint-Omer" name="city" required placeholder="Saint-Omer"></div>
-            <div class="nv-form-field"><label>Date souhaitée</label><input aria-label="Preferred_date" name="preferred_date" type="date" min="${new Date().toISOString().slice(0,10)}"></div>
-            <div class="nv-form-field"><label>Créneau</label>
-              <select aria-label="preferred_slot" name="preferred_slot">
-                <option value="">Sans préférence</option>
-                <option value="matin">Matin (8h-12h)</option>
-                <option value="apres-midi">Après-midi (13h-18h)</option>
-                <option value="urgent">Urgent</option>
-              </select>
-            </div>
-            <div class="nv-form-field nv-form-full"><label>Précisions (optionnel)</label><textarea aria-label="Marque/modèle actuel, accès particulier, photos disponibles..." name="notes" placeholder="Marque/modèle actuel, accès particulier, photos disponibles..."></textarea></div>
-          </div>
+ <form id="nvForm" novalidate>
+ <!-- Anti-bot honeypot — laisser vide -->
+ <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" value="">
+ <div class="nv-form-grid">
+ <div class="nv-form-field"><label>Prénom *</label><input aria-label="Firstname" name="firstname" required></div>
+ <div class="nv-form-field"><label>Nom *</label><input aria-label="Lastname" name="lastname" required></div>
+ <div class="nv-form-field"><label>Email *</label><input aria-label="Email" name="email" type="email" required></div>
+ <div class="nv-form-field"><label>Téléphone *</label><input aria-label="06 12 34 56 78" name="phone" type="tel" required placeholder="06 12 34 56 78"></div>
+ <div class="nv-form-field nv-form-full"><label>Adresse d'intervention *</label><input aria-label="3 Rue du Général Sarrail" name="address" required placeholder="3 Rue du Général Sarrail"></div>
+ <div class="nv-form-field"><label>Code postal *</label><input aria-label="62500" name="postal_code" required placeholder="62500"></div>
+ <div class="nv-form-field"><label>Ville *</label><input aria-label="Saint-Omer" name="city" required placeholder="Saint-Omer"></div>
+ <div class="nv-form-field"><label>Date souhaitée</label><input aria-label="Preferred_date" name="preferred_date" type="date" min="${new Date().toISOString().slice(0,10)}"></div>
+ <div class="nv-form-field"><label>Créneau</label>
+ <select aria-label="preferred_slot" name="preferred_slot">
+ <option value="">Sans préférence</option>
+ <option value="matin">Matin (8h-12h)</option>
+ <option value="apres-midi">Après-midi (13h-18h)</option>
+ <option value="urgent">Urgent</option>
+ </select>
+ </div>
+ <div class="nv-form-field nv-form-full"><label>Précisions (optionnel)</label><textarea aria-label="Marque/modèle actuel, accès particulier, photos disponibles..." name="notes" placeholder="Marque/modèle actuel, accès particulier, photos disponibles..."></textarea></div>
+ </div>
 
-          <div class="nv-deposit-info">
-            <strong>Comment ça marche :</strong> votre demande nous parvient instantanément. Nous vous rappelons rapidement pour confirmer la date et envoyer le devis détaillé. <strong>L'acompte n'est pas encaissé maintenant</strong> — il sera demandé après confirmation, par virement ou paiement sécurisé.
-          </div>
+ <div class="nv-deposit-info">
+ <strong>Comment ça marche :</strong> votre demande nous parvient instantanément. Nous vous rappelons rapidement pour confirmer la date et envoyer le devis détaillé. <strong>L'acompte n'est pas encaissé maintenant</strong> — il sera demandé après confirmation, par virement ou paiement sécurisé.
+ </div>
 
-          <div id="nvFormError" style="display:none;margin-top:14px;padding:10px 14px;background:rgba(225,29,72,.08);color:#9F0E2B;border-radius:10px;font-size:.86rem;border-left:3px solid #E11D48"></div>
-        </form>
-      </div>
-      <div class="nv-modal-foot">
-        <span class="nv-foot-tel">Ou appelez : <a href="tel:+33366100134">03 66 10 01 34</a></span>
-        <button type="button" class="nv-cta-submit" id="nvSubmitBtn">
-          Confirmer ma demande
-          <svg width="16" height="16" ${SVG_ATTRS}><polyline points="20 6 9 17 4 12"/></svg>
-        </button>
-      </div>
-    `;
+ <div id="nvFormError" style="display:none;margin-top:14px;padding:10px 14px;background:rgba(225,29,72,.08);color:#9F0E2B;border-radius:10px;font-size:.86rem;border-left:3px solid #E11D48"></div>
+ </form>
+ </div>
+ <div class="nv-modal-foot">
+ <span class="nv-foot-tel">Ou appelez : <a href="tel:+33366100134">03 66 10 01 34</a></span>
+ <button type="button" class="nv-cta-submit" id="nvSubmitBtn">
+ Confirmer ma demande
+ <svg width="16" height="16" ${SVG_ATTRS}><polyline points="20 6 9 17 4 12"/></svg>
+ </button>
+ </div>
+ `;
 
-    modal.classList.add('is-open');
-    document.body.style.overflow = 'hidden';
+ modal.classList.add('is-open');
+ document.body.style.overflow = 'hidden';
 
-    // Close handlers
-    sheet.querySelector('.nv-modal-close').onclick = closeModal;
-    modal.onclick = (e) => { if (e.target === modal) closeModal(); };
+ // Close handlers
+ sheet.querySelector('.nv-modal-close').onclick = closeModal;
+ modal.onclick = (e) => { if (e.target === modal) closeModal(); };
 
-    // Variant change → recalcule prix
-    if (hasVariants) {
-      sheet.querySelectorAll('input[name="variant"]').forEach(r => {
-        r.onchange = () => {
-          let ttc, deposit;
-          if (r.value === '') {
-            ttc = svc.price_ttc;
-            deposit = svc.deposit_ttc;
-          } else {
-            const v = variants[Number(r.value)];
-            ttc = Math.round(Number(v.price_ht) * (1 + Number(svc.vat_rate)) * 100) / 100;
-            deposit = Math.round(ttc * (svc.deposit_pct / 100) * 100) / 100;
-          }
-          document.getElementById('nvSummaryPrice').textContent = eurFmt(ttc);
-          document.getElementById('nvSummaryDeposit').textContent = `Acompte ${svc.deposit_pct}% : ${eurFmt(deposit)}`;
-        };
-      });
-    }
+ // Variant change → recalcule prix
+ if (hasVariants) {
+ sheet.querySelectorAll('input[name="variant"]').forEach(r => {
+ r.onchange = () => {
+ let ttc, deposit;
+ if (r.value === '') {
+ ttc = svc.price_ttc;
+ deposit = svc.deposit_ttc;
+ } else {
+ const v = variants[Number(r.value)];
+ ttc = Math.round(Number(v.price_ht) * (1 + Number(svc.vat_rate)) * 100) / 100;
+ deposit = Math.round(ttc * (svc.deposit_pct / 100) * 100) / 100;
+ }
+ document.getElementById('nvSummaryPrice').textContent = eurFmt(ttc);
+ document.getElementById('nvSummaryDeposit').textContent = `Acompte ${svc.deposit_pct}% : ${eurFmt(deposit)}`;
+ };
+ });
+ }
 
-    // Submit
-    document.getElementById('nvSubmitBtn').onclick = async () => {
-      const form = document.getElementById('nvForm');
-      const errBox = document.getElementById('nvFormError');
-      errBox.style.display = 'none';
+ // Submit
+ document.getElementById('nvSubmitBtn').onclick = async () => {
+ const form = document.getElementById('nvForm');
+ const errBox = document.getElementById('nvFormError');
+ errBox.style.display = 'none';
 
-      const fd = new FormData(form);
-      const data = Object.fromEntries(fd.entries());
-      const required = ['firstname','lastname','email','phone','address','postal_code','city'];
-      const missing = required.filter(k => !data[k] || !data[k].trim());
-      if (missing.length) {
-        errBox.style.display = 'block';
-        errBox.textContent = 'Merci de remplir les champs obligatoires : ' + missing.join(', ');
-        return;
-      }
+ const fd = new FormData(form);
+ const data = Object.fromEntries(fd.entries());
+ const required = ['firstname','lastname','email','phone','address','postal_code','city'];
+ const missing = required.filter(k => !data[k] || !data[k].trim());
+ if (missing.length) {
+ errBox.style.display = 'block';
+ errBox.textContent = 'Merci de remplir les champs obligatoires : ' + missing.join(', ');
+ return;
+ }
 
-      // Variant
-      let variantKey = null, variantLabel = null, finalHt = svc.price_ht, finalTtc = svc.price_ttc;
-      const vSel = sheet.querySelector('input[name="variant"]:checked');
-      if (vSel && vSel.value !== '') {
-        const v = variants[Number(vSel.value)];
-        variantKey = v.key; variantLabel = v.label;
-        finalHt = Number(v.price_ht);
-        finalTtc = Math.round(finalHt * (1 + Number(svc.vat_rate)) * 100) / 100;
-      }
-      const deposit = Math.round(finalTtc * (svc.deposit_pct / 100) * 100) / 100;
+ // Variant
+ let variantKey = null, variantLabel = null, finalHt = svc.price_ht, finalTtc = svc.price_ttc;
+ const vSel = sheet.querySelector('input[name="variant"]:checked');
+ if (vSel && vSel.value !== '') {
+ const v = variants[Number(vSel.value)];
+ variantKey = v.key; variantLabel = v.label;
+ finalHt = Number(v.price_ht);
+ finalTtc = Math.round(finalHt * (1 + Number(svc.vat_rate)) * 100) / 100;
+ }
+ const deposit = Math.round(finalTtc * (svc.deposit_pct / 100) * 100) / 100;
 
-      const btn = document.getElementById('nvSubmitBtn');
-      btn.disabled = true;
-      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9" stroke-opacity=".3"/><path d="M21 12a9 9 0 0 0-9-9"/></svg> Envoi…';
+ const btn = document.getElementById('nvSubmitBtn');
+ btn.disabled = true;
+ btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9" stroke-opacity=".3"/><path d="M21 12a9 9 0 0 0-9-9"/></svg> Envoi…';
 
-      const payload = {
-        service_id: svc.id,
-        service_name: svc.name,
-        variant_key: variantKey,
-        variant_label: variantLabel,
-        customer_name: `${data.firstname} ${data.lastname}`,
-        customer_email: data.email,
-        customer_phone: data.phone,
-        address: data.address,
-        postal_code: data.postal_code,
-        city: data.city,
-        notes: data.notes || null,
-        preferred_date: data.preferred_date || null,
-        preferred_slot: data.preferred_slot || null,
-        price_ht: finalHt,
-        vat_rate: Number(svc.vat_rate),
-        price_ttc: finalTtc,
-        deposit_amount: deposit,
-        status: 'pending'
-      };
+ const payload = {
+ service_id: svc.id,
+ service_name: svc.name,
+ variant_key: variantKey,
+ variant_label: variantLabel,
+ customer_name: `${data.firstname} ${data.lastname}`,
+ customer_email: data.email,
+ customer_phone: data.phone,
+ address: data.address,
+ postal_code: data.postal_code,
+ city: data.city,
+ notes: data.notes || null,
+ preferred_date: data.preferred_date || null,
+ preferred_slot: data.preferred_slot || null,
+ price_ht: finalHt,
+ vat_rate: Number(svc.vat_rate),
+ price_ttc: finalTtc,
+ deposit_amount: deposit,
+ status: 'pending'
+ };
 
-      const { data: inserted, error: insErr } = await sb.from('service_orders').insert(payload).select().single();
+ const { data: inserted, error: insErr } = await sb.from('service_orders').insert(payload).select().single();
 
-      if (insErr) {
-        btn.disabled = false;
-        btn.innerHTML = 'Confirmer ma demande';
-        errBox.style.display = 'block';
-        errBox.textContent = 'Une erreur est survenue. Réessayez ou appelez-nous au 03 66 10 01 34. (' + (insErr.message || 'erreur inconnue') + ')';
-        console.error('[reserve] insert error', insErr);
-        return;
-      }
+ if (insErr) {
+ btn.disabled = false;
+ btn.innerHTML = 'Confirmer ma demande';
+ errBox.style.display = 'block';
+ errBox.textContent = 'Une erreur est survenue. Réessayez ou appelez-nous au 03 66 10 01 34. (' + (insErr.message || 'erreur inconnue') + ')';
+ console.error('[reserve] insert error', insErr);
+ return;
+ }
 
-      // Succès
-      sheet.innerHTML = `
-        <div class="nv-success">
-          <div class="nv-success-icon">
-            <svg ${SVG_ATTRS}><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <h3>Demande enregistrée !</h3>
-          <p>Merci ${escapeHtml(data.firstname)}, nous avons bien reçu votre demande.</p>
-          <div class="nv-order-num">N° ${escapeHtml(inserted.order_number)}</div>
-          <p>Nous vous rappelons au <strong>${escapeHtml(data.phone)}</strong> sous <strong>4 h ouvrées</strong> pour confirmer la date d'intervention et vous envoyer le devis détaillé.</p>
-          <p style="margin-top:24px"><button class="nv-btn-primary" onclick="document.getElementById('nvModal').classList.remove('is-open');document.body.style.overflow='';">Fermer</button></p>
-        </div>`;
-    };
-  }
+ // Succès
+ sheet.innerHTML = `
+ <div class="nv-success">
+ <div class="nv-success-icon">
+ <svg ${SVG_ATTRS}><polyline points="20 6 9 17 4 12"/></svg>
+ </div>
+ <h3>Demande enregistrée !</h3>
+ <p>Merci ${escapeHtml(data.firstname)}, nous avons bien reçu votre demande.</p>
+ <div class="nv-order-num">N° ${escapeHtml(inserted.order_number)}</div>
+ <p>Nous vous rappelons au <strong>${escapeHtml(data.phone)}</strong> sous <strong>4 h ouvrées</strong> pour confirmer la date d'intervention et vous envoyer le devis détaillé.</p>
+ <p style="margin-top:24px"><button class="nv-btn-primary" onclick="document.getElementById('nvModal').classList.remove('is-open');document.body.style.overflow='';">Fermer</button></p>
+ </div>`;
+ };
+ }
 
-  function closeModal() {
-    document.getElementById('nvModal').classList.remove('is-open');
-    document.body.style.overflow = '';
-  }
+ function closeModal() {
+ document.getElementById('nvModal').classList.remove('is-open');
+ document.body.style.overflow = '';
+ }
 
-  // Escape pour fermer
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
+ // Escape pour fermer
+ document.addEventListener('keydown', (e) => {
+ if (e.key === 'Escape') closeModal();
+ });
 
 })();
 </script>
@@ -1141,26 +930,26 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
 <!-- HC-SW-KILL-V2 — désinscription SW + purge caches + reload (15/05 PM) -->
 <script>
 (function(){
-  if (!('serviceWorker' in navigator)) return;
-  var hadSW = false;
-  navigator.serviceWorker.getRegistrations().then(function(rs){
-    if (rs.length > 0) hadSW = true;
-    rs.forEach(function(r){ r.unregister(); });
-  });
-  if ('caches' in window) {
-    caches.keys().then(function(ks){
-      ks.forEach(function(k){ caches.delete(k); });
-    });
-  }
-  // Si on avait un SW actif et qu'on n'a pas encore rechargé une fois, force le reload (sans boucle)
-  setTimeout(function(){
-    try {
-      if (hadSW && !sessionStorage.getItem('__hc_sw_reset')) {
-        sessionStorage.setItem('__hc_sw_reset', '1');
-        location.reload(true);
-      }
-    } catch(_){}
-  }, 500);
+ if (!('serviceWorker' in navigator)) return;
+ var hadSW = false;
+ navigator.serviceWorker.getRegistrations().then(function(rs){
+ if (rs.length > 0) hadSW = true;
+ rs.forEach(function(r){ r.unregister(); });
+ });
+ if ('caches' in window) {
+ caches.keys().then(function(ks){
+ ks.forEach(function(k){ caches.delete(k); });
+ });
+ }
+ // Si on avait un SW actif et qu'on n'a pas encore rechargé une fois, force le reload (sans boucle)
+ setTimeout(function(){
+ try {
+ if (hadSW && !sessionStorage.getItem('__hc_sw_reset')) {
+ sessionStorage.setItem('__hc_sw_reset', '1');
+ location.reload(true);
+ }
+ } catch(_){}
+ }, 500);
 })();
 </script>
 </body>

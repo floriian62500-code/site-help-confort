@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <link rel="dns-prefetch" href="https://api-adresse.data.gouv.fr">
+ <link rel="dns-prefetch" href="https://api-adresse.data.gouv.fr">
 
 <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -23,67 +23,15 @@
 <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=1778685798">
-<style>
-.real-page{max-width:1100px;margin:0 auto;padding:32px clamp(16px,4vw,40px) 80px}
-.real-back{display:inline-flex;align-items:center;gap:6px;font-size:.86rem;color:#0DA0CF;font-weight:600;text-decoration:none;margin-bottom:18px;transition:.15s}
-.real-back:hover{color:#0a7fa8;gap:9px}
-.real-back svg{width:14px;height:14px}
-.real-meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
-.real-meta-tag{padding:5px 12px;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
-.real-meta-tag.metier{background:rgba(13,160,207,.10);color:#0DA0CF}
-.real-meta-tag.ville{background:rgba(255,107,26,.10);color:#FF6B1A}
-.real-meta-tag.date{background:#F5F8FB;color:#475569}
-.real-meta-tag.agence{background:rgba(124,58,237,.10);color:#7C3AED}
-.real-h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;color:#0A1428;line-height:1.15;margin:0 0 14px 0}
-.real-lead{font-size:1.05rem;color:#475569;line-height:1.6;margin:0 0 28px 0;max-width:780px}
-.real-photos{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px}
-.real-photo{position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#F5F8FB;box-shadow:0 8px 24px rgba(10,20,40,.08)}
-.real-photo img{width:100%;height:100%;object-fit:cover;display:block}
-.real-photo .tag{position:absolute;top:12px;left:12px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.96);font-size:.78rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#0A1428;backdrop-filter:blur(8px)}
-.real-photo.after .tag{background:#FF6B1A;color:#fff}
-.real-single-photo{aspect-ratio:16/9;max-width:880px;margin:0 auto 32px}
-.real-content{display:grid;grid-template-columns:1.6fr 1fr;gap:32px;align-items:start}
-.real-body{font-size:1rem;color:#0A1428;line-height:1.7}
-.real-body p{margin:0 0 14px}
-.real-body h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin:28px 0 14px;color:#0A1428}
-.real-side{position:sticky;top:20px;background:#fff;border:1px solid #E5EDF3;border-radius:14px;padding:20px;box-shadow:0 1px 2px rgba(11,18,32,.04)}
-.real-side h3{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#475569;margin:0 0 12px}
-.real-side-info{display:flex;flex-direction:column;gap:10px;padding-bottom:14px;border-bottom:1px solid #E5EDF3;margin-bottom:14px}
-.real-side-info div{font-size:.88rem;color:#0A1428}
-.real-side-info strong{font-weight:700}
-.real-side-info span.label{display:block;color:#475569;font-size:.74rem;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px;font-weight:600}
-.real-side-cta{display:flex;flex-direction:column;gap:8px}
-.real-cta-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:10px;font-weight:700;font-size:.92rem;text-decoration:none;transition:.18s}
-.real-cta-phone{background:#FF6B1A;color:#fff}
-.real-cta-phone:hover{background:#e85e15}
-.real-cta-devis{background:#0DA0CF;color:#fff}
-.real-cta-devis:hover{background:#0a7fa8}
-.real-cta-fb{background:#fff;color:#1877F2;border:1px solid rgba(24,119,242,.30)}
-.real-cta-fb:hover{background:rgba(24,119,242,.06)}
-.real-cta-btn svg{width:16px;height:16px}
-.real-similar{margin-top:48px;padding-top:36px;border-top:1px solid #E5EDF3}
-.real-similar h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:#0A1428;margin:0 0 18px}
-.real-similar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
-.real-similar-card{display:block;background:#fff;border:1px solid #E5EDF3;border-radius:12px;overflow:hidden;text-decoration:none;color:inherit;transition:.18s}
-.real-similar-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(10,20,40,.10)}
-.real-similar-card .photo{aspect-ratio:4/3;background:#F5F8FB;overflow:hidden}
-.real-similar-card .photo img{width:100%;height:100%;object-fit:cover}
-.real-similar-card .body{padding:12px}
-.real-similar-card h4{font-size:.92rem;font-weight:700;color:#0A1428;margin:0 0 4px;line-height:1.3}
-.real-similar-card .meta{font-size:.74rem;color:#475569}
-.real-loading{text-align:center;padding:80px 0;color:#475569}
-.real-loading .spinner{display:inline-block;width:32px;height:32px;border:3px solid #E5EDF3;border-top-color:#0DA0CF;border-radius:50%;animation:spin .8s linear infinite}
+<style>.real-page{max-width:1100px;margin:0 auto;padding:32px clamp(16px,4vw,40px) 80px}.real-back{display:inline-flex;align-items:center;gap:6px;font-size:.86rem;color:#0DA0CF;font-weight:600;text-decoration:none;margin-bottom:18px;transition:.15s}.real-back:hover{color:#0a7fa8;gap:9px}.real-back svg{width:14px;height:14px}.real-meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}.real-meta-tag{padding:5px 12px;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}.real-meta-tag.metier{background:rgba(13,160,207,.10);color:#0DA0CF}.real-meta-tag.ville{background:rgba(255,107,26,.10);color:#FF6B1A}.real-meta-tag.date{background:#F5F8FB;color:#475569}.real-meta-tag.agence{background:rgba(124,58,237,.10);color:#7C3AED}.real-h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;color:#0A1428;line-height:1.15;margin:0 0 14px 0}.real-lead{font-size:1.05rem;color:#475569;line-height:1.6;margin:0 0 28px 0;max-width:780px}.real-photos{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px}.real-photo{position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#F5F8FB;box-shadow:0 8px 24px rgba(10,20,40,.08)}.real-photo img{width:100%;height:100%;object-fit:cover;display:block}.real-photo.tag{position:absolute;top:12px;left:12px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.96);font-size:.78rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#0A1428;backdrop-filter:blur(8px)}.real-photo.after.tag{background:#FF6B1A;color:#fff}.real-single-photo{aspect-ratio:16/9;max-width:880px;margin:0 auto 32px}.real-content{display:grid;grid-template-columns:1.6fr 1fr;gap:32px;align-items:start}.real-body{font-size:1rem;color:#0A1428;line-height:1.7}.real-body p{margin:0 0 14px}.real-body h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin:28px 0 14px;color:#0A1428}.real-side{position:sticky;top:20px;background:#fff;border:1px solid #E5EDF3;border-radius:14px;padding:20px;box-shadow:0 1px 2px rgba(11,18,32,.04)}.real-side h3{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#475569;margin:0 0 12px}.real-side-info{display:flex;flex-direction:column;gap:10px;padding-bottom:14px;border-bottom:1px solid #E5EDF3;margin-bottom:14px}.real-side-info div{font-size:.88rem;color:#0A1428}.real-side-info strong{font-weight:700}.real-side-info span.label{display:block;color:#475569;font-size:.74rem;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px;font-weight:600}.real-side-cta{display:flex;flex-direction:column;gap:8px}.real-cta-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:10px;font-weight:700;font-size:.92rem;text-decoration:none;transition:.18s}.real-cta-phone{background:#FF6B1A;color:#fff}.real-cta-phone:hover{background:#e85e15}.real-cta-devis{background:#0DA0CF;color:#fff}.real-cta-devis:hover{background:#0a7fa8}.real-cta-fb{background:#fff;color:#1877F2;border:1px solid rgba(24,119,242,.30)}.real-cta-fb:hover{background:rgba(24,119,242,.06)}.real-cta-btn svg{width:16px;height:16px}.real-similar{margin-top:48px;padding-top:36px;border-top:1px solid #E5EDF3}.real-similar h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:#0A1428;margin:0 0 18px}.real-similar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}.real-similar-card{display:block;background:#fff;border:1px solid #E5EDF3;border-radius:12px;overflow:hidden;text-decoration:none;color:inherit;transition:.18s}.real-similar-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(10,20,40,.10)}.real-similar-card.photo{aspect-ratio:4/3;background:#F5F8FB;overflow:hidden}.real-similar-card.photo img{width:100%;height:100%;object-fit:cover}.real-similar-card.body{padding:12px}.real-similar-card h4{font-size:.92rem;font-weight:700;color:#0A1428;margin:0 0 4px;line-height:1.3}.real-similar-card.meta{font-size:.74rem;color:#475569}.real-loading{text-align:center;padding:80px 0;color:#475569}.real-loading.spinner{display:inline-block;width:32px;height:32px;border:3px solid #E5EDF3;border-top-color:#0DA0CF;border-radius:50%;animation:spin.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:780px){
-  .real-photos{grid-template-columns:1fr}
-  .real-content{grid-template-columns:1fr}
-  .real-side{position:static}
+@media(max-width:780px){.real-photos{grid-template-columns:1fr}.real-content{grid-template-columns:1fr}.real-side{position:static}
 }
 </style>
-  <link rel="manifest" href="/manifest.json">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-  <meta name="theme-color" content="#0DA0CF">
-  <script src="/assets/hc-consent.js" defer></script>
+ <link rel="manifest" href="/manifest.json">
+ <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+ <meta name="theme-color" content="#0DA0CF">
+ <script src="/assets/hc-consent.js" defer></script>
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style id="hc-skip-style">.hc-skip-link{position:absolute;top:-100px;left:0;background:#0A1428;color:#fff;padding:10px 18px;text-decoration:none;font-weight:700;font-size:.92rem;border-radius:0 0 8px 0;z-index:10000}.hc-skip-link:focus{top:0}</style>
 </head>
@@ -92,197 +40,190 @@
 
 <!-- Header partagé (à charger depuis includes/header.html via le template) -->
 <header id="hcHeader" style="background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(229,237,243,.5);padding:12px clamp(20px,4vw,64px);position:sticky;top:0;z-index:100">
-  <div style="max-width:1480px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px">
-    <a href="/" style="display:flex;align-items:center;text-decoration:none">
-      <img decoding="async" loading="lazy" src="logo-officiel.jpg" alt="HELP! Confort" style="height:48px">
-    </a>
-    <nav style="display:flex;align-items:center;gap:12px">
-      <a href="realisations.html" style="color:#0DA0CF;font-weight:600;text-decoration:none;font-size:.92rem">← Toutes les réalisations</a>
-    </nav>
-  </div>
+ <div style="max-width:1480px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px">
+ <a href="/" style="display:flex;align-items:center;text-decoration:none">
+ <img decoding="async" loading="lazy" src="logo-officiel.jpg" alt="HELP! Confort" style="height:48px">
+ </a>
+ <nav style="display:flex;align-items:center;gap:12px">
+ <a href="realisations.html" style="color:#0DA0CF;font-weight:600;text-decoration:none;font-size:.92rem">← Toutes les réalisations</a>
+ </nav>
+ </div>
 </header>
 
 <main class="real-page" id="main-content">
-  <div id="realContent" class="real-loading">
-    <div class="spinner"></div>
-    <div style="margin-top:14px">Chargement du chantier…</div>
-  </div>
+ <div id="realContent" class="real-loading">
+ <div class="spinner"></div>
+ <div style="margin-top:14px">Chargement du chantier…</div>
+ </div>
 </main>
 
 <!-- Footer minimaliste -->
 <footer style="background:#0A1428;color:#fff;padding:40px clamp(20px,4vw,64px);text-align:center">
-  <div style="max-width:1100px;margin:0 auto">
-    <strong style="display:block;font-size:1.1rem;margin-bottom:10px">HELP! Confort</strong>
-    <p style="color:rgba(255,255,255,.7);font-size:.86rem;margin:0 0 14px">Dépan'Audo Saint-Omer · Dépan'DK Dunkerque</p>
-    <a href="/" style="color:#0DA0CF;font-size:.86rem;font-weight:600;text-decoration:none">Retour au site →</a>
-  </div>
+ <div style="max-width:1100px;margin:0 auto">
+ <strong style="display:block;font-size:1.1rem;margin-bottom:10px">HELP! Confort</strong>
+ <p style="color:rgba(255,255,255,.7);font-size:.86rem;margin:0 0 14px">Dépan'Audo Saint-Omer · Dépan'DK Dunkerque</p>
+ <a href="/" style="color:#0DA0CF;font-size:.86rem;font-weight:600;text-decoration:none">Retour au site →</a>
+ </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 (async function() {
-  const params = new URLSearchParams(location.search);
-  const slug = params.get('slug');
-  const container = document.getElementById('realContent');
+ const params = new URLSearchParams(location.search);
+ const slug = params.get('slug');
+ const container = document.getElementById('realContent');
 
-  if (!slug) {
-    container.innerHTML = '<div style="text-align:center;padding:60px 0"><h1>Chantier introuvable</h1><p style="color:#475569">Aucun identifiant fourni. <a href="realisations.html" style="color:#0DA0CF;font-weight:600">Voir toutes les réalisations →</a></p></div>';
-    return;
-  }
+ if (!slug) {
+ container.innerHTML = '<div style="text-align:center;padding:60px 0"><h1>Chantier introuvable</h1><p style="color:#475569">Aucun identifiant fourni. <a href="realisations.html" style="color:#0DA0CF;font-weight:600">Voir toutes les réalisations →</a></p></div>';
+ return;
+ }
 
-  const METIER_LABELS = {
-    plomberie:'Plomberie', chauffage:'Chauffage', electricite:'Électricité',
-    serrurerie:'Serrurerie', vitrerie:'Vitrerie', renovation:'Rénovation',
-    menuiserie:'Menuiserie', volets:'Volets', pmr:'Adaptation PMR',
-    multiservice:'Multi-métiers'
-  };
-  const AGENCE_LABELS = { 'depan-audo': "Dépan'Audo (Saint-Omer)", 'depan-dk': "Dépan'DK (Dunkerque)" };
+ const METIER_LABELS = {
+ plomberie:'Plomberie', chauffage:'Chauffage', electricite:'Électricité',
+ serrurerie:'Serrurerie', vitrerie:'Vitrerie', renovation:'Rénovation',
+ menuiserie:'Menuiserie', volets:'Volets', pmr:'Adaptation PMR',
+ multiservice:'Multi-métiers'
+ };
+ const AGENCE_LABELS = { 'depan-audo': "Dépan'Audo (Saint-Omer)", 'depan-dk': "Dépan'DK (Dunkerque)" };
 
-  const sb = window.supabase.createClient(
-    'https://btcbjwqiivhpwoszomhg.supabase.co',
-    'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2'
-  );
+ const sb = window.supabase.createClient(
+ 'https://btcbjwqiivhpwoszomhg.supabase.co',
+ 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2'
+ );
 
-  // Chantier courant
-  const { data, error } = await sb.from('realisations').select('*').eq('slug', slug).eq('status','publie').single();
+ // Chantier courant
+ const { data, error } = await sb.from('realisations').select('*').eq('slug', slug).eq('status','publie').single();
 
-  if (error || !data) {
-    container.innerHTML = '<div style="text-align:center;padding:60px 0"><h1>Chantier introuvable</h1><p style="color:#475569">Ce chantier n\'existe pas ou n\'est pas publié. <a href="realisations.html" style="color:#0DA0CF;font-weight:600">Voir toutes les réalisations →</a></p></div>';
-    return;
-  }
+ if (error || !data) {
+ container.innerHTML = '<div style="text-align:center;padding:60px 0"><h1>Chantier introuvable</h1><p style="color:#475569">Ce chantier n\'existe pas ou n\'est pas publié. <a href="realisations.html" style="color:#0DA0CF;font-weight:600">Voir toutes les réalisations →</a></p></div>';
+ return;
+ }
 
-  const r = data;
-  const metierLabel = METIER_LABELS[r.metier] || r.metier || 'Chantier';
-  const agence = (r.ai_generated && r.ai_generated.agence) || (['Dunkerque','Grande-Synthe','Coudekerque-Branche','Téteghem','Cappelle-la-Grande','Saint-Pol-sur-Mer'].includes(r.ville) ? 'depan-dk' : 'depan-audo');
-  const agenceLabel = AGENCE_LABELS[agence] || "Help! Confort";
-  const dateStr = r.date_intervention ? new Date(r.date_intervention).toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' }) : '';
-  const photo = r.image_after || r.image_before;
-  const fbUrl = r.ai_generated && r.ai_generated.source_fb;
+ const r = data;
+ const metierLabel = METIER_LABELS[r.metier] || r.metier || 'Chantier';
+ const agence = (r.ai_generated && r.ai_generated.agence) || (['Dunkerque','Grande-Synthe','Coudekerque-Branche','Téteghem','Cappelle-la-Grande','Saint-Pol-sur-Mer'].includes(r.ville) ? 'depan-dk' : 'depan-audo');
+ const agenceLabel = AGENCE_LABELS[agence] || "Help! Confort";
+ const dateStr = r.date_intervention ? new Date(r.date_intervention).toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' }) : '';
+ const photo = r.image_after || r.image_before;
+ const fbUrl = r.ai_generated && r.ai_generated.source_fb;
 
-  // Meta SEO
-  document.getElementById('pageTitle').textContent = r.title + ' · HELP! Confort';
-  document.getElementById('pageDesc').setAttribute('content', (r.description || r.title).slice(0, 160));
-  document.getElementById('pageCanonical').setAttribute('href', 'https://www.depan59-62.fr/realisation.html?slug=' + encodeURIComponent(slug));
-  document.getElementById('ogTitle').setAttribute('content', r.title);
-  document.getElementById('ogDesc').setAttribute('content', (r.description || r.title).slice(0, 200));
-  if (photo) document.getElementById('ogImage').setAttribute('content', photo);
+ // Meta SEO
+ document.getElementById('pageTitle').textContent = r.title + ' · HELP! Confort';
+ document.getElementById('pageDesc').setAttribute('content', (r.description || r.title).slice(0, 160));
+ document.getElementById('pageCanonical').setAttribute('href', 'https://www.depan59-62.fr/realisation.html?slug=' + encodeURIComponent(slug));
+ document.getElementById('ogTitle').setAttribute('content', r.title);
+ document.getElementById('ogDesc').setAttribute('content', (r.description || r.title).slice(0, 200));
+ if (photo) document.getElementById('ogImage').setAttribute('content', photo);
 
-  // JSON-LD
-  const jsonLd = document.createElement('script');
-  jsonLd.type = 'application/ld+json';
-  jsonLd.textContent = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": r.title,
-    "image": photo ? [photo] : [],
-    "datePublished": r.published_at || r.created_at,
-    "author": { "@type": "Organization", "name": agenceLabel },
-    "publisher": { "@type": "Organization", "name": "HELP! Confort", "logo": { "@type": "ImageObject", "url": "https://www.depan59-62.fr/logo-officiel.jpg" }},
-    "description": r.description || r.title
-  });
-  document.head.appendChild(jsonLd);
+ // JSON-LD
+ const jsonLd = document.createElement('script');
+ jsonLd.type = 'application/ld+json';
+ jsonLd.textContent = JSON.stringify({
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": r.title,
+ "image": photo ? [photo] : [],
+ "datePublished": r.published_at || r.created_at,
+ "author": { "@type": "Organization", "name": agenceLabel },
+ "publisher": { "@type": "Organization", "name": "HELP! Confort", "logo": { "@type": "ImageObject", "url": "https://www.depan59-62.fr/logo-officiel.jpg" }},
+ "description": r.description || r.title
+ });
+ document.head.appendChild(jsonLd);
 
-  // Rendu
-  let photosHTML = '';
-  if (r.image_before && r.image_after) {
-    photosHTML = `
-      <div class="real-photos">
-        <div class="real-photo before"><span class="tag">Avant</span><img loading="lazy" decoding="async" src="${r.image_before}" alt="Avant — ${escapeHtml(r.title)}"></div>
-        <div class="real-photo after"><span class="tag">Après</span><img loading="lazy" decoding="async" src="${r.image_after}" alt="Après — ${escapeHtml(r.title)}"></div>
-      </div>`;
-  } else if (photo) {
-    photosHTML = `
-      <div class="real-single-photo real-photo ${r.image_after ? 'after' : ''}">
-        <span class="tag">${r.image_after ? 'Après' : 'Avant'}</span>
-        <img loading="lazy" decoding="async" src="${photo}" alt="${escapeHtml(r.title)}">
-      </div>`;
-  }
+ // Rendu
+ let photosHTML = '';
+ if (r.image_before && r.image_after) {
+ photosHTML = `
+ <div class="real-photos">
+ <div class="real-photo before"><span class="tag">Avant</span><img loading="lazy" decoding="async" src="${r.image_before}" alt="Avant — ${escapeHtml(r.title)}"></div>
+ <div class="real-photo after"><span class="tag">Après</span><img loading="lazy" decoding="async" src="${r.image_after}" alt="Après — ${escapeHtml(r.title)}"></div>
+ </div>`;
+ } else if (photo) {
+ photosHTML = `
+ <div class="real-single-photo real-photo ${r.image_after ? 'after' : ''}">
+ <span class="tag">${r.image_after ? 'Après' : 'Avant'}</span>
+ <img loading="lazy" decoding="async" src="${photo}" alt="${escapeHtml(r.title)}">
+ </div>`;
+ }
 
-  container.classList.remove('real-loading');
-  container.innerHTML = `
-    <a href="realisations.html" class="real-back">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-      Toutes les réalisations
-    </a>
-    <div class="real-meta">
-      <span class="real-meta-tag metier">${metierLabel}</span>
-      <span class="real-meta-tag ville">📍 ${escapeHtml(r.ville)}</span>
-      ${dateStr ? `<span class="real-meta-tag date">${dateStr}</span>` : ''}
-      <span class="real-meta-tag agence">${agenceLabel}</span>
-    </div>
-    <h1 class="real-h1">${escapeHtml(r.title)}</h1>
-    ${r.description ? `<p class="real-lead">${escapeHtml(r.description)}</p>` : ''}
-    ${photosHTML}
-    <div class="real-content">
-      <div class="real-body">
-        ${r.description_long ? formatBody(r.description_long) : '<p>Détails du chantier à venir.</p>'}
-      </div>
-      <aside class="real-side">
-        <h3>Cette intervention</h3>
-        <div class="real-side-info">
-          <div><span class="label">Métier</span><strong>${metierLabel}</strong></div>
-          <div><span class="label">Ville</span><strong>${escapeHtml(r.ville)}</strong></div>
-          <div><span class="label">Agence</span><strong>${agenceLabel}</strong></div>
-          ${r.technicien ? `<div><span class="label">Technicien</span><strong>${escapeHtml(r.technicien)}</strong></div>` : ''}
-          ${dateStr ? `<div><span class="label">Date</span><strong>${dateStr}</strong></div>` : ''}
-        </div>
-        <div class="real-side-cta">
-          <a href="tel:+33366100134" class="real-cta-btn real-cta-phone" aria-label="Appeler le 03 66 10 01 34">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            Appeler maintenant
-          </a>
-          <a href="/?devis=1" class="real-cta-btn real-cta-devis">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Demander un devis
-          </a>
-          ${fbUrl ? `<a href="${fbUrl}" target="_blank" rel="noopener" class="real-cta-btn real-cta-fb">
-            <svg viewBox="0 0 24 24" fill="#1877F2"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
-            Voir sur Facebook
-          </a>` : ''}
-        </div>
-      </aside>
-    </div>
+ container.classList.remove('real-loading');
+ container.innerHTML = `
+ <a href="realisations.html" class="real-back">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+ Toutes les réalisations
+ </a>
+ <div class="real-meta">
+ <span class="real-meta-tag metier">${metierLabel}</span>
+ <span class="real-meta-tag ville">📍 ${escapeHtml(r.ville)}</span>
+ ${dateStr ? `<span class="real-meta-tag date">${dateStr}</span>` : ''}
+ <span class="real-meta-tag agence">${agenceLabel}</span>
+ </div>
+ <h1 class="real-h1">${escapeHtml(r.title)}</h1>
+ ${r.description ? `<p class="real-lead">${escapeHtml(r.description)}</p>` : ''}
+ ${photosHTML}
+ <div class="real-content">
+ <div class="real-body">
+ ${r.description_long ? formatBody(r.description_long) : '<p>Détails du chantier à venir.</p>'}
+ </div>
+ <aside class="real-side">
+ <h3>Cette intervention</h3>
+ <div class="real-side-info">
+ <div><span class="label">Métier</span><strong>${metierLabel}</strong></div>
+ <div><span class="label">Ville</span><strong>${escapeHtml(r.ville)}</strong></div>
+ <div><span class="label">Agence</span><strong>${agenceLabel}</strong></div>
+ ${r.technicien ? `<div><span class="label">Technicien</span><strong>${escapeHtml(r.technicien)}</strong></div>` : ''}
+ ${dateStr ? `<div><span class="label">Date</span><strong>${dateStr}</strong></div>` : ''}
+ </div>
+ <div class="real-side-cta">
+ <a href="tel:+33366100134" class="real-cta-btn real-cta-phone" aria-label="Appeler le 03 66 10 01 34">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0.7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+ Appeler maintenant
+ </a>
+ <a href="/?devis=1" class="real-cta-btn real-cta-devis">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+ Demander un devis
+ </a>
+ ${fbUrl ? `<a href="${fbUrl}" target="_blank" rel="noopener" class="real-cta-btn real-cta-fb">
+ <svg viewBox="0 0 24 24" fill="#1877F2"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1.45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+ Voir sur Facebook
+ </a>` : ''}
+ </div>
+ </aside>
+ </div>
 
-    <div class="real-similar" id="similarSection" style="display:none">
-      <h2>Chantiers similaires</h2>
-      <div class="real-similar-grid" id="similarGrid"></div>
-    </div>
-  `;
+ <div class="real-similar" id="similarSection" style="display:none">
+ <h2>Chantiers similaires</h2>
+ <div class="real-similar-grid" id="similarGrid"></div>
+ </div>
+ `;
 
-  // Chantiers similaires (même métier ou même ville)
-  const { data: similar } = await sb.from('realisations')
-    .select('slug,title,metier,ville,date_intervention,image_before,image_after')
-    .eq('status','publie')
-    .neq('id', r.id)
-    .or(`metier.eq.${r.metier},ville.eq.${r.ville}`)
-    .order('pinned',{ascending:false})
-    .order('published_at',{ascending:false,nullsFirst:false})
-    .limit(3);
+ // Chantiers similaires (même métier ou même ville)
+ const { data: similar } = await sb.from('realisations').select('slug,title,metier,ville,date_intervention,image_before,image_after').eq('status','publie').neq('id', r.id).or(`metier.eq.${r.metier},ville.eq.${r.ville}`).order('pinned',{ascending:false}).order('published_at',{ascending:false,nullsFirst:false}).limit(3);
 
-  if (similar && similar.length) {
-    document.getElementById('similarSection').style.display = 'block';
-    document.getElementById('similarGrid').innerHTML = similar.map(s => {
-      const p = s.image_after || s.image_before;
-      const m = METIER_LABELS[s.metier] || s.metier;
-      return `
-        <a href="realisation.html?slug=${encodeURIComponent(s.slug)}" class="real-similar-card">
-          <div class="photo">${p ? `<img decoding="async" src="${p}" alt="" loading="lazy">` : ''}</div>
-          <div class="body">
-            <h4>${escapeHtml(s.title)}</h4>
-            <div class="meta">${m} · ${escapeHtml(s.ville)}</div>
-          </div>
-        </a>
-      `;
-    }).join('');
-  }
+ if (similar && similar.length) {
+ document.getElementById('similarSection').style.display = 'block';
+ document.getElementById('similarGrid').innerHTML = similar.map(s => {
+ const p = s.image_after || s.image_before;
+ const m = METIER_LABELS[s.metier] || s.metier;
+ return `
+ <a href="realisation.html?slug=${encodeURIComponent(s.slug)}" class="real-similar-card">
+ <div class="photo">${p ? `<img decoding="async" src="${p}" alt="" loading="lazy">` : ''}</div>
+ <div class="body">
+ <h4>${escapeHtml(s.title)}</h4>
+ <div class="meta">${m} · ${escapeHtml(s.ville)}</div>
+ </div>
+ </a>
+ `;
+ }).join('');
+ }
 
-  function escapeHtml(s) {
-    if (s == null) return '';
-    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  }
-  function formatBody(t) {
-    return '<p>' + escapeHtml(t).split(/\n\n+/).join('</p><p>').replace(/\n/g, '<br>') + '</p>';
-  }
+ function escapeHtml(s) {
+ if (s == null) return '';
+ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ }
+ function formatBody(t) {
+ return '<p>' + escapeHtml(t).split(/\n\n+/).join('</p><p>').replace(/\n/g, '<br>') + '</p>';
+ }
 })();
 </script>
 <script src="assets/hc-widgets.js" defer></script>
@@ -292,26 +233,26 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
 <!-- HC-SW-KILL-V2 — désinscription SW + purge caches + reload (15/05 PM) -->
 <script>
 (function(){
-  if (!('serviceWorker' in navigator)) return;
-  var hadSW = false;
-  navigator.serviceWorker.getRegistrations().then(function(rs){
-    if (rs.length > 0) hadSW = true;
-    rs.forEach(function(r){ r.unregister(); });
-  });
-  if ('caches' in window) {
-    caches.keys().then(function(ks){
-      ks.forEach(function(k){ caches.delete(k); });
-    });
-  }
-  // Si on avait un SW actif et qu'on n'a pas encore rechargé une fois, force le reload (sans boucle)
-  setTimeout(function(){
-    try {
-      if (hadSW && !sessionStorage.getItem('__hc_sw_reset')) {
-        sessionStorage.setItem('__hc_sw_reset', '1');
-        location.reload(true);
-      }
-    } catch(_){}
-  }, 500);
+ if (!('serviceWorker' in navigator)) return;
+ var hadSW = false;
+ navigator.serviceWorker.getRegistrations().then(function(rs){
+ if (rs.length > 0) hadSW = true;
+ rs.forEach(function(r){ r.unregister(); });
+ });
+ if ('caches' in window) {
+ caches.keys().then(function(ks){
+ ks.forEach(function(k){ caches.delete(k); });
+ });
+ }
+ // Si on avait un SW actif et qu'on n'a pas encore rechargé une fois, force le reload (sans boucle)
+ setTimeout(function(){
+ try {
+ if (hadSW && !sessionStorage.getItem('__hc_sw_reset')) {
+ sessionStorage.setItem('__hc_sw_reset', '1');
+ location.reload(true);
+ }
+ } catch(_){}
+ }, 500);
 })();
 </script>
 </body>
