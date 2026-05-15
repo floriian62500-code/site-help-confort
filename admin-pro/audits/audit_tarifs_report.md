@@ -1,10 +1,10 @@
 # Audit Tarifs — Sonde IA #28
 
-_Généré le 2026-05-15 11:30 — `admin-pro/audits/audit_tarifs.py`_
+_Généré le 2026-05-15 12:47 — `admin-pro/audits/audit_tarifs.py`_
 
-- Pages publiques scannées : **38**
+- Pages publiques scannées : **39**
 - Montants validés (TARIFS_REFERENCE.md) : **45**
-- Alertes : **25**
+- Alertes : **22**
 - Erreurs lecture : **0**
 
 ## Règle
@@ -17,31 +17,28 @@ Tout montant `\d+\s*€` visible doit :
 
 | Page | Ligne | Montant | Contexte |
 |------|------:|--------:|----------|
-| `depannage-dunkerque.html` | 696 | **60 €** | HT/h). En revanche, le <strong>déplacement</strong> sur Dunkerque est facturé à 60 € HT (au lieu de gratuit sur l'audomarois) en raison de l |
+| `depannage-dunkerque.html` | 698 | **60 €** | HT/h). En revanche, le <strong>déplacement</strong> sur Dunkerque est facturé à 60 € HT (au lieu de gratuit sur l'audomarois) en raison de l |
 | `electricien-saint-omer.html` | 12 | **1080 €** | Saint-Omer & Dunkerque : dépannage 75 € TTC, recherche panne 107 € TTC, tableau 1 080 € TTC. Techniciens qualifiés NF C 15-100. ☎ 03 66 10 0 |
 | `electricien-saint-omer.html` | 18 | **1080 €** | Saint-Omer & Dunkerque : dépannage 75 € TTC, recherche panne 107 € TTC, tableau 1 080 € TTC. Techniciens qualifiés NF C 15-100. ☎ 03 66 10 0 |
-| `electricien-saint-omer.html` | 243 | **1080 €** | Saint-Omer & Dunkerque : dépannage 75 € TTC, recherche panne 107 € TTC, tableau 1 080 € TTC. Techniciens qualifiés NF C 15-100. ☎ 03 66 10 0 |
-| `electricien-saint-omer.html` | 1356 | **1080 €** | dard avec disjoncteurs et différentiels.</p> ⏎         <div class="m-tarif-price">1 080 € TTC <small>· forfait standard</small></div> ⏎      |
-| `guide-adaptation-pmr.html` | 445 | **22000 €** | rir jusqu'à <strong>50 % à 70 % du coût des travaux</strong>, dans la limite de 22 000 € HT. Le bénéficiaire doit être propriétaire occupant |
-| `guide-adaptation-pmr.html` | 458 | **5500 €** | complète adaptée</strong> (douche italienne + WC rehaussés + barres d'appui) : 5 500 € → reste à charge ~1 800 € après MaPrimeAdapt'</li> ⏎  |
-| `guide-adaptation-pmr.html` | 458 | **1800 €** | (douche italienne + WC rehaussés + barres d'appui) : 5 500 € → reste à charge ~1 800 € après MaPrimeAdapt'</li> ⏎   <li><strong>Monte-escali |
-| `guide-adaptation-pmr.html` | 459 | **3800 €** | </li> ⏎   <li><strong>Monte-escaliers droit</strong> + main courante secondaire : 3 800 € → reste à charge ~1 200 €</li> ⏎   <li><strong>Éla |
-| `guide-adaptation-pmr.html` | 459 | **1200 €** | escaliers droit</strong> + main courante secondaire : 3 800 € → reste à charge ~1 200 €</li> ⏎   <li><strong>Élargissement de 3 portes intér |
-| `guide-adaptation-pmr.html` | 460 | **2200 €** | strong>Élargissement de 3 portes intérieures</strong> + suppression de seuils : 2 200 € → reste à charge ~700 €</li> ⏎   <li><strong>Pack gl |
-| `guide-adaptation-pmr.html` | 460 | **700 €** | portes intérieures</strong> + suppression de seuils : 2 200 € → reste à charge ~700 €</li> ⏎   <li><strong>Pack global maintien à domicile</ |
-| `guide-adaptation-pmr.html` | 461 | **9800 €** | global maintien à domicile</strong> (douche + WC + barres + monte-escaliers) : 9 800 € → reste à charge ~3 200 €</li> ⏎ </ul> ⏎ <h2>6. Comme |
-| `guide-adaptation-pmr.html` | 461 | **3200 €** | e</strong> (douche + WC + barres + monte-escaliers) : 9 800 € → reste à charge ~3 200 €</li> ⏎ </ul> ⏎ <h2>6. Comment démarrer ?</h2> ⏎ <p>L |
-| `guide-entretien-chaudiere.html` | 430 | **100 €** | e ?</h2> ⏎ <p>Le prix moyen d'un entretien chaudière gaz en France se situe entre 100 € et 180 € TTC selon la marque, la puissance et la rég |
-| `guide-entretien-chaudiere.html` | 430 | **180 €** | <p>Le prix moyen d'un entretien chaudière gaz en France se situe entre 100 € et 180 € TTC selon la marque, la puissance et la région. Chez < |
-| `guide-mise-aux-normes-electriques.html` | 437 | **800 €** | <strong>Petite mise en conformité</strong> (quelques anomalies ciblées) : 300 à 800 €</li> ⏎   <li><strong>Mise aux normes du tableau électr |
-| `guide-mise-aux-normes-electriques.html` | 438 | **1500 €** | </li> ⏎   <li><strong>Mise aux normes du tableau électrique</strong> seul : 600 à 1 500 €</li> ⏎   <li><strong>Rénovation électrique complèt |
-| `guide-mise-aux-normes-electriques.html` | 439 | **9000 €** | €</li> ⏎   <li><strong>Rénovation électrique complète</strong> d'un T3 : 4 000 à 9 000 €</li> ⏎   <li><strong>Maison entière (100 m²)</stron |
-| `guide-mise-aux-normes-electriques.html` | 440 | **15000 €** | : 4 000 à 9 000 €</li> ⏎   <li><strong>Maison entière (100 m²)</strong> : 8 000 à 15 000 €</li> ⏎ </ul> ⏎ <p>Les <strong>aides MaPrimeRénov' |
-| `guide-mise-aux-normes-electriques.html` | 467 | **1080 €** | -right:auto">Diagnostic gratuit · Tableau standard à <strong style="color:#fff">1 080 € TTC</strong> · Aides CEE & MaPrimeRénov' éligibles.  |
-| `serrurier-saint-omer.html` | 1380 | **55 €** | perte de clé ou tentative d'effraction.</p> ⏎         <div class="m-tarif-price">55 € TTC <small>· pièce</small></div> ⏎         <a href="co |
-| `travaux-saint-omer.html` | 1343 | **19 €** | es peinture acrylique déco. Tarif au m².</p> ⏎         <div class="m-tarif-price">19 € TTC <small>· par m²</small></div> ⏎         <a href=" |
-| `travaux-saint-omer.html` | 1359 | **34 €** | de carrelage scellé. Évacuation incluse.</p> ⏎         <div class="m-tarif-price">34 € TTC <small>· par m²</small></div> ⏎         <a href=" |
-| `travaux-saint-omer.html` | 1367 | **275 €** | cement à l'identique d'un meuble vasque.</p> ⏎         <div class="m-tarif-price">275 € TTC <small>· forfait</small></div> ⏎         <a href |
+| `electricien-saint-omer.html` | 244 | **1080 €** | Saint-Omer & Dunkerque : dépannage 75 € TTC, recherche panne 107 € TTC, tableau 1 080 € TTC. Techniciens qualifiés NF C 15-100. ☎ 03 66 10 0 |
+| `electricien-saint-omer.html` | 1358 | **1080 €** | dard avec disjoncteurs et différentiels.</p> ⏎         <div class="m-tarif-price">1 080 € TTC <small>· forfait standard</small></div> ⏎      |
+| `guide-adaptation-pmr.html` | 447 | **22000 €** | rir jusqu'à <strong>50 % à 70 % du coût des travaux</strong>, dans la limite de 22 000 € HT. Le bénéficiaire doit être propriétaire occupant |
+| `guide-adaptation-pmr.html` | 460 | **5500 €** | lète adaptée</strong> (douche italienne + WC rehaussés + barres d'appui)&nbsp;: 5 500 € → reste à charge ~1 800 € après MaPrimeAdapt'</li> ⏎ |
+| `guide-adaptation-pmr.html` | 460 | **1800 €** | che italienne + WC rehaussés + barres d'appui)&nbsp;: 5 500 € → reste à charge ~1 800 € après MaPrimeAdapt'</li> ⏎   <li><strong>Monte-escal |
+| `guide-adaptation-pmr.html` | 461 | **3800 €** | ⏎   <li><strong>Monte-escaliers droit</strong> + main courante secondaire&nbsp;: 3 800 € → reste à charge ~1 200 €</li> ⏎   <li><strong>Élar |
+| `guide-adaptation-pmr.html` | 461 | **1200 €** | iers droit</strong> + main courante secondaire&nbsp;: 3 800 € → reste à charge ~1 200 €</li> ⏎   <li><strong>Élargissement de 3 portes intér |
+| `guide-adaptation-pmr.html` | 462 | **2200 €** | g>Élargissement de 3 portes intérieures</strong> + suppression de seuils&nbsp;: 2 200 € → reste à charge ~700 €</li> ⏎   <li><strong>Pack gl |
+| `guide-adaptation-pmr.html` | 462 | **700 €** | s intérieures</strong> + suppression de seuils&nbsp;: 2 200 € → reste à charge ~700 €</li> ⏎   <li><strong>Pack global maintien à domicile</ |
+| `guide-adaptation-pmr.html` | 463 | **9800 €** | al maintien à domicile</strong> (douche + WC + barres + monte-escaliers)&nbsp;: 9 800 € → reste à charge ~3 200 €</li> ⏎ </ul> ⏎ <h2>6. Comm |
+| `guide-adaptation-pmr.html` | 463 | **3200 €** | rong> (douche + WC + barres + monte-escaliers)&nbsp;: 9 800 € → reste à charge ~3 200 €</li> ⏎ </ul> ⏎ <h2>6. Comment démarrer&nbsp;?</h2> ⏎ |
+| `guide-entretien-chaudiere.html` | 432 | **100 €** | p;?</h2> ⏎ <p>Le prix moyen d'un entretien chaudière gaz en France se situe entre 100 € et 180 € TTC selon la marque, la puissance et la rég |
+| `guide-entretien-chaudiere.html` | 432 | **180 €** | <p>Le prix moyen d'un entretien chaudière gaz en France se situe entre 100 € et 180 € TTC selon la marque, la puissance et la région. Chez < |
+| `guide-mise-aux-normes-electriques.html` | 439 | **800 €** | ng>Petite mise en conformité</strong> (quelques anomalies ciblées)&nbsp;: 300 à 800 €</li> ⏎   <li><strong>Mise aux normes du tableau électr |
+| `guide-mise-aux-normes-electriques.html` | 440 | **1500 €** | ⏎   <li><strong>Mise aux normes du tableau électrique</strong> seul&nbsp;: 600 à 1 500 €</li> ⏎   <li><strong>Rénovation électrique complète |
+| `guide-mise-aux-normes-electriques.html` | 441 | **9000 €** | i> ⏎   <li><strong>Rénovation électrique complète</strong> d'un T3&nbsp;: 4 000 à 9 000 €</li> ⏎   <li><strong>Maison entière (100 m²)</stro |
+| `guide-mise-aux-normes-electriques.html` | 442 | **15000 €** | : 4 000 à 9 000 €</li> ⏎   <li><strong>Maison entière (100 m²)</strong> : 8 000 à 15 000 €</li> ⏎ </ul> ⏎ <p>Les <strong>aides MaPrimeRénov' |
+| `guide-mise-aux-normes-electriques.html` | 469 | **1080 €** | -right:auto">Diagnostic gratuit · Tableau standard à <strong style="color:#fff">1 080 € TTC</strong> · Aides CEE & MaPrimeRénov' éligibles.  |
+| `travaux-saint-omer.html` | 1345 | **19 €** | es peinture acrylique déco. Tarif au m².</p> ⏎         <div class="m-tarif-price">19 € TTC <small>· par m²</small></div> ⏎         <a href=" |
 
 ## Détail par page
 
@@ -52,13 +49,14 @@ Tout montant `\d+\s*€` visible doit :
 | `actualites.html` | 0 | 0 | 0 | 0 | **0** |
 | `aides.html` | 0 | 0 | 0 | 1 | **0** |
 | `avant-apres.html` | 0 | 0 | 0 | 0 | **0** |
+| `blog.html` | 0 | 0 | 0 | 0 | **0** |
 | `carrieres.html` | 0 | 0 | 0 | 0 | **0** |
 | `chauffagiste-saint-omer.html` | 30 | 0 | 0 | 10 | **0** |
 | `contact.html` | 0 | 0 | 0 | 36 | **0** |
 | `contrats-entretien.html` | 3 | 0 | 0 | 2 | **0** |
 | `depannage-arques.html` | 3 | 0 | 0 | 0 | **0** |
 | `depannage-bergues.html` | 3 | 0 | 0 | 0 | **0** |
-| `depannage-dunkerque.html` | 4 | 0 | 0 | 2 | **1** |
+| `depannage-dunkerque.html` | 4 | 0 | 0 | 3 | **1** |
 | `depannage-gravelines.html` | 3 | 0 | 0 | 0 | **0** |
 | `depannage-longuenesse.html` | 2 | 0 | 0 | 0 | **0** |
 | `depannage-saint-martin-lez-tatinghem.html` | 3 | 0 | 0 | 0 | **0** |
@@ -80,10 +78,10 @@ Tout montant `\d+\s*€` visible doit :
 | `processus.html` | 0 | 0 | 0 | 0 | **0** |
 | `realisation.html` | 0 | 0 | 0 | 0 | **0** |
 | `realisations.html` | 0 | 0 | 0 | 0 | **0** |
-| `serrurier-saint-omer.html` | 20 | 0 | 0 | 5 | **1** |
+| `serrurier-saint-omer.html` | 20 | 0 | 0 | 5 | **0** |
 | `sinistres.html` | 0 | 0 | 0 | 0 | **0** |
 | `temoignages.html` | 0 | 0 | 0 | 0 | **0** |
-| `travaux-saint-omer.html` | 6 | 0 | 0 | 1 | **3** |
+| `travaux-saint-omer.html` | 6 | 0 | 0 | 1 | **1** |
 | `zones-intervention.html` | 0 | 0 | 0 | 0 | **0** |
 
 ## Montants valides reconnus depuis TARIFS_REFERENCE.md

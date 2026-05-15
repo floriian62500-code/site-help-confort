@@ -1,43 +1,42 @@
 # Audit ARIA / a11y — HELP! Confort
 
-_Généré par `admin-pro/audits/audit_aria.py` — 37 pages scannées._
+_Généré par `admin-pro/audits/audit_aria.py` — 38 pages scannées._
 
 ## Synthèse
 
-- Pages scannées : **37**
-- Pages 100% clean : **23**
+- Pages scannées : **38**
+- Pages 100% clean : **13**
 - Pages avec ≥ 1 erreur : **7**
-- Total findings : **35**
+- Total findings : **61**
 
 ### Répartition par code
 
 | Code | Sévérité | Occurrences |
 |------|----------|-------------|
-| `INPUT-NO-LABEL` | avertissement | 18 |
+| `INPUT-NO-LABEL` | avertissement | 47 |
 | `DIALOG-NO-LABEL` | erreur | 7 |
 | `A-NO-NAME` | avertissement | 6 |
-| `BTN-NO-NAME` | erreur | 3 |
 | `H1-MISSING` | erreur | 1 |
 
 ## Détail par page
 
-### `index.html` — 12 finding(s)
+### `index.html` — 11 finding(s)
 
-- **BTN-NO-NAME** (erreur, l. 647) — `<button type="button" class="hctsl-btn"></button>`
-- **BTN-NO-NAME** (erreur, l. 652) — `<button type="button" class="hctsl-btn"></button>`
-- **BTN-NO-NAME** (erreur, l. 657) — `<button type="button" class="hctsl-btn"></button>`
-- **DIALOG-NO-LABEL** (erreur, l. 664) — `<div role="dialog">`
-- **DIALOG-NO-LABEL** (erreur, l. 2350) — `<div role="dialog">`
+- **DIALOG-NO-LABEL** (erreur, l. 663) — `<div role="dialog">`
+- **DIALOG-NO-LABEL** (erreur, l. 2399) — `<div role="dialog">`
+- **INPUT-NO-LABEL** (avertissement, l. 912) — `<input type="checkbox" name="resa-metiers[]">`
 - **INPUT-NO-LABEL** (avertissement, l. 913) — `<input type="checkbox" name="resa-metiers[]">`
 - **INPUT-NO-LABEL** (avertissement, l. 914) — `<input type="checkbox" name="resa-metiers[]">`
 - **INPUT-NO-LABEL** (avertissement, l. 915) — `<input type="checkbox" name="resa-metiers[]">`
 - **INPUT-NO-LABEL** (avertissement, l. 916) — `<input type="checkbox" name="resa-metiers[]">`
 - **INPUT-NO-LABEL** (avertissement, l. 917) — `<input type="checkbox" name="resa-metiers[]">`
-- _… et 2 autre(s)_
+- **INPUT-NO-LABEL** (avertissement, l. 918) — `<input type="checkbox" name="resa-metiers[]">`
+- **INPUT-NO-LABEL** (avertissement, l. 2226) — `<input type="text" name="website">`
+- _… et 1 autre(s)_
 
-### `contact.html` — 8 finding(s)
+### `contact.html` — 10 finding(s)
 
-- **INPUT-NO-LABEL** (avertissement, l. 590) — `<input type="checkbox" name="services[]">`
+- **INPUT-NO-LABEL** (avertissement, l. 442) — `<input type="text" name="website">`
 - **INPUT-NO-LABEL** (avertissement, l. 591) — `<input type="checkbox" name="services[]">`
 - **INPUT-NO-LABEL** (avertissement, l. 592) — `<input type="checkbox" name="services[]">`
 - **INPUT-NO-LABEL** (avertissement, l. 593) — `<input type="checkbox" name="services[]">`
@@ -45,57 +44,117 @@ _Généré par `admin-pro/audits/audit_aria.py` — 37 pages scannées._
 - **INPUT-NO-LABEL** (avertissement, l. 595) — `<input type="checkbox" name="services[]">`
 - **INPUT-NO-LABEL** (avertissement, l. 596) — `<input type="checkbox" name="services[]">`
 - **INPUT-NO-LABEL** (avertissement, l. 597) — `<input type="checkbox" name="services[]">`
+- **INPUT-NO-LABEL** (avertissement, l. 598) — `<input type="checkbox" name="services[]">`
+- **INPUT-NO-LABEL** (avertissement, l. 1036) — `<input type="text" name="website">`
 
-### `contrats-entretien.html` — 3 finding(s)
+### `contrats-entretien.html` — 5 finding(s)
 
-- **INPUT-NO-LABEL** (avertissement, l. 1632) — `<input type="checkbox" name="no_facture">`
-- **INPUT-NO-LABEL** (avertissement, l. 1647) — `<input type="checkbox" name="sepa_principe">`
-- **INPUT-NO-LABEL** (avertissement, l. 1678) — `<input type="checkbox" name="cgv">`
+- **INPUT-NO-LABEL** (avertissement, l. 1088) — `<input type="text" name="website">`
+- **INPUT-NO-LABEL** (avertissement, l. 1339) — `<input type="text" name="website">`
+- **INPUT-NO-LABEL** (avertissement, l. 1627) — `<input type="checkbox" name="no_facture">`
+- **INPUT-NO-LABEL** (avertissement, l. 1642) — `<input type="checkbox" name="sepa_principe">`
+- **INPUT-NO-LABEL** (avertissement, l. 1673) — `<input type="checkbox" name="cgv">`
+
+### `chauffagiste-saint-omer.html` — 3 finding(s)
+
+- **DIALOG-NO-LABEL** (erreur, l. 1741) — `<div role="dialog">`
+- **INPUT-NO-LABEL** (avertissement, l. 1753) — `<input type="text" name="website">`
+- **INPUT-NO-LABEL** (avertissement, l. 2450) — `<input type="text" name="website">`
+
+### `electricien-saint-omer.html` — 3 finding(s)
+
+- **DIALOG-NO-LABEL** (erreur, l. 1693) — `<div role="dialog">`
+- **INPUT-NO-LABEL** (avertissement, l. 1705) — `<input type="text" name="website">`
+- **INPUT-NO-LABEL** (avertissement, l. 2402) — `<input type="text" name="website">`
+
+### `plombier-saint-omer.html` — 3 finding(s)
+
+- **DIALOG-NO-LABEL** (erreur, l. 1751) — `<div role="dialog">`
+- **INPUT-NO-LABEL** (avertissement, l. 1763) — `<input type="text" name="website">`
+- **INPUT-NO-LABEL** (avertissement, l. 2460) — `<input type="text" name="website">`
+
+### `serrurier-saint-omer.html` — 3 finding(s)
+
+- **DIALOG-NO-LABEL** (erreur, l. 1733) — `<div role="dialog">`
+- **INPUT-NO-LABEL** (avertissement, l. 1745) — `<input type="text" name="website">`
+- **INPUT-NO-LABEL** (avertissement, l. 2442) — `<input type="text" name="website">`
+
+### `travaux-saint-omer.html` — 3 finding(s)
+
+- **DIALOG-NO-LABEL** (erreur, l. 1728) — `<div role="dialog">`
+- **INPUT-NO-LABEL** (avertissement, l. 1740) — `<input type="text" name="website">`
+- **INPUT-NO-LABEL** (avertissement, l. 2437) — `<input type="text" name="website">`
+
+### `devis-express.html` — 2 finding(s)
+
+- **A-NO-NAME** (avertissement, l. 100) — `<a href="index.html" class="logo"></a>`
+- **INPUT-NO-LABEL** (avertissement, l. 124) — `<input type="text" name="website">`
+
+### `nos-prestations.html` — 2 finding(s)
+
+- **A-NO-NAME** (avertissement, l. 333) — `<a href="index.html" class="hc-logo"></a>`
+- **INPUT-NO-LABEL** (avertissement, l. 484) — `<input type="text" name="website">`
 
 ### `realisation.html` — 2 finding(s)
 
-- **A-NO-NAME** (avertissement, l. 95) — `<a href="/"></a>`
+- **A-NO-NAME** (avertissement, l. 96) — `<a href="/"></a>`
 - **H1-MISSING** (erreur, l. 0) — `Aucun <h1>`
+
+### `a-propos.html` — 1 finding(s)
+
+- **INPUT-NO-LABEL** (avertissement, l. 975) — `<input type="text" name="website">`
+
+### `actualites.html` — 1 finding(s)
+
+- **INPUT-NO-LABEL** (avertissement, l. 900) — `<input type="text" name="website">`
 
 ### `avant-apres.html` — 1 finding(s)
 
-- **A-NO-NAME** (avertissement, l. 72) — `<a href="index.html"></a>`
+- **A-NO-NAME** (avertissement, l. 75) — `<a href="index.html"></a>`
 
-### `chauffagiste-saint-omer.html` — 1 finding(s)
+### `carrieres.html` — 1 finding(s)
 
-- **DIALOG-NO-LABEL** (erreur, l. 1742) — `<div role="dialog">`
+- **INPUT-NO-LABEL** (avertissement, l. 562) — `<input type="text" name="website">`
 
-### `devis-express.html` — 1 finding(s)
+### `depannage-dunkerque.html` — 1 finding(s)
 
-- **A-NO-NAME** (avertissement, l. 97) — `<a href="index.html" class="logo"></a>`
+- **INPUT-NO-LABEL** (avertissement, l. 1226) — `<input type="text" name="website">`
 
-### `electricien-saint-omer.html` — 1 finding(s)
+### `depannage-saint-omer.html` — 1 finding(s)
 
-- **DIALOG-NO-LABEL** (erreur, l. 1694) — `<div role="dialog">`
+- **INPUT-NO-LABEL** (avertissement, l. 1228) — `<input type="text" name="website">`
+
+### `espace-client.html` — 1 finding(s)
+
+- **INPUT-NO-LABEL** (avertissement, l. 479) — `<input type="text" name="website">`
 
 ### `faq.html` — 1 finding(s)
 
-- **A-NO-NAME** (avertissement, l. 65) — `<a href="index.html" class="hc-logo"></a>`
+- **A-NO-NAME** (avertissement, l. 68) — `<a href="index.html" class="hc-logo"></a>`
 
-### `nos-prestations.html` — 1 finding(s)
+### `mentions-legales.html` — 1 finding(s)
 
-- **A-NO-NAME** (avertissement, l. 332) — `<a href="index.html" class="hc-logo"></a>`
+- **INPUT-NO-LABEL** (avertissement, l. 852) — `<input type="text" name="website">`
 
-### `plombier-saint-omer.html` — 1 finding(s)
+### `pro.html` — 1 finding(s)
 
-- **DIALOG-NO-LABEL** (erreur, l. 1752) — `<div role="dialog">`
+- **INPUT-NO-LABEL** (avertissement, l. 533) — `<input type="text" name="website">`
 
-### `serrurier-saint-omer.html` — 1 finding(s)
+### `realisations.html` — 1 finding(s)
 
-- **DIALOG-NO-LABEL** (erreur, l. 1734) — `<div role="dialog">`
+- **INPUT-NO-LABEL** (avertissement, l. 1147) — `<input type="text" name="website">`
+
+### `sinistres.html` — 1 finding(s)
+
+- **INPUT-NO-LABEL** (avertissement, l. 512) — `<input type="text" name="website">`
 
 ### `temoignages.html` — 1 finding(s)
 
-- **A-NO-NAME** (avertissement, l. 101) — `<a href="index.html"></a>`
+- **A-NO-NAME** (avertissement, l. 104) — `<a href="index.html"></a>`
 
-### `travaux-saint-omer.html` — 1 finding(s)
+### `zones-intervention.html` — 1 finding(s)
 
-- **DIALOG-NO-LABEL** (erreur, l. 1729) — `<div role="dialog">`
+- **INPUT-NO-LABEL** (avertissement, l. 2000) — `<input type="text" name="website">`
 
 ---
 
