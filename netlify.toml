@@ -80,6 +80,12 @@
   to = "/admin-pro/"
   status = 301
 
+# RFC 9116 : alias /security.txt vers /.well-known/security.txt
+[[redirects]]
+  from = "/security.txt"
+  to = "/.well-known/security.txt"
+  status = 301
+
 # Custom 404 page
 [[redirects]]
   from = "/*"
