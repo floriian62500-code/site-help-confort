@@ -504,6 +504,41 @@
   const navBadge = document.getElementById('navRealCount');
   if (navBadge) navBadge.textContent = total;
 
+  // ─── Badge nav "Contrats" : nombre à importer dans le CRM ─
+  const navContracts = document.getElementById('navContractsCount');
+  const toImportCount = contracts.filter(x => !x.imported_to_crm_at).length;
+  if (navContracts) {
+    if (toImportCount > 0) {
+      navContracts.textContent = toImportCount;
+      navContracts.style.display = '';
+    } else {
+      navContracts.style.display = 'none';
+    }
+  }
+
+  // ─── Badge nav "Leads" : nouveaux à qualifier ──────────────
+  const navLeads = document.getElementById('navLeadsCount');
+  const newLeadsCount = leads30.filter(l => l.status === 'nouveau').length;
+  if (navLeads) {
+    if (newLeadsCount > 0) {
+      navLeads.textContent = newLeadsCount;
+      navLeads.style.display = '';
+    } else {
+      navLeads.style.display = 'none';
+    }
+  }
+
+  // ─── Badge nav "Services/Commandes" : commandes en attente ─
+  const navOrders = document.getElementById('navOrdersCount');
+  if (navOrders) {
+    if (ordersPending > 0) {
+      navOrders.textContent = ordersPending;
+      navOrders.style.display = '';
+    } else {
+      navOrders.style.display = 'none';
+    }
+  }
+
   // ─── Activité récente : 5 derniers chantiers ─────────────
   const recent = all.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5);
   const recentEl = document.getElementById('recentActivity');

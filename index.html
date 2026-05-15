@@ -1555,7 +1555,8 @@ return 'Saint-Omer · SARL Dépan’Audo';
 // Catalogue complet de prestations
 var ALL_PRESTAS = [
   // Plomberie
-  { id:'p-fuite',    icon:'💧', label:'Recherche & réparation de fuite', metier:'Plomberie', match: /fuite|gout|écoule|ruisselle|inonda|deau|humid/ },
+  { id:'p-fuite',    icon:'💧', label:'Recherche de fuite visuelle',     metier:'Plomberie', match: /fuite|gout|écoule|ruisselle|inonda|deau|humid/ },
+  { id:'p-fuite-tech', icon:'🔬', label:'Recherche de fuite technique (caméra, gaz traceur, acoustique)', metier:'Plomberie', match: /caméra|thermique|acoustique|traceur|encastr|fuite cachée/ },
   { id:'p-debouch',  icon:'🚿', label:'Débouchage canalisation',         metier:'Plomberie', match: /débouch|wc bouch|évier bouch|canalisation|engorg/ },
   { id:'p-chau-eau', icon:'♨️', label:'Dépannage chauffe-eau / cumulus', metier:'Plomberie', match: /chauffe.eau|cumulus|ballon eau chaude/ },
   { id:'p-robinet',  icon:'🚰', label:'Robinetterie / sanitaires',       metier:'Plomberie', match: /robinet|mitig|évier|lavabo|douche|wc(?! bouch)/ },
@@ -1580,34 +1581,34 @@ var ALL_PRESTAS = [
   { id:'t-pmr',      icon:'♿', label:'Adaptation PMR',                  metier:'Travaux',   match: /pmr|handicap|adaptation|mobilité réduite/ }
 ];
 
-// Renvoie jusqu'à N prestations suggérées + une option "autre"
+// Renvoie jusqu'à 4 prestations suggérées + une option "autre"
+// FILTRE STRICT : seules les prestations du/des métier(s) coché(s) en step 2 sont proposées
 function proposePrestations() {
   var d = (state.desc || '').toLowerCase();
   var metiers = state.metiers || [];
-  var scored = [];
-  ALL_PRESTAS.forEach(function(p){
-    var score = 0;
+  // Normalise "Travaux / rénovation" → "Travaux" pour le matching
+  var metiersNorm = metiers.map(function(m){ return m === 'Travaux / rénovation' ? 'Travaux' : m; });
+
+  // 1. Filtre strict par métier coché (jamais de mix inter-métier)
+  var inMetier = ALL_PRESTAS.filter(function(p){ return metiersNorm.indexOf(p.metier) >= 0; });
+
+  // 2. Score selon mots-clés description
+  var scored = inMetier.map(function(p){
+    var score = 1; // tout ce qui passe le filtre métier est éligible
     if (p.match && p.match.test(d)) score += 10;
-    if (metiers.indexOf(p.metier) >= 0) score += 5;
-    if (metiers.indexOf('Travaux / rénovation') >= 0 && p.metier === 'Travaux') score += 5;
-    if (score > 0) scored.push({ presta: p, score: score });
+    return { presta: p, score: score };
   });
   scored.sort(function(a, b){ return b.score - a.score; });
   var top = scored.slice(0, 4).map(function(x){ return x.presta; });
-  // Si rien ne matche, fallback : prendre les prestations du 1er métier coché (max 4) sinon les 4 plus génériques
+
+  // 3. Fallback si aucun métier coché : 4 prestations vedette par métier
   if (top.length === 0) {
-    if (metiers.length) {
-      var byMetier = ALL_PRESTAS.filter(function(p){ return metiers.indexOf(p.metier) >= 0; });
-      top = byMetier.slice(0, 4);
-    }
-    if (top.length === 0) {
-      top = [
-        ALL_PRESTAS.find(function(p){ return p.id === 'p-fuite'; }),
-        ALL_PRESTAS.find(function(p){ return p.id === 'c-chaudiere'; }),
-        ALL_PRESTAS.find(function(p){ return p.id === 'e-panne'; }),
-        ALL_PRESTAS.find(function(p){ return p.id === 's-ouverture'; })
-      ];
-    }
+    top = [
+      ALL_PRESTAS.find(function(p){ return p.id === 'p-fuite'; }),
+      ALL_PRESTAS.find(function(p){ return p.id === 'c-chaudiere'; }),
+      ALL_PRESTAS.find(function(p){ return p.id === 'e-panne'; }),
+      ALL_PRESTAS.find(function(p){ return p.id === 's-ouverture'; })
+    ].filter(Boolean);
   }
   return top;
 }
