@@ -24,7 +24,26 @@
   async function pushLead(payload) {
     const sb = await loadSupabase();
     const client = sb.createClient(SUPABASE_URL, SUPABASE_KEY);
-    return client.from('leads').insert([payload]);
+    const res = await client.from('leads').insert([payload]).select().single();
+    // ─── Trigger notification email à Florian ────────────────────────────
+    // Edge Function notify-lead. Best-effort : si elle échoue, le lead
+    // reste en base. L'erreur est silencieuse côté visiteur (pas de bloquage).
+    if (res.data?.id) {
+      try {
+        // Call non bloquant — on n'attend PAS la réponse pour rendre la main
+        // au formulaire (l'utilisateur a déjà son toast de succès).
+        fetch(`${SUPABASE_URL}/functions/v1/notify-lead`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + SUPABASE_KEY,
+            'apikey': SUPABASE_KEY
+          },
+          body: JSON.stringify({ lead_id: res.data.id })
+        }).catch(err => console.warn('[hc-leads] notify-lead failed (silent):', err && err.message));
+      } catch(e) { /* swallow */ }
+    }
+    return res;
   }
 
   // Récupère les UTM depuis l'URL courante
