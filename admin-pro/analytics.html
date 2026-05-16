@@ -139,7 +139,67 @@
     return j;
   }
 
-  if (ga4Ready && saJsonStr) {
+  // ─── Plan B : si on a un OAuth refresh_token GA4 (config ga4_oauth) → on l'utilise en PRIORITÉ ──
+  // (sinon fallback sur service account)
+  let ga4OauthRefresh = null;
+  try {
+    const { data: oauthData } = await c.from('app_settings').select('value').eq('key','ga4_oauth').maybeSingle();
+    if (oauthData?.value?.refresh_token && oauthData?.value?.client_id && oauthData?.value?.client_secret) {
+      ga4OauthRefresh = oauthData.value;
+    }
+  } catch(_){}
+
+  if (ga4Ready && ga4OauthRefresh) {
+    try {
+      // Échange refresh_token → access_token
+      const rt = await fetch('https://oauth2.googleapis.com/token', {
+        method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body: new URLSearchParams({
+          client_id: ga4OauthRefresh.client_id,
+          client_secret: ga4OauthRefresh.client_secret,
+          refresh_token: ga4OauthRefresh.refresh_token,
+          grant_type:'refresh_token'
+        }).toString()
+      });
+      const tj = await rt.json();
+      if (!tj.access_token) throw new Error(tj.error_description || tj.error || 'oauth refresh failed');
+      // Appel GA4 directement
+      const ga4OauthCall = async (body) => {
+        const r = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${settings.value.property_id}:runReport`, {
+          method:'POST', headers:{Authorization:'Bearer '+tj.access_token,'Content-Type':'application/json'},
+          body: JSON.stringify(body)
+        });
+        const j = await r.json();
+        if (j.error) throw new Error('GA4: '+j.error.message);
+        return j;
+      };
+      const main = await ga4OauthCall({
+        dateRanges:[{startDate:'30daysAgo',endDate:'today'}],
+        metrics:[{name:'sessions'},{name:'totalUsers'},{name:'newUsers'},{name:'screenPageViews'},{name:'averageSessionDuration'},{name:'engagementRate'}]
+      });
+      const row = main.rows?.[0]?.metricValues || [];
+      ga4Stats = {
+        sessions: Number(row[0]?.value||0), users: Number(row[1]?.value||0),
+        newUsers: Number(row[2]?.value||0), page_views: Number(row[3]?.value||0),
+        avg_duration_sec: Math.round(Number(row[4]?.value||0)), engagement_rate: Number(row[5]?.value||0)
+      };
+      // Top sources + pages
+      try {
+        const s = await ga4OauthCall({ dateRanges:[{startDate:'30daysAgo',endDate:'today'}], dimensions:[{name:'sessionSourceMedium'}], metrics:[{name:'sessions'},{name:'totalUsers'}], limit:8, orderBys:[{metric:{metricName:'sessions'},desc:true}] });
+        topSources = (s.rows||[]).map(r => ({ source:r.dimensionValues[0]?.value||'(direct)', sessions:Number(r.metricValues[0]?.value||0), users:Number(r.metricValues[1]?.value||0) }));
+      } catch(_){}
+      try {
+        const p = await ga4OauthCall({ dateRanges:[{startDate:'30daysAgo',endDate:'today'}], dimensions:[{name:'pagePath'}], metrics:[{name:'screenPageViews'},{name:'totalUsers'}], limit:10, orderBys:[{metric:{metricName:'screenPageViews'},desc:true}] });
+        topPages = (p.rows||[]).map(r => ({ path:r.dimensionValues[0]?.value||'/', views:Number(r.metricValues[0]?.value||0), users:Number(r.metricValues[1]?.value||0) }));
+      } catch(_){}
+      console.info('[analytics] GA4 via OAuth user — OK');
+    } catch(e) {
+      ga4Error = '[OAuth] ' + (e.message || 'erreur');
+      console.warn('[analytics] OAuth fail, fallback SA :', ga4Error);
+    }
+  }
+
+  if (!ga4Stats && ga4Ready && saJsonStr) {
     try {
       const sa = typeof saJsonStr === 'string' ? JSON.parse(saJsonStr) : saJsonStr;
       if (!sa.client_email || !sa.private_key || !String(sa.private_key).includes('BEGIN PRIVATE KEY')) {
@@ -262,9 +322,10 @@
             • L'API <code>analyticsdata.googleapis.com</code> n'est pas activée sur le projet <code>help-confort-back-office</code>
           </p>
           <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
-            <a href="finalize-config.html" class="btn btn-primary" style="background:linear-gradient(135deg,#15803D,#22C55E);color:#fff;text-decoration:none;padding:9px 16px;border-radius:8px;font-weight:800;font-size:.86rem">🔧 Re-coller le JSON complet →</a>
-            <a href="sync-ga4.html" class="btn" style="padding:9px 16px;border-radius:8px;font-weight:700;font-size:.86rem;text-decoration:none;background:#fff;border:1px solid #e2e8f0;color:#0A1428">🧪 Page de test détaillé</a>
-            <a href="https://console.cloud.google.com/apis/library/analyticsdata.googleapis.com?project=help-confort-back-office" target="_blank" class="btn" style="padding:9px 16px;border-radius:8px;font-weight:700;font-size:.86rem;text-decoration:none;background:#fff;border:1px solid #e2e8f0;color:#0A1428">✅ Activer Analytics Data API</a>
+            <a href="oauth-ga4.html" class="btn btn-primary" style="background:linear-gradient(135deg,#4285F4,#34A853);color:#fff;text-decoration:none;padding:9px 16px;border-radius:8px;font-weight:800;font-size:.86rem">🔐 Plan B : connexion OAuth Google</a>
+            <a href="finalize-config.html" class="btn" style="padding:9px 16px;border-radius:8px;font-weight:700;font-size:.86rem;text-decoration:none;background:#fff;border:1px solid #e2e8f0;color:#0A1428">🔧 Re-coller le JSON</a>
+            <a href="sync-ga4.html" class="btn" style="padding:9px 16px;border-radius:8px;font-weight:700;font-size:.86rem;text-decoration:none;background:#fff;border:1px solid #e2e8f0;color:#0A1428">🧪 Test détaillé</a>
+            <a href="https://console.cloud.google.com/apis/library/analyticsdata.googleapis.com?project=help-confort-back-office" target="_blank" class="btn" style="padding:9px 16px;border-radius:8px;font-weight:700;font-size:.86rem;text-decoration:none;background:#fff;border:1px solid #e2e8f0;color:#0A1428">✅ Activer API</a>
           </div>
         </div>`
       }
