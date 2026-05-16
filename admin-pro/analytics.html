@@ -768,6 +768,50 @@
               <p style="margin:12px 0 0;font-size:.74rem;color:#94a3b8">💡 Plus la case est foncée, plus il y a de sessions à cette heure. Utile pour adapter tes horaires de support ou tes campagnes Google Ads.</p>
             </div>`;
           })() : ''}
+
+          <!-- ═══ COMPARAISON ANNÉE-ANNÉE ═══ -->
+          ${ga4LastYear && (ga4LastYear.sessions || ga4LastYear.users) ? (() => {
+            function vCompare(curr, prev) {
+              if (!prev || prev === 0) return { v: curr>0?'+100%':'0%', cls: curr>0?'up':'flat', icon: curr>0?'↗':'—' };
+              const pct = Math.round(((curr - prev) / prev) * 100);
+              if (pct > 0) return { v: '+'+pct+'%', cls:'up', icon:'↗' };
+              if (pct < 0) return { v: pct+'%', cls:'down', icon:'↘' };
+              return { v: '0%', cls:'flat', icon:'—' };
+            }
+            const cy = vCompare(ga4Stats.users, ga4LastYear.users);
+            const cs = vCompare(ga4Stats.sessions, ga4LastYear.sessions);
+            const cv = vCompare(ga4Stats.page_views, ga4LastYear.page_views);
+            return `<div style="margin-top:14px;padding:22px;background:linear-gradient(135deg,#F0FDF4,#fff);border:1px solid var(--ink-100);border-radius:12px">
+              <h3 style="margin:0 0 14px;font-size:1rem;font-weight:800;color:#0A1428">📅 Comparaison année-année (même période)</h3>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px">
+                <div style="padding:14px;background:#fff;border:1px solid var(--ink-100);border-radius:10px">
+                  <div style="font-size:.7rem;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.04em">Visiteurs</div>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px">
+                    <div style="font-size:1.5rem;font-weight:900;color:#0A1428">${(ga4Stats.users||0).toLocaleString('fr-FR')}</div>
+                    <div style="font-size:.78rem;color:${cy.cls==='up'?'#15803d':cy.cls==='down'?'#B91C1C':'#64748b'};font-weight:700">${cy.icon} ${cy.v}</div>
+                  </div>
+                  <div style="font-size:.74rem;color:#94a3b8;margin-top:2px">N-1 : ${(ga4LastYear.users||0).toLocaleString('fr-FR')}</div>
+                </div>
+                <div style="padding:14px;background:#fff;border:1px solid var(--ink-100);border-radius:10px">
+                  <div style="font-size:.7rem;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.04em">Sessions</div>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px">
+                    <div style="font-size:1.5rem;font-weight:900;color:#0A1428">${(ga4Stats.sessions||0).toLocaleString('fr-FR')}</div>
+                    <div style="font-size:.78rem;color:${cs.cls==='up'?'#15803d':cs.cls==='down'?'#B91C1C':'#64748b'};font-weight:700">${cs.icon} ${cs.v}</div>
+                  </div>
+                  <div style="font-size:.74rem;color:#94a3b8;margin-top:2px">N-1 : ${(ga4LastYear.sessions||0).toLocaleString('fr-FR')}</div>
+                </div>
+                <div style="padding:14px;background:#fff;border:1px solid var(--ink-100);border-radius:10px">
+                  <div style="font-size:.7rem;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.04em">Pages vues</div>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px">
+                    <div style="font-size:1.5rem;font-weight:900;color:#0A1428">${(ga4Stats.page_views||0).toLocaleString('fr-FR')}</div>
+                    <div style="font-size:.78rem;color:${cv.cls==='up'?'#15803d':cv.cls==='down'?'#B91C1C':'#64748b'};font-weight:700">${cv.icon} ${cv.v}</div>
+                  </div>
+                  <div style="font-size:.74rem;color:#94a3b8;margin-top:2px">N-1 : ${(ga4LastYear.page_views||0).toLocaleString('fr-FR')}</div>
+                </div>
+              </div>
+              <p style="margin:12px 0 0;font-size:.74rem;color:#94a3b8">💡 Comparaison avec la même période il y a 1 an. Permet d'évaluer la croissance réelle (et pas seulement la saisonnalité).</p>
+            </div>`;
+          })() : ''}
           `;
         })()
         :

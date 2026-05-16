@@ -784,6 +784,55 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
    return s;
  });
 
+ // ─── Enrichissement icon_emoji + sous-catégorie pour les services Supabase (qui n'ont pas ces champs) ───
+ function deriveEmoji(s){
+   var name = (s.name||'').toLowerCase();
+   var slug = (s.slug||'').toLowerCase();
+   var hay = name + ' ' + slug;
+   if (/chauffe.?eau|cumulus|ballon/.test(hay)) return '♨️';
+   if (/recherche.+fuite|caméra|gaz traceur|acoustique/.test(hay)) {
+     return /tech|caméra|acoustique|gaz/.test(hay) ? '🔬' : '💧';
+   }
+   if (/débouchage|désengorg|canalisation/.test(hay)) return '🚿';
+   if (/chasse|wc|sanitaire/.test(hay)) return '🚽';
+   if (/détartrage|calcaire|tartre/.test(hay)) return '💎';
+   if (/contrat.+entretien|entretien.+annuel/.test(hay)) return '🛡️';
+   if (/chaudière|chauffage|radiateur/.test(hay)) return '🔥';
+   if (/désembou/.test(hay)) return '🌡️';
+   if (/panne|électric|disjonct/.test(hay)) return '⚡';
+   if (/tableau/.test(hay)) return '🔲';
+   if (/ouverture.+porte|claqu|fermé/.test(hay)) return '🔓';
+   if (/serrure|cylindre|verrou/.test(hay)) return '🔒';
+   if (/blindage/.test(hay)) return '🚪';
+   if (/vitr|bris|fenêtre/.test(hay)) return '🪟';
+   if (/volet|store/.test(hay)) return '🪟';
+   if (/douche|salle.+bain|sdb/.test(hay)) return '🛁';
+   if (/pmr|adaptation|handicap/.test(hay)) return '♿';
+   if (/cuisine/.test(hay)) return '🍳';
+   if (/peinture/.test(hay)) return '🎨';
+   return '🔧';
+ }
+ function deriveSubcat(s){
+   var hay = ((s.name||'') + ' ' + (s.slug||'')).toLowerCase();
+   if (/recherche.+fuite|caméra|gaz traceur|acoustique/.test(hay)) return { slug:'diagnostic', name:'🔍 Diagnostic & recherche' };
+   if (/débouchage|désengorg|canalisation/.test(hay)) return { slug:'debouchage', name:'🚿 Débouchage canalisations' };
+   if (/chauffe.?eau|cumulus|ballon|contrat.+chauffe/.test(hay)) return { slug:'chauffe-eau', name:'♨️ Chauffe-eau & ECS' };
+   if (/chasse|wc|sanitaire|détartrage|robinet|mitigeur/.test(hay)) return { slug:'sanitaire', name:'🚽 Sanitaire & WC' };
+   if (/contrat.+chauffage|contrat.+gaz|contrat.+fioul/.test(hay)) return { slug:'contrats', name:'🛡️ Contrats annuels' };
+   if (/chaudière|désembou|entretien.+gaz|entretien.+fioul|dépannage.+chauffage/.test(hay)) return { slug:'chaudiere', name:'🔧 Entretien & dépannage' };
+   if (/ouverture/.test(hay)) return { slug:'ouverture', name:'🔓 Ouverture de porte' };
+   return null;
+ }
+ services = services.map(s => {
+   var enriched = { ...s };
+   if (!enriched.icon_emoji) enriched.icon_emoji = deriveEmoji(s);
+   if (!enriched.subcategory_slug) {
+     var sub = deriveSubcat(s);
+     if (sub) { enriched.subcategory_slug = sub.slug; enriched.subcategory_name = sub.name; }
+   }
+   return enriched;
+ });
+
  // Fusion + déduplication SOLIDE :
  //   - on garde les services Supabase
  //   - on ajoute les locaux SI ni le slug NI le nom (normalisé) n'existent déjà
