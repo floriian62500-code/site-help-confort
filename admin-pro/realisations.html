@@ -718,8 +718,61 @@ async function loadReals() {
   else { _all = data || []; }
   document.getElementById('navRealCount').textContent = _all.length;
   refreshVilleFilter();
+  refreshTabCounts();
   renderList();
 }
+
+// ─── Branche les onglets Chantiers / Actus / Tout ─────────────
+function setupTabs() {
+  document.querySelectorAll('.rtab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      _activeTab = btn.dataset.rtab;
+      document.querySelectorAll('.rtab').forEach(b => {
+        b.classList.remove('is-active');
+        b.style.color = 'var(--ink-500)';
+        b.style.borderBottomColor = 'transparent';
+        b.style.fontWeight = '600';
+      });
+      btn.classList.add('is-active');
+      btn.style.color = 'var(--hc-primary)';
+      btn.style.borderBottomColor = 'var(--hc-primary)';
+      btn.style.fontWeight = '700';
+      renderList();
+    });
+  });
+}
+
+// ─── Détection Chantier vs Actualité ─────────────────────────
+// Une "actualité" = post communication/marketing/vœux, PAS un vrai chantier
+// Critères : tag manuel ai_generated.post_type === 'actualite'
+// OU mots-clés typiques dans le titre/description
+// OU import FB sans paire avant/après ET sans mot-clé métier précis
+function classifyReal(r) {
+  // 1) Tag manuel (priorité absolue)
+  if (r.ai_generated && r.ai_generated.post_type === 'actualite') return 'actualite';
+  if (r.ai_generated && r.ai_generated.post_type === 'realisation') return 'chantier';
+
+  const t = (r.title || '').toLowerCase();
+  const d = (r.description || '').toLowerCase();
+  const blob = t + ' ' + d;
+
+  // 2) Mots-clés typiques actu / communication marketing
+  if (/vœux|voeux|meilleurs vœux|fin d'année|bonne année|nouvel an|joyeuses fêtes|noël|s'invite sur vos écrans|patient zero|recrutement|nous recrutons|stage|alternance|portes ouvertes|salon (du|des)|émission|reportage|radiateurs? glacés?|hiver|jingle|spot tv|publicité|sponsor/.test(blob)) return 'actualite';
+
+  // 3) Chantier "officiel" si paire avant/après présente
+  if (r.image_before && r.image_after) return 'chantier';
+
+  // 4) Mots-clés métier précis = chantier (même sans avant/après)
+  if (/remplacement|installation|pose|dépannage|réparation|débouchage|désengorgement|désembouage|détartrage|entretien|ouverture|fuite|chaudière|chauffe-eau|radiateur|mitigeur|robinet|chasse d'eau|porte de (garage|service|entrée|fenêtre)|volet|vitrage|insert|cylindre|cellier|plafond|peinture/.test(blob)) return 'chantier';
+
+  // 5) Import FB sans rien d'identifiable = actu par défaut
+  if (r.ai_generated && /facebook_scrape/.test(r.ai_generated.imported_from || '')) return 'actualite';
+
+  // 6) Sinon, chantier par défaut
+  return 'chantier';
+}
+
+let _activeTab = 'chantiers'; // 'chantiers' | 'actus' | 'tout'
 
 // ─── Filtrage + tri ──────────────────────────────────────────
 function getFiltered() {
@@ -729,6 +782,12 @@ function getFiltered() {
   const s = document.getElementById('filterStatus').value;
   const ag = document.getElementById('filterAgence').value;
   return _all.filter(r => {
+    // Onglet : chantier / actualite / tout
+    if (_activeTab !== 'tout') {
+      const cls = classifyReal(r);
+      if (_activeTab === 'chantiers' && cls !== 'chantier') return false;
+      if (_activeTab === 'actus' && cls !== 'actualite') return false;
+    }
     if (m && r.metier !== m) return false;
     if (v && r.ville !== v) return false;
     if (s && r.status !== s) return false;
@@ -742,6 +801,18 @@ function getFiltered() {
     }
     return true;
   });
+}
+
+// Met à jour les compteurs dans les onglets
+function refreshTabCounts() {
+  const chantiers = _all.filter(r => classifyReal(r) === 'chantier').length;
+  const actus = _all.filter(r => classifyReal(r) === 'actualite').length;
+  const cntC = document.getElementById('cntChantiers');
+  const cntA = document.getElementById('cntActus');
+  const cntT = document.getElementById('cntTout');
+  if (cntC) cntC.textContent = chantiers;
+  if (cntA) cntA.textContent = actus;
+  if (cntT) cntT.textContent = _all.length;
 }
 
 // Peuple dynamiquement le filtre Ville depuis les données chargées
@@ -1543,6 +1614,9 @@ async function triggerMultichannelPublish(realisationId, targets) {
   document.getElementById('previewClose').addEventListener('click', closePreview);
   document.getElementById('previewModal').addEventListener('click', e => { if (e.target.id === 'previewModal') closePreview(); });
   await loadSettings();
+
+  // Onglets Chantiers / Actus / Tout
+  setupTabs();
 
   // Charger les données
   await loadReals();
