@@ -416,11 +416,16 @@ if (document.fonts && document.fonts.ready) {
  var presta = params.get('presta');
  var metier = params.get('metier');
  // Auto-scroll vers le formulaire si on arrive avec ?presta= ou ?metier= ou hash #form
- if (presta || metier || location.hash === '#form') {
-   setTimeout(function(){
+ // 2 essais : 1er après DOMContentLoaded, 2e à 800ms (anti-override navigateur)
+ if (presta || metier || location.hash === '#form' || location.hash === '#rappel' || location.hash === '#catalogues') {
+   var doScroll = function(){
      var formEl = document.getElementById('form');
      if (formEl) formEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-   }, 200);
+   };
+   if (document.readyState === 'loading') {
+     document.addEventListener('DOMContentLoaded', function(){ setTimeout(doScroll, 50); });
+   }
+   setTimeout(doScroll, 800);
  }
  // Si pas de presta mais un métier : on mappe le métier sur une presta générique
  var METIER_TO_PRESTA = {
