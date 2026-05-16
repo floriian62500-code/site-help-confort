@@ -187,11 +187,26 @@ window.HCLayout = (function() {
   `;
 
   function sidebarHTML(activePage) {
+    // ─── Module actif (Comm / RH / Outils) ───
+    // Auto-détection : si la page active est dans une section "outils", switch module
+    let activeModule = getActiveModule();
+    SECTIONS.forEach(sec => {
+      if (sec.links.some(l => l.id === activePage)) {
+        if (sec.module && sec.module !== activeModule) {
+          activeModule = sec.module;
+          setActiveModule(activeModule); // persist
+        }
+      }
+    });
+
     // Determine which section contains the active page
     let activeSectionId = null;
     SECTIONS.forEach(sec => {
       if (sec.links.some(l => l.id === activePage)) activeSectionId = sec.id;
     });
+
+    // Sections filtrées par module actif
+    const visibleSections = SECTIONS.filter(s => !s.module || s.module === activeModule);
 
     // Read collapsed state from localStorage
     let userState = {};
@@ -203,21 +218,33 @@ window.HCLayout = (function() {
       return `<a href="${l.href}" class="admin-nav-item${active}"${extraAttrs}><svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${l.icon}</svg>${l.label}${l.badge || ''}</a>`;
     }
 
+    // ─── Switcher 3 modules en haut de sidebar ───
+    let moduleSwitcherHtml = `<div class="admin-module-switcher" style="display:flex;gap:3px;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:10px;margin:10px 12px 14px">`;
+    Object.entries(MODULES).forEach(([mid, m]) => {
+      const isActive = mid === activeModule;
+      moduleSwitcherHtml += `<button type="button" data-module="${mid}" title="${m.label} — ${m.desc}" style="flex:1;padding:7px 4px;background:${isActive ? m.color : 'transparent'};color:${isActive ? '#fff' : 'rgba(255,255,255,.65)'};border:none;border-radius:7px;font:inherit;font-size:.72rem;font-weight:800;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:.15s">
+        <span style="font-size:1rem">${m.icon}</span>
+        <span>${m.shortLabel.replace(m.icon, '').trim()}</span>
+      </button>`;
+    });
+    moduleSwitcherHtml += `</div>`;
+
     let html = `<style>${SIDEBAR_ACCORDION_CSS}</style>
       <div class="admin-sidebar-brand">
         <div class="admin-brand-logo">H!</div>
         <div class="admin-brand-text">
           <strong>HELP! Confort</strong>
-          <span>Back-Office Pro</span>
+          <span>${MODULES[activeModule]?.label || 'Back-Office'}</span>
         </div>
       </div>
+      ${moduleSwitcherHtml}
       <nav class="admin-sidebar-nav" data-sidebar-nav>`;
 
     // Pinned Dashboard
     html += `<div class="admin-nav-pinned">${renderItem(PINNED_ITEM)}</div>`;
 
-    // Sections accordéon
-    SECTIONS.forEach(sec => {
+    // Sections accordéon (filtrées par module actif)
+    visibleSections.forEach(sec => {
       const hasActive = sec.id === activeSectionId;
       // Section is open if: contains active page, OR user explicitly opened it (state===1).
       // If user explicitly closed it (state===0), keep closed even if active — but only if state was set deliberately.
