@@ -41,11 +41,12 @@
 .cs-block span{display:block;font-size:.72rem;color:var(--ink-500);line-height:1.4;position:relative;z-index:1}
 
 /* ─── Panel d'édition ──────────────────────────────── */
-.cs-edit{background:#fff;border:1px solid var(--ink-100);border-radius:14px;padding:20px;box-shadow:0 1px 2px rgba(11,18,32,.04)}
-.cs-edit-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--ink-100)}
-.cs-edit-head .emoji{font-size:2rem;line-height:1;flex-shrink:0}
-.cs-edit-head h2{font-size:1.06rem;font-weight:800;margin:0;color:var(--ink-900);line-height:1.2}
-.cs-edit-head p{font-size:.82rem;color:var(--ink-500);margin:1px 0 0 0}
+.cs-edit{background:linear-gradient(180deg,#fff 0%,#FAFCFD 100%);border:1px solid var(--ink-100);border-radius:16px;padding:22px;box-shadow:0 2px 6px rgba(11,18,32,.04)}
+.cs-edit-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--ink-100);position:relative}
+.cs-edit-head::after{content:'';position:absolute;bottom:-1px;left:0;width:60px;height:2px;background:linear-gradient(90deg,var(--hc-primary),transparent);border-radius:2px}
+.cs-edit-head .emoji{font-size:2.1rem;line-height:1;flex-shrink:0;filter:drop-shadow(0 3px 6px rgba(11,18,32,.10))}
+.cs-edit-head h2{font-size:1.1rem;font-weight:800;margin:0;color:var(--ink-900);line-height:1.2;letter-spacing:-.015em}
+.cs-edit-head p{font-size:.85rem;color:var(--ink-500);margin:2px 0 0 0}
 
 .cs-panel{display:none}
 .cs-panel.active{display:block;animation:cs-fade .2s ease-out}
@@ -124,11 +125,12 @@
 .cs-prev-footer .rs-row a{background:rgba(255,255,255,.10);color:#fff;padding:3px 9px;border-radius:5px;font-size:.66rem;font-weight:600;text-decoration:none}
 
 /* ─── Save bar fixe ─────────────────────────────────── */
-.cs-savebar{position:sticky;bottom:16px;background:#fff;border:1px solid var(--ink-100);border-radius:13px;padding:13px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 -2px 24px rgba(11,18,32,.10);margin-top:16px;z-index:10}
-.cs-savebar .status{font-size:.82rem;color:var(--ink-500);flex:1;display:flex;align-items:center;gap:6px}
-.cs-savebar .status svg{width:14px;height:14px}
-.cs-savebar .status.dirty{color:#7a4c00}
-.cs-savebar .btn{padding:9px 16px;font-size:.84rem}
+.cs-savebar{position:sticky;bottom:16px;background:linear-gradient(180deg,#fff 0%,#FAFCFD 100%);border:1px solid var(--ink-100);border-radius:14px;padding:14px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 -4px 30px rgba(11,18,32,.10),0 0 0 1px rgba(11,18,32,.02);margin-top:18px;z-index:10;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.cs-savebar .status{font-size:.84rem;font-weight:600;color:var(--ink-500);flex:1;display:flex;align-items:center;gap:7px}
+.cs-savebar .status svg{width:15px;height:15px;color:var(--success)}
+.cs-savebar .status.dirty{color:#92400E}
+.cs-savebar .status.dirty svg{color:var(--warning)}
+.cs-savebar .btn{padding:10px 18px;font-size:.86rem;font-weight:700}
 
 .toast-stack{position:fixed;bottom:80px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:2000;pointer-events:none}
 .toast{background:#fff;border:1px solid var(--ink-100);border-radius:10px;padding:11px 14px;box-shadow:0 8px 24px rgba(11,18,32,.16);font-size:.86rem;font-weight:600;color:var(--ink-900);pointer-events:auto;min-width:240px}
@@ -620,14 +622,15 @@ let dirty = false;
     document.getElementById('prevPhone').innerHTML = heroPhone ? '📞 ' + escapeHtml(heroPhone) : '';
 
     // === COORDONNÉES ===
-    document.getElementById('prevContactPhoneAudo').textContent = getDeep(siteContent, 'contact.phone_audo') || '—';
-    document.getElementById('prevContactPhoneDk').textContent   = getDeep(siteContent, 'contact.phone_dk')   || '—';
+    const ph = (v) => v ? v : '<em style="color:var(--ink-300);font-style:italic;font-weight:500">à renseigner</em>';
+    document.getElementById('prevContactPhoneAudo').innerHTML = ph(getDeep(siteContent, 'contact.phone_audo'));
+    document.getElementById('prevContactPhoneDk').innerHTML   = ph(getDeep(siteContent, 'contact.phone_dk'));
     const email    = getDeep(siteContent, 'contact.email');
     const emailUrg = getDeep(siteContent, 'contact.email_urgence');
-    document.getElementById('prevContactEmail').textContent = email || emailUrg ? [email, emailUrg].filter(Boolean).join(' · ') : '—';
+    document.getElementById('prevContactEmail').innerHTML = (email || emailUrg) ? escapeHtml([email, emailUrg].filter(Boolean).join(' · ')) : ph('');
     const adAudo = getDeep(siteContent, 'contact.address_audo');
     const adDk   = getDeep(siteContent, 'contact.address_dk');
-    document.getElementById('prevContactAddress').textContent = [adAudo, adDk].filter(Boolean).join(' · ') || '—';
+    document.getElementById('prevContactAddress').innerHTML = (adAudo || adDk) ? escapeHtml([adAudo, adDk].filter(Boolean).join(' · ')) : ph('');
     const hours = getDeep(siteContent, 'contact.hours');
     const hoursEl = document.getElementById('prevContactHours');
     if (hours) { hoursEl.style.display = ''; hoursEl.textContent = hours; }
@@ -665,8 +668,8 @@ let dirty = false;
     // === ZONES ===
     const zAudo = (getDeep(siteContent, 'zones.audo') || '').split('\n').filter(Boolean);
     const zDk   = (getDeep(siteContent, 'zones.dk')   || '').split('\n').filter(Boolean);
-    document.getElementById('prevZonesAudo').textContent = zAudo.length ? zAudo.slice(0, 8).join(' · ') + (zAudo.length > 8 ? ' …' : '') : '—';
-    document.getElementById('prevZonesDk').textContent   = zDk.length   ? zDk.slice(0, 8).join(' · ')   + (zDk.length   > 8 ? ' …' : '') : '—';
+    document.getElementById('prevZonesAudo').innerHTML = zAudo.length ? escapeHtml(zAudo.slice(0, 8).join(' · ') + (zAudo.length > 8 ? ' …' : '')) : '<em style="color:var(--ink-300);font-style:italic;font-weight:500">à renseigner</em>';
+    document.getElementById('prevZonesDk').innerHTML   = zDk.length   ? escapeHtml(zDk.slice(0, 8).join(' · ')   + (zDk.length   > 8 ? ' …' : ''))   : '<em style="color:var(--ink-300);font-style:italic;font-weight:500">à renseigner</em>';
     const radius = getDeep(siteContent, 'zones.radius');
     document.getElementById('prevZonesRadius').textContent = radius || '';
     document.getElementById('prevZonesRadius').style.display = radius ? '' : 'none';
