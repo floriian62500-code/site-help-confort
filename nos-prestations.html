@@ -804,10 +804,10 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  short_desc:"Nettoyage chimique des boues pour rendement chauffage optimal (prix par radiateur).", price_ttc:105, deposit_pct:40, deposit_ttc:42,
  duration_min:60, warranty:"Pose garantie",
  includes:["Produit désembouant pro","Rinçage installation","Vérification équilibrage","Déplacement inclus"] },
- { id:'loc-ch-depan', slug:'depannage-chaudiere-t1', name:"Dépannage chaudière (T1 semaine, hors fourniture)", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage', icon_emoji:'🔥', subcategory_slug:'chaudiere', subcategory_name:"🔧 Entretien & dépannage",
- short_desc:"Forfait diagnostic + 1ère heure en semaine, sans pièce détachée.", price_ttc:75, deposit_pct:40, deposit_ttc:30,
+ { id:'loc-ch-depan', slug:'depannage-chaudiere', name:"Dépannage chaudière", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage', icon_emoji:'🔥', subcategory_slug:'chaudiere', subcategory_name:"🔧 Entretien & dépannage", requires_quote:true,
+ short_desc:"Diagnostic + intervention selon la panne. Devis annoncé avant intervention.",
  duration_min:60, warranty:"Diagnostic garanti",
- includes:["Diagnostic complet","1ère heure de MO incluse","Devis pour pièce détachée","Déplacement inclus"] },
+ includes:["Diagnostic complet","Devis transparent avant intervention","Déplacement inclus","Pièces facturées en sus si besoin"] },
  // ─── Contrats annuels chauffage — sous la section chauffage ─────
  { id:'loc-ch-contrat-basic-gaz', slug:'contrat-chauffage-basic-gaz', name:"Contrat Basic — chaudière gaz", category_slug:'chauffage', category_name:'Chauffage', category_icon:'chauffage', is_contrat:true, icon_emoji:'📅', subcategory_slug:'contrats', subcategory_name:"🛡️ Contrats annuels", badge:"Contrat annuel",
  short_desc:"Entretien annuel obligatoire + attestation. Prélèvement mensuel 9 €/mois.", price_ttc:108, deposit_pct:0, deposit_ttc:0,
