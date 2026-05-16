@@ -80,6 +80,9 @@ CATALOG_PATH = Path(
 LOG_DIR = Path(os.environ.get("HC_LOG_DIR", HOME / "Library/Logs/helpconfort"))
 LOG_FILE = LOG_DIR / "template-posts.log"
 
+# Dossier des marqueurs anti-doublon (un fichier par jour de publication)
+FLAG_DIR = LOG_DIR
+
 # Fichiers .env recherchés (priorité décroissante)
 ENV_FILES = [
     HOME / ".helpconfort/phase2.env",            # convention Florian (runtime)
