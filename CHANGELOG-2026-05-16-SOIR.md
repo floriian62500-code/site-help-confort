@@ -62,3 +62,17 @@
 - 2 modules clairs (Comm + Outils) — plus lisible que 3
 - Pages individuelles bénéficient toutes du polish CSS layer
 - Stack vendable telle quelle à un confrère plombier/chauffagiste
+
+---
+
+## 🐛 Fix carrousel "Nos dernières actualités" (13:25)
+
+**Problème récurrent** : Des chantiers (importés Facebook) s'affichaient dans le bloc « Nos dernières actualités » de l'accueil. Filtre `CHANTIER_RE` titre seul trop fragile : `votre [mot] est X` ratait `votre panneau de porte PVC est X` (à cause du complément « de … »).
+
+**Fix** :
+- Double filtre **TITRE + RÉSUMÉ** (défense-en-profondeur). Les chantiers FB ont des résumés très stéréotypés (« Help Confort intervient pour… », « Nos prestations : », « Notre équipe est intervenue ») → impossible d'en laisser passer un nouveau.
+- Détection métier réordonnée : `panneau|pvc` testé AVANT `porte|serrurerie` (« panneau de porte PVC » → Menuiserie 🚪, plus Serrurerie 🔒).
+- Ajout `soupape`, `manomètre`, `cumulus` → Chauffage 🔥 (au lieu du fallback générique).
+- Visuel : flèches prev/next du carrousel repositionnées EN INTERNE du track (left:8px au lieu de -24px) pour les bandeaux côte-à-côte, évitant le rognage par l'`overflow:hidden` de l'aside.
+
+**Résultat sur la data actuelle** : 12 chantiers filtrés / 5 vraies actualités conservées (campagnes, vœux, articles éducatifs).
