@@ -95,6 +95,16 @@
   const ga4Ready = !!(settings?.value?.property_id);
   const saJsonStr = settings?.value?.service_account_json;
 
+  // ─── Sélecteur de période (lu depuis ?period=7d|30d|90d|365d) ──
+  const PERIOD = (new URL(location.href).searchParams.get('period') || '30d');
+  const PERIOD_MAP = {
+    '7d':  { start:'7daysAgo',   end:'today',    prevStart:'14daysAgo', prevEnd:'8daysAgo',   label:'7 derniers jours' },
+    '30d': { start:'30daysAgo',  end:'today',    prevStart:'60daysAgo', prevEnd:'31daysAgo',  label:'30 derniers jours' },
+    '90d': { start:'90daysAgo',  end:'today',    prevStart:'180daysAgo',prevEnd:'91daysAgo',  label:'90 derniers jours' },
+    '365d':{ start:'365daysAgo', end:'today',    prevStart:'730daysAgo',prevEnd:'366daysAgo', label:'12 derniers mois' }
+  };
+  const PERIOD_CFG = PERIOD_MAP[PERIOD] || PERIOD_MAP['30d'];
+
   // ─── Appel CLIENT-SIDE direct à GA4 (plus de dépendance Edge Function) ──
   let ga4Stats = null;
   let ga4Error = null;
