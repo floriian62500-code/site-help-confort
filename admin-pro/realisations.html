@@ -1666,6 +1666,94 @@ async function triggerMultichannelPublish(realisationId, targets) {
   document.getElementById('btnDelete').addEventListener('click', async () => {
     if (_editing && confirm('Supprimer définitivement ce chantier ?')) await deleteReal(_editing);
   });
+
+  // ─── Bouton "Programmer" : ouvre la mini-modal datepicker ──────────────
+  document.getElementById('btnSchedule').addEventListener('click', () => {
+    if (!_editing) {
+      toast('Sauvegarde d\'abord, puis programme la publication', 'err', 3500);
+      return;
+    }
+    const inp = document.getElementById('scheduleDateTime');
+    // Pré-remplir avec demain 9h par défaut
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(9, 0, 0, 0);
+    inp.value = tomorrow.toISOString().slice(0, 16);
+    document.getElementById('scheduleModal').classList.add('is-open');
+  });
+  document.getElementById('scheduleClose').addEventListener('click', () => {
+    document.getElementById('scheduleModal').classList.remove('is-open');
+  });
+  document.getElementById('scheduleCancel').addEventListener('click', () => {
+    document.getElementById('scheduleModal').classList.remove('is-open');
+  });
+  document.getElementById('scheduleModal').addEventListener('click', e => {
+    if (e.target.id === 'scheduleModal') e.currentTarget.classList.remove('is-open');
+  });
+  // Presets
+  document.querySelectorAll('.schedule-preset').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const inp = document.getElementById('scheduleDateTime');
+      const v = btn.dataset.h;
+      const d = new Date();
+      if (v === '2') {
+        d.setHours(d.getHours() + 2);
+      } else if (v === '24') {
+        d.setDate(d.getDate() + 1);
+        d.setHours(9, 0, 0, 0);
+      } else if (v === 'next-monday-9') {
+        const day = d.getDay();
+        const diff = (8 - day) % 7 || 7;
+        d.setDate(d.getDate() + diff);
+        d.setHours(9, 0, 0, 0);
+      }
+      inp.value = d.toISOString().slice(0, 16);
+    });
+  });
+  // Confirmer la programmation → INSERT dans scheduled_publications
+  document.getElementById('scheduleConfirm').addEventListener('click', async () => {
+    if (!_editing) return;
+    const inp = document.getElementById('scheduleDateTime');
+    if (!inp.value) { toast('Choisis une date et heure', 'err'); return; }
+    const scheduledAt = new Date(inp.value).toISOString();
+    if (new Date(scheduledAt) < new Date()) {
+      toast('La date doit être dans le futur', 'err'); return;
+    }
+    // Récupère les canaux cochés
+    const channels = {
+      meta: !!document.querySelector('#publishTargets input[data-target="fb"]')?.checked,
+      linkedin: !!document.querySelector('#publishTargets input[data-target="linkedin"]')?.checked,
+      gbp: !!document.querySelector('#publishTargets input[data-target="gbp"]')?.checked,
+      site: !!document.querySelector('#publishTargets input[data-target="site"]')?.checked
+    };
+    const btn = document.getElementById('scheduleConfirm');
+    btn.disabled = true; btn.textContent = '…';
+    try {
+      const c = await HCSupabase.init();
+      // 1. Sauvegarde d'abord la réalisation
+      await saveReal({silent:true});
+      // 2. INSERT dans scheduled_publications
+      const { error } = await c.from('scheduled_publications').insert({
+        realisation_id: _editing,
+        scheduled_at: scheduledAt,
+        channels,
+        status: 'pending',
+        created_by: _user?.email || 'admin'
+      });
+      if (error) throw error;
+      document.getElementById('scheduleModal').classList.remove('is-open');
+      const fmtDate = new Date(scheduledAt).toLocaleString('fr-FR', { dateStyle:'short', timeStyle:'short' });
+      toast(`✅ Publication programmée pour ${fmtDate}`, 'ok', 4500);
+      closeEdit();
+      await loadReals();
+    } catch (e) {
+      console.error(e);
+      toast('Erreur : ' + (e.message || e), 'err', 5000);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Confirmer la programmation';
+    }
+  });
   document.getElementById('modalEdit').addEventListener('click', e => {
     if (e.target.id === 'modalEdit') closeEdit();
   });
