@@ -17,9 +17,20 @@ const CORS_HEADERS = {
 };
 
 interface PublishInput {
-  realisationId: string;
-  targets?: { facebook?: boolean; instagram?: boolean };
+  // Mode "chantier" : publie une réalisation existante depuis la base
+  realisationId?: string;
   customText?: string;  // texte personnalisé (optimisé IA pour FB)
+
+  // Mode "texte brut" : publie un message arbitraire (templates calendrier,
+  // posts ad-hoc) sans passer par la table realisations.
+  // Si textPost.message est fourni ET realisationId est absent → mode texte.
+  textPost?: {
+    message: string;
+    photoUrl?: string;   // URL publique d'une image à attacher (optionnel)
+    logKey?: string;     // identifiant libre pour traçabilité (ex: "template-mardi-r3-W20")
+  };
+
+  targets?: { facebook?: boolean; instagram?: boolean };
 }
 
 // @ts-ignore Deno global
@@ -53,29 +64,49 @@ Deno.serve(async (req: Request) => {
     }
 
     const body: PublishInput = await req.json();
-    if (!body.realisationId) return json({ error: "realisationId requis" }, 400);
 
-    // Charger la réalisation
-    const { data: r, error } = await sb.from("realisations").select("*").eq("id", body.realisationId).single();
-    if (error || !r) return json({ error: "Chantier introuvable" }, 404);
+    // Détermination du mode : chantier vs. texte brut
+    const isTextMode = !body.realisationId && !!body.textPost?.message?.trim();
+    if (!body.realisationId && !isTextMode) {
+      return json({ error: "realisationId ou textPost.message requis" }, 400);
+    }
 
-    const photo = r.image_after || r.image_before;
-    // Texte FB : customText si fourni (généré par IA), sinon assemblage par défaut
-    const fullText = body.customText && body.customText.trim()
-      ? body.customText.trim() + (r.hashtags ? "\n\n" + r.hashtags : "")
-      : [
-          r.title,
-          r.description,
-          "",
-          `📍 ${r.ville}`,
-          r.technicien ? `🔧 Technicien : ${r.technicien}` : "",
-          "",
-          r.hashtags || ""
-        ].filter(Boolean).join("\n");
+    let r: any = null;     // ligne realisations (mode chantier uniquement)
+    let photo: string | undefined;
+    let fullText: string;
+    let wantFb: boolean;
+    let wantIg: boolean;
+    let logKey: string | undefined;
 
-    // Targets par défaut : si non fourni, on lit publish_targets de la réalisation
-    const wantFb = body.targets?.facebook ?? !!(r.publish_targets?.facebook);
-    const wantIg = body.targets?.instagram ?? !!(r.publish_targets?.instagram);
+    if (isTextMode) {
+      // ─── Mode texte brut (templates calendrier, posts ad-hoc) ───
+      fullText = body.textPost!.message.trim();
+      photo = body.textPost!.photoUrl;
+      logKey = body.textPost!.logKey;
+      // Targets : par défaut Facebook seul (les templates calendrier sont FB-only)
+      wantFb = body.targets?.facebook ?? true;
+      wantIg = body.targets?.instagram ?? false;
+    } else {
+      // ─── Mode chantier (réalisation depuis la base) ───
+      const { data, error } = await sb.from("realisations").select("*").eq("id", body.realisationId).single();
+      if (error || !data) return json({ error: "Chantier introuvable" }, 404);
+      r = data;
+      photo = r.image_after || r.image_before;
+      // Texte FB : customText si fourni (généré par IA), sinon assemblage par défaut
+      fullText = body.customText && body.customText.trim()
+        ? body.customText.trim() + (r.hashtags ? "\n\n" + r.hashtags : "")
+        : [
+            r.title,
+            r.description,
+            "",
+            `📍 ${r.ville}`,
+            r.technicien ? `🔧 Technicien : ${r.technicien}` : "",
+            "",
+            r.hashtags || ""
+          ].filter(Boolean).join("\n");
+      wantFb = body.targets?.facebook ?? !!(r.publish_targets?.facebook);
+      wantIg = body.targets?.instagram ?? !!(r.publish_targets?.instagram);
+    }
 
     const results: any = {};
 
@@ -164,14 +195,16 @@ Deno.serve(async (req: Request) => {
       }
     }
 
-    // Mettre à jour la réalisation avec les liens
-    const publishLog = (r.publish_log || {});
-    Object.assign(publishLog, {
-      meta: { ...results, published_at: new Date().toISOString() }
-    });
-    await sb.from("realisations").update({ ai_generated: { ...(r.ai_generated || {}), publish_log: publishLog } }).eq("id", r.id);
+    // Mettre à jour la réalisation avec les liens (mode chantier uniquement)
+    if (r) {
+      const publishLog = (r.publish_log || {});
+      Object.assign(publishLog, {
+        meta: { ...results, published_at: new Date().toISOString() }
+      });
+      await sb.from("realisations").update({ ai_generated: { ...(r.ai_generated || {}), publish_log: publishLog } }).eq("id", r.id);
+    }
 
-    return json({ success: true, results });
+    return json({ success: true, mode: isTextMode ? "text" : "realisation", logKey, results });
 
   } catch (e: any) {
     return json({ error: e.message || String(e) }, 500);

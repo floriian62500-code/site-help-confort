@@ -75,7 +75,8 @@ step "5/6 — Migration pg_cron (20260516120000_cron_weekly_recap.sql)"
 echo -e "${YELLOW}⚠ Cette étape pousse la migration en DB. Annule maintenant si tu n'as pas committé tes autres migrations en attente.${NC}"
 read -r -p "Appliquer la migration ? [o/N] " ans
 if [ "$ans" = "o" ] || [ "$ans" = "O" ]; then
-  if supabase db push --project-ref "$PROJECT_REF"; then
+  # db push n'accepte pas --project-ref (utilise le projet linké automatiquement)
+  if supabase db push; then
     ok "Migration appliquée"
   else
     warn "supabase db push a échoué — applique manuellement via SQL Editor :"
