@@ -611,6 +611,47 @@
       <div class="distrib-list">${distrib(byVille, 12)}</div>
     </div>
   `;
+
+  // ─── Init du graphique d'évolution GA4 (si Chart.js dispo + data présente) ───
+  const chartCanvas = document.getElementById('ga4EvolutionChart');
+  if (chartCanvas) {
+    const loadChart = () => {
+      if (typeof Chart === 'undefined') { setTimeout(loadChart, 300); return; }
+      try {
+        const evol = JSON.parse(chartCanvas.dataset.evol || '[]');
+        if (!evol.length) return;
+        const labels = evol.map(d => {
+          const s = d.date || '';
+          if (s.length === 8) return s.slice(6,8) + '/' + s.slice(4,6); // YYYYMMDD → DD/MM
+          return s;
+        });
+        new Chart(chartCanvas, {
+          type: 'line',
+          data: {
+            labels,
+            datasets: [
+              { label:'Sessions', data: evol.map(d=>d.sessions), borderColor:'#0DA0CF', backgroundColor:'rgba(13,160,207,.12)', tension:.35, fill:true, pointRadius:2, pointHoverRadius:5, borderWidth:2 },
+              { label:'Visiteurs', data: evol.map(d=>d.users), borderColor:'#FF6B1A', backgroundColor:'rgba(255,107,26,.10)', tension:.35, fill:false, pointRadius:2, pointHoverRadius:5, borderWidth:2 },
+              { label:'Pages vues', data: evol.map(d=>d.views), borderColor:'#7C3AED', backgroundColor:'rgba(124,58,237,.08)', tension:.35, fill:false, pointRadius:2, pointHoverRadius:5, borderWidth:2, borderDash:[4,3] }
+            ]
+          },
+          options: {
+            responsive: true, maintainAspectRatio: false,
+            interaction:{ mode:'index', intersect:false },
+            plugins:{ legend:{ display:false }, tooltip:{ backgroundColor:'#0A1428', titleColor:'#fff', bodyColor:'#fff', padding:10, cornerRadius:8 } },
+            scales:{ x:{ grid:{ display:false }, ticks:{ font:{ size:10 } } }, y:{ beginAtZero:true, grid:{ color:'#f1f5f9' }, ticks:{ font:{ size:10 } } } }
+          }
+        });
+      } catch(e) { console.warn('[analytics] Chart init:', e.message); }
+    };
+    // Charger Chart.js si pas déjà chargé
+    if (typeof Chart === 'undefined') {
+      const sc = document.createElement('script');
+      sc.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
+      sc.onload = loadChart;
+      document.head.appendChild(sc);
+    } else loadChart();
+  }
 })();
 </script>
 </body>
