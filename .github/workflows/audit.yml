@@ -93,6 +93,9 @@ jobs:
             audit_script_async.py
             audit_robots_noindex.py
             audit_html_weight.py
+            audit_og_url_consistency.py
+            audit_breadcrumb_schema.py
+            audit_font_display.py
           )
           for a in "${AUDITS[@]}"; do
             f="admin-pro/audits/$a"
