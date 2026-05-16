@@ -194,20 +194,11 @@
       <div class="sv-pane" id="paneTarifs">
         <p style="margin:0 0 16px;color:var(--ink-500);font-size:.92rem">Tarif horaire universel + contrats annuels — référence pour les devis sur mesure. Pour les forfaits prestations, va dans l'onglet <strong>Catalogue</strong>. <a href="/admin-pro/TARIFS_REFERENCE.md" target="_blank" style="color:var(--hc-primary);font-weight:700">Voir source TARIFS_REFERENCE.md →</a></p>
 
-        <h3 style="margin:0 0 10px;font-size:1rem;font-weight:800;color:#0A1428;display:flex;align-items:center;gap:8px">🕐 Tarif horaire universel <small style="color:var(--ink-500);font-weight:400;font-size:.78rem">(tous métiers)</small></h3>
+        <h3 style="margin:0 0 10px;font-size:1rem;font-weight:800;color:#0A1428;display:flex;align-items:center;gap:8px">🕐 Tarif horaire universel <small style="color:var(--ink-500);font-weight:400;font-size:.78rem">(tous métiers)</small> <a href="tarifs.html" style="margin-left:auto;font-size:.74rem;color:var(--hc-primary);font-weight:600;text-decoration:none">✎ Modifier dans Tarifs →</a></h3>
         <div class="sv-table" style="margin-bottom:24px">
           <table>
             <thead><tr><th>Prestation</th><th style="width:120px;text-align:right">Prix HT</th><th style="width:120px;text-align:right">Prix TTC</th></tr></thead>
-            <tbody>
-              <tr><td>Main d'œuvre tous métiers <small style="color:var(--ink-500)">(Saint-Omer)</small></td><td style="text-align:right">53 €/h</td><td style="text-align:right"><strong>58 €/h</strong></td></tr>
-              <tr><td>Main d'œuvre tous métiers <small style="color:var(--ink-500)">(Dunkerque)</small></td><td style="text-align:right">55 €/h</td><td style="text-align:right"><strong>60,50 €/h</strong></td></tr>
-              <tr><td>Main d'œuvre urgence (intervention &lt;1h)</td><td style="text-align:right">63 €/h</td><td style="text-align:right"><strong>69 €/h</strong></td></tr>
-              <tr><td>Main d'œuvre week-end</td><td style="text-align:right">80 €/h</td><td style="text-align:right"><strong>88 €/h</strong></td></tr>
-              <tr><td>Déplacement audomarois</td><td style="text-align:right">45 €</td><td style="text-align:right"><strong>50 €</strong></td></tr>
-              <tr><td>Déplacement Dunkerque</td><td style="text-align:right">48 €</td><td style="text-align:right"><strong>52,80 €</strong></td></tr>
-              <tr style="background:#FAFCFD"><td>Frais de dossier (systématique)</td><td style="text-align:right">5 €</td><td style="text-align:right"><strong>5,50 €</strong></td></tr>
-              <tr style="background:#FAFCFD"><td>Traitement des déchets (% obligatoire)</td><td style="text-align:right"><strong>1 % du HT</strong></td><td style="text-align:right"><strong>1 % du HT</strong></td></tr>
-            </tbody>
+            <tbody id="svPricingHoraireBody"><tr><td colspan="3" style="padding:18px;text-align:center;color:var(--ink-500)">Chargement…</td></tr></tbody>
           </table>
         </div>
 
@@ -216,15 +207,11 @@
           Main d'œuvre (53 € HT) + Déplacement (45 € HT) + Frais de dossier (5 € HT) = <strong>103 € HT</strong> + Traitement déchets <strong>1 %</strong> = 1,03 € → <strong>104,03 € HT base (≈ 114,40 € TTC)</strong>. Le traitement déchets est <strong>toujours 1 % du HT total du forfait commandé</strong>, calculé automatiquement.
         </div>
 
-        <h3 style="margin:0 0 10px;font-size:1rem;font-weight:800;color:#0A1428;display:flex;align-items:center;gap:8px">📄 Contrats annuels entretien chaudière</h3>
+        <h3 style="margin:0 0 10px;font-size:1rem;font-weight:800;color:#0A1428;display:flex;align-items:center;gap:8px">📄 Contrats annuels entretien chaudière <a href="tarifs.html" style="margin-left:auto;font-size:.74rem;color:var(--hc-primary);font-weight:600;text-decoration:none">✎ Modifier dans Tarifs →</a></h3>
         <div class="sv-table">
           <table>
             <thead><tr><th>Formule</th><th style="text-align:right">Gaz /mois</th><th style="text-align:right">Gaz /an</th><th style="text-align:right">Fioul /mois</th><th style="text-align:right">Fioul /an</th></tr></thead>
-            <tbody>
-              <tr><td><span style="background:#DBEAFE;color:#1E40AF;font-size:.7rem;padding:2px 8px;border-radius:4px;font-weight:800">BASIC</span></td><td style="text-align:right">9 €</td><td style="text-align:right">108 €</td><td style="text-align:right">12 €</td><td style="text-align:right">140 €</td></tr>
-              <tr><td><span style="background:#FEF3C7;color:#92400E;font-size:.7rem;padding:2px 8px;border-radius:4px;font-weight:800">CONFORT</span></td><td style="text-align:right">13 €</td><td style="text-align:right">156 €</td><td style="text-align:right">16 €</td><td style="text-align:right">190 €</td></tr>
-              <tr><td><span style="background:#DCFCE7;color:#15803D;font-size:.7rem;padding:2px 8px;border-radius:4px;font-weight:800">SÉCURITÉ</span></td><td style="text-align:right">23 €</td><td style="text-align:right">276 €</td><td style="text-align:right">27 €</td><td style="text-align:right">320 €</td></tr>
-            </tbody>
+            <tbody id="svPricingContratsBody"><tr><td colspan="5" style="padding:18px;text-align:center;color:var(--ink-500)">Chargement…</td></tr></tbody>
           </table>
         </div>
 
