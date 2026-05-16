@@ -1435,6 +1435,13 @@ async function triggerMultichannelPublish(realisationId, targets) {
   document.getElementById('btnCancel').addEventListener('click', closeEdit);
   document.getElementById('modalClose').addEventListener('click', closeEdit);
   document.getElementById('btnSave').addEventListener('click', saveReal);
+  // Bouton "Valider et publier" : force statut = publie + canal site coché, puis save
+  document.getElementById('btnPublish').addEventListener('click', () => {
+    document.getElementById('f_status').value = 'publie';
+    const siteCb = document.querySelector('#publishTargets input[data-target="site"]');
+    if (siteCb) { siteCb.checked = true; siteCb.closest('.target-pill')?.classList.add('is-on'); }
+    saveReal();
+  });
   document.getElementById('btnDelete').addEventListener('click', async () => {
     if (_editing && confirm('Supprimer définitivement ce chantier ?')) await deleteReal(_editing);
   });
