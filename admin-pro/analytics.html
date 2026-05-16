@@ -441,6 +441,7 @@
               <div style="display:inline-flex;background:rgba(255,255,255,.10);border-radius:8px;padding:3px;gap:1px">
                 ${['7d','30d','90d','365d'].map(p => `<a href="?period=${p}" style="padding:6px 11px;background:${p===PERIOD?'#fff':'transparent'};color:${p===PERIOD?'#0A1428':'#fff'};text-decoration:none;border-radius:6px;font-size:.74rem;font-weight:800">${p === '7d' ? '7 j' : p === '30d' ? '30 j' : p === '90d' ? '90 j' : '1 an'}</a>`).join('')}
               </div>
+              <button id="btnExportCsv" style="padding:7px 12px;background:rgba(255,255,255,.18);color:#fff;border:none;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer">📥 Export CSV</button>
               <a href="https://analytics.google.com/analytics/web/#/p${escapeHtml(settings?.value?.property_id||'')}/reports/intelligenthome" target="_blank" style="padding:7px 12px;background:rgba(255,255,255,.18);color:#fff;text-decoration:none;border-radius:7px;font-size:.78rem;font-weight:700">Ouvrir GA4 ↗</a>
               <a href="oauth-ga4.html" style="padding:7px 12px;background:rgba(255,255,255,.18);color:#fff;text-decoration:none;border-radius:7px;font-size:.78rem;font-weight:700">🔁 Reconnecter</a>
             </div>
