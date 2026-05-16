@@ -427,7 +427,7 @@
                 <div style="font-size:2rem;font-weight:900;color:#0A1428;line-height:1">${(ga4Stats.users||0).toLocaleString('fr-FR')}</div>
                 <div style="margin-top:6px;font-size:.78rem;display:flex;align-items:center;gap:6px">
                   <span style="font-weight:800;color:${v1.cls==='up'?'#15803d':v1.cls==='down'?'#B91C1C':'#64748b'}">${v1.icon} ${v1.v}</span>
-                  <span style="color:#64748b">vs J-60 à J-30</span>
+                  <span style="color:#64748b">vs période précédente</span>
                 </div>
                 <div style="margin-top:4px;font-size:.74rem;color:#64748b">${ga4Stats.newUsers || 0} nouveaux</div>
               </div>
@@ -440,7 +440,7 @@
                 <div style="font-size:2rem;font-weight:900;color:#0A1428;line-height:1">${(ga4Stats.sessions||0).toLocaleString('fr-FR')}</div>
                 <div style="margin-top:6px;font-size:.78rem;display:flex;align-items:center;gap:6px">
                   <span style="font-weight:800;color:${v2.cls==='up'?'#15803d':v2.cls==='down'?'#B91C1C':'#64748b'}">${v2.icon} ${v2.v}</span>
-                  <span style="color:#64748b">vs J-60 à J-30</span>
+                  <span style="color:#64748b">vs période précédente</span>
                 </div>
                 <div style="margin-top:4px;font-size:.74rem;color:#64748b">${(ga4Stats.engagement_rate*100).toFixed(0)}% engagement</div>
               </div>
@@ -453,7 +453,7 @@
                 <div style="font-size:2rem;font-weight:900;color:#0A1428;line-height:1">${(ga4Stats.page_views||0).toLocaleString('fr-FR')}</div>
                 <div style="margin-top:6px;font-size:.78rem;display:flex;align-items:center;gap:6px">
                   <span style="font-weight:800;color:${v3.cls==='up'?'#15803d':v3.cls==='down'?'#B91C1C':'#64748b'}">${v3.icon} ${v3.v}</span>
-                  <span style="color:#64748b">vs J-60 à J-30</span>
+                  <span style="color:#64748b">vs période précédente</span>
                 </div>
                 <div style="margin-top:4px;font-size:.74rem;color:#64748b">${ga4Stats.sessions ? (ga4Stats.page_views/ga4Stats.sessions).toFixed(1) : '—'} vues/session</div>
               </div>
