@@ -287,7 +287,7 @@
  <a href="contact.html" class="hc-nav-link">Contact</a>
 
  <div class="hc-megamenu" data-menu="metiers" role="menu">
- <a href="plombier-saint-omer.html"><img decoding="async" src="images/picto-chauffage.svg" alt="" loading="lazy">Chauffage</a>
+ <a href="plombier-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-plomberie.png" alt="" loading="lazy">Plomberie</a>
  <a href="chauffagiste-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-chauffage.svg" alt="" loading="lazy">Chauffage</a>
  <a href="electricien-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-electricite.png" alt="" loading="lazy">Électricité</a>
  <a href="serrurier-saint-omer.html"><img decoding="async" height="437" width="437" src="images/picto-serrurerie.png" alt="" loading="lazy">Serrurerie</a>
@@ -1236,7 +1236,7 @@ if (document.fonts && document.fonts.ready) {
  if(!track) return;
  fetch('content/realisations/index.json?t=' + Date.now()).then(function(r){return r.ok?r.json():Promise.reject()}).then(function(list){
  var plomb = list.filter(function(r){
- return r.published !== false && (r.metier === 'Chauffage' || /plomb/i.test(r.metier||''));
+ return r.published !== false && r.metier === 'Chauffage';
  }).slice(0, 2);
  if(!plomb.length) return; // garde le fallback statique
  track.innerHTML = plomb.map(function(r){
