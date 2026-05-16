@@ -275,80 +275,216 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  </div>
  </div>
 
- <!-- ─── MODULE CONTRATS D'ENTRETIEN (module dédié, séparé du catalogue prestations) ─── -->
+ <!-- ─── MODULE CONTRATS D'ENTRETIEN — VRAI MODULE (identique à contrats-entretien.html) ─── -->
+ <style>
+ .npce-switch{display:flex;gap:6px;padding:6px;background:#f4f7fb;border-radius:999px;max-width:380px;margin:24px auto 36px;border:1px solid rgba(10,20,40,.05)}
+ .npce-switch button{flex:1;text-align:center;padding:12px 18px;border-radius:999px;cursor:pointer;font-weight:600;color:#6b7384;transition:all .3s ease;user-select:none;font-size:.92rem;background:transparent;border:0;font-family:inherit}
+ .npce-switch button:hover{color:#0A1428}
+ .npce-switch button.is-active{background:#0A1428;color:#fff;box-shadow:0 4px 12px rgba(10,20,40,.15)}
+ .npce-pane{display:none}
+ .npce-pane.is-active{display:block;animation:npceFadeUp .4s ease}
+ @keyframes npceFadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+ .npce-grid{display:grid;gap:22px;grid-template-columns:1fr;margin:0 auto;max-width:1100px}
+ @media(min-width:768px){.npce-grid{grid-template-columns:repeat(3,1fr)}}
+ .npce-grid.npce-grid-single{grid-template-columns:1fr;max-width:680px}
+ .npce-card{background:#fff;border:1px solid rgba(10,20,40,.06);border-radius:24px;padding:32px 28px;display:flex;flex-direction:column;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative}
+ .npce-card:hover{transform:translateY(-6px);box-shadow:0 30px 60px -20px rgba(10,20,40,.12);border-color:rgba(255,107,26,.25)}
+ .npce-card.is-featured{background:linear-gradient(180deg,#fff,#FFF4E8);border:2px solid #FF6B1A;box-shadow:0 18px 40px rgba(255,107,26,.18)}
+ .npce-card.is-featured:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 30px 70px rgba(255,107,26,.25)}
+ .npce-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#FF6B1A,#E55510);color:#fff;padding:6px 16px;border-radius:999px;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 6px 16px rgba(255,107,26,.4);white-space:nowrap}
+ .npce-eyebrow{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:#94a3b8;font-weight:700;margin-bottom:6px}
+ .npce-card.is-featured .npce-eyebrow{color:#FF6B1A}
+ .npce-card.is-securite .npce-eyebrow{color:#E11D48}
+ .npce-name{margin:0 0 18px;font-size:1.5rem;font-weight:800;letter-spacing:-.02em;color:#0A1428}
+ .npce-price-block{padding:18px 0;border-top:1px solid rgba(10,20,40,.08);border-bottom:1px solid rgba(10,20,40,.08);margin-bottom:20px}
+ .npce-price{font-size:2.4rem;font-weight:900;color:#0A1428;line-height:1;letter-spacing:-.04em}
+ .npce-price small{font-size:.85rem;font-weight:500;color:#6b7384;letter-spacing:0}
+ .npce-price-year{font-size:.85rem;color:#6b7384;margin-top:4px}
+ .npce-baseline{font-size:1rem;color:#475569;margin-bottom:18px;font-weight:500}
+ .npce-list{list-style:none;padding:0;margin:0 0 22px;flex-grow:1}
+ .npce-list li{padding:8px 0;display:flex;gap:10px;align-items:flex-start;font-size:.94rem;color:#0A1428;border-bottom:1px solid rgba(10,20,40,.04)}
+ .npce-list li:last-child{border-bottom:none}
+ .npce-list li.yes::before{content:"✓";color:#1aa260;font-weight:800;flex-shrink:0;font-size:1.1rem}
+ .npce-list li.no::before{content:"–";color:#cbd5e1;font-weight:800;flex-shrink:0;font-size:1.1rem}
+ .npce-list li.no{color:#94a3b8}
+ .npce-cta{display:inline-flex;justify-content:center;align-items:center;gap:8px;padding:14px 22px;background:#0A1428;color:#fff;border-radius:999px;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .3s ease;margin-top:auto}
+ .npce-cta:hover{background:#1a2742;transform:scale(1.03)}
+ .npce-card.is-featured .npce-cta{background:linear-gradient(135deg,#FF6B1A,#E55510);color:#fff}
+ .npce-card.is-featured .npce-cta:hover{box-shadow:0 14px 28px rgba(255,107,26,.4)}
+ .npce-note{font-size:.78rem;color:#94a3b8;margin-top:12px;line-height:1.4;display:block}
+ </style>
  <section class="nv-contrats-section" aria-label="Contrats d'entretien chauffage" style="margin-top:64px;padding:48px 28px;background:linear-gradient(180deg,#FFF9F0 0%,#FFF3E0 100%);border-radius:24px;border:1px solid rgba(255,107,26,.18)">
- <div style="text-align:center;max-width:720px;margin:0 auto 36px">
+ <div style="text-align:center;max-width:720px;margin:0 auto 12px">
  <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:#fff;color:#FF6B1A;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:14px;border:1px solid rgba(255,107,26,.25)">📋 Contrats d'entretien</span>
  <h2 style="font-size:clamp(1.5rem,2.6vw,2rem);font-weight:800;color:#0A1428;margin:0 0 10px;letter-spacing:-.02em">Vos contrats d'entretien <em style="font-family:'Playfair Display',Georgia,serif;font-style:italic;color:#FF6B1A;font-weight:500">en toute sérénité</em></h2>
- <p style="margin:0;color:#475569;font-size:.96rem;line-height:1.55">Chaudière gaz, fioul ou adoucisseur d'eau : choisissez la formule qui vous correspond. Visite annuelle, dépannages prioritaires, prélèvement mensuel.</p>
+ <p style="margin:0;color:#475569;font-size:.96rem;line-height:1.55">Choisissez votre énergie, puis votre formule. Engagement 1 an renouvelable — résiliable à chaque échéance.</p>
  </div>
 
- <!-- Switch Gaz / Fioul / Adoucisseur -->
- <div class="nv-energie-switch" style="display:inline-flex;gap:6px;padding:6px;background:#fff;border:1px solid #E5EDF3;border-radius:14px;margin:0 auto 24px;box-shadow:0 4px 14px rgba(10,20,40,.05)">
- <button type="button" class="nv-energie-btn is-active" data-energie="gaz" style="padding:9px 18px;border:0;background:#0A1428;color:#fff;border-radius:10px;font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px"><span aria-hidden="true">⚡</span>Gaz</button>
- <button type="button" class="nv-energie-btn" data-energie="fioul" style="padding:9px 18px;border:0;background:transparent;color:#475569;border-radius:10px;font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px"><span aria-hidden="true">🛢️</span>Fioul</button>
- <button type="button" class="nv-energie-btn" data-energie="adoucisseur" style="padding:9px 18px;border:0;background:transparent;color:#475569;border-radius:10px;font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px"><span aria-hidden="true">💧</span>Adoucisseur</button>
+ <div class="npce-switch" role="tablist" aria-label="Choisir l'énergie">
+ <button type="button" class="npce-energy-btn is-active" data-energy="gaz" role="tab" aria-selected="true">⚡ Gaz</button>
+ <button type="button" class="npce-energy-btn" data-energy="fioul" role="tab" aria-selected="false">🛢️ Fioul</button>
+ <button type="button" class="npce-energy-btn" data-energy="adoucisseur" role="tab" aria-selected="false">💧 Adoucisseur</button>
  </div>
 
- <div class="nv-contrats-grid" style="display:grid;grid-template-columns:1fr;gap:18px;max-width:1080px;margin:0 auto 24px">
- <a href="contrats-entretien.html#basic" class="nv-contrat-card" style="background:#fff;border:1.5px solid #E5EDF3;border-radius:18px;padding:24px;text-decoration:none;color:#0A1428;transition:all .25s ease;display:flex;flex-direction:column;gap:12px">
- <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(255,107,26,.10);color:#FF6B1A;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;width:fit-content">Basic — L'essentiel</span>
- <h3 style="margin:0;font-size:1.15rem;font-weight:800">Entretien annuel obligatoire</h3>
- <p style="margin:0;font-size:.9rem;line-height:1.55;color:#475569;flex:1">Visite annuelle + attestation officielle. Rappel automatique 1 mois avant la date. Idéal locataire ou usage standard.</p>
- <div style="display:flex;align-items:baseline;gap:6px;font-weight:800;margin-top:6px"><span class="ce-price" data-gaz="9" data-fioul="12" data-adoucisseur="11" style="font-size:1.6rem;color:#FF6B1A">9 € HT</span><span class="ce-meta" data-gaz="/mois (gaz) — 108 € HT/an" data-fioul="/mois (fioul) — 144 € HT/an" data-adoucisseur="/mois (adoucisseur) — 132 € HT/an" style="color:#64748b;font-size:.84rem;font-weight:500">/mois (gaz) — 108 € HT/an</span></div>
- <span style="margin-top:auto;color:#FF6B1A;font-weight:700;font-size:.86rem">Voir la formule Basic →</span>
- </a>
- <a href="contrats-entretien.html#confort" class="nv-contrat-card nv-contrat-featured" style="background:#fff;border:2px solid #FF6B1A;border-radius:18px;padding:24px;text-decoration:none;color:#0A1428;transition:all .25s ease;display:flex;flex-direction:column;gap:12px;box-shadow:0 14px 32px rgba(255,107,26,.22);position:relative">
- <span style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#FF6B1A,#E55510);color:#fff;padding:5px 14px;border-radius:999px;font-size:.66rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;box-shadow:0 6px 14px rgba(255,107,26,.35);white-space:nowrap">★ Le plus choisi</span>
- <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(255,107,26,.15);color:#FF6B1A;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;width:fit-content;margin-top:4px">Confort — Sérénité</span>
- <h3 style="margin:0;font-size:1.15rem;font-weight:800">Entretien + 2 dépannages/an</h3>
- <p style="margin:0;font-size:.9rem;line-height:1.55;color:#475569;flex:1">Tout BASIC inclus + 2 dépannages/an (MO + déplacement). Intervention sous 48h max.</p>
- <div style="display:flex;align-items:baseline;gap:6px;font-weight:800;margin-top:6px"><span class="ce-price" data-gaz="13" data-fioul="16" data-adoucisseur="15" style="font-size:1.6rem;color:#FF6B1A">13 € HT</span><span class="ce-meta" data-gaz="/mois (gaz) — 156 € HT/an" data-fioul="/mois (fioul) — 192 € HT/an" data-adoucisseur="/mois (adoucisseur) — 180 € HT/an" style="color:#64748b;font-size:.84rem;font-weight:500">/mois (gaz) — 156 € HT/an</span></div>
- <span style="margin-top:auto;color:#FF6B1A;font-weight:700;font-size:.86rem">Voir la formule Confort →</span>
- </a>
- <a href="contrats-entretien.html#securite" class="nv-contrat-card" style="background:#fff;border:1.5px solid #E5EDF3;border-radius:18px;padding:24px;text-decoration:none;color:#0A1428;transition:all .25s ease;display:flex;flex-direction:column;gap:12px">
- <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(225,29,72,.10);color:#E11D48;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;width:fit-content">Sécurité — Tout compris</span>
- <h3 style="margin:0;font-size:1.15rem;font-weight:800">Entretien + pièces incluses</h3>
- <p style="margin:0;font-size:.9rem;line-height:1.55;color:#475569;flex:1">Tout CONFORT + pièces de rechange courantes (carte électronique, sonde, vase). Sérénité totale.</p>
- <div style="display:flex;align-items:baseline;gap:6px;font-weight:800;margin-top:6px"><span class="ce-price" data-gaz="18" data-fioul="22" data-adoucisseur="20" style="font-size:1.6rem;color:#E11D48">18 € HT</span><span class="ce-meta" data-gaz="/mois (gaz) — 216 € HT/an" data-fioul="/mois (fioul) — 264 € HT/an" data-adoucisseur="/mois (adoucisseur) — 240 € HT/an" style="color:#64748b;font-size:.84rem;font-weight:500">/mois (gaz) — 216 € HT/an</span></div>
- <span style="margin-top:auto;color:#E11D48;font-weight:700;font-size:.86rem">Voir la formule Sécurité →</span>
- </a>
+ <!-- Pane GAZ -->
+ <div class="npce-pane is-active" data-pane="gaz">
+ <div class="npce-grid">
+ <div class="npce-card">
+ <div class="npce-eyebrow">Formule Gaz</div>
+ <h3 class="npce-name">BASIC</h3>
+ <div class="npce-price-block">
+ <div class="npce-price">9 € HT<small> /mois</small></div>
+ <div class="npce-price-year">soit 108 € HT/an</div>
  </div>
- <style>
- @media(min-width:760px){.nv-contrats-grid{grid-template-columns:repeat(3,1fr) !important}}
- .nv-contrat-card:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(255,107,26,.20);border-color:#FF6B1A}
- .nv-contrat-featured:hover{transform:translateY(-4px);box-shadow:0 22px 48px rgba(255,107,26,.32)}
- .nv-energie-btn{transition:all .2s ease}
- .nv-energie-btn:hover:not(.is-active){background:rgba(13,160,207,.06) !important;color:#0DA0CF !important}
- </style>
+ <p class="npce-baseline">L'essentiel pour être en règle.</p>
+ <ul class="npce-list">
+ <li class="yes">Visite annuelle <strong>+ attestation officielle</strong></li>
+ <li class="yes">Rappel automatique 1 mois avant la date</li>
+ <li class="yes">Conformité décret n° 2009-649</li>
+ <li class="no">Dépannages facturés en sus</li>
+ <li class="no">Pièces de rechange non incluses</li>
+ </ul>
+ <a href="contrats-entretien.html#basic" class="npce-cta">Souscrire BASIC</a>
+ </div>
+ <div class="npce-card is-featured">
+ <span class="npce-badge">★ Le plus choisi</span>
+ <div class="npce-eyebrow">Formule Gaz</div>
+ <h3 class="npce-name">CONFORT</h3>
+ <div class="npce-price-block">
+ <div class="npce-price">13 € HT<small> /mois</small></div>
+ <div class="npce-price-year">soit 156 € HT/an</div>
+ </div>
+ <p class="npce-baseline">L'entretien + la tranquillité dépannage.</p>
+ <ul class="npce-list">
+ <li class="yes">Tout <strong>BASIC</strong> inclus</li>
+ <li class="yes"><strong>2 dépannages/an</strong> (MO + déplacement offerts)</li>
+ <li class="yes">Intervention sous <strong>48 h max</strong></li>
+ <li class="yes">Accès prioritaire en saison de chauffe</li>
+ <li class="no">Pièces de rechange non incluses</li>
+ </ul>
+ <a href="contrats-entretien.html#confort" class="npce-cta">Souscrire CONFORT</a>
+ </div>
+ <div class="npce-card is-securite">
+ <div class="npce-eyebrow">Formule Gaz</div>
+ <h3 class="npce-name">SÉCURITÉ</h3>
+ <div class="npce-price-block">
+ <div class="npce-price">23 € HT<small> /mois</small></div>
+ <div class="npce-price-year">soit 276 € HT/an</div>
+ </div>
+ <p class="npce-baseline">Tout compris, plus rien à payer en cas de panne.</p>
+ <ul class="npce-list">
+ <li class="yes">Tout <strong>CONFORT</strong> inclus</li>
+ <li class="yes"><strong>Pièces incluses sans frais</strong> (carte, sonde, vase, circulateur…)</li>
+ <li class="yes">Intervention sous <strong>24 h max</strong></li>
+ <li class="yes">Sérénité totale, zéro mauvaise surprise</li>
+ </ul>
+ <small class="npce-note">Réservée aux chaudières &lt; 5 ans, après contrôle technique. Hors corps de chauffe, échangeur principal, ballon ECS et pièces non disponibles fabricant.</small>
+ <a href="contrats-entretien.html#securite" class="npce-cta" style="margin-top:14px">Souscrire SÉCURITÉ</a>
+ </div>
+ </div>
+ </div>
+
+ <!-- Pane FIOUL -->
+ <div class="npce-pane" data-pane="fioul">
+ <div class="npce-grid">
+ <div class="npce-card">
+ <div class="npce-eyebrow">Formule Fioul</div>
+ <h3 class="npce-name">BASIC</h3>
+ <div class="npce-price-block">
+ <div class="npce-price">12 € HT<small> /mois</small></div>
+ <div class="npce-price-year">soit 144 € HT/an</div>
+ </div>
+ <p class="npce-baseline">L'essentiel pour être en règle.</p>
+ <ul class="npce-list">
+ <li class="yes">Visite annuelle fioul <strong>+ attestation</strong></li>
+ <li class="yes">Nettoyage brûleur, foyer, chambre de combustion</li>
+ <li class="yes">Mesures de combustion et contrôle gicleur</li>
+ <li class="no">Dépannages facturés en sus</li>
+ <li class="no">Pièces de rechange non incluses</li>
+ </ul>
+ <a href="contrats-entretien.html#basic" class="npce-cta">Souscrire BASIC</a>
+ </div>
+ <div class="npce-card is-featured">
+ <span class="npce-badge">★ Le plus choisi</span>
+ <div class="npce-eyebrow">Formule Fioul</div>
+ <h3 class="npce-name">CONFORT</h3>
+ <div class="npce-price-block">
+ <div class="npce-price">16 € HT<small> /mois</small></div>
+ <div class="npce-price-year">soit 192 € HT/an</div>
+ </div>
+ <p class="npce-baseline">L'entretien + la tranquillité dépannage.</p>
+ <ul class="npce-list">
+ <li class="yes">Tout <strong>BASIC</strong> inclus</li>
+ <li class="yes"><strong>2 dépannages/an</strong> (MO + déplacement offerts)</li>
+ <li class="yes">Intervention sous <strong>48 h max</strong></li>
+ <li class="yes">Accès prioritaire en saison de chauffe</li>
+ <li class="no">Pièces de rechange non incluses</li>
+ </ul>
+ <a href="contrats-entretien.html#confort" class="npce-cta">Souscrire CONFORT</a>
+ </div>
+ <div class="npce-card is-securite">
+ <div class="npce-eyebrow">Formule Fioul</div>
+ <h3 class="npce-name">SÉCURITÉ</h3>
+ <div class="npce-price-block">
+ <div class="npce-price">27 € HT<small> /mois</small></div>
+ <div class="npce-price-year">soit 324 € HT/an</div>
+ </div>
+ <p class="npce-baseline">Tout compris, plus rien à payer en cas de panne.</p>
+ <ul class="npce-list">
+ <li class="yes">Tout <strong>CONFORT</strong> inclus</li>
+ <li class="yes"><strong>Pièces incluses sans frais</strong> (gicleur, électrodes, pompe…)</li>
+ <li class="yes">Intervention sous <strong>24 h max</strong></li>
+ <li class="yes">Sérénité totale, zéro mauvaise surprise</li>
+ </ul>
+ <small class="npce-note">Réservée aux chaudières &lt; 5 ans, après contrôle technique. Hors corps de chauffe et pièces non disponibles fabricant.</small>
+ <a href="contrats-entretien.html#securite" class="npce-cta" style="margin-top:14px">Souscrire SÉCURITÉ</a>
+ </div>
+ </div>
+ </div>
+
+ <!-- Pane ADOUCISSEUR -->
+ <div class="npce-pane" data-pane="adoucisseur">
+ <div class="npce-grid npce-grid-single">
+ <div class="npce-card is-featured" style="border-color:#1FC4F0;background:linear-gradient(180deg,#fff,#E6F8FE);box-shadow:0 18px 40px rgba(31,196,240,.18)">
+ <span class="npce-badge" style="background:linear-gradient(135deg,#1FC4F0,#0DA0CF);box-shadow:0 6px 16px rgba(31,196,240,.4)">Formule unique</span>
+ <div class="npce-eyebrow" style="color:#0DA0CF">Adoucisseur d'eau</div>
+ <h3 class="npce-name">ENTRETIEN ADOUCISSEUR</h3>
+ <div class="npce-price-block">
+ <div class="npce-price">Sur devis<small></small></div>
+ <div class="npce-price-year">tarif selon modèle &amp; volume — à partir de 15 € HT/mois</div>
+ </div>
+ <p class="npce-baseline">Eau adoucie toute l'année, appareils protégés du calcaire.</p>
+ <ul class="npce-list">
+ <li class="yes">Visite annuelle &amp; contrôle complet de l'appareil</li>
+ <li class="yes">Contrôle de la dureté de l'eau (TH avant/après)</li>
+ <li class="yes">Vérification de la régénération et du bac à sel</li>
+ <li class="yes">Réglage des cycles selon votre consommation</li>
+ <li class="yes">Conseils &amp; recommandations sel</li>
+ <li class="yes">Intervention prioritaire en cas de panne</li>
+ </ul>
+ <a href="contrats-entretien.html#adoucisseur" class="npce-cta" style="background:linear-gradient(135deg,#1FC4F0,#0DA0CF);color:#fff">Demander un devis adoucisseur</a>
+ </div>
+ </div>
+ </div>
+
+ <p style="text-align:center;margin-top:28px;color:#475569;font-size:.88rem"><a href="contrats-entretien.html" style="color:#FF6B1A;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px">Comparer toutes les formules en détail <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></p>
+ </section>
  <script>
  (function(){
-   var buttons = document.querySelectorAll('.nv-energie-btn');
-   var priceEls = document.querySelectorAll('.ce-price');
-   var metaEls = document.querySelectorAll('.ce-meta');
-   buttons.forEach(function(btn){
+   var btns = document.querySelectorAll('.npce-energy-btn');
+   var panes = document.querySelectorAll('.npce-pane');
+   btns.forEach(function(btn){
      btn.addEventListener('click', function(){
-       var energie = btn.getAttribute('data-energie');
-       buttons.forEach(function(b){
-         b.classList.remove('is-active');
-         b.setAttribute('style', 'padding:9px 18px;border:0;background:transparent;color:#475569;border-radius:10px;font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px');
-       });
-       btn.classList.add('is-active');
-       btn.setAttribute('style', 'padding:9px 18px;border:0;background:#0A1428;color:#fff;border-radius:10px;font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px');
-       priceEls.forEach(function(p){
-         var val = p.getAttribute('data-' + energie);
-         if (val) p.textContent = val + ' € HT';
-       });
-       metaEls.forEach(function(m){
-         var val = m.getAttribute('data-' + energie);
-         if (val) m.textContent = val;
+       var target = btn.getAttribute('data-energy');
+       btns.forEach(function(b){ b.classList.remove('is-active'); b.setAttribute('aria-selected','false'); });
+       btn.classList.add('is-active'); btn.setAttribute('aria-selected','true');
+       panes.forEach(function(p){
+         p.classList.toggle('is-active', p.getAttribute('data-pane') === target);
        });
      });
    });
  })();
  </script>
- <p style="text-align:center;color:#475569;font-size:.88rem"><a href="contrats-entretien.html" style="color:#FF6B1A;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px">Comparer toutes les formules (gaz · fioul · adoucisseur) <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></p>
- </section>
 
 </main>
 
