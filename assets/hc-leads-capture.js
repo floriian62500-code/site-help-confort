@@ -35,7 +35,23 @@
       const v = p.get(k);
       if (v) utm[k] = v;
     });
+    // Fallback : récupère aussi depuis sessionStorage (capté au landing par tracking.js)
+    try {
+      const stored = JSON.parse(sessionStorage.getItem('hc_utm') || '{}');
+      Object.keys(stored).forEach(k => { if (!utm[k] && stored[k]) utm[k] = stored[k]; });
+    } catch(_){}
     return utm;
+  }
+  // Récupère les hidden fields hc_* injectés par tracking.js (UTM persistantes)
+  function getHiddenUtm(form){
+    const obj = {};
+    try {
+      ['hc_utm_source','hc_utm_medium','hc_utm_campaign','hc_utm_term','hc_utm_content','hc_gclid','hc_fbclid','hc_referrer','hc_page_path','hc_landing_ts'].forEach(k => {
+        const inp = form.querySelector('[name="'+k+'"]');
+        if (inp && inp.value) obj[k.replace(/^hc_/,'')] = inp.value;
+      });
+    } catch(_){}
+    return obj;
   }
 
   // Hook tous les formulaires marqués (sauf ceux qui ont leur propre handler onsubmit)
