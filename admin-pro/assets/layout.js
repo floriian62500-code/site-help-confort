@@ -1233,5 +1233,18 @@ window.HCLayout = (function() {
   // Appliquer le thème AU PLUS TÔT (avant DOMContentLoaded) pour éviter le flash
   try { applyTheme(localStorage.getItem(THEME_KEY) || 'light'); } catch(e) {}
 
-  return { mount, mountSidebar, openQuickModal, init, toggleTheme };
+  // Fonction publique : switchModule (utilisée par onclick inline du switcher)
+  function switchModule(m) {
+    if (!MODULES[m]) return;
+    setActiveModule(m);
+    const aside = document.querySelector('.admin-sidebar');
+    if (aside) {
+      const activePage = aside.dataset.activePage || 'dashboard';
+      aside.innerHTML = sidebarHTML(activePage);
+      aside.dataset.activeModule = m;
+      setupSidebarAccordion();
+    }
+  }
+
+  return { mount, mountSidebar, openQuickModal, init, toggleTheme, switchModule };
 })();
