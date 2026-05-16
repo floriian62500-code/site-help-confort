@@ -46,16 +46,23 @@
   <!-- ───── ÉTAPE 1 : GA4 JSON ───── -->
   <div class="step" id="step-ga4">
     <h2>1️⃣ Google Analytics 4 — Service Account JSON <span class="badge-state" id="state-ga4">À COMPLÉTER</span></h2>
-    <p class="hint">Re-télécharge le JSON depuis <a href="https://console.cloud.google.com/iam-admin/serviceaccounts?project=help-confort-back-office" target="_blank">Google Cloud → Comptes de service → ga4-reader</a> → onglet <strong>Clés</strong> → <strong>Ajouter une clé → Créer une clé → JSON</strong>. Ouvre le fichier .json téléchargé, Cmd+A, Cmd+C, puis colle ci-dessous le JSON COMPLET (30 lignes, avec la <code>private_key</code> entière).</p>
-    <textarea id="ga4_json" rows="14" placeholder='{
+    <p class="hint">Re-télécharge le JSON depuis <a href="https://console.cloud.google.com/iam-admin/serviceaccounts?project=help-confort-back-office" target="_blank">Google Cloud → Comptes de service → ga4-reader</a> → onglet <strong>Clés</strong> → <strong>Ajouter une clé → Créer une clé → JSON</strong>. Tu obtiens un fichier <code>help-confort-back-office-xxxx.json</code> dans Téléchargements.</p>
+
+    <!-- MÉTHODE 1 : Upload du fichier (le plus simple) -->
+    <div style="background:linear-gradient(135deg,#EFF6FF,#fff);border:2px dashed rgba(13,160,207,.40);border-radius:12px;padding:18px;text-align:center;margin-bottom:14px">
+      <p style="margin:0 0 10px;font-size:.94rem;color:#0A1428;font-weight:700">📂 Méthode rapide : upload du fichier .json</p>
+      <input type="file" id="ga4_file" accept=".json,application/json" style="display:none">
+      <button type="button" id="btnPickGa4File" style="background:linear-gradient(135deg,#0DA0CF,#0884AE);color:#fff;border:0;padding:11px 22px;border-radius:9px;font-weight:800;cursor:pointer;font-size:.92rem">📎 Sélectionner le fichier .json</button>
+      <p style="margin:10px 0 0;font-size:.78rem;color:#64748b">Sélectionne ton fichier <code>help-confort-back-office-xxxx.json</code> téléchargé depuis Google Cloud — il sera lu, validé et collé automatiquement.</p>
+      <div id="ga4_file_status" style="margin-top:10px;font-size:.84rem"></div>
+    </div>
+    <p style="margin:0 0 8px;font-size:.78rem;color:#64748b;text-align:center"><em>OU colle manuellement ci-dessous :</em></p>
+    <textarea id="ga4_json" rows="10" placeholder='{
   "type": "service_account",
   "project_id": "help-confort-back-office",
-  "private_key_id": "...",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIE...\n-----END PRIVATE KEY-----\n",
+  "private_key_id": "f624d4143f36xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIE...une_longue_clé_de_1700_chars...\n-----END PRIVATE KEY-----\n",
   "client_email": "ga4-reader@help-confort-back-office.iam.gserviceaccount.com",
-  "client_id": "...",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
   ...
 }'></textarea>
     <details>
