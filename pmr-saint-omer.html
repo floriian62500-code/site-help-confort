@@ -136,7 +136,7 @@
  ],
  "hasOfferCatalog": {
  "@type": "OfferCatalog",
- "name": "Prestations Plomberie",
+ "name": "Prestations Adaptation PMR",
  "itemListElement": [
       {
         "@type": "Offer",
@@ -402,7 +402,7 @@ if (document.fonts && document.fonts.ready) {
 })();
 </script>
 
-<!-- ═══ PAGE PLOMBERIE — VERSION COMPACTE PREMIUM ═══ -->
+<!-- ═══ PAGE ADAPTATION PMR — VERSION COMPACTE PREMIUM ═══ -->
 <style>
  body[data-metier-page="pmr"] {
  --m-color: #0DA0CF;
@@ -858,18 +858,18 @@ if (document.fonts && document.fonts.ready) {
 <script>document.body.setAttribute('data-metier-page', 'pmr');</script>
 
 <!-- ─── 1. HERO ─── -->
-<section class="m-hero" aria-label="Plomberie HELP! Confort" id="main-content">
+<section class="m-hero" aria-label="Adaptation PMR HELP! Confort" id="main-content">
  <div class="m-hero-inner">
  <div>
  <span class="m-hero-eye">
  <img loading="lazy" decoding="async" src="images/picto-pmr.png" alt="" width="22" height="22" style="vertical-align:middle;object-fit:contain;display:inline-block;margin-right:2px" aria-hidden="true">
- <span style="background: linear-gradient(135deg, var(--m-color), var(--m-color-dark)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">Plomberie</span>
+ <span style="background: linear-gradient(135deg, var(--m-color), var(--m-color-dark)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">PMR</span>
  <span style="opacity:.5">·</span>
  Saint-Omer / Dunkerque
  </span>
  <div style="display:flex;align-items:center;gap:14px;margin:8px 0 0;flex-wrap:wrap">
  <img decoding="async" src="images/picto-pmr.png" alt="Adaptation PMR HELP! Confort" width="64" height="64" style="object-fit:contain;flex-shrink:0;filter:drop-shadow(0 4px 12px rgba(13,160,207,.18))" loading="eager">
- <h1 class="m-hero-h1" style="margin:0">Plomberie &amp; dépannage rapide à <em>Saint-Omer</em> et <em>Dunkerque</em></h1>
+ <h1 class="m-hero-h1" style="margin:0">Adaptation PMR à domicile — <em>Saint-Omer</em> et <em>Dunkerque</em></h1>
  </div>
  <p class="m-hero-lead">Fuite, chauffe-eau, débouchage, recherche de fuite, sanitaire&nbsp;: nos <strong>techniciens interviennent rapidement</strong> sur tout le secteur.</p>
 
@@ -978,7 +978,7 @@ if (document.fonts && document.fonts.ready) {
  <span class="m-hero-service-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9z"/></svg></span>
  <span>Portes</span>
  </a>
- <a href="contact.html?presta=reseaux-plomberie#form" class="m-hero-service s6" title="Devis réseaux plomberie">
+ <a href="contact.html?metier=pmr#form" class="m-hero-service s6" title="Demander un devis adaptation PMR">
  <span class="m-hero-service-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6"/><path d="M12 22v-6"/><path d="M2 12h6"/><path d="M22 12h-6"/></svg></span>
  <span>Accessibilité</span>
  </a>
@@ -1218,7 +1218,7 @@ if (document.fonts && document.fonts.ready) {
  if(!track) return;
  fetch('content/realisations/index.json?t=' + Date.now()).then(function(r){return r.ok?r.json():Promise.reject()}).then(function(list){
  var plomb = list.filter(function(r){
- return r.published !== false && (r.metier === 'Plomberie' || /plomb/i.test(r.metier||''));
+ return r.published !== false && (r.metier === 'Adaptation PMR' || new RegExp('pmr','i').test(r.metier||''));
  }).slice(0, 2);
  if(!plomb.length) return; // garde le fallback statique
  track.innerHTML = plomb.map(function(r){
@@ -1232,7 +1232,7 @@ if (document.fonts && document.fonts.ready) {
  } else {
  img = '<div class="placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>';
  }
- return '<a href="'+url+'" class="m-proof-card m-proof-real"><div class="m-proof-thumb">'+img+'</div><div class="m-proof-card-body"><span class="m-proof-tag">'+(r.metier||'Plomberie')+'</span><h3>'+(r.title||'Chantier')+'</h3><p>'+(r.description||'').slice(0,120)+'</p></div></a>';
+ return '<a href="'+url+'" class="m-proof-card m-proof-real"><div class="m-proof-thumb">'+img+'</div><div class="m-proof-card-body"><span class="m-proof-tag">'+(r.metier||'Adaptation PMR')+'</span><h3>'+(r.title||'Chantier')+'</h3><p>'+(r.description||'').slice(0,120)+'</p></div></a>';
  }).join('');
  }).catch(function(){ /* keep static fallback */ });
  })();
@@ -1502,7 +1502,7 @@ if (document.fonts && document.fonts.ready) {
 
 
 
-<!-- ─── FAQ PLOMBERIE — Schema.org/FAQPage (rich results Google) ─── -->
+<!-- ─── FAQ ADAPTATION PMR — Schema.org/FAQPage (rich results Google) ─── -->
 <section class="hc-faq-section" aria-label="Questions fréquentes adaptation PMR" style="background:linear-gradient(180deg,#fff 0%,#F8FCFE 100%);padding:70px 0 80px;border-top:1px solid #EAF2F7">
  <div class="container" style="max-width:980px;margin:0 auto;padding:0 clamp(20px,4vw,40px)">
  <div style="text-align:center;margin-bottom:40px">
@@ -2011,6 +2011,7 @@ if (document.fonts && document.fonts.ready) {
  </div>
 
  <div class="chat-quick" id="chatQuick">
+ <button type="button" data-svc="PMR / Adaptation logement" data-emoji="♿">♿ Adaptation logement</button>
  <button type="button" data-svc="Plomberie / Fuite d'eau" data-emoji="💧">💧 Fuite d'eau</button>
  <button type="button" data-svc="Chauffage / Plus de chauffage" data-emoji="🔥">🔥 Plus de chauffage</button>
  <button type="button" data-svc="Électricité / Coupure" data-emoji="⚡">⚡ Coupure électrique</button>
