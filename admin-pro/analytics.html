@@ -404,11 +404,14 @@
           <!-- HEADER PROPERTY -->
           <div style="padding:16px 20px;background:linear-gradient(135deg,#0A1428,#0DA0CF);color:#fff;border-radius:14px 14px 0 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
             <div>
-              <div style="font-size:1.06rem;font-weight:800;display:flex;align-items:center;gap:8px"><svg width="22" height="22" viewBox="0 0 192 192"><path fill="#F9AB00" d="M152 154h-32V40c0-12 9-22 21-22s21 10 21 22v114h-10z"/><path fill="#E37400" d="M86 152V108c0-13 11-22 22-22s22 9 22 22v44H86z"/><circle fill="#E37400" cx="32" cy="142" r="22"/></svg> Google Analytics 4 — <span style="opacity:.85">30 derniers jours</span></div>
+              <div style="font-size:1.06rem;font-weight:800;display:flex;align-items:center;gap:8px"><svg width="22" height="22" viewBox="0 0 192 192"><path fill="#F9AB00" d="M152 154h-32V40c0-12 9-22 21-22s21 10 21 22v114h-10z"/><path fill="#E37400" d="M86 152V108c0-13 11-22 22-22s22 9 22 22v44H86z"/><circle fill="#E37400" cx="32" cy="142" r="22"/></svg> Google Analytics 4 — <span style="opacity:.85">${PERIOD_CFG.label}</span></div>
               <div style="font-size:.74rem;opacity:.78;margin-top:4px">Property <code style="background:rgba(255,255,255,.18);padding:1px 6px;border-radius:4px">${escapeHtml(settings?.value?.property_id||'')}</code> · Live via API GA4 (OAuth user)</div>
             </div>
-            <div style="display:flex;gap:8px">
-              <a href="https://analytics.google.com/analytics/web/#/p${escapeHtml(settings?.value?.property_id||'')}/reports/intelligenthome" target="_blank" style="padding:7px 12px;background:rgba(255,255,255,.18);color:#fff;text-decoration:none;border-radius:7px;font-size:.78rem;font-weight:700">Ouvrir dans GA4 ↗</a>
+            <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+              <div style="display:inline-flex;background:rgba(255,255,255,.10);border-radius:8px;padding:3px;gap:1px">
+                ${['7d','30d','90d','365d'].map(p => `<a href="?period=${p}" style="padding:6px 11px;background:${p===PERIOD?'#fff':'transparent'};color:${p===PERIOD?'#0A1428':'#fff'};text-decoration:none;border-radius:6px;font-size:.74rem;font-weight:800">${p === '7d' ? '7 j' : p === '30d' ? '30 j' : p === '90d' ? '90 j' : '1 an'}</a>`).join('')}
+              </div>
+              <a href="https://analytics.google.com/analytics/web/#/p${escapeHtml(settings?.value?.property_id||'')}/reports/intelligenthome" target="_blank" style="padding:7px 12px;background:rgba(255,255,255,.18);color:#fff;text-decoration:none;border-radius:7px;font-size:.78rem;font-weight:700">Ouvrir GA4 ↗</a>
               <a href="oauth-ga4.html" style="padding:7px 12px;background:rgba(255,255,255,.18);color:#fff;text-decoration:none;border-radius:7px;font-size:.78rem;font-weight:700">🔁 Reconnecter</a>
             </div>
           </div>
@@ -471,7 +474,7 @@
           ${ga4DailyEvolution.length ? `
           <div style="background:#fff;padding:22px 20px;border-left:1px solid var(--ink-100);border-right:1px solid var(--ink-100);border-top:1px solid var(--ink-100)">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
-              <h3 style="margin:0;font-size:1rem;font-weight:800;color:#0A1428">📈 Évolution du trafic (30 jours)</h3>
+              <h3 style="margin:0;font-size:1rem;font-weight:800;color:#0A1428">📈 Évolution du trafic (${PERIOD_CFG.label})</h3>
               <div style="display:flex;gap:14px;font-size:.78rem">
                 <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#0DA0CF"></span>Sessions</span>
                 <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#FF6B1A"></span>Visiteurs</span>
