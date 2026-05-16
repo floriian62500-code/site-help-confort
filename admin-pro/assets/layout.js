@@ -211,12 +211,14 @@ window.HCLayout = (function() {
 
     // ─── Switcher modules en haut de sidebar ───
     // 2 modules → switch horizontal compact avec libellé complet
+    // ⚠ Utilise onclick inline (au lieu d'addEventListener) pour garantir
+    // que le clic fonctionne même si JS recompile en partie après mount
     let moduleSwitcherHtml = `<div class="admin-module-switcher" style="display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:5px;background:rgba(11,18,32,.45);border:1px solid rgba(255,255,255,.06);border-radius:11px;margin:10px 12px 14px;box-shadow:inset 0 1px 2px rgba(0,0,0,.18)">`;
     Object.entries(MODULES).forEach(([mid, m]) => {
       const isActive = mid === activeModule;
       const bg = isActive ? `linear-gradient(135deg, ${m.color}, ${m.colorDark})` : 'transparent';
       const sh = isActive ? `0 2px 8px ${m.color}55, 0 0 0 1px rgba(255,255,255,.08) inset` : 'none';
-      moduleSwitcherHtml += `<button type="button" data-module="${mid}" title="${m.label} — ${m.desc}" style="padding:8px 6px;background:${bg};color:${isActive ? '#fff' : 'rgba(255,255,255,.55)'};border:none;border-radius:8px;font:inherit;font-size:.74rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .18s cubic-bezier(.16,1,.3,1);box-shadow:${sh};letter-spacing:.01em">
+      moduleSwitcherHtml += `<button type="button" data-module="${mid}" onclick="window.HCLayout && window.HCLayout.switchModule && window.HCLayout.switchModule('${mid}')" title="${m.label} — ${m.desc}" style="padding:8px 6px;background:${bg};color:${isActive ? '#fff' : 'rgba(255,255,255,.55)'};border:none;border-radius:8px;font:inherit;font-size:.74rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .18s cubic-bezier(.16,1,.3,1);box-shadow:${sh};letter-spacing:.01em">
         <span style="font-size:.95rem;line-height:1">${m.icon}</span>
         <span>${m.shortLabel.replace(m.icon, '').trim()}</span>
       </button>`;
