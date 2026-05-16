@@ -2192,6 +2192,31 @@ if (state.cp) params.set('cp', state.cp);
 window.location.href = 'contact.html?' + params.toString() + '#form';
 });
 gotoStep(1);
+
+// ─── Auto-trigger : ?wizard=depannage|devis-travaux|contrat-entretien dans l'URL
+// déclenche automatiquement la voie correspondante du wizard et scrolle vers la section.
+try {
+  var wzParams = new URLSearchParams(location.search);
+  var wzPresta = wzParams.get('wizard') || wzParams.get('presta');
+  if (wzPresta) {
+    setTimeout(function(){
+      var card = document.querySelector('.mq-card[data-presta="' + wzPresta + '"]');
+      if (card) {
+        var sec = document.getElementById('hc-reservation');
+        if (sec) sec.scrollIntoView({ behavior:'smooth', block:'start' });
+        setTimeout(function(){ card.click(); }, 350);
+      } else {
+        var sec = document.getElementById('hc-reservation');
+        if (sec) sec.scrollIntoView({ behavior:'smooth', block:'start' });
+      }
+    }, 150);
+  } else if (location.hash === '#hc-reservation') {
+    setTimeout(function(){
+      var sec = document.getElementById('hc-reservation');
+      if (sec) sec.scrollIntoView({ behavior:'smooth', block:'start' });
+    }, 150);
+  }
+} catch(_){}
 })();
 </script>
 </section>
