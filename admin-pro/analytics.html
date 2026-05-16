@@ -116,6 +116,7 @@
   let ga4Devices = [];
   let ga4Heatmap = []; // [{ day:0-6, hour:0-23, sessions:N }]
   let ga4CustomEvents = {}; // { click_phone: N, click_email: N, form_submit: N, click_whatsapp: N, click_external: N }
+  let ga4LastYear = null; // KPI même période N-1 (pour comparaison année-année)
 
   // Helpers crypto pour JWT RS256
   function pemToArrayBuffer(pem){
@@ -273,6 +274,22 @@
           hour: Number(r.dimensionValues[1]?.value||0),   // 0-23
           sessions: Number(r.metricValues[0]?.value||0)
         }));
+      } catch(_){}
+      // Comparaison année-année : même période N-1
+      try {
+        // Calcule les dates N-1 (365 jours en arrière)
+        const dayCount = PERIOD === '7d' ? 7 : PERIOD === '30d' ? 30 : PERIOD === '90d' ? 90 : 365;
+        const ly = await ga4OauthCall({
+          dateRanges:[{startDate:(365+dayCount)+'daysAgo',endDate:'365daysAgo'}],
+          metrics:[{name:'sessions'},{name:'totalUsers'},{name:'screenPageViews'},{name:'averageSessionDuration'}]
+        });
+        const lr = ly.rows?.[0]?.metricValues || [];
+        ga4LastYear = {
+          sessions: Number(lr[0]?.value||0),
+          users: Number(lr[1]?.value||0),
+          page_views: Number(lr[2]?.value||0),
+          avg_duration_sec: Math.round(Number(lr[3]?.value||0))
+        };
       } catch(_){}
       // Events de conversion (click_phone, click_email, form_submit)
       try {
