@@ -188,7 +188,7 @@
         return j;
       };
       const main = await ga4OauthCall({
-        dateRanges:[{startDate:'30daysAgo',endDate:'today'}],
+        dateRanges:[{startDate:PERIOD_CFG.start,endDate:PERIOD_CFG.end}],
         metrics:[{name:'sessions'},{name:'totalUsers'},{name:'newUsers'},{name:'screenPageViews'},{name:'averageSessionDuration'},{name:'engagementRate'}]
       });
       const row = main.rows?.[0]?.metricValues || [];
@@ -199,17 +199,17 @@
       };
       // Top sources + pages
       try {
-        const s = await ga4OauthCall({ dateRanges:[{startDate:'30daysAgo',endDate:'today'}], dimensions:[{name:'sessionSourceMedium'}], metrics:[{name:'sessions'},{name:'totalUsers'}], limit:8, orderBys:[{metric:{metricName:'sessions'},desc:true}] });
+        const s = await ga4OauthCall({ dateRanges:[{startDate:PERIOD_CFG.start,endDate:PERIOD_CFG.end}], dimensions:[{name:'sessionSourceMedium'}], metrics:[{name:'sessions'},{name:'totalUsers'}], limit:8, orderBys:[{metric:{metricName:'sessions'},desc:true}] });
         topSources = (s.rows||[]).map(r => ({ source:r.dimensionValues[0]?.value||'(direct)', sessions:Number(r.metricValues[0]?.value||0), users:Number(r.metricValues[1]?.value||0) }));
       } catch(_){}
       try {
-        const p = await ga4OauthCall({ dateRanges:[{startDate:'30daysAgo',endDate:'today'}], dimensions:[{name:'pagePath'}], metrics:[{name:'screenPageViews'},{name:'totalUsers'}], limit:10, orderBys:[{metric:{metricName:'screenPageViews'},desc:true}] });
+        const p = await ga4OauthCall({ dateRanges:[{startDate:PERIOD_CFG.start,endDate:PERIOD_CFG.end}], dimensions:[{name:'pagePath'}], metrics:[{name:'screenPageViews'},{name:'totalUsers'}], limit:10, orderBys:[{metric:{metricName:'screenPageViews'},desc:true}] });
         topPages = (p.rows||[]).map(r => ({ path:r.dimensionValues[0]?.value||'/', views:Number(r.metricValues[0]?.value||0), users:Number(r.metricValues[1]?.value||0) }));
       } catch(_){}
       // Évolution quotidienne 30j (pour graphique)
       try {
         const d = await ga4OauthCall({
-          dateRanges:[{startDate:'30daysAgo',endDate:'today'}],
+          dateRanges:[{startDate:PERIOD_CFG.start,endDate:PERIOD_CFG.end}],
           dimensions:[{name:'date'}],
           metrics:[{name:'sessions'},{name:'totalUsers'},{name:'screenPageViews'}],
           orderBys:[{dimension:{dimensionName:'date'}}]
@@ -224,7 +224,7 @@
       // Comparaison 30j précédents (J-60 à J-30)
       try {
         const prev = await ga4OauthCall({
-          dateRanges:[{startDate:'60daysAgo',endDate:'31daysAgo'}],
+          dateRanges:[{startDate:PERIOD_CFG.prevStart,endDate:PERIOD_CFG.prevEnd}],
           metrics:[{name:'sessions'},{name:'totalUsers'},{name:'screenPageViews'}]
         });
         const r2 = prev.rows?.[0]?.metricValues || [];
@@ -237,7 +237,7 @@
       // Top villes
       try {
         const ct = await ga4OauthCall({
-          dateRanges:[{startDate:'30daysAgo',endDate:'today'}],
+          dateRanges:[{startDate:PERIOD_CFG.start,endDate:PERIOD_CFG.end}],
           dimensions:[{name:'city'}],
           metrics:[{name:'sessions'}],
           limit: 8, orderBys:[{metric:{metricName:'sessions'},desc:true}]
@@ -250,7 +250,7 @@
       // Devices
       try {
         const dv = await ga4OauthCall({
-          dateRanges:[{startDate:'30daysAgo',endDate:'today'}],
+          dateRanges:[{startDate:PERIOD_CFG.start,endDate:PERIOD_CFG.end}],
           dimensions:[{name:'deviceCategory'}],
           metrics:[{name:'sessions'}]
         });
@@ -274,7 +274,7 @@
       }
       // KPI principaux 30j
       const main = await ga4SignAndCall(sa, {
-        dateRanges:[{ startDate:'30daysAgo', endDate:'today' }],
+        dateRanges:[{startDate:PERIOD_CFG.start,endDate:PERIOD_CFG.end}],
         metrics:[{name:'sessions'},{name:'totalUsers'},{name:'newUsers'},{name:'screenPageViews'},{name:'averageSessionDuration'},{name:'engagementRate'}]
       });
       const row = main.rows?.[0]?.metricValues || [];
@@ -289,7 +289,7 @@
       // Top sources 30j
       try {
         const s = await ga4SignAndCall(sa, {
-          dateRanges:[{startDate:'30daysAgo',endDate:'today'}],
+          dateRanges:[{startDate:PERIOD_CFG.start,endDate:PERIOD_CFG.end}],
           dimensions:[{name:'sessionSourceMedium'}],
           metrics:[{name:'sessions'},{name:'totalUsers'}],
           limit: 8, orderBys:[{metric:{metricName:'sessions'},desc:true}]
@@ -303,7 +303,7 @@
       // Top pages 30j
       try {
         const p = await ga4SignAndCall(sa, {
-          dateRanges:[{startDate:'30daysAgo',endDate:'today'}],
+          dateRanges:[{startDate:PERIOD_CFG.start,endDate:PERIOD_CFG.end}],
           dimensions:[{name:'pagePath'}],
           metrics:[{name:'screenPageViews'},{name:'totalUsers'}],
           limit: 10, orderBys:[{metric:{metricName:'screenPageViews'},desc:true}]
