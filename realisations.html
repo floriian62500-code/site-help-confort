@@ -860,7 +860,7 @@ if (document.fonts && document.fonts.ready) {
  if (!res.ok) throw new Error('No index');
  allRealisations = await res.json();
  } catch(e) {
- grid.innerHTML = '<div class="real-empty" style="grid-column:1/-1"><h3>Aucun chantier publié pour le moment.</h3><p>Les réalisations publiées via le <a href="admin-pro/login.html" style="color:#FF6B1A;font-weight:700">back-office</a> apparaîtront ici automatiquement.</p></div>';
+ grid.innerHTML = '<div class="real-empty" style="grid-column:1/-1"><h3>Aucun chantier publié pour le moment.</h3><p>Les nouvelles réalisations apparaîtront ici automatiquement.</p></div>';
  return;
  }
  }
