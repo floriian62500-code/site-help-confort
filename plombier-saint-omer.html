@@ -700,6 +700,31 @@ if (document.fonts && document.fonts.ready) {
  }
  @media (min-width: 720px) {.m-real-card { flex: 0 0 360px; } }.m-real-card:hover { transform: translateY(-3px); box-shadow: 0 14px 32px var(--m-glow); border-color: var(--m-color); }.m-real-img { aspect-ratio: 4/3; background: linear-gradient(135deg, #F4F8FC, #EAF2F7); position: relative; overflow: hidden; }.m-real-img iframe { position: absolute; top: -60px; left: -40px; width: calc(100% + 80px); height: calc(100% + 200px); border: 0; pointer-events: none; }.m-real-img img { width: 100%; height: 100%; object-fit: cover; display: block; }.m-real-img.placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--m-color-dark); gap: 10px; font-size:.88rem; font-weight: 600; }.m-real-img.placeholder svg { width: 36px; height: 36px; opacity:.6; }.m-real-body { padding: 14px 16px 16px; }.m-real-tag { display: inline-block; padding: 3px 8px; background: var(--m-soft); color: var(--m-color-dark); border-radius: 6px; font-size:.68rem; font-weight: 800; text-transform: uppercase; letter-spacing:.06em; margin-bottom: 8px; }.m-real-card h3 { margin: 0 0 4px; font-size:.98rem; font-weight: 800; color: #0A1428; line-height: 1.3; }.m-real-card p { margin: 0; font-size:.82rem; line-height: 1.5; color: #475569; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }.m-real-foot { text-align: center; margin-top: 12px; }.m-real-foot a { display: inline-flex; align-items: center; gap: 6px; color: var(--m-color-dark); font-weight: 700; font-size:.9rem; text-decoration: none; }.m-real-foot a:hover { gap: 10px; }
 
+ /* ─── 2-CTA + Pourquoi nous (remplace catalogue redondant) ─── */
+ .m-cta-pair { display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 1100px; margin: 0 auto 40px; }
+ @media (min-width: 760px) { .m-cta-pair { grid-template-columns: 1fr 1fr; gap: 22px; } }
+ .m-cta-big { display: flex; align-items: center; gap: 18px; padding: 26px 28px; border-radius: 18px; text-decoration: none; transition: all .25s cubic-bezier(.16,1,.3,1); border: 1.5px solid transparent; position: relative; overflow: hidden; }
+ .m-cta-big .m-cta-icon { flex-shrink: 0; width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
+ .m-cta-big .m-cta-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; line-height: 1.35; }
+ .m-cta-big .m-cta-text strong { font-size: 1.18rem; font-weight: 800; letter-spacing: -.015em; }
+ .m-cta-big .m-cta-text span { font-size: .88rem; font-weight: 500; opacity: .88; }
+ .m-cta-big .m-cta-arrow { flex-shrink: 0; font-size: 1.6rem; font-weight: 900; transition: transform .25s ease; }
+ .m-cta-big:hover .m-cta-arrow { transform: translateX(5px); }
+ .m-cta-primary { background: linear-gradient(135deg, var(--m-color), var(--m-color-dark)); color: #fff; box-shadow: 0 14px 32px var(--m-glow), 0 0 0 1px var(--m-glow); }
+ .m-cta-primary:hover { transform: translateY(-3px); box-shadow: 0 22px 48px var(--m-glow), 0 0 0 1px var(--m-color); }
+ .m-cta-primary .m-cta-icon { background: rgba(255,255,255,.20); color: #fff; }
+ .m-cta-secondary { background: #fff; color: #0A1428; border-color: #E5EDF3; box-shadow: 0 8px 24px rgba(10,20,40,.06); }
+ .m-cta-secondary:hover { transform: translateY(-3px); border-color: var(--m-color); box-shadow: 0 18px 40px var(--m-glow); }
+ .m-cta-secondary .m-cta-icon { background: var(--m-soft); color: var(--m-color-dark); }
+
+ .m-pourquoi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; max-width: 1100px; margin: 0 auto; }
+ @media (min-width: 760px) { .m-pourquoi-grid { grid-template-columns: repeat(4, 1fr); } }
+ .m-pourquoi-card { background: #fff; border: 1px solid #E5EDF3; border-radius: 14px; padding: 22px 20px; display: flex; flex-direction: column; gap: 8px; text-align: left; transition: all .25s ease; }
+ .m-pourquoi-card:hover { transform: translateY(-2px); border-color: var(--m-color); box-shadow: 0 10px 26px var(--m-glow); }
+ .m-pourquoi-ico { width: 44px; height: 44px; border-radius: 12px; background: var(--m-soft); color: var(--m-color-dark); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 4px; }
+ .m-pourquoi-card strong { font-size: .98rem; font-weight: 800; color: #0A1428; letter-spacing: -.005em; }
+ .m-pourquoi-card span { font-size: .82rem; line-height: 1.5; color: #64748b; }
+
  /* ─── TARIFS RÉSERVABLES (avec wizard) ─── */.m-tarifs-grid {
  display: grid; grid-template-columns: 1fr; gap: 14px;
  max-width: 1100px; margin: 0 auto;
@@ -1084,101 +1109,59 @@ if (document.fonts && document.fonts.ready) {
  </div>
  </div>
 
- <div class="m-tarifs-grid" id="plomberieServicesGrid">
- <!-- Catalogue plomberie : fallback hardcodé complet, enrichi via Supabase si disponible -->
-
- <!-- Tarifs issus de la base produits HELP! Confort — 100% prestations PLOMBERIE -->
- <article class="m-tarif-card" data-presta="Recherche de fuite visuelle" data-source="base-produits-2026-05">
- <div class="m-tarif-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
- <h3>Recherche de fuite visuelle</h3>
- <p>Localisation d'une fuite accessible, non encastrée. Diagnostic et devis remis.</p>
- <div class="m-tarif-price">148 € TTC <small>· forfait</small></div>
- <a href="contact.html?presta=recherche-fuite#form" class="m-tarif-action">Réserver →</a>
- </article>
-
-
- <article class="m-tarif-card" data-presta="Désengorgement canalisation" data-source="base-produits-2026-05">
- <div class="m-tarif-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M6 8v8"/><path d="M18 8v8"/><path d="M12 6v12"/></svg></div>
- <h3>Désengorgement canalisation</h3>
- <p>WC, évier, douche bouchés. Furet électrique ou hydrocurage selon le cas.</p>
- <div class="m-tarif-price">165 € TTC <small>· forfait</small></div>
- <a href="contact.html?presta=desengorgement#form" class="m-tarif-action">Réserver →</a>
- </article>
-
- <article class="m-tarif-card" data-presta="Remplacement mécanisme chasse d'eau Nicoll" data-source="devis-2026-05-15">
- <div class="m-tarif-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M9 8h6"/><path d="M9 12h6"/></svg></div>
- <h3>Mécanisme chasse d'eau · Nicoll</h3>
- <p>Fourniture + dépose + pose + MO + déplacement + frais. <strong>Tout compris.</strong></p>
- <div class="m-tarif-price">187 € TTC <small>· devis tout inclus</small></div>
- <a href="contact.html?presta=mecanisme-chasse-eau-nicoll#form" class="m-tarif-action">Réserver →</a>
- </article>
-
-
- <!-- BLOC CHAUFFE-EAU — 6 devis Atlantic Éco/Stéatite, tout compris -->
- <article class="m-tarif-card" data-presta="Chauffe-eau 100L Éco" data-source="devis-2026-05-15">
- <div class="m-tarif-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><line x1="10" y1="17" x2="14" y2="17"/></svg></div>
- <h3>Chauffe-eau 100 L · Gamme Éco</h3>
- <p>Atlantic blindé, mural ou trépied. Dépose + pose + accessoires inclus.</p>
- <div class="m-tarif-price">817 € TTC <small>· tout compris</small></div>
- <a href="contact.html?presta=chauffe-eau-100-eco#form" class="m-tarif-action">Réserver →</a>
- </article>
-
-
- <article class="m-tarif-card" data-presta="Chauffe-eau 150L Éco" data-source="devis-2026-05-15">
- <div class="m-tarif-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="18" x2="14" y2="18"/></svg></div>
- <h3>Chauffe-eau 150 L · Gamme Éco</h3>
- <p>Atlantic blindé, mural ou trépied. Foyer 2-3 personnes.</p>
- <div class="m-tarif-price">884 € TTC <small>· tout compris</small></div>
- <a href="contact.html?presta=chauffe-eau-150-eco#form" class="m-tarif-action">Réserver →</a>
- </article>
-
-
- <article class="m-tarif-card" data-presta="Chauffe-eau 200L sol Éco" data-source="devis-2026-05-15">
- <div class="m-tarif-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="5" y1="22" x2="19" y2="22"/></svg></div>
- <h3>Chauffe-eau 200 L au sol · Éco</h3>
- <p>Atlantic blindé au sol. Famille 4-5 personnes. Tout inclus.</p>
- <div class="m-tarif-price">1 332 € TTC <small>· tout compris</small></div>
- <a href="contact.html?presta=chauffe-eau-200-eco#form" class="m-tarif-action">Réserver →</a>
- </article>
-
-
- <article class="m-tarif-card" data-presta="Contrat entretien chauffe-eau" data-source="devis-2026-05-15">
- <div class="m-tarif-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 14l2 2 4-4"/></svg></div>
- <h3>Contrat entretien chauffe-eau</h3>
- <p>Détartrage cuve, vérification groupe sécurité, anode, joints. Annuel.</p>
- <div class="m-tarif-price">220 € TTC <small>· forfait annuel</small></div>
- <a href="contact.html?presta=contrat-entretien-chauffe-eau#form" class="m-tarif-action">Souscrire →</a>
- </article>
-
- <article class="m-tarif-card complex" data-presta="Pose WC suspendu / au sol">
- <div class="m-tarif-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v18"/><path d="M15 3v18"/><path d="M3 12h18"/></svg></div>
- <h3>Pose WC suspendu / au sol</h3>
- <p>Bâti-support ou sol, raccordement, finitions selon configuration.</p>
- <div class="m-tarif-price">sur devis</div>
- <a href="contact.html?presta=wc-suspendu#form" class="m-tarif-action">Demander un devis →</a>
- </article>
-
-
- <article class="m-tarif-card complex" data-presta="Rénovation SDB">
- <div class="m-tarif-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/></svg></div>
- <h3>Rénovation salle de bain</h3>
- <p>Visite technique gratuite. Devis détaillé sous 5 jours. Clés en main.</p>
- <div class="m-tarif-price">sur devis</div>
- <a href="travaux-saint-omer.html" class="m-tarif-action">Voir nos rénovations →</a>
- </article>
+ <div class="m-cta-pair" data-section="plomberie">
+ <a href="nos-prestations.html#sec-plomberie" class="m-cta-big m-cta-primary">
+ <span class="m-cta-icon" aria-hidden="true">
+ <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+ </span>
+ <span class="m-cta-text">
+ <strong>Réserver une intervention</strong>
+ <span>Catalogue plomberie : forfaits prix fixe, réservation en ligne avec acompte 40%.</span>
+ </span>
+ <span class="m-cta-arrow" aria-hidden="true">→</span>
+ </a>
+ <a href="contact.html?metier=plomberie" class="m-cta-big m-cta-secondary">
+ <span class="m-cta-icon" aria-hidden="true">
+ <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+ </span>
+ <span class="m-cta-text">
+ <strong>Demander un devis gratuit</strong>
+ <span>Cas spécifique, rénovation, projet sur mesure : on vous rappelle sous 1h ouvrée.</span>
+ </span>
+ <span class="m-cta-arrow" aria-hidden="true">→</span>
+ </a>
  </div>
 
- <style>.m-tarifs-grid.m-tarif-price { font-weight: 800; color: var(--m-color, #0DA0CF); font-size: 1.1rem; margin: 8px 0 14px; letter-spacing: -.01em; }.m-tarifs-grid.m-tarif-price small { font-weight: 500; color: #94a3b8; font-size:.78rem; letter-spacing: 0; }
- </style>
-
- <!-- Le catalogue est entièrement hardcodé ci-dessus. Pour activer un enrichissement automatique
- depuis Supabase plus tard (en plus des cards par défaut), rajouter ici un script
- qui APPEND uniquement les services Supabase ABSENTS du hardcoded.
- Pour l'instant on garde 100% hardcoded pour garantir l'affichage cohérent en prod. -->
-
- <div class="m-tarifs-note">
- <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
- <span>Le tarif vous est <strong>communiqué après vérification de votre situation</strong> et avant toute intervention. Aucun engagement tant que vous n'avez pas validé le devis.</span>
+ <!-- Garanties / pourquoi nous -->
+ <div class="m-pourquoi-grid" aria-label="Nos garanties">
+ <div class="m-pourquoi-card">
+ <span class="m-pourquoi-ico" aria-hidden="true">
+ <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12c0 5-9 9-9 9s-9-4-9-9V5l9-3 9 3v7z"/><path d="M9 12l2 2 4-4"/></svg>
+ </span>
+ <strong>Garantie décennale MAAF</strong>
+ <span>Couverture totale sur tous nos travaux plomberie.</span>
+ </div>
+ <div class="m-pourquoi-card">
+ <span class="m-pourquoi-ico" aria-hidden="true">
+ <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+ </span>
+ <strong>Intervention rapide</strong>
+ <span>Saint-Omer & Dunkerque — sous 24h en semaine.</span>
+ </div>
+ <div class="m-pourquoi-card">
+ <span class="m-pourquoi-ico" aria-hidden="true">
+ <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+ </span>
+ <strong>Techniciens salariés</strong>
+ <span>Pas de sous-traitance. Équipe formée en interne.</span>
+ </div>
+ <div class="m-pourquoi-card">
+ <span class="m-pourquoi-ico" aria-hidden="true">
+ <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+ </span>
+ <strong>4,7/5 sur 343 avis</strong>
+ <span>Google &amp; Trustville — vérifiés.</span>
+ </div>
  </div>
  </div>
 </section>
