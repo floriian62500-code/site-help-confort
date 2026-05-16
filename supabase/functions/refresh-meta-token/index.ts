@@ -56,6 +56,29 @@ serve(async (req) => {
     if (!currentToken) return json({ error: 'Token Meta absent (config.page_access_token vide)' }, 400);
     if (!pageId) return json({ error: 'fb_page_id absent dans settings.meta' }, 400);
 
+    // 1.bis — Court-circuit : si le token actuel est déjà valide ET permanent
+    // (expires_at == 0), pas la peine de tenter quoi que ce soit, sinon on
+    // casse un token qui marche très bien.
+    if (appId && appSecret) {
+      try {
+        const appAccessToken = `${appId}|${appSecret}`;
+        const dbg = await fetch(`${GRAPH}/debug_token?input_token=${encodeURIComponent(currentToken)}&access_token=${encodeURIComponent(appAccessToken)}`);
+        const dbgD = await dbg.json();
+        const info = dbgD.data || {};
+        if (info.is_valid === true && info.type === 'PAGE' && (info.expires_at === 0 || !info.expires_at)) {
+          return json({
+            ok: true,
+            refreshed: false,
+            token_source: 'already_permanent',
+            token_info: info,
+            message: 'Page Access Token déjà permanent, aucun refresh nécessaire',
+          });
+        }
+      } catch (_) {
+        // En cas d'erreur de debug_token, on continue avec la logique de refresh
+      }
+    }
+
     // 2. Stratégie pour obtenir un Page Access Token PERMANENT :
     //
     //    Règle Facebook : un Page Access Token dérivé de /me/accounts hérite
