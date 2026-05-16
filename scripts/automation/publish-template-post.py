@@ -4,8 +4,22 @@ from __future__ import annotations
 """
 publish-template-post.py
 ------------------------
-Publie le post Facebook (et Google Business Profile) du jour à partir du
-catalogue de templates (catalog-posts.json).
+Publie le post Facebook du jour à partir du catalogue de templates
+(catalog-posts.json), via l'Edge Function Supabase `publish-meta`
+(mode `textPost`).
+
+Architecture
+~~~~~~~~~~~~
+Aucun token Meta n'est stocké en local. Le Page Access Token est détenu
+côté Supabase (table `app_settings`, clé `meta`) et rafraîchi
+quotidiennement par `refresh-fb-token.sh` (qui appelle l'Edge Function
+`refresh-meta-token`).
+
+Ce script se contente de :
+  1. Lire le catalogue local (catalog-posts.json)
+  2. Sélectionner le template du jour selon (jour_semaine, semaine ISO % 8)
+  3. POSTer le message à l'Edge Function `publish-meta` en mode texte
+  4. Logger le résultat
 
 Logique de sélection :
     rotation_index = numero_semaine_iso % 8
@@ -14,7 +28,23 @@ Logique de sélection :
 Jours couverts par les templates : lundi, mardi, jeudi, vendredi, samedi.
 Les mercredis et dimanches sont gérés par l'agent 7 (IA Cowork).
 
-Si le script est appelé un mercredi ou dimanche, il ne fait rien et logge.
+Variables d'environnement (recherchées dans cet ordre dans
+~/.helpconfort/phase2.env puis $PROJECT_DIR/.autopush/.env) :
+    SUPABASE_URL                 (requis)
+    SUPABASE_SERVICE_ROLE_KEY    (requis — authentification cron de l'Edge Function)
+
+Variables optionnelles :
+    HC_CATALOG_PATH      chemin alternatif vers catalog-posts.json
+    HC_LOG_DIR           dossier de logs (défaut : ~/Library/Logs/helpconfort)
+
+Codes de sortie :
+    0  succès (ou jour sans template)
+    1  aucun template trouvé pour la combinaison jour/rotation
+    2  catalogue introuvable
+    3  configuration manquante (SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY)
+    5  erreur HTTP de l'Edge Function (4xx/5xx)
+    6  erreur réseau
+    7  l'Edge Function a répondu mais Facebook a rejeté le post
 
 Auteur : Help Confort — Phase 3 automatisation
 Date   : 2026-05-16
@@ -27,52 +57,45 @@ import logging
 import datetime as dt
 from pathlib import Path
 from urllib import request as urlrequest
-from urllib import parse as urlparse
 from urllib.error import HTTPError, URLError
 
 # -----------------------------------------------------------------------------
-# CONFIGURATION — à ajuster si besoin selon l'environnement
+# CONFIGURATION
 # -----------------------------------------------------------------------------
 HOME = Path.home()
+PROJECT_DIR = Path(
+    os.environ.get(
+        "HC_PROJECT_DIR",
+        HOME / "Documents/Claude/Projects/SITE INTERNET",
+    )
+)
 
 CATALOG_PATH = Path(
     os.environ.get(
         "HC_CATALOG_PATH",
-        HOME / "Documents/Claude/Projects/SITE INTERNET/scripts/automation/catalog-posts.json",
+        PROJECT_DIR / "scripts/automation/catalog-posts.json",
     )
 )
 
-FB_TOKEN_PATH = Path(
-    os.environ.get("HC_FB_TOKEN_PATH", HOME / ".helpconfort/fb_token.txt")
-)
-
-FB_PAGE_ID = os.environ.get("HC_FB_PAGE_ID", "")  # à renseigner via env ou launchd
-
-LOG_DIR = Path(
-    os.environ.get("HC_LOG_DIR", HOME / "Library/Logs/helpconfort")
-)
+LOG_DIR = Path(os.environ.get("HC_LOG_DIR", HOME / "Library/Logs/helpconfort"))
 LOG_FILE = LOG_DIR / "template-posts.log"
 
-# Jours qui utilisent ce script (les autres sont gérés par l'IA)
+# Fichiers .env recherchés (priorité décroissante)
+ENV_FILES = [
+    HOME / ".helpconfort/phase2.env",            # convention Florian (runtime)
+    PROJECT_DIR / ".autopush/.env",              # fallback (autopush)
+]
+
 JOURS_TEMPLATES = {"lundi", "mardi", "jeudi", "vendredi", "samedi"}
-
-# Mapping Python (0=Mon) -> français
 JOURS_FR = {
-    0: "lundi",
-    1: "mardi",
-    2: "mercredi",
-    3: "jeudi",
-    4: "vendredi",
-    5: "samedi",
-    6: "dimanche",
+    0: "lundi", 1: "mardi", 2: "mercredi", 3: "jeudi",
+    4: "vendredi", 5: "samedi", 6: "dimanche",
 }
-
 
 # -----------------------------------------------------------------------------
 # LOGGING
 # -----------------------------------------------------------------------------
 LOG_DIR.mkdir(parents=True, exist_ok=True)
-
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -85,10 +108,39 @@ log = logging.getLogger("publish-template-post")
 
 
 # -----------------------------------------------------------------------------
-# FONCTIONS
+# CHARGEMENT .env
+# -----------------------------------------------------------------------------
+def charger_env() -> dict[str, str]:
+    """Charge les variables des fichiers .env (sans écraser l'environnement existant).
+
+    Retourne un dict {clé: valeur} agrégé. Les variables d'environnement
+    existantes prennent priorité sur les valeurs lues dans les fichiers.
+    """
+    valeurs: dict[str, str] = {}
+    for env_file in ENV_FILES:
+        if not env_file.exists():
+            continue
+        log.info("Chargement .env : %s", env_file)
+        for ligne in env_file.read_text(encoding="utf-8").splitlines():
+            ligne = ligne.strip()
+            if not ligne or ligne.startswith("#") or "=" not in ligne:
+                continue
+            cle, _, val = ligne.partition("=")
+            cle = cle.strip()
+            val = val.strip().strip('"').strip("'")
+            # Première occurrence gagne (priorité à phase2.env)
+            valeurs.setdefault(cle, val)
+    # L'environnement réel a la priorité ultime
+    for cle in list(valeurs.keys()):
+        if os.environ.get(cle):
+            valeurs[cle] = os.environ[cle]
+    return valeurs
+
+
+# -----------------------------------------------------------------------------
+# CATALOGUE & SÉLECTION
 # -----------------------------------------------------------------------------
 def charger_catalogue() -> list[dict]:
-    """Charge la liste des templates depuis le fichier JSON."""
     if not CATALOG_PATH.exists():
         log.error("Catalogue introuvable : %s", CATALOG_PATH)
         sys.exit(2)
@@ -98,52 +150,66 @@ def charger_catalogue() -> list[dict]:
 
 
 def selectionner_template(templates: list[dict], aujourdhui: dt.date) -> dict | None:
-    """Retourne le template correspondant au jour et à la semaine."""
     jour = JOURS_FR[aujourdhui.weekday()]
     rotation = aujourdhui.isocalendar().week % 8
     log.info("Recherche template : jour=%s, rotation=%d", jour, rotation)
-
     for t in templates:
-        if t["jour"] == jour and t["rotation"] == rotation:
+        if t.get("jour") == jour and t.get("rotation") == rotation:
             return t
     return None
 
 
 def construire_message(template: dict) -> str:
-    """Concatène le texte du template avec les hashtags."""
-    texte = template["texte"].strip()
+    texte = template.get("texte", "").strip()
     hashtags = " ".join(template.get("hashtags", []))
-    return f"{texte}\n\n{hashtags}".strip()
+    if hashtags:
+        return f"{texte}\n\n{hashtags}".strip()
+    return texte
 
 
-def charger_token_fb() -> str:
-    """Lit le Page Access Token Facebook."""
-    if not FB_TOKEN_PATH.exists():
-        log.error("Token Facebook introuvable : %s", FB_TOKEN_PATH)
-        sys.exit(3)
-    return FB_TOKEN_PATH.read_text(encoding="utf-8").strip()
+# -----------------------------------------------------------------------------
+# APPEL EDGE FUNCTION
+# -----------------------------------------------------------------------------
+def publier_via_edge(
+    message: str,
+    supabase_url: str,
+    service_key: str,
+    log_key: str,
+    photo_url: str | None = None,
+) -> dict:
+    """Appelle l'Edge Function publish-meta en mode textPost."""
+    endpoint = supabase_url.rstrip("/") + "/functions/v1/publish-meta"
+    payload: dict = {
+        "textPost": {
+            "message": message,
+            "logKey": log_key,
+        },
+        "targets": {"facebook": True, "instagram": False},
+    }
+    if photo_url:
+        payload["textPost"]["photoUrl"] = photo_url
 
-
-def publier_facebook(message: str, page_id: str, token: str) -> dict:
-    """Poste le message sur la page Facebook via l'API Graph."""
-    if not page_id:
-        log.error("HC_FB_PAGE_ID non défini.")
-        sys.exit(4)
-
-    url = f"https://graph.facebook.com/v20.0/{page_id}/feed"
-    data = urlparse.urlencode({"message": message, "access_token": token}).encode()
-
-    req = urlrequest.Request(url, data=data, method="POST")
+    body = json.dumps(payload).encode("utf-8")
+    req = urlrequest.Request(
+        endpoint,
+        data=body,
+        method="POST",
+        headers={
+            "Authorization": f"Bearer {service_key}",
+            "Content-Type": "application/json",
+        },
+    )
     try:
         with urlrequest.urlopen(req, timeout=30) as resp:
-            body = resp.read().decode("utf-8")
-            log.info("Réponse Facebook : %s", body)
-            return json.loads(body)
+            raw = resp.read().decode("utf-8")
+            log.info("Réponse Edge Function (HTTP %d) : %s", resp.status, raw)
+            return json.loads(raw)
     except HTTPError as e:
-        log.error("Erreur HTTP Facebook %s : %s", e.code, e.read().decode("utf-8", "ignore"))
+        contenu = e.read().decode("utf-8", "ignore")
+        log.error("Erreur HTTP %d de l'Edge Function : %s", e.code, contenu)
         sys.exit(5)
     except URLError as e:
-        log.error("Erreur réseau Facebook : %s", e.reason)
+        log.error("Erreur réseau vers l'Edge Function : %s", e.reason)
         sys.exit(6)
 
 
@@ -171,17 +237,57 @@ def main() -> None:
     message = construire_message(template)
     log.info("Message construit (%d caractères).", len(message))
 
-    # Mode dry-run pour test sans publication
+    # Identifiant de traçabilité côté Supabase
+    rotation = aujourdhui.isocalendar().week % 8
+    log_key = f"template-{jour}-r{rotation}-{aujourdhui.isoformat()}"
+
+    # Mode dry-run : pas de publication
     if "--dry-run" in sys.argv:
         print("--- DRY RUN ---")
+        print(f"logKey : {log_key}")
+        print(f"thème  : {template.get('theme')}")
+        print("--- Message Facebook ---")
         print(message)
         print("--- /DRY RUN ---")
         log.info("Dry-run : pas de publication.")
         return
 
-    token = charger_token_fb()
-    resultat = publier_facebook(message, FB_PAGE_ID, token)
-    log.info("Post publié avec id=%s", resultat.get("id", "?"))
+    # Chargement de la configuration .env
+    env = charger_env()
+    supabase_url = env.get("SUPABASE_URL", "").strip()
+    service_key = env.get("SUPABASE_SERVICE_ROLE_KEY", "").strip()
+    if not supabase_url or not service_key:
+        log.error(
+            "Configuration manquante. Requis : SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY "
+            "dans %s (ou %s).",
+            ENV_FILES[0],
+            ENV_FILES[1],
+        )
+        sys.exit(3)
+
+    # Appel de l'Edge Function
+    resultat = publier_via_edge(
+        message=message,
+        supabase_url=supabase_url,
+        service_key=service_key,
+        log_key=log_key,
+    )
+
+    # Analyse de la réponse
+    if not resultat.get("success"):
+        log.error("Edge Function a répondu sans success=true : %s", resultat)
+        sys.exit(7)
+
+    fb = (resultat.get("results") or {}).get("facebook") or {}
+    if fb.get("error"):
+        log.error("Facebook a rejeté le post : %s", fb["error"])
+        sys.exit(7)
+
+    log.info(
+        "Post publié — postId=%s url=%s",
+        fb.get("postId", "?"),
+        fb.get("url", "?"),
+    )
 
 
 if __name__ == "__main__":
