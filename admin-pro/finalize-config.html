@@ -178,6 +178,30 @@
     return merged;
   }
 
+  // ─── HANDLER FILE PICKER : clic sur "Sélectionner le fichier .json" ────
+  const ga4FileInput = document.getElementById('ga4_file');
+  const ga4StatusEl = document.getElementById('ga4_file_status');
+  document.getElementById('btnPickGa4File').onclick = () => ga4FileInput.click();
+  ga4FileInput.onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const content = ev.target.result;
+      try {
+        const sa = JSON.parse(content);
+        if (!sa.client_email || !sa.private_key) throw new Error('JSON incomplet (manque client_email ou private_key)');
+        if (!String(sa.private_key).includes('BEGIN PRIVATE KEY')) throw new Error('private_key invalide');
+        document.getElementById('ga4_json').value = content;
+        ga4StatusEl.innerHTML = `<span style="color:#15803d;font-weight:700">✅ Fichier <code>${file.name}</code> lu (${(file.size/1024).toFixed(1)} KB) — Service account : <code>${sa.client_email}</code>. Clique "💾 Tout enregistrer" en bas pour pousser en base.</span>`;
+      } catch(err) {
+        ga4StatusEl.innerHTML = `<span style="color:#B91C1C;font-weight:700">❌ Fichier invalide : ${err.message}</span>`;
+      }
+    };
+    reader.onerror = () => { ga4StatusEl.innerHTML = `<span style="color:#B91C1C">❌ Impossible de lire le fichier.</span>`; };
+    reader.readAsText(file);
+  };
+
   document.getElementById('btnSaveAll').onclick = async () => {
     logEl.innerHTML = '';
     logCard.style.display = '';
