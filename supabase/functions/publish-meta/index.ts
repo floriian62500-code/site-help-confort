@@ -42,19 +42,48 @@ Deno.serve(async (req: Request) => {
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) return json({ error: "Missing Authorization" }, 401);
 
+    // Le bearer est comparé à toutes les clés que Supabase peut auto-injecter.
+    // Supabase migre progressivement de SUPABASE_SERVICE_ROLE_KEY (JWT legacy)
+    // vers SUPABASE_SECRET_KEY (nouveau format sb_secret_...). On accepte les deux.
     // @ts-ignore
-    const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
-    const isCron = authHeader === `Bearer ${serviceKey}`;
+    const legacyKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
+    // @ts-ignore
+    const secretKey = Deno.env.get("SUPABASE_SECRET_KEY") ?? "";
+    const bearer = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : "";
+
+    const matchLegacy = !!legacyKey && bearer === legacyKey;
+    const matchSecret = !!secretKey && bearer === secretKey;
+    const isCron = matchLegacy || matchSecret;
+    const activeKey = matchLegacy ? legacyKey : (matchSecret ? secretKey : legacyKey);
+
     // @ts-ignore
     const sb = isCron
       // @ts-ignore
-      ? createClient(Deno.env.get("SUPABASE_URL")!, serviceKey, { auth: { persistSession: false } })
+      ? createClient(Deno.env.get("SUPABASE_URL")!, activeKey, { auth: { persistSession: false } })
       // @ts-ignore
       : createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_ANON_KEY")!, { global: { headers: { Authorization: authHeader } } });
 
     if (!isCron) {
+      // Tentative d'auth utilisateur classique
       const { data: { user } } = await sb.auth.getUser();
-      if (!user) return json({ error: "Not authenticated" }, 401);
+      if (!user) {
+        // Diagnostic pour comprendre ce qui est injecté côté runtime
+        // (longueurs uniquement, jamais les valeurs en clair)
+        // @ts-ignore
+        const envKeys = Object.keys(Deno.env.toObject()).filter(k => k.startsWith("SUPABASE_") || k.startsWith("SB_"));
+        return json({
+          error: "Not authenticated",
+          diagnostic: {
+            bearerLen: bearer.length,
+            bearerHead: bearer.slice(0, 12),
+            legacyKeyLen: legacyKey.length,
+            legacyKeyHead: legacyKey.slice(0, 12),
+            secretKeyLen: secretKey.length,
+            secretKeyHead: secretKey.slice(0, 12),
+            envKeys,
+          },
+        }, 401);
+      }
     }
 
     const { data: settings } = await sb.from("app_settings").select("value").eq("key", "meta").single();
