@@ -71,6 +71,57 @@
     y.parentNode.insertBefore(t, y);
   })(window, document, 'clarity', 'script', 'CLARITY_ID');
 
+  // ─── Capture des UTM source / referrer pour traçabilité leads ─────
+  // Quand un visiteur arrive depuis Google Ads / FB Ads / email / etc.,
+  // on stocke les UTM en sessionStorage. Lors de la soumission d'un formulaire,
+  // on injecte automatiquement des hidden fields hc_utm_* qui sont récupérés
+  // côté Supabase pour savoir d'où vient chaque lead.
+  try {
+    var params = new URLSearchParams(location.search);
+    var utm = {};
+    ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'].forEach(function(k){
+      var v = params.get(k);
+      if (v) utm[k] = v;
+    });
+    // Si on a au moins une UTM, on la stocke (priorité à la 1ère touche)
+    if (Object.keys(utm).length && !sessionStorage.getItem('hc_utm')) {
+      utm._first_landing = location.pathname;
+      utm._captured_at = new Date().toISOString();
+      sessionStorage.setItem('hc_utm', JSON.stringify(utm));
+    }
+    // Capture aussi referrer si externe
+    if (document.referrer && !sessionStorage.getItem('hc_referrer')) {
+      try {
+        var refHost = new URL(document.referrer).hostname;
+        if (refHost && refHost !== location.hostname) {
+          sessionStorage.setItem('hc_referrer', document.referrer);
+        }
+      } catch(_){}
+    }
+  } catch(_){}
+  // Hook tous les forms : avant submit, injecte les UTM en hidden fields
+  document.addEventListener('submit', function(e){
+    var f = e.target;
+    if (!(f && f.tagName === 'FORM')) return;
+    try {
+      var stored = JSON.parse(sessionStorage.getItem('hc_utm') || '{}');
+      var ref = sessionStorage.getItem('hc_referrer') || '';
+      function setHidden(name, val) {
+        if (!val) return;
+        if (f.querySelector('[name="'+name+'"]')) return; // déjà présent
+        var inp = document.createElement('input');
+        inp.type = 'hidden';
+        inp.name = name;
+        inp.value = val;
+        f.appendChild(inp);
+      }
+      Object.entries(stored).forEach(function(kv){ setHidden('hc_' + kv[0], kv[1]); });
+      setHidden('hc_referrer', ref);
+      setHidden('hc_page_path', location.pathname);
+      setHidden('hc_landing_ts', new Date().toISOString());
+    } catch(_){}
+  }, true); // capture phase pour passer AVANT les handlers du form
+
   // ─── Tracking automatique des clics téléphone + email ──────────────
   // Envoie un event GA4 personnalisé à chaque clic sur tel: ou mailto:
   // Permet de mesurer les conversions hors-formulaire (très important
