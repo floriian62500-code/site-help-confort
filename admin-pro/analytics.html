@@ -597,6 +597,86 @@
             </div>` : ''}
           </div>` : ''}
 
+          <!-- ═══ FUNNEL DE CONVERSION ═══ -->
+          ${(() => {
+            // Calcule la date de début pour filtrer Supabase
+            const daysMap = { '7d':7, '30d':30, '90d':90, '365d':365 };
+            const daysBack = daysMap[PERIOD] || 30;
+            const sinceDate = new Date(Date.now() - daysBack * 86400000);
+            // Visiteurs GA4
+            const visiteurs = ga4Stats.users || 0;
+            // Pages clés visitées : /contact, /contrats-entretien, /demande-devis, /realisation
+            const pagesClesPaths = ['/contact','/contrats-entretien','/demande-devis','/devis'];
+            const vuesPagesCles = topPages.filter(p => pagesClesPaths.some(c => (p.path||'').toLowerCase().startsWith(c)))
+              .reduce((s, p) => s + (p.users || 0), 0);
+            // Leads créés sur la période (Supabase)
+            const leadsPeriode = leads.filter(l => l.created_at && new Date(l.created_at) >= sinceDate).length;
+            // Contrats souscrits sur la période (Supabase)
+            const contratsPeriode = contracts.filter(ct => ct.created_at && new Date(ct.created_at) >= sinceDate).length;
+            // Commandes prestations
+            const commandesPeriode = orders.filter(o => o.created_at && new Date(o.created_at) >= sinceDate).length;
+            // Pourcentages
+            const pctPagesCles = visiteurs ? (vuesPagesCles / visiteurs * 100).toFixed(1) : 0;
+            const pctLeads = visiteurs ? (leadsPeriode / visiteurs * 100).toFixed(2) : 0;
+            const pctContrats = leadsPeriode ? (contratsPeriode / leadsPeriode * 100).toFixed(1) : 0;
+            // CA généré (estimation : leads.estimated_value + contracts.monthly_amount × 12)
+            const caContrats = contracts.filter(ct => ct.created_at && new Date(ct.created_at) >= sinceDate)
+              .reduce((s, ct) => s + (Number(ct.monthly_amount||0) * 12), 0);
+            const caOrders = orders.filter(o => o.created_at && new Date(o.created_at) >= sinceDate)
+              .reduce((s, o) => s + Number(o.price_ttc||0), 0);
+            const caTotal = caContrats + caOrders;
+
+            // Couleurs de l'entonnoir (du plus large au plus étroit)
+            const steps = [
+              { ico:'👁', label:'Visiteurs site', value:visiteurs, color:'#0DA0CF', width:100, sub:'GA4' },
+              { ico:'🎯', label:'Pages conversion vues', value:vuesPagesCles, color:'#7C3AED', width:80, sub:'/contact · /devis · /contrats', pct: pctPagesCles },
+              { ico:'💬', label:'Leads créés', value:leadsPeriode, color:'#FFB400', width:55, sub:'Formulaires remplis', pct: pctLeads },
+              { ico:'✅', label:'Contrats + commandes', value:contratsPeriode + commandesPeriode, color:'#22C55E', width:35, sub:contratsPeriode+' contrats · '+commandesPeriode+' commandes', pct: pctContrats }
+            ];
+            const maxV = Math.max(1, ...steps.map(s => s.value));
+
+            return `<div style="margin-top:14px;padding:22px;background:linear-gradient(135deg,#FAFCFD,#fff);border:1px solid var(--ink-100);border-radius:12px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:8px">
+                <h3 style="margin:0;font-size:1rem;font-weight:800;color:#0A1428">🎯 Funnel de conversion (${PERIOD_CFG.label})</h3>
+                <div style="font-size:.78rem;color:#64748b">
+                  CA estimé période : <strong style="color:#15803D">${caTotal.toLocaleString('fr-FR')} €</strong>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px;max-width:780px;margin:0 auto">
+                ${steps.map((s, i) => {
+                  const wPct = s.width;
+                  const valuePct = maxV ? (s.value / maxV * 100).toFixed(1) : 0;
+                  return `<div style="display:flex;align-items:center;gap:14px">
+                    <div style="width:36px;height:36px;border-radius:10px;background:${s.color};color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">${s.ico}</div>
+                    <div style="flex:1;position:relative">
+                      <div style="display:flex;justify-content:space-between;margin-bottom:5px">
+                        <div>
+                          <strong style="color:#0A1428;font-size:.96rem">${s.label}</strong>
+                          <span style="color:#64748b;font-size:.76rem;margin-left:6px">${escapeHtml(s.sub)}</span>
+                        </div>
+                        <div style="display:flex;align-items:baseline;gap:8px">
+                          <strong style="color:#0A1428;font-size:1.2rem">${s.value.toLocaleString('fr-FR')}</strong>
+                          ${s.pct !== undefined ? `<span style="color:${s.color};font-size:.78rem;font-weight:700">(${s.pct}%)</span>` : ''}
+                        </div>
+                      </div>
+                      <div style="position:relative;height:18px;background:#f1f5f9;border-radius:9px;overflow:hidden">
+                        <div style="position:absolute;left:0;top:0;bottom:0;width:${wPct}%;background:linear-gradient(90deg,${s.color},${s.color}aa);border-radius:9px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  ${i < steps.length - 1 ? `<div style="text-align:center;color:#cbd5e1;font-size:.84rem;margin:-2px 0">▼</div>` : ''}`;
+                }).join('')}
+              </div>
+              <div style="margin-top:18px;padding:12px 16px;background:#fff;border:1px dashed var(--ink-100);border-radius:8px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;font-size:.82rem">
+                <div><strong style="color:#0DA0CF">Taux conversion visiteur → lead :</strong> <strong style="color:#0A1428">${pctLeads}%</strong></div>
+                <div><strong style="color:#FFB400">Taux closure lead → contrat :</strong> <strong style="color:#0A1428">${pctContrats}%</strong></div>
+                <div><strong style="color:#22C55E">CA / visiteur :</strong> <strong style="color:#0A1428">${visiteurs ? (caTotal/visiteurs).toFixed(2) : '0'} €</strong></div>
+              </div>
+              <p style="margin:12px 0 0;font-size:.74rem;color:#94a3b8">💡 Sources : visiteurs depuis GA4 · leads & contrats depuis Supabase · CA estimé = contrats×12 mois + commandes payées TTC</p>
+            </div>`;
+          })()}
+
           <!-- ═══ HEATMAP HORAIRE — jour × heure ═══ -->
           ${ga4Heatmap.length ? (() => {
             // Build 7x24 grid : day 0=Dim 1=Lun … 6=Sam → on réordonne Lun-Dim

@@ -501,15 +501,15 @@ if (document.fonts && document.fonts.ready) {
  if (Array.isArray(data) && data.length) actus = data;
  }
  } catch(e){}
- // Fallback : derniers articles statiques (généré à partir du dossier /actualites/)
+ // Fallback : 6 vrais articles/conseils éditoriaux (PAS des chantiers — séparation actu/réalisation)
  if (!actus.length) {
  actus = [
- { slug:'2026-05-07-remplacement-de-panneau-pvc-modele-surinam-3', title:"Remplacement de panneau PVC — Modèle Surinam", date:'07/05/2026', category:'Menuiserie' },
- { slug:'2026-04-29-remplacement-de-mitigeur-evier-bec-long-douchette', title:"Remplacement de mitigeur évier bec long avec douchette", date:'29/04/2026', category:'Plomberie' },
- { slug:'2026-04-22-remplacement-de-double-vitrage-apres-bris-de-glace', title:"Remplacement de double vitrage après bris de glace", date:'22/04/2026', category:'Vitrerie' },
- { slug:'2026-04-14-votre-soupape-de-securite-ou-votre-manometre-est-defectueux', title:"Soupape de sécurité ou manomètre chaudière défectueux ?", date:'14/04/2026', category:'Chauffage' },
- { slug:'2026-04-08-votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le', title:"Panneau de porte PVC abîmé, fissuré ou terni ?", date:'08/04/2026', category:'Menuiserie' },
- { slug:'2026-04-01-envie-de-remplacer-votre-baignoire-par-une-douche-a-litalien', title:"Envie de remplacer votre baignoire par une douche italienne ?", date:'01/04/2026', category:'Rénovation' }
+ { slug:'guide-entretien-chaudiere', url:'guide-entretien-chaudiere.html', title:"Entretien annuel chaudière : obligation légale & bonnes pratiques", date:'2026-04-15', category:'Chauffage' },
+ { slug:'guide-fuite-eau', url:'guide-fuite-eau.html', title:"Détecter une fuite d'eau cachée : 6 signes qui ne trompent pas", date:'2026-04-08', category:'Plomberie' },
+ { slug:'guide-mise-aux-normes-electriques', url:'guide-mise-aux-normes-electriques.html', title:"Mise aux normes électriques NF C 15-100 : ce qui change pour vous", date:'2026-03-25', category:'Électricité' },
+ { slug:'guide-adaptation-pmr', url:'guide-adaptation-pmr.html', title:"Adaptation PMR : MaPrimeAdapt' couvre jusqu'à 70% des travaux", date:'2026-03-12', category:'Rénovation' },
+ { slug:'aides', url:'aides.html', title:"Aides 2026 : MaPrimeRénov', MaPrimeAdapt', éco-PTZ — qui peut en bénéficier ?", date:'2026-02-28', category:'Conseils' },
+ { slug:'contrats-entretien', url:'contrats-entretien.html', title:"Contrats d'entretien chaudière : Basic, Confort, Sécurité — comment choisir ?", date:'2026-02-14', category:'Chauffage' }
  ];
  }
  function fmtDate(d){
