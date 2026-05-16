@@ -1089,11 +1089,12 @@ if (document.fonts && document.fonts.ready) {
  <p style="color:#475569;font-size:.95rem;margin-top:8px">Chaque intervention faite par nos techniciens salariés — sans sous-traitance.</p>
  </div>
  <!-- 6 cartes prestations avec photos Unsplash vérifiées (URLs validées par fetch direct) -->
- <div class="m-services-grid">
+ <style>.m-svc-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--m-color),var(--m-color-dark));color:#fff}.m-svc-placeholder svg{width:64px;height:64px;opacity:.85}</style>
+            <div class="m-services-grid">
  <a href="index.html?wizard=depannage#hc-reservation" class="m-svc">
  <div class="m-svc-img">
  <span class="m-svc-tag">Diagnostic</span>
- <img decoding="async" src="https://plus.unsplash.com/premium_photo-1664301972519-506636f0245d?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop" alt="Spécialiste avec détecteur de fuite — recherche de fuite par caméra thermique" loading="lazy" onerror="this.style.display='none'">
+ <span class="m-svc-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3M18 12h3M12 3v3M12 18v3"/><circle cx="12" cy="12" r="4"/><path d="M14.83 9.17a4 4 0 0 0-5.66 5.66"/></svg></span>
  </div>
  <div class="m-svc-body">
  <div class="m-svc-body-text"><h3>Recherche de fuite</h3><p>Caméra thermique, gaz traceur, écoute acoustique — sans casse inutile.</p></div>
@@ -1103,7 +1104,7 @@ if (document.fonts && document.fonts.ready) {
  <a href="prestations/debouchage.html" class="m-svc ">
  <div class="m-svc-img">
  <span class="m-svc-tag">Urgence</span>
- <img decoding="async" src="https://images.unsplash.com/photo-1676210133055-eab6ef033ce3?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop" alt="Plombier en intervention sous évier pour déboucher une canalisation" loading="lazy" onerror="this.style.display='none'">
+ <span class="m-svc-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4M21 10v4M3 12h18M7 12V8a3 3 0 0 1 6 0v8a3 3 0 0 0 6 0v-4"/></svg></span>
  </div>
  <div class="m-svc-body">
  <div class="m-svc-body-text"><h3>Débouchage</h3><p>WC, évier, canalisation. Furet ou hydrocurage haute pression.</p></div>
@@ -1113,7 +1114,7 @@ if (document.fonts && document.fonts.ready) {
  <a href="prestations/chauffe-eau.html" class="m-svc ">
  <div class="m-svc-img">
  <span class="m-svc-tag">Installation</span>
- <img decoding="async" src="https://plus.unsplash.com/premium_photo-1661301068444-8ac48208d017?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop" alt="Chauffe-eau électrique mural dans une salle de bain" loading="lazy" onerror="this.style.display='none'">
+ <span class="m-svc-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="6"/><circle cx="12" cy="14" r="2"/><line x1="12" y1="7" x2="12" y2="10"/></svg></span>
  </div>
  <div class="m-svc-body">
  <div class="m-svc-body-text"><h3>Chauffe-eau</h3><p>Installation, dépannage, remplacement tous modèles (gaz, élec, thermo).</p></div>
@@ -1123,7 +1124,7 @@ if (document.fonts && document.fonts.ready) {
  <a href="prestations/sanitaire.html" class="m-svc ">
  <div class="m-svc-img">
  <span class="m-svc-tag">Sanitaire</span>
- <img decoding="async" src="https://plus.unsplash.com/premium_photo-1661884973994-d7625e52631a?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop" alt="Plombier installant un WC et système sanitaire" loading="lazy" onerror="this.style.display='none'">
+ <span class="m-svc-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3M18 12h3M12 3v3M12 18v3"/><circle cx="12" cy="12" r="4"/><path d="M14.83 9.17a4 4 0 0 0-5.66 5.66"/></svg></span>
  </div>
  <div class="m-svc-body">
  <div class="m-svc-body-text"><h3>Sanitaire</h3><p>WC, lavabo, douche, baignoire, robinetterie — pose et remplacement.</p></div>
@@ -1133,7 +1134,7 @@ if (document.fonts && document.fonts.ready) {
  <a href="contact.html?presta=renovation-sdb#form" class="m-svc">
  <div class="m-svc-img">
  <span class="m-svc-tag">Rénovation</span>
- <img decoding="async" src="https://images.unsplash.com/photo-1744869524920-f0efc925b82f?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop" alt="Salle de bain moderne rénovée avec douche italienne et baignoire" loading="lazy" onerror="this.style.display='none'">
+ <span class="m-svc-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M7 12V8a5 5 0 0 1 10 0"/><path d="M3 12v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6"/></svg></span>
  </div>
  <div class="m-svc-body">
  <div class="m-svc-body-text"><h3>Salle de bain</h3><p>Rénovation complète clés en main, douche à l'italienne, PMR — devis gratuit personnalisé.</p></div>
@@ -1143,7 +1144,7 @@ if (document.fonts && document.fonts.ready) {
  <a href="prestations/reseaux-plomberie.html" class="m-svc ">
  <div class="m-svc-img">
  <span class="m-svc-tag">Technique</span>
- <img decoding="async" src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop" alt="Réseau de tuyaux et canalisations métalliques" loading="lazy" onerror="this.style.display='none'">
+ <span class="m-svc-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4M21 10v4M3 12h18M7 12V8a3 3 0 0 1 6 0v8a3 3 0 0 0 6 0v-4"/></svg></span>
  </div>
  <div class="m-svc-body">
  <div class="m-svc-body-text"><h3>Réseaux</h3><p>Canalisations, raccordement, mise aux normes, dépose et reprise.</p></div>

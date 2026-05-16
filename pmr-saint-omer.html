@@ -1043,11 +1043,12 @@ if (document.fonts && document.fonts.ready) {
  <p style="color:#475569;font-size:.95rem;margin-top:8px">Chaque intervention faite par nos techniciens salariés — sans sous-traitance.</p>
  </div>
  <!-- 6 cartes prestations avec photos Unsplash vérifiées (URLs validées par fetch direct) -->
- <div class="m-services-grid">
+ <style>.m-svc-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--m-color),var(--m-color-dark));color:#fff}.m-svc-placeholder svg{width:64px;height:64px;opacity:.85}</style>
+            <div class="m-services-grid">
  <a href="guide-fuite-eau.html" class="m-svc">
  <div class="m-svc-img">
  <span class="m-svc-tag">Douche</span>
- <img decoding="async" src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop" alt="Spécialiste avec détecteur de fuite — recherche de fuite par caméra thermique" loading="lazy" onerror="this.style.display='none'">
+ <span class="m-svc-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M7 12V8a5 5 0 0 1 10 0"/><path d="M3 12v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6"/></svg></span>
  </div>
  <div class="m-svc-body">
  <div class="m-svc-body-text"><h3>Douche à l'italienne</h3><p>Transformation baignoire en douche sécurisée : sol antidérapant, banc, barres d'appui.</p></div>
@@ -1057,7 +1058,7 @@ if (document.fonts && document.fonts.ready) {
  <a href="contact.html?metier=PMR&objet=Monte-escalier#form" class="m-svc">
  <div class="m-svc-img">
  <span class="m-svc-tag">Mobilité</span>
- <img decoding="async" src="https://images.unsplash.com/photo-1576697010604-71b6df8e8edb?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop" alt="Plombier en intervention sous évier pour déboucher une canalisation" loading="lazy" onerror="this.style.display='none'">
+ <span class="m-svc-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l4-9 5 4 5-7 4 12"/><circle cx="9" cy="6" r="2"/></svg></span>
  </div>
  <div class="m-svc-body">
  <div class="m-svc-body-text"><h3>Monte-escalier</h3><p>Étude, pose et SAV de monte-escaliers droits ou courbes — chez vous.</p></div>
@@ -1067,7 +1068,7 @@ if (document.fonts && document.fonts.ready) {
  <a href="contact.html?metier=PMR&objet=Barres d appui#form" class="m-svc">
  <div class="m-svc-img">
  <span class="m-svc-tag">Sécurité</span>
- <img decoding="async" src="https://images.unsplash.com/photo-1551836022-deb4988cc6c0?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop" alt="Chauffe-eau électrique mural dans une salle de bain" loading="lazy" onerror="this.style.display='none'">
+ <span class="m-svc-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="6" rx="2"/><line x1="7" y1="9" x2="7" y2="15"/><line x1="17" y1="9" x2="17" y2="15"/></svg></span>
  </div>
  <div class="m-svc-body">
  <div class="m-svc-body-text"><h3>Barres d'appui</h3><p>Pose de barres d'appui WC, douche, baignoire, couloirs — choix sur-mesure.</p></div>
@@ -1077,7 +1078,7 @@ if (document.fonts && document.fonts.ready) {
  <a href="contact.html?metier=PMR&objet=WC PMR#form" class="m-svc">
  <div class="m-svc-img">
  <span class="m-svc-tag">Sanitaire</span>
- <img decoding="async" src="https://images.unsplash.com/photo-1604014438059-c4c6ed2bbeac?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop" alt="Plombier installant un WC et système sanitaire" loading="lazy" onerror="this.style.display='none'">
+ <span class="m-svc-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="9" y1="7" x2="15" y2="7"/><circle cx="12" cy="14" r="2"/></svg></span>
  </div>
  <div class="m-svc-body">
  <div class="m-svc-body-text"><h3>WC PMR rehaussé</h3><p>Pose WC suspendu rehaussé, abattant adapté, barres latérales pour transfert.</p></div>
@@ -1087,7 +1088,7 @@ if (document.fonts && document.fonts.ready) {
  <a href="travaux-saint-omer.html" class="m-svc">
  <div class="m-svc-img">
  <span class="m-svc-tag">Aménagement</span>
- <img decoding="async" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop" alt="Salle de bain moderne rénovée avec douche italienne et baignoire" loading="lazy" onerror="this.style.display='none'">
+ <span class="m-svc-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="2"/><path d="M12 8v4l3 3h4M9 12a5 5 0 1 0 6 6"/></svg></span>
  </div>
  <div class="m-svc-body">
  <div class="m-svc-body-text"><h3>Élargissement portes</h3><p>Élargissement de portes pour passage fauteuil roulant, seuils encastrés.</p></div>
@@ -1097,7 +1098,7 @@ if (document.fonts && document.fonts.ready) {
  <a href="aides.html#elig" class="m-svc">
  <div class="m-svc-img">
  <span class="m-svc-tag">Aide</span>
- <img decoding="async" src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop" alt="Réseau de tuyaux et canalisations métalliques" loading="lazy" onerror="this.style.display='none'">
+ <span class="m-svc-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><line x1="3" y1="11" x2="21" y2="11"/><line x1="7" y1="16" x2="13" y2="16"/></svg></span>
  </div>
  <div class="m-svc-body">
  <div class="m-svc-body-text"><h3>MaPrimeAdapt'</h3><p>Accompagnement dossier MaPrimeAdapt' jusqu'à 70% d'aide selon revenus.</p></div>
