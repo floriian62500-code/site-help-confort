@@ -138,53 +138,31 @@
  "@type": "OfferCatalog",
  "name": "Prestations Plomberie",
  "itemListElement": [
- {
- "@type": "Offer",
- "price": "148.00",
- "priceCurrency": "EUR",
- "availability": "https://schema.org/InStock",
- "itemOffered": {"@type": "Service", "name": "Recherche de fuite visuelle", "serviceType": "Plomberie"}
- },
- {
- "@type": "Offer",
- "price": "383.00",
- "priceCurrency": "EUR",
- "availability": "https://schema.org/InStock",
- "itemOffered": {"@type": "Service", "name": "Recherche de fuite technique (caméra / gaz / acoustique)", "serviceType": "Plomberie"}
- },
- {
- "@type": "Offer",
- "price": "165.00",
- "priceCurrency": "EUR",
- "availability": "https://schema.org/InStock",
- "itemOffered": {"@type": "Service", "name": "Désengorgement canalisation", "serviceType": "Plomberie"}
- },
- {
- "@type": "Offer",
- "price": "131.00",
- "priceCurrency": "EUR",
- "availability": "https://schema.org/InStock",
- "itemOffered": {"@type": "Service", "name": "Mécanisme chasse d'eau (T1 semaine)", "serviceType": "Plomberie"}
- },
- {
- "@type": "Offer",
- "price": "237.00",
- "priceCurrency": "EUR",
- "availability": "https://schema.org/InStock",
- "itemOffered": {"@type": "Service", "name": "Détartrage installation sanitaire", "serviceType": "Plomberie"}
- },
- {
- "@type": "Offer",
- "priceSpecification": {
- "@type": "UnitPriceSpecification",
- "price": "58.00",
- "priceCurrency": "EUR",
- "unitCode": "HUR",
- "referenceQuantity": {"@type": "QuantitativeValue", "value": 1, "unitCode": "HUR"}
- },
- "itemOffered": {"@type": "Service", "name": "Main d'œuvre plomberie (heure)", "serviceType": "Plomberie"}
- }
- ]
+      {
+        "@type": "Offer",
+        "itemOffered": {"@type": "Service", "name": "Remplacement vitrage simple", "serviceType": "Vitrerie"}
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {"@type": "Service", "name": "Remplacement double vitrage isolant", "serviceType": "Vitrerie"}
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {"@type": "Service", "name": "Vitrage sur-mesure (découpe + pose)", "serviceType": "Vitrerie"}
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {"@type": "Service", "name": "Sécurisation bris de glace 24h", "serviceType": "Vitrerie"}
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {"@type": "Service", "name": "Reprise joints vitrage / étanchéité", "serviceType": "Vitrerie"}
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {"@type": "Service", "name": "Pose fenêtre alu / PVC", "serviceType": "Vitrerie"}
+      }
+    ]
  },
  "aggregateRating": {
  "@type": "AggregateRating",
@@ -426,7 +404,7 @@ if (document.fonts && document.fonts.ready) {
 
 <!-- ═══ PAGE PLOMBERIE — VERSION COMPACTE PREMIUM ═══ -->
 <style>
- body[data-metier-page="plomberie"] {
+ body[data-metier-page="vitrerie"] {
  --m-color: #16A34A;
  --m-color-dark: #15803D;
  --m-color-light: #6FDFFF;
@@ -533,7 +511,7 @@ if (document.fonts && document.fonts.ready) {
  }
  @keyframes m-blob { 0%,100% { transform: scale(1); opacity:.85 } 50% { transform: scale(1.06); opacity: 1 } }
 
- /* Picto plomberie géant en arrière-plan décoratif */.m-hero-bg-icon {
+ /* Picto vitrerie géant en arrière-plan décoratif */.m-hero-bg-icon {
  position: absolute; left: 50%; top: 50%;
  transform: translate(-50%, -50%);
  width: 75%; height: 75%; max-width: 380px; max-height: 380px;
@@ -877,20 +855,20 @@ if (document.fonts && document.fonts.ready) {
  }
 </style>
 
-<script>document.body.setAttribute('data-metier-page', 'plomberie');</script>
+<script>document.body.setAttribute('data-metier-page', 'vitrerie');</script>
 
 <!-- ─── 1. HERO ─── -->
 <section class="m-hero" aria-label="Plomberie HELP! Confort" id="main-content">
  <div class="m-hero-inner">
  <div>
  <span class="m-hero-eye">
- <img loading="lazy" decoding="async" src="images/picto-plomberie.png" alt="" width="22" height="22" style="vertical-align:middle;object-fit:contain;display:inline-block;margin-right:2px" aria-hidden="true">
+ <img loading="lazy" decoding="async" src="images/picto-vitrerie.png" alt="" width="22" height="22" style="vertical-align:middle;object-fit:contain;display:inline-block;margin-right:2px" aria-hidden="true">
  <span style="background: linear-gradient(135deg, var(--m-color), var(--m-color-dark)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">Plomberie</span>
  <span style="opacity:.5">·</span>
  Saint-Omer / Dunkerque
  </span>
  <div style="display:flex;align-items:center;gap:14px;margin:8px 0 0;flex-wrap:wrap">
- <img decoding="async" src="images/picto-plomberie.png" alt="Plomberie HELP! Confort" width="64" height="64" style="object-fit:contain;flex-shrink:0;filter:drop-shadow(0 4px 12px rgba(13,160,207,.18))" loading="eager">
+ <img decoding="async" src="images/picto-vitrerie.png" alt="Vitrerie HELP! Confort" width="64" height="64" style="object-fit:contain;flex-shrink:0;filter:drop-shadow(0 4px 12px rgba(13,160,207,.18))" loading="eager">
  <h1 class="m-hero-h1" style="margin:0">Plomberie &amp; dépannage rapide à <em>Saint-Omer</em> et <em>Dunkerque</em></h1>
  </div>
  <p class="m-hero-lead">Fuite, chauffe-eau, débouchage, recherche de fuite, sanitaire&nbsp;: nos <strong>techniciens interviennent rapidement</strong> sur tout le secteur.</p>
@@ -939,7 +917,7 @@ if (document.fonts && document.fonts.ready) {
  <!-- Halo derrière -->
  <div class="m-hero-blob" aria-hidden="true"></div>
 
- <!-- Picto plomberie géant en BG (signature visuelle métier) -->
+ <!-- Picto vitrerie géant en BG (signature visuelle métier) -->
  <div class="m-hero-bg-icon" aria-hidden="true">
  <!-- Robinet stylisé -->
  <svg width="16" height="16" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -974,7 +952,7 @@ if (document.fonts && document.fonts.ready) {
  <div class="m-hero-mascotte-wrap">
  <picture>
   <source srcset="images/mascotte.webp" type="image/webp">
-  <img decoding="async" height="1500" width="503" src="images/mascotte.png" alt="Technicien plomberie HELP! Confort" class="m-hero-mascotte" loading="eager" onerror="this.onerror=null;this.src='images/mascotte-opt.png'">
+  <img decoding="async" height="1500" width="503" src="images/mascotte.png" alt="Technicien vitrerie HELP! Confort" class="m-hero-mascotte" loading="eager" onerror="this.onerror=null;this.src='images/mascotte-opt.png'">
  </picture>
  </div>
 
@@ -1009,8 +987,8 @@ if (document.fonts && document.fonts.ready) {
  </div>
 </section>
 
-<!-- ─── 3. CATALOGUE DÉTAILLÉ — Toutes nos interventions plomberie ─── -->
-<section class="m-section" aria-label="Détail des interventions plomberie">
+<!-- ─── 3. CATALOGUE DÉTAILLÉ — Toutes nos interventions vitrerie ─── -->
+<section class="m-section" aria-label="Détail des interventions vitrerie">
  <div class="container">
  <div class="m-head">
  <span class="eyebrow">Notre savoir-faire</span>
@@ -1084,7 +1062,7 @@ if (document.fonts && document.fonts.ready) {
 </section>
 
 <!-- ─── 3. ACTION : 2 CTA + tarif horaire transparent ─── -->
-<section class="m-section m-cta-section" style="background: linear-gradient(180deg, #fff 0%, #F8FCFE 100%);" aria-label="Réserver une intervention ou demander un devis plomberie">
+<section class="m-section m-cta-section" style="background: linear-gradient(180deg, #fff 0%, #F8FCFE 100%);" aria-label="Réserver une intervention ou demander un devis vitrerie">
  <div class="container">
  <div class="m-head">
  <span class="eyebrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Passer à l&apos;action</span>
@@ -1117,7 +1095,7 @@ if (document.fonts && document.fonts.ready) {
  </span>
  <span class="m-cta-text">
  <strong>Réserver une intervention</strong>
- <span>Catalogue plomberie : forfaits prix fixe, réservation en ligne avec acompte 40%.</span>
+ <span>Catalogue vitrerie : forfaits prix fixe, réservation en ligne avec acompte 40%.</span>
  </span>
  <span class="m-cta-arrow" aria-hidden="true">→</span>
  </a>
@@ -1140,7 +1118,7 @@ if (document.fonts && document.fonts.ready) {
  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12c0 5-9 9-9 9s-9-4-9-9V5l9-3 9 3v7z"/><path d="M9 12l2 2 4-4"/></svg>
  </span>
  <strong>Garantie décennale MAAF</strong>
- <span>Couverture totale sur tous nos travaux plomberie.</span>
+ <span>Couverture totale sur tous nos travaux vitrerie.</span>
  </div>
  <div class="m-pourquoi-card">
  <span class="m-pourquoi-ico" aria-hidden="true">
@@ -1168,7 +1146,7 @@ if (document.fonts && document.fonts.ready) {
 </section>
 
 <!-- ─── 4. CHANTIERS + AVIS (2 colonnes côte à côte, sans défilement) ─── -->
-<section class="m-section m-proof-section" aria-label="Chantiers et avis plomberie">
+<section class="m-section m-proof-section" aria-label="Chantiers et avis vitrerie">
  <div class="container">
  <div class="m-proof-2cols">
  <!-- Colonne GAUCHE : chantiers -->
@@ -1178,7 +1156,7 @@ if (document.fonts && document.fonts.ready) {
  <h2>Nos <em>chantiers</em> vitrerie</h2>
  <p>Avant/après, photos réelles, interventions locales.</p>
  </div>
- <div class="m-proof-stack" id="m-real-plomberie">
+ <div class="m-proof-stack" id="m-real-vitrerie">
  <!-- Cards générées dynamiquement via JS, fallback statique ci-dessous -->
  <a href="realisations.html" class="m-proof-card m-proof-real">
  <div class="m-proof-thumb"><div class="placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div></div>
@@ -1236,7 +1214,7 @@ if (document.fonts && document.fonts.ready) {
 
  <script>
  (function(){
- var track = document.getElementById('m-real-plomberie');
+ var track = document.getElementById('m-real-vitrerie');
  if(!track) return;
  fetch('content/realisations/index.json?t=' + Date.now()).then(function(r){return r.ok?r.json():Promise.reject()}).then(function(list){
  var plomb = list.filter(function(r){
@@ -1406,7 +1384,7 @@ if (document.fonts && document.fonts.ready) {
 </section>
 
 <!-- ─── 7. ZONE COMPACTE ─── -->
-<section class="m-section" style="padding: clamp(36px, 4vw, 56px) 0" aria-label="Zone d'intervention plomberie">
+<section class="m-section" style="padding: clamp(36px, 4vw, 56px) 0" aria-label="Zone d'intervention vitrerie">
  <div class="container">
  <div class="m-zone-compact">
  <span class="label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Zone d'intervention</span>
@@ -1525,11 +1503,11 @@ if (document.fonts && document.fonts.ready) {
 
 
 <!-- ─── FAQ PLOMBERIE — Schema.org/FAQPage (rich results Google) ─── -->
-<section class="hc-faq-section" aria-label="Questions fréquentes plomberie" style="background:linear-gradient(180deg,#fff 0%,#F8FCFE 100%);padding:70px 0 80px;border-top:1px solid #EAF2F7">
+<section class="hc-faq-section" aria-label="Questions fréquentes vitrerie" style="background:linear-gradient(180deg,#fff 0%,#F8FCFE 100%);padding:70px 0 80px;border-top:1px solid #EAF2F7">
  <div class="container" style="max-width:980px;margin:0 auto;padding:0 clamp(20px,4vw,40px)">
  <div style="text-align:center;margin-bottom:40px">
- <span style="display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:800;letter-spacing:2px;color:#0DA0CF;text-transform:uppercase;background:rgba(13,160,207,.08);padding:6px 12px;border-radius:999px;border:1px solid #0DA0CF33;margin-bottom:12px">❓ FAQ plomberie</span>
- <h2 style="font-size:clamp(1.5rem,2.6vw,2rem);font-weight:800;color:#0A1428;margin:0 0 10px;letter-spacing:-.018em">Vos questions sur la plomberie</h2>
+ <span style="display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:800;letter-spacing:2px;color:#0DA0CF;text-transform:uppercase;background:rgba(13,160,207,.08);padding:6px 12px;border-radius:999px;border:1px solid #0DA0CF33;margin-bottom:12px">❓ FAQ vitrerie</span>
+ <h2 style="font-size:clamp(1.5rem,2.6vw,2rem);font-weight:800;color:#0A1428;margin:0 0 10px;letter-spacing:-.018em">Vos questions sur vitrerie</h2>
  <p style="color:#475569;margin:0;font-size:.96rem">Tout ce que vous devez savoir avant de nous contacter.</p>
  </div>
  <div class="hc-faq-list">
@@ -1587,47 +1565,31 @@ if (document.fonts && document.fonts.ready) {
  "@context": "https://schema.org",
  "@type": "FAQPage",
  "mainEntity": [
- {
- "@type": "Question",
- "name": "Combien coûte une recherche de fuite à Saint-Omer ?",
- "acceptedAnswer": {
- "@type": "Answer",
- "text": "Notre recherche de fuite par caméra thermique, gaz traceur ou écoute acoustique est facturée 383 € TTC (forfait recherche technique). Le diagnostic comprend la localisation précise (au mm), un rapport remis à votre assurance et un devis pour la réparation. Pour une recherche visuelle simple : 148 € TTC. Pas de casse inutile, intervention propre."
- }
- },
- {
- "@type": "Question",
- "name": "Intervenez-vous en urgence le week-end ou la nuit ?",
- "acceptedAnswer": {
- "@type": "Answer",
- "text": "Oui, notre sur rendez-vous couvre les urgences plomberie (fuite majeure, dégât des eaux, plus d'eau chaude) à Saint-Omer, Longuenesse, Arques et toute la zone. "
- }
- },
- {
- "@type": "Question",
- "name": "Faites-vous des devis gratuits pour la plomberie ?",
- "acceptedAnswer": {
- "@type": "Answer",
- "text": "Oui, tous nos devis pour travaux de plomberie (salle de bain, raccordement, remplacement chauffe-eau, sanitaire) sont gratuits et sans engagement. Devis détaillé après visite, planning ferme à la signature."
- }
- },
- {
- "@type": "Question",
- "name": "Quel est le prix d'un débouchage de canalisation ?",
- "acceptedAnswer": {
- "@type": "Answer",
- "text": "Forfait désengorgement de canalisation : 165 € TTC (WC, évier, lavabo, siphon). Pour les bouchons profonds nécessitant furet motorisé ou hydrocurage haute pression : sur devis selon difficulté et longueur. Tarif annoncé avant intervention, aucune surprise."
- }
- },
- {
- "@type": "Question",
- "name": "Êtes-vous Professionnel du Gaz (PG) ?",
- "acceptedAnswer": {
- "@type": "Answer",
- "text": "Oui, HELP! Confort Saint-Omer est habilitée Professionnel du Gaz®, ce qui nous autorise à intervenir sur les chaudières gaz, chauffe-eau gaz, et à délivrer les certificats de conformité après installation."
- }
- }
- ]
+    {
+      "@type": "Question",
+      "name": "Intervenez-vous en urgence pour un bris de glace ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, nous proposons une sécurisation immédiate (panneau OSB ou film) et un remplacement sous 24h sur Saint-Omer, Longuenesse, Arques et toute la zone."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Faites-vous des devis gratuits pour la vitrerie ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, tous nos devis vitrerie (remplacement vitrage, double vitrage, sur-mesure) sont gratuits et sans engagement. Devis détaillé après mesure sur place."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Posez-vous du double vitrage isolant ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, nous remplaçons les vitrages simples par du double vitrage isolant 4/16/4 — gain phonique et thermique immédiat. Compatible avec les châssis existants en bon état."
+      }
+    }
+  ]
 }
 </script>
 
