@@ -1,0 +1,305 @@
+{
+  "_metadata": {
+    "version": "1.0",
+    "creation": "2026-05-16",
+    "description": "Catalogue de templates pour les posts Help Confort sans IA. Rotation sur 8 semaines, 5 jours par semaine (lundi, mardi, jeudi, vendredi, samedi). Les mercredis et dimanches sont générés par l'agent 7 (IA).",
+    "fields": {
+      "jour": "Jour de la semaine (en français, minuscules)",
+      "theme": "Thème éditorial fixe du jour",
+      "texte": "Texte du post (Facebook + Google Business Profile)",
+      "hashtags": "Liste de hashtags à concaténer en fin de post"
+    },
+    "regle_rotation": "semaine_iso % 8 = index_rotation (0 à 7)",
+    "marque": "Help Confort",
+    "ton": "Concret, factuel, rassurant, sans jargon, sans emojis"
+  },
+  "templates": [
+    {
+      "rotation": 0,
+      "jour": "lundi",
+      "theme": "Conseil pratique du lundi",
+      "texte": "Conseil pratique du lundi.\n\nUn robinet qui goutte, ce n'est pas anodin : un goutte-à-goutte régulier représente près de 4 litres d'eau par heure, soit 35 m³ par an. Au prix moyen du m³ d'eau en France, cela peut représenter plus de 150 € sur votre facture annuelle.\n\nUn joint à 2 € change tout. Si le problème persiste après le remplacement, c'est probablement la tête de robinet ou le mécanisme qui est en cause.",
+      "hashtags": ["#HelpConfort", "#Plomberie", "#ConseilDuLundi", "#Économies"]
+    },
+    {
+      "rotation": 0,
+      "jour": "mardi",
+      "theme": "L'astuce technique",
+      "texte": "L'astuce technique de la semaine.\n\nVotre porte d'entrée ferme mal et accroche depuis quelque temps ? Avant d'appeler un serrurier, vérifiez les gonds : un simple resserrage des vis avec un tournevis cruciforme suffit dans 6 cas sur 10.\n\nSi la porte continue de frotter, il peut s'agir d'un affaissement du dormant : là, l'intervention d'un professionnel devient nécessaire pour ajuster ou changer le mécanisme.",
+      "hashtags": ["#HelpConfort", "#Serrurerie", "#AstuceTechnique"]
+    },
+    {
+      "rotation": 0,
+      "jour": "jeudi",
+      "theme": "Le saviez-vous",
+      "texte": "Le saviez-vous.\n\nDepuis l'arrêté du 24 janvier 2017, tous les professionnels du dépannage à domicile (plomberie, serrurerie, électricité, vitrerie) doivent afficher leurs tarifs de façon claire et lisible avant toute intervention.\n\nChez Help Confort, nos tarifs sont communiqués par téléphone avant tout déplacement, et un devis écrit gratuit est systématiquement établi au-delà de 100 € TTC. C'est votre droit.",
+      "hashtags": ["#HelpConfort", "#Transparence", "#DroitsDuConsommateur"]
+    },
+    {
+      "rotation": 0,
+      "jour": "vendredi",
+      "theme": "La question fréquente",
+      "texte": "La question fréquente.\n\n« Combien de temps faut-il pour qu'un technicien arrive en urgence ? »\n\nNotre engagement : moins d'une heure sur la majorité de nos zones d'intervention pour les vraies urgences (fuite active, porte claquée, panne de chaudière en hiver). Le délai dépend du trafic, de l'heure et de la disponibilité immédiate du technicien dans votre secteur.\n\nUn seul numéro à appeler, 7j/7.",
+      "hashtags": ["#HelpConfort", "#Urgence", "#FAQ"]
+    },
+    {
+      "rotation": 0,
+      "jour": "samedi",
+      "theme": "Transparence",
+      "texte": "Transparence sur nos interventions.\n\nChaque intervention Help Confort suit le même processus : diagnostic gratuit avant tout démontage, devis écrit dès 100 € TTC, validation client avant le moindre travail, facture détaillée à la fin.\n\nPas de surprise, pas de surfacturation. Si vous avez le moindre doute pendant l'intervention, exigez le devis avant de signer quoi que ce soit. C'est votre protection, c'est aussi notre règle.",
+      "hashtags": ["#HelpConfort", "#Transparence", "#Devis"]
+    },
+
+    {
+      "rotation": 1,
+      "jour": "lundi",
+      "theme": "Conseil pratique du lundi",
+      "texte": "Conseil pratique du lundi.\n\nVous partez en vacances ? Coupez l'arrivée d'eau générale de votre logement. Cela ne prend pas dix secondes et cela évite l'inondation en cas de rupture d'un flexible de machine à laver ou de chasse d'eau pendant votre absence.\n\nLe robinet d'arrêt général est généralement situé près du compteur d'eau, dans la cuisine, la salle de bains ou un placard technique.",
+      "hashtags": ["#HelpConfort", "#Plomberie", "#ConseilDuLundi"]
+    },
+    {
+      "rotation": 1,
+      "jour": "mardi",
+      "theme": "L'astuce technique",
+      "texte": "L'astuce technique de la semaine.\n\nUne prise électrique qui ne fonctionne plus dans une seule pièce, mais le disjoncteur n'a pas sauté ? Vérifiez d'abord les autres prises de la pièce : si elles sont toutes hors service, c'est probablement un faux contact sur le tableau ou une protection différentielle en bout de course.\n\nNe démontez jamais une prise vous-même sans avoir coupé le disjoncteur correspondant.",
+      "hashtags": ["#HelpConfort", "#Électricité", "#AstuceTechnique", "#Sécurité"]
+    },
+    {
+      "rotation": 1,
+      "jour": "jeudi",
+      "theme": "Le saviez-vous",
+      "texte": "Le saviez-vous.\n\nLe réseau Help Confort, c'est plus de 80 agences réparties sur l'ensemble du territoire français, toutes franchisées et tenues par des entrepreneurs locaux.\n\nNos techniciens vivent et travaillent dans votre secteur : ils connaissent les particularités de votre habitat, les fournisseurs locaux, et peuvent intervenir rapidement en cas d'urgence. Trouvez l'agence la plus proche sur helpconfort.com.",
+      "hashtags": ["#HelpConfort", "#RéseauFranchisé", "#Proximité"]
+    },
+    {
+      "rotation": 1,
+      "jour": "vendredi",
+      "theme": "La question fréquente",
+      "texte": "La question fréquente.\n\n« Mon assurance habitation prend-elle en charge le dépannage ? »\n\nDans la majorité des contrats multirisques habitation, une garantie assistance est incluse. Elle couvre généralement les frais de serrurerie en cas d'effraction, les fuites avec dégâts des eaux, ou les pannes de chauffage en hiver.\n\nAppelez votre assureur avant l'intervention si possible : cela peut réduire votre reste à charge.",
+      "hashtags": ["#HelpConfort", "#Assurance", "#FAQ"]
+    },
+    {
+      "rotation": 1,
+      "jour": "samedi",
+      "theme": "Transparence",
+      "texte": "Transparence sur les frais de déplacement.\n\nChez Help Confort, les frais de déplacement vous sont communiqués clairement par téléphone avant toute intervention. Ils varient selon votre commune, l'heure d'appel (jour ouvré, soir, week-end ou jour férié) et la spécialité demandée.\n\nAucun déplacement ne vous sera facturé sans votre accord explicite préalable. C'est une règle du réseau.",
+      "hashtags": ["#HelpConfort", "#Transparence", "#TarifsClairs"]
+    },
+
+    {
+      "rotation": 2,
+      "jour": "lundi",
+      "theme": "Conseil pratique du lundi",
+      "texte": "Conseil pratique du lundi.\n\nVos WC se bouchent régulièrement ? Avant de mettre des produits chimiques agressifs dans la cuvette, essayez d'abord la ventouse classique : dans la plupart des cas, un bouchon récent se déloge en moins d'une minute.\n\nÉvitez la soude caustique : elle abîme les canalisations sur le long terme et peut générer des fuites en aval. En cas d'échec répété, faites diagnostiquer la canalisation.",
+      "hashtags": ["#HelpConfort", "#Plomberie", "#ConseilDuLundi"]
+    },
+    {
+      "rotation": 2,
+      "jour": "mardi",
+      "theme": "L'astuce technique",
+      "texte": "L'astuce technique de la semaine.\n\nVotre chauffe-eau électrique siffle ou claque la nuit ? C'est souvent le signe d'une accumulation de calcaire au fond de la cuve. Un détartrage tous les 2 à 3 ans prolonge la durée de vie de votre appareil de 5 à 10 ans en moyenne.\n\nC'est une intervention rapide pour un technicien, et bien moins coûteuse qu'un remplacement complet du chauffe-eau.",
+      "hashtags": ["#HelpConfort", "#Plomberie", "#ChauffeEau", "#Entretien"]
+    },
+    {
+      "rotation": 2,
+      "jour": "jeudi",
+      "theme": "Le saviez-vous",
+      "texte": "Le saviez-vous.\n\nEn France, plus de 30 000 cambriolages ou tentatives sont recensés chaque mois, avec des pics en été et pendant les vacances scolaires.\n\nUn cylindre de serrure de qualité (norme A2P), un blindage de porte et un verrou supplémentaire dissuadent la grande majorité des intrusions. Help Confort installe ces équipements en quelques heures, sans transformation lourde de votre porte.",
+      "hashtags": ["#HelpConfort", "#Serrurerie", "#Sécurité"]
+    },
+    {
+      "rotation": 2,
+      "jour": "vendredi",
+      "theme": "La question fréquente",
+      "texte": "La question fréquente.\n\n« Puis-je obtenir un devis sans engagement ? »\n\nOui, systématiquement. Tout devis Help Confort est gratuit, écrit, daté, et ne vous engage à rien tant que vous ne l'avez pas signé. Vous disposez du temps nécessaire pour comparer, demander conseil, ou simplement réfléchir.\n\nDemandez votre devis directement à l'agence de votre secteur ou via le formulaire en ligne sur helpconfort.com.",
+      "hashtags": ["#HelpConfort", "#Devis", "#FAQ"]
+    },
+    {
+      "rotation": 2,
+      "jour": "samedi",
+      "theme": "Transparence",
+      "texte": "Transparence sur les pièces facturées.\n\nChaque pièce remplacée lors d'une intervention Help Confort vous est restituée si vous le souhaitez (joint, cylindre, robinet, etc.) : c'est une garantie de confiance simple à demander à votre technicien.\n\nLa facture détaille systématiquement la main-d'œuvre, le coût des pièces, le déplacement et la TVA applicable. Aucune ligne floue, aucun forfait opaque.",
+      "hashtags": ["#HelpConfort", "#Transparence", "#Facturation"]
+    },
+
+    {
+      "rotation": 3,
+      "jour": "lundi",
+      "theme": "Conseil pratique du lundi",
+      "texte": "Conseil pratique du lundi.\n\nUne fuite sous l'évier ? Posez immédiatement un récipient pour récolter l'eau, fermez l'arrivée d'eau locale (les deux petits robinets sous l'évier) et essuyez la zone pour identifier d'où vient la fuite : flexible, joint de bonde, siphon ou raccord.\n\nUne fuite de joint de siphon se règle souvent en 10 minutes avec une pince multiprise et un joint neuf à moins d'un euro.",
+      "hashtags": ["#HelpConfort", "#Plomberie", "#ConseilDuLundi"]
+    },
+    {
+      "rotation": 3,
+      "jour": "mardi",
+      "theme": "L'astuce technique",
+      "texte": "L'astuce technique de la semaine.\n\nUne vitre simple peut être remplacée par un double vitrage dans la plupart des fenêtres existantes, sans changer le châssis. C'est jusqu'à 40 % d'économies de chauffage et un confort acoustique nettement amélioré.\n\nCondition : le châssis doit être en bon état et compatible. Un vitrier Help Confort peut diagnostiquer cela en quelques minutes sur place.",
+      "hashtags": ["#HelpConfort", "#Vitrerie", "#Économies", "#Isolation"]
+    },
+    {
+      "rotation": 3,
+      "jour": "jeudi",
+      "theme": "Le saviez-vous",
+      "texte": "Le saviez-vous.\n\nLe taux de TVA appliqué aux travaux de rénovation dans un logement de plus de 2 ans est de 10 % au lieu de 20 % en France métropolitaine, sous réserve de respecter les conditions définies par l'administration fiscale.\n\nPour certains travaux d'amélioration énergétique (isolation, chauffage performant), le taux peut descendre à 5,5 %. Help Confort vous fournit systématiquement l'attestation nécessaire.",
+      "hashtags": ["#HelpConfort", "#Rénovation", "#TVA"]
+    },
+    {
+      "rotation": 3,
+      "jour": "vendredi",
+      "theme": "La question fréquente",
+      "texte": "La question fréquente.\n\n« Que faire si je ne suis pas satisfait de l'intervention ? »\n\nContactez d'abord l'agence Help Confort qui est intervenue : la majorité des litiges se résolvent par un échange direct, parfois par une seconde intervention. Si le désaccord persiste, vous pouvez saisir le médiateur de la consommation dont les coordonnées figurent sur votre facture.\n\nLa satisfaction client est suivie au niveau du réseau.",
+      "hashtags": ["#HelpConfort", "#Satisfaction", "#FAQ"]
+    },
+    {
+      "rotation": 3,
+      "jour": "samedi",
+      "theme": "Transparence",
+      "texte": "Transparence sur nos garanties.\n\nToute intervention Help Confort est couverte par une garantie de bon fonctionnement, dont la durée varie selon le type de travail. Les pièces neuves bénéficient en plus de la garantie du fabricant.\n\nPour les gros travaux relevant du bâtiment, la garantie décennale est obligatoirement en vigueur. Demandez les attestations à votre agence : c'est votre droit, c'est aussi notre obligation.",
+      "hashtags": ["#HelpConfort", "#Garanties", "#Transparence"]
+    },
+
+    {
+      "rotation": 4,
+      "jour": "lundi",
+      "theme": "Conseil pratique du lundi",
+      "texte": "Conseil pratique du lundi.\n\nVotre chasse d'eau coule en continu dans la cuvette ? C'est l'une des pannes les plus fréquentes et les plus coûteuses en silence : une chasse qui fuit représente jusqu'à 600 litres d'eau perdus par jour.\n\nUn joint de mécanisme à 5 € et 15 minutes de manipulation règlent le problème dans 80 % des cas. Si le mécanisme est ancien, mieux vaut le changer en entier.",
+      "hashtags": ["#HelpConfort", "#Plomberie", "#ConseilDuLundi"]
+    },
+    {
+      "rotation": 4,
+      "jour": "mardi",
+      "theme": "L'astuce technique",
+      "texte": "L'astuce technique de la semaine.\n\nUne pompe à chaleur perd jusqu'à 25 % de rendement si son unité extérieure est encrassée. Un dépoussiérage à l'aspirateur (puissance basse, brosse douce) tous les 6 mois suffit dans la plupart des cas, en dehors de l'entretien annuel obligatoire par un professionnel.\n\nVérifiez aussi que rien ne bloque la circulation d'air autour de l'unité.",
+      "hashtags": ["#HelpConfort", "#Chauffage", "#PompeÀChaleur", "#Entretien"]
+    },
+    {
+      "rotation": 4,
+      "jour": "jeudi",
+      "theme": "Le saviez-vous",
+      "texte": "Le saviez-vous.\n\nDepuis 2024, l'entretien annuel de votre chaudière (gaz, fioul, bois) est obligatoire en France pour des raisons de sécurité et d'efficacité énergétique. Cette obligation incombe à l'occupant du logement, qu'il soit propriétaire ou locataire.\n\nUn entretien régulier prolonge la durée de vie de votre installation de 5 à 8 ans et réduit votre consommation d'environ 10 %.",
+      "hashtags": ["#HelpConfort", "#Chauffage", "#Entretien", "#Obligation"]
+    },
+    {
+      "rotation": 4,
+      "jour": "vendredi",
+      "theme": "La question fréquente",
+      "texte": "La question fréquente.\n\n« Intervenez-vous le dimanche et les jours fériés ? »\n\nOui, sur la totalité de notre réseau, pour les vraies urgences : fuite active, dégât des eaux, panne de chauffage en période froide, porte claquée, vitre brisée à sécuriser. Les tarifs week-end et jours fériés sont communiqués clairement par téléphone avant l'intervention.\n\nUn seul numéro à appeler, à toute heure.",
+      "hashtags": ["#HelpConfort", "#Urgence7j7", "#FAQ"]
+    },
+    {
+      "rotation": 4,
+      "jour": "samedi",
+      "theme": "Transparence",
+      "texte": "Transparence sur le droit de rétractation.\n\nPour les interventions qui ne sont pas en urgence et qui sont contractualisées à votre domicile, vous bénéficiez d'un délai de rétractation de 14 jours conformément à la loi Hamon.\n\nEn cas d'urgence avérée (fuite, effraction, panne de chauffage en hiver), vous pouvez renoncer à ce délai par écrit pour permettre une intervention immédiate. Notre devis vous l'indique clairement.",
+      "hashtags": ["#HelpConfort", "#LoiHamon", "#DroitsDuConsommateur"]
+    },
+
+    {
+      "rotation": 5,
+      "jour": "lundi",
+      "theme": "Conseil pratique du lundi",
+      "texte": "Conseil pratique du lundi.\n\nL'hiver approche : pour éviter le gel des canalisations extérieures, fermez les robinets de jardin, purgez-les en ouvrant le mitigeur après fermeture, et isolez les tuyaux apparents avec un manchon en mousse vendu en grande surface de bricolage.\n\nUne canalisation gelée puis éclatée représente plusieurs centaines d'euros de réparation et d'éventuels dégâts des eaux.",
+      "hashtags": ["#HelpConfort", "#Plomberie", "#Hiver", "#Prévention"]
+    },
+    {
+      "rotation": 5,
+      "jour": "mardi",
+      "theme": "L'astuce technique",
+      "texte": "L'astuce technique de la semaine.\n\nUn interphone qui ne sonne plus mais s'allume encore : c'est souvent le combiné de l'appartement qui est en cause, pas la platine de rue. Avant de faire intervenir un installateur pour toute la copropriété, demandez à votre voisin direct de tester son combiné.\n\nLe remplacement d'un combiné est une opération simple, sans incidence sur les autres logements.",
+      "hashtags": ["#HelpConfort", "#Électricité", "#Interphone", "#AstuceTechnique"]
+    },
+    {
+      "rotation": 5,
+      "jour": "jeudi",
+      "theme": "Le saviez-vous",
+      "texte": "Le saviez-vous.\n\nLes pratiques commerciales trompeuses dans le dépannage à domicile sont la principale source de plaintes traitées par la DGCCRF chaque année. Les abus connus : surfacturation, fausses urgences, pression à la signature, démarchage non sollicité.\n\nLe réseau Help Confort est engagé dans une charte qualité stricte sur ces sujets. Si vous avez le moindre doute, ne signez rien et appelez le 3939 (Allo Service Public).",
+      "hashtags": ["#HelpConfort", "#Vigilance", "#DGCCRF"]
+    },
+    {
+      "rotation": 5,
+      "jour": "vendredi",
+      "theme": "La question fréquente",
+      "texte": "La question fréquente.\n\n« Peut-on payer en plusieurs fois ? »\n\nOui, sur la majorité de nos agences, plusieurs solutions sont possibles : paiement en 2, 3 ou 4 fois sans frais selon les montants et les conditions de l'agence intervenante. Pour les travaux conséquents, des offres de financement peuvent également être étudiées.\n\nPosez la question au technicien dès la remise du devis, c'est plus simple.",
+      "hashtags": ["#HelpConfort", "#Paiement", "#FAQ"]
+    },
+    {
+      "rotation": 5,
+      "jour": "samedi",
+      "theme": "Transparence",
+      "texte": "Transparence sur l'identification des techniciens.\n\nChaque technicien Help Confort se présente à votre domicile avec une carte professionnelle nominative, un véhicule estampillé aux couleurs du réseau, et la facturation se fait au nom de l'agence locale, identifiable et joignable.\n\nN'hésitez jamais à demander la carte avant d'ouvrir la porte. C'est votre sécurité, c'est aussi notre engagement de transparence.",
+      "hashtags": ["#HelpConfort", "#Sécurité", "#Identification"]
+    },
+
+    {
+      "rotation": 6,
+      "jour": "lundi",
+      "theme": "Conseil pratique du lundi",
+      "texte": "Conseil pratique du lundi.\n\nUn radiateur qui chauffe en haut mais reste froid en bas : c'est qu'il a besoin d'être purgé. L'air emprisonné empêche l'eau chaude de circuler correctement, ce qui peut faire grimper votre facture de chauffage jusqu'à 15 %.\n\nUne clé de purge à 2 €, un récipient pour récupérer l'eau, et l'opération prend moins de 5 minutes par radiateur. À faire en début de saison.",
+      "hashtags": ["#HelpConfort", "#Chauffage", "#ConseilDuLundi", "#Économies"]
+    },
+    {
+      "rotation": 6,
+      "jour": "mardi",
+      "theme": "L'astuce technique",
+      "texte": "L'astuce technique de la semaine.\n\nUne climatisation réversible mal réglée consomme jusqu'à 30 % d'énergie en plus. La règle simple : ne descendez jamais en-dessous de 7 °C d'écart avec la température extérieure en mode rafraîchissement, et orientez les volets vers le plafond pour mieux brasser l'air.\n\nUn entretien tous les 2 ans par un professionnel certifié est obligatoire pour les unités de plus de 2 kW.",
+      "hashtags": ["#HelpConfort", "#Climatisation", "#AstuceTechnique"]
+    },
+    {
+      "rotation": 6,
+      "jour": "jeudi",
+      "theme": "Le saviez-vous",
+      "texte": "Le saviez-vous.\n\nUne installation électrique non conforme aux normes en vigueur peut être un motif de refus d'indemnisation par votre assureur en cas de sinistre (incendie, court-circuit majeur).\n\nLes tableaux électriques de plus de 25 ans gagnent à être audités. Help Confort propose un diagnostic complet de votre installation, qui vous remet aux normes à votre rythme et selon vos priorités budgétaires.",
+      "hashtags": ["#HelpConfort", "#Électricité", "#Sécurité", "#Assurance"]
+    },
+    {
+      "rotation": 6,
+      "jour": "vendredi",
+      "theme": "La question fréquente",
+      "texte": "La question fréquente.\n\n« Travaillez-vous pour les syndics et les bailleurs ? »\n\nOui, le réseau Help Confort intervient régulièrement pour des syndics de copropriété, des bailleurs sociaux et privés, ainsi que des gestionnaires de patrimoine. Des conditions tarifaires et de facturation adaptées au volume peuvent être négociées en direct avec votre agence locale.\n\nContact pro : helpconfort.com, rubrique professionnels.",
+      "hashtags": ["#HelpConfort", "#Professionnels", "#FAQ"]
+    },
+    {
+      "rotation": 6,
+      "jour": "samedi",
+      "theme": "Transparence",
+      "texte": "Transparence sur nos certifications.\n\nLes techniciens Help Confort sont formés en continu sur les évolutions techniques, normatives et sécuritaires de chaque métier (Qualibat, RGE, habilitations électriques selon les spécialités). Les certifications de l'agence intervenante vous sont communiquées sur demande.\n\nC'est ce qui distingue un réseau professionnel structuré d'un intervenant improvisé.",
+      "hashtags": ["#HelpConfort", "#Certifications", "#Professionnalisme"]
+    },
+
+    {
+      "rotation": 7,
+      "jour": "lundi",
+      "theme": "Conseil pratique du lundi",
+      "texte": "Conseil pratique du lundi.\n\nVos canalisations d'évacuation sentent mauvais ? Avant de penser au curage professionnel, versez régulièrement un mélange de bicarbonate de soude et de vinaigre blanc dans les bondes : c'est efficace, économique et non agressif pour les joints et les canalisations.\n\nÉvitez les déboucheurs chimiques en utilisation préventive : à long terme, ils fragilisent vos tuyaux PVC.",
+      "hashtags": ["#HelpConfort", "#Plomberie", "#ConseilDuLundi"]
+    },
+    {
+      "rotation": 7,
+      "jour": "mardi",
+      "theme": "L'astuce technique",
+      "texte": "L'astuce technique de la semaine.\n\nUne fenêtre qui ferme mal laisse passer jusqu'à 20 % de chaleur en hiver, sans même qu'on s'en rende compte. Avant d'envisager un changement complet, vérifiez l'état des joints : un remplacement à 10 € par fenêtre redonne plusieurs années d'isolation correcte.\n\nLe diagnostic se fait visuellement : si le joint est durci, fissuré ou écrasé, il a fait son temps.",
+      "hashtags": ["#HelpConfort", "#Vitrerie", "#AstuceTechnique", "#Isolation"]
+    },
+    {
+      "rotation": 7,
+      "jour": "jeudi",
+      "theme": "Le saviez-vous",
+      "texte": "Le saviez-vous.\n\nLe coffre-fort à domicile n'est plus réservé aux gros patrimoines. Pour quelques centaines d'euros, un coffre certifié A2P scellé dans un mur ou un sol protège vos documents importants (passeport, livret de famille, contrats d'assurance) en cas de cambriolage ou d'incendie léger.\n\nHelp Confort installe ce type d'équipement avec garantie de scellement.",
+      "hashtags": ["#HelpConfort", "#Serrurerie", "#CoffreFort", "#Sécurité"]
+    },
+    {
+      "rotation": 7,
+      "jour": "vendredi",
+      "theme": "La question fréquente",
+      "texte": "La question fréquente.\n\n« Comment être sûr de tomber sur un vrai professionnel Help Confort et pas une copie ? »\n\nVérifiez systématiquement le numéro appelé sur le site officiel helpconfort.com. Méfiez-vous des résultats sponsorisés qui imitent notre marque. Le réseau Help Confort ne pratique pas le démarchage téléphonique à froid : si on vous appelle pour vous proposer un dépannage, c'est suspect.\n\nEn cas de doute, raccrochez et appelez vous-même.",
+      "hashtags": ["#HelpConfort", "#Vigilance", "#FAQ"]
+    },
+    {
+      "rotation": 7,
+      "jour": "samedi",
+      "theme": "Transparence",
+      "texte": "Transparence sur nos avis clients.\n\nChaque avis client publié sur Google Business Profile, Pages Jaunes ou notre site est authentique et lié à une intervention vérifiable. Nous ne supprimons pas les avis négatifs : nous y répondons publiquement avec la solution apportée.\n\nLes notes moyennes de chaque agence sont consultables librement. C'est le meilleur reflet de notre engagement qualité sur le terrain.",
+      "hashtags": ["#HelpConfort", "#Avis", "#Transparence"]
+    }
+  ]
+}
