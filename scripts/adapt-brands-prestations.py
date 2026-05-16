@@ -9,9 +9,32 @@ as porte-garage.html — and injects the new CSS if missing.
 
 import os
 import re
+import sys
 from pathlib import Path
 
-ROOT = Path("/Users/HP/Documents/Claude/Projects/SITE INTERNET/prestations")
+# Resolve the prestations directory. By default we use the user's macOS path,
+# but the script also runs inside the Cowork Linux workspace where the
+# project is mounted under /sessions/.../mnt/SITE INTERNET/. The directory
+# can also be overridden with PRESTATIONS_DIR or the first CLI arg.
+DEFAULT_CANDIDATES = [
+    "/Users/HP/Documents/Claude/Projects/SITE INTERNET/prestations",
+    "/sessions/youthful-charming-goldberg/mnt/SITE INTERNET/prestations",
+]
+
+
+def resolve_root() -> Path:
+    if len(sys.argv) > 1:
+        return Path(sys.argv[1])
+    env = os.environ.get("PRESTATIONS_DIR")
+    if env:
+        return Path(env)
+    for c in DEFAULT_CANDIDATES:
+        if Path(c).is_dir():
+            return Path(c)
+    return Path(DEFAULT_CANDIDATES[0])
+
+
+ROOT = resolve_root()
 
 # CSS snippet that must be present in each prestation page's <style>.
 NEW_CSS = (
@@ -295,8 +318,17 @@ def process_file(path: Path, slug: str, brand_list) -> bool:
             break
 
     if not replaced:
-        print(f"  [WARN] marques section not found in {path.name}")
-        return False
+        # Fall back: insert the new marques section just before
+        # the "Avis clients vérifiés" section so it lands in the
+        # right place on pages that don't have an existing marques block.
+        avis_marker = '<section class="seo-section"><h2>Avis clients vérifiés</h2>'
+        if avis_marker in text:
+            text = text.replace(avis_marker, new_section + avis_marker, 1)
+            replaced = True
+            print(f"  [INFO] inserted new marques section into {path.name}")
+        else:
+            print(f"  [WARN] marques section not found in {path.name}")
+            return False
 
     # CSS: replace old pill style with the new card CSS if present.
     if ".seo-brand-card" not in text:
