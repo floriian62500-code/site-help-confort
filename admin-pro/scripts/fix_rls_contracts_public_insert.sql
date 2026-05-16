@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — FIX RLS contracts (insert anonyme public_form)
+-- HELP Confort — FIX RLS contracts (insert anonyme public_form)
 -- ═══════════════════════════════════════════════════════════════
 --
 -- ERREUR ACTUELLE :

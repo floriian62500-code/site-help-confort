@@ -45,7 +45,7 @@ const SEASONAL_TOPICS = {
 const METIERS_ROTATION = ['plomberie', 'chauffage', 'electricite', 'serrurerie', 'vitrerie', 'renovation'];
 
 // ─── Prompt système ─────────────────────────────────────────────────────────
-const SYSTEM_PROMPT = `Tu es un expert en communication digitale pour HELP! Confort Saint-Omer / Dunkerque (Nord/Pas-de-Calais), artisan multi-services local.
+const SYSTEM_PROMPT = `Tu es un expert en communication digitale pour HELP Confort Saint-Omer / Dunkerque (Nord/Pas-de-Calais), artisan multi-services local.
 
 Métiers : plomberie, chauffage, électricité, serrurerie, vitrerie, rénovation, adaptation PMR.
 Zones : Saint-Omer, Dunkerque, Arques, Longuenesse, Gravelines, Coudekerque, etc.

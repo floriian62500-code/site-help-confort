@@ -1,5 +1,5 @@
 #!/bin/bash
-# Installation du LaunchAgent auto-push HELP! Confort
+# Installation du LaunchAgent auto-push HELP Confort
 set -e
 
 REPO="/Users/HP/Documents/Claude/Projects/SITE INTERNET"

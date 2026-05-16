@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — Planification de publications
+-- HELP Confort — Planification de publications
 -- À exécuter UNE SEULE FOIS dans Supabase → SQL Editor
 -- ═══════════════════════════════════════════════════════════════
 

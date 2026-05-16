@@ -1,6 +1,6 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════
-# PUSH AUTO — HELP! Confort
+# PUSH AUTO — HELP Confort
 # ═══════════════════════════════════════════════════════════════
 # Usage :
 #   - Double-clique sur ce fichier depuis Finder
@@ -21,7 +21,7 @@ REPO="/Users/HP/Documents/Claude/Projects/SITE INTERNET"
 clear
 echo ""
 echo "╔══════════════════════════════════════════════════════════╗"
-echo "║  🚀 Push Auto — HELP! Confort                            ║"
+echo "║  🚀 Push Auto — HELP Confort                            ║"
 echo "╚══════════════════════════════════════════════════════════╝"
 echo ""
 

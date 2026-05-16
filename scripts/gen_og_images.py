@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-HELP! Confort — Générateur d'images Open Graph 1200×630.
+HELP Confort — Générateur d'images Open Graph 1200×630.
 
 Lit chaque page HTML publique, extrait <title> et le métier (depuis le slug du fichier),
 et génère une image OG brandée dans /og/{slug}.png.

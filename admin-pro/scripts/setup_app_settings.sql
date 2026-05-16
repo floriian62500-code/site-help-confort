@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — Table de configuration des APIs externes
+-- HELP Confort — Table de configuration des APIs externes
 -- À exécuter UNE SEULE FOIS dans Supabase → SQL Editor
 -- ═══════════════════════════════════════════════════════════════
 

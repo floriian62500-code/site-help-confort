@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════
-// HELP! Confort — Edge Function : manage-users  (v2026-05-14 — redeploy)
+// HELP Confort — Edge Function : manage-users  (v2026-05-14 — redeploy)
 // ═══════════════════════════════════════════════════════════════
 // Gestion centralisée des comptes admins du dashboard.
 // Toutes les actions vérifient que l'appelant est OWNER (sinon 403).

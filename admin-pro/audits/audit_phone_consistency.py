@@ -5,7 +5,7 @@ Audit phone consistency — sonde P15.
 
 Extrait tous les numéros de téléphone (lien `tel:` ou affichage humain
 "03 66 10 01 34", "+33 3 66 10 01 34", etc.) des pages publiques et
-vérifie qu'ils correspondent tous au numéro canonique HELP! Confort
+vérifie qu'ils correspondent tous au numéro canonique HELP Confort
 (défini dans `mentions-legales.html` / `TARIFS_REFERENCE.md`).
 
 Numéro canonique attendu :
@@ -37,7 +37,7 @@ OUT_JSON = ROOT / "admin-pro" / "audits" / "audit_phone_consistency_report.json"
 EXCLUDE = {"404.html", "reset.html"}
 EXCLUDE_PREFIX = ("test-", "_")
 
-# Numéro canonique HELP! Confort (source : mentions-legales.html + TARIFS_REFERENCE.md)
+# Numéro canonique HELP Confort (source : mentions-legales.html + TARIFS_REFERENCE.md)
 CANONICAL_DIGITS = "33366100134"            # forme E.164 sans "+"
 CANONICAL_LOCAL_DIGITS = "0366100134"       # forme FR 10 chiffres
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════
-# INSTALL AUTO-PUSH DAEMON — HELP! Confort
+# INSTALL AUTO-PUSH DAEMON — HELP Confort
 # ═══════════════════════════════════════════════════════════════
 # Installe un service launchd qui surveille le dépôt et pousse
 # automatiquement TOUTE modification vers GitHub, sans intervention.
@@ -24,7 +24,7 @@ PLIST_PATH="$HOME/Library/LaunchAgents/$PLIST_NAME.plist"
 clear
 echo ""
 echo "╔══════════════════════════════════════════════════════════╗"
-echo "║  🤖 Installation Auto-Push Daemon — HELP! Confort        ║"
+echo "║  🤖 Installation Auto-Push Daemon — HELP Confort        ║"
 echo "╚══════════════════════════════════════════════════════════╝"
 echo ""
 

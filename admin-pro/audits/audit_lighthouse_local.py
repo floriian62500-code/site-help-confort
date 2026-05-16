@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-HELP! Confort — Audit Lighthouse local (sans Chromium).
+HELP Confort — Audit Lighthouse local (sans Chromium).
 
 Scanne chaque page HTML et vérifie :
   - Performance : <link rel=preconnect>, <img loading=lazy>, width/height, srcset, preload critique

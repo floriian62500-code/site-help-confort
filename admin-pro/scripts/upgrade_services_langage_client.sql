@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — Refonte catalogue services en LANGAGE CLIENT
+-- HELP Confort — Refonte catalogue services en LANGAGE CLIENT
 -- ═══════════════════════════════════════════════════════════════
 --
 -- OBJECTIF : Remplacer les intitulés techniques par des phrases

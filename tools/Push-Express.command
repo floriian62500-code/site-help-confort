@@ -1,6 +1,6 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════
-# PUSH EXPRESS — HELP! Confort
+# PUSH EXPRESS — HELP Confort
 # ═══════════════════════════════════════════════════════════════
 # Double-clic = nettoyage + git add . + commit (message auto) + push
 # Aucune question posée. Idéal pour pousser rapidement.

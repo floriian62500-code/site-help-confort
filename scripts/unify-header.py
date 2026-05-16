@@ -8,8 +8,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Le nouveau header (copié exactement de index.html lignes 185-280)
 NEW_HEADER = '''<header class="hc-header" id="hcHeader">
   <div class="hc-header-row">
-    <a href="index.html" class="hc-logo" aria-label="HELP! Confort Saint-Omer · Accueil">
-      <img loading="lazy" decoding="async" src="logo-officiel.jpg" alt="HELP! Confort" width="200" height="60">
+    <a href="index.html" class="hc-logo" aria-label="HELP Confort Saint-Omer · Accueil">
+      <img loading="lazy" decoding="async" src="logo-officiel.jpg" alt="HELP Confort" width="200" height="60">
     </a>
     <nav class="hc-nav" aria-label="Navigation principale">
       <a href="index.html" class="hc-nav-link">Accueil</a>

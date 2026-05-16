@@ -101,7 +101,7 @@ SIDEBAR_HTML = '''<aside class="admin-sidebar">
     <div class="admin-sidebar-brand">
       <div class="admin-brand-logo">H!</div>
       <div class="admin-brand-text">
-        <strong>HELP! Confort</strong>
+        <strong>HELP Confort</strong>
         <span>Back-Office Pro</span>
       </div>
     </div>
@@ -207,7 +207,7 @@ TEMPLATE = '''<!DOCTYPE html>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>{TITLE} · Back-Office HELP! Confort</title>
+<title>{TITLE} · Back-Office HELP Confort</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">

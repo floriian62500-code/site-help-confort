@@ -18,12 +18,12 @@ with open(TEMPLATE_FILE, 'r', encoding='utf-8') as f:
 # Remplacer le titre, description, canonical
 template = re.sub(
     r'<title>[^<]*</title>',
-    '<title>Zones d\'intervention HELP! Confort — Saint-Omer · Dunkerque · Calais · Boulogne | Plomberie, Chauffage, Électricité</title>',
+    '<title>Zones d\'intervention HELP Confort — Saint-Omer · Dunkerque · Calais · Boulogne | Plomberie, Chauffage, Électricité</title>',
     template, count=1
 )
 template = re.sub(
     r'<meta\s+name="description"\s+content="[^"]*">',
-    '<meta name="description" content="HELP! Confort intervient sur tout le Pas-de-Calais et le Nord : Saint-Omer, Dunkerque, Calais, Boulogne-sur-Mer, Audomarois, littoral. 2 agences locales (Dépan\'Audo · Dépan\'DK) — plomberie, chauffage, électricité, serrurerie, vitrerie, rénovation. ☎ 03 66 10 01 34">',
+    '<meta name="description" content="HELP Confort intervient sur tout le Pas-de-Calais et le Nord : Saint-Omer, Dunkerque, Calais, Boulogne-sur-Mer, Audomarois, littoral. 2 agences locales (Dépan\'Audo · Dépan\'DK) — plomberie, chauffage, électricité, serrurerie, vitrerie, rénovation. ☎ 03 66 10 01 34">',
     template, count=1
 )
 template = re.sub(
@@ -32,7 +32,7 @@ template = re.sub(
     template, count=1
 )
 # OG tags
-template = re.sub(r'<meta\s+property="og:title"\s+content="[^"]*">', '<meta property="og:title" content="Zones d\'intervention HELP! Confort">', template, count=1)
+template = re.sub(r'<meta\s+property="og:title"\s+content="[^"]*">', '<meta property="og:title" content="Zones d\'intervention HELP Confort">', template, count=1)
 template = re.sub(r'<meta\s+property="og:description"\s+content="[^"]*">', '<meta property="og:description" content="Saint-Omer & Dunkerque — Plomberie, chauffage, électricité, serrurerie, vitrerie, rénovation.">', template, count=1)
 
 # Trouver header end + script

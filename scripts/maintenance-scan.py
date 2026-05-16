@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-maintenance-scan.py — Agent IA Maintenance HELP! Confort
+maintenance-scan.py — Agent IA Maintenance HELP Confort
 ─────────────────────────────────────────────────────────
 Scan le site (HTML/CSS/JS) + back-office + Edge Functions,
 détecte les anomalies, écrit logs/scan-latest.json + scan-YYYY-MM-DD.json.
@@ -399,7 +399,7 @@ def write_outputs(summary: dict, root: Path):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Scan maintenance HELP! Confort")
+    ap = argparse.ArgumentParser(description="Scan maintenance HELP Confort")
     ap.add_argument("--root", default=str(Path(__file__).resolve().parent.parent))
     ap.add_argument("--verbose", action="store_true")
     args = ap.parse_args()

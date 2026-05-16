@@ -1,6 +1,6 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════
-# UNINSTALL AUTO-PUSH DAEMON — HELP! Confort
+# UNINSTALL AUTO-PUSH DAEMON — HELP Confort
 # ═══════════════════════════════════════════════════════════════
 
 REPO="/Users/HP/Documents/Claude/Projects/SITE INTERNET"

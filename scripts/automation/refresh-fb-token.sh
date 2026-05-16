@@ -97,6 +97,6 @@ Une fois fait, je détecterai automatiquement la mise à jour à la prochaine ex
 EOF
 
 # Notification macOS
-osascript -e 'display notification "Token Facebook expiré — voir docs/ALERT-FB-TOKEN.md" with title "🚨 HELP! Confort — Token FB" sound name "Glass"' 2>/dev/null || true
+osascript -e 'display notification "Token Facebook expiré — voir docs/ALERT-FB-TOKEN.md" with title "🚨 HELP Confort — Token FB" sound name "Glass"' 2>/dev/null || true
 
 exit 1

@@ -1,6 +1,6 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════
-# FIX AUTH DAEMON — HELP! Confort
+# FIX AUTH DAEMON — HELP Confort
 # ═══════════════════════════════════════════════════════════════
 # Résout l'erreur "Device not configured" du daemon launchd.
 # Stocke le PAT dans l'URL du remote (visible uniquement dans

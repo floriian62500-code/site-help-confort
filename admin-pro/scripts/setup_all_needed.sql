@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════════════════
--- HELP! Confort — SCRIPT D'INSTALLATION COMPLET
+-- HELP Confort — SCRIPT D'INSTALLATION COMPLET
 -- ═══════════════════════════════════════════════════════════════════════════
 -- À exécuter UNE SEULE FOIS dans Supabase → SQL Editor (https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/sql/new)
 -- 
@@ -20,7 +20,7 @@
 -- ╚═══════════════════════════════════════════════════════════════════════╝
 
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — Setup user_profiles (rôles & permissions)
+-- HELP Confort — Setup user_profiles (rôles & permissions)
 -- ═══════════════════════════════════════════════════════════════
 -- À exécuter dans Supabase SQL Editor (1 seule fois)
 -- Crée :
@@ -216,7 +216,7 @@ ORDER BY up.created_at ASC;
 -- ╚═══════════════════════════════════════════════════════════════════════╝
 
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — Setup Contrats & Interventions
+-- HELP Confort — Setup Contrats & Interventions
 -- ═══════════════════════════════════════════════════════════════
 -- À exécuter dans Supabase SQL Editor APRÈS setup_user_profiles.sql
 -- (car les policies utilisent public.current_role())
@@ -400,7 +400,7 @@ SELECT 'Setup contracts + interventions OK' AS info;
 -- ╚═══════════════════════════════════════════════════════════════════════╝
 
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — Catalogue de prestations en ligne
+-- HELP Confort — Catalogue de prestations en ligne
 -- Tables : service_categories, services, service_orders
 -- À exécuter dans Supabase → SQL Editor
 -- ═══════════════════════════════════════════════════════════════

@@ -58,7 +58,7 @@ serve(async (req) => {
     // app_settings.value->from_email n'a pas été migré (migration 20260515000000).
     const FROM_EMAIL_FORCED = 'noreply@depan59-62.fr';
     const to = agenceCfg.email || cfg.subscriptions_to || 'saint-omer@helpconfort.com';
-    const fromName = cfg.from_name || 'HELP! Confort — Site';
+    const fromName = cfg.from_name || 'HELP Confort — Site';
     const fromEmail = FROM_EMAIL_FORCED;  // toujours depan59-62.fr (domaine Resend verified)
     const replyTo = cfg.reply_to || 'saint-omer@helpconfort.com';
 
@@ -174,7 +174,7 @@ function buildEmailHtml(c: any): string {
 </td></tr>
 
 <tr><td style="padding:18px 28px;background:#fafcfd;border-top:1px solid #E5EDF3;font-size:11px;color:#94a3b8">
-  HELP! Confort — Souscription reçue le ${new Date(c.created_at).toLocaleString('fr-FR')}<br>
+  HELP Confort — Souscription reçue le ${new Date(c.created_at).toLocaleString('fr-FR')}<br>
   Référence interne : ${c.id}
 </td></tr>
 </table></td></tr></table></body></html>`;

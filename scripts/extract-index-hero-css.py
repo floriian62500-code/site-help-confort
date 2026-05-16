@@ -33,7 +33,7 @@ def main():
 
     css_body = m.group(1).strip()
     OUT_CSS.write_text(
-        "/*! HELP! Confort — styles Hero V12 (externalisé pour alléger index.html) */\n"
+        "/*! HELP Confort — styles Hero V12 (externalisé pour alléger index.html) */\n"
         + css_body + "\n",
         encoding="utf-8",
     )

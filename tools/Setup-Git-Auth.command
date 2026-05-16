@@ -1,6 +1,6 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════
-# SETUP GIT AUTH — HELP! Confort
+# SETUP GIT AUTH — HELP Confort
 # ═══════════════════════════════════════════════════════════════
 # À LANCER UNE SEULE FOIS, après quoi Push-Express marchera tout
 # seul sans GitHub Desktop.
@@ -18,7 +18,7 @@ REPO="/Users/HP/Documents/Claude/Projects/SITE INTERNET"
 clear
 echo ""
 echo "╔══════════════════════════════════════════════════════════╗"
-echo "║  🔐 Setup Git Auth — HELP! Confort                       ║"
+echo "║  🔐 Setup Git Auth — HELP Confort                       ║"
 echo "║  (À lancer une seule fois)                               ║"
 echo "╚══════════════════════════════════════════════════════════╝"
 echo ""

@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — Système de capture des leads (formulaires site)
+-- HELP Confort — Système de capture des leads (formulaires site)
 -- À exécuter UNE SEULE FOIS dans Supabase → SQL Editor
 -- ═══════════════════════════════════════════════════════════════
 

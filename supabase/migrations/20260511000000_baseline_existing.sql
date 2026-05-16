@@ -5,7 +5,7 @@
 -- ═════════════════════════════════════════════════════════════════════
 
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — Table de configuration des APIs externes
+-- HELP Confort — Table de configuration des APIs externes
 -- À exécuter UNE SEULE FOIS dans Supabase → SQL Editor
 -- ═══════════════════════════════════════════════════════════════
 
@@ -76,7 +76,7 @@ on conflict (key) do nothing;
 
 -- ── setup_leads.sql ─────────────────────────────────────────────────
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — Système de capture des leads (formulaires site)
+-- HELP Confort — Système de capture des leads (formulaires site)
 -- À exécuter UNE SEULE FOIS dans Supabase → SQL Editor
 -- ═══════════════════════════════════════════════════════════════
 
@@ -173,7 +173,7 @@ create policy "leads_public_insert"
 
 -- ── setup_reviews.sql ───────────────────────────────────────────────
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — Table des avis clients (synchronisation GBP + FB)
+-- HELP Confort — Table des avis clients (synchronisation GBP + FB)
 -- À exécuter UNE SEULE FOIS dans Supabase → SQL Editor
 -- ═══════════════════════════════════════════════════════════════
 
@@ -264,7 +264,7 @@ create policy "reviews_public_read"
 
 -- ── setup_scheduled_publications.sql ───────────────────────────────
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — Planification de publications
+-- HELP Confort — Planification de publications
 -- À exécuter UNE SEULE FOIS dans Supabase → SQL Editor
 -- ═══════════════════════════════════════════════════════════════
 

@@ -32,7 +32,7 @@ VALUES ('notification_emails', jsonb_build_object(
   'orders_to',        'florian.dhaillecourt@helpconfort.com',
   'leads_to',         'florian.dhaillecourt@helpconfort.com',
   'reply_to',         'florian.dhaillecourt@helpconfort.com',
-  'from_name',        'HELP! Confort — Site',
+  'from_name',        'HELP Confort — Site',
   'from_email',       'noreply@depan59-62.fr',
   'agences', jsonb_build_object(
     'saint-omer', jsonb_build_object('email','saint-omer@helpconfort.com','phone','03 66 10 01 34','postal_codes','62500,62219,62570,62960,62575'),

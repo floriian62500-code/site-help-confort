@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — Setup Contrats & Interventions
+-- HELP Confort — Setup Contrats & Interventions
 -- ═══════════════════════════════════════════════════════════════
 -- À exécuter dans Supabase SQL Editor APRÈS setup_user_profiles.sql
 -- (car les policies utilisent public.current_role())

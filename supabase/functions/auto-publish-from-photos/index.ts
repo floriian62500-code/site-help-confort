@@ -56,7 +56,7 @@ function slugify(str: string): string {
 }
 
 const SYSTEM_PROMPT = `Tu es un expert en marketing digital pour entreprises artisanales du dépannage et de la rénovation.
-Tu écris pour HELP! Confort, multi-services (plomberie, chauffage, électricité, serrurerie, vitrerie, rénovation, menuiserie, volets, PMR) avec 2 agences :
+Tu écris pour HELP Confort, multi-services (plomberie, chauffage, électricité, serrurerie, vitrerie, rénovation, menuiserie, volets, PMR) avec 2 agences :
 - Dépan'Audo (Saint-Omer et environs)
 - Dépan'DK (Dunkerque et environs)
 

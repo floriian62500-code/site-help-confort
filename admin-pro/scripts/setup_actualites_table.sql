@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — Table public.actualites
+-- HELP Confort — Table public.actualites
 -- À exécuter UNE SEULE FOIS dans Supabase → SQL Editor
 -- ═══════════════════════════════════════════════════════════════
 --

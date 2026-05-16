@@ -47,8 +47,8 @@ const METIER_LABELS: Record<string, string> = {
 };
 
 const AGENCE_LABELS: Record<string, string> = {
-  "depan-audo": "Dépan'Audo (HELP! Confort Saint-Omer)",
-  "depan-dk": "Dépan'DK (HELP! Confort Dunkerque)"
+  "depan-audo": "Dépan'Audo (HELP Confort Saint-Omer)",
+  "depan-dk": "Dépan'DK (HELP Confort Dunkerque)"
 };
 
 // @ts-ignore Deno global
@@ -94,11 +94,11 @@ Deno.serve(async (req: Request) => {
       return json({ error: "metier et ville requis" }, 400);
     }
     const metierLabel = METIER_LABELS[body.metier] || body.metier;
-    const agenceLabel = AGENCE_LABELS[body.agence || ""] || "HELP! Confort";
+    const agenceLabel = AGENCE_LABELS[body.agence || ""] || "HELP Confort";
 
     // Prompt Claude
     const systemPrompt = `Tu es un expert en marketing digital pour entreprises artisanales du dépannage et de la rénovation.
-Tu écris pour HELP! Confort, multi-services (plomberie, chauffage, électricité, serrurerie, vitrerie, rénovation) avec 2 agences :
+Tu écris pour HELP Confort, multi-services (plomberie, chauffage, électricité, serrurerie, vitrerie, rénovation) avec 2 agences :
 - Dépan'Audo (Saint-Omer et environs)
 - Dépan'DK (Dunkerque et environs)
 

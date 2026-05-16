@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-HELP! Confort — Audit ARIA / accessibilité (a11y)
+HELP Confort — Audit ARIA / accessibilité (a11y)
 ==================================================
 Sonde locale (0 dépendance) qui scanne les pages publiques racine pour
 détecter les anti-patterns d'accessibilité les plus fréquents :
@@ -212,7 +212,7 @@ def main() -> int:
 
     # Markdown
     lines = []
-    lines.append("# Audit ARIA / a11y — HELP! Confort")
+    lines.append("# Audit ARIA / a11y — HELP Confort")
     lines.append("")
     lines.append(f"_Généré par `admin-pro/audits/audit_aria.py` — {len(pages)} pages scannées._")
     lines.append("")

@@ -1,6 +1,6 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════
-# CHANGE DOMAIN — HELP! Confort → Dépan'59-62
+# CHANGE DOMAIN — HELP Confort → Dépan'59-62
 # ═══════════════════════════════════════════════════════════════
 # Lance ce script UNIQUEMENT quand votre nouveau domaine est acheté
 # et que vous voulez basculer toutes les URLs canoniques.
@@ -19,7 +19,7 @@ NEW_DOMAIN_DEFAULT="depan-59-62.fr"
 clear
 echo ""
 echo "╔══════════════════════════════════════════════════════════╗"
-echo "║  🔀 Change Domain — HELP! Confort                        ║"
+echo "║  🔀 Change Domain — HELP Confort                        ║"
 echo "╚══════════════════════════════════════════════════════════╝"
 echo ""
 

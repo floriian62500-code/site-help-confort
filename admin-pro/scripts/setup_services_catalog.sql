@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — Catalogue de prestations en ligne
+-- HELP Confort — Catalogue de prestations en ligne
 -- Tables : service_categories, services, service_orders
 -- À exécuter dans Supabase → SQL Editor
 -- ═══════════════════════════════════════════════════════════════

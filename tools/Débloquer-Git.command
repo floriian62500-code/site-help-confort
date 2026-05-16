@@ -1,6 +1,6 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════
-# DÉBLOQUER GIT — HELP! Confort
+# DÉBLOQUER GIT — HELP Confort
 # ═══════════════════════════════════════════════════════════════
 # Si GitHub Desktop affiche "A lock file already exists" :
 # 👉 Double-clique sur ce fichier (depuis Finder, dans ton dossier
@@ -14,7 +14,7 @@ REPO="/Users/HP/Documents/Claude/Projects/SITE INTERNET"
 clear
 echo ""
 echo "╔══════════════════════════════════════════════════════════╗"
-echo "║  🔓 Déblocage Git en cours — HELP! Confort               ║"
+echo "║  🔓 Déblocage Git en cours — HELP Confort               ║"
 echo "╚══════════════════════════════════════════════════════════╝"
 echo ""
 

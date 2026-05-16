@@ -70,7 +70,7 @@ log "Monitoring $HHMM ALERT (${#ALERTS[@]} problème(s))"
 
 mkdir -p "$(dirname "$ALERT_FILE")"
 {
-  echo "# 🚨 ALERTE Monitoring HELP! Confort — $TIMESTAMP"
+  echo "# 🚨 ALERTE Monitoring HELP Confort — $TIMESTAMP"
   echo ""
   echo "## Problèmes détectés"
   echo ""
@@ -90,6 +90,6 @@ mkdir -p "$(dirname "$ALERT_FILE")"
   echo "- Logs détaillés : \`$LOG_FILE\`"
 } > "$ALERT_FILE"
 
-osascript -e 'display notification "Voir ALERT-MONITORING.md" with title "🚨 HELP! Confort — Monitoring" sound name "Glass"' 2>/dev/null || true
+osascript -e 'display notification "Voir ALERT-MONITORING.md" with title "🚨 HELP Confort — Monitoring" sound name "Glass"' 2>/dev/null || true
 
 exit 1

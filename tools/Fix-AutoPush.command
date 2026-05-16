@@ -1,6 +1,6 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════
-# FIX AUTO-PUSH v2 — HELP! Confort
+# FIX AUTO-PUSH v2 — HELP Confort
 # ═══════════════════════════════════════════════════════════════
 # Met à jour le daemon launchd avec la version ROBUSTE :
 #   - Auto-commit des fichiers modifiés
@@ -34,7 +34,7 @@ echo "🔓 Locks Git nettoyés (si présents)"
 
 cat > "$NEW_SCRIPT" << 'SCRIPT'
 #!/bin/bash
-# AUTO-PUSH ROBUSTE — HELP! Confort (v2)
+# AUTO-PUSH ROBUSTE — HELP Confort (v2)
 REPO="/Users/HP/Documents/Claude/Projects/SITE INTERNET"
 LOG="$HOME/Library/Application Support/HelpConfort/autopush.log"
 DEPLOY_LOG="$HOME/Library/Application Support/HelpConfort/supabase-deploy.log"
@@ -119,7 +119,7 @@ else
   echo "$FAIL" > "$STATE_FILE" 2>/dev/null
   log "❌ push failed ($LOCAL) — échec #$FAIL"
   if [ "$FAIL" = "3" ]; then
-    notify "Auto-push HELP! Confort" "⚠️ 3 échecs consécutifs. Auth GitHub à vérifier (Setup-Git-Auth.command)"
+    notify "Auto-push HELP Confort" "⚠️ 3 échecs consécutifs. Auth GitHub à vérifier (Setup-Git-Auth.command)"
     log "🔔 Notification envoyée"
   fi
 fi

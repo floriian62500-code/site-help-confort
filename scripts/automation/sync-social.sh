@@ -108,6 +108,6 @@ Renouveler dans Réglages → Facebook + Instagram → re-générer le long-live
 Sinon, vérifier les logs Supabase : https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/logs/edge-functions
 EOF
 
-osascript -e 'display notification "Erreur sync FB/Reviews — voir docs/ALERT-SYNC.md" with title "⚠️ HELP! Confort — Sync" sound name "Glass"' 2>/dev/null || true
+osascript -e 'display notification "Erreur sync FB/Reviews — voir docs/ALERT-SYNC.md" with title "⚠️ HELP Confort — Sync" sound name "Glass"' 2>/dev/null || true
 
 exit 1

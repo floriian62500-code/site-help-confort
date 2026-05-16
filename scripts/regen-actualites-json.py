@@ -38,7 +38,7 @@ for html in sorted(ACTUS_DIR.glob('*.html'), reverse=True):
     if not title_m:
         title_m = re.search(r'<title[^>]*>(.*?)</title>', text, re.S)
     title = re.sub(r'<[^>]+>', '', title_m.group(1)).strip() if title_m else html.stem
-    title = re.sub(r'\s*\|.*$', '', title).strip()  # remove " | HELP! Confort"
+    title = re.sub(r'\s*\|.*$', '', title).strip()  # remove " | HELP Confort"
 
     # Categorie depuis tag/badge ou défaut
     cat_m = re.search(r'CONSEILS|S[ÉE]CURIT[ÉE]|AGENCE|R[ÉE]GLEMENTATION|ACTUALIT[ÉE]|SAISONNIER|[ÉE]CONOMIES', text)

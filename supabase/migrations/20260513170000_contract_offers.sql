@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════════════════
--- HELP! Confort — Table contract_offers
+-- HELP Confort — Table contract_offers
 -- ═══════════════════════════════════════════════════════════════════════════
 -- Stocke les offres de contrats d'entretien (BASIC/CONFORT/SÉCURITÉ × Gaz/Fioul/Adoucisseur)
 -- qui étaient jusqu'ici codées en dur dans contrats-entretien.html.

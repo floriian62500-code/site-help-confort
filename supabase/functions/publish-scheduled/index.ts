@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════
-// HELP! Confort — Cron : Exécute les publications planifiées dues
+// HELP Confort — Cron : Exécute les publications planifiées dues
 // ═══════════════════════════════════════════════════════════════
 // Appelée par pg_cron toutes les 5 min avec la SERVICE_ROLE_KEY.
 // Récupère tous les scheduled_publications pending dont scheduled_at <= now,

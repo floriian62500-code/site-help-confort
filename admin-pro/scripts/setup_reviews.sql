@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — Table des avis clients (synchronisation GBP + FB)
+-- HELP Confort — Table des avis clients (synchronisation GBP + FB)
 -- À exécuter UNE SEULE FOIS dans Supabase → SQL Editor
 -- ═══════════════════════════════════════════════════════════════
 

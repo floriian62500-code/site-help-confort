@@ -107,7 +107,7 @@ Deno.serve(async (req: Request) => {
     // PROMPT CLAUDE
     const systemPrompt = `Tu es un expert en marketing digital pour entreprises artisanales du dépannage et de la rénovation habitat en France.
 
-Tu écris pour HELP! Confort, multi-services à Saint-Omer (Dépan'Audo) et Dunkerque (Dépan'DK).
+Tu écris pour HELP Confort, multi-services à Saint-Omer (Dépan'Audo) et Dunkerque (Dépan'DK).
 Valeurs : techniciens salariés (pas de sous-traitance), employeur local, garantie, transparence prix, intervention rapide.
 
 OBJECTIF : Générer le contenu marketing+SEO d'une PRESTATION (service du catalogue), pas d'un chantier.

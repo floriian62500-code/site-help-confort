@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Global replacement script: "HELP! Confort" -> "HELP Confort"
+Global replacement script: "HELP Confort" -> "HELP Confort"
 Walks all .html/.js/.ts/.py/.json/.md/.css files (and a few more text extensions),
 skips binary files, backup directories, node_modules, .git.
 Reports count of replacements per file and a final total.
@@ -9,7 +9,9 @@ Reports count of replacements per file and a final total.
 import os
 import sys
 
-ROOT = "/Users/HP/Documents/Claude/Projects/SITE INTERNET"
+# Project root = parent of this script's directory (so the script is portable
+# between the user's Mac and the sandbox mount).
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 TEXT_EXTS = {
     ".html", ".htm", ".js", ".ts", ".tsx", ".jsx",
     ".py", ".json", ".md", ".css", ".scss",
@@ -19,7 +21,7 @@ TEXT_EXTS = {
 SKIP_DIR_NAMES = {"node_modules", ".git", "__pycache__", ".venv", "venv"}
 SKIP_DIR_SUFFIXES = (".bak",)  # any dir ending with .bak
 
-OLD = "HELP! Confort"
+OLD = "HELP Confort"
 NEW = "HELP Confort"
 
 

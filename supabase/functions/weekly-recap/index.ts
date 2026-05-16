@@ -129,7 +129,7 @@ serve(async (req) => {
 
     // ─── Email ────
     const FROM_EMAIL = 'noreply@depan59-62.fr';
-    const fromName = cfg.from_name || 'HELP! Confort — Récap hebdo';
+    const fromName = cfg.from_name || 'HELP Confort — Récap hebdo';
     const to = cfg.weekly_recap_to || cfg.subscriptions_to || 'saint-omer@helpconfort.com';
     const ccArr = (cfg.weekly_recap_cc || []) as string[];
 
@@ -254,7 +254,7 @@ function buildEmailHtml(d: any): string {
 <table width="680" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(10,20,40,.10);overflow:hidden">
 
 <tr><td style="background:linear-gradient(135deg,#0A1428 0%,#0DA0CF 100%);padding:28px 32px;color:#fff">
-  <div style="font-size:13px;font-weight:700;opacity:.85;letter-spacing:.06em;text-transform:uppercase">Récap hebdo HELP! Confort</div>
+  <div style="font-size:13px;font-weight:700;opacity:.85;letter-spacing:.06em;text-transform:uppercase">Récap hebdo HELP Confort</div>
   <div style="font-size:26px;font-weight:900;margin-top:4px;letter-spacing:-.02em">Semaine ${escapeHtml(d.semaineLabel)}</div>
   <div style="font-size:14px;opacity:.92;margin-top:8px">Bonjour Florian 👋 — voici ton tableau de bord de la semaine écoulée.</div>
 </td></tr>
@@ -331,7 +331,7 @@ ${d.leadsStale.length ? `<tr><td style="padding:0 28px 20px">
 </td></tr>
 
 <tr><td style="padding:18px 28px;background:#fafcfd;border-top:1px solid #E5EDF3;font-size:11px;color:#94a3b8">
-  HELP! Confort — Récap automatique du lundi 8h<br>
+  HELP Confort — Récap automatique du lundi 8h<br>
   Tu peux désactiver cet email dans <a href="https://depan59-62.fr/admin-pro/settings.html" style="color:#0DA0CF">Réglages → Notifications</a>.
 </td></tr>
 </table></td></tr></table></body></html>`;

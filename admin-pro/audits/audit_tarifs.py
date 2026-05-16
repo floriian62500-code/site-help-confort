@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Sonde IA #28 — Détection de tarifs inventés (HELP! Confort).
+Sonde IA #28 — Détection de tarifs inventés (HELP Confort).
 
 But : croiser tout montant `\\d+\\s*€` visible dans les pages publiques HTML
 avec la liste officielle TARIFS_REFERENCE.md (BAREME AGENCE validé Florian).

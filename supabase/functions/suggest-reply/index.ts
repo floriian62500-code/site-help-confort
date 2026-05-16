@@ -19,8 +19,8 @@ const CORS = {
 };
 
 const AGENCE_LABEL: Record<string, string> = {
-  "depan-audo": "HELP! Confort Saint-Omer",
-  "depan-dk": "HELP! Confort Dunkerque"
+  "depan-audo": "HELP Confort Saint-Omer",
+  "depan-dk": "HELP Confort Dunkerque"
 };
 
 // @ts-ignore Deno
@@ -54,8 +54,8 @@ Deno.serve(async (req: Request) => {
     const apiKey = setAnth.value.api_key;
     const model = setAnth.value.model || "claude-haiku-4-5-20251001";
     const company = setCo?.value || {};
-    const agenceLabel = AGENCE_LABEL[rv.agence] || "HELP! Confort";
-    const signature = company.signature || "L'équipe HELP! Confort";
+    const agenceLabel = AGENCE_LABEL[rv.agence] || "HELP Confort";
+    const signature = company.signature || "L'équipe HELP Confort";
     const raisonSociale = company.raison_sociale || "SARL Dépan'Audo";
 
     // Tonalité selon le rating

@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════════════════
--- HELP! Confort — FIX RLS contracts pour autoriser souscriptions publiques
+-- HELP Confort — FIX RLS contracts pour autoriser souscriptions publiques
 -- ═══════════════════════════════════════════════════════════════════════════
 -- BUG : "new row violates row-level security policy for table contracts"
 -- lors de soumission du wizard contrat-entretien depuis le site public.

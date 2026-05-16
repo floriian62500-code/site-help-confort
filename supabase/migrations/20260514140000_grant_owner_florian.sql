@@ -45,7 +45,7 @@ BEGIN
 
   IF v_admin_id IS NOT NULL THEN
     INSERT INTO public.user_profiles (user_id, full_name, role, is_active)
-    VALUES (v_admin_id, 'Admin HELP! Confort', 'owner', true)
+    VALUES (v_admin_id, 'Admin HELP Confort', 'owner', true)
     ON CONFLICT (user_id) DO UPDATE
       SET role = 'owner', is_active = true;
   END IF;

@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — Setup user_profiles (rôles & permissions)
+-- HELP Confort — Setup user_profiles (rôles & permissions)
 -- ═══════════════════════════════════════════════════════════════
 -- À exécuter dans Supabase SQL Editor (1 seule fois)
 -- Crée :

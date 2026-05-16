@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-HELP! Confort — Audit performance images
+HELP Confort — Audit performance images
 =========================================
 Crawl `images/` + `og/` et liste tous les fichiers raster (PNG/JPG/JPEG/WEBP)
 dont le poids dépasse 200 KB. Pour chaque image lourde, croise avec son usage
@@ -194,7 +194,7 @@ def main() -> int:
     lines = []
     lines.append(f"# Audit images perf — {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     lines.append("")
-    lines.append("> Sonde performance HELP! Confort — détecte les images > 200 KB et")
+    lines.append("> Sonde performance HELP Confort — détecte les images > 200 KB et")
     lines.append("> alerte si elles sont au-dessus du fold ou utilisées sur ≥ 5 pages.")
     lines.append("> Lancement : `python3 admin-pro/audits/audit_images.py`")
     lines.append("")

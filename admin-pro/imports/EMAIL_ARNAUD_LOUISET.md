@@ -1,6 +1,6 @@
 # Email à envoyer à Arnaud Louiset (siège HC)
 
-**À :** Arnaud Louiset — Chef de projet Wizville & Communication digitale, HELP! Confort
+**À :** Arnaud Louiset — Chef de projet Wizville & Communication digitale, HELP Confort
 **De :** Florian D'haillecourt — Dirigeant Dépan'Audo / Dépan'DK
 **Objet :** Accès Analyste page Facebook HELP Confort France — pour relayer automatiquement
 
@@ -44,6 +44,6 @@ Bien cordialement,
 
 **Florian D'haillecourt**
 Dépan'Audo · Dépan'DK
-HELP! Confort Saint-Omer & Dunkerque
+HELP Confort Saint-Omer & Dunkerque
 03 66 10 01 34 · florian.dhaillecourt@helpconfort.com
 depan59-62.fr

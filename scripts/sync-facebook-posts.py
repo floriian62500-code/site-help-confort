@@ -2,7 +2,7 @@
 """
 sync-facebook-posts.py
 ═══════════════════════════════════════════════════════════════════════
-Synchronise les publications Facebook → site HELP! Confort Saint-Omer.
+Synchronise les publications Facebook → site HELP Confort Saint-Omer.
 
 Pour chaque post de la page Facebook :
   1. Récupère le texte, la date, le lien permanent
@@ -227,7 +227,7 @@ def build_html(post_data):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{title_html} — HELP! Confort Saint-Omer</title>
+<title>{title_html} — HELP Confort Saint-Omer</title>
 <meta name="description" content="{html.escape(resume)}">
 <link rel="canonical" href="https://www.helpconfort-saintomer.fr/actualites/{post_data['slug']}.html">
 
@@ -284,7 +284,7 @@ def build_html(post_data):
 
 <nav class="actu-nav">
   <div class="container">
-    <a href="../index.html" class="home"><img src="../logo.svg" alt="HELP! Confort">HELP! Confort</a>
+    <a href="../index.html" class="home"><img src="../logo.svg" alt="HELP Confort">HELP Confort</a>
     <a href="../actualites.html">← Toutes les actualités</a>
   </div>
 </nav>
@@ -319,7 +319,7 @@ def build_html(post_data):
 </article>
 
 <footer class="actu-foot">
-  <p>© 2026 SARL Dépan'Audo — Agence officielle HELP! Confort · <a href="../mentions-legales.html">Mentions légales</a></p>
+  <p>© 2026 SARL Dépan'Audo — Agence officielle HELP Confort · <a href="../mentions-legales.html">Mentions légales</a></p>
 </footer>
 
 </body>

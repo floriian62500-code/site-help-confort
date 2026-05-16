@@ -75,7 +75,7 @@ Deno.serve(async (req: Request) => {
       return `--- Conversation #${i+1} (note: ${r.rating}/5, métier: ${r.metier || "?"}, topic: ${r.topic || "?"}) ---\n${msgs}\nNote admin: ${r.rating_notes || "(aucune)"}\n`;
     }).join("\n");
 
-    const userPrompt = `Tu es expert en prompt-engineering pour chatbots de service client BtoC. Voici ${rows.length} conversations du chatbot HELP! Confort (entreprise de dépannage habitat) qui ont été notées comme insatisfaisantes (≤${minRating}/5) par l'équipe admin.
+    const userPrompt = `Tu es expert en prompt-engineering pour chatbots de service client BtoC. Voici ${rows.length} conversations du chatbot HELP Confort (entreprise de dépannage habitat) qui ont été notées comme insatisfaisantes (≤${minRating}/5) par l'équipe admin.
 
 ${samples}
 

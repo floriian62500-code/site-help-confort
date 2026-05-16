@@ -61,7 +61,7 @@ serve(async (req) => {
     const FROM_EMAIL_FORCED = 'noreply@depan59-62.fr';
     const to = agenceCfg.email || cfg.leads_to || cfg.subscriptions_to || 'saint-omer@helpconfort.com';
     const cc = (cfg.leads_cc || cfg.subscriptions_cc || []) as string[];
-    const fromName = cfg.from_name || 'HELP! Confort — Site';
+    const fromName = cfg.from_name || 'HELP Confort — Site';
     const fromEmail = FROM_EMAIL_FORCED;
     const replyTo = lead.email || cfg.reply_to || 'saint-omer@helpconfort.com';
 
@@ -220,7 +220,7 @@ function buildEmailHtml(l: any, agence: string, urgent: boolean): string {
 </td></tr>
 
 <tr><td style="padding:18px 28px;background:#fafcfd;border-top:1px solid #E5EDF3;font-size:11px;color:#94a3b8">
-  HELP! Confort — Lead reçu le ${new Date(l.created_at).toLocaleString('fr-FR')}<br>
+  HELP Confort — Lead reçu le ${new Date(l.created_at).toLocaleString('fr-FR')}<br>
   Référence interne : ${l.id}
 </td></tr>
 </table></td></tr></table></body></html>`;

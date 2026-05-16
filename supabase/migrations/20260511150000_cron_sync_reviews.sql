@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════
--- HELP! Confort — Cron auto-sync des avis Google (toutes les 6h)
+-- HELP Confort — Cron auto-sync des avis Google (toutes les 6h)
 -- À exécuter UNE SEULE FOIS dans Supabase → SQL Editor
 -- ═══════════════════════════════════════════════════════════════
 -- Pré-requis : extensions pg_cron + pg_net activées

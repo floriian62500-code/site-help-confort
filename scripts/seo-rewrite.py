@@ -29,7 +29,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OVERRIDES = {
     # Index racine
     "index.html": {
-        "title": "Plombier, Chauffagiste, Électricien Saint-Omer | HELP! Confort",
+        "title": "Plombier, Chauffagiste, Électricien Saint-Omer | HELP Confort",
         # 65c, garde mots-clés + marque
         "desc": "Dépannage 7j/7 plomberie, chauffage, électricité, serrurerie à Saint-Omer & Dunkerque. 4,7/5 sur 343 avis. Devis gratuit au 03 66 10 01 34.",
         # 152c
@@ -37,19 +37,19 @@ OVERRIDES = {
 
     # Pages métiers
     "chauffagiste-saint-omer.html": {
-        "title": "Chauffagiste Saint-Omer — Dépannage Chaudière | HELP! Confort",
+        "title": "Chauffagiste Saint-Omer — Dépannage Chaudière | HELP Confort",
         # 64c
         "desc": "Chauffagiste à Saint-Omer : dépannage chaudière, entretien gaz/fioul, désembouage. Intervention 7j/7. Devis gratuit au 03 66 10 01 34.",
         # 138c
     },
     "travaux-saint-omer.html": {
-        "title": "Travaux Saint-Omer — Rénovation, Menuiserie, Volets | HELP! Confort",
+        "title": "Travaux Saint-Omer — Rénovation, Menuiserie, Volets | HELP Confort",
         # 67c
         "desc": "Rénovation, menuiserie, volets, adaptation PMR à Saint-Omer & Dunkerque. Un seul interlocuteur pour tous vos travaux. Devis gratuit.",
         # 134c
     },
     "contrats-entretien.html": {
-        "title": "Contrats d'entretien chaudière Saint-Omer | HELP! Confort",
+        "title": "Contrats d'entretien chaudière Saint-Omer | HELP Confort",
         # 58c
         "desc": "Contrats d'entretien chaudière gaz, fioul et adoucisseur dès 9 €/mois. Visite annuelle, dépannage prioritaire. Saint-Omer & Dunkerque.",
         # 137c
@@ -57,43 +57,43 @@ OVERRIDES = {
 
     # Pages dépannage par ville
     "depannage-saint-omer.html": {
-        "title": "Dépannage Saint-Omer 7j/7 — Plombier, Chauffage | HELP! Confort",
+        "title": "Dépannage Saint-Omer 7j/7 — Plombier, Chauffage | HELP Confort",
         # 65c
         "desc": "Dépannage urgent à Saint-Omer : plomberie, chauffage, électricité, serrurerie. Intervention rapide 7j/7. 4,7/5 sur 343 avis. 03 66 10 01 34.",
         # 145c
     },
     "depannage-dunkerque.html": {
-        "title": "Dépannage Dunkerque 7j/7 — Plomberie, Chauffage | HELP! Confort",
+        "title": "Dépannage Dunkerque 7j/7 — Plomberie, Chauffage | HELP Confort",
         # 65c
         "desc": "Dépannage à Dunkerque : plombier, chauffagiste, électricien, serrurier. Intervention rapide 7j/7. 4,7/5 sur 343 avis. 03 66 10 01 34.",
         # 139c
     },
     "depannage-arques.html": {
-        "title": "Dépannage Arques (62510) — Plomberie, Chauffage | HELP! Confort",
+        "title": "Dépannage Arques (62510) — Plomberie, Chauffage | HELP Confort",
         # 65c
         "desc": "Dépannage à Arques (62510) : plomberie, chauffage, électricité, serrurerie. À 5 km de Saint-Omer. Devis gratuit au 03 66 10 01 34.",
         # 135c
     },
     "depannage-bergues.html": {
-        "title": "Dépannage Bergues (59380) — Plomberie, Chauffage | HELP! Confort",
+        "title": "Dépannage Bergues (59380) — Plomberie, Chauffage | HELP Confort",
         # 65c
         "desc": "Dépannage à Bergues (59380) : plomberie, chauffage, électricité, serrurerie. À 15 km de Dunkerque. Devis gratuit au 03 66 10 01 34.",
         # 135c
     },
     "depannage-gravelines.html": {
-        "title": "Dépannage Gravelines (59820) — Plomberie, Chauffage | HELP! Confort",
+        "title": "Dépannage Gravelines (59820) — Plomberie, Chauffage | HELP Confort",
         # 68c
         "desc": "Dépannage à Gravelines (59820) : plomberie, chauffage, électricité. À 25 km de Dunkerque. 4,7/5 sur 343 avis. 03 66 10 01 34.",
         # 132c
     },
     "depannage-longuenesse.html": {
-        "title": "Dépannage Longuenesse (62219) — Plombier, Chauffage | HELP! Confort",
+        "title": "Dépannage Longuenesse (62219) — Plombier, Chauffage | HELP Confort",
         # 69c (limite)
         "desc": "Dépannage à Longuenesse (62219) : plomberie, chauffage, électricité, serrurerie. À 3 km de Saint-Omer. Devis gratuit au 03 66 10 01 34.",
         # 141c
     },
     "depannage-saint-martin-lez-tatinghem.html": {
-        "title": "Dépannage Saint-Martin-lez-Tatinghem (62500) | HELP! Confort",
+        "title": "Dépannage Saint-Martin-lez-Tatinghem (62500) | HELP Confort",
         # 60c
         "desc": "Dépannage Saint-Martin-lez-Tatinghem : plombier, chauffagiste, électricien. À 2 km de Saint-Omer. Intervention rapide 7j/7. 03 66 10 01 34.",
         # 142c
@@ -101,43 +101,43 @@ OVERRIDES = {
 
     # Pages publiques
     "actualites.html": {
-        "title": "Actualités HELP! Confort Saint-Omer — Conseils & Infos",
+        "title": "Actualités HELP Confort Saint-Omer — Conseils & Infos",
         # 56c
-        "desc": "Toutes les actualités de HELP! Confort : nos conseils saisonniers, interventions récentes et nouveautés sur Saint-Omer & Dunkerque.",
+        "desc": "Toutes les actualités de HELP Confort : nos conseils saisonniers, interventions récentes et nouveautés sur Saint-Omer & Dunkerque.",
         # 135c
     },
     "realisations.html": {
-        "title": "Nos réalisations — Chantiers Plomberie, Chauffage | HELP! Confort",
+        "title": "Nos réalisations — Chantiers Plomberie, Chauffage | HELP Confort",
         # 67c
         "desc": "Découvrez nos chantiers récents à Saint-Omer & Dunkerque : plomberie, chauffage, vitrerie, rénovation. Photos avant/après et témoignages.",
         # 142c
     },
     "carrieres.html": {
-        "title": "Recrutement — Rejoignez HELP! Confort Saint-Omer",
+        "title": "Recrutement — Rejoignez HELP Confort Saint-Omer",
         # 49c
-        "desc": "HELP! Confort recrute plombiers, chauffagistes, électriciens à Saint-Omer & Dunkerque. CDI, équipe locale, formation continue. Rejoignez-nous.",
+        "desc": "HELP Confort recrute plombiers, chauffagistes, électriciens à Saint-Omer & Dunkerque. CDI, équipe locale, formation continue. Rejoignez-nous.",
         # 145c
     },
     "pro.html": {
-        "title": "Espace Pro — Assurances, Syndics, Bailleurs | HELP! Confort",
+        "title": "Espace Pro — Assurances, Syndics, Bailleurs | HELP Confort",
         # 60c
         "desc": "Solutions pro pour assurances, syndics, bailleurs et collectivités : interventions multi-sites, reporting, conventions. 4,7/5 sur 343 avis.",
         # 145c
     },
     "sinistres.html": {
-        "title": "Gestion sinistres — Interventions assurance | HELP! Confort",
+        "title": "Gestion sinistres — Interventions assurance | HELP Confort",
         # 60c
         "desc": "Intervention rapide après sinistre (dégât des eaux, vol, incendie) : devis, photos, rapport pour votre assurance. Saint-Omer & Dunkerque.",
         # 140c
     },
     "a-propos.html": {
-        "title": "À propos — HELP! Confort Saint-Omer & Dunkerque",
-        "desc": "HELP! Confort, SARL Dépan'Audo : un réseau local de plombiers, chauffagistes, électriciens à Saint-Omer & Dunkerque. 343 avis 4,7/5.",
+        "title": "À propos — HELP Confort Saint-Omer & Dunkerque",
+        "desc": "HELP Confort, SARL Dépan'Audo : un réseau local de plombiers, chauffagistes, électriciens à Saint-Omer & Dunkerque. 343 avis 4,7/5.",
         # 132c
     },
     "guides.html": {
         "title": "Guides pratiques — Plomberie, Chauffage, Électricité",
-        "desc": "Guides HELP! Confort : entretien chaudière, fuite d'eau, mise aux normes électriques, adaptation PMR. Conseils d'experts à Saint-Omer.",
+        "desc": "Guides HELP Confort : entretien chaudière, fuite d'eau, mise aux normes électriques, adaptation PMR. Conseils d'experts à Saint-Omer.",
         # 137c
     },
     "processus.html": {
@@ -153,7 +153,7 @@ OVERRIDES = {
 }
 
 # Suffixe marque pour actualités
-ACTU_SUFFIX = " — HELP! Confort"
+ACTU_SUFFIX = " — HELP Confort"
 ACTU_TITLE_MAX = 65   # max final (incluant suffix)
 ACTU_DESC_MAX = 155
 
