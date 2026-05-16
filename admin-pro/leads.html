@@ -5,7 +5,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Demandes clients · Back-Office HELP! Confort</title>
+<title>Demandes clients · Back-Office HELP Confort</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/admin.css">
 <style>
@@ -771,7 +771,7 @@ let _filterStatusOverride = null;
     <div style="font-size:11px;color:#64748b">Demande reçue le ${fmtDate(l.created_at)} · Statut : <span class="badge ${l.status==='gagne'?'success':l.status==='perdu'?'danger':l.status==='nouveau'?'warning':''}">${STATUS_LABELS[l.status] || l.status}</span></div>
   </div>
   <div class="header-right">
-    <div style="font-size:14px;font-weight:800;color:#0A1428">HELP! Confort</div>
+    <div style="font-size:14px;font-weight:800;color:#0A1428">HELP Confort</div>
     <div>SARL Dépannage 59-62</div>
     <div>Saint-Omer · Dunkerque</div>
     <div>03 66 10 01 34 · saint-omer@helpconfort.com</div>
@@ -832,7 +832,7 @@ ${l.source_page ? `<div class="row"><strong>Page d'origine</strong><span style="
 ${l.assigned_to ? `<div class="row"><strong>Assigné à</strong><span>${escapeHtml(l.assigned_to)}</span></div>` : ''}
 
 <div class="footer">
-  Document généré automatiquement le ${new Date().toLocaleString('fr-FR')} depuis le back-office HELP! Confort · depan59-62.fr<br>
+  Document généré automatiquement le ${new Date().toLocaleString('fr-FR')} depuis le back-office HELP Confort · depan59-62.fr<br>
   SARL Dépannage 59-62 — RCS Saint-Omer
 </div>
 
