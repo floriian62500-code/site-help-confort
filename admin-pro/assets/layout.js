@@ -272,25 +272,29 @@ window.HCLayout = (function() {
     return html;
   }
 
-  // Activate module switcher (click sur Comm/RH/Outils → change le module et re-render)
+  // Activate module switcher — EVENT DELEGATION (robust to re-renders)
+  // Listener attaché 1 SEULE FOIS au document. Survit à tous les re-renders.
+  let _moduleSwitcherBound = false;
   function setupModuleSwitcher() {
-    document.querySelectorAll('.admin-module-switcher [data-module]').forEach(btn => {
-      if (btn.dataset.bound === '1') return;
-      btn.dataset.bound = '1';
-      btn.addEventListener('click', () => {
-        const m = btn.dataset.module;
-        setActiveModule(m);
-        // Re-render la sidebar avec le nouveau module
-        const aside = document.querySelector('.admin-sidebar');
-        if (aside) {
-          const activePage = aside.dataset.activePage || 'dashboard';
-          aside.innerHTML = sidebarHTML(activePage);
-          aside.dataset.activeModule = m;
-          setupSidebarAccordion();
-          setupModuleSwitcher();
-        }
-      });
-    });
+    if (_moduleSwitcherBound) return;
+    _moduleSwitcherBound = true;
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.admin-module-switcher [data-module]');
+      if (!btn) return;
+      const m = btn.dataset.module;
+      if (!m || !MODULES[m]) return;
+      e.preventDefault();
+      e.stopPropagation();
+      setActiveModule(m);
+      const aside = document.querySelector('.admin-sidebar');
+      if (aside) {
+        const activePage = aside.dataset.activePage || 'dashboard';
+        aside.innerHTML = sidebarHTML(activePage);
+        aside.dataset.activeModule = m;
+        setupSidebarAccordion();
+        // pas besoin de re-bind : listener est au document
+      }
+    }, true); // capture phase pour intercepter avant tout autre handler
   }
 
   // Activate accordion toggle behaviour on the just-rendered sidebar.
