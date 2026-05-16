@@ -1264,6 +1264,13 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
  }
  .hc-resa-sides-row .hc-side-real{border-top:3px solid #FF6B1A}
  .hc-resa-sides-row .hc-side-news{border-top:3px solid #0DA0CF}
+ /* Fix visuel : dans les bandeaux côte-à-côte, l'overflow:hidden de l'aside
+    coupait la flèche prev/next positionnée à -24px et donnait l'impression
+    d'une carte rognée. On repositionne les flèches À L'INTÉRIEUR du track
+    (en superposition sur les cards) avec un fond opaque pour rester lisibles. */
+ .hc-resa-sides-row .hc-mini-prev{left:8px !important}
+ .hc-resa-sides-row .hc-mini-next{right:8px !important}
+ .hc-resa-sides-row .hc-mini-arrow{width:40px !important;height:40px !important;background:rgba(255,255,255,.96) !important;backdrop-filter:blur(4px);box-shadow:0 4px 14px rgba(10,20,40,.18) !important}
  </style>
 
  
