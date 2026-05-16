@@ -1708,25 +1708,57 @@ function detectDetailedPresta() {
  return top[0] || { icon: '🛠️', label: 'Dépannage à diagnostiquer sur place', metier: '—' };
 }
 
+// État pour la recherche / mode "tout voir"
+var prestaSearchState = { query:'', showAll:false };
+
+function normaliseStr(s){
+  return (s||'').toString().toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g,'')
+    .replace(/[^a-z0-9 ]+/g,' ').trim();
+}
+
 // Rend les cards de proposition + sélection
 function renderPrestaProposals() {
  var container = document.getElementById('presta-proposals');
  if (!container) return;
- var proposals = proposePrestations();
+ var emptyMsg = document.getElementById('resa-presta-empty');
+
+ // Sélection des prestations à afficher
+ var proposals;
+ if (prestaSearchState.query) {
+   // Recherche : filtre dans toutes les prestations (sauf placeholders quote-only)
+   var q = normaliseStr(prestaSearchState.query);
+   proposals = ALL_PRESTAS.filter(function(p){
+     if (p.id === 'p-other') return false;
+     var hay = normaliseStr(p.label + ' ' + p.metier + ' ' + (p.slug||''));
+     return hay.indexOf(q) >= 0;
+   });
+ } else if (prestaSearchState.showAll) {
+   // Mode "tout voir" : toutes les prestations (sauf placeholders)
+   proposals = ALL_PRESTAS.filter(function(p){ return p.id !== 'p-other'; });
+ } else {
+   // Mode normal : propositions filtrées par métier + match desc
+   proposals = proposePrestations();
+ }
+
+ if (emptyMsg) emptyMsg.style.display = proposals.length === 0 ? '' : 'none';
+
  var html = proposals.map(function(p, idx){
- var sel = (idx === 0) ? 'pp-card pp-selected' : 'pp-card';
+ var sel = (idx === 0 && !prestaSearchState.query && !prestaSearchState.showAll) ? 'pp-card pp-selected' : 'pp-card';
  return '<button type="button" class="' + sel + '" data-presta-id="' + p.id + '">' +
  '<span class="pp-icon">' + p.icon + '</span>' +
  '<span class="pp-label">' + p.label + '</span>' +
- '<span class="pp-metier">' + p.metier + '</span>' +
+ '<span class="pp-metier">' + p.metier + (p.price ? ' · ' + p.price + ' € TTC' : ' · sur devis') + '</span>' +
  '</button>';
  }).join('');
- // Bouton "Autre"
- html += '<button type="button" class="pp-card pp-other" data-presta-id="__other__">' +
- '<span class="pp-icon">🔎</span>' +
- '<span class="pp-label">Autre prestation</span>' +
- '<span class="pp-metier">Voir toute la liste</span>' +
- '</button>';
+ // Bouton "Autre" seulement en mode normal
+ if (!prestaSearchState.query && !prestaSearchState.showAll) {
+   html += '<button type="button" class="pp-card pp-other" data-presta-id="__other__">' +
+   '<span class="pp-icon">🔎</span>' +
+   '<span class="pp-label">Autre prestation</span>' +
+   '<span class="pp-metier">Voir toute la liste</span>' +
+   '</button>';
+ }
  container.innerHTML = html;
 
  // Sélection de la 1ère par défaut
@@ -1863,8 +1895,34 @@ if (sug && sug.quote) {
  priceEl.textContent = 'Sur devis';
 }
 simpleBlock.hidden = false;
+// Reset recherche/showAll au passage à l'étape 4
+prestaSearchState = { query:'', showAll:false };
+var searchInput = document.getElementById('resa-presta-search');
+if (searchInput) searchInput.value = '';
+var toggleBtn = document.getElementById('resa-toggle-all');
+if (toggleBtn) toggleBtn.textContent = 'Tout voir';
 // Génère les cards de proposition de prestation
 renderPrestaProposals();
+// Branche les listeners (idempotent : seule la 1ère fois ajoute)
+if (searchInput && !searchInput.dataset.hcInit) {
+  searchInput.dataset.hcInit = '1';
+  searchInput.addEventListener('input', function(e){
+    prestaSearchState.query = e.target.value.trim();
+    prestaSearchState.showAll = false;
+    if (toggleBtn) toggleBtn.textContent = 'Tout voir';
+    renderPrestaProposals();
+  });
+}
+if (toggleBtn && !toggleBtn.dataset.hcInit) {
+  toggleBtn.dataset.hcInit = '1';
+  toggleBtn.addEventListener('click', function(){
+    prestaSearchState.showAll = !prestaSearchState.showAll;
+    prestaSearchState.query = '';
+    if (searchInput) searchInput.value = '';
+    toggleBtn.textContent = prestaSearchState.showAll ? 'Replier' : 'Tout voir';
+    renderPrestaProposals();
+  });
+}
 } else {
 document.getElementById('resa-presta-name-c').textContent = presta.label;
 document.getElementById('resa-agence-name-c').textContent = detectAgence(state.cp);
