@@ -610,24 +610,55 @@
               </div>
             </div>` : ''}
             ${ga4TopCities.length ? `<div style="padding:18px;background:#fff;border:1px solid var(--ink-100);border-radius:12px">
-              <h3 style="margin:0 0 12px;font-size:.96rem;font-weight:800;color:#0A1428">📍 Top villes</h3>
-              <div style="display:flex;flex-direction:column;gap:8px">
-                ${ga4TopCities.slice(0,6).map(ct => {
+              <h3 style="margin:0 0 12px;font-size:.96rem;font-weight:800;color:#0A1428;display:flex;align-items:center;justify-content:space-between">
+                <span>📍 Top villes</span>
+                <span style="font-size:.66rem;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.04em">Zones service</span>
+              </h3>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                ${ga4TopCities.slice(0,8).map((ct, i) => {
                   const total = ga4TopCities[0]?.sessions || 1;
                   const pct = (ct.sessions/total*100).toFixed(0);
+                  // Détection agence — Saint-Omer/Audo vs Dunkerque
+                  const audo = ['saint-omer','arques','longuenesse','tatinghem','wizernes','blendecques','aire-sur-la-lys','lumbres','saint-martin-lez-tatinghem'];
+                  const dk = ['dunkerque','grande-synthe','coudekerque-branche','téteghem','cappelle-la-grande','saint-pol-sur-mer','gravelines','bergues','calais','boulogne-sur-mer'];
+                  const cname = (ct.city||'').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,'');
+                  let badge = '';
+                  if (audo.some(v => cname.includes(v))) badge = '<span style="background:rgba(13,160,207,.12);color:#0884AE;padding:2px 7px;border-radius:999px;font-size:.64rem;font-weight:800;letter-spacing:.02em">SO</span>';
+                  else if (dk.some(v => cname.includes(v))) badge = '<span style="background:rgba(255,107,26,.12);color:#C2410C;padding:2px 7px;border-radius:999px;font-size:.64rem;font-weight:800;letter-spacing:.02em">DK</span>';
+                  else if (cname === '(not set)' || cname === '(inconnu)') badge = '<span style="background:#f1f5f9;color:#94a3b8;padding:2px 7px;border-radius:999px;font-size:.64rem;font-weight:700">?</span>';
+                  const medal = i === 0 ? '🥇 ' : i === 1 ? '🥈 ' : i === 2 ? '🥉 ' : '';
                   return `<div style="display:flex;align-items:center;gap:10px">
                     <div style="flex:1">
-                      <div style="display:flex;justify-content:space-between;font-size:.84rem;font-weight:700">
-                        <span>${escapeHtml(ct.city)}</span>
-                        <span>${ct.sessions}</span>
+                      <div style="display:flex;align-items:center;gap:6px;font-size:.84rem;font-weight:700">
+                        <span style="flex:1">${medal}${escapeHtml(ct.city||'(inconnu)')}</span>
+                        ${badge}
+                        <span style="color:#0A1428;font-variant-numeric:tabular-nums">${ct.sessions}</span>
                       </div>
-                      <div style="position:relative;height:4px;background:#f1f5f9;border-radius:2px;margin-top:4px;overflow:hidden">
-                        <div style="position:absolute;left:0;top:0;bottom:0;width:${pct}%;background:#FF6B1A;border-radius:2px"></div>
+                      <div style="position:relative;height:5px;background:#f1f5f9;border-radius:3px;margin-top:5px;overflow:hidden">
+                        <div style="position:absolute;left:0;top:0;bottom:0;width:${pct}%;background:linear-gradient(90deg,#FF6B1A,#FFB400);border-radius:3px;transition:width .4s"></div>
                       </div>
                     </div>
                   </div>`;
                 }).join('')}
               </div>
+              ${(() => {
+                const audo = ['saint-omer','arques','longuenesse','tatinghem','wizernes','blendecques','aire-sur-la-lys','lumbres','saint-martin-lez-tatinghem'];
+                const dk = ['dunkerque','grande-synthe','coudekerque-branche','téteghem','cappelle-la-grande','saint-pol-sur-mer','gravelines','bergues','calais','boulogne-sur-mer'];
+                const sumAudo = ga4TopCities.reduce((s,c) => { const n=(c.city||'').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,''); return s + (audo.some(v=>n.includes(v))?c.sessions:0); }, 0);
+                const sumDk = ga4TopCities.reduce((s,c) => { const n=(c.city||'').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,''); return s + (dk.some(v=>n.includes(v))?c.sessions:0); }, 0);
+                const tot = sumAudo + sumDk;
+                if (!tot) return '';
+                const pctAudo = Math.round(sumAudo/tot*100);
+                const pctDk = 100 - pctAudo;
+                return `<div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--ink-100);font-size:.74rem;color:#64748b">
+                  <div style="display:flex;justify-content:space-between;margin-bottom:5px;font-weight:700;color:#0A1428"><span>Répartition agences</span><span>${tot} sessions</span></div>
+                  <div style="display:flex;height:8px;border-radius:4px;overflow:hidden;background:#f1f5f9">
+                    <div style="background:linear-gradient(90deg,#0DA0CF,#0884AE);width:${pctAudo}%" title="Saint-Omer ${pctAudo}%"></div>
+                    <div style="background:linear-gradient(90deg,#FFB400,#FF6B1A);width:${pctDk}%" title="Dunkerque ${pctDk}%"></div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;margin-top:5px"><span style="color:#0884AE;font-weight:700">🔵 Saint-Omer ${pctAudo}%</span><span style="color:#C2410C;font-weight:700">🟠 Dunkerque ${pctDk}%</span></div>
+                </div>`;
+              })()}
             </div>` : ''}
           </div>` : ''}
 
