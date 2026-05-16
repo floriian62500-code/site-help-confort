@@ -1282,7 +1282,9 @@ var box=track.closest('.hc-mini-car');
 var prev=box.querySelector('.hc-mini-prev');
 var next=box.querySelector('.hc-mini-next');
 // Pattern pour détecter un CHANTIER (faux article) à exclure du flux actu
-var CHANTIER_RE=/^(remplacement|pose|installation|dépose|réparation|intervention|chantier|suite à|votre [a-zéèà]+ (est|a) (cassé|usé|abîmé|défectueux|fissuré|terni))/i;
+// Filtre TRÈS large : exclut TOUT titre qui ressemble à un compte-rendu de chantier FB
+var CHANTIER_KEYWORDS=/remplacement|installation|d[ée]pose|r[ée]paration|intervention|chantier|votre [a-zéèàïêç' ]+(?:est|a|sont|ont) (?:cass|ab[îi]m|d[ée]fect|fissur|us[ée]|terni|endommag)|panneau pvc|bris de glace|votre [a-zéèàïêç' ]+pvc|votre soupape|votre manom[èe]tre|votre mitigeur|votre tablier|votre cumulus|votre chaudi[èe]re/i;
+var CHANTIER_RE=CHANTIER_KEYWORDS;
 fetch(jsonUrl+'?v='+Date.now()).then(r=>r.ok?r.json():Promise.reject()).then(list=>{
 // Si on charge actualites, on EXCLUT les items dont le titre ressemble à un chantier (importés FB)
 var isActu = trackId.indexOf('actu') >= 0;
