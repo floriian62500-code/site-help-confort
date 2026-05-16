@@ -320,53 +320,173 @@
     + renderMetierTable("Serrurerie",  "🔒", (liveData?.serrurerie?.length ? liveData.serrurerie : DATA.serrurerie), false)
     + renderMetierTable("Vitrerie",    "🪟", (liveData?.vitrerie?.length ? liveData.vitrerie : DATA.vitrerie),       false);
 
-  // Pane Horaire
-  const horaireRows = DATA.horaire.map(it => `
-    <tr>
-      <td class="prest-name">${it.name}</td>
-      <td class="num">${fmt(it.ht)} <span style="font-weight:500;color:#64748b">${it.unit || ''}</span></td>
-      <td class="num ttc">${fmt(it.ttc)} <span style="font-weight:500;color:#64748b">${it.unit || ''}</span></td>
-    </tr>`).join('');
-  document.getElementById('paneHoraire').innerHTML = `
-    <div class="tarif-section">
-      <h2><span class="emoji">🕐</span>Tarif horaire universel (tous métiers) <span class="badge-count">${DATA.horaire.length} lignes</span></h2>
-      <table class="tarif-table">
-        <thead><tr>
-          <th>Type d'intervention</th>
-          <th style="text-align:right">Prix HT</th>
-          <th style="text-align:right">Prix TTC</th>
-        </tr></thead>
-        <tbody>${horaireRows}</tbody>
-      </table>
-    </div>`;
+  // ═══ MODE ÉDITION : charge depuis app_settings.pricing, fallback DATA ═══
+  // Tarif horaire + Contrats sont stockés en base et éditables (CRUD complet)
+  let pricingData = null;
+  try {
+    const { data: pcfg } = await sb.from('app_settings').select('value').eq('key','pricing').maybeSingle();
+    pricingData = pcfg?.value || null;
+  } catch(e) { console.warn('pricing load:', e.message); }
+  // Init : si pas de pricing en base, on initialise avec DATA hardcodé + tarifs DK
+  if (!pricingData || !pricingData.horaire) {
+    pricingData = {
+      horaire: [
+        { id: 'mo-so',  name: "Main d'œuvre tous métiers (Saint-Omer)",     ht: 53, ttc: 58, unit: "/h" },
+        { id: 'mo-dk',  name: "Main d'œuvre tous métiers (Dunkerque)",      ht: 55, ttc: 60.50, unit: "/h" },
+        { id: 'mo-urg', name: "Main d'œuvre urgence (intervention <1h)",    ht: 63, ttc: 69, unit: "/h" },
+        { id: 'mo-we',  name: "Main d'œuvre week-end",                      ht: 80, ttc: 88, unit: "/h" },
+        { id: 'dep-so', name: "Déplacement audomarois",                     ht: 45, ttc: 50, unit: "forfait" },
+        { id: 'dep-dk', name: "Déplacement Dunkerque",                      ht: 48, ttc: 52.80, unit: "forfait" },
+        { id: 'frais',  name: "Frais de dossier (systématique)",            ht: 5,  ttc: 5.50, unit: "" },
+        { id: 'dechet', name: "Traitement des déchets (% obligatoire)",     ht: null, ttc: null, unit: "1 % du HT" }
+      ],
+      contrats: DATA.contrats
+    };
+  }
 
-  // Pane Contrats
-  const contratRows = DATA.contrats.map(c => `
-    <tr>
-      <td><span class="formula-name formula-${c.cls}"><span class="formula-dot"></span>${c.formula}</span></td>
-      <td class="num">${fmt(c.gaz.mois)}/mois</td>
-      <td class="num ttc">${fmt(c.gaz.an)}/an</td>
-      <td class="num">${fmt(c.fioul.mois)}/mois</td>
-      <td class="num ttc">${fmt(c.fioul.an)}/an</td>
-    </tr>`).join('');
-  document.getElementById('paneContrats').innerHTML = `
-    <div class="tarif-section">
-      <h2><span class="emoji">📝</span>Contrats annuels d'entretien chaudière <span class="badge-count">3 formules</span></h2>
-      <table class="tarif-table">
-        <thead><tr>
-          <th>Formule</th>
-          <th colspan="2" style="text-align:center;border-left:1px solid var(--ink-100)">Gaz</th>
-          <th colspan="2" style="text-align:center;border-left:1px solid var(--ink-100)">Fioul</th>
-        </tr><tr>
-          <th></th>
-          <th style="text-align:right;border-left:1px solid var(--ink-100)">Mois</th>
-          <th style="text-align:right">An</th>
-          <th style="text-align:right;border-left:1px solid var(--ink-100)">Mois</th>
-          <th style="text-align:right">An</th>
-        </tr></thead>
-        <tbody>${contratRows}</tbody>
-      </table>
-    </div>`;
+  // Helper : save dans Supabase
+  async function savePricing(showToast=true){
+    try {
+      const { error } = await sb.from('app_settings').upsert({ key:'pricing', value: pricingData, updated_by: session.email }, { onConflict:'key' });
+      if (error) throw error;
+      if (showToast && window.toast) toast('✓ Tarifs sauvegardés', 'ok');
+      document.getElementById('lastUpdate').textContent = new Date().toLocaleString('fr-FR');
+    } catch(e) {
+      alert('❌ Erreur sauvegarde : ' + e.message);
+    }
+  }
+
+  // ───── PANE HORAIRE — éditable ─────
+  function renderHoraire(){
+    const rows = pricingData.horaire.map((it, idx) => `
+      <tr data-idx="${idx}">
+        <td><input class="t-edit" data-field="name" value="${escAttr(it.name)}" style="width:100%;border:none;background:transparent;font-weight:600;color:#0A1428;padding:6px 4px;border-radius:4px" placeholder="Nom de la prestation…"></td>
+        <td style="width:130px"><input class="t-edit" data-field="ht" type="number" step="0.01" value="${it.ht ?? ''}" style="width:80px;text-align:right;border:none;background:transparent;font-weight:600;color:#0A1428;padding:6px 4px;border-radius:4px" placeholder="—"></td>
+        <td style="width:130px"><input class="t-edit" data-field="ttc" type="number" step="0.01" value="${it.ttc ?? ''}" style="width:80px;text-align:right;border:none;background:transparent;font-weight:700;color:#15803D;padding:6px 4px;border-radius:4px" placeholder="—"></td>
+        <td style="width:100px"><input class="t-edit" data-field="unit" value="${escAttr(it.unit||'')}" style="width:90px;border:none;background:transparent;color:#64748b;font-size:.82rem;padding:6px 4px;border-radius:4px" placeholder="/h, forfait…"></td>
+        <td style="width:40px;text-align:center"><button class="t-del" data-idx="${idx}" title="Supprimer cette ligne" style="background:transparent;border:none;cursor:pointer;color:#dc2626;font-size:1rem;padding:4px 6px;border-radius:5px">🗑</button></td>
+      </tr>`).join('');
+    document.getElementById('paneHoraire').innerHTML = `
+      <div class="tarif-section">
+        <h2><span class="emoji">🕐</span>Tarif horaire universel (tous métiers) <span class="badge-count">${pricingData.horaire.length} lignes</span></h2>
+        <div style="padding:14px 18px;background:linear-gradient(135deg,#EFF6FF,#fff);border-bottom:1px solid var(--ink-100);font-size:.84rem;color:#0A4F6E">💡 Click sur une cellule pour modifier · 🗑 pour supprimer · ➕ pour ajouter une ligne. Sauvegarde automatique en base.</div>
+        <table class="tarif-table">
+          <thead><tr>
+            <th>Type d'intervention</th>
+            <th style="text-align:right">Prix HT (€)</th>
+            <th style="text-align:right">Prix TTC (€)</th>
+            <th>Unité</th>
+            <th></th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+        <div style="padding:12px 18px;background:#FAFCFD;border-top:1px solid var(--ink-100);text-align:center">
+          <button id="btnAddHoraire" style="background:linear-gradient(135deg,#0DA0CF,#0884AE);color:#fff;border:none;padding:9px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.86rem">➕ Ajouter une ligne</button>
+        </div>
+      </div>`;
+    // Listeners
+    document.querySelectorAll('#paneHoraire .t-edit').forEach(inp => {
+      inp.addEventListener('focus', e => e.target.style.background = '#FFFBEB');
+      inp.addEventListener('blur',  async e => {
+        e.target.style.background = 'transparent';
+        const tr = e.target.closest('tr');
+        const idx = Number(tr.dataset.idx);
+        const field = e.target.dataset.field;
+        const val = (field === 'ht' || field === 'ttc') ? (e.target.value ? Number(e.target.value) : null) : e.target.value;
+        pricingData.horaire[idx][field] = val;
+        await savePricing();
+      });
+    });
+    document.querySelectorAll('#paneHoraire .t-del').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const idx = Number(btn.dataset.idx);
+        const name = pricingData.horaire[idx]?.name || 'cette ligne';
+        if (!confirm(`Supprimer "${name}" ?`)) return;
+        pricingData.horaire.splice(idx, 1);
+        await savePricing();
+        renderHoraire();
+      });
+    });
+    document.getElementById('btnAddHoraire').addEventListener('click', async () => {
+      pricingData.horaire.push({ id:'new-'+Date.now(), name:'Nouvelle prestation', ht: 0, ttc: 0, unit: '' });
+      await savePricing();
+      renderHoraire();
+    });
+  }
+  function escAttr(s){return String(s||'').replace(/"/g,'&quot;');}
+
+  // ───── PANE CONTRATS — éditable ─────
+  function renderContrats(){
+    const rows = pricingData.contrats.map((c, idx) => `
+      <tr data-idx="${idx}">
+        <td><input class="c-edit" data-field="formula" value="${escAttr(c.formula)}" style="width:100px;border:none;background:transparent;font-weight:700;color:#0A1428;padding:6px 4px;border-radius:4px"></td>
+        <td style="border-left:1px solid var(--ink-100)"><input class="c-edit" data-field="gaz.mois" type="number" step="0.01" value="${c.gaz?.mois ?? ''}" style="width:80px;text-align:right;border:none;background:transparent;font-weight:600;color:#0A1428;padding:6px 4px;border-radius:4px"></td>
+        <td><input class="c-edit" data-field="gaz.an" type="number" step="0.01" value="${c.gaz?.an ?? ''}" style="width:80px;text-align:right;border:none;background:transparent;font-weight:700;color:#15803D;padding:6px 4px;border-radius:4px"></td>
+        <td style="border-left:1px solid var(--ink-100)"><input class="c-edit" data-field="fioul.mois" type="number" step="0.01" value="${c.fioul?.mois ?? ''}" style="width:80px;text-align:right;border:none;background:transparent;font-weight:600;color:#0A1428;padding:6px 4px;border-radius:4px"></td>
+        <td><input class="c-edit" data-field="fioul.an" type="number" step="0.01" value="${c.fioul?.an ?? ''}" style="width:80px;text-align:right;border:none;background:transparent;font-weight:700;color:#15803D;padding:6px 4px;border-radius:4px"></td>
+        <td style="width:40px;text-align:center"><button class="c-del" data-idx="${idx}" title="Supprimer cette formule" style="background:transparent;border:none;cursor:pointer;color:#dc2626;font-size:1rem;padding:4px 6px;border-radius:5px">🗑</button></td>
+      </tr>`).join('');
+    document.getElementById('paneContrats').innerHTML = `
+      <div class="tarif-section">
+        <h2><span class="emoji">📝</span>Contrats annuels d'entretien chaudière <span class="badge-count">${pricingData.contrats.length} formule${pricingData.contrats.length>1?'s':''}</span></h2>
+        <div style="padding:14px 18px;background:linear-gradient(135deg,#EFF6FF,#fff);border-bottom:1px solid var(--ink-100);font-size:.84rem;color:#0A4F6E">💡 Click sur une cellule pour modifier · valeurs HT, attention. Sauvegarde auto.</div>
+        <table class="tarif-table">
+          <thead><tr>
+            <th>Formule</th>
+            <th colspan="2" style="text-align:center;border-left:1px solid var(--ink-100)">Gaz</th>
+            <th colspan="2" style="text-align:center;border-left:1px solid var(--ink-100)">Fioul</th>
+            <th></th>
+          </tr><tr>
+            <th></th>
+            <th style="text-align:right;border-left:1px solid var(--ink-100)">€/mois</th>
+            <th style="text-align:right">€/an</th>
+            <th style="text-align:right;border-left:1px solid var(--ink-100)">€/mois</th>
+            <th style="text-align:right">€/an</th>
+            <th></th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+        <div style="padding:12px 18px;background:#FAFCFD;border-top:1px solid var(--ink-100);text-align:center">
+          <button id="btnAddContrat" style="background:linear-gradient(135deg,#0DA0CF,#0884AE);color:#fff;border:none;padding:9px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.86rem">➕ Ajouter une formule</button>
+        </div>
+      </div>`;
+    document.querySelectorAll('#paneContrats .c-edit').forEach(inp => {
+      inp.addEventListener('focus', e => e.target.style.background = '#FFFBEB');
+      inp.addEventListener('blur', async e => {
+        e.target.style.background = 'transparent';
+        const tr = e.target.closest('tr');
+        const idx = Number(tr.dataset.idx);
+        const field = e.target.dataset.field;
+        const val = e.target.type === 'number' ? (e.target.value ? Number(e.target.value) : null) : e.target.value;
+        if (field.includes('.')) {
+          const [k1, k2] = field.split('.');
+          if (!pricingData.contrats[idx][k1]) pricingData.contrats[idx][k1] = {};
+          pricingData.contrats[idx][k1][k2] = val;
+        } else {
+          pricingData.contrats[idx][field] = val;
+        }
+        await savePricing();
+      });
+    });
+    document.querySelectorAll('#paneContrats .c-del').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const idx = Number(btn.dataset.idx);
+        const name = pricingData.contrats[idx]?.formula || 'cette formule';
+        if (!confirm(`Supprimer la formule "${name}" ?`)) return;
+        pricingData.contrats.splice(idx, 1);
+        await savePricing();
+        renderContrats();
+      });
+    });
+    document.getElementById('btnAddContrat').addEventListener('click', async () => {
+      pricingData.contrats.push({ formula:'Nouvelle formule', cls:'basic', gaz:{mois:0,an:0}, fioul:{mois:0,an:0} });
+      await savePricing();
+      renderContrats();
+    });
+  }
+
+  renderHoraire();
+  renderContrats();
 
   // Pane Devis-only
   const devisTags = DATA.devis.map(d => `<span class="devis-tag">${d}</span>`).join('');
