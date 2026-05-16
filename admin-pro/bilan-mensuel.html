@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Bilan mensuel · Back-Office HELP! Confort</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<link rel="manifest" href="/admin-pro/manifest.webmanifest">
+<meta name="theme-color" content="#0DA0CF">
+<style>
+  body{font-family:Inter,sans-serif;background:#FAFCFD;margin:0;padding:24px}
+  .wrap{max-width:1100px;margin:0 auto}
+  h1{font-size:1.6rem;margin:0 0 8px}
+  .sub{color:#64748b;margin-bottom:24px}
+  .month-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:22px}
+  .month-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;box-shadow:0 1px 2px rgba(11,18,32,.04)}
+  .month-card.current{border-color:#0DA0CF;background:linear-gradient(135deg,#EFF6FF,#fff)}
+  .month-card .lbl{font-size:.74rem;color:#64748b;font-weight:700;text-transform:uppercase}
+  .month-card .val{font-size:1.4rem;font-weight:900;color:#0A1428;margin:6px 0}
+  .month-card .meta{font-size:.78rem;color:#64748b}
+  .month-card.current .meta{color:#0DA0CF;font-weight:700}
+  a.back{color:#0DA0CF;text-decoration:none;font-size:.84rem;font-weight:600}
+  .row{display:grid;grid-template-columns:120px 1fr 100px;gap:10px;padding:10px 14px;border-bottom:1px solid #f1f5f9;align-items:center}
+  .row strong{color:#0A1428}
+  .row .bar-bg{height:14px;background:#f1f5f9;border-radius:7px;overflow:hidden;position:relative}
+  .row .bar{height:100%;background:linear-gradient(90deg,#0DA0CF,#0884AE);border-radius:7px;transition:width .3s}
+  .row .val{text-align:right;font-weight:700;font-size:.92rem}
+  .card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:0;margin-bottom:18px;overflow:hidden}
+  .card h3{margin:0;padding:14px 18px;background:linear-gradient(180deg,#FAFCFD,#fff);border-bottom:1px solid #e2e8f0;font-size:1rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Retour au dashboard</a>
+  <h1>📅 Bilan mensuel</h1>
+  <p class="sub">Vue agrégée sur 12 mois : leads, contrats, commandes, CA estimé. Permet de piloter sur l'année et identifier les tendances.</p>
+
+  <div id="content"><p style="color:#64748b;padding:40px;text-align:center">⏳ Chargement des données…</p></div>
+</div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script>
+(async function(){
+  const sb = await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+
+  // Charge toutes les données des 13 derniers mois (1 mois courant + 12 mois historiques)
+  const now = new Date();
+  const start13 = new Date(now.getFullYear(), now.getMonth() - 12, 1);
+
+  const [leadsRes, contractsRes, ordersRes] = await Promise.all([
+    sb.from('leads').select('created_at,estimated_value').gte('created_at', start13.toISOString()),
+    sb.from('contracts').select('created_at,monthly_amount').gte('created_at', start13.toISOString()),
+    sb.from('service_orders').select('created_at,price_ttc').gte('created_at', start13.toISOString())
+  ]);
+
+  const leads = leadsRes.data || [];
+  const contracts = contractsRes.data || [];
+  const orders = ordersRes.data || [];
+
+  // Group par mois (YYYY-MM)
+  const months = [];
+  for (let i = 12; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const key = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
+    const lbl = d.toLocaleDateString('fr-FR', { month:'short', year:'numeric' });
+    months.push({ key, lbl, date: d, leads:0, contracts:0, orders:0, ca:0 });
+  }
+  function monthKey(iso) {
+    const d = new Date(iso);
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
+  }
+  leads.forEach(l => { const m = months.find(x => x.key === monthKey(l.created_at)); if (m) m.leads++; });
+  contracts.forEach(ct => {
+    const m = months.find(x => x.key === monthKey(ct.created_at));
+    if (m) { m.contracts++; m.ca += (Number(ct.monthly_amount||0) * 12); }
+  });
+  orders.forEach(o => {
+    const m = months.find(x => x.key === monthKey(o.created_at));
+    if (m) { m.orders++; m.ca += Number(o.price_ttc||0); }
+  });
+
+  // Stats globales
+  const total = months.reduce((s,m) => ({
+    leads: s.leads + m.leads, contracts: s.contracts + m.contracts, orders: s.orders + m.orders, ca: s.ca + m.ca
+  }), { leads:0, contracts:0, orders:0, ca:0 });
+
+  // Max pour barres
+  const maxLeads = Math.max(1, ...months.map(m => m.leads));
+  const maxContracts = Math.max(1, ...months.map(m => m.contracts));
+  const maxCa = Math.max(1, ...months.map(m => m.ca));
+
+  const fmt = n => new Intl.NumberFormat('fr-FR').format(n);
+  const fmtEur = n => new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+
+  document.getElementById('content').innerHTML = `
+    <div class="month-grid">
+      <div class="month-card current">
+        <div class="lbl">12 derniers mois</div>
+        <div class="val">${fmt(total.leads)}</div>
+        <div class="meta">leads · ~${(total.leads/12).toFixed(1)} /mois</div>
+      </div>
+      <div class="month-card">
+        <div class="lbl">Contrats signés</div>
+        <div class="val">${fmt(total.contracts)}</div>
+        <div class="meta">contrats · ~${(total.contracts/12).toFixed(1)} /mois</div>
+      </div>
+      <div class="month-card">
+        <div class="lbl">Commandes</div>
+        <div class="val">${fmt(total.orders)}</div>
+        <div class="meta">commandes prestations</div>
+      </div>
+      <div class="month-card" style="background:linear-gradient(135deg,#F0FDF4,#fff);border-color:#22C55E">
+        <div class="lbl" style="color:#15803D">CA estimé 12 m</div>
+        <div class="val" style="color:#15803D">${fmtEur(total.ca)}</div>
+        <div class="meta" style="color:#22C55E">contrats × 12 + commandes</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>💬 Leads créés par mois</h3>
+      ${months.map(m => `<div class="row">
+        <strong>${m.lbl}</strong>
+        <div class="bar-bg"><div class="bar" style="width:${(m.leads/maxLeads*100).toFixed(1)}%"></div></div>
+        <div class="val">${m.leads}</div>
+      </div>`).join('')}
+    </div>
+
+    <div class="card">
+      <h3>📋 Contrats + Commandes par mois</h3>
+      ${months.map(m => {
+        const total = m.contracts + m.orders;
+        const max = Math.max(1, ...months.map(x => x.contracts + x.orders));
+        return `<div class="row">
+          <strong>${m.lbl}</strong>
+          <div class="bar-bg"><div class="bar" style="background:linear-gradient(90deg,#FFB400,#FF6B1A);width:${(total/max*100).toFixed(1)}%"></div></div>
+          <div class="val">${total} <small style="color:#64748b;font-weight:400">(${m.contracts}c · ${m.orders}o)</small></div>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div class="card">
+      <h3>💰 CA estimé par mois</h3>
+      ${months.map(m => `<div class="row">
+        <strong>${m.lbl}</strong>
+        <div class="bar-bg"><div class="bar" style="background:linear-gradient(90deg,#22C55E,#15803D);width:${(m.ca/maxCa*100).toFixed(1)}%"></div></div>
+        <div class="val">${fmtEur(m.ca)}</div>
+      </div>`).join('')}
+    </div>
+
+    <p style="text-align:center;color:#94a3b8;font-size:.78rem;margin-top:24px">💡 CA estimé = contrats actifs × 12 mois + commandes prestations payées (TTC). Mise à jour temps réel depuis Supabase.</p>
+  `;
+})();
+</script>
+</body>
+</html>
