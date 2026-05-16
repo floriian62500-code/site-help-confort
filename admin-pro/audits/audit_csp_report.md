@@ -1,6 +1,6 @@
 # 🛡️ Audit CSP whitelist — Sonde IA #41
 
-*Généré le 2026-05-15 13:09 — `admin-pro/audits/audit_csp.py`*
+*Généré le 2026-05-16 05:56 — `admin-pro/audits/audit_csp.py`*
 
 **Pages scannées** : 40
 **Hosts externes distincts détectés** : 7
@@ -11,8 +11,8 @@
 
 - **script-src** → 'self', 'unsafe-eval', 'unsafe-inline', https://cdn.jsdelivr.net, https://connect.facebook.net, https://unpkg.com, https://www.google-analytics.com, https://www.googletagmanager.com
 - **style-src** → 'self', 'unsafe-inline', https://fonts.googleapis.com, https://unpkg.com
-- **img-src** → 'self', blob:, data:, https:
-- **connect-src** → 'self', https://*.supabase.co, https://*.tile.openstreetmap.org, https://api-adresse.data.gouv.fr, https://api.anthropic.com, https://www.google-analytics.com
+- **img-src** → 'self', blob:, data:, https:, https://scontent-cdg2-1.xx.fbcdn.net, https://scontent.xx.fbcdn.net
+- **connect-src** → 'self', https://*.fbcdn.net, https://*.googleapis.com, https://*.supabase.co, https://*.tile.openstreetmap.org, https://api-adresse.data.gouv.fr, https://api.anthropic.com, https://googleapis.com, https://graph.facebook.com, https://www.google-analytics.com
 - **frame-src** → https://www.facebook.com, https://www.google.com, https://www.google.com/maps/, https://www.youtube.com
 - **font-src** → 'self', data:, https://fonts.gstatic.com
 - **default-src** → 'self'

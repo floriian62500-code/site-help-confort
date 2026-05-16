@@ -1,6 +1,6 @@
 # Audit script async/defer — Rapport
 
-_Généré le 2026-05-15 19:48_
+_Généré le 2026-05-16 05:56_
 
 ## Synthèse
 

@@ -1,10 +1,10 @@
 # 🤖 Audit robots.txt + sitemap.xml — P10
 
-*Généré le 2026-05-15 13:49 — `admin-pro/audits/audit_robots.py`*
+*Généré le 2026-05-16 05:56 — `admin-pro/audits/audit_robots.py`*
 
 **Findings totaux** : 1 (0 critical, 0 high, 1 med, 0 low)
-**Vérifications OK** : 5
-**Vérifications skipped** : 2
+**Vérifications OK** : 8
+**Vérifications skipped** : 0
 
 ## ✅ Vérifications réussies
 
@@ -13,8 +13,9 @@
 - ✅ 14 pages publiques principales autorisées
 - ✅ Sitemap référencé dans robots.txt : 1
 - ✅ sitemap.xml présent + bien formé (54 URLs)
-- ⏭️ /robots.txt test HTTP prod : SKIPPED (no network: URLError: <urlopen error Tunnel connection failed: 403 Forbi)
-- ⏭️ /sitemap.xml test HTTP prod : SKIPPED (no network: URLError: <urlopen error Tunnel connection failed: 403 Forbi)
+- ✅ /robots.txt → HTTP 200 en prod
+- ✅ /sitemap.xml → HTTP 200 en prod
+- ✅ sitemap.xml content-type OK (application/xml; charset=utf-8)
 
 ## 🚨 Findings
 
@@ -59,8 +60,8 @@ Disallow: /realisation.html?*
 
 ## 🌍 Tests HTTP prod
 
-- `/robots.txt` → status 0 content-type ``
-- `/sitemap.xml` → status 0 content-type ``
+- `/robots.txt` → status 200 content-type `text/plain; charset=utf-8`
+- `/sitemap.xml` → status 200 content-type `application/xml; charset=utf-8`
 
 ## 🛠️ Procédure
 
