@@ -406,11 +406,15 @@ if (document.fonts && document.fonts.ready) {
  <button class="real-filter" data-zone="Dunkerque">📍 Dunkerque</button>
  </div>
 
- <div class="real-grid" id="realGrid">
- <div class="real-empty" style="grid-column:1/-1">
+ <div class="ra-carousel" data-ra-car>
+ <button type="button" class="ra-car-arrow ra-car-prev" aria-label="Réalisations précédentes"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+ <div class="real-grid ra-car-track" id="realGrid">
+ <div class="real-empty" style="flex:1 0 100%">
  <h2>Chargement des réalisations…</h2>
  <p>Les chantiers publiés via le back-office <a href="admin/index.html" style="color:#FF6B1A;font-weight:700">/admin/</a> apparaîtront ici.</p>
  </div>
+ </div>
+ <button type="button" class="ra-car-arrow ra-car-next" aria-label="Réalisations suivantes"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
  </div>
 
  </div>

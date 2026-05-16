@@ -81,6 +81,7 @@ window.HCLayout = (function() {
         { id:'sync-fb', href:'sync-fb.html', label:'Sync Facebook', icon:'<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>' },
         { id:'sync-google-reviews', href:'sync-google-reviews.html', label:'Sync avis Google', icon:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>' },
         { id:'sync-ga4', href:'sync-ga4.html', label:'Test GA4', icon:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>' },
+        { id:'oauth-ga4', href:'oauth-ga4.html', label:'OAuth GA4 (plan B)', icon:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>' },
         { id:'seed-catalog', href:'seed-catalog.html', label:'Seed catalogue', icon:'<path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93 4.93 19.07"/>' },
         { id:'purge-tests', href:'purge-tests.html', label:'Purge tests', icon:'<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>' }
       ]
