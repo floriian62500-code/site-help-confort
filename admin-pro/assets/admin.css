@@ -1093,20 +1093,21 @@ button[title], a[title] { cursor: pointer; }
 ═══════════════════════════════════════════════════════════════ */
 
 /* ─── Page head : titre + sous-titre plus premium ─────────────── */
+/* Note : pas de gradient text — casse les émojis dans le titre.
+   On garde du solid avec un tracking serré + weight 800. */
 .admin-page-head h1 {
   font-weight: 800;
   letter-spacing: -.025em;
-  background: linear-gradient(135deg, var(--ink-900) 0%, var(--ink-700) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
   color: var(--ink-900);
 }
 .admin-page-head p {
   font-size: .94rem;
   color: var(--ink-500);
   max-width: 760px;
+  line-height: 1.55;
 }
+.admin-page-head { gap: 20px; }
+.admin-page-head .actions, .admin-page-head > div:last-child:not(:only-child) { flex-shrink: 0; }
 
 /* ─── Cartes & stat-cards : ombres subtiles + hover micro-lift ── */
 .card, .stat-card {
@@ -1482,4 +1483,23 @@ a.btn-ghost:hover { background: var(--hc-primary-soft); }
   .admin-content { padding: 0 !important; max-width: 100% !important; }
   .card, .stat-card { break-inside: avoid; border: 1px solid #ddd !important; box-shadow: none !important; }
   body::before { display: none; }
+}
+
+/* ─── Mobile fine-tune (<560px) ──────────────────────── */
+@media (max-width: 560px) {
+  .admin-page-head h1 { font-size: 1.35rem; }
+  .admin-page-head p { font-size: .88rem; }
+  .stat-card { padding: 16px; }
+  .stat-card-value { font-size: 1.7rem; }
+  .hc-greeting-emoji { font-size: 1.6rem; }
+  .hc-greeting h1 { font-size: 1.4rem; }
+  .breadcrumb { font-size: .76rem; }
+  .modal-panel { border-radius: 14px !important; max-height: calc(100vh - 30px) !important; }
+  .modal-head { padding: 14px 16px !important; }
+  .modal-body { padding: 16px !important; }
+}
+
+/* ─── Tablette (561-980px) ──────────────────────────── */
+@media (min-width: 561px) and (max-width: 980px) {
+  .admin-page-head { flex-direction: column; align-items: flex-start; gap: 14px; }
 }
