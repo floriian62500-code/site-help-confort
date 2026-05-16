@@ -36,11 +36,11 @@ def lire_statut_global() -> dict:
     """Charge statut-health.json si présent, sinon dict vide."""
     p = HEALTH_DIR / "statut-health.json"
     if not p.exists():
-        return {"scripts": [], "verifie_le": "—", "anomalies": "?"}
+        return {"scripts": [], "verifie_le": "—", "anomalies": 0, "_aucune_donnee": True}
     try:
         return json.loads(p.read_text(encoding="utf-8"))
     except Exception:
-        return {"scripts": [], "verifie_le": "(erreur)", "anomalies": "?"}
+        return {"scripts": [], "verifie_le": "(erreur)", "anomalies": 0, "_aucune_donnee": True}
 
 
 def formater_date(iso: str) -> str:
@@ -91,17 +91,28 @@ def lire_log_slack(n: int = 20) -> list[str]:
 def main() -> None:
     statut = lire_statut_global()
     scripts = statut.get("scripts", [])
-    anomalies = statut.get("anomalies", 0)
+    aucune_donnee = statut.get("_aucune_donnee", False)
 
-    bandeau_couleur = "#1f9d55" if anomalies == 0 else (
-        "#c53030" if any(s.get("criticite") == "high" and s.get("statut") != "ok" for s in scripts)
-        else "#dd6b20"
-    )
-    bandeau_msg = (
-        "Toutes les automatisations sont saines."
-        if anomalies == 0
-        else f"{anomalies} anomalie{'s' if anomalies > 1 else ''} détectée{'s' if anomalies > 1 else ''}."
-    )
+    # Robustesse : anomalies peut être absent ou mal typé
+    try:
+        anomalies = int(statut.get("anomalies", 0))
+    except (TypeError, ValueError):
+        anomalies = 0
+
+    if aucune_donnee:
+        bandeau_couleur = "#9ca3af"
+        bandeau_msg = "Aucune donnée pour le moment. Le check-health n'a pas encore tourné — il s'exécute à h+35 chaque heure."
+    elif anomalies == 0:
+        bandeau_couleur = "#1f9d55"
+        bandeau_msg = "Toutes les automatisations sont saines."
+    else:
+        bandeau_couleur = (
+            "#c53030"
+            if any(s.get("criticite") == "high" and s.get("statut") != "ok" for s in scripts)
+            else "#dd6b20"
+        )
+        pluriel = "s" if anomalies > 1 else ""
+        bandeau_msg = f"{anomalies} anomalie{pluriel} détectée{pluriel}."
 
     lignes_scripts = ""
     for s in scripts:
