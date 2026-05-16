@@ -81,6 +81,7 @@ window.HCLayout = (function() {
         { id:'medias', href:'medias.html', label:'Médiathèque', icon:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>' },
         { id:'publications', href:'publications.html', label:'Pile de publication', icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>' },
         { id:'calendar', href:'calendar.html', label:'Calendrier éditorial', icon:'<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>' },
+        { id:'actu-generator', href:'actu-generator.html', label:'🤖 Générateur actus IA', icon:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' },
         { id:'magic', href:'magic.html', label:'Studio création IA', icon:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' }
         // "Modèles de posts" (templates.html) + "Générateur visuel" (visuel.html)
         // restent accessibles via leurs URLs directes mais sortis du sidebar
