@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.helpconfort.template-post</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HC_CATALOG_PATH</key>
+    <string>/Users/HP/Documents/Claude/Projects/SITE INTERNET/scripts/automation/catalog-posts.json</string>
+    <key>HC_LOG_DIR</key>
+    <string>/Users/HP/Library/Logs/helpconfort</string>
+    <key>HC_NOTIFY_SCRIPT</key>
+    <string>/Users/HP/Documents/Claude/Projects/SITE INTERNET/scripts/automation/monitoring/notify-slack.sh</string>
+    <key>HC_SLACK_WEBHOOK</key>
+    <string></string>
+  </dict>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/HP/Documents/Claude/Projects/SITE INTERNET/scripts/automation/monitoring/health-wrapper.sh</string>
+    <string>template-post</string>
+    <string>/usr/bin/python3</string>
+    <string>/Users/HP/Documents/Claude/Projects/SITE INTERNET/scripts/automation/publish-template-post.py</string>
+  </array>
+
+  <key>StandardOutPath</key>
+  <string>/Users/HP/Library/Logs/helpconfort/template-posts.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/HP/Library/Logs/helpconfort/template-posts.err.log</string>
+
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict><key>Hour</key><integer>8</integer><key>Minute</key><integer>0</integer><key>Weekday</key><integer>1</integer></dict>
+    <dict><key>Hour</key><integer>8</integer><key>Minute</key><integer>0</integer><key>Weekday</key><integer>2</integer></dict>
+    <dict><key>Hour</key><integer>8</integer><key>Minute</key><integer>0</integer><key>Weekday</key><integer>4</integer></dict>
+    <dict><key>Hour</key><integer>8</integer><key>Minute</key><integer>0</integer><key>Weekday</key><integer>5</integer></dict>
+    <dict><key>Hour</key><integer>8</integer><key>Minute</key><integer>0</integer><key>Weekday</key><integer>6</integer></dict>
+  </array>
+</dict>
+</plist>
