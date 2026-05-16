@@ -94,6 +94,19 @@
  /* ─── Cache l'en-tête catégorie quand un seul filtre actif (anti-doublon avec la tabbar) ─── */
  .nv-catalog.nv-mode-single .nv-cat-head--all{display:none !important}
 
+ /* ─── BARRE DE SOUS-FILTRES (sous-catégories : WC, Chauffe-eau, Robinetterie…) ─── */
+ .nv-subfilters{max-width:1480px;margin:10px auto 0;padding:0 clamp(20px,4vw,64px);display:flex;flex-wrap:wrap;gap:6px;animation:nvSubFadeIn .3s ease}
+ @keyframes nvSubFadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+ .nv-subfilter{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:1.5px solid #E5EDF3;background:#fff;color:#475569;border-radius:999px;font-size:.8rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .15s ease;font-family:inherit}
+ .nv-subfilter:hover{border-color:#0DA0CF;color:#0DA0CF}
+ .nv-subfilter.is-active{background:#0DA0CF;color:#fff;border-color:#0DA0CF}
+ .nv-subfilter .nv-count{padding:0 6px;border-radius:999px;font-size:.7rem;font-weight:800;background:rgba(10,20,40,.06);color:inherit}
+ .nv-subfilter.is-active .nv-count{background:rgba(255,255,255,.20)}
+
+ /* Masquer subgroups & subcat-heads quand sous-filtre actif */
+ .nv-subgroup[data-hidden]{display:none}
+ .nv-subcat-head[data-hidden]{display:none}
+
  /* ─── SOUS-CATÉGORIES (titres de section dans chaque métier) ─── */
  .nv-subcat-head{display:flex;align-items:center;gap:12px;margin:32px 0 16px;padding:0;border:0}
  .nv-subcat-head:first-of-type{margin-top:8px}
@@ -1058,9 +1071,11 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
    const hasSubs = subgroups.length > 1 || (subgroups[0] && subgroups[0].name);
    const inner = hasSubs
      ? subgroups.map(sg => `
-       ${sg.name ? `<h3 class="nv-subcat-head"><span class="nv-subcat-emoji">${sg.name.match(/^\S+/)?.[0] || ''}</span><span class="nv-subcat-label">${escapeHtml((sg.name||'').replace(/^\S+\s*/, ''))}</span><span class="nv-subcat-count">${sg.items.length}</span></h3>` : ''}
+       <div class="nv-subgroup" data-subcat-slug="${escapeHtml(sg.slug || '_default')}">
+       ${sg.name ? `<h3 class="nv-subcat-head" data-subcat-slug="${escapeHtml(sg.slug || '_default')}"><span class="nv-subcat-emoji">${sg.name.match(/^\S+/)?.[0] || ''}</span><span class="nv-subcat-label">${escapeHtml((sg.name||'').replace(/^\S+\s*/, ''))}</span><span class="nv-subcat-count">${sg.items.length}</span></h3>` : ''}
        <div class="nv-grid">
          ${sg.items.map(s => renderCard(s, g.slug)).join('')}
+       </div>
        </div>
      `).join('')
      : `<div class="nv-grid">${g.items.map(s => renderCard(s, g.slug)).join('')}</div>`;
