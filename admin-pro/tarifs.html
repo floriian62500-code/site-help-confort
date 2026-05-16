@@ -298,37 +298,140 @@
   // ──────────────────────────────────────────────────────────────
   const fmt = (n) => new Intl.NumberFormat('fr-FR', { style:'currency', currency:'EUR', minimumFractionDigits:0, maximumFractionDigits:0 }).format(n);
 
-  function renderMetierTable(title, emoji, items, hasRef) {
-    const rows = items.map(it => `
-      <tr>
-        <td class="prest-name">${it.name}</td>
-        <td class="num ttc">${fmt(it.ttc)}${it.unit ? ' <span style="font-weight:500;color:#64748b">'+it.unit+'</span>' : ''}</td>
-        ${hasRef ? `<td><span class="ref">${it.ref || '—'}</span></td>` : ''}
-      </tr>`).join('');
+  function renderMetierTable(title, emoji, items, hasRef, catSlug) {
+    const cat = catSlug ? catBySlug[catSlug] : null;
+    const editable = !!cat;
+    const rows = items.map(it => {
+      if (editable && it.id) {
+        return `
+          <tr data-svc-id="${it.id}">
+            <td class="prest-name"><input class="m-edit" data-field="name" value="${escAttr(it.name)}" style="width:100%;border:none;background:transparent;font-weight:600;color:#0A1428;padding:6px 4px;border-radius:4px"></td>
+            <td class="num" style="text-align:right"><input class="m-edit" data-field="price_ht" type="number" step="0.01" value="${it.raw?.price_ht ?? ''}" style="width:90px;text-align:right;border:none;background:transparent;font-weight:600;color:#0A1428;padding:6px 4px;border-radius:4px"></td>
+            <td class="num ttc" style="text-align:right;font-weight:800;color:#15803D">${fmt(it.ttc)}<small style="color:#94a3b8;font-weight:500;display:block;font-size:.7rem">TVA ${(Number(it.vat_rate||0.10)*100).toFixed(1)} %</small></td>
+            ${hasRef ? `<td><span class="ref">${it.ref || '—'}</span></td>` : ''}
+            <td style="width:40px;text-align:center"><button class="m-del" title="Supprimer cette prestation" style="background:transparent;border:none;cursor:pointer;color:#dc2626;font-size:1rem;padding:4px 6px;border-radius:5px">🗑</button></td>
+          </tr>`;
+      }
+      return `
+        <tr>
+          <td class="prest-name">${it.name}</td>
+          <td class="num ttc">${fmt(it.ttc)}${it.unit ? ' <span style="font-weight:500;color:#64748b">'+it.unit+'</span>' : ''}</td>
+          ${hasRef ? `<td><span class="ref">${it.ref || '—'}</span></td>` : ''}
+        </tr>`;
+    }).join('');
+    const addBtn = editable
+      ? `<div style="padding:12px 18px;background:#FAFCFD;border-top:1px solid var(--ink-100);text-align:center"><button class="m-add" data-cat="${cat.id}" style="background:linear-gradient(135deg,#0DA0CF,#0884AE);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.84rem">➕ Ajouter une prestation ${title}</button></div>`
+      : '';
+    const lockNote = editable ? '' : `<div style="padding:10px 18px;background:#FFF7ED;color:#9A3412;font-size:.78rem;border-bottom:1px solid #FED7AA">⚠️ Lecture seule (catégorie absente en base). Crée la catégorie depuis <a href="services.html" style="color:#0DA0CF;font-weight:700">services.html</a> pour activer l'édition.</div>`;
     return `
-      <div class="tarif-section">
-        <h2><span class="emoji">${emoji}</span>${title} <span class="badge-count">${items.length} forfait${items.length>1?'s':''}</span></h2>
+      <div class="tarif-section" data-cat-slug="${catSlug||''}">
+        <h2><span class="emoji">${emoji}</span>${title} <span class="badge-count">${items.length} forfait${items.length>1?'s':''}</span>${editable ? ' <span style="margin-left:auto;font-size:.7rem;color:#15803D;background:rgba(34,197,94,.12);padding:3px 8px;border-radius:999px;font-weight:700">✏️ Éditable</span>' : ''}</h2>
+        ${lockNote}
         <table class="tarif-table">
           <thead><tr>
             <th>Prestation</th>
+            ${editable ? '<th style="text-align:right">Prix HT (€)</th>' : ''}
             <th style="text-align:right">Tarif TTC</th>
             ${hasRef ? '<th>Réf.</th>' : ''}
+            ${editable ? '<th></th>' : ''}
           </tr></thead>
           <tbody>${rows}</tbody>
         </table>
+        ${addBtn}
       </div>`;
   }
 
-  // Pane Métiers (5 métiers)
-  document.getElementById('paneMetiers').innerHTML =
-      // Si Supabase a chargé des données live, on les préfère
-      // Sinon on retombe sur le hardcode TARIFS_REFERENCE.md
-      renderMetierTable("Plomberie",   "🔧", (liveData?.plomberie?.length ? liveData.plomberie : DATA.plomberie),   true)
-    + renderMetierTable("Chauffe-eau", "💧", (liveData?.['chauffe-eau']?.length ? liveData['chauffe-eau'] : []),    false)
-    + renderMetierTable("Chauffage",   "🔥", (liveData?.chauffage?.length ? liveData.chauffage : DATA.chauffage),   false)
-    + renderMetierTable("Électricité", "⚡", (liveData?.electricite?.length ? liveData.electricite : DATA.electricite), false)
-    + renderMetierTable("Serrurerie",  "🔒", (liveData?.serrurerie?.length ? liveData.serrurerie : DATA.serrurerie), false)
-    + renderMetierTable("Vitrerie",    "🪟", (liveData?.vitrerie?.length ? liveData.vitrerie : DATA.vitrerie),       false);
+  // CRUD : sauvegarde en base
+  async function saveSvcField(svcId, field, value) {
+    const update = { [field]: field === 'price_ht' ? Number(value || 0) : value };
+    const { error } = await sb.from('services').update(update).eq('id', svcId);
+    if (error) { alert('❌ Sauvegarde : ' + error.message); return false; }
+    const svc = allServices.find(s => s.id === svcId);
+    if (svc) svc[field] = update[field];
+    const lu = document.getElementById('lastUpdate'); if (lu) lu.textContent = new Date().toLocaleString('fr-FR');
+    return true;
+  }
+  async function deleteSvc(svcId) {
+    const { error } = await sb.from('services').delete().eq('id', svcId);
+    if (error) { alert('❌ Suppression : ' + error.message); return false; }
+    allServices = allServices.filter(s => s.id !== svcId);
+    return true;
+  }
+  async function createSvc(categoryId, name, priceHt, vatRate=0.10) {
+    const slug = (name||'').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,80) || ('svc-'+Date.now());
+    const { data, error } = await sb.from('services').insert({
+      category_id: categoryId, name, slug, price_ht: priceHt, vat_rate: vatRate, active: true, position: 999
+    }).select().single();
+    if (error) { alert('❌ Création : ' + error.message); return null; }
+    allServices.push(data);
+    return data;
+  }
+
+  function rebuildLiveData(){
+    const groupBy = (slug) => allServices.filter(s => {
+      const cat = catById[s.category_id];
+      if (!cat) return false;
+      const catSlug = (cat.slug || '').toLowerCase();
+      return catSlug === slug || catSlug.startsWith(slug + '-') || catSlug.endsWith('-' + slug);
+    }).map(s => ({
+      id: s.id, name: s.name,
+      ht: Number(s.price_ht).toFixed(2),
+      ttc: Math.round(s.price_ht * (1 + s.vat_rate) * 100) / 100,
+      ref: s.slug, vat_rate: s.vat_rate, category_id: s.category_id, raw: s
+    }));
+    liveData = {
+      plomberie: groupBy('plomberie'), chauffage: groupBy('chauffage'),
+      'chauffe-eau': groupBy('chauffe-eau'), electricite: groupBy('electricite'),
+      serrurerie: groupBy('serrurerie'), vitrerie: groupBy('vitrerie'),
+      sur_mesure: groupBy('sur-mesure')
+    };
+  }
+  function renderMetiersPane(){
+    document.getElementById('paneMetiers').innerHTML =
+        renderMetierTable("Plomberie",   "🔧", (liveData?.plomberie?.length ? liveData.plomberie : DATA.plomberie),   true,  'plomberie')
+      + renderMetierTable("Chauffe-eau", "💧", (liveData?.['chauffe-eau']?.length ? liveData['chauffe-eau'] : []),    false, 'chauffe-eau')
+      + renderMetierTable("Chauffage",   "🔥", (liveData?.chauffage?.length ? liveData.chauffage : DATA.chauffage),   false, 'chauffage')
+      + renderMetierTable("Électricité", "⚡", (liveData?.electricite?.length ? liveData.electricite : DATA.electricite), false, 'electricite')
+      + renderMetierTable("Serrurerie",  "🔒", (liveData?.serrurerie?.length ? liveData.serrurerie : DATA.serrurerie), false, 'serrurerie')
+      + renderMetierTable("Vitrerie",    "🪟", (liveData?.vitrerie?.length ? liveData.vitrerie : DATA.vitrerie),       false, 'vitrerie');
+    bindMetiersListeners();
+  }
+  function bindMetiersListeners(){
+    document.querySelectorAll('#paneMetiers .m-edit').forEach(inp => {
+      inp.addEventListener('focus', e => e.target.style.background = '#FFFBEB');
+      inp.addEventListener('blur', async e => {
+        e.target.style.background = 'transparent';
+        const tr = e.target.closest('tr');
+        const svcId = tr.dataset.svcId;
+        const field = e.target.dataset.field;
+        const val = field === 'price_ht' ? Number(e.target.value || 0) : e.target.value;
+        const ok = await saveSvcField(svcId, field, val);
+        if (ok) { rebuildLiveData(); renderMetiersPane(); }
+      });
+    });
+    document.querySelectorAll('#paneMetiers .m-del').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const tr = btn.closest('tr');
+        const svcId = tr.dataset.svcId;
+        const svc = allServices.find(s => s.id === svcId);
+        if (!confirm(`Supprimer "${svc?.name || 'cette prestation'}" ? Action irréversible.`)) return;
+        const ok = await deleteSvc(svcId);
+        if (ok) { rebuildLiveData(); renderMetiersPane(); }
+      });
+    });
+    document.querySelectorAll('#paneMetiers .m-add').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const name = prompt('Nom de la nouvelle prestation :');
+        if (!name || !name.trim()) return;
+        const htStr = prompt('Prix HT (€) :', '100');
+        const ht = Number(htStr || 0);
+        if (isNaN(ht) || ht < 0) { alert('Prix invalide'); return; }
+        const created = await createSvc(btn.dataset.cat, name.trim(), ht, 0.10);
+        if (created) { rebuildLiveData(); renderMetiersPane(); }
+      });
+    });
+  }
+  renderMetiersPane();
 
   // ═══ MODE ÉDITION : charge depuis app_settings.pricing, fallback DATA ═══
   // Tarif horaire + Contrats sont stockés en base et éditables (CRUD complet)
