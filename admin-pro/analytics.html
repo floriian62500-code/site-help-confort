@@ -794,6 +794,70 @@
     </div>
   `;
 
+  // ─── Export CSV des stats GA4 (clic sur bouton dans le header) ───
+  const btnCsv = document.getElementById('btnExportCsv');
+  if (btnCsv) {
+    btnCsv.onclick = () => {
+      try {
+        const lines = [];
+        // En-tête
+        lines.push(`Export GA4 — ${PERIOD_CFG.label} — ${new Date().toLocaleString('fr-FR')}`);
+        lines.push('Property,'+(settings?.value?.property_id||''));
+        lines.push('');
+        // KPI globaux
+        lines.push('=== KPI globaux ===');
+        lines.push('Métrique,Valeur,vs période précédente');
+        const prev = ga4Previous || { sessions:0, users:0, views:0 };
+        const v1 = variation(ga4Stats.users, prev.users);
+        const v2 = variation(ga4Stats.sessions, prev.sessions);
+        const v3 = variation(ga4Stats.page_views, prev.views);
+        lines.push(`Visiteurs uniques,${ga4Stats.users||0},${v1.v}`);
+        lines.push(`Sessions,${ga4Stats.sessions||0},${v2.v}`);
+        lines.push(`Pages vues,${ga4Stats.page_views||0},${v3.v}`);
+        lines.push(`Nouveaux visiteurs,${ga4Stats.newUsers||0},`);
+        lines.push(`Durée moyenne (s),${ga4Stats.avg_duration_sec||0},`);
+        lines.push(`Taux engagement,${((ga4Stats.engagement_rate||0)*100).toFixed(1)}%,`);
+        lines.push('');
+        // Évolution quotidienne
+        if (ga4DailyEvolution.length) {
+          lines.push('=== Évolution quotidienne ===');
+          lines.push('Date,Sessions,Visiteurs,Pages vues');
+          ga4DailyEvolution.forEach(d => {
+            const dt = d.date && d.date.length===8 ? `${d.date.slice(0,4)}-${d.date.slice(4,6)}-${d.date.slice(6,8)}` : d.date;
+            lines.push(`${dt},${d.sessions},${d.users},${d.views}`);
+          });
+          lines.push('');
+        }
+        // Top sources
+        if (topSources.length) {
+          lines.push('=== Top sources ===');
+          lines.push('Source/Medium,Sessions,Visiteurs');
+          topSources.forEach(s => lines.push(`"${s.source.replace(/"/g,'""')}",${s.sessions},${s.users}`));
+          lines.push('');
+        }
+        // Top pages
+        if (topPages.length) {
+          lines.push('=== Top pages ===');
+          lines.push('Page,Vues,Visiteurs');
+          topPages.forEach(p => lines.push(`"${p.path.replace(/"/g,'""')}",${p.views},${p.users}`));
+          lines.push('');
+        }
+        // Conversions
+        lines.push('=== Conversions (events) ===');
+        Object.entries(ga4CustomEvents||{}).forEach(([k,v]) => lines.push(`${k},${v}`));
+        // Build CSV blob
+        const csv = '﻿' + lines.join('\n'); // BOM pour Excel
+        const blob = new Blob([csv], { type:'text/csv;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `ga4-export-${PERIOD}-${new Date().toISOString().slice(0,10)}.csv`;
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 5000);
+      } catch(e) { alert('Erreur export : ' + e.message); }
+    };
+  }
+
   // ─── Init du graphique d'évolution GA4 (si Chart.js dispo + data présente) ───
   const chartCanvas = document.getElementById('ga4EvolutionChart');
   if (chartCanvas) {
