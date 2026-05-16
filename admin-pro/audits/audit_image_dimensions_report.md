@@ -1,63 +1,13 @@
 # 📐 Audit dimensions images (PIL) — extension CLS prevention
 
-_Généré le 2026-05-16 07:31_
+_Généré le 2026-05-16 07:47_
 
 - Pages scannées : **41**
-- `<img>` avec width+height : **443**
-- Patchables (dimensions lues PIL) : **5**
+- `<img>` avec width+height : **448**
+- Patchables (dimensions lues PIL) : **0**
 - Externes (CDN/hot-link) : **24**
 - Non-résolues (fichier absent) : **49**
 - Dynamiques (template `${...}`) : **4**
-
-## 🛠️ Patches proposés (dimensions lues PIL)
-
-Pour chaque `<img>` ci-dessous, le patch est prêt à être appliqué
-(décision masse → Florian).
-
-### `avant-apres.html` — 1 patch(es)
-
-**L42** (1080×1080px) — `logo-officiel.jpg`
-
-```html
-AVANT : <img decoding="async" loading="lazy" src="logo-officiel.jpg" alt="HELP! Confort" style="height:48px">
-APRÈS : <img width="1080" height="1080" decoding="async" loading="lazy" src="logo-officiel.jpg" alt="HELP! Confort" style="height:48px">
-```
-
-### `devis-express.html` — 1 patch(es)
-
-**L50** (1080×1080px) — `logo-officiel.jpg`
-
-```html
-AVANT : <img decoding="async" src="logo-officiel.jpg" alt="HELP! Confort" loading="eager">
-APRÈS : <img width="1080" height="1080" decoding="async" src="logo-officiel.jpg" alt="HELP! Confort" loading="eager">
-```
-
-### `faq.html` — 1 patch(es)
-
-**L76** (1080×1080px) — `logo-officiel.jpg`
-
-```html
-AVANT : <img decoding="async" src="logo-officiel.jpg" alt="HELP! Confort" loading="eager">
-APRÈS : <img width="1080" height="1080" decoding="async" src="logo-officiel.jpg" alt="HELP! Confort" loading="eager">
-```
-
-### `realisation.html` — 1 patch(es)
-
-**L45** (1080×1080px) — `logo-officiel.jpg`
-
-```html
-AVANT : <img decoding="async" loading="lazy" src="logo-officiel.jpg" alt="HELP! Confort" style="height:48px">
-APRÈS : <img width="1080" height="1080" decoding="async" loading="lazy" src="logo-officiel.jpg" alt="HELP! Confort" style="height:48px">
-```
-
-### `temoignages.html` — 1 patch(es)
-
-**L66** (1080×1080px) — `logo-officiel.jpg`
-
-```html
-AVANT : <img decoding="async" src="logo-officiel.jpg" alt="HELP! Confort" style="height:48px" loading="eager">
-APRÈS : <img width="1080" height="1080" decoding="async" src="logo-officiel.jpg" alt="HELP! Confort" style="height:48px" loading="eager">
-```
 
 ## 🌐 Images externes (à patcher manuellement)
 
@@ -65,9 +15,9 @@ Source externe (CDN, hot-link) — PIL ne peut pas les lire sans accès réseau.
 Recommandation : rapatrier en local (cf. `audit_hotlink_cdn.py`) puis re-runner.
 
 - `plombier-saint-omer.html` (6) : L1025, L1035, L1045, L1055, L1065, L1075
-- `pmr-saint-omer.html` (6) : L1025, L1035, L1045, L1055, L1065, L1075
-- `vitrier-saint-omer.html` (6) : L1025, L1035, L1045, L1055, L1065, L1075
-- `volets-saint-omer.html` (6) : L1025, L1035, L1045, L1055, L1065, L1075
+- `pmr-saint-omer.html` (6) : L1003, L1013, L1023, L1033, L1043, L1053
+- `vitrier-saint-omer.html` (6) : L1003, L1013, L1023, L1033, L1043, L1053
+- `volets-saint-omer.html` (6) : L1003, L1013, L1023, L1033, L1043, L1053
 
 ## ❓ Sources non résolues
 
@@ -113,10 +63,10 @@ Recommandation : rapatrier en local (cf. `audit_hotlink_cdn.py`) puis re-runner.
 - L1377 — `images/marques/logo-ramon-soler-azul.svg` (PIL n'a pas pu lire les dimensions)
 
 ### `pmr-saint-omer.html` — 4
-- L1250 — `'+r.image+'` (fichier introuvable sur disque)
-- L1367 — `images/marques/logo-atlantic.svg` (PIL n'a pas pu lire les dimensions)
-- L1372 — `images/marques/Hansgrohe-Logo-2.svg` (PIL n'a pas pu lire les dimensions)
-- L1377 — `images/marques/logo-ramon-soler-azul.svg` (PIL n'a pas pu lire les dimensions)
+- L1228 — `'+r.image+'` (fichier introuvable sur disque)
+- L1345 — `images/marques/logo-atlantic.svg` (PIL n'a pas pu lire les dimensions)
+- L1350 — `images/marques/Hansgrohe-Logo-2.svg` (PIL n'a pas pu lire les dimensions)
+- L1355 — `images/marques/logo-ramon-soler-azul.svg` (PIL n'a pas pu lire les dimensions)
 
 ### `realisations.html` — 4
 - L508 — `(empty)` (src vide)
@@ -137,16 +87,16 @@ Recommandation : rapatrier en local (cf. `audit_hotlink_cdn.py`) puis re-runner.
 - L1360 — `images/marques/logo-ramon-soler-azul.svg` (PIL n'a pas pu lire les dimensions)
 
 ### `vitrier-saint-omer.html` — 4
-- L1250 — `'+r.image+'` (fichier introuvable sur disque)
-- L1367 — `images/marques/logo-atlantic.svg` (PIL n'a pas pu lire les dimensions)
-- L1372 — `images/marques/Hansgrohe-Logo-2.svg` (PIL n'a pas pu lire les dimensions)
-- L1377 — `images/marques/logo-ramon-soler-azul.svg` (PIL n'a pas pu lire les dimensions)
+- L1228 — `'+r.image+'` (fichier introuvable sur disque)
+- L1345 — `images/marques/logo-atlantic.svg` (PIL n'a pas pu lire les dimensions)
+- L1350 — `images/marques/Hansgrohe-Logo-2.svg` (PIL n'a pas pu lire les dimensions)
+- L1355 — `images/marques/logo-ramon-soler-azul.svg` (PIL n'a pas pu lire les dimensions)
 
 ### `volets-saint-omer.html` — 4
-- L1250 — `'+r.image+'` (fichier introuvable sur disque)
-- L1367 — `images/marques/logo-atlantic.svg` (PIL n'a pas pu lire les dimensions)
-- L1372 — `images/marques/Hansgrohe-Logo-2.svg` (PIL n'a pas pu lire les dimensions)
-- L1377 — `images/marques/logo-ramon-soler-azul.svg` (PIL n'a pas pu lire les dimensions)
+- L1228 — `'+r.image+'` (fichier introuvable sur disque)
+- L1345 — `images/marques/logo-atlantic.svg` (PIL n'a pas pu lire les dimensions)
+- L1350 — `images/marques/Hansgrohe-Logo-2.svg` (PIL n'a pas pu lire les dimensions)
+- L1355 — `images/marques/logo-ramon-soler-azul.svg` (PIL n'a pas pu lire les dimensions)
 
 ### `zones-intervention.html` — 2
 - L1222 — `images/picto-chauffage.svg` (PIL n'a pas pu lire les dimensions)

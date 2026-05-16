@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-05-16T07:31:38",
+  "generated_at": "2026-05-16T07:47:46",
   "pil_available": true,
   "scanned": 41,
-  "imgs_ok": 443,
-  "patchable": 5,
+  "imgs_ok": 448,
+  "patchable": 0,
   "external": 24,
   "unresolved": 49,
   "dynamic": 4,
@@ -18,24 +18,11 @@
     },
     {
       "file": "avant-apres.html",
-      "patchable": 1,
+      "patchable": 0,
       "external": 0,
       "unresolved": 1,
       "dynamic": 0,
-      "patches": [
-        {
-          "line": 42,
-          "src": "logo-officiel.jpg",
-          "missing": [
-            "width",
-            "height"
-          ],
-          "real_width": 1080,
-          "real_height": 1080,
-          "snippet": "<img decoding=\"async\" loading=\"lazy\" src=\"logo-officiel.jpg\" alt=\"HELP! Confort\" style=\"height:48px\">",
-          "patch": "<img width=\"1080\" height=\"1080\" decoding=\"async\" loading=\"lazy\" src=\"logo-officiel.jpg\" alt=\"HELP! Confort\" style=\"height:48px\">"
-        }
-      ]
+      "patches": []
     },
     {
       "file": "blog.html",
@@ -62,54 +49,12 @@
       "patches": []
     },
     {
-      "file": "devis-express.html",
-      "patchable": 1,
-      "external": 0,
-      "unresolved": 0,
-      "dynamic": 0,
-      "patches": [
-        {
-          "line": 50,
-          "src": "logo-officiel.jpg",
-          "missing": [
-            "width",
-            "height"
-          ],
-          "real_width": 1080,
-          "real_height": 1080,
-          "snippet": "<img decoding=\"async\" src=\"logo-officiel.jpg\" alt=\"HELP! Confort\" loading=\"eager\">",
-          "patch": "<img width=\"1080\" height=\"1080\" decoding=\"async\" src=\"logo-officiel.jpg\" alt=\"HELP! Confort\" loading=\"eager\">"
-        }
-      ]
-    },
-    {
       "file": "electricien-saint-omer.html",
       "patchable": 0,
       "external": 0,
       "unresolved": 4,
       "dynamic": 0,
       "patches": []
-    },
-    {
-      "file": "faq.html",
-      "patchable": 1,
-      "external": 0,
-      "unresolved": 0,
-      "dynamic": 0,
-      "patches": [
-        {
-          "line": 76,
-          "src": "logo-officiel.jpg",
-          "missing": [
-            "width",
-            "height"
-          ],
-          "real_width": 1080,
-          "real_height": 1080,
-          "snippet": "<img decoding=\"async\" src=\"logo-officiel.jpg\" alt=\"HELP! Confort\" loading=\"eager\">",
-          "patch": "<img width=\"1080\" height=\"1080\" decoding=\"async\" src=\"logo-officiel.jpg\" alt=\"HELP! Confort\" loading=\"eager\">"
-        }
-      ]
     },
     {
       "file": "index.html",
@@ -145,24 +90,11 @@
     },
     {
       "file": "realisation.html",
-      "patchable": 1,
+      "patchable": 0,
       "external": 0,
       "unresolved": 0,
       "dynamic": 4,
-      "patches": [
-        {
-          "line": 45,
-          "src": "logo-officiel.jpg",
-          "missing": [
-            "width",
-            "height"
-          ],
-          "real_width": 1080,
-          "real_height": 1080,
-          "snippet": "<img decoding=\"async\" loading=\"lazy\" src=\"logo-officiel.jpg\" alt=\"HELP! Confort\" style=\"height:48px\">",
-          "patch": "<img width=\"1080\" height=\"1080\" decoding=\"async\" loading=\"lazy\" src=\"logo-officiel.jpg\" alt=\"HELP! Confort\" style=\"height:48px\">"
-        }
-      ]
+      "patches": []
     },
     {
       "file": "realisations.html",
@@ -179,27 +111,6 @@
       "unresolved": 4,
       "dynamic": 0,
       "patches": []
-    },
-    {
-      "file": "temoignages.html",
-      "patchable": 1,
-      "external": 0,
-      "unresolved": 0,
-      "dynamic": 0,
-      "patches": [
-        {
-          "line": 66,
-          "src": "logo-officiel.jpg",
-          "missing": [
-            "width",
-            "height"
-          ],
-          "real_width": 1080,
-          "real_height": 1080,
-          "snippet": "<img decoding=\"async\" src=\"logo-officiel.jpg\" alt=\"HELP! Confort\" style=\"height:48px\" loading=\"eager\">",
-          "patch": "<img width=\"1080\" height=\"1080\" decoding=\"async\" src=\"logo-officiel.jpg\" alt=\"HELP! Confort\" style=\"height:48px\" loading=\"eager\">"
-        }
-      ]
     },
     {
       "file": "travaux-saint-omer.html",
