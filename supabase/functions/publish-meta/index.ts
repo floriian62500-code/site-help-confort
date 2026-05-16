@@ -42,48 +42,32 @@ Deno.serve(async (req: Request) => {
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) return json({ error: "Missing Authorization" }, 401);
 
-    // Le bearer est comparé à toutes les clés que Supabase peut auto-injecter.
-    // Supabase migre progressivement de SUPABASE_SERVICE_ROLE_KEY (JWT legacy)
-    // vers SUPABASE_SECRET_KEY (nouveau format sb_secret_...). On accepte les deux.
+    // Authentification "cron" : on compare le Bearer à HC_EDGE_AUTH_TOKEN
+    // (secret custom déployé via `supabase secrets set`). On ne dépend plus
+    // des clés auto-injectées par Supabase (SUPABASE_SERVICE_ROLE_KEY) dont
+    // la valeur change selon la version du projet.
     // @ts-ignore
-    const legacyKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
-    // @ts-ignore
-    const secretKey = Deno.env.get("SUPABASE_SECRET_KEY") ?? "";
+    const hcToken = Deno.env.get("HC_EDGE_AUTH_TOKEN") ?? "";
     const bearer = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : "";
+    const isCron = !!hcToken && bearer === hcToken;
 
-    const matchLegacy = !!legacyKey && bearer === legacyKey;
-    const matchSecret = !!secretKey && bearer === secretKey;
-    const isCron = matchLegacy || matchSecret;
-    const activeKey = matchLegacy ? legacyKey : (matchSecret ? secretKey : legacyKey);
+    // Pour les opérations DB on a toujours besoin d'un service role réel.
+    // On utilise SUPABASE_SERVICE_ROLE_KEY (auto-injecté par Supabase, peu
+    // importe son format actuel — Supabase l'accepte côté DB de toute façon).
+    // @ts-ignore
+    const sbServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
 
     // @ts-ignore
     const sb = isCron
       // @ts-ignore
-      ? createClient(Deno.env.get("SUPABASE_URL")!, activeKey, { auth: { persistSession: false } })
+      ? createClient(Deno.env.get("SUPABASE_URL")!, sbServiceKey, { auth: { persistSession: false } })
       // @ts-ignore
       : createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_ANON_KEY")!, { global: { headers: { Authorization: authHeader } } });
 
     if (!isCron) {
-      // Tentative d'auth utilisateur classique
+      // Tentative d'auth utilisateur classique (appel depuis le dashboard)
       const { data: { user } } = await sb.auth.getUser();
-      if (!user) {
-        // Diagnostic pour comprendre ce qui est injecté côté runtime
-        // (longueurs uniquement, jamais les valeurs en clair)
-        // @ts-ignore
-        const envKeys = Object.keys(Deno.env.toObject()).filter(k => k.startsWith("SUPABASE_") || k.startsWith("SB_"));
-        return json({
-          error: "Not authenticated",
-          diagnostic: {
-            bearerLen: bearer.length,
-            bearerHead: bearer.slice(0, 12),
-            legacyKeyLen: legacyKey.length,
-            legacyKeyHead: legacyKey.slice(0, 12),
-            secretKeyLen: secretKey.length,
-            secretKeyHead: secretKey.slice(0, 12),
-            envKeys,
-          },
-        }, 401);
-      }
+      if (!user) return json({ error: "Not authenticated" }, 401);
     }
 
     const { data: settings } = await sb.from("app_settings").select("value").eq("key", "meta").single();
