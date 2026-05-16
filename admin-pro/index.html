@@ -469,6 +469,16 @@
           const v = j2.rows[0].metricValues;
           ga4Kpi = { sessions:Number(v[0]?.value||0), users:Number(v[1]?.value||0), page_views:Number(v[2]?.value||0), avg_duration_sec:Math.round(Number(v[3]?.value||0)) };
         }
+        // Mini heatmap horaire (7j)
+        try {
+          const jh = await callGa4({ dateRanges:[{startDate:'7daysAgo',endDate:'today'}], dimensions:[{name:'hour'}], metrics:[{name:'sessions'}] });
+          window._ga4HeatmapMini = Array.from({length:24}, (_,h) => 0);
+          (jh.rows||[]).forEach(r => {
+            const h = Number(r.dimensionValues[0]?.value||0);
+            const s = Number(r.metricValues[0]?.value||0);
+            if (h>=0 && h<24) window._ga4HeatmapMini[h] = s;
+          });
+        } catch(_){}
         // Top pages 7j
         try {
           const jp = await callGa4({ dateRanges:[{startDate:'7daysAgo',endDate:'today'}], dimensions:[{name:'pagePath'}], metrics:[{name:'screenPageViews'}], limit:3, orderBys:[{metric:{metricName:'screenPageViews'},desc:true}] });
@@ -512,14 +522,33 @@
             <div style="font-size:.74rem;color:#64748b;margin-top:2px">${ga4Events.click_phone||0} appels · ${ga4Events.click_email||0} emails</div>
           </div>
         `;
-        // Top pages mini
+        // Top pages mini + heatmap horaire mini
+        let extraHtml = '';
         if (ga4Top.length) {
-          const max = ga4Top[0]?.views || 1;
-          extra.innerHTML = `<div style="font-size:.78rem;color:#64748b;margin:6px 0 6px;font-weight:700">🏆 Top pages visitées</div>
-            <div style="display:flex;flex-direction:column;gap:6px">
+          extraHtml += `<div style="font-size:.78rem;color:#64748b;margin:6px 0 6px;font-weight:700">🏆 Top pages visitées (7 j)</div>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
               ${ga4Top.slice(0,3).map(p => `<div style="display:flex;align-items:center;gap:10px;font-size:.82rem"><code style="flex:1;font-family:Menlo,Monaco,monospace;color:#0A1428;font-size:.76rem">${escapeHtml(p.path.slice(0,42))}</code><span style="font-weight:700;color:#0DA0CF;min-width:34px;text-align:right">${p.views}</span></div>`).join('')}
             </div>`;
         }
+        // Mini heatmap horaire 24h
+        const hm = window._ga4HeatmapMini;
+        if (hm && hm.some(v => v > 0)) {
+          const maxH = Math.max(...hm);
+          const peakHour = hm.indexOf(maxH);
+          extraHtml += `<div style="font-size:.78rem;color:#64748b;margin:6px 0 6px;font-weight:700">🕐 Heures de pointe (7 j) · Pic ${String(peakHour).padStart(2,'0')}h</div>
+            <div style="display:flex;gap:2px;align-items:flex-end;height:36px;padding:4px 0">
+              ${hm.map((v, h) => {
+                const intensity = v / maxH;
+                const height = Math.max(3, intensity * 32);
+                const bg = v > 0 ? `rgba(13, 160, 207, ${(0.20 + intensity*0.80).toFixed(2)})` : '#f1f5f9';
+                return `<div title="${String(h).padStart(2,'0')}h — ${v} session${v>1?'s':''}" style="flex:1;height:${height}px;background:${bg};border-radius:2px;cursor:default;min-width:8px"></div>`;
+              }).join('')}
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:.62rem;color:#94a3b8;margin-top:3px">
+              <span>0h</span><span>6h</span><span>12h</span><span>18h</span><span>23h</span>
+            </div>`;
+        }
+        extra.innerHTML = extraHtml;
         widget.style.display = '';
       }
       // Retire le KPI "Note Google" qui devient redondant

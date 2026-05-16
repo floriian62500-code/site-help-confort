@@ -277,12 +277,20 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  <h2 style="font-size:clamp(1.5rem,2.6vw,2rem);font-weight:800;color:#0A1428;margin:0 0 10px;letter-spacing:-.02em">Vos contrats d'entretien <em style="font-family:'Playfair Display',Georgia,serif;font-style:italic;color:#FF6B1A;font-weight:500">en toute sérénité</em></h2>
  <p style="margin:0;color:#475569;font-size:.96rem;line-height:1.55">Chaudière gaz, fioul ou adoucisseur d'eau : choisissez la formule qui vous correspond. Visite annuelle, dépannages prioritaires, prélèvement mensuel.</p>
  </div>
+
+ <!-- Switch Gaz / Fioul / Adoucisseur -->
+ <div class="nv-energie-switch" style="display:inline-flex;gap:6px;padding:6px;background:#fff;border:1px solid #E5EDF3;border-radius:14px;margin:0 auto 24px;box-shadow:0 4px 14px rgba(10,20,40,.05)">
+ <button type="button" class="nv-energie-btn is-active" data-energie="gaz" style="padding:9px 18px;border:0;background:#0A1428;color:#fff;border-radius:10px;font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px"><span aria-hidden="true">⚡</span>Gaz</button>
+ <button type="button" class="nv-energie-btn" data-energie="fioul" style="padding:9px 18px;border:0;background:transparent;color:#475569;border-radius:10px;font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px"><span aria-hidden="true">🛢️</span>Fioul</button>
+ <button type="button" class="nv-energie-btn" data-energie="adoucisseur" style="padding:9px 18px;border:0;background:transparent;color:#475569;border-radius:10px;font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px"><span aria-hidden="true">💧</span>Adoucisseur</button>
+ </div>
+
  <div class="nv-contrats-grid" style="display:grid;grid-template-columns:1fr;gap:18px;max-width:1080px;margin:0 auto 24px">
  <a href="contrats-entretien.html#basic" class="nv-contrat-card" style="background:#fff;border:1.5px solid #E5EDF3;border-radius:18px;padding:24px;text-decoration:none;color:#0A1428;transition:all .25s ease;display:flex;flex-direction:column;gap:12px">
  <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(255,107,26,.10);color:#FF6B1A;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;width:fit-content">Basic — L'essentiel</span>
  <h3 style="margin:0;font-size:1.15rem;font-weight:800">Entretien annuel obligatoire</h3>
  <p style="margin:0;font-size:.9rem;line-height:1.55;color:#475569;flex:1">Visite annuelle + attestation officielle. Rappel automatique 1 mois avant la date. Idéal locataire ou usage standard.</p>
- <div style="display:flex;align-items:baseline;gap:6px;font-weight:800;margin-top:6px"><span style="font-size:1.6rem;color:#FF6B1A">9 € HT</span><span style="color:#64748b;font-size:.84rem;font-weight:500">/mois (gaz) — 108 € HT/an</span></div>
+ <div style="display:flex;align-items:baseline;gap:6px;font-weight:800;margin-top:6px"><span class="ce-price" data-gaz="9" data-fioul="12" data-adoucisseur="11" style="font-size:1.6rem;color:#FF6B1A">9 € HT</span><span class="ce-meta" data-gaz="/mois (gaz) — 108 € HT/an" data-fioul="/mois (fioul) — 144 € HT/an" data-adoucisseur="/mois (adoucisseur) — 132 € HT/an" style="color:#64748b;font-size:.84rem;font-weight:500">/mois (gaz) — 108 € HT/an</span></div>
  <span style="margin-top:auto;color:#FF6B1A;font-weight:700;font-size:.86rem">Voir la formule Basic →</span>
  </a>
  <a href="contrats-entretien.html#confort" class="nv-contrat-card nv-contrat-featured" style="background:#fff;border:2px solid #FF6B1A;border-radius:18px;padding:24px;text-decoration:none;color:#0A1428;transition:all .25s ease;display:flex;flex-direction:column;gap:12px;box-shadow:0 14px 32px rgba(255,107,26,.22);position:relative">
@@ -290,14 +298,14 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(255,107,26,.15);color:#FF6B1A;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;width:fit-content;margin-top:4px">Confort — Sérénité</span>
  <h3 style="margin:0;font-size:1.15rem;font-weight:800">Entretien + 2 dépannages/an</h3>
  <p style="margin:0;font-size:.9rem;line-height:1.55;color:#475569;flex:1">Tout BASIC inclus + 2 dépannages/an (MO + déplacement). Intervention sous 48h max.</p>
- <div style="display:flex;align-items:baseline;gap:6px;font-weight:800;margin-top:6px"><span style="font-size:1.6rem;color:#FF6B1A">13 € HT</span><span style="color:#64748b;font-size:.84rem;font-weight:500">/mois (gaz) — 156 € HT/an</span></div>
+ <div style="display:flex;align-items:baseline;gap:6px;font-weight:800;margin-top:6px"><span class="ce-price" data-gaz="13" data-fioul="16" data-adoucisseur="15" style="font-size:1.6rem;color:#FF6B1A">13 € HT</span><span class="ce-meta" data-gaz="/mois (gaz) — 156 € HT/an" data-fioul="/mois (fioul) — 192 € HT/an" data-adoucisseur="/mois (adoucisseur) — 180 € HT/an" style="color:#64748b;font-size:.84rem;font-weight:500">/mois (gaz) — 156 € HT/an</span></div>
  <span style="margin-top:auto;color:#FF6B1A;font-weight:700;font-size:.86rem">Voir la formule Confort →</span>
  </a>
  <a href="contrats-entretien.html#securite" class="nv-contrat-card" style="background:#fff;border:1.5px solid #E5EDF3;border-radius:18px;padding:24px;text-decoration:none;color:#0A1428;transition:all .25s ease;display:flex;flex-direction:column;gap:12px">
  <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(225,29,72,.10);color:#E11D48;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;width:fit-content">Sécurité — Tout compris</span>
  <h3 style="margin:0;font-size:1.15rem;font-weight:800">Entretien + pièces incluses</h3>
  <p style="margin:0;font-size:.9rem;line-height:1.55;color:#475569;flex:1">Tout CONFORT + pièces de rechange courantes (carte électronique, sonde, vase). Sérénité totale.</p>
- <div style="display:flex;align-items:baseline;gap:6px;font-weight:800;margin-top:6px"><span style="font-size:1.6rem;color:#E11D48">18 € HT</span><span style="color:#64748b;font-size:.84rem;font-weight:500">/mois (gaz) — 216 € HT/an</span></div>
+ <div style="display:flex;align-items:baseline;gap:6px;font-weight:800;margin-top:6px"><span class="ce-price" data-gaz="18" data-fioul="22" data-adoucisseur="20" style="font-size:1.6rem;color:#E11D48">18 € HT</span><span class="ce-meta" data-gaz="/mois (gaz) — 216 € HT/an" data-fioul="/mois (fioul) — 264 € HT/an" data-adoucisseur="/mois (adoucisseur) — 240 € HT/an" style="color:#64748b;font-size:.84rem;font-weight:500">/mois (gaz) — 216 € HT/an</span></div>
  <span style="margin-top:auto;color:#E11D48;font-weight:700;font-size:.86rem">Voir la formule Sécurité →</span>
  </a>
  </div>
