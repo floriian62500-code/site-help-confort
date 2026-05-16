@@ -99,6 +99,9 @@ jobs:
             audit_meta_description_length.py
             audit_h1_length.py
             audit_robots_sitemap_url.py
+            audit_inline_style_size.py
+            audit_admin_pro_isolation.py
+            audit_phone_consistency.py
           )
           for a in "${AUDITS[@]}"; do
             f="admin-pro/audits/$a"
