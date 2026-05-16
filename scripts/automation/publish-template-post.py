@@ -111,13 +111,16 @@ log = logging.getLogger("publish-template-post")
 # CHARGEMENT .env
 # -----------------------------------------------------------------------------
 def charger_env() -> dict[str, str]:
-    """Charge les variables des fichiers .env (sans écraser l'environnement existant).
+    """Charge les variables des fichiers .env puis applique l'environnement.
 
-    Retourne un dict {clé: valeur} agrégé. Les variables d'environnement
-    existantes prennent priorité sur les valeurs lues dans les fichiers.
+    Ordre de priorité (du moins prioritaire au plus prioritaire) :
+      1. .autopush/.env       (fallback historique)
+      2. ~/.helpconfort/phase2.env  (convention runtime)
+      3. variables d'environnement réelles (launchd, shell, surcharges)
     """
     valeurs: dict[str, str] = {}
-    for env_file in ENV_FILES:
+    # On parcourt les fichiers du moins prioritaire au plus prioritaire
+    for env_file in reversed(ENV_FILES):
         if not env_file.exists():
             continue
         log.info("Chargement .env : %s", env_file)
@@ -128,12 +131,11 @@ def charger_env() -> dict[str, str]:
             cle, _, val = ligne.partition("=")
             cle = cle.strip()
             val = val.strip().strip('"').strip("'")
-            # Première occurrence gagne (priorité à phase2.env)
-            valeurs.setdefault(cle, val)
-    # L'environnement réel a la priorité ultime
-    for cle in list(valeurs.keys()):
-        if os.environ.get(cle):
-            valeurs[cle] = os.environ[cle]
+            valeurs[cle] = val   # écrase si déjà présent
+    # Surcharge finale par l'environnement réel
+    for cle, val in os.environ.items():
+        if val:
+            valeurs[cle] = val
     return valeurs
 
 
