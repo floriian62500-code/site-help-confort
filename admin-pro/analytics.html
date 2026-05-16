@@ -323,52 +323,254 @@
   }
   function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
+  // ─── Helpers UI pour la refonte ──────────────────────────
+  function variation(curr, prev){
+    if (!prev || prev === 0) return curr > 0 ? { v: '+100%', cls: 'up', icon: '↗' } : { v: '0%', cls: 'flat', icon: '—' };
+    const pct = Math.round(((curr - prev) / prev) * 100);
+    if (pct > 0) return { v: '+' + pct + '%', cls: 'up', icon: '↗' };
+    if (pct < 0) return { v: pct + '%', cls: 'down', icon: '↘' };
+    return { v: '0%', cls: 'flat', icon: '—' };
+  }
+  function sourceIcon(src){
+    const s = (src || '').toLowerCase();
+    if (s.includes('google') && s.includes('organic')) return { ico:'🔍', bg:'#4285F4', label:'Google Search' };
+    if (s.includes('google') && (s.includes('cpc')||s.includes('ads'))) return { ico:'💰', bg:'#34A853', label:'Google Ads' };
+    if (s.includes('google')) return { ico:'G', bg:'#4285F4', label:'Google' };
+    if (s.includes('facebook') || s.includes('fb')) return { ico:'f', bg:'#1877F2', label:'Facebook' };
+    if (s.includes('instagram') || s.includes('ig.')) return { ico:'📷', bg:'#E1306C', label:'Instagram' };
+    if (s.includes('linkedin')) return { ico:'in', bg:'#0A66C2', label:'LinkedIn' };
+    if (s.includes('bing')) return { ico:'B', bg:'#008373', label:'Bing' };
+    if (s.includes('direct')) return { ico:'⌨', bg:'#64748b', label:'Direct (saisie URL)' };
+    if (s.includes('referral')) return { ico:'🔗', bg:'#A78BFA', label:'Referral' };
+    if (s.includes('email') || s.includes('mail')) return { ico:'📧', bg:'#FFB400', label:'Email' };
+    if (s === '(not set)' || s.includes('not set')) return { ico:'?', bg:'#94a3b8', label:'Non catégorisé' };
+    return { ico:'🌐', bg:'#0DA0CF', label: src };
+  }
+  function pageMetier(path){
+    const p = (path || '').toLowerCase();
+    if (/plomb/.test(p)) return { ico:'💧', label:'Plomberie', color:'#0DA0CF' };
+    if (/chauff/.test(p)) return { ico:'🔥', label:'Chauffage', color:'#FF6B1A' };
+    if (/electric/.test(p)) return { ico:'⚡', label:'Électricité', color:'#FFB400' };
+    if (/serrur/.test(p)) return { ico:'🔒', label:'Serrurerie', color:'#7C3AED' };
+    if (/vitr/.test(p)) return { ico:'🪟', label:'Vitrerie', color:'#22C55E' };
+    if (/menuis|porte|volet/.test(p)) return { ico:'🚪', label:'Menuiserie', color:'#A78BFA' };
+    if (/pmr|adaptation/.test(p)) return { ico:'♿', label:'PMR', color:'#15803D' };
+    if (/contrat|entretien/.test(p)) return { ico:'📋', label:'Contrats', color:'#0884AE' };
+    if (/contact|devis/.test(p)) return { ico:'✉️', label:'Contact', color:'#C2410C' };
+    if (/realisation/.test(p)) return { ico:'🛠', label:'Réalisation', color:'#0A1428' };
+    if (/actualite|blog/.test(p)) return { ico:'📰', label:'Actu', color:'#FFB400' };
+    if (/zone|saint-omer|dunkerque/.test(p)) return { ico:'📍', label:'Zone', color:'#0DA0CF' };
+    if (/guide/.test(p)) return { ico:'📖', label:'Guide', color:'#A78BFA' };
+    if (p === '/' || p === '/index.html') return { ico:'🏠', label:'Accueil', color:'#0DA0CF' };
+    return { ico:'📄', label:'Page', color:'#64748b' };
+  }
+  function deviceIcon(d){
+    const v = (d || '').toLowerCase();
+    if (v === 'mobile') return { ico:'📱', label:'Mobile' };
+    if (v === 'tablet') return { ico:'📱', label:'Tablette' };
+    if (v === 'desktop') return { ico:'🖥', label:'Desktop' };
+    return { ico:'❓', label: d };
+  }
+
   document.getElementById('anContent').innerHTML = `
-    <div class="an-card">
-      <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Trafic visiteurs (GA4) — 30 derniers jours</h3>
+    <div class="an-card" style="padding:0;overflow:hidden;border:none;background:transparent;box-shadow:none">
       ${!ga4Ready ?
-        `<div class="an-empty" style="padding:24px">
+        `<div class="an-empty" style="padding:32px;background:#fff;border:1px solid var(--ink-100);border-radius:14px">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
           <p style="margin:0 0 12px;color:var(--ink-700)">GA4 non configuré</p>
           <div style="display:flex;gap:8px;justify-content:center"><a href="../guides/ga4.md" target="_blank" class="btn">📖 Guide</a><a href="settings.html#section-ga4" class="btn btn-primary">Configurer →</a></div>
         </div>`
         : ga4Stats ?
-        `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px">
-          <div style="padding:13px;background:#FAFCFD;border:1px solid var(--ink-100);border-radius:10px">
-            <div style="font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">👥 Visiteurs uniques</div>
-            <div style="font-size:1.5rem;font-weight:800;color:#0A1428;line-height:1.1">${(ga4Stats.users||ga4Stats.totalUsers||0).toLocaleString('fr-FR')}</div>
+        (() => {
+          const prev = ga4Previous || { sessions:0, users:0, views:0 };
+          const v1 = variation(ga4Stats.users, prev.users);
+          const v2 = variation(ga4Stats.sessions, prev.sessions);
+          const v3 = variation(ga4Stats.page_views, prev.views);
+          const min = Math.floor((ga4Stats.avg_duration_sec||0)/60);
+          const sec = (ga4Stats.avg_duration_sec||0)%60;
+          // Sparkline data pour graphique
+          const evolJSON = JSON.stringify(ga4DailyEvolution);
+          return `
+          <!-- HEADER PROPERTY -->
+          <div style="padding:16px 20px;background:linear-gradient(135deg,#0A1428,#0DA0CF);color:#fff;border-radius:14px 14px 0 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+            <div>
+              <div style="font-size:1.06rem;font-weight:800;display:flex;align-items:center;gap:8px"><svg width="22" height="22" viewBox="0 0 192 192"><path fill="#F9AB00" d="M152 154h-32V40c0-12 9-22 21-22s21 10 21 22v114h-10z"/><path fill="#E37400" d="M86 152V108c0-13 11-22 22-22s22 9 22 22v44H86z"/><circle fill="#E37400" cx="32" cy="142" r="22"/></svg> Google Analytics 4 — <span style="opacity:.85">30 derniers jours</span></div>
+              <div style="font-size:.74rem;opacity:.78;margin-top:4px">Property <code style="background:rgba(255,255,255,.18);padding:1px 6px;border-radius:4px">${escapeHtml(settings?.value?.property_id||'')}</code> · Live via API GA4 (OAuth user)</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <a href="https://analytics.google.com/analytics/web/#/p${escapeHtml(settings?.value?.property_id||'')}/reports/intelligenthome" target="_blank" style="padding:7px 12px;background:rgba(255,255,255,.18);color:#fff;text-decoration:none;border-radius:7px;font-size:.78rem;font-weight:700">Ouvrir dans GA4 ↗</a>
+              <a href="oauth-ga4.html" style="padding:7px 12px;background:rgba(255,255,255,.18);color:#fff;text-decoration:none;border-radius:7px;font-size:.78rem;font-weight:700">🔁 Reconnecter</a>
+            </div>
           </div>
-          <div style="padding:13px;background:#FAFCFD;border:1px solid var(--ink-100);border-radius:10px">
-            <div style="font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">📊 Sessions</div>
-            <div style="font-size:1.5rem;font-weight:800;color:#0A1428;line-height:1.1">${(ga4Stats.sessions||0).toLocaleString('fr-FR')}</div>
+
+          <!-- KPI HERO -->
+          <div style="background:#fff;padding:22px 20px;border-left:1px solid var(--ink-100);border-right:1px solid var(--ink-100)">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px">
+              <div style="padding:18px;background:linear-gradient(135deg,#EFF6FF,#fff);border:1px solid rgba(13,160,207,.20);border-radius:12px">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                  <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#0DA0CF,#0884AE);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem">👥</div>
+                  <div style="font-size:.7rem;color:#0884AE;font-weight:800;text-transform:uppercase;letter-spacing:.04em">Visiteurs</div>
+                </div>
+                <div style="font-size:2rem;font-weight:900;color:#0A1428;line-height:1">${(ga4Stats.users||0).toLocaleString('fr-FR')}</div>
+                <div style="margin-top:6px;font-size:.78rem;display:flex;align-items:center;gap:6px">
+                  <span style="font-weight:800;color:${v1.cls==='up'?'#15803d':v1.cls==='down'?'#B91C1C':'#64748b'}">${v1.icon} ${v1.v}</span>
+                  <span style="color:#64748b">vs J-60 à J-30</span>
+                </div>
+                <div style="margin-top:4px;font-size:.74rem;color:#64748b">${ga4Stats.newUsers || 0} nouveaux</div>
+              </div>
+
+              <div style="padding:18px;background:linear-gradient(135deg,#F5F3FF,#fff);border:1px solid rgba(124,58,237,.20);border-radius:12px">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                  <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#A78BFA,#7C3AED);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem">📊</div>
+                  <div style="font-size:.7rem;color:#7C3AED;font-weight:800;text-transform:uppercase;letter-spacing:.04em">Sessions</div>
+                </div>
+                <div style="font-size:2rem;font-weight:900;color:#0A1428;line-height:1">${(ga4Stats.sessions||0).toLocaleString('fr-FR')}</div>
+                <div style="margin-top:6px;font-size:.78rem;display:flex;align-items:center;gap:6px">
+                  <span style="font-weight:800;color:${v2.cls==='up'?'#15803d':v2.cls==='down'?'#B91C1C':'#64748b'}">${v2.icon} ${v2.v}</span>
+                  <span style="color:#64748b">vs J-60 à J-30</span>
+                </div>
+                <div style="margin-top:4px;font-size:.74rem;color:#64748b">${(ga4Stats.engagement_rate*100).toFixed(0)}% engagement</div>
+              </div>
+
+              <div style="padding:18px;background:linear-gradient(135deg,#FFF7ED,#fff);border:1px solid rgba(255,107,26,.20);border-radius:12px">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                  <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem">📄</div>
+                  <div style="font-size:.7rem;color:#C2410C;font-weight:800;text-transform:uppercase;letter-spacing:.04em">Pages vues</div>
+                </div>
+                <div style="font-size:2rem;font-weight:900;color:#0A1428;line-height:1">${(ga4Stats.page_views||0).toLocaleString('fr-FR')}</div>
+                <div style="margin-top:6px;font-size:.78rem;display:flex;align-items:center;gap:6px">
+                  <span style="font-weight:800;color:${v3.cls==='up'?'#15803d':v3.cls==='down'?'#B91C1C':'#64748b'}">${v3.icon} ${v3.v}</span>
+                  <span style="color:#64748b">vs J-60 à J-30</span>
+                </div>
+                <div style="margin-top:4px;font-size:.74rem;color:#64748b">${ga4Stats.sessions ? (ga4Stats.page_views/ga4Stats.sessions).toFixed(1) : '—'} vues/session</div>
+              </div>
+
+              <div style="padding:18px;background:linear-gradient(135deg,#F0FDF4,#fff);border:1px solid rgba(34,197,94,.20);border-radius:12px">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                  <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#22C55E,#15803D);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem">⏱</div>
+                  <div style="font-size:.7rem;color:#15803D;font-weight:800;text-transform:uppercase;letter-spacing:.04em">Durée moy.</div>
+                </div>
+                <div style="font-size:2rem;font-weight:900;color:#0A1428;line-height:1">${min}:${String(sec).padStart(2,'0')}</div>
+                <div style="margin-top:6px;font-size:.78rem;color:#64748b">par session</div>
+                <div style="margin-top:4px;font-size:.74rem;color:#64748b">${ga4Stats.avg_duration_sec > 60 ? '✓ Engagement bon' : ga4Stats.avg_duration_sec > 30 ? '~ Moyen' : '⚠ À améliorer'}</div>
+              </div>
+            </div>
           </div>
-          <div style="padding:13px;background:#FAFCFD;border:1px solid var(--ink-100);border-radius:10px">
-            <div style="font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">📄 Pages vues</div>
-            <div style="font-size:1.5rem;font-weight:800;color:#0A1428;line-height:1.1">${(ga4Stats.page_views||ga4Stats.screenPageViews||0).toLocaleString('fr-FR')}</div>
+
+          <!-- GRAPHIQUE ÉVOLUTION 30 JOURS -->
+          ${ga4DailyEvolution.length ? `
+          <div style="background:#fff;padding:22px 20px;border-left:1px solid var(--ink-100);border-right:1px solid var(--ink-100);border-top:1px solid var(--ink-100)">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+              <h3 style="margin:0;font-size:1rem;font-weight:800;color:#0A1428">📈 Évolution du trafic (30 jours)</h3>
+              <div style="display:flex;gap:14px;font-size:.78rem">
+                <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#0DA0CF"></span>Sessions</span>
+                <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#FF6B1A"></span>Visiteurs</span>
+                <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#7C3AED"></span>Pages vues</span>
+              </div>
+            </div>
+            <div style="position:relative;height:260px"><canvas id="ga4EvolutionChart" data-evol='${evolJSON.replace(/'/g, "&#39;")}'></canvas></div>
+          </div>` : ''}
+
+          <!-- 2 COLONNES : Top sources + Top pages -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;background:#fff;border:1px solid var(--ink-100);border-top:none;border-radius:0 0 14px 14px;padding:0">
+            <!-- COL 1 : TOP SOURCES -->
+            <div style="padding:22px 20px;border-right:1px solid var(--ink-100)">
+              <h3 style="margin:0 0 14px;font-size:1rem;font-weight:800;color:#0A1428">🔗 Top sources de trafic</h3>
+              ${topSources.length ? `<div style="display:flex;flex-direction:column;gap:10px">
+                ${topSources.map(s => {
+                  const ic = sourceIcon(s.source);
+                  const pct = topSources[0]?.sessions ? (s.sessions / topSources[0].sessions * 100).toFixed(0) : 0;
+                  return `<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--ink-50)">
+                    <div style="width:36px;height:36px;border-radius:9px;background:${ic.bg};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.92rem;flex-shrink:0">${ic.ico}</div>
+                    <div style="flex:1;min-width:0">
+                      <div style="font-weight:700;color:#0A1428;font-size:.86rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(ic.label)}</div>
+                      <div style="position:relative;height:6px;background:#f1f5f9;border-radius:3px;margin-top:5px;overflow:hidden">
+                        <div style="position:absolute;left:0;top:0;bottom:0;width:${pct}%;background:linear-gradient(90deg,${ic.bg},${ic.bg}cc);border-radius:3px"></div>
+                      </div>
+                    </div>
+                    <div style="text-align:right;flex-shrink:0">
+                      <div style="font-weight:900;color:#0A1428;font-size:1rem">${s.sessions}</div>
+                      <div style="font-size:.7rem;color:#64748b">${s.users} visiteurs</div>
+                    </div>
+                  </div>`;
+                }).join('')}
+              </div>` : '<p style="color:#64748b;font-size:.86rem">Pas encore de données sources.</p>'}
+            </div>
+
+            <!-- COL 2 : TOP PAGES -->
+            <div style="padding:22px 20px">
+              <h3 style="margin:0 0 14px;font-size:1rem;font-weight:800;color:#0A1428">📄 Top pages visitées</h3>
+              ${topPages.length ? `<div style="display:flex;flex-direction:column;gap:10px">
+                ${topPages.map(p => {
+                  const m = pageMetier(p.path);
+                  const pct = topPages[0]?.views ? (p.views / topPages[0].views * 100).toFixed(0) : 0;
+                  const url = p.path.startsWith('/') ? 'https://depan59-62.fr' + p.path : '#';
+                  return `<a href="${escapeHtml(url)}" target="_blank" style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--ink-50);text-decoration:none;color:inherit">
+                    <div style="width:36px;height:36px;border-radius:9px;background:${m.color}1f;color:${m.color};display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0">${m.ico}</div>
+                    <div style="flex:1;min-width:0">
+                      <div style="font-weight:700;color:#0A1428;font-size:.84rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:Menlo,Monaco,monospace">${escapeHtml(p.path.length>40?p.path.slice(0,37)+'…':p.path)}</div>
+                      <div style="position:relative;height:6px;background:#f1f5f9;border-radius:3px;margin-top:5px;overflow:hidden">
+                        <div style="position:absolute;left:0;top:0;bottom:0;width:${pct}%;background:linear-gradient(90deg,${m.color},${m.color}aa);border-radius:3px"></div>
+                      </div>
+                    </div>
+                    <div style="text-align:right;flex-shrink:0">
+                      <div style="font-weight:900;color:#0A1428;font-size:1rem">${p.views}</div>
+                      <div style="font-size:.7rem;color:#64748b">${p.users} uniq.</div>
+                    </div>
+                  </a>`;
+                }).join('')}
+              </div>` : '<p style="color:#64748b;font-size:.86rem">Pas encore de données pages.</p>'}
+            </div>
           </div>
-          <div style="padding:13px;background:#FAFCFD;border:1px solid var(--ink-100);border-radius:10px">
-            <div style="font-size:.7rem;color:var(--ink-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">⏱ Durée moyenne</div>
-            <div style="font-size:1.5rem;font-weight:800;color:#0A1428;line-height:1.1">${ga4Stats.avg_duration_sec ? Math.floor(ga4Stats.avg_duration_sec/60)+':'+String(ga4Stats.avg_duration_sec%60).padStart(2,'0') : '—'}</div>
-          </div>
-        </div>
-        <p style="margin-top:14px;font-size:.78rem;color:var(--ink-400)">Données live depuis l'API GA4 (signature client-side RS256) · property ${escapeHtml(settings?.value?.property_id||'')} · 30 derniers jours</p>
-        ${topSources.length ? `
-          <h4 style="margin:18px 0 6px;font-size:.9rem;font-weight:800;color:#0A1428">🔗 Top sources (30 j)</h4>
-          <div class="distrib-list">${topSources.map(s => `
-            <div class="distrib-row">
-              <div class="label">${escapeHtml(s.source)}</div>
-              <div class="bar-wrap"><div class="bar" style="width:${(s.sessions/(topSources[0]?.sessions||1)*100).toFixed(1)}%"></div></div>
-              <div class="count">${s.sessions}</div>
-            </div>`).join('')}</div>` : ''}
-        ${topPages.length ? `
-          <h4 style="margin:18px 0 6px;font-size:.9rem;font-weight:800;color:#0A1428">📄 Top pages (30 j)</h4>
-          <div class="distrib-list">${topPages.map(p => `
-            <div class="distrib-row">
-              <div class="label" style="font-family:Menlo,Monaco,monospace;font-size:.78rem">${escapeHtml(p.path.length>50?p.path.slice(0,47)+'…':p.path)}</div>
-              <div class="bar-wrap"><div class="bar" style="width:${(p.views/(topPages[0]?.views||1)*100).toFixed(1)}%"></div></div>
-              <div class="count">${p.views}</div>
-            </div>`).join('')}</div>` : ''}
-        `
+
+          <!-- 3ème ROW : Devices + Top villes -->
+          ${(ga4Devices.length || ga4TopCities.length) ? `
+          <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            ${ga4Devices.length ? `<div style="padding:18px;background:#fff;border:1px solid var(--ink-100);border-radius:12px">
+              <h3 style="margin:0 0 12px;font-size:.96rem;font-weight:800;color:#0A1428">📱 Devices</h3>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                ${ga4Devices.map(d => {
+                  const ic = deviceIcon(d.device);
+                  const total = ga4Devices.reduce((s,x)=>s+x.sessions,0);
+                  const pct = total ? (d.sessions/total*100).toFixed(0) : 0;
+                  return `<div style="display:flex;align-items:center;gap:10px">
+                    <div style="font-size:1.2rem">${ic.ico}</div>
+                    <div style="flex:1">
+                      <div style="display:flex;justify-content:space-between;font-size:.84rem;font-weight:700">
+                        <span>${escapeHtml(ic.label)}</span>
+                        <span>${d.sessions} <small style="color:#64748b;font-weight:400">(${pct}%)</small></span>
+                      </div>
+                      <div style="position:relative;height:4px;background:#f1f5f9;border-radius:2px;margin-top:4px;overflow:hidden">
+                        <div style="position:absolute;left:0;top:0;bottom:0;width:${pct}%;background:#0DA0CF;border-radius:2px"></div>
+                      </div>
+                    </div>
+                  </div>`;
+                }).join('')}
+              </div>
+            </div>` : ''}
+            ${ga4TopCities.length ? `<div style="padding:18px;background:#fff;border:1px solid var(--ink-100);border-radius:12px">
+              <h3 style="margin:0 0 12px;font-size:.96rem;font-weight:800;color:#0A1428">📍 Top villes</h3>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                ${ga4TopCities.slice(0,6).map(ct => {
+                  const total = ga4TopCities[0]?.sessions || 1;
+                  const pct = (ct.sessions/total*100).toFixed(0);
+                  return `<div style="display:flex;align-items:center;gap:10px">
+                    <div style="flex:1">
+                      <div style="display:flex;justify-content:space-between;font-size:.84rem;font-weight:700">
+                        <span>${escapeHtml(ct.city)}</span>
+                        <span>${ct.sessions}</span>
+                      </div>
+                      <div style="position:relative;height:4px;background:#f1f5f9;border-radius:2px;margin-top:4px;overflow:hidden">
+                        <div style="position:absolute;left:0;top:0;bottom:0;width:${pct}%;background:#FF6B1A;border-radius:2px"></div>
+                      </div>
+                    </div>
+                  </div>`;
+                }).join('')}
+              </div>
+            </div>` : ''}
+          </div>` : ''}
+          `;
+        })()
         :
         `<div style="padding:18px;background:linear-gradient(135deg,#FEF2F2,#fff);border:1px solid rgba(220,38,38,.30);border-radius:10px">
           <p style="margin:0;font-size:.92rem;color:#991B1B;font-weight:700">⚠ GA4 ne renvoie pas de données${ga4Error ? ' — '+escapeHtml(ga4Error) : ''}</p>

@@ -603,6 +603,32 @@ v.addEventListener('pause', function(){ play.style.opacity = 1; });
 }
 })();
 </script>
+
+<!-- ─── Indicateur de scroll (flèche pulse) ─── -->
+<a href="#hc-reservation" class="hc-scroll-cue" aria-label="Voir plus de contenu en bas">
+ <span class="hsc-label">Découvrir</span>
+ <span class="hsc-arrow" aria-hidden="true">
+ <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+ </span>
+</a>
+<style>
+ .hc-scroll-cue{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);display:inline-flex;flex-direction:column;align-items:center;gap:6px;padding:10px 16px;background:rgba(255,255,255,.94);border:1px solid rgba(13,160,207,.25);border-radius:999px;text-decoration:none;color:#0A1428;font-size:.74rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;box-shadow:0 8px 24px rgba(10,20,40,.10);z-index:5;transition:transform.25s ease,box-shadow.25s ease,opacity.4s ease;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+ .hc-scroll-cue:hover{transform:translateX(-50%) translateY(-3px);box-shadow:0 14px 32px rgba(13,160,207,.18);border-color:#0DA0CF}
+ .hc-scroll-cue .hsc-arrow{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#1FC4F0,#0DA0CF);color:#fff;animation:hscBounce 1.8s ease-in-out infinite;box-shadow:0 4px 10px rgba(13,160,207,.30)}
+ @keyframes hscBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+ .hc-scroll-cue.is-hidden{opacity:0;pointer-events:none}
+ @media(max-width:640px){.hc-scroll-cue{bottom:14px;padding:8px 12px;font-size:.68rem}.hc-scroll-cue .hsc-label{display:none}}
+</style>
+<script>
+ (function(){
+   var cue = document.querySelector('.hc-scroll-cue');
+   if (!cue) return;
+   window.addEventListener('scroll', function(){
+     if (window.scrollY > 120) cue.classList.add('is-hidden');
+     else cue.classList.remove('is-hidden');
+   }, { passive:true });
+ })();
+</script>
 </section>
 
 <section class="hc-trust-strip" aria-label="Garanties et certifications">
