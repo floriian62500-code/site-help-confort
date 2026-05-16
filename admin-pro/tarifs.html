@@ -173,14 +173,20 @@
   const sb = await HCSupabase.init();
   const safe = (p) => p.then(r => r).catch(e => { console.warn('[admin] fetch err:', e && e.message); return { data: [], error: e }; });
   let liveData = null;
+  let allServices = [];      // pour CRUD : tableau complet (raw)
+  let catBySlug = {};        // map slug → cat (id, name)
+  let catById = {};          // map id → cat
   try {
     const [svcRes, catRes] = await Promise.all([
       safe(sb.from('services').select('*').eq('active', true).order('position')),
       safe(sb.from('service_categories').select('*').eq('active', true).order('position'))
   ]);
     if (!svcRes.error && svcRes.data) {
-      const services = svcRes.data;
+      allServices = svcRes.data;
       const cats = (catRes.data || []).reduce((acc, c) => { acc[c.id] = c; return acc; }, {});
+      catById = cats;
+      (catRes.data || []).forEach(c => { if (c.slug) catBySlug[c.slug.toLowerCase()] = c; });
+      const services = svcRes.data;
       // Regroupe par slug de catégorie pour matcher la structure DATA hardcodée
       const groupBy = (slug) => services.filter(s => {
         const cat = cats[s.category_id];
@@ -188,10 +194,14 @@
         const catSlug = (cat.slug || '').toLowerCase();
         return catSlug === slug || catSlug.startsWith(slug + '-') || catSlug.endsWith('-' + slug);
       }).map(s => ({
+        id: s.id,
         name: s.name,
         ht: Number(s.price_ht).toFixed(2),
         ttc: Math.round(s.price_ht * (1 + s.vat_rate) * 100) / 100,
-        ref: s.slug
+        ref: s.slug,
+        vat_rate: s.vat_rate,
+        category_id: s.category_id,
+        raw: s
       }));
       liveData = {
         plomberie:   groupBy('plomberie'),
