@@ -657,14 +657,16 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  // LEAD-GATE : Active le verrou des prix tant que coords pas remplies
  // ═══════════════════════════════════════════════════════════════
  const LG_KEY = 'hc_leadgate_unlocked_v1';
- function isUnlocked(){ try { return localStorage.getItem(LG_KEY) === '1'; } catch(_) { return false; } }
+ // ⚠️ Lead-gate TOUJOURS actif (décision Florian) : les prix prestations restent floutés jusqu'à saisie coords.
+ // Les contrats d'entretien (.npce-card) ne sont PAS floutés — voir CSS.
+ function isUnlocked(){ return false; }
  function unlock(){ try { localStorage.setItem(LG_KEY, '1'); } catch(_) {} document.body.classList.remove('is-locked'); }
  function lock(){ document.body.classList.add('is-locked'); }
  function showLgModal(){ document.getElementById('nvLeadgateModal').hidden = false; document.body.style.overflow = 'hidden'; }
  function hideLgModal(){ document.getElementById('nvLeadgateModal').hidden = true; document.body.style.overflow = ''; }
 
- // Au chargement : si pas unlocked, on lock
- if (!isUnlocked()) lock();
+ // Au chargement : lock systématique
+ lock();
 
  // Click sur "Voir le tarif" (bouton réserver locked) ou prix → ouvre modal
  document.addEventListener('click', function(e){
