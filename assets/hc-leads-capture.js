@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════
-// HELP! Confort — Capture des leads depuis les formulaires du site
+// HELP Confort — Capture des leads depuis les formulaires du site
 // Inclure ce script sur toutes les pages qui ont un formulaire
 // Usage : <form data-hc-lead="devis"> ... </form>
 // Les champs doivent avoir les attributs name="" cohérents

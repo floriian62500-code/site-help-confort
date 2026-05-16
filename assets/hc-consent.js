@@ -1,5 +1,5 @@
 /*!
- * HELP! Confort — Banner de consentement RGPD (HC-CONSENT-V1)
+ * HELP Confort — Banner de consentement RGPD (HC-CONSENT-V1)
  * ───────────────────────────────────────────────────────────
  * Banner minimal CSS pur (zéro dépendance). Affiché tant que l'utilisateur
  * n'a pas choisi. 2 boutons : Accepter (analytics actives) / Refuser (rien

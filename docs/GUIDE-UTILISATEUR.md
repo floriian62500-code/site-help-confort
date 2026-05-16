@@ -1,4 +1,4 @@
-# Guide utilisateur — Back-Office HELP! Confort
+# Guide utilisateur — Back-Office HELP Confort
 
 > Pense-bête rapide pour retrouver les fonctions clés du back-office. Pas besoin de lire ça d'un trait — utilise-le comme référence ponctuelle.
 
@@ -40,7 +40,7 @@
 5. **Toi tu dois** :
    - Cliquer sur la ligne du client → modal détaillée (énergie, équipement, CGV, etc.)
    - Aller dans **Apogée** créer le contact / lead correspondant
-   - Revenir sur HELP! Confort → clic bouton **`📥 Importé`** sur la ligne → saisir l'ID externe Apogée (facultatif)
+   - Revenir sur HELP Confort → clic bouton **`📥 Importé`** sur la ligne → saisir l'ID externe Apogée (facultatif)
 6. Le contrat passe en `✓ CRM` (vert)
 
 **Pour gagner du temps** : si tu as importé plusieurs souscriptions d'un coup dans Apogée, utilise le bouton **"Tout marquer importé"** en haut de la liste.

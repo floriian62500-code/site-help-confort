@@ -44,8 +44,8 @@ Google va te proposer plusieurs méthodes. Choisis **« Balise HTML »** (la plu
 ## 3️⃣ Google Business Profile (5 min)
 
 1. Va sur https://business.google.com
-2. Connecte-toi avec ton compte Google (celui qui gère HELP! Confort Saint-Omer)
-3. Sélectionne la fiche **HELP! Confort Saint-Omer**
+2. Connecte-toi avec ton compte Google (celui qui gère HELP Confort Saint-Omer)
+3. Sélectionne la fiche **HELP Confort Saint-Omer**
 4. Onglet **Infos** → **Horaires** :
    - Lundi : 9h00 – 17h00
    - Mardi : 9h00 – 17h00

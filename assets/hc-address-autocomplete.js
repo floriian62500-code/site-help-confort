@@ -1,5 +1,5 @@
 /*!
- * HELP! Confort — Autocomplete adresse (BAN api-adresse.data.gouv.fr)
+ * HELP Confort — Autocomplete adresse (BAN api-adresse.data.gouv.fr)
  *
  * Auto-attache à TOUT champ <input name="adresse"> du site.
  * - Si CP + ville voisins (name="cp" et name="ville") → remplit aussi.

@@ -1,4 +1,4 @@
-# Changelog HELP! Confort — Site vitrine
+# Changelog HELP Confort — Site vitrine
 
 Format : entrée par session de travail, classé par impact (critique, fonctionnel, esthétique).
 

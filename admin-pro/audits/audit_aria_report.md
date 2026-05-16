@@ -1,4 +1,4 @@
-# Audit ARIA / a11y — HELP! Confort
+# Audit ARIA / a11y — HELP Confort
 
 _Généré par `admin-pro/audits/audit_aria.py` — 39 pages scannées._
 

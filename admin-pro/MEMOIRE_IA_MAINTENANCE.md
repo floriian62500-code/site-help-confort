@@ -305,7 +305,7 @@ Ce document recense tous les bugs trouvés manuellement pendant la session du 13
   - Bonus : si une colonne a une `CHECK` constraint, vérifier que la valeur envoyée respecte la contrainte.
 
 ### 30bis. Images vides dans JSON statique → placeholder générique partout
-- **Symptôme** : Sur la home, le carousel "Nos dernières actualités" affiche systématiquement un placeholder "❓ HELP! Confort" au lieu d'images de chantiers.
+- **Symptôme** : Sur la home, le carousel "Nos dernières actualités" affiche systématiquement un placeholder "❓ HELP Confort" au lieu d'images de chantiers.
 - **Cause racine** : Toutes les entrées de `content/actualites/index.json` ont `"image": ""` ET `"source_facebook": ""`. Le code passe au fallback générique.
 - **Cause amont** : La sync Facebook qui devait peupler ces champs ne tourne pas (cf. bug #9 cron non configuré).
 - **Correctif court terme** : Améliorer le placeholder pour qu'il devine le métier depuis le titre (`mitigeur` → 💧 Plomberie, `vitrage` → 🪟 Vitrerie, `panneau PVC` → 🚪 Menuiserie) avec un gradient et une icône appropriée. Ajout `onerror` sur `<img>` pour fallback gracieux.

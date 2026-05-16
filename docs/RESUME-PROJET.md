@@ -1,4 +1,4 @@
-# 📋 Résumé du projet — Site HELP! Confort Saint-Omer
+# 📋 Résumé du projet — Site HELP Confort Saint-Omer
 
 > **À coller au début d'une nouvelle conversation Cowork** pour reprendre le travail sans repartir de zéro.
 > Mise à jour : **12 mai 2026 — Vague T** (audit complet + SEO sprint majeur + UX 5 pages métiers + nettoyage repo + auto-push permanent)
@@ -72,7 +72,7 @@
 
 ## 🏢 Le client
 
-- **Entreprise** : SARL Dépan'Audo, exploitante de la marque **HELP! Confort Saint-Omer / Dunkerque**
+- **Entreprise** : SARL Dépan'Audo, exploitante de la marque **HELP Confort Saint-Omer / Dunkerque**
 - **Métiers** (9) : plomberie, chauffage, électricité, serrurerie, vitrerie, menuiserie, volets, rénovation, adaptation PMR
 - **Zone** : Saint-Omer + Dunkerque + 55 km à la ronde
 - **Adresse** : 242 route de Boulogne, Saint-Martin-lez-Tatinghem 62500
@@ -107,7 +107,7 @@
 ## ✅ État final (après audit complet et améliorations 10 mai)
 
 ### Hero homepage
-- Eyebrow badge orange « Agence officielle Réseau HELP! Confort » + zones (Saint-Omer · Dunkerque) + horaires (Lun-Sam · 8h-18h)
+- Eyebrow badge orange « Agence officielle Réseau HELP Confort » + zones (Saint-Omer · Dunkerque) + horaires (Lun-Sam · 8h-18h)
 - H1 grand format : « Un dépannage. Une rénovation. *Une seule équipe pour tous vos travaux.* »
 - Lead avec slogan « Quand ça lâche, on répond. Et on règle. »
 - 2 cartes avis : Google 4,7/5 (343 avis) + Trustville 4,0/5
@@ -143,7 +143,7 @@
 
 ### Footer harmonisé
 - Version standard (footer-grid 6263 chars) sur 31/31 pages
-- Logo, tagline, contact, réseau HELP! Confort, mentions légales
+- Logo, tagline, contact, réseau HELP Confort, mentions légales
 
 ### Pages métiers
 - Plombier, chauffagiste, électricien, serrurier (vitrerie inclus), travaux (menuiserie/rénovation/volets)
@@ -185,7 +185,7 @@
 ## 🎨 Vague S — Refonte UX globale + presets visuel HC (12 mai 2026)
 
 ### Générateur visuel `visuel.html` — refonte complète
-Reproduit fidèlement les **7 templates "Avant/Après"** officiels HELP! Confort (fournis en PDF par Florian) :
+Reproduit fidèlement les **7 templates "Avant/Après"** officiels HELP Confort (fournis en PDF par Florian) :
 - **Plomberie** : fond cyan saturé `#0093D0` · picto robinet
 - **Menuiserie / Chauffage** : fond orange vif `#F37322` · picto règle
 - **Rénovation** : fond brun taupe `#9C8B78` · picto maison
@@ -194,7 +194,7 @@ Reproduit fidèlement les **7 templates "Avant/Après"** officiels HELP! Confort
 - **Volet Roulant** : fond violet `#9C1E84` · picto lamelles
 - **PMR** : fond bleu marine `#2A4FA0` · picto maison+main
 
-Layout fidèle : logo HELP! Confort + "Une marque de La Poste" en haut-gauche, 2 photos côte-à-côte avec bandes blanches qui dépassent (effet caractéristique), étiquettes blanches AVANT/APRÈS sous chaque photo (texte coloré métier), nom du métier centré + picto rond en bas. Format 1080×1080 (Instagram carré), 1080×1350 (portrait), 1200×630 (FB feed), 1080×1920 (story).
+Layout fidèle : logo HELP Confort + "Une marque de La Poste" en haut-gauche, 2 photos côte-à-côte avec bandes blanches qui dépassent (effet caractéristique), étiquettes blanches AVANT/APRÈS sous chaque photo (texte coloré métier), nom du métier centré + picto rond en bas. Format 1080×1080 (Instagram carré), 1080×1350 (portrait), 1200×630 (FB feed), 1080×1920 (story).
 
 ### Templates de posts `templates.html` — refonte
 - **14 templates** au lieu de 6 (ajouts : témoignage 5★, urgence fuite, chantier terminé, conseil saisonnier, jour férié, promo contrats gaz, portrait équipe)
@@ -331,7 +331,7 @@ Le push échoue avec `Password authentication is not supported for Git operation
 
 ## 📞 Comment reprendre dans une nouvelle conversation
 
-> Bonjour, je reprends mon projet **site HELP! Confort Saint-Omer**. Le dossier de travail est `/Users/HP/Documents/Claude/Projects/SITE INTERNET/`.
+> Bonjour, je reprends mon projet **site HELP Confort Saint-Omer**. Le dossier de travail est `/Users/HP/Documents/Claude/Projects/SITE INTERNET/`.
 >
 > Lis le fichier `RESUME-PROJET.md` à la racine pour avoir tout le contexte.
 >

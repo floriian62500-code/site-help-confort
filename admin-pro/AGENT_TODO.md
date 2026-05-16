@@ -1,4 +1,4 @@
-# 🎉 Tout est fait — HELP! Confort Saint-Omer
+# 🎉 Tout est fait — HELP Confort Saint-Omer
 
 > **Mise à jour 15 mai 2026 — PM (agent autonome session 2)** — P1 à P9 cochés ; P10 ajouté (12 items monitoring/audits) dont 3 déjà cochés via audit live.
 > L'agent peut désormais s'occuper exclusivement de monitoring (nouveaux bugs, ajout contenu).
@@ -27,7 +27,7 @@
 >
 > 🎉 **TODO P15 épuisé le 2026-05-16 matin** (session 5 agent autonome) — 2 dernières sondes livrées : `audit_image_dimensions.py` (5 patches PIL prêts à coller + 24 externes Unsplash + 49 non-résolues, décision Florian sur application masse) et `audit_consent_default_state.py` (parser brace-counter qui valide que `hc-consent.js` n'écrit aucun storage hors scope user-triggered ; garde tracking.js OK ; conforme RGPD strict ✓). Workflow nightly à **44 audits**. P16 ouvert ci-dessous.
 
-# 🤖 Agent TODO — Travail autonome HELP! Confort
+# 🤖 Agent TODO — Travail autonome HELP Confort
 
 > Ce fichier pilote l'agent IA pendant les absences de Florian.
 > À chaque déclenchement, l'agent doit lire ce fichier, faire le **prochain item non-coché** (`[ ]`), le marquer `[x]` avec date+commit-hash, puis sortir.

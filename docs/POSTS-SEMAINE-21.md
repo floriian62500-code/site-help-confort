@@ -55,7 +55,7 @@ Ta facture d'eau a bondi sans raison ? Un bruit d'écoulement quand personne n'u
 **Texte** :
 Aujourd'hui c'est l'Ascension, et ta chaudière n'a pas regardé le calendrier. Pas de panique : notre permanence dépannage tourne aussi les jours fériés sur tout le secteur Saint-Omer et Dunkerque. Une fuite, une panne de chauffage, un problème électrique ? On est là. Profite quand même de ta journée — et garde le 03 66 10 01 34 sous le coude au cas où.
 
-**Visuel suggéré** : Visuel "permanence" simple OU photo van HELP! Confort
+**Visuel suggéré** : Visuel "permanence" simple OU photo van HELP Confort
 
 **Hashtags** : #dépannage24h #saintomer #ascension #urgence #helpconfort
 

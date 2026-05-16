@@ -1,6 +1,6 @@
 # 🎯 RÉCAP COMPLET — Tout ce qui a été fait
 
-> Document de référence pour Florian — synthèse exhaustive de l'autonomisation du projet HELP! Confort.
+> Document de référence pour Florian — synthèse exhaustive de l'autonomisation du projet HELP Confort.
 > Dernière mise à jour : 15 mai 2026.
 
 ---

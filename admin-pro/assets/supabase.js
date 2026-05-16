@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════
-// Supabase Client — HELP! Confort Back-Office
+// Supabase Client — HELP Confort Back-Office
 // ═══════════════════════════════════════════════════════════════
 
 const SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';

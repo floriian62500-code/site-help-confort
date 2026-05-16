@@ -1,4 +1,4 @@
-# Audits qualité — HELP! Confort
+# Audits qualité — HELP Confort
 
 Scripts d'audit local lancés à la demande pour pré-filtrer les erreurs HTML/JSON-LD avant validation W3C/schema.org officielle.
 

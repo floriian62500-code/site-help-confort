@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   HELP! Confort — Module "Site Content"
+   HELP Confort — Module "Site Content"
    Lit le contenu éditable depuis Supabase et l'injecte dans les pages.
    Cherche les éléments avec data-content="path.to.key" et y remplace
    leur contenu textuel.

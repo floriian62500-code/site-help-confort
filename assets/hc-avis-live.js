@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   HELP! Confort — Module "Avis Live"
+   HELP Confort — Module "Avis Live"
    Affiche les derniers avis clients depuis Supabase
    Cherche un placeholder <div id="hc-avis-live"></div> dans la page
    et y injecte un carrousel d'avis récents (note >= 4, avec commentaire).

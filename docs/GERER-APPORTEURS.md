@@ -69,7 +69,7 @@ Le bandeau défile en ordre croissant.
 - **Bailleur privé**
 - **Agence immobilière**
 - **Collectivité / CCAS** (mairies, CCAS, intercommunalités)
-- **Réseau / Groupe national** (HELP! Confort, La Poste, etc.)
+- **Réseau / Groupe national** (HELP Confort, La Poste, etc.)
 - **Partenaire pro** (autres entreprises BTP)
 - **Autre**
 

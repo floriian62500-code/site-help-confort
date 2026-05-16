@@ -1,6 +1,6 @@
 # 📂 Scripts de synchronisation
 
-Ce dossier contient les scripts utilitaires du site HELP! Confort.
+Ce dossier contient les scripts utilitaires du site HELP Confort.
 
 ## 🔄 sync-facebook-posts.py
 

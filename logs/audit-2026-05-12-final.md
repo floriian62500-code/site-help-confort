@@ -1,4 +1,4 @@
-# 🤖 Rapport Final Maintenance — HELP! Confort
+# 🤖 Rapport Final Maintenance — HELP Confort
 
 **Date** : 2026-05-12 (session autonome)
 **Agent** : Claude (Cowork Maintenance Mode)

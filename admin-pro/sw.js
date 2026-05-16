@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════════════
-// Service Worker — HELP! Confort Back-Office
+// Service Worker — HELP Confort Back-Office
 // ═══════════════════════════════════════════════════════════════════════════
 // Stratégie minimaliste pour PWA installable :
 //   - Cache des assets statiques (CSS, JS, fonts)
@@ -81,7 +81,7 @@ self.addEventListener('push', (event) => {
   if (!event.data) return;
   const data = event.data.json();
   event.waitUntil(
-    self.registration.showNotification(data.title || 'HELP! Confort', {
+    self.registration.showNotification(data.title || 'HELP Confort', {
       body: data.body || '',
       icon: '/logo-help-confort.png',
       badge: '/logo-help-confort.png',

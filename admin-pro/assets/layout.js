@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════
-// HELP! Confort — Layout commun back-office
+// HELP Confort — Layout commun back-office
 // Injecte sidebar + topbar dynamiquement, met à jour le badge nav
 // ═══════════════════════════════════════════════════════════════
 window.HCLayout = (function() {
@@ -226,7 +226,7 @@ window.HCLayout = (function() {
       <div class="admin-sidebar-brand">
         <div class="admin-brand-logo">H!</div>
         <div class="admin-brand-text">
-          <strong>HELP! Confort</strong>
+          <strong>HELP Confort</strong>
           <span>${MODULES[activeModule]?.label || 'Back-Office'}</span>
         </div>
       </div>
@@ -416,7 +416,7 @@ window.HCLayout = (function() {
         newLeads.forEach(l => {
           const isUrgent = l.priority === 'urgente';
           const n = new Notification(
-            isUrgent ? '🔥 LEAD URGENT — HELP! Confort' : '🔔 Nouveau lead — HELP! Confort',
+            isUrgent ? '🔥 LEAD URGENT — HELP Confort' : '🔔 Nouveau lead — HELP Confort',
             {
               body: `${l.nom}${l.metier ? ' · ' + l.metier : ''}${l.ville ? ' · ' + l.ville : ''}${l.telephone ? '\n📞 ' + l.telephone : ''}`,
               icon: '/logo-help-confort.png',
@@ -1104,7 +1104,7 @@ window.HCLayout = (function() {
   }
 
   function fallbackSidebar(activePage) {
-    return '<div class="admin-sidebar-brand"><div class="admin-brand-logo">H!</div><div class="admin-brand-text"><strong>HELP! Confort</strong><span>Back-Office Pro</span></div></div>' +
+    return '<div class="admin-sidebar-brand"><div class="admin-brand-logo">H!</div><div class="admin-brand-text"><strong>HELP Confort</strong><span>Back-Office Pro</span></div></div>' +
       '<nav class="admin-sidebar-nav" style="padding:10px"><div style="color:#fff;font-size:.8rem;padding:10px;background:rgba(217,45,32,.20);border-radius:8px;margin-bottom:10px">⚠ Sidebar fallback (erreur chargement)</div>' +
       '<a href="index.html" class="admin-nav-item">Dashboard</a>' +
       '<a href="realisations.html" class="admin-nav-item">Réalisations</a>' +

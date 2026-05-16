@@ -3,7 +3,7 @@ LOGOS OFFICIELS DES APPORTEURS D'AFFAIRES
 Glisser-déposer les logos officiels dans ce dossier avec ces noms exacts
 (sensible à la casse, en minuscules) :
 
-- help-confort.png   → Réseau HELP! Confort
+- help-confort.png   → Réseau HELP Confort
 - homeserve.png      → HomeServe
 - dynaren.png        → Dynaren (l'après-sinistre responsable)
 - viaren.png         → ViaREN

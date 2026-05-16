@@ -1,4 +1,4 @@
-# Audit HELP! Confort — 2026-05-16
+# Audit HELP Confort — 2026-05-16
 
 ## Top 3 actions prioritaires
 - **Clé service_role Supabase manquante** → sync Facebook et Reviews bloquées depuis hier. Ajouter `SUPABASE_SERVICE_ROLE_KEY` dans [`.autopush/.env`](file:///Users/HP/Documents/Claude/Projects/SITE INTERNET/.autopush/.env), clé à récupérer sur [Supabase → API Settings](https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/settings/api). Détail : [`docs/ALERT-SYNC.md`](file:///Users/HP/Documents/Claude/Projects/SITE INTERNET/docs/ALERT-SYNC.md).

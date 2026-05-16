@@ -1,4 +1,4 @@
-# 🚀 Guide d'installation du back-office HELP! Confort
+# 🚀 Guide d'installation du back-office HELP Confort
 
 > Ce guide t'explique pas à pas comment activer ton **back-office en ligne**
 > pour publier articles + photos chantiers depuis n'importe où, sans m'appeler.
@@ -32,7 +32,7 @@ Tu as besoin de **2 comptes gratuits** (création 5 min chacun) :
 2. Clique sur **« New repository »** (bouton vert en haut à droite)
 3. Remplis :
    - **Repository name** : `helpconfort-saintomer-site`
-   - **Description** : "Site internet HELP! Confort Saint-Omer / Dunkerque"
+   - **Description** : "Site internet HELP Confort Saint-Omer / Dunkerque"
    - Coche **Private** (ton site reste privé)
    - **Add a README** : ❌ (laisse décoché)
 4. Clique **« Create repository »**
@@ -41,7 +41,7 @@ Tu as besoin de **2 comptes gratuits** (création 5 min chacun) :
 ```bash
 git init
 git add .
-git commit -m "Premier dépôt du site HELP! Confort"
+git commit -m "Premier dépôt du site HELP Confort"
 git branch -M main
 git remote add origin https://github.com/TON_PSEUDO/helpconfort-saintomer-site.git
 git push -u origin main

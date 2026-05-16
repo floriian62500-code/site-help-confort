@@ -1,4 +1,4 @@
-# 📚 Documentation HELP! Confort
+# 📚 Documentation HELP Confort
 
 Tous les documents de référence du projet.
 

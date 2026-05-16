@@ -68,7 +68,7 @@ Google exige qu'on passe par leur "Cloud Console" pour activer leurs APIs (même
 1. Va sur **https://support.google.com/business/contact/api_default**
 
 2. Remplis le formulaire :
-   - **Nom de l'organisation** : `HELP! Confort Saint-Omer`
+   - **Nom de l'organisation** : `HELP Confort Saint-Omer`
    - **Adresse e-mail** : l'email Google qui gère tes fiches
    - **Nom du contact** : Florian Dhaillecourt
    - **Numéro du projet Google Cloud** : récupère-le dans console.cloud.google.com → menu principal → "Tableau de bord" → "Numéro du projet" (12 chiffres)

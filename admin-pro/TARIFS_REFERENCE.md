@@ -1,4 +1,4 @@
-# 💰 Tarifs HELP! Confort — Source de vérité
+# 💰 Tarifs HELP Confort — Source de vérité
 
 > **Source** : `Base_produits_2026-05-14_11-11.xlsx` onglet **BAREME AGENCE** uniquement
 > **Validé par** : Florian (florian.dhaillecourt@helpconfort.com)
@@ -22,7 +22,7 @@ Tous les tarifs affichés sur le site doivent être croisés avec ce document. T
 | **Traitement des déchets** (% obligatoire) | **1 % du HT** | **1 % du HT** |
 
 ### 🧮 Base d'un devis « tout compris »
-Tout devis HELP! Confort comprend systématiquement :
+Tout devis HELP Confort comprend systématiquement :
 - Main d'œuvre (53 €/h HT)
 - Déplacement (45 € HT)
 - Frais de dossier (5 € HT)

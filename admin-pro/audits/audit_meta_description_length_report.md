@@ -54,5 +54,5 @@ _Généré le 2026-05-16 06:48_
 - ⚠️ DESC-SHORT : 92 chars < 120 (idéal 120-158)
 
 ### `espace-client.html`  (159 chars)
-> Votre espace client HELP! Confort : suivi intervention en temps réel, signature devis, paiement contrats entretien, historique. Pré-inscription dès maintenant.
+> Votre espace client HELP Confort : suivi intervention en temps réel, signature devis, paiement contrats entretien, historique. Pré-inscription dès maintenant.
 - ⚠️ DESC-LONG : 159 chars > 158 (idéal 120-158)

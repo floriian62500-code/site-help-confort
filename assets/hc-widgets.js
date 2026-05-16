@@ -1,10 +1,10 @@
 /**
- * HELP! Confort — Widget UNIFIÉ
+ * HELP Confort — Widget UNIFIÉ
  * - Un seul bouton flottant (en bas à droite)
  * - Menu d'actions au clic : Urgence, Chat assistant, Devis instant
  * - Cache automatiquement le bouton URGENCE séparé (HC-EMERGENCY-FAB-V1)
  *
- * (c) 2026 HELP! Confort Saint-Omer & Dunkerque
+ * (c) 2026 HELP Confort Saint-Omer & Dunkerque
  */
 (function() {
   'use strict';
@@ -203,7 +203,7 @@
   // =========== ARBRE DE DÉCISION CHAT ===========
   var TREE = {
     start: {
-      msg: "Bonjour 👋 Je suis l'assistant HELP! Confort. Comment puis-je vous orienter ?",
+      msg: "Bonjour 👋 Je suis l'assistant HELP Confort. Comment puis-je vous orienter ?",
       opts: [
         { label: "📋 Demander un devis", to: "devis" },
         { label: "❓ J'ai une question", to: "question" },
@@ -276,10 +276,10 @@
   var fab = document.createElement('div');
   fab.className = 'hc-fab';
   fab.innerHTML =
-    "<div class='hc-chat-panel' role='dialog' aria-label='Assistant HELP! Confort'>" +
+    "<div class='hc-chat-panel' role='dialog' aria-label='Assistant HELP Confort'>" +
       "<div class='hc-chat-head'>" +
         "<div class='av' style='background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff'>✨</div>" +
-        "<div class='info'><h4>Assistant HELP! Confort</h4><span class='hc-chat-status'><span class='hc-chat-dot'></span>En ligne · IA + équipe humaine</span></div>" +
+        "<div class='info'><h4>Assistant HELP Confort</h4><span class='hc-chat-status'><span class='hc-chat-dot'></span>En ligne · IA + équipe humaine</span></div>" +
         "<button class='back' aria-label='Retour menu'>‹ Menu</button>" +
       "</div>" +
       "<div class='hc-chat-body' id='hcChatBody'></div>" +
@@ -293,7 +293,7 @@
       "<div class='hc-chat-foot'>Urgence ? <a href='tel:" + PHONE + "'>" + PHONE_DISPLAY + "</a> · <span style='color:#94a3b8'>Réponses IA basées sur votre historique</span></div>" +
     "</div>" +
     "<div class='hc-menu' role='menu'>" +
-      "<div class='hc-menu-head'><span>HELP! Confort</span><span class='live'>En ligne</span></div>" +
+      "<div class='hc-menu-head'><span>HELP Confort</span><span class='live'>En ligne</span></div>" +
       "<a href='tel:" + PHONE + "' class='hc-action urgent' data-act='call'>" +
         "<span class='ic'><svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='#fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z'/></svg></span>" +
         "<span class='lbl'><span class='t'>Urgence — Appel direct</span><span class='s' id='hcOpenLabel'>" + PHONE_DISPLAY + "</span></span>" +
@@ -309,7 +309,7 @@
       "<div class='hc-menu-foot'>Lun-Sam 8h-18h · Réponse immédiate</div>" +
     "</div>" +
     "<div class='hc-fab-bubble' aria-hidden='true'><span class='hcfb-text'>Une question ?</span><span class='hcfb-arrow'></span></div>" +
-    "<button type='button' class='hc-fab-btn hc-fab-btn--premium' aria-label='Ouvrir le menu HELP! Confort' aria-expanded='false'>" +
+    "<button type='button' class='hc-fab-btn hc-fab-btn--premium' aria-label='Ouvrir le menu HELP Confort' aria-expanded='false'>" +
       "<span class='pulse'></span>" +
       "<span class='badge' style='display:none'>1</span>" +
       "<img class='hc-fab-masc' src='/images/mascotte.webp' alt='' onerror=\"this.src='/images/mascotte.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display=''}\" loading='lazy'>" +
@@ -509,7 +509,7 @@
     if (local.length){
       local.forEach(function(m){ appendBubble(m.role, m.content); });
     } else {
-      appendBubble('assistant', 'Bonjour 👋 Je suis l\'assistant HELP! Confort. Décrivez-moi votre situation (panne, devis, contrat d\'entretien) — un conseiller vous rappellera sous 24h. Si c\'est une urgence, appelez le ' + PHONE_DISPLAY + '.');
+      appendBubble('assistant', 'Bonjour 👋 Je suis l\'assistant HELP Confort. Décrivez-moi votre situation (panne, devis, contrat d\'entretien) — un conseiller vous rappellera sous 24h. Si c\'est une urgence, appelez le ' + PHONE_DISPLAY + '.');
     }
   }
 

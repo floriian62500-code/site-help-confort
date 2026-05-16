@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════
-// HELP! Confort — Back-Office Pro · Logique commune
+// HELP Confort — Back-Office Pro · Logique commune
 // ═══════════════════════════════════════════════════════════════
 
 (function() {

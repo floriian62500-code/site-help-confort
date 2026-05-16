@@ -1,10 +1,10 @@
-# Intégration Apogée ↔ Site HELP! Confort
+# Intégration Apogée ↔ Site HELP Confort
 
 > **À envoyer à Dynoco** pour discuter de l'intégration d'un flux automatique entre le formulaire public du site et le CRM Apogée.
 
 ## Contexte
 
-**SARL Dépannage 59-62** (marque **HELP! Confort** Saint-Omer / Dunkerque) utilise Apogée pour la gestion des interventions, contrats et clients.
+**SARL Dépannage 59-62** (marque **HELP Confort** Saint-Omer / Dunkerque) utilise Apogée pour la gestion des interventions, contrats et clients.
 
 Le site web public **https://depan59-62.fr** propose plusieurs formulaires qui génèrent actuellement des leads stockés dans une base intermédiaire (Supabase) puis ré-saisis manuellement dans Apogée.
 

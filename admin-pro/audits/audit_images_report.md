@@ -1,6 +1,6 @@
 # Audit images perf — 2026-05-16 05:56
 
-> Sonde performance HELP! Confort — détecte les images > 200 KB et
+> Sonde performance HELP Confort — détecte les images > 200 KB et
 > alerte si elles sont au-dessus du fold ou utilisées sur ≥ 5 pages.
 > Lancement : `python3 admin-pro/audits/audit_images.py`
 

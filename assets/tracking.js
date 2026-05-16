@@ -1,5 +1,5 @@
 /*!
- * HELP! Confort — Tracking centralisé (GA4 + GTM + Clarity)
+ * HELP Confort — Tracking centralisé (GA4 + GTM + Clarity)
  * ─────────────────────────────────────────────────────────
  * Tant que les ID sont les placeholders ci-dessous, chaque snippet
  * détecte l'auto-référence et fait `return` immédiatement : aucune
