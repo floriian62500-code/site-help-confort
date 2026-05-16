@@ -226,6 +226,17 @@ def main() -> None:
     jour = JOURS_FR[aujourdhui.weekday()]
     log.info("=== Lancement publish-template-post.py — %s (%s) ===", aujourdhui, jour)
 
+    # Garde anti-doublon : si un post a déjà été publié aujourd'hui avec succès,
+    # on sort immédiatement (sauf en --dry-run).
+    flag_file = FLAG_DIR / f"published-{aujourdhui.isoformat()}.flag"
+    if flag_file.exists() and "--dry-run" not in sys.argv and "--force" not in sys.argv:
+        log.info(
+            "Publication déjà effectuée aujourd'hui (%s existe). Skip pour éviter doublon. "
+            "Utiliser --force pour bypasser.",
+            flag_file,
+        )
+        return
+
     if jour not in JOURS_TEMPLATES:
         log.info("Jour %s non couvert par les templates (géré par l'agent IA). Arrêt.", jour)
         return
@@ -293,6 +304,22 @@ def main() -> None:
         fb.get("postId", "?"),
         fb.get("url", "?"),
     )
+
+    # Crée le marqueur anti-doublon pour la journée
+    flag_file.parent.mkdir(parents=True, exist_ok=True)
+    flag_file.write_text(
+        json.dumps({
+            "date": aujourdhui.isoformat(),
+            "jour": jour,
+            "theme": template.get("theme"),
+            "logKey": log_key,
+            "postId": fb.get("postId"),
+            "url": fb.get("url"),
+            "published_at": dt.datetime.now().isoformat(timespec="seconds"),
+        }, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    log.info("Marqueur anti-doublon créé : %s", flag_file)
 
 
 if __name__ == "__main__":
