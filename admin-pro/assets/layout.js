@@ -208,12 +208,15 @@ window.HCLayout = (function() {
       return `<a href="${l.href}" class="admin-nav-item${active}"${extraAttrs}><svg class="admin-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${l.icon}</svg>${l.label}${l.badge || ''}</a>`;
     }
 
-    // ─── Switcher 3 modules en haut de sidebar ───
-    let moduleSwitcherHtml = `<div class="admin-module-switcher" style="display:flex;gap:3px;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:10px;margin:10px 12px 14px">`;
+    // ─── Switcher modules en haut de sidebar ───
+    // 2 modules → switch horizontal compact avec libellé complet
+    let moduleSwitcherHtml = `<div class="admin-module-switcher" style="display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:5px;background:rgba(11,18,32,.45);border:1px solid rgba(255,255,255,.06);border-radius:11px;margin:10px 12px 14px;box-shadow:inset 0 1px 2px rgba(0,0,0,.18)">`;
     Object.entries(MODULES).forEach(([mid, m]) => {
       const isActive = mid === activeModule;
-      moduleSwitcherHtml += `<button type="button" data-module="${mid}" title="${m.label} — ${m.desc}" style="flex:1;padding:7px 4px;background:${isActive ? m.color : 'transparent'};color:${isActive ? '#fff' : 'rgba(255,255,255,.65)'};border:none;border-radius:7px;font:inherit;font-size:.72rem;font-weight:800;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:.15s">
-        <span style="font-size:1rem">${m.icon}</span>
+      const bg = isActive ? `linear-gradient(135deg, ${m.color}, ${m.colorDark})` : 'transparent';
+      const sh = isActive ? `0 2px 8px ${m.color}55, 0 0 0 1px rgba(255,255,255,.08) inset` : 'none';
+      moduleSwitcherHtml += `<button type="button" data-module="${mid}" title="${m.label} — ${m.desc}" style="padding:8px 6px;background:${bg};color:${isActive ? '#fff' : 'rgba(255,255,255,.55)'};border:none;border-radius:8px;font:inherit;font-size:.74rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .18s cubic-bezier(.16,1,.3,1);box-shadow:${sh};letter-spacing:.01em">
+        <span style="font-size:.95rem;line-height:1">${m.icon}</span>
         <span>${m.shortLabel.replace(m.icon, '').trim()}</span>
       </button>`;
     });
