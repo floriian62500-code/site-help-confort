@@ -100,6 +100,10 @@
   let ga4Error = null;
   let topSources = [];
   let topPages = [];
+  let ga4DailyEvolution = [];
+  let ga4Previous = null;
+  let ga4TopCities = [];
+  let ga4Devices = [];
 
   // Helpers crypto pour JWT RS256
   function pemToArrayBuffer(pem){
@@ -191,6 +195,59 @@
       try {
         const p = await ga4OauthCall({ dateRanges:[{startDate:'30daysAgo',endDate:'today'}], dimensions:[{name:'pagePath'}], metrics:[{name:'screenPageViews'},{name:'totalUsers'}], limit:10, orderBys:[{metric:{metricName:'screenPageViews'},desc:true}] });
         topPages = (p.rows||[]).map(r => ({ path:r.dimensionValues[0]?.value||'/', views:Number(r.metricValues[0]?.value||0), users:Number(r.metricValues[1]?.value||0) }));
+      } catch(_){}
+      // Évolution quotidienne 30j (pour graphique)
+      try {
+        const d = await ga4OauthCall({
+          dateRanges:[{startDate:'30daysAgo',endDate:'today'}],
+          dimensions:[{name:'date'}],
+          metrics:[{name:'sessions'},{name:'totalUsers'},{name:'screenPageViews'}],
+          orderBys:[{dimension:{dimensionName:'date'}}]
+        });
+        ga4DailyEvolution = (d.rows||[]).map(r => ({
+          date: r.dimensionValues[0]?.value || '',
+          sessions: Number(r.metricValues[0]?.value||0),
+          users: Number(r.metricValues[1]?.value||0),
+          views: Number(r.metricValues[2]?.value||0)
+        }));
+      } catch(_){}
+      // Comparaison 30j précédents (J-60 à J-30)
+      try {
+        const prev = await ga4OauthCall({
+          dateRanges:[{startDate:'60daysAgo',endDate:'31daysAgo'}],
+          metrics:[{name:'sessions'},{name:'totalUsers'},{name:'screenPageViews'}]
+        });
+        const r2 = prev.rows?.[0]?.metricValues || [];
+        ga4Previous = {
+          sessions: Number(r2[0]?.value||0),
+          users: Number(r2[1]?.value||0),
+          views: Number(r2[2]?.value||0)
+        };
+      } catch(_){}
+      // Top villes
+      try {
+        const ct = await ga4OauthCall({
+          dateRanges:[{startDate:'30daysAgo',endDate:'today'}],
+          dimensions:[{name:'city'}],
+          metrics:[{name:'sessions'}],
+          limit: 8, orderBys:[{metric:{metricName:'sessions'},desc:true}]
+        });
+        ga4TopCities = (ct.rows||[]).map(r => ({
+          city: r.dimensionValues[0]?.value || '(inconnu)',
+          sessions: Number(r.metricValues[0]?.value||0)
+        }));
+      } catch(_){}
+      // Devices
+      try {
+        const dv = await ga4OauthCall({
+          dateRanges:[{startDate:'30daysAgo',endDate:'today'}],
+          dimensions:[{name:'deviceCategory'}],
+          metrics:[{name:'sessions'}]
+        });
+        ga4Devices = (dv.rows||[]).map(r => ({
+          device: r.dimensionValues[0]?.value || 'unknown',
+          sessions: Number(r.metricValues[0]?.value||0)
+        }));
       } catch(_){}
       console.info('[analytics] GA4 via OAuth user — OK');
     } catch(e) {
