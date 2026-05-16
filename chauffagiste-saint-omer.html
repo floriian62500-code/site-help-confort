@@ -1329,22 +1329,10 @@ if (document.fonts && document.fonts.ready) {
  </div>
  <div class="m-proof-stack" id="m-real-chauffage">
  <!-- Cards générées dynamiquement via JS, fallback statique ci-dessous -->
- <a href="realisations.html" class="m-proof-card m-proof-real">
- <div class="m-proof-thumb"><div class="placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div></div>
- <div class="m-proof-card-body">
- <span class="m-proof-tag">Chauffage</span>
- <h3>Fuite cuisine — Saint-Omer</h3>
- <p>Recherche de fuite par caméra thermique, réparation propre, remise en service rapide.</p>
+ <div class="m-proof-empty" style="padding:32px 24px;text-align:center;background:#f8fcff;border:1px dashed #cfd9e2;border-radius:14px;color:#6b7384;font-size:.9rem">
+ <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="opacity:.5;margin-bottom:8px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+ <p style="margin:0;line-height:1.5">Nos prochains chantiers seront publiés ici.<br><a href="realisations.html" style="color:#0DA0CF;font-weight:600;text-decoration:none">Voir toutes nos réalisations →</a></p>
  </div>
- </a>
- <a href="realisations.html" class="m-proof-card m-proof-real">
- <div class="m-proof-thumb"><div class="placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div></div>
- <div class="m-proof-card-body">
- <span class="m-proof-tag">Chauffage</span>
- <h3>Remplacement chauffe-eau — Dunkerque</h3>
- <p>Dépose ancien ballon + pose ballon thermodynamique 200L. Mise en service le jour même.</p>
- </div>
- </a>
  </div>
  <div class="m-proof-foot">
  <a href="realisations.html?filter=Chauffage" class="m-proof-link">Voir toutes nos réalisations <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
@@ -1391,7 +1379,7 @@ if (document.fonts && document.fonts.ready) {
  var plomb = list.filter(function(r){
  return r.published !== false && r.metier === 'Chauffage';
  }).slice(0, 2);
- if(!plomb.length) return; // garde le fallback statique
+ if(!plomb.length) return; // pas de chantiers — empty state HTML reste affiché
  track.innerHTML = plomb.map(function(r){
  var url = r.url || 'realisations.html';
  var img = '';
