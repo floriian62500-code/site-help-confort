@@ -1018,6 +1018,51 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
 
  // Filtres
  document.getElementById('cntAll').textContent = services.length;
+ // ─── Construit dynamiquement la barre de sous-filtres pour une catégorie ───
+ function buildSubfilters(catSlug) {
+   var bar = document.getElementById('subfiltersBar');
+   if (!bar) return;
+   var section = document.getElementById('sec-' + catSlug);
+   if (!section) { bar.style.display = 'none'; bar.innerHTML = ''; return; }
+   var subgroups = section.querySelectorAll('.nv-subgroup');
+   if (subgroups.length < 2) { bar.style.display = 'none'; bar.innerHTML = ''; return; }
+   bar.innerHTML = '';
+   bar.style.display = 'flex';
+   // Pill "Tous" en premier
+   var allBtn = document.createElement('button');
+   allBtn.className = 'nv-subfilter is-active';
+   allBtn.dataset.subfilter = 'all';
+   allBtn.innerHTML = 'Tous <span class="nv-count">' + section.querySelectorAll('.nv-card').length + '</span>';
+   allBtn.onclick = function(){
+     bar.querySelectorAll('.nv-subfilter').forEach(b => b.classList.remove('is-active'));
+     allBtn.classList.add('is-active');
+     section.querySelectorAll('.nv-subgroup').forEach(g => g.removeAttribute('data-hidden'));
+   };
+   bar.appendChild(allBtn);
+   // Une pill par sous-catégorie
+   subgroups.forEach(function(sg){
+     var slug = sg.getAttribute('data-subcat-slug');
+     var head = sg.querySelector('.nv-subcat-head');
+     var label = head ? (head.querySelector('.nv-subcat-label')||{}).textContent : slug;
+     var emoji = head ? (head.querySelector('.nv-subcat-emoji')||{}).textContent : '';
+     var count = sg.querySelectorAll('.nv-card').length;
+     if (!label || !slug) return;
+     var b = document.createElement('button');
+     b.className = 'nv-subfilter';
+     b.dataset.subfilter = slug;
+     b.innerHTML = (emoji ? emoji + ' ' : '') + label.trim() + ' <span class="nv-count">' + count + '</span>';
+     b.onclick = function(){
+       bar.querySelectorAll('.nv-subfilter').forEach(x => x.classList.remove('is-active'));
+       b.classList.add('is-active');
+       section.querySelectorAll('.nv-subgroup').forEach(g => {
+         if (g.getAttribute('data-subcat-slug') === slug) g.removeAttribute('data-hidden');
+         else g.setAttribute('data-hidden', '1');
+       });
+     };
+     bar.appendChild(b);
+   });
+ }
+
  Object.values(grouped).forEach(g => {
  const btn = document.createElement('button');
  btn.className = 'nv-filter';
@@ -1028,6 +1073,8 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  btn.classList.add('is-active');
  // NEW : masquer toutes les sections et n'afficher que la cliquée
  document.querySelectorAll('.nv-catalog-section').forEach(s => s.style.display = 'none');
+ // Reset des sous-groupes cachés par un éventuel sous-filtre précédent
+ document.querySelectorAll('.nv-subgroup[data-hidden]').forEach(sg => sg.removeAttribute('data-hidden'));
  const target = document.getElementById('sec-' + g.slug);
  if (target) {
  target.style.display = '';
@@ -1035,6 +1082,8 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  }
  // Mode single : cache l'en-tête catégorie (la tabbar suffit)
  document.getElementById('catalogRoot').classList.add('nv-mode-single');
+ // Construit la barre de sous-filtres pour cette catégorie
+ buildSubfilters(g.slug);
  };
  filtersBar.appendChild(btn);
  });
@@ -1042,12 +1091,18 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  document.querySelector('[data-filter="all"]').onclick = () => {
  document.querySelectorAll('.nv-filter').forEach(b => b.classList.remove('is-active'));
  document.querySelector('[data-filter="all"]').classList.add('is-active');
- // Affiche TOUTES les sections
+ // Affiche TOUTES les sections + reset sous-groupes
  document.querySelectorAll('.nv-catalog-section').forEach(s => s.style.display = '');
+ document.querySelectorAll('.nv-subgroup[data-hidden]').forEach(sg => sg.removeAttribute('data-hidden'));
  // Mode all : affiche les en-têtes de catégorie pour distinguer les sections
  document.getElementById('catalogRoot').classList.remove('nv-mode-single');
+ // Cache la barre de sous-filtres (pas de catégorie unique active)
+ var sub = document.getElementById('subfiltersBar');
+ if (sub) { sub.style.display = 'none'; sub.innerHTML = ''; }
  window.scrollTo({ top: 0, behavior: 'smooth' });
  };
+ // Expose pour l'init par défaut
+ window.__buildSubfilters = buildSubfilters;
 
  // ─── Grouper les items par SOUS-CATÉGORIE à l'intérieur de chaque catégorie ───
  function groupBySubcat(items) {
@@ -1108,6 +1163,8 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  }
  // Mode single au chargement initial : cache les en-têtes catégorie redondants
  document.getElementById('catalogRoot').classList.add('nv-mode-single');
+ // Construit la barre de sous-filtres pour la catégorie activée par défaut
+ if (window.__buildSubfilters) window.__buildSubfilters(targetSlug);
  }, 50);
 
  function renderCard(s, catSlug) {
