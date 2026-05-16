@@ -87,11 +87,13 @@
 .cs-preview-frame::-webkit-scrollbar-thumb{background:rgba(0,0,0,.18);border-radius:3px}
 
 /* Mini renders dans le preview */
-.cs-prev-hero{background:linear-gradient(135deg,#0DA0CF,#0a7fa3);color:#fff;padding:24px 20px;min-height:200px;position:relative}
-.cs-prev-hero h1{font-size:1.15rem;line-height:1.2;font-weight:800;margin:0 0 8px 0}
-.cs-prev-hero p{font-size:.78rem;line-height:1.5;margin:0;opacity:.95}
-.cs-prev-hero .cta{display:inline-flex;align-items:center;gap:5px;margin-top:10px;padding:7px 14px;background:#FF6B1A;color:#fff;border-radius:7px;font-size:.78rem;font-weight:700}
-.cs-prev-hero .phone{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.18);padding:5px 10px;border-radius:6px;font-size:.74rem;font-weight:700;backdrop-filter:blur(6px)}
+.cs-prev-hero{background:linear-gradient(135deg,#0DA0CF 0%,#0a7fa3 50%,#085a78 100%);color:#fff;padding:24px 20px;min-height:200px;position:relative;overflow:hidden}
+.cs-prev-hero::before{content:'';position:absolute;right:-60px;top:-60px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.12) 0%,transparent 70%)}
+.cs-prev-hero > *{position:relative;z-index:1}
+.cs-prev-hero h1{font-size:1.2rem;line-height:1.2;font-weight:800;margin:0 0 8px 0;letter-spacing:-.015em}
+.cs-prev-hero p{font-size:.8rem;line-height:1.55;margin:0;opacity:.95}
+.cs-prev-hero .cta{display:inline-flex;align-items:center;gap:5px;margin-top:12px;padding:8px 16px;background:linear-gradient(135deg,#FF8C42,#FF6B1A);color:#fff;border-radius:8px;font-size:.8rem;font-weight:800;box-shadow:0 4px 12px rgba(255,107,26,.30);letter-spacing:-.005em}
+.cs-prev-hero .phone{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.20);border:1px solid rgba(255,255,255,.12);padding:6px 11px;border-radius:7px;font-size:.76rem;font-weight:700;backdrop-filter:blur(8px)}
 
 .cs-prev-section{padding:18px 20px;border-bottom:1px solid var(--ink-100);transition:background .35s}
 .cs-prev-section.flash{background:rgba(13,160,207,.08)}
