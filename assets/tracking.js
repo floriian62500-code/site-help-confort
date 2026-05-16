@@ -70,4 +70,66 @@
     y = l.getElementsByTagName(r)[0];
     y.parentNode.insertBefore(t, y);
   })(window, document, 'clarity', 'script', 'CLARITY_ID');
+
+  // ─── Tracking automatique des clics téléphone + email ──────────────
+  // Envoie un event GA4 personnalisé à chaque clic sur tel: ou mailto:
+  // Permet de mesurer les conversions hors-formulaire (très important
+  // pour un business téléphonique comme HC).
+  function trackClicks(){
+    if (!window.gtag && !window.dataLayer) return; // GA4 pas chargé
+    function send(eventName, props){
+      try {
+        if (window.gtag) window.gtag('event', eventName, props);
+        else if (window.dataLayer) window.dataLayer.push(Object.assign({ event: eventName }, props));
+      } catch(_){}
+    }
+    document.addEventListener('click', function(e){
+      var a = e.target.closest('a[href]');
+      if (!a) return;
+      var href = a.getAttribute('href') || '';
+      var page = location.pathname;
+      if (href.startsWith('tel:')) {
+        send('click_phone', { phone: href.replace('tel:',''), page_path: page, link_text: (a.textContent||'').trim().slice(0,60) });
+      } else if (href.startsWith('mailto:')) {
+        send('click_email', { email: href.replace('mailto:',''), page_path: page, link_text: (a.textContent||'').trim().slice(0,60) });
+      } else if (/wa\.me|whatsapp/.test(href)) {
+        send('click_whatsapp', { url: href, page_path: page });
+      } else if (/^https?:/.test(href) && !href.includes(location.host)) {
+        // Lien externe (réseaux sociaux, partenaires)
+        try {
+          var u = new URL(href);
+          send('click_external', { domain: u.hostname, page_path: page });
+        } catch(_){}
+      }
+    }, { passive: true });
+
+    // Tracking de la soumission des formulaires (form_submit)
+    document.addEventListener('submit', function(e){
+      var f = e.target;
+      if (!(f && f.tagName === 'FORM')) return;
+      var formId = f.id || f.getAttribute('data-form') || 'unknown';
+      send('form_submit', { form_id: formId, page_path: location.pathname });
+    }, { passive: true });
+
+    // Tracking du scroll profondeur (25/50/75/100%)
+    var scrolled = { 25:false, 50:false, 75:false, 100:false };
+    window.addEventListener('scroll', function(){
+      var pct = Math.round((window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100);
+      [25,50,75,100].forEach(function(t){
+        if (!scrolled[t] && pct >= t) {
+          scrolled[t] = true;
+          send('scroll_depth', { depth: t, page_path: location.pathname });
+        }
+      });
+    }, { passive: true });
+  }
+  // Attendre que gtag soit dispo (timer de 2 sec max)
+  var tries = 0;
+  var iv = setInterval(function(){
+    tries++;
+    if (window.gtag || tries > 10) {
+      clearInterval(iv);
+      try { trackClicks(); } catch(_){}
+    }
+  }, 200);
 })();

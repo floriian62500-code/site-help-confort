@@ -273,6 +273,21 @@
           sessions: Number(r.metricValues[0]?.value||0)
         }));
       } catch(_){}
+      // Events de conversion (click_phone, click_email, form_submit)
+      try {
+        const ev = await ga4OauthCall({
+          dateRanges:[{startDate:PERIOD_CFG.start,endDate:PERIOD_CFG.end}],
+          dimensions:[{name:'eventName'}],
+          metrics:[{name:'eventCount'}],
+          dimensionFilter:{ filter:{ fieldName:'eventName', inListFilter:{ values:['click_phone','click_email','click_whatsapp','form_submit','click_external','scroll_depth'] } } }
+        });
+        ga4CustomEvents = {};
+        (ev.rows||[]).forEach(r => {
+          const name = r.dimensionValues[0]?.value || '';
+          const count = Number(r.metricValues[0]?.value||0);
+          ga4CustomEvents[name] = count;
+        });
+      } catch(_){}
       console.info('[analytics] GA4 via OAuth user — OK');
     } catch(e) {
       ga4Error = '[OAuth] ' + (e.message || 'erreur');
