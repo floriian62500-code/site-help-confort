@@ -413,6 +413,13 @@ if (document.fonts && document.fonts.ready) {
  var params = new URLSearchParams(location.search);
  var presta = params.get('presta');
  var metier = params.get('metier');
+ // Auto-scroll vers le formulaire si on arrive avec ?presta= ou ?metier= ou hash #form
+ if (presta || metier || location.hash === '#form') {
+   setTimeout(function(){
+     var formEl = document.getElementById('form');
+     if (formEl) formEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+   }, 200);
+ }
  // Si pas de presta mais un métier : on mappe le métier sur une presta générique
  var METIER_TO_PRESTA = {
    'plomberie':'sanitaire',
