@@ -114,6 +114,7 @@
   let ga4Previous = null;
   let ga4TopCities = [];
   let ga4Devices = [];
+  let ga4Heatmap = []; // [{ day:0-6, hour:0-23, sessions:N }]
 
   // Helpers crypto pour JWT RS256
   function pemToArrayBuffer(pem){
