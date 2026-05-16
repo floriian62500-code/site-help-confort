@@ -16,7 +16,6 @@ Tous les tarifs affichés sur le site doivent être croisés avec ce document. T
 | **Main d'œuvre urgence (intervention <1h)** | 63 €/h | **69 €/h** |
 | **Main d'œuvre week-end** | 80 €/h | **88 €/h** |
 | **Déplacement audomarois** | 45 € | **50 €** |
-| **Déplacement Dunkerque (forfait)** | 80 € | **88 €** |
 | **Frais de dossier** (systématique) | 5 € | **5,50 €** |
 | **Traitement des déchets** (% obligatoire) | **1 % du HT** | **1 % du HT** |
 
