@@ -12,10 +12,9 @@ window.HCLayout = (function() {
   const ACTIVE_MODULE_KEY = 'hc-active-module-v1';
 
   // ═════════════════════════════════════════════════════════
-  // ARCHITECTURE 3 MODULES (refonte 2026-05-16)
+  // ARCHITECTURE 2 MODULES (refonte 2026-05-16, RH supprimé)
   // - Comm & Acquisition : marketing/commercial (gros volume)
-  // - RH & Opérations : interne (à venir)
-  // - Outils : super-admin (réglages + sync + diagnostic)
+  // - Outils & Connexions : super-admin (réglages + sync + diagnostic)
   // ═════════════════════════════════════════════════════════
   const MODULES = {
     comm: {
@@ -25,14 +24,6 @@ window.HCLayout = (function() {
       color: '#0DA0CF',
       colorDark: '#0884AE',
       desc: 'Marketing, leads, contrats, publications, analytics'
-    },
-    rh: {
-      label: 'RH & Opérations',
-      shortLabel: '👥 RH',
-      icon: '👥',
-      color: '#7C3AED',
-      colorDark: '#5B21B6',
-      desc: 'Équipe, permissions, opérations internes'
     },
     outils: {
       label: 'Outils & Connexions',
@@ -46,7 +37,12 @@ window.HCLayout = (function() {
 
   // Détecte le module actif depuis localStorage ou défaut "comm"
   function getActiveModule(){
-    try { return localStorage.getItem(ACTIVE_MODULE_KEY) || 'comm'; } catch(_) { return 'comm'; }
+    try {
+      const m = localStorage.getItem(ACTIVE_MODULE_KEY);
+      // Migration : module 'rh' supprimé → bascule sur 'comm'
+      if (!m || m === 'rh' || !MODULES[m]) return 'comm';
+      return m;
+    } catch(_) { return 'comm'; }
   }
   function setActiveModule(m){
     try { localStorage.setItem(ACTIVE_MODULE_KEY, m); } catch(_){}
@@ -117,12 +113,6 @@ window.HCLayout = (function() {
         { id:'maintenance', href:'maintenance.html', label:'Santé & Maintenance', icon:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>' },
         { id:'setup', href:'setup.html', label:'Diagnostic setup', icon:'<polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>' },
         { id:'diagnostic-connexions', href:'diagnostic-connexions.html', label:'Diagnostic connexions', icon:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>' }
-      ]
-    },
-    { id:'rh', label:'RH & Équipe', module:'rh',
-      sectionIcon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
-      links: [
-        { id:'users', href:'users.html', label:'Équipe & permissions', icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' }
       ]
     },
     { id:'outils', label:'Outils maintenance', module:'outils',
