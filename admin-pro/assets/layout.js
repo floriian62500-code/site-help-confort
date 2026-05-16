@@ -9,6 +9,48 @@ window.HCLayout = (function() {
   // active est ouverte par défaut. État persisté en localStorage.
   // ═════════════════════════════════════════════════════════
   const SIDEBAR_STATE_KEY = 'hc-sidebar-sections-v2';
+  const ACTIVE_MODULE_KEY = 'hc-active-module-v1';
+
+  // ═════════════════════════════════════════════════════════
+  // ARCHITECTURE 3 MODULES (refonte 2026-05-16)
+  // - Comm & Acquisition : marketing/commercial (gros volume)
+  // - RH & Opérations : interne (à venir)
+  // - Outils : super-admin (réglages + sync + diagnostic)
+  // ═════════════════════════════════════════════════════════
+  const MODULES = {
+    comm: {
+      label: 'Comm & Acquisition',
+      shortLabel: '📣 Comm',
+      icon: '📣',
+      color: '#0DA0CF',
+      colorDark: '#0884AE',
+      desc: 'Marketing, leads, contrats, publications, analytics'
+    },
+    rh: {
+      label: 'RH & Opérations',
+      shortLabel: '👥 RH',
+      icon: '👥',
+      color: '#7C3AED',
+      colorDark: '#5B21B6',
+      desc: 'Équipe, permissions, opérations internes'
+    },
+    outils: {
+      label: 'Outils & Connexions',
+      shortLabel: '🛠 Outils',
+      icon: '🛠',
+      color: '#FF6B1A',
+      colorDark: '#C2410C',
+      desc: 'Réglages, connexions API, sync, diagnostic, maintenance'
+    }
+  };
+
+  // Détecte le module actif depuis localStorage ou défaut "comm"
+  function getActiveModule(){
+    try { return localStorage.getItem(ACTIVE_MODULE_KEY) || 'comm'; } catch(_) { return 'comm'; }
+  }
+  function setActiveModule(m){
+    try { localStorage.setItem(ACTIVE_MODULE_KEY, m); } catch(_){}
+  }
 
   // Item Dashboard épinglé seul tout en haut
   const PINNED_ITEM = {
@@ -16,7 +58,9 @@ window.HCLayout = (function() {
     icon:'<rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/>'
   };
 
-  // 5 sections accordéons
+  // ═════════════════════════════════════════════════════════
+  // 5 sections accordéons (toutes définies, filtrées par module)
+  // ═════════════════════════════════════════════════════════
   const SECTIONS = [
     { id:'activity', label:'Mon activité',
       sectionIcon:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
