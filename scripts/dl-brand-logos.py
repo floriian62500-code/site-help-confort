@@ -111,19 +111,39 @@ def get_image_url(file_title, lang="en"):
     except Exception:
         return None
 
-def is_likely_logo(file_title):
-    """Heuristic: is this file likely a brand logo (not a building/people photo)?"""
+def is_likely_logo(file_title, brand_name=""):
+    """Heuristic: is this file likely THIS brand's logo (not a generic Wikipedia icon)?"""
     t = file_title.lower()
-    # Must contain "logo" OR be SVG
     has_logo_kw = "logo" in t
     is_svg = t.endswith(".svg")
-    # Reject obvious building/people/event/blason photos
-    bad_kw = ["campus", "siege", "siège", "hq", "headquarters", "building",
+    # REJECT generic Wikipedia/Commons icons (these appear on many articles as decoration)
+    wiki_generic = [
+        "commons-logo", "commons logo", "disambig", "wikidata",
+        "wikipedia-logo", "wiki-logo", "edit-icon", "padlock",
+        "mfgco", "stub-icon", "question_book", "ambox",
+        "office-logo", "padlock-silver", "yes_check", "redirect",
+        "logo disambig", "logo_disambig", "p_industry", "p industry",
+        "merge-arrow", "split-arrow", "wikiquote-logo",
+    ]
+    if any(g in t for g in wiki_generic):
+        return False
+    # Reject building/people/event/blason photos
+    bad_kw = ["campus", "siege", "siège", "hq_", "headquarters", "building",
               "factory", "usine", "blason", "coat_of_arms", "armoiries",
               "img_", "img-", "_img", ".jpg", ".jpeg", "photo_de_",
               "freiburg", "hochdorf", "amsterdam", "schiltigheim"]
-    if any(bad in t for bad in bad_kw) and not is_svg and not has_logo_kw:
+    if any(bad in t for bad in bad_kw) and not is_svg:
         return False
+    # Must contain the brand name OR have "logo" keyword
+    # Normalize brand name for comparison (remove special chars, lowercase)
+    if brand_name:
+        normalized_brand = re.sub(r"[^a-z0-9]+", "", brand_name.lower())
+        normalized_title = re.sub(r"[^a-z0-9]+", "", t)
+        if normalized_brand and len(normalized_brand) >= 4:
+            # The filename must contain at least the first 4 chars of the brand
+            brand_prefix = normalized_brand[:4]
+            if brand_prefix not in normalized_title:
+                return False
     return is_svg or has_logo_kw
 
 def download(url, slug, ext_hint=None):
@@ -171,8 +191,8 @@ def main():
             failed_list.append((slug, wiki_title, "no article"))
             time.sleep(0.8)
             continue
-        # Step 2 — filter for likely logos
-        logo_candidates = [img for img in images if is_likely_logo(img)]
+        # Step 2 — filter for likely logos (must reference this brand)
+        logo_candidates = [img for img in images if is_likely_logo(img, wiki_title)]
         if not logo_candidates:
             print(f"      no logo-like file found in {len(images)} images")
             fail += 1
