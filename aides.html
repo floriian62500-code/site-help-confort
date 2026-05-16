@@ -712,22 +712,57 @@
  function go(){
  if(!st.proj || !st.age || !st.stat) return;
  var aides = [];
- if(st.proj==='energie' && st.age==='vieux' && (st.stat==='prop'||st.stat==='bail')) aides.push("<strong>MaPrimeRénov'</strong> (Montant variable selon situation)", "<strong>CEE Coup de pouce</strong> (Montant variable selon situation)", "<strong>TVA 5,5 %</strong>", "<strong>Éco-PTZ</strong> possible");
- else if(st.proj==='energie' && st.age==='vieux') aides.push("<strong>CEE Coup de pouce</strong> (locataire avec accord propriétaire)", "<strong>TVA 5,5 %</strong> (sur la part travaux)");
- else if(st.proj==='energie' && st.age==='moyen') aides.push("<strong>CEE Coup de pouce</strong>", "<strong>TVA 5,5 %</strong>", "<strong>Éco-PTZ</strong>");
- else if(st.proj==='energie' && st.age==='neuf') aides.push("Pas d'aide spécifique sur logement neuf — mais TVA standard et éco-PTZ disponibles");
- if(st.proj==='adapt' && st.stat==='senior') aides.push("<strong>MaPrimeAdapt'</strong> (Montant variable selon situation, 50-70 % couvert)", "Aides caisse de retraite complémentaire", "Aides départementales");
- if(st.proj==='adapt' && st.stat!=='senior') aides.push("Vérifier MaPrimeAdapt' selon votre situation (handicap)", "Aides locales possibles");
- if(st.proj==='renov' && st.age==='vieux' && (st.stat==='prop'||st.stat==='bail')) aides.push("<strong>MaPrimeRénov' Sérénité</strong> (rénovation globale, jusqu'à 35 % du HT)", "<strong>Éco-PTZ</strong>", "<strong>TVA 5,5 %</strong>", "Aides locales");
- if(st.proj==='elec') aides.push("Pas d'aide spécifique pour la mise aux normes électriques (sauf cas particulier dans rénovation globale)");
+ // ─── Rénovation énergétique (logement >2 ans) — propriétaire ou bailleur
+ if(st.proj==='energie' && st.age==='vieux' && (st.stat==='prop'||st.stat==='bail')) aides.push(
+   "<strong>MaPrimeRénov'</strong> — barèmes 2025-2026 selon votre tranche de revenus (Bleu / Jaune / Violet / Rose). Montant par poste de travaux (ex&nbsp;: isolation combles 7-25&nbsp;€/m², fenêtres 80-100&nbsp;€/fenêtre — <em>à titre indicatif</em>).",
+   "<strong>CEE Coup de pouce</strong> — primes forfaitaires des fournisseurs d'énergie (ex&nbsp;: PAC air/eau ménages modestes ~4&nbsp;000&nbsp;€, chaudière biomasse ~4&nbsp;000&nbsp;€, isolation combles ~12&nbsp;€/m² — <em>montants indicatifs, variables selon opérateur</em>).",
+   "<strong>TVA réduite 5,5&nbsp;%</strong> — applicable directement sur facture (logement &gt; 2 ans, travaux d'amélioration énergétique).",
+   "<strong>Éco-PTZ</strong> — prêt à taux zéro jusqu'à <strong>50&nbsp;000&nbsp;€</strong>, remboursable sur 20 ans maximum, sans condition de ressources."
+ );
+ else if(st.proj==='energie' && st.age==='vieux') aides.push(
+   "<strong>CEE Coup de pouce</strong> — accessible aux locataires avec accord propriétaire (montants forfaitaires selon opération, <em>à titre indicatif</em>).",
+   "<strong>TVA réduite 5,5&nbsp;%</strong> — sur la part travaux énergétiques (logement &gt; 2 ans)."
+ );
+ else if(st.proj==='energie' && st.age==='moyen') aides.push(
+   "<strong>CEE Coup de pouce</strong> — primes forfaitaires selon opération.",
+   "<strong>TVA réduite 5,5&nbsp;%</strong> — si logement &gt; 2 ans.",
+   "<strong>Éco-PTZ</strong> — prêt à taux zéro jusqu'à 50&nbsp;000&nbsp;€ sur 20 ans."
+ );
+ else if(st.proj==='energie' && st.age==='neuf') aides.push(
+   "Pas d'aide spécifique sur logement neuf (&lt;&nbsp;2 ans). TVA standard 20&nbsp;% et éco-PTZ accession éventuellement disponibles."
+ );
+ // ─── Adaptation PMR / Sénior
+ if(st.proj==='adapt' && st.stat==='senior') aides.push(
+   "<strong>MaPrimeAdapt'</strong> — <strong>50&nbsp;%</strong> (revenus intermédiaires) à <strong>70&nbsp;%</strong> (ménages modestes) des travaux TTC, plafond <strong>22&nbsp;000&nbsp;€ HT</strong>. Conditions&nbsp;: âge ≥ 70 ans, GIR 1-6, ou handicap reconnu ≥ 50&nbsp;%.",
+   "Aides de votre <strong>caisse de retraite</strong> (régime général ou complémentaire) — montant variable selon caisse.",
+   "<strong>Aides départementales</strong> (Conseil départemental) — selon votre département de résidence."
+ );
+ if(st.proj==='adapt' && st.stat!=='senior') aides.push(
+   "<strong>MaPrimeAdapt'</strong> peut s'appliquer en cas de <strong>handicap reconnu ≥ 50&nbsp;%</strong> (50 à 70&nbsp;% des travaux selon revenus, plafond 22&nbsp;000&nbsp;€ HT).",
+   "Aides locales possibles (caisses, mutuelles, département) — à vérifier selon votre situation."
+ );
+ // ─── Rénovation globale (logement >2 ans)
+ if(st.proj==='renov' && st.age==='vieux' && (st.stat==='prop'||st.stat==='bail')) aides.push(
+   "<strong>MaPrimeRénov' Parcours accompagné</strong> — pour rénovation d'ampleur (gain ≥ 2 classes DPE), pourcentage variable selon revenus et ampleur des travaux, <em>barèmes 2025-2026 évolutifs</em>.",
+   "<strong>Éco-PTZ</strong> — jusqu'à 50&nbsp;000&nbsp;€ sur 20 ans à taux zéro.",
+   "<strong>TVA réduite 5,5&nbsp;%</strong> — sur travaux énergétiques (logement &gt; 2 ans).",
+   "<strong>Aides locales</strong> — Région Hauts-de-France, intercommunalités, plateformes France Rénov'."
+ );
+ // ─── Mise aux normes électriques
+ if(st.proj==='elec') aides.push(
+   "Aucune aide spécifique nationale pour la mise aux normes électriques seule. Possibilité d'intégration dans une rénovation globale éligible MaPrimeRénov'.",
+   "<strong>TVA réduite 10&nbsp;%</strong> applicable sur les travaux d'amélioration dans un logement &gt; 2 ans."
+ );
 
  var html = '';
  if(aides.length === 0){
  html = "<strong>Aucune aide majeure n'est habituellement disponible</strong> pour cette combinaison. Contactez-nous au 03 66 10 01 34 pour un avis personnalisé.";
  } else {
- html = "<strong>Aides probablement disponibles pour vous :</strong><ul style='margin:10px 0 0;padding-left:20px;color:#475569'>";
- aides.forEach(function(a){ html += "<li style='margin-bottom:5px'>"+a+"</li>"; });
- html += "</ul><div style='margin-top:14px;padding-top:14px;border-top:1px solid #E5EDF3;font-size:.88rem'>👉 <a href='tel:+33366100134' style='color:#22A06B;font-weight:700;text-decoration:none'>Appelez-nous au 03 66 10 01 34</a> pour monter votre dossier.</div>";
+ html = "<strong>Aides potentiellement adaptées à votre situation&nbsp;:</strong><ul style='margin:10px 0 0;padding-left:20px;color:#475569'>";
+ aides.forEach(function(a){ html += "<li style='margin-bottom:8px;line-height:1.5'>"+a+"</li>"; });
+ html += "</ul>";
+ html += "<div style='margin-top:14px;padding:12px 14px;background:#FFF7ED;border-left:3px solid #FF6B1A;border-radius:6px;font-size:.84rem;color:#7A2E0A;line-height:1.5'><strong>⚠️ Information indicative.</strong> Les barèmes 2025-2026 peuvent évoluer&nbsp;: vérifiez les conditions sur les sites officiels (<a href='https://france-renov.gouv.fr' target='_blank' rel='noopener' style='color:#0DA0CF;font-weight:700'>France Rénov'</a>, <a href='https://www.anah.gouv.fr' target='_blank' rel='noopener' style='color:#0DA0CF;font-weight:700'>Anah</a>). Une étude personnalisée reste indispensable pour valider votre éligibilité.</div>";
+ html += "<div style='margin-top:14px;padding-top:14px;border-top:1px solid #E5EDF3;font-size:.88rem'>👉 <a href='tel:+33366100134' style='color:#22A06B;font-weight:700;text-decoration:none'>Appelez-nous au 03 66 10 01 34</a> pour monter votre dossier — nous identifions les aides applicables et vous orientons vers les démarches utiles.</div>";
  }
  var r = document.getElementById('eligR');
  r.innerHTML = html;
