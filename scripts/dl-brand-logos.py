@@ -3,6 +3,7 @@
 import os
 import sys
 import urllib.request
+import urllib.parse
 import urllib.error
 import ssl
 
@@ -44,7 +45,15 @@ ctx = ssl.create_default_context()
 ok = []
 failed = []
 
-for slug, url in LOGOS:
+def encode_url(url):
+    """Percent-encode the path so non-ASCII chars (e.g. ö in Hörmann) work in HTTP requests."""
+    parts = urllib.parse.urlsplit(url)
+    path = urllib.parse.quote(parts.path, safe="/:%")
+    return urllib.parse.urlunsplit((parts.scheme, parts.netloc, path, parts.query, parts.fragment))
+
+
+for slug, raw_url in LOGOS:
+    url = encode_url(raw_url)
     out_path = os.path.join(OUT, f"{slug}.svg")
     try:
         req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "image/svg+xml,image/*,*/*"})
