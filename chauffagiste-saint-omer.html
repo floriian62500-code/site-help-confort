@@ -1050,7 +1050,7 @@ if (document.fonts && document.fonts.ready) {
  </div>
  <!-- 6 cartes prestations avec photos Unsplash vérifiées (URLs validées par fetch direct) -->
  <div class="m-services-grid">
- <a href="contact.html?presta=desembouage#form" class="m-svc" data-source="base-produits-2026-05">
+ <a href="#m-reserve-modal" class="m-svc m-reserve-btn" data-presta="Désembouage radiateur" data-source="base-produits-2026-05">
  <div class="m-svc-img" style="position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">
  <span class="m-svc-tag" style="position:relative;z-index:3">Entretien</span>
  <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,.45) 100%);z-index:1;pointer-events:none"></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="position:relative;z-index:2;width:62px;height:62px;opacity:.96;filter:drop-shadow(0 4px 12px rgba(0,0,0,.28))" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="3" x2="8" y2="21"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="16" y1="3" x2="16" y2="21"/></svg>
@@ -1070,7 +1070,7 @@ if (document.fonts && document.fonts.ready) {
  <span class="m-svc-arrow" aria-hidden="true">→</span>
  </div>
  </a>
- <a href="contact.html?presta=remplacement-chaudiere#form" class="m-svc">
+ <a href="#m-reserve-modal" class="m-svc m-reserve-btn" data-presta="Remplacement chaudière">
  <div class="m-svc-img" style="position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">
  <span class="m-svc-tag" style="position:relative;z-index:3">Installation</span>
  <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,.45) 100%);z-index:1;pointer-events:none"></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="position:relative;z-index:2;width:62px;height:62px;opacity:.96;filter:drop-shadow(0 4px 12px rgba(0,0,0,.28))" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="11" r="3"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
@@ -1643,7 +1643,7 @@ if (document.fonts && document.fonts.ready) {
  }
 
  document.querySelectorAll('.m-reserve-btn').forEach(function(b){
- b.addEventListener('click', function(){ open(this.getAttribute('data-presta')); });
+ b.addEventListener('click', function(e){ e.preventDefault(); open(this.getAttribute('data-presta')); });
  });
  modal.querySelector('.m-modal-close').addEventListener('click', close);
  modal.addEventListener('click', function(e){ if(e.target === modal) close(); });
