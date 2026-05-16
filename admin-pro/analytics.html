@@ -115,6 +115,7 @@
   let ga4TopCities = [];
   let ga4Devices = [];
   let ga4Heatmap = []; // [{ day:0-6, hour:0-23, sessions:N }]
+  let ga4CustomEvents = {}; // { click_phone: N, click_email: N, form_submit: N, click_whatsapp: N, click_external: N }
 
   // Helpers crypto pour JWT RS256
   function pemToArrayBuffer(pem){
@@ -641,11 +642,18 @@
               .reduce((s, o) => s + Number(o.price_ttc||0), 0);
             const caTotal = caContrats + caOrders;
 
+            // Clics téléphone + email (tracking GA4 custom events)
+            const clicsTel = ga4CustomEvents.click_phone || 0;
+            const clicsMail = ga4CustomEvents.click_email || 0;
+            const clicsWhatsapp = ga4CustomEvents.click_whatsapp || 0;
+            const conversionsContact = clicsTel + clicsMail + clicsWhatsapp;
+            const pctContactClicks = visiteurs ? (conversionsContact / visiteurs * 100).toFixed(1) : 0;
             // Couleurs de l'entonnoir (du plus large au plus étroit)
             const steps = [
               { ico:'👁', label:'Visiteurs site', value:visiteurs, color:'#0DA0CF', width:100, sub:'GA4' },
-              { ico:'🎯', label:'Pages conversion vues', value:vuesPagesCles, color:'#7C3AED', width:80, sub:'/contact · /devis · /contrats', pct: pctPagesCles },
-              { ico:'💬', label:'Leads créés', value:leadsPeriode, color:'#FFB400', width:55, sub:'Formulaires remplis', pct: pctLeads },
+              { ico:'🎯', label:'Pages conversion vues', value:vuesPagesCles, color:'#A78BFA', width:80, sub:'/contact · /devis · /contrats', pct: pctPagesCles },
+              { ico:'📞', label:'Clics Appeler / Email / WhatsApp', value:conversionsContact, color:'#7C3AED', width:65, sub:clicsTel+' tel · '+clicsMail+' email · '+clicsWhatsapp+' WA', pct: pctContactClicks },
+              { ico:'💬', label:'Leads créés (formulaires)', value:leadsPeriode, color:'#FFB400', width:50, sub:'Site → base Supabase', pct: pctLeads },
               { ico:'✅', label:'Contrats + commandes', value:contratsPeriode + commandesPeriode, color:'#22C55E', width:35, sub:contratsPeriode+' contrats · '+commandesPeriode+' commandes', pct: pctContrats }
             ];
             const maxV = Math.max(1, ...steps.map(s => s.value));
