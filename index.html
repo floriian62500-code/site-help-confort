@@ -1848,28 +1848,72 @@ function updateSelectedPrestaPrice(p) {
 }
 
 function showAllPrestasModal() {
- // Construit une modale simple avec toutes les prestations groupées par métier
+ // Construit une modale REDESIGNÉE avec toutes les prestations groupées par métier
  var existing = document.getElementById('allPrestasModal');
  if (existing) { existing.classList.add('is-open'); return; }
+ var METIER_COLORS = {
+   'Plomberie': {bg:'linear-gradient(135deg,#E0F7FE 0%,#B6E9FA 100%)', border:'#0DA0CF', emoji:'💧'},
+   'Chauffage': {bg:'linear-gradient(135deg,#FFE9D7 0%,#FFCEA8 100%)', border:'#FF6B1A', emoji:'🔥'},
+   'Électricité': {bg:'linear-gradient(135deg,#FFF7CC 0%,#FFE89A 100%)', border:'#FFB400', emoji:'⚡'},
+   'Serrurerie': {bg:'linear-gradient(135deg,#FCE7F3 0%,#FBCFE8 100%)', border:'#EC4899', emoji:'🔒'},
+   'Vitrerie': {bg:'linear-gradient(135deg,#DCFCE7 0%,#A7F3D0 100%)', border:'#16A34A', emoji:'🪟'},
+   'Travaux': {bg:'linear-gradient(135deg,#F5EAD7 0%,#E8D9C5 100%)', border:'#A28C7A', emoji:'🛠️'}
+ };
  var metiers = ['Plomberie','Chauffage','Électricité','Serrurerie','Vitrerie','Travaux'];
  var html = '<div class="apm-backdrop" id="allPrestasModal"><div class="apm-panel">' +
- '<div class="apm-head"><strong>Toutes les prestations</strong><button class="apm-close" type="button">✕</button></div>' +
+ '<div class="apm-head">' +
+ '<div><strong>📋 Toutes nos prestations</strong><span class="apm-sub">Choisissez celle qui correspond à votre besoin</span></div>' +
+ '<button class="apm-close" type="button" aria-label="Fermer">✕</button>' +
+ '</div>' +
+ '<div class="apm-search-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
+ '<input type="search" class="apm-search" placeholder="Rechercher une prestation..." autocomplete="off"></div>' +
  '<div class="apm-body">';
  metiers.forEach(function(m){
- var list = ALL_PRESTAS.filter(function(p){ return p.metier === m; });
+ var list = ALL_PRESTAS.filter(function(p){ return p.metier === m && p.id !== 'p-other'; });
  if (!list.length) return;
- html += '<div class="apm-group"><h4>' + m + '</h4><div class="apm-list">';
+ var c = METIER_COLORS[m] || {bg:'#f8fafc', border:'#0DA0CF', emoji:'🔧'};
+ html += '<div class="apm-group" data-metier="' + m + '"><div class="apm-group-head" style="border-left-color:' + c.border + '"><span class="apm-group-emoji">' + c.emoji + '</span><h4>' + m + '</h4><span class="apm-count">' + list.length + '</span></div><div class="apm-grid">';
  list.forEach(function(p){
- html += '<button type="button" class="apm-item" data-presta-id="' + p.id + '">' + p.icon + ' ' + p.label + '</button>';
+   var priceTag = p.quote ? '<span class="apm-price apm-price-quote">Sur devis</span>' : (p.price ? '<span class="apm-price">À partir de <strong>' + p.price + ' €</strong></span>' : '');
+   html += '<button type="button" class="apm-item" data-presta-id="' + p.id + '" style="--apm-c:' + c.border + ';--apm-bg:' + c.bg + '">' +
+   '<span class="apm-item-icon">' + p.icon + '</span>' +
+   '<span class="apm-item-body">' +
+   '<span class="apm-item-label">' + p.label + '</span>' +
+   priceTag +
+   '</span>' +
+   '<span class="apm-item-arrow">→</span>' +
+   '</button>';
  });
  html += '</div></div>';
  });
  html += '</div></div></div>';
  document.body.insertAdjacentHTML('beforeend', html);
+ // Injecter le CSS si pas déjà fait
+ if (!document.getElementById('apm-styles')) {
+   var styles = document.createElement('style');
+   styles.id = 'apm-styles';
+   styles.textContent = '.apm-backdrop{position:fixed;inset:0;background:rgba(10,20,40,.55);backdrop-filter:blur(8px);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;animation:apmFade .3s ease}.apm-backdrop.is-open{display:flex}@keyframes apmFade{from{opacity:0}to{opacity:1}}.apm-panel{background:#fff;border-radius:24px;max-width:1100px;width:100%;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 40px 80px rgba(10,20,40,.30);overflow:hidden;animation:apmSlide .35s cubic-bezier(.16,1,.3,1)}@keyframes apmSlide{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:none}}.apm-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 28px;border-bottom:1px solid #E5EDF3;background:linear-gradient(180deg,#fff 0%,#F8FCFE 100%)}.apm-head strong{display:block;font-size:1.3rem;font-weight:800;color:#0A1428;letter-spacing:-.01em}.apm-head .apm-sub{display:block;color:#64748b;font-size:.86rem;margin-top:3px}.apm-close{width:38px;height:38px;border-radius:50%;border:0;background:#F1F5F9;color:#475569;font-size:1.3rem;cursor:pointer;line-height:1;font-family:inherit;transition:all .2s ease}.apm-close:hover{background:#0A1428;color:#fff;transform:scale(1.08)}.apm-search-wrap{position:relative;padding:14px 28px 6px;background:#fff}.apm-search-wrap svg{position:absolute;left:42px;top:50%;transform:translateY(-50%);color:#94a3b8}.apm-search{width:100%;box-sizing:border-box;padding:11px 16px 11px 44px;border:1.5px solid #E5EDF3;background:#F7FBFD;border-radius:10px;font-family:inherit;font-size:.94rem;color:#0A1428;outline:none;transition:all .2s ease}.apm-search:focus{border-color:#0DA0CF;background:#fff;box-shadow:0 0 0 4px rgba(13,160,207,.10)}.apm-body{padding:18px 28px 28px;overflow-y:auto;flex:1}.apm-group{margin-bottom:24px}.apm-group:last-child{margin-bottom:0}.apm-group-head{display:flex;align-items:center;gap:10px;padding:8px 12px 8px 14px;margin-bottom:12px;border-left:4px solid;background:linear-gradient(90deg,rgba(13,160,207,.04),transparent);border-radius:0 8px 8px 0}.apm-group-emoji{font-size:1.4rem;line-height:1}.apm-group-head h4{margin:0;font-size:1rem;font-weight:800;color:#0A1428;letter-spacing:-.005em;flex:1}.apm-count{padding:3px 10px;background:rgba(13,160,207,.12);color:#0DA0CF;border-radius:999px;font-size:.74rem;font-weight:800}.apm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}.apm-item{display:flex;align-items:center;gap:12px;padding:14px 14px 14px 16px;background:var(--apm-bg,#f8fafc);border:1.5px solid transparent;border-radius:14px;cursor:pointer;text-align:left;font-family:inherit;color:#0A1428;transition:all .25s ease;position:relative;overflow:hidden}.apm-item:hover{transform:translateY(-2px);border-color:var(--apm-c,#0DA0CF);box-shadow:0 10px 24px rgba(10,20,40,.10)}.apm-item-icon{flex-shrink:0;width:42px;height:42px;border-radius:11px;background:rgba(255,255,255,.85);display:inline-flex;align-items:center;justify-content:center;font-size:1.4rem;line-height:1;box-shadow:0 2px 8px rgba(10,20,40,.06)}.apm-item-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}.apm-item-label{font-size:.92rem;font-weight:700;line-height:1.25;color:#0A1428}.apm-price{font-size:.78rem;color:#64748b;font-weight:500}.apm-price strong{color:var(--apm-c,#0DA0CF);font-weight:800}.apm-price-quote{font-style:italic;color:#FF6B1A;font-weight:700}.apm-item-arrow{flex-shrink:0;font-size:1.2rem;font-weight:900;color:var(--apm-c,#0DA0CF);opacity:.5;transition:all .25s ease}.apm-item:hover .apm-item-arrow{opacity:1;transform:translateX(4px)}@media(max-width:720px){.apm-head{padding:16px 18px}.apm-search-wrap{padding:10px 18px 6px}.apm-search-wrap svg{left:32px}.apm-body{padding:14px 18px 18px}.apm-grid{grid-template-columns:1fr;gap:8px}.apm-item{padding:12px}}';
+   document.head.appendChild(styles);
+ }
  var modal = document.getElementById('allPrestasModal');
  modal.classList.add('is-open');
  modal.querySelector('.apm-close').addEventListener('click', function(){ modal.classList.remove('is-open'); });
  modal.addEventListener('click', function(e){ if (e.target === modal) modal.classList.remove('is-open'); });
+ // Recherche
+ var searchInput = modal.querySelector('.apm-search');
+ if (searchInput) {
+   searchInput.addEventListener('input', function(){
+     var q = (this.value || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').trim();
+     modal.querySelectorAll('.apm-item').forEach(function(item){
+       var label = (item.querySelector('.apm-item-label').textContent || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+       item.style.display = (!q || label.indexOf(q) >= 0) ? '' : 'none';
+     });
+     modal.querySelectorAll('.apm-group').forEach(function(group){
+       var visible = Array.from(group.querySelectorAll('.apm-item')).some(function(it){ return it.style.display !== 'none'; });
+       group.style.display = visible ? '' : 'none';
+     });
+   });
+ }
  modal.querySelectorAll('.apm-item').forEach(function(btn){
  btn.addEventListener('click', function(){
  var id = btn.dataset.prestaId;
@@ -1879,11 +1923,9 @@ function showAllPrestasModal() {
  var nameEl = document.getElementById('resa-presta-name');
  if (nameEl) nameEl.innerHTML = p.icon + ' ' + p.label;
  updateSelectedPrestaPrice(p);
- // Remplace la 1ère card de proposals visuellement
  var container = document.getElementById('presta-proposals');
  if (container) {
  container.querySelectorAll('.pp-card').forEach(function(b){ b.classList.remove('pp-selected'); });
- // On rend la "Autre prestation" comme sélectionnée si la valeur n'est pas dans le top
  var alreadyVisible = container.querySelector('.pp-card[data-presta-id="' + id + '"]');
  if (alreadyVisible) alreadyVisible.classList.add('pp-selected');
  else {
@@ -2072,13 +2114,57 @@ var to = state.cp && state.cp.substring(0,2) === '59'
 ? 'dunkerque@helpconfort.com' : 'saint-omer@helpconfort.com';
 window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + encodeURIComponent(buildMailBody());
 });
+// ═══════════════════════════════════════════════════════════════
+// STRIPE PAYMENT LINKS — table de correspondance slug → URL Stripe
+// (à compléter par Florian depuis son dashboard Stripe : https://dashboard.stripe.com/payment-links)
+// Format : 'slug-presta': 'https://buy.stripe.com/XXXXXXXXX'
+// Si la prestation n'a pas de Payment Link, fallback contact.html?action=paiement
+// ═══════════════════════════════════════════════════════════════
+var STRIPE_LINKS = {
+  // Plomberie
+  'recherche-fuite-visuelle': '',  // à remplir : https://buy.stripe.com/...
+  'recherche-fuite-technique': '',
+  'desengorgement': '',
+  'chasse-nicoll': '',
+  'chasse-geberit': '',
+  'detartrage-sanitaire': '',
+  'chauffe-eau-100-eco': '',
+  'chauffe-eau-100-st': '',
+  'chauffe-eau-150-eco': '',
+  'chauffe-eau-150-st': '',
+  'chauffe-eau-200-eco': '',
+  'contrat-entretien-chauffe-eau': '',
+  // Chauffage
+  'entretien-chaudiere-gaz': '',
+  'desembouage-radiateur': '',
+  'depannage-chaudiere-t1': '',
+  // Serrurerie
+  'ouverture-porte-simple': '',
+  'ouverture-porte-claquee': '',
+  'ouverture-porte-fermee-cle': '',
+  'ouverture-porte-securite': '',
+  // Électricité
+  'recherche-panne-elec': '',
+};
+
 var payBtn = document.getElementById('resa-pay');
 if (payBtn) payBtn.addEventListener('click', async function() {
 // 1. Enregistre le lead côté Supabase
 persistLeadToSupabase('home_wizard_reservation_paiement');
-// 2. Redirige vers contact.html avec ?presta=<slug>&action=paiement (gère le contexte paiement + pré-remplit le form)
 var sug = state.suggested_presta || {};
 var slug = sug.slug || (state.presta || '');
+// 2. Si Stripe Payment Link configuré pour cette presta → paiement direct
+var stripeUrl = STRIPE_LINKS[slug];
+if (stripeUrl && stripeUrl.indexOf('https://') === 0) {
+  // Pré-remplir les champs client Stripe via query params
+  var stripeParams = new URLSearchParams();
+  if (state.email) stripeParams.set('prefilled_email', state.email);
+  if (state.tel) stripeParams.set('prefilled_phone_number', state.tel);
+  var sep = stripeUrl.indexOf('?') > -1 ? '&' : '?';
+  window.location.href = stripeUrl + sep + stripeParams.toString();
+  return;
+}
+// 3. Sinon, fallback contact.html avec action=paiement (l'agence envoie un lien Stripe par email)
 var params = new URLSearchParams();
 params.set('presta', slug || 'autre');
 params.set('action', 'paiement');
