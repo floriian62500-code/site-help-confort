@@ -425,29 +425,56 @@
     googleReviews.length > 0 ? 'sur Google' : 'aucun avis');
   if (reviewsRes.error) console.warn('reviews error:', reviewsRes.error.message);
 
-  // ─── GA4 stats (si configuré) ───────────────────────────
+  // ─── GA4 stats live (priorité OAuth user, fallback Service Account) ──
+  // Appel CLIENT-SIDE direct (pas d'Edge Function), comme analytics.html
   try {
-    const { data: ga4Settings } = await c.from('app_settings').select('value').eq('key','ga4').single();
-    if (ga4Settings?.value?.property_id && ga4Settings?.value?.service_account_json) {
-      // Override le KPI couverture IA en "Visiteurs" si GA4 dispo
-      const { data: { session: sess } } = await c.auth.getSession();
-      const r = await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/ga4-stats', {
-        method:'POST',
-        headers:{ 'Authorization':'Bearer '+sess.access_token, 'content-type':'application/json' },
-        body: JSON.stringify({ period:'7d' })
+    let ga4Kpi = null;
+    // Tentative OAuth user (plan B, le plus fiable)
+    const { data: oauthData } = await c.from('app_settings').select('value').eq('key','ga4_oauth').maybeSingle();
+    if (oauthData?.value?.refresh_token && oauthData?.value?.client_id && oauthData?.value?.client_secret) {
+      const o = oauthData.value;
+      const tr = await fetch('https://oauth2.googleapis.com/token', {
+        method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body: new URLSearchParams({ client_id:o.client_id, client_secret:o.client_secret, refresh_token:o.refresh_token, grant_type:'refresh_token' }).toString()
       });
-      const ga = await r.json();
-      if (ga.success && ga.kpi) {
-        const card = document.querySelector('[data-kpi="ai-coverage"]');
-        if (card) {
-          card.querySelector('.stat-card-label').textContent = 'Visiteurs site (7j)';
-          card.querySelector('[data-kpi-value]').textContent = ga.kpi.users.toLocaleString('fr-FR');
-          card.querySelector('[data-kpi-trend]').textContent = ga.kpi.sessions + ' sessions';
-          card.querySelector('[data-kpi-meta]').textContent = ga.kpi.page_views + ' vues · ' + Math.floor(ga.kpi.avg_duration_sec/60) + ':' + String(ga.kpi.avg_duration_sec%60).padStart(2,'0') + ' moy';
+      const tj = await tr.json();
+      if (tj.access_token) {
+        const r2 = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${o.property_id}:runReport`, {
+          method:'POST', headers:{ Authorization:'Bearer '+tj.access_token, 'Content-Type':'application/json' },
+          body: JSON.stringify({
+            dateRanges:[{startDate:'7daysAgo',endDate:'today'}],
+            metrics:[{name:'sessions'},{name:'totalUsers'},{name:'screenPageViews'},{name:'averageSessionDuration'}]
+          })
+        });
+        const j2 = await r2.json();
+        if (j2.rows?.[0]?.metricValues) {
+          const v = j2.rows[0].metricValues;
+          ga4Kpi = {
+            sessions: Number(v[0]?.value||0),
+            users: Number(v[1]?.value||0),
+            page_views: Number(v[2]?.value||0),
+            avg_duration_sec: Math.round(Number(v[3]?.value||0))
+          };
         }
       }
     }
-  } catch (e) { /* GA4 non configuré ou erreur — KPI couverture IA reste affichée */ }
+    // Si on a des stats, remplace le KPI "Note Google" par "Visiteurs (7j)"
+    if (ga4Kpi) {
+      const card = document.querySelector('[data-kpi="ai-coverage"]');
+      if (card) {
+        const lbl = card.querySelector('.stat-card-label'); if (lbl) lbl.textContent = 'Visiteurs (7 j)';
+        const val = card.querySelector('[data-kpi-value]'); if (val) val.textContent = ga4Kpi.users.toLocaleString('fr-FR');
+        const trd = card.querySelector('[data-kpi-trend]'); if (trd) trd.textContent = ga4Kpi.sessions + ' sessions';
+        const meta = card.querySelector('[data-kpi-meta]');
+        if (meta) {
+          const min = Math.floor(ga4Kpi.avg_duration_sec/60);
+          const sec = ga4Kpi.avg_duration_sec%60;
+          meta.textContent = ga4Kpi.page_views + ' vues · ' + min + ':' + String(sec).padStart(2,'0') + ' moy';
+        }
+        card.href = 'analytics.html';
+      }
+    }
+  } catch (e) { console.warn('[dashboard] GA4:', e.message); }
 
   // ─── Stats chantiers (pour alertes + badge nav) ──────────
   const total = all.length;
