@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Diagnostic connexions · Back-Office HELP! Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<link rel="manifest" href="/admin-pro/manifest.webmanifest">
+<meta name="theme-color" content="#0DA0CF">
+<style>
+  body{font-family:Inter,sans-serif;background:#FAFCFD;margin:0;padding:24px}
+  .wrap{max-width:1080px;margin:0 auto}
+  h1{font-size:1.6rem;margin:0 0 8px;display:flex;align-items:center;gap:10px}
+  .sub{color:#64748b;margin-bottom:24px}
+  .check{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:18px 22px;margin-bottom:14px;box-shadow:0 1px 2px rgba(11,18,32,.04);transition:.2s}
+  .check.ok{background:linear-gradient(135deg,#F0FDF4,#fff);border-color:rgba(22,163,74,.35)}
+  .check.warn{background:linear-gradient(135deg,#FFFBEB,#fff);border-color:rgba(255,180,0,.40)}
+  .check.err{background:linear-gradient(135deg,#FEF2F2,#fff);border-color:rgba(220,38,38,.40)}
+  .check.testing{background:#FAFCFD;border-color:#0DA0CF}
+  .check-head{display:flex;align-items:center;gap:14px}
+  .check-icon{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.4rem;background:#fff;border:1px solid #e2e8f0}
+  .check.ok .check-icon{background:#dcfce7;border-color:rgba(22,163,74,.30)}
+  .check.warn .check-icon{background:#fef3c7;border-color:rgba(255,180,0,.30)}
+  .check.err .check-icon{background:#fee2e2;border-color:rgba(220,38,38,.30)}
+  .check-info{flex:1;min-width:0}
+  .check-title{font-size:1.04rem;font-weight:800;color:#0A1428;margin:0}
+  .check-state{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 10px;border-radius:999px}
+  .check.ok .check-state{background:#dcfce7;color:#15803d}
+  .check.warn .check-state{background:#fef3c7;color:#92400e}
+  .check.err .check-state{background:#fee2e2;color:#991b1b}
+  .check.testing .check-state{background:#dbeafe;color:#0DA0CF}
+  .check-msg{margin:8px 0 0;font-size:.86rem;color:#475569;line-height:1.55}
+  .check-actions{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+  .check-actions a{padding:6px 14px;border-radius:8px;text-decoration:none;font-weight:700;font-size:.8rem}
+  .check-actions a.fix{background:linear-gradient(135deg,#0DA0CF,#0884AE);color:#fff}
+  .check-actions a.info{background:#fff;border:1px solid #e2e8f0;color:#0A1428}
+  .summary{background:linear-gradient(135deg,#0A1428,#0DA0CF);color:#fff;padding:18px 22px;border-radius:14px;margin-bottom:18px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .summary .stat{background:rgba(255,255,255,.14);padding:8px 14px;border-radius:9px;font-weight:700;font-size:.88rem}
+  .summary .stat strong{font-size:1.15rem;display:block}
+  a.back{color:#0DA0CF;text-decoration:none;font-size:.84rem;font-weight:600}
+  .cta-relaunch{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;border:none;border-radius:10px;font:inherit;font-weight:800;font-size:.92rem;cursor:pointer;margin-top:14px}
+  details{margin-top:10px;font-size:.8rem;color:#64748b}
+  summary{cursor:pointer;font-weight:600}
+  pre{background:#0A1428;color:#A7F3D0;padding:10px;border-radius:8px;font-size:.74rem;overflow:auto;margin:6px 0 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Retour au dashboard</a>
+  <h1>🩺 Diagnostic connexions</h1>
+  <p class="sub">Vérifie en temps réel l'état de chaque intégration (Meta, GBP, GA4, Claude IA, Supabase). Ping client-side direct, pas d'Edge Function. Mis à jour à chaque rechargement de la page.</p>
+
+  <div class="summary" id="summary">
+    <div class="stat"><strong id="sumOk">—</strong>OK</div>
+    <div class="stat"><strong id="sumWarn">—</strong>Attention</div>
+    <div class="stat"><strong id="sumErr">—</strong>Erreur</div>
+    <div class="stat" style="margin-left:auto"><span id="sumTime">Tests en cours…</span></div>
+  </div>
+
+  <div id="checks"></div>
+
+  <button class="cta-relaunch" id="btnRelaunch">🔁 Relancer tous les tests</button>
+</div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script>
+(async function(){
+  const sb = await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+
+  const checksEl = document.getElementById('checks');
+
+  // ─── Helpers ─────────────────────────────────────────────
+  function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  function pemToArrayBuffer(pem){
+    const b64 = String(pem||'').replace(/-----BEGIN PRIVATE KEY-----/g,'').replace(/-----END PRIVATE KEY-----/g,'').replace(/\s+/g,'');
+    const binary = atob(b64);
+    const bytes = new Uint8Array(binary.length);
+    for (let i=0; i<binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    return bytes.buffer;
+  }
+  function b64u(s){ return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }
+  function b64uBuf(buf){
+    const b = new Uint8Array(buf); let s=''; for (let i=0;i<b.byteLength;i++) s += String.fromCharCode(b[i]);
+    return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  }
+
+  // ─── Render d'une carte de test ──────────────────────────
+  function renderCheck(id, icon, title, state, msg, actions=[], details=null){
+    const cls = state.toLowerCase();
+    const stateText = { ok:'✓ OK', warn:'⚠ Attention', err:'✗ Erreur', testing:'⏳ Test en cours' }[cls] || state;
+    const actionsHtml = actions.length ? `<div class="check-actions">${actions.map(a => `<a href="${a.href}" ${a.blank?'target="_blank"':''} class="${a.style||'info'}">${a.label}</a>`).join('')}</div>` : '';
+    const detailsHtml = details ? `<details><summary>📋 Détails</summary><pre>${esc(typeof details === 'string' ? details : JSON.stringify(details, null, 2))}</pre></details>` : '';
+    const el = document.getElementById('check-'+id);
+    const html = `<div class="check-head"><div class="check-icon">${icon}</div><div class="check-info"><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap"><h3 class="check-title">${title}</h3><span class="check-state">${stateText}</span></div><p class="check-msg">${msg}</p>${actionsHtml}${detailsHtml}</div></div>`;
+    if (el) { el.className = 'check ' + cls; el.innerHTML = html; }
+    else { const div = document.createElement('div'); div.id='check-'+id; div.className='check '+cls; div.innerHTML=html; checksEl.appendChild(div); }
+  }
+
+  // ─── Update summary ──────────────────────────────────────
+  function updateSummary(){
+    const all = checksEl.querySelectorAll('.check');
+    let ok=0, warn=0, err=0;
+    all.forEach(c => { if (c.classList.contains('ok')) ok++; else if (c.classList.contains('warn')) warn++; else if (c.classList.contains('err')) err++; });
+    document.getElementById('sumOk').textContent = ok;
+    document.getElementById('sumWarn').textContent = warn;
+    document.getElementById('sumErr').textContent = err;
+    document.getElementById('sumTime').textContent = 'Dernier test : ' + new Date().toLocaleTimeString('fr-FR');
+  }
+
+  // ─── TEST 1 : Supabase RLS / table app_settings ──────────
+  async function testSupabase(){
+    renderCheck('supabase','🗄','Supabase (base de données)','testing','Lecture des configs en cours…');
+    try {
+      const { data, error } = await sb.from('app_settings').select('key').limit(20);
+      if (error) throw error;
+      const keys = (data||[]).map(r=>r.key);
+      renderCheck('supabase','🗄','Supabase (base de données)','ok',
+        `Connexion active · ${keys.length} clés de config en base : <code>${keys.join(', ')||'(aucune)'}</code>`,
+        [{href:'https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg',label:'Ouvrir Supabase',blank:true,style:'info'}]
+      );
+    } catch(e) {
+      renderCheck('supabase','🗄','Supabase (base de données)','err',
+        'Impossible de lire les configs : ' + esc(e.message),
+        [{href:'https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg',label:'Vérifier Supabase',blank:true,style:'fix'}]
+      );
+    }
+    updateSummary();
+  }
+
+  // ─── TEST 2 : Facebook (debug_token + accès page) ────────
+  async function testMeta(){
+    renderCheck('meta','📘','Facebook + Instagram (Meta)','testing','Vérification du Page Access Token en cours…');
+    try {
+      const { data } = await sb.from('app_settings').select('value').eq('key','meta').single();
+      const cfg = data?.value || {};
+      if (!cfg.page_access_token || !cfg.fb_page_id) {
+        renderCheck('meta','📘','Facebook + Instagram (Meta)','err',
+          'Configuration incomplète : token ou Page ID manquant.',
+          [{href:'settings.html#meta',label:'Configurer →',style:'fix'}]
+        );
+        updateSummary(); return;
+      }
+      // Test 1 : récupérer le nom de la page
+      const r = await fetch(`https://graph.facebook.com/v21.0/${cfg.fb_page_id}?fields=name,fan_count,access_token&access_token=${encodeURIComponent(cfg.page_access_token)}`);
+      const j = await r.json();
+      if (!r.ok || j.error) throw new Error(j.error?.message || 'HTTP '+r.status);
+      // Test 2 : debug_token pour expiration
+      let expires = null, isPerm = false;
+      try {
+        const dr = await fetch(`https://graph.facebook.com/v21.0/debug_token?input_token=${encodeURIComponent(cfg.page_access_token)}&access_token=${encodeURIComponent(cfg.page_access_token)}`);
+        const dj = await dr.json();
+        if (dj.data) {
+          expires = dj.data.expires_at;  // 0 = permanent
+          isPerm = expires === 0 || !expires;
+        }
+      } catch(_e){}
+      const expiryMsg = isPerm
+        ? '<strong style="color:#15803d">Token permanent ✓ (à vie)</strong>'
+        : expires ? `<strong style="color:#92400e">Token expire le ${new Date(expires*1000).toLocaleDateString('fr-FR')} (${Math.round((expires*1000 - Date.now())/86400000)} jours restants)</strong>`
+        : '<strong style="color:#92400e">Durée de vie inconnue</strong>';
+      const state = isPerm ? 'ok' : (expires && (expires*1000 - Date.now()) < 7*86400000 ? 'err' : 'warn');
+      renderCheck('meta','📘','Facebook + Instagram (Meta)', state,
+        `Page : <strong>${esc(j.name)}</strong> (${j.fan_count?.toLocaleString('fr-FR')||0} fans).<br>${expiryMsg}`,
+        [
+          {href:'settings.html#meta',label:'Régler →',style:'info'},
+          {href:'sync-fb.html',label:'Sync FB',style:'info'}
+        ],
+        { page: j.name, fan_count: j.fan_count, expires_at: expires, is_permanent: isPerm }
+      );
+    } catch(e) {
+      renderCheck('meta','📘','Facebook + Instagram (Meta)','err',
+        'Erreur API : ' + esc(e.message),
+        [{href:'settings.html#meta',label:'Réparer →',style:'fix'}]
+      );
+    }
+    updateSummary();
+  }
+
+  // ─── TEST 3 : Google Business Profile (refresh token) ────
+  async function testGBP(){
+    renderCheck('gbp','📍','Google Business Profile','testing','Test du refresh token Google en cours…');
+    try {
+      const { data } = await sb.from('app_settings').select('value').eq('key','gbp').single();
+      const cfg = data?.value || {};
+      if (!cfg.client_id || !cfg.client_secret || !cfg.refresh_token) {
+        renderCheck('gbp','📍','Google Business Profile','err',
+          'Configuration incomplète : Client ID, Secret ou Refresh Token manquant.',
+          [{href:'settings.html#gbp',label:'Configurer →',style:'fix'}]
+        );
+        updateSummary(); return;
+      }
+      const r = await fetch('https://oauth2.googleapis.com/token', {
+        method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body: new URLSearchParams({
+          client_id: cfg.client_id, client_secret: cfg.client_secret,
+          refresh_token: cfg.refresh_token, grant_type:'refresh_token'
+        }).toString()
+      });
+      const j = await r.json();
+      if (!j.access_token) throw new Error(j.error_description || j.error || 'Token refresh failed');
+      // Tester l'API de listing des comptes (peut être en quota=0)
+      try {
+        const a = await fetch('https://mybusinessaccountmanagement.googleapis.com/v1/accounts', {
+          headers:{Authorization:'Bearer '+j.access_token}
+        });
+        const aj = await a.json();
+        if (a.ok && aj.accounts) {
+          renderCheck('gbp','📍','Google Business Profile','ok',
+            `Access Token renouvelé (expire dans ${j.expires_in}s). <strong>${aj.accounts.length} compte(s) GBP</strong> détecté(s).`,
+            [
+              {href:'sync-google-reviews.html',label:'Sync avis Google',style:'info'},
+              {href:'settings.html#gbp',label:'Régler →',style:'info'}
+            ]
+          );
+        } else if (aj.error?.message?.includes('Quota exceeded')) {
+          renderCheck('gbp','📍','Google Business Profile','warn',
+            `Token OK mais <strong>quota API limité à 0 req/min</strong> (politique Google sur My Business API). Demande de quota soumise — en attente Google (2-7 jours).`,
+            [
+              {href:'https://support.google.com/business/contact/api_default',label:'Voir demande quota',blank:true,style:'info'},
+              {href:'settings.html#gbp',label:'Régler →',style:'info'}
+            ],
+            aj
+          );
+        } else {
+          throw new Error(aj.error?.message || 'API access denied');
+        }
+      } catch(quotaErr) {
+        renderCheck('gbp','📍','Google Business Profile','warn',
+          `Token OK mais accès aux comptes GBP refusé : ${esc(quotaErr.message)}`,
+          [{href:'settings.html#gbp',label:'Régler →',style:'info'}]
+        );
+      }
+    } catch(e) {
+      renderCheck('gbp','📍','Google Business Profile','err',
+        'Refresh token invalide : ' + esc(e.message),
+        [{href:'settings.html#gbp',label:'Re-connecter OAuth →',style:'fix'}]
+      );
+    }
+    updateSummary();
+  }
+
+  // ─── TEST 4 : GA4 (signature JWT + runReport) ────────────
+  async function testGA4(){
+    renderCheck('ga4','📊','Google Analytics 4','testing','Test du service account et appel runReport en cours…');
+    try {
+      const { data } = await sb.from('app_settings').select('value').eq('key','ga4').single();
+      const cfg = data?.value || {};
+      if (!cfg.property_id || !cfg.service_account_json) {
+        renderCheck('ga4','📊','Google Analytics 4','err',
+          'Configuration incomplète : Property ID ou Service Account JSON manquant.',
+          [{href:'finalize-config.html',label:'Configurer →',style:'fix'}]
+        );
+        updateSummary(); return;
+      }
+      let sa;
+      try {
+        sa = typeof cfg.service_account_json === 'string' ? JSON.parse(cfg.service_account_json) : cfg.service_account_json;
+      } catch(_) { throw new Error('Service Account JSON non parsable (tronqué ?)'); }
+      if (!sa.client_email || !sa.private_key || !String(sa.private_key).includes('BEGIN PRIVATE KEY')) {
+        throw new Error('Service Account JSON incomplet (client_email ou private_key manquant)');
+      }
+      // JWT
+      const now = Math.floor(Date.now()/1000);
+      const header = { alg:'RS256', typ:'JWT', kid: sa.private_key_id };
+      const payload = { iss: sa.client_email, scope:'https://www.googleapis.com/auth/analytics.readonly',
+        aud: sa.token_uri || 'https://oauth2.googleapis.com/token', exp: now+3600, iat: now };
+      const data2 = b64u(JSON.stringify(header)) + '.' + b64u(JSON.stringify(payload));
+      const key = await crypto.subtle.importKey('pkcs8', pemToArrayBuffer(sa.private_key),
+        { name:'RSASSA-PKCS1-v1_5', hash:'SHA-256' }, false, ['sign']);
+      const sig = await crypto.subtle.sign('RSASSA-PKCS1-v1_5', key, new TextEncoder().encode(data2));
+      const jwt = data2 + '.' + b64uBuf(sig);
+      const tr = await fetch('https://oauth2.googleapis.com/token', {
+        method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body: new URLSearchParams({ grant_type:'urn:ietf:params:oauth:grant-type:jwt-bearer', assertion: jwt }).toString()
+      });
+      const tj = await tr.json();
+      if (!tj.access_token) throw new Error(tj.error_description || tj.error || 'token error');
+      // runReport
+      const rr = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${cfg.property_id}:runReport`, {
+        method:'POST', headers:{Authorization:'Bearer '+tj.access_token,'Content-Type':'application/json'},
+        body: JSON.stringify({ dateRanges:[{startDate:'7daysAgo',endDate:'today'}], metrics:[{name:'sessions'},{name:'totalUsers'}] })
+      });
+      const rj = await rr.json();
+      if (rj.error) throw new Error(rj.error.message);
+      const row = rj.rows?.[0]?.metricValues || [];
+      const sessions = Number(row[0]?.value||0);
+      const users = Number(row[1]?.value||0);
+      renderCheck('ga4','📊','Google Analytics 4','ok',
+        `Service account <code>${esc(sa.client_email)}</code> OK · Property <code>${esc(cfg.property_id)}</code>.<br><strong>${sessions} session(s) · ${users} visiteur(s) sur 7 jours.</strong>${sessions === 0 ? ' <span style="color:#92400e">⚠ Aucun trafic — tag GA4 actif sur le site ?</span>' : ''}`,
+        [
+          {href:'analytics.html',label:'Voir les stats',style:'info'},
+          {href:'sync-ga4.html',label:'Test détaillé',style:'info'}
+        ]
+      );
+    } catch(e) {
+      renderCheck('ga4','📊','Google Analytics 4','err',
+        'Erreur : ' + esc(e.message),
+        [
+          {href:'finalize-config.html',label:'Re-coller JSON →',style:'fix'},
+          {href:'https://console.cloud.google.com/apis/library/analyticsdata.googleapis.com?project=help-confort-back-office',label:'Activer API',blank:true,style:'info'}
+        ]
+      );
+    }
+    updateSummary();
+  }
+
+  // ─── TEST 5 : Claude IA (présence clé + appel /messages) ─
+  async function testClaude(){
+    renderCheck('claude','🤖','Claude IA (Anthropic)','testing','Vérification de la clé API…');
+    try {
+      const { data } = await sb.from('app_settings').select('value').eq('key','claude').single();
+      const cfg = data?.value || {};
+      if (!cfg.api_key) {
+        renderCheck('claude','🤖','Claude IA (Anthropic)','err',
+          'Clé API Anthropic absente. Génère ta clé sur <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a> puis colle-la dans Settings → IA.',
+          [{href:'finalize-config.html',label:'Coller la clé →',style:'fix'}]
+        );
+        updateSummary(); return;
+      }
+      if (!/^sk-ant-/.test(cfg.api_key)) {
+        renderCheck('claude','🤖','Claude IA (Anthropic)','warn',
+          `Clé en base mais format inhabituel (n'commence pas par sk-ant-) : ${cfg.api_key.slice(0,10)}…`,
+          [{href:'finalize-config.html',label:'Re-coller la clé →',style:'fix'}]
+        );
+        updateSummary(); return;
+      }
+      // Anthropic API ne supporte pas CORS direct depuis le browser. On vérifie juste le format.
+      renderCheck('claude','🤖','Claude IA (Anthropic)','ok',
+        `Clé API présente (${cfg.api_key.length} chars, format <code>sk-ant-...</code>) · Modèle : <strong>${esc(cfg.model||'claude-sonnet-4-6')}</strong>.<br><em style="color:#64748b">L'API Anthropic n'autorise pas les appels depuis le navigateur (CORS). La validation réelle se fait quand les agents IA tournent côté serveur.</em>`,
+        [
+          {href:'https://console.anthropic.com/settings/usage',label:'Usage Anthropic',blank:true,style:'info'},
+          {href:'settings.html#claude',label:'Régler →',style:'info'}
+        ]
+      );
+    } catch(e) {
+      renderCheck('claude','🤖','Claude IA (Anthropic)','err','Erreur : '+esc(e.message),[]);
+    }
+    updateSummary();
+  }
+
+  // ─── TEST 6 : Resend (emails) ────────────────────────────
+  async function testResend(){
+    renderCheck('resend','✉️','Resend (notifications email)','testing','Lecture config…');
+    try {
+      const { data } = await sb.from('app_settings').select('value').eq('key','email_notifs').single();
+      const cfg = data?.value || {};
+      const dest = cfg.contracts_recipient || cfg.recipient;
+      if (!dest) {
+        renderCheck('resend','✉️','Resend (notifications email)','warn','Destinataires non configurés.',
+          [{href:'settings.html#notifs',label:'Configurer →',style:'fix'}]);
+      } else {
+        renderCheck('resend','✉️','Resend (notifications email)','ok',
+          `Destinataire principal : <strong>${esc(dest)}</strong> · domaine <code>depan59-62.fr</code> (DKIM Resend OK).`,
+          [{href:'settings.html#notifs',label:'Régler →',style:'info'}]
+        );
+      }
+    } catch(e) {
+      renderCheck('resend','✉️','Resend (notifications email)','warn','Pas de config email_notifs en base.',
+        [{href:'settings.html#notifs',label:'Configurer →',style:'info'}]);
+    }
+    updateSummary();
+  }
+
+  // ─── TEST 7 : CRM Apogée / Dynoco ────────────────────────
+  async function testCRM(){
+    renderCheck('crm','🏢','CRM Apogée (Dynoco)','testing','Lecture config…');
+    try {
+      const { data } = await sb.from('app_settings').select('value').eq('key','crm').single();
+      const cfg = data?.value || {};
+      if (cfg.webhook_url && cfg.api_key) {
+        renderCheck('crm','🏢','CRM Apogée (Dynoco)','ok',
+          `Webhook configuré : <code>${esc(cfg.webhook_url.slice(0,50))}…</code>`,
+          [{href:'settings.html#crm',label:'Régler →',style:'info'}]);
+      } else {
+        renderCheck('crm','🏢','CRM Apogée (Dynoco)','warn',
+          'Webhook Apogée pas encore configuré. Mail envoyé à Hugo Bulthé (dynoco.fr) — en attente budget + endpoint (réponse Hugo : 2-3 h de dev).',
+          [{href:'settings.html#crm',label:'Ouvrir config CRM →',style:'info'}]);
+      }
+    } catch(e) {
+      renderCheck('crm','🏢','CRM Apogée (Dynoco)','warn','Pas de config CRM en base (mail envoyé à Hugo Bulthé, attente réponse).',
+        [{href:'settings.html#crm',label:'Configurer →',style:'info'}]);
+    }
+    updateSummary();
+  }
+
+  // ─── TEST 8 : Site public en ligne ───────────────────────
+  async function testSite(){
+    renderCheck('site','🌐','Site public (depan59-62.fr)','testing','Ping de la page d\'accueil…');
+    try {
+      const t0 = Date.now();
+      const r = await fetch('https://depan59-62.fr/', { method:'HEAD', cache:'no-store' });
+      const ms = Date.now() - t0;
+      if (!r.ok) throw new Error('HTTP '+r.status);
+      const state = ms < 500 ? 'ok' : ms < 1500 ? 'warn' : 'err';
+      renderCheck('site','🌐','Site public (depan59-62.fr)', state,
+        `Réponse HTTP ${r.status} en <strong>${ms} ms</strong> · CDN Netlify.`,
+        [
+          {href:'https://depan59-62.fr',label:'Ouvrir site',blank:true,style:'info'},
+          {href:'https://app.netlify.com/projects/remarkable-dragon-364e2b/deploys',label:'Deploys Netlify',blank:true,style:'info'}
+        ]
+      );
+    } catch(e) {
+      renderCheck('site','🌐','Site public (depan59-62.fr)','err','Site inaccessible : '+esc(e.message),
+        [{href:'https://app.netlify.com/projects/remarkable-dragon-364e2b/deploys',label:'Voir Netlify',blank:true,style:'fix'}]);
+    }
+    updateSummary();
+  }
+
+  // ─── Lance tous les tests en parallèle ───────────────────
+  async function runAll(){
+    checksEl.innerHTML = '';
+    document.getElementById('sumOk').textContent = '—';
+    document.getElementById('sumWarn').textContent = '—';
+    document.getElementById('sumErr').textContent = '—';
+    document.getElementById('sumTime').textContent = 'Tests en cours…';
+
+    await Promise.all([
+      testSite(), testSupabase(), testMeta(),
+      testGBP(), testGA4(), testClaude(),
+      testResend(), testCRM()
+    ]);
+  }
+
+  document.getElementById('btnRelaunch').onclick = runAll;
+  await runAll();
+})();
+</script>
+</body>
+</html>

@@ -370,23 +370,30 @@ window.addEventListener('load', positionMegamenus);
 if (document.fonts && document.fonts.ready) {
  document.fonts.ready.then(positionMegamenus);
 }
- function forceCloseMenus() { megaMenus.forEach(function(m) { m.classList.add('mm-force-closed'); }); }
+ function getMenuFor(link){ var id = link.getAttribute('data-has-menu'); return document.querySelector('.hc-megamenu[data-menu="' + id + '"]'); }
+ function openMenu(menu, link){ megaMenus.forEach(function(m){ m.classList.remove('is-hovered','is-open','mm-force-closed'); }); navLinks.forEach(function(l){ l.setAttribute('aria-expanded','false'); }); if (!menu) return; menu.classList.add('is-hovered'); if (link) link.setAttribute('aria-expanded','true'); if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; } }
+ function forceCloseMenus() { megaMenus.forEach(function(m) { m.classList.remove('is-open','is-hovered'); m.classList.add('mm-force-closed'); }); navLinks.forEach(function(l){ l.setAttribute('aria-expanded','false'); }); if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; } }
  function cancelCloseMenus() { megaMenus.forEach(function(m) { m.classList.remove('mm-force-closed'); }); if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; } }
- function scheduleClose() { if (closeTimer) clearTimeout(closeTimer); closeTimer = setTimeout(forceCloseMenus, 300); }
+ function scheduleClose() { if (closeTimer) clearTimeout(closeTimer); closeTimer = setTimeout(forceCloseMenus, 400); }
  navLinks.forEach(function(link) {
- link.addEventListener('mouseenter', cancelCloseMenus);
+ link.addEventListener('mouseenter', function(){ cancelCloseMenus(); openMenu(getMenuFor(link), link); });
  link.addEventListener('mouseleave', scheduleClose);
- link.addEventListener('click', cancelCloseMenus);
+ link.addEventListener('focus', function(){ openMenu(getMenuFor(link), link); });
+ link.addEventListener('click', function(e){
+ if (link.tagName === 'BUTTON' || link.getAttribute('data-has-menu')) {
+ e.preventDefault();
+ var menu = getMenuFor(link);
+ if (!menu) return;
+ if (menu.classList.contains('is-hovered') || menu.classList.contains('is-open')) { forceCloseMenus(); } else { openMenu(menu, link); }
+ }
+ });
  });
  megaMenus.forEach(function(menu) {
- menu.addEventListener('mouseenter', cancelCloseMenus);
+ menu.addEventListener('mouseenter', function(){ cancelCloseMenus(); menu.classList.add('is-hovered'); });
  menu.addEventListener('mouseleave', scheduleClose);
- /* Click dans la zone vide du mégamenu (pas sur un lien) → ferme aussi */
- menu.addEventListener('click', function(e){ if (!e.target.closest('a')) forceCloseMenus(); });
  });
  document.addEventListener('click', function(e) { if (!e.target.closest('.hc-megamenu') && !e.target.closest('.hc-nav-link[data-has-menu]')) { forceCloseMenus(); } });
  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') forceCloseMenus(); });
- window.addEventListener('scroll', function() { if (!document.querySelector('.hc-megamenu:hover')) { forceCloseMenus(); } }, { passive: true });
 })();
 </script>
 
