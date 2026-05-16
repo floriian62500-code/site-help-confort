@@ -523,9 +523,39 @@
  if (!error && Array.isArray(data)) services = data;
  } catch(e) { console.warn('[catalog] Supabase indisponible — fallback local'); }
 
- // Fusion : on garde les services Supabase + on ajoute les locaux qui ne sont pas déjà présents (par slug)
+ // ─── FUSION : Chauffe-eau / Production ECS → Plomberie & Sanitaires ───
+ // (côté Supabase, certaines prestations sont encore catégorisées séparément)
+ const CHAUFFE_EAU_SLUGS = new Set(['chauffe-eau','production-ecs','ecs','chauffe-eau-production-ecs']);
+ services = services.map(s => {
+   if (CHAUFFE_EAU_SLUGS.has((s.category_slug||'').toLowerCase())) {
+     return { ...s, category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie' };
+   }
+   return s;
+ });
+
+ // Fusion + déduplication SOLIDE :
+ //   - on garde les services Supabase
+ //   - on ajoute les locaux SI ni le slug NI le nom (normalisé) n'existent déjà
+ //   - normalisation : minuscules, sans accents, sans ponctuation/espaces
+ const norm = (s) => (s||'').toString().toLowerCase()
+   .normalize('NFD').replace(/[̀-ͯ]/g,'')
+   .replace(/[^a-z0-9]+/g,'')
+   .trim();
  const supaSlugs = new Set(services.map(s => s.slug));
- LOCAL_CATALOG.forEach(loc => { if (!supaSlugs.has(loc.slug)) services.push(loc); });
+ const supaNames = new Set(services.map(s => norm(s.name)));
+ LOCAL_CATALOG.forEach(loc => {
+   if (supaSlugs.has(loc.slug)) return;
+   if (supaNames.has(norm(loc.name))) return;  // ← bloc anti-doublon par nom
+   services.push(loc);
+ });
+ // 2e passe : si des doublons Supabase existent déjà entre eux (cas rare), on dédup par nom
+ const seen = new Set();
+ services = services.filter(s => {
+   const k = norm(s.name);
+   if (seen.has(k)) return false;
+   seen.add(k);
+   return true;
+ });
 
  if (services.length === 0) {
  root.innerHTML = `<div class="nv-empty"><h3>Catalogue indisponible</h3><p>Un problème de connexion empêche l'affichage des prestations. Appelez-nous au <a href="tel:+33366100134" style="color:#0DA0CF;font-weight:700">03 66 10 01 34</a>.</p></div>`;
