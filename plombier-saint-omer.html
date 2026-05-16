@@ -233,6 +233,21 @@
  <meta name="theme-color" content="#0DA0CF">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style id="hc-skip-style">.hc-skip-link{position:absolute;top:-100px;left:0;background:#0A1428;color:#fff;padding:10px 18px;text-decoration:none;font-weight:700;font-size:.92rem;border-radius:0 0 8px 0;z-index:10000}.hc-skip-link:focus{top:0}</style>
+<style>
+ .m-suppliers-marquee-wrap{position:relative;mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);margin:24px 0 8px}
+ .m-suppliers-marquee{overflow:hidden;padding:8px 0}
+ .m-suppliers-track{display:flex;gap:18px;width:max-content;animation:mSuppScroll 55s linear infinite}
+ .m-suppliers-marquee:hover .m-suppliers-track{animation-play-state:paused}
+ @keyframes mSuppScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+ .m-supp-card{flex-shrink:0;width:220px;height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 20px;background:#fff;border:1px solid #E5EDF3;border-radius:18px;text-decoration:none;color:#0A1428;text-align:center;gap:6px;transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;box-shadow:0 4px 14px rgba(10,20,40,.05)}
+ .m-supp-card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(10,20,40,.10);border-color:rgba(13,160,207,.30)}
+ .m-supp-logo-wrap{height:48px;display:flex;align-items:center;justify-content:center;width:100%}
+ .m-supp-logo-img{max-height:44px;max-width:140px;object-fit:contain}
+ .m-supp-logo-text{align-items:center;justify-content:center}
+ .m-supp-name{font-size:.86rem;font-weight:800;color:#0A1428;line-height:1.2;letter-spacing:-.01em;margin-top:6px}
+ .m-supp-cat{font-size:.72rem;color:#6b7384;line-height:1.3;font-weight:500}
+ @media(max-width:768px){.m-supp-card{width:180px;height:130px;padding:14px 16px}.m-supp-logo-img{max-height:36px;max-width:120px}}
+</style>
 </head>
 <body>
 <a href="#main-content" class="hc-skip-link">Aller au contenu principal</a>
@@ -1347,48 +1362,213 @@ if (document.fonts && document.fonts.ready) {
  <p>HELP! Confort privilégie des fournisseurs <strong>français et européens</strong> reconnus pour leur qualité, leur fiabilité et la disponibilité des pièces.</p>
  <span class="made-in"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Fabricants français &amp; européens</span>
  </div>
- <div class="m-suppliers-grid">
- <a class="m-supplier m-supplier-link" href="https://www.atlantic.fr/" target="_blank" rel="noopener" aria-label="Atlantic — chauffe-eau & chauffage (ouvre dans un nouvel onglet)">
- <img class="m-supplier-logo" src="images/marques/logo-atlantic.svg" alt="Atlantic" loading="lazy" decoding="async">
- <span class="m-supplier-name">Atlantic</span>
- <span class="m-supplier-cat">Chauffe-eau · chauffage</span>
- </a>
- <a class="m-supplier m-supplier-link" href="https://www.hansgrohe.fr/" target="_blank" rel="noopener" aria-label="Hansgrohe — robinetterie premium (ouvre dans un nouvel onglet)">
- <img class="m-supplier-logo" src="images/marques/Hansgrohe-Logo-2.svg" alt="Hansgrohe" loading="lazy" decoding="async">
- <span class="m-supplier-name">Hansgrohe</span>
- <span class="m-supplier-cat">Robinetterie premium</span>
- </a>
- <a class="m-supplier m-supplier-link" href="https://rsramonsoler.com/fr/personnes" target="_blank" rel="noopener" aria-label="RS Ramon Soler — robinetterie (ouvre dans un nouvel onglet)">
- <img class="m-supplier-logo" src="images/marques/logo-ramon-soler-azul.svg" alt="RS Ramon Soler" loading="lazy" decoding="async">
- <span class="m-supplier-name">RS Ramon Soler</span>
- <span class="m-supplier-cat">Robinetterie sanitaire</span>
- </a>
- <a class="m-supplier m-supplier-link" href="https://quaredesign.fr/" target="_blank" rel="noopener" aria-label="Quare Design — receveurs de douche (ouvre dans un nouvel onglet)">
- <span class="m-supplier-logo m-supplier-logo--text" aria-hidden="true">
- <svg viewBox="0 0 140 36" width="140" height="36"><text x="70" y="28" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="26" font-weight="300" fill="#2A2D35" letter-spacing="1">QUARE</text></svg>
+ <div class="m-suppliers-marquee-wrap">
+ <div class="m-suppliers-marquee">
+ <div class="m-suppliers-track">
+ <a class="m-supp-card" href="https://www.atlantic.fr/" target="_blank" rel="noopener" aria-label="Atlantic — Chauffe-eau & chauffage (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/logo-atlantic.svg" alt="Atlantic" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#E30613" letter-spacing="0.5">ATLANTIC</text></svg>
  </span>
- <span class="m-supplier-name">Quare Design</span>
- <span class="m-supplier-cat">Receveurs de douche</span>
- </a>
- <a class="m-supplier m-supplier-link" href="https://www.kinedo.com/" target="_blank" rel="noopener" aria-label="Kinedo — cabines de douche et douches sécurisées (ouvre dans un nouvel onglet)">
- <span class="m-supplier-logo m-supplier-logo--text" aria-hidden="true">
- <svg viewBox="0 0 100 32" width="100" height="32"><text x="50" y="22" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="900" fill="#005B9F" letter-spacing="-0.3">Kinedo</text></svg>
  </span>
- <span class="m-supplier-name">Kinedo</span>
- <span class="m-supplier-cat">Douches & SDB</span>
+ <span class="m-supp-name">Atlantic</span>
+ <span class="m-supp-cat">Chauffe-eau & chauffage</span>
+ </a>
+ <a class="m-supp-card" href="https://www.hansgrohe.fr/" target="_blank" rel="noopener" aria-label="Hansgrohe — Robinetterie premium (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/Hansgrohe-Logo-2.svg" alt="Hansgrohe" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#000000" letter-spacing="0.5">hansgrohe</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Hansgrohe</span>
+ <span class="m-supp-cat">Robinetterie premium</span>
+ </a>
+ <a class="m-supp-card" href="https://www.geberit.fr/accueil/" target="_blank" rel="noopener" aria-label="Geberit — Mécanismes & systèmes WC (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/geberit.svg" alt="Geberit" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#005DA9" letter-spacing="0.5">GEBERIT</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Geberit</span>
+ <span class="m-supp-cat">Mécanismes & systèmes WC</span>
+ </a>
+ <a class="m-supp-card" href="https://siamp.fr/" target="_blank" rel="noopener" aria-label="Siamp — Mécanismes de chasse (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/siamp.svg" alt="Siamp" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#003E81" letter-spacing="0.5">SIAMP</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Siamp</span>
+ <span class="m-supp-cat">Mécanismes de chasse</span>
+ </a>
+ <a class="m-supp-card" href="https://www.delabie.fr/" target="_blank" rel="noopener" aria-label="Delabie — Robinetterie & sanitaires (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="https://logo.clearbit.com/delabie.fr?size=200" alt="Delabie" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#000000" letter-spacing="0.5">DELABIE</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Delabie</span>
+ <span class="m-supp-cat">Robinetterie & sanitaires</span>
+ </a>
+ <a class="m-supp-card" href="https://rsramonsoler.com/fr/personnes" target="_blank" rel="noopener" aria-label="RS Ramon Soler — Robinetterie sanitaire (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/logo-ramon-soler-azul.svg" alt="RS Ramon Soler" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#0066A1" letter-spacing="0.5">RS Ramon Soler</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">RS Ramon Soler</span>
+ <span class="m-supp-cat">Robinetterie sanitaire</span>
+ </a>
+ <a class="m-supp-card" href="https://www.hsk.de/fr" target="_blank" rel="noopener" aria-label="HSK — Parois de douche premium (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/hsk.svg" alt="HSK" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#003D7C" letter-spacing="0.5">HSK</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">HSK</span>
+ <span class="m-supp-cat">Parois de douche premium</span>
+ </a>
+ <a class="m-supp-card" href="https://quaredesign.fr/" target="_blank" rel="noopener" aria-label="Quare Design — Receveurs de douche (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/quare-design.svg" alt="Quare Design" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#2A2D35" letter-spacing="0.5">QUARE</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Quare Design</span>
+ <span class="m-supp-cat">Receveurs de douche</span>
+ </a>
+ <a class="m-supp-card" href="https://www.kinedo.com/" target="_blank" rel="noopener" aria-label="Kinedo — Cabines de douche (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/kinedo.svg" alt="Kinedo" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#005B9F" letter-spacing="0.5">Kinedo</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Kinedo</span>
+ <span class="m-supp-cat">Cabines de douche</span>
+ </a>
+ <a class="m-supp-card" href="https://akw.fr/" target="_blank" rel="noopener" aria-label="AKW — PMR & douche accessible (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/akw.svg" alt="AKW" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#6B6F76" letter-spacing="0.5">AKW</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">AKW</span>
+ <span class="m-supp-cat">PMR & douche accessible</span>
+ </a>
+ <a class="m-supp-card" href="https://www.atlantic.fr/" target="_blank" rel="noopener" aria-label="Atlantic — Chauffe-eau & chauffage (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/logo-atlantic.svg" alt="Atlantic" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#E30613" letter-spacing="0.5">ATLANTIC</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Atlantic</span>
+ <span class="m-supp-cat">Chauffe-eau & chauffage</span>
+ </a>
+ <a class="m-supp-card" href="https://www.hansgrohe.fr/" target="_blank" rel="noopener" aria-label="Hansgrohe — Robinetterie premium (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/Hansgrohe-Logo-2.svg" alt="Hansgrohe" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#000000" letter-spacing="0.5">hansgrohe</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Hansgrohe</span>
+ <span class="m-supp-cat">Robinetterie premium</span>
+ </a>
+ <a class="m-supp-card" href="https://www.geberit.fr/accueil/" target="_blank" rel="noopener" aria-label="Geberit — Mécanismes & systèmes WC (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/geberit.svg" alt="Geberit" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#005DA9" letter-spacing="0.5">GEBERIT</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Geberit</span>
+ <span class="m-supp-cat">Mécanismes & systèmes WC</span>
+ </a>
+ <a class="m-supp-card" href="https://siamp.fr/" target="_blank" rel="noopener" aria-label="Siamp — Mécanismes de chasse (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/siamp.svg" alt="Siamp" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#003E81" letter-spacing="0.5">SIAMP</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Siamp</span>
+ <span class="m-supp-cat">Mécanismes de chasse</span>
+ </a>
+ <a class="m-supp-card" href="https://www.delabie.fr/" target="_blank" rel="noopener" aria-label="Delabie — Robinetterie & sanitaires (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="https://logo.clearbit.com/delabie.fr?size=200" alt="Delabie" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#000000" letter-spacing="0.5">DELABIE</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Delabie</span>
+ <span class="m-supp-cat">Robinetterie & sanitaires</span>
+ </a>
+ <a class="m-supp-card" href="https://rsramonsoler.com/fr/personnes" target="_blank" rel="noopener" aria-label="RS Ramon Soler — Robinetterie sanitaire (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/logo-ramon-soler-azul.svg" alt="RS Ramon Soler" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#0066A1" letter-spacing="0.5">RS Ramon Soler</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">RS Ramon Soler</span>
+ <span class="m-supp-cat">Robinetterie sanitaire</span>
+ </a>
+ <a class="m-supp-card" href="https://www.hsk.de/fr" target="_blank" rel="noopener" aria-label="HSK — Parois de douche premium (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/hsk.svg" alt="HSK" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#003D7C" letter-spacing="0.5">HSK</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">HSK</span>
+ <span class="m-supp-cat">Parois de douche premium</span>
+ </a>
+ <a class="m-supp-card" href="https://quaredesign.fr/" target="_blank" rel="noopener" aria-label="Quare Design — Receveurs de douche (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/quare-design.svg" alt="Quare Design" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#2A2D35" letter-spacing="0.5">QUARE</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Quare Design</span>
+ <span class="m-supp-cat">Receveurs de douche</span>
+ </a>
+ <a class="m-supp-card" href="https://www.kinedo.com/" target="_blank" rel="noopener" aria-label="Kinedo — Cabines de douche (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/kinedo.svg" alt="Kinedo" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#005B9F" letter-spacing="0.5">Kinedo</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Kinedo</span>
+ <span class="m-supp-cat">Cabines de douche</span>
+ </a>
+ <a class="m-supp-card" href="https://akw.fr/" target="_blank" rel="noopener" aria-label="AKW — PMR & douche accessible (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/akw.svg" alt="AKW" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#6B6F76" letter-spacing="0.5">AKW</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">AKW</span>
+ <span class="m-supp-cat">PMR & douche accessible</span>
  </a>
  </div>
- <style>.m-supplier-link{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px 16px;background:#fff;border:1.5px solid #E5EDF3;border-radius:14px;text-decoration:none;color:inherit;transition:all.25s cubic-bezier(.16,1,.3,1);min-height:150px}.m-supplier-link:hover{transform:translateY(-4px);border-color:#0DA0CF;box-shadow:0 12px 28px -8px rgba(13,160,207,.20)}.m-supplier-logo{display:block;max-height:48px;width:auto;max-width:140px;object-fit:contain;margin:6px 0}.m-supplier-logo--text{display:inline-flex;align-items:center;justify-content:center;height:48px}.m-supplier-name{font-size:.95rem;font-weight:800;color:#0A1428;letter-spacing:-.01em;margin-top:4px}.m-supplier-cat{font-size:.74rem;color:#64748b;font-weight:500;text-align:center}
- @media(max-width:720px){.m-supplier-link{min-height:130px;padding:14px 10px}.m-supplier-logo{max-height:36px}}
- </style>
- <div class="m-suppliers-cta">
- <a href="contact.html#catalogues">
- <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
- Demander les catalogues fournisseurs
- </a>
  </div>
  </div>
-</section>
+ </section>
 
 <!-- ─── 7. ZONE COMPACTE ─── -->
 <section class="m-section" style="padding: clamp(36px, 4vw, 56px) 0" aria-label="Zone d'intervention plomberie">
