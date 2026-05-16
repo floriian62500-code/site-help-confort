@@ -475,20 +475,47 @@
       curGroup.items.push(s);
     });
 
+    // Mapping catégorie → URL page publique métier
+    // (pour rendre les pictos cliquables vers le site public)
+    const CAT_PUBLIC_URL = {
+      'plomberie': '/plombier-saint-omer.html',
+      'plomberie-sanitaires': '/plombier-saint-omer.html',
+      'chauffe-eau': '/chauffagiste-saint-omer.html',
+      'chauffe-eau-production-ecs': '/chauffagiste-saint-omer.html',
+      'chauffage': '/chauffagiste-saint-omer.html',
+      'electricite': '/electricien-saint-omer.html',
+      'serrurerie': '/serrurier-saint-omer.html',
+      'vitrerie': '/vitrier-saint-omer.html',
+      'menuiserie': '/travaux-saint-omer.html',
+      'volets': '/volets-saint-omer.html',
+      'pmr': '/pmr-saint-omer.html',
+      'renovation': '/travaux-saint-omer.html',
+      'devis-sur-mesure': '/contact.html'
+    };
+
     // Build HTML : un header par catégorie + ses rows
     let html = '';
     groups.forEach(g => {
       const cat = allCats.find(c => c.id === g.cat_id);
       const v = visualForCat(cat);
+      const publicUrl = cat ? (CAT_PUBLIC_URL[cat.slug] || CAT_PUBLIC_URL[cat.slug?.replace(/_/g,'-')] || null) : null;
       // Header de catégorie (uniquement si pas filtré sur une seule cat ou s'il y a plusieurs groupes)
       if (groups.length > 1 || !catFilter) {
+        const pictoHtml = publicUrl
+          ? `<a href="${publicUrl}" target="_blank" rel="noopener" title="Voir la page publique « ${escapeHtml(cat?.name||'')} »" style="width:34px;height:34px;border-radius:9px;background:${v.bg};color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 10px ${v.color}33;text-decoration:none;transition:transform .15s;cursor:pointer" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+              <svg width="17" height="17" ${SVG_ATTRS}>${v.icon}</svg>
+            </a>`
+          : `<div style="width:34px;height:34px;border-radius:9px;background:${v.bg};color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 10px ${v.color}33">
+              <svg width="17" height="17" ${SVG_ATTRS}>${v.icon}</svg>
+            </div>`;
+        const titleHtml = publicUrl
+          ? `<a href="${publicUrl}" target="_blank" rel="noopener" style="color:#0A1428;text-decoration:none;border-bottom:1px dashed transparent;transition:border-color .15s" onmouseover="this.style.borderBottomColor='#0DA0CF'" onmouseout="this.style.borderBottomColor='transparent'">${escapeHtml(cat?.name || 'Sans catégorie')} <span style="font-size:.7rem;color:#0DA0CF;font-weight:600">↗</span></a>`
+          : escapeHtml(cat?.name || 'Sans catégorie');
         html += `<tr class="sv-cat-header"><td colspan="8" style="padding:14px 14px 8px;background:#fafcfd;border-top:1px solid var(--ink-100);position:sticky;top:0;z-index:5">
           <div style="display:flex;align-items:center;gap:11px">
-            <div style="width:34px;height:34px;border-radius:9px;background:${v.bg};color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 10px ${v.color}33">
-              <svg width="17" height="17" ${SVG_ATTRS}>${v.icon}</svg>
-            </div>
+            ${pictoHtml}
             <div style="flex:1">
-              <div style="font-size:.96rem;font-weight:800;color:#0A1428;line-height:1.2">${escapeHtml(cat?.name || 'Sans catégorie')}</div>
+              <div style="font-size:.96rem;font-weight:800;line-height:1.2">${titleHtml}</div>
               <div style="font-size:.74rem;color:var(--ink-500);margin-top:1px">${g.items.length} prestation${g.items.length>1?'s':''} · ${g.items.filter(x=>x.active).length} active${g.items.filter(x=>x.active).length>1?'s':''} · ${g.items.filter(x=>x.featured).length} mise${g.items.filter(x=>x.featured).length>1?'s':''} en avant</div>
             </div>
           </div>
