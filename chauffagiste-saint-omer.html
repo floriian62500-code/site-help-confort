@@ -241,6 +241,21 @@
  <meta name="theme-color" content="#0DA0CF">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style id="hc-skip-style">.hc-skip-link{position:absolute;top:-100px;left:0;background:#0A1428;color:#fff;padding:10px 18px;text-decoration:none;font-weight:700;font-size:.92rem;border-radius:0 0 8px 0;z-index:10000}.hc-skip-link:focus{top:0}</style>
+<style>
+ .m-suppliers-marquee-wrap{position:relative;mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);margin:24px 0 8px}
+ .m-suppliers-marquee{overflow:hidden;padding:8px 0}
+ .m-suppliers-track{display:flex;gap:18px;width:max-content;animation:mSuppScroll 45s linear infinite}
+ .m-suppliers-marquee:hover .m-suppliers-track{animation-play-state:paused}
+ @keyframes mSuppScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+ .m-supp-card{flex-shrink:0;width:220px;height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 20px;background:#fff;border:1px solid #E5EDF3;border-radius:18px;text-decoration:none;color:#0A1428;text-align:center;gap:6px;transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;box-shadow:0 4px 14px rgba(10,20,40,.05)}
+ .m-supp-card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(10,20,40,.10);border-color:rgba(13,160,207,.30)}
+ .m-supp-logo-wrap{height:48px;display:flex;align-items:center;justify-content:center;width:100%}
+ .m-supp-logo-img{max-height:44px;max-width:140px;object-fit:contain}
+ .m-supp-logo-text{align-items:center;justify-content:center}
+ .m-supp-name{font-size:.86rem;font-weight:800;color:#0A1428;line-height:1.2;letter-spacing:-.01em;margin-top:6px}
+ .m-supp-cat{font-size:.72rem;color:#6b7384;line-height:1.3;font-weight:500}
+ @media(max-width:768px){.m-supp-card{width:180px;height:130px;padding:14px 16px}.m-supp-logo-img{max-height:36px;max-width:120px}}
+</style>
 </head>
 <body>
 <a href="#main-content" class="hc-skip-link">Aller au contenu principal</a>
@@ -1503,42 +1518,151 @@ if (document.fonts && document.fonts.ready) {
  <p>HELP! Confort privilégie des fournisseurs <strong>français et européens</strong> reconnus pour leur qualité, leur fiabilité et la disponibilité des pièces.</p>
  <span class="made-in"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Fabricants français &amp; européens</span>
  </div>
- <div class="m-suppliers-grid">
- <a class="m-supplier m-supplier-link" href="https://www.atlantic.fr/" target="_blank" rel="noopener" aria-label="Atlantic — Chaudière & ECS (ouvre dans un nouvel onglet)">
- <span class="m-supplier-logo m-supplier-logo--text" aria-hidden="true">
- <svg viewBox="0 0 160 36" width="160" height="36"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#E30613" letter-spacing="0.5">ATLANTIC</text></svg>
+ <div class="m-suppliers-marquee-wrap">
+ <div class="m-suppliers-marquee">
+ <div class="m-suppliers-track">
+ <a class="m-supp-card" href="https://www.finimetal.com/fr-fr/" target="_blank" rel="noopener" aria-label="Finimetal — Radiateurs eau chaude (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/finimetal.svg" alt="Finimetal" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#C8102E" letter-spacing="0.5">FINIMETAL</text></svg>
  </span>
- <span class="m-supplier-name">Atlantic</span>
- <span class="m-supplier-cat">Chaudière & ECS</span>
- </a>
- <a class="m-supplier m-supplier-link" href="https://www.frisquet.com/" target="_blank" rel="noopener" aria-label="Frisquet — Chaudières gaz fabrication française (ouvre dans un nouvel onglet)">
- <span class="m-supplier-logo m-supplier-logo--text" aria-hidden="true">
- <svg viewBox="0 0 160 36" width="160" height="36"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#1F4FA3" letter-spacing="0.5">Frisquet</text></svg>
  </span>
- <span class="m-supplier-name">Frisquet</span>
- <span class="m-supplier-cat">Chaudières gaz fabrication française</span>
+ <span class="m-supp-name">Finimetal</span>
+ <span class="m-supp-cat">Radiateurs eau chaude</span>
  </a>
- <a class="m-supplier m-supplier-link" href="https://www.saunierduval.fr/" target="_blank" rel="noopener" aria-label="Saunier Duval — Chaudières & PAC (ouvre dans un nouvel onglet)">
- <span class="m-supplier-logo m-supplier-logo--text" aria-hidden="true">
- <svg viewBox="0 0 160 36" width="160" height="36"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#005EA8" letter-spacing="0.5">Saunier Duval</text></svg>
+ <a class="m-supp-card" href="https://www.atlantic.fr/" target="_blank" rel="noopener" aria-label="Atlantic — Chaudières & ECS (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/logo-atlantic.svg" alt="Atlantic" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#E30613" letter-spacing="0.5">ATLANTIC</text></svg>
  </span>
- <span class="m-supplier-name">Saunier Duval</span>
- <span class="m-supplier-cat">Chaudières & PAC</span>
- </a>
- <a class="m-supplier m-supplier-link" href="https://www.dedietrich-thermique.fr/" target="_blank" rel="noopener" aria-label="De Dietrich — Chaudières haut rendement (ouvre dans un nouvel onglet)">
- <span class="m-supplier-logo m-supplier-logo--text" aria-hidden="true">
- <svg viewBox="0 0 160 36" width="160" height="36"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#003366" letter-spacing="0.5">DE DIETRICH</text></svg>
  </span>
- <span class="m-supplier-name">De Dietrich</span>
- <span class="m-supplier-cat">Chaudières haut rendement</span>
+ <span class="m-supp-name">Atlantic</span>
+ <span class="m-supp-cat">Chaudières & ECS</span>
  </a>
- <a class="m-supplier m-supplier-link" href="https://www.vaillant.fr/" target="_blank" rel="noopener" aria-label="Vaillant — Chaudières & systèmes thermiques (ouvre dans un nouvel onglet)">
- <span class="m-supplier-logo m-supplier-logo--text" aria-hidden="true">
- <svg viewBox="0 0 160 36" width="160" height="36"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#00964C" letter-spacing="0.5">Vaillant</text></svg>
+ <a class="m-supp-card" href="https://comap.aalberts-hfc.com/fr" target="_blank" rel="noopener" aria-label="Comap — Robinetterie chauffage (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="https://logo.clearbit.com/comap.aalberts-hfc.com?size=200" alt="Comap" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#005CA9" letter-spacing="0.5">COMAP</text></svg>
  </span>
- <span class="m-supplier-name">Vaillant</span>
- <span class="m-supplier-cat">Chaudières & systèmes thermiques</span>
+ </span>
+ <span class="m-supp-name">Comap</span>
+ <span class="m-supp-cat">Robinetterie chauffage</span>
  </a>
+ <a class="m-supp-card" href="https://www.frisquet.com/" target="_blank" rel="noopener" aria-label="Frisquet — Chaudières gaz fabrication française (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/frisquet.svg" alt="Frisquet" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#1F4FA3" letter-spacing="0.5">Frisquet</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Frisquet</span>
+ <span class="m-supp-cat">Chaudières gaz fabrication française</span>
+ </a>
+ <a class="m-supp-card" href="https://www.chappee.com/" target="_blank" rel="noopener" aria-label="Chappée — Chaudières haut rendement (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/chappee.svg" alt="Chappée" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#BD2225" letter-spacing="0.5">Chappée</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Chappée</span>
+ <span class="m-supp-cat">Chaudières haut rendement</span>
+ </a>
+ <a class="m-supp-card" href="https://www.dedietrich-thermique.fr/" target="_blank" rel="noopener" aria-label="De Dietrich — Chaudières & systèmes thermiques (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="https://logo.clearbit.com/dedietrich-thermique.fr?size=200" alt="De Dietrich" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#1A2C45" letter-spacing="0.5">De Dietrich</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">De Dietrich</span>
+ <span class="m-supp-cat">Chaudières & systèmes thermiques</span>
+ </a>
+ <a class="m-supp-card" href="https://www.saunierduval.fr/particulier/" target="_blank" rel="noopener" aria-label="Saunier Duval — Chaudières & PAC (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="https://logo.clearbit.com/saunierduval.fr?size=200" alt="Saunier Duval" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#C8102E" letter-spacing="0.5">Saunier Duval</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Saunier Duval</span>
+ <span class="m-supp-cat">Chaudières & PAC</span>
+ </a>
+ <a class="m-supp-card" href="https://www.finimetal.com/fr-fr/" target="_blank" rel="noopener" aria-label="Finimetal — Radiateurs eau chaude (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/finimetal.svg" alt="Finimetal" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#C8102E" letter-spacing="0.5">FINIMETAL</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Finimetal</span>
+ <span class="m-supp-cat">Radiateurs eau chaude</span>
+ </a>
+ <a class="m-supp-card" href="https://www.atlantic.fr/" target="_blank" rel="noopener" aria-label="Atlantic — Chaudières & ECS (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/logo-atlantic.svg" alt="Atlantic" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#E30613" letter-spacing="0.5">ATLANTIC</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Atlantic</span>
+ <span class="m-supp-cat">Chaudières & ECS</span>
+ </a>
+ <a class="m-supp-card" href="https://comap.aalberts-hfc.com/fr" target="_blank" rel="noopener" aria-label="Comap — Robinetterie chauffage (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="https://logo.clearbit.com/comap.aalberts-hfc.com?size=200" alt="Comap" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#005CA9" letter-spacing="0.5">COMAP</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Comap</span>
+ <span class="m-supp-cat">Robinetterie chauffage</span>
+ </a>
+ <a class="m-supp-card" href="https://www.frisquet.com/" target="_blank" rel="noopener" aria-label="Frisquet — Chaudières gaz fabrication française (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/frisquet.svg" alt="Frisquet" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#1F4FA3" letter-spacing="0.5">Frisquet</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Frisquet</span>
+ <span class="m-supp-cat">Chaudières gaz fabrication française</span>
+ </a>
+ <a class="m-supp-card" href="https://www.chappee.com/" target="_blank" rel="noopener" aria-label="Chappée — Chaudières haut rendement (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="images/marques/chappee.svg" alt="Chappée" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#BD2225" letter-spacing="0.5">Chappée</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Chappée</span>
+ <span class="m-supp-cat">Chaudières haut rendement</span>
+ </a>
+ <a class="m-supp-card" href="https://www.dedietrich-thermique.fr/" target="_blank" rel="noopener" aria-label="De Dietrich — Chaudières & systèmes thermiques (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="https://logo.clearbit.com/dedietrich-thermique.fr?size=200" alt="De Dietrich" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#1A2C45" letter-spacing="0.5">De Dietrich</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">De Dietrich</span>
+ <span class="m-supp-cat">Chaudières & systèmes thermiques</span>
+ </a>
+ <a class="m-supp-card" href="https://www.saunierduval.fr/particulier/" target="_blank" rel="noopener" aria-label="Saunier Duval — Chaudières & PAC (ouvre dans un nouvel onglet)">
+ <span class="m-supp-logo-wrap">
+ <img class="m-supp-logo-img" src="https://logo.clearbit.com/saunierduval.fr?size=200" alt="Saunier Duval" loading="lazy" decoding="async" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='flex'">
+ <span class="m-supp-logo-text" style="display:none">
+ <svg viewBox="0 0 160 36" width="160" height="36" aria-hidden="true"><text x="80" y="26" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="800" fill="#C8102E" letter-spacing="0.5">Saunier Duval</text></svg>
+ </span>
+ </span>
+ <span class="m-supp-name">Saunier Duval</span>
+ <span class="m-supp-cat">Chaudières & PAC</span>
+ </a>
+ </div>
+ </div>
  </div>
  </section>
 
