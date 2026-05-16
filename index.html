@@ -1281,16 +1281,22 @@ if(!track) return;
 var box=track.closest('.hc-mini-car');
 var prev=box.querySelector('.hc-mini-prev');
 var next=box.querySelector('.hc-mini-next');
-// Pattern pour détecter un CHANTIER (faux article) à exclure du flux actu
-// Filtre TRÈS large : exclut TOUT titre qui ressemble à un compte-rendu de chantier FB
-var CHANTIER_KEYWORDS=/remplacement|installation|d[ée]pose|r[ée]paration|intervention|chantier|votre [a-zéèàïêç' ]+(?:est|a|sont|ont) (?:cass|ab[îi]m|d[ée]fect|fissur|us[ée]|terni|endommag)|panneau pvc|bris de glace|votre [a-zéèàïêç' ]+pvc|votre soupape|votre manom[èe]tre|votre mitigeur|votre tablier|votre cumulus|votre chaudi[èe]re/i;
-var CHANTIER_RE=CHANTIER_KEYWORDS;
+// Filtres CHANTIER (faux article) — défense-en-profondeur.
+// Les chantiers importés de Facebook ont des titres très variables mais des
+// résumés stéréotypés ("Help Confort intervient pour…", "Nos prestations :",
+// "Notre équipe est intervenue"…). On filtre donc sur TITRE + RÉSUMÉ + type.
+// Si un nouveau chantier passe le filtre titre, le résumé le bloquera.
+var CHANTIER_TITLE=/remplacement|installation|d[ée]pose|r[ée]paration|intervention|chantier|votre [a-zéèàïêç' ]+(?:est|a|sont|ont) (?:cass|ab[îi]m|d[ée]fect|fissur|us[ée]|terni|endommag)|panneau pvc|bris de glace|votre [a-zéèàïêç' ]+pvc|votre soupape|votre manom[èe]tre|votre mitigeur|votre tablier|votre cumulus|votre chaudi[èe]re|vitre d['']insert|nous intervenons rapidement/i;
+var CHANTIER_RESUME=/help confort intervient pour|nos prestations\s*:|nous sommes (?:r[ée]cemment )?intervenus?|notre [ée]quipe est intervenue|nous intervenons rapidement|intervention r[ée]alis[ée]e|nous r[ée]alisons le remplacement/i;
 fetch(jsonUrl+'?v='+Date.now()).then(r=>r.ok?r.json():Promise.reject()).then(list=>{
-// Si on charge actualites, on EXCLUT les items dont le titre ressemble à un chantier (importés FB)
+// Si on charge actualites, on EXCLUT les items qui ressemblent à un chantier (titre OU résumé OU type explicite)
 var isActu = trackId.indexOf('actu') >= 0;
 var items=list.filter(x=>{
   if (x.published === false) return false;
-  if (isActu && CHANTIER_RE.test(x.title||'')) return false;
+  if (!isActu) return true;
+  if (/chantier|realisation/i.test(x.type||'')) return false;
+  if (CHANTIER_TITLE.test(x.title||'')) return false;
+  if (CHANTIER_RESUME.test(x.resume||'')) return false;
   return true;
 }).sort((a,b)=>new Date(b.date)-new Date(a.date));
 if(!items.length){track.innerHTML='<div class="hc-mini-loading">Aucun</div>';return}
@@ -1311,16 +1317,19 @@ return '<a href="'+escHtml(url)+'" class="hc-mini-card">'+photo+'<div class="bod
 setupMini('hc-mini-actu-track','content/actualites/index.json',function(a){
 var url=a.url||'actualites.html';var photo='';
 var catIcons={'Conseils':'<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>','Sécurité':'<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>','Agence':'<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>','Économies':'<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>','Saisonnier':'<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>','Réglementation':'<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'};
-// Détection du métier depuis le titre pour un placeholder pertinent
+// Détection du métier depuis le titre pour un placeholder pertinent.
+// ORDRE IMPORTANT : les patterns les plus spécifiques en premier
+// (ex. "panneau de porte PVC" → Menuiserie, pas Serrurerie).
 var titleLow = (a.title || '').toLowerCase();
 var metierTheme = (function(){
- if (/fuite|mitigeur|robinet|évier|wc|sanitaire|plomb/.test(titleLow)) return { grad:'linear-gradient(135deg,#E5F4FB 0%,#CFE8F5 100%)', icon:'💧', label:'Plomberie', color:'#0DA0CF' };
- if (/chaudière|chauffage|radiateur|fioul|gaz|chauffe.eau|cumulus|désembou/.test(titleLow)) return { grad:'linear-gradient(135deg,#FFE9CF 0%,#FFD3A8 100%)', icon:'🔥', label:'Chauffage', color:'#FF6B1A' };
- if (/électric|courant|tableau|disjonct/.test(titleLow)) return { grad:'linear-gradient(135deg,#FFF8CF 0%,#FFE89A 100%)', icon:'⚡', label:'Électricité', color:'#D97706' };
- if (/serrur|porte|cylindre|verrou/.test(titleLow)) return { grad:'linear-gradient(135deg,#E8E7F5 0%,#CFCCE8 100%)', icon:'🔒', label:'Serrurerie', color:'#5B21B6' };
+ // Menuiserie en premier : "panneau de porte PVC" contient "porte" mais c'est de la menuiserie
+ if (/panneau|pvc|surinam|menuiserie|volet/.test(titleLow)) return { grad:'linear-gradient(135deg,#EDE9FE 0%,#C4B5FD 100%)', icon:'🚪', label:'Menuiserie', color:'#7C3AED' };
+ if (/chaudi[èe]re|chauffage|radiateur|fioul|gaz|chauffe.?eau|cumulus|d[ée]sembou|soupape|manom[èe]tre/.test(titleLow)) return { grad:'linear-gradient(135deg,#FFE9CF 0%,#FFD3A8 100%)', icon:'🔥', label:'Chauffage', color:'#FF6B1A' };
+ if (/fuite|mitigeur|robinet|[ée]vier|wc|sanitaire|plomb|baignoire|douche|tablier/.test(titleLow)) return { grad:'linear-gradient(135deg,#E5F4FB 0%,#CFE8F5 100%)', icon:'💧', label:'Plomberie', color:'#0DA0CF' };
+ if (/[ée]lectric|courant|tableau|disjonct/.test(titleLow)) return { grad:'linear-gradient(135deg,#FFF8CF 0%,#FFE89A 100%)', icon:'⚡', label:'Électricité', color:'#D97706' };
  if (/vitr|bris|double vitrage|insert/.test(titleLow)) return { grad:'linear-gradient(135deg,#DCFCE7 0%,#A7F3D0 100%)', icon:'🪟', label:'Vitrerie', color:'#15803D' };
- if (/peinture|plafond|cellier|carrelage|pmr|douche|salle de bain|cuisine|rénovation/.test(titleLow)) return { grad:'linear-gradient(135deg,#FCE8DB 0%,#FBC8A2 100%)', icon:'🏠', label:'Rénovation', color:'#C2410C' };
- if (/panneau|pvc|surinam/.test(titleLow)) return { grad:'linear-gradient(135deg,#EDE9FE 0%,#C4B5FD 100%)', icon:'🚪', label:'Menuiserie', color:'#7C3AED' };
+ if (/serrur|cylindre|verrou|porte de service|porte d['']entr[ée]e/.test(titleLow)) return { grad:'linear-gradient(135deg,#E8E7F5 0%,#CFCCE8 100%)', icon:'🔒', label:'Serrurerie', color:'#5B21B6' };
+ if (/peinture|plafond|cellier|carrelage|pmr|salle de bain|cuisine|r[ée]novation/.test(titleLow)) return { grad:'linear-gradient(135deg,#FCE8DB 0%,#FBC8A2 100%)', icon:'🏠', label:'Rénovation', color:'#C2410C' };
  return { grad:'linear-gradient(135deg,#F7FBFD 0%,#E5F4FB 100%)', icon:'🛠️', label:'HELP! Confort', color:'#0DA0CF' };
 })();
 var iconSvg = catIcons[a.categorie] || catIcons['Conseils'];
