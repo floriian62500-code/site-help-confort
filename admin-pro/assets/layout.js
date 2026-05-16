@@ -278,6 +278,27 @@ window.HCLayout = (function() {
     return html;
   }
 
+  // Activate module switcher (click sur Comm/RH/Outils → change le module et re-render)
+  function setupModuleSwitcher() {
+    document.querySelectorAll('.admin-module-switcher [data-module]').forEach(btn => {
+      if (btn.dataset.bound === '1') return;
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', () => {
+        const m = btn.dataset.module;
+        setActiveModule(m);
+        // Re-render la sidebar avec le nouveau module
+        const aside = document.querySelector('.admin-sidebar');
+        if (aside) {
+          const activePage = aside.dataset.activePage || 'dashboard';
+          aside.innerHTML = sidebarHTML(activePage);
+          aside.dataset.activeModule = m;
+          setupSidebarAccordion();
+          setupModuleSwitcher();
+        }
+      });
+    });
+  }
+
   // Activate accordion toggle behaviour on the just-rendered sidebar.
   function setupSidebarAccordion() {
     const nav = document.querySelector('[data-sidebar-nav]');
@@ -1109,7 +1130,9 @@ window.HCLayout = (function() {
         const html = sidebarHTML(activePage);
         if (!html || html.length < 100) throw new Error('Empty sidebar HTML');
         sb.innerHTML = html;
+        sb.dataset.activePage = activePage;
         setupSidebarAccordion();
+        setupModuleSwitcher();
       } catch (e) {
         console.error('[HCLayout] sidebarHTML failed:', e);
         sb.innerHTML = fallbackSidebar(activePage);
@@ -1176,7 +1199,9 @@ window.HCLayout = (function() {
         const html = sidebarHTML(activePage);
         if (!html || html.length < 100) throw new Error('Empty sidebar HTML');
         sb.innerHTML = html;
+        sb.dataset.activePage = activePage;
         setupSidebarAccordion();
+        setupModuleSwitcher();
       } catch (e) {
         console.error('[HCLayout] sidebarHTML failed:', e);
         sb.innerHTML = fallbackSidebar(activePage);
