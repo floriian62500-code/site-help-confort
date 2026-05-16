@@ -62,7 +62,7 @@ window.HCLayout = (function() {
   // 5 sections accordéons (toutes définies, filtrées par module)
   // ═════════════════════════════════════════════════════════
   const SECTIONS = [
-    { id:'activity', label:'Mon activité',
+    { id:'activity', label:'Mon activité', module:'comm',
       sectionIcon:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
       links: [
         { id:'leads', href:'leads.html', label:'Demandes clients', icon:'<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>', badge:'<span class="admin-nav-item-badge alert" id="navLeadsCount" style="display:none"></span>' },
@@ -77,7 +77,7 @@ window.HCLayout = (function() {
         { id:'crm-external', href:'#open-crm', label:'Mon CRM (interventions)', icon:'<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>', dataAttrs:'data-action="open-crm"' }
       ]
     },
-    { id:'content', label:'Contenu & posts',
+    { id:'content', label:'Contenu & posts', module:'comm',
       sectionIcon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
       links: [
         { id:'content-site', href:'content-site.html', label:'Pages du site', icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/>' },
@@ -91,7 +91,7 @@ window.HCLayout = (function() {
         // pour simplifier — les liens sont dans Studio IA.
       ]
     },
-    { id:'perf', label:'Performance & IA',
+    { id:'perf', label:'Performance & IA', module:'comm',
       sectionIcon:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
       links: [
         { id:'analytics', href:'analytics.html', label:'SEO & Analytics', icon:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>' },
@@ -100,7 +100,7 @@ window.HCLayout = (function() {
         { id:'alerts', href:'alerts.html', label:'Alertes & Monitoring', icon:'<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/>' }
       ]
     },
-    { id:'connexions', label:'Connexions',
+    { id:'connexions', label:'Connexions API', module:'outils',
       sectionIcon:'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
       links: [
         { id:'social', href:'social.html', label:'Vue d\'ensemble', icon:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>' },
