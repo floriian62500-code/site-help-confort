@@ -77,7 +77,7 @@ def metier_for(slug):
     if slug in METIER_EXACT: return METIER_EXACT[slug]
     for prefix, val in METIER_PREFIX:
         if slug.startswith(prefix): return val
-    return ('HELP! Confort', '#0DA0CF')
+    return ('HELP Confort', '#0DA0CF')
 
 # ─── Extraction title + description depuis le HTML ────────────────
 def parse_html_meta(path):
@@ -141,9 +141,9 @@ def make_og(path):
         draw.rectangle([(bx0, by0), (bx0 + badge_w, by0 + badge_h)], fill=glow_color)
     draw.text((bx0 + 28, by0 + 14), metier_label.upper(), font=badge_font, fill=(255,255,255))
 
-    # Logo HC en haut-droite (texte stylisé "HELP! Confort")
+    # Logo HC en haut-droite (texte stylisé "HELP Confort")
     logo_font = load_font(34)
-    logo_text = "HELP! Confort"
+    logo_text = "HELP Confort"
     lw = draw.textlength(logo_text, font=logo_font)
     lx = W - 64 - int(lw)
     draw.text((lx, 80), logo_text, font=logo_font, fill=(255,255,255))

@@ -78,12 +78,27 @@
  }.real-card.photo.ph-fallback{
  position:absolute; inset:0;
  display:flex; flex-direction:column; align-items:center; justify-content:center;
- color:#FF6B1A; gap:8px;
- }.real-card.photo.ph-fallback.ic{
- width:48px; height:48px; border-radius:14px;
- background:#fff; display:flex; align-items:center; justify-content:center;
- box-shadow:0 4px 10px rgba(255,107,26,.15);
- }.real-card.photo.ph-fallback span{font-weight:600;font-size:.78rem}
+ color:#fff; gap:10px;
+ background:linear-gradient(135deg,#0A1428 0%,#0DA0CF 100%);
+ }
+ .real-card.photo.ph-fallback[data-cat="plomberie"]{background:linear-gradient(135deg,#0DA0CF,#0884AE)}
+ .real-card.photo.ph-fallback[data-cat="chauffage"]{background:linear-gradient(135deg,#FF6B1A,#C2410C)}
+ .real-card.photo.ph-fallback[data-cat="electricite"]{background:linear-gradient(135deg,#FFB400,#B45309)}
+ .real-card.photo.ph-fallback[data-cat="serrurerie"]{background:linear-gradient(135deg,#EC4899,#BE185D)}
+ .real-card.photo.ph-fallback[data-cat="vitrerie"]{background:linear-gradient(135deg,#0EA5E9,#0369A1)}
+ .real-card.photo.ph-fallback[data-cat="menuiserie"]{background:linear-gradient(135deg,#92400E,#78350F)}
+ .real-card.photo.ph-fallback[data-cat="renovation"]{background:linear-gradient(135deg,#22A06B,#15803D)}
+ .real-card.photo.ph-fallback[data-cat="volets"]{background:linear-gradient(135deg,#6366F1,#4338CA)}
+ .real-card.photo.ph-fallback[data-cat="pmr"]{background:linear-gradient(135deg,#0891B2,#155E75)}
+ .real-card.photo.ph-fallback[data-cat="multi"]{background:linear-gradient(135deg,#0A1428,#1FC4F0)}
+ .real-card.photo.ph-fallback::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.20));pointer-events:none}
+ .real-card.photo.ph-fallback .ic{
+ width:74px; height:74px; border-radius:18px;
+ background:rgba(255,255,255,.18); display:flex; align-items:center; justify-content:center;
+ backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); z-index:1;
+ }
+ .real-card.photo.ph-fallback .ic svg{width:38px;height:38px;color:#fff;opacity:.95}
+ .real-card.photo.ph-fallback span{font-weight:700;font-size:.78rem;letter-spacing:.10em;text-transform:uppercase;color:rgba(255,255,255,.92);z-index:1}
 
  /* Comparateur avant/après (legacy, si photos uploadées) */.real-card.ba-wrap{position:relative;aspect-ratio:4/3;overflow:hidden;background:#f4f7fb}.real-card.ba-wrap img{width:100%;height:100%;object-fit:cover;display:block}.real-card.ba-tag{
  position:absolute;top:12px;background:rgba(10,20,40,.85);color:#fff;
