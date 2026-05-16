@@ -8,7 +8,13 @@ set -euo pipefail
 
 # === Configuration ===
 PROJECT_DIR="$HOME/Documents/Claude/Projects/SITE INTERNET"
-ENV_FILE="$PROJECT_DIR/.autopush/.env"
+# Sources .env recherchées (priorité décroissante).
+# La convention runtime côté Florian est ~/.helpconfort/phase2.env ; le
+# fichier .autopush/.env reste un fallback pour rétro-compatibilité.
+ENV_FILES=(
+  "$HOME/.helpconfort/phase2.env"
+  "$PROJECT_DIR/.autopush/.env"
+)
 LOG_FILE="$HOME/Library/Logs/helpconfort-automation.log"
 ALERT_FILE="$PROJECT_DIR/docs/ALERT-FB-TOKEN.md"
 EDGE_FUNCTION_URL="https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/refresh-meta-token"
@@ -22,16 +28,23 @@ log() {
 }
 
 # === Vérification .env ===
-if [ ! -f "$ENV_FILE" ]; then
-  log "ERREUR: fichier .env introuvable à $ENV_FILE"
+ENV_LOADED=0
+for ENV_FILE in "${ENV_FILES[@]}"; do
+  if [ -f "$ENV_FILE" ]; then
+    # shellcheck disable=SC1090
+    source "$ENV_FILE"
+    ENV_LOADED=1
+    log "env chargé : $ENV_FILE"
+  fi
+done
+
+if [ "$ENV_LOADED" -eq 0 ]; then
+  log "ERREUR: aucun fichier .env trouvé (cherché : ${ENV_FILES[*]})"
   exit 1
 fi
 
-# shellcheck disable=SC1090
-source "$ENV_FILE"
-
 if [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
-  log "ERREUR: SUPABASE_SERVICE_ROLE_KEY absent du .env"
+  log "ERREUR: SUPABASE_SERVICE_ROLE_KEY absent du .env (attendu dans ${ENV_FILES[0]})"
   exit 1
 fi
 
