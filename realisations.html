@@ -505,17 +505,21 @@ if (document.fonts && document.fonts.ready) {
  // Fallback : 6 vrais articles/conseils éditoriaux (PAS des chantiers — séparation actu/réalisation)
  if (!actus.length) {
  actus = [
- { slug:'guide-entretien-chaudiere', url:'guide-entretien-chaudiere.html', title:"Entretien annuel chaudière : obligation légale & bonnes pratiques", date:'2026-04-15', category:'Chauffage' },
- { slug:'guide-fuite-eau', url:'guide-fuite-eau.html', title:"Détecter une fuite d'eau cachée : 6 signes qui ne trompent pas", date:'2026-04-08', category:'Plomberie' },
- { slug:'guide-mise-aux-normes-electriques', url:'guide-mise-aux-normes-electriques.html', title:"Mise aux normes électriques NF C 15-100 : ce qui change pour vous", date:'2026-03-25', category:'Électricité' },
- { slug:'guide-adaptation-pmr', url:'guide-adaptation-pmr.html', title:"Adaptation PMR : MaPrimeAdapt' couvre jusqu'à 70% des travaux", date:'2026-03-12', category:'Rénovation' },
- { slug:'aides', url:'aides.html', title:"Aides 2026 : MaPrimeRénov', MaPrimeAdapt', éco-PTZ — qui peut en bénéficier ?", date:'2026-02-28', category:'Conseils' },
- { slug:'contrats-entretien', url:'contrats-entretien.html', title:"Contrats d'entretien chaudière : Basic, Confort, Sécurité — comment choisir ?", date:'2026-02-14', category:'Chauffage' }
+ { url:'guide-entretien-chaudiere.html', title:"Entretien annuel chaudière : obligation légale & bonnes pratiques", date:'2026-04-15', category:'Chauffage' },
+ { url:'guide-fuite-eau.html', title:"Détecter une fuite d'eau cachée : 6 signes qui ne trompent pas", date:'2026-04-08', category:'Plomberie' },
+ { url:'guide-mise-aux-normes-electriques.html', title:"Mise aux normes électriques NF C 15-100 : ce qui change pour vous", date:'2026-03-25', category:'Électricité' },
+ { url:'guide-adaptation-pmr.html', title:"Adaptation PMR : MaPrimeAdapt' couvre jusqu'à 70% des travaux", date:'2026-03-12', category:'Rénovation' },
+ { url:'aides.html', title:"Aides 2026 : MaPrimeRénov', MaPrimeAdapt', éco-PTZ — qui peut en bénéficier ?", date:'2026-02-28', category:'Conseils' },
+ { url:'contrats-entretien.html', title:"Contrats d'entretien chaudière : Basic, Confort, Sécurité — comment choisir ?", date:'2026-02-14', category:'Chauffage' }
  ];
  }
  function fmtDate(d){
  if (!d) return '';
- try { var dt = new Date(d); return dt.toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'}); } catch(_){ return d; }
+ try {
+   var dt = new Date(d);
+   if (isNaN(dt.getTime())) return d;
+   return dt.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+ } catch(_){ return d; }
  }
  // Icônes SVG par catégorie pour les fallbacks sans image
  var CAT_SVG = {
@@ -530,8 +534,10 @@ if (document.fonts && document.fonts.ready) {
  };
  function slugifyCat(s){ return (s||'hc').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z]/g,''); }
  grid.innerHTML = actus.map(function(a){
- var url = a.slug ? ('actualites/' + a.slug + '.html') : 'actualites.html';
- var date = a.published_at ? fmtDate(a.published_at) : (a.date || '');
+ // URL : priorité à a.url (fallback éditorial pointe vers guide-X.html à la racine),
+ // sinon a.slug (Supabase) avec préfixe actualites/, sinon page index.
+ var url = a.url ? a.url : (a.slug ? ('actualites/' + a.slug + '.html') : 'actualites.html');
+ var date = fmtDate(a.published_at || a.date || '');
  var catSlug = slugifyCat(a.category);
  var catLabel = (a.category || 'Actu').toUpperCase();
  var svg = CAT_SVG[catSlug] || '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="13"/><circle cx="12" cy="16" r="1"/></svg>';
