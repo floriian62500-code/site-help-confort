@@ -260,6 +260,19 @@
           sessions: Number(r.metricValues[0]?.value||0)
         }));
       } catch(_){}
+      // Heatmap horaire (jour × heure) — utile pour savoir quand les visiteurs viennent
+      try {
+        const hm = await ga4OauthCall({
+          dateRanges:[{startDate:PERIOD_CFG.start,endDate:PERIOD_CFG.end}],
+          dimensions:[{name:'dayOfWeek'},{name:'hour'}],
+          metrics:[{name:'sessions'}]
+        });
+        ga4Heatmap = (hm.rows||[]).map(r => ({
+          day: Number(r.dimensionValues[0]?.value||0),    // 0=Dim, 1=Lun … 6=Sam
+          hour: Number(r.dimensionValues[1]?.value||0),   // 0-23
+          sessions: Number(r.metricValues[0]?.value||0)
+        }));
+      } catch(_){}
       console.info('[analytics] GA4 via OAuth user — OK');
     } catch(e) {
       ga4Error = '[OAuth] ' + (e.message || 'erreur');
