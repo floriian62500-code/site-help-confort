@@ -24,6 +24,8 @@
 > 🎉 **Finding BreadcrumbList P14 résorbé le 2026-05-16 matin** (agent autonome session 3) — 17 articles `actualites/*.html` + `faq.html` ont reçu leur JSON-LD `BreadcrumbList` (Accueil → Actualités/FAQ → Titre). `audit_breadcrumb_schema.py` rebascule à **36/36 OK, 0 erreur**. Script de batch idempotent conservé : `scripts/inject-breadcrumb-actualites.py`. P15 ouvert : monitoring + nouvelles sondes dérivées des findings restants (`audit_cls_prevention` 52 alertes, `audit_typo_fr` 578 fautifs).
 >
 > **Mise à jour 2026-05-16 matin (session 4 agent autonome)** — 3 sondes P15 livrées : `audit_inline_style_size.py` (9 pages > 50 KB CSS inline), `audit_admin_pro_isolation.py` (1 fuite trouvée + auto-fixée sur `realisations.html`), `audit_phone_consistency.py` (0 finding, canonique `+33366100134`). Workflow nightly à 42 audits.
+>
+> 🎉 **TODO P15 épuisé le 2026-05-16 matin** (session 5 agent autonome) — 2 dernières sondes livrées : `audit_image_dimensions.py` (5 patches PIL prêts à coller + 24 externes Unsplash + 49 non-résolues, décision Florian sur application masse) et `audit_consent_default_state.py` (parser brace-counter qui valide que `hc-consent.js` n'écrit aucun storage hors scope user-triggered ; garde tracking.js OK ; conforme RGPD strict ✓). Workflow nightly à **44 audits**. P16 ouvert ci-dessous.
 
 # 🤖 Agent TODO — Travail autonome HELP! Confort
 
@@ -228,6 +230,22 @@
 - [x] **Sonde `audit_inline_style_size.py`** — détecter les pages avec > 50 KB de CSS inline (`<style>...</style>` cumulé). Suggère extraction vers `styles.css`. Top 10 pages dans le rapport. *(fait 16/05 matin — script + report.md/json zéro-dep, seuils ERROR>50 KB / WARN>25 KB ; 58 pages, 9 > 50 KB (8 métier saint-omer ~61 KB + index.html 53 KB), 4 > 25 KB, cumul 1185 KB — décision Florian sur extraction vers styles.css ; ajouté workflow nightly)*
 - [x] **Sonde `audit_admin_pro_isolation.py`** — vérifier qu'aucune page `admin-pro/*.html` n'est référencée depuis une page publique racine (sécurité : l'admin doit rester accessible uniquement via login direct). *(fait 16/05 matin — script + report.md/json, 2 patterns (href/src/action/data-*= et chaîne nue JS), whitelist `admin/index.html` + `admin-pro/index.html` ; 1 fuite trouvée sur `realisations.html` ligne 863 (lien "back-office" → `admin-pro/login.html` dans message empty-state) AUTO-FIX : lien retiré du message, texte neutre conservé ; 58 pages, 0 fuite après fix ✓ ; ajouté workflow nightly)*
 - [x] **Sonde `audit_consent_default_state.py`** — vérifier que `assets/hc-consent.js` ne dépose AUCUN cookie/localStorage tant que le user n'a pas cliqué Accept (RGPD strict). Parse le JS et alerte sur tout `document.cookie =` ou `localStorage.setItem(` exécuté avant le clic Accept. *(fait 16/05 matin — script + report.md/json ; parser brace-counter string/comment-aware qui remonte le scope englobant de chaque storage-write ; whitelist `persist` / `hcConsentReset` / `<click_handler>` ; audit secondaire tracking.js (présence garde `getItem('hc-consent')` + return en tête ≤80 lignes) ; 2 writes OK / 0 alerte sur hc-consent.js + garde tracking.js OK ✓ — conforme RGPD strict ; ajouté workflow nightly)*
+
+---
+
+## P16 — Auto-générés (TODO P15 épuisé le 2026-05-16 matin)
+
+> Section ouverte après épuisement complet P1-P15. Items orientés résorption des findings éditoriaux ouverts par les audits récents + nouvelles sondes pour combler les angles morts détectés.
+> Tout item engageant un montant ou un contenu marketing → `[?]` (attendre Florian).
+
+- [ ] **Appliquer en masse les 5 patches `audit_image_dimensions`** — résorber les 5 `<img>` sans `width`/`height` patchables (logo-officiel.jpg, mascotte.webp, etc.) en injectant les dimensions PIL déjà calculées dans le rapport. Script idempotent qui parse `audit_image_dimensions_report.json` et applique les `patch` ligne par ligne. Re-run audit après pour confirmer 0 patchable.
+- [ ] **Rapatrier les 6 images Unsplash en local** (`plombier-saint-omer.html`) — finding `audit_hotlink_cdn.py` : 6 images hot-linkées Unsplash à télécharger en local (`images/plomberie/`), passer en `.webp` (Pillow), réécrire `<img src=...>` vers chemin local + ajouter width/height. Évite dépendance CDN tiers + améliore perf + permet patch dimensions.
+- [ ] **Sonde `audit_lang_attribute.py`** — vérifier que toutes les pages publiques ont `<html lang="fr">` (SEO + accessibilité WCAG 3.1.1). Tolérer `lang="fr-FR"`. Toute page sans lang ou avec lang ≠ fr* → ALERTE.
+- [ ] **Sonde `audit_meta_viewport.py`** — vérifier `<meta name="viewport" content="...">` présent + correct sur toutes les pages (`width=device-width, initial-scale=1` minimum). Pages sans viewport = unusable mobile.
+- [ ] **Sonde `audit_form_autocomplete.py`** — auditer les `<input>` des formulaires publics : `name` / `email` / `tel` / `postal-code` doivent avoir l'attribut `autocomplete` correspondant (`name`, `email`, `tel`, `postal-code`). Améliore conversion mobile.
+- [ ] **Page `admin-pro/audits/index.html`** — créer un dashboard HTML qui liste tous les rapports d'audit du dossier avec : nom, dernière exécution (mtime du `.md`), badge OK/ALERTE (parse 1ère ligne `## 🎯` ou `## ⚠️`), lien direct vers le `.md`. Refresh manuel.
+- [ ] **Sonde `audit_html_entities.py`** — détecter les double-encodings (`&amp;amp;`, `&amp;nbsp;`, `&amp;eacute;`) qui apparaissent quand un texte HTML déjà encodé est ré-injecté dans un template. Toute occurrence → ALERTE.
+- [ ] **Sonde `audit_articles_freshness.py`** — détecter les articles `actualites/*.html` dont la date `<time datetime="...">` est > 12 mois (SEO : Google rétrograde le contenu obsolète). Rapport éditorial pour Florian.
 
 ---
 
