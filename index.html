@@ -869,6 +869,21 @@ track1.innerHTML = '<div class="hc-logo-card"><span class="cat">Réseau</span><s
 })();
 </script>
 </section>
+<style id="hc-wizard-lock-css">
+/* ═══════════════════════════════════════════════════════════════
+   LOCK MODE pour wizard urgence (?wizard=depannage)
+   Cache tout sauf le wizard, force focus sur le formulaire d'intervention.
+═══════════════════════════════════════════════════════════════ */
+body.hc-locked-wizard{overflow-x:hidden}
+body.hc-locked-wizard > *:not(#hc-reservation):not(script):not(style):not(noscript){display:none !important}
+body.hc-locked-wizard #hc-reservation{display:block !important;min-height:100vh;padding:24px 0 48px;background:linear-gradient(180deg,#FFF7ED 0%,#FFE5C8 100%);position:relative}
+body.hc-locked-wizard #hc-reservation::before{content:'⚠ Demande d\27 intervention urgente · HELP Confort Saint-Omer & Dunkerque · ☎ 03 66 10 01 34';display:block;background:linear-gradient(135deg,#FF6B1A,#E55510);color:#fff;font-weight:800;font-size:.92rem;text-align:center;padding:12px 20px;letter-spacing:.02em;box-shadow:0 4px 14px rgba(255,107,26,.3)}
+body.hc-locked-wizard #hc-reservation .container{max-width:920px;margin:24px auto 0}
+body.hc-locked-wizard #hc-locked-exit{display:inline-block;margin:24px auto 0;padding:10px 20px;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;border-radius:8px;background:#fff;border:1px solid #E5EDF3;transition:all .15s}
+body.hc-locked-wizard #hc-locked-exit:hover{background:#0A1428;color:#fff;border-color:#0A1428}
+body.hc-locked-wizard .hc-resa-head{text-align:center}
+body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !important}
+</style>
 <section id="hc-reservation" class="hc-reservation" aria-label="Réserver une intervention">
  <div class="container">
  <div class="hc-resa-head" style="margin-bottom:24px">
@@ -2196,10 +2211,29 @@ gotoStep(1);
 
 // ─── Auto-trigger : ?wizard=depannage|devis-travaux|contrat-entretien dans l'URL
 // déclenche automatiquement la voie correspondante du wizard et scrolle vers la section.
+// Si ?wizard=depannage, VERROUILLE la page : header/footer/autres sections cachés,
+// uniquement le wizard visible, navigation impossible vers d'autres pages.
 try {
   var wzParams = new URLSearchParams(location.search);
   var wzPresta = wzParams.get('wizard') || wzParams.get('presta');
   if (wzPresta) {
+    // ── LOCK MODE pour urgence (wizard=depannage)
+    if (wzPresta === 'depannage') {
+      document.body.classList.add('hc-locked-wizard');
+      // bloquer la fermeture accidentelle
+      // ajouter bouton "Quitter le mode urgence" dans le wizard
+      setTimeout(function(){
+        var sec = document.getElementById('hc-reservation');
+        if (sec && !document.getElementById('hc-locked-exit')) {
+          var exit = document.createElement('a');
+          exit.id = 'hc-locked-exit';
+          exit.href = 'index.html';
+          exit.textContent = '← Retour à l\'accueil';
+          exit.setAttribute('aria-label', 'Quitter le formulaire d\'urgence et revenir à l\'accueil');
+          sec.appendChild(exit);
+        }
+      }, 50);
+    }
     setTimeout(function(){
       var card = document.querySelector('.mq-card[data-presta="' + wzPresta + '"]');
       if (card) {
