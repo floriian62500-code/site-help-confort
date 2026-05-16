@@ -343,6 +343,20 @@
           </button>
         </div>
 
+        <!-- ─── Toggle Chantier / Actualité ─── -->
+        <div style="display:flex;gap:8px;margin-bottom:14px;padding:10px 14px;background:linear-gradient(135deg,#FAFCFD,#fff);border:1px solid var(--ink-100);border-radius:10px;align-items:center">
+          <span style="font-size:.84rem;font-weight:700;color:var(--ink-700);margin-right:4px">Type :</span>
+          <label style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:#fff;border:1px solid var(--ink-100);border-radius:8px;cursor:pointer;font-size:.84rem;font-weight:700" id="f_posttype_chantier_label">
+            <input type="radio" name="f_posttype" value="realisation" id="f_posttype_chantier" checked style="margin:0">
+            🔨 Chantier
+          </label>
+          <label style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:#fff;border:1px solid var(--ink-100);border-radius:8px;cursor:pointer;font-size:.84rem;font-weight:700" id="f_posttype_actu_label">
+            <input type="radio" name="f_posttype" value="actualite" id="f_posttype_actu" style="margin:0">
+            📰 Actualité
+          </label>
+          <small style="margin-left:auto;color:var(--ink-500);font-size:.74rem">Chantier = vrai dépannage. Actualité = vœux, post marketing, recrutement, com…</small>
+        </div>
+
         <div class="form-grid">
           <div class="field-block">
             <label>Métier *</label>
@@ -991,6 +1005,11 @@ function openEdit(id = null) {
   if (id) {
     const r = _all.find(x => x.id === id);
     if (!r) return;
+    // Toggle Chantier / Actualité — basé sur ai_generated.post_type OU détection auto via classifyReal
+    const detected = classifyReal(r);
+    const ptype = (r.ai_generated && r.ai_generated.post_type) || (detected === 'actualite' ? 'actualite' : 'realisation');
+    document.getElementById('f_posttype_chantier').checked = (ptype !== 'actualite');
+    document.getElementById('f_posttype_actu').checked = (ptype === 'actualite');
     document.getElementById('f_metier').value = r.metier || '';
     // Gestion ville (rigide ou "Autre")
     const vSelect = document.getElementById('f_ville');
@@ -1154,9 +1173,10 @@ async function saveReal() {
   const targets = {};
   document.querySelectorAll('#publishTargets input[type=checkbox]').forEach(cb => targets[cb.dataset.target] = cb.checked);
 
-  // ai_generated stocke aussi agence + type + import_facebook si dispo (preservé)
+  // ai_generated stocke aussi agence + type + post_type (chantier/actu) + import_facebook si dispo (preservé)
   const existingAi = _editing ? (_all.find(x => x.id === _editing)?.ai_generated || {}) : {};
-  const aiPayload = Object.assign({}, existingAi, { agence, type: typeInter });
+  const postType = document.getElementById('f_posttype_actu').checked ? 'actualite' : 'realisation';
+  const aiPayload = Object.assign({}, existingAi, { agence, type: typeInter, post_type: postType });
 
   const payload = {
     title,
