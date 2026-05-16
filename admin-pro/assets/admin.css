@@ -1434,3 +1434,52 @@ a.btn-ghost:hover { background: var(--hc-primary-soft); }
   background: linear-gradient(180deg, rgba(255,255,255,.30), transparent 50%);
   pointer-events: none;
 }
+
+/* ─── Breadcrumb polish ──────────────────────────────── */
+.breadcrumb {
+  margin-bottom: 8px;
+  font-size: .82rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: .85;
+}
+.breadcrumb a { transition: color .15s; }
+
+/* ─── Section divider — utilitaire ───────────────────── */
+.hc-divider {
+  height: 1px;
+  background: var(--ink-100);
+  margin: 24px 0;
+}
+
+/* ─── Tags / chips polished ──────────────────────────── */
+.chip, .tag, .real-card-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: 7px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .01em;
+  background: var(--ink-50);
+  color: var(--ink-700);
+}
+
+/* ─── Logo officiel : taille uniformisée ─────────────── */
+.admin-brand-logo { box-shadow: 0 6px 18px var(--hc-primary-glow), inset 0 1px 0 rgba(255,255,255,.18); }
+
+/* ─── Cohérence pile : tabs/onglets ─────────────────── */
+.tarif-tab, .sv-tab, .rtab, .ct-tab {
+  letter-spacing: -.005em;
+}
+
+/* ─── Print : sortir un visuel propre ──────────────── */
+@media print {
+  .admin-sidebar, .admin-topbar, .admin-page-head .actions, .btn, button { display: none !important; }
+  .admin-content { padding: 0 !important; max-width: 100% !important; }
+  .card, .stat-card { break-inside: avoid; border: 1px solid #ddd !important; box-shadow: none !important; }
+  body::before { display: none; }
+}
