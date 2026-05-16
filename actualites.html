@@ -638,15 +638,56 @@ if (document.fonts && document.fonts.ready) {
  var allArticles = [];
  var currentFilter = 'all';
 
- // Charger l'index des articles depuis content/actualites/index.json
- // (généré automatiquement à chaque commit du CMS via Netlify build hook)
+ // ─── Source 1 : articles legacy CMS (content/actualites/index.json) ──
  try {
  var res = await fetch('content/actualites/index.json?t=' + Date.now(), {cache:'no-cache'});
- if (!res.ok) throw new Error('No index');
- allArticles = await res.json();
- } catch(e) {
- // Pas encore d'articles — afficher message
- grid.innerHTML = '<div class="actu-empty" style="grid-column:1/-1"><h3>Aucun article publié pour le moment.</h3><p>Les articles publiés via le back-office <a href="admin/index.html" style="color:#0DA0CF;font-weight:700">/admin/</a> apparaîtront ici automatiquement.</p></div>';
+ if (res.ok) allArticles = await res.json();
+ } catch(e) { /* pas grave, on fallback sur Supabase */ }
+
+ // ─── Source 2 : imports FB classés "actualite" depuis Supabase ──────
+ // (vœux, recrutement, posts marketing — tout ce qui n'est pas un vrai chantier)
+ try {
+ var SB_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+ var SB_KEY = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
+ // Requête : realisations publiées dont post_type='actualite' OU détectées comme actu via mots-clés
+ var sbResp = await fetch(SB_URL + '/rest/v1/realisations?select=title,slug,description,description_long,metier,date_intervention,created_at,published_at,image_after,image_before,ai_generated&status=eq.publie&order=published_at.desc.nullslast,created_at.desc&limit=100', {
+ headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+ });
+ if (sbResp.ok) {
+ var rows = await sbResp.json();
+ // Filtre : ne garder que les actus (tag manuel OU mots-clés OU imports FB sans avant/après)
+ var actus = rows.filter(function(r){
+ var pt = r.ai_generated && r.ai_generated.post_type;
+ if (pt === 'actualite') return true;
+ if (pt === 'realisation') return false;
+ var t = (r.title || '').toLowerCase();
+ var d = (r.description || '').toLowerCase();
+ var blob = t + ' ' + d;
+ if (/vœux|voeux|meilleurs vœux|fin d'année|bonne année|nouvel an|joyeuses fêtes|noël|recrutement|nous recrutons|stage|alternance|portes ouvertes|salon (du|des)|émission|reportage|radiateurs? glacés?|spot tv/.test(blob)) return true;
+ if (r.image_before && r.image_after) return false; // vraie réalisation
+ if (/remplacement|installation|pose|dépannage|réparation|débouchage|désengorgement/.test(blob)) return false; // vrai chantier
+ var isFb = r.ai_generated && /facebook_scrape/.test(r.ai_generated.imported_from || '');
+ return isFb; // imports FB sans signal métier = actu par défaut
+ });
+ // Convertir au format de la grille
+ actus.forEach(function(r){
+ allArticles.push({
+ title: r.title,
+ url: r.slug ? '/realisation/' + r.slug + '.html' : '#',
+ date: r.published_at || r.date_intervention || r.created_at,
+ image: r.image_after || r.image_before || null,
+ resume: (r.description || '').slice(0,180),
+ categorie: 'Actualité',
+ published: true,
+ source_facebook: r.ai_generated && r.ai_generated.source_fb,
+ _from_supabase: true
+ });
+ });
+ }
+ } catch(e){ console.warn('[actus] Supabase fetch:', e.message); }
+
+ if (!allArticles.length) {
+ grid.innerHTML = '<div class="actu-empty" style="grid-column:1/-1"><h3>Aucun article publié pour le moment.</h3><p>Les actualités et publications Facebook apparaîtront ici automatiquement.</p></div>';
  return;
  }
 
