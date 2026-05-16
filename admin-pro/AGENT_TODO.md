@@ -20,6 +20,8 @@
 > 🎉 **TODO P13 épuisé** — P14 ouvert le 2026-05-15 soir (agent autonome) — 8 items SEO/qualité dérivés des manques détectés dans les rapports d'audit (canonical mismatch, duplicates titres, scripts non-async, robots noindex, fonts blocking, poids HTML, og:url, schema BreadcrumbList).
 >
 > 🎉 **TODO P14 épuisé le 2026-05-16 matin** (8/8). 3 dernières sondes créées : `audit_og_url_consistency.py`, `audit_breadcrumb_schema.py`, `audit_font_display.py`. Workflow nightly à 39 audits. Findings ouverts pour Florian : 18 pages éligibles sans BreadcrumbList (articles + depannage-* + faq/blog/guides).
+>
+> 🎉 **Finding BreadcrumbList P14 résorbé le 2026-05-16 matin** (agent autonome session 3) — 17 articles `actualites/*.html` + `faq.html` ont reçu leur JSON-LD `BreadcrumbList` (Accueil → Actualités/FAQ → Titre). `audit_breadcrumb_schema.py` rebascule à **36/36 OK, 0 erreur**. Script de batch idempotent conservé : `scripts/inject-breadcrumb-actualites.py`. P15 ouvert : monitoring + nouvelles sondes dérivées des findings restants (`audit_cls_prevention` 52 alertes, `audit_typo_fr` 578 fautifs).
 
 # 🤖 Agent TODO — Travail autonome HELP! Confort
 
