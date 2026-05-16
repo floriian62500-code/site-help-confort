@@ -104,6 +104,7 @@ jobs:
             audit_phone_consistency.py
             audit_image_dimensions.py
             audit_consent_default_state.py
+            audit_lang_attribute.py
           )
           for a in "${AUDITS[@]}"; do
             f="admin-pro/audits/$a"
