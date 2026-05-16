@@ -460,6 +460,31 @@ if (document.fonts && document.fonts.ready) {
  </div>
 </section>
 
+<script>
+// ─── Carousel défilant : navigation prev/next + disable states ───
+(function(){
+  document.querySelectorAll('.ra-carousel[data-ra-car]').forEach(function(box){
+    var track = box.querySelector('.ra-car-track');
+    var prev = box.querySelector('.ra-car-prev');
+    var next = box.querySelector('.ra-car-next');
+    if (!track || !prev || !next) return;
+    function scrollAmount(){ return track.clientWidth * 0.85; }
+    function update(){
+      var maxScroll = track.scrollWidth - track.clientWidth - 5;
+      prev.disabled = track.scrollLeft <= 5;
+      next.disabled = track.scrollLeft >= maxScroll;
+    }
+    prev.addEventListener('click', function(){ track.scrollBy({left: -scrollAmount(), behavior:'smooth'}); });
+    next.addEventListener('click', function(){ track.scrollBy({left:  scrollAmount(), behavior:'smooth'}); });
+    track.addEventListener('scroll', update, {passive:true});
+    // Re-check après chaque MutationObserver (le track est rempli dynamiquement)
+    var mo = new MutationObserver(function(){ setTimeout(update, 50); });
+    mo.observe(track, {childList:true, subtree:false});
+    window.addEventListener('resize', update);
+    setTimeout(update, 200);
+  });
+})();
+</script>
 <style>.ra-news-card{background:#fff;border:1px solid #E5EDF3;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform.25s ease,box-shadow.25s ease;text-decoration:none;color:inherit}.ra-news-card:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(10,20,40,.08);border-color:rgba(13,160,207,.30)}.ra-news-card-img{width:100%;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.74rem;font-weight:800;letter-spacing:2px;position:relative;overflow:hidden;background:linear-gradient(135deg,#0A1428,#0DA0CF)}.ra-news-card-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.20));pointer-events:none}.ra-news-card-img svg{width:42%;height:42%;opacity:.92;position:relative;z-index:1}.ra-news-card-img.ra-news-cat{position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,.30);backdrop-filter:blur(4px);padding:4px 9px;border-radius:6px;font-size:.66rem;letter-spacing:1.6px;z-index:2}.ra-news-card-img[data-cat="plomberie"]{background:linear-gradient(135deg,#0DA0CF,#0884AE)}.ra-news-card-img[data-cat="chauffage"]{background:linear-gradient(135deg,#FF6B1A,#C2410C)}.ra-news-card-img[data-cat="electricite"]{background:linear-gradient(135deg,#FFB400,#B45309)}.ra-news-card-img[data-cat="serrurerie"]{background:linear-gradient(135deg,#EC4899,#BE185D)}.ra-news-card-img[data-cat="vitrerie"]{background:linear-gradient(135deg,#0EA5E9,#0369A1)}.ra-news-card-img[data-cat="menuiserie"]{background:linear-gradient(135deg,#92400E,#78350F)}.ra-news-card-img[data-cat="renovation"]{background:linear-gradient(135deg,#22A06B,#15803D)}.ra-news-card-img[data-cat="travaux"]{background:linear-gradient(135deg,#22A06B,#15803D)}.ra-news-card-body{padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:6px}.ra-news-card-eyebrow{font-size:.7rem;font-weight:700;letter-spacing:1.4px;color:#0DA0CF;text-transform:uppercase}.ra-news-card-title{font-size:1rem;font-weight:700;color:#0A1428;line-height:1.3;margin:0}.ra-news-card-foot{margin-top:auto;font-size:.78rem;color:#94a3b8;padding-top:6px}
 </style>
 
@@ -840,17 +865,23 @@ if (document.fonts && document.fonts.ready) {
  // On exclut seulement les actualités saisonnières et les communications pures.
  if (sbRes.data) {
  sbRes.data = sbRes.data.filter(function(r){
+ // 1) Tag manuel (priorité absolue depuis le back-office)
+ var pt = r.ai_generated && r.ai_generated.post_type;
+ if (pt === 'actualite') return false; // forcé actu → exclu de la grille chantiers
+ if (pt === 'realisation') return true; // forcé chantier → inclus quoi qu'il arrive
  var t = (r.title || '').toLowerCase();
  var d = (r.description || '').toLowerCase();
  var blob = t + ' ' + d;
- // Exclusions absolues : actus saisonnières, vœux, recrutement, communication marketing
- if (/vœux|voeux|meilleurs vœux|fin d'année|bonne année|nouvel an|joyeuses fêtes|noël|s'invite sur vos écrans|patient zero|recrutement|nous recrutons|stage|alternance|portes ouvertes|salon (du|des)|émission|reportage/.test(blob)) return false;
- // Mots-clés métier précis : si présents, c'est un vrai chantier même sans paire avant/après
- var hasMetierKeyword = /remplacement|installation|pose|d[ée]pannage|r[ée]paration|d[ée]bouchage|d[ée]sengorgement|d[ée]semboua|d[ée]tartrage|entretien|d[ée]pannage|ouverture|fuite|chaudière|chauffe-eau|radiateur|mitigeur|robinet|chasse d'eau|wc|porte (de garage|d'entr[ée]e|fenêtre)|volet|vitrage|insert|cylindre/.test(blob);
- var isFbImport = r.ai_generated && r.ai_generated.imported_from === 'facebook_scrape';
+ // 2) Exclusions absolues : actus saisonnières, vœux, recrutement, communication marketing
+ if (/vœux|voeux|meilleurs vœux|fin d'année|bonne année|nouvel an|joyeuses fêtes|noël|s'invite sur vos écrans|patient zero|recrutement|nous recrutons|stage|alternance|portes ouvertes|salon (du|des)|émission|reportage|radiateurs? glacés?|spot tv/.test(blob)) return false;
+ // 3) Paire avant/après = vraie réalisation
  var hasBeforeAfter = !!(r.image_before && r.image_after);
- // Import FB sans paire avant/après ET sans mot-clé métier = exclu (probable actu/com)
- if (isFbImport && !hasBeforeAfter && !hasMetierKeyword) return false;
+ if (hasBeforeAfter) return true;
+ // 4) Mots-clés métier précis : chantier même sans paire avant/après
+ var hasMetierKeyword = /remplacement|installation|pose|d[ée]pannage|r[ée]paration|d[ée]bouchage|d[ée]sengorgement|d[ée]semboua|d[ée]tartrage|entretien|ouverture|fuite|chaudière|chauffe-eau|radiateur|mitigeur|robinet|chasse d'eau|wc|porte (de garage|d'entr[ée]e|fenêtre)|volet|vitrage|insert|cylindre|cellier|plafond/.test(blob);
+ var isFbImport = r.ai_generated && /facebook_scrape/.test(r.ai_generated.imported_from || '');
+ // Import FB sans signal métier = actu par défaut → exclu
+ if (isFbImport && !hasMetierKeyword) return false;
  return true;
  });
  }
