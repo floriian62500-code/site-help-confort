@@ -829,18 +829,9 @@ if (document.fonts && document.fonts.ready) {
  crossOrigin: true
  }).addTo(map);
 
- // ZONE DE COUVERTURE (cercles colorés)
- L.circle([50.7503, 2.2519], { // Saint-Omer
- radius: 35000, // 35 km
- color: '#0DA0CF', fillColor: '#0DA0CF', fillOpacity: 0.12,
- weight: 2, dashArray: '6 6'
- }).addTo(map);
-
- L.circle([51.0345, 2.3768], { // Dunkerque
- radius: 35000,
- color: '#FF6B1A', fillColor: '#FF6B1A', fillOpacity: 0.12,
- weight: 2, dashArray: '6 6'
- }).addTo(map);
+ // ZONE DE COUVERTURE retirée (cercles produisaient un artefact visuel ressemblant
+ // à un drapeau aux couleurs étranges sur certains zooms / superpositions).
+ // Les zones sont identifiées par les markers + popups + tuiles villes secondaires.
 
  // Icône custom AGENCE (Dépan'Audo - cyan)
  var agencyAudo = L.divIcon({

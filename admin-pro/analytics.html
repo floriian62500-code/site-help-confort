@@ -596,6 +596,57 @@
               </div>
             </div>` : ''}
           </div>` : ''}
+
+          <!-- ═══ HEATMAP HORAIRE — jour × heure ═══ -->
+          ${ga4Heatmap.length ? (() => {
+            // Build 7x24 grid : day 0=Dim 1=Lun … 6=Sam → on réordonne Lun-Dim
+            const grid = {}; ga4Heatmap.forEach(h => { grid[h.day+':'+h.hour] = h.sessions; });
+            const maxV = Math.max(1, ...ga4Heatmap.map(h => h.sessions));
+            const dayOrder = [1,2,3,4,5,6,0]; // Lun à Dim
+            const dayLabel = { 0:'Dim', 1:'Lun', 2:'Mar', 3:'Mer', 4:'Jeu', 5:'Ven', 6:'Sam' };
+            // Total par heure pour repérer le pic
+            const hourTotals = Array.from({length:24}, (_, h) => ga4Heatmap.filter(x => x.hour===h).reduce((s,x)=>s+x.sessions,0));
+            const peakHour = hourTotals.indexOf(Math.max(...hourTotals));
+            // Total par jour pour repérer le jour favori
+            const dayTotals = {}; for (const d of [0,1,2,3,4,5,6]) dayTotals[d] = ga4Heatmap.filter(x => x.day===d).reduce((s,x)=>s+x.sessions,0);
+            const peakDay = Object.entries(dayTotals).sort((a,b)=>b[1]-a[1])[0][0];
+            return `<div style="margin-top:14px;padding:22px;background:#fff;border:1px solid var(--ink-100);border-radius:12px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+                <h3 style="margin:0;font-size:1rem;font-weight:800;color:#0A1428">🕐 Heatmap horaire (${PERIOD_CFG.label})</h3>
+                <div style="font-size:.78rem;color:#64748b">
+                  Pic : <strong style="color:#0A1428">${dayLabel[peakDay]} à ${String(peakHour).padStart(2,'0')}h</strong> · Plage active : 8h-22h
+                </div>
+              </div>
+              <div style="overflow-x:auto">
+                <table style="width:100%;border-collapse:separate;border-spacing:2px;font-size:.7rem">
+                  <thead>
+                    <tr>
+                      <th style="width:32px"></th>
+                      ${Array.from({length:24}, (_, h) => `<th style="font-weight:600;color:#94a3b8;padding:2px 0;text-align:center;font-size:.66rem">${h%3===0?h+'h':''}</th>`).join('')}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${dayOrder.map(d => `<tr>
+                      <th style="font-weight:700;color:#475569;text-align:right;padding-right:8px;font-size:.74rem">${dayLabel[d]}</th>
+                      ${Array.from({length:24}, (_, h) => {
+                        const v = grid[d+':'+h] || 0;
+                        const intensity = v / maxV;
+                        // Couleur : transparent (0) → bleu HC (max)
+                        let bg = '#f1f5f9';
+                        if (v > 0) {
+                          const opacity = 0.15 + (intensity * 0.85);
+                          bg = `rgba(13, 160, 207, ${opacity.toFixed(2)})`;
+                        }
+                        const color = intensity > 0.55 ? '#fff' : intensity > 0 ? '#0A1428' : '#cbd5e1';
+                        return `<td title="${dayLabel[d]} ${String(h).padStart(2,'0')}h — ${v} session${v>1?'s':''}" style="width:24px;height:22px;text-align:center;background:${bg};color:${color};font-weight:600;border-radius:3px;cursor:default;font-size:.66rem">${v||''}</td>`;
+                      }).join('')}
+                    </tr>`).join('')}
+                  </tbody>
+                </table>
+              </div>
+              <p style="margin:12px 0 0;font-size:.74rem;color:#94a3b8">💡 Plus la case est foncée, plus il y a de sessions à cette heure. Utile pour adapter tes horaires de support ou tes campagnes Google Ads.</p>
+            </div>`;
+          })() : ''}
           `;
         })()
         :
