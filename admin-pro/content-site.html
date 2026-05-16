@@ -71,13 +71,19 @@
 .cs-metier-card .del{position:absolute;top:7px;right:7px;background:none;border:none;cursor:pointer;color:#d92d20;padding:3px;border-radius:5px}
 .cs-metier-card .del:hover{background:rgba(217,45,32,.10)}
 
-/* ─── Preview live ────────────────────────────────── */
-.cs-preview-wrap{position:sticky;top:20px;background:linear-gradient(135deg,#1A2A44,#0A1428);border-radius:14px;padding:14px;box-shadow:0 8px 24px rgba(11,18,32,.18);overflow:hidden}
-.cs-preview-label{display:flex;align-items:center;gap:8px;margin-bottom:10px;color:rgba(255,255,255,.7);font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
-.cs-preview-label svg{width:14px;height:14px}
-.cs-preview-frame{background:#fff;border-radius:9px;box-shadow:0 4px 16px rgba(0,0,0,.30);max-height:72vh;min-height:420px;position:relative;overflow-y:auto;scroll-behavior:smooth}
+/* ─── Preview live (refonte plus douce, fond clair) ───────── */
+.cs-preview-wrap{position:sticky;top:20px;background:linear-gradient(180deg,#F4F7FB 0%,#E5EDF3 100%);border:1px solid var(--ink-100);border-radius:16px;padding:14px;box-shadow:0 6px 18px rgba(11,18,32,.06),inset 0 1px 0 rgba(255,255,255,.6);overflow:hidden}
+.cs-preview-label{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;padding:0 4px;color:var(--ink-500);font-size:.74rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.cs-preview-label .left{display:flex;align-items:center;gap:8px}
+.cs-preview-label svg{width:14px;height:14px;color:var(--hc-primary)}
+.cs-preview-label .dots{display:flex;gap:4px;align-items:center}
+.cs-preview-label .dots span{width:8px;height:8px;border-radius:50%;background:var(--ink-200)}
+.cs-preview-label .dots span:nth-child(1){background:#FF6058}
+.cs-preview-label .dots span:nth-child(2){background:#FFBD2E}
+.cs-preview-label .dots span:nth-child(3){background:#28C840}
+.cs-preview-frame{background:#fff;border-radius:11px;box-shadow:0 10px 30px rgba(11,18,32,.14),0 0 0 1px rgba(11,18,32,.05);max-height:72vh;min-height:420px;position:relative;overflow-y:auto;scroll-behavior:smooth}
 .cs-preview-frame::-webkit-scrollbar{width:6px}
-.cs-preview-frame::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2);border-radius:3px}
+.cs-preview-frame::-webkit-scrollbar-thumb{background:rgba(0,0,0,.18);border-radius:3px}
 
 /* Mini renders dans le preview */
 .cs-prev-hero{background:linear-gradient(135deg,#0DA0CF,#0a7fa3);color:#fff;padding:24px 20px;min-height:200px;position:relative}
@@ -394,8 +400,11 @@
         <div>
           <div class="cs-preview-wrap">
             <div class="cs-preview-label">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              Aperçu en direct
+              <div class="left">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                Aperçu en direct
+              </div>
+              <div class="dots"><span></span><span></span><span></span></div>
             </div>
             <div class="cs-preview-frame" id="previewFrame">
               <!-- Bannière urgence (textes) -->
