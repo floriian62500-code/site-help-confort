@@ -12,30 +12,33 @@
 <link rel="stylesheet" href="assets/admin.css">
 <style>
 /* ─── HERO bandeau d'orientation ──────────────────── */
-.cs-hero{background:linear-gradient(135deg,#0DA0CF 0%,#0a7fa3 50%,#FFB400 130%);color:#fff;border-radius:18px;padding:24px 28px;margin-bottom:18px;box-shadow:0 12px 32px rgba(13,160,207,.22);position:relative;overflow:hidden}
-.cs-hero::before{content:'';position:absolute;right:-50px;top:-50px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.10)}
-.cs-hero-content{position:relative;z-index:1;display:flex;align-items:center;gap:18px}
-.cs-hero-emoji{font-size:3rem;line-height:1;flex-shrink:0}
-.cs-hero h1{font-size:1.4rem;font-weight:800;margin:0 0 4px 0;line-height:1.2}
-.cs-hero p{font-size:.92rem;opacity:.96;margin:0;line-height:1.5;max-width:680px}
-.cs-hero .quick-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.cs-hero .quick-actions a{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;background:rgba(255,255,255,.18);border-radius:8px;font-size:.8rem;font-weight:600;color:#fff;text-decoration:none;backdrop-filter:blur(6px);transition:.15s}
-.cs-hero .quick-actions a:hover{background:rgba(255,255,255,.30)}
-.cs-hero .quick-actions svg{width:13px;height:13px}
+.cs-hero{background:linear-gradient(135deg,#0A1428 0%,#0DA0CF 60%,#1FC4F0 100%);color:#fff;border-radius:18px;padding:26px 30px;margin-bottom:20px;box-shadow:0 14px 38px rgba(13,160,207,.26),inset 0 1px 0 rgba(255,255,255,.10);position:relative;overflow:hidden}
+.cs-hero::before{content:'';position:absolute;right:-80px;top:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.14) 0%,transparent 70%)}
+.cs-hero::after{content:'';position:absolute;left:50%;bottom:-100px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,180,0,.16) 0%,transparent 70%)}
+.cs-hero-content{position:relative;z-index:1;display:flex;align-items:center;gap:20px}
+.cs-hero-emoji{font-size:3.2rem;line-height:1;flex-shrink:0;filter:drop-shadow(0 4px 8px rgba(0,0,0,.20))}
+.cs-hero h1{font-size:1.5rem;font-weight:800;margin:0 0 6px 0;line-height:1.2;letter-spacing:-.02em}
+.cs-hero p{font-size:.94rem;opacity:.96;margin:0;line-height:1.55;max-width:680px}
+.cs-hero .quick-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.cs-hero .quick-actions a{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.16);border-radius:9px;font-size:.84rem;font-weight:700;color:#fff;text-decoration:none;backdrop-filter:blur(8px);transition:all .18s cubic-bezier(.16,1,.3,1)}
+.cs-hero .quick-actions a:hover{background:rgba(255,255,255,.28);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.cs-hero .quick-actions svg{width:14px;height:14px}
 
 /* ─── Layout 2 colonnes ─────────────────────────────── */
 .cs-layout{display:grid;grid-template-columns:1fr 1.05fr;gap:18px;align-items:flex-start}
 @media(max-width:1180px){.cs-layout{grid-template-columns:1fr}}
 
 /* ─── Colonne gauche : Navigation par blocs visuels ─ */
-.cs-blocks{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.cs-block{background:#fff;border:2px solid var(--ink-100);border-radius:14px;padding:14px 12px;cursor:pointer;transition:.18s;text-align:center;position:relative}
-.cs-block:hover{transform:translateY(-2px);border-color:var(--hc-primary);box-shadow:0 6px 18px rgba(11,18,32,.06)}
-.cs-block.active{border-color:var(--hc-primary);background:linear-gradient(135deg,rgba(13,160,207,.06),#fff);box-shadow:0 4px 14px rgba(13,160,207,.16)}
-.cs-block.active::after{content:'';position:absolute;top:-8px;right:-8px;width:24px;height:24px;border-radius:50%;background:var(--hc-primary);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");background-size:14px;background-repeat:no-repeat;background-position:center}
-.cs-block-emoji{font-size:1.8rem;line-height:1;margin-bottom:6px;display:block}
-.cs-block strong{display:block;font-size:.88rem;font-weight:700;color:var(--ink-900);margin-bottom:3px}
-.cs-block span{display:block;font-size:.7rem;color:var(--ink-500);line-height:1.3}
+.cs-blocks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.cs-block{background:linear-gradient(180deg,#fff 0%,#FAFCFD 100%);border:1.5px solid var(--ink-100);border-radius:14px;padding:16px 14px;cursor:pointer;transition:all .22s cubic-bezier(.16,1,.3,1);text-align:center;position:relative;overflow:hidden}
+.cs-block::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(13,160,207,.04) 0%,transparent 60%);opacity:0;transition:opacity .22s}
+.cs-block:hover::before{opacity:1}
+.cs-block:hover{transform:translateY(-2px);border-color:rgba(13,160,207,.40);box-shadow:0 8px 20px rgba(11,18,32,.08)}
+.cs-block.active{border-color:var(--hc-primary);background:linear-gradient(135deg,rgba(13,160,207,.08),#fff 70%);box-shadow:0 6px 20px rgba(13,160,207,.18)}
+.cs-block.active::after{content:'';position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;background:var(--hc-primary);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");background-size:15px;background-repeat:no-repeat;background-position:center;box-shadow:0 4px 10px rgba(13,160,207,.30)}
+.cs-block-emoji{font-size:1.9rem;line-height:1;margin-bottom:7px;display:block;position:relative;z-index:1;filter:drop-shadow(0 2px 3px rgba(11,18,32,.08))}
+.cs-block strong{display:block;font-size:.9rem;font-weight:700;color:var(--ink-900);margin-bottom:4px;position:relative;z-index:1;letter-spacing:-.005em}
+.cs-block span{display:block;font-size:.72rem;color:var(--ink-500);line-height:1.4;position:relative;z-index:1}
 
 /* ─── Panel d'édition ──────────────────────────────── */
 .cs-edit{background:#fff;border:1px solid var(--ink-100);border-radius:14px;padding:20px;box-shadow:0 1px 2px rgba(11,18,32,.04)}
