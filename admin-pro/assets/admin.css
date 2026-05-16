@@ -1279,3 +1279,54 @@ button:focus-visible, a:focus-visible {
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+
+/* ─── Ambient background gradient — donne du caractère ────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(13,160,207,.04) 0%, transparent 35%),
+    radial-gradient(circle at 100% 0%, rgba(255,107,26,.025) 0%, transparent 35%);
+}
+.admin-shell { position: relative; z-index: 1; }
+
+[data-theme="dark"] body::before {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(13,160,207,.10) 0%, transparent 40%),
+    radial-gradient(circle at 100% 0%, rgba(255,107,26,.06) 0%, transparent 40%);
+}
+
+/* ─── Topbar refinement ─────────────────────────────────── */
+.admin-topbar { backdrop-filter: saturate(180%) blur(24px); -webkit-backdrop-filter: saturate(180%) blur(24px); }
+.admin-topbar-title { letter-spacing: -.015em; }
+
+/* ─── Sidebar item icon hover anim ───────────────────────── */
+.admin-nav-item-icon { transition: transform .18s; }
+.admin-nav-item:hover .admin-nav-item-icon { transform: scale(1.08); }
+
+/* ─── Card-head : actions plus visibles ──────────────────── */
+.card-head { align-items: center; }
+.card-head .card-title { font-size: 1rem; }
+
+/* ─── Stat-card-value plus impressionnant ─────────────────── */
+.stat-card-value {
+  font-size: 2.05rem;
+  font-weight: 900;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.05;
+}
+
+/* ─── Toolbar plus structurée ────────────────────────────── */
+.reals-toolbar, .leads-toolbar {
+  background: linear-gradient(180deg, #fff 0%, #FAFCFD 100%) !important;
+  box-shadow: 0 1px 3px rgba(11,18,32,.04) !important;
+}
+
+/* ─── Boutons secondaires — meilleur état hover ──────────── */
+.btn:hover { border-color: var(--ink-200); background: var(--ink-50); }
+.btn-primary { background-image: linear-gradient(135deg, var(--hc-primary-light), var(--hc-primary)) !important; color:#fff !important; border:0 !important; }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 18px var(--hc-primary-glow); }
