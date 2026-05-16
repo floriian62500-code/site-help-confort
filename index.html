@@ -1232,7 +1232,24 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
  <a href="actualites.html" class="all-link" style="border-color:#0DA0CF;color:#0DA0CF">Voir toutes nos actualités <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
  </aside>
  </div>
- <style>@media(min-width:980px){.hc-resa-sides-row{grid-template-columns:1fr 1fr !important;gap:36px !important}}</style>
+ <style>
+ /* Wrapper 2 bandeaux côte à côte sur desktop large, empilés en mobile */
+ @media(min-width:980px){
+   .hc-resa-sides-row{grid-template-columns:1fr 1fr !important;gap:36px !important;align-items:start}
+   /* Quand les bandeaux sont côte à côte, chaque bandeau affiche moins de cards */
+   .hc-resa-sides-row .hc-mini-track > *{flex:0 0 calc(100% - 8px) !important}
+ }
+ @media(min-width:1280px){
+   .hc-resa-sides-row .hc-mini-track > *{flex:0 0 calc(50% - 9px) !important}
+ }
+ /* Asides : couleur de bordure différenciée pour clarifier les blocs */
+ .hc-resa-sides-row .hc-side-real, .hc-resa-sides-row .hc-side-news{
+   background:#fff;border:1px solid #E5EDF3;border-radius:18px;padding:22px;
+   box-shadow:0 8px 24px rgba(10,20,40,.04);overflow:hidden;
+ }
+ .hc-resa-sides-row .hc-side-real{border-top:3px solid #FF6B1A}
+ .hc-resa-sides-row .hc-side-news{border-top:3px solid #0DA0CF}
+ </style>
 
  
 <!-- Carrousel actualités définitivement supprimé 15/05/2026 : photos vides = bug visuel récurrent.
