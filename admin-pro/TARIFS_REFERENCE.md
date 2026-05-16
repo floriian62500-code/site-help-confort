@@ -12,10 +12,12 @@ Tous les tarifs affichés sur le site doivent être croisés avec ce document. T
 
 | | Prix HT | Prix TTC |
 |--|--------|----------|
-| **Main d'œuvre tous métiers** | 53 €/h | **58 €/h** |
+| **Main d'œuvre tous métiers** (Saint-Omer) | 53 €/h | **58 €/h** |
+| **Main d'œuvre tous métiers** (Dunkerque) | 55 €/h | **60,50 €/h** |
 | **Main d'œuvre urgence (intervention <1h)** | 63 €/h | **69 €/h** |
 | **Main d'œuvre week-end** | 80 €/h | **88 €/h** |
 | **Déplacement audomarois** | 45 € | **50 €** |
+| **Déplacement Dunkerque** | 48 € | **52,80 €** |
 | **Frais de dossier** (systématique) | 5 € | **5,50 €** |
 | **Traitement des déchets** (% obligatoire) | **1 % du HT** | **1 % du HT** |
 
