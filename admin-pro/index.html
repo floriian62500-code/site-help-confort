@@ -124,6 +124,23 @@
         </a>
       </div>
 
+      <!-- ═══ WIDGET GA4 TRAFIC LIVE (7 derniers jours) ═══ -->
+      <div id="ga4Widget" style="margin-bottom:24px;background:#fff;border:1px solid var(--ink-100);border-radius:14px;overflow:hidden;display:none">
+        <div style="background:linear-gradient(135deg,#0A1428,#0DA0CF);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:10px;font-size:.94rem;font-weight:800">
+            <svg width="20" height="20" viewBox="0 0 192 192"><path fill="#F9AB00" d="M152 154h-32V40c0-12 9-22 21-22s21 10 21 22v114h-10z"/><path fill="#E37400" d="M86 152V108c0-13 11-22 22-22s22 9 22 22v44H86z"/><circle fill="#E37400" cx="32" cy="142" r="22"/></svg>
+            Trafic site (Google Analytics — 7 derniers jours)
+          </div>
+          <a href="analytics.html" style="background:rgba(255,255,255,.18);color:#fff;text-decoration:none;padding:6px 12px;border-radius:7px;font-size:.78rem;font-weight:700">Voir tout →</a>
+        </div>
+        <div style="padding:18px 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px" id="ga4WidgetGrid">
+          <!-- rempli par JS -->
+        </div>
+        <div style="padding:0 20px 18px" id="ga4WidgetExtra">
+          <!-- mini funnel + heatmap row -->
+        </div>
+      </div>
+
       <!-- Placeholders cachés (IDs requis par les scripts existants — masqués pour épurer le dashboard) -->
       <div style="display:none">
         <span id="liveLeadsToday"></span><span id="liveLeadsTodayMeta"></span>
