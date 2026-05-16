@@ -107,14 +107,20 @@
       "'self'",
       "blob:",
       "data:",
-      "https:"
+      "https:",
+      "https://scontent-cdg2-1.xx.fbcdn.net",
+      "https://scontent.xx.fbcdn.net"
     ],
     "connect-src": [
       "'self'",
+      "https://*.fbcdn.net",
+      "https://*.googleapis.com",
       "https://*.supabase.co",
       "https://*.tile.openstreetmap.org",
       "https://api-adresse.data.gouv.fr",
       "https://api.anthropic.com",
+      "https://googleapis.com",
+      "https://graph.facebook.com",
       "https://www.google-analytics.com"
     ],
     "frame-src": [
@@ -135,5 +141,5 @@
     ],
     "upgrade-insecure-requests": []
   },
-  "generated_at": "2026-05-15T13:09:02"
+  "generated_at": "2026-05-16T05:56:10"
 }

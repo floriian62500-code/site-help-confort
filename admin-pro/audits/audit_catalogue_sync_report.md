@@ -1,20 +1,30 @@
 # 🔄 Audit synchronisation wizard ↔ catalogue — Sonde IA #59
 
-*Généré le 2026-05-15 13:12 — `admin-pro/audits/audit_catalogue_sync.py`*
+*Généré le 2026-05-16 05:56 — `admin-pro/audits/audit_catalogue_sync.py`*
 
-**Wizard home (`ALL_PRESTAS` d'index.html)** : 32 prestations
-**Catalogue (`LOCAL_CATALOG` de nos-prestations.html)** : 30 prestations
-**Slugs communs** : 30
+**Wizard home (`ALL_PRESTAS` d'index.html)** : 31 prestations
+**Catalogue (`LOCAL_CATALOG` de nos-prestations.html)** : 33 prestations
+**Slugs communs** : 27
 **Slugs wizard tolérés (fourre-tout)** : 2
-**Alertes totales** : **0**
+**Alertes totales** : **8**
 
 ## 🚨 Prestations dans wizard mais ABSENTES du catalogue
 
-✅ Aucun écart — tous les slugs wizard existent dans le catalogue.
+| Slug | Label wizard | Métier | Prix |
+|------|--------------|--------|------|
+| `contrat-chauffage-basic` | Contrat chauffage Basic (gaz) | Chauffage | 108.0 € |
+| `contrat-chauffage-confort` | Contrat chauffage Confort (gaz) | Chauffage | 156.0 € |
 
 ## 🚨 Prestations dans catalogue mais ABSENTES du wizard
 
-✅ Aucun écart — tous les slugs catalogue existent dans le wizard.
+| Slug | Label catalogue | Métier | Prix |
+|------|-----------------|--------|------|
+| `contrat-chauffage-basic-fioul` | Contrat Basic — chaudière fioul | chauffage | 140.0 € |
+| `contrat-chauffage-basic-gaz` | Contrat Basic — chaudière gaz | chauffage | 108.0 € |
+| `contrat-chauffage-confort-fioul` | Contrat Confort — chaudière fioul | chauffage | 190.0 € |
+| `contrat-chauffage-confort-gaz` | Contrat Confort — chaudière gaz | chauffage | 156.0 € |
+| `contrat-chauffage-securite-fioul` | Contrat Sécurité — chaudière fioul | chauffage | 320.0 € |
+| `contrat-chauffage-securite-gaz` | Contrat Sécurité — chaudière gaz | chauffage | 276.0 € |
 
 ## ⚠️ Écarts de prix sur slugs communs
 

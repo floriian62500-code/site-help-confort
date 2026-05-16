@@ -1,13 +1,13 @@
-# Audit JSON-LD — 2026-05-15 10:50
+# Audit JSON-LD — 2026-05-16 05:56
 
 > Audit local des blocs `<script type="application/ld+json">` de chaque page HTML.
 > Lancement : `python3 admin-pro/audits/audit_jsonld.py`
 
 ## Synthèse
 
-- Pages auditées : **38**
-- Pages avec JSON-LD : **35**
-- Pages sans JSON-LD : **3**
+- Pages auditées : **40**
+- Pages avec JSON-LD : **36**
+- Pages sans JSON-LD : **4**
 - Erreurs de syntaxe JSON : **0**
 - Avertissements (champs manquants/dupliqués) : **173**
 
@@ -16,6 +16,7 @@
 - `avant-apres.html`
 - `devis-express.html`
 - `realisation.html`
+- `reset.html`
 
 ## Détail par page
 
@@ -36,6 +37,11 @@
 ### `aides.html` — 1 bloc(s) — types : WebPage, FAQPage, Question, Answer
 
 - ✅ Bloc #0 (`WebPage, FAQPage, Question, Answer`) — OK
+
+### `blog.html` — 2 bloc(s) — types : Blog, Organization, ImageObject, BlogPosting, BreadcrumbList, ListItem
+
+- ✅ Bloc #0 (`Blog, Organization, ImageObject, BlogPosting`) — OK
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
 
 ### `carrieres.html` — 2 bloc(s) — types : Organization, PostalAddress, BreadcrumbList, ListItem
 

@@ -1,4 +1,4 @@
-# Audit images perf — 2026-05-15 13:30
+# Audit images perf — 2026-05-16 05:56
 
 > Sonde performance HELP! Confort — détecte les images > 200 KB et
 > alerte si elles sont au-dessus du fold ou utilisées sur ≥ 5 pages.
@@ -6,10 +6,10 @@
 
 ## Synthèse
 
-- Images scannées : **84** (6349.0 KB total)
-- Images > 200 KB : **6**
+- Images scannées : **81** (4867.3 KB total)
+- Images > 200 KB : **2**
 - Erreurs (>500 KB + ATF/5+ pages) : **0**
-- Warnings : **6**
+- Warnings : **2**
 
 ## Détail (par poids décroissant)
 
@@ -17,10 +17,6 @@
 |----------|---------|-------|-------|-----|---------|
 | ⚠️ | `images/mascotte-opt.tmp.png` | 688.4 KB | 0 | — | poids élevé (688.4 KB), non référencée (mort ?) |
 | ⚠️ | `images/mascotte.tmp.png` | 688.4 KB | 0 | — | poids élevé (688.4 KB), non référencée (mort ?) |
-| ⚠️ | `images/mascotte-with-bg.png` | 390.7 KB | 0 | — | non référencée (mort ?) |
-| ⚠️ | `images/mascotte1.png` | 390.7 KB | 0 | — | non référencée (mort ?) |
-| ⚠️ | `images/mascotte-opt.png` | 375.2 KB | 0 | — | non référencée (mort ?) |
-| ⚠️ | `images/mascotte.png` | 375.2 KB | 0 | — | non référencée (mort ?) |
 
 ## Recommandations
 
