@@ -102,6 +102,8 @@ jobs:
             audit_inline_style_size.py
             audit_admin_pro_isolation.py
             audit_phone_consistency.py
+            audit_image_dimensions.py
+            audit_consent_default_state.py
           )
           for a in "${AUDITS[@]}"; do
             f="admin-pro/audits/$a"
