@@ -717,6 +717,8 @@
  const grouped = {};
  // Pré-initialiser les catégories pour qu'elles apparaissent dans l'ordre voulu
  CAT_ORDER.forEach(slug => { grouped[slug] = { name: CAT_LABELS[slug], icon: slug, slug, items: [] }; });
+ // Exclure les contrats d'entretien du catalogue principal (module dédié séparé en bas)
+ services = services.filter(s => !s.is_contrat);
  services.forEach(s => {
  const key = s.category_slug || 'sur-mesure';
  if (!grouped[key]) grouped[key] = { name: s.category_name || 'Autre', icon: s.category_icon, slug: key, items: [] };
