@@ -408,9 +408,51 @@ if (document.fonts && document.fonts.ready) {
  <input type="hidden" id="presta-hidden" name="prestation_demandee">
  <script>
  (function(){
- // Lecture du param ?presta= dans l'URL
+ // Lecture du param ?presta= ou ?metier= dans l'URL
  var params = new URLSearchParams(location.search);
  var presta = params.get('presta');
+ var metier = params.get('metier');
+ // Si pas de presta mais un métier : on mappe le métier sur une presta générique
+ var METIER_TO_PRESTA = {
+   'plomberie':'sanitaire',
+   'chauffage':'chaudiere',
+   'electricite':'recherche-panne',
+   'serrurerie':'serrure',
+   'vitrerie':'sanitaire',
+   'volets':'pmr',
+   'pmr':'pmr',
+   'renovation':'renovation-sdb',
+   'travaux':'renovation-sdb'
+ };
+ var METIER_LABEL = {
+   'plomberie':'🚰 Plomberie · sanitaire',
+   'chauffage':'🔥 Chauffage',
+   'electricite':'⚡ Électricité',
+   'serrurerie':'🔒 Serrurerie',
+   'vitrerie':'🪟 Vitrerie',
+   'volets':'🪟 Volets · stores',
+   'pmr':'♿ Adaptation PMR',
+   'renovation':'🛁 Rénovation / travaux',
+   'travaux':'🛁 Rénovation / travaux'
+ };
+ if (!presta && metier && METIER_LABEL[metier]) {
+   // On pré-remplit avec un label métier générique
+   var banner = document.getElementById('prestaBanner');
+   var labelEl = document.getElementById('prestaLabel');
+   var hidden = document.getElementById('presta-hidden');
+   if (banner && labelEl) {
+     labelEl.textContent = METIER_LABEL[metier] + ' — devis personnalisé';
+     banner.style.display = 'block';
+   }
+   if (hidden) hidden.value = '[DEVIS METIER] ' + metier;
+   setTimeout(function(){
+     var msg = document.getElementById('message');
+     if (msg && !msg.value) {
+       msg.value = 'Bonjour, je souhaite un devis pour des travaux de ' + (METIER_LABEL[metier].replace(/^[^\s]+ /, '').toLowerCase()) + '.\n\n';
+     }
+   }, 100);
+   return;
+ }
  if (!presta) return;
  // Mapping slug → label lisible
  var labels = {
