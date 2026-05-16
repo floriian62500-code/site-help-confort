@@ -966,6 +966,61 @@
   }
 
   loadAll();
+
+  // ─── Chargement des tarifs (horaire + contrats) depuis app_settings.pricing ──
+  // Cohérence avec admin-pro/tarifs.html qui permet l'édition CRUD complète
+  (async function loadPricingTables(){
+    const FMT = n => (n == null ? '—' : new Intl.NumberFormat('fr-FR',{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2}).format(n) + ' €');
+    let pd = null;
+    try {
+      const { data } = await sb.from('app_settings').select('value').eq('key','pricing').maybeSingle();
+      pd = data?.value || null;
+    } catch(_){}
+    // Fallback : valeurs par défaut si pas en base
+    if (!pd || !pd.horaire) {
+      pd = {
+        horaire: [
+          { name:"Main d'œuvre tous métiers (Saint-Omer)", ht:53, ttc:58, unit:"/h" },
+          { name:"Main d'œuvre tous métiers (Dunkerque)",  ht:55, ttc:60.50, unit:"/h" },
+          { name:"Main d'œuvre urgence (intervention <1h)", ht:63, ttc:69, unit:"/h" },
+          { name:"Main d'œuvre week-end", ht:80, ttc:88, unit:"/h" },
+          { name:"Déplacement audomarois", ht:45, ttc:50, unit:"" },
+          { name:"Déplacement Dunkerque", ht:48, ttc:52.80, unit:"" },
+          { name:"Frais de dossier (systématique)", ht:5, ttc:5.50, unit:"" },
+          { name:"Traitement des déchets (% obligatoire)", ht:null, ttc:null, unit:"1 % du HT" }
+        ],
+        contrats: [
+          { formula:"Basic",    cls:"basic",    gaz:{mois:9,an:108},  fioul:{mois:12,an:140} },
+          { formula:"Confort",  cls:"confort",  gaz:{mois:13,an:156}, fioul:{mois:16,an:190} },
+          { formula:"Sécurité", cls:"securite", gaz:{mois:23,an:276}, fioul:{mois:27,an:320} }
+        ]
+      };
+    }
+    const tBody = document.getElementById('svPricingHoraireBody');
+    if (tBody) {
+      tBody.innerHTML = pd.horaire.map((it, i) => {
+        const isSystem = i >= pd.horaire.length - 2;
+        const bg = isSystem ? 'background:#FAFCFD' : '';
+        const htDisp = it.ht == null ? (it.unit || '—') : FMT(it.ht) + (it.unit||'').replace('1 % du HT','');
+        const ttcDisp = it.ttc == null ? (it.unit || '—') : '<strong>' + FMT(it.ttc) + (it.unit||'').replace('1 % du HT','') + '</strong>';
+        return `<tr style="${bg}"><td>${escapeHtml(it.name)}</td><td style="text-align:right">${htDisp}</td><td style="text-align:right">${ttcDisp}</td></tr>`;
+      }).join('');
+    }
+    const cBody = document.getElementById('svPricingContratsBody');
+    if (cBody) {
+      const clsColor = { basic:'#DBEAFE;color:#1E40AF', confort:'#FEF3C7;color:#92400E', securite:'#DCFCE7;color:#15803D' };
+      cBody.innerHTML = pd.contrats.map(c => {
+        const color = clsColor[c.cls] || '#f1f5f9;color:#475569';
+        return `<tr>
+          <td><span style="background:${color};font-size:.7rem;padding:2px 8px;border-radius:4px;font-weight:800">${escapeHtml(c.formula.toUpperCase())}</span></td>
+          <td style="text-align:right">${FMT(c.gaz?.mois)}</td>
+          <td style="text-align:right">${FMT(c.gaz?.an)}</td>
+          <td style="text-align:right">${FMT(c.fioul?.mois)}</td>
+          <td style="text-align:right">${FMT(c.fioul?.an)}</td>
+        </tr>`;
+      }).join('');
+    }
+  })();
 })();
 </script>
 </body>
