@@ -56,38 +56,31 @@ serve(async (req) => {
     if (!currentToken) return json({ error: 'Token Meta absent (config.page_access_token vide)' }, 400);
     if (!pageId) return json({ error: 'fb_page_id absent dans settings.meta' }, 400);
 
-    // 2. Tente d'appeler /me/accounts pour obtenir un Page Access Token permanent
+    // 2. Stratégie pour obtenir un Page Access Token PERMANENT :
+    //
+    //    Règle Facebook : un Page Access Token dérivé de /me/accounts hérite
+    //    de la durée de vie du User Token utilisé. Donc :
+    //      - User Token court (1h)    → Page Token court (1h)
+    //      - User Token long-lived (60j) → Page Token PERMANENT (jamais d'expiry)
+    //
+    //    Conséquence : si on a app_id + app_secret, on DOIT toujours faire
+    //    l'échange long-lived d'abord, puis appeler /me/accounts avec le
+    //    résultat. Sinon on retombera dans 1h.
+    //
+    //    L'appel direct n'est conservé qu'en fallback (cas où app_secret manque).
     let pageAccessToken: string | null = null;
     let tokenSource = 'unknown';
     let debugInfo: any = {};
 
-    // Étape A : tentative directe avec le token actuel
-    try {
-      const r = await fetch(`${GRAPH}/me/accounts?access_token=${encodeURIComponent(currentToken)}`);
-      const d = await r.json();
-      debugInfo.attempt_direct = { status: r.status, has_data: !!d.data, error: d.error?.message };
-
-      if (r.ok && d.data && Array.isArray(d.data)) {
-        // Cherche notre page par ID (ou prend la première si pas de match)
-        const page = d.data.find((p: any) => p.id === pageId) || d.data[0];
-        if (page?.access_token) {
-          pageAccessToken = page.access_token;
-          tokenSource = 'me_accounts_direct';
-        }
-      }
-    } catch (e) { debugInfo.attempt_direct = { error: String(e) }; }
-
-    // Étape B : si A a échoué et qu'on a app_id+secret, échange long-lived
-    if (!pageAccessToken && appId && appSecret) {
+    // Étape A (prioritaire) : échange long-lived puis /me/accounts
+    if (appId && appSecret) {
       try {
-        // Échange user token short → long
         const exchangeUrl = `${GRAPH}/oauth/access_token?grant_type=fb_exchange_token&client_id=${encodeURIComponent(appId)}&client_secret=${encodeURIComponent(appSecret)}&fb_exchange_token=${encodeURIComponent(currentToken)}`;
         const er = await fetch(exchangeUrl);
         const ed = await er.json();
         debugInfo.attempt_exchange = { status: er.status, has_token: !!ed.access_token, error: ed.error?.message };
 
         if (ed.access_token) {
-          // Re-tente /me/accounts avec le long-lived
           const ar = await fetch(`${GRAPH}/me/accounts?access_token=${encodeURIComponent(ed.access_token)}`);
           const ad = await ar.json();
           debugInfo.attempt_exchange_accounts = { status: ar.status, has_data: !!ad.data };
@@ -101,6 +94,25 @@ serve(async (req) => {
           }
         }
       } catch (e) { debugInfo.attempt_exchange = { error: String(e) }; }
+    }
+
+    // Étape B (fallback) : appel direct /me/accounts sans échange.
+    // Donnera un Page Token qui hérite de l'expiry du User Token courant
+    // (durée probablement courte si app_secret n'est pas configuré).
+    if (!pageAccessToken) {
+      try {
+        const r = await fetch(`${GRAPH}/me/accounts?access_token=${encodeURIComponent(currentToken)}`);
+        const d = await r.json();
+        debugInfo.attempt_direct = { status: r.status, has_data: !!d.data, error: d.error?.message };
+
+        if (r.ok && d.data && Array.isArray(d.data)) {
+          const page = d.data.find((p: any) => p.id === pageId) || d.data[0];
+          if (page?.access_token) {
+            pageAccessToken = page.access_token;
+            tokenSource = 'me_accounts_direct';
+          }
+        }
+      } catch (e) { debugInfo.attempt_direct = { error: String(e) }; }
     }
 
     // 3. Si on a un Page Access Token, on le sauvegarde
