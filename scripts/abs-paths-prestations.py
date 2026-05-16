@@ -32,13 +32,18 @@ PATTERNS = [
 
 
 def strip_scripts(html: str):
-    """Replace <script>...</script> blocks with placeholders to avoid altering JS."""
+    """Replace inline <script>JS</script> bodies with placeholders to avoid altering JS code.
+    Keeps the <script ...> opening tag visible so its src attribute can still be rewritten."""
     script_blocks = []
-    pattern = re.compile(r'<script\b[^>]*>.*?</script>', re.DOTALL | re.IGNORECASE)
+    # Match only the INNER content between <script ...> and </script>, not the tags themselves.
+    pattern = re.compile(r'(<script\b[^>]*>)(.*?)(</script>)', re.DOTALL | re.IGNORECASE)
 
     def replace(match):
-        script_blocks.append(match.group(0))
-        return f"___SCRIPT_BLOCK_{len(script_blocks) - 1}___"
+        open_tag, body, close_tag = match.group(1), match.group(2), match.group(3)
+        if body.strip() == "":
+            return match.group(0)
+        script_blocks.append(body)
+        return f"{open_tag}___SCRIPT_BLOCK_{len(script_blocks) - 1}___{close_tag}"
 
     stripped = pattern.sub(replace, html)
     return stripped, script_blocks
