@@ -105,6 +105,9 @@ jobs:
             audit_image_dimensions.py
             audit_consent_default_state.py
             audit_lang_attribute.py
+            audit_meta_viewport.py
+            audit_html_entities.py
+            audit_articles_freshness.py
           )
           for a in "${AUDITS[@]}"; do
             f="admin-pro/audits/$a"
