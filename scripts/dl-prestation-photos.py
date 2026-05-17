@@ -121,21 +121,44 @@ def get_file_url(file_title):
         return None, None, 0
 
 def is_acceptable(file_title, mime, size):
-    """Filter: real photo (not logo, icon, chart, SVG, animated GIF)."""
+    """Filter: real product photo (not book, archive, vehicle, logo, etc.)."""
     t = file_title.lower()
     # Reject non-photos
     bad = ["logo", "icon", "flag", "map", "chart", "diagram", "graph",
            "wikipedia", "wikimedia", ".svg", ".gif", ".pdf", ".ogg",
+           ".djvu", ".tiff", ".tif",  # scanned books and archives
            "commons-logo", "disambig", "stub-icon"]
     if any(b in t for b in bad):
+        return False
+    # Reject books, manuscripts, archives, history
+    archive_kw = ["légende", "legende", "livre", "manuscrit", "manuscript",
+                  "feuillets", "recueil", "contes", "régiment", "regiment",
+                  "1851", "1900", "1912", "1915", "1917", "1920", "lusitania",
+                  "monseigneur", "lois et", "broyer", "villerabel", "saint-georges",
+                  "saint yves", "saint_yves", "feuillet", "broyé", "extrait",
+                  "fichier:cou", "comte de", "comtesse"]
+    if any(k in t for k in archive_kw):
+        return False
+    # Reject vehicles (cars, trains, etc.)
+    vehicle_kw = ["citroen", "citroën", "renault", "peugeot", "voiture",
+                  "handbrake", "frein", "rally", "raid", "car_", "_car",
+                  "automobile", "vehicle", "train"]
+    if any(k in t for k in vehicle_kw):
+        return False
+    # Reject events, people, historical photos
+    event_kw = ["manifestation", "manif_", "boche", "crime", "anti_",
+                "guerre", "war_", "_war", "soldat", "soldier",
+                "1939", "1944", "1945", "1962", "1968",
+                "herrenhaustag"]
+    if any(k in t for k in event_kw):
         return False
     # Reject unwanted mime types
     if mime and not mime.startswith("image/"):
         return False
     if mime in ("image/svg+xml", "image/gif"):
         return False
-    # Size check: between 5KB and 5MB
-    if size and (size < 5_000 or size > 5_000_000):
+    # Size check: between 30KB and 5MB (30KB minimum = avoid tiny icons)
+    if size and (size < 30_000 or size > 5_000_000):
         return False
     return True
 

@@ -249,6 +249,20 @@
  });
  document.head.appendChild(jsonLd);
 
+ // JSON-LD BreadcrumbList — SEO local
+ const breadcrumbLd = document.createElement('script');
+ breadcrumbLd.type = 'application/ld+json';
+ breadcrumbLd.textContent = JSON.stringify({
+ "@context": "https://schema.org",
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+ { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://www.depan59-62.fr/" },
+ { "@type": "ListItem", "position": 2, "name": "Réalisations", "item": "https://www.depan59-62.fr/realisations.html" },
+ { "@type": "ListItem", "position": 3, "name": r.title, "item": "https://www.depan59-62.fr/realisations/" + encodeURIComponent(slug) }
+ ]
+ });
+ document.head.appendChild(breadcrumbLd);
+
  // Rendu
  let photosHTML = '';
  if (r.image_before && r.image_after) {

@@ -20,7 +20,9 @@ Disallow: /*.docx$
 Disallow: /*.pdf$
 Disallow: /content/
 Disallow: /supabase/
-Disallow: /assets/
+# /assets/ AUTORISÉ : Google a besoin du JS/CSS pour rendre correctement la page
+# (sans ça, le rendu serait jugé "mobile-unfriendly" + risque de cloaking)
+Allow: /assets/
 
 # Réalisation : URLs propres /realisations/{slug} indexables
 # La page realisation.html avec ?slug=... est autorisée (canonical → /realisations/{slug})
