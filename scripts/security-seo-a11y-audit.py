@@ -36,7 +36,7 @@ REPORT: dict = {
 
 # Collect all HTML files at root and in subfolders (excluding admin/backup/etc.)
 EXCLUDED_DIRS = {".git", "node_modules", "_backup_png", "docs", "supabase",
-                 "__pycache__", "tools", "logs", ".vscode"}
+                 "__pycache__", "tools", "logs", ".vscode", "tmp", "scripts"}
 
 
 def iter_html_files():
@@ -457,37 +457,38 @@ def audit_broken():
                          re.IGNORECASE)
     src_re = re.compile(r'(?:src|href)\s*=\s*["\']([^"\'#?]+\.(?:jpg|jpeg|png|gif|svg|webp|avif|mp4|webm|css|js|ico|json|xml|woff2?|ttf))(?:[?#][^"\']*)?["\']',
                         re.IGNORECASE)
+    def normalize(rel_dir: Path, href: str) -> str:
+        href = href.split("?")[0].split("#")[0]
+        if href.startswith("/"):
+            return href.lstrip("/")
+        # Resolve ../ etc. without touching the filesystem
+        return os.path.normpath((rel_dir / href).as_posix()).replace("\\", "/")
+
     for f in iter_html_files():
         try:
             text = f.read_text(encoding="utf-8")
         except Exception:
             continue
         rel = f.relative_to(ROOT).as_posix()
+        rel_dir = Path(rel).parent
         # internal HTML links
         for m in href_re.finditer(text):
             href = m.group(1)
             if href.startswith(("http://", "https://", "mailto:", "tel:", "//")):
                 continue
-            # resolve relative to file's dir
-            if href.startswith("/"):
-                target = href.lstrip("/")
-            else:
-                target = (Path(rel).parent / href).as_posix()
-            target = target.split("?")[0].split("#")[0]
-            if target not in all_files and ("/" + target) not in all_files:
-                broken_links.append(f"{rel} -> {href}")
+            target = normalize(rel_dir, href)
+            if target in all_files or ("/" + target) in all_files:
+                continue
+            broken_links.append(f"{rel} -> {href}")
         # assets
         for m in src_re.finditer(text):
             src = m.group(1)
             if src.startswith(("http://", "https://", "//", "data:")):
                 continue
-            if src.startswith("/"):
-                target = src.lstrip("/")
-            else:
-                target = (Path(rel).parent / src).as_posix()
-            target = target.split("?")[0].split("#")[0]
-            if target not in all_files and ("/" + target) not in all_files:
-                missing_assets.append(f"{rel} -> {src}")
+            target = normalize(rel_dir, src)
+            if target in all_files or ("/" + target) in all_files:
+                continue
+            missing_assets.append(f"{rel} -> {src}")
     if broken_links:
         REPORT["axisD_broken"]["issues"].append(
             f"{len(broken_links)} broken internal HTML link(s). First 10: "
