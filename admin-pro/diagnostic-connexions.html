@@ -95,7 +95,7 @@
   function renderCheck(id, icon, title, state, msg, actions=[], details=null){
     const cls = state.toLowerCase();
     const stateText = { ok:'✓ OK', warn:'⚠ Attention', err:'✗ Erreur', testing:'⏳ Test en cours' }[cls] || state;
-    const actionsHtml = actions.length ? `<div class="check-actions">${actions.map(a => `<a href="${a.href}" ${a.blank?'target="_blank"':''} class="${a.style||'info'}">${a.label}</a>`).join('')}</div>` : '';
+    const actionsHtml = actions.length ? `<div class="check-actions">${actions.map(a => `<a href="${a.href}" ${a.blank?'target="_blank"':''} class="${a.style||'info'}" rel="noopener noreferrer">${a.label}</a>`).join('')}</div>` : '';
     const detailsHtml = details ? `<details><summary>📋 Détails</summary><pre>${esc(typeof details === 'string' ? details : JSON.stringify(details, null, 2))}</pre></details>` : '';
     const el = document.getElementById('check-'+id);
     const html = `<div class="check-head"><div class="check-icon">${icon}</div><div class="check-info"><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap"><h3 class="check-title">${title}</h3><span class="check-state">${stateText}</span></div><p class="check-msg">${msg}</p>${actionsHtml}${detailsHtml}</div></div>`;
@@ -319,7 +319,7 @@
       const cfg = data?.value || {};
       if (!cfg.api_key) {
         renderCheck('claude','🤖','Claude IA (Anthropic)','err',
-          'Clé API Anthropic absente. Génère ta clé sur <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a> puis colle-la dans Settings → IA.',
+          'Clé API Anthropic absente. Génère ta clé sur <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener noreferrer">console.anthropic.com</a> puis colle-la dans Settings → IA.',
           [{href:'finalize-config.html',label:'Coller la clé →',style:'fix'}]
         );
         updateSummary(); return;

@@ -224,15 +224,15 @@
       <div class="setup-resources">
         <h3>📚 Ressources et documentation</h3>
         <div class="setup-resources-grid">
-          <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg" target="_blank" rel="noopener">
+          <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             Console Supabase
           </a>
-          <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/sql/new" target="_blank" rel="noopener">
+          <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/sql/new" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
             Éditeur SQL
           </a>
-          <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/functions" target="_blank" rel="noopener">
+          <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/functions" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             Edge Functions
           </a>
@@ -240,11 +240,11 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             Configurer les clés
           </a>
-          <a href="../guides/deploy-edge-functions.md" target="_blank" rel="noopener">
+          <a href="../guides/deploy-edge-functions.md" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Guide déploiement Edge Functions
           </a>
-          <a href="../docs/SETUP-CMS.md" target="_blank" rel="noopener">
+          <a href="../docs/SETUP-CMS.md" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
             Guide d'installation complet
           </a>
@@ -427,7 +427,7 @@ function updateScoreAndPriorities() {
             <li>
               <div class="setup-priority-num">${i+1}</div>
               <div class="setup-priority-text">${title}<small>${hint}</small></div>
-              ${fix.fixUrl ? `<a href="${fix.fixUrl}" ${fix.fixUrl.startsWith('http') ? 'target="_blank" rel="noopener"' : ''}>${fix.fixLabel} →</a>` : ''}
+              ${fix.fixUrl ? `<a href="${fix.fixUrl}" ${fix.fixUrl.startsWith('http') ? 'target="_blank" rel="noopener noreferrer"' : ''}>${fix.fixLabel} →</a>` : ''}
             </li>`;
         }).join('')}
         ${fails.length > 5 ? `<li style="background:transparent;border:none;justify-content:center;color:var(--ink-500);font-size:.8rem;padding:4px 0">+ ${fails.length - 5} autre${fails.length-5>1?'s':''} action${fails.length-5>1?'s':''} secondaire${fails.length-5>1?'s':''}</li>` : ''}
@@ -440,7 +440,7 @@ function actionLink(key, isPrimary) {
   if (!c || !c.fixUrl) return '';
   const isExternal = c.fixUrl.startsWith('http');
   const cls = 'setup-step-action' + (isPrimary ? ' is-primary' : '');
-  return `<a class="${cls}" href="${c.fixUrl}" ${isExternal ? 'target="_blank" rel="noopener"' : ''}>${c.fixLabel} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>`;
+  return `<a class="${cls}" href="${c.fixUrl}" ${isExternal ? 'target="_blank" rel="noopener noreferrer"' : ''}>${c.fixLabel} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>`;
 }
 
 (async function runChecks() {

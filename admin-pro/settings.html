@@ -69,7 +69,7 @@
       <h2 class="admin-topbar-title">Paramètres</h2>
       <div style="flex:1"></div>
       <div class="admin-topbar-actions">
-        <a href="../" class="admin-icon-btn" title="Voir le site public" target="_blank" rel="noopener">
+        <a href="../" class="admin-icon-btn" title="Voir le site public" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         </a>
       </div>
@@ -186,14 +186,14 @@
             <p class="section-desc">Permet la génération automatique de titres SEO, descriptions, hashtags et alt-text pour vos chantiers.</p>
 
             <div class="guide-box" style="margin-bottom:14px">
-              <strong>📖 Guide rapide :</strong> ouvrir <a href="https://console.anthropic.com/" target="_blank">console.anthropic.com</a> → Settings → API Keys → <em>Create Key</em>. Coût estimé : <code>~0,003 €</code> par chantier généré.
+              <strong>📖 Guide rapide :</strong> ouvrir <a href="https://console.anthropic.com/" target="_blank" rel="noopener noreferrer">console.anthropic.com</a> → Settings → API Keys → <em>Create Key</em>. Coût estimé : <code>~0,003 €</code> par chantier généré.
             </div>
 
             <form class="settings-form" data-section="anthropic">
               <div class="field-row">
                 <label>Clé API (sk-ant-api03-…)</label>
                 <input type="password" name="api_key" placeholder="sk-ant-api03-xxxxxxxxxxxxxxxx" autocomplete="off">
-                <span class="hint">Stockée en BDD Supabase, jamais exposée côté navigateur. Voir <a href="../guides/anthropic.md" target="_blank">guide complet</a>.</span>
+                <span class="hint">Stockée en BDD Supabase, jamais exposée côté navigateur. Voir <a href="../guides/anthropic.md" target="_blank" rel="noopener noreferrer">guide complet</a>.</span>
               </div>
               <div class="field-row">
                 <label>Modèle</label>
@@ -222,15 +222,15 @@
               </h3>
               <span class="head-status" data-head-status="meta">Non configuré</span>
             </div>
-            <p class="section-desc">Une seule app Meta gère Facebook et Instagram. <a href="wizard-meta.html">Assistant pas-à-pas (~25 min)</a> · <a href="../guides/meta.md" target="_blank">Guide manuel</a></p>
+            <p class="section-desc">Une seule app Meta gère Facebook et Instagram. <a href="wizard-meta.html">Assistant pas-à-pas (~25 min)</a> · <a href="../guides/meta.md" target="_blank" rel="noopener noreferrer">Guide manuel</a></p>
 
             <div class="guide-box" style="margin-bottom:14px">
               <strong>📖 Méthode rapide (5 min) :</strong>
               <ol style="margin:6px 0 0 18px;padding:0;line-height:1.7">
-                <li>Va sur <a href="https://developers.facebook.com/tools/explorer/" target="_blank"><strong>Graph API Explorer</strong></a> → coche pages_show_list / pages_read_engagement / pages_manage_posts → Generate Access Token</li>
+                <li>Va sur <a href="https://developers.facebook.com/tools/explorer/" target="_blank" rel="noopener noreferrer"><strong>Graph API Explorer</strong></a> → coche pages_show_list / pages_read_engagement / pages_manage_posts → Generate Access Token</li>
                 <li>Tape <code>me/accounts</code> dans la barre URL → <strong>Envoyer</strong></li>
                 <li>Sélectionne tout le JSON de réponse (Cmd+A + Cmd+C) → colle ci-dessous dans <strong>"🪄 Méthode rapide"</strong> → clique <strong>"📥 Extraire automatiquement"</strong></li>
-                <li>(Optionnel pour token <strong>permanent</strong>) Ajoute App ID + App Secret depuis <a href="https://developers.facebook.com/apps" target="_blank">developers.facebook.com/apps</a> → Settings → Basic</li>
+                <li>(Optionnel pour token <strong>permanent</strong>) Ajoute App ID + App Secret depuis <a href="https://developers.facebook.com/apps" target="_blank" rel="noopener noreferrer">developers.facebook.com/apps</a> → Settings → Basic</li>
                 <li><strong>Enregistrer</strong> → <strong>Tester</strong> pour valider la connexion</li>
               </ol>
             </div>
@@ -290,7 +290,7 @@
               </h3>
               <span class="head-status" data-head-status="linkedin">Non configuré</span>
             </div>
-            <p class="section-desc">Publication sur votre page entreprise LinkedIn. <a href="wizard-linkedin.html">Assistant pas-à-pas (~20 min)</a> · <a href="../guides/linkedin.md" target="_blank">Guide manuel</a></p>
+            <p class="section-desc">Publication sur votre page entreprise LinkedIn. <a href="wizard-linkedin.html">Assistant pas-à-pas (~20 min)</a> · <a href="../guides/linkedin.md" target="_blank" rel="noopener noreferrer">Guide manuel</a></p>
             <form class="settings-form" data-section="linkedin">
               <div class="field-row">
                 <label>Access Token (3-legged OAuth)</label>
@@ -319,7 +319,7 @@
               </h3>
               <span class="head-status" data-head-status="gbp">Non configuré</span>
             </div>
-            <p class="section-desc">Publication de Posts Google + synchronisation des avis. <a href="wizard-google.html">Assistant pas-à-pas (~25 min)</a> · <a href="../guides/gbp.md" target="_blank">Guide manuel</a></p>
+            <p class="section-desc">Publication de Posts Google + synchronisation des avis. <a href="wizard-google.html">Assistant pas-à-pas (~25 min)</a> · <a href="../guides/gbp.md" target="_blank" rel="noopener noreferrer">Guide manuel</a></p>
             <form class="settings-form" data-section="gbp">
               <div class="field-row">
                 <label>Client ID OAuth <span style="color:#E11D48;font-size:.78em">*</span></label>
@@ -370,7 +370,7 @@
               </h3>
               <span class="head-status" data-head-status="ga4">Non configuré</span>
             </div>
-            <p class="section-desc">Affiche dans le dashboard les vraies stats visiteurs (sessions, sources, conversions). <a href="wizard-ga4.html">Assistant pas-à-pas (~20 min)</a> · <a href="../guides/ga4.md" target="_blank">Guide manuel</a></p>
+            <p class="section-desc">Affiche dans le dashboard les vraies stats visiteurs (sessions, sources, conversions). <a href="wizard-ga4.html">Assistant pas-à-pas (~20 min)</a> · <a href="../guides/ga4.md" target="_blank" rel="noopener noreferrer">Guide manuel</a></p>
             <form class="settings-form" data-section="ga4">
               <div class="field-row">
                 <label>Property ID</label>
@@ -400,7 +400,7 @@
               </h3>
               <span class="head-status" data-head-status="notification_emails">À configurer</span>
             </div>
-            <p class="section-desc">Adresses email qui reçoivent les notifs quand un client soumet une souscription, commande ou demande de devis depuis le site public. La clé <code>RESEND_API_KEY</code> doit être configurée dans <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/functions/secrets" target="_blank" rel="noopener">Supabase Secrets</a> pour que les emails partent réellement.</p>
+            <p class="section-desc">Adresses email qui reçoivent les notifs quand un client soumet une souscription, commande ou demande de devis depuis le site public. La clé <code>RESEND_API_KEY</code> doit être configurée dans <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/functions/secrets" target="_blank" rel="noopener noreferrer">Supabase Secrets</a> pour que les emails partent réellement.</p>
             <form class="settings-form" data-section="notification_emails">
               <div class="field-row">
                 <label>Destinataire des souscriptions contrats</label>
@@ -430,7 +430,7 @@
               <div class="field-row">
                 <label>Adresse expéditeur</label>
                 <input type="email" name="from_email" placeholder="noreply@depan59-62.fr">
-                <small style="display:block;color:var(--ink-500);font-size:.76rem;margin-top:3px">Doit être sur un domaine vérifié dans <a href="https://resend.com/domains" target="_blank" rel="noopener">Resend</a>. <code>depan59-62.fr</code> est déjà configuré côté DNS (DKIM Resend présent).</small>
+                <small style="display:block;color:var(--ink-500);font-size:.76rem;margin-top:3px">Doit être sur un domaine vérifié dans <a href="https://resend.com/domains" target="_blank" rel="noopener noreferrer">Resend</a>. <code>depan59-62.fr</code> est déjà configuré côté DNS (DKIM Resend présent).</small>
               </div>
               <div class="settings-actions">
                 <span class="hint" data-saved-meta>Non sauvegardé</span>
@@ -455,7 +455,7 @@
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                 📧 Envoyer la demande à Dynoco (1 clic)
               </a>
-              <a href="../docs/INTEGRATION-APOGEE-DYNOCO.md" target="_blank" style="margin-left:10px;font-size:.78rem;color:var(--hc-primary)">📄 Voir le mail complet</a>
+              <a href="../docs/INTEGRATION-APOGEE-DYNOCO.md" target="_blank" style="margin-left:10px;font-size:.78rem;color:var(--hc-primary)" rel="noopener noreferrer">📄 Voir le mail complet</a>
             </div>
             <p class="section-desc">Tu gères tes interventions et contrats clients dans un CRM séparé. Le dashboard sert juste de passerelle : le bouton « Ouvrir mon CRM » du dashboard pointera vers l'URL renseignée ici.</p>
             <form class="settings-form" data-section="crm">

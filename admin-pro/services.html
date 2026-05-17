@@ -130,7 +130,7 @@
             <option value="quote">Sur devis</option>
           </select>
           <input type="search" id="searchSvc" placeholder="Rechercher une prestation…" class="grow">
-          <a class="sv-cta" href="../nos-prestations.html" target="_blank" rel="noopener" style="background:#fff;color:var(--ink-900);border:1px solid var(--ink-100);box-shadow:none">
+          <a class="sv-cta" href="../nos-prestations.html" target="_blank" rel="noopener noreferrer" style="background:#fff;color:var(--ink-900);border:1px solid var(--ink-100);box-shadow:none">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             Voir page publique
           </a>
@@ -192,7 +192,7 @@
 
       <!-- ═══ TAB TARIFS HORAIRES & CONTRATS ═══ -->
       <div class="sv-pane" id="paneTarifs">
-        <p style="margin:0 0 16px;color:var(--ink-500);font-size:.92rem">Tarif horaire universel + contrats annuels — référence pour les devis sur mesure. Pour les forfaits prestations, va dans l'onglet <strong>Catalogue</strong>. <a href="/admin-pro/TARIFS_REFERENCE.md" target="_blank" style="color:var(--hc-primary);font-weight:700">Voir source TARIFS_REFERENCE.md →</a></p>
+        <p style="margin:0 0 16px;color:var(--ink-500);font-size:.92rem">Tarif horaire universel + contrats annuels — référence pour les devis sur mesure. Pour les forfaits prestations, va dans l'onglet <strong>Catalogue</strong>. <a href="/admin-pro/TARIFS_REFERENCE.md" target="_blank" style="color:var(--hc-primary);font-weight:700" rel="noopener noreferrer">Voir source TARIFS_REFERENCE.md →</a></p>
 
         <h3 style="margin:0 0 10px;font-size:1rem;font-weight:800;color:#0A1428;display:flex;align-items:center;gap:8px">🕐 Tarif horaire universel <small style="color:var(--ink-500);font-weight:400;font-size:.78rem">(tous métiers)</small> <a href="tarifs.html" style="margin-left:auto;font-size:.74rem;color:var(--hc-primary);font-weight:600;text-decoration:none">✎ Modifier dans Tarifs →</a></h3>
         <div class="sv-table" style="margin-bottom:24px">
@@ -489,14 +489,14 @@
       // Header de catégorie (uniquement si pas filtré sur une seule cat ou s'il y a plusieurs groupes)
       if (groups.length > 1 || !catFilter) {
         const pictoHtml = publicUrl
-          ? `<a href="${publicUrl}" target="_blank" rel="noopener" title="Voir la page publique « ${escapeHtml(cat?.name||'')} »" style="width:34px;height:34px;border-radius:9px;background:${v.bg};color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 10px ${v.color}33;text-decoration:none;transition:transform .15s;cursor:pointer" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+          ? `<a href="${publicUrl}" target="_blank" rel="noopener noreferrer" title="Voir la page publique « ${escapeHtml(cat?.name||'')} »" style="width:34px;height:34px;border-radius:9px;background:${v.bg};color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 10px ${v.color}33;text-decoration:none;transition:transform .15s;cursor:pointer" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
               <svg width="17" height="17" ${SVG_ATTRS}>${v.icon}</svg>
             </a>`
           : `<div style="width:34px;height:34px;border-radius:9px;background:${v.bg};color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 10px ${v.color}33">
               <svg width="17" height="17" ${SVG_ATTRS}>${v.icon}</svg>
             </div>`;
         const titleHtml = publicUrl
-          ? `<a href="${publicUrl}" target="_blank" rel="noopener" style="color:#0A1428;text-decoration:none;border-bottom:1px dashed transparent;transition:border-color .15s" onmouseover="this.style.borderBottomColor='#0DA0CF'" onmouseout="this.style.borderBottomColor='transparent'">${escapeHtml(cat?.name || 'Sans catégorie')} <span style="font-size:.7rem;color:#0DA0CF;font-weight:600">↗</span></a>`
+          ? `<a href="${publicUrl}" target="_blank" rel="noopener noreferrer" style="color:#0A1428;text-decoration:none;border-bottom:1px dashed transparent;transition:border-color .15s" onmouseover="this.style.borderBottomColor='#0DA0CF'" onmouseout="this.style.borderBottomColor='transparent'">${escapeHtml(cat?.name || 'Sans catégorie')} <span style="font-size:.7rem;color:#0DA0CF;font-weight:600">↗</span></a>`
           : escapeHtml(cat?.name || 'Sans catégorie');
         html += `<tr class="sv-cat-header"><td colspan="8" style="padding:14px 14px 8px;background:#fafcfd;border-top:1px solid var(--ink-100);position:sticky;top:0;z-index:5">
           <div style="display:flex;align-items:center;gap:11px">

@@ -435,7 +435,7 @@
         `<div class="an-empty" style="padding:32px;background:#fff;border:1px solid var(--ink-100);border-radius:14px">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
           <p style="margin:0 0 12px;color:var(--ink-700)">GA4 non configuré</p>
-          <div style="display:flex;gap:8px;justify-content:center"><a href="../guides/ga4.md" target="_blank" class="btn">📖 Guide</a><a href="settings.html#section-ga4" class="btn btn-primary">Configurer →</a></div>
+          <div style="display:flex;gap:8px;justify-content:center"><a href="../guides/ga4.md" target="_blank" class="btn" rel="noopener noreferrer">📖 Guide</a><a href="settings.html#section-ga4" class="btn btn-primary">Configurer →</a></div>
         </div>`
         : ga4Stats ?
         (() => {
@@ -459,7 +459,7 @@
                 ${['7d','30d','90d','365d'].map(p => `<a href="?period=${p}" style="padding:6px 11px;background:${p===PERIOD?'#fff':'transparent'};color:${p===PERIOD?'#0A1428':'#fff'};text-decoration:none;border-radius:6px;font-size:.74rem;font-weight:800">${p === '7d' ? '7 j' : p === '30d' ? '30 j' : p === '90d' ? '90 j' : '1 an'}</a>`).join('')}
               </div>
               <button id="btnExportCsv" style="padding:7px 12px;background:rgba(255,255,255,.18);color:#fff;border:none;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer">📥 Export CSV</button>
-              <a href="https://analytics.google.com/analytics/web/#/p${escapeHtml(settings?.value?.property_id||'')}/reports/intelligenthome" target="_blank" style="padding:7px 12px;background:rgba(255,255,255,.18);color:#fff;text-decoration:none;border-radius:7px;font-size:.78rem;font-weight:700">Ouvrir GA4 ↗</a>
+              <a href="https://analytics.google.com/analytics/web/#/p${escapeHtml(settings?.value?.property_id||'')}/reports/intelligenthome" target="_blank" style="padding:7px 12px;background:rgba(255,255,255,.18);color:#fff;text-decoration:none;border-radius:7px;font-size:.78rem;font-weight:700" rel="noopener noreferrer">Ouvrir GA4 ↗</a>
               <a href="oauth-ga4.html" style="padding:7px 12px;background:rgba(255,255,255,.18);color:#fff;text-decoration:none;border-radius:7px;font-size:.78rem;font-weight:700">🔁 Reconnecter</a>
             </div>
           </div>
@@ -566,7 +566,7 @@
                   const m = pageMetier(p.path);
                   const pct = topPages[0]?.views ? (p.views / topPages[0].views * 100).toFixed(0) : 0;
                   const url = p.path.startsWith('/') ? 'https://depan59-62.fr' + p.path : '#';
-                  return `<a href="${escapeHtml(url)}" target="_blank" style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--ink-50);text-decoration:none;color:inherit">
+                  return `<a href="${escapeHtml(url)}" target="_blank" style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--ink-50);text-decoration:none;color:inherit" rel="noopener noreferrer">
                     <div style="width:36px;height:36px;border-radius:9px;background:${m.color}1f;color:${m.color};display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0">${m.ico}</div>
                     <div style="flex:1;min-width:0">
                       <div style="font-weight:700;color:#0A1428;font-size:.84rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:Menlo,Monaco,monospace">${escapeHtml(p.path.length>40?p.path.slice(0,37)+'…':p.path)}</div>
@@ -851,14 +851,14 @@
           <p style="margin:8px 0 0;font-size:.82rem;color:#7f1d1d;line-height:1.55">
             Causes probables :<br>
             • <strong>Service Account JSON tronqué/incomplet</strong> (ex: contient des "..." au lieu de la vraie private_key)<br>
-            • Le service account <code>ga4-reader@help-confort-back-office.iam.gserviceaccount.com</code> n'a pas accès à la property GA4 (vérifie sur <a href="https://analytics.google.com" target="_blank" style="color:#0DA0CF">analytics.google.com → Admin → Property Access Management</a>)<br>
+            • Le service account <code>ga4-reader@help-confort-back-office.iam.gserviceaccount.com</code> n'a pas accès à la property GA4 (vérifie sur <a href="https://analytics.google.com" target="_blank" style="color:#0DA0CF" rel="noopener noreferrer">analytics.google.com → Admin → Property Access Management</a>)<br>
             • L'API <code>analyticsdata.googleapis.com</code> n'est pas activée sur le projet <code>help-confort-back-office</code>
           </p>
           <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
             <a href="oauth-ga4.html" class="btn btn-primary" style="background:linear-gradient(135deg,#4285F4,#34A853);color:#fff;text-decoration:none;padding:9px 16px;border-radius:8px;font-weight:800;font-size:.86rem">🔐 Plan B : connexion OAuth Google</a>
             <a href="finalize-config.html" class="btn" style="padding:9px 16px;border-radius:8px;font-weight:700;font-size:.86rem;text-decoration:none;background:#fff;border:1px solid #e2e8f0;color:#0A1428">🔧 Re-coller le JSON</a>
             <a href="sync-ga4.html" class="btn" style="padding:9px 16px;border-radius:8px;font-weight:700;font-size:.86rem;text-decoration:none;background:#fff;border:1px solid #e2e8f0;color:#0A1428">🧪 Test détaillé</a>
-            <a href="https://console.cloud.google.com/apis/library/analyticsdata.googleapis.com?project=help-confort-back-office" target="_blank" class="btn" style="padding:9px 16px;border-radius:8px;font-weight:700;font-size:.86rem;text-decoration:none;background:#fff;border:1px solid #e2e8f0;color:#0A1428">✅ Activer API</a>
+            <a href="https://console.cloud.google.com/apis/library/analyticsdata.googleapis.com?project=help-confort-back-office" target="_blank" class="btn" style="padding:9px 16px;border-radius:8px;font-weight:700;font-size:.86rem;text-decoration:none;background:#fff;border:1px solid #e2e8f0;color:#0A1428" rel="noopener noreferrer">✅ Activer API</a>
           </div>
         </div>`
       }

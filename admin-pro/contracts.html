@@ -189,7 +189,7 @@
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           Tester le pipeline
         </button>
-        <a href="../contrats-entretien.html" target="_blank" rel="noopener" class="ct-tab-link">
+        <a href="../contrats-entretien.html" target="_blank" rel="noopener noreferrer" class="ct-tab-link">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           Page publique
         </a>
@@ -296,7 +296,7 @@
         <div class="of-help">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
           <div>
-            <strong>Ces offres pilotent la page publique <a href="../contrats-entretien.html" target="_blank" rel="noopener">/contrats-entretien.html</a></strong> — chaque modification est visible côté client en quelques secondes (cache CDN).
+            <strong>Ces offres pilotent la page publique <a href="../contrats-entretien.html" target="_blank" rel="noopener noreferrer">/contrats-entretien.html</a></strong> — chaque modification est visible côté client en quelques secondes (cache CDN).
           </div>
         </div>
 
@@ -1162,13 +1162,13 @@ let _editingId = null;
             result.innerHTML += `<br><strong>HTTP Resend :</strong> ${fnData.status}`;
           }
           if (fnData.reason === 'no_api_key') {
-            result.innerHTML += `<div style="margin-top:10px;padding:10px;background:#fff8eb;border-radius:6px;color:#7a5500;font-size:.82rem"><strong>👉 Action requise :</strong> ajoute <code>RESEND_API_KEY</code> dans <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/settings/functions" target="_blank" style="color:#0DA0CF;font-weight:700">Supabase Secrets</a></div>`;
+            result.innerHTML += `<div style="margin-top:10px;padding:10px;background:#fff8eb;border-radius:6px;color:#7a5500;font-size:.82rem"><strong>👉 Action requise :</strong> ajoute <code>RESEND_API_KEY</code> dans <a href="https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/settings/functions" target="_blank" style="color:#0DA0CF;font-weight:700" rel="noopener noreferrer">Supabase Secrets</a></div>`;
           } else if (reason && (String(reason).includes('domain') || String(reason).includes('verified'))) {
-            result.innerHTML += `<div style="margin-top:10px;padding:10px;background:#fff8eb;border-radius:6px;color:#7a5500;font-size:.82rem"><strong>👉 Domaine non vérifié dans Resend :</strong> va sur <a href="https://resend.com/domains" target="_blank" style="color:#0DA0CF;font-weight:700">resend.com/domains</a> et vérifie que <code>depan59-62.fr</code> apparaît en <strong>Verified</strong>. Les DKIM/SPF sont déjà chez Gandi, donc la validation devrait passer en quelques minutes.</div>`;
+            result.innerHTML += `<div style="margin-top:10px;padding:10px;background:#fff8eb;border-radius:6px;color:#7a5500;font-size:.82rem"><strong>👉 Domaine non vérifié dans Resend :</strong> va sur <a href="https://resend.com/domains" target="_blank" style="color:#0DA0CF;font-weight:700" rel="noopener noreferrer">resend.com/domains</a> et vérifie que <code>depan59-62.fr</code> apparaît en <strong>Verified</strong>. Les DKIM/SPF sont déjà chez Gandi, donc la validation devrait passer en quelques minutes.</div>`;
           } else if (reason && String(reason).includes('from')) {
             result.innerHTML += `<div style="margin-top:10px;padding:10px;background:#fff8eb;border-radius:6px;color:#7a5500;font-size:.82rem"><strong>👉 Adresse expéditeur invalide :</strong> change <code>from_email</code> dans <a href="settings.html#section-notifications" style="color:#0DA0CF;font-weight:700">Paramètres → Notifications email</a></div>`;
           } else {
-            result.innerHTML += `<div style="margin-top:10px;padding:10px;background:#fff8eb;border-radius:6px;color:#7a5500;font-size:.82rem"><strong>👉 Pour voir le détail exact</strong>, regarde les logs Resend : <a href="https://resend.com/emails" target="_blank" style="color:#0DA0CF;font-weight:700">resend.com/emails</a></div>`;
+            result.innerHTML += `<div style="margin-top:10px;padding:10px;background:#fff8eb;border-radius:6px;color:#7a5500;font-size:.82rem"><strong>👉 Pour voir le détail exact</strong>, regarde les logs Resend : <a href="https://resend.com/emails" target="_blank" style="color:#0DA0CF;font-weight:700" rel="noopener noreferrer">resend.com/emails</a></div>`;
           }
           result.style.background = 'rgba(255,180,0,.10)';
           result.style.color = '#7a5500';

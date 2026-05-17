@@ -158,7 +158,7 @@
             <h1>Modifier le contenu de mon site</h1>
             <p>Clique sur un bloc à gauche pour éditer une section. À droite, tu vois en direct ce qui va apparaître sur le site.</p>
             <div class="quick-actions">
-              <a href="../" target="_blank" rel="noopener">
+              <a href="../" target="_blank" rel="noopener noreferrer">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
                 Voir mon site
               </a>
@@ -689,10 +689,10 @@ let dirty = false;
     const mp     = getDeep(siteContent, 'footer.maps_url');
     const tv     = getDeep(siteContent, 'footer.trustville_url');
     const rs = [];
-    if (fb) rs.push(`<a href="${escapeHtml(fb)}" target="_blank" rel="noopener">Facebook</a>`);
-    if (ln) rs.push(`<a href="${escapeHtml(ln)}" target="_blank" rel="noopener">LinkedIn</a>`);
-    if (mp) rs.push(`<a href="${escapeHtml(mp)}" target="_blank" rel="noopener">Google Maps</a>`);
-    if (tv) rs.push(`<a href="${escapeHtml(tv)}" target="_blank" rel="noopener">Trustville</a>`);
+    if (fb) rs.push(`<a href="${escapeHtml(fb)}" target="_blank" rel="noopener noreferrer">Facebook</a>`);
+    if (ln) rs.push(`<a href="${escapeHtml(ln)}" target="_blank" rel="noopener noreferrer">LinkedIn</a>`);
+    if (mp) rs.push(`<a href="${escapeHtml(mp)}" target="_blank" rel="noopener noreferrer">Google Maps</a>`);
+    if (tv) rs.push(`<a href="${escapeHtml(tv)}" target="_blank" rel="noopener noreferrer">Trustville</a>`);
     document.getElementById('prevRsRow').innerHTML = rs.join('');
   }
   renderPreview();

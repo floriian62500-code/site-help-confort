@@ -332,7 +332,7 @@ function toast(msg,type='ok',d=2600){
           const cls = ch.ok ? 'ok' : 'err';
           const title = ch.error ? ' title="' + escapeHtml(ch.error) + '"' : '';
           const content = `<span class="ch-icon">${ch.icon}</span><span class="ch-label">${ch.label}</span>`;
-          return ch.url ? `<a href="${ch.url}" target="_blank" rel="noopener" class="ch-pill ${cls}"${title}>${content}</a>` : `<span class="ch-pill ${cls}"${title}>${content}</span>`;
+          return ch.url ? `<a href="${ch.url}" target="_blank" rel="noopener noreferrer" class="ch-pill ${cls}"${title}>${content}</a>` : `<span class="ch-pill ${cls}"${title}>${content}</span>`;
         }).join('') + '</div>';
       }
 

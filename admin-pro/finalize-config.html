@@ -46,7 +46,7 @@
   <!-- ───── ÉTAPE 1 : GA4 JSON ───── -->
   <div class="step" id="step-ga4">
     <h2>1️⃣ Google Analytics 4 — Service Account JSON <span class="badge-state" id="state-ga4">À COMPLÉTER</span></h2>
-    <p class="hint">Re-télécharge le JSON depuis <a href="https://console.cloud.google.com/iam-admin/serviceaccounts?project=help-confort-back-office" target="_blank">Google Cloud → Comptes de service → ga4-reader</a> → onglet <strong>Clés</strong> → <strong>Ajouter une clé → Créer une clé → JSON</strong>. Tu obtiens un fichier <code>help-confort-back-office-xxxx.json</code> dans Téléchargements.</p>
+    <p class="hint">Re-télécharge le JSON depuis <a href="https://console.cloud.google.com/iam-admin/serviceaccounts?project=help-confort-back-office" target="_blank" rel="noopener noreferrer">Google Cloud → Comptes de service → ga4-reader</a> → onglet <strong>Clés</strong> → <strong>Ajouter une clé → Créer une clé → JSON</strong>. Tu obtiens un fichier <code>help-confort-back-office-xxxx.json</code> dans Téléchargements.</p>
 
     <!-- MÉTHODE 1 : Upload du fichier (le plus simple) -->
     <div style="background:linear-gradient(135deg,#EFF6FF,#fff);border:2px dashed rgba(13,160,207,.40);border-radius:12px;padding:18px;text-align:center;margin-bottom:14px">
@@ -67,7 +67,7 @@
 }'></textarea>
     <details>
       <summary>📋 Comment retrouver le JSON ?</summary>
-      <p>1. Va sur <a href="https://console.cloud.google.com/iam-admin/serviceaccounts?project=help-confort-back-office" target="_blank">Google Cloud Console → Service accounts</a><br>
+      <p>1. Va sur <a href="https://console.cloud.google.com/iam-admin/serviceaccounts?project=help-confort-back-office" target="_blank" rel="noopener noreferrer">Google Cloud Console → Service accounts</a><br>
       2. Clique sur <strong>ga4-reader@help-confort-back-office.iam.gserviceaccount.com</strong><br>
       3. Onglet <strong>"Clés" (Keys)</strong><br>
       4. <strong>"Ajouter une clé" → "Créer une clé" → JSON</strong><br>
@@ -78,7 +78,7 @@
   <!-- ───── ÉTAPE 2 : Clé Claude IA ───── -->
   <div class="step" id="step-claude">
     <h2>2️⃣ Clé API Claude IA <span class="badge-state" id="state-claude">À COMPLÉTER</span></h2>
-    <p class="hint">Récupère ta clé sur <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com → API Keys</a>. Format : <code>sk-ant-api03-...</code> (environ 108 caractères).</p>
+    <p class="hint">Récupère ta clé sur <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener noreferrer">console.anthropic.com → API Keys</a>. Format : <code>sk-ant-api03-...</code> (environ 108 caractères).</p>
     <input type="text" id="claude_key" placeholder="sk-ant-api03-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off" data-1p-ignore data-lpignore="true">
     <details>
       <summary>🔑 Cette clé sert à quoi ?</summary>
