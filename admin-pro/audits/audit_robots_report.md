@@ -1,6 +1,6 @@
 # 🤖 Audit robots.txt + sitemap.xml — P10
 
-*Généré le 2026-05-16 05:56 — `admin-pro/audits/audit_robots.py`*
+*Généré le 2026-05-17 06:26 — `admin-pro/audits/audit_robots.py`*
 
 **Findings totaux** : 1 (0 critical, 0 high, 1 med, 0 low)
 **Vérifications OK** : 8
@@ -12,14 +12,15 @@
 - ✅ User-agent: * présent
 - ✅ 14 pages publiques principales autorisées
 - ✅ Sitemap référencé dans robots.txt : 1
-- ✅ sitemap.xml présent + bien formé (54 URLs)
+- ✅ sitemap.xml présent + bien formé (82 URLs)
 - ✅ /robots.txt → HTTP 200 en prod
 - ✅ /sitemap.xml → HTTP 200 en prod
 - ✅ sitemap.xml content-type OK (application/xml; charset=utf-8)
 
 ## 🚨 Findings
 
-- 🟡 **MED** : 2 page(s) racine absente(s) du sitemap
+- 🟡 **MED** : 3 page(s) racine absente(s) du sitemap
+  - `partenaires.html`
   - `realisation.html`
   - `reset.html`
 

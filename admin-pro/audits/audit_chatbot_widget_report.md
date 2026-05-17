@@ -1,12 +1,16 @@
 # 🤖 Audit couverture chatbot widget — sonde #24
 
-_Généré le 2026-05-16 05:56_
+_Généré le 2026-05-17 06:26_
 
-- Pages publiques scannées : **38**
-- Pages avec widget chargé : **38**
-- Pages **sans widget** (alertes) : **0**
+- Pages publiques scannées : **43**
+- Pages avec widget chargé : **42**
+- Pages **sans widget** (alertes) : **1**
 
-## ✅ Toutes les pages chargent le chatbot widget
+## ❌ Pages sans `hc-widgets.js`
+
+- `partenaires.html` — aucun `<script src=...hc-widgets.js>` détecté
+
+→ Ajouter `<script src="assets/hc-widgets.js" defer></script>` avant `</body>`.
 
 ---
 
@@ -39,8 +43,10 @@ _Généré le 2026-05-16 05:56_
 - `guides.html` — `<script defer src="assets/hc-widgets.js`
 - `index.html` — `<script defer src="assets/hc-widgets.js`
 - `mentions-legales.html` — `<script defer src="assets/hc-widgets.js`
+- `menuisier-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
 - `nos-prestations.html` — `<script src="assets/hc-widgets.js`
 - `plombier-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
+- `pmr-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
 - `pro.html` — `<script defer src="assets/hc-widgets.js`
 - `processus.html` — `<script defer src="assets/hc-widgets.js`
 - `realisation.html` — `<script src="assets/hc-widgets.js`
@@ -49,4 +55,6 @@ _Généré le 2026-05-16 05:56_
 - `sinistres.html` — `<script defer src="assets/hc-widgets.js`
 - `temoignages.html` — `<script src="assets/hc-widgets.js`
 - `travaux-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
+- `vitrier-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
+- `volets-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
 - `zones-intervention.html` — `<script defer src="assets/hc-widgets.js`

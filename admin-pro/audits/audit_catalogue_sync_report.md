@@ -1,12 +1,12 @@
 # 🔄 Audit synchronisation wizard ↔ catalogue — Sonde IA #59
 
-*Généré le 2026-05-16 05:56 — `admin-pro/audits/audit_catalogue_sync.py`*
+*Généré le 2026-05-17 06:24 — `admin-pro/audits/audit_catalogue_sync.py`*
 
-**Wizard home (`ALL_PRESTAS` d'index.html)** : 31 prestations
-**Catalogue (`LOCAL_CATALOG` de nos-prestations.html)** : 33 prestations
-**Slugs communs** : 27
+**Wizard home (`ALL_PRESTAS` d'index.html)** : 30 prestations
+**Catalogue (`LOCAL_CATALOG` de nos-prestations.html)** : 35 prestations
+**Slugs communs** : 25
 **Slugs wizard tolérés (fourre-tout)** : 2
-**Alertes totales** : **8**
+**Alertes totales** : **13**
 
 ## 🚨 Prestations dans wizard mais ABSENTES du catalogue
 
@@ -14,17 +14,22 @@
 |------|--------------|--------|------|
 | `contrat-chauffage-basic` | Contrat chauffage Basic (gaz) | Chauffage | 108.0 € |
 | `contrat-chauffage-confort` | Contrat chauffage Confort (gaz) | Chauffage | 156.0 € |
+| `depannage-chaudiere-t1` | Dépannage chaudière (T1 semaine) | Chauffage | 75.0 € |
 
 ## 🚨 Prestations dans catalogue mais ABSENTES du wizard
 
 | Slug | Label catalogue | Métier | Prix |
 |------|-----------------|--------|------|
+| `attestation-consuel` | Attestation Consuel | electricite | sur devis |
 | `contrat-chauffage-basic-fioul` | Contrat Basic — chaudière fioul | chauffage | 140.0 € |
 | `contrat-chauffage-basic-gaz` | Contrat Basic — chaudière gaz | chauffage | 108.0 € |
 | `contrat-chauffage-confort-fioul` | Contrat Confort — chaudière fioul | chauffage | 190.0 € |
 | `contrat-chauffage-confort-gaz` | Contrat Confort — chaudière gaz | chauffage | 156.0 € |
 | `contrat-chauffage-securite-fioul` | Contrat Sécurité — chaudière fioul | chauffage | 320.0 € |
 | `contrat-chauffage-securite-gaz` | Contrat Sécurité — chaudière gaz | chauffage | 276.0 € |
+| `depannage-chaudiere` | Dépannage chaudière | chauffage | sur devis |
+| `pose-luminaire` | Pose de luminaire | electricite | sur devis |
+| `vmc` | VMC simple ou double flux | electricite | sur devis |
 
 ## ⚠️ Écarts de prix sur slugs communs
 

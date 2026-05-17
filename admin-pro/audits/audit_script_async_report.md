@@ -1,99 +1,115 @@
 # Audit script async/defer — Rapport
 
-_Généré le 2026-05-16 05:56_
+_Généré le 2026-05-17 06:26_
 
 ## Synthèse
 
-- Pages scannées : **55**
-- Scripts externes total : **196**
-- Scripts render-blocking : **39**
-- ✅ OK : **32**
+- Pages scannées : **60**
+- Scripts externes total : **233**
+- Scripts render-blocking : **47**
+- ✅ OK : **33**
 - ❌ Erreurs (script bloquant dans `<head>`) : **0**
-- ⚠️ Avertissements (script bloquant en fin de `<body>`) : **23**
+- ⚠️ Avertissements (script bloquant en fin de `<body>`) : **27**
 
 ## Findings
 
 ### `a-propos.html`
-- ⚠️ L.808 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.1052 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.831 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.1075 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `actualites.html`
-- ⚠️ L.963 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.1019 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `avant-apres.html`
 - ⚠️ L.82 (head) `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js` — ajouter `defer` ou `async`
 
 ### `carrieres.html`
-- ⚠️ L.856 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.876 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `chauffagiste-saint-omer.html`
-- ⚠️ L.1996 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.2240 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.2361 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.2604 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `contact.html`
-- ⚠️ L.864 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.1108 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.936 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.1180 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `contrats-entretien.html`
-- ⚠️ L.869 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.1540 (head) `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js` — ajouter `defer` ou `async`
-- ⚠️ L.1842 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.891 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.1562 (head) `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js` — ajouter `defer` ou `async`
+- ⚠️ L.1864 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `depannage-dunkerque.html`
-- ⚠️ L.993 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.1239 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.1009 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.1255 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `depannage-saint-omer.html`
-- ⚠️ L.1003 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.1249 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.1019 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.1265 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `electricien-saint-omer.html`
-- ⚠️ L.1948 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.2192 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.2109 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.2352 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `espace-client.html`
-- ⚠️ L.738 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.750 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `index.html`
-- ⚠️ L.2318 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.2409 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.2647 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.2738 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `mentions-legales.html`
-- ⚠️ L.686 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.930 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.697 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.941 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+
+### `menuisier-saint-omer.html`
+- ⚠️ L.2261 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.2505 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `nos-prestations.html`
-- ⚠️ L.264 (head) `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js` — ajouter `defer` ou `async`
+- ⚠️ L.649 (head) `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js` — ajouter `defer` ou `async`
 
 ### `plombier-saint-omer.html`
-- ⚠️ L.2009 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.2253 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.2260 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.2503 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+
+### `pmr-saint-omer.html`
+- ⚠️ L.2001 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.2245 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `pro.html`
-- ⚠️ L.867 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.1006 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `realisation.html`
-- ⚠️ L.69 (head) `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js` — ajouter `defer` ou `async`
+- ⚠️ L.187 (head) `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js` — ajouter `defer` ou `async`
 
 ### `realisations.html`
-- ⚠️ L.778 (head) `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js` — ajouter `defer` ou `async`
-- ⚠️ L.1207 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.864 (head) `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js` — ajouter `defer` ou `async`
+- ⚠️ L.1319 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `serrurier-saint-omer.html`
-- ⚠️ L.1984 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.2228 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.2250 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.2493 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `sinistres.html`
-- ⚠️ L.829 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.845 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `temoignages.html`
 - ⚠️ L.114 (head) `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js` — ajouter `defer` ou `async`
 
 ### `travaux-saint-omer.html`
-- ⚠️ L.1983 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.2227 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.2027 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.2270 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+
+### `vitrier-saint-omer.html`
+- ⚠️ L.2072 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.2316 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+
+### `volets-saint-omer.html`
+- ⚠️ L.2102 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.2346 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `zones-intervention.html`
-- ⚠️ L.797 (head) `https://unpkg.com/leaflet@1.9.4/dist/leaflet.js` — ajouter `defer` ou `async`
-- ⚠️ L.1668 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.1912 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.799 (head) `https://unpkg.com/leaflet@1.9.4/dist/leaflet.js` — ajouter `defer` ou `async`
+- ⚠️ L.1675 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.1919 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`

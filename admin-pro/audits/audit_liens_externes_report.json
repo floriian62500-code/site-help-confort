@@ -1,11 +1,133 @@
 {
-  "scanned_pages": 39,
-  "tested_urls": 13,
-  "ok": 13,
-  "broken": [],
+  "scanned_pages": 44,
+  "tested_urls": 71,
+  "ok": 58,
+  "broken": [
+    {
+      "url": "https://comap.aalberts-hfc.com/fr",
+      "status": 403,
+      "error": "Forbidden",
+      "ok": false,
+      "pages": [
+        "chauffagiste-saint-omer.html",
+        "partenaires.html"
+      ]
+    },
+    {
+      "url": "https://fr.indeed.com/cmp/Help-Confort",
+      "status": 403,
+      "error": "Forbidden",
+      "ok": false,
+      "pages": [
+        "carrieres.html"
+      ]
+    },
+    {
+      "url": "https://new.abb.com/fr",
+      "status": 0,
+      "error": "TimeoutError: The read operation timed out",
+      "ok": false,
+      "pages": [
+        "electricien-saint-omer.html",
+        "partenaires.html"
+      ]
+    },
+    {
+      "url": "https://www.anah.gouv.fr/maprimeadapt",
+      "status": 404,
+      "error": "Not Found",
+      "ok": false,
+      "pages": [
+        "aides.html"
+      ]
+    },
+    {
+      "url": "https://www.bremaud.com/",
+      "status": 0,
+      "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>",
+      "ok": false,
+      "pages": [
+        "menuisier-saint-omer.html",
+        "partenaires.html"
+      ]
+    },
+    {
+      "url": "https://www.handicare.com/fr",
+      "status": 404,
+      "error": "Not Found",
+      "ok": false,
+      "pages": [
+        "pmr-saint-omer.html"
+      ]
+    },
+    {
+      "url": "https://www.hoppe.com/fr-fr/catalogue-produits/1001192940/solutions-pour-portes-interieures-poignees-pour-portes-interieures",
+      "status": 403,
+      "error": "Forbidden",
+      "ok": false,
+      "pages": [
+        "partenaires.html",
+        "serrurier-saint-omer.html"
+      ]
+    },
+    {
+      "url": "https://www.knauf.fr/",
+      "status": 403,
+      "error": "Forbidden",
+      "ok": false,
+      "pages": [
+        "travaux-saint-omer.html"
+      ]
+    },
+    {
+      "url": "https://www.mapei.fr/",
+      "status": 403,
+      "error": "Forbidden",
+      "ok": false,
+      "pages": [
+        "travaux-saint-omer.html"
+      ]
+    },
+    {
+      "url": "https://www.pellet-asc.com/",
+      "status": 403,
+      "error": "Forbidden",
+      "ok": false,
+      "pages": [
+        "pmr-saint-omer.html"
+      ]
+    },
+    {
+      "url": "https://www.placo.fr/",
+      "status": 403,
+      "error": "Forbidden",
+      "ok": false,
+      "pages": [
+        "travaux-saint-omer.html"
+      ]
+    },
+    {
+      "url": "https://www.saint-gobain.com/fr",
+      "status": 403,
+      "error": "Forbidden",
+      "ok": false,
+      "pages": [
+        "travaux-saint-omer.html"
+      ]
+    },
+    {
+      "url": "https://www.watermatic.fr/",
+      "status": 403,
+      "error": "Forbidden",
+      "ok": false,
+      "pages": [
+        "plombier-saint-omer.html"
+      ]
+    }
+  ],
   "skipped_social": [
     "https://www.facebook.com/depanaudo/",
     "https://www.linkedin.com/in/florian-d-haillecourt-2a67bb207"
   ],
-  "generated_at": "2026-05-16T05:56:18"
+  "generated_at": "2026-05-17T06:26:04"
 }

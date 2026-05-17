@@ -1,37 +1,31 @@
 # Audit Heading hierarchy — Rapport
 
-Généré le : `2026-05-16T05:56:20`
+Généré le : `2026-05-17T06:26:06`
 
 Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il y a exactement un <h1>, et que la séquence commence bien par un <h1>.
 
 ## Synthèse
 
-- Pages auditées : **38**
-- Pages clean : **36**
-- Pages avec erreur(s) : **0**
-- Pages avec warning(s) : **2**
+- Pages auditées : **43**
+- Pages clean : **42**
+- Pages avec erreur(s) : **1**
+- Pages avec warning(s) : **1**
 - Findings totaux : **2**
 
 ## Top codes
 
-- **1×** `SKIP_LEVEL`
-- **1×** `NO_HEADINGS`
+- **1×** `NO_H1`
+- **1×** `WRONG_START`
 
 ## Détail par page (pages avec findings)
-
-### `nos-prestations.html`
-
-- h1 sur la page : **1**
-- Total headings : **2**
-- Séquence : `h1 → h3`
-- ⚠️ **SKIP_LEVEL** — Saut h1 → h3 (de 'Nos prestations au prix juste , sans sur' à 'Voyez nos tarifs en 10 secondes').
 
 ### `realisation.html`
 
 - h1 sur la page : **0**
-- Total headings : **0**
-- Séquence : `(aucune)`
-- ⚠️ **NO_HEADINGS** — Aucune balise <h1>..<h6> trouvée sur la page.
+- Total headings : **3**
+- Séquence : `h3 → h3 → h3`
+- ❌ **NO_H1** — La page ne contient pas de <h1>.
+- ⚠️ **WRONG_START** — Première heading = h3 (texte : 'Métiers'). Attendu : h1.
 
 ## ✅ Pages sans finding
 
@@ -62,7 +56,11 @@ Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il 
 - `guides.html`
 - `index.html`
 - `mentions-legales.html`
+- `menuisier-saint-omer.html`
+- `nos-prestations.html`
+- `partenaires.html`
 - `plombier-saint-omer.html`
+- `pmr-saint-omer.html`
 - `pro.html`
 - `processus.html`
 - `realisations.html`
@@ -70,4 +68,6 @@ Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il 
 - `sinistres.html`
 - `temoignages.html`
 - `travaux-saint-omer.html`
+- `vitrier-saint-omer.html`
+- `volets-saint-omer.html`
 - `zones-intervention.html`

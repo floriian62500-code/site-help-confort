@@ -1,12 +1,12 @@
-# Audit fallback Supabase — 2026-05-16 05:56
+# Audit fallback Supabase — 2026-05-17 06:26
 
 Sonde MEMOIRE #49 — toute page qui consomme Supabase doit déclarer un `LOCAL_CATALOG` / `FALLBACK_DATA` pour éviter une page vide en cas de coupure ou de RLS bloquée.
 
 ## Synthèse
 
-- Pages auditées : **38**
-- Pages qui consomment Supabase : **9**
-- Pages avec fallback explicite : **13**
+- Pages auditées : **43**
+- Pages qui consomment Supabase : **10**
+- Pages avec fallback explicite : **17**
 - **Alertes** : **3** (2 erreur(s), 1 warning(s))
 
 ## 🚨 Pages sans fallback
@@ -19,15 +19,16 @@ Sonde MEMOIRE #49 — toute page qui consomme Supabase doit déclarer un `LOCAL_
 
 ## ✅ Pages avec fallback (Supabase + LOCAL_CATALOG/FALLBACK)
 
+- `actualites.html` — `fetch('content/actualites/index.json?t='`
 - `avant-apres.html` — `fetch('content/realisations/index.json?v='`
 - `blog.html` — `fetch('content/actualites/index.json?t='`
 - `index.html` — `LOCAL_CATALOG`, `fetch('content/apporteurs/index.json?v='`, `fetch('content/config/reviews.json?v='`
 - `nos-prestations.html` — `LOCAL_CATALOG`
 - `realisations.html` — `actus = [
- { slug:'2026-05-07-remplacement-de-panneau-pvc-modele-surinam-3', title:`, `fetch('content/realisations/index.json'`
+ { url:'guide-entretien-chaudiere.html', title:`, `fetch('content/realisations/index.json'`
 - `temoignages.html` — `allReviews = [
  {author_name:`
 
-## ℹ️ Pages sans consommation Supabase (29)
+## ℹ️ Pages sans consommation Supabase (33)
 
 > Non concernées par la sonde — pas d'attente de fallback.

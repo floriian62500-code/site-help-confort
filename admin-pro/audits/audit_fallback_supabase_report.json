@@ -1,10 +1,10 @@
 {
   "audit": "fallback_supabase",
-  "generated_at": "2026-05-16T05:56:21",
+  "generated_at": "2026-05-17T06:26:06",
   "stats": {
-    "pages_audited": 38,
-    "pages_using_supabase": 9,
-    "pages_with_fallback": 13,
+    "pages_audited": 43,
+    "pages_using_supabase": 10,
+    "pages_with_fallback": 17,
     "pages_alerted": 3,
     "total_findings": 3,
     "code_distribution": {
@@ -23,8 +23,10 @@
     },
     {
       "file": "actualites.html",
-      "uses_supabase": false,
-      "supabase_signatures": [],
+      "uses_supabase": true,
+      "supabase_signatures": [
+        "/rest/v1/realisations"
+      ],
       "has_fallback": true,
       "fallback_signatures": [
         "fetch('content/actualites/index.json?t='"
@@ -292,6 +294,17 @@
       "findings": []
     },
     {
+      "file": "menuisier-saint-omer.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": true,
+      "fallback_signatures": [
+        "fetch('content/realisations/index.json?t='"
+      ],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
       "file": "nos-prestations.html",
       "uses_supabase": true,
       "supabase_signatures": [
@@ -305,7 +318,27 @@
       "findings": []
     },
     {
+      "file": "partenaires.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
       "file": "plombier-saint-omer.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": true,
+      "fallback_signatures": [
+        "fetch('content/realisations/index.json?t='"
+      ],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "pmr-saint-omer.html",
       "uses_supabase": false,
       "supabase_signatures": [],
       "has_fallback": true,
@@ -358,7 +391,7 @@
       ],
       "has_fallback": true,
       "fallback_signatures": [
-        "actus = [\n { slug:'2026-05-07-remplacement-de-panneau-pvc-modele-surinam-3', title:",
+        "actus = [\n { url:'guide-entretien-chaudiere.html', title:",
         "fetch('content/realisations/index.json'"
       ],
       "soft_fallback_catch": false,
@@ -399,6 +432,28 @@
     },
     {
       "file": "travaux-saint-omer.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": true,
+      "fallback_signatures": [
+        "fetch('content/realisations/index.json?t='"
+      ],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "vitrier-saint-omer.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": true,
+      "fallback_signatures": [
+        "fetch('content/realisations/index.json?t='"
+      ],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "volets-saint-omer.html",
       "uses_supabase": false,
       "supabase_signatures": [],
       "has_fallback": true,

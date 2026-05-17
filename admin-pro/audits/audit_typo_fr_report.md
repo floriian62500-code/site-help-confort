@@ -1,57 +1,55 @@
-# Audit typographie FR (espaces insécables) — 2026-05-16 05:56
+# Audit typographie FR (espaces insécables) — 2026-05-17 06:26
 
 Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une espace **insécable** (`&nbsp;`, U+00A0, U+202F). Seuil d'alerte : > **5** occurrences fautives par page.
 
 ## Synthèse
 
-- Pages auditées : **38**
-- Pages clean (≤ seuil) : **4**
-- Pages avec alerte : **34**
-- Occurrences fautives cumulées : **578**
+- Pages auditées : **43**
+- Pages clean (≤ seuil) : **11**
+- Pages avec alerte : **32**
+- Occurrences fautives cumulées : **552**
 
 ## ⚠️ Pages au-delà du seuil
 
 | Page | Fautifs | Échantillons |
 |------|---------|--------------|
-| `faq.html` | **41** | `…e, élec, serrurerie | HELP Confort > Aller au conte…` · `…ies, zones d'intervention : les réponses aux 15 ques…` · `…raire d'un technicien HELP Confort ? Notre tarif ho…` |
-| `mentions-legales.html` | **39** | `…Mentions légales – HELP Confort Saint-Omer Aller…` · `…ur du site Raison sociale : SARL Dépan'Audo Nom comm…` · `…Dépan'Audo Nom commercial : HELP Confort Saint-Omer…` |
-| `chauffagiste-saint-omer.html` | **30** | `…Chaudière, contrats | HELP Confort Aller au contenu…` · `…retien annuel obligatoire : nos chauffagistes interv…` · `…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…` |
-| `a-propos.html` | **29** | `…À propos — HELP Confort Saint-Omer &amp;…` · `…34 Accueil › À propos HELP Confort Saint-Omer par l…` · `…re nom commercial est HELP Confort Saint-Omer . Not…` |
-| `plombier-saint-omer.html` | **25** | `…te, chauffe-eau, WC | HELP Confort Aller au contenu…` · `…erche de fuite, sanitaire : nos techniciens intervie…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` |
-| `serrurier-saint-omer.html` | **25** | `…ture &amp; sécurité | HELP Confort Aller au contenu…` · `…cée, clé cassée, blindage : nos serruriers intervien…` · `…le Indép. 👋 Porte claquée ? Clé cassée ? Un serrurie…` |
-| `travaux-saint-omer.html` | **25** | `…on &amp; gros œuvre | HELP Confort Aller au contenu…` · `…enuiserie, adaptation PMR : un seul interlocuteur po…` · `…👋 Un projet de rénovation ? Salle de bain, cuisine,…` |
-| `electricien-saint-omer.html` | **24** | `…es &amp; rénovation | HELP Confort Aller au contenu…` · `…se aux normes NF C 15-100 : nos électriciens qualifi…` · `…dép. 👋 Coupure de courant ? Tableau qui saute ? J'en…` |
-| `contrats-entretien.html` | **23** | `…haudière Saint-Omer | HELP Confort Aller au contenu…` · `…ioul ou adoucisseur d'eau : choisissez la formule qu…` · `…des formules… Cadre légal : Tarifs HT, TVA en vigueu…` |
-| `depannage-dunkerque.html` | **23** | `…lomberie, Chauffage | HELP Confort Aller au contenu…` · `…ts de Coudekerque-Branche : sur le dunkerquois , cha…` · `…age habitat sur Dunkerque : notre expertise du bâti…` |
-| `depannage-saint-omer.html` | **22** | `…Plombier, Chauffage | HELP Confort Aller au contenu…` · `…uffage, une porte bloquée ? Notre équipe basée à Sai…` · `…Omer, le bâti est typique : maisons audomaroises en…` |
-| `guide-adaptation-pmr.html` | **22** | `…logement PMR — Guide HELP Confort Aller au contenu…` · `…ment Adapter son logement : PMR & maintien à domicil…` · `…2026 ✍️ Par l'équipe HELP Confort Adapter son loge…` |
-| `guide-mise-aux-normes-electriques.html` | **22** | `…s électriques NF C 15-100 : le guide complet 📖 7 min…` · `…2026 ✍️ Par l'équipe HELP Confort La norme NF C 15…` · `…a norme s'applique-t-elle ? La NF C 15-100 est oblig…` |
-| `index.html` | **19** | `…ctricien Saint-Omer | HELP Confort Aller au contenu…` · `…r avec un seul engagement : diagnostic clair, devis…` · `…cupe du reste. Équipe HELP Confort En ligne · répon…` |
-| `guide-fuite-eau.html` | **18** | `…Fuite d'eau : les 5 réflexes immédiats…` · `…xes immédiats — Guide HELP Confort Aller au contenu…` · `…eau Plomberie Fuite d'eau : les 5 réflexes immédiats…` |
-| `guide-entretien-chaudiere.html` | **16** | `…Entretien chaudière : la loi — Guide HELP! Con…` · `…ière : la loi — Guide HELP Confort Aller au contenu…` · `…e Entretien chaudière gaz : tout ce que dit la loi 📖…` |
-| `depannage-saint-martin-lez-tatinghem.html` | **13** | `…z-Tatinghem (62500) | HELP Confort Aller au contenu…` · `…ez-Tatinghem ou Tatinghem ? Notre dépôt est sur la c…` · `…rerie, volets, rénovation : tous les métiers du bâti…` |
-| `contact.html` | **12** | `…Contact &amp; Devis – HELP Confort Saint-Omer | 03…` · `…l › Contact Contactez HELP Confort Saint-Omer Répon…` · `…ssi remplir le formulaire : nous vous rappelons rapi…` |
-| `depannage-gravelines.html` | **12** | `…(59820) — Plombier | HELP Confort Aller au contenu…` · `…es ou Petit-Fort-Philippe ? Notre équipe HELP! Confo…` · `…ilippe ? Notre équipe HELP Confort Dunkerque interv…` |
-| `blog.html` | **11** | `…Blog HELP Confort — Guides &amp; a…` · `…03 66 10 01 34 📚 Blog HELP Confort Le blog des part…` · `…Les guides pratiques HELP Confort Tout ce qu'un pa…` |
-| `depannage-bergues.html` | **11** | `…lomberie, Chauffage | HELP Confort Aller au contenu…` · `…ues, la « Bruges flamande » ? Notre équipe HELP! Con…` · `…s, la « Bruges flamande » ? Notre équipe HELP! Confo…` |
-| `depannage-longuenesse.html` | **11** | `…(62219) — Plombier | HELP Confort Aller au contenu…` · `…uffage, une porte bloquée ? Notre équipe basée juste…` · `…rès du parc Pierre Mauroy : intervention rapide, piè…` |
-| `zones-intervention.html` | **11** | `…nt-Omer · Dunkerque | HELP Confort Aller au contenu…` · `…e, vitrerie et rénovation : 2 agences locales (Dépan…` · `…recommande sans hésiter. » M Mathieu D. Saint-Omer…` |
-| `depannage-arques.html` | **9** | `…lomberie, Chauffage | HELP Confort Aller au contenu…` · `…oin d'un dépannage rapide ? Notre équipe basée à Sai…` · `…la zone du Bras Delattre : on s'adapte au type d'ha…` |
-| `actualites.html` | **8** | `…Actualités HELP Confort Saint-Omer — Con…` · `…66 10 01 34 📰 Le blog HELP Confort Actualités, cons…` · `…· Sociétés du réseau HELP Confort · Franchise du g…` |
-| `aides.html` | **8** | `…CEE, MaPrimeAdapt' | HELP Confort Aller au contenu…` · `…E, MaPrimeAdapt', éco-PTZ : les dispositifs sont nom…` · `…on Information importante : les aides présentées sur…` |
-| `carrieres.html` | **8** | `…crutement — Rejoignez HELP Confort Saint-Omer Aller…` · `…istant·e administratif·ve : nous recrutons régulière…` · `…profil aimant la variété : petite plomberie, petite…` |
-| `pro.html` | **8** | `…Syndics, Bailleurs | HELP Confort Aller au contenu…` · `…ollectivités, entreprises : HELP Confort centralise…` · `…ivités, entreprises : HELP Confort centralise vos d…` |
-| `processus.html` | **8** | `…le site, message Facebook : peu importe le canal. Vo…` · `…t disponibilités. Urgence : intervention rapide sur…` · `…nkerque. Demande standard : créneau selon agenda. Tr…` |
-| `realisations.html` | **8** | `…lomberie, Chauffage | HELP Confort Aller au contenu…` · `…és du terrain et conseils : tout l'agenda et les his…` · `…· Sociétés du réseau HELP Confort · Franchise du g…` |
-| `sinistres.html` | **8** | `…rventions assurance | HELP Confort Aller au contenu…` · `…hnique Sinistre chez vous ? Nous intervenons techniq…` · `…l'ouverture. La priorité : limiter l'aggravation du…` |
-| `espace-client.html` | **7** | `…Suivi intervention | HELP Confort Aller au contenu…` · `…etien, historique complet : nous construisons l'espa…` · `…ra-ce vraiment disponible ? Soyons transparents : no…` |
-| `devis-express.html` | **6** | `…ss — Réponse rapide | HELP Confort Aller au contenu…` · `…/ 3 Quel est votre besoin ? 💧 Plomberie Fuite, WC, c…` · `…C'est urgent ou planifié ? 🚨 Urgent Aujourd'hui 📅 P…` |
-| `guides.html` | **6** | `…nes pratiques d'entretien : nous partageons notre sa…` · `…e Entretien chaudière gaz : tout ce que dit la loi O…` · `…t → Plomberie Fuite d'eau : les 5 réflexes immédiats…` |
+| `faq.html` | **38** | `…ies, zones d'intervention : les réponses aux 15 ques…` · `…n technicien HELP Confort ? Notre tarif horaire est…` · `…TC) pour tous nos métiers : plomberie, chauffage, él…` |
+| `mentions-legales.html` | **31** | `…ur du site Raison sociale : SARL Dépan'Audo Nom comm…` · `…Dépan'Audo Nom commercial : HELP Confort Saint-Omer…` · `…t Saint-Omer Siège social : 242 route de Boulogne, 6…` |
+| `chauffagiste-saint-omer.html` | **25** | `…retien annuel obligatoire : nos chauffagistes interv…` · `…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…` · `…panne ? Plus d'eau chaude ? Je vous mets en relation…` |
+| `volets-saint-omer.html` | **25** | `…tablier cassé, pose neuve : nos techniciens intervie…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
+| `a-propos.html` | **23** | `…par deux agences locales : Dépan'Audo à Saint-Marti…` · `…vec une conviction simple : les habitants de Saint-O…` · `…manque souvent au métier : l'organisation. Un stand…` |
+| `vitrier-saint-omer.html` | **23** | `…sur-mesure, sécurisation : nos vitriers intervienne…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
+| `menuisier-saint-omer.html` | **22** | `…sur-mesure, sécurisation : nos vitriers intervienne…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
+| `plombier-saint-omer.html` | **22** | `…erche de fuite, sanitaire : nos techniciens intervie…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
+| `pmr-saint-omer.html` | **21** | `…PMR, élargissement portes : nos équipes adaptent vot…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
+| `serrurier-saint-omer.html` | **21** | `…cée, clé cassée, blindage : nos serruriers intervien…` · `…le Indép. 👋 Porte claquée ? Clé cassée ? Un serrurie…` · `…orte claquée ? Clé cassée ? Un serrurier intervient…` |
+| `depannage-dunkerque.html` | **20** | `…ts de Coudekerque-Branche : sur le dunkerquois , cha…` · `…age habitat sur Dunkerque : notre expertise du bâti…` · `…uois a ses particularités : corrosion accélérée par…` |
+| `electricien-saint-omer.html` | **20** | `…se aux normes NF C 15-100 : nos électriciens qualifi…` · `…dép. 👋 Coupure de courant ? Tableau qui saute ? J'en…` · `…urant ? Tableau qui saute ? J'envoie un électricien.…` |
+| `contrats-entretien.html` | **19** | `…ioul ou adoucisseur d'eau : choisissez la formule qu…` · `…des formules… Cadre légal : Tarifs HT, TVA en vigueu…` · `…tement la visite annuelle ? Pour une chaudière gaz :…` |
+| `guide-mise-aux-normes-electriques.html` | **19** | `…s électriques NF C 15-100 : le guide complet 📖 7 min…` · `…a norme s'applique-t-elle ? La NF C 15-100 est oblig…` · `…atoire dans plusieurs cas : Construction neuve (touj…` |
+| `travaux-saint-omer.html` | **19** | `…enuiserie, adaptation PMR : un seul interlocuteur po…` · `…👋 Un projet de rénovation ? Salle de bain, cuisine,…` · `…lle de bain, cuisine, PMR : parlons de votre chantie…` |
+| `depannage-saint-omer.html` | **18** | `…uffage, une porte bloquée ? Notre équipe basée à Sai…` · `…Omer, le bâti est typique : maisons audomaroises en…` · `…ans une fermette d'Arques : on intervient avec le bo…` |
+| `guide-adaptation-pmr.html` | **18** | `…ment Adapter son logement : PMR & maintien à domicil…` · `…s , ce n'est plus un luxe : c'est une condition souv…` · `…quoi adapter son logement ? Le maintien à domicile e…` |
+| `index.html` | **15** | `…r avec un seul engagement : diagnostic clair, devis…` · `…pond rapidement 👋 Bonjour ! Je vous guide en 4 étape…` · `…Une question vous bloque ? Notre équipe finalise vo…` |
+| `guide-fuite-eau.html` | **14** | `…Fuite d'eau : les 5 réflexes immédiats…` · `…eau Plomberie Fuite d'eau : les 5 réflexes immédiats…` · `…vrez une fuite. Réflexe 1 : Couper l'eau C'est la pr…` |
+| `depannage-saint-martin-lez-tatinghem.html` | **11** | `…ez-Tatinghem ou Tatinghem ? Notre dépôt est sur la c…` · `…rerie, volets, rénovation : tous les métiers du bâti…` · `…llons de la rue de Calais : nous connaissons chaque…` |
+| `aides.html` | **10** | `…E, MaPrimeAdapt', éco-PTZ : les dispositifs sont nom…` · `…on Information importante : les aides présentées sur…` · `…P Confort des dispositifs : mai 2026 · Consultez les…` |
+| `guide-entretien-chaudiere.html` | **10** | `…Entretien chaudière : la loi — Guide HELP Conf…` · `…e Entretien chaudière gaz : tout ce que dit la loi 📖…` · `…nt. On vous explique tout : pourquoi c'est obligatoi…` |
+| `depannage-gravelines.html` | **9** | `…es ou Petit-Fort-Philippe ? Notre équipe HELP Confor…` · `…, c'est un mélange unique : maisons en brique du cen…` · `…nt pour les installations : corrosion accélérée, joi…` |
+| `depannage-longuenesse.html` | **9** | `…uffage, une porte bloquée ? Notre équipe basée juste…` · `…rès du parc Pierre Mauroy : intervention rapide, piè…` · `…ion urgente à Longuenesse ? Longuenesse étant juste…` |
+| `contact.html` | **8** | `…remplissez le formulaire : nous vous rappelons rapi…` · `…es Bureaux &amp; standard : du lundi au vendredi 9h-…` · `…h-16h Urgences techniques : sur rendez-vous en journ…` |
+| `depannage-bergues.html` | **8** | `…ues, la « Bruges flamande » ? Notre équipe HELP Conf…` · `…s, la « Bruges flamande » ? Notre équipe HELP Confor…` · `…un patrimoine bâti unique : remparts Vauban, beffroi…` |
+| `zones-intervention.html` | **8** | `…e, vitrerie et rénovation : 2 agences locales (Dépan…` · `…recommande sans hésiter. » M Mathieu D. Saint-Omer…` · `…é, finitions impeccables. » S Sophie L. Dunkerque ★★…` |
+| `depannage-arques.html` | **7** | `…oin d'un dépannage rapide ? Notre équipe basée à Sai…` · `…la zone du Bras Delattre : on s'adapte au type d'ha…` · `…à Arques en cas d'urgence ? En horaires d'ouverture,…` |
+| `pro.html` | **7** | `…ollectivités, entreprises : HELP Confort Saint-Omer…` · `…as de prestataire externe : la même équipe du devis…` · `…habitat traités de A à Z : intervention conservatoi…` |
+| `processus.html` | **7** | `…le site, message Facebook : peu importe le canal. Vo…` · `…t disponibilités. Urgence : intervention rapide sur…` · `…nkerque. Demande standard : créneau selon agenda. Tr…` |
+| `blog.html` | **6** | `…quence, prix, attestation : tout savoir sur l'entret…` · `…a source, dégâts des eaux : les bons réflexes à avoi…` · `…el, diagnostic électrique : ce qu'il faut faire mett…` |
+| `sinistres.html` | **6** | `…hnique Sinistre chez vous ? Nous intervenons techniq…` · `…l'ouverture. La priorité : limiter l'aggravation du…` · `…e à votre charge. À noter : ce formulaire est en ver…` |
 
 ## Top 5 pages les plus chargées
 
-- `faq.html` : 41 occurrence(s)
-- `mentions-legales.html` : 39 occurrence(s)
-- `chauffagiste-saint-omer.html` : 30 occurrence(s)
-- `a-propos.html` : 29 occurrence(s)
-- `plombier-saint-omer.html` : 25 occurrence(s)
+- `faq.html` : 38 occurrence(s)
+- `mentions-legales.html` : 31 occurrence(s)
+- `chauffagiste-saint-omer.html` : 25 occurrence(s)
+- `volets-saint-omer.html` : 25 occurrence(s)
+- `a-propos.html` : 23 occurrence(s)

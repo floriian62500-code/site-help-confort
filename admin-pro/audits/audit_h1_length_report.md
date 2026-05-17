@@ -1,11 +1,11 @@
 # Audit H1 length — Rapport
 
-_Généré le 2026-05-16 06:48_
+_Généré le 2026-05-17 06:26_
 
 ## Synthèse
 
-- Pages scannées : **54**
-- ✅ OK (20-70 chars) : **34**
+- Pages scannées : **59**
+- ✅ OK (20-70 chars) : **39**
 - ⚠️  Warnings (h1 multiples, hors longueur) : **0**
 - ❌ Erreurs (< 20 ou > 70) : **20**
 - ℹ️  Sans h1 ou parse error : **0**
@@ -88,9 +88,9 @@ _Généré le 2026-05-16 06:48_
 > Mentions légales
 - ❌ H1-TOO-SHORT : 16 chars < 20
 
-### `pro.html`  (96 chars, n_h1=1)
-> Un partenaire structuré pour vos interventions habitat multi-sites · sinistres · contrats cadres
-- ❌ H1-TOO-LONG : 96 chars > 70
+### `pro.html`  (122 chars, n_h1=1)
+> Un partenaire local fiable pour vos interventions habitat techniciens salariés · zéro sous-traitance · réseau HELP Confort
+- ❌ H1-TOO-LONG : 122 chars > 70
 
 ### `sinistres.html`  (101 chars, n_h1=1)
 > Sinistre chez vous ? Nous intervenons techniquement à vos côtés mise en sécurité, diagnostic, travaux
