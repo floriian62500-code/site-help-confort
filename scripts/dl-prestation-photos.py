@@ -136,20 +136,30 @@ def is_acceptable(file_title, mime, size):
                   "1851", "1900", "1912", "1915", "1917", "1920", "lusitania",
                   "monseigneur", "lois et", "broyer", "villerabel", "saint-georges",
                   "saint yves", "saint_yves", "feuillet", "broyé", "extrait",
-                  "fichier:cou", "comte de", "comtesse"]
+                  "fichier:cou", "comte de", "comtesse",
+                  "bibliothèque", "bibliotheque", "library", "carnegie",
+                  "sanatorium", "musée", "musee", "museum", "château", "chateau",
+                  "eb1911", "encyclopédie", "encyclopedia", "joinery"]
     if any(k in t for k in archive_kw):
         return False
-    # Reject vehicles (cars, trains, etc.)
+    # Reject vehicles (cars, trains, planes, key fobs, etc.)
     vehicle_kw = ["citroen", "citroën", "renault", "peugeot", "voiture",
                   "handbrake", "frein", "rally", "raid", "car_", "_car",
-                  "automobile", "vehicle", "train"]
+                  "automobile", "vehicle", "train", "key_fob", "key fob",
+                  "ford", "chevrolet", "bmw", "audi", "mercedes", "toyota"]
     if any(k in t for k in vehicle_kw):
         return False
-    # Reject events, people, historical photos
+    # Reject events, people, historical photos, geographic landmarks
     event_kw = ["manifestation", "manif_", "boche", "crime", "anti_",
                 "guerre", "war_", "_war", "soldat", "soldier",
-                "1939", "1944", "1945", "1962", "1968",
-                "herrenhaustag"]
+                "1939", "1944", "1945", "1962", "1968", "1990", "1991",
+                "herrenhaustag",
+                # Places that suggest landscape/architecture not product
+                "rue saint", "rue de", "place de", "avenue", "boulevard",
+                "stoumont", "terrebonne", "nancy", "dollander",
+                "front of", "shop_", "shopfront",
+                # Generic landmarks
+                "hôtel de ville", "hotel de ville", "cathédrale", "cathedral"]
     if any(k in t for k in event_kw):
         return False
     # Reject unwanted mime types
@@ -157,8 +167,8 @@ def is_acceptable(file_title, mime, size):
         return False
     if mime in ("image/svg+xml", "image/gif"):
         return False
-    # Size check: between 30KB and 5MB (30KB minimum = avoid tiny icons)
-    if size and (size < 30_000 or size > 5_000_000):
+    # Size check: between 50KB and 2MB (50KB min = better quality; 2MB max = no huge scans)
+    if size and (size < 50_000 or size > 2_000_000):
         return False
     return True
 
