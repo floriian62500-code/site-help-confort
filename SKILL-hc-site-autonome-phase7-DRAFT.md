@@ -1,9 +1,9 @@
 ---
-description: "🤖 1. AGENT PRINCIPAL — TODO + scan maintenance autonome (site / Netlify / dashboard / Supabase), avec pre-check économe et throttle 60 min"
+description: "🛠️ Agent de maintenance site et dashboard — scan auto site live, Netlify, dashboard back-office, Supabase + traitement TODO en priorité"
 cronExpression: "*/30 8-21 * * *"
 ---
 
-# Agent 1 — TODO + Maintenance autonome (Phase 7)
+# Agent de maintenance site et dashboard (Phase 7)
 
 ## Mission
 
