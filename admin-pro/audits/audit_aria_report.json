@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "scanned_pages": 39,
-  "total_findings": 107,
+  "scanned_pages": 44,
+  "total_findings": 236,
   "by_code": {
-    "INPUT-NO-LABEL": 47,
-    "INPUT-NO-ARIA-LABEL": 46,
-    "A-NO-NAME": 6,
-    "DIALOG-NO-LABEL": 7,
+    "INPUT-NO-LABEL": 109,
+    "INPUT-NO-ARIA-LABEL": 108,
+    "A-NO-NAME": 7,
+    "DIALOG-NO-LABEL": 11,
     "H1-MISSING": 1
   },
   "pages_clean": 14,
-  "pages_with_errors": 7,
+  "pages_with_errors": 11,
   "details": [
     {
       "file": "a-propos.html",
@@ -25,12 +25,12 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 871
+          "line": 894
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 871
+          "line": 894
         }
       ]
     },
@@ -47,12 +47,12 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 780
+          "line": 836
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 780
+          "line": 836
         }
       ]
     },
@@ -101,12 +101,12 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 469
+          "line": 484
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 469
+          "line": 484
         }
       ]
     },
@@ -114,37 +114,97 @@
       "file": "chauffagiste-saint-omer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 17,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 8,
+        "INPUT-NO-ARIA-LABEL": 8
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1422
+          "line": 1735
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1434
+          "line": 1776
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1434
+          "line": 1776
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\">",
+          "line": 1779
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\"> sans id",
+          "line": 1779
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\">",
+          "line": 1780
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\"> sans id",
+          "line": 1780
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\">",
+          "line": 1783
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\"> sans id",
+          "line": 1783
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\">",
+          "line": 1784
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\"> sans id",
+          "line": 1784
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\">",
+          "line": 1787
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\"> sans id",
+          "line": 1787
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\">",
+          "line": 1788
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\"> sans id",
+          "line": 1788
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 2059
+          "line": 2424
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 2059
+          "line": 2424
         }
       ]
     },
@@ -161,102 +221,102 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 392
+          "line": 406
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 392
+          "line": 406
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 541
+          "line": 608
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 541
+          "line": 608
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 542
+          "line": 609
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 542
+          "line": 609
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 543
+          "line": 610
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 543
+          "line": 610
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 544
+          "line": 611
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 544
+          "line": 611
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 545
+          "line": 612
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 545
+          "line": 612
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 546
+          "line": 613
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 546
+          "line": 613
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 547
+          "line": 614
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 547
+          "line": 614
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 548
+          "line": 615
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 548
+          "line": 615
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 927
+          "line": 999
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 927
+          "line": 999
         }
       ]
     },
@@ -273,47 +333,47 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 932
+          "line": 954
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 932
+          "line": 954
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1130
+          "line": 1152
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1130
+          "line": 1152
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"no_facture\">",
-          "line": 1418
+          "line": 1440
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"sepa_principe\">",
-          "line": 1433
+          "line": 1455
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"sepa_principe\"> sans id",
-          "line": 1433
+          "line": 1455
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"cgv\">",
-          "line": 1464
+          "line": 1486
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"cgv\"> sans id",
-          "line": 1464
+          "line": 1486
         }
       ]
     },
@@ -346,12 +406,12 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1057
+          "line": 1073
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1057
+          "line": 1073
         }
       ]
     },
@@ -392,12 +452,12 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1067
+          "line": 1083
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1067
+          "line": 1083
         }
       ]
     },
@@ -433,37 +493,97 @@
       "file": "electricien-saint-omer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 17,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 8,
+        "INPUT-NO-ARIA-LABEL": 8
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1374
+          "line": 1483
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1386
+          "line": 1524
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1386
+          "line": 1524
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\">",
+          "line": 1527
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\"> sans id",
+          "line": 1527
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\">",
+          "line": 1528
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\"> sans id",
+          "line": 1528
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\">",
+          "line": 1531
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\"> sans id",
+          "line": 1531
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\">",
+          "line": 1532
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\"> sans id",
+          "line": 1532
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\">",
+          "line": 1535
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\"> sans id",
+          "line": 1535
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\">",
+          "line": 1536
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\"> sans id",
+          "line": 1536
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 2011
+          "line": 2172
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 2011
+          "line": 2172
         }
       ]
     },
@@ -480,12 +600,12 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 396
+          "line": 405
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 396
+          "line": 405
         }
       ]
     },
@@ -501,7 +621,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"hc-logo\"></a>",
-          "line": 65
+          "line": 76
         }
       ]
     },
@@ -559,102 +679,102 @@
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 641
+          "line": 686
         },
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 2323
+          "line": 2652
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\">",
-          "line": 853
+          "line": 1031
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\"> sans id",
-          "line": 853
+          "line": 1031
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\">",
-          "line": 854
+          "line": 1032
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\"> sans id",
-          "line": 854
+          "line": 1032
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\">",
-          "line": 855
+          "line": 1033
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\"> sans id",
-          "line": 855
+          "line": 1033
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\">",
-          "line": 856
+          "line": 1034
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\"> sans id",
-          "line": 856
+          "line": 1034
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\">",
-          "line": 857
+          "line": 1035
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\"> sans id",
-          "line": 857
+          "line": 1035
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\">",
-          "line": 858
+          "line": 1036
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\"> sans id",
-          "line": 858
+          "line": 1036
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\">",
-          "line": 859
+          "line": 1037
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\"> sans id",
-          "line": 859
+          "line": 1037
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 2150
+          "line": 2479
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 2150
+          "line": 2479
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 2251
+          "line": 2580
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 2251
+          "line": 2580
         }
       ]
     },
@@ -671,12 +791,110 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 749
+          "line": 760
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 749
+          "line": 760
+        }
+      ]
+    },
+    {
+      "file": "menuisier-saint-omer.html",
+      "lang": "fr",
+      "h1_count": 1,
+      "findings_total": 17,
+      "by_code": {
+        "DIALOG-NO-LABEL": 1,
+        "INPUT-NO-LABEL": 8,
+        "INPUT-NO-ARIA-LABEL": 8
+      },
+      "findings": [
+        {
+          "code": "DIALOG-NO-LABEL",
+          "snippet": "<div role=\"dialog\">",
+          "line": 1648
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"website\">",
+          "line": 1689
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"website\"> sans id",
+          "line": 1689
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\">",
+          "line": 1692
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\"> sans id",
+          "line": 1692
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\">",
+          "line": 1693
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\"> sans id",
+          "line": 1693
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\">",
+          "line": 1696
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\"> sans id",
+          "line": 1696
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\">",
+          "line": 1697
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\"> sans id",
+          "line": 1697
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\">",
+          "line": 1700
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\"> sans id",
+          "line": 1700
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\">",
+          "line": 1701
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\"> sans id",
+          "line": 1701
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"website\">",
+          "line": 2325
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"website\"> sans id",
+          "line": 2325
         }
       ]
     },
@@ -694,17 +912,33 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"hc-logo\"></a>",
-          "line": 146
+          "line": 177
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 238
+          "line": 504
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 238
+          "line": 504
+        }
+      ]
+    },
+    {
+      "file": "partenaires.html",
+      "lang": "fr",
+      "h1_count": 1,
+      "findings_total": 1,
+      "by_code": {
+        "A-NO-NAME": 1
+      },
+      "findings": [
+        {
+          "code": "A-NO-NAME",
+          "snippet": "<a href=\"index.html\"></a>",
+          "line": 63
         }
       ]
     },
@@ -712,37 +946,195 @@
       "file": "plombier-saint-omer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 17,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 8,
+        "INPUT-NO-ARIA-LABEL": 8
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1435
+          "line": 1631
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1447
+          "line": 1672
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1447
+          "line": 1672
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\">",
+          "line": 1675
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\"> sans id",
+          "line": 1675
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\">",
+          "line": 1676
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\"> sans id",
+          "line": 1676
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\">",
+          "line": 1679
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\"> sans id",
+          "line": 1679
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\">",
+          "line": 1680
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\"> sans id",
+          "line": 1680
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\">",
+          "line": 1683
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\"> sans id",
+          "line": 1683
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\">",
+          "line": 1684
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\"> sans id",
+          "line": 1684
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 2072
+          "line": 2323
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 2072
+          "line": 2323
+        }
+      ]
+    },
+    {
+      "file": "pmr-saint-omer.html",
+      "lang": "fr",
+      "h1_count": 1,
+      "findings_total": 17,
+      "by_code": {
+        "DIALOG-NO-LABEL": 1,
+        "INPUT-NO-LABEL": 8,
+        "INPUT-NO-ARIA-LABEL": 8
+      },
+      "findings": [
+        {
+          "code": "DIALOG-NO-LABEL",
+          "snippet": "<div role=\"dialog\">",
+          "line": 1388
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"website\">",
+          "line": 1429
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"website\"> sans id",
+          "line": 1429
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\">",
+          "line": 1432
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\"> sans id",
+          "line": 1432
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\">",
+          "line": 1433
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\"> sans id",
+          "line": 1433
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\">",
+          "line": 1436
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\"> sans id",
+          "line": 1436
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\">",
+          "line": 1437
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\"> sans id",
+          "line": 1437
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\">",
+          "line": 1440
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\"> sans id",
+          "line": 1440
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\">",
+          "line": 1441
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\"> sans id",
+          "line": 1441
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"website\">",
+          "line": 2065
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"website\"> sans id",
+          "line": 2065
         }
       ]
     },
@@ -759,12 +1151,12 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 448
+          "line": 582
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 448
+          "line": 582
         }
       ]
     },
@@ -811,12 +1203,12 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1024
+          "line": 1136
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1024
+          "line": 1136
         }
       ]
     },
@@ -832,37 +1224,97 @@
       "file": "serrurier-saint-omer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 17,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 8,
+        "INPUT-NO-ARIA-LABEL": 8
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1410
+          "line": 1624
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1422
+          "line": 1665
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1422
+          "line": 1665
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\">",
+          "line": 1668
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\"> sans id",
+          "line": 1668
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\">",
+          "line": 1669
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\"> sans id",
+          "line": 1669
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\">",
+          "line": 1672
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\"> sans id",
+          "line": 1672
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\">",
+          "line": 1673
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\"> sans id",
+          "line": 1673
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\">",
+          "line": 1676
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\"> sans id",
+          "line": 1676
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\">",
+          "line": 1677
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\"> sans id",
+          "line": 1677
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 2047
+          "line": 2313
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 2047
+          "line": 2313
         }
       ]
     },
@@ -879,12 +1331,12 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 431
+          "line": 442
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 431
+          "line": 442
         }
       ]
     },
@@ -908,37 +1360,293 @@
       "file": "travaux-saint-omer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 17,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 8,
+        "INPUT-NO-ARIA-LABEL": 8
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1409
+          "line": 1401
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1421
+          "line": 1442
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1421
+          "line": 1442
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\">",
+          "line": 1445
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\"> sans id",
+          "line": 1445
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\">",
+          "line": 1446
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\"> sans id",
+          "line": 1446
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\">",
+          "line": 1449
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\"> sans id",
+          "line": 1449
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\">",
+          "line": 1450
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\"> sans id",
+          "line": 1450
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\">",
+          "line": 1453
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\"> sans id",
+          "line": 1453
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\">",
+          "line": 1454
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\"> sans id",
+          "line": 1454
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 2046
+          "line": 2090
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 2046
+          "line": 2090
+        }
+      ]
+    },
+    {
+      "file": "vitrier-saint-omer.html",
+      "lang": "fr",
+      "h1_count": 1,
+      "findings_total": 17,
+      "by_code": {
+        "DIALOG-NO-LABEL": 1,
+        "INPUT-NO-LABEL": 8,
+        "INPUT-NO-ARIA-LABEL": 8
+      },
+      "findings": [
+        {
+          "code": "DIALOG-NO-LABEL",
+          "snippet": "<div role=\"dialog\">",
+          "line": 1459
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"website\">",
+          "line": 1500
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"website\"> sans id",
+          "line": 1500
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\">",
+          "line": 1503
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\"> sans id",
+          "line": 1503
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\">",
+          "line": 1504
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\"> sans id",
+          "line": 1504
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\">",
+          "line": 1507
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\"> sans id",
+          "line": 1507
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\">",
+          "line": 1508
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\"> sans id",
+          "line": 1508
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\">",
+          "line": 1511
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\"> sans id",
+          "line": 1511
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\">",
+          "line": 1512
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\"> sans id",
+          "line": 1512
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"website\">",
+          "line": 2136
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"website\"> sans id",
+          "line": 2136
+        }
+      ]
+    },
+    {
+      "file": "volets-saint-omer.html",
+      "lang": "fr",
+      "h1_count": 1,
+      "findings_total": 17,
+      "by_code": {
+        "DIALOG-NO-LABEL": 1,
+        "INPUT-NO-LABEL": 8,
+        "INPUT-NO-ARIA-LABEL": 8
+      },
+      "findings": [
+        {
+          "code": "DIALOG-NO-LABEL",
+          "snippet": "<div role=\"dialog\">",
+          "line": 1489
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"website\">",
+          "line": 1530
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"website\"> sans id",
+          "line": 1530
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\">",
+          "line": 1533
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"prenom\"> sans id",
+          "line": 1533
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\">",
+          "line": 1534
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"nom\"> sans id",
+          "line": 1534
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\">",
+          "line": 1537
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"tel\" name=\"tel\"> sans id",
+          "line": 1537
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\">",
+          "line": 1538
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"email\" name=\"email\"> sans id",
+          "line": 1538
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\">",
+          "line": 1541
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"cp\"> sans id",
+          "line": 1541
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\">",
+          "line": 1542
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"ville\"> sans id",
+          "line": 1542
+        },
+        {
+          "code": "INPUT-NO-LABEL",
+          "snippet": "<input type=\"text\" name=\"website\">",
+          "line": 2166
+        },
+        {
+          "code": "INPUT-NO-ARIA-LABEL",
+          "snippet": "<input type=\"text\" name=\"website\"> sans id",
+          "line": 2166
         }
       ]
     },
@@ -955,12 +1663,12 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1731
+          "line": 1738
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1731
+          "line": 1738
         }
       ]
     }

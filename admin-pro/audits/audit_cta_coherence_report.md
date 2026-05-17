@@ -1,9 +1,9 @@
 # 🎯 Audit CTA cohérence URL — sonde #20
 
-_Généré le 2026-05-16 05:56_
+_Généré le 2026-05-17 06:26_
 
-- Pages scannées : **38**
-- CTA trouvés (toutes familles) : **54**
+- Pages scannées : **43**
+- CTA trouvés (toutes familles) : **30**
 - Familles avec ≥ 1 occurrence : **3**
 - Familles **divergentes** (alertes) : **0**
 
@@ -15,11 +15,11 @@ _Généré le 2026-05-16 05:56_
 
 ## 📊 Stats par famille
 
-### ✅ `devis` — 28 occurrence(s), 1 destination(s)
-- `contact.html` × 28
+### ✅ `devis` — 27 occurrence(s), 1 destination(s)
+- `contact.html` × 27
 
 ### ✅ `estimation` — 2 occurrence(s), 1 destination(s)
 - `tel:+33366100134` × 2
 
-### ✅ `reserver` — 24 occurrence(s), 1 destination(s)
-- `contact.html` × 24
+### ✅ `reserver` — 1 occurrence(s), 1 destination(s)
+- `contact.html` × 1

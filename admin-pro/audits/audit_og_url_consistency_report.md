@@ -1,15 +1,15 @@
 # Audit og:url vs canonical — Rapport
 
-_Généré le 2026-05-16 06:09_
+_Généré le 2026-05-17 06:26_
 
 ## Synthèse
 
-- Pages scannées : **55**
-- ✅ OK : **40**
+- Pages scannées : **60**
+- ✅ OK : **41**
 - ❌ Erreurs : **0** (cumul 0 findings)
-- ⚠️  Avertissements (pages) : **15**
+- ⚠️  Avertissements (pages) : **19**
 - ℹ️  Info : **0**
-- ⚠️  Total warnings : **15**
+- ⚠️  Total warnings : **19**
 
 ## Findings
 
@@ -49,8 +49,16 @@ _Généré le 2026-05-16 06:09_
 - canonical = `https://www.depan59-62.fr/`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
+### `menuisier-saint-omer.html`
+- canonical = `https://www.depan59-62.fr/menuisier-saint-omer.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
 ### `plombier-saint-omer.html`
 - canonical = `https://www.depan59-62.fr/plombier-saint-omer.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `pmr-saint-omer.html`
+- canonical = `https://www.depan59-62.fr/pmr-saint-omer.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
 ### `realisation.html`
@@ -67,6 +75,14 @@ _Généré le 2026-05-16 06:09_
 
 ### `travaux-saint-omer.html`
 - canonical = `https://www.depan59-62.fr/travaux-saint-omer.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `vitrier-saint-omer.html`
+- canonical = `https://www.depan59-62.fr/vitrier-saint-omer.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `volets-saint-omer.html`
+- canonical = `https://www.depan59-62.fr/volets-saint-omer.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
 ### `zones-intervention.html`

@@ -1,10 +1,10 @@
 # Audit phone consistency — Rapport
 
-_Généré le 2026-05-16 07:12_
+_Généré le 2026-05-17 06:26_
 
 ## Synthèse
 
-- Pages publiques scannées : **58**
+- Pages publiques scannées : **60**
 - Numéro canonique attendu : `+33366100134` (`03 66 10 01 34`)
 - Pages avec numéro non canonique : **0**
 - Findings totaux : **0**

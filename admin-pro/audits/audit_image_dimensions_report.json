@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-05-16T07:47:46",
+  "generated_at": "2026-05-17T06:26:09",
   "pil_available": true,
-  "scanned": 41,
-  "imgs_ok": 448,
-  "patchable": 0,
-  "external": 24,
-  "unresolved": 49,
+  "scanned": 43,
+  "imgs_ok": 523,
+  "patchable": 1,
+  "external": 78,
+  "unresolved": 100,
   "dynamic": 4,
   "by_page": [
     {
@@ -35,8 +35,8 @@
     {
       "file": "chauffagiste-saint-omer.html",
       "patchable": 0,
-      "external": 0,
-      "unresolved": 5,
+      "external": 6,
+      "unresolved": 9,
       "dynamic": 0,
       "patches": []
     },
@@ -51,8 +51,8 @@
     {
       "file": "electricien-saint-omer.html",
       "patchable": 0,
-      "external": 0,
-      "unresolved": 4,
+      "external": 8,
+      "unresolved": 1,
       "dynamic": 0,
       "patches": []
     },
@@ -65,6 +65,14 @@
       "patches": []
     },
     {
+      "file": "menuisier-saint-omer.html",
+      "patchable": 0,
+      "external": 14,
+      "unresolved": 11,
+      "dynamic": 0,
+      "patches": []
+    },
+    {
       "file": "nos-prestations.html",
       "patchable": 0,
       "external": 0,
@@ -73,18 +81,39 @@
       "patches": []
     },
     {
+      "file": "partenaires.html",
+      "patchable": 1,
+      "external": 20,
+      "unresolved": 25,
+      "dynamic": 0,
+      "patches": [
+        {
+          "line": 63,
+          "src": "logo-officiel.jpg",
+          "missing": [
+            "width",
+            "height"
+          ],
+          "real_width": 1080,
+          "real_height": 1080,
+          "snippet": "<img src=\"logo-officiel.jpg\" alt=\"HELP Confort\" style=\"height:48px;width:auto\">",
+          "patch": "<img width=\"1080\" height=\"1080\" src=\"logo-officiel.jpg\" alt=\"HELP Confort\" style=\"height:48px;width:auto\">"
+        }
+      ]
+    },
+    {
       "file": "plombier-saint-omer.html",
       "patchable": 0,
-      "external": 6,
-      "unresolved": 4,
+      "external": 4,
+      "unresolved": 19,
       "dynamic": 0,
       "patches": []
     },
     {
       "file": "pmr-saint-omer.html",
       "patchable": 0,
-      "external": 6,
-      "unresolved": 4,
+      "external": 0,
+      "unresolved": 1,
       "dynamic": 0,
       "patches": []
     },
@@ -107,8 +136,8 @@
     {
       "file": "serrurier-saint-omer.html",
       "patchable": 0,
-      "external": 0,
-      "unresolved": 4,
+      "external": 12,
+      "unresolved": 11,
       "dynamic": 0,
       "patches": []
     },
@@ -116,15 +145,15 @@
       "file": "travaux-saint-omer.html",
       "patchable": 0,
       "external": 0,
-      "unresolved": 4,
+      "unresolved": 1,
       "dynamic": 0,
       "patches": []
     },
     {
       "file": "vitrier-saint-omer.html",
       "patchable": 0,
-      "external": 6,
-      "unresolved": 4,
+      "external": 8,
+      "unresolved": 1,
       "dynamic": 0,
       "patches": []
     },
@@ -132,7 +161,7 @@
       "file": "volets-saint-omer.html",
       "patchable": 0,
       "external": 6,
-      "unresolved": 4,
+      "unresolved": 5,
       "dynamic": 0,
       "patches": []
     },
