@@ -1674,16 +1674,16 @@ if (document.fonts && document.fonts.ready) {
  <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" value="">
  <input type="hidden" name="presta" id="m-modal-presta">
  <div class="m-modal-row">
- <div class="m-modal-field"><label>Prénom *</label><input type="text" name="prenom" required autocomplete="given-name"></div>
- <div class="m-modal-field"><label>Nom *</label><input type="text" name="nom" required autocomplete="family-name"></div>
+ <div class="m-modal-field"><label>Prénom *</label><input type="text" name="prenom" required autocomplete="given-name" aria-label="Prénom"></div>
+ <div class="m-modal-field"><label>Nom *</label><input type="text" name="nom" required autocomplete="family-name" aria-label="Nom"></div>
  </div>
  <div class="m-modal-row">
- <div class="m-modal-field"><label>Téléphone *</label><input type="tel" name="tel" required autocomplete="tel" pattern="[0-9 +.-]{10,}"></div>
- <div class="m-modal-field"><label>Email *</label><input type="email" name="email" required autocomplete="email"></div>
+ <div class="m-modal-field"><label>Téléphone *</label><input type="tel" name="tel" required autocomplete="tel" pattern="[0-9 +.-]{10,}" aria-label="Numéro de téléphone"></div>
+ <div class="m-modal-field"><label>Email *</label><input type="email" name="email" required autocomplete="email" aria-label="Adresse email"></div>
  </div>
  <div class="m-modal-row">
- <div class="m-modal-field"><label>Code postal *</label><input type="text" name="cp" required autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5"></div>
- <div class="m-modal-field"><label>Ville *</label><input type="text" name="ville" required autocomplete="address-level2"></div>
+ <div class="m-modal-field"><label>Code postal *</label><input type="text" name="cp" required autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5" aria-label="Code postal"></div>
+ <div class="m-modal-field"><label>Ville *</label><input type="text" name="ville" required autocomplete="address-level2" aria-label="Ville"></div>
  </div>
  <div class="m-modal-field"><label>Décrivez votre situation</label><textarea name="message" rows="2" placeholder="Pour une intervention rapide, donnez quelques détails (modèle, urgence, contraintes…)"></textarea></div>
  <button type="submit" class="m-modal-submit">Recevoir mon devis →</button>
@@ -2327,8 +2327,8 @@ if (document.fonts && document.fonts.ready) {
  <p>OK 👌 — laissez-moi votre <strong>numéro</strong> et un <strong>mot clé</strong>, je transfère immédiatement au technicien.</p>
  </div>
  <input type="hidden" name="service" id="chatSvcField" value="">
- <input type="tel" name="telephone" id="chatTel" required placeholder="📞 Votre téléphone" autocomplete="tel">
- <input type="text" name="precision" id="chatPrec" placeholder="📝 1 mot (rue, étage, urgence…)" maxlength="80">
+ <input type="tel" name="telephone" id="chatTel" required placeholder="📞 Votre téléphone" autocomplete="tel" aria-label="Numéro de téléphone">
+ <input type="text" name="precision" id="chatPrec" placeholder="📝 1 mot (rue, étage, urgence…)" maxlength="80" aria-label="📝 1 mot (rue, étage, urgence…)">
  <button type="submit" class="chat-urg-send">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
  Être rappelé(e)

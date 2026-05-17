@@ -956,8 +956,8 @@ if (document.fonts && document.fonts.ready) {
  <p>OK 👌 — laissez-moi votre <strong>numéro</strong> et un <strong>mot clé</strong>, je transfère immédiatement au technicien.</p>
  </div>
  <input type="hidden" name="service" id="chatSvcField" value="">
- <input type="tel" name="telephone" id="chatTel" required placeholder="📞 Votre téléphone" autocomplete="tel" pattern="[0-9 +.\-]{10,}" autocomplete="tel">
- <input type="text" name="precision" id="chatPrec" placeholder="📝 1 mot (rue, étage, urgence…)" maxlength="80">
+ <input type="tel" name="telephone" id="chatTel" required placeholder="📞 Votre téléphone" autocomplete="tel" pattern="[0-9 +.\-]{10,}" autocomplete="tel" aria-label="Numéro de téléphone">
+ <input type="text" name="precision" id="chatPrec" placeholder="📝 1 mot (rue, étage, urgence…)" maxlength="80" aria-label="📝 1 mot (rue, étage, urgence…)">
  <button type="submit" class="chat-urg-send">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
  Être rappelé(e)
@@ -1204,12 +1204,12 @@ if (document.fonts && document.fonts.ready) {
  </div>
 
  <div class="sous-addr-wrap" style="position:relative;margin-bottom:10px">
- <input type="text" id="sousAdresse" name="adresse" placeholder="N°, rue *" required class="sous-inp" autocomplete="off" data-validate="required">
+ <input type="text" id="sousAdresse" name="adresse" placeholder="N°, rue *" required class="sous-inp" autocomplete="off" data-validate="required" aria-label="Adresse">
  <div id="sousAdresseList" class="sous-addr-list" role="listbox" hidden></div>
  </div>
  <div style="display:grid;grid-template-columns:120px 1fr;gap:10px">
- <input type="text" id="sousCp" name="cp" placeholder="Code postal *" required class="sous-inp" pattern="[0-9]{5}" maxlength="5" data-validate="cp">
- <input type="text" id="sousVille" name="ville" placeholder="Ville *" required class="sous-inp" data-validate="required">
+ <input type="text" id="sousCp" name="cp" placeholder="Code postal *" required class="sous-inp" pattern="[0-9]{5}" maxlength="5" data-validate="cp" aria-label="Code postal">
+ <input type="text" id="sousVille" name="ville" placeholder="Ville *" required class="sous-inp" data-validate="required" aria-label="Ville">
  </div>
  </div>
 
@@ -1366,7 +1366,7 @@ if (document.fonts && document.fonts.ready) {
  <option>Jamais entretenu</option>
  <option>Je ne sais pas</option>
  </select>
- <input type="text" name="dernier_entretien" id="eqEntretienTexte" placeholder="Précisions (facultatif)" class="sous-inp">
+ <input type="text" name="dernier_entretien" id="eqEntretienTexte" placeholder="Précisions (facultatif)" class="sous-inp" aria-label="Précisions (facultatif)">
  </div>
  </div>
 
