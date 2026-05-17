@@ -228,7 +228,8 @@
  // Meta SEO
  document.getElementById('pageTitle').textContent = r.title + ' · HELP Confort';
  document.getElementById('pageDesc').setAttribute('content', (r.description || r.title).slice(0, 160));
- document.getElementById('pageCanonical').setAttribute('href', 'https://www.depan59-62.fr/realisation.html?slug=' + encodeURIComponent(slug));
+ document.getElementById('pageCanonical').setAttribute('href', 'https://www.depan59-62.fr/realisations/' + encodeURIComponent(slug));
+ document.getElementById('pageRobots').setAttribute('content', 'index, follow');
  document.getElementById('ogTitle').setAttribute('content', r.title);
  document.getElementById('ogDesc').setAttribute('content', (r.description || r.title).slice(0, 200));
  if (photo) document.getElementById('ogImage').setAttribute('content', photo);

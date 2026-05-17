@@ -22,9 +22,11 @@ Disallow: /content/
 Disallow: /supabase/
 Disallow: /assets/
 
-# Bloquer template de réalisation (rendu dynamique côté client)
-Disallow: /realisation.html
-Disallow: /realisation.html?*
+# Réalisation : URLs propres /realisations/{slug} indexables
+# La page realisation.html avec ?slug=... est autorisée (canonical → /realisations/{slug})
+# Sans slug, la page envoie noindex via meta JS
+Allow: /realisation.html?slug=*
+Allow: /realisations/
 
 # Bloquer fichiers cachés
 Disallow: /.autopush/
