@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backlinks Partenaires — HELP Confort</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<style>
+  :root {
+    --bleu: #0066b3;
+    --bleu-fonce: #003c6e;
+    --vert: #1aa959;
+    --orange: #ff8a00;
+    --rouge: #dc2626;
+    --fond: #f6f8fb;
+    --texte: #1a1a1a;
+    --gris: #6b7280;
+    --border: #e5e7eb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--fond);
+    margin: 0;
+    color: var(--texte);
+    line-height: 1.6;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px 80px; }
+  header {
+    background: linear-gradient(135deg, var(--bleu) 0%, var(--bleu-fonce) 100%);
+    color: white;
+    padding: 36px 24px;
+    border-radius: 16px;
+    margin-bottom: 32px;
+    box-shadow: 0 10px 30px rgba(0,102,179,0.15);
+  }
+  header h1 { margin: 0 0 6px; font-size: 26px; }
+  header p { margin: 0; opacity: 0.95; font-size: 14px; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .stat {
+    background: rgba(255,255,255,0.15);
+    padding: 14px;
+    border-radius: 10px;
+  }
+  .stat .num { font-size: 22px; font-weight: 700; display: block; }
+  .stat .lib { font-size: 11px; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .nav {
+    display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap;
+  }
+  .nav a {
+    padding: 7px 12px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--bleu-fonce);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .nav a:hover { background: var(--bleu); color: white; }
+
+  .card {
+    background: white;
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border: 1px solid var(--border);
+  }
+  .card h2 {
+    margin: 0 0 6px;
+    font-size: 18px;
+    color: var(--bleu-fonce);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .card h2 .badge {
+    background: var(--bleu);
+    color: white;
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 16px;
+    font-weight: 600;
+  }
+  .card h2 .badge.priorite { background: var(--rouge); }
+  .card h2 .badge.facile { background: var(--vert); }
+  .card .sub { color: var(--gris); margin: 0 0 16px; font-size: 13px; }
+
+  .partenaires {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+    margin: 12px 0;
+  }
+  .partenaire {
+    background: var(--fond);
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .partenaire .nom { font-weight: 600; color: var(--bleu-fonce); margin-bottom: 4px; }
+  .partenaire .info { color: var(--gris); font-size: 12px; }
+  .partenaire a { color: var(--bleu); text-decoration: none; }
+  .partenaire a:hover { text-decoration: underline; }
+
+  .email-template {
+    background: #fafbfc;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 12px;
+    position: relative;
+  }
+  .email-template .label {
+    font-size: 11px;
+    color: var(--gris);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .email-template .objet {
+    font-weight: 600;
+    color: var(--bleu-fonce);
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  .email-template .corps {
+    font-size: 13px;
+    white-space: pre-wrap;
+    color: var(--texte);
+    line-height: 1.5;
+  }
+  .btn-copy {
+    margin-top: 10px;
+    padding: 7px 14px;
+    background: var(--vert);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn-copy:hover { background: #148546; }
+  .copied { background: var(--bleu) !important; }
+
+  /* Tableau suivi */
+  .suivi {
+    overflow-x: auto;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-top: 16px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th {
+    background: var(--fond);
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 2px solid var(--border);
+    color: var(--bleu-fonce);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  td .statut {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .s-todo { background: #fef3c7; color: #92400e; }
+  .s-envoye { background: #dbeafe; color: #1e40af; }
+  .s-attente { background: #fef3c7; color: #92400e; }
+  .s-refus { background: #fee2e2; color: #991b1b; }
+  .s-obtenu { background: #d1fae5; color: #065f46; }
+
+  .conseil {
+    background: linear-gradient(135deg, #fff8eb 0%, #fff3d6 100%);
+    padding: 18px;
+    border-radius: 10px;
+    border-left: 4px solid var(--orange);
+    margin-top: 16px;
+    font-size: 14px;
+  }
+  .conseil strong { color: var(--bleu-fonce); }
+  .conseil ul { margin: 8px 0 0; padding-left: 20px; }
+  .conseil li { margin-bottom: 6px; }
+
+  details summary {
+    cursor: pointer;
+    padding: 10px 14px;
+    background: var(--fond);
+    border-radius: 8px;
+    font-weight: 600;
+    color: var(--bleu-fonce);
+    user-select: none;
+  }
+  details[open] summary { margin-bottom: 12px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="nav">
+    <a href="/admin-pro/">← Retour admin</a>
+    <a href="#strategie">Stratégie</a>
+    <a href="#cat1">Fournisseurs</a>
+    <a href="#cat2">Annuaires métier</a>
+    <a href="#cat3">Locaux</a>
+    <a href="#cat4">Presse</a>
+    <a href="#cat5">Assurance</a>
+    <a href="#cat6">Énergie/RGE</a>
+    <a href="#cat7">Fédérations</a>
+    <a href="#cat8">Comparateurs</a>
+    <a href="#cat9">Sponsoring local</a>
+    <a href="#suivi">Tableau de suivi</a>
+  </div>
+
+  <header>
+    <h1>🔗 Backlinks Partenaires — HELP Confort</h1>
+    <p>Stratégie de netlinking local pour booster le SEO de depan59-62.fr. Objectif : +15 backlinks qualifiés en 60 jours.</p>
+    <div class="stats">
+      <div class="stat">
+        <span class="num">9</span>
+        <span class="lib">Catégories de partenaires</span>
+      </div>
+      <div class="stat">
+        <span class="num">25+</span>
+        <span class="lib">Cibles identifiées</span>
+      </div>
+      <div class="stat">
+        <span class="num">9 jours</span>
+        <span class="lib">1 email/jour</span>
+      </div>
+      <div class="stat">
+        <span class="num">+15</span>
+        <span class="lib">Backlinks objectif 60j</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- STRATEGIE -->
+  <div class="card" id="strategie">
+    <h2>🎯 Stratégie : pourquoi ces backlinks ?</h2>
+    <p class="sub">Google classe ton site en fonction de qui parle de toi. Pour le SEO local, 3 types de liens comptent vraiment :</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
+      <div style="background: var(--fond); padding: 16px; border-radius: 10px; border-left: 4px solid var(--vert);">
+        <strong style="color: var(--bleu-fonce);">📍 Liens locaux</strong>
+        <p style="font-size: 13px; margin: 6px 0 0; color: var(--gris);">Office du Tourisme, CCI, mairie, presse locale → renforce ton ancrage géographique sur Saint-Omer/Dunkerque/Calais/Boulogne</p>
+      </div>
+      <div style="background: var(--fond); padding: 16px; border-radius: 10px; border-left: 4px solid var(--bleu);">
+        <strong style="color: var(--bleu-fonce);">🏭 Liens métier</strong>
+        <p style="font-size: 13px; margin: 6px 0 0; color: var(--gris);">Fournisseurs (Atlantic, Vaillant), annuaires plombier.com, fédérations FFB/CAPEB → autorité thématique</p>
+      </div>
+      <div style="background: var(--fond); padding: 16px; border-radius: 10px; border-left: 4px solid var(--orange);">
+        <strong style="color: var(--bleu-fonce);">🤝 Liens confiance</strong>
+        <p style="font-size: 13px; margin: 6px 0 0; color: var(--gris);">RGE, Qualibat, partenaires assurance → signaux de confiance pour Google et clients</p>
+      </div>
+    </div>
+
+    <div class="conseil">
+      <strong>⚡ Rythme conseillé :</strong>
+      <ul>
+        <li><strong>1 email/jour</strong> sur 9 jours (1 catégorie/jour) — évite de te surcharger</li>
+        <li><strong>Relance 7 jours après</strong> si pas de réponse (1 seule fois)</li>
+        <li>Tu vises <strong>~50% de retour</strong>, et <strong>~30% de backlinks obtenus</strong> au final</li>
+        <li>9 catégories × 3 partenaires moyens × 30% = <strong>+8 à +15 backlinks</strong> en 60 jours</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CAT 1 : FOURNISSEURS -->
+  <div class="card" id="cat1">
+    <h2>1. Fournisseurs / Marques chaudières <span class="badge priorite">PRIORITÉ HAUTE</span></h2>
+    <p class="sub">Les fabricants ont souvent une page "Trouver un installateur agréé" avec liens externes. Excellent pour SEO + génération de leads.</p>
+
+    <div class="partenaires">
+      <div class="partenaire">
+        <div class="nom">Atlantic</div>
+        <div class="info">Annuaire installateurs agréés<br><a href="https://www.atlantic.fr/Pros-Atlantic" target="_blank">atlantic.fr/Pros-Atlantic</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">De Dietrich</div>
+        <div class="info">Réseau partenaires<br><a href="https://www.dedietrich-thermique.fr/" target="_blank">dedietrich-thermique.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Vaillant</div>
+        <div class="info">Partenaires installateurs<br><a href="https://www.vaillant.fr/" target="_blank">vaillant.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Saunier Duval</div>
+        <div class="info">Réseau Pro Saunier<br><a href="https://www.saunierduval.fr/" target="_blank">saunierduval.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">ELM Leblanc</div>
+        <div class="info">Espace pros<br><a href="https://www.elmleblanc.fr/" target="_blank">elmleblanc.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Frisquet</div>
+        <div class="info">Annuaire installateurs<br><a href="https://www.frisquet.fr/" target="_blank">frisquet.fr</a></div>
+      </div>
+    </div>
+
+    <details>
+      <summary>📧 Email-type fournisseur</summary>
+      <div class="email-template">
+        <div class="label">Objet</div>
+        <div class="objet">Demande de référencement dans votre annuaire installateurs — HELP Confort Saint-Omer</div>
+        <div class="label">Corps</div>
+        <div class="corps" id="email-fournisseur">Bonjour,
+
+Je suis Florian D'haillecourt, gérant de l'agence HELP Confort à Saint-Omer (62500), couvrant le département du Pas-de-Calais et le Nord (Dunkerque, Calais, Boulogne-sur-Mer).
+
+Nous installons et dépannons régulièrement vos chaudières [MARQUE] chez nos clients particuliers (volume annuel : XX unités). Nos techniciens sont formés et certifiés.
+
+Je vous écris pour demander notre inscription dans votre annuaire "Trouver un installateur agréé" / "Espace Pros". Voici nos coordonnées :
+
+— Raison sociale : HELP Confort Saint-Omer
+— Adresse : 242 Rte de Boulogne, 62500 Saint-Martin-lez-Tatinghem
+— Téléphone : 03 66 10 01 34
+— Site web : https://www.depan59-62.fr
+— Zone d'intervention : Saint-Omer, Dunkerque, Calais, Boulogne-sur-Mer et environs
+
+Je reste disponible pour vous fournir tout document supplémentaire (Kbis, Qualibat, attestations).
+
+Cordialement,
+Florian D'haillecourt
+HELP Confort Saint-Omer
+03 66 10 01 34
+florian.dhaillecourt@helpconfort.com</div>
+        <button class="btn-copy" onclick="copyEmail('email-fournisseur', this)">📋 Copier l'email</button>
+      </div>
+    </details>
+  </div>
+
+  <!-- CAT 2 : ANNUAIRES METIER -->
+  <div class="card" id="cat2">
+    <h2>2. Annuaires métier nationaux <span class="badge facile">FACILE — 30 min</span></h2>
+    <p class="sub">Inscriptions souvent gratuites, lien obtenu en quelques jours. À faire en priorité car ROI immédiat.</p>
+
+    <div class="partenaires">
+      <div class="partenaire">
+        <div class="nom">Solocal / Pages Jaunes Pro</div>
+        <div class="info">Inscription gratuite + Premium payant<br><a href="https://pro.pagesjaunes.fr/" target="_blank">pro.pagesjaunes.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Plombier.com</div>
+        <div class="info">Annuaire spécialisé plomberie<br><a href="https://www.plombier.com/" target="_blank">plombier.com</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Hellopro</div>
+        <div class="info">Annuaire pro B2B/B2C<br><a href="https://www.hellopro.fr/" target="_blank">hellopro.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Mappy Pro</div>
+        <div class="info">Annuaire local intégré Mappy<br><a href="https://fr.mappy.com/" target="_blank">mappy.com</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">118000.fr</div>
+        <div class="info">Annuaire universel<br><a href="https://www.118000.fr/" target="_blank">118000.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Yelp France</div>
+        <div class="info">Avis + annuaire local<br><a href="https://fr.yelp.fr/" target="_blank">yelp.fr</a></div>
+      </div>
+    </div>
+
+    <div class="conseil">
+      <strong>💡 Pas besoin d'email pour ces annuaires</strong> — simplement créer ta fiche gratuite en 5-10 min/annuaire. Mêmes infos pour tous (NAP cohérent : Name / Address / Phone).
+    </div>
+  </div>
+
+  <!-- CAT 3 : LOCAUX -->
+  <div class="card" id="cat3">
+    <h2>3. Acteurs locaux (CCI, Office Tourisme, Mairies) <span class="badge priorite">FORT POIDS SEO</span></h2>
+    <p class="sub">Les liens en .fr depuis institutions locales pèsent énormément pour le SEO local. À cibler en priorité.</p>
+
+    <div class="partenaires">
+      <div class="partenaire">
+        <div class="nom">CCI Grand Lille / Hauts-de-France</div>
+        <div class="info">Annuaire entreprises adhérentes<br><a href="https://www.hautsdefrance.cci.fr/" target="_blank">hautsdefrance.cci.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">CMA Hauts-de-France (Artisans)</div>
+        <div class="info">Annuaire artisans agréés<br><a href="https://www.cma-hautsdefrance.fr/" target="_blank">cma-hautsdefrance.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Pays de Saint-Omer Tourisme</div>
+        <div class="info">Section "Services pratiques"<br><a href="https://www.tourisme-saintomer.com/" target="_blank">tourisme-saintomer.com</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Office du Tourisme Dunkerque</div>
+        <div class="info">Annuaire entreprises locales<br><a href="https://www.dunkerque-tourisme.fr/" target="_blank">dunkerque-tourisme.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Mairie Saint-Omer</div>
+        <div class="info">Section entreprises de la ville<br><a href="https://www.ville-saint-omer.fr/" target="_blank">ville-saint-omer.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Agglo Pays de Saint-Omer (CAPSO)</div>
+        <div class="info">Annuaire entreprises du territoire<br><a href="https://www.capso.fr/" target="_blank">capso.fr</a></div>
+      </div>
+    </div>
+
+    <details>
+      <summary>📧 Email-type CCI / collectivité</summary>
+      <div class="email-template">
+        <div class="label">Objet</div>
+        <div class="objet">Demande d'inscription annuaire entreprises locales — HELP Confort Saint-Omer</div>
+        <div class="label">Corps</div>
+        <div class="corps" id="email-cci">Bonjour,
+
+Je me permets de vous contacter en tant que dirigeant de HELP Confort Saint-Omer, entreprise de dépannage et installation en plomberie, chauffage, électricité et serrurerie basée à Saint-Martin-lez-Tatinghem.
+
+Notre activité est tournée vers les particuliers de l'Audomarois et du Calaisis (Saint-Omer, Calais, Dunkerque, Boulogne-sur-Mer, Aire-sur-la-Lys…). Nous employons X personnes et intervenons en 7j/7 24h/24 en urgence.
+
+Je souhaiterais figurer dans votre annuaire des entreprises locales / artisans de la région. Voici nos informations :
+
+— Raison sociale : HELP Confort Saint-Omer
+— SIRET : [À remplir]
+— Adresse : 242 Rte de Boulogne, 62500 Saint-Martin-lez-Tatinghem
+— Téléphone : 03 66 10 01 34
+— Site : https://www.depan59-62.fr
+— Activités : plomberie, chauffage, électricité, serrurerie, vitrerie
+
+Quels documents devrais-je vous transmettre pour finaliser l'inscription ?
+
+Cordialement,
+Florian D'haillecourt
+HELP Confort Saint-Omer
+03 66 10 01 34</div>
+        <button class="btn-copy" onclick="copyEmail('email-cci', this)">📋 Copier l'email</button>
+      </div>
+    </details>
+  </div>
+
+  <!-- CAT 4 : PRESSE LOCALE -->
+  <div class="card" id="cat4">
+    <h2>4. Presse locale & médias <span class="badge">À LONG TERME</span></h2>
+    <p class="sub">Articles ou portraits dans la presse locale → backlinks haute autorité + visibilité. Joue la carte "entreprise locale qui recrute / qui se développe".</p>
+
+    <div class="partenaires">
+      <div class="partenaire">
+        <div class="nom">La Voix du Nord</div>
+        <div class="info">Quotidien régional<br><a href="https://www.lavoixdunord.fr/" target="_blank">lavoixdunord.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Nord Littoral</div>
+        <div class="info">Calais / littoral<br><a href="https://www.nordlittoral.fr/" target="_blank">nordlittoral.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">L'Indicateur des Flandres</div>
+        <div class="info">Hebdo Flandres<br><a href="https://www.lindicateurdesflandres.fr/" target="_blank">lindicateurdesflandres.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Delta FM</div>
+        <div class="info">Radio Côte d'Opale<br><a href="https://www.deltafm.fr/" target="_blank">deltafm.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">L'Écho de la Lys</div>
+        <div class="info">Hebdo Saint-Omer<br><a href="https://www.lechodelalys.fr/" target="_blank">lechodelalys.fr</a></div>
+      </div>
+    </div>
+
+    <details>
+      <summary>📧 Email-type presse locale</summary>
+      <div class="email-template">
+        <div class="label">Objet</div>
+        <div class="objet">Sujet possible : entreprise locale qui se développe — HELP Confort Saint-Omer</div>
+        <div class="label">Corps</div>
+        <div class="corps" id="email-presse">Bonjour,
+
+Je suis Florian D'haillecourt, gérant de HELP Confort à Saint-Omer. Je vous écris pour vous proposer un sujet susceptible d'intéresser vos lecteurs.
+
+Depuis [année d'installation], notre agence HELP Confort intervient en urgence chez les particuliers de l'Audomarois et du Calaisis pour tout problème de plomberie, chauffage, électricité ou serrurerie. Nous comptons aujourd'hui X collaborateurs et intervenons sur près de XXX interventions par an.
+
+Quelques angles qui pourraient vous intéresser :
+• Le métier d'artisan dépanneur 7j/7 24h/24 (témoignage terrain)
+• La pénurie de techniciens de chauffage dans la région (recrutement difficile)
+• Les chiffres-clés du dépannage à domicile dans le Nord/Pas-de-Calais
+• [Autre angle pertinent à proposer]
+
+Je serais ravi de pouvoir échanger avec un journaliste ou vous transmettre des informations complémentaires.
+
+Cordialement,
+Florian D'haillecourt
+HELP Confort Saint-Omer
+03 66 10 01 34
+https://www.depan59-62.fr</div>
+        <button class="btn-copy" onclick="copyEmail('email-presse', this)">📋 Copier l'email</button>
+      </div>
+    </details>
+  </div>
+
+  <!-- CAT 5 : ASSURANCE -->
+  <div class="card" id="cat5">
+    <h2>5. Partenaires assurance / assistance <span class="badge priorite">FORT POIDS</span></h2>
+    <p class="sub">Les assureurs ont des réseaux de prestataires agréés. Liens depuis MAIF, MAAF, etc. = backlinks haute autorité + flux de leads garantis.</p>
+
+    <div class="partenaires">
+      <div class="partenaire">
+        <div class="nom">MAIF</div>
+        <div class="info">Réseau Habitat Pro<br><a href="https://www.maif.fr/" target="_blank">maif.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">MAAF</div>
+        <div class="info">Partenaires assistance habitation<br><a href="https://www.maaf.fr/" target="_blank">maaf.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Macif</div>
+        <div class="info">Macif Habitat<br><a href="https://www.macif.fr/" target="_blank">macif.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">GMF / Groupama</div>
+        <div class="info">Réseau d'intervenants habitat<br><a href="https://www.gmf.fr/" target="_blank">gmf.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">IMA / Mondial Assistance</div>
+        <div class="info">Plateformes d'assistance — sous-traitance<br><a href="https://www.ima.eu/" target="_blank">ima.eu</a></div>
+      </div>
+    </div>
+
+    <div class="conseil">
+      <strong>⚠️ Approche différente</strong> : ce ne sont pas des "demandes de backlink" mais des <strong>candidatures de référencement prestataire</strong>. Plus long mais énorme ROI. À traiter en B2B.
+    </div>
+  </div>
+
+  <!-- CAT 6 : ENERGIE / RGE -->
+  <div class="card" id="cat6">
+    <h2>6. Énergie / RGE / Qualibat <span class="badge facile">FACILE</span></h2>
+    <p class="sub">Les organismes de certification publient leurs listes d'artisans certifiés. Sources officielles, lien gov-grade.</p>
+
+    <div class="partenaires">
+      <div class="partenaire">
+        <div class="nom">France Rénov' (annuaire RGE)</div>
+        <div class="info">Annuaire officiel artisans RGE<br><a href="https://france-renov.gouv.fr/annuaire-rge" target="_blank">france-renov.gouv.fr/annuaire-rge</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Qualibat</div>
+        <div class="info">Annuaire certifiés Qualibat<br><a href="https://www.qualibat.com/" target="_blank">qualibat.com</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Qualit'EnR</div>
+        <div class="info">Annuaire installateurs ENR<br><a href="https://www.qualit-enr.org/" target="_blank">qualit-enr.org</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Qualifelec</div>
+        <div class="info">Annuaire électriciens certifiés<br><a href="https://www.qualifelec.fr/" target="_blank">qualifelec.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">ADEME — Espaces Conseil</div>
+        <div class="info">Listes d'artisans recommandés<br><a href="https://agirpourlatransition.ademe.fr/" target="_blank">agirpourlatransition.ademe.fr</a></div>
+      </div>
+    </div>
+
+    <div class="conseil">
+      <strong>🟢 Si HC est déjà RGE/Qualibat</strong> : tu es <strong>automatiquement référencé</strong> dans l'annuaire officiel — vérifie juste que ton lien web pointe bien vers depan59-62.fr. Sinon, demande la mise à jour.
+    </div>
+  </div>
+
+  <!-- CAT 7 : FEDERATIONS -->
+  <div class="card" id="cat7">
+    <h2>7. Fédérations professionnelles <span class="badge">MOYEN</span></h2>
+    <p class="sub">Les fédérations du bâtiment ont des annuaires d'adhérents très qualifiés.</p>
+
+    <div class="partenaires">
+      <div class="partenaire">
+        <div class="nom">CAPEB Hauts-de-France</div>
+        <div class="info">Confédération artisans BTP<br><a href="https://www.capeb-hautsdefrance.fr/" target="_blank">capeb-hautsdefrance.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">FFB (Fédération Française du Bâtiment)</div>
+        <div class="info">Annuaire des adhérents<br><a href="https://www.ffbatiment.fr/" target="_blank">ffbatiment.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">FNAS (sanitaire-chauffage)</div>
+        <div class="info">Fédération nationale<br><a href="https://www.fnas.fr/" target="_blank">fnas.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">UNCP (couverture-plomberie)</div>
+        <div class="info">Union nationale<br><a href="https://www.uncp.ffbatiment.fr/" target="_blank">uncp.ffbatiment.fr</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAT 8 : COMPARATEURS -->
+  <div class="card" id="cat8">
+    <h2>8. Comparateurs de travaux / devis <span class="badge facile">FACILE</span></h2>
+    <p class="sub">Plateformes d'apporteurs d'affaires. Backlinks + flux de leads. À tester sans engagement long.</p>
+
+    <div class="partenaires">
+      <div class="partenaire">
+        <div class="nom">Travaux.com</div>
+        <div class="info">Comparateur artisans<br><a href="https://www.travaux.com/" target="_blank">travaux.com</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">123 Devis</div>
+        <div class="info">Mise en relation pros/particuliers<br><a href="https://www.123devis.com/" target="_blank">123devis.com</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Quotatis</div>
+        <div class="info">Apporteur d'affaires travaux<br><a href="https://www.quotatis.fr/" target="_blank">quotatis.fr</a></div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Habitatpresto</div>
+        <div class="info">Devis travaux<br><a href="https://www.habitatpresto.com/" target="_blank">habitatpresto.com</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAT 9 : SPONSORING LOCAL -->
+  <div class="card" id="cat9">
+    <h2>9. Sponsoring local & associations <span class="badge">CRÉATIF</span></h2>
+    <p class="sub">Sponsoring petits clubs sportifs, associations, événements locaux → mention sur leur site avec backlink. Très bon ROI pour notoriété locale.</p>
+
+    <div class="partenaires">
+      <div class="partenaire">
+        <div class="nom">Club de foot local</div>
+        <div class="info">USSO, AS Saint-Omer, etc.<br>Sponsoring maillot/panneau = lien sur site</div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Marché de Noël Saint-Omer</div>
+        <div class="info">Page partenaires + lien</div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Course locale / 10 km</div>
+        <div class="info">Sponsoring dossard = lien partenaire</div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">Association caritative</div>
+        <div class="info">Téléthon, Restos du Cœur local, etc.</div>
+      </div>
+      <div class="partenaire">
+        <div class="nom">École / collège (mécénat)</div>
+        <div class="info">Don matériel + mention sur site école</div>
+      </div>
+    </div>
+
+    <div class="conseil">
+      <strong>💡 Investissement modeste, fort impact</strong> : 200-500€ de sponsoring local = backlink + notoriété + carte mentale "HC = soutient le territoire" chez les habitants. Imbattable.
+    </div>
+  </div>
+
+  <!-- TABLEAU DE SUIVI -->
+  <div class="card" id="suivi">
+    <h2>📊 Tableau de suivi <span class="badge">À tenir à jour</span></h2>
+    <p class="sub">Coche au fur et à mesure. Données stockées localement dans ton navigateur (localStorage = persistant).</p>
+
+    <button onclick="ajouterLigne()" style="padding: 8px 16px; background: var(--bleu); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; margin-bottom: 12px;">
+      ➕ Ajouter une cible
+    </button>
+
+    <div class="suivi">
+      <table id="tableSuivi">
+        <thead>
+          <tr>
+            <th>Cible</th>
+            <th>Catégorie</th>
+            <th>Contact</th>
+            <th>Date envoi</th>
+            <th>Statut</th>
+            <th>Lien obtenu</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody-suivi">
+          <!-- Lignes injectées via JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // === COPY EMAIL ===
+  function copyEmail(id, btn) {
+    const txt = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(txt);
+    btn.classList.add('copied');
+    const oldText = btn.textContent;
+    btn.textContent = '✅ Copié !';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = oldText;
+    }, 2000);
+  }
+
+  // === TABLEAU DE SUIVI ===
+  const STORAGE_KEY = 'hc_backlinks_suivi';
+  const cibles_initiales = [
+    { cible: 'Atlantic', categorie: 'Fournisseur', contact: 'atlantic.fr/Pros-Atlantic', date: '', statut: 'todo', lien: '' },
+    { cible: 'De Dietrich', categorie: 'Fournisseur', contact: 'dedietrich-thermique.fr', date: '', statut: 'todo', lien: '' },
+    { cible: 'Vaillant', categorie: 'Fournisseur', contact: 'vaillant.fr', date: '', statut: 'todo', lien: '' },
+    { cible: 'Solocal / Pages Jaunes', categorie: 'Annuaire métier', contact: 'pro.pagesjaunes.fr', date: '', statut: 'todo', lien: '' },
+    { cible: 'Plombier.com', categorie: 'Annuaire métier', contact: 'plombier.com', date: '', statut: 'todo', lien: '' },
+    { cible: 'CCI Hauts-de-France', categorie: 'Local', contact: 'hautsdefrance.cci.fr', date: '', statut: 'todo', lien: '' },
+    { cible: 'CMA Hauts-de-France', categorie: 'Local', contact: 'cma-hautsdefrance.fr', date: '', statut: 'todo', lien: '' },
+    { cible: 'Pays de Saint-Omer Tourisme', categorie: 'Local', contact: 'tourisme-saintomer.com', date: '', statut: 'todo', lien: '' },
+    { cible: 'CAPSO', categorie: 'Local', contact: 'capso.fr', date: '', statut: 'todo', lien: '' },
+    { cible: 'La Voix du Nord', categorie: 'Presse', contact: 'lavoixdunord.fr', date: '', statut: 'todo', lien: '' },
+    { cible: 'L\'Écho de la Lys', categorie: 'Presse', contact: 'lechodelalys.fr', date: '', statut: 'todo', lien: '' },
+    { cible: 'MAIF Habitat Pro', categorie: 'Assurance', contact: 'maif.fr', date: '', statut: 'todo', lien: '' },
+    { cible: 'IMA Assistance', categorie: 'Assurance', contact: 'ima.eu', date: '', statut: 'todo', lien: '' },
+    { cible: 'France Rénov\' RGE', categorie: 'Énergie/RGE', contact: 'france-renov.gouv.fr', date: '', statut: 'todo', lien: '' },
+    { cible: 'Qualibat', categorie: 'Énergie/RGE', contact: 'qualibat.com', date: '', statut: 'todo', lien: '' },
+    { cible: 'CAPEB Hauts-de-France', categorie: 'Fédération', contact: 'capeb-hautsdefrance.fr', date: '', statut: 'todo', lien: '' },
+    { cible: 'FFB', categorie: 'Fédération', contact: 'ffbatiment.fr', date: '', statut: 'todo', lien: '' },
+    { cible: 'Travaux.com', categorie: 'Comparateur', contact: 'travaux.com', date: '', statut: 'todo', lien: '' },
+    { cible: 'Sponsoring USSO foot', categorie: 'Sponsoring', contact: 'À identifier', date: '', statut: 'todo', lien: '' },
+  ];
+
+  let cibles = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null') || cibles_initiales;
+
+  function sauvegarder() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(cibles));
+  }
+
+  function renderTable() {
+    const tbody = document.getElementById('tbody-suivi');
+    tbody.innerHTML = '';
+    cibles.forEach((c, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input type="text" value="${c.cible}" onchange="updateCell(${i}, 'cible', this.value)" style="border:none; background:transparent; width:100%;"></td>
+        <td><input type="text" value="${c.categorie}" onchange="updateCell(${i}, 'categorie', this.value)" style="border:none; background:transparent; width:100%;"></td>
+        <td><input type="text" value="${c.contact}" onchange="updateCell(${i}, 'contact', this.value)" style="border:none; background:transparent; width:100%;"></td>
+        <td><input type="date" value="${c.date}" onchange="updateCell(${i}, 'date', this.value)" style="border:none; background:transparent;"></td>
+        <td>
+          <select onchange="updateCell(${i}, 'statut', this.value)" style="border:1px solid var(--border); border-radius:4px; padding:2px; background:white;">
+            <option value="todo" ${c.statut==='todo'?'selected':''}>À faire</option>
+            <option value="envoye" ${c.statut==='envoye'?'selected':''}>Envoyé</option>
+            <option value="attente" ${c.statut==='attente'?'selected':''}>En attente</option>
+            <option value="refus" ${c.statut==='refus'?'selected':''}>Refusé</option>
+            <option value="obtenu" ${c.statut==='obtenu'?'selected':''}>✅ Obtenu</option>
+          </select>
+        </td>
+        <td><input type="text" value="${c.lien}" onchange="updateCell(${i}, 'lien', this.value)" placeholder="URL du backlink" style="border:none; background:transparent; width:100%; font-size:12px;"></td>
+        <td><button onclick="supprimerLigne(${i})" style="background:none; border:none; color:var(--rouge); cursor:pointer; font-size:16px;">🗑️</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function updateCell(i, key, val) {
+    cibles[i][key] = val;
+    sauvegarder();
+  }
+
+  function ajouterLigne() {
+    cibles.push({ cible: 'Nouvelle cible', categorie: '', contact: '', date: '', statut: 'todo', lien: '' });
+    sauvegarder();
+    renderTable();
+  }
+
+  function supprimerLigne(i) {
+    if (!confirm('Supprimer cette cible ?')) return;
+    cibles.splice(i, 1);
+    sauvegarder();
+    renderTable();
+  }
+
+  renderTable();
+</script>
+</body>
+</html>
