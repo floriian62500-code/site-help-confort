@@ -151,27 +151,29 @@ def apply_patch_1_remove_1h_ouvree(content):
 
 
 def apply_patch_2_trust_band(content, filename):
-    """Patch 2 : Insère bandeau trust V2 entre commentaire et m-pourquoi-top."""
+    """Patch 2 : Insère bandeau trust V2 JUSTE APRÈS le commentaire BANDEAU GARANTIES.
+
+    Que la page ait du contenu derrière (retours terrain) ou non,
+    le trust band est inséré en tête (signaux de confiance d'abord).
+    """
     if TRUST_BAND_V2_MARKER in content:
-        # Déjà patché, on remplace pour mettre à jour
+        # Déjà patché → on remplace l'ancien bloc pour update
         old_band_pattern = re.compile(
-            r'<!-- HC-TRUST-BAND-V2 -->.*?</section>\s*(?=\s*\n\s*<section class="m-pourquoi-top")',
+            r'<!-- HC-TRUST-BAND-V2 -->.*?</section>',
             re.DOTALL
         )
         new_content, n = old_band_pattern.subn(TRUST_BAND_V2_HTML, content)
         return new_content, n
 
-    # Pas encore patché → insertion
+    # Pas encore patché → insertion juste après le commentaire BANDEAU GARANTIES
     target_pattern = re.compile(
-        r'(<!-- ─── BANDEAU GARANTIES — placé en haut juste après hero ─── -->)'
-        r'(\s*\n+)'
-        r'(<section class="m-pourquoi-top")',
+        r'(<!-- ─── BANDEAU GARANTIES — placé en haut juste après hero ─── -->)',
     )
 
     def replacement(m):
-        return f'{m.group(1)}\n{TRUST_BAND_V2_HTML}\n\n{m.group(3)}'
+        return f'{m.group(1)}\n{TRUST_BAND_V2_HTML}'
 
-    new_content, n = target_pattern.subn(replacement, content)
+    new_content, n = target_pattern.subn(replacement, content, count=1)
     return new_content, n
 
 
