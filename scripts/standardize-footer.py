@@ -110,19 +110,19 @@ def standardize_file(path: Path) -> Tuple[bool, str]:
     in_prestations = len(rel_parts) >= 2 and rel_parts[0] == "prestations"
     prefix = "/" if in_prestations else ""
 
-    # Idempotence check: if Saint-Pol-sur-Mer already in footer Zones, skip.
-    # Quick check: must appear *and* in the Zones context. We use a simple
-    # text presence check since the only place this string should appear is
-    # in the Zones list itself.
-    if "Saint-Pol-sur-Mer" in content:
-        return (False, "already-standardized")
-
     new_content = content
 
     # ── Task A: replace Zones <ul> ───────────────────────────────────────────
     zones_match = ZONES_RE.search(new_content)
     if not zones_match:
         return (False, "no-zones-block")
+
+    # Idempotence check (scoped to the matched footer Zones <ul>):
+    # if 'Saint-Pol-sur-Mer' already appears in the Zones list itself,
+    # the footer is already standardized — skip rewriting.
+    zones_block_text = zones_match.group(0)
+    if "Saint-Pol-sur-Mer" in zones_block_text:
+        return (False, "already-standardized")
     indent = zones_match.group(2)
     new_zones_ul = build_zones_ul(prefix, indent)
     new_content = ZONES_RE.sub(
