@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toolkit Avis Google — HELP Confort</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<style>
+  :root {
+    --bleu: #0066b3;
+    --bleu-fonce: #003c6e;
+    --vert: #1aa959;
+    --orange: #ff8a00;
+    --fond: #f6f8fb;
+    --texte: #1a1a1a;
+    --gris: #6b7280;
+    --border: #e5e7eb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--fond);
+    margin: 0;
+    color: var(--texte);
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+  header {
+    background: linear-gradient(135deg, var(--bleu) 0%, var(--bleu-fonce) 100%);
+    color: white;
+    padding: 40px 24px;
+    border-radius: 16px;
+    margin-bottom: 32px;
+    box-shadow: 0 10px 30px rgba(0,102,179,0.15);
+  }
+  header h1 { margin: 0 0 8px; font-size: 28px; }
+  header p { margin: 0; opacity: 0.95; font-size: 15px; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .stat {
+    background: rgba(255,255,255,0.15);
+    padding: 16px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+  }
+  .stat .num { font-size: 26px; font-weight: 700; display: block; }
+  .stat .lib { font-size: 12px; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .card {
+    background: white;
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border: 1px solid var(--border);
+  }
+  .card h2 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    color: var(--bleu-fonce);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card h2 .badge {
+    background: var(--bleu);
+    color: white;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+  .card .sub { color: var(--gris); margin: 0 0 20px; font-size: 14px; }
+
+  /* QR */
+  .qr-wrap {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: center;
+  }
+  @media (max-width: 640px) {
+    .qr-wrap { grid-template-columns: 1fr; text-align: center; }
+  }
+  #qrcode {
+    background: white;
+    padding: 16px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    display: inline-block;
+  }
+  #qrcode canvas, #qrcode img { display: block; }
+  .qr-info .lien {
+    background: var(--fond);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 13px;
+    word-break: break-all;
+    margin: 10px 0;
+    border: 1px solid var(--border);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--bleu);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn:hover { background: var(--bleu-fonce); transform: translateY(-1px); }
+  .btn.vert { background: var(--vert); }
+  .btn.vert:hover { background: #148546; }
+  .btn.outline {
+    background: white;
+    color: var(--bleu);
+    border: 2px solid var(--bleu);
+  }
+  .btn.outline:hover { background: var(--bleu); color: white; }
+
+  /* SMS */
+  .sms-block {
+    background: var(--fond);
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid var(--bleu);
+    margin: 16px 0;
+    position: relative;
+  }
+  .sms-block .label {
+    font-size: 11px;
+    color: var(--gris);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .sms-block .texte {
+    font-family: -apple-system, sans-serif;
+    font-size: 15px;
+    white-space: pre-wrap;
+    color: var(--texte);
+  }
+  .sms-block .count {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-size: 11px;
+    color: var(--gris);
+    background: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+  .btn-copy {
+    margin-top: 12px;
+  }
+  .copied {
+    background: var(--vert) !important;
+    color: white !important;
+  }
+
+  /* Script verbal */
+  .step {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .step-num {
+    background: var(--bleu);
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+  .step-content h4 {
+    margin: 0 0 4px;
+    color: var(--bleu-fonce);
+  }
+  .step-content p { margin: 0; color: var(--gris); }
+  .step-content em {
+    display: block;
+    background: var(--fond);
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-top: 8px;
+    font-style: italic;
+    color: var(--texte);
+    border-left: 3px solid var(--orange);
+  }
+
+  .tips {
+    background: linear-gradient(135deg, #fff8eb 0%, #fff3d6 100%);
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid var(--orange);
+  }
+  .tips ul { margin: 8px 0 0; padding-left: 20px; }
+  .tips li { margin-bottom: 8px; }
+
+  .nav {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .nav a {
+    padding: 8px 14px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--bleu-fonce);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .nav a:hover { background: var(--bleu); color: white; }
+
+  .impression {
+    background: white;
+    padding: 24px;
+    border: 2px dashed var(--bleu);
+    border-radius: 12px;
+    text-align: center;
+    margin-top: 16px;
+  }
+  .impression p { margin: 8px 0; }
+
+  @media print {
+    body { background: white; }
+    .nav, header, .no-print { display: none; }
+    .card { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="nav no-print">
+    <a href="/admin-pro/">← Retour admin</a>
+    <a href="#qr">QR Code</a>
+    <a href="#sms">Template SMS</a>
+    <a href="#script">Script verbal</a>
+    <a href="#tips">Conseils</a>
+    <a href="javascript:window.print()">🖨️ Imprimer</a>
+  </div>
+
+  <header>
+    <h1>📣 Toolkit Avis Google — HELP Confort</h1>
+    <p>Système d'automatisation des avis post-intervention. Objectif : passer de 343 à 500+ avis en 3 mois.</p>
+    <div class="stats">
+      <div class="stat">
+        <span class="num">343</span>
+        <span class="lib">Avis actuels Saint-Omer</span>
+      </div>
+      <div class="stat">
+        <span class="num">4,7 ★</span>
+        <span class="lib">Note moyenne</span>
+      </div>
+      <div class="stat">
+        <span class="num">+157</span>
+        <span class="lib">Objectif 3 mois</span>
+      </div>
+      <div class="stat">
+        <span class="num">~30%</span>
+        <span class="lib">Taux de conversion SMS attendu</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- QR CODE -->
+  <div class="card" id="qr">
+    <h2>📱 QR Code Avis Google <span class="badge">À imprimer</span></h2>
+    <p class="sub">À coller dans les véhicules, sur les factures, dans le sac à outils. Le client scanne avec son téléphone et tombe directement sur la page d'avis.</p>
+
+    <div class="qr-wrap">
+      <div id="qrcode"></div>
+      <div class="qr-info">
+        <p><strong>Lien direct vers la page d'avis :</strong></p>
+        <div class="lien" id="lien-avis">https://g.page/r/Ca0e1I7n08d9EBM/review</div>
+        <button class="btn" onclick="copierLien()">📋 Copier le lien</button>
+        <a class="btn outline" href="https://g.page/r/Ca0e1I7n08d9EBM/review" target="_blank" rel="noopener">🔗 Tester le lien</a>
+        <button class="btn outline" onclick="telechargerQR()">⬇️ Télécharger QR PNG</button>
+      </div>
+    </div>
+
+    <div class="impression no-print">
+      <p><strong>📍 Où imprimer le QR code :</strong></p>
+      <p>✅ Autocollant <strong>dans chaque véhicule</strong> (tableau de bord côté passager)<br>
+      ✅ <strong>Bas de chaque facture</strong> (template à modifier)<br>
+      ✅ <strong>Carte de visite</strong> remise en fin d'intervention<br>
+      ✅ <strong>Magnet</strong> offert au client (bonus mémorisation)</p>
+    </div>
+  </div>
+
+  <!-- TEMPLATE SMS -->
+  <div class="card" id="sms">
+    <h2>💬 Template SMS Post-Intervention <span class="badge">Prêt à copier</span></h2>
+    <p class="sub">À envoyer 1 à 2 heures après la fin de l'intervention (timing optimal : client satisfait, encore frais dans son esprit). Compatible Ringover, SMSFactor, OVHcloud SMS.</p>
+
+    <h4 style="color: var(--bleu-fonce); margin-top: 24px;">Version 1 — Standard (recommandé)</h4>
+    <div class="sms-block">
+      <span class="count" id="count-v1"></span>
+      <div class="label">SMS à envoyer</div>
+      <div class="texte" id="sms-v1">Bonjour {prenom}, merci pour votre confiance ! 🙏 Votre retour nous aide énormément. 1 clic pour nous laisser une étoile : https://g.page/r/Ca0e1I7n08d9EBM/review — L'équipe HELP Confort</div>
+    </div>
+    <button class="btn vert btn-copy" onclick="copierSMS('sms-v1', this)">📋 Copier ce SMS</button>
+
+    <h4 style="color: var(--bleu-fonce); margin-top: 28px;">Version 2 — Plus chaleureux</h4>
+    <div class="sms-block">
+      <span class="count" id="count-v2"></span>
+      <div class="label">SMS à envoyer</div>
+      <div class="texte" id="sms-v2">Bonjour {prenom} 👋 Ravi d'avoir pu intervenir chez vous aujourd'hui. Si tout est OK, un petit avis nous ferait très plaisir : https://g.page/r/Ca0e1I7n08d9EBM/review Merci ! HELP Confort</div>
+    </div>
+    <button class="btn vert btn-copy" onclick="copierSMS('sms-v2', this)">📋 Copier ce SMS</button>
+
+    <h4 style="color: var(--bleu-fonce); margin-top: 28px;">Version 3 — Court (90 caractères)</h4>
+    <div class="sms-block">
+      <span class="count" id="count-v3"></span>
+      <div class="label">SMS à envoyer</div>
+      <div class="texte" id="sms-v3">Merci {prenom} pour votre confiance ! 🙏 Un avis Google ? https://g.page/r/Ca0e1I7n08d9EBM/review — HELP Confort</div>
+    </div>
+    <button class="btn vert btn-copy" onclick="copierSMS('sms-v3', this)">📋 Copier ce SMS</button>
+
+    <div class="tips" style="margin-top: 24px;">
+      <strong>💡 À savoir :</strong>
+      <ul>
+        <li><strong>{prenom}</strong> = variable à remplacer par le prénom du client dans ton outil d'envoi (Ringover, etc.)</li>
+        <li><strong>Timing idéal</strong> : 1h à 2h après la fin de l'intervention. Pas le lendemain (oublié).</li>
+        <li><strong>Pas le dimanche</strong> ni après 20h (mauvaise expérience client).</li>
+        <li><strong>Lundi-vendredi 9h-19h</strong> + samedi 9h-17h = créneaux gagnants.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SCRIPT VERBAL -->
+  <div class="card" id="script">
+    <h2>🗣️ Script verbal — Techniciens HC <span class="badge">Sur le terrain</span></h2>
+    <p class="sub">À utiliser en fin d'intervention, juste avant le départ. Demander à l'oral fait passer le taux de conversion de 5% à 25%+.</p>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Vérifier la satisfaction</h4>
+        <p>Avant de demander l'avis, s'assurer que le client est content. Pas d'avis demandé si insatisfait (résoudre d'abord le problème).</p>
+        <em>« Voilà, c'est terminé. Tout est OK pour vous ? Vous avez des questions ? »</em>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Annoncer le SMS</h4>
+        <p>Prévenir le client qu'il va recevoir un SMS. Ça booste l'attention au moment de la réception.</p>
+        <em>« Super ! Dans 1 à 2 heures, vous allez recevoir un petit SMS de notre part. Si vous avez 30 secondes, ça nous aiderait beaucoup de laisser un avis sur Google — c'est notre meilleure pub. »</em>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Proposer le QR code (option)</h4>
+        <p>Pour les clients à l'aise avec leur téléphone, scan immédiat = avis instantané.</p>
+        <em>« Sinon, vous pouvez le faire tout de suite en scannant ce QR code avec l'appareil photo de votre téléphone. C'est 1 clic. »</em>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Remercier (toujours)</h4>
+        <p>Que le client laisse un avis ou pas, finir sur du positif.</p>
+        <em>« En tout cas merci pour votre confiance, et n'hésitez pas à nous rappeler en cas de besoin ! »</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="card" id="tips">
+    <h2>🎯 Maximiser les avis — Bonnes pratiques</h2>
+
+    <h4 style="color: var(--bleu-fonce);">✅ À FAIRE</h4>
+    <ul>
+      <li><strong>Demander à chaque client satisfait</strong> — ne pas sélectionner</li>
+      <li><strong>Répondre à TOUS les avis</strong> (positifs ET négatifs) sous 48h — Google adore</li>
+      <li><strong>Personnaliser la réponse</strong> avec le prénom et un détail de l'intervention</li>
+      <li><strong>Mentionner les mots-clés métier</strong> dans tes réponses ("plombier Saint-Omer", "dépannage chaudière")</li>
+      <li><strong>Suivre les stats GBP</strong> 1× par semaine (vue Performance)</li>
+    </ul>
+
+    <h4 style="color: var(--bleu-fonce); margin-top: 20px;">❌ À NE PAS FAIRE</h4>
+    <ul>
+      <li><strong>Jamais offrir de remise/cadeau contre un avis</strong> → interdit par Google, suspension de la fiche</li>
+      <li><strong>Pas de SMS le dimanche</strong> ni après 20h</li>
+      <li><strong>Pas de relance multiple</strong> — 1 SMS suffit. Pas de spam.</li>
+      <li><strong>Pas d'avis "demandés au bureau"</strong> tous depuis la même IP → Google détecte et supprime</li>
+      <li><strong>Ne jamais ignorer un avis négatif</strong> → répondre poliment, proposer de rappeler</li>
+    </ul>
+
+    <h4 style="color: var(--bleu-fonce); margin-top: 20px;">📊 ROI attendu</h4>
+    <p>Avec 50 interventions/mois × 30% de conversion SMS = <strong>15 nouveaux avis/mois</strong>. En 3 mois = +45 avis. Si tu ajoutes le QR + le verbal, tu peux atteindre <strong>+60 à +80 avis</strong>.</p>
+    <p style="background: var(--fond); padding: 14px; border-radius: 8px; border-left: 4px solid var(--vert); margin-top: 12px;">
+      <strong>Impact SEO local</strong> : passer de 343 à 500+ avis = top 3 garanti sur "plombier Saint-Omer", "chauffagiste Saint-Omer", "électricien Saint-Omer", etc. La densité d'avis est un signal de classement majeur dans le pack local Google Maps.
+    </p>
+  </div>
+
+  <!-- DUNKERQUE -->
+  <div class="card" style="background: linear-gradient(135deg, #fff8eb 0%, #fff3d6 100%);">
+    <h2>⏳ Dunkerque — En attente</h2>
+    <p class="sub">La fiche Google Business Profile Dunkerque n'est pas encore créée. Quand elle le sera, ajouter ici le 2ème lien d'avis pour automatiser selon la ville du client.</p>
+    <p><strong>Étapes pour créer la fiche GBP Dunkerque :</strong></p>
+    <ol>
+      <li>Aller sur <a href="https://business.google.com/" target="_blank" rel="noopener">business.google.com</a></li>
+      <li>"Ajouter un établissement" → renseigner adresse Dunkerque</li>
+      <li>Valider par carte postale (5-14 jours)</li>
+      <li>Optimiser : photos, services, horaires, zone d'intervention</li>
+      <li>Récupérer le lien d'avis et l'ajouter dans ce toolkit</li>
+    </ol>
+  </div>
+
+</div>
+
+<script>
+  const LIEN_AVIS = 'https://g.page/r/Ca0e1I7n08d9EBM/review';
+
+  // Génération QR code
+  QRCode.toCanvas(document.getElementById('qrcode'), LIEN_AVIS, {
+    width: 240,
+    margin: 2,
+    color: { dark: '#003c6e', light: '#ffffff' },
+    errorCorrectionLevel: 'H'
+  }, function(err) {
+    if (err) console.error(err);
+  });
+
+  // Compteur caractères SMS
+  function countChars() {
+    ['v1', 'v2', 'v3'].forEach(v => {
+      const txt = document.getElementById('sms-' + v).textContent;
+      document.getElementById('count-' + v).textContent = txt.length + ' car.';
+    });
+  }
+  countChars();
+
+  // Copier lien
+  function copierLien() {
+    navigator.clipboard.writeText(LIEN_AVIS);
+    alert('✅ Lien copié !');
+  }
+
+  // Copier SMS
+  function copierSMS(id, btn) {
+    const txt = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(txt);
+    btn.classList.add('copied');
+    btn.textContent = '✅ Copié !';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = '📋 Copier ce SMS';
+    }, 2000);
+  }
+
+  // Télécharger QR PNG
+  function telechargerQR() {
+    const canvas = document.querySelector('#qrcode canvas');
+    if (!canvas) { alert('QR pas encore généré'); return; }
+    const lien = document.createElement('a');
+    lien.download = 'QR-avis-google-helpconfort.png';
+    lien.href = canvas.toDataURL('image/png');
+    lien.click();
+  }
+</script>
+</body>
+</html>
