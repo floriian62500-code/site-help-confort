@@ -1040,19 +1040,109 @@ if (document.fonts && document.fonts.ready) {
 
 
 <!-- ─── 3. CATALOGUE DÉTAILLÉ — Toutes nos interventions adaptation PMR ─── -->
-<!-- ─── BANDEAU AIDE MAPRIMEADAPT — mise en avant aide financière ─── -->
+<!-- ─── BANDEAU AIDE MAPRIMEADAPT V2 — refonte 2026 (lisible, moderne, clin d'oeil logo officiel) ─── -->
+<!-- HC-MAPRIMEADAPT-V2 -->
 <section class="m-section" aria-label="Aide financière MaPrimeAdapt" style="padding:24px 0">
  <div class="container">
- <a href="aides.html#elig" style="display:flex;align-items:center;gap:20px;padding:24px 28px;background:linear-gradient(135deg,#7C3AED 0%,#5B21B6 100%);color:#fff;text-decoration:none;border-radius:18px;box-shadow:0 12px 32px rgba(124,58,237,.22);flex-wrap:wrap">
- <span style="flex-shrink:0;width:64px;height:64px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.30);border-radius:16px;display:flex;align-items:center;justify-content:center"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
- <div style="flex:1;min-width:240px">
- <div style="font-size:.78rem;font-weight:800;letter-spacing:.10em;text-transform:uppercase;opacity:.85;margin-bottom:4px">AIDE D&apos;ÉTAT — DEPUIS 2024</div>
- <div style="font-size:1.35rem;font-weight:800;line-height:1.2;margin-bottom:6px">MaPrimeAdapt&apos; — jusqu&apos;à 70 % d&apos;aide sur vos travaux PMR</div>
- <p style="margin:0;font-size:.95rem;line-height:1.5;opacity:.92">Pour les seniors 70 ans et + ou en perte d&apos;autonomie. Nous montons gratuitement votre dossier&nbsp;: diagnostic, devis, déclaration, suivi jusqu&apos;au versement.</p>
+   <div class="hc-maprime-banner">
+     <!-- Visuel maison/sourire (inspiré du logo MaPrimeAdapt') -->
+     <div class="hc-maprime-icon">
+       <svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true">
+         <path d="M16 30 L32 14 L48 30" fill="none" stroke="#0A1428" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+         <ellipse cx="32" cy="38" rx="16" ry="14" fill="#F59E0B"/>
+         <path d="M25 35 Q27 38 29 35" fill="none" stroke="#0A1428" stroke-width="2.2" stroke-linecap="round"/>
+         <path d="M35 35 Q37 38 39 35" fill="none" stroke="#0A1428" stroke-width="2.2" stroke-linecap="round"/>
+       </svg>
+     </div>
+
+     <div class="hc-maprime-content">
+       <div class="hc-maprime-tag">
+         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+         Aide d'État · Depuis 2024
+       </div>
+       <h3 class="hc-maprime-title">MaPrimeAdapt&apos; — jusqu'à <strong>70 %</strong> d'aide sur vos travaux PMR</h3>
+       <p class="hc-maprime-desc">Pour les seniors <strong>70 ans et +</strong> ou en perte d'autonomie. Nous montons <strong>gratuitement</strong> votre dossier : diagnostic, devis, déclaration, suivi jusqu'au versement.</p>
+     </div>
+
+     <a href="aides.html#elig" class="hc-maprime-cta">
+       Vérifier mon éligibilité
+       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+     </a>
+   </div>
  </div>
- <span style="flex-shrink:0;padding:12px 20px;background:#fff;color:#5B21B6;border-radius:10px;font-weight:800;font-size:.94rem;white-space:nowrap">Vérifier mon éligibilité →</span>
- </a>
- </div>
+
+ <style>
+   .hc-maprime-banner {
+     display:flex; align-items:center; gap:24px;
+     padding:24px 28px;
+     background:linear-gradient(135deg, #FFF8F1 0%, #FFFFFF 60%);
+     border:1px solid #FBD38D;
+     border-left:6px solid #F59E0B;
+     border-radius:18px;
+     box-shadow:0 6px 24px rgba(245,158,11,.10), 0 2px 6px rgba(10,20,40,.04);
+     flex-wrap:wrap;
+     transition:transform .25s ease, box-shadow .25s ease;
+   }
+   .hc-maprime-banner:hover {
+     transform:translateY(-2px);
+     box-shadow:0 14px 36px rgba(245,158,11,.16), 0 4px 12px rgba(10,20,40,.06);
+   }
+   .hc-maprime-icon {
+     flex-shrink:0;
+     width:72px; height:72px;
+     background:#FFFFFF;
+     border:1px solid #FBD38D;
+     border-radius:16px;
+     display:flex; align-items:center; justify-content:center;
+     box-shadow:0 2px 8px rgba(245,158,11,.10);
+   }
+   .hc-maprime-content { flex:1; min-width:260px; }
+   .hc-maprime-tag {
+     display:inline-flex; align-items:center; gap:6px;
+     padding:5px 11px;
+     background:rgba(245,158,11,.12);
+     color:#92400E;
+     border-radius:999px;
+     font-size:.74rem; font-weight:700;
+     letter-spacing:.04em; text-transform:uppercase;
+     margin-bottom:10px;
+   }
+   .hc-maprime-title {
+     margin:0 0 8px;
+     font-size:1.3rem; font-weight:800; line-height:1.25;
+     color:#0A1428; letter-spacing:-.01em;
+   }
+   .hc-maprime-title strong { color:#D97706; font-weight:900; }
+   .hc-maprime-desc {
+     margin:0;
+     font-size:.94rem; line-height:1.55;
+     color:#475569;
+   }
+   .hc-maprime-desc strong { color:#0A1428; font-weight:700; }
+   .hc-maprime-cta {
+     flex-shrink:0;
+     display:inline-flex; align-items:center; gap:8px;
+     padding:13px 22px;
+     background:linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+     color:#FFFFFF;
+     text-decoration:none;
+     border-radius:12px;
+     font-weight:700; font-size:.95rem;
+     white-space:nowrap;
+     box-shadow:0 6px 18px rgba(245,158,11,.30);
+     transition:transform .2s ease, box-shadow .2s ease, gap .2s ease;
+   }
+   .hc-maprime-cta:hover {
+     transform:translateY(-1px);
+     gap:12px;
+     box-shadow:0 10px 24px rgba(245,158,11,.40);
+   }
+   @media (max-width:720px) {
+     .hc-maprime-banner { padding:20px; gap:16px; }
+     .hc-maprime-title { font-size:1.1rem; }
+     .hc-maprime-cta { width:100%; justify-content:center; }
+   }
+ </style>
 </section>
 
 <section class="m-section" aria-label="Détail des interventions adaptation PMR">
