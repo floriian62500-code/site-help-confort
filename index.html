@@ -2246,6 +2246,31 @@ try {
         if (sec) sec.scrollIntoView({ behavior:'smooth', block:'start' });
       }
     }, 150);
+
+    /* HC-WIZARD-PREFILL-METIER : pré-cocher le métier si urg= dans l'URL */
+    try {
+      var wzUrg = wzParams.get('urg');
+      if (wzUrg) {
+        var URG_MAP = {
+          'plomberie': 'Plomberie',
+          'chauffage': 'Chauffage',
+          'electricite': 'Électricité',
+          'serrurerie': 'Serrurerie',
+          'vitrerie': 'Vitrerie',
+          'travaux': 'Travaux / rénovation'
+        };
+        var metierValue = URG_MAP[wzUrg.toLowerCase()];
+        if (metierValue) {
+          setTimeout(function(){
+            var cb = document.querySelector('input[name="resa-metiers[]"][value="' + metierValue + '"]');
+            if (cb && !cb.checked) {
+              cb.checked = true;
+              cb.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+          }, 900);
+        }
+      }
+    } catch(_){}
   } else if (location.hash === '#hc-reservation') {
     setTimeout(function(){
       var sec = document.getElementById('hc-reservation');
