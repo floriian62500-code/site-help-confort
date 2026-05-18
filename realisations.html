@@ -294,7 +294,7 @@
  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0.7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
  <span class="hc-btn-tel-num">03 66 10 01 34</span>
  </a>
- <button class="hc-burger" aria-label="Ouvrir le menu" aria-expanded="false">
+ <button type="button" class="hc-burger" aria-label="Ouvrir le menu" aria-expanded="false">
  <span></span><span></span><span></span>
  </button>
  </div>
@@ -435,20 +435,20 @@ if (document.fonts && document.fonts.ready) {
  <div class="container">
 
  <div class="real-filters" id="realFilters">
- <button class="real-filter active" data-filter="all">Toutes</button>
- <button class="real-filter" data-filter="Plomberie">Plomberie</button>
- <button class="real-filter" data-filter="Chauffage">Chauffage</button>
- <button class="real-filter" data-filter="Électricité">Électricité</button>
- <button class="real-filter" data-filter="Serrurerie">Serrurerie</button>
- <button class="real-filter" data-filter="Vitrerie">Vitrerie</button>
- <button class="real-filter" data-filter="Menuiserie">Menuiserie</button>
- <button class="real-filter" data-filter="Volets">Volets</button>
- <button class="real-filter" data-filter="Rénovation">Rénovation</button>
- <button class="real-filter" data-filter="Adaptation PMR">Adaptation PMR</button>
- <button class="real-filter" data-filter="Multi-métiers">Multi-métiers</button>
+ <button type="button" class="real-filter active" data-filter="all">Toutes</button>
+ <button type="button" class="real-filter" data-filter="Plomberie">Plomberie</button>
+ <button type="button" class="real-filter" data-filter="Chauffage">Chauffage</button>
+ <button type="button" class="real-filter" data-filter="Électricité">Électricité</button>
+ <button type="button" class="real-filter" data-filter="Serrurerie">Serrurerie</button>
+ <button type="button" class="real-filter" data-filter="Vitrerie">Vitrerie</button>
+ <button type="button" class="real-filter" data-filter="Menuiserie">Menuiserie</button>
+ <button type="button" class="real-filter" data-filter="Volets">Volets</button>
+ <button type="button" class="real-filter" data-filter="Rénovation">Rénovation</button>
+ <button type="button" class="real-filter" data-filter="Adaptation PMR">Adaptation PMR</button>
+ <button type="button" class="real-filter" data-filter="Multi-métiers">Multi-métiers</button>
  <span style="flex:1"></span>
- <button class="real-filter" data-zone="Saint-Omer">📍 Saint-Omer</button>
- <button class="real-filter" data-zone="Dunkerque">📍 Dunkerque</button>
+ <button type="button" class="real-filter" data-zone="Saint-Omer">📍 Saint-Omer</button>
+ <button type="button" class="real-filter" data-zone="Dunkerque">📍 Dunkerque</button>
  </div>
 
  <div class="ra-carousel" data-ra-car>
@@ -604,7 +604,7 @@ if (document.fonts && document.fonts.ready) {
 
 <!-- Lightbox -->
 <div class="real-lightbox" id="realLightbox" onclick="document.getElementById('realLightbox').classList.remove('open')">
- <button class="close" aria-label="Fermer">×</button>
+ <button type="button" class="close" aria-label="Fermer">×</button>
  <img id="lightboxImg" src="" alt="" loading="lazy" decoding="async">
 </div>
 

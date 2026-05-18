@@ -211,7 +211,7 @@
  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0.7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
  <span class="hc-btn-tel-num">03 66 10 01 34</span>
  </a>
- <button class="hc-burger" aria-label="Ouvrir le menu" aria-expanded="false">
+ <button type="button" class="hc-burger" aria-label="Ouvrir le menu" aria-expanded="false">
  <span></span><span></span><span></span>
  </button>
  </div>
@@ -1246,8 +1246,8 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
  </h4>
  <div class="hc-mini-car" data-mini="real">
  <div class="hc-mini-track" id="hc-mini-real-track"><div class="hc-mini-loading">Chargement…</div></div>
- <button class="hc-mini-arrow hc-mini-prev" aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
- <button class="hc-mini-arrow hc-mini-next" aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+ <button type="button" class="hc-mini-arrow hc-mini-prev" aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+ <button type="button" class="hc-mini-arrow hc-mini-next" aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
  </div>
  <a href="realisations.html" class="all-link" style="border-color:#FF6B1A;color:#FF6B1A">Voir tous nos chantiers <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
  </aside>
@@ -1259,8 +1259,8 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
  </h4>
  <div class="hc-mini-car" data-mini="actu">
  <div class="hc-mini-track" id="hc-mini-actu-track"><div class="hc-mini-loading">Chargement…</div></div>
- <button class="hc-mini-arrow hc-mini-prev" aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
- <button class="hc-mini-arrow hc-mini-next" aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+ <button type="button" class="hc-mini-arrow hc-mini-prev" aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+ <button type="button" class="hc-mini-arrow hc-mini-next" aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
  </div>
  <a href="actualites.html" class="all-link" style="border-color:#0DA0CF;color:#0DA0CF">Voir toutes nos actualités <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
  </aside>
@@ -1909,7 +1909,7 @@ function showAllPrestasModal() {
  html += '<div class="apm-group" data-metier="' + m + '"><div class="apm-group-head" style="border-left-color:' + c.border + '"><span class="apm-group-emoji">' + c.emoji + '</span><h4>' + m + '</h4><span class="apm-count">' + list.length + '</span></div><div class="apm-grid">';
  list.forEach(function(p){
    var priceTag = p.quote ? '<span class="apm-price apm-price-quote">Sur devis</span>' : (p.price ? '<span class="apm-price">À partir de <strong>' + p.price + ' €</strong></span>' : '');
-   html += '<button type="button" class="apm-item" data-presta-id="' + p.id + '" style="--apm-c:' + c.border + ';--apm-bg:' + c.bg + '">' +
+   html += '<button type="button" class="apm-item" data-presta-id="' + p.id + '-2" style="--apm-c:' + c.border + ';--apm-bg:' + c.bg + '">' +
    '<span class="apm-item-icon">' + p.icon + '</span>' +
    '<span class="apm-item-body">' +
    '<span class="apm-item-label">' + p.label + '</span>' +

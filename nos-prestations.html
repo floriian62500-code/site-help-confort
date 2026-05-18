@@ -278,7 +278,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  <!-- FILTRES STICKY -->
  <nav class="nv-filters" aria-label="Filtrer par catégorie">
  <div class="nv-filters-inner" id="filtersBar">
- <button class="nv-filter is-active" data-filter="all">Toutes les prestations <span class="nv-count" id="cntAll">—</span></button>
+ <button type="button" class="nv-filter is-active" data-filter="all">Toutes les prestations <span class="nv-count" id="cntAll">—</span></button>
  </div>
  <div class="nv-subfilters" id="subfiltersBar" role="tablist" aria-label="Filtrer par sous-catégorie" style="display:none"></div>
  </nav>
@@ -1219,7 +1219,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  const incl = (s.includes || []).slice(0, 4);
  const more = (s.includes || []).length - incl.length;
  return `
- <article class="nv-card" data-service-id="${s.id}">
+ <article class="nv-card" data-service-id="${s.id}-2">
  <div class="nv-card-visual" data-cat="${escapeHtml(catSlug)}">
  ${s.badge ? `<span class="nv-card-badge">${escapeHtml(s.badge)}</span>` : ''}
  <span class="nv-card-cat">${escapeHtml(s.category_name || '')}</span>
@@ -1251,7 +1251,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  <div class="nv-price-deposit">Acompte ${s.deposit_pct}% à la commande : ${eurFmt(s.deposit_ttc)}</div>
  </div>
  <div class="nv-card-actions">
- <button class="nv-btn-primary" data-action="reserve" data-service-id="${s.id}">
+ <button type="button" class="nv-btn-primary" data-action="reserve" data-service-id="${s.id}-3">
  Réserver cette prestation
  <svg width="16" height="16" ${SVG_ATTRS}><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
  </button>
@@ -1457,7 +1457,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  <p>Merci ${escapeHtml(data.firstname)}, nous avons bien reçu votre demande.</p>
  <div class="nv-order-num">N° ${escapeHtml(inserted.order_number)}</div>
  <p>Nous vous rappelons au <strong>${escapeHtml(data.phone)}</strong> sous <strong>4 h ouvrées</strong> pour confirmer la date d'intervention et vous envoyer le devis détaillé.</p>
- <p style="margin-top:24px"><button class="nv-btn-primary" onclick="document.getElementById('nvModal').classList.remove('is-open');document.body.style.overflow='';">Fermer</button></p>
+ <p style="margin-top:24px"><button type="button" class="nv-btn-primary" onclick="document.getElementById('nvModal').classList.remove('is-open');document.body.style.overflow='';">Fermer</button></p>
  </div>`;
  };
  }
