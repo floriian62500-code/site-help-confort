@@ -1,16 +1,16 @@
 # Audit H1 length — Rapport
 
-_Généré le 2026-05-17 06:26_
+_Généré le 2026-05-18 07:00_
 
 ## Synthèse
 
-- Pages scannées : **59**
-- ✅ OK (20-70 chars) : **39**
+- Pages scannées : **92**
+- ✅ OK (20-70 chars) : **63**
 - ⚠️  Warnings (h1 multiples, hors longueur) : **0**
-- ❌ Erreurs (< 20 ou > 70) : **20**
+- ❌ Erreurs (< 20 ou > 70) : **29**
 - ℹ️  Sans h1 ou parse error : **0**
-- Findings totaux : **20**
-  - Erreurs : 20
+- Findings totaux : **29**
+  - Erreurs : 29
   - Avertissements : 0
 
 ## Bornes appliquées
@@ -44,6 +44,14 @@ _Généré le 2026-05-17 06:26_
 > Votre soupape de sécurité ou votre manomètre est défectueux, usé ou ne fonctionne plus correctement
 - ❌ H1-TOO-LONG : 99 chars > 70
 
+### `agence-dunkerque.html`  (16 chars, n_h1=1)
+> Agence Dunkerque
+- ❌ H1-TOO-SHORT : 16 chars < 20
+
+### `agence-saint-omer.html`  (17 chars, n_h1=1)
+> Agence Saint-Omer
+- ❌ H1-TOO-SHORT : 17 chars < 20
+
 ### `avant-apres.html`  (13 chars, n_h1=1)
 > Avant / Après
 - ❌ H1-TOO-SHORT : 13 chars < 20
@@ -59,6 +67,18 @@ _Généré le 2026-05-17 06:26_
 ### `depannage-bergues.html`  (75 chars, n_h1=1)
 > Dépannage à Bergues Plomberie, chauffage, électricité — intervention rapide
 - ❌ H1-TOO-LONG : 75 chars > 70
+
+### `depannage-boulogne-sur-mer.html`  (84 chars, n_h1=1)
+> Dépannage à Boulogne-sur-Mer Plomberie, chauffage, électricité — intervention rapide
+- ❌ H1-TOO-LONG : 84 chars > 70
+
+### `depannage-calais.html`  (74 chars, n_h1=1)
+> Dépannage à Calais Plomberie, chauffage, électricité — intervention rapide
+- ❌ H1-TOO-LONG : 74 chars > 70
+
+### `depannage-coquelles.html`  (77 chars, n_h1=1)
+> Dépannage à Coquelles Plomberie, chauffage, électricité — intervention rapide
+- ❌ H1-TOO-LONG : 77 chars > 70
 
 ### `depannage-dunkerque.html`  (83 chars, n_h1=1)
 > Dépannage à Dunkerque Plombier, chauffagiste, électricien — sur le littoral du Nord
@@ -80,6 +100,14 @@ _Généré le 2026-05-17 06:26_
 > Dépannage à Saint-Omer Plomberie, chauffage, électricité — intervention rapide
 - ❌ H1-TOO-LONG : 78 chars > 70
 
+### `depannage-saint-pol-sur-mer.html`  (85 chars, n_h1=1)
+> Dépannage à Saint-Pol-sur-Mer Plomberie, chauffage, électricité — intervention rapide
+- ❌ H1-TOO-LONG : 85 chars > 70
+
+### `depannage-sangatte.html`  (76 chars, n_h1=1)
+> Dépannage à Sangatte Plomberie, chauffage, électricité — intervention rapide
+- ❌ H1-TOO-LONG : 76 chars > 70
+
 ### `guides.html`  (71 chars, n_h1=1)
 > Guides & conseils d'experts tout ce qu'il faut savoir sur votre habitat
 - ❌ H1-TOO-LONG : 71 chars > 70
@@ -88,9 +116,17 @@ _Généré le 2026-05-17 06:26_
 > Mentions légales
 - ❌ H1-TOO-SHORT : 16 chars < 20
 
-### `pro.html`  (122 chars, n_h1=1)
-> Un partenaire local fiable pour vos interventions habitat techniciens salariés · zéro sous-traitance · réseau HELP Confort
-- ❌ H1-TOO-LONG : 122 chars > 70
+### `nos-metiers.html`  (13 chars, n_h1=1)
+> Nos 8 métiers
+- ❌ H1-TOO-SHORT : 13 chars < 20
+
+### `plan-du-site.html`  (12 chars, n_h1=1)
+> Plan du site
+- ❌ H1-TOO-SHORT : 12 chars < 20
+
+### `pro.html`  (124 chars, n_h1=1)
+> Un partenaire local fiable pour vos interventions habitat. Techniciens salariés · zéro sous-traitance · réseau HELP Confort.
+- ❌ H1-TOO-LONG : 124 chars > 70
 
 ### `sinistres.html`  (101 chars, n_h1=1)
 > Sinistre chez vous ? Nous intervenons techniquement à vos côtés mise en sécurité, diagnostic, travaux

@@ -1,11 +1,18 @@
 {
-  "generated": "2026-05-17 06:26",
+  "generated": "2026-05-18 07:00",
   "canonical_sitemap": "https://www.depan59-62.fr/sitemap.xml",
   "robots_exists": true,
   "sitemap_urls": [
-    "https://www.depan59-62.fr/sitemap.xml"
+    "https://www.depan59-62.fr/sitemap-index.xml",
+    "https://www.depan59-62.fr/sitemap.xml",
+    "https://www.depan59-62.fr/sitemap-pages.xml",
+    "https://www.depan59-62.fr/sitemap-actus.xml"
   ],
-  "errors": [],
+  "errors": [
+    "SITEMAP-URL-MISMATCH : path `/sitemap-index.xml` ≠ `/sitemap.xml` (URL : `https://www.depan59-62.fr/sitemap-index.xml`)",
+    "SITEMAP-URL-MISMATCH : path `/sitemap-pages.xml` ≠ `/sitemap.xml` (URL : `https://www.depan59-62.fr/sitemap-pages.xml`)",
+    "SITEMAP-URL-MISMATCH : path `/sitemap-actus.xml` ≠ `/sitemap.xml` (URL : `https://www.depan59-62.fr/sitemap-actus.xml`)"
+  ],
   "warnings": [],
-  "status": "ok"
+  "status": "error"
 }

@@ -1,16 +1,42 @@
-# Audit duplicate IDs — 2026-05-17 06:24
+# Audit duplicate IDs — 2026-05-18 06:58
 
 Sonde #63 : détecte les `id="X"` répétés dans une page (HTML invalide) et les ids partagés par > 10 pages (potentielle factorisation).
 
-- **Pages scannées** : 44
-- **IDs totaux (toutes pages)** : 731
-- **IDs uniques (clés)** : 243
+- **Pages scannées** : 77
+- **IDs totaux (toutes pages)** : 1382
+- **IDs uniques (clés)** : 246
 - **🚨 Pages avec ids dupliqués** : 0
-- **🟠 IDs partagés par ≥ 10 pages** : 0
+- **🟠 IDs partagés par ≥ 10 pages** : 19
 
 ## ✅ Aucun id dupliqué dans une même page
 
-## ✅ Aucun id partagé par ≥ 10 pages (hors whitelist)
+## 🟠 IDs partagés par ≥ 10 pages
+
+Ces ids dupliqués entre pages suggèrent un bloc HTML copié à la main.
+Si c'est un header/footer/banner attendu, ajouter l'id à
+`EXPECTED_GLOBAL_IDS` dans le script.
+
+| ID | Nb pages | Usages totaux |
+|----|----------|---------------|
+| `m-modal-detail-brands` | 26 | 26 |
+| `m-modal-detail-brands-block` | 26 | 26 |
+| `m-modal-detail-delay` | 26 | 26 |
+| `m-modal-detail-delay-text` | 26 | 26 |
+| `m-modal-detail-desc` | 26 | 26 |
+| `m-modal-detail-eligibilite` | 26 | 26 |
+| `m-modal-detail-eligibilite-text` | 26 | 26 |
+| `m-modal-detail-icon` | 26 | 26 |
+| `m-modal-detail-included` | 26 | 26 |
+| `m-modal-detail-included-block` | 26 | 26 |
+| `m-modal-detail-pane` | 26 | 26 |
+| `m-modal-detail-title` | 26 | 26 |
+| `m-modal-detail-warranty` | 26 | 26 |
+| `m-modal-detail-warranty-text` | 26 | 26 |
+| `m-modal-form-title` | 26 | 26 |
+| `m-modal-presta` | 26 | 26 |
+| `m-modal-success` | 26 | 26 |
+| `m-reserve-form` | 26 | 26 |
+| `m-reserve-modal` | 26 | 26 |
 
 ## Notes
 

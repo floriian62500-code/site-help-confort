@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-05-17T06:26:07",
-  "scanned_pages": 43,
-  "total_ctas": 30,
+  "generated_at": "2026-05-18T07:00:42",
+  "scanned_pages": 76,
+  "total_ctas": 63,
   "families": {
     "estimation": {
       "occurrences": 2,
@@ -11,10 +11,12 @@
       }
     },
     "devis": {
-      "occurrences": 27,
-      "unique_destinations": 1,
+      "occurrences": 60,
+      "unique_destinations": 3,
       "destinations": {
-        "contact.html": 27
+        "contact.html": 57,
+        "devis-express.html": 1,
+        "tel:+33366100134": 2
       }
     },
     "reserver": {
@@ -25,5 +27,60 @@
       }
     }
   },
-  "alerts": []
+  "alerts": [
+    {
+      "family": "devis",
+      "destination_count": 3,
+      "destinations": [
+        {
+          "canon": "contact.html",
+          "count": 57,
+          "examples": [
+            {
+              "page": "aides.html",
+              "text": "Demander un devis",
+              "href": "contact.html"
+            },
+            {
+              "page": "avant-apres.html",
+              "text": "Demander un devis →",
+              "href": "contact.html#form"
+            },
+            {
+              "page": "blog.html",
+              "text": "Demander un devis",
+              "href": "contact.html"
+            }
+          ]
+        },
+        {
+          "canon": "tel:+33366100134",
+          "count": 2,
+          "examples": [
+            {
+              "page": "remplacement-chauffe-eau.html",
+              "text": "Demander un devis 03 66 10 01 34",
+              "href": "tel:+33366100134"
+            },
+            {
+              "page": "tarifs.html",
+              "text": "📞 Devis gratuit 03 66 10 01 34",
+              "href": "tel:+33366100134"
+            }
+          ]
+        },
+        {
+          "canon": "devis-express.html",
+          "count": 1,
+          "examples": [
+            {
+              "page": "plan-du-site.html",
+              "text": "Devis express",
+              "href": "devis-express.html"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

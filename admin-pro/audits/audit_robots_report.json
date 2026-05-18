@@ -1,12 +1,14 @@
 {
   "robots_present": true,
   "sitemap_present": true,
-  "sitemap_urls_count": 82,
+  "sitemap_urls_count": 144,
   "robots_sitemaps_directives": [
-    "https://www.depan59-62.fr/sitemap.xml"
+    "https://www.depan59-62.fr/sitemap-index.xml",
+    "https://www.depan59-62.fr/sitemap.xml",
+    "https://www.depan59-62.fr/sitemap-pages.xml",
+    "https://www.depan59-62.fr/sitemap-actus.xml"
   ],
   "missing_from_sitemap": [
-    "partenaires.html",
     "realisation.html",
     "reset.html"
   ],
@@ -14,9 +16,8 @@
   "findings": [
     {
       "sev": "MED",
-      "msg": "3 page(s) racine absente(s) du sitemap",
+      "msg": "2 page(s) racine absente(s) du sitemap",
       "details": [
-        "partenaires.html",
         "realisation.html",
         "reset.html"
       ]
@@ -26,8 +27,8 @@
     "robots.txt présent",
     "User-agent: * présent",
     "14 pages publiques principales autorisées",
-    "Sitemap référencé dans robots.txt : 1",
-    "sitemap.xml présent + bien formé (82 URLs)",
+    "Sitemap référencé dans robots.txt : 4",
+    "sitemap.xml présent + bien formé (144 URLs)",
     "/robots.txt → HTTP 200 en prod",
     "/sitemap.xml → HTTP 200 en prod",
     "sitemap.xml content-type OK (application/xml; charset=utf-8)"
@@ -46,5 +47,5 @@
       "tested": true
     }
   },
-  "generated_at": "2026-05-17T06:26:05"
+  "generated_at": "2026-05-18T07:00:38"
 }

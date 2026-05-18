@@ -1,8 +1,8 @@
 # 🔗 Audit liens externes cassés — P10
 
-*Généré le 2026-05-17 06:26 — `admin-pro/audits/audit_liens_externes.py`*
+*Généré le 2026-05-18 07:00 — `admin-pro/audits/audit_liens_externes.py`*
 
-**Pages scannées** : 44
+**Pages scannées** : 77
 **URLs externes uniques testés** : 71
 **URLs OK (2xx/3xx)** : 58
 **URLs cassés (4xx/5xx/timeout/DNS)** : **13**
@@ -12,19 +12,19 @@
 
 | Status | URL | Pages | Erreur |
 |--------|-----|-------|--------|
-| 403 | `https://comap.aalberts-hfc.com/fr` | chauffagiste-saint-omer.html, partenaires.html | Forbidden |
+| 403 | `https://comap.aalberts-hfc.com/fr` | chauffagiste-boulogne-sur-mer.html, chauffagiste-calais.html, chauffagiste-dunkerque.html (+2) | Forbidden |
 | 403 | `https://fr.indeed.com/cmp/Help-Confort` | carrieres.html | Forbidden |
-| --- | `https://new.abb.com/fr` | electricien-saint-omer.html, partenaires.html | TimeoutError: The read operation timed out |
+| --- | `https://new.abb.com/fr` | electricien-boulogne-sur-mer.html, electricien-calais.html, electricien-dunkerque.html (+2) | TimeoutError: The read operation timed out |
 | 404 | `https://www.anah.gouv.fr/maprimeadapt` | aides.html | Not Found |
-| --- | `https://www.bremaud.com/` | menuisier-saint-omer.html, partenaires.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
-| 404 | `https://www.handicare.com/fr` | pmr-saint-omer.html | Not Found |
-| 403 | `https://www.hoppe.com/fr-fr/catalogue-produits/1001192940/solutions-pour-portes-interieures-poignees` | partenaires.html, serrurier-saint-omer.html | Forbidden |
-| 403 | `https://www.knauf.fr/` | travaux-saint-omer.html | Forbidden |
-| 403 | `https://www.mapei.fr/` | travaux-saint-omer.html | Forbidden |
-| 403 | `https://www.pellet-asc.com/` | pmr-saint-omer.html | Forbidden |
-| 403 | `https://www.placo.fr/` | travaux-saint-omer.html | Forbidden |
-| 403 | `https://www.saint-gobain.com/fr` | travaux-saint-omer.html | Forbidden |
-| 403 | `https://www.watermatic.fr/` | plombier-saint-omer.html | Forbidden |
+| --- | `https://www.bremaud.com/` | menuisier-dunkerque.html, menuisier-saint-omer.html, partenaires.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
+| 404 | `https://www.handicare.com/fr` | pmr-dunkerque.html, pmr-saint-omer.html | Not Found |
+| 403 | `https://www.hoppe.com/fr-fr/catalogue-produits/1001192940/solutions-pour-portes-interieures-poignees` | partenaires.html, serrurier-boulogne-sur-mer.html, serrurier-calais.html (+2) | Forbidden |
+| 403 | `https://www.knauf.fr/` | travaux-dunkerque.html, travaux-saint-omer.html | Forbidden |
+| 403 | `https://www.mapei.fr/` | travaux-dunkerque.html, travaux-saint-omer.html | Forbidden |
+| 403 | `https://www.pellet-asc.com/` | pmr-dunkerque.html, pmr-saint-omer.html | Forbidden |
+| 403 | `https://www.placo.fr/` | travaux-dunkerque.html, travaux-saint-omer.html | Forbidden |
+| 403 | `https://www.saint-gobain.com/fr` | travaux-dunkerque.html, travaux-saint-omer.html | Forbidden |
+| 403 | `https://www.watermatic.fr/` | plombier-boulogne-sur-mer.html, plombier-calais.html, plombier-dunkerque.html (+1) | Forbidden |
 
 ## 📊 Statistiques
 
