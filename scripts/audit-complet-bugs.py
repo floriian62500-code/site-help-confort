@@ -201,28 +201,31 @@ def axis2(pages):
         except Exception:
             continue
         rel_p = str(p.relative_to(ROOT))
+        scan = strip_dynamic(txt)
 
-        # display:none inline qui masque du contenu
-        for m in re.finditer(r'style\s*=\s*"([^"]*display\s*:\s*none[^"]*)"', txt, re.I):
-            # signaler seulement (potentiellement intentionnel)
+        # display:none inline (sur scan)
+        for m in re.finditer(r'style\s*=\s*"([^"]*display\s*:\s*none[^"]*)"', scan, re.I):
             findings["display_none_inline"].append({"page": rel_p, "style": m.group(1)[:100]})
 
-        # multi-h1
-        h1s = RE_H1.findall(txt)
+        # multi-h1 (sur scan)
+        h1s = RE_H1.findall(scan)
         if len(h1s) > 1:
             findings["multi_h1"].append({"page": rel_p, "count": len(h1s), "h1s": [re.sub(r"\s+"," ",h)[:80] for h in h1s[:5]]})
 
-        # img alt vide pour images probablement de contenu (non-decoratif)
-        for m in RE_IMG.finditer(txt):
+        # img alt vide (sur scan)
+        for m in RE_IMG.finditer(scan):
             attrs = m.group(1)
             am = re.search(r'\balt\s*=\s*"([^"]*)"', attrs, re.I)
-            src = re.search(r'\bsrc\s*=\s*"([^"]*)"', attrs, re.I)
+            src_m = re.search(r'\bsrc\s*=\s*"([^"]*)"', attrs, re.I)
             if am is not None and am.group(1).strip() == "":
-                # decoratif si presence role="presentation" ou aria-hidden
                 if "aria-hidden" not in attrs and "presentation" not in attrs:
-                    findings["img_alt_vide"].append({"page": rel_p, "src": src.group(1) if src else "", "tag": m.group(0)[:150]})
+                    src_val = src_m.group(1) if src_m else ""
+                    # ignorer si src est un placeholder/template
+                    if any(tok in src_val for tok in ("${","{{","'+","+'")):
+                        continue
+                    findings["img_alt_vide"].append({"page": rel_p, "src": src_val, "tag": m.group(0)[:150]})
 
-        # viewport
+        # viewport (sur txt complet - le head ne contient pas de template)
         if not RE_VIEWPORT.search(txt):
             findings["viewport_manquant"].append({"page": rel_p})
 
@@ -261,43 +264,56 @@ def axis3(pages):
             continue
         orig = txt
         rel_p = str(p.relative_to(ROOT))
+        scan = strip_dynamic(txt)
 
-        # forms
-        for m in RE_FORM.finditer(txt):
+        # forms (sur scan)
+        for m in RE_FORM.finditer(scan):
             attrs = m.group(1)
             if not re.search(r'\baction\s*=', attrs, re.I) and not re.search(r'\bonsubmit\s*=', attrs, re.I):
                 findings["form_sans_action"].append({"page": rel_p, "tag": m.group(0)[:180]})
 
-        # buttons sans type -> auto-fix en type="button"
+        # buttons sans type -> auto-fix en type="button" (NE PAS toucher au contenu scripts/templates)
         def fix_button(match):
             attrs = match.group(1)
             if RE_TYPE_ATTR.search(attrs):
                 return match.group(0)
-            # Heuristique: si dans un form qui n'a qu'un seul bouton, peut etre submit
-            # Pour safety on met type="button" - le dev peut overrider
             findings["auto_fixed_button_type"] += 1
             return f'<button type="button"{attrs}>'
 
-        new_txt = RE_BUTTON.sub(fix_button, txt)
+        # On opere fix sur txt MAIS en preservant les scripts: split, fix, recombine
+        parts = []
+        last = 0
+        for sm in RE_SCRIPT_BLOCK.finditer(txt):
+            parts.append(("html", txt[last:sm.start()]))
+            parts.append(("raw",  txt[sm.start():sm.end()]))
+            last = sm.end()
+        parts.append(("html", txt[last:]))
+        rebuilt = []
+        for kind, seg in parts:
+            if kind == "html":
+                rebuilt.append(RE_BUTTON.sub(fix_button, seg))
+            else:
+                rebuilt.append(seg)
+        new_txt = "".join(rebuilt)
         if new_txt != txt:
             txt = new_txt
 
-        # selects vides
-        for sm in RE_SELECT.finditer(txt):
+        # selects vides (sur scan)
+        for sm in RE_SELECT.finditer(scan):
             inner = sm.group(1)
             opts = RE_OPTION.findall(inner)
             if not opts or all(o.strip() == "" for o in opts):
                 findings["select_vide"].append({"page": rel_p, "snippet": sm.group(0)[:200]})
 
-        # onclick references
-        for om in RE_ONCLICK.finditer(txt):
+        # onclick references (sur scan)
+        for om in RE_ONCLICK.finditer(scan):
             code = om.group(1).strip()
             # extract first identifier call
             cm = re.match(r'\s*([A-Za-z_$][\w$.]*)\s*\(', code)
             if cm:
                 fname = cm.group(1).split(".")[0]
                 # ignorer methodes natives
-                if fname in {"this","event","window","document","location","history","console","JSON","Math","Date","Array","Object","String","Number","Boolean","parent","top","self"}:
+                if fname in {"this","event","window","document","location","history","console","JSON","Math","Date","Array","Object","String","Number","Boolean","parent","top","self","if","else","return","var","let","const","function","new","typeof","void","true","false","null","undefined"}:
                     continue
                 if fname not in js_funcs:
                     findings["onclick_indefinis"].append({"page": rel_p, "fn": fname, "onclick": code[:120]})
@@ -322,31 +338,33 @@ def axis4(pages):
             continue
         orig = txt
         rel_p = str(p.relative_to(ROOT))
+        scan = strip_dynamic(txt)
 
         # title
-        tm = RE_TITLE.search(txt)
+        tm = RE_TITLE.search(scan)
         if tm:
             t = re.sub(r"\s+"," ", tm.group(1).strip())
             titles[t].append(rel_p)
 
         # meta description
-        dm = RE_META_DESC.search(txt)
+        dm = RE_META_DESC.search(scan)
         if dm:
             d = re.sub(r"\s+"," ", dm.group(1).strip())
             if d:
                 descs[d].append(rel_p)
 
-        # cards dans le meme <ul> avec meme href -> chercher <ul>...<a href="..."> dupes
-        for um in re.finditer(r'<ul\b[^>]*>(.*?)</ul>', txt, re.I | re.S):
+        # cards dans le meme <ul> avec meme href -> sur scan
+        for um in re.finditer(r'<ul\b[^>]*>(.*?)</ul>', scan, re.I | re.S):
             inner = um.group(1)
             hrefs = re.findall(r'<a\b[^>]*\bhref\s*=\s*"([^"]+)"', inner, re.I)
-            cnt = Counter([h for h in hrefs if h and not h.startswith("#")])
+            cnt = Counter([h for h in hrefs if h and not h.startswith("#") and "${" not in h and "'+" not in h])
             for h, n in cnt.items():
                 if n > 1:
                     findings["cards_dupes"].append({"page": rel_p, "href": h, "count": n})
 
-        # IDs dupliques -> auto-rename
-        ids = RE_ID.findall(txt)
+        # IDs dupliques (sur scan -> ignore templates) -> auto-rename si vrais dupes
+        ids = RE_ID.findall(scan)
+        ids = [i for i in ids if "${" not in i and "'+" not in i and "{{" not in i]
         cnt = Counter(ids)
         dupes_in_page = {k:v for k,v in cnt.items() if v > 1}
         if dupes_in_page:
