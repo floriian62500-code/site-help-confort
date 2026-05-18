@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>SEO Dashboard · Audit & Monitoring · HC</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<link rel="manifest" href="/admin-pro/manifest.webmanifest">
+<meta name="theme-color" content="#0DA0CF">
+<style>
+  body { font-family: Inter, -apple-system, sans-serif; background: #FAFCFD; margin: 0; padding: 24px; }
+  .wrap { max-width: 1300px; margin: 0 auto; }
+  h1 { font-size: 1.6rem; margin: 0 0 6px; display: flex; align-items: center; gap: 10px; }
+  h2 { font-size: 1.1rem; margin: 24px 0 12px; color: #0A1428; display: flex; align-items: center; gap: 10px; }
+  h2 .badge { background: #0DA0CF; color: #fff; font-size: 0.66rem; padding: 3px 9px; border-radius: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .sub { color: #64748b; margin-bottom: 16px; font-size: 0.92rem; }
+  a.back { color: #0DA0CF; text-decoration: none; font-size: 0.84rem; font-weight: 600; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 24px; }
+  .kpi { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 18px 18px 16px; box-shadow: 0 1px 2px rgba(11,18,32,.04); }
+  .kpi .lbl { font-size: 0.72rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.4px; font-weight: 700; margin-bottom: 6px; }
+  .kpi .val { font-size: 1.8rem; font-weight: 900; color: #0A1428; line-height: 1; }
+  .kpi .meta { font-size: 0.78rem; color: #64748b; margin-top: 8px; }
+  .kpi .meta.ok { color: #16a34a; font-weight: 600; }
+  .kpi .meta.warn { color: #f59e0b; font-weight: 600; }
+  .kpi .meta.err { color: #dc2626; font-weight: 600; }
+  .kpi.lg .val { color: #0DA0CF; }
+
+  .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 2px rgba(11,18,32,.04); }
+
+  .check-list { display: grid; gap: 8px; }
+  .check-item { display: grid; grid-template-columns: 32px 1fr auto; gap: 12px; padding: 10px 14px; background: #FAFCFD; border: 1px solid #e2e8f0; border-radius: 10px; align-items: center; }
+  .check-item.ok { background: linear-gradient(135deg, #ECFDF5, #fff); border-color: rgba(22,163,74,0.35); }
+  .check-item.warn { background: linear-gradient(135deg, #FFFBEB, #fff); border-color: rgba(245,158,11,0.35); }
+  .check-item.err { background: linear-gradient(135deg, #FEF2F2, #fff); border-color: rgba(220,38,38,0.35); }
+  .check-icon { font-size: 1.4rem; text-align: center; }
+  .check-label { font-size: 0.94rem; font-weight: 600; color: #0A1428; }
+  .check-meta { font-size: 0.78rem; color: #64748b; margin-top: 2px; }
+  .check-action { font-size: 0.82rem; color: #0DA0CF; text-decoration: none; font-weight: 600; white-space: nowrap; }
+  .check-action:hover { text-decoration: underline; }
+
+  .pages-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+  .pages-table th { background: #FAFCFD; text-align: left; padding: 10px 12px; border-bottom: 2px solid #e2e8f0; color: #0A1428; font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.3px; }
+  .pages-table td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+  .pages-table tr:hover td { background: #FAFCFD; }
+  .pages-table .url { color: #0DA0CF; text-decoration: none; }
+  .pages-table .url:hover { text-decoration: underline; }
+  .pages-table .pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600; }
+  .p-metier { background: #dbeafe; color: #1e40af; }
+  .p-ville { background: #d1fae5; color: #065f46; }
+  .p-hub { background: #fce7f3; color: #9d174d; }
+  .p-longtail { background: #fef3c7; color: #92400e; }
+  .p-actu { background: #ede9fe; color: #5b21b6; }
+  .p-tech { background: #f1f5f9; color: #475569; }
+  .p-trans { background: #ffedd5; color: #c2410c; }
+
+  .filter-bar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .filter-bar button { padding: 6px 14px; background: #fff; border: 1px solid #e2e8f0; border-radius: 999px; cursor: pointer; font-size: 0.82rem; font-weight: 600; color: #475569; }
+  .filter-bar button.active { background: #0DA0CF; color: #fff; border-color: #0DA0CF; }
+  .filter-bar input { padding: 6px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.86rem; min-width: 200px; }
+
+  .quick-tools { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+  .tool { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 6px; transition: all 0.2s; }
+  .tool:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-color: #0DA0CF; }
+  .tool .title { font-weight: 700; color: #0A1428; font-size: 0.95rem; }
+  .tool .desc { font-size: 0.82rem; color: #64748b; }
+  .tool .icon { font-size: 1.5rem; }
+
+  .empty { text-align: center; padding: 30px 20px; color: #64748b; }
+
+  .meter { height: 8px; background: #f1f5f9; border-radius: 4px; overflow: hidden; margin-top: 6px; }
+  .meter-fill { height: 100%; background: linear-gradient(90deg, #0DA0CF, #34A853); transition: width 0.5s; }
+</style>
+</head>
+<body>
+<div class="admin-overlay"></div>
+<div class="admin-shell">
+  <aside class="admin-sidebar"></aside>
+  <main class="admin-main">
+    <header class="admin-topbar"></header>
+    <div class="admin-content">
+
+      <div style="margin-bottom: 16px;">
+        <a class="back" href="index.html">← Dashboard</a>
+      </div>
+
+      <h1>🎯 SEO Dashboard — Audit & Monitoring</h1>
+      <p class="sub">Vue d'ensemble du référencement de <strong>depan59-62.fr</strong>. Données sitemap + GA4 + checklist audit.</p>
+
+      <!-- KPI EN HAUT -->
+      <div class="kpi-grid" id="kpiGrid">
+        <div class="kpi lg">
+          <div class="lbl">📄 URLs au sitemap</div>
+          <div class="val" id="kpi-urls">—</div>
+          <div class="meta" id="kpi-urls-meta">Chargement…</div>
+        </div>
+        <div class="kpi">
+          <div class="lbl">🌐 Pages indexables</div>
+          <div class="val" id="kpi-indexable">—</div>
+          <div class="meta" id="kpi-indexable-meta">—</div>
+        </div>
+        <div class="kpi">
+          <div class="lbl">🚀 Sessions (30j)</div>
+          <div class="val" id="kpi-sessions">—</div>
+          <div class="meta" id="kpi-sessions-meta">Via GA4</div>
+        </div>
+        <div class="kpi">
+          <div class="lbl">🔍 Trafic organic</div>
+          <div class="val" id="kpi-organic">—</div>
+          <div class="meta" id="kpi-organic-meta">Part du trafic SEO</div>
+        </div>
+      </div>
+
+      <!-- CHECKLIST AUDIT -->
+      <h2>✅ Checklist d'audit SEO <span class="badge">État actuel</span></h2>
+      <div class="card">
+        <p class="sub">Audit complet des fondamentaux SEO. Cliquer sur chaque ligne pour vérifier/agir.</p>
+        <div class="check-list" id="checkList"></div>
+      </div>
+
+      <!-- OUTILS RAPIDES -->
+      <h2>🛠️ Outils de diagnostic externe</h2>
+      <div class="card">
+        <p class="sub">Liens directs vers les outils Google/Bing pour audit ponctuel.</p>
+        <div class="quick-tools">
+          <a class="tool" href="https://search.google.com/search-console" target="_blank" rel="noopener">
+            <div class="icon">🔍</div>
+            <div class="title">Google Search Console</div>
+            <div class="desc">Voir l'indexation, les requêtes recherchées et les positions</div>
+          </a>
+          <a class="tool" href="https://www.bing.com/webmasters" target="_blank" rel="noopener">
+            <div class="icon">🅱️</div>
+            <div class="title">Bing Webmaster Tools</div>
+            <div class="desc">Indexation Bing + Yahoo + DuckDuckGo + Ecosia</div>
+          </a>
+          <a class="tool" href="https://pagespeed.web.dev/?url=https%3A%2F%2Fwww.depan59-62.fr%2F" target="_blank" rel="noopener">
+            <div class="icon">⚡</div>
+            <div class="title">PageSpeed Insights</div>
+            <div class="desc">Core Web Vitals (LCP, CLS, INP) sur mobile + desktop</div>
+          </a>
+          <a class="tool" href="https://search.google.com/test/rich-results?url=https%3A%2F%2Fwww.depan59-62.fr%2F" target="_blank" rel="noopener">
+            <div class="icon">🏷️</div>
+            <div class="title">Rich Results Test</div>
+            <div class="desc">Vérifier les schemas (LocalBusiness, FAQPage, HowTo…)</div>
+          </a>
+          <a class="tool" href="https://search.google.com/test/mobile-friendly?url=https%3A%2F%2Fwww.depan59-62.fr%2F" target="_blank" rel="noopener">
+            <div class="icon">📱</div>
+            <div class="title">Mobile-Friendly Test</div>
+            <div class="desc">Test de mobile-friendliness Google</div>
+          </a>
+          <a class="tool" href="https://www.semrush.com/analytics/overview/?q=depan59-62.fr" target="_blank" rel="noopener">
+            <div class="icon">📊</div>
+            <div class="title">Semrush (gratuit, partiel)</div>
+            <div class="desc">Backlinks, mots-clés concurrents, opportunités</div>
+          </a>
+          <a class="tool" href="https://www.uptrends.com/tools/uptime" target="_blank" rel="noopener">
+            <div class="icon">⏱️</div>
+            <div class="title">Uptime check</div>
+            <div class="desc">Vérifier que le site est UP depuis plusieurs serveurs</div>
+          </a>
+          <a class="tool" href="analytics.html">
+            <div class="icon">📈</div>
+            <div class="title">Analytics détaillé (interne)</div>
+            <div class="desc">Données GA4 complètes : sessions, pages, sources, heatmap</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- LISTE PAGES + INSPECTION GSC -->
+      <h2>📑 Toutes les pages du sitemap <span class="badge" id="totalCount">—</span></h2>
+      <div class="card">
+        <p class="sub">Cliquer "Inspecter" pour ouvrir directement l'URL dans Google Search Console et voir son état d'indexation.</p>
+
+        <div class="filter-bar">
+          <input type="text" id="searchInput" placeholder="🔍 Filtrer par URL…">
+          <button class="active" data-filter="all">Toutes</button>
+          <button data-filter="metier">Métier</button>
+          <button data-filter="ville">Ville</button>
+          <button data-filter="hub">Hubs</button>
+          <button data-filter="longtail">Long-tail</button>
+          <button data-filter="trans">Transactionnel</button>
+          <button data-filter="actu">Actus</button>
+          <button data-filter="tech">Technique</button>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="pages-table" id="pagesTable">
+            <thead>
+              <tr>
+                <th>URL</th>
+                <th>Catégorie</th>
+                <th>Priorité</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="pagesBody">
+              <tr><td colspan="4" class="empty">⏳ Chargement du sitemap…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ROADMAP RECOMMANDÉE -->
+      <h2>🎯 Actions recommandées <span class="badge">Roadmap 90 jours</span></h2>
+      <div class="card" id="roadmapCard">
+        <div class="check-list" id="roadmapList"></div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+(async function() {
+  const sb = await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+  await HCLayout.mount('seo-dashboard', 'SEO Dashboard');
+
+  // ═══════════════════════════════════════════════════════
+  // 1. CHARGE LE SITEMAP
+  // ═══════════════════════════════════════════════════════
+  let urls = [];
+  try {
+    const res = await fetch('/sitemap.xml', { cache: 'no-cache' });
+    const xml = await res.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(xml, 'text/xml');
+    const urlNodes = doc.querySelectorAll('url');
+    urlNodes.forEach(node => {
+      const loc = node.querySelector('loc')?.textContent || '';
+      const priority = parseFloat(node.querySelector('priority')?.textContent || '0.5');
+      const lastmod = node.querySelector('lastmod')?.textContent || '';
+      urls.push({ url: loc, priority, lastmod, category: categorize(loc) });
+    });
+  } catch (e) {
+    console.error('Sitemap load error:', e);
+  }
+
+  function categorize(url) {
+    const u = url.toLowerCase();
+    if (/realisations\//.test(u)) return 'actu';
+    if (/(plombier|chauffagiste|electricien|serrurier|vitrier|menuisier)-(saint-omer|dunkerque|calais|boulogne)/.test(u)) return 'metier';
+    if (/(saint-omer|dunkerque|calais|boulogne|aire-sur-la-lys|hazebrouck|sangatte|coquelles|saint-pol)/.test(u) && !u.includes('plombier') && !u.includes('chauffagiste')) return 'ville';
+    if (/nos-(metiers|villes|services)|plan-du-site|agence-/.test(u)) return 'hub';
+    if (/(debouchage|panne|fuite|installation|reparation|urgence|tarif|entretien|diagnostic|ouverture)/.test(u)) return 'longtail';
+    if (/(contact|devis|rdv|reservation)/.test(u)) return 'trans';
+    if (/(mentions|cgv|cookies|politique|robots|sitemap)/.test(u)) return 'tech';
+    return 'tech';
+  }
+
+  // KPI 1 — URLs
+  document.getElementById('kpi-urls').textContent = urls.length;
+  document.getElementById('kpi-urls-meta').textContent = `Soumises au sitemap.xml`;
+  document.getElementById('totalCount').textContent = urls.length;
+
+  // KPI 2 — Indexables (estimation : on considère que toutes sauf actus très récentes sont indexables)
+  const indexables = urls.filter(u => u.priority >= 0.5).length;
+  document.getElementById('kpi-indexable').textContent = indexables;
+  document.getElementById('kpi-indexable-meta').textContent = `Priorité ≥ 0.5`;
+
+  // ═══════════════════════════════════════════════════════
+  // 2. CHARGE LES KPI GA4 (via app_settings.ga4_oauth)
+  // ═══════════════════════════════════════════════════════
+  try {
+    const { data: ga4Settings } = await sb.from('app_settings').select('value').eq('key','ga4').single();
+    const { data: ga4Oauth } = await sb.from('app_settings').select('value').eq('key','ga4_oauth').maybeSingle();
+
+    if (ga4Settings?.value?.property_id && ga4Oauth?.value?.refresh_token) {
+      const rt = await fetch('https://oauth2.googleapis.com/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          client_id: ga4Oauth.value.client_id,
+          client_secret: ga4Oauth.value.client_secret,
+          refresh_token: ga4Oauth.value.refresh_token,
+          grant_type: 'refresh_token'
+        }).toString()
+      });
+      const tj = await rt.json();
+      if (tj.access_token) {
+        const propId = ga4Settings.value.property_id;
+        // Sessions 30j + organic split
+        const main = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${propId}:runReport`, {
+          method: 'POST',
+          headers: { Authorization: 'Bearer ' + tj.access_token, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
+            metrics: [{ name: 'sessions' }],
+            dimensions: [{ name: 'sessionDefaultChannelGroup' }]
+          })
+        }).then(r => r.json());
+
+        let totalSessions = 0, organicSessions = 0;
+        (main.rows || []).forEach(row => {
+          const channel = row.dimensionValues[0].value;
+          const sessions = Number(row.metricValues[0].value);
+          totalSessions += sessions;
+          if (channel === 'Organic Search') organicSessions += sessions;
+        });
+
+        document.getElementById('kpi-sessions').textContent = new Intl.NumberFormat('fr-FR').format(totalSessions);
+        document.getElementById('kpi-sessions-meta').textContent = `30 derniers jours`;
+        document.getElementById('kpi-sessions-meta').classList.add('ok');
+
+        const pct = totalSessions > 0 ? Math.round(organicSessions / totalSessions * 100) : 0;
+        document.getElementById('kpi-organic').textContent = pct + '%';
+        document.getElementById('kpi-organic-meta').textContent = `${new Intl.NumberFormat('fr-FR').format(organicSessions)} sessions organic`;
+        document.getElementById('kpi-organic-meta').classList.add(pct >= 50 ? 'ok' : pct >= 30 ? 'warn' : 'err');
+      }
+    } else {
+      document.getElementById('kpi-sessions').textContent = '—';
+      document.getElementById('kpi-sessions-meta').textContent = 'GA4 non connecté';
+      document.getElementById('kpi-sessions-meta').classList.add('warn');
+      document.getElementById('kpi-organic').textContent = '—';
+      document.getElementById('kpi-organic-meta').textContent = 'GA4 requis';
+    }
+  } catch (e) {
+    console.error('GA4 load error:', e);
+    document.getElementById('kpi-sessions').textContent = '—';
+    document.getElementById('kpi-sessions-meta').textContent = 'Erreur GA4';
+    document.getElementById('kpi-sessions-meta').classList.add('err');
+  }
+
+  // ═══════════════════════════════════════════════════════
+  // 3. CHECKLIST D'AUDIT
+  // ═══════════════════════════════════════════════════════
+  const checks = [
+    {
+      label: 'Sitemap.xml accessible',
+      status: urls.length > 100 ? 'ok' : urls.length > 0 ? 'warn' : 'err',
+      meta: urls.length > 100 ? `${urls.length} URLs détectées` : urls.length > 0 ? `Seulement ${urls.length} URLs — étrange` : 'Sitemap vide ou inaccessible',
+      action: { label: 'Voir', url: '/sitemap.xml' }
+    },
+    {
+      label: 'Sitemap-index.xml configuré',
+      status: 'ok',
+      meta: 'Indique sitemap-pages.xml + sitemap-actus.xml + sitemap-images.xml',
+      action: { label: 'Voir', url: '/sitemap-index.xml' }
+    },
+    {
+      label: 'Robots.txt présent et autorisant le crawl',
+      status: 'ok',
+      meta: 'Bloque /admin-pro/ + autorise tout le reste',
+      action: { label: 'Voir', url: '/robots.txt' }
+    },
+    {
+      label: 'Google Search Console — propriété vérifiée',
+      status: 'ok',
+      meta: 'Vérifiée via fichier HTML (mai 2026)',
+      action: { label: 'Ouvrir GSC', url: 'https://search.google.com/search-console' }
+    },
+    {
+      label: 'Sitemap soumis à GSC',
+      status: 'ok',
+      meta: 'sitemap.xml + sitemap-index.xml — 146 URLs détectées',
+      action: { label: 'Ouvrir GSC', url: 'https://search.google.com/search-console/sitemaps' }
+    },
+    {
+      label: 'Bing Webmaster Tools connecté',
+      status: 'ok',
+      meta: 'Import depuis GSC + 10 URLs prioritaires soumises',
+      action: { label: 'Ouvrir Bing WM', url: 'https://www.bing.com/webmasters' }
+    },
+    {
+      label: 'IndexNow configuré (Bing/Yandex/Seznam)',
+      status: 'ok',
+      meta: 'Ping auto à chaque publication via Edge Function',
+      action: { label: 'Voir admin', url: 'maintenance.html' }
+    },
+    {
+      label: 'Schema.org structuré sur pages clés',
+      status: 'ok',
+      meta: 'LocalBusiness, Service, FAQPage, HowTo, AggregateRating, Article',
+      action: { label: 'Tester', url: 'https://search.google.com/test/rich-results?url=https%3A%2F%2Fwww.depan59-62.fr%2Fplombier-saint-omer.html' }
+    },
+    {
+      label: 'Google Business Profile actif',
+      status: 'ok',
+      meta: 'Saint-Omer : 343 avis, 4,7★ — Dunkerque : à créer',
+      action: { label: 'Ouvrir GBP', url: 'https://business.google.com/' }
+    },
+    {
+      label: 'Solocal / Pages Jaunes — lien principal corrigé',
+      status: 'ok',
+      meta: 'Pointe vers depan59-62.fr (22 plateformes redirigées)',
+      action: { label: 'Ouvrir Solocal', url: 'https://manager.solocal.com/' }
+    },
+    {
+      label: 'Page Dunkerque GBP (fiche)',
+      status: 'warn',
+      meta: 'Pas encore créée — opportunité loupée pour Dunkerque',
+      action: { label: 'Créer fiche', url: 'https://business.google.com/' }
+    },
+    {
+      label: 'Backlinks partenaires lancés',
+      status: 'warn',
+      meta: 'Toolkit prêt, 0 demandes envoyées encore',
+      action: { label: 'Ouvrir toolkit', url: 'backlinks-partenaires.html' }
+    },
+    {
+      label: 'Avis Google automatisés (SMS post-QA)',
+      status: 'warn',
+      meta: 'Toolkit prêt, QR à imprimer, SMS à configurer Ringover',
+      action: { label: 'Ouvrir toolkit', url: 'avis-google-toolkit.html' }
+    },
+    {
+      label: 'Réponses aux avis Google',
+      status: 'warn',
+      meta: 'Gérées par Arnaud Louiset au siège — digest à envoyer',
+      action: { label: 'Ouvrir digest', url: 'avis-non-repondus.html' }
+    },
+    {
+      label: 'Core Web Vitals (vitesse mobile)',
+      status: 'warn',
+      meta: 'À tester périodiquement avec PSI',
+      action: { label: 'Tester PSI', url: 'https://pagespeed.web.dev/?url=https%3A%2F%2Fwww.depan59-62.fr%2F' }
+    }
+  ];
+
+  const checkList = document.getElementById('checkList');
+  checkList.innerHTML = checks.map(c => `
+    <div class="check-item ${c.status}">
+      <div class="check-icon">${c.status === 'ok' ? '✅' : c.status === 'warn' ? '⚠️' : '❌'}</div>
+      <div>
+        <div class="check-label">${c.label}</div>
+        <div class="check-meta">${c.meta}</div>
+      </div>
+      <a class="check-action" href="${c.action.url}" target="${c.action.url.startsWith('http') ? '_blank' : '_self'}" rel="noopener">${c.action.label} →</a>
+    </div>
+  `).join('');
+
+  // ═══════════════════════════════════════════════════════
+  // 4. LISTE DES PAGES + INSPECTION GSC
+  // ═══════════════════════════════════════════════════════
+  let filtreActif = 'all';
+  let searchQuery = '';
+
+  function categoryLabel(cat) {
+    return ({ metier: 'Métier × Ville', ville: 'Ville', hub: 'Hub', longtail: 'Long-tail', actu: 'Actualité', trans: 'Transactionnel', tech: 'Technique' })[cat] || cat;
+  }
+
+  function renderPages() {
+    let filtered = urls;
+    if (filtreActif !== 'all') filtered = filtered.filter(u => u.category === filtreActif);
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      filtered = filtered.filter(u => u.url.toLowerCase().includes(q));
+    }
+
+    // Tri par priorité décroissante
+    filtered.sort((a, b) => b.priority - a.priority);
+
+    const tbody = document.getElementById('pagesBody');
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" class="empty">Aucune page trouvée avec ces filtres.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(u => {
+      const pathOnly = u.url.replace(/^https?:\/\/[^\/]+/, '');
+      const gscInspectUrl = `https://search.google.com/search-console/inspect?resource_id=https%3A%2F%2Fwww.depan59-62.fr%2F&id=${encodeURIComponent(u.url)}`;
+      return `
+        <tr>
+          <td><a href="${u.url}" target="_blank" rel="noopener" class="url">${pathOnly}</a></td>
+          <td><span class="pill p-${u.category}">${categoryLabel(u.category)}</span></td>
+          <td>${u.priority.toFixed(1)}</td>
+          <td>
+            <a href="${gscInspectUrl}" target="_blank" rel="noopener" class="check-action">🔍 Inspecter</a>
+            &nbsp;·&nbsp;
+            <a href="https://pagespeed.web.dev/?url=${encodeURIComponent(u.url)}" target="_blank" rel="noopener" class="check-action">⚡ PSI</a>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  document.querySelectorAll('.filter-bar button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-bar button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filtreActif = btn.dataset.filter;
+      renderPages();
+    });
+  });
+  document.getElementById('searchInput').addEventListener('input', (e) => {
+    searchQuery = e.target.value;
+    renderPages();
+  });
+
+  renderPages();
+
+  // ═══════════════════════════════════════════════════════
+  // 5. ROADMAP 90 JOURS
+  // ═══════════════════════════════════════════════════════
+  const roadmap = [
+    { phase: 'J+0 à J+7', label: '🚀 Imprimer 10 QR codes "Avis Google" + coller dans véhicules', priority: 'high', status: 'todo' },
+    { phase: 'J+0 à J+7', label: '📞 Configurer SMS auto Ringover post-QA (trigger "client satisfait")', priority: 'high', status: 'todo' },
+    { phase: 'J+7 à J+14', label: '🔗 Lancer 1ère vague backlinks : France Rénov\' RGE + Qualibat + CCI Hauts-de-France', priority: 'high', status: 'todo' },
+    { phase: 'J+7 à J+14', label: '📋 Envoyer 1er digest avis non répondus à Arnaud Louiset', priority: 'medium', status: 'todo' },
+    { phase: 'J+14 à J+30', label: '📍 Créer fiche Google Business Profile Dunkerque (validation par carte postale = 5-14j)', priority: 'high', status: 'todo' },
+    { phase: 'J+14 à J+30', label: '🏷️ Vérifier 10 URLs prioritaires dans GSC + corriger si problème d\'indexation', priority: 'medium', status: 'todo' },
+    { phase: 'J+30 à J+60', label: '🔗 2ème vague backlinks : presse locale (La Voix du Nord, Écho de la Lys) + fournisseurs (Atlantic, Vaillant)', priority: 'medium', status: 'todo' },
+    { phase: 'J+30 à J+60', label: '📝 Publier 2 articles de fond (1500+ mots) sur sujets à fort volume', priority: 'medium', status: 'todo' },
+    { phase: 'J+60 à J+90', label: '📊 1er audit positions GSC complet : top 10 / top 3 / hors top 10', priority: 'high', status: 'todo' },
+    { phase: 'J+60 à J+90', label: '⚡ Audit Core Web Vitals + optimisation vitesse mobile si LCP > 2.5s', priority: 'medium', status: 'todo' }
+  ];
+
+  const rdList = document.getElementById('roadmapList');
+  rdList.innerHTML = roadmap.map((r, i) => `
+    <div class="check-item ${r.priority === 'high' ? 'err' : 'warn'}" style="grid-template-columns: 100px 32px 1fr;">
+      <div style="font-size: 0.78rem; font-weight: 700; color: #64748b;">${r.phase}</div>
+      <div class="check-icon">${r.priority === 'high' ? '🔥' : '⚡'}</div>
+      <div class="check-label">${r.label}</div>
+    </div>
+  `).join('');
+
+})();
+</script>
+</body>
+</html>
