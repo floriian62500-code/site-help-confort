@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Avis non répondus · Digest pour Arnaud · HC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+  body { font-family: Inter, -apple-system, sans-serif; background: #FAFCFD; margin: 0; padding: 24px; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 6px; display: flex; align-items: center; gap: 10px; }
+  .sub { color: #64748b; margin-bottom: 20px; font-size: 0.94rem; }
+  .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 2px rgba(11,18,32,.04); }
+  .card h2 { margin: 0 0 8px; font-size: 1.05rem; color: #0A1428; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .stat { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; text-align: center; }
+  .stat .num { font-size: 1.6rem; font-weight: 800; color: #0DA0CF; }
+  .stat .lib { font-size: 0.74rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 4px; }
+  .stat.urgente .num { color: #dc2626; }
+  .stat.haute .num { color: #f59e0b; }
+  .stat.normale .num { color: #16a34a; }
+  .cta { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; color: #fff; border: none; border-radius: 10px; font: inherit; font-weight: 700; font-size: 0.92rem; cursor: pointer; background: linear-gradient(135deg, #4285F4, #34A853); }
+  .cta:hover { transform: translateY(-1px); }
+  .cta.gris { background: linear-gradient(135deg, #64748b, #475569); }
+  .cta:disabled { opacity: 0.55; cursor: not-allowed; }
+  .review-item { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; padding: 14px; background: #FAFCFD; border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 10px; align-items: start; }
+  .review-item.urgente { background: linear-gradient(135deg, #FEF2F2, #fff); border-color: rgba(220,38,38,0.35); }
+  .review-item.haute { background: linear-gradient(135deg, #FFFBEB, #fff); border-color: rgba(245,158,11,0.35); }
+  .review-rating { font-size: 1.4rem; font-weight: 700; color: #FFB400; min-width: 60px; }
+  .review-rating small { display: block; font-size: 0.66rem; color: #64748b; font-weight: 500; }
+  .review-meta { font-size: 0.78rem; color: #64748b; margin-bottom: 6px; }
+  .review-author { font-weight: 700; color: #0A1428; }
+  .review-comment { font-size: 0.92rem; line-height: 1.55; color: #1f2937; }
+  .review-tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600; margin-left: 6px; }
+  .tag-urgente { background: #fee2e2; color: #991b1b; }
+  .tag-haute { background: #fef3c7; color: #92400e; }
+  .tag-normale { background: #dbeafe; color: #1e40af; }
+  .email-block { background: #f3f4f6; padding: 16px; border-radius: 10px; border-left: 4px solid #4285F4; margin-top: 12px; font-family: Menlo, monospace; font-size: 0.84rem; line-height: 1.6; white-space: pre-wrap; }
+  .empty { text-align: center; padding: 40px 20px; color: #64748b; }
+  .empty .ic { font-size: 3rem; margin-bottom: 8px; }
+  a.back { color: #0DA0CF; text-decoration: none; font-size: 0.84rem; font-weight: 600; }
+  .filter { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .filter button { padding: 7px 14px; background: #fff; border: 1px solid #e2e8f0; border-radius: 999px; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: #475569; }
+  .filter button.active { background: #0DA0CF; color: #fff; border-color: #0DA0CF; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/admin-pro/">← Retour admin</a>
+  <h1>📋 Avis non répondus — Digest pour Arnaud</h1>
+  <p class="sub">Les réponses aux avis Google sont gérées par <strong>Arnaud Louiset au siège</strong>. Cette page liste les avis en attente de réponse et génère un email-récap prêt à envoyer.</p>
+
+  <!-- STATS -->
+  <div class="stats" id="stats">
+    <div class="stat urgente"><div class="num" id="stat-urgente">—</div><div class="lib">≤ 2 ★ urgents</div></div>
+    <div class="stat haute"><div class="num" id="stat-haute">—</div><div class="lib">3 ★ à traiter</div></div>
+    <div class="stat normale"><div class="num" id="stat-normale">—</div><div class="lib">4-5 ★ à remercier</div></div>
+    <div class="stat"><div class="num" id="stat-total">—</div><div class="lib">Total non répondus</div></div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="card" style="text-align: center;">
+    <button class="cta" id="btnRefresh">🔄 Charger les avis</button>
+    <button class="cta gris" id="btnGenerateEmail" disabled>✉️ Générer l'email pour Arnaud</button>
+    <button class="cta gris" id="btnCopyEmail" disabled>📋 Copier l'email</button>
+    <p class="sub" style="margin: 12px 0 0; font-size: 0.82rem;">Email à envoyer à : <strong>arnaud.louiset@helpconfort.com</strong> (à adapter)</p>
+  </div>
+
+  <!-- FILTRES -->
+  <div class="card">
+    <h2>📊 Avis en attente de réponse</h2>
+    <div class="filter">
+      <button class="active" data-filter="all">Tous</button>
+      <button data-filter="urgente">≤ 2 ★ urgents</button>
+      <button data-filter="haute">3 ★</button>
+      <button data-filter="normale">4-5 ★</button>
+    </div>
+    <div id="reviewsList">
+      <div class="empty">
+        <div class="ic">⏳</div>
+        <p>Clique sur "Charger les avis" pour récupérer les avis non répondus depuis Supabase.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMAIL GENERE -->
+  <div class="card" id="emailCard" style="display: none;">
+    <h2>✉️ Email prêt à envoyer</h2>
+    <p class="sub">Copie-colle dans ton client mail (Outlook, Gmail, etc.) et envoie à Arnaud.</p>
+    <div class="email-block" id="emailContent"></div>
+  </div>
+
+</div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script>
+(async function() {
+  const sb = await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+
+  let avis = [];
+  let filtreActif = 'all';
+
+  // === CHARGEMENT ===
+  document.getElementById('btnRefresh').addEventListener('click', chargerAvis);
+
+  async function chargerAvis() {
+    const btn = document.getElementById('btnRefresh');
+    btn.disabled = true;
+    btn.textContent = '⏳ Chargement…';
+
+    try {
+      const { data, error } = await sb
+        .from('reviews')
+        .select('*')
+        .is('reply_text', null)
+        .neq('status', 'ignored')
+        .neq('status', 'archive')
+        .order('posted_at', { ascending: false });
+
+      if (error) throw error;
+      avis = data || [];
+
+      majStats();
+      majListe();
+
+      document.getElementById('btnGenerateEmail').disabled = avis.length === 0;
+      btn.disabled = false;
+      btn.textContent = '🔄 Recharger';
+    } catch (e) {
+      alert('Erreur : ' + e.message);
+      btn.disabled = false;
+      btn.textContent = '🔄 Charger les avis';
+    }
+  }
+
+  // === STATS ===
+  function majStats() {
+    const urgente = avis.filter(a => parseFloat(a.rating) <= 2).length;
+    const haute = avis.filter(a => parseFloat(a.rating) === 3).length;
+    const normale = avis.filter(a => parseFloat(a.rating) >= 4).length;
+    document.getElementById('stat-urgente').textContent = urgente;
+    document.getElementById('stat-haute').textContent = haute;
+    document.getElementById('stat-normale').textContent = normale;
+    document.getElementById('stat-total').textContent = avis.length;
+  }
+
+  // === LISTE ===
+  function majListe() {
+    const liste = document.getElementById('reviewsList');
+    let aFiltrer = avis;
+
+    if (filtreActif === 'urgente') aFiltrer = avis.filter(a => parseFloat(a.rating) <= 2);
+    else if (filtreActif === 'haute') aFiltrer = avis.filter(a => parseFloat(a.rating) === 3);
+    else if (filtreActif === 'normale') aFiltrer = avis.filter(a => parseFloat(a.rating) >= 4);
+
+    if (aFiltrer.length === 0) {
+      liste.innerHTML = '<div class="empty"><div class="ic">🎉</div><p>Aucun avis dans cette catégorie. Bravo !</p></div>';
+      return;
+    }
+
+    liste.innerHTML = aFiltrer.map(a => {
+      const rating = parseFloat(a.rating);
+      let classePrio = 'normale', tagPrio = 'normale', libPrio = '4-5 ★';
+      if (rating <= 2) { classePrio = 'urgente'; tagPrio = 'urgente'; libPrio = '⚠️ URGENT'; }
+      else if (rating === 3) { classePrio = 'haute'; tagPrio = 'haute'; libPrio = '⚡ Haute'; }
+      const dateAvis = new Date(a.posted_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
+      const stars = '★'.repeat(Math.floor(rating)) + '☆'.repeat(5 - Math.floor(rating));
+      return `
+        <div class="review-item ${classePrio}">
+          <div class="review-rating">${stars}<small>${rating}/5</small></div>
+          <div>
+            <div class="review-meta">
+              <span class="review-author">${escapeHtml(a.author_name || 'Anonyme')}</span>
+              · ${dateAvis}
+              <span class="review-tag tag-${tagPrio}">${libPrio}</span>
+            </div>
+            <div class="review-comment">${escapeHtml(a.comment || '(pas de commentaire)')}</div>
+          </div>
+          <div>
+            ${a.source_url ? `<a href="${a.source_url}" target="_blank" class="cta" style="padding:6px 12px;font-size:0.78rem;">Voir sur Google ↗</a>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // === FILTRES ===
+  document.querySelectorAll('.filter button').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.filter button').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      filtreActif = b.dataset.filter;
+      majListe();
+    });
+  });
+
+  // === EMAIL ARNAUD ===
+  document.getElementById('btnGenerateEmail').addEventListener('click', () => {
+    const urgente = avis.filter(a => parseFloat(a.rating) <= 2);
+    const haute = avis.filter(a => parseFloat(a.rating) === 3);
+    const normale = avis.filter(a => parseFloat(a.rating) >= 4);
+
+    const today = new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
+
+    let mail = `Bonjour Arnaud,
+
+Petit digest hebdo des avis Google non encore répondus pour HELP Confort Saint-Omer (au ${today}).
+
+📊 RÉCAP CHIFFRÉ
+— Total à traiter : ${avis.length}
+— ≤ 2 ★ urgents : ${urgente.length}
+— 3 ★ à traiter : ${haute.length}
+— 4-5 ★ à remercier : ${normale.length}
+`;
+
+    if (urgente.length > 0) {
+      mail += `\n\n⚠️ PRIORITÉ 1 — Avis ≤ 2 ★ (à traiter dans les 24h, impact SEO majeur)\n`;
+      urgente.forEach((a, i) => {
+        mail += `\n${i+1}. ${a.author_name || 'Anonyme'} — ${a.rating}/5 — ${new Date(a.posted_at).toLocaleDateString('fr-FR')}
+   « ${(a.comment || '(pas de commentaire)').substring(0, 200)}${(a.comment || '').length > 200 ? '…' : ''} »
+   ${a.source_url || ''}\n`;
+      });
+    }
+
+    if (haute.length > 0) {
+      mail += `\n\n⚡ PRIORITÉ 2 — Avis 3 ★ (à traiter sous 48h)\n`;
+      haute.forEach((a, i) => {
+        mail += `\n${i+1}. ${a.author_name || 'Anonyme'} — ${a.rating}/5 — ${new Date(a.posted_at).toLocaleDateString('fr-FR')}
+   « ${(a.comment || '(pas de commentaire)').substring(0, 200)}${(a.comment || '').length > 200 ? '…' : ''} »
+   ${a.source_url || ''}\n`;
+      });
+    }
+
+    if (normale.length > 0) {
+      mail += `\n\n✅ PRIORITÉ 3 — Avis 4-5 ★ (réponse simple de remerciement, sous 7j)\n`;
+      normale.slice(0, 10).forEach((a, i) => {
+        mail += `\n${i+1}. ${a.author_name || 'Anonyme'} — ${a.rating}/5 — ${new Date(a.posted_at).toLocaleDateString('fr-FR')}`;
+      });
+      if (normale.length > 10) mail += `\n   … et ${normale.length - 10} autres.\n`;
+    }
+
+    mail += `\n\n🎯 RAPPEL SEO
+Répondre à TOUS les avis (positifs ET négatifs) sous 48h améliore le classement Google de manière significative. Mentionne le métier ("plombier", "chauffagiste") et la ville ("Saint-Omer", "Dunkerque") dans tes réponses → boost SEO local.
+
+Tu peux retrouver le détail complet dans le back-office : https://www.depan59-62.fr/admin-pro/avis-non-repondus.html
+
+Merci !
+Florian`;
+
+    document.getElementById('emailContent').textContent = mail;
+    document.getElementById('emailCard').style.display = 'block';
+    document.getElementById('btnCopyEmail').disabled = false;
+    document.getElementById('emailCard').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.getElementById('btnCopyEmail').addEventListener('click', () => {
+    const txt = document.getElementById('emailContent').textContent;
+    navigator.clipboard.writeText(txt);
+    const btn = document.getElementById('btnCopyEmail');
+    btn.textContent = '✅ Copié !';
+    setTimeout(() => { btn.textContent = '📋 Copier l\'email'; }, 2000);
+  });
+
+  function escapeHtml(s) {
+    return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  // Auto-charge au démarrage
+  chargerAvis();
+})();
+</script>
+</body>
+</html>
