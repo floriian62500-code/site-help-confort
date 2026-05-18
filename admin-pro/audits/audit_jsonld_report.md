@@ -1,20 +1,18 @@
-# Audit JSON-LD — 2026-05-17 06:24
+# Audit JSON-LD — 2026-05-18 06:58
 
 > Audit local des blocs `<script type="application/ld+json">` de chaque page HTML.
 > Lancement : `python3 admin-pro/audits/audit_jsonld.py`
 
 ## Synthèse
 
-- Pages auditées : **45**
-- Pages avec JSON-LD : **41**
-- Pages sans JSON-LD : **4**
+- Pages auditées : **78**
+- Pages avec JSON-LD : **76**
+- Pages sans JSON-LD : **2**
 - Erreurs de syntaxe JSON : **0**
-- Avertissements (champs manquants/dupliqués) : **276**
+- Avertissements (champs manquants/dupliqués) : **680**
 
 ## ⚠️ Pages sans aucun JSON-LD
 
-- `avant-apres.html`
-- `devis-express.html`
 - `realisation.html`
 - `reset.html`
 
@@ -29,14 +27,30 @@
 - ✅ Bloc #0 (`LocalBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, City, AggregateRating`) — OK
 - ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
 
-### `actualites.html` — 2 bloc(s) — types : LocalBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, City, AggregateRating, BreadcrumbList, ListItem
+### `actualites.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, City, AggregateRating, BreadcrumbList, ListItem, Blog, Organization, ImageObject
 
 - ✅ Bloc #0 (`LocalBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, City, AggregateRating`) — OK
 - ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ✅ Bloc #2 (`Blog, Organization, ImageObject`) — OK
 
-### `aides.html` — 1 bloc(s) — types : WebPage, FAQPage, Question, Answer
+### `agence-dunkerque.html` — 2 bloc(s) — types : Plumber, PostalAddress, GeoCoordinates, OpeningHoursSpecification, AggregateRating, BreadcrumbList, ListItem
+
+- ✅ Bloc #0 (`Plumber, PostalAddress, GeoCoordinates, OpeningHoursSpecification, AggregateRating`) — OK
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+
+### `agence-saint-omer.html` — 2 bloc(s) — types : Plumber, PostalAddress, GeoCoordinates, OpeningHoursSpecification, AggregateRating, BreadcrumbList, ListItem
+
+- ✅ Bloc #0 (`Plumber, PostalAddress, GeoCoordinates, OpeningHoursSpecification, AggregateRating`) — OK
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+
+### `aides.html` — 2 bloc(s) — types : WebPage, FAQPage, Question, Answer, BreadcrumbList, ListItem
 
 - ✅ Bloc #0 (`WebPage, FAQPage, Question, Answer`) — OK
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+
+### `avant-apres.html` — 1 bloc(s) — types : BreadcrumbList, ListItem
+
+- ✅ Bloc #0 (`BreadcrumbList, ListItem`) — OK
 
 ### `blog.html` — 2 bloc(s) — types : Blog, Organization, ImageObject, BlogPosting, BreadcrumbList, ListItem
 
@@ -47,6 +61,99 @@
 
 - ✅ Bloc #0 (`Organization, PostalAddress`) — OK
 - ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+
+### `chauffagiste-boulogne-sur-mer.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, HVACBusiness, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+- ⚠️ Bloc #1 (`HVACBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, Service, UnitPriceSpecification, QuantitativeValue, AggregateRating`) :
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
+
+### `chauffagiste-calais.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, HVACBusiness, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+- ⚠️ Bloc #1 (`HVACBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, Service, UnitPriceSpecification, QuantitativeValue, AggregateRating`) :
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
+
+### `chauffagiste-dunkerque.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, HVACBusiness, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+- ⚠️ Bloc #1 (`HVACBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, Service, UnitPriceSpecification, QuantitativeValue, AggregateRating`) :
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
 
 ### `chauffagiste-saint-omer.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, HVACBusiness, GeoCoordinates, City, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
 
@@ -90,6 +197,20 @@
 - ✅ Bloc #1 (`FAQPage, Question, Answer`) — OK
 - ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
 
+### `debouchage-canalisation.html` — 6 bloc(s) — types : Service, Plumber, PostalAddress, Offer, BreadcrumbList, ListItem, FAQPage, Question, Answer, HowTo, HowToStep, LocalBusiness, AggregateRating, Article, Organization, ImageObject, WebPage
+
+- ⚠️ Bloc #0 (`Service, Plumber, PostalAddress, Offer`) :
+    - Plumber sans url (recommandé) @ provider
+    - Plumber sans areaServed (recommandé) @ provider
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ✅ Bloc #2 (`FAQPage, Question, Answer`) — OK
+- ✅ Bloc #3 (`HowTo, HowToStep`) — OK
+- ⚠️ Bloc #4 (`LocalBusiness, AggregateRating`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #5 (`Article, Organization, ImageObject, WebPage`) — OK
+
 ### `depannage-arques.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, GeoCoordinates, City, OpeningHoursSpecification, AggregateRating, FAQPage, Question, Answer, BreadcrumbList, ListItem
 
 - ✅ Bloc #0 (`LocalBusiness, PostalAddress, GeoCoordinates, City, OpeningHoursSpecification, AggregateRating`) — OK
@@ -99,6 +220,35 @@
 ### `depannage-bergues.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, GeoCoordinates, City, OpeningHoursSpecification, AggregateRating, FAQPage, Question, Answer, BreadcrumbList, ListItem
 
 - ✅ Bloc #0 (`LocalBusiness, PostalAddress, GeoCoordinates, City, OpeningHoursSpecification, AggregateRating`) — OK
+- ✅ Bloc #1 (`FAQPage, Question, Answer`) — OK
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+
+### `depannage-boulogne-sur-mer.html` — 4 bloc(s) — types : LocalBusiness, PostalAddress, GeoCoordinates, FAQPage, Question, Answer, BreadcrumbList, ListItem, AggregateRating
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, GeoCoordinates`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`FAQPage, Question, Answer`) — OK
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness, AggregateRating`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+
+### `depannage-calais.html` — 4 bloc(s) — types : LocalBusiness, PostalAddress, GeoCoordinates, FAQPage, Question, Answer, BreadcrumbList, ListItem, AggregateRating
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, GeoCoordinates`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`FAQPage, Question, Answer`) — OK
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness, AggregateRating`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+
+### `depannage-coquelles.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, GeoCoordinates, FAQPage, Question, Answer, BreadcrumbList, ListItem
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, GeoCoordinates`) :
+    - LocalBusiness sans url (recommandé) @ racine
 - ✅ Bloc #1 (`FAQPage, Question, Answer`) — OK
 - ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
 
@@ -134,6 +284,99 @@
 - ✅ Bloc #1 (`FAQPage, Question, Answer`) — OK
 - ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
 
+### `depannage-saint-pol-sur-mer.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, GeoCoordinates, FAQPage, Question, Answer, BreadcrumbList, ListItem
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, GeoCoordinates`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`FAQPage, Question, Answer`) — OK
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+
+### `depannage-sangatte.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, GeoCoordinates, FAQPage, Question, Answer, BreadcrumbList, ListItem
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, GeoCoordinates`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`FAQPage, Question, Answer`) — OK
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+
+### `devis-express.html` — 1 bloc(s) — types : BreadcrumbList, ListItem
+
+- ✅ Bloc #0 (`BreadcrumbList, ListItem`) — OK
+
+### `electricien-boulogne-sur-mer.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, Electrician, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+- ⚠️ Bloc #1 (`Electrician, PostalAddress, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, Service, UnitPriceSpecification, QuantitativeValue, AggregateRating`) :
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
+
+### `electricien-calais.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, Electrician, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+- ⚠️ Bloc #1 (`Electrician, PostalAddress, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, Service, UnitPriceSpecification, QuantitativeValue, AggregateRating`) :
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
+
+### `electricien-dunkerque.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, Electrician, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+- ⚠️ Bloc #1 (`Electrician, PostalAddress, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, Service, UnitPriceSpecification, QuantitativeValue, AggregateRating`) :
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
+
 ### `electricien-saint-omer.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, Electrician, GeoCoordinates, City, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
 
 - ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
@@ -159,6 +402,18 @@
     - LocalBusiness sans url (recommandé) @ racine
 - ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
 
+### `entretien-chaudiere.html` — 5 bloc(s) — types : Service, HVACBusiness, PostalAddress, Offer, BreadcrumbList, ListItem, HowTo, HowToStep, FAQPage, Question, Answer, LocalBusiness, AggregateRating
+
+- ⚠️ Bloc #0 (`Service, HVACBusiness, PostalAddress, Offer`) :
+    - HVACBusiness sans url (recommandé) @ provider
+    - HVACBusiness sans areaServed (recommandé) @ provider
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ✅ Bloc #2 (`HowTo, HowToStep`) — OK
+- ✅ Bloc #3 (`FAQPage, Question, Answer`) — OK
+- ⚠️ Bloc #4 (`LocalBusiness, AggregateRating`) :
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+
 ### `espace-client.html` — 2 bloc(s) — types : WebPage, BreadcrumbList, ListItem
 
 - ✅ Bloc #0 (`WebPage`) — OK
@@ -169,17 +424,19 @@
 - ✅ Bloc #0 (`FAQPage, Question, Answer`) — OK
 - ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
 
-### `guide-adaptation-pmr.html` — 3 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem, TechArticle, Audience
+### `guide-adaptation-pmr.html` — 4 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem, TechArticle, Audience, HowTo, HowToStep
 
 - ✅ Bloc #0 (`Article, Organization, ImageObject, WebPage`) — OK
 - ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
 - ✅ Bloc #2 (`TechArticle, Organization, ImageObject, WebPage, Audience`) — OK
+- ✅ Bloc #3 (`HowTo, HowToStep, Organization, ImageObject`) — OK
 
-### `guide-entretien-chaudiere.html` — 3 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem, TechArticle, Audience
+### `guide-entretien-chaudiere.html` — 4 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem, TechArticle, Audience, HowTo, HowToStep
 
 - ✅ Bloc #0 (`Article, Organization, ImageObject, WebPage`) — OK
 - ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
 - ✅ Bloc #2 (`TechArticle, Organization, ImageObject, WebPage, Audience`) — OK
+- ✅ Bloc #3 (`HowTo, HowToStep, Organization, ImageObject`) — OK
 
 ### `guide-fuite-eau.html` — 4 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem, TechArticle, Audience, HowTo, HowToSupply, HowToTool, HowToStep
 
@@ -188,11 +445,12 @@
 - ✅ Bloc #2 (`TechArticle, Organization, ImageObject, WebPage, Audience`) — OK
 - ✅ Bloc #3 (`HowTo, HowToSupply, HowToTool, HowToStep`) — OK
 
-### `guide-mise-aux-normes-electriques.html` — 3 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem, TechArticle, Audience
+### `guide-mise-aux-normes-electriques.html` — 4 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem, TechArticle, Audience, HowTo, HowToStep
 
 - ✅ Bloc #0 (`Article, Organization, ImageObject, WebPage`) — OK
 - ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
 - ✅ Bloc #2 (`TechArticle, Organization, ImageObject, WebPage, Audience`) — OK
+- ✅ Bloc #3 (`HowTo, HowToStep, Organization, ImageObject`) — OK
 
 ### `guides.html` — 2 bloc(s) — types : CollectionPage, Organization, ImageObject, Article, BreadcrumbList, ListItem
 
@@ -240,6 +498,37 @@
 - ✅ Bloc #0 (`LocalBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, City, AggregateRating`) — OK
 - ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
 
+### `menuisier-dunkerque.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, HomeAndConstructionBusiness, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+- ⚠️ Bloc #1 (`HomeAndConstructionBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, Service, AggregateRating`) :
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
+
 ### `menuisier-saint-omer.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, HomeAndConstructionBusiness, GeoCoordinates, City, OpeningHoursSpecification, OfferCatalog, Offer, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
 
 - ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
@@ -271,17 +560,144 @@
     - LocalBusiness sans url (recommandé) @ racine
 - ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
 
+### `nos-metiers.html` — 3 bloc(s) — types : ItemList, ListItem, BreadcrumbList, LocalBusiness, PostalAddress, AggregateRating
+
+- ✅ Bloc #0 (`ItemList, ListItem`) — OK
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`LocalBusiness, PostalAddress, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+
 ### `nos-prestations.html` — 1 bloc(s) — types : BreadcrumbList, ListItem, OfferCatalog, LocalBusiness, PostalAddress
 
 - ⚠️ Bloc #0 (`BreadcrumbList, ListItem, OfferCatalog, LocalBusiness, PostalAddress`) :
     - @type manquant à la racine
     - LocalBusiness sans url (recommandé) @ @graph[1].provider
 
-### `partenaires.html` — 1 bloc(s) — types : LocalBusiness
+### `nos-villes.html` — 3 bloc(s) — types : ItemList, ListItem, BreadcrumbList, LocalBusiness, PostalAddress, AggregateRating
+
+- ✅ Bloc #0 (`ItemList, ListItem`) — OK
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`LocalBusiness, PostalAddress, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+
+### `ouverture-porte-claquee.html` — 6 bloc(s) — types : Service, Locksmith, PostalAddress, Offer, BreadcrumbList, ListItem, FAQPage, Question, Answer, HowTo, HowToStep, LocalBusiness, AggregateRating, Article, Organization, ImageObject, WebPage
+
+- ⚠️ Bloc #0 (`Service, Locksmith, PostalAddress, Offer`) :
+    - Locksmith sans url (recommandé) @ provider
+    - Locksmith sans areaServed (recommandé) @ provider
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ✅ Bloc #2 (`FAQPage, Question, Answer`) — OK
+- ✅ Bloc #3 (`HowTo, HowToStep`) — OK
+- ⚠️ Bloc #4 (`LocalBusiness, AggregateRating`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #5 (`Article, Organization, ImageObject, WebPage`) — OK
+
+### `partenaires.html` — 2 bloc(s) — types : LocalBusiness, BreadcrumbList, ListItem
 
 - ⚠️ Bloc #0 (`LocalBusiness`) :
     - LocalBusiness sans telephone (recommandé) @ racine
     - LocalBusiness sans address (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+
+### `plan-du-site.html` — 2 bloc(s) — types : BreadcrumbList, ListItem, SiteNavigationElement
+
+- ✅ Bloc #0 (`BreadcrumbList, ListItem`) — OK
+- ✅ Bloc #1 (`SiteNavigationElement`) — OK
+
+### `plombier-boulogne-sur-mer.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, Plumber, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+- ⚠️ Bloc #1 (`Plumber, PostalAddress, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, Service, UnitPriceSpecification, QuantitativeValue, AggregateRating`) :
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
+
+### `plombier-calais.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, Plumber, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+- ⚠️ Bloc #1 (`Plumber, PostalAddress, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, Service, UnitPriceSpecification, QuantitativeValue, AggregateRating`) :
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
+
+### `plombier-dunkerque.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, Plumber, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+- ⚠️ Bloc #1 (`Plumber, PostalAddress, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, Service, UnitPriceSpecification, QuantitativeValue, AggregateRating`) :
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
 
 ### `plombier-saint-omer.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, Plumber, GeoCoordinates, City, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
 
@@ -313,6 +729,33 @@
     - LocalBusiness sans address (recommandé) @ racine
     - LocalBusiness sans url (recommandé) @ racine
 - ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
+
+### `pmr-dunkerque.html` — 4 bloc(s) — types : Service, LocalBusiness, PostalAddress, HomeAndConstructionBusiness, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+- ⚠️ Bloc #1 (`HomeAndConstructionBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, Service, AggregateRating`) :
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ✅ Bloc #3 (`FAQPage, Question, Answer`) — OK
 
 ### `pmr-saint-omer.html` — 4 bloc(s) — types : Service, LocalBusiness, PostalAddress, HomeAndConstructionBusiness, GeoCoordinates, City, OpeningHoursSpecification, OfferCatalog, Offer, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
 
@@ -348,14 +791,123 @@
     - Service sans offers (recommandé) @ racine
 - ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
 
-### `processus.html` — 1 bloc(s) — types : HowTo, HowToStep
+### `processus.html` — 2 bloc(s) — types : HowTo, HowToStep, BreadcrumbList, ListItem
 
 - ✅ Bloc #0 (`HowTo, HowToStep`) — OK
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
 
-### `realisations.html` — 2 bloc(s) — types : LocalBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, City, AggregateRating, BreadcrumbList, ListItem
+### `realisations.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, City, AggregateRating, BreadcrumbList, ListItem, CollectionPage
 
 - ✅ Bloc #0 (`LocalBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, City, AggregateRating`) — OK
 - ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ✅ Bloc #2 (`CollectionPage`) — OK
+
+### `remplacement-chauffe-eau.html` — 6 bloc(s) — types : Service, Plumber, PostalAddress, Offer, BreadcrumbList, ListItem, FAQPage, Question, Answer, HowTo, HowToStep, LocalBusiness, AggregateRating, Article, Organization, ImageObject, WebPage
+
+- ⚠️ Bloc #0 (`Service, Plumber, PostalAddress, Offer`) :
+    - Plumber sans url (recommandé) @ provider
+    - Plumber sans areaServed (recommandé) @ provider
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ✅ Bloc #2 (`FAQPage, Question, Answer`) — OK
+- ✅ Bloc #3 (`HowTo, HowToStep`) — OK
+- ⚠️ Bloc #4 (`LocalBusiness, AggregateRating`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #5 (`Article, Organization, ImageObject, WebPage`) — OK
+
+### `serrurier-boulogne-sur-mer.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, Locksmith, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+- ⚠️ Bloc #1 (`Locksmith, PostalAddress, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, Service, UnitPriceSpecification, QuantitativeValue, AggregateRating`) :
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
+
+### `serrurier-calais.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, Locksmith, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+- ⚠️ Bloc #1 (`Locksmith, PostalAddress, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, Service, UnitPriceSpecification, QuantitativeValue, AggregateRating`) :
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
+
+### `serrurier-dunkerque.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, Locksmith, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+- ⚠️ Bloc #1 (`Locksmith, PostalAddress, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, Service, UnitPriceSpecification, QuantitativeValue, AggregateRating`) :
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
 
 ### `serrurier-saint-omer.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, Locksmith, GeoCoordinates, City, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
 
@@ -405,9 +957,49 @@
     - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
 - ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
 
-### `temoignages.html` — 1 bloc(s) — types : LocalBusiness, AggregateRating, PostalAddress
+### `tarifs.html` — 4 bloc(s) — types : PriceSpecification, BreadcrumbList, ListItem, LocalBusiness, AggregateRating, FAQPage, Question, Answer
+
+- ✅ Bloc #0 (`PriceSpecification`) — OK
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`LocalBusiness, AggregateRating`) :
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #3 (`FAQPage, Question, Answer`) — OK
+
+### `temoignages.html` — 2 bloc(s) — types : LocalBusiness, AggregateRating, PostalAddress, BreadcrumbList, ListItem
 
 - ✅ Bloc #0 (`LocalBusiness, AggregateRating, PostalAddress`) — OK
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+
+### `travaux-dunkerque.html` — 4 bloc(s) — types : Service, LocalBusiness, PostalAddress, GeneralContractor, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+- ⚠️ Bloc #1 (`GeneralContractor, PostalAddress, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, Service, UnitPriceSpecification, QuantitativeValue, AggregateRating`) :
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[6].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[6].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[6].itemOffered
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ✅ Bloc #3 (`FAQPage, Question, Answer`) — OK
 
 ### `travaux-saint-omer.html` — 4 bloc(s) — types : Service, LocalBusiness, PostalAddress, GeneralContractor, GeoCoordinates, City, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
 
@@ -439,6 +1031,43 @@
 - ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
 - ✅ Bloc #3 (`FAQPage, Question, Answer`) — OK
 
+### `urgence.html` — 3 bloc(s) — types : EmergencyService, PostalAddress, OpeningHoursSpecification, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ✅ Bloc #0 (`EmergencyService, PostalAddress, OpeningHoursSpecification`) — OK
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ✅ Bloc #2 (`FAQPage, Question, Answer`) — OK
+
+### `vitrier-dunkerque.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, HomeAndConstructionBusiness, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+- ⚠️ Bloc #1 (`HomeAndConstructionBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, Service, AggregateRating`) :
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
+
 ### `vitrier-saint-omer.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, HomeAndConstructionBusiness, GeoCoordinates, City, OpeningHoursSpecification, OfferCatalog, Offer, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
 
 - ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
@@ -465,6 +1094,37 @@
     - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
 - ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
 - ⚠️ Bloc #3 (`LocalBusiness, City`) :
+    - LocalBusiness sans telephone (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #4 (`FAQPage, Question, Answer`) — OK
+
+### `volets-dunkerque.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, HomeAndConstructionBusiness, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+- ⚠️ Bloc #1 (`HomeAndConstructionBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, Service, AggregateRating`) :
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
+    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
+- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness`) :
     - LocalBusiness sans telephone (recommandé) @ racine
     - LocalBusiness sans address (recommandé) @ racine
     - LocalBusiness sans url (recommandé) @ racine

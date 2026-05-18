@@ -1,21 +1,26 @@
 # Audit robots.txt — directive Sitemap — Rapport
 
-_Généré le 2026-05-17 06:26_
+_Généré le 2026-05-18 07:00_
 
 ## Synthèse
 
 - robots.txt présent : **✅**
-- URLs déclarées via `Sitemap:` : **1**
+- URLs déclarées via `Sitemap:` : **4**
 - URL canonique attendue : `https://www.depan59-62.fr/sitemap.xml`
-- ❌ Erreurs : **0**
+- ❌ Erreurs : **3**
 - ⚠️  Avertissements : **0**
-- Findings totaux : **0**
-- Statut global : **OK**
+- Findings totaux : **3**
+- Statut global : **ERROR**
 
 ## URLs Sitemap déclarées
 
+- `https://www.depan59-62.fr/sitemap-index.xml`
 - `https://www.depan59-62.fr/sitemap.xml`
+- `https://www.depan59-62.fr/sitemap-pages.xml`
+- `https://www.depan59-62.fr/sitemap-actus.xml`
 
 ## Findings
 
-_Aucun finding — robots.txt expose correctement le sitemap canonique._
+- ❌ SITEMAP-URL-MISMATCH : path `/sitemap-index.xml` ≠ `/sitemap.xml` (URL : `https://www.depan59-62.fr/sitemap-index.xml`)
+- ❌ SITEMAP-URL-MISMATCH : path `/sitemap-pages.xml` ≠ `/sitemap.xml` (URL : `https://www.depan59-62.fr/sitemap-pages.xml`)
+- ❌ SITEMAP-URL-MISMATCH : path `/sitemap-actus.xml` ≠ `/sitemap.xml` (URL : `https://www.depan59-62.fr/sitemap-actus.xml`)

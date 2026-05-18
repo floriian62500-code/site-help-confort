@@ -1,13 +1,13 @@
 {
-  "generated": "2026-05-17 06:26",
+  "generated": "2026-05-18 07:00",
   "thresholds": {
     "min_len": 20,
     "max_len": 70
   },
-  "n_total": 59,
-  "n_ok": 39,
+  "n_total": 92,
+  "n_ok": 63,
   "n_warn": 0,
-  "n_errors": 20,
+  "n_errors": 29,
   "n_info": 0,
   "results": [
     {
@@ -194,6 +194,28 @@
       "warnings": []
     },
     {
+      "file": "agence-dunkerque.html",
+      "status": "error",
+      "n_h1": 1,
+      "h1_text": "Agence Dunkerque",
+      "length": 16,
+      "errors": [
+        "H1-TOO-SHORT : 16 chars < 20"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "agence-saint-omer.html",
+      "status": "error",
+      "n_h1": 1,
+      "h1_text": "Agence Saint-Omer",
+      "length": 17,
+      "errors": [
+        "H1-TOO-SHORT : 17 chars < 20"
+      ],
+      "warnings": []
+    },
+    {
       "file": "aides.html",
       "status": "ok",
       "n_h1": 1,
@@ -234,6 +256,33 @@
       "warnings": []
     },
     {
+      "file": "chauffagiste-boulogne-sur-mer.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Chauffage & dépannage chaudière à Boulogne-sur-Mer & Boulonnais",
+      "length": 63,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "chauffagiste-calais.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Chauffage & dépannage chaudière à Calais & Côte d'Opale",
+      "length": 55,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "chauffagiste-dunkerque.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Chauffage & dépannage chaudière à Dunkerque & Saint-Omer",
+      "length": 56,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "chauffagiste-saint-omer.html",
       "status": "ok",
       "n_h1": 1,
@@ -261,6 +310,15 @@
       "warnings": []
     },
     {
+      "file": "debouchage-canalisation.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Débouchage de canalisation à Saint-Omer & Dunkerque",
+      "length": 51,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "depannage-arques.html",
       "status": "error",
       "n_h1": 1,
@@ -279,6 +337,39 @@
       "length": 75,
       "errors": [
         "H1-TOO-LONG : 75 chars > 70"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "depannage-boulogne-sur-mer.html",
+      "status": "error",
+      "n_h1": 1,
+      "h1_text": "Dépannage à Boulogne-sur-Mer Plomberie, chauffage, électricité — intervention rapide",
+      "length": 84,
+      "errors": [
+        "H1-TOO-LONG : 84 chars > 70"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "depannage-calais.html",
+      "status": "error",
+      "n_h1": 1,
+      "h1_text": "Dépannage à Calais Plomberie, chauffage, électricité — intervention rapide",
+      "length": 74,
+      "errors": [
+        "H1-TOO-LONG : 74 chars > 70"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "depannage-coquelles.html",
+      "status": "error",
+      "n_h1": 1,
+      "h1_text": "Dépannage à Coquelles Plomberie, chauffage, électricité — intervention rapide",
+      "length": 77,
+      "errors": [
+        "H1-TOO-LONG : 77 chars > 70"
       ],
       "warnings": []
     },
@@ -338,6 +429,28 @@
       "warnings": []
     },
     {
+      "file": "depannage-saint-pol-sur-mer.html",
+      "status": "error",
+      "n_h1": 1,
+      "h1_text": "Dépannage à Saint-Pol-sur-Mer Plomberie, chauffage, électricité — intervention rapide",
+      "length": 85,
+      "errors": [
+        "H1-TOO-LONG : 85 chars > 70"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "depannage-sangatte.html",
+      "status": "error",
+      "n_h1": 1,
+      "h1_text": "Dépannage à Sangatte Plomberie, chauffage, électricité — intervention rapide",
+      "length": 76,
+      "errors": [
+        "H1-TOO-LONG : 76 chars > 70"
+      ],
+      "warnings": []
+    },
+    {
       "file": "devis-express.html",
       "status": "ok",
       "n_h1": 1,
@@ -347,11 +460,47 @@
       "warnings": []
     },
     {
+      "file": "electricien-boulogne-sur-mer.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Électricité & dépannage à Boulogne-sur-Mer & Boulonnais",
+      "length": 55,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "electricien-calais.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Électricité & dépannage à Calais & Côte d'Opale",
+      "length": 47,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "electricien-dunkerque.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Électricité & dépannage à Dunkerque & Saint-Omer",
+      "length": 48,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "electricien-saint-omer.html",
       "status": "ok",
       "n_h1": 1,
       "h1_text": "Électricité & dépannage à Saint-Omer et Dunkerque",
       "length": 49,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "entretien-chaudiere.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Entretien chaudière à Saint-Omer & Dunkerque",
+      "length": 44,
       "errors": [],
       "warnings": []
     },
@@ -441,6 +590,15 @@
       "warnings": []
     },
     {
+      "file": "menuisier-dunkerque.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Menuiserie rapide à Dunkerque & Saint-Omer",
+      "length": 42,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "menuisier-saint-omer.html",
       "status": "ok",
       "n_h1": 1,
@@ -450,11 +608,40 @@
       "warnings": []
     },
     {
+      "file": "nos-metiers.html",
+      "status": "error",
+      "n_h1": 1,
+      "h1_text": "Nos 8 métiers",
+      "length": 13,
+      "errors": [
+        "H1-TOO-SHORT : 13 chars < 20"
+      ],
+      "warnings": []
+    },
+    {
       "file": "nos-prestations.html",
       "status": "ok",
       "n_h1": 1,
       "h1_text": "Nos prestations au prix juste , sans surprise.",
       "length": 46,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "nos-villes.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Nos villes d'intervention",
+      "length": 25,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "ouverture-porte-claquee.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Ouverture de porte claquée à Saint-Omer & Dunkerque",
+      "length": 51,
       "errors": [],
       "warnings": []
     },
@@ -468,11 +655,58 @@
       "warnings": []
     },
     {
+      "file": "plan-du-site.html",
+      "status": "error",
+      "n_h1": 1,
+      "h1_text": "Plan du site",
+      "length": 12,
+      "errors": [
+        "H1-TOO-SHORT : 12 chars < 20"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "plombier-boulogne-sur-mer.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Plomberie & dépannage rapide à Boulogne-sur-Mer & Boulonnais",
+      "length": 60,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "plombier-calais.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Plomberie & dépannage rapide à Calais & Côte d'Opale",
+      "length": 52,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "plombier-dunkerque.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Plomberie & dépannage rapide à Dunkerque & Saint-Omer",
+      "length": 53,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "plombier-saint-omer.html",
       "status": "ok",
       "n_h1": 1,
       "h1_text": "Plomberie & dépannage rapide à Saint-Omer et Dunkerque",
       "length": 54,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "pmr-dunkerque.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Adaptation PMR à domicile — Dunkerque & Saint-Omer",
+      "length": 50,
       "errors": [],
       "warnings": []
     },
@@ -489,10 +723,10 @@
       "file": "pro.html",
       "status": "error",
       "n_h1": 1,
-      "h1_text": "Un partenaire local fiable pour vos interventions habitat techniciens salariés · zéro sous-traitance · réseau HELP Confort",
-      "length": 122,
+      "h1_text": "Un partenaire local fiable pour vos interventions habitat. Techniciens salariés · zéro sous-traitance · réseau HELP Confort.",
+      "length": 124,
       "errors": [
-        "H1-TOO-LONG : 122 chars > 70"
+        "H1-TOO-LONG : 124 chars > 70"
       ],
       "warnings": []
     },
@@ -511,6 +745,42 @@
       "n_h1": 1,
       "h1_text": "Réalisations & actualités.",
       "length": 26,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "remplacement-chauffe-eau.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Remplacement de chauffe-eau à Saint-Omer & Dunkerque",
+      "length": 52,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "serrurier-boulogne-sur-mer.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Serrurerie & ouverture de porte à Boulogne-sur-Mer & Boulonnais",
+      "length": 63,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "serrurier-calais.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Serrurerie & ouverture de porte à Calais & Côte d'Opale",
+      "length": 55,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "serrurier-dunkerque.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Serrurerie & ouverture de porte à Dunkerque & Saint-Omer",
+      "length": 56,
       "errors": [],
       "warnings": []
     },
@@ -535,11 +805,29 @@
       "warnings": []
     },
     {
+      "file": "tarifs.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Nos tarifs transparents",
+      "length": 23,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "temoignages.html",
       "status": "ok",
       "n_h1": 1,
       "h1_text": "Témoignages vérifiés",
       "length": 20,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "travaux-dunkerque.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Travaux tous corps d'état à Dunkerque & Saint-Omer",
+      "length": 50,
       "errors": [],
       "warnings": []
     },
@@ -553,11 +841,38 @@
       "warnings": []
     },
     {
+      "file": "urgence.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Urgence à Saint-Omer & Dunkerque",
+      "length": 32,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "vitrier-dunkerque.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Vitrerie rapide à Dunkerque & Saint-Omer",
+      "length": 40,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "vitrier-saint-omer.html",
       "status": "ok",
       "n_h1": 1,
       "h1_text": "Vitrerie rapide à Saint-Omer et Dunkerque",
       "length": 41,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "volets-dunkerque.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Volets & stores à Dunkerque & Saint-Omer",
+      "length": 40,
       "errors": [],
       "warnings": []
     },

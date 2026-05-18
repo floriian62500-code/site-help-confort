@@ -1,40 +1,68 @@
-# 🔦 Audit Lighthouse local — 2026-05-17 06:24
+# 🔦 Audit Lighthouse local — 2026-05-18 06:58
 
-**44 pages auditées** · **0 erreurs** · **30 warnings** · **Score moyen 97/100**
+**77 pages auditées** · **0 erreurs** · **46 warnings** · **Score moyen 98/100**
 
 ## 📊 Résumé par page
 
 | Page | Score | Erreurs | Warnings |
 |------|------:|--------:|---------:|
-| `partenaires.html` | **84/100** | 0 | 4 |
-| `chauffagiste-saint-omer.html` | **88/100** | 0 | 3 |
-| `electricien-saint-omer.html` | **88/100** | 0 | 3 |
-| `serrurier-saint-omer.html` | **88/100** | 0 | 3 |
-| `menuisier-saint-omer.html` | **92/100** | 0 | 2 |
-| `plombier-saint-omer.html` | **92/100** | 0 | 2 |
-| `pmr-saint-omer.html` | **92/100** | 0 | 2 |
+| `entretien-chaudiere.html` | **88/100** | 0 | 3 |
+| `partenaires.html` | **88/100** | 0 | 3 |
+| `nos-metiers.html` | **92/100** | 0 | 2 |
+| `nos-villes.html` | **92/100** | 0 | 2 |
 | `realisation.html` | **92/100** | 0 | 2 |
+| `remplacement-chauffe-eau.html` | **92/100** | 0 | 2 |
 | `reset.html` | **92/100** | 0 | 2 |
-| `travaux-saint-omer.html` | **92/100** | 0 | 2 |
-| `vitrier-saint-omer.html` | **92/100** | 0 | 2 |
-| `volets-saint-omer.html` | **92/100** | 0 | 2 |
-| `index.html` | **96/100** | 0 | 1 |
+| `serrurier-saint-omer.html` | **92/100** | 0 | 2 |
+| `tarifs.html` | **92/100** | 0 | 2 |
+| `urgence.html` | **92/100** | 0 | 2 |
+| `agence-dunkerque.html` | **96/100** | 0 | 1 |
+| `agence-saint-omer.html` | **96/100** | 0 | 1 |
+| `chauffagiste-boulogne-sur-mer.html` | **96/100** | 0 | 1 |
+| `chauffagiste-dunkerque.html` | **96/100** | 0 | 1 |
+| `chauffagiste-saint-omer.html` | **96/100** | 0 | 1 |
+| `debouchage-canalisation.html` | **96/100** | 0 | 1 |
+| `electricien-boulogne-sur-mer.html` | **96/100** | 0 | 1 |
+| `electricien-dunkerque.html` | **96/100** | 0 | 1 |
+| `electricien-saint-omer.html` | **96/100** | 0 | 1 |
+| `menuisier-dunkerque.html` | **96/100** | 0 | 1 |
+| `ouverture-porte-claquee.html` | **96/100** | 0 | 1 |
+| `plan-du-site.html` | **96/100** | 0 | 1 |
+| `plombier-boulogne-sur-mer.html` | **96/100** | 0 | 1 |
+| `plombier-dunkerque.html` | **96/100** | 0 | 1 |
+| `pmr-dunkerque.html` | **96/100** | 0 | 1 |
+| `pmr-saint-omer.html` | **96/100** | 0 | 1 |
+| `serrurier-boulogne-sur-mer.html` | **96/100** | 0 | 1 |
+| `serrurier-dunkerque.html` | **96/100** | 0 | 1 |
+| `travaux-dunkerque.html` | **96/100** | 0 | 1 |
+| `travaux-saint-omer.html` | **96/100** | 0 | 1 |
+| `vitrier-dunkerque.html` | **96/100** | 0 | 1 |
+| `vitrier-saint-omer.html` | **96/100** | 0 | 1 |
+| `volets-dunkerque.html` | **96/100** | 0 | 1 |
+| `volets-saint-omer.html` | **96/100** | 0 | 1 |
 | `a-propos.html` | **100/100** | 0 | 0 |
 | `actualites.html` | **100/100** | 0 | 0 |
 | `aides.html` | **100/100** | 0 | 0 |
 | `avant-apres.html` | **100/100** | 0 | 0 |
 | `blog.html` | **100/100** | 0 | 0 |
 | `carrieres.html` | **100/100** | 0 | 0 |
+| `chauffagiste-calais.html` | **100/100** | 0 | 0 |
 | `contact.html` | **100/100** | 0 | 0 |
 | `contrats-entretien.html` | **100/100** | 0 | 0 |
 | `depannage-arques.html` | **100/100** | 0 | 0 |
 | `depannage-bergues.html` | **100/100** | 0 | 0 |
+| `depannage-boulogne-sur-mer.html` | **100/100** | 0 | 0 |
+| `depannage-calais.html` | **100/100** | 0 | 0 |
+| `depannage-coquelles.html` | **100/100** | 0 | 0 |
 | `depannage-dunkerque.html` | **100/100** | 0 | 0 |
 | `depannage-gravelines.html` | **100/100** | 0 | 0 |
 | `depannage-longuenesse.html` | **100/100** | 0 | 0 |
 | `depannage-saint-martin-lez-tatinghem.html` | **100/100** | 0 | 0 |
 | `depannage-saint-omer.html` | **100/100** | 0 | 0 |
+| `depannage-saint-pol-sur-mer.html` | **100/100** | 0 | 0 |
+| `depannage-sangatte.html` | **100/100** | 0 | 0 |
 | `devis-express.html` | **100/100** | 0 | 0 |
+| `electricien-calais.html` | **100/100** | 0 | 0 |
 | `espace-client.html` | **100/100** | 0 | 0 |
 | `faq.html` | **100/100** | 0 | 0 |
 | `guide-adaptation-pmr.html` | **100/100** | 0 | 0 |
@@ -42,63 +70,47 @@
 | `guide-fuite-eau.html` | **100/100** | 0 | 0 |
 | `guide-mise-aux-normes-electriques.html` | **100/100** | 0 | 0 |
 | `guides.html` | **100/100** | 0 | 0 |
+| `index.html` | **100/100** | 0 | 0 |
 | `mentions-legales.html` | **100/100** | 0 | 0 |
+| `menuisier-saint-omer.html` | **100/100** | 0 | 0 |
 | `nos-prestations.html` | **100/100** | 0 | 0 |
+| `plombier-calais.html` | **100/100** | 0 | 0 |
+| `plombier-saint-omer.html` | **100/100** | 0 | 0 |
 | `pro.html` | **100/100** | 0 | 0 |
 | `processus.html` | **100/100** | 0 | 0 |
 | `realisations.html` | **100/100** | 0 | 0 |
+| `serrurier-calais.html` | **100/100** | 0 | 0 |
 | `sinistres.html` | **100/100** | 0 | 0 |
 | `temoignages.html` | **100/100** | 0 | 0 |
 | `zones-intervention.html` | **100/100** | 0 | 0 |
 
 ## 🔍 Détails par page
 
-### partenaires.html — 84/100
+### entretien-chaudiere.html — 88/100
 
 **Warnings :**
-- ⚠️ SEO title long (76 chars)
-- ⚠️ meta description longue (196 chars)
-- ⚠️ og:image manquant
+- ⚠️ SEO title long (78 chars)
+- ⚠️ meta description longue (162 chars)
 - ⚠️ Aucun rel=preconnect
 
-### chauffagiste-saint-omer.html — 88/100
+### partenaires.html — 88/100
 
 **Warnings :**
-- ⚠️ SEO title long (84 chars)
-- ⚠️ meta description longue (162 chars)
-- ⚠️ 6 <input> sans label
+- ⚠️ SEO title long (86 chars)
+- ⚠️ meta description longue (196 chars)
+- ⚠️ Aucun rel=preconnect
 
-### electricien-saint-omer.html — 88/100
-
-**Warnings :**
-- ⚠️ SEO title long (83 chars)
-- ⚠️ meta description longue (190 chars)
-- ⚠️ 6 <input> sans label
-
-### serrurier-saint-omer.html — 88/100
-
-**Warnings :**
-- ⚠️ SEO title long (79 chars)
-- ⚠️ meta description longue (183 chars)
-- ⚠️ 6 <input> sans label
-
-### menuisier-saint-omer.html — 92/100
-
-**Warnings :**
-- ⚠️ SEO title long (80 chars)
-- ⚠️ 6 <input> sans label
-
-### plombier-saint-omer.html — 92/100
-
-**Warnings :**
-- ⚠️ SEO title long (75 chars)
-- ⚠️ 6 <input> sans label
-
-### pmr-saint-omer.html — 92/100
+### nos-metiers.html — 92/100
 
 **Warnings :**
 - ⚠️ SEO title long (74 chars)
-- ⚠️ 6 <input> sans label
+- ⚠️ Aucun rel=preconnect
+
+### nos-villes.html — 92/100
+
+**Warnings :**
+- ⚠️ SEO title long (82 chars)
+- ⚠️ Aucun rel=preconnect
 
 ### realisation.html — 92/100
 
@@ -106,34 +118,155 @@
 - ⚠️ SEO title court (23 chars, idéal 30–65)
 - ⚠️ 3 <h1> trouvés (devrait être 1)
 
+### remplacement-chauffe-eau.html — 92/100
+
+**Warnings :**
+- ⚠️ meta description longue (164 chars)
+- ⚠️ Aucun rel=preconnect
+
 ### reset.html — 92/100
 
 **Warnings :**
 - ⚠️ og:image manquant
 - ⚠️ Aucun rel=preconnect
 
-### travaux-saint-omer.html — 92/100
+### serrurier-saint-omer.html — 92/100
+
+**Warnings :**
+- ⚠️ SEO title long (79 chars)
+- ⚠️ meta description longue (183 chars)
+
+### tarifs.html — 92/100
+
+**Warnings :**
+- ⚠️ SEO title long (80 chars)
+- ⚠️ Aucun rel=preconnect
+
+### urgence.html — 92/100
+
+**Warnings :**
+- ⚠️ SEO title long (93 chars)
+- ⚠️ Aucun rel=preconnect
+
+### agence-dunkerque.html — 96/100
+
+**Warnings :**
+- ⚠️ Aucun rel=preconnect
+
+### agence-saint-omer.html — 96/100
+
+**Warnings :**
+- ⚠️ Aucun rel=preconnect
+
+### chauffagiste-boulogne-sur-mer.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (176 chars)
+
+### chauffagiste-dunkerque.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (172 chars)
+
+### chauffagiste-saint-omer.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (162 chars)
+
+### debouchage-canalisation.html — 96/100
+
+**Warnings :**
+- ⚠️ Aucun rel=preconnect
+
+### electricien-boulogne-sur-mer.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (175 chars)
+
+### electricien-dunkerque.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (171 chars)
+
+### electricien-saint-omer.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (190 chars)
+
+### menuisier-dunkerque.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (174 chars)
+
+### ouverture-porte-claquee.html — 96/100
+
+**Warnings :**
+- ⚠️ Aucun rel=preconnect
+
+### plan-du-site.html — 96/100
+
+**Warnings :**
+- ⚠️ Aucun rel=preconnect
+
+### plombier-boulogne-sur-mer.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (172 chars)
+
+### plombier-dunkerque.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (168 chars)
+
+### pmr-dunkerque.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (179 chars)
+
+### pmr-saint-omer.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (74 chars)
+
+### serrurier-boulogne-sur-mer.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (173 chars)
+
+### serrurier-dunkerque.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (169 chars)
+
+### travaux-dunkerque.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (185 chars)
+
+### travaux-saint-omer.html — 96/100
 
 **Warnings :**
 - ⚠️ SEO title long (87 chars)
-- ⚠️ 6 <input> sans label
 
-### vitrier-saint-omer.html — 92/100
+### vitrier-dunkerque.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (172 chars)
+
+### vitrier-saint-omer.html — 96/100
 
 **Warnings :**
 - ⚠️ SEO title long (78 chars)
-- ⚠️ 6 <input> sans label
 
-### volets-saint-omer.html — 92/100
+### volets-dunkerque.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (171 chars)
+
+### volets-saint-omer.html — 96/100
 
 **Warnings :**
 - ⚠️ SEO title long (77 chars)
-- ⚠️ 6 <input> sans label
-
-### index.html — 96/100
-
-**Warnings :**
-- ⚠️ 1 <input> sans label
 
 ## ✅ Pages parfaites (100/100)
 
@@ -143,16 +276,23 @@
 - avant-apres.html
 - blog.html
 - carrieres.html
+- chauffagiste-calais.html
 - contact.html
 - contrats-entretien.html
 - depannage-arques.html
 - depannage-bergues.html
+- depannage-boulogne-sur-mer.html
+- depannage-calais.html
+- depannage-coquelles.html
 - depannage-dunkerque.html
 - depannage-gravelines.html
 - depannage-longuenesse.html
 - depannage-saint-martin-lez-tatinghem.html
 - depannage-saint-omer.html
+- depannage-saint-pol-sur-mer.html
+- depannage-sangatte.html
 - devis-express.html
+- electricien-calais.html
 - espace-client.html
 - faq.html
 - guide-adaptation-pmr.html
@@ -160,11 +300,16 @@
 - guide-fuite-eau.html
 - guide-mise-aux-normes-electriques.html
 - guides.html
+- index.html
 - mentions-legales.html
+- menuisier-saint-omer.html
 - nos-prestations.html
+- plombier-calais.html
+- plombier-saint-omer.html
 - pro.html
 - processus.html
 - realisations.html
+- serrurier-calais.html
 - sinistres.html
 - temoignages.html
 - zones-intervention.html

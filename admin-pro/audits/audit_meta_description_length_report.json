@@ -1,15 +1,15 @@
 {
-  "generated": "2026-05-17 06:26",
+  "generated": "2026-05-18 07:00",
   "thresholds": {
     "min_error": 70,
     "max_error": 160,
     "min_warn": 120,
     "max_warn": 158
   },
-  "n_total": 59,
-  "n_ok": 47,
-  "n_warn": 7,
-  "n_errors": 5,
+  "n_total": 92,
+  "n_ok": 62,
+  "n_warn": 10,
+  "n_errors": 20,
   "n_info": 0,
   "results": [
     {
@@ -181,6 +181,24 @@
       "warnings": []
     },
     {
+      "file": "agence-dunkerque.html",
+      "status": "warn",
+      "length": 117,
+      "description": "Agence HELP Confort Saint-Omer : Dépan'DK, agence littoral dunkerquois. Lun-Ven 9h-17h, Sam 9h-16h. ☎ 03 66 10 01 34.",
+      "errors": [],
+      "warnings": [
+        "DESC-SHORT : 117 chars < 120 (idéal 120-158)"
+      ]
+    },
+    {
+      "file": "agence-saint-omer.html",
+      "status": "ok",
+      "length": 152,
+      "description": "Agence HELP Confort Saint-Omer : SARL Dépan'Audo, 242 route de Boulogne, 62500 Saint-Martin-lez-Tatinghem. Lun-Ven 9h-17h, Sam 9h-16h. ☎ 03 66 10 01 34.",
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "aides.html",
       "status": "ok",
       "length": 132,
@@ -213,6 +231,34 @@
       "warnings": []
     },
     {
+      "file": "chauffagiste-boulogne-sur-mer.html",
+      "status": "error",
+      "length": 176,
+      "description": "Chauffagiste à Boulogne-sur-Mer & Boulonnais : dépannage rapide, devis gratuit, techniciens HELP Confort. Saint-Martin-Boulogne, Outreau, Le Portel, Wimereux. ☎ 03 66 10 01 34.",
+      "errors": [
+        "DESC-TOO-LONG : 176 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "chauffagiste-calais.html",
+      "status": "ok",
+      "length": 154,
+      "description": "Chauffagiste à Calais & Côte d'Opale : dépannage rapide, devis gratuit, techniciens HELP Confort. Coquelles, Sangatte, Coulogne, Guînes. ☎ 03 66 10 01 34.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "chauffagiste-dunkerque.html",
+      "status": "error",
+      "length": 172,
+      "description": "Chauffagiste à Dunkerque & littoral : dépannage rapide, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.",
+      "errors": [
+        "DESC-TOO-LONG : 172 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
       "file": "chauffagiste-saint-omer.html",
       "status": "error",
       "length": 162,
@@ -239,6 +285,14 @@
       "warnings": []
     },
     {
+      "file": "debouchage-canalisation.html",
+      "status": "ok",
+      "length": 156,
+      "description": "Débouchage canalisation, WC bouché, évier qui refoule à Saint-Omer & Dunkerque. Furet, hydrocurage, devis transparent. Intervention rapide ☎ 03 66 10 01 34.",
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "depannage-arques.html",
       "status": "ok",
       "length": 151,
@@ -251,6 +305,32 @@
       "status": "ok",
       "length": 139,
       "description": "Dépannage Bergues (59380) : plombier, chauffagiste, électricien, serrurier. À 15 km de Dunkerque. Main d'œuvre 58€/h TTC. ☎ 03 66 10 01 34.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "depannage-boulogne-sur-mer.html",
+      "status": "warn",
+      "length": 159,
+      "description": "Dépannage Boulogne-sur-Mer (62200) : plombier, chauffagiste, électricien, serrurier. Forfait transparent — devis gratuit. 4,7/5 sur 343 avis. ☎ 03 66 10 01 34.",
+      "errors": [],
+      "warnings": [
+        "DESC-LONG : 159 chars > 158 (idéal 120-158)"
+      ]
+    },
+    {
+      "file": "depannage-calais.html",
+      "status": "ok",
+      "length": 149,
+      "description": "Dépannage Calais (62100) : plombier, chauffagiste, électricien, serrurier. Forfait transparent — devis gratuit. 4,7/5 sur 343 avis. ☎ 03 66 10 01 34.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "depannage-coquelles.html",
+      "status": "ok",
+      "length": 132,
+      "description": "Dépannage Coquelles (62231) : plombier, chauffagiste, électricien, serrurier. Forfait transparent — devis gratuit. ☎ 03 66 10 01 34.",
       "errors": [],
       "warnings": []
     },
@@ -295,11 +375,55 @@
       "warnings": []
     },
     {
+      "file": "depannage-saint-pol-sur-mer.html",
+      "status": "ok",
+      "length": 140,
+      "description": "Dépannage Saint-Pol-sur-Mer (59430) : plombier, chauffagiste, électricien, serrurier. Forfait transparent — devis gratuit. ☎ 03 66 10 01 34.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "depannage-sangatte.html",
+      "status": "ok",
+      "length": 131,
+      "description": "Dépannage Sangatte (62231) : plombier, chauffagiste, électricien, serrurier. Forfait transparent — devis gratuit. ☎ 03 66 10 01 34.",
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "devis-express.html",
       "status": "ok",
       "length": 146,
       "description": "Demandez un devis en 60 secondes : 3 questions, une photo, et on vous rappelle rapidement. Plomberie, chauffage, électricité, serrurerie, travaux.",
       "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "electricien-boulogne-sur-mer.html",
+      "status": "error",
+      "length": 175,
+      "description": "Électricien à Boulogne-sur-Mer & Boulonnais : dépannage rapide, devis gratuit, techniciens HELP Confort. Saint-Martin-Boulogne, Outreau, Le Portel, Wimereux. ☎ 03 66 10 01 34.",
+      "errors": [
+        "DESC-TOO-LONG : 175 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "electricien-calais.html",
+      "status": "ok",
+      "length": 153,
+      "description": "Électricien à Calais & Côte d'Opale : dépannage rapide, devis gratuit, techniciens HELP Confort. Coquelles, Sangatte, Coulogne, Guînes. ☎ 03 66 10 01 34.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "electricien-dunkerque.html",
+      "status": "error",
+      "length": 171,
+      "description": "Electricien à Dunkerque & littoral : dépannage rapide, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.",
+      "errors": [
+        "DESC-TOO-LONG : 171 chars > 160"
+      ],
       "warnings": []
     },
     {
@@ -309,6 +433,16 @@
       "description": "Électricien à Saint-Omer & Dunkerque : dépannage, recherche de panne, tableau électrique, rénovation. Techniciens qualifiés NF C 15-100 — forfait transparent, devis gratuit. ☎ 03 66 10 01 34",
       "errors": [
         "DESC-TOO-LONG : 190 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "entretien-chaudiere.html",
+      "status": "error",
+      "length": 162,
+      "description": "Entretien chaudière gaz, fioul, granulés à Saint-Omer & Dunkerque. Obligation légale annuelle. Contrat à tarif fixe, attestation, devis gratuit. ☎ 03 66 10 01 34.",
+      "errors": [
+        "DESC-TOO-LONG : 162 chars > 160"
       ],
       "warnings": []
     },
@@ -385,6 +519,16 @@
       "warnings": []
     },
     {
+      "file": "menuisier-dunkerque.html",
+      "status": "error",
+      "length": 174,
+      "description": "Menuisier à Dunkerque & littoral : interventions rapides, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.",
+      "errors": [
+        "DESC-TOO-LONG : 174 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
       "file": "menuisier-saint-omer.html",
       "status": "ok",
       "length": 132,
@@ -393,10 +537,36 @@
       "warnings": []
     },
     {
+      "file": "nos-metiers.html",
+      "status": "ok",
+      "length": 150,
+      "description": "HELP Confort : plombier, chauffagiste, électricien, serrurier, vitrier, menuisier, travaux, volets, PMR — sur Saint-Omer, Dunkerque, Calais, Boulogne.",
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "nos-prestations.html",
       "status": "ok",
       "length": 132,
       "description": "Forfaits plomberie, chauffe-eau, dépannage à prix fixe. Réservation en ligne avec acompte 40%, devis rapide pour projets sur mesure.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "nos-villes.html",
+      "status": "warn",
+      "length": 159,
+      "description": "HELP Confort intervient sur Saint-Omer, Dunkerque, Calais, Boulogne-sur-Mer, Coquelles, Sangatte, Bergues, Gravelines & littoral du Nord. Cherchez votre ville.",
+      "errors": [],
+      "warnings": [
+        "DESC-LONG : 159 chars > 158 (idéal 120-158)"
+      ]
+    },
+    {
+      "file": "ouverture-porte-claquee.html",
+      "status": "ok",
+      "length": 154,
+      "description": "Porte claquée ou clé cassée à Saint-Omer & Dunkerque ? Serrurier HELP Confort, tarif annoncé au téléphone, intervention non destructive. ☎ 03 66 10 01 34.",
       "errors": [],
       "warnings": []
     },
@@ -411,11 +581,57 @@
       "warnings": []
     },
     {
+      "file": "plan-du-site.html",
+      "status": "ok",
+      "length": 131,
+      "description": "Plan du site HELP Confort : toutes nos pages métiers, villes, guides, contacts. Trouvez rapidement l'information que vous cherchez.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "plombier-boulogne-sur-mer.html",
+      "status": "error",
+      "length": 172,
+      "description": "Plombier à Boulogne-sur-Mer & Boulonnais : dépannage rapide, devis gratuit, techniciens HELP Confort. Saint-Martin-Boulogne, Outreau, Le Portel, Wimereux. ☎ 03 66 10 01 34.",
+      "errors": [
+        "DESC-TOO-LONG : 172 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "plombier-calais.html",
+      "status": "ok",
+      "length": 150,
+      "description": "Plombier à Calais & Côte d'Opale : dépannage rapide, devis gratuit, techniciens HELP Confort. Coquelles, Sangatte, Coulogne, Guînes. ☎ 03 66 10 01 34.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "plombier-dunkerque.html",
+      "status": "error",
+      "length": 168,
+      "description": "Plombier à Dunkerque & littoral : dépannage rapide, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.",
+      "errors": [
+        "DESC-TOO-LONG : 168 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
       "file": "plombier-saint-omer.html",
       "status": "ok",
       "length": 155,
       "description": "Plombier à Saint-Omer & Dunkerque : fuite d'eau, dégorgement, recherche de fuite, ballon d'eau chaude. Intervention rapide, devis gratuit. ☎ 03 66 10 01 34",
       "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "pmr-dunkerque.html",
+      "status": "error",
+      "length": 179,
+      "description": "Adaptation PMR à Dunkerque & littoral : interventions rapides, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.",
+      "errors": [
+        "DESC-TOO-LONG : 179 chars > 160"
+      ],
       "warnings": []
     },
     {
@@ -451,6 +667,44 @@
       "warnings": []
     },
     {
+      "file": "remplacement-chauffe-eau.html",
+      "status": "error",
+      "length": 164,
+      "description": "Remplacement ballon d'eau chaude / chauffe-eau électrique, thermodynamique ou gaz à Saint-Omer & Dunkerque. Devis gratuit, pose conforme, garantie ☎ 03 66 10 01 34.",
+      "errors": [
+        "DESC-TOO-LONG : 164 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "serrurier-boulogne-sur-mer.html",
+      "status": "error",
+      "length": 173,
+      "description": "Serrurier à Boulogne-sur-Mer & Boulonnais : dépannage rapide, devis gratuit, techniciens HELP Confort. Saint-Martin-Boulogne, Outreau, Le Portel, Wimereux. ☎ 03 66 10 01 34.",
+      "errors": [
+        "DESC-TOO-LONG : 173 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "serrurier-calais.html",
+      "status": "ok",
+      "length": 151,
+      "description": "Serrurier à Calais & Côte d'Opale : dépannage rapide, devis gratuit, techniciens HELP Confort. Coquelles, Sangatte, Coulogne, Guînes. ☎ 03 66 10 01 34.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "serrurier-dunkerque.html",
+      "status": "error",
+      "length": 169,
+      "description": "Serrurier à Dunkerque & littoral : dépannage rapide, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.",
+      "errors": [
+        "DESC-TOO-LONG : 169 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
       "file": "serrurier-saint-omer.html",
       "status": "error",
       "length": 183,
@@ -469,11 +723,29 @@
       "warnings": []
     },
     {
+      "file": "tarifs.html",
+      "status": "ok",
+      "length": 155,
+      "description": "Tarifs transparents HELP Confort à Saint-Omer & Dunkerque : plomberie, chauffage, électricité, serrurerie, débouchage. Prix TTC annoncés avant déplacement.",
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "temoignages.html",
       "status": "ok",
       "length": 157,
       "description": "Lisez les vrais avis de nos clients HELP Confort à Saint-Omer & Dunkerque. 4,7/5 sur 343 avis Google. Plomberie, chauffage, électricité, serrurerie, travaux.",
       "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "travaux-dunkerque.html",
+      "status": "error",
+      "length": 185,
+      "description": "Travaux & Rénovation à Dunkerque & littoral : interventions rapides, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.",
+      "errors": [
+        "DESC-TOO-LONG : 185 chars > 160"
+      ],
       "warnings": []
     },
     {
@@ -485,11 +757,39 @@
       "warnings": []
     },
     {
+      "file": "urgence.html",
+      "status": "ok",
+      "length": 154,
+      "description": "Urgence dépannage Saint-Omer & Dunkerque : fuite eau, panne chauffage, porte claquée, court-circuit. Tarif annoncé au téléphone. ☎ 03 66 10 01 34 Lun-Sam.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "vitrier-dunkerque.html",
+      "status": "error",
+      "length": 172,
+      "description": "Vitrier à Dunkerque & littoral : interventions rapides, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.",
+      "errors": [
+        "DESC-TOO-LONG : 172 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
       "file": "vitrier-saint-omer.html",
       "status": "ok",
       "length": 138,
       "description": "Vitrier urgence à Saint-Omer & Dunkerque. Bris de glace, remplacement vitrage, double vitrage sur mesure. Devis gratuit au 03 66 10 01 34.",
       "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "volets-dunkerque.html",
+      "status": "error",
+      "length": 171,
+      "description": "Volets à Dunkerque & littoral : interventions rapides, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.",
+      "errors": [
+        "DESC-TOO-LONG : 171 chars > 160"
+      ],
       "warnings": []
     },
     {
