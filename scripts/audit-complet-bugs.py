@@ -114,7 +114,8 @@ def axis1(pages, all_files):
         scan = strip_dynamic(txt)
 
         # Anciens patterns (sur scan - hors scripts)
-        for pat in ("#m-reserve-modal", "#m-reserve", "javascript:void(0)"):
+        # NOTE: javascript:void(0) reste un pattern valide (anchors-buttons), NON obsolete
+        for pat in ("#m-reserve-modal", "#m-reserve"):
             if pat in scan:
                 findings["anciens_patterns"].append({"page": rel_p, "pattern": pat})
 
@@ -142,9 +143,14 @@ def axis1(pages, all_files):
             url = href.split("?")[0].split("#")[0]
             if not url:
                 continue
-            # path relatif a la page
-            base = p.parent
-            target = (base / url).resolve()
+            # path absolu site-root commencant par "/" -> resolu depuis ROOT
+            if url in ("/",):
+                # racine du site, servi par le serveur web -> ok
+                continue
+            if url.startswith("/"):
+                target = (ROOT / url.lstrip("/")).resolve()
+            else:
+                target = (p.parent / url).resolve()
             try:
                 rel_target = target.relative_to(ROOT.resolve())
                 key = str(rel_target).replace("\\","/")
@@ -152,7 +158,6 @@ def axis1(pages, all_files):
                 if key not in all_files and fname not in all_files:
                     findings["hrefs_inexistants"].append({"page": rel_p, "href": href})
             except Exception:
-                # hors racine - on note
                 findings["hrefs_inexistants"].append({"page": rel_p, "href": href, "note": "hors-racine"})
 
         # target="_blank" sans rel="noopener" -> auto-fix
