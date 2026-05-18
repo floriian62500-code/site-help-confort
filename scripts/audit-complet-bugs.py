@@ -74,6 +74,20 @@ def read(p):
 def write(p, txt):
     p.write_text(txt, encoding="utf-8")
 
+RE_SCRIPT_BLOCK = re.compile(r'<script\b[^>]*>.*?</script>', re.I | re.S)
+RE_STYLE_BLOCK  = re.compile(r'<style\b[^>]*>.*?</style>', re.I | re.S)
+RE_TEMPLATE_BLK = re.compile(r'<template\b[^>]*>.*?</template>', re.I | re.S)
+
+def strip_dynamic(txt):
+    """Retire les blocs <script>, <style>, <template> + commentaires HTML
+    pour eviter les faux-positifs (hrefs avec template literals, IDs ${...}, etc.).
+    """
+    txt = RE_SCRIPT_BLOCK.sub("", txt)
+    txt = RE_STYLE_BLOCK.sub("", txt)
+    txt = RE_TEMPLATE_BLK.sub("", txt)
+    txt = re.sub(r"<!--.*?-->", "", txt, flags=re.S)
+    return txt
+
 def page_files_set():
     """Index des fichiers existants pour valider hrefs."""
     s = set()
@@ -97,16 +111,20 @@ def axis1(pages, all_files):
             continue
         orig = txt
         rel_p = str(p.relative_to(ROOT))
+        scan = strip_dynamic(txt)
 
-        # Anciens patterns
+        # Anciens patterns (sur scan - hors scripts)
         for pat in ("#m-reserve-modal", "#m-reserve", "javascript:void(0)"):
-            if pat in txt:
+            if pat in scan:
                 findings["anciens_patterns"].append({"page": rel_p, "pattern": pat})
 
-        # hrefs vers fichiers locaux
-        for m in RE_HREF.finditer(txt):
+        # hrefs vers fichiers locaux (sur scan)
+        for m in RE_HREF.finditer(scan):
             href = m.group(1).strip()
             if not href or href.startswith("#"):
+                continue
+            # Ignorer hrefs avec template literals / placeholders
+            if any(tok in href for tok in ("${", "{{", "'+", "+'", "<%", "%>")):
                 continue
             if href.startswith(("http://","https://","mailto:","tel:","javascript:","data:")):
                 # mailto / tel validation
