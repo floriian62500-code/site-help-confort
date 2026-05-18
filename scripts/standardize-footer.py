@@ -118,10 +118,13 @@ def standardize_file(path: Path) -> Tuple[bool, str]:
         return (False, "no-zones-block")
 
     # Idempotence check (scoped to the matched footer Zones <ul>):
-    # if 'Saint-Pol-sur-Mer' already appears in the Zones list itself,
-    # the footer is already standardized — skip rewriting.
+    # consider it already standardized when both 'Saint-Pol-sur-Mer' AND the
+    # new "Voir toutes nos villes" link are present in the Zones block.
     zones_block_text = zones_match.group(0)
-    if "Saint-Pol-sur-Mer" in zones_block_text:
+    if (
+        "Saint-Pol-sur-Mer" in zones_block_text
+        and "Voir toutes nos villes" in zones_block_text
+    ):
         return (False, "already-standardized")
     indent = zones_match.group(2)
     new_zones_ul = build_zones_ul(prefix, indent)
