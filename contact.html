@@ -410,7 +410,39 @@ if (document.fonts && document.fonts.ready) {
  <strong style="color:#0DA0CF;display:block;margin-bottom:4px">📌 Demande de devis pour&nbsp;:</strong>
  <span id="prestaLabel" style="font-weight:700;color:#0A1428"></span>
  </div>
- <p style="color:var(--gray-700);margin-bottom:24px">Vous décrivez votre besoin, nous vous rappelons rapidement. Pour une urgence, appelez le 03 66 10 01 34.</p>
+ <p style="color:var(--gray-700);margin-bottom:18px">Vous décrivez votre besoin, nous étudions votre dossier et vous répondons. Pour une urgence, appelez directement le 03 66 10 01 34.</p>
+
+ <!-- HC-TRUST-BAND : signaux de confiance avant le formulaire -->
+ <div class="form-trust" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 24px;padding:14px 16px;background:linear-gradient(135deg,rgba(13,160,207,.06),rgba(34,197,94,.04));border:1px solid rgba(13,160,207,.18);border-radius:12px">
+   <div style="display:flex;align-items:center;gap:10px">
+     <span style="font-size:1.4rem">⭐</span>
+     <div style="line-height:1.25">
+       <strong style="display:block;color:#0A1428;font-size:.94rem">4,7/5 sur 343 avis</strong>
+       <span style="font-size:.74rem;color:#64748b">Google · vérifiés</span>
+     </div>
+   </div>
+   <div style="display:flex;align-items:center;gap:10px">
+     <span style="font-size:1.4rem">🏆</span>
+     <div style="line-height:1.25">
+       <strong style="display:block;color:#0A1428;font-size:.94rem">Qualibat RGE</strong>
+       <span style="font-size:.74rem;color:#64748b">+ Handibat</span>
+     </div>
+   </div>
+   <div style="display:flex;align-items:center;gap:10px">
+     <span style="font-size:1.4rem">📄</span>
+     <div style="line-height:1.25">
+       <strong style="display:block;color:#0A1428;font-size:.94rem">Devis simple sous 24h</strong>
+       <span style="font-size:.74rem;color:#64748b">Gratuit, sans engagement</span>
+     </div>
+   </div>
+   <div style="display:flex;align-items:center;gap:10px">
+     <span style="font-size:1.4rem">👨‍🔧</span>
+     <div style="line-height:1.25">
+       <strong style="display:block;color:#0A1428;font-size:.94rem">Techniciens diplômés</strong>
+       <span style="font-size:.74rem;color:#64748b">Réseau national HELP Confort</span>
+     </div>
+   </div>
+ </div>
  <input type="hidden" id="presta-hidden" name="prestation_demandee">
  <script>
  (function(){
@@ -599,8 +631,25 @@ if (document.fonts && document.fonts.ready) {
 
  <div class="form-row two">
  <div class="form-group">
- <label for="ville">Ville</label>
- <input id="ville" name="ville" type="text" autocomplete="address-level2" placeholder="Saint-Omer, Longuenesse...">
+ <label for="ville">Ville de l'intervention *</label>
+ <input id="ville" name="ville" type="text" autocomplete="address-level2" placeholder="Saint-Omer, Dunkerque, Calais..." list="hc-villes" required>
+ <datalist id="hc-villes">
+   <option value="Saint-Omer">
+   <option value="Saint-Martin-lez-Tatinghem">
+   <option value="Longuenesse">
+   <option value="Arques">
+   <option value="Wizernes">
+   <option value="Blendecques">
+   <option value="Lumbres">
+   <option value="Aire-sur-la-Lys">
+   <option value="Hazebrouck">
+   <option value="Dunkerque">
+   <option value="Saint-Pol-sur-Mer">
+   <option value="Calais">
+   <option value="Coquelles">
+   <option value="Sangatte">
+   <option value="Boulogne-sur-Mer">
+ </datalist>
  </div>
  <div class="form-group">
  <label>Service(s) concerné(s) <span class="opt" style="font-weight:500;color:#94a3b8;font-size:.78rem;margin-left:4px">— plusieurs choix possibles</span></label>
@@ -640,9 +689,26 @@ if (document.fonts && document.fonts.ready) {
  </div>
  </div>
 
+ <!-- HC-POST-CLIC : réassurance "ce qui se passe après envoi" -->
+ <div class="form-after" style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:12px;padding:14px 18px;margin:18px 0 12px">
+   <strong style="display:block;color:#0A1428;font-size:.88rem;margin-bottom:10px">📋 Ce qui se passe après votre envoi :</strong>
+   <ol style="margin:0;padding-left:18px;color:#475569;font-size:.85rem;line-height:1.55">
+     <li>Votre demande est reçue par notre équipe Saint-Omer</li>
+     <li>Un <strong>technicien spécialisé</strong> étudie votre dossier</li>
+     <li>Nous vous adressons un <strong>devis gratuit et détaillé</strong> (sous 24h pour les demandes simples)</li>
+     <li>Vous décidez librement — <strong>aucun engagement</strong> de votre part</li>
+   </ol>
+ </div>
+
  <p class="form-disclaimer">Les données collectées sont uniquement utilisées pour vous recontacter dans le cadre de votre demande. Voir notre <a href="mentions-legales.html">politique de confidentialité</a>.</p>
 
- <button type="submit" class="btn btn-primary btn-block">Envoyer ma demande</button>
+ <button type="submit" class="btn btn-primary btn-block" style="display:flex;align-items:center;justify-content:center;gap:10px;font-size:1.05rem;padding:16px 24px">
+   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+   Recevoir mon devis gratuit
+ </button>
+ <p style="text-align:center;margin:10px 0 0;font-size:.78rem;color:#64748b">
+   ✓ Gratuit · ✓ Sans engagement · ✓ Étudié par un technicien spécialisé
+ </p>
  </form>
  </div>
  </div>
