@@ -261,7 +261,8 @@
     <a href="/admin-pro/">← Retour admin</a>
     <a href="#qr">QR Code</a>
     <a href="#sms">Template SMS</a>
-    <a href="#script">Script verbal</a>
+    <a href="#script">Script Technicien</a>
+    <a href="#qa-audio">Script QA Audio</a>
     <a href="#tips">Conseils</a>
     <a href="javascript:window.print()">🖨️ Imprimer</a>
   </div>
@@ -314,10 +315,43 @@
     </div>
   </div>
 
+  <!-- WORKFLOW -->
+  <div class="card" style="background: linear-gradient(135deg, #e8f4ff 0%, #d6e9ff 100%); border-left: 6px solid var(--bleu);">
+    <h2>🔄 Workflow HC — Demande d'avis</h2>
+    <p class="sub" style="font-weight: 600; color: var(--bleu-fonce);">⚠️ Le SMS d'avis n'est JAMAIS envoyé directement après l'intervention. Il passe TOUJOURS par le contrôle qualité audio.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 20px;">
+      <div style="background: white; padding: 16px; border-radius: 10px; text-align: center; border: 2px solid var(--border);">
+        <div style="font-size: 32px;">🔧</div>
+        <div style="font-weight: 700; color: var(--bleu-fonce); margin-top: 6px;">1. Intervention</div>
+        <div style="font-size: 13px; color: var(--gris); margin-top: 4px;">Technicien termine le chantier</div>
+      </div>
+      <div style="background: white; padding: 16px; border-radius: 10px; text-align: center; border: 2px solid var(--orange);">
+        <div style="font-size: 32px;">📞</div>
+        <div style="font-weight: 700; color: var(--orange); margin-top: 6px;">2. Contrôle qualité AUDIO</div>
+        <div style="font-size: 13px; color: var(--gris); margin-top: 4px;">Appel du bureau → vérifie satisfaction & qualité</div>
+      </div>
+      <div style="background: white; padding: 16px; border-radius: 10px; text-align: center; border: 2px solid var(--vert);">
+        <div style="font-size: 32px;">💬</div>
+        <div style="font-weight: 700; color: var(--vert); margin-top: 6px;">3. SMS si OK</div>
+        <div style="font-size: 13px; color: var(--gris); margin-top: 4px;">Uniquement si client satisfait au QA</div>
+      </div>
+      <div style="background: white; padding: 16px; border-radius: 10px; text-align: center; border: 2px solid #dc2626;">
+        <div style="font-size: 32px;">🛠️</div>
+        <div style="font-weight: 700; color: #dc2626; margin-top: 6px;">3 bis. Traitement</div>
+        <div style="font-size: 13px; color: var(--gris); margin-top: 4px;">Si client mitigé → rappel/geste avant tout SMS</div>
+      </div>
+    </div>
+
+    <p style="margin-top: 20px; font-size: 14px; background: white; padding: 12px 16px; border-radius: 8px; border-left: 4px solid var(--vert);">
+      <strong>👉 Pourquoi ce process est gagnant :</strong> il explique vos <strong>4,7★ sur 343 avis</strong>. Sans contrôle qualité, vous auriez 4,2 avec des avis 1★ inattendus. Le QA est un actif business à préserver — toutes les automatisations s'insèrent APRÈS, jamais avant.
+    </p>
+  </div>
+
   <!-- TEMPLATE SMS -->
   <div class="card" id="sms">
-    <h2>💬 Template SMS Post-Intervention <span class="badge">Prêt à copier</span></h2>
-    <p class="sub">À envoyer 1 à 2 heures après la fin de l'intervention (timing optimal : client satisfait, encore frais dans son esprit). Compatible Ringover, SMSFactor, OVHcloud SMS.</p>
+    <h2>💬 Template SMS Post-Contrôle Qualité <span class="badge">Prêt à copier</span></h2>
+    <p class="sub">À envoyer <strong>uniquement après contrôle qualité audio positif</strong>. Timing optimal : dans la foulée de l'appel QA, pendant que le client est encore en relation positive avec HC. Compatible Ringover, SMSFactor, OVHcloud SMS.</p>
 
     <h4 style="color: var(--bleu-fonce); margin-top: 24px;">Version 1 — Standard (recommandé)</h4>
     <div class="sms-block">
@@ -354,44 +388,104 @@
     </div>
   </div>
 
-  <!-- SCRIPT VERBAL -->
+  <!-- SCRIPT TECHNICIEN -->
   <div class="card" id="script">
-    <h2>🗣️ Script verbal — Techniciens HC <span class="badge">Sur le terrain</span></h2>
-    <p class="sub">À utiliser en fin d'intervention, juste avant le départ. Demander à l'oral fait passer le taux de conversion de 5% à 25%+.</p>
+    <h2>🗣️ Script Technicien — Fin d'intervention <span class="badge">Sur le terrain</span></h2>
+    <p class="sub">⚠️ Le technicien ne demande PAS l'avis (c'est le rôle du QA audio). Il annonce simplement qu'un contrôle qualité va avoir lieu.</p>
 
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-content">
-        <h4>Vérifier la satisfaction</h4>
-        <p>Avant de demander l'avis, s'assurer que le client est content. Pas d'avis demandé si insatisfait (résoudre d'abord le problème).</p>
-        <em>« Voilà, c'est terminé. Tout est OK pour vous ? Vous avez des questions ? »</em>
+        <h4>Vérifier la propreté + récap</h4>
+        <p>Avant de partir : tout est rangé, propre, fonctionnel. Récap rapide de ce qui a été fait.</p>
+        <em>« Voilà, j'ai fait [récap]. Tout fonctionne, c'est propre. Vous avez des questions ? »</em>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-content">
-        <h4>Annoncer le SMS</h4>
-        <p>Prévenir le client qu'il va recevoir un SMS. Ça booste l'attention au moment de la réception.</p>
-        <em>« Super ! Dans 1 à 2 heures, vous allez recevoir un petit SMS de notre part. Si vous avez 30 secondes, ça nous aiderait beaucoup de laisser un avis sur Google — c'est notre meilleure pub. »</em>
+        <h4>Annoncer le contrôle qualité</h4>
+        <p>Prévenir que le bureau va appeler pour vérifier. Ça responsabilise le client et crée de la valeur perçue.</p>
+        <em>« Notre service qualité va vous appeler dans la journée ou demain pour s'assurer que tout est OK. C'est important pour nous d'avoir votre retour. »</em>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-content">
-        <h4>Proposer le QR code (option)</h4>
-        <p>Pour les clients à l'aise avec leur téléphone, scan immédiat = avis instantané.</p>
-        <em>« Sinon, vous pouvez le faire tout de suite en scannant ce QR code avec l'appareil photo de votre téléphone. C'est 1 clic. »</em>
+        <h4>Remettre la carte (option QR)</h4>
+        <p>Carte de visite avec QR code au dos. Le client peut scanner s'il le souhaite plus tard, mais aucune pression.</p>
+        <em>« Voici ma carte. Si jamais vous voulez nous laisser un avis Google plus tard, il y a un QR au dos qui amène directement à la bonne page. Pas obligatoire bien sûr. »</em>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">4</div>
       <div class="step-content">
-        <h4>Remercier (toujours)</h4>
-        <p>Que le client laisse un avis ou pas, finir sur du positif.</p>
-        <em>« En tout cas merci pour votre confiance, et n'hésitez pas à nous rappeler en cas de besoin ! »</em>
+        <h4>Remercier</h4>
+        <p>Toujours finir sur du positif.</p>
+        <em>« Merci pour votre confiance, n'hésitez pas à nous rappeler en cas de besoin ! »</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT QA AUDIO -->
+  <div class="card" id="qa-audio">
+    <h2>📞 Script Contrôle Qualité Audio <span class="badge">Bureau HC</span></h2>
+    <p class="sub">À utiliser par la personne en charge du QA. Objectif : vérifier satisfaction, traiter les insatisfactions, puis (et seulement si client satisfait) déclencher le SMS d'avis.</p>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Introduction</h4>
+        <p>Présentation claire, on appelle pour le suivi qualité.</p>
+        <em>« Bonjour {prenom}, c'est {prénom_QA} de HELP Confort. Je vous appelle juste pour le suivi de votre intervention {date}. Avez-vous 2 minutes ? »</em>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Vérifier satisfaction (3 points)</h4>
+        <p>Poser des questions ouvertes, ne pas inciter. Écouter activement.</p>
+        <em>
+          • « Est-ce que tout fonctionne bien depuis le passage du technicien ? »<br>
+          • « Êtes-vous satisfait(e) de la qualité du travail et de la propreté du chantier ? »<br>
+          • « Le technicien a-t-il été à l'écoute, professionnel ? »
+        </em>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4 style="color: var(--vert);">3a. ✅ Client satisfait → Demander l'avis</h4>
+        <p>Maintenant (et seulement maintenant), proposer l'avis Google.</p>
+        <em>« Super, ravi de l'entendre ! Pour nous aider à nous faire connaître, est-ce que ça vous embêterait de nous laisser un petit avis sur Google ? Je vous envoie le lien par SMS dans la foulée, c'est 30 secondes. »</em>
+        <div style="margin-top: 8px; padding: 10px; background: #e6f9ee; border-radius: 8px; font-size: 14px;">
+          <strong>→ Si OUI</strong> : envoyer le SMS immédiatement (V1 recommandé) et marquer "avis demandé" dans le CRM
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4 style="color: #dc2626;">3b. ⚠️ Client mitigé/insatisfait → PAS de SMS</h4>
+        <p>Traiter l'insatisfaction d'abord. JAMAIS d'avis demandé tant que ce n'est pas résolu.</p>
+        <em>« Je suis vraiment désolé d'entendre ça. Pouvez-vous m'expliquer ce qui n'a pas convenu ? Nous allons faire le nécessaire pour rectifier. »</em>
+        <div style="margin-top: 8px; padding: 10px; background: #fde8e8; border-radius: 8px; font-size: 14px;">
+          <strong>→ Actions</strong> : noter le motif dans le CRM, mettre en relation avec le technicien ou un responsable, proposer geste commercial si justifié, recontacter après résolution. <strong>Pas d'avis</strong> avant satisfaction confirmée.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Clôture</h4>
+        <em>« Je vous remercie pour votre temps. Bonne journée et à bientôt ! »</em>
       </div>
     </div>
   </div>
