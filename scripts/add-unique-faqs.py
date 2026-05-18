@@ -248,7 +248,7 @@ def process_file(path, slug):
     text = path.read_text(encoding="utf-8")
     original = text
 
-    # 1. Replace FAQ section
+    # 1. Replace or inject FAQ section
     new_faq_html = build_faq_html(faqs)
     faq_section_replaced = False
     if FAQ_SECTION_RE.search(text):
@@ -257,6 +257,18 @@ def process_file(path, slug):
     elif FAQ_SECTION_NOID_RE.search(text):
         text = FAQ_SECTION_NOID_RE.sub(lambda m: new_faq_html, text, count=1)
         faq_section_replaced = True
+    else:
+        # Inject before the closing </div> of seo-content, which sits right before <aside class="seo-form-side"
+        aside_marker = '</div><aside class="seo-form-side"'
+        if aside_marker in text:
+            text = text.replace(aside_marker, new_faq_html + aside_marker, 1)
+            faq_section_replaced = True
+        else:
+            # Try with newline variant
+            aside_marker_nl = '</div>\n<aside class="seo-form-side"'
+            if aside_marker_nl in text:
+                text = text.replace(aside_marker_nl, new_faq_html + '</div>\n<aside class="seo-form-side"', 1)
+                faq_section_replaced = True
 
     # 2. Replace JSON-LD FAQPage schema
     new_jsonld = build_faq_jsonld(faqs)
