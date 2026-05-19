@@ -224,3 +224,14 @@
 - **Durée** : 8 min (basculement propre + sortie noscript)
 - **Pattern** : pour cartes informatives statiques, préférer SVG inline plutôt que Leaflet+tile (immunité aux overlays tiers et extensions)
 - **Volet** : site live
+
+## 2026-05-19 — Edge Function publish-scheduled V5 cassée par verify_jwt=true (4h de retard chasse d'eau)
+- **Symptôme** : Publication chasse d'eau prévue 18:00 FR (16:00 UTC) toujours en `status=pending` 4h après l'heure prévue. Tous les calls cron retournaient 401 Unauthorized.
+- **Cause** : V5 déployée par moi-même à 17:51 avec `verify_jwt=true` (par défaut Supabase MCP). Le secret `sync_reviews_service_key` dans Supabase Vault est probablement expired/invalide → cron call avec ce Bearer token rejeté. V4 marchait sans verify_jwt strict.
+- **Fix immédiat (rattrapage manuel)** :
+  1. `UPDATE realisations SET status='publie', published_at=NOW()` pour la chasse d'eau (publication forcée sur le site)
+  2. `UPDATE scheduled_publications SET status='done', executed_at=NOW()` pour marquer la pub comme traitée
+- **Fix structurel** : Redéploiement V6 avec `verify_jwt=false`. L'auth est faite via SERVICE_ROLE_KEY interne (Deno.env), pas via JWT user.
+- **Durée totale** : ≈ 2 min de fix après détection (mais 4h de retard de publication)
+- **Pattern critique** : sur Edge Function appelée par cron pg_net, TOUJOURS `verify_jwt=false` (le cron passe via pg_net avec un Bearer Vault, pas un JWT user valide auprès du JWKS Supabase). Mentaliser pour tous les futurs deployments.
+- **Volet** : supabase
