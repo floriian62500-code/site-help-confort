@@ -83,6 +83,21 @@ Deno.serve(async (req) => {
       log.gbp = await callPublishFn("publish-gbp", due.realisation_id, SERVICE_ROLE_KEY);
       if (log.gbp.success) anySuccess = true; else anyFail = true;
     }
+    // HC-V2 : channel "site" → publication sur le site web (status realisations = publie)
+    // C'est le channel par défaut si aucun autre n'est sélectionné
+    if (channels.site || (!channels.meta && !channels.linkedin && !channels.gbp)) {
+      try {
+        const { error: errSite } = await sb.from("realisations").update({
+          status: "publie",
+          published_at: new Date().toISOString()
+        }).eq("id", due.realisation_id);
+        if (errSite) { log.site = { success: false, error: errSite.message }; anyFail = true; }
+        else { log.site = { success: true, channel: "site_web" }; anySuccess = true; }
+      } catch (e) {
+        log.site = { success: false, error: (e as Error).message };
+        anyFail = true;
+      }
+    }
 
     // Marque le chantier publié si succès au moins partiel
     if (anySuccess) {
