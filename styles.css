@@ -2028,24 +2028,27 @@ html .header .nav-desktop{overflow:visible !important}
 
 
 /* ════════════════════════════════════════════════════════════
-   HC-LOGO-FOOTER-FIX-V1
-   Cartouche blanc autour du logo dans le footer sombre (fv3)
-   Évite le carré blanc moche du JPG sur fond noir
+   HC-LOGO-FOOTER-FIX-V2
+   logo-officiel.jpg = 1080x1080 (carré) — HTML force width=200 height=60
+   On override les dimensions HTML inline et on respecte le ratio carré.
+   Cartouche blanc autour pour intégration sur fond sombre.
    ════════════════════════════════════════════════════════════ */
 .fv3-logo {
   display: inline-block;
   background: #FFFFFF;
-  padding: 10px 14px;
-  border-radius: 12px;
+  padding: 12px;
+  border-radius: 14px;
   line-height: 0;
   transition: transform .2s ease, box-shadow .2s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,.10);
 }
 .fv3-logo:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(13,160,207,.20);
+  box-shadow: 0 8px 24px rgba(13,160,207,.30);
 }
 .fv3-logo img {
-  display: block;
-  height: 50px;
-  width: auto;
+  display: block !important;
+  width: 110px !important;
+  height: 110px !important;
+  object-fit: contain;
 }
