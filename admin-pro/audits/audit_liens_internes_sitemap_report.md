@@ -1,16 +1,25 @@
-# Audit liens internes vs sitemap.xml — 2026-05-18 06:58
+# Audit liens internes vs sitemap.xml — 2026-05-19 06:50
 
 Sonde #61 : croise les `href` locaux `.html` avec `sitemap.xml` et le disque.
 
-- **Pages scannées** : 77
-- **Liens internes uniques (par page)** : 2197
-- **URLs dans sitemap.xml** : 144
+- **Pages scannées** : 81
+- **Liens internes uniques (par page)** : 3015
+- **URLs dans sitemap.xml** : 146
 - **🚨 Liens cassés (BROKEN)** : 0 (0 cibles uniques)
-- **🟠 Liens orphelins (ORPHAN — absents du sitemap)** : 0 (0 cibles uniques)
+- **🟠 Liens orphelins (ORPHAN — absents du sitemap)** : 81 (2 cibles uniques)
 
 ## ✅ Aucun lien interne cassé
 
-## ✅ Aucun lien orphelin (toutes les pages liées sont dans le sitemap)
+## 🟠 Pages existantes mais absentes du sitemap.xml
+
+Ces fichiers existent et sont liés depuis le site, mais Google ne les
+découvrira pas via le sitemap. À ajouter à `sitemap.xml` ou à exclure
+explicitement (whitelist du script si page technique/noindex).
+
+| Cible | Pointée par |
+|-------|-------------|
+| `reseau-help-confort.html` | 79× — `404.html`, `a-propos.html`, `actualites.html`, `agence-dunkerque.html`, `agence-saint-omer.html` … (+74) |
+| `prestations/salle-de-bain-pmr.html` | 2× — `pmr-dunkerque.html`, `pmr-saint-omer.html` |
 
 ## Notes
 

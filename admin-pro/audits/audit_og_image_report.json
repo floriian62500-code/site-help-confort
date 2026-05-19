@@ -1,17 +1,18 @@
 {
-  "generated_at": "2026-05-18 07:00",
-  "pages_scanned": 76,
-  "ok": 74,
-  "alerts": 2,
+  "generated_at": "2026-05-19 06:52",
+  "pages_scanned": 80,
+  "ok": 76,
+  "alerts": 4,
   "external_skipped": 0,
   "pil_available": true,
   "target_width": 1200,
   "target_height": 630,
   "tolerance_pct": 5,
   "by_status": {
-    "ok": 74,
+    "ok": 76,
+    "MISSING-OG-IMAGE": 2,
     "MISSING-FILE": 1,
-    "MISSING-OG-IMAGE": 1
+    "WRONG-SIZE": 1
   },
   "entries": [
     {
@@ -381,6 +382,19 @@
       "alerts": []
     },
     {
+      "page": "diagnostic-electrique.html",
+      "og_url": "https://www.depan59-62.fr/og/index.png",
+      "twitter_url": "https://www.depan59-62.fr/og/index.png",
+      "og_w_declared": null,
+      "og_h_declared": null,
+      "external": false,
+      "resolved": "og/index.png",
+      "image_w": 1200,
+      "image_h": 630,
+      "status": "ok",
+      "alerts": []
+    },
+    {
       "page": "electricien-boulogne-sur-mer.html",
       "og_url": "https://www.depan59-62.fr/og/electricien-saint-omer.png",
       "twitter_url": "https://www.depan59-62.fr/og/electricien-saint-omer.png",
@@ -470,6 +484,21 @@
       "image_h": 630,
       "status": "ok",
       "alerts": []
+    },
+    {
+      "page": "googlef09a1887914c5a23.html",
+      "og_url": null,
+      "twitter_url": null,
+      "og_w_declared": null,
+      "og_h_declared": null,
+      "external": false,
+      "resolved": null,
+      "image_w": null,
+      "image_h": null,
+      "status": "MISSING-OG-IMAGE",
+      "alerts": [
+        "Pas de <meta property=\"og:image\"> sur la page"
+      ]
     },
     {
       "page": "guide-adaptation-pmr.html",
@@ -643,6 +672,19 @@
       ]
     },
     {
+      "page": "panne-chaudiere.html",
+      "og_url": "https://www.depan59-62.fr/og/index.png",
+      "twitter_url": "https://www.depan59-62.fr/og/index.png",
+      "og_w_declared": null,
+      "og_h_declared": null,
+      "external": false,
+      "resolved": "og/index.png",
+      "image_w": 1200,
+      "image_h": 630,
+      "status": "ok",
+      "alerts": []
+    },
+    {
       "page": "partenaires.html",
       "og_url": "https://www.depan59-62.fr/og/partenaires.png",
       "twitter_url": "https://www.depan59-62.fr/og/partenaires.png",
@@ -814,6 +856,24 @@
       "image_h": 630,
       "status": "ok",
       "alerts": [
+        "Bonus : <meta name=\"twitter:image\"> absent (recommandé)"
+      ]
+    },
+    {
+      "page": "reseau-help-confort.html",
+      "og_url": "https://www.depan59-62.fr/logo-officiel.jpg",
+      "twitter_url": null,
+      "og_w_declared": 1200,
+      "og_h_declared": 630,
+      "external": false,
+      "resolved": "logo-officiel.jpg",
+      "image_w": 1080,
+      "image_h": 1080,
+      "status": "WRONG-SIZE",
+      "alerts": [
+        "Dimensions 1080×1080 hors tolérance ±5% (attendu 1200×630)",
+        "og:image:width déclaré (1200) ≠ dimensions réelles (1080)",
+        "og:image:height déclaré (630) ≠ dimensions réelles (1080)",
         "Bonus : <meta name=\"twitter:image\"> absent (recommandé)"
       ]
     },

@@ -1,13 +1,13 @@
 {
   "audit": "typo_fr",
-  "generated_at": "2026-05-18T07:00:39",
+  "generated_at": "2026-05-19T06:52:13",
   "threshold": 5,
   "stats": {
-    "pages_audited": 76,
-    "pages_alerted": 62,
-    "total_fautifs": 1201,
+    "pages_audited": 80,
+    "pages_alerted": 64,
+    "total_fautifs": 1207,
     "code_distribution": {
-      "TYPO-FR": 62
+      "TYPO-FR": 64
     }
   },
   "results": [
@@ -133,56 +133,6 @@
     },
     {
       "file": "chauffagiste-boulogne-sur-mer.html",
-      "fautifs": 28,
-      "findings": [
-        {
-          "code": "TYPO-FR",
-          "severity": "warning",
-          "detail": "28 occurrences de ponctuation haute (?!:;») sans espace insécable.",
-          "samples": [
-            "…retien annuel obligatoire : nos chauffagistes HELP C…",
-            "…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…",
-            "…panne ? Plus d'eau chaude ? Je vous mets en relation…",
-            "…uffage dans le Boulonnais : beaucoup de chaudières g…",
-            "…+ factures qui s'envolent ? Un désembouage du circui…",
-            "…lisé gratuit. Autre ville ? Chauffagiste Saint-Omer…",
-            "…r an selon votre assureur : cheminée, conduit chaudi…",
-            "…devis Prestations simples : réservez en ligne. Trava…",
-            "…ligne. Travaux complexes : devis personnalisé après…",
-            "…ntion Catalogue chauffage : entretien chaudière, dép…",
-            "…ifique, projet sur mesure : on vous rappelle sous 1h…",
-            "…arent, réparation propre. » M Mathieu D. Saint-Omer…"
-          ]
-        }
-      ]
-    },
-    {
-      "file": "chauffagiste-calais.html",
-      "fautifs": 30,
-      "findings": [
-        {
-          "code": "TYPO-FR",
-          "severity": "warning",
-          "detail": "30 occurrences de ponctuation haute (?!:;») sans espace insécable.",
-          "samples": [
-            "…etien annuel, désembouage : nos chauffagistes HELP C…",
-            "…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…",
-            "…panne ? Plus d'eau chaude ? Je vous mets en relation…",
-            "…udière Chauffage à Calais : nos retours terrain Sur…",
-            "…e). Les modèles fréquents : Frisquet Hydromotrix, Sa…",
-            "…le Calaisis qui incluent : passage annuel, attestat…",
-            "…a + de 12 ans, anticipez : un désembouage circuit o…",
-            "…oins de 800€. Autre ville ? Chauffagiste Saint-Omer…",
-            "…r an selon votre assureur : cheminée, conduit chaudi…",
-            "…devis Prestations simples : réservez en ligne. Trava…",
-            "…ligne. Travaux complexes : devis personnalisé après…",
-            "…ntion Catalogue chauffage : entretien chaudière, dép…"
-          ]
-        }
-      ]
-    },
-    {
-      "file": "chauffagiste-dunkerque.html",
       "fautifs": 27,
       "findings": [
         {
@@ -190,16 +140,16 @@
           "severity": "warning",
           "detail": "27 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
-            "…etien annuel, désembouage : nos chauffagistes HELP C…",
+            "…retien annuel obligatoire : nos chauffagistes HELP C…",
             "…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…",
             "…panne ? Plus d'eau chaude ? Je vous mets en relation…",
-            "…ude Chauffage à Dunkerque : nos retours terrain Beau…",
-            "…ien chaudière Autre ville ? Chauffagiste Saint-Omer…",
+            "…uffage dans le Boulonnais : beaucoup de chaudières g…",
+            "…+ factures qui s'envolent ? Un désembouage du circui…",
             "…r an selon votre assureur : cheminée, conduit chaudi…",
             "…devis Prestations simples : réservez en ligne. Trava…",
             "…ligne. Travaux complexes : devis personnalisé après…",
             "…ntion Catalogue chauffage : entretien chaudière, dép…",
-            "…ifique, projet sur mesure : on vous rappelle sous 1h…",
+            "…ifique, projet sur mesure : on vous rappelle rapidem…",
             "…arent, réparation propre. » M Mathieu D. Saint-Omer…",
             "…port remis à l'assurance. » S Sophie L. Longuenesse…"
           ]
@@ -207,7 +157,32 @@
       ]
     },
     {
-      "file": "chauffagiste-saint-omer.html",
+      "file": "chauffagiste-calais.html",
+      "fautifs": 29,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "29 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…etien annuel, désembouage : nos chauffagistes HELP C…",
+            "…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…",
+            "…panne ? Plus d'eau chaude ? Je vous mets en relation…",
+            "…9h-16h Chauffage à Calais : nos retours terrain Sur…",
+            "…e). Les modèles fréquents : Frisquet Hydromotrix, Sa…",
+            "…le Calaisis qui incluent : passage annuel, attestat…",
+            "…a + de 12 ans, anticipez : un désembouage circuit o…",
+            "…r an selon votre assureur : cheminée, conduit chaudi…",
+            "…devis Prestations simples : réservez en ligne. Trava…",
+            "…ligne. Travaux complexes : devis personnalisé après…",
+            "…ntion Catalogue chauffage : entretien chaudière, dép…",
+            "…ifique, projet sur mesure : on vous rappelle rapidem…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "chauffagiste-dunkerque.html",
       "fautifs": 26,
       "findings": [
         {
@@ -215,15 +190,15 @@
           "severity": "warning",
           "detail": "26 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
-            "…retien annuel obligatoire : nos chauffagistes interv…",
+            "…etien annuel, désembouage : nos chauffagistes HELP C…",
             "…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…",
             "…panne ? Plus d'eau chaude ? Je vous mets en relation…",
-            "…ien chaudière Autre ville ? Chauffagiste Dunkerque C…",
+            "…16h Chauffage à Dunkerque : nos retours terrain Beau…",
             "…r an selon votre assureur : cheminée, conduit chaudi…",
             "…devis Prestations simples : réservez en ligne. Trava…",
             "…ligne. Travaux complexes : devis personnalisé après…",
             "…ntion Catalogue chauffage : entretien chaudière, dép…",
-            "…ifique, projet sur mesure : on vous rappelle sous 1h…",
+            "…ifique, projet sur mesure : on vous rappelle rapidem…",
             "…arent, réparation propre. » M Mathieu D. Saint-Omer…",
             "…port remis à l'assurance. » S Sophie L. Longuenesse…",
             "…Google Marques installées : En chauffage, nous trava…"
@@ -232,18 +207,44 @@
       ]
     },
     {
-      "file": "contact.html",
-      "fautifs": 8,
+      "file": "chauffagiste-saint-omer.html",
+      "fautifs": 25,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "8 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "25 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…retien annuel obligatoire : nos chauffagistes interv…",
+            "…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…",
+            "…panne ? Plus d'eau chaude ? Je vous mets en relation…",
+            "…r an selon votre assureur : cheminée, conduit chaudi…",
+            "…devis Prestations simples : réservez en ligne. Trava…",
+            "…ligne. Travaux complexes : devis personnalisé après…",
+            "…ntion Catalogue chauffage : entretien chaudière, dép…",
+            "…ifique, projet sur mesure : on vous rappelle rapidem…",
+            "…arent, réparation propre. » M Mathieu D. Saint-Omer…",
+            "…port remis à l'assurance. » S Sophie L. Longuenesse…",
+            "…Google Marques installées : En chauffage, nous trava…",
+            "…nts français et européens : Finimetal, Atlantic, Com…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "contact.html",
+      "fautifs": 9,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "9 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…remplissez le formulaire : nous vous rappelons rapi…",
             "…es Bureaux &amp; standard : du lundi au vendredi 9h-…",
             "…h-16h Urgences techniques : sur rendez-vous en journ…",
             "…s 📌 Demande de devis pour : Vous décrivez votre beso…",
+            "…e passe après votre envoi : Votre demande est reçue…",
             "…Confidentialité 👋 Urgence ? H! Assistant HELP Confor…",
             "…fidentialité 👋 Urgence ? H! Assistant HELP Confort E…",
             "…Rappel sous 1h 👋 Bonjour ! Comment pouvons-nous vou…",
@@ -352,7 +353,7 @@
           "samples": [
             "…uffage, une porte bloquée ? Notre équipe basée à Sai…",
             "…mme tout le littoral nord : eau dure, air marin agre…",
-            "…Délai d'arrivée Boulogne : sous 1h- en heures ouvré…",
+            "…Délai d'arrivée Boulogne : en heures ouvrées selon…",
             "…Omer, le bâti est typique : maisons audomaroises en…",
             "…ans une fermette d'Arques : on intervient avec le bo…",
             "…Voir détails → Voir aussi : Travaux &amp; Rénovation…",
@@ -590,57 +591,57 @@
       "findings": []
     },
     {
-      "file": "electricien-boulogne-sur-mer.html",
-      "fautifs": 23,
+      "file": "diagnostic-electrique.html",
+      "fautifs": 13,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "23 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "13 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…ntion ⚖️ Qui est concerné ? Le DEO est obligatoire s…",
+            "…s ou rénovations récentes : l'attestation Consuel su…",
+            "…suffit. Durée de validité : 3 ans pour vente · 6 ans…",
+            "…électricien doit vérifier : 1 Appareil général de co…",
+            "…e faire en cas de défauts ? Pour une vente : le DEO…",
+            "…défauts ? Pour une vente : le DEO est informatif. L…",
+            "…e prix. Pour une location : le bailleur DOIT mettre…",
+            "…t-il vraiment obligatoire ? Oui : vente (installatio…",
+            "…raiment obligatoire ? Oui : vente (installation > 15…",
+            "…n ça coûte sur Saint-Omer ? 120-180€ TTC pour T2-T4…",
+            "…15 ans, suis-je dispensé ? Oui, si vous avez l'atte…",
+            "…temps prend le diagnostic ? 1h- pour T2-T4 standard.…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "electricien-boulogne-sur-mer.html",
+      "fautifs": 22,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "22 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…en sécurité, installation : nos électriciens HELP Co…",
             "…dép. 👋 Coupure de courant ? Tableau qui saute ? J'en…",
             "…urant ? Tableau qui saute ? J'envoie un électricien.…",
             "…ogne et quartiers anciens : beaucoup d'installations…",
             "…nes véhicules électriques : nous installons toutes p…",
-            "…des travaux). Autre ville ? Électricien Saint-Omer É…",
             "…devis Prestations simples : réservez en ligne. Trava…",
             "…ligne. Travaux complexes : devis personnalisé après…",
             "…ion Catalogue électricité : tableau, prises, mise au…",
-            "…ifique, projet sur mesure : on vous rappelle sous 1h…",
+            "…ifique, projet sur mesure : on vous rappelle rapidem…",
             "…arent, réparation propre. » M Mathieu D. Saint-Omer…",
-            "…port remis à l'assurance. » S Sophie L. Longuenesse…"
+            "…port remis à l'assurance. » S Sophie L. Longuenesse…",
+            "…Google Marques installées : Pour vos installations é…"
           ]
         }
       ]
     },
     {
       "file": "electricien-calais.html",
-      "fautifs": 25,
-      "findings": [
-        {
-          "code": "TYPO-FR",
-          "severity": "warning",
-          "detail": "25 occurrences de ponctuation haute (?!:;») sans espace insécable.",
-          "samples": [
-            "…en sécurité, installation : nos électriciens HELP Co…",
-            "…dép. 👋 Coupure de courant ? Tableau qui saute ? J'en…",
-            "…urant ? Tableau qui saute ? J'envoie un électricien.…",
-            "…teur Électricité à Calais : points de vigilance Cent…",
-            "…ord, Quartier Bonningues) : beaucoup d'installations…",
-            "…nés tissu. Vente/location : un diagnostic électrique…",
-            "…nes véhicules électriques : protection 30 mA dédiée,…",
-            "…kW à 22 kW). Autre ville ? Électricien Saint-Omer É…",
-            "…devis Prestations simples : réservez en ligne. Trava…",
-            "…ligne. Travaux complexes : devis personnalisé après…",
-            "…ion Catalogue électricité : tableau, prises, mise au…",
-            "…ifique, projet sur mesure : on vous rappelle sous 1h…"
-          ]
-        }
-      ]
-    },
-    {
-      "file": "electricien-dunkerque.html",
       "fautifs": 24,
       "findings": [
         {
@@ -651,40 +652,65 @@
             "…en sécurité, installation : nos électriciens HELP Co…",
             "…dép. 👋 Coupure de courant ? Tableau qui saute ? J'en…",
             "…urant ? Tableau qui saute ? J'envoie un électricien.…",
-            "…r Électricité à Dunkerque : points de vigilance Beau…",
-            "…on ou héritage immobilier : un diagnostic électrique…",
-            "…iscines & abris de jardin : protection 30 mA dédiée,…",
-            "…a conformité. Autre ville ? Électricien Saint-Omer É…",
+            "…-16h Électricité à Calais : points de vigilance Cent…",
+            "…ord, Quartier Bonningues) : beaucoup d'installations…",
+            "…nés tissu. Vente/location : un diagnostic électrique…",
+            "…nes véhicules électriques : protection 30 mA dédiée,…",
             "…devis Prestations simples : réservez en ligne. Trava…",
             "…ligne. Travaux complexes : devis personnalisé après…",
             "…ion Catalogue électricité : tableau, prises, mise au…",
-            "…ifique, projet sur mesure : on vous rappelle sous 1h…",
+            "…ifique, projet sur mesure : on vous rappelle rapidem…",
             "…arent, réparation propre. » M Mathieu D. Saint-Omer…"
           ]
         }
       ]
     },
     {
-      "file": "electricien-saint-omer.html",
-      "fautifs": 21,
+      "file": "electricien-dunkerque.html",
+      "fautifs": 23,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "21 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "23 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…en sécurité, installation : nos électriciens HELP Co…",
+            "…dép. 👋 Coupure de courant ? Tableau qui saute ? J'en…",
+            "…urant ? Tableau qui saute ? J'envoie un électricien.…",
+            "…h Électricité à Dunkerque : points de vigilance Beau…",
+            "…on ou héritage immobilier : un diagnostic électrique…",
+            "…iscines & abris de jardin : protection 30 mA dédiée,…",
+            "…devis Prestations simples : réservez en ligne. Trava…",
+            "…ligne. Travaux complexes : devis personnalisé après…",
+            "…ion Catalogue électricité : tableau, prises, mise au…",
+            "…ifique, projet sur mesure : on vous rappelle rapidem…",
+            "…arent, réparation propre. » M Mathieu D. Saint-Omer…",
+            "…port remis à l'assurance. » S Sophie L. Longuenesse…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "electricien-saint-omer.html",
+      "fautifs": 20,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "20 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…se aux normes NF C 15-100 : nos électriciens qualifi…",
             "…dép. 👋 Coupure de courant ? Tableau qui saute ? J'en…",
             "…urant ? Tableau qui saute ? J'envoie un électricien.…",
-            "…/ extracteur Autre ville ? Électricien Dunkerque Él…",
             "…devis Prestations simples : réservez en ligne. Trava…",
             "…ligne. Travaux complexes : devis personnalisé après…",
             "…ion Catalogue électricité : tableau, prises, mise au…",
-            "…ifique, projet sur mesure : on vous rappelle sous 1h…",
+            "…ifique, projet sur mesure : on vous rappelle rapidem…",
             "…arent, réparation propre. » M Mathieu D. Saint-Omer…",
             "…port remis à l'assurance. » S Sophie L. Longuenesse…",
             "…Google Marques installées : Pour vos installations é…",
-            "…les marques de référence : Legrand et ABB . Nous so…"
+            "…les marques de référence : Legrand et ABB . Nous so…",
+            "…s avant vente ou location ? Oui, nous établissons le…"
           ]
         }
       ]
@@ -698,7 +724,7 @@
           "severity": "warning",
           "detail": "10 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
-            "…1 34 ⚖️ Obligation légale : en France, l'entretien a…",
+            "…vous ⚖️ Obligation légale : en France, l'entretien a…",
             "…oup d'œil + une signature : c'est 45 à 60 minutes de…",
             "…geux qu'un passage unique : tarif fixe annuel, passa…",
             "…s Quand faire l'entretien ? Idéalement avant l'hiver…",
@@ -741,6 +767,11 @@
           ]
         }
       ]
+    },
+    {
+      "file": "googlef09a1887914c5a23.html",
+      "fautifs": 0,
+      "findings": []
     },
     {
       "file": "guide-adaptation-pmr.html",
@@ -897,12 +928,12 @@
     },
     {
       "file": "menuisier-dunkerque.html",
-      "fautifs": 26,
+      "fautifs": 25,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "26 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "25 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…es, panneaux PVC, parquet : nos menuisiers HELP Conf…",
             "…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…",
@@ -910,37 +941,37 @@
             "…tensif face à l'air marin ; nous le recommandons sur…",
             "…éité & isolation phonique : en bord de mer comme à M…",
             "…bandes. MaPrimeRénov 2026 : le remplacement de fenêt…",
-            "…Vous êtes sur Saint-Omer ? Voir notre page Menuisie…",
             "…Pose neuve ou rénovation : balcons, terrasses, esca…",
             "…e abîmé, fissuré ou terni : dépose et pose d'un pann…",
             "…devis Prestations simples : réservez en ligne avec a…",
             "…40%. Travaux spécifiques : devis gratuit après visi…",
-            "…tion Catalogue menuiserie : forfaits prix fixe, rése…"
+            "…tion Catalogue menuiserie : forfaits prix fixe, rése…",
+            "…vation, projet sur mesure : on vous rappelle rapidem…"
           ]
         }
       ]
     },
     {
       "file": "menuisier-saint-omer.html",
-      "fautifs": 23,
+      "fautifs": 22,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "23 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "22 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…sur-mesure, sécurisation : nos vitriers intervienne…",
             "…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…",
             "…ne fuite ? Un dégorgement ? Je vous oriente vers le…",
-            "…e Vous êtes sur Dunkerque ? Voir notre page Menuisie…",
             "…Pose neuve ou rénovation : balcons, terrasses, esca…",
             "…e abîmé, fissuré ou terni : dépose et pose d'un pann…",
             "…devis Prestations simples : réservez en ligne avec a…",
             "…40%. Travaux spécifiques : devis gratuit après visi…",
             "…tion Catalogue menuiserie : forfaits prix fixe, rése…",
-            "…vation, projet sur mesure : on vous rappelle sous 1h…",
+            "…vation, projet sur mesure : on vous rappelle rapidem…",
             "…arent, réparation propre. » M Mathieu D. Saint-Omer…",
-            "…port remis à l'assurance. » S Sophie L. Longuenesse…"
+            "…port remis à l'assurance. » S Sophie L. Longuenesse…",
+            "…Google Marques installées : En menuiserie intérieure…"
           ]
         }
       ]
@@ -986,6 +1017,31 @@
       ]
     },
     {
+      "file": "panne-chaudiere.html",
+      "fautifs": 20,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "20 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…e de pression, eau froide : nos chauffagistes diagno…",
+            "…à 1-1.5 bar. Si récurrent : fuite circuit. EA / E1 S…",
+            "…apides Pression chaudière : doit être entre 1 et 1.5…",
+            "…ière). Thermostat ambiant : changer les piles si écr…",
+            "…Manuel / Off). Vanne gaz : ouverte ? (Levier en pos…",
+            "…Off). Vanne gaz : ouverte ? (Levier en position para…",
+            "…u.) Disjoncteur chaudière : enclenché ? (Tableau éle…",
+            "…eur chaudière : enclenché ? (Tableau électrique géné…",
+            "…que général.) Code erreur : noter exactement ce qui…",
+            "…pièces les plus courantes : Frisquet Saunier Duval E…",
+            "…r Riello Combien ça coûte ? Prestation Tarif TTC Dia…",
+            "…un code erreur, que faire ? Notez exactement le code…"
+          ]
+        }
+      ]
+    },
+    {
       "file": "partenaires.html",
       "fautifs": 2,
       "findings": []
@@ -997,37 +1053,37 @@
     },
     {
       "file": "plombier-boulogne-sur-mer.html",
-      "fautifs": 25,
+      "fautifs": 24,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "25 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "24 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…erche de fuite, sanitaire : nos plombiers HELP Confo…",
             "…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…",
             "…ne fuite ? Un dégorgement ? Je vous oriente vers le…",
             "…ille portuaire historique : beaucoup d'habitat ancie…",
             "…(Wimereux, Equihen-Plage) : nombreuses résidences se…",
-            "…ti-logements. Autre ville ? Plombier Saint-Omer Plom…",
             "…devis Prestations simples : réservez en ligne avec a…",
             "…40%. Travaux spécifiques : devis gratuit après visi…",
             "…ntion Catalogue plomberie : forfaits prix fixe, rése…",
-            "…vation, projet sur mesure : on vous rappelle sous 1h…",
+            "…vation, projet sur mesure : on vous rappelle rapidem…",
             "…arent, réparation propre. » M Mathieu D. Saint-Omer…",
-            "…port remis à l'assurance. » S Sophie L. Longuenesse…"
+            "…port remis à l'assurance. » S Sophie L. Longuenesse…",
+            "…Google Marques installées : En plomberie, sanitaires…"
           ]
         }
       ]
     },
     {
       "file": "plombier-calais.html",
-      "fautifs": 26,
+      "fautifs": 25,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "26 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "25 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…erche de fuite, sanitaire : nos plombiers HELP Confo…",
             "…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…",
@@ -1035,35 +1091,10 @@
             "…de 30-35°F). Conséquence : entartrage rapide des ba…",
             "…haudières. Recommandation : détartrage tous les 2 an…",
             "…, Blériot-Plage, Wissant) : pensez à fermer l'arrivé…",
-            "…pour 80€ TTC. Autre ville ? Plombier Saint-Omer Plom…",
             "…devis Prestations simples : réservez en ligne avec a…",
             "…40%. Travaux spécifiques : devis gratuit après visi…",
             "…ntion Catalogue plomberie : forfaits prix fixe, rése…",
-            "…vation, projet sur mesure : on vous rappelle sous 1h…",
-            "…arent, réparation propre. » M Mathieu D. Saint-Omer…"
-          ]
-        }
-      ]
-    },
-    {
-      "file": "plombier-dunkerque.html",
-      "fautifs": 25,
-      "findings": [
-        {
-          "code": "TYPO-FR",
-          "severity": "warning",
-          "detail": "25 occurrences de ponctuation haute (?!:;») sans espace insécable.",
-          "samples": [
-            "…erche de fuite, sanitaire : nos techniciens HELP Con…",
-            "…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…",
-            "…ne fuite ? Un dégorgement ? Je vous oriente vers le…",
-            "…x Plomberie sur Dunkerque : ce qu'il faut savoir L'e…",
-            "…ne signalée. Gel hivernal : les nuits sous zéro sont…",
-            "…t chauffe-eau Autre ville ? Plombier Saint-Omer Plom…",
-            "…devis Prestations simples : réservez en ligne avec a…",
-            "…40%. Travaux spécifiques : devis gratuit après visi…",
-            "…ntion Catalogue plomberie : forfaits prix fixe, rése…",
-            "…vation, projet sur mesure : on vous rappelle sous 1h…",
+            "…vation, projet sur mesure : on vous rappelle rapidem…",
             "…arent, réparation propre. » M Mathieu D. Saint-Omer…",
             "…port remis à l'assurance. » S Sophie L. Longuenesse…"
           ]
@@ -1071,38 +1102,63 @@
       ]
     },
     {
-      "file": "plombier-saint-omer.html",
-      "fautifs": 23,
+      "file": "plombier-dunkerque.html",
+      "fautifs": 24,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "23 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "24 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…erche de fuite, sanitaire : nos techniciens HELP Con…",
+            "…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…",
+            "…ne fuite ? Un dégorgement ? Je vous oriente vers le…",
+            "…h Plomberie sur Dunkerque : ce qu'il faut savoir L'e…",
+            "…ne signalée. Gel hivernal : les nuits sous zéro sont…",
+            "…devis Prestations simples : réservez en ligne avec a…",
+            "…40%. Travaux spécifiques : devis gratuit après visi…",
+            "…ntion Catalogue plomberie : forfaits prix fixe, rése…",
+            "…vation, projet sur mesure : on vous rappelle rapidem…",
+            "…arent, réparation propre. » M Mathieu D. Saint-Omer…",
+            "…port remis à l'assurance. » S Sophie L. Longuenesse…",
+            "…Google Marques installées : En plomberie, sanitaires…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "plombier-saint-omer.html",
+      "fautifs": 22,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "22 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…erche de fuite, sanitaire : nos techniciens intervie…",
             "…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…",
             "…ne fuite ? Un dégorgement ? Je vous oriente vers le…",
-            "…t chauffe-eau Autre ville ? Plombier Dunkerque Plomb…",
             "…devis Prestations simples : réservez en ligne avec a…",
             "…40%. Travaux spécifiques : devis gratuit après visi…",
             "…ntion Catalogue plomberie : forfaits prix fixe, rése…",
-            "…vation, projet sur mesure : on vous rappelle sous 1h…",
+            "…vation, projet sur mesure : on vous rappelle rapidem…",
             "…arent, réparation propre. » M Mathieu D. Saint-Omer…",
             "…port remis à l'assurance. » S Sophie L. Longuenesse…",
             "…Google Marques installées : En plomberie, sanitaires…",
-            "…es de référence du marché : Atlantic, Hansgrohe, Geb…"
+            "…es de référence du marché : Atlantic, Hansgrohe, Geb…",
+            "…ne intervention plomberie ? Notre technicien arrive…"
           ]
         }
       ]
     },
     {
       "file": "pmr-dunkerque.html",
-      "fautifs": 26,
+      "fautifs": 23,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "26 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "23 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…monte-escalier, accès PMR : nos artisans labellisés…",
             "…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…",
@@ -1111,36 +1167,36 @@
             "…PrimeAdapt' (depuis 2024) : aide phare pour les 70 a…",
             "…Salle de bain prioritaire : remplacement baignoire p…",
             "…aidé. Labels HELP Confort : nos artisans sont labell…",
-            "…Vous êtes sur Saint-Omer ? Voir notre page Adaptati…",
-            "…noire en douche sécurisée : sol antidérapant, banc,…",
+            "…ratuitement votre dossier : diagnostic, devis, décla…",
             "…devis Prestations simples : réservez en ligne avec a…",
             "…40%. Travaux spécifiques : devis gratuit après visi…",
-            "…Catalogue adaptation PMR : forfaits prix fixe, rése…"
+            "…Catalogue adaptation PMR : forfaits prix fixe, rése…",
+            "…vation, projet sur mesure : on vous rappelle rapidem…"
           ]
         }
       ]
     },
     {
       "file": "pmr-saint-omer.html",
-      "fautifs": 22,
+      "fautifs": 19,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "22 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "19 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…PMR, élargissement portes : nos équipes adaptent vot…",
             "…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…",
             "…ne fuite ? Un dégorgement ? Je vous oriente vers le…",
-            "…s Vous êtes sur Dunkerque ? Voir notre page Adaptati…",
-            "…noire en douche sécurisée : sol antidérapant, banc,…",
+            "…ratuitement votre dossier : diagnostic, devis, décla…",
             "…devis Prestations simples : réservez en ligne avec a…",
             "…40%. Travaux spécifiques : devis gratuit après visi…",
             "…Catalogue adaptation PMR : forfaits prix fixe, rése…",
-            "…vation, projet sur mesure : on vous rappelle sous 1h…",
-            "…arent, réparation propre. » M Mathieu D. Saint-Omer…",
-            "…port remis à l'assurance. » S Sophie L. Longuenesse…",
-            "…du dossier MaPrimeAdapt' ? Oui, nous accompagnons g…"
+            "…vation, projet sur mesure : on vous rappelle rapidem…",
+            "…du dossier MaPrimeAdapt' ? Oui, nous accompagnons g…",
+            "…du dossier MaPrimeAdapt' : devis chiffré, attestati…",
+            "…noire en douche italienne ? Comptez 2 à 5 jours selo…",
+            "…jours selon configuration : dépose baignoire, étanch…"
           ]
         }
       ]
@@ -1221,13 +1277,18 @@
       ]
     },
     {
+      "file": "reseau-help-confort.html",
+      "fautifs": 4,
+      "findings": []
+    },
+    {
       "file": "serrurier-boulogne-sur-mer.html",
-      "fautifs": 27,
+      "fautifs": 26,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "27 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "26 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…e, blindage, cylindre A2P : nos serruriers HELP Conf…",
             "…le Indép. 👋 Porte claquée ? Clé cassée ? Un serrurie…",
@@ -1237,22 +1298,22 @@
             "…ité résidence + maritimes : sur Boulogne et la côte…",
             "…lindre A2P 2 étoiles posé : 200-350€ TTC. Blindage d…",
             "…Blindage de porte complet : 600-1200€ selon configur…",
-            "…tuit sur RDV. Autre ville ? Serrurier Saint-Omer Ser…",
             "…orte Renforcement complet : plaque acier + serrure A…",
             "…devis Prestations simples : réservez en ligne. Trava…",
-            "…ligne. Travaux complexes : devis personnalisé après…"
+            "…ligne. Travaux complexes : devis personnalisé après…",
+            "…tion Catalogue serrurerie : ouverture de porte, remp…"
           ]
         }
       ]
     },
     {
       "file": "serrurier-calais.html",
-      "fautifs": 26,
+      "fautifs": 25,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "26 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "25 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…age, cylindre de sécurité : nos serruriers HELP Conf…",
             "…le Indép. 👋 Porte claquée ? Clé cassée ? Un serrurie…",
@@ -1261,23 +1322,23 @@
             "…fication spécifique. Coût : 60-90€ TTC vs 250-400€ p…",
             "…e. Cambriolage sur Calais : l'été et les vacances sc…",
             "…ics. Investissement utile : cylindre A2P 2 ou 3 étoi…",
-            "…tuit sur RDV. Autre ville ? Serrurier Saint-Omer Ser…",
             "…orte Renforcement complet : plaque acier + serrure A…",
             "…devis Prestations simples : réservez en ligne. Trava…",
             "…ligne. Travaux complexes : devis personnalisé après…",
-            "…tion Catalogue serrurerie : ouverture de porte, remp…"
+            "…tion Catalogue serrurerie : ouverture de porte, remp…",
+            "…ifique, projet sur mesure : on vous rappelle rapidem…"
           ]
         }
       ]
     },
     {
       "file": "serrurier-dunkerque.html",
-      "fautifs": 26,
+      "fautifs": 25,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "26 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "25 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…age, cylindre de sécurité : nos serruriers HELP Conf…",
             "…le Indép. 👋 Porte claquée ? Clé cassée ? Un serrurie…",
@@ -1286,36 +1347,36 @@
             "…ez-nous en heures ouvrées : on vous donne le tarif e…",
             "…indage et anti-effraction : sur Dunkerque, les stati…",
             "…poignée anti-arrachement : nous chiffrons les optio…",
-            "…porte claquée Autre ville ? Serrurier Saint-Omer Ser…",
             "…orte Renforcement complet : plaque acier + serrure A…",
             "…devis Prestations simples : réservez en ligne. Trava…",
             "…ligne. Travaux complexes : devis personnalisé après…",
-            "…tion Catalogue serrurerie : ouverture de porte, remp…"
+            "…tion Catalogue serrurerie : ouverture de porte, remp…",
+            "…ifique, projet sur mesure : on vous rappelle rapidem…"
           ]
         }
       ]
     },
     {
       "file": "serrurier-saint-omer.html",
-      "fautifs": 22,
+      "fautifs": 21,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "22 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "21 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…cée, clé cassée, blindage : nos serruriers intervien…",
             "…le Indép. 👋 Porte claquée ? Clé cassée ? Un serrurie…",
             "…orte claquée ? Clé cassée ? Un serrurier intervient…",
-            "…porte claquée Autre ville ? Serrurier Dunkerque Serr…",
             "…orte Renforcement complet : plaque acier + serrure A…",
             "…devis Prestations simples : réservez en ligne. Trava…",
             "…ligne. Travaux complexes : devis personnalisé après…",
             "…tion Catalogue serrurerie : ouverture de porte, remp…",
-            "…ifique, projet sur mesure : on vous rappelle sous 1h…",
+            "…ifique, projet sur mesure : on vous rappelle rapidem…",
             "…arent, réparation propre. » M Mathieu D. Saint-Omer…",
             "…port remis à l'assurance. » S Sophie L. Longuenesse…",
-            "…Google Marques installées : En serrurerie, nous trav…"
+            "…Google Marques installées : En serrurerie, nous trav…",
+            "…tes A2P et haute sécurité : Trenois Decamps, Vachett…"
           ]
         }
       ]
@@ -1368,50 +1429,50 @@
     },
     {
       "file": "travaux-dunkerque.html",
-      "fautifs": 24,
+      "fautifs": 23,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "24 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "23 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…e, plafond, peinture, sol : nos équipes HELP Confort…",
             "…👋 Un projet de rénovation ? Salle de bain, cuisine,…",
             "…lle de bain, cuisine, PMR : parlons de votre chantie…",
-            "…re Rénovation à Dunkerque : nos chantiers types Réno…",
+            "…6h Rénovation à Dunkerque : nos chantiers types Réno…",
             "…Rénovation salle de bain : notre spécialité. Sur Du…",
             "…pleur. Plafond & peinture : les variations d'humidit…",
             "…Coordination multi-corps : sur un chantier complet…",
-            "…Vous êtes sur Saint-Omer ? Voir notre page Travaux…",
             "…devis Prestations simples : réservez en ligne. Trava…",
             "…ligne. Travaux complexes : devis personnalisé après…",
             "…vention Catalogue travaux : salle de bain, cuisine,…",
-            "…ifique, projet sur mesure : on vous rappelle sous 1h…"
+            "…ifique, projet sur mesure : on vous rappelle rapidem…",
+            "…arent, réparation propre. » M Mathieu D. Saint-Omer…"
           ]
         }
       ]
     },
     {
       "file": "travaux-saint-omer.html",
-      "fautifs": 20,
+      "fautifs": 19,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "20 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "19 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…enuiserie, adaptation PMR : un seul interlocuteur po…",
             "…👋 Un projet de rénovation ? Salle de bain, cuisine,…",
             "…lle de bain, cuisine, PMR : parlons de votre chantie…",
-            "…e Vous êtes sur Dunkerque ? Voir notre page Travaux…",
             "…devis Prestations simples : réservez en ligne. Trava…",
             "…ligne. Travaux complexes : devis personnalisé après…",
             "…vention Catalogue travaux : salle de bain, cuisine,…",
-            "…ifique, projet sur mesure : on vous rappelle sous 1h…",
+            "…ifique, projet sur mesure : on vous rappelle rapidem…",
             "…arent, réparation propre. » M Mathieu D. Saint-Omer…",
             "…port remis à l'assurance. » S Sophie L. Longuenesse…",
             "…travaux tous corps d'état ? Oui, nous coordonnons l'…",
-            "…ur un devis de rénovation ? Après visite technique g…"
+            "…ur un devis de rénovation ? Après visite technique g…",
+            "…ides MaPrimeRénov' et CEE ? Oui, HELP Confort est ce…"
           ]
         }
       ]
@@ -1443,12 +1504,12 @@
     },
     {
       "file": "vitrier-dunkerque.html",
-      "fautifs": 28,
+      "fautifs": 27,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "28 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "27 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…é, fissure, bris de glace : nos vitriers HELP Confor…",
             "…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…",
@@ -1457,17 +1518,67 @@
             "…Air marin & condensation : les double-vitrages perd…",
             "…ant. Urgence sécurisation : vitre cassée par effract…",
             "…tion, tempête ou accident ? Nous posons une planche…",
-            "…Vous êtes sur Saint-Omer ? Voir notre page Vitrier…",
             "…e, tentative d'effraction : sécurisation immédiate e…",
             "…sur menuiserie existante : simple 4 / 6 mm, double…",
             "…e abîmé, fissuré ou terni : dépose et pose d'un pann…",
-            "…devis Prestations simples : réservez en ligne avec a…"
+            "…devis Prestations simples : réservez en ligne avec a…",
+            "…40%. Travaux spécifiques : devis gratuit après visi…"
           ]
         }
       ]
     },
     {
       "file": "vitrier-saint-omer.html",
+      "fautifs": 23,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "23 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…sur-mesure, sécurisation : nos vitriers intervienne…",
+            "…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…",
+            "…ne fuite ? Un dégorgement ? Je vous oriente vers le…",
+            "…e, tentative d'effraction : sécurisation immédiate e…",
+            "…sur menuiserie existante : simple 4 / 6 mm, double…",
+            "…e abîmé, fissuré ou terni : dépose et pose d'un pann…",
+            "…devis Prestations simples : réservez en ligne avec a…",
+            "…40%. Travaux spécifiques : devis gratuit après visi…",
+            "…ention Catalogue vitrerie : forfaits prix fixe, rése…",
+            "…vation, projet sur mesure : on vous rappelle rapidem…",
+            "…arent, réparation propre. » M Mathieu D. Saint-Omer…",
+            "…port remis à l'assurance. » S Sophie L. Longuenesse…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "volets-dunkerque.html",
+      "fautifs": 27,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "27 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…isation, dépannage moteur : nos techniciens HELP Con…",
+            "…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…",
+            "…ne fuite ? Un dégorgement ? Je vous oriente vers le…",
+            "…9h-16h Volets à Dunkerque : pourquoi c'est essentiel…",
+            "…blier coincé, lame cassée : nous dépannons toutes ma…",
+            "…cer. Volets battants bois : caractéristiques du patr…",
+            "…endommagé, lames cassées : intervention rapide pour…",
+            "…devis Prestations simples : réservez en ligne avec a…",
+            "…40%. Travaux spécifiques : devis gratuit après visi…",
+            "…rvention Catalogue volets : forfaits prix fixe, rése…",
+            "…vation, projet sur mesure : on vous rappelle rapidem…",
+            "…arent, réparation propre. » M Mathieu D. Saint-Omer…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "volets-saint-omer.html",
       "fautifs": 24,
       "findings": [
         {
@@ -1475,68 +1586,18 @@
           "severity": "warning",
           "detail": "24 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
-            "…sur-mesure, sécurisation : nos vitriers intervienne…",
-            "…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…",
-            "…ne fuite ? Un dégorgement ? Je vous oriente vers le…",
-            "…s Vous êtes sur Dunkerque ? Voir notre page Vitrier…",
-            "…e, tentative d'effraction : sécurisation immédiate e…",
-            "…sur menuiserie existante : simple 4 / 6 mm, double…",
-            "…e abîmé, fissuré ou terni : dépose et pose d'un pann…",
-            "…devis Prestations simples : réservez en ligne avec a…",
-            "…40%. Travaux spécifiques : devis gratuit après visi…",
-            "…ention Catalogue vitrerie : forfaits prix fixe, rése…",
-            "…vation, projet sur mesure : on vous rappelle sous 1h…",
-            "…arent, réparation propre. » M Mathieu D. Saint-Omer…"
-          ]
-        }
-      ]
-    },
-    {
-      "file": "volets-dunkerque.html",
-      "fautifs": 29,
-      "findings": [
-        {
-          "code": "TYPO-FR",
-          "severity": "warning",
-          "detail": "29 occurrences de ponctuation haute (?!:;») sans espace insécable.",
-          "samples": [
-            "…isation, dépannage moteur : nos techniciens HELP Con…",
-            "…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…",
-            "…ne fuite ? Un dégorgement ? Je vous oriente vers le…",
-            "…Devis Volets à Dunkerque : pourquoi c'est essentiel…",
-            "…blier coincé, lame cassée : nous dépannons toutes ma…",
-            "…cer. Volets battants bois : caractéristiques du patr…",
-            "…Vous êtes sur Saint-Omer ? Voir notre page Volets S…",
-            "…oqué Manuel ou électrique : déblocage, remplacement…",
-            "…nes, vénitiens, ou screen : pose, réparation, motori…",
-            "…devis Prestations simples : réservez en ligne avec a…",
-            "…40%. Travaux spécifiques : devis gratuit après visi…",
-            "…rvention Catalogue volets : forfaits prix fixe, rése…"
-          ]
-        }
-      ]
-    },
-    {
-      "file": "volets-saint-omer.html",
-      "fautifs": 26,
-      "findings": [
-        {
-          "code": "TYPO-FR",
-          "severity": "warning",
-          "detail": "26 occurrences de ponctuation haute (?!:;») sans espace insécable.",
-          "samples": [
             "…tablier cassé, pose neuve : nos techniciens intervie…",
             "…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…",
             "…ne fuite ? Un dégorgement ? Je vous oriente vers le…",
-            "…s Vous êtes sur Dunkerque ? Voir notre page Volets D…",
-            "…oqué Manuel ou électrique : déblocage, remplacement…",
-            "…nes, vénitiens, ou screen : pose, réparation, motori…",
+            "…endommagé, lames cassées : intervention rapide pour…",
             "…devis Prestations simples : réservez en ligne avec a…",
             "…40%. Travaux spécifiques : devis gratuit après visi…",
             "…rvention Catalogue volets : forfaits prix fixe, rése…",
-            "…vation, projet sur mesure : on vous rappelle sous 1h…",
+            "…vation, projet sur mesure : on vous rappelle rapidem…",
             "…arent, réparation propre. » M Mathieu D. Saint-Omer…",
-            "…port remis à l'assurance. » S Sophie L. Longuenesse…"
+            "…port remis à l'assurance. » S Sophie L. Longuenesse…",
+            "…Google Marques installées : Pour les volets roulants…",
+            "…ons les leaders du marché : Somfy Pro, Bubendorff, S…"
           ]
         }
       ]

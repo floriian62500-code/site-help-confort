@@ -1,12 +1,12 @@
 # Audit inline `<style>` size — Rapport
 
-_Généré le 2026-05-18 07:00_
+_Généré le 2026-05-19 06:52_
 
 ## Synthèse
 
-- Pages scannées : **93**
-- CSS inline cumulé : **2655.7 KB**
-- CSS inline moyen : **28.6 KB / page**
+- Pages scannées : **97**
+- CSS inline cumulé : **2691.0 KB**
+- CSS inline moyen : **27.7 KB / page**
 - ❌ Pages > 50 KB : **27**
 - ⚠️ Pages 25–50 KB : **11**
 
@@ -18,12 +18,12 @@ _Généré le 2026-05-18 07:00_
 | 2 | ❌ `chauffagiste-calais.html` | **70.4 KB** | 12 |
 | 3 | ❌ `chauffagiste-dunkerque.html` | **70.4 KB** | 12 |
 | 4 | ❌ `chauffagiste-saint-omer.html` | **70.4 KB** | 12 |
-| 5 | ❌ `plombier-boulogne-sur-mer.html` | **67.1 KB** | 12 |
-| 6 | ❌ `plombier-calais.html` | **67.1 KB** | 12 |
-| 7 | ❌ `plombier-dunkerque.html` | **67.1 KB** | 12 |
-| 8 | ❌ `plombier-saint-omer.html` | **67.1 KB** | 12 |
-| 9 | ❌ `volets-dunkerque.html` | **67.1 KB** | 12 |
-| 10 | ❌ `volets-saint-omer.html` | **67.1 KB** | 12 |
+| 5 | ❌ `pmr-saint-omer.html` | **67.8 KB** | 12 |
+| 6 | ❌ `pmr-dunkerque.html` | **67.5 KB** | 12 |
+| 7 | ❌ `plombier-boulogne-sur-mer.html` | **67.1 KB** | 12 |
+| 8 | ❌ `plombier-calais.html` | **67.1 KB** | 12 |
+| 9 | ❌ `plombier-dunkerque.html` | **67.1 KB** | 12 |
+| 10 | ❌ `volets-dunkerque.html` | **67.1 KB** | 12 |
 
 ## ❌ Pages > 50 KB
 
@@ -33,10 +33,11 @@ Ces pages gagneraient à voir leur CSS inline extrait vers un fichier `.css` ext
 - `chauffagiste-calais.html` — **70.4 KB** (12 bloc(s) `<style>`)
 - `chauffagiste-dunkerque.html` — **70.4 KB** (12 bloc(s) `<style>`)
 - `chauffagiste-saint-omer.html` — **70.4 KB** (12 bloc(s) `<style>`)
+- `pmr-saint-omer.html` — **67.8 KB** (12 bloc(s) `<style>`)
+- `pmr-dunkerque.html` — **67.5 KB** (12 bloc(s) `<style>`)
 - `plombier-boulogne-sur-mer.html` — **67.1 KB** (12 bloc(s) `<style>`)
 - `plombier-calais.html` — **67.1 KB** (12 bloc(s) `<style>`)
 - `plombier-dunkerque.html` — **67.1 KB** (12 bloc(s) `<style>`)
-- `plombier-saint-omer.html` — **67.1 KB** (12 bloc(s) `<style>`)
 - `volets-dunkerque.html` — **67.1 KB** (12 bloc(s) `<style>`)
 - `volets-saint-omer.html` — **67.1 KB** (12 bloc(s) `<style>`)
 - `menuisier-dunkerque.html` — **66.8 KB** (11 bloc(s) `<style>`)
@@ -51,8 +52,7 @@ Ces pages gagneraient à voir leur CSS inline extrait vers un fichier `.css` ext
 - `serrurier-saint-omer.html` — **66.8 KB** (11 bloc(s) `<style>`)
 - `vitrier-dunkerque.html` — **66.8 KB** (11 bloc(s) `<style>`)
 - `vitrier-saint-omer.html` — **66.8 KB** (11 bloc(s) `<style>`)
-- `pmr-dunkerque.html` — **65.5 KB** (11 bloc(s) `<style>`)
-- `pmr-saint-omer.html` — **65.5 KB** (11 bloc(s) `<style>`)
+- `plombier-saint-omer.html` — **66.3 KB** (12 bloc(s) `<style>`)
 - `travaux-dunkerque.html` — **65.3 KB** (10 bloc(s) `<style>`)
 - `travaux-saint-omer.html` — **65.3 KB** (10 bloc(s) `<style>`)
 - `index.html` — **58.1 KB** (19 bloc(s) `<style>`)

@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-05-18T07:00:42",
-  "scanned_pages": 76,
-  "total_ctas": 63,
+  "generated_at": "2026-05-19T06:52:16",
+  "scanned_pages": 80,
+  "total_ctas": 66,
   "families": {
     "estimation": {
       "occurrences": 2,
@@ -11,18 +11,20 @@
       }
     },
     "devis": {
-      "occurrences": 60,
-      "unique_destinations": 3,
+      "occurrences": 62,
+      "unique_destinations": 4,
       "destinations": {
-        "contact.html": 57,
+        "contact.html": 58,
+        "[button-js]": 1,
         "devis-express.html": 1,
         "tel:+33366100134": 2
       }
     },
     "reserver": {
-      "occurrences": 1,
-      "unique_destinations": 1,
+      "occurrences": 2,
+      "unique_destinations": 2,
       "destinations": {
+        "index.html": 1,
         "contact.html": 1
       }
     }
@@ -30,11 +32,11 @@
   "alerts": [
     {
       "family": "devis",
-      "destination_count": 3,
+      "destination_count": 4,
       "destinations": [
         {
           "canon": "contact.html",
-          "count": 57,
+          "count": 58,
           "examples": [
             {
               "page": "aides.html",
@@ -70,6 +72,17 @@
           ]
         },
         {
+          "canon": "[button-js]",
+          "count": 1,
+          "examples": [
+            {
+              "page": "contact.html",
+              "text": "Recevoir mon devis gratuit",
+              "href": "[button-js]"
+            }
+          ]
+        },
+        {
           "canon": "devis-express.html",
           "count": 1,
           "examples": [
@@ -77,6 +90,34 @@
               "page": "plan-du-site.html",
               "text": "Devis express",
               "href": "devis-express.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "family": "reserver",
+      "destination_count": 2,
+      "destinations": [
+        {
+          "canon": "index.html",
+          "count": 1,
+          "examples": [
+            {
+              "page": "entretien-chaudiere.html",
+              "text": "Prendre rendez-vous",
+              "href": "index.html?wizard=depannage&urg=chauffage#hc-reservation"
+            }
+          ]
+        },
+        {
+          "canon": "contact.html",
+          "count": 1,
+          "examples": [
+            {
+              "page": "guide-entretien-chaudiere.html",
+              "text": "Réserver mon entretien",
+              "href": "contact.html?presta=entretien-chaudiere#form"
             }
           ]
         }

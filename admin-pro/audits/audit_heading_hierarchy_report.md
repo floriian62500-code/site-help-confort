@@ -1,20 +1,21 @@
 # Audit Heading hierarchy — Rapport
 
-Généré le : `2026-05-18T07:00:38`
+Généré le : `2026-05-19T06:52:12`
 
 Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il y a exactement un <h1>, et que la séquence commence bien par un <h1>.
 
 ## Synthèse
 
-- Pages auditées : **76**
-- Pages clean : **66**
+- Pages auditées : **80**
+- Pages clean : **77**
 - Pages avec erreur(s) : **1**
-- Pages avec warning(s) : **10**
-- Findings totaux : **11**
+- Pages avec warning(s) : **3**
+- Findings totaux : **4**
 
 ## Top codes
 
-- **9×** `SKIP_LEVEL`
+- **1×** `NO_HEADINGS`
+- **1×** `SKIP_LEVEL`
 - **1×** `NO_H1`
 - **1×** `WRONG_START`
 
@@ -28,68 +29,19 @@ Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il 
 - ❌ **NO_H1** — La page ne contient pas de <h1>.
 - ⚠️ **WRONG_START** — Première heading = h3 (texte : 'Métiers'). Attendu : h1.
 
-### `chauffagiste-boulogne-sur-mer.html`
+### `googlef09a1887914c5a23.html`
+
+- h1 sur la page : **0**
+- Total headings : **0**
+- Séquence : `(aucune)`
+- ⚠️ **NO_HEADINGS** — Aucune balise <h1>..<h6> trouvée sur la page.
+
+### `pmr-saint-omer.html`
 
 - h1 sur la page : **1**
-- Total headings : **28**
-- Séquence : `h1 → h3 → h2 → h2 → h3 → h3 → h3 → h3 → h3 → h2 → h3 → h3 → h3 → h3 → h3 → h3 → h2 → h2 → h2 → h2 → h2 → h3 → h4 → h2 → h2 → h3 → h3 → h3`
-- ⚠️ **SKIP_LEVEL** — Saut h1 → h3 (de 'Chauffage & dépannage chaudière à Boulog' à 'Prestations détaillées').
-
-### `chauffagiste-calais.html`
-
-- h1 sur la page : **1**
-- Total headings : **28**
-- Séquence : `h1 → h3 → h2 → h2 → h3 → h3 → h3 → h3 → h3 → h2 → h3 → h3 → h3 → h3 → h3 → h3 → h2 → h2 → h2 → h2 → h2 → h3 → h4 → h2 → h2 → h3 → h3 → h3`
-- ⚠️ **SKIP_LEVEL** — Saut h1 → h3 (de 'Chauffage & dépannage chaudière à Calais' à 'Prestations détaillées').
-
-### `chauffagiste-saint-omer.html`
-
-- h1 sur la page : **1**
-- Total headings : **27**
-- Séquence : `h1 → h3 → h2 → h3 → h3 → h3 → h3 → h3 → h2 → h3 → h3 → h3 → h3 → h3 → h3 → h2 → h2 → h2 → h2 → h2 → h3 → h4 → h2 → h2 → h3 → h3 → h3`
-- ⚠️ **SKIP_LEVEL** — Saut h1 → h3 (de 'Chauffage & dépannage chaudière à Saint-' à 'Prestations détaillées').
-
-### `plombier-boulogne-sur-mer.html`
-
-- h1 sur la page : **1**
-- Total headings : **22**
-- Séquence : `h1 → h3 → h2 → h2 → h3 → h3 → h3 → h3 → h3 → h3 → h2 → h2 → h2 → h2 → h2 → h3 → h4 → h2 → h2 → h3 → h3 → h3`
-- ⚠️ **SKIP_LEVEL** — Saut h1 → h3 (de 'Plomberie &amp; dépannage rapide à Boulo' à 'Prestations détaillées').
-
-### `plombier-calais.html`
-
-- h1 sur la page : **1**
-- Total headings : **22**
-- Séquence : `h1 → h3 → h2 → h2 → h3 → h3 → h3 → h3 → h3 → h3 → h2 → h2 → h2 → h2 → h2 → h3 → h4 → h2 → h2 → h3 → h3 → h3`
-- ⚠️ **SKIP_LEVEL** — Saut h1 → h3 (de 'Plomberie &amp; dépannage rapide à Calai' à 'Prestations détaillées').
-
-### `plombier-saint-omer.html`
-
-- h1 sur la page : **1**
-- Total headings : **21**
-- Séquence : `h1 → h3 → h2 → h3 → h3 → h3 → h3 → h3 → h3 → h2 → h2 → h2 → h2 → h2 → h3 → h4 → h2 → h2 → h3 → h3 → h3`
-- ⚠️ **SKIP_LEVEL** — Saut h1 → h3 (de 'Plomberie &amp; dépannage rapide à Saint' à 'Prestations détaillées').
-
-### `serrurier-boulogne-sur-mer.html`
-
-- h1 sur la page : **1**
-- Total headings : **22**
-- Séquence : `h1 → h3 → h2 → h2 → h3 → h3 → h3 → h3 → h3 → h3 → h2 → h2 → h2 → h2 → h2 → h3 → h4 → h2 → h2 → h3 → h3 → h3`
-- ⚠️ **SKIP_LEVEL** — Saut h1 → h3 (de 'Serrurerie & ouverture de porte à Boulog' à 'Prestations détaillées').
-
-### `serrurier-calais.html`
-
-- h1 sur la page : **1**
-- Total headings : **22**
-- Séquence : `h1 → h3 → h2 → h2 → h3 → h3 → h3 → h3 → h3 → h3 → h2 → h2 → h2 → h2 → h2 → h3 → h4 → h2 → h2 → h3 → h3 → h3`
-- ⚠️ **SKIP_LEVEL** — Saut h1 → h3 (de 'Serrurerie & ouverture de porte à Calais' à 'Prestations détaillées').
-
-### `serrurier-saint-omer.html`
-
-- h1 sur la page : **1**
-- Total headings : **21**
-- Séquence : `h1 → h3 → h2 → h3 → h3 → h3 → h3 → h3 → h3 → h2 → h2 → h2 → h2 → h2 → h3 → h4 → h2 → h2 → h3 → h3 → h3`
-- ⚠️ **SKIP_LEVEL** — Saut h1 → h3 (de 'Serrurerie & ouverture de porte à Saint-' à 'Prestations détaillées').
+- Total headings : **17**
+- Séquence : `h1 → h3 → h2 → h3 → h3 → h3 → h2 → h2 → h2 → h2 → h3 → h4 → h2 → h2 → h3 → h3 → h3`
+- ⚠️ **SKIP_LEVEL** — Saut h1 → h3 (de 'Adaptation PMR à domicile — Saint-Omer e' à "MaPrimeAdapt&apos; — jusqu'à 70 % d'aide").
 
 ## ✅ Pages sans finding
 
@@ -101,7 +53,10 @@ Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il 
 - `avant-apres.html`
 - `blog.html`
 - `carrieres.html`
+- `chauffagiste-boulogne-sur-mer.html`
+- `chauffagiste-calais.html`
 - `chauffagiste-dunkerque.html`
+- `chauffagiste-saint-omer.html`
 - `contact.html`
 - `contrats-entretien.html`
 - `debouchage-canalisation.html`
@@ -118,6 +73,7 @@ Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il 
 - `depannage-saint-pol-sur-mer.html`
 - `depannage-sangatte.html`
 - `devis-express.html`
+- `diagnostic-electrique.html`
 - `electricien-boulogne-sur-mer.html`
 - `electricien-calais.html`
 - `electricien-dunkerque.html`
@@ -138,16 +94,23 @@ Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il 
 - `nos-prestations.html`
 - `nos-villes.html`
 - `ouverture-porte-claquee.html`
+- `panne-chaudiere.html`
 - `partenaires.html`
 - `plan-du-site.html`
+- `plombier-boulogne-sur-mer.html`
+- `plombier-calais.html`
 - `plombier-dunkerque.html`
+- `plombier-saint-omer.html`
 - `pmr-dunkerque.html`
-- `pmr-saint-omer.html`
 - `pro.html`
 - `processus.html`
 - `realisations.html`
 - `remplacement-chauffe-eau.html`
+- `reseau-help-confort.html`
+- `serrurier-boulogne-sur-mer.html`
+- `serrurier-calais.html`
 - `serrurier-dunkerque.html`
+- `serrurier-saint-omer.html`
 - `sinistres.html`
 - `tarifs.html`
 - `temoignages.html`

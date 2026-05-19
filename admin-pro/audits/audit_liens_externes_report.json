@@ -1,7 +1,7 @@
 {
-  "scanned_pages": 77,
-  "tested_urls": 71,
-  "ok": 58,
+  "scanned_pages": 81,
+  "tested_urls": 69,
+  "ok": 56,
   "broken": [
     {
       "url": "https://comap.aalberts-hfc.com/fr",
@@ -39,6 +39,15 @@
       ]
     },
     {
+      "url": "https://www.anah.fr",
+      "status": 0,
+      "error": "URLError: <urlopen error timed out>",
+      "ok": false,
+      "pages": [
+        "aides.html"
+      ]
+    },
+    {
       "url": "https://www.anah.gouv.fr/maprimeadapt",
       "status": 404,
       "error": "Not Found",
@@ -56,16 +65,6 @@
         "menuisier-dunkerque.html",
         "menuisier-saint-omer.html",
         "partenaires.html"
-      ]
-    },
-    {
-      "url": "https://www.handicare.com/fr",
-      "status": 404,
-      "error": "Not Found",
-      "ok": false,
-      "pages": [
-        "pmr-dunkerque.html",
-        "pmr-saint-omer.html"
       ]
     },
     {
@@ -102,16 +101,6 @@
       ]
     },
     {
-      "url": "https://www.pellet-asc.com/",
-      "status": 403,
-      "error": "Forbidden",
-      "ok": false,
-      "pages": [
-        "pmr-dunkerque.html",
-        "pmr-saint-omer.html"
-      ]
-    },
-    {
       "url": "https://www.placo.fr/",
       "status": 403,
       "error": "Forbidden",
@@ -132,6 +121,17 @@
       ]
     },
     {
+      "url": "https://www.velux.fr/",
+      "status": 503,
+      "error": "Service Unavailable",
+      "ok": false,
+      "pages": [
+        "menuisier-dunkerque.html",
+        "menuisier-saint-omer.html",
+        "partenaires.html"
+      ]
+    },
+    {
       "url": "https://www.watermatic.fr/",
       "status": 403,
       "error": "Forbidden",
@@ -148,5 +148,5 @@
     "https://www.facebook.com/depanaudo/",
     "https://www.linkedin.com/in/florian-d-haillecourt-2a67bb207"
   ],
-  "generated_at": "2026-05-18T07:00:37"
+  "generated_at": "2026-05-19T06:52:10"
 }

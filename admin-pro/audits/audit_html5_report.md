@@ -1,174 +1,143 @@
-# Audit HTML5 — 2026-05-18 06:58
+# Audit HTML5 — 2026-05-19 06:50
 
 > Audit local rapide HTML5 + a11y de base. Lancement : `python3 admin-pro/audits/audit_html5.py`
 > ⚠️ Ce n'est pas un substitut au validateur W3C officiel, mais il pré-filtre les erreurs évidentes.
 
 ## Synthèse
 
-- Pages auditées : **78**
-- Pages avec erreurs : **0**
-- Pages avec warnings : **29**
-- Total erreurs : **0**
-- Total warnings : **44**
+- Pages auditées : **82**
+- Pages avec erreurs : **2**
+- Pages avec warnings : **20**
+- Total erreurs : **10**
+- Total warnings : **21**
+
+## Top patterns d'erreurs
+
+- **2×** <meta name="description"> manquant ou vide
+- **1×** DOCTYPE html manquant ou incorrect
+- **1×** balise <html> manquante
+- **1×** <meta charset> manquant
+- **1×** <title> manquant ou vide
+- **1×** <meta name="viewport"> manquant
+- **1×** BODY-HEAD-MISSING : balise </head> introuvable
+- **1×** BODY-HEAD-MISSING : balise <body> introuvable
+- **1×** aucun <hN>
 
 ## Détail par page (pages problématiques uniquement)
+
+### `googlef09a1887914c5a23.html`
+
+- ❌ DOCTYPE html manquant ou incorrect
+- ❌ balise <html> manquante
+- ❌ <meta charset> manquant
+- ❌ <title> manquant ou vide
+- ❌ <meta name="description"> manquant ou vide
+- ❌ <meta name="viewport"> manquant
+- ❌ BODY-HEAD-MISSING : balise </head> introuvable
+- ❌ BODY-HEAD-MISSING : balise <body> introuvable
+- ❌ aucun <h1>
+- ⚠️ <link rel="canonical"> manquant
+
+### `diagnostic-electrique.html`
+
+- ❌ <meta name="description"> manquant ou vide
+- ⚠️ <title> long (83 chars, >70 recommandé)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `reseau-help-confort.html`
+
+- ⚠️ <title> long (108 chars, >70 recommandé)
+- ⚠️ meta description longue (173 chars, >170 → tronquée)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `chauffagiste-boulogne-sur-mer.html`
 
 - ⚠️ meta description longue (176 chars, >170 → tronquée)
-- ⚠️ balisage déséquilibré (indicatif) : <div> 182↗ / 181↘
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
 ### `chauffagiste-dunkerque.html`
 
 - ⚠️ meta description longue (172 chars, >170 → tronquée)
-- ⚠️ balisage déséquilibré (indicatif) : <div> 182↗ / 181↘
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
 ### `electricien-boulogne-sur-mer.html`
 
 - ⚠️ meta description longue (175 chars, >170 → tronquée)
-- ⚠️ balisage déséquilibré (indicatif) : <div> 152↗ / 151↘
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
 ### `electricien-dunkerque.html`
 
 - ⚠️ meta description longue (171 chars, >170 → tronquée)
-- ⚠️ balisage déséquilibré (indicatif) : <div> 152↗ / 151↘
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
 ### `electricien-saint-omer.html`
 
 - ⚠️ meta description longue (190 chars, >170 → tronquée)
-- ⚠️ balisage déséquilibré (indicatif) : <div> 150↗ / 149↘
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
 ### `menuisier-dunkerque.html`
 
 - ⚠️ meta description longue (174 chars, >170 → tronquée)
-- ⚠️ balisage déséquilibré (indicatif) : <div> 154↗ / 153↘
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
-
-### `partenaires.html`
-
-- ⚠️ <title> long (86 chars, >70 recommandé)
-- ⚠️ meta description longue (196 chars, >170 → tronquée)
-
-### `plombier-boulogne-sur-mer.html`
-
-- ⚠️ meta description longue (172 chars, >170 → tronquée)
-- ⚠️ balisage déséquilibré (indicatif) : <div> 143↗ / 142↘
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
-
-### `pmr-dunkerque.html`
-
-- ⚠️ meta description longue (179 chars, >170 → tronquée)
-- ⚠️ balisage déséquilibré (indicatif) : <div> 137↗ / 136↘
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
-
-### `serrurier-boulogne-sur-mer.html`
-
-- ⚠️ meta description longue (173 chars, >170 → tronquée)
-- ⚠️ balisage déséquilibré (indicatif) : <div> 149↗ / 148↘
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
-
-### `serrurier-saint-omer.html`
-
-- ⚠️ meta description longue (183 chars, >170 → tronquée)
-- ⚠️ balisage déséquilibré (indicatif) : <div> 147↗ / 146↘
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
-
-### `travaux-dunkerque.html`
-
-- ⚠️ meta description longue (185 chars, >170 → tronquée)
-- ⚠️ balisage déséquilibré (indicatif) : <div> 143↗ / 142↘
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
-
-### `travaux-saint-omer.html`
-
-- ⚠️ <title> long (87 chars, >70 recommandé)
-- ⚠️ balisage déséquilibré (indicatif) : <div> 141↗ / 140↘
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
-
-### `vitrier-dunkerque.html`
-
-- ⚠️ meta description longue (172 chars, >170 → tronquée)
-- ⚠️ balisage déséquilibré (indicatif) : <div> 142↗ / 141↘
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
-
-### `volets-dunkerque.html`
-
-- ⚠️ meta description longue (171 chars, >170 → tronquée)
-- ⚠️ balisage déséquilibré (indicatif) : <div> 140↗ / 139↘
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
-
-### `chauffagiste-calais.html`
-
-- ⚠️ balisage déséquilibré (indicatif) : <div> 182↗ / 181↘
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
-
-### `chauffagiste-saint-omer.html`
-
-- ⚠️ balisage déséquilibré (indicatif) : <div> 180↗ / 179↘
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
-
-### `electricien-calais.html`
-
-- ⚠️ balisage déséquilibré (indicatif) : <div> 152↗ / 151↘
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
-
-### `menuisier-saint-omer.html`
-
-- ⚠️ balisage déséquilibré (indicatif) : <div> 152↗ / 151↘
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
 ### `nos-villes.html`
 
 - ⚠️ <title> long (82 chars, >70 recommandé)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
-### `plombier-calais.html`
+### `partenaires.html`
 
-- ⚠️ balisage déséquilibré (indicatif) : <div> 143↗ / 142↘
+- ⚠️ meta description longue (196 chars, >170 → tronquée)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `plombier-boulogne-sur-mer.html`
+
+- ⚠️ meta description longue (172 chars, >170 → tronquée)
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
-### `plombier-dunkerque.html`
+### `pmr-dunkerque.html`
 
-- ⚠️ balisage déséquilibré (indicatif) : <div> 143↗ / 142↘
+- ⚠️ meta description longue (179 chars, >170 → tronquée)
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
-### `plombier-saint-omer.html`
+### `serrurier-boulogne-sur-mer.html`
 
-- ⚠️ balisage déséquilibré (indicatif) : <div> 141↗ / 140↘
+- ⚠️ meta description longue (173 chars, >170 → tronquée)
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
-### `pmr-saint-omer.html`
+### `serrurier-saint-omer.html`
 
-- ⚠️ balisage déséquilibré (indicatif) : <div> 135↗ / 134↘
+- ⚠️ meta description longue (183 chars, >170 → tronquée)
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
-### `serrurier-calais.html`
+### `travaux-dunkerque.html`
 
-- ⚠️ balisage déséquilibré (indicatif) : <div> 149↗ / 148↘
+- ⚠️ meta description longue (185 chars, >170 → tronquée)
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
-### `serrurier-dunkerque.html`
+### `travaux-saint-omer.html`
 
-- ⚠️ balisage déséquilibré (indicatif) : <div> 149↗ / 148↘
+- ⚠️ <title> long (87 chars, >70 recommandé)
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
 ### `urgence.html`
 
 - ⚠️ <title> long (93 chars, >70 recommandé)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
-### `vitrier-saint-omer.html`
+### `vitrier-dunkerque.html`
 
-- ⚠️ balisage déséquilibré (indicatif) : <div> 140↗ / 139↘
+- ⚠️ meta description longue (172 chars, >170 → tronquée)
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
-### `volets-saint-omer.html`
+### `volets-dunkerque.html`
 
-- ⚠️ balisage déséquilibré (indicatif) : <div> 138↗ / 137↘
+- ⚠️ meta description longue (171 chars, >170 → tronquée)
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
+
+### `404.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `a-propos.html`
 
@@ -177,6 +146,14 @@
 ### `actualites.html`
 
 - ℹ️ 11 <img> avec alt vide (OK si décoratif)
+
+### `agence-dunkerque.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `agence-saint-omer.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `aides.html`
 
@@ -190,6 +167,14 @@
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
+### `chauffagiste-calais.html`
+
+- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+
+### `chauffagiste-saint-omer.html`
+
+- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+
 ### `contact.html`
 
 - ℹ️ 11 <img> avec alt vide (OK si décoratif)
@@ -197,6 +182,10 @@
 ### `contrats-entretien.html`
 
 - ℹ️ 11 <img> avec alt vide (OK si décoratif)
+
+### `debouchage-canalisation.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `depannage-arques.html`
 
@@ -246,6 +235,14 @@
 
 - ℹ️ 11 <img> avec alt vide (OK si décoratif)
 
+### `electricien-calais.html`
+
+- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+
+### `entretien-chaudiere.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
 ### `espace-client.html`
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
@@ -278,9 +275,41 @@
 
 - ℹ️ 11 <img> avec alt vide (OK si décoratif)
 
+### `menuisier-saint-omer.html`
+
+- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+
+### `nos-metiers.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
 ### `nos-prestations.html`
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `ouverture-porte-claquee.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `panne-chaudiere.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `plombier-calais.html`
+
+- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+
+### `plombier-dunkerque.html`
+
+- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+
+### `plombier-saint-omer.html`
+
+- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+
+### `pmr-saint-omer.html`
+
+- ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
 ### `pro.html`
 
@@ -294,9 +323,33 @@
 
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
+### `remplacement-chauffe-eau.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `serrurier-calais.html`
+
+- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+
+### `serrurier-dunkerque.html`
+
+- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+
 ### `sinistres.html`
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `tarifs.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `vitrier-saint-omer.html`
+
+- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+
+### `volets-saint-omer.html`
+
+- ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
 ### `zones-intervention.html`
 
@@ -313,6 +366,8 @@
 - `avant-apres.html`
 - `blog.html`
 - `carrieres.html`
+- `chauffagiste-calais.html`
+- `chauffagiste-saint-omer.html`
 - `contact.html`
 - `contrats-entretien.html`
 - `debouchage-canalisation.html`
@@ -329,6 +384,7 @@
 - `depannage-saint-pol-sur-mer.html`
 - `depannage-sangatte.html`
 - `devis-express.html`
+- `electricien-calais.html`
 - `entretien-chaudiere.html`
 - `espace-client.html`
 - `faq.html`
@@ -339,17 +395,27 @@
 - `guides.html`
 - `index.html`
 - `mentions-legales.html`
+- `menuisier-saint-omer.html`
 - `nos-metiers.html`
 - `nos-prestations.html`
 - `ouverture-porte-claquee.html`
+- `panne-chaudiere.html`
 - `plan-du-site.html`
+- `plombier-calais.html`
+- `plombier-dunkerque.html`
+- `plombier-saint-omer.html`
+- `pmr-saint-omer.html`
 - `pro.html`
 - `processus.html`
 - `realisation.html`
 - `realisations.html`
 - `remplacement-chauffe-eau.html`
 - `reset.html`
+- `serrurier-calais.html`
+- `serrurier-dunkerque.html`
 - `sinistres.html`
 - `tarifs.html`
 - `temoignages.html`
+- `vitrier-saint-omer.html`
+- `volets-saint-omer.html`
 - `zones-intervention.html`

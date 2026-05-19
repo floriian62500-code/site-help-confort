@@ -1,17 +1,17 @@
 # Audit H1 length — Rapport
 
-_Généré le 2026-05-18 07:00_
+_Généré le 2026-05-19 06:52_
 
 ## Synthèse
 
-- Pages scannées : **92**
-- ✅ OK (20-70 chars) : **63**
+- Pages scannées : **96**
+- ✅ OK (20-70 chars) : **66**
 - ⚠️  Warnings (h1 multiples, hors longueur) : **0**
 - ❌ Erreurs (< 20 ou > 70) : **29**
-- ℹ️  Sans h1 ou parse error : **0**
-- Findings totaux : **29**
+- ℹ️  Sans h1 ou parse error : **1**
+- Findings totaux : **30**
   - Erreurs : 29
-  - Avertissements : 0
+  - Avertissements : 1
 
 ## Bornes appliquées
 
@@ -135,3 +135,6 @@ _Généré le 2026-05-18 07:00_
 ### `zones-intervention.html`  (88 chars, n_h1=1)
 > Nos équipes interviennent sur tout le secteur Saint-Omer · Dunkerque · Calais · Boulogne
 - ❌ H1-TOO-LONG : 88 chars > 70
+
+### `googlef09a1887914c5a23.html`  (0 chars, n_h1=0)
+- ⚠️ H1-MISSING : aucun <h1> trouvé

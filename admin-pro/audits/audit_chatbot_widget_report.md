@@ -1,23 +1,27 @@
 # 🤖 Audit couverture chatbot widget — sonde #24
 
-_Généré le 2026-05-18 07:00_
+_Généré le 2026-05-19 06:52_
 
-- Pages publiques scannées : **76**
+- Pages publiques scannées : **80**
 - Pages avec widget chargé : **64**
-- Pages **sans widget** (alertes) : **12**
+- Pages **sans widget** (alertes) : **16**
 
 ## ❌ Pages sans `hc-widgets.js`
 
 - `agence-dunkerque.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `agence-saint-omer.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `debouchage-canalisation.html` — aucun `<script src=...hc-widgets.js>` détecté
+- `diagnostic-electrique.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `entretien-chaudiere.html` — aucun `<script src=...hc-widgets.js>` détecté
+- `googlef09a1887914c5a23.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `nos-metiers.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `nos-villes.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `ouverture-porte-claquee.html` — aucun `<script src=...hc-widgets.js>` détecté
+- `panne-chaudiere.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `partenaires.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `plan-du-site.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `remplacement-chauffe-eau.html` — aucun `<script src=...hc-widgets.js>` détecté
+- `reseau-help-confort.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `tarifs.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `urgence.html` — aucun `<script src=...hc-widgets.js>` détecté
 

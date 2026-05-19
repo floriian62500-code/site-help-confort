@@ -1,8 +1,8 @@
-# Audit FAQPage doublon — 2026-05-18 07:00
+# Audit FAQPage doublon — 2026-05-19 06:52
 
-- **Pages scannées** : 77
-- **Pages avec 1 bloc FAQPage** : 48
-- **Pages sans FAQPage** : 29
+- **Pages scannées** : 81
+- **Pages avec 1 bloc FAQPage** : 50
+- **Pages sans FAQPage** : 31
 - **Pages avec > 1 bloc FAQPage (alertes)** : 0
 
 > Google recommande un seul bloc `FAQPage` par URL. Au-delà, le rich result peut être ignoré silencieusement.
@@ -30,6 +30,7 @@
 - `depannage-saint-omer.html` (3 blocs JSON-LD au total)
 - `depannage-saint-pol-sur-mer.html` (3 blocs JSON-LD au total)
 - `depannage-sangatte.html` (3 blocs JSON-LD au total)
+- `diagnostic-electrique.html` (4 blocs JSON-LD au total)
 - `electricien-boulogne-sur-mer.html` (5 blocs JSON-LD au total)
 - `electricien-calais.html` (5 blocs JSON-LD au total)
 - `electricien-dunkerque.html` (5 blocs JSON-LD au total)
@@ -39,6 +40,7 @@
 - `menuisier-dunkerque.html` (5 blocs JSON-LD au total)
 - `menuisier-saint-omer.html` (5 blocs JSON-LD au total)
 - `ouverture-porte-claquee.html` (6 blocs JSON-LD au total)
+- `panne-chaudiere.html` (4 blocs JSON-LD au total)
 - `plombier-boulogne-sur-mer.html` (5 blocs JSON-LD au total)
 - `plombier-calais.html` (5 blocs JSON-LD au total)
 - `plombier-dunkerque.html` (5 blocs JSON-LD au total)

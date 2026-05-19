@@ -1,8 +1,8 @@
 {
   "audit": "fallback_supabase",
-  "generated_at": "2026-05-18T07:00:39",
+  "generated_at": "2026-05-19T06:52:13",
   "stats": {
-    "pages_audited": 76,
+    "pages_audited": 80,
     "pages_using_supabase": 10,
     "pages_with_fallback": 34,
     "pages_alerted": 3,
@@ -301,6 +301,15 @@
       ]
     },
     {
+      "file": "diagnostic-electrique.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
       "file": "electricien-boulogne-sur-mer.html",
       "uses_supabase": false,
       "supabase_signatures": [],
@@ -364,6 +373,15 @@
     },
     {
       "file": "faq.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "googlef09a1887914c5a23.html",
       "uses_supabase": false,
       "supabase_signatures": [],
       "has_fallback": false,
@@ -503,6 +521,15 @@
       "findings": []
     },
     {
+      "file": "panne-chaudiere.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
       "file": "partenaires.html",
       "uses_supabase": false,
       "supabase_signatures": [],
@@ -625,6 +652,7 @@
       "file": "realisations.html",
       "uses_supabase": true,
       "supabase_signatures": [
+        "/rest/v1/realisations",
         "createClient("
       ],
       "has_fallback": true,
@@ -637,6 +665,15 @@
     },
     {
       "file": "remplacement-chauffe-eau.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "reseau-help-confort.html",
       "uses_supabase": false,
       "supabase_signatures": [],
       "has_fallback": false,

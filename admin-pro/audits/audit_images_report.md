@@ -1,4 +1,4 @@
-# Audit images perf — 2026-05-18 06:58
+# Audit images perf — 2026-05-19 06:50
 
 > Sonde performance HELP Confort — détecte les images > 200 KB et
 > alerte si elles sont au-dessus du fold ou utilisées sur ≥ 5 pages.
@@ -6,32 +6,23 @@
 
 ## Synthèse
 
-- Images scannées : **127** (21836.2 KB total)
-- Images > 200 KB : **17**
+- Images scannées : **126** (10480.4 KB total)
+- Images > 200 KB : **8**
 - Erreurs (>500 KB + ATF/5+ pages) : **0**
-- Warnings : **17**
+- Warnings : **8**
 
 ## Détail (par poids décroissant)
 
 | Sévérité | Fichier | Poids | Pages | ATF | Raisons |
 |----------|---------|-------|-------|-----|---------|
-| ⚠️ | `images/prestations/ramonage.png` | 4379.4 KB | 0 | — | poids élevé (4379.4 KB), non référencée (mort ?) |
-| ⚠️ | `images/prestations/ouverture-porte.jpg` | 2232.9 KB | 0 | — | poids élevé (2232.9 KB), non référencée (mort ?) |
-| ⚠️ | `images/prestations/mise-securite-vitrerie.jpg` | 1142.8 KB | 0 | — | poids élevé (1142.8 KB), non référencée (mort ?) |
-| ⚠️ | `images/prestations/remplacement-panneau-porte.jpg` | 1092.1 KB | 0 | — | poids élevé (1092.1 KB), non référencée (mort ?) |
-| ⚠️ | `images/prestations/changement-cylindre.jpg` | 921.8 KB | 0 | — | poids élevé (921.8 KB), non référencée (mort ?) |
-| ⚠️ | `images/prestations/remplacement-chaudiere.jpg` | 845.6 KB | 0 | — | poids élevé (845.6 KB), non référencée (mort ?) |
 | ⚠️ | `images/mascotte-opt.tmp.png` | 688.4 KB | 0 | — | poids élevé (688.4 KB), non référencée (mort ?) |
 | ⚠️ | `images/mascotte.tmp.png` | 688.4 KB | 0 | — | poids élevé (688.4 KB), non référencée (mort ?) |
-| ⚠️ | `images/prestations/vitrage-simple-double-triple.jpg` | 532.8 KB | 0 | — | poids élevé (532.8 KB), non référencée (mort ?) |
-| ⚠️ | `images/prestations/desembouage.png` | 418.1 KB | 0 | — | non référencée (mort ?) |
-| ⚠️ | `images/prestations/vitrage-insert-poele.jpg` | 403.0 KB | 0 | — | non référencée (mort ?) |
 | ⚠️ | `images/prestations/ramonage.jpg` | 344.0 KB | 0 | — | non référencée (mort ?) |
-| ⚠️ | `images/prestations/salle-de-bain.jpg` | 313.6 KB | 0 | — | non référencée (mort ?) |
-| ⚠️ | `images/prestations/recherche-panne-elec.jpg` | 278.0 KB | 0 | — | non référencée (mort ?) |
-| ⚠️ | `images/prestations/debouchage.jpg` | 249.3 KB | 0 | — | non référencée (mort ?) |
-| ⚠️ | `images/prestations/porte-fermee-cle.jpg` | 241.2 KB | 0 | — | non référencée (mort ?) |
-| ⚠️ | `images/prestations/vitrerie-panneau-porte.jpg` | 213.9 KB | 0 | — | non référencée (mort ?) |
+| ⚠️ | `images/prestations/garde-corps-rampes.jpg` | 309.9 KB | 2 (`menuisier-dunkerque.html`, `menuisier-saint-omer.html`) | — | — |
+| ⚠️ | `images/prestations/fenetres-bois-alu-pvc.jpg` | 290.6 KB | 2 (`menuisier-dunkerque.html`, `menuisier-saint-omer.html`) | — | — |
+| ⚠️ | `images/prestations/recherche-panne-elec.jpg` | 277.8 KB | 0 | — | non référencée (mort ?) |
+| ⚠️ | `images/prestations/mise-securite-vitrerie.jpg` | 250.1 KB | 0 | — | non référencée (mort ?) |
+| ⚠️ | `images/prestations/coulissant-baie-vitree.jpg` | 238.2 KB | 2 (`menuisier-dunkerque.html`, `menuisier-saint-omer.html`) | — | — |
 
 ## Recommandations
 

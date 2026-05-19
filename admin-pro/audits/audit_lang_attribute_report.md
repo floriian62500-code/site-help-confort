@@ -1,15 +1,15 @@
 # Audit lang attribute — Rapport
 
-_Généré le 2026-05-18 07:00_
+_Généré le 2026-05-19 06:52_
 
 ## Synthèse
 
-- Pages scannées : **93**
-- ✅ OK (`fr` ou `fr-FR`) : **93**
+- Pages scannées : **97**
+- ✅ OK (`fr` ou `fr-FR`) : **96**
 - ⚠️  Warnings (variantes `fr-XX`) : **0**
-- ❌ Erreurs (lang manquant ou ≠ fr) : **0**
-- Findings totaux : **0**
-  - Erreurs : 0
+- ❌ Erreurs (lang manquant ou ≠ fr) : **1**
+- Findings totaux : **1**
+  - Erreurs : 1
   - Avertissements : 0
 
 ## Règles
@@ -20,4 +20,5 @@ _Généré le 2026-05-18 07:00_
 
 ## Findings
 
-_Aucun finding — toutes les pages déclarent correctement `lang`._
+### `googlef09a1887914c5a23.html`  (lang=None)
+- ❌ HTML-TAG-MISSING : aucune balise `<html>` détectée

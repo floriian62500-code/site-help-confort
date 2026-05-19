@@ -1,18 +1,19 @@
-# Audit JSON-LD — 2026-05-18 06:58
+# Audit JSON-LD — 2026-05-19 06:50
 
 > Audit local des blocs `<script type="application/ld+json">` de chaque page HTML.
 > Lancement : `python3 admin-pro/audits/audit_jsonld.py`
 
 ## Synthèse
 
-- Pages auditées : **78**
-- Pages avec JSON-LD : **76**
-- Pages sans JSON-LD : **2**
+- Pages auditées : **82**
+- Pages avec JSON-LD : **79**
+- Pages sans JSON-LD : **3**
 - Erreurs de syntaxe JSON : **0**
-- Avertissements (champs manquants/dupliqués) : **680**
+- Avertissements (champs manquants/dupliqués) : **688**
 
 ## ⚠️ Pages sans aucun JSON-LD
 
+- `googlef09a1887914c5a23.html`
 - `realisation.html`
 - `reset.html`
 
@@ -22,10 +23,12 @@
 
 - ✅ Bloc #0 (`WebPage, Organization, ImageObject`) — OK
 
-### `a-propos.html` — 2 bloc(s) — types : LocalBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, City, AggregateRating, BreadcrumbList, ListItem
+### `a-propos.html` — 4 bloc(s) — types : LocalBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, City, AggregateRating, BreadcrumbList, ListItem, Person, Organization, AboutPage, Place
 
 - ✅ Bloc #0 (`LocalBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, City, AggregateRating`) — OK
 - ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ✅ Bloc #2 (`Person, Organization`) — OK
+- ✅ Bloc #3 (`AboutPage, Organization, Person, Place`) — OK
 
 ### `actualites.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, City, AggregateRating, BreadcrumbList, ListItem, Blog, Organization, ImageObject
 
@@ -301,6 +304,17 @@
 ### `devis-express.html` — 1 bloc(s) — types : BreadcrumbList, ListItem
 
 - ✅ Bloc #0 (`BreadcrumbList, ListItem`) — OK
+
+### `diagnostic-electrique.html` — 4 bloc(s) — types : Service, Electrician, PostalAddress, Offer, BreadcrumbList, ListItem, FAQPage, Question, Answer, LocalBusiness, AggregateRating
+
+- ⚠️ Bloc #0 (`Service, Electrician, PostalAddress, Offer`) :
+    - Electrician sans url (recommandé) @ provider
+    - Electrician sans areaServed (recommandé) @ provider
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ✅ Bloc #2 (`FAQPage, Question, Answer`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness, AggregateRating`) :
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
 
 ### `electricien-boulogne-sur-mer.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, Electrician, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
 
@@ -594,6 +608,17 @@
     - LocalBusiness sans url (recommandé) @ racine
 - ✅ Bloc #5 (`Article, Organization, ImageObject, WebPage`) — OK
 
+### `panne-chaudiere.html` — 4 bloc(s) — types : Service, HVACBusiness, PostalAddress, Offer, BreadcrumbList, ListItem, FAQPage, Question, Answer, LocalBusiness, AggregateRating
+
+- ⚠️ Bloc #0 (`Service, HVACBusiness, PostalAddress, Offer`) :
+    - HVACBusiness sans url (recommandé) @ provider
+    - HVACBusiness sans areaServed (recommandé) @ provider
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ✅ Bloc #2 (`FAQPage, Question, Answer`) — OK
+- ⚠️ Bloc #3 (`LocalBusiness, AggregateRating`) :
+    - LocalBusiness sans address (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ racine
+
 ### `partenaires.html` — 2 bloc(s) — types : LocalBusiness, BreadcrumbList, ListItem
 
 - ⚠️ Bloc #0 (`LocalBusiness`) :
@@ -815,6 +840,11 @@
     - LocalBusiness sans address (recommandé) @ racine
     - LocalBusiness sans url (recommandé) @ racine
 - ✅ Bloc #5 (`Article, Organization, ImageObject, WebPage`) — OK
+
+### `reseau-help-confort.html` — 2 bloc(s) — types : WebPage, Organization, BreadcrumbList, ListItem
+
+- ✅ Bloc #0 (`WebPage, Organization`) — OK
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
 
 ### `serrurier-boulogne-sur-mer.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, Locksmith, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
 

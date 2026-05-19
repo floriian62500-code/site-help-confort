@@ -1,17 +1,21 @@
-# 🔦 Audit Lighthouse local — 2026-05-18 06:58
+# 🔦 Audit Lighthouse local — 2026-05-19 06:50
 
-**77 pages auditées** · **0 erreurs** · **46 warnings** · **Score moyen 98/100**
+**81 pages auditées** · **7 erreurs** · **54 warnings** · **Score moyen 96/100**
 
 ## 📊 Résumé par page
 
 | Page | Score | Erreurs | Warnings |
 |------|------:|--------:|---------:|
+| `googlef09a1887914c5a23.html` | **0/100** | 7 | 3 |
 | `entretien-chaudiere.html` | **88/100** | 0 | 3 |
-| `partenaires.html` | **88/100** | 0 | 3 |
+| `diagnostic-electrique.html` | **92/100** | 0 | 2 |
 | `nos-metiers.html` | **92/100** | 0 | 2 |
 | `nos-villes.html` | **92/100** | 0 | 2 |
+| `panne-chaudiere.html` | **92/100** | 0 | 2 |
+| `partenaires.html` | **92/100** | 0 | 2 |
 | `realisation.html` | **92/100** | 0 | 2 |
 | `remplacement-chauffe-eau.html` | **92/100** | 0 | 2 |
+| `reseau-help-confort.html` | **92/100** | 0 | 2 |
 | `reset.html` | **92/100** | 0 | 2 |
 | `serrurier-saint-omer.html` | **92/100** | 0 | 2 |
 | `tarifs.html` | **92/100** | 0 | 2 |
@@ -86,6 +90,22 @@
 
 ## 🔍 Détails par page
 
+### googlef09a1887914c5a23.html — 0/100
+
+**Erreurs :**
+- ❌ SEO <title> manquant
+- ❌ meta description manquante
+- ❌ Aucun <h1>
+- ❌ <html lang> manquant
+- ❌ DOCTYPE manquant
+- ❌ viewport manquant
+- ❌ charset manquant
+
+**Warnings :**
+- ⚠️ <link rel="canonical"> manquant
+- ⚠️ og:image manquant
+- ⚠️ Aucun rel=preconnect
+
 ### entretien-chaudiere.html — 88/100
 
 **Warnings :**
@@ -93,11 +113,10 @@
 - ⚠️ meta description longue (162 chars)
 - ⚠️ Aucun rel=preconnect
 
-### partenaires.html — 88/100
+### diagnostic-electrique.html — 92/100
 
 **Warnings :**
-- ⚠️ SEO title long (86 chars)
-- ⚠️ meta description longue (196 chars)
+- ⚠️ SEO title long (83 chars)
 - ⚠️ Aucun rel=preconnect
 
 ### nos-metiers.html — 92/100
@@ -112,6 +131,18 @@
 - ⚠️ SEO title long (82 chars)
 - ⚠️ Aucun rel=preconnect
 
+### panne-chaudiere.html — 92/100
+
+**Warnings :**
+- ⚠️ SEO title long (72 chars)
+- ⚠️ Aucun rel=preconnect
+
+### partenaires.html — 92/100
+
+**Warnings :**
+- ⚠️ meta description longue (196 chars)
+- ⚠️ Aucun rel=preconnect
+
 ### realisation.html — 92/100
 
 **Warnings :**
@@ -123,6 +154,12 @@
 **Warnings :**
 - ⚠️ meta description longue (164 chars)
 - ⚠️ Aucun rel=preconnect
+
+### reseau-help-confort.html — 92/100
+
+**Warnings :**
+- ⚠️ SEO title long (108 chars)
+- ⚠️ meta description longue (173 chars)
 
 ### reset.html — 92/100
 

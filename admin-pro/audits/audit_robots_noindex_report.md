@@ -1,12 +1,12 @@
 # Audit robots noindex — Rapport
 
-_Généré le 2026-05-18 07:00_
+_Généré le 2026-05-19 06:52_
 
 ## Synthèse
 
-- Pages scannées : **93**
-- Pages avec `<meta robots>` : **89**
-- ✅ OK (indexables) : **92**
+- Pages scannées : **97**
+- Pages avec `<meta robots>` : **92**
+- ✅ OK (indexables) : **96**
 - ℹ️ noindex légitime (pages dynamiques) : **1**
 - ❌ Erreurs (noindex/none non attendu) : **0**
 

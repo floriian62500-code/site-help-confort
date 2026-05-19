@@ -1,17 +1,17 @@
 # Audit meta description length — Rapport
 
-_Généré le 2026-05-18 07:00_
+_Généré le 2026-05-19 06:52_
 
 ## Synthèse
 
-- Pages scannées : **92**
-- ✅ OK (120-158 chars) : **62**
+- Pages scannées : **96**
+- ✅ OK (120-158 chars) : **64**
 - ⚠️  Warnings (acceptable mais hors cible) : **10**
-- ❌ Erreurs (< 70 ou > 160) : **20**
-- ℹ️  Sans description : **0**
-- Findings totaux : **30**
-  - Erreurs : 20
-  - Avertissements : 10
+- ❌ Erreurs (< 70 ou > 160) : **21**
+- ℹ️  Sans description : **1**
+- Findings totaux : **32**
+  - Erreurs : 21
+  - Avertissements : 11
 
 ## Bornes appliquées
 
@@ -77,6 +77,10 @@ _Généré le 2026-05-18 07:00_
 > Remplacement ballon d'eau chaude / chauffe-eau électrique, thermodynamique ou gaz à Saint-Omer & Dunkerque. Devis gratuit, pose conforme, garantie ☎ 03 66 10 01 34.
 - ❌ DESC-TOO-LONG : 164 chars > 160
 
+### `reseau-help-confort.html`  (173 chars)
+> HELP Confort : 1er réseau national d'urgence, dépannage et amélioration de l'habitat. Plomberie, chauffage, électricité, serrurerie, vitrerie — franchise du groupe La Poste.
+- ❌ DESC-TOO-LONG : 173 chars > 160
+
 ### `serrurier-boulogne-sur-mer.html`  (173 chars)
 > Serrurier à Boulogne-sur-Mer & Boulonnais : dépannage rapide, devis gratuit, techniciens HELP Confort. Saint-Martin-Boulogne, Outreau, Le Portel, Wimereux. ☎ 03 66 10 01 34.
 - ❌ DESC-TOO-LONG : 173 chars > 160
@@ -140,3 +144,6 @@ _Généré le 2026-05-18 07:00_
 ### `nos-villes.html`  (159 chars)
 > HELP Confort intervient sur Saint-Omer, Dunkerque, Calais, Boulogne-sur-Mer, Coquelles, Sangatte, Bergues, Gravelines & littoral du Nord. Cherchez votre ville.
 - ⚠️ DESC-LONG : 159 chars > 158 (idéal 120-158)
+
+### `googlef09a1887914c5a23.html`  (0 chars)
+- ⚠️ DESC-MISSING : pas de meta description

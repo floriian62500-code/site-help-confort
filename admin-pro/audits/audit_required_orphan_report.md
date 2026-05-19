@@ -1,8 +1,8 @@
 # 🔎 Audit `required` / `pattern` hors `<form>` — sonde #25
 
-_Généré le 2026-05-18 07:00_
+_Généré le 2026-05-19 06:52_
 
-- Pages scannées : **76**
+- Pages scannées : **80**
 - Pages avec orphelins : **1**
 - Findings totaux : **7**
 
@@ -15,13 +15,13 @@ Sinon, HTML5 n'applique aucune validation native → bug silencieux.
 
 ### `index.html` (7)
 
-- L 1045 — `<textarea>` `resa-desc` → required
-- L 1074 — `<input>` `resa-prenom` → required
-- L 1078 — `<input>` `resa-nom` → required
-- L 1085 — `<input>` `resa-tel` → required, pattern='[0-9 +.\\-]{10,}'
-- L 1089 — `<input>` `resa-email` → required
-- L 1095 — `<input>` `resa-adresse` → required
-- L 1105 — `<input>` `resa-cp` → required, pattern='[0-9]{5}'
+- L 1044 — `<textarea>` `resa-desc` → required
+- L 1073 — `<input>` `resa-prenom` → required
+- L 1077 — `<input>` `resa-nom` → required
+- L 1084 — `<input>` `resa-tel` → required, pattern='[0-9 +.\\-]{10,}'
+- L 1088 — `<input>` `resa-email` → required
+- L 1094 — `<input>` `resa-adresse` → required
+- L 1104 — `<input>` `resa-cp` → required, pattern='[0-9]{5}'
 
 → Action : encapsuler dans `<form novalidate>...</form>` si la 
 validation est gérée par JS (wizard), ou retirer `required` / 

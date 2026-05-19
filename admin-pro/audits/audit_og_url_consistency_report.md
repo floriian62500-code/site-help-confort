@@ -1,15 +1,15 @@
 # Audit og:url vs canonical — Rapport
 
-_Généré le 2026-05-18 07:00_
+_Généré le 2026-05-19 06:52_
 
 ## Synthèse
 
-- Pages scannées : **93**
-- ✅ OK : **41**
+- Pages scannées : **97**
+- ✅ OK : **42**
 - ❌ Erreurs : **0** (cumul 0 findings)
-- ⚠️  Avertissements (pages) : **52**
-- ℹ️  Info : **0**
-- ⚠️  Total warnings : **52**
+- ⚠️  Avertissements (pages) : **54**
+- ℹ️  Info : **1**
+- ⚠️  Total warnings : **55**
 
 ## Findings
 
@@ -85,6 +85,10 @@ _Généré le 2026-05-18 07:00_
 - canonical = `https://www.depan59-62.fr/depannage-sangatte.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
+### `diagnostic-electrique.html`
+- canonical = `https://www.depan59-62.fr/diagnostic-electrique.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
 ### `electricien-boulogne-sur-mer.html`
 - canonical = `https://www.depan59-62.fr/electricien-boulogne-sur-mer.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
@@ -104,6 +108,9 @@ _Généré le 2026-05-18 07:00_
 ### `entretien-chaudiere.html`
 - canonical = `https://www.depan59-62.fr/entretien-chaudiere.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `googlef09a1887914c5a23.html`
+- ⚠️ OG-URL-MISSING : `og:url` et canonical absents
 
 ### `index.html`
 - canonical = `https://www.depan59-62.fr/`
@@ -127,6 +134,10 @@ _Généré le 2026-05-18 07:00_
 
 ### `ouverture-porte-claquee.html`
 - canonical = `https://www.depan59-62.fr/ouverture-porte-claquee.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `panne-chaudiere.html`
+- canonical = `https://www.depan59-62.fr/panne-chaudiere.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
 ### `plan-du-site.html`

@@ -1,15 +1,16 @@
 # Audit canonical URL match — Rapport
 
-_Généré le 2026-05-18 07:00_
+_Généré le 2026-05-19 06:52_
 
 ## Synthèse
 
-- Pages scannées : **93**
-- ✅ OK : **93**
+- Pages scannées : **97**
+- ✅ OK : **96**
 - ❌ Erreurs : **0** (cumul 0 findings)
-- ℹ️  Sans canonical : **0**
-- ⚠️  Avertissements : **0**
+- ℹ️  Sans canonical : **1**
+- ⚠️  Avertissements : **1**
 
 ## Findings
 
-_Aucun finding — toutes les canonicals sont cohérentes._
+### `googlef09a1887914c5a23.html`
+- ⚠️ Pas de canonical (vérifier audit_html5)
