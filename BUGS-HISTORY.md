@@ -159,12 +159,14 @@
 - **Pattern** : CSS dimension override sur attributs HTML legacy avec `!important`
 - **Volet** : site live
 
-## 2026-05-19 — Doublons "chasse d'eau" (4 cartes au lieu de 2)
+## 2026-05-19 — Doublons "chasse d'eau" (4 cartes au lieu de 2) — V1 + V2
 - **Symptôme** : 4 cartes affichées (2 BDD + 2 hardcoded JS) pour "Mécanisme de chasse d'eau" Nicoll/Geberit
-- **Cause** : Services `loc-plo-3` et `loc-plo-4` hardcodés en JS dans nos-prestations.html sont des doublons de la BDD Supabase. `dedupServices()` n'arrivait pas à normaliser ("Mécanisme de" vs "Mécanisme").
-- **Fix** : Suppression des entrées hardcoded loc-plo-3 et loc-plo-4 → seules 2 entrées BDD restent
-- **Durée** : 5 min
-- **Pattern** : éviter mix données hardcoded JS et données BDD pour le même catalogue
+- **Cause V1** : Services `loc-plo-3` et `loc-plo-4` hardcodés en JS dans nos-prestations.html sont des doublons de la BDD Supabase. `dedupServices()` ne normalisait pas ("Mécanisme de" vs "Mécanisme").
+- **Fix V1** : Suppression des entrées hardcoded loc-plo-3 et loc-plo-4 → seules 2 entrées BDD restent.
+- **Symptôme persistant** : Florian voyait encore 4 cartes après le fix V1 (cache navigateur agressif probable + dedup runtime trop strict)
+- **Fix V2** : Ajout d'un **dedup agressif côté JS (3e passe)** qui groupe les services chasse d'eau par marque + type WC (sol/suspendu) et garde le 1er (priorité BDD via test `!/^loc-/.test(s.id)`). Même si du hardcoded revient ou que le cache navigateur conserve l'ancienne version, le dedup runtime nettoie au load.
+- **Durée** : 10 min (V1 + V2)
+- **Pattern** : ne jamais dépendre d'un fix purement statique pour des doublons → toujours doubler avec un dedup runtime aggressive par regex métier
 - **Volet** : site live + supabase
 
 ## 2026-05-19 — Edge Function publish-scheduled ne gère pas channel "site"
