@@ -1140,6 +1140,44 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
    return true;
  });
 
+ // 3e passe DEDUP AGGRESSIF (HC-FIX 2026-05-19) : pour les chasses d'eau et autres prestations
+ // récurrentes, dédoublonne par (mot-clé métier + marque) même si les noms diffèrent légèrement
+ (function aggressiveDedup() {
+   const groups = new Map();
+   services.forEach((s, idx) => {
+     const n = (s.name || '').toLowerCase();
+     // Détecte les groupes "chasse d'eau + brand"
+     const brandMatch = n.match(/\b(nicoll|geberit|siamp|grohe|wirquin|wisa|tece)\b/);
+     const isChasse = /chasse|mécanisme/.test(n);
+     if (isChasse && brandMatch) {
+       const wcType = /wc.{0,5}sol|au sol/.test(n) ? 'sol' : (/suspend|bati|bâti/.test(n) ? 'sus' : '');
+       const key = `chasse-${brandMatch[1]}-${wcType}`;
+       if (!groups.has(key)) groups.set(key, []);
+       groups.get(key).push({ s, idx });
+     }
+   });
+   const toRemove = new Set();
+   groups.forEach(arr => {
+     if (arr.length <= 1) return;
+     // Garde celui qui vient de la BDD (uuid id) plutôt que hardcoded (loc-* id)
+     arr.sort((a, b) => {
+       const aBdd = !/^loc-/.test(a.s.id || '');
+       const bBdd = !/^loc-/.test(b.s.id || '');
+       if (aBdd && !bBdd) return -1;
+       if (!aBdd && bBdd) return 1;
+       // Sinon priorité au plus complet (plus d'includes, plus de champs)
+       const scoreA = (a.s.includes || []).length + (a.s.short_desc ? 1 : 0);
+       const scoreB = (b.s.includes || []).length + (b.s.short_desc ? 1 : 0);
+       return scoreB - scoreA;
+     });
+     arr.slice(1).forEach(x => toRemove.add(x.idx));
+   });
+   if (toRemove.size > 0) {
+     console.log('[catalog] dedup aggressif chasse : ' + toRemove.size + ' doublons supprimés');
+     services = services.filter((_, idx) => !toRemove.has(idx));
+   }
+ })();
+
  if (services.length === 0) {
  root.innerHTML = `<div class="nv-empty"><h3>Catalogue indisponible</h3><p>Un problème de connexion empêche l'affichage des prestations. Appelez-nous au <a href="tel:+33366100134" style="color:#0DA0CF;font-weight:700">03 66 10 01 34</a>.</p></div>`;
  return;
