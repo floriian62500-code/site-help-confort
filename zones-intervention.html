@@ -815,13 +815,17 @@ if (document.fonts && document.fonts.ready) {
  tap: false
  });
 
- // Tuiles OSM standard (plus stable que CartoDB Voyager qui produit des artefacts visuels bleu/jaune sur certaines tuiles)
- L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
- attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
- subdomains: 'abc',
- maxZoom: 19,
+ // Tuiles Wikimedia (équivalent OSM mais sans bandière Ukraine en overlay)
+ L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
+ attribution: 'Données © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · Tuiles <a href="https://wikimediafoundation.org/">Wikimedia</a>',
+ maxZoom: 18,
  crossOrigin: true
  }).addTo(map);
+
+ // Masque tout overlay tier injecté en bas-droite (drapeaux, badges, etc.)
+ var styleFix = document.createElement('style');
+ styleFix.textContent = '#zones-leaflet-map .leaflet-bottom.leaflet-right > :not(.leaflet-control-attribution){display:none !important;}';
+ document.head.appendChild(styleFix);
 
  // ZONE DE COUVERTURE retirée (cercles produisaient un artefact visuel ressemblant
  // à un drapeau aux couleurs étranges sur certains zooms / superpositions).
