@@ -70,6 +70,31 @@ Une fois traitée avec Florian, l'entrée est :
 **Reco** : option 1 dès que tu as 5 min pour exporter le SVG depuis ta source.
 **Quand on se voit** : 2 min.
 
+## 2026-05-19 18:30 — Supabase advisors : 37 warnings sécurité à arbitrer
+**Source** : `get_advisors` Supabase MCP, session autonome 2026-05-19
+**Constat** : Le linter Supabase remonte 37 issues sécurité dont :
+- **4 ERROR — Vues SECURITY DEFINER** : `v_recent_prospects`, `v_interventions_today`, `v_services_public`, `v_contract_offers` (les vues utilisent les permissions du créateur au lieu du caller → contournent RLS)
+- **11 WARN — Functions search_path mutable** (`touch_*`, `tg_*`, `update_contract_next_date`, etc.) : sans `SET search_path = public` figé, risque de hijacking
+- **1 WARN — pg_net dans public schema** : devrait être dans un schema dédié
+- **11 WARN — RLS policies trop permissives** sur `app_settings`, `contracts`, `leads`, `realisations`, `reviews`, `scheduled_publications`, `service_orders` : USING (true) ou WITH CHECK (true) pour INSERT/UPDATE/DELETE = pas de filtre par user
+- **5 WARN — SECURITY DEFINER functions exposées à anon** : `current_role`, `handle_new_user`, `is_owner`, `ping_indexnow_on_publish`, `rls_auto_enable`
+- **1 WARN — Auth Leaked Password Protection désactivé** (HaveIBeenPwned check)
+
+**Pourquoi je ne traite pas** : Garde-fou absolu CLAUDE-AUTONOME — "Jamais DROP / suppression données / RLS sans validation explicite". Toutes ces corrections impliquent des modifs RLS/permissions/SECURITY DEFINER, donc validation obligatoire.
+
+**Options** :
+  1. Session dédiée 60-90 min pour traiter tous les items un par un (le plus propre).
+  2. Traiter en priorité les 4 ERROR (vues SECURITY DEFINER) qui sont le risque le plus critique, et reporter les WARN.
+  3. Activer Leaked Password Protection (1 clic dans Supabase Auth settings) — c'est gratuit et sans risque.
+
+**Reco** : commencer par option 3 (Auth Settings → 1 toggle), puis option 2 pour les vues SECURITY DEFINER (impact réel sur exposition data), puis session dédiée pour les RLS si tu veux durcir.
+
+**Lien Supabase** : https://supabase.com/dashboard/project/btcbjwqiivhpwoszomhg/database/database-advisors
+
+**Quand on se voit** : 60-90 min (session sécurité dédiée) ou 5 min pour le toggle Leaked Password.
+
+---
+
 ## 2026-05-19 11:10 — Logo PNG transparent HC à fournir
 **Source** : refonte logo footer V2 session 2026-05-19
 **Constat** : Le logo officiel HC (maison + "HELP! Confort" + "Une marque de La Poste") n'est pas dans le projet en version PNG transparente. Seul `logo-officiel.jpg` (1080×1080 carré) est disponible. Workaround CSS V2 (cartouche blanc carré 110×110px) fonctionne mais sub-optimal.
