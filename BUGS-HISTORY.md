@@ -216,3 +216,11 @@
 - **Durée** : 15 min (détection + extraction + injection)
 - **Pattern** : CSS critique commun devrait être dans **styles.css** centralisé, pas inline. À refactorer en session dédiée. En attendant : audit régulier `grep -L '\.footer-v3{' *.html | grep -lF 'footer-v3'` pour détecter les drift.
 - **Volet** : site live
+
+## 2026-05-19 — V3 Drapeau Ukraine : bascule Leaflet → SVG statique
+- **Symptôme** : Drapeau Ukraine persiste sur carte zones-intervention même après V1 (Wikimedia) et V2 (Esri ArcGIS) + masque CSS
+- **Cause** : Probablement extension Chrome côté Florian qui injecte un drapeau sur toutes les cartes web. Pas reproductible côté code.
+- **Fix V3** : remplacement du composant Leaflet par le SVG statique du fallback noscript (existait déjà ligne 909+). Plus de tile = plus de drapeau possible, peu importe l'extension ou le tile provider. Carte SVG conservée avec markers agences, villes, halos zones, axe géographique. On perd zoom/drag interactif mais gain de stabilité visuelle + perf (zéro requête tile, zéro JS Leaflet).
+- **Durée** : 8 min (basculement propre + sortie noscript)
+- **Pattern** : pour cartes informatives statiques, préférer SVG inline plutôt que Leaflet+tile (immunité aux overlays tiers et extensions)
+- **Volet** : site live
