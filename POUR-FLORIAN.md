@@ -95,6 +95,23 @@ Une fois traitée avec Florian, l'entrée est :
 
 ---
 
+## 2026-05-19 18:00 — Doublons chauffe-eau hardcoded vs BDD
+**Source** : audit catalogue services session autonome 2026-05-19
+**Constat** : 5 chauffe-eau hardcoded en JS dans nos-prestations.html (loc-ce-100eco, 100st, 150eco, 150st, 200eco) sont en **doublon partiel** avec 10 chauffe-eau Atlantic en BDD. Noms légèrement différents :
+- BDD : "Chauffe-eau 100L mural — Gamme Éco (résistance blindée)"
+- Hardcoded : "Chauffe-eau 100 L Éco (mural)"
+`dedupServices()` ne capture pas → Florian voit potentiellement 2× chaque modèle sur nos-prestations.
+**Particularités** :
+- Le hardcoded `loc-ce-contrat` (Contrat entretien annuel à 220€) n'est PAS en BDD → à conserver.
+- Les prix peuvent diverger entre hardcoded et BDD → vérifier avant suppression.
+**Pourquoi je ne traite pas** : Risque de présenter des prix incorrects si on supprime sans vérifier. Garde-fou : ne jamais modifier des prix affichés sans validation.
+**Options** :
+  1. **Source de vérité = BDD** : on supprime les 5 chauffe-eau hardcoded en JS. Le catalogue ne montre que les 10 modèles Atlantic en BDD (plus complet : sol/mural × Éco/Stéatite × 100/150/200/300L).
+  2. **Source de vérité = JS hardcoded** : on désactive les 5 services BDD correspondants. Plus simple visuellement (5 modèles vs 10).
+  3. Améliorer `dedupServices()` pour reconnaître ces variantes (régex plus large) — risque de fausses dédup.
+**Reco** : option 1 (BDD source unique = aligné sur l'objectif "tout passe par le CMS"). À faire en session 5 min ensemble pour vérifier que les prix BDD sont à jour avant suppression hardcoded.
+**Quand on se voit** : 5 min.
+
 ## 2026-05-19 11:10 — Logo PNG transparent HC à fournir
 **Source** : refonte logo footer V2 session 2026-05-19
 **Constat** : Le logo officiel HC (maison + "HELP! Confort" + "Une marque de La Poste") n'est pas dans le projet en version PNG transparente. Seul `logo-officiel.jpg` (1080×1080 carré) est disponible. Workaround CSS V2 (cartouche blanc carré 110×110px) fonctionne mais sub-optimal.
