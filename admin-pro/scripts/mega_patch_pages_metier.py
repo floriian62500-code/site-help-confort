@@ -150,11 +150,21 @@ REAL_REVIEWS_PLACEHOLDER = '''<!-- HC-REAL-REVIEWS-V1 — placeholder vers vrais
 # ─────────────────────────────────────────────────────────────
 # PATCH 4 : Suppression section "Réservez ou demandez un devis" (doublon CTA)
 # ─────────────────────────────────────────────────────────────
-CTA_DUPLICATE_PATTERN = re.compile(
-    r'<!-- ─── 3\. ACTION : 2 CTA[^─]*─── -->\s*'
-    r'<section class="m-section m-cta-section"[^>]*aria-label="Réserver une intervention[^"]*">.*?</section>',
-    re.DOTALL
-)
+# 2 patterns selon les variantes de commentaire trouvées
+CTA_DUPLICATE_PATTERNS = [
+    # Variant A : pages plombier/menuisier/vitrier/volets/pmr — commentaire "3. ACTION : 2 CTA"
+    re.compile(
+        r'<!-- ─── 3\. ACTION : 2 CTA[^─]*─── -->\s*'
+        r'<section class="m-section m-cta-section"[^>]*aria-label="Réserver une intervention[^"]*">.*?</section>',
+        re.DOTALL
+    ),
+    # Variant B : pages chauffagiste/electricien/serrurier/travaux — commentaire "3. TARIFS RÉSERVABLES"
+    re.compile(
+        r'<!-- ─── 3\. TARIFS RÉSERVABLES \+ COMPLEXES ─── -->\s*'
+        r'<section class="m-section"[^>]*aria-label="Tarifs et prestations[^"]*">.*?</section>',
+        re.DOTALL
+    ),
+]
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -210,8 +220,11 @@ def apply_patch_3_fake_reviews(content, filename):
 
 def apply_patch_4_remove_cta_duplicate(content, filename):
     """Patch 4 : Supprime la section 'Réservez ou demandez un devis' (doublon CTA hero)."""
-    new_content, n = CTA_DUPLICATE_PATTERN.subn('', content)
-    return new_content, n
+    n_total = 0
+    for pattern in CTA_DUPLICATE_PATTERNS:
+        content, n = pattern.subn('', content)
+        n_total += n
+    return content, n_total
 
 
 def process_file(filepath, is_metier_ville):
