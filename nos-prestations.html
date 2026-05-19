@@ -926,6 +926,63 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  if (!error && Array.isArray(data)) services = data;
  } catch(e) { console.warn('[catalog] Supabase indisponible — fallback local'); }
 
+ // ─── DÉDOUBLONNAGE AUTOMATIQUE — fusionne les cartes au nom quasi-identique ───
+ // (en attendant nettoyage côté base Supabase via admin-pro/services.html)
+ function normalizeName(s) {
+   return (s||'')
+     .toLowerCase()
+     .normalize('NFD').replace(/[̀-ͯ]/g,'')  // retirer accents
+     .replace(/['']/g,'')                                 // apostrophes
+     .replace(/[—\-–]+/g,' ')                             // tirets → espaces
+     .replace(/[()]/g,'')                                 // parenthèses
+     .replace(/\s+/g,' ')                                 // espaces multiples
+     .trim();
+ }
+ (function dedupServices(){
+   if (!Array.isArray(services) || services.length === 0) return;
+   var seen = new Map();
+   var unique = [];
+   for (var s of services) {
+     var key = normalizeName(s.name);
+     // Détecter les doublons "chasse d'eau" qui varient en nom (standard/wc au sol) mais sont des doublons fonctionnels
+     // Stratégie : si même nom normalisé OU même nom de base (mécanisme chasse d'eau + même marque), on dédoublonne
+     var base = key.replace(/^mecanisme(?:\s+(?:de\s+)?chasse(?:\s+d?eau)?)?\s+/,'')
+                   .replace(/^chasse(?:\s+d?eau)?\s+/,'')
+                   .replace(/\s+wc\s+au\s+sol/g,' wc-sol')
+                   .replace(/\s+suspendu/g,'')
+                   .replace(/\s+bati\s+support/g,'')
+                   .replace(/\s+standard/g,'')
+                   .replace(/\s+complet/g,'')
+                   .trim();
+     // Marque (nicoll / geberit / siamp / etc.) + type WC (sol / suspendu)
+     var brand = (key.match(/\b(nicoll|geberit|siamp|grohe|wirquin|wisa|tece|villeroy)\b/)||[])[1] || '';
+     var wcType = /sol/.test(key) ? 'sol' : (/suspend|bati/.test(key) ? 'sus' : '');
+     var dedupKey = key;
+     if (brand && /chasse|mecanisme/.test(key)) {
+       dedupKey = 'chasse-' + brand + '-' + wcType;
+     }
+     if (seen.has(dedupKey)) {
+       // doublon : garder celui qui a le plus de champs remplis
+       var existing = seen.get(dedupKey);
+       var scoreNew = (s.short_description||'').length + (s.includes||[]).length*20 + (s.price_ttc?100:0);
+       var scoreOld = (existing.short_description||'').length + (existing.includes||[]).length*20 + (existing.price_ttc?100:0);
+       if (scoreNew > scoreOld) {
+         // remplacer l'ancien par le nouveau
+         var idx = unique.indexOf(existing);
+         if (idx>=0) unique[idx] = s;
+         seen.set(dedupKey, s);
+       }
+       continue;
+     }
+     seen.set(dedupKey, s);
+     unique.push(s);
+   }
+   if (unique.length < services.length) {
+     console.log('[catalog] dédoublonnage : ' + services.length + ' → ' + unique.length + ' prestations');
+     services = unique;
+   }
+ })();
+
  // ─── FUSION : Chauffe-eau / Production ECS → Plomberie & Sanitaires ───
  // (côté Supabase, certaines prestations sont encore catégorisées séparément)
  const CHAUFFE_EAU_SLUGS = new Set(['chauffe-eau','production-ecs','ecs','chauffe-eau-production-ecs']);
