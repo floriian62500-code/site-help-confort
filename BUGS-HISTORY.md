@@ -206,3 +206,11 @@
 - **Durée** : 10 min (V2 après échec V1)
 - **Pattern** : tester plusieurs tile providers avant de conclure. Esri ArcGIS = backup fiable sans overlay politique.
 - **Volet** : site live
+
+## 2026-05-19 — CSS footer-v3 manquant sur 11 pages (layout cassé)
+- **Symptôme** : Pages partenaires.html, reseau-help-confort.html, agence-saint-omer/dunkerque, blog, panne-chaudiere, entretien-chaudiere, debouchage-canalisation, nos-villes, nos-metiers, ouverture-porte-claquee, diagnostic-electrique affichent footer + bas de page totalement non-stylisés (texte brut, pictos 437×437px). Florian a vu plusieurs pages cassées consécutivement.
+- **Cause** : Le CSS du footer-v3 (~5 KB, `.footer-v3{...}` jusqu'à `.fv3-legal-line{...}`) est inline dans 68 pages mais 11 pages root l'avaient perdu (probablement créées via template sans le bloc style, ou patch précédent qui l'a retiré). Le HTML utilisait `class="footer footer-v3"` mais sans le CSS associé → rendu DOM brut.
+- **Fix** : Script Python qui extrait le CSS footer-v3 inline depuis index.html (référence stable) et l'injecte avant `</head>` sur les 11 pages détectées. 5024 chars de CSS par page, marqueur `HC-FIX 2026-05-19`.
+- **Durée** : 15 min (détection + extraction + injection)
+- **Pattern** : CSS critique commun devrait être dans **styles.css** centralisé, pas inline. À refactorer en session dédiée. En attendant : audit régulier `grep -L '\.footer-v3{' *.html | grep -lF 'footer-v3'` pour détecter les drift.
+- **Volet** : site live
