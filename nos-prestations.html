@@ -1353,7 +1353,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  const incl = (s.includes || []).slice(0, 4);
  const more = (s.includes || []).length - incl.length;
  return `
- <article class="nv-card" data-service-id="${s.id}-2">
+ <article class="nv-card" data-service-id="${s.id}">
  <div class="nv-card-visual" data-cat="${escapeHtml(catSlug)}">
  ${s.badge ? `<span class="nv-card-badge">${escapeHtml(s.badge)}</span>` : ''}
  <span class="nv-card-cat">${escapeHtml(s.category_name || '')}</span>
@@ -1385,7 +1385,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  <div class="nv-price-deposit">Acompte ${s.deposit_pct}% à la commande : ${eurFmt(s.deposit_ttc)}</div>
  </div>
  <div class="nv-card-actions">
- <button type="button" class="nv-btn-primary" data-action="reserve" data-service-id="${s.id}-3">
+ <button type="button" class="nv-btn-primary" data-action="reserve" data-service-id="${s.id}">
  Réserver cette prestation
  <svg width="16" height="16" ${SVG_ATTRS}><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
  </button>
