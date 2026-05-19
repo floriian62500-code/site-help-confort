@@ -13,3 +13,9 @@
 - [ ] Refactor : CSS footer-v3 commun à externaliser dans styles.css (actuellement inline sur 68+ pages, drift régulier) | source: audit 2026-05-19 | sévérité: normale | bénéfice : -5 KB par page, fin des drifts
 - [ ] Supabase performance : audit advisors révèle N foreign keys non indexées + N unused indexes | source: get_advisors performance 2026-05-19 | sévérité: faible (volume actuel ~22 rows, pas critique avant 100K) | détail : pour optimisation future
 - [x] Fix CSS footer-v3 manquant sur 12 pages (partenaires, reseau-help-confort, agence-*, nos-villes, nos-metiers, notre-equipe…) | source: audit autonome 2026-05-19 | sévérité: critique | (fait le 2026-05-19, injection CSS depuis index.html)
+
+# Ajout 2026-05-19 11:30 (session Cowork autonome)
+- [ ] BUG: drapeau Ukraine carte zones-intervention persiste malgré fix V1 (Wikimedia) et V2 (Esri ArcGIS) | source: chat 2026-05-19 | sévérité: normale
+- [ ] Test fenêtre privée drapeau Ukraine (validation extension Chrome vs vrai bug) — Florian
+- [x] Confirmer publication chasse d'eau 18:00 (Edge Function V5 + cron actif) (fait le 2026-05-19)
+- [ ] Si drapeau persiste en privé : remplacer Leaflet par carte SVG statique (fallback existant ligne 909+)
