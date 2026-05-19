@@ -149,7 +149,7 @@
 
  // Fetch avis 5★ depuis table reviews
  try {
- var resp = await fetch(SUPABASE_URL + '/rest/v1/reviews?rating=gte.4&select=id,author_name,rating,text,metier,ville,source,published_at&order=published_at.desc&limit=60', {
+ var resp = await fetch(SUPABASE_URL + '/rest/v1/reviews?rating=gte.4&select=id,author_name,rating,text,metier,ville,source,source_url,published_at&order=published_at.desc&limit=60', {
  headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY }
  });
  if (resp.ok) allReviews = await resp.json();
@@ -184,12 +184,17 @@
  return;
  }
 
+ // URL fallback vers la page des avis Google HC (si source_url absent)
+ var GOOGLE_REVIEWS_URL = 'https://maps.app.goo.gl/B4BPVTiRp5rDp26fA';
+
  grid.innerHTML = items.map(function(r){
  var initials = (r.author_name || '?').split(/\s+/).map(function(w){return w[0]||'';}).join('').slice(0,2).toUpperCase();
  var stars = '★'.repeat(r.rating || 5) + '☆'.repeat(5 - (r.rating || 5));
  var date = '';
  try { date = new Date(r.published_at).toLocaleDateString('fr-FR', { month:'long', year:'numeric' }); } catch(_){}
- return '<article class="tm-card">' +
+ // Lien vers le vrai avis Google : source_url si dispo, sinon page Google globale
+ var reviewUrl = r.source_url || GOOGLE_REVIEWS_URL;
+ return '<a href="' + reviewUrl + '" target="_blank" rel="noopener noreferrer" class="tm-card" style="text-decoration:none;color:inherit;display:block;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease" onmouseover="this.style.transform=\'translateY(-3px)\';this.style.boxShadow=\'0 12px 28px rgba(13,160,207,.15)\'" onmouseout="this.style.transform=\'\';this.style.boxShadow=\'\'">' +
  '<div class="tm-card-source">' + (r.source === 'Google' ? '<span style="color:#4285F4">G</span>' : '') + escapeHtml(r.source || 'Google') + '</div>' +
  '<div class="tm-card-stars">' + stars + '</div>' +
  '<p class="tm-card-text">' + escapeHtml(r.text) + '</p>' +
@@ -204,7 +209,8 @@
  '</div>' +
  '</div>' +
  '</div>' +
- '</article>';
+ '<div style="margin-top:10px;font-size:.78rem;color:#0DA0CF;font-weight:600;display:flex;align-items:center;gap:5px">Voir sur Google →</div>' +
+ '</a>';
  }).join('');
  }
 
