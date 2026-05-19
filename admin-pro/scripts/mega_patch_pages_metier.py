@@ -253,27 +253,30 @@ def main():
     print(f"   Pages métier × ville cibles : {len(metier_ville_files)}")
     print(f"   Total HTML à scanner : {len(all_html)}\n")
 
-    stats = {'total_1': 0, 'total_2': 0, 'total_3': 0, 'files_changed': 0}
+    stats = {'total_1': 0, 'total_2': 0, 'total_3': 0, 'total_4': 0, 'files_changed': 0}
 
     for filepath in sorted(all_html):
         is_mv = filepath in metier_ville_files
-        n1, n2, n3 = process_file(filepath, is_mv)
-        if n1 or n2 or n3:
+        n1, n2, n3, n4 = process_file(filepath, is_mv)
+        if n1 or n2 or n3 or n4:
             stats['files_changed'] += 1
             stats['total_1'] += n1
             stats['total_2'] += n2
             stats['total_3'] += n3
+            stats['total_4'] += n4
             marks = []
             if n1: marks.append(f"P1×{n1}")
             if n2: marks.append(f"P2×{n2}")
             if n3: marks.append(f"P3×{n3}")
+            if n4: marks.append(f"P4×{n4}")
             print(f"  ✓ {filepath}  ({', '.join(marks)})")
 
     print(f"\n═══════════════════════════════════════════════")
     print(f"  ✅ FILES MODIFIÉS : {stats['files_changed']}")
-    print(f"  ✅ P1 (remove 1h ouvrée)   : {stats['total_1']} remplacements")
-    print(f"  ✅ P2 (trust band V2)      : {stats['total_2']} pages")
-    print(f"  ✅ P3 (fake reviews tag)   : {stats['total_3']} pages PMR")
+    print(f"  ✅ P1 (remove 1h ouvrée)        : {stats['total_1']} remplacements")
+    print(f"  ✅ P2 (trust band V2)           : {stats['total_2']} pages")
+    print(f"  ✅ P3 (fake reviews → Google)   : {stats['total_3']} pages")
+    print(f"  ✅ P4 (suppr. CTA doublon)      : {stats['total_4']} pages")
     print(f"═══════════════════════════════════════════════\n")
 
 
