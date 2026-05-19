@@ -862,14 +862,9 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  short_desc:"Débouchage évier, WC, douche, baignoire ou siphon sans casse.", price_ttc:165, deposit_pct:40, deposit_ttc:66,
  duration_min:60, warranty:"Pose garantie",
  includes:["Furet manuel ou électrique","Test étanchéité","Déplacement + déchets","Frais dossier inclus"] },
- { id:'loc-plo-3', slug:'chasse-nicoll', name:"Mécanisme chasse d'eau — Nicoll", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie', icon_emoji:'🚽', subcategory_slug:'sanitaire', subcategory_name:"🚽 Sanitaire & WC",
- short_desc:"Remplacement complet d'un mécanisme de chasse d'eau standard.", price_ttc:187, deposit_pct:40, deposit_ttc:74.80, brand:"Nicoll",
- duration_min:60, warranty:"Pièces 2 ans",
- includes:["Fourniture mécanisme Nicoll","Pose + réglage","Déplacement + frais","Garantie pièces 2 ans"] },
- { id:'loc-plo-4', slug:'chasse-geberit', name:"Mécanisme chasse d'eau — Geberit WC au sol", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie', icon_emoji:'🚽', subcategory_slug:'sanitaire', subcategory_name:"🚽 Sanitaire & WC",
- short_desc:"Remplacement mécanisme Geberit pour WC au sol (tout compris).", price_ttc:203, deposit_pct:40, deposit_ttc:81.20, brand:"Geberit",
- duration_min:75, warranty:"Pièces 2 ans",
- includes:["Mécanisme Geberit","Joints + petite fourniture","Pose 1 technicien","Garantie pièces 2 ans"] },
+ // HC-FIX 2026-05-19 : loc-plo-3 et loc-plo-4 supprimés car DOUBLONS de la BDD
+ // BDD : "Mécanisme de chasse d'eau — Standard (Nicoll)" et "Mécanisme de chasse d'eau — WC au sol (Geberit)"
+ // → suppression des entrées hardcoded pour éviter le rendu de 4 cartes au lieu de 2
  { id:'loc-plo-5', slug:'detartrage-sanitaire', name:"Détartrage installation sanitaire", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie', icon_emoji:'💎', subcategory_slug:'sanitaire', subcategory_name:"🚽 Sanitaire & WC",
  short_desc:"Nettoyage du calcaire dans une installation sanitaire (cumulus, robinetterie).", price_ttc:237, deposit_pct:40, deposit_ttc:94.80,
  duration_min:90, warranty:"Intervention garantie",
