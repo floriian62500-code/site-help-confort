@@ -1000,8 +1000,13 @@ if (document.fonts && document.fonts.ready) {
  var dateStr = new Date(r.date).toLocaleDateString('fr-FR', {month:'long', year:'numeric'});
 
  // PHOTO : 4 cas par ordre de priorité
+ // HC-FIX 2026-05-19 : détecte les URLs Facebook CDN qui bloquent le hot-linking → on les ignore
+ var isFbCdn = function(url){ return /(?:fbcdn|scontent)[.-]/i.test(url || ''); };
+ var hasUsableAvant = r.photo_avant && !isFbCdn(r.photo_avant);
+ var hasUsableApres = r.photo_apres && !isFbCdn(r.photo_apres);
+
  var photoHtml;
- if (r.photo_avant && r.photo_apres){
+ if (hasUsableAvant && hasUsableApres){
  // 1. Comparateur avant/après (legacy, photos uploadées CMS)
  photoHtml =
  '<div class="ba-wrap" onclick="event.preventDefault();openLightbox(\''+r.photo_apres+'\')">' +
@@ -1011,7 +1016,7 @@ if (document.fonts && document.fonts.ready) {
  '<span class="ba-tag" style="left:12px">AVANT</span>' +
  '<span class="ba-tag" style="right:12px;background:#FF6B1A">APRÈS</span>' +
  '</div>';
- } else if (r.photo_apres) {
+ } else if (hasUsableApres) {
  // 2. Photo unique uploadée
  photoHtml =
  '<div class="photo" onclick="event.preventDefault();openLightbox(\''+r.photo_apres+'\')">' +
