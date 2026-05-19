@@ -19,6 +19,24 @@
 
 ---
 
+## À faire en session dédiée
+
+## 2026-05-19 — 3 modaux urgence cohabitent sur index.html
+- **Symptôme** : trois blocs modal/popup d'urgence imbriqués dans `index.html` (probablement un legacy, un V2 et un nouveau), JS éventuellement dupliqué.
+- **Cause** : itérations successives sans purge de l'ancien modal.
+- **Fix attendu** : audit des trois `<div class="modal*">` ou `<div id="modal*">`, identification du JS rattaché à chacun, fusion en un seul modal, retrait des deux autres.
+- **Pourquoi reporté** : complexe à fusionner sans casser le JS — chaque modal peut être appelé par des CTA spécifiques.
+- **Pattern** : à traiter en session dédiée (45-60 min).
+- **Volet** : site live (index.html uniquement)
+
+## 2026-05-19 — 24 scripts inline dans index.html
+- **Symptôme** : `index.html` contient ≈24 balises `<script>...</script>` inline, ce qui alourdit le HTML, complique la CSP et casse le cache navigateur.
+- **Cause** : accumulation au fil des itérations (snippets analytics, JSON-LD, init carrousel, modal, hero video, etc.).
+- **Fix attendu** : audit script par script, externalisation dans `assets/` quand pertinent, regroupement des JSON-LD, suppression des doublons. Conserver les inline strictement critiques (anti-CLS).
+- **Pourquoi reporté** : lourd, demande une session dédiée pour identifier les dépendances entre scripts.
+- **Pattern** : à traiter en session dédiée (60-90 min).
+- **Volet** : site live (index.html uniquement)
+
 ## Bugs résolus
 
 ## 2026-05-18 — Chemins absolus `/assets/` qui cassent en sous-dossier

@@ -50,6 +50,26 @@ Une fois traitée avec Florian, l'entrée est :
 **Reco** : option 2 d'abord (lecture code), puis 1 si nécessaire.
 **Quand on se voit** : 5 min.
 
+## 2026-05-19 — Dynamiser le widget "4,7/5 sur 343 avis Google"
+**Source** : audit promesses marketing 2026-05-19
+**Constat** : le chiffre "4,7/5 sur 343 avis" est figé dans le HTML de 104 pages. À chaque nouvel avis, il faudrait tout mettre à jour manuellement.
+**Pourquoi je ne traite pas** : nécessite création d'une vue Supabase + script JS de fetch + tests. Nécessite session dédiée 30-45 min.
+**Options** :
+  1. Créer une vue `v_reviews_stats` dans Supabase + script `hc-avis-stats.js` qui fetch et substitue.
+  2. Continuer à mettre à jour manuellement à intervalle régulier (3 mois).
+**Reco** : option 1 quand sync-reviews aura été réparé (cf. item du 2026-05-19 11:00).
+**Quand on se voit** : 45 min après réparation sync-reviews.
+
+## 2026-05-19 — Item logo header SVG (logo.svg manquant à la racine)
+**Source** : audit bugs résiduels 2026-05-19
+**Constat** : l'audit demandait de remplacer `logo-officiel.jpg` par `logo.svg` dans le header (classe `hc-logo`) de toutes les pages. **`logo.svg` n'existe pas à la racine** (seulement `images/apporteurs/logo.svg` qui est sans rapport). Aucun remplacement n'a été fait pour ne pas casser l'affichage.
+**Pourquoi je ne traite pas** : il faut d'abord créer/déposer un vrai `logo.svg` à la racine du projet (vectoriel HC officiel).
+**Options** :
+  1. Tu déposes le SVG officiel HC à la racine → on relance le remplacement automatisé.
+  2. On reste sur le JPG actuel (acceptable, juste un peu plus lourd).
+**Reco** : option 1 dès que tu as 5 min pour exporter le SVG depuis ta source.
+**Quand on se voit** : 2 min.
+
 ## 2026-05-19 11:10 — Logo PNG transparent HC à fournir
 **Source** : refonte logo footer V2 session 2026-05-19
 **Constat** : Le logo officiel HC (maison + "HELP! Confort" + "Une marque de La Poste") n'est pas dans le projet en version PNG transparente. Seul `logo-officiel.jpg` (1080×1080 carré) est disponible. Workaround CSS V2 (cartouche blanc carré 110×110px) fonctionne mais sub-optimal.
