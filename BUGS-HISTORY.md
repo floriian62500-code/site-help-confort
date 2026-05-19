@@ -76,3 +76,99 @@
 - **Durée** : 30 min
 - **Pattern** : audit promesses tous les 3 mois minimum. Toute nouvelle promesse doit passer par POUR-FLORIAN.md avant mise en ligne
 - **Volet** : site live + conformité DGCCRF
+
+## 2026-05-19 — Photos manquantes sur /realisations (3 cartes sur 4)
+- **Symptôme** : Sur depan59-62.fr/realisations, plusieurs cartes affichent texte sans image ni fallback gradient
+- **Cause** : CSS minifié avec `.real-card.photo` (compound) au lieu de `.real-card .photo` (descendant) → le sélecteur cherchait un élément avec les 2 classes en même temps alors que HTML rend `<a class="real-card"><div class="photo">…</div></a>`. Le CSS ne matchait jamais.
+- **Fix** : script Python qui patche 19 sélecteurs (.fb-tag, img, iframe, ph-fallback inclus)
+- **Durée** : 25 min
+- **Pattern** : sélecteur CSS compound vs descendant — vérifier les espaces après minification
+- **Volet** : site live
+
+## 2026-05-19 — Drapeau Ukraine sur carte Leaflet zones-intervention
+- **Symptôme** : Rectangle bleu/jaune en bas-droite de la carte interactive
+- **Cause** : Tile provider OSM.org affiche overlay "Stand with Ukraine" sur certaines tuiles
+- **Fix** : Change tile provider `tile.openstreetmap.org` → `maps.wikimedia.org/osm-intl` + CSS injectif masque `.leaflet-bottom.leaflet-right` non-attribution
+- **Durée** : 10 min
+- **Pattern** : overlays tile providers à vérifier — préférer Wikimedia ou auto-hébergé
+- **Volet** : site live
+
+## 2026-05-19 — Bouton "Réserver cette prestation" inactif (nos-prestations.html)
+- **Symptôme** : Clic sur bouton orange ne déclenche pas la modale
+- **Cause** : `data-service-id="${s.id}-3"` dans le template alors que `services.find()` cherche l'ID exact (sans suffixe). Idem `data-service-id="${s.id}-2"` sur l'article. Copy-paste foireux.
+- **Fix** : sed suppression suffixes `-2` et `-3`
+- **Durée** : 5 min
+- **Pattern** : data attributes incohérents HTML↔JS — toujours vérifier matching find/data-id
+- **Volet** : site live
+
+## 2026-05-19 — Fake avis "Mathieu D./Sophie L./Patrick V." (26 pages)
+- **Symptôme** : Avis fictifs incohérents (ex: "Fuite cuisine" sur page PMR). Risque DGCCRF (loi Hamon) + Google CGU.
+- **Cause** : Avis hardcodés dans HTML statique legacy avant la sync Supabase reviews
+- **Fix** : mega_patch_pages_metier.py remplace par placeholder "4,7/5 · 343 avis vérifiés Google" cliquable. Cartes zones-intervention.html + temoignages.html rendues cliquables vers source_url ou Google Maps.
+- **Durée** : 40 min
+- **Pattern** : préférer données BDD (table reviews) — créer lien dynamique vers vrai avis
+- **Volet** : site live + conformité DGCCRF
+
+## 2026-05-19 — "Sous 1h ouvrée" partout (engagement non tenable)
+- **Symptôme** : 61 fichiers contenaient "Sous 1h ouvrée"/"Être rappelé sous 1h" → Florian ne peut garantir → risque réputation
+- **Cause** : Texte hardcodé legacy avec engagement temporel non maintenable
+- **Fix** : sed global remplace par "rapidement" ou "Devis sous 24h" (tenable). 114 remplacements/61 fichiers.
+- **Durée** : 10 min
+- **Pattern** : engagements temporels stricts à valider — préférer formulations souples
+- **Volet** : site live + conformité DGCCRF
+
+## 2026-05-19 — Section "Réservez ou demandez un devis" redondante (26 pages)
+- **Symptôme** : Bloc CTA répété sur toutes pages métier × ville alors que CTA déjà hero+footer+chat urgence
+- **Cause** : Bloc historique quand le hero n'avait pas de CTA
+- **Fix** : script Python supprime sur 26 pages (2 patterns : `m-cta-section` et `m-section` aria-label="Tarifs et prestations…")
+- **Durée** : 15 min
+- **Pattern** : audit redondance CTA — 1 hero + 1 footer suffit
+- **Volet** : site live
+
+## 2026-05-19 — VitrerieMenuiserie collés footer (46 pages)
+- **Symptôme** : Affichage "VitrerieMenuiserie" sans séparation
+- **Cause** : 2 `<a>` dans le même `<li>` sans séparateur
+- **Fix** : sed split en 2 `<li>` séparés
+- **Durée** : 3 min
+- **Pattern** : 1 `<a>` par `<li>` dans menus
+- **Volet** : site live
+
+## 2026-05-19 — Logo footer écrasé (carré 1080×1080 forcé en 200×60)
+- **Symptôme** : Logo HC compressé en rectangle dans le footer sombre
+- **Cause** : HTML `width="200" height="60"` force ratio rect, image `logo-officiel.jpg` est 1080×1080 carré
+- **Fix** : CSS V2 dans styles.css avec `!important` → 110×110px + `object-fit:contain` + cartouche blanc + ombre. À long terme : remplacer par PNG transparent rectangulaire (Florian doit l'uploader).
+- **Durée** : 10 min
+- **Pattern** : CSS dimension override sur attributs HTML legacy avec `!important`
+- **Volet** : site live
+
+## 2026-05-19 — Doublons "chasse d'eau" (4 cartes au lieu de 2)
+- **Symptôme** : 4 cartes affichées (2 BDD + 2 hardcoded JS) pour "Mécanisme de chasse d'eau" Nicoll/Geberit
+- **Cause** : Services `loc-plo-3` et `loc-plo-4` hardcodés en JS dans nos-prestations.html sont des doublons de la BDD Supabase. `dedupServices()` n'arrivait pas à normaliser ("Mécanisme de" vs "Mécanisme").
+- **Fix** : Suppression des entrées hardcoded loc-plo-3 et loc-plo-4 → seules 2 entrées BDD restent
+- **Durée** : 5 min
+- **Pattern** : éviter mix données hardcoded JS et données BDD pour le même catalogue
+- **Volet** : site live + supabase
+
+## 2026-05-19 — Edge Function publish-scheduled ne gère pas channel "site"
+- **Symptôme** : Publications programmées avec `channels = {site:true, meta:false, linkedin:false, gbp:false}` ne se déclenchaient pas (anySuccess=false, status final = "done" mais sans publication réelle)
+- **Cause** : Edge Function ne gérait que meta/linkedin/gbp. Channel "site" (par défaut CMS) traité par aucune branche
+- **Fix** : Ajout branche dans publish-scheduled/index.ts qui update `realisations.status='publie'` + `published_at=now()` quand `channels.site=true` (ou par défaut). V5 déployée via Supabase MCP `deploy_edge_function`.
+- **Durée** : 15 min
+- **Pattern** : Edge Functions multi-channels — prévoir fallback "site" par défaut
+- **Volet** : supabase
+
+## 2026-05-19 — Bandeau MaPrimeAdapt' violet illisible
+- **Symptôme** : Bandeau "MaPrimeAdapt' jusqu'à 70% d'aide" — contraste catastrophique (sous-texte violet pâle sur fond violet uni invisible)
+- **Cause** : `background:linear-gradient(135deg,#7C3AED 0%,#5B21B6 100%)` + `opacity:.92` rendait sous-texte invisible
+- **Fix** : Refonte V2 — fond crème dégradé + bordure orange MaPrimeAdapt' + icône maison+sourire SVG + titre noir charbon + CTA orange chaud. WCAG AAA.
+- **Durée** : 20 min
+- **Pattern** : contraste WCAG à vérifier sur tous bandeaux promo
+- **Volet** : site live
+
+## 2026-05-19 — Doublon scheduled_publications (chasse d'eau 19/05 18h)
+- **Symptôme** : 2 entrées identiques pour la même réalisation à la même heure → risque double publication
+- **Cause** : Double clic involontaire sur "Confirmer la programmation" admin
+- **Fix** : SQL DELETE avec ROW_NUMBER() PARTITION BY pour garder le plus ancien
+- **Durée** : 3 min
+- **Pattern** : ajouter UNIQUE constraint sur (realisation_id, scheduled_at) côté SQL ou debouncer le bouton côté JS
+- **Volet** : supabase

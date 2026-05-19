@@ -67,6 +67,7 @@ window.HCLayout = (function() {
         { id:'avis-non-repondus', href:'avis-non-repondus.html', label:'Avis non répondus', icon:'<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>' },
         { id:'avis-google-toolkit', href:'avis-google-toolkit.html', label:'Toolkit Avis Google', icon:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/>' },
         { id:'services', href:'services.html', label:'Catalogue prestations', icon:'<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>', badge:'<span class="admin-nav-item-badge alert" id="navOrdersCount" style="display:none"></span>' },
+        { id:'photos-prestations', href:'photos-prestations.html', label:'📸 Photos prestations', icon:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/>' },
         // "Tarifs de référence" retiré de la sidebar (fusion avec Catalogue prestations)
         // Page tarifs.html reste accessible via URL directe pour consultation
         // Pour modifier les prix : passer par services.html (synchro live)
