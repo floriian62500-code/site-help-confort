@@ -120,19 +120,41 @@ METIER_VILLE_GLOB = [
 ]
 
 # ─────────────────────────────────────────────────────────────
-# PATCH 3 : Fake avis "Mathieu D." / "Sophie L." (pages PMR)
+# PATCH 3 : Fake avis "Mathieu D." / "Sophie L." (TOUTES pages métier × ville)
 # ─────────────────────────────────────────────────────────────
-FAKE_REVIEWS_PATTERNS = [
-    # Pattern bloc témoignage Mathieu D. (Fuite cuisine) - incohérent sur PMR
-    re.compile(
-        r'<div class="m-review-card[^"]*"[^>]*>\s*'
-        r'(?:<div[^>]*>★★★★★</div>\s*)?'
-        r'(?:<p[^>]*>«\s*Fuite sous l.évier.*?»\s*</p>\s*)'
-        r'(?:<div[^>]*>.*?Mathieu D\..*?</div>\s*)?'
-        r'</div>',
-        re.DOTALL
-    ),
-]
+# Remplace les 2 fake-articles par un placeholder vers vrais avis Google
+FAKE_REVIEWS_PATTERN = re.compile(
+    r'<article class="m-proof-card m-proof-review">\s*'
+    r'<div class="m-review-stars">★★★★★</div>\s*'
+    r'<blockquote>«\s*Fuite sous l\'évier.*?</blockquote>\s*'
+    r'<div class="m-review-author">.*?Mathieu D\..*?</div>\s*'
+    r'</div>\s*'
+    r'</article>\s*'
+    r'<article class="m-proof-card m-proof-review">\s*'
+    r'<div class="m-review-stars">★★★★★</div>\s*'
+    r'<blockquote>«\s*Recherche de fuite.*?</blockquote>\s*'
+    r'<div class="m-review-author">.*?Sophie L\..*?</div>\s*'
+    r'</div>\s*'
+    r'</article>',
+    re.DOTALL
+)
+
+REAL_REVIEWS_PLACEHOLDER = '''<!-- HC-REAL-REVIEWS-V1 — placeholder vers vrais avis Google (en attente sync Supabase) -->
+ <article class="m-proof-card" style="background:linear-gradient(135deg,#FFF8F1 0%,#FFFFFF 100%);border:1px solid #FBD38D;padding:24px;text-align:center">
+   <div style="font-size:2.4rem;line-height:1;margin-bottom:6px">⭐⭐⭐⭐⭐</div>
+   <div style="font-size:1.6rem;font-weight:900;color:#0A1428;margin-bottom:4px">4,7 / 5</div>
+   <div style="font-size:.94rem;color:#475569;margin-bottom:14px"><strong>343 avis vérifiés</strong> sur Google par nos clients de Saint-Omer, Dunkerque &amp; Côte d'Opale</div>
+   <a href="https://maps.app.goo.gl/B4BPVTiRp5rDp26fA" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:linear-gradient(135deg,#F59E0B 0%,#D97706 100%);color:#fff;text-decoration:none;border-radius:10px;font-weight:700;font-size:.9rem;box-shadow:0 4px 12px rgba(245,158,11,.30)">Lire les avis sur Google <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+ </article>'''
+
+# ─────────────────────────────────────────────────────────────
+# PATCH 4 : Suppression section "Réservez ou demandez un devis" (doublon CTA)
+# ─────────────────────────────────────────────────────────────
+CTA_DUPLICATE_PATTERN = re.compile(
+    r'<!-- ─── 3\. ACTION : 2 CTA[^─]*─── -->\s*'
+    r'<section class="m-section m-cta-section"[^>]*aria-label="Réserver une intervention[^"]*">.*?</section>',
+    re.DOTALL
+)
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -178,23 +200,18 @@ def apply_patch_2_trust_band(content, filename):
 
 
 def apply_patch_3_fake_reviews(content, filename):
-    """Patch 3 : Sur pages PMR, signale les fake reviews (à traiter manuellement)."""
-    # Pour ce premier patch, on log seulement (suppression risquée sans connaître la structure exacte)
-    if 'pmr-' not in filename and 'salle-de-bain-pmr' not in filename:
+    """Patch 3 : Sur TOUTES pages métier × ville, remplace les fake avis par placeholder Google."""
+    if 'HC-REAL-REVIEWS-V1' in content:
+        # Déjà patché, idempotent
         return content, 0
+    new_content, n = FAKE_REVIEWS_PATTERN.subn(REAL_REVIEWS_PLACEHOLDER, content)
+    return new_content, n
 
-    has_fake = ('Mathieu D.' in content and ('Fuite cuisine' in content or 'Fuite sous l\'évier' in content))
-    if has_fake:
-        # Pour l'instant, juste un commentaire HTML pour signaler à traiter
-        marker = '<!-- HC-FAKE-REVIEWS-TODO: avis incohérents avec PMR à remplacer par sync Supabase -->'
-        if marker not in content:
-            content = content.replace(
-                '<!-- ─── ',
-                f'{marker}\n<!-- ─── ',
-                1
-            )
-            return content, 1
-    return content, 0
+
+def apply_patch_4_remove_cta_duplicate(content, filename):
+    """Patch 4 : Supprime la section 'Réservez ou demandez un devis' (doublon CTA hero)."""
+    new_content, n = CTA_DUPLICATE_PATTERN.subn('', content)
+    return new_content, n
 
 
 def process_file(filepath, is_metier_ville):
@@ -203,23 +220,22 @@ def process_file(filepath, is_metier_ville):
         original = f.read()
     content = original
 
-    n1 = n2 = n3 = 0
+    n1 = n2 = n3 = n4 = 0
 
     # Patch 1 : toutes les pages
     content, n1 = apply_patch_1_remove_1h_ouvree(content)
 
-    # Patch 2 : seulement métier × ville
+    # Patches 2, 3, 4 : seulement métier × ville
     if is_metier_ville:
         content, n2 = apply_patch_2_trust_band(content, filepath)
-
-    # Patch 3 : seulement PMR
-    content, n3 = apply_patch_3_fake_reviews(content, filepath)
+        content, n3 = apply_patch_3_fake_reviews(content, filepath)
+        content, n4 = apply_patch_4_remove_cta_duplicate(content, filepath)
 
     if content != original:
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        return n1, n2, n3
-    return 0, 0, 0
+        return n1, n2, n3, n4
+    return 0, 0, 0, 0
 
 
 def main():
