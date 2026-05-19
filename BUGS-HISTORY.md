@@ -190,3 +190,19 @@
 - **Durée** : 3 min
 - **Pattern** : ajouter UNIQUE constraint sur (realisation_id, scheduled_at) côté SQL ou debouncer le bouton côté JS
 - **Volet** : supabase
+
+## 2026-05-19 — Photos absentes /realisations (vraie cause : URLs Facebook CDN)
+- **Symptôme** : 3 cartes sur 4 sans image ni fallback, malgré image_after non null en BDD. Le fix précédent (sélecteur CSS descendant) n'a pas suffi car le vrai bug était ailleurs.
+- **Cause** : Les `image_after` en BDD sont des URLs Facebook CDN (`scontent-cdg4-1.xx.fbcdn.net`). Facebook **bloque le hot-linking** depuis d'autres domaines → les `<img>` échouent silencieusement → cartes vides.
+- **Fix** : Ajout d'une fonction `isFbCdn(url)` dans realisations.html qui détecte les URLs `fbcdn|scontent` et les considère comme inutilisables → le rendu bascule sur le fallback gradient (case 4 du switch).
+- **Durée** : 15 min (investigation BDD + fix JS)
+- **Pattern** : ne **jamais** stocker d'URLs Facebook CDN comme images persistantes. Toujours rapatrier les images sur Supabase Storage ou /images/. Audit régulier `WHERE image_after LIKE '%fbcdn%' OR '%scontent%'`.
+- **Volet** : site live + supabase
+
+## 2026-05-19 — Drapeau Ukraine carte V2 (Wikimedia ne suffisait pas)
+- **Symptôme** : Le drapeau Ukraine reste visible en bas-droite de la carte zones-intervention même après changement OSM → Wikimedia + CSS masque
+- **Cause** : Wikimedia render aussi un overlay sur certaines tuiles dans cette zone. La règle CSS masque seul `.leaflet-bottom.leaflet-right` ne couvrait pas tous les cas.
+- **Fix** : V2 — Tile provider basculé sur Esri ArcGIS World Street Map (`server.arcgisonline.com`) qui n'a aucun overlay Ukraine connu + CSS masque agressif élargi (img alt/src ukraine, classes/aria-label, divs non-leaflet, bottom-left et bottom-right)
+- **Durée** : 10 min (V2 après échec V1)
+- **Pattern** : tester plusieurs tile providers avant de conclure. Esri ArcGIS = backup fiable sans overlay politique.
+- **Volet** : site live
