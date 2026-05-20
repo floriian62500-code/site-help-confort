@@ -7,43 +7,29 @@
 
 (function() {
   const SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
-  const SUPABASE_KEY = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
-
-  // Charge Supabase JS si pas déjà présent
-  function loadSupabase() {
-    return new Promise((resolve, reject) => {
-      if (window.supabase) return resolve(window.supabase);
-      const s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
-      s.onload = () => resolve(window.supabase);
-      s.onerror = reject;
-      document.head.appendChild(s);
-    });
-  }
+  // ─── HC-FIX 2026-05-20 ────────────────────────────────────────────────
+  // On n'utilise PLUS le client supabase-js anon : la clé sb_publishable_*
+  // se fait rejeter par RLS (bug 0 leads). On passe par l'Edge Function
+  // submit-lead (service_role côté serveur, anon-callable, verify_jwt=false).
+  // L'Edge Function gère aussi le déclenchement de notify-lead côté serveur.
+  // ─────────────────────────────────────────────────────────────────────
+  const SUBMIT_LEAD_URL = SUPABASE_URL + '/functions/v1/submit-lead';
 
   async function pushLead(payload) {
-    const sb = await loadSupabase();
-    const client = sb.createClient(SUPABASE_URL, SUPABASE_KEY);
-    const res = await client.from('leads').insert([payload]).select().single();
-    // ─── Trigger notification email à Florian ────────────────────────────
-    // Edge Function notify-lead. Best-effort : si elle échoue, le lead
-    // reste en base. L'erreur est silencieuse côté visiteur (pas de bloquage).
-    if (res.data?.id) {
-      try {
-        // Call non bloquant — on n'attend PAS la réponse pour rendre la main
-        // au formulaire (l'utilisateur a déjà son toast de succès).
-        fetch(`${SUPABASE_URL}/functions/v1/notify-lead`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + SUPABASE_KEY,
-            'apikey': SUPABASE_KEY
-          },
-          body: JSON.stringify({ lead_id: res.data.id })
-        }).catch(err => console.warn('[hc-leads] notify-lead failed (silent):', err && err.message));
-      } catch(e) { /* swallow */ }
+    try {
+      const r = await fetch(SUBMIT_LEAD_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok || data.error) {
+        return { data: null, error: new Error(data.error || ('HTTP ' + r.status)) };
+      }
+      return { data: { id: data.id }, error: null };
+    } catch (err) {
+      return { data: null, error: err };
     }
-    return res;
   }
 
   // Récupère les UTM depuis l'URL courante
@@ -116,7 +102,7 @@
         }
 
         try {
-          const { error } = await pushLead(payload);
+          const { data, error } = await pushLead(payload);
           if (error) throw error;
 
           // Succès : afficher message + reset form
