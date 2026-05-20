@@ -63,9 +63,11 @@
         .hcal-head p{font-size:1rem;color:#64748b;margin:0;line-height:1.5}\
         .hcal-head strong{color:#FFB400}\
         .hcal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}\
-        .hcal-card{background:#fff;border:1px solid #E5EDF3;border-radius:14px;padding:20px;box-shadow:0 1px 2px rgba(11,18,32,.04);transition:.2s;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden}\
+        .hcal-card{background:#fff;border:1px solid #E5EDF3;border-radius:14px;padding:20px;box-shadow:0 1px 2px rgba(11,18,32,.04);transition:.2s;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;color:inherit;text-decoration:none;cursor:pointer}\
         .hcal-card::before{content:"\\201C";position:absolute;top:-10px;right:14px;font-size:4rem;color:rgba(13,160,207,.10);font-family:Georgia,serif;line-height:1}\
         .hcal-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(11,18,32,.08);border-color:rgba(13,160,207,.30)}\
+        .hcal-open-hint{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:.74rem;font-weight:700;color:#0DA0CF;letter-spacing:.01em;opacity:.85;align-self:flex-start}\
+        .hcal-card:hover .hcal-open-hint{opacity:1;text-decoration:underline}\
         .hcal-author-row{display:flex;align-items:center;gap:10px}\
         .hcal-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#0DA0CF,#5fc7e5);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.92rem;flex-shrink:0}\
         .hcal-author-info{flex:1;min-width:0}\
@@ -89,8 +91,10 @@
           reviews.map(function(r) {
             var initial = (r.author_name || 'A').charAt(0).toUpperCase();
             var hasReply = r.reply_text && r.reply_text.trim().length > 0;
+            // HC-FIX 2026-05-20 : carte entière cliquable → review_url (si dispo) ou fiche Google
+            var clickUrl = r.review_url || 'https://maps.app.goo.gl/B4BPVTiRp5rDp26fA';
             return '\
-              <div class="hcal-card">\
+              <a href="' + escapeHtml(clickUrl) + '" target="_blank" rel="noopener noreferrer" class="hcal-card" aria-label="Voir cet avis sur ' + (r.source || 'Google') + '">\
                 <div class="hcal-author-row">\
                   <div class="hcal-avatar">' + initial + '</div>\
                   <div class="hcal-author-info">\
@@ -105,7 +109,8 @@
                 </div>\
                 <p class="hcal-comment">' + escapeHtml(r.comment || '') + '</p>' +
                 (hasReply ? '<div class="hcal-reply"><div class="hcal-reply-label">Réponse Help Confort</div><div class="hcal-reply-text">' + escapeHtml(r.reply_text) + '</div></div>' : '') +
-              '</div>';
+                '<span class="hcal-open-hint">Voir sur ' + (r.source === 'facebook' ? 'Facebook' : r.source === 'trustville' ? 'Trustville' : 'Google') + ' <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>' +
+              '</a>';
           }).join('') +
         '</div>\
         <div class="hcal-cta">\
