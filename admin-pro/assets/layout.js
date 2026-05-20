@@ -182,17 +182,13 @@ window.HCLayout = (function() {
   `;
 
   function sidebarHTML(activePage) {
-    // ─── Module actif (Comm / RH / Outils) ───
-    // Auto-détection : si la page active est dans une section "outils", switch module
-    let activeModule = getActiveModule();
-    SECTIONS.forEach(sec => {
-      if (sec.links.some(l => l.id === activePage)) {
-        if (sec.module && sec.module !== activeModule) {
-          activeModule = sec.module;
-          setActiveModule(activeModule); // persist
-        }
-      }
-    });
+    // ─── Module actif (Comm / Outils) ───
+    // HC-FIX 2026-05-20 : on lit juste l'état (ne MAJ plus le localStorage ici).
+    // Sinon, cliquer sur "Outils" depuis une page Comm écrasait immédiatement
+    // le choix utilisateur (sidebarHTML était appelée derrière avec activePage='contracts'
+    // qui est Comm → reset à 'comm' → bouton Outils inopérant).
+    // L'auto-detect au LOAD initial reste géré par mount() ligne ~1100+.
+    const activeModule = getActiveModule();
 
     // Determine which section contains the active page
     let activeSectionId = null;
@@ -1127,6 +1123,13 @@ window.HCLayout = (function() {
   }
 
   async function mount(activePage, pageTitle) {
+    // HC-FIX 2026-05-20 : auto-switch module au LOAD initial seulement
+    // (avant le 1er render de sidebarHTML, donc pas de boucle infinie avec switchModule)
+    SECTIONS.forEach(sec => {
+      if (sec.links.some(l => l.id === activePage) && sec.module && sec.module !== getActiveModule()) {
+        setActiveModule(sec.module);
+      }
+    });
     // Injecter sidebar — try/catch pour ne JAMAIS laisser la sidebar vide
     const sb = document.querySelector('.admin-sidebar');
     if (sb) {
@@ -1197,6 +1200,12 @@ window.HCLayout = (function() {
   // Mount uniquement la sidebar dynamique (garde la topbar existante)
   // Utile pour les pages avec topbar custom (index.html, realisations.html, settings.html)
   async function mountSidebar(activePage) {
+    // HC-FIX 2026-05-20 : auto-switch module au LOAD initial (cf. mount())
+    SECTIONS.forEach(sec => {
+      if (sec.links.some(l => l.id === activePage) && sec.module && sec.module !== getActiveModule()) {
+        setActiveModule(sec.module);
+      }
+    });
     const sb = document.querySelector('.admin-sidebar');
     if (sb) {
       try {
