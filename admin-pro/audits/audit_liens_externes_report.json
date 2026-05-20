@@ -1,7 +1,7 @@
 {
   "scanned_pages": 81,
   "tested_urls": 69,
-  "ok": 56,
+  "ok": 55,
   "broken": [
     {
       "url": "https://comap.aalberts-hfc.com/fr",
@@ -36,6 +36,19 @@
         "electricien-dunkerque.html",
         "electricien-saint-omer.html",
         "partenaires.html"
+      ]
+    },
+    {
+      "url": "https://rsramonsoler.com/fr/personnes",
+      "status": 500,
+      "error": "Internal Server Error",
+      "ok": false,
+      "pages": [
+        "partenaires.html",
+        "plombier-boulogne-sur-mer.html",
+        "plombier-calais.html",
+        "plombier-dunkerque.html",
+        "plombier-saint-omer.html"
       ]
     },
     {
@@ -121,14 +134,16 @@
       ]
     },
     {
-      "url": "https://www.velux.fr/",
-      "status": 503,
-      "error": "Service Unavailable",
+      "url": "https://www.schueco.com/fr/particuliers",
+      "status": 0,
+      "error": "TimeoutError: The read operation timed out",
       "ok": false,
       "pages": [
-        "menuisier-dunkerque.html",
-        "menuisier-saint-omer.html",
-        "partenaires.html"
+        "partenaires.html",
+        "serrurier-boulogne-sur-mer.html",
+        "serrurier-calais.html",
+        "serrurier-dunkerque.html",
+        "serrurier-saint-omer.html"
       ]
     },
     {
@@ -148,5 +163,5 @@
     "https://www.facebook.com/depanaudo/",
     "https://www.linkedin.com/in/florian-d-haillecourt-2a67bb207"
   ],
-  "generated_at": "2026-05-19T06:52:10"
+  "generated_at": "2026-05-20T06:52:04"
 }
