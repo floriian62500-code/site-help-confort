@@ -244,3 +244,11 @@
 - **Durée détection** : audit 25 min (lecture code, test SQL direct postgres, test SET LOCAL ROLE anon, test pg_net via REST avec clé publishable)
 - **Pattern critique** : **toujours tester le flux complet anon → API REST → BDD après tout changement de clé Supabase ou de RLS**. Le bug a été silencieux pendant des semaines.
 - **Volet** : supabase + site live + business
+
+## 2026-05-20 — Logo footer rendu "carré écrasé" causé par mon V2 (régression CSS)
+- **Symptôme** : Logo HELP Confort dans le footer rendu en carré blanc "écrasé" 110×110 au lieu du rendu rectangulaire natif
+- **Cause** : Mon HC-LOGO-FOOTER-FIX-V2 ajouté dans styles.css avec `width:110px !important; height:110px !important;` écrasait le CSS inline footer-v3 natif qui était propre (`.fv3-logo img { width:180px; height:auto; max-height:56px; object-fit:contain }` = box 180×56 avec image 56×56 centrée)
+- **Fix V3** : Retrait du surdimensionnement V2 dans styles.css. Retour au rendu inline natif du footer-v3 (180×56 box, image carrée centrée 56×56). Plus propre visuellement. Le vrai fix long-terme reste : uploader un PNG transparent rectangulaire (item POUR-FLORIAN.md).
+- **Durée** : 5 min (détection en relisant le CSS inline du footer-v3 dans index.html)
+- **Pattern critique** : ne JAMAIS utiliser `!important` sur des règles CSS quand un inline `<style>` existe déjà sur la même classe. Toujours vérifier la cascade existante avant d'ajouter des !important.
+- **Volet** : site live
