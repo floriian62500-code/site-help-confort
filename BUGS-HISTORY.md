@@ -252,3 +252,15 @@
 - **Durée** : 5 min (détection en relisant le CSS inline du footer-v3 dans index.html)
 - **Pattern critique** : ne JAMAIS utiliser `!important` sur des règles CSS quand un inline `<style>` existe déjà sur la même classe. Toujours vérifier la cascade existante avant d'ajouter des !important.
 - **Volet** : site live
+
+## 2026-05-20 — URGENT : photos absentes sur /realisations (cartes blanches)
+- **Symptôme** : 3 cartes sur 4 affichent du blanc total (ni image ni fallback gradient) sur depan59-62.fr/realisations. Florian voit "pb toujours pas résolu" malgré multiples interventions précédentes.
+- **Cause** : 19 chantiers FB scrape ont `ai_generated.source_fb = "https://facebook.com/..."` ET `image_after` sur Facebook CDN. Le code JS realisations.html avait :
+  1. Case 2 (`hasUsableApres`) skip car isFbCdn() détecte l'URL Facebook CDN
+  2. Case 3 (`r.source_facebook`) → tentait `<iframe src="https://www.facebook.com/plugins/post.php?href=...">` mais Facebook bloque l'iframe (CSP, 3rd party cookies, X-Frame-Options) → iframe vide invisible
+  3. Case 4 (fallback gradient) jamais atteinte
+- **Fix** : désactiver complètement le case 3 (iframe Facebook). Les chantiers FB scrape tombent désormais directement sur le fallback gradient + icône métier (visuel propre et cohérent).
+- **Durée détection** : long (3 sessions, cause vraie identifiée 4ème tentative). Pattern caché : ai_generated.source_fb n'apparaît pas dans les colonnes principales d'audit BDD.
+- **Pattern critique** : pour les imports automatiques (FB scrape), TOUJOURS rapatrier les médias en local. Les iframes/CDN externes sont fragiles (CSP, hot-link bloqué, sites tiers).
+- **Volet** : site live + supabase
+- **À faire (POUR-FLORIAN)** : rapatrier 19 images Facebook CDN sur Supabase Storage pour avoir de vraies photos sur ces cartes (priorité moyenne, visuel)

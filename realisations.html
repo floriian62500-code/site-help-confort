@@ -1023,16 +1023,9 @@ if (document.fonts && document.fonts.ready) {
  '<div class="photo" onclick="event.preventDefault();openLightbox(\''+r.photo_apres+'\')">' +
  '<img src="'+r.photo_apres+'" alt="'+r.title+'" loading="lazy" decoding="async">' +
  '</div>';
- } else if (r.source_facebook) {
- // 3. Embed Facebook (photo automatique du post)
- var fbSrc = 'https://www.facebook.com/plugins/post.php?href=' +
- encodeURIComponent(r.source_facebook) +
- '&show_text=false&width=420';
- photoHtml =
- '<div class="photo">' +
- '<iframe src="'+fbSrc+'" loading="lazy" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>' +
- '<span class="fb-tag"><svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1.45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>Facebook</span>' +
- '</div>';
+ // HC-FIX 2026-05-20 : iframe Facebook désactivée (ne s'affiche pas, blocages CSP/3rd-party)
+ // Les chantiers FB scrape tombent désormais sur le fallback gradient + icône métier (propre + visible)
+ // À terme : rapatrier les vraies images FB sur Supabase Storage (cf. POUR-FLORIAN.md)
  } else {
  // 4. Fallback : gradient + icône métier (visuel cohérent avec les autres cards)
  var METIER_SVG = {
