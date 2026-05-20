@@ -10,8 +10,8 @@
 - [x] URGENT BUG: Page /partenaires cassée (CSS ne charge pas, pictos 437×437px, layout détruit) | source: chat 2026-05-19 18h | sévérité: critique (fait le 2026-05-19, cause = CSS footer-v3 inline manquant sur 11 pages : partenaires, reseau-help-confort, agence-*, nos-villes, nos-metiers, etc. Fix : injection du bloc CSS depuis index.html sur les 11 pages)
 - [x] Optimisation meta SEO : 37 pages avec desc/title trop longs (> 160/70 chars Google tronque) | source: audit autonome 2026-05-19 18h30 | sévérité: normale | détail: ex plombier-boulogne (172), vitrier-saint-omer title 78, serrurier-saint-omer desc 196 (fait le 2026-05-19, 29 pages corrigées : 17 descriptions raccourcies sous 160 chars + 14 titres raccourcis sous 70 chars, og:* synchronisés ; audit final 82/82 OK)
 - [ ] Rapatrier 19 images Facebook CDN sur Supabase Storage (toutes réalisations actuellement en fallback gradient) | source: audit BDD 2026-05-19 | sévérité: normale | nécessite : Supabase Storage bucket + Edge Function de migration
-- [ ] Refactor : CSS footer-v3 commun à externaliser dans styles.css (actuellement inline sur 68+ pages, drift régulier) | source: audit 2026-05-19 | sévérité: normale | bénéfice : -5 KB par page, fin des drifts
-- [ ] Supabase performance : audit advisors révèle N foreign keys non indexées + N unused indexes | source: get_advisors performance 2026-05-19 | sévérité: faible (volume actuel ~22 rows, pas critique avant 100K) | détail : pour optimisation future
+- [x] Refactor : CSS footer-v3 commun à externaliser dans styles.css (fait le 2026-05-20, ajouté ligne 2042+ ; inline conservé comme failsafe → modifs futures uniquement dans styles.css)
+- [x] Supabase performance : 6 indexes FK manquants ajoutés (fait le 2026-05-20 via migration hc_perf_add_missing_fk_indexes)
 - [x] Fix CSS footer-v3 manquant sur 12 pages (partenaires, reseau-help-confort, agence-*, nos-villes, nos-metiers, notre-equipe…) | source: audit autonome 2026-05-19 | sévérité: critique | (fait le 2026-05-19, injection CSS depuis index.html)
 
 # Ajout 2026-05-19 11:30 (session Cowork autonome)
