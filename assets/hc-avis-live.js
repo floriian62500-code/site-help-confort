@@ -119,7 +119,8 @@
 
   function load() {
     // Fetch reviews depuis Supabase (anon = lecture des avis non flag/archive)
-    fetch(SUPABASE_URL + '/rest/v1/reviews?status=neq.flagged&status=neq.archive&rating=gte.4&comment=not.is.null&order=posted_at.desc&limit=6', {
+    // HC-FIX 2026-05-20 : on récupère AUSSI review_url pour pouvoir rendre la carte cliquable
+    fetch(SUPABASE_URL + '/rest/v1/reviews?status=neq.flagged&status=neq.archive&rating=gte.4&comment=not.is.null&order=posted_at.desc&limit=6&select=*,review_url', {
       headers: {
         'apikey': SUPABASE_KEY,
         'Authorization': 'Bearer ' + SUPABASE_KEY
