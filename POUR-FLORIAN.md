@@ -39,7 +39,34 @@ Une fois traitée avec Florian, l'entrée est :
 **Reco** : option 3 (diagnostic non destructif), puis 2 si confirmé invalide.
 **Quand on se voit** : 10 min ensemble.
 
-## 2026-05-19 11:05 — Table `leads` vide (formulaire de contact ?)
+## 2026-05-20 09:35 — 🔥 CRITIQUE BUSINESS : RLS leads bloque les INSERT anon
+**Source** : audit autonome 2026-05-20 (lecture code + test pg_net direct vers /rest/v1/leads)
+**Constat** : **Aucun lead enregistré depuis la mise en place de la clé `sb_publishable_*`**. Tous les visiteurs qui ont rempli le formulaire de contact reçoivent un toast d'erreur ("Erreur d'envoi. Veuillez nous appeler..."). Cela représente potentiellement **des dizaines/centaines de leads perdus** selon le trafic.
+
+**Preuve** :
+- Table `leads` totalement vide (0 entrées, alors que site reçoit trafic depuis semaines)
+- Test pg_net direct vers `https://btcbjwqiivhpwoszomhg.supabase.co/rest/v1/leads` avec clé `sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2` → **401 Unauthorized**, message exact : `"new row violates row-level security policy for table 'leads'"`
+- Test reproduit en injectant `status='nouveau'` ET `assigned_to=NULL` explicitement → toujours 401
+- Policy `leads_public_insert` : `WITH CHECK ((status = 'nouveau'::text) AND (assigned_to IS NULL))` — semble correcte mais n'est pas appliquée
+
+**Hypothèse principale** : la clé `sb_publishable_*` (nouveau format Supabase) résout vers un rôle Postgres différent de `anon`. La policy `leads_public_insert` ciblant `{anon}` ne s'applique pas. PostgREST refuse l'INSERT car aucune policy ne couvre le rôle effectif de cette clé.
+
+**Pourquoi je ne traite pas** : Garde-fou absolu — toute modification RLS/permissions doit être validée explicitement par toi.
+
+**Options** :
+  1. **Ajouter une policy permissive pour le nouveau rôle** (probablement `public_anon` ou `viewer`). À identifier avec `SELECT rolname FROM pg_roles`.
+  2. **Créer une Edge Function `submit-lead`** (service_role, bypass RLS, anon-callable). Plus propre architecturalement et permet de logger/notifier instantanément.
+  3. **Régénérer une clé anon "legacy" JWT** (`eyJ*`) et l'utiliser dans `hc-leads-capture.js` au lieu de `sb_publishable_*`.
+
+**Reco** : **option 2** (Edge Function `submit-lead`). Bénéfices : centralisation logique lead + notif email auto à Florian + log d'erreur en BDD + bypass RLS propre + plus jamais ce problème.
+
+**Action immédiate à valider** : modifier `hc-leads-capture.js` ligne 35 pour appeler l'Edge Function `submit-lead` au lieu de l'INSERT direct. Architecture identique à `publish-scheduled`.
+
+**Quand on se voit** : 15 min pour valider + déployer l'Edge Function `submit-lead`.
+
+**Impact** : tant que ce bug est ouvert, **chaque jour de trafic = leads perdus**. Priorité maximale.
+
+## 2026-05-19 11:05 — Table `leads` vide (formulaire de contact ?) — REMPLACÉ par item ci-dessus
 **Source** : audit BDD via Supabase MCP session autonome 2026-05-19
 **Constat** : La table `leads` contient **0 entrées** alors que le site reçoit du trafic et que contact.html a été optimisé pour la conversion. Soit aucun visiteur n'a rempli le formulaire (peu probable), soit le formulaire **n'écrit pas en BDD**.
 **Pourquoi je ne traite pas** : Pour diagnostiquer il faut soumettre un faux lead E2E. Je peux faire le test mais la suppression du lead test après requiert ton aval (cf. garde-fou DELETE).

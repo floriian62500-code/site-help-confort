@@ -235,3 +235,12 @@
 - **Durée totale** : ≈ 2 min de fix après détection (mais 4h de retard de publication)
 - **Pattern critique** : sur Edge Function appelée par cron pg_net, TOUJOURS `verify_jwt=false` (le cron passe via pg_net avec un Bearer Vault, pas un JWT user valide auprès du JWKS Supabase). Mentaliser pour tous les futurs deployments.
 - **Volet** : supabase
+
+## 2026-05-20 — 🔥 CRITIQUE : Formulaire contact silencieusement cassé (0 leads en BDD)
+- **Symptôme** : Table `leads` totalement vide alors que le site reçoit du trafic depuis des semaines. Tous les visiteurs qui ont rempli le formulaire ont reçu un toast d'erreur.
+- **Cause** : RLS sur table `leads` rejette les INSERT via la clé `sb_publishable_*` (nouveau format Supabase). Policy `leads_public_insert` ciblant le rôle Postgres `anon` ne s'applique pas car la clé `sb_publishable_*` résout probablement vers un autre rôle (à confirmer). Test direct pg_net → 401 "new row violates row-level security policy" même avec status='nouveau' et assigned_to=NULL explicites.
+- **Fix attendu** : créer une Edge Function `submit-lead` (service_role, bypass RLS, anon-callable). Modifier `assets/hc-leads-capture.js` pour appeler cette Edge Function au lieu de l'INSERT REST direct. Garde-fou : modif validée par Florian car touche aux credentials + architecture.
+- **Pourquoi reporté** : nécessite création d'Edge Function et choix d'archi → POUR-FLORIAN.md
+- **Durée détection** : audit 25 min (lecture code, test SQL direct postgres, test SET LOCAL ROLE anon, test pg_net via REST avec clé publishable)
+- **Pattern critique** : **toujours tester le flux complet anon → API REST → BDD après tout changement de clé Supabase ou de RLS**. Le bug a été silencieux pendant des semaines.
+- **Volet** : supabase + site live + business
