@@ -39,9 +39,10 @@ Une fois traitée avec Florian, l'entrée est :
 **Reco** : option 3 (diagnostic non destructif), puis 2 si confirmé invalide.
 **Quand on se voit** : 10 min ensemble.
 
-## 2026-05-20 09:35 — 🔥 CRITIQUE BUSINESS : RLS leads bloque les INSERT anon
+## 2026-05-20 09:35 — 🔥 CRITIQUE BUSINESS : RLS leads bloque les INSERT anon — ✅ RÉSOLU 2026-05-20 10:55
+**Statut** : **CORRIGÉ** par déploiement Edge Function `submit-lead` V1 (verify_jwt=false, service_role bypass RLS) + refactor `assets/hc-leads-capture.js` (HC-FIX 2026-05-20). Testé OK via pg_net direct → 200 lead créé, supprimé après test. Tous les formulaires `data-hc-lead` du site passent désormais par l'Edge Function. Notif email à Florian conservée (déclenchée côté serveur).
 **Source** : audit autonome 2026-05-20 (lecture code + test pg_net direct vers /rest/v1/leads)
-**Constat** : **Aucun lead enregistré depuis la mise en place de la clé `sb_publishable_*`**. Tous les visiteurs qui ont rempli le formulaire de contact reçoivent un toast d'erreur ("Erreur d'envoi. Veuillez nous appeler..."). Cela représente potentiellement **des dizaines/centaines de leads perdus** selon le trafic.
+**Constat initial** : **Aucun lead enregistré depuis la mise en place de la clé `sb_publishable_*`**. Tous les visiteurs qui ont rempli le formulaire de contact reçoivent un toast d'erreur ("Erreur d'envoi. Veuillez nous appeler..."). Cela représente potentiellement **des dizaines/centaines de leads perdus** selon le trafic.
 
 **Preuve** :
 - Table `leads` totalement vide (0 entrées, alors que site reçoit trafic depuis semaines)

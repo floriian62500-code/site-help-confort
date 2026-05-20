@@ -19,6 +19,24 @@
 
 ---
 
+## 2026-05-20 — 🔥 CRITIQUE : 0 leads remontés (RLS rejette clé sb_publishable_*)
+- **Symptôme** : Table `leads` à 0 entrées depuis le passage à la clé `sb_publishable_Zyd4jmm3_*`. Tous les soumissions formulaires renvoient un toast d'erreur côté visiteur. Potentiellement des dizaines de leads perdus.
+- **Cause** : La clé `sb_publishable_*` (nouveau format Supabase) ne résout pas vers le rôle `anon`. La policy `leads_public_insert` ciblait `{anon}` uniquement. PostgREST refuse l'INSERT avec : `new row violates row-level security policy for table 'leads'`.
+- **Fix** : Création Edge Function `submit-lead` V1 (verify_jwt=false, service_role bypass RLS, anon-callable). Refactor `assets/hc-leads-capture.js` (HC-FIX 2026-05-20) pour appeler `/functions/v1/submit-lead` au lieu de l'INSERT direct via supabase-js. Honeypot, rate-limit IP basique, validation nom + (email OU téléphone), déclenchement notify-lead côté serveur (architecture identique à publish-scheduled).
+- **Durée** : ~25 min (diagnostic + dev + test E2E + déploiement).
+- **Pattern** : **À retenir** — toute table avec INSERT anon doit passer par une Edge Function plutôt que client supabase-js si l'on utilise les clés `sb_publishable_*`. Ne JAMAIS faire confiance à la RLS sur du anonyme front quand on change le format de clé.
+- **Volet** : site live + supabase
+
+## 2026-05-20 — Publication Facebook chasse d'eau échoue (auth mismatch publish-meta vs publish-scheduled)
+- **Symptôme** : Cron `publish-scheduled` enregistre `meta: { status:401, error:"Not authenticated" }` dans `result_log` malgré V6 déployé. Site OK, Facebook KO.
+- **Cause** : `publish-meta` V7 acceptait UNIQUEMENT `HC_EDGE_AUTH_TOKEN` comme bearer cron, mais `publish-scheduled` envoyait `SUPABASE_SERVICE_ROLE_KEY`. Mismatch d'authent inter-Edge Functions.
+- **Fix** : Déploiement `publish-meta` V8 acceptant les DEUX tokens (`isCron = (hcToken && bearer===hcToken) || (sbServiceKey && bearer===sbServiceKey)`). Re-trigger manuel du publish-scheduled → Facebook post créé : https://www.facebook.com/107405408058063_1430575819112493
+- **Durée** : ~10 min.
+- **Pattern** : valider que les Edge Functions appelées en cascade partagent le même contrat d'auth (token unique OU acceptation multi-tokens explicite).
+- **Volet** : supabase edge functions
+
+---
+
 ## À faire en session dédiée
 
 ## 2026-05-19 — 3 modaux urgence cohabitent sur index.html

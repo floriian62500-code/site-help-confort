@@ -4,7 +4,7 @@
 > Ce fichier est la **source de vérité opérationnelle** validée par Florian.
 > Lis-le intégralement **avant** ta première réponse à l'utilisateur dans toute conversation où ce fichier est accessible.
 > Si Florian dit « applique le workflow », « lance la maintenance », « ajoute au TODO », etc., c'est ici que tu trouves la définition exacte.
-> Date de dernière mise à jour : **2026-05-19 11:15** (session Cowork autonome : application mode CLAUDE-AUTONOME, 12 bugs traités, BUGS-HISTORY + POUR-FLORIAN alimentés).
+> Date de dernière mise à jour : **2026-05-20 11:00** (session Cowork autonome P0-P3 : toolkit avis Google supprimé / toggles FB+GBP UI activés / publi chasse d'eau publiée sur FB / Edge Function submit-lead V1 déployée et bug 0 leads RÉSOLU).
 
 ---
 
