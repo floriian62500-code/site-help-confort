@@ -19,6 +19,45 @@
 
 ---
 
+## 2026-05-20 — Optim pictos métier (-120 KB par page)
+- **Symptôme** : 8 pictos PNG (plomberie, électricité, etc.) en 437×437 alors qu'affichés en 24×24 dans le mega-menu nav. Chaque page nav chargeait ~196 KB de pictos inutiles.
+- **Cause** : Images source en haute résolution sans pipeline de compression à la build.
+- **Fix** : `convert -resize 96x96 -strip` sur 8 pictos PNG (backup dans `images/_backup_pictos_437/`) + update attributs `width="437" height="437"` → `width="96" height="96"` sur 73 fichiers HTML via sed bulk. Total avant : ~196 KB / Après : ~76 KB. **Gain ~120 KB par page chargée × 73 pages.**
+- **Durée** : ~5 min.
+- **Pattern** : surveiller `identify -format "%wx%h"` sur toutes les images src ; comparer à la taille d'affichage CSS pour spotter le ratio absurde. Idéalement intégrer à build CI.
+- **Volet** : site live (toutes pages nav)
+
+## 2026-05-20 — Sécurité Supabase : 11 fonctions + 4 vues + 5 SECURITY DEFINER durcies
+- **Symptôme** : audit `get_advisors` security retournait 4 ERROR + multiples WARN (Security Definer Views, search_path mutable, anon execute SECURITY DEFINER functions).
+- **Cause** : migrations historiques laissant des configurations par défaut Postgres permissives.
+- **Fix** : 3 migrations appliquées :
+  - `hc_security_fix_search_path_2026_05_20` : `ALTER FUNCTION ... SET search_path = public, pg_temp` sur 11 fonctions trigger
+  - `hc_security_fix_views_security_invoker_2026_05_20` : `ALTER VIEW ... SET (security_invoker = on)` sur 4 vues
+  - `hc_security_revoke_anon_security_definer_2026_05_20` : `REVOKE EXECUTE FROM anon, authenticated` sur 5 fonctions SECURITY DEFINER
+- **Durée** : ~10 min.
+- **Pattern** : exécuter `get_advisors security` après chaque session DDL pour catch les nouveaux warnings.
+- **Volet** : supabase
+
+## 2026-05-20 — Perf Supabase : 6 indexes FK manquants
+- **Symptôme** : audit `get_advisors` performance révèle 6 foreign keys sans index couvrant.
+- **Fix** : migration `hc_perf_add_missing_fk_indexes_2026_05_20` créant `idx_contracts_created_by`, `idx_interventions_created_by/lead_id/realisation_id`, `idx_leads_realisation_id`, `idx_user_profiles_invited_by`.
+- **Durée** : ~3 min.
+- **Pattern** : `CREATE INDEX IF NOT EXISTS` non destructif → safe à appliquer en autonomie.
+- **Volet** : supabase
+
+## 2026-05-20 — Refactor footer-v3 externalisé dans styles.css
+- **Symptôme** : CSS footer-v3 dupliqué inline sur 81 pages HTML (~5 KB chacun). Drift régulier entre pages.
+- **Fix** : Ajout du bloc CSS complet dans `styles.css` ligne 2042+. Inline conservé comme failsafe (cf. incident partenaires.html du 18 mai). Modifs futures du footer → uniquement dans styles.css.
+- **Volet** : site live
+
+## 2026-05-20 — #urgenceModal orphelin supprimé index.html
+- **Symptôme** : 3 modaux urgence cohabitent dans index.html.
+- **Cause** : itérations successives sans purge legacy.
+- **Fix** : `#urgenceModal` (V1 legacy avec inline onclick) supprimé — aucun trigger ne l'ouvrait (orphelin). #hcUrgModal (V3 propre) reste seul. -88 lignes.
+- **Volet** : site live
+
+---
+
 ## 2026-05-20 — 🔥 CRITIQUE : 0 leads remontés (RLS rejette clé sb_publishable_*)
 - **Symptôme** : Table `leads` à 0 entrées depuis le passage à la clé `sb_publishable_Zyd4jmm3_*`. Tous les soumissions formulaires renvoient un toast d'erreur côté visiteur. Potentiellement des dizaines de leads perdus.
 - **Cause** : La clé `sb_publishable_*` (nouveau format Supabase) ne résout pas vers le rôle `anon`. La policy `leads_public_insert` ciblait `{anon}` uniquement. PostgREST refuse l'INSERT avec : `new row violates row-level security policy for table 'leads'`.
