@@ -1365,6 +1365,16 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  document.getElementById('catalogRoot').classList.add('nv-mode-single');
  // Construit la barre de sous-filtres pour la catégorie activée par défaut
  if (window.__buildSubfilters) window.__buildSubfilters(targetSlug);
+ // HC-FIX 2026-05-21 : afficher la section "Contrats chaudière" uniquement quand filtre Chauffage actif
+ var contratsSec = document.getElementById('nv-contrats-chauffage');
+ if (contratsSec) contratsSec.style.display = (targetSlug === 'chauffage') ? 'block' : 'none';
+ // Listener : au clic sur un autre filtre catégorie, on cache/montre la section contrats
+ document.querySelectorAll('.nv-filter').forEach(btn => {
+   btn.addEventListener('click', () => {
+     var slug = btn.getAttribute('data-filter');
+     if (contratsSec) contratsSec.style.display = (slug === 'chauffage') ? 'block' : 'none';
+   });
+ });
  }, 50);
 
  function renderCard(s, catSlug) {
