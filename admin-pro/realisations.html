@@ -407,33 +407,16 @@
             <input type="text" id="f_ville_other" placeholder="Précisez la ville" style="display:none;margin-top:6px">
           </div>
 
-          <div class="field-block">
-            <label>Agence *</label>
-            <select id="f_agence" required>
-              <option value="">— Auto-déduite de la ville —</option>
-              <option value="depan-audo">Dépan'Audo (Saint-Omer)</option>
-              <option value="depan-dk">Dépan'DK (Dunkerque)</option>
-            </select>
-            <span class="hint">Modifiable si chantier croisé entre les deux agences.</span>
-          </div>
-          <div class="field-block">
-            <label>Type d'intervention</label>
-            <select id="f_type">
-              <option value="">— Optionnel —</option>
-              <option value="depannage">Dépannage urgent</option>
-              <option value="renovation">Rénovation programmée</option>
-              <option value="installation">Installation neuve</option>
-              <option value="entretien">Entretien / maintenance</option>
-            </select>
-          </div>
-
-          <div class="field-block">
-            <label>Technicien</label>
-            <input type="text" id="f_technicien" placeholder="ex : Damien, Yacine…">
-          </div>
+          <!-- HC-CLEANUP 2026-05-21 : champs essentiels visibles, le reste replié dans <details> -->
           <div class="field-block">
             <label>Date d'intervention</label>
             <input type="date" id="f_date">
+          </div>
+          <div class="field-block">
+            <label style="display:flex;align-items:center;gap:8px;font-weight:700">
+              <input type="checkbox" id="f_pinned" style="width:16px;height:16px;cursor:pointer">
+              Épingler en tête de liste
+            </label>
           </div>
 
           <div class="field-block field-full">
@@ -446,26 +429,50 @@
             <textarea id="f_description" placeholder="2–3 lignes — résumé visible en grille/feed."></textarea>
           </div>
 
-          <div class="field-block field-full">
-            <label>Description longue (page détail / SEO)</label>
-            <textarea id="f_description_long" placeholder="Contexte, matériel posé, durée, garantie… (optionnel)" style="min-height:120px"></textarea>
-          </div>
-
-          <div class="field-block">
-            <label>Statut</label>
-            <select id="f_status">
-              <option value="brouillon">Brouillon</option>
-              <option value="validation">À valider</option>
-              <option value="publie">Publié</option>
-            </select>
-          </div>
-          <div class="field-block">
-            <label style="display:flex;align-items:center;gap:8px;font-weight:700">
-              <input type="checkbox" id="f_pinned" style="width:16px;height:16px;cursor:pointer">
-              Épingler en tête de liste
-            </label>
-            <span class="hint">Affiché en priorité sur le site et les feeds.</span>
-          </div>
+          <!-- ─── OPTIONS AVANCÉES (repliées par défaut) ─── -->
+          <details class="field-block field-full" style="grid-column:1/-1;background:#F7FBFD;border:1px solid #E5EDF3;border-radius:10px;padding:10px 14px;margin-top:4px">
+            <summary style="cursor:pointer;font-weight:700;color:#0DA0CF;padding:6px 0;list-style:none;display:flex;align-items:center;gap:8px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s ease"><polyline points="6 9 12 15 18 9"/></svg>
+              Options avancées (Agence, technicien, SEO, statut)
+              <span style="margin-left:auto;font-size:.78rem;font-weight:500;color:#94a3b8">facultatif</span>
+            </summary>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px">
+              <div class="field-block">
+                <label>Agence</label>
+                <select id="f_agence">
+                  <option value="">— Auto-déduite de la ville —</option>
+                  <option value="depan-audo">Dépan'Audo (Saint-Omer)</option>
+                  <option value="depan-dk">Dépan'DK (Dunkerque)</option>
+                </select>
+              </div>
+              <div class="field-block">
+                <label>Type d'intervention</label>
+                <select id="f_type">
+                  <option value="">— Optionnel —</option>
+                  <option value="depannage">Dépannage urgent</option>
+                  <option value="renovation">Rénovation programmée</option>
+                  <option value="installation">Installation neuve</option>
+                  <option value="entretien">Entretien / maintenance</option>
+                </select>
+              </div>
+              <div class="field-block">
+                <label>Technicien</label>
+                <input type="text" id="f_technicien" placeholder="ex : Damien, Yacine…">
+              </div>
+              <div class="field-block">
+                <label>Statut</label>
+                <select id="f_status">
+                  <option value="brouillon">Brouillon</option>
+                  <option value="validation">À valider</option>
+                  <option value="publie">Publié</option>
+                </select>
+              </div>
+              <div class="field-block field-full" style="grid-column:1/-1">
+                <label>Description longue (page détail / SEO)</label>
+                <textarea id="f_description_long" placeholder="Contexte, matériel posé, durée, garantie… (optionnel pour SEO)" style="min-height:100px"></textarea>
+              </div>
+            </div>
+          </details>
 
           <div class="field-block field-full">
             <label>Canaux de publication</label>
