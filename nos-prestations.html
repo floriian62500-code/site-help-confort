@@ -1188,6 +1188,49 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
    }
  })();
 
+ // 4e passe DEDUP CHAUFFE-EAU (HC-FIX 2026-05-21)
+ // Groupe les variantes Éco vs Stéatite par (volume + format mural/sol)
+ // Garde uniquement la variante Éco (la plus accessible en prix), mentionne Stéatite dispo
+ (function dedupChauffeEau() {
+   const groups = new Map();
+   services.forEach((s, idx) => {
+     const n = (s.name || '').toLowerCase();
+     const slug = (s.slug || '').toLowerCase();
+     // Pattern : "Chauffe-eau XXX L mural/au sol — Gamme Éco/Stéatite"
+     const volMatch = n.match(/(\d+)\s*l/i) || slug.match(/(\d+)l/);
+     const isChauffeEau = /chauffe.?eau|cumulus/.test(n);
+     if (!isChauffeEau || !volMatch) return;
+     const volume = volMatch[1];
+     const format = /au sol|sol\b/.test(n + ' ' + slug) ? 'sol' : 'mural';
+     const key = `chauffe-eau-${volume}-${format}`;
+     if (!groups.has(key)) groups.set(key, []);
+     groups.get(key).push({ s, idx });
+   });
+   const toRemove2 = new Set();
+   groups.forEach(arr => {
+     if (arr.length <= 1) return;
+     // Priorité : variante Éco (moins chère, plus accessible) > Stéatite
+     arr.sort((a, b) => {
+       const aEco = /éco|eco|blindée/i.test(a.s.name || '');
+       const bEco = /éco|eco|blindée/i.test(b.s.name || '');
+       if (aEco && !bEco) return -1;
+       if (!aEco && bEco) return 1;
+       return 0;
+     });
+     // Marque la carte gardée avec mention "+ variante Stéatite (anti-calcaire) disponible"
+     const kept = arr[0].s;
+     const hasStéatite = arr.some(x => /stéatite|steatite|anti.calcaire/i.test(x.s.name || ''));
+     if (hasStéatite && kept.short_desc) {
+       kept.short_desc += ' Variante Stéatite (anti-calcaire) disponible sur demande.';
+     }
+     arr.slice(1).forEach(x => toRemove2.add(x.idx));
+   });
+   if (toRemove2.size > 0) {
+     console.log('[catalog] dedup chauffe-eau : ' + toRemove2.size + ' variantes Stéatite groupées');
+     services = services.filter((_, idx) => !toRemove2.has(idx));
+   }
+ })();
+
  if (services.length === 0) {
  root.innerHTML = `<div class="nv-empty"><h3>Catalogue indisponible</h3><p>Un problème de connexion empêche l'affichage des prestations. Appelez-nous au <a href="tel:+33366100134" style="color:#0DA0CF;font-weight:700">03 66 10 01 34</a>.</p></div>`;
  return;
