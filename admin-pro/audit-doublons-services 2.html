@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Audit doublons services · HC</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+  body { font-family: Inter, -apple-system, sans-serif; background: #FAFCFD; margin: 0; padding: 24px; color: #0A1428; }
+  .wrap { max-width: 1200px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 6px; display: flex; align-items: center; gap: 10px; }
+  .sub { color: #64748b; margin-bottom: 20px; font-size: 0.94rem; }
+  a.back { color: #0DA0CF; text-decoration: none; font-size: 0.84rem; font-weight: 600; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 24px; }
+  .stat { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; text-align: center; }
+  .stat .num { font-size: 1.8rem; font-weight: 800; color: #0DA0CF; }
+  .stat.warn .num { color: #f59e0b; }
+  .stat.err .num { color: #dc2626; }
+  .stat.ok .num { color: #16a34a; }
+  .stat .lib { font-size: 0.74rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 4px; }
+  .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 2px rgba(11,18,32,.04); }
+  h2 { font-size: 1.1rem; margin: 24px 0 12px; }
+  .cta { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; color: #fff; border: none; border-radius: 10px; font: inherit; font-weight: 700; font-size: 0.92rem; cursor: pointer; background: linear-gradient(135deg, #0DA0CF, #0884AE); text-decoration: none; }
+  .cta:hover { transform: translateY(-1px); }
+  .cta:disabled { opacity: 0.55; cursor: not-allowed; }
+  .group { background: linear-gradient(135deg,#FFFBEB,#FFFFFF); border: 1px solid #FBD38D; border-radius: 12px; padding: 16px; margin-bottom: 14px; }
+  .group-title { font-weight: 800; color: #92400E; margin: 0 0 12px; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+  .group-title .badge { background: #F59E0B; color: white; padding: 3px 10px; border-radius: 999px; font-size: 0.72rem; }
+  .service { display: grid; grid-template-columns: 1fr auto; gap: 14px; padding: 12px 14px; background: white; border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 8px; }
+  .service .meta { font-size: 0.78rem; color: #64748b; margin-top: 4px; }
+  .service .pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600; background: #dbeafe; color: #1e40af; margin-right: 4px; }
+  .service .actions { display: flex; gap: 6px; align-items: center; }
+  .service .btn-edit { padding: 5px 10px; background: #fff; border: 1px solid #0DA0CF; color: #0DA0CF; border-radius: 6px; font-size: 0.78rem; font-weight: 600; cursor: pointer; text-decoration: none; }
+  .service .btn-edit:hover { background: #0DA0CF; color: white; }
+  .service .btn-del { padding: 5px 10px; background: #fee2e2; border: 1px solid #dc2626; color: #dc2626; border-radius: 6px; font-size: 0.78rem; font-weight: 600; cursor: pointer; }
+  .service .btn-del:hover { background: #dc2626; color: white; }
+  .service.recommend-keep { border-color: #16a34a; background: linear-gradient(135deg, #f0fdf4, #fff); }
+  .service.recommend-keep::before { content: "✓ Garder"; display: inline-block; padding: 2px 8px; background: #16a34a; color: white; border-radius: 6px; font-size: 0.7rem; font-weight: 700; margin-right: 8px; }
+  .empty { text-align: center; padding: 30px 20px; color: #64748b; }
+  .log { background: #0A1428; color: #A7F3D0; padding: 16px 20px; border-radius: 10px; font-family: Menlo, monospace; font-size: 0.82rem; max-height: 300px; overflow: auto; white-space: pre-wrap; line-height: 1.55; margin-top: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Dashboard</a>
+  <h1>🔍 Audit doublons services</h1>
+  <p class="sub">Détecte automatiquement les services en doublon dans le catalogue (titre/marque/type similaires). Tu valides manuellement la suppression depuis la page <a href="services.html">Services</a>.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="num" id="stat-total">—</div><div class="lib">Services totaux</div></div>
+    <div class="stat warn"><div class="num" id="stat-groups">—</div><div class="lib">Groupes de doublons</div></div>
+    <div class="stat err"><div class="num" id="stat-duplicates">—</div><div class="lib">Doublons potentiels</div></div>
+    <div class="stat ok"><div class="num" id="stat-unique">—</div><div class="lib">Services uniques</div></div>
+  </div>
+
+  <div class="card" style="text-align: center;">
+    <button class="cta" id="btnRefresh">🔄 Lancer l'audit</button>
+    <p class="sub" style="margin: 12px 0 0; font-size: 0.82rem;">L'audit ne modifie rien — il liste juste les doublons potentiels.</p>
+  </div>
+
+  <h2>🚨 Groupes de doublons détectés</h2>
+  <div id="groupsList">
+    <div class="empty">Clique sur "Lancer l'audit" pour scanner la table services.</div>
+  </div>
+
+  <h2>📋 Log d'exécution</h2>
+  <div class="log" id="log">En attente.</div>
+</div>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/admin.js"></script>
+<script>
+(async function() {
+  const sb = await HCSupabase.init();
+  const session = await HCAdmin.requireAuth();
+  if (!session) return;
+
+  const logEl = document.getElementById('log');
+  function log(msg, cls = '') {
+    logEl.textContent += msg + '\n';
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  document.getElementById('btnRefresh').addEventListener('click', launchAudit);
+
+  // ═══════════════════════════════════════════════════════════
+  // Détection doublons par similarité titre + brand + serviceType
+  // ═══════════════════════════════════════════════════════════
+  function normalize(s) {
+    return (s || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')  // accents
+      .replace(/[^a-z0-9]+/g, ' ')                        // ponctuation
+      .replace(/\b(de|du|d|la|le|les|l|et|pour|avec|sur|au|aux|standard)\b/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function similarity(a, b) {
+    // Jaccard similarity sur les mots
+    const sa = new Set(normalize(a).split(' ').filter(Boolean));
+    const sb = new Set(normalize(b).split(' ').filter(Boolean));
+    if (sa.size === 0 && sb.size === 0) return 1;
+    if (sa.size === 0 || sb.size === 0) return 0;
+    const inter = new Set([...sa].filter(x => sb.has(x)));
+    const union = new Set([...sa, ...sb]);
+    return inter.size / union.size;
+  }
+
+  function detectDuplicates(services) {
+    const groups = [];
+    const visited = new Set();
+
+    for (let i = 0; i < services.length; i++) {
+      if (visited.has(services[i].id)) continue;
+      const group = [services[i]];
+      visited.add(services[i].id);
+
+      for (let j = i + 1; j < services.length; j++) {
+        if (visited.has(services[j].id)) continue;
+        const s1 = services[i], s2 = services[j];
+
+        // Critère 1 : nom très similaire (>= 0.65)
+        const nameSim = similarity(s1.name || s1.label || '', s2.name || s2.label || '');
+
+        // Critère 2 : même brand (insensible)
+        const sameBrand = (s1.brand || '').toLowerCase().trim() === (s2.brand || '').toLowerCase().trim();
+
+        // Critère 3 : même category/serviceType
+        const sameCategory = (s1.category_slug || s1.category || '') === (s2.category_slug || s2.category || '');
+
+        // Match si nom très similaire ET (même brand OU même catégorie)
+        if (nameSim >= 0.65 && (sameBrand || sameCategory)) {
+          group.push(s2);
+          visited.add(s2.id);
+        }
+      }
+
+      if (group.length > 1) groups.push(group);
+    }
+    return groups;
+  }
+
+  async function launchAudit() {
+    const btn = document.getElementById('btnRefresh');
+    btn.disabled = true;
+    btn.textContent = '⏳ Audit en cours…';
+    logEl.textContent = '';
+    log('🔍 Démarrage de l\'audit…');
+
+    try {
+      // Détecter le bon nom de table : services OU prestations
+      log('→ Recherche de la table catalogue…');
+      let services = [];
+      let tableName = '';
+
+      for (const tbl of ['services', 'prestations', 'catalogue']) {
+        const { data, error } = await sb.from(tbl).select('*').limit(1000);
+        if (!error && data && data.length > 0) {
+          services = data;
+          tableName = tbl;
+          break;
+        }
+      }
+
+      if (services.length === 0) {
+        log('⚠️ Aucune table de catalogue trouvée (services / prestations / catalogue)');
+        document.getElementById('groupsList').innerHTML = '<div class="empty">Pas de catalogue détecté.</div>';
+        btn.disabled = false;
+        btn.textContent = '🔄 Relancer l\'audit';
+        return;
+      }
+
+      log(`✅ Table trouvée : ${tableName} — ${services.length} services chargés`);
+
+      // Mise à jour stats
+      document.getElementById('stat-total').textContent = services.length;
+
+      // Détection doublons
+      log('→ Détection des doublons (similarité nom + marque + catégorie)…');
+      const groups = detectDuplicates(services);
+      log(`✅ ${groups.length} groupe(s) de doublons potentiels détecté(s)`);
+
+      const totalDups = groups.reduce((s, g) => s + g.length, 0);
+      const unique = services.length - totalDups + groups.length;
+      document.getElementById('stat-groups').textContent = groups.length;
+      document.getElementById('stat-duplicates').textContent = totalDups - groups.length;
+      document.getElementById('stat-unique').textContent = unique;
+
+      // Rendu groupes
+      renderGroups(groups, tableName);
+
+      btn.disabled = false;
+      btn.textContent = '🔄 Relancer l\'audit';
+    } catch (e) {
+      log('❌ Erreur : ' + e.message);
+      btn.disabled = false;
+      btn.textContent = '🔄 Relancer l\'audit';
+    }
+  }
+
+  function renderGroups(groups, tableName) {
+    const list = document.getElementById('groupsList');
+    if (groups.length === 0) {
+      list.innerHTML = '<div class="empty">✅ Aucun doublon détecté. Catalogue propre !</div>';
+      return;
+    }
+
+    list.innerHTML = groups.map((group, idx) => {
+      // Suggère de garder le service le plus "complet" (le plus de champs remplis)
+      const scored = group.map(s => {
+        let score = 0;
+        if (s.name || s.label) score += 1;
+        if (s.short_desc || s.description) score += 1;
+        if (s.price_ttc) score += 1;
+        if (s.duration_min) score += 1;
+        if (s.brand) score += 1;
+        if (s.warranty) score += 1;
+        if (s.includes && s.includes.length) score += s.includes.length;
+        return { service: s, score };
+      });
+      scored.sort((a, b) => b.score - a.score);
+      const recommendKeep = scored[0].service.id;
+
+      return `
+        <div class="group">
+          <div class="group-title">
+            Groupe ${idx + 1} <span class="badge">${group.length} doublons</span> · ${group[0].name || group[0].label || '(sans nom)'}
+          </div>
+          ${scored.map(({ service: s, score }) => `
+            <div class="service ${s.id === recommendKeep ? 'recommend-keep' : ''}">
+              <div>
+                <strong>${escape(s.name || s.label || '(sans nom)')}</strong>
+                ${s.brand ? `<span class="pill">${escape(s.brand)}</span>` : ''}
+                ${s.category_slug || s.category ? `<span class="pill">${escape(s.category_slug || s.category)}</span>` : ''}
+                ${s.price_ttc ? `<span class="pill">${s.price_ttc}€</span>` : ''}
+                <div class="meta">
+                  ID: <code>${s.id}</code>
+                  · Score complétude: ${score}
+                  ${s.short_desc ? `<br>${escape(s.short_desc.substring(0, 120))}${s.short_desc.length > 120 ? '…' : ''}` : ''}
+                </div>
+              </div>
+              <div class="actions">
+                <a class="btn-edit" href="services.html#${s.id}" target="_blank">✏️ Éditer</a>
+                ${s.id !== recommendKeep ? `<button class="btn-del" data-id="${s.id}" data-table="${tableName}">🗑️ Supprimer</button>` : ''}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }).join('');
+
+    // Attach delete handlers
+    document.querySelectorAll('.btn-del').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.id;
+        const table = btn.dataset.table;
+        if (!confirm(`Supprimer ce service ?\nID: ${id}\nCette action est IRRÉVERSIBLE.`)) return;
+        try {
+          const { error } = await sb.from(table).delete().eq('id', id);
+          if (error) throw error;
+          log(`🗑️ Service supprimé : ${id}`);
+          btn.closest('.service').style.opacity = '0.4';
+          btn.disabled = true;
+          btn.textContent = '✅ Supprimé';
+        } catch (e) {
+          alert('Erreur suppression : ' + e.message);
+          log(`❌ Échec suppression ${id} : ${e.message}`);
+        }
+      });
+    });
+  }
+
+  function escape(s) {
+    return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  // Lance auto au chargement
+  launchAudit();
+})();
+</script>
+</body>
+</html>
