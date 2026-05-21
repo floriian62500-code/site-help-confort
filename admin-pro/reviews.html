@@ -95,11 +95,12 @@
       <div class="rv-stats" id="rvStats"></div>
 
       <div class="rv-toolbar">
+        <!-- HC-FIX 2026-05-21 : par défaut = à répondre (les avis répondus sont archivés et masqués) -->
         <select id="filterStatus">
+          <option value="new" selected>📬 À répondre (par défaut)</option>
+          <option value="replied">✅ Répondu (archivé)</option>
+          <option value="flagged">⚠️ À surveiller</option>
           <option value="">Tous statuts</option>
-          <option value="new">Nouveau (non répondu)</option>
-          <option value="replied">Répondu</option>
-          <option value="flagged">À surveiller</option>
         </select>
         <select id="filterRating">
           <option value="">Toutes notes</option>
