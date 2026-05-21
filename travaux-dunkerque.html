@@ -1128,17 +1128,15 @@ if (document.fonts && document.fonts.ready) {
  var track = document.getElementById('m-real-travaux');
  if(!track) return;
  fetch('content/realisations/index.json?t=' + Date.now()).then(function(r){return r.ok?r.json():Promise.reject()}).then(function(list){
- // Travaux/rénovation strict : on veut les vrais chantiers rénovation (plafond, peinture, salle de bain, etc.)
+ // Travaux/rénovation STRICT : SEUL le tag metier compte (pas de fallback keyword → évite faux positifs vitrerie/plomberie)
  var TRAVAUX_METIERS = ['Travaux','Rénovation','Renovation'];
- var TRAVAUX_KEYWORDS = /plafond|peinture|placo|plâtre|platre|enduit|isolation|carrelage|fa[iï]ence|rénov|renov|salle de bain|cuisine compl|sinistre|d[ée]g[âa]t des eaux/i;
- // Exclure les vœux et messages non-chantiers
  var EXCLUDE_KEYWORDS = /v[oeœ]ux|meilleurs.*vux|belles f[êe]tes|fin d.ann[ée]e/i;
  var plomb = list.filter(function(r){
  if(r.published === false) return false;
+ if(TRAVAUX_METIERS.indexOf(r.metier) === -1) return false;
  var txt = (r.title||'') + ' ' + (r.description||'');
  if(EXCLUDE_KEYWORDS.test(txt)) return false;
- if(TRAVAUX_METIERS.indexOf(r.metier) !== -1) return true;
- return TRAVAUX_KEYWORDS.test(txt);
+ return true;
  }).slice(0, 2);
  if(!plomb.length) return; // pas de chantiers — empty state HTML reste affiché
  track.innerHTML = plomb.map(function(r){
