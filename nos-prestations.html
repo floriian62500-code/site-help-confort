@@ -975,24 +975,32 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  short_desc:"Sécurisation après bris de vitre (prix au m² — panneau provisoire).", price_ttc:120, deposit_pct:40, deposit_ttc:48,
  duration_min:60, warranty:"Sécurisation immédiate",
  includes:["Panneau OSB ou contreplaqué","Fixation propre","120 €/m² TTC","Rapport assurance"] },
- { id:'loc-vi-2', slug:'gabarit-vitrerie', name:"Réalisation gabarit (vitrage sur mesure)", category_slug:'vitrerie', category_name:'Vitrerie', category_icon:'vitrerie', icon_emoji:'📏', subcategory_slug:'securisation', subcategory_name:"🪟 Sécurisation & vitrage",
- short_desc:"Prise de mesures précises + gabarit pour vitrage sur mesure.", price_ttc:184, deposit_pct:40, deposit_ttc:73.60,
- duration_min:60, warranty:"Gabarit conforme",
- includes:["Mesures précises sur place","Gabarit transmis au vitrier","Validation client","Déplacement inclus"] },
+ // HC-FIX 2026-05-21 : suppression loc-vi-2 (gabarit) + ajout 2 cartes vitrerie sur mesure
+ { id:'loc-vi-devis-vitrage', slug:'devis-remplacement-vitrage', name:"Devis remplacement vitrage", requires_quote:true,
+ category_slug:'vitrerie', category_name:'Vitrerie', category_icon:'vitrerie', icon_emoji:'🪟', subcategory_slug:'securisation', subcategory_name:"🪟 Sécurisation & vitrage",
+ short_desc:"Remplacement vitrage simple, double ou triple — fenêtre, baie, porte vitrée. Devis gratuit après prise de mesures sur place." },
+ { id:'loc-vi-devis-insert', slug:'devis-vitre-insert-poele', name:"Devis vitre insert / poêle", requires_quote:true,
+ category_slug:'vitrerie', category_name:'Vitrerie', category_icon:'vitrerie', icon_emoji:'🔥', subcategory_slug:'securisation', subcategory_name:"🪟 Sécurisation & vitrage",
+ short_desc:"Remplacement vitre céramique d'insert ou poêle à bois/granulés. Devis sur référence appareil + dimensions." },
 
- // ─── DEVIS SUR MESURE ────────────────────────────────────────
- { id:'loc-dev-renov', slug:'renovation-salle-de-bain', name:"Rénovation salle de bain complète", requires_quote:true,
- category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure', icon_emoji:'🛁',
- short_desc:"De la dépose à la remise en service — tous corps d'état. Devis détaillé après visite." },
- { id:'loc-dev-pmr', slug:'adaptation-pmr', name:"Adaptation logement PMR / senior", requires_quote:true,
- category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure', icon_emoji:'♿',
- short_desc:"Douche italienne, monte-escalier, barres d'appui, WC surélevés. Devis label Handibat/Silverbat." },
- { id:'loc-dev-tableau', slug:'tableau-electrique', name:"Tableau électrique complet", requires_quote:true,
- category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure', icon_emoji:'🔲',
- short_desc:"Remise aux normes NF C 15-100. Devis après visite avec attestation Consuel." },
- { id:'loc-dev-blindage', slug:'blindage-porte', name:"Blindage de porte", requires_quote:true,
- category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure', icon_emoji:'🚪',
- short_desc:"Renforcement complet : plaque acier + serrure A2P + cornière. Devis après visite." }
+ // ─── DEVIS SUR MESURE (rénovation finition intérieure) ───────
+ // HC-FIX 2026-05-21 : refonte module — isolation, enduit, peinture, revêtements, plafond
+ // (les anciens devis SDB/PMR/tableau/blindage retirés à la demande de Florian)
+ { id:'loc-dev-isolation', slug:'devis-isolation', name:"Isolation thermique / phonique", requires_quote:true,
+ category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure', icon_emoji:'🧱',
+ short_desc:"Isolation murs, combles, plafond — laine de verre, ouate de cellulose, polystyrène. Devis après diagnostic thermique." },
+ { id:'loc-dev-enduit', slug:'devis-enduit', name:"Enduit intérieur / extérieur", requires_quote:true,
+ category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure', icon_emoji:'🪣',
+ short_desc:"Enduit de lissage, ratissage, enduit décoratif ou extérieur (façade). Devis après visite et état des supports." },
+ { id:'loc-dev-peinture', slug:'devis-peinture', name:"Peinture intérieure", requires_quote:true,
+ category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure', icon_emoji:'🎨',
+ short_desc:"Peinture murs, plafonds, boiseries — préparation des supports incluse. Devis selon surface et finition souhaitée." },
+ { id:'loc-dev-revetements', slug:'devis-revetements-muraux', name:"Revêtements muraux", requires_quote:true,
+ category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure', icon_emoji:'🖼️',
+ short_desc:"Pose papier peint, toile de verre, lambris, parement bois ou pierre. Devis selon nature du revêtement et m²." },
+ { id:'loc-dev-plafond', slug:'devis-plafond', name:"Plafond (rénovation, pose)", requires_quote:true,
+ category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure', icon_emoji:'🏠',
+ short_desc:"Réfection plafond fissuré, pose placo, faux-plafond ou dalles décoratives. Devis après visite technique." }
  ];
 
  // Charger services + catégories (Supabase) + fusion avec catalogue local
