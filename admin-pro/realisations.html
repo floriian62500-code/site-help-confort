@@ -557,7 +557,8 @@ let _selectedIds = new Set();  // bulk actions
 let _ga4Views = {};      // map { slug → { views, users } } pour les chantiers/actus
 let _ga4Loading = false; // état du chargement GA4
 
-const BUCKET = 'réalisations';
+// HC-FIX 2026-05-21 : bucket Supabase = 'realisations' (sans accent). Florian voyait "Bucket name invalid".
+const BUCKET = 'realisations';
 
 // ─── GA4 : récupère les vues par page (chantier / actu) ──────
 async function loadGA4Views() {

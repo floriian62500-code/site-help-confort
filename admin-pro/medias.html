@@ -89,7 +89,7 @@
   await HCLayout.mount('medias', 'Médiathèque');
 
   const c = await HCSupabase.init();
-  const BUCKET = 'réalisations';
+  const BUCKET = 'realisations'; // HC-FIX 2026-05-21 : bucket Supabase sans accent
   let allFiles = [];
 
   async function loadFiles() {
