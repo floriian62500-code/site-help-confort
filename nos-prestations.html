@@ -872,10 +872,26 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  includes:["Produit détartrant pro","Rinçage installation","Vérification étanchéité","Déplacement + déchets"] },
 
  // ─── CHAUFFE-EAU ATLANTIC ────────────────────────────────────
- // HC-CLEANUP 2026-05-20 : loc-ce-100eco/100st/150eco/150st/200eco supprimés
- // → DOUBLONS de la BDD (chauffe-eau-100l-eco/steatite, 150l-eco/steatite, 200l-sol-eco)
- // La source de vérité = table services Supabase (10 chauffe-eau dispos).
- // On garde uniquement loc-ce-contrat qui n'est pas en BDD (contrat entretien annuel).
+ { id:'loc-ce-100eco', slug:'chauffe-eau-100-eco', name:"Chauffe-eau 100 L Éco (mural)", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie', icon_emoji:'♨️', subcategory_slug:'chauffe-eau', subcategory_name:"♨️ Chauffe-eau & ECS",
+ short_desc:"Cumulus Atlantic 100 L blindé, pose murale tout compris.", price_ttc:817, deposit_pct:40, deposit_ttc:326.80, brand:"Atlantic",
+ duration_min:180, warranty:"Cuve 5 ans · Pièces 2 ans",
+ includes:["Cumulus Atlantic 100 L","Pose 2 techniciens","Trépied + groupe sécurité","Siphon + petite fourniture"] },
+ { id:'loc-ce-100st', slug:'chauffe-eau-100-st', name:"Chauffe-eau 100 L Stéatite (mural)", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie', icon_emoji:'♨️', subcategory_slug:'chauffe-eau', subcategory_name:"♨️ Chauffe-eau & ECS",
+ short_desc:"Cumulus Atlantic 100 L stéatite, résistance protégée du calcaire.", price_ttc:887, deposit_pct:40, deposit_ttc:354.80, brand:"Atlantic",
+ duration_min:180, warranty:"Cuve 5 ans · Pièces 2 ans",
+ includes:["Cumulus Stéatite 100 L","Pose 2 techniciens","Trépied + groupe sécurité","Idéal eaux calcaires"] },
+ { id:'loc-ce-150eco', slug:'chauffe-eau-150-eco', name:"Chauffe-eau 150 L Éco (mural)", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie', icon_emoji:'♨️', subcategory_slug:'chauffe-eau', subcategory_name:"♨️ Chauffe-eau & ECS",
+ short_desc:"Cumulus Atlantic 150 L blindé, pose murale tout compris.", price_ttc:884, deposit_pct:40, deposit_ttc:353.60, brand:"Atlantic",
+ duration_min:180, warranty:"Cuve 5 ans · Pièces 2 ans",
+ includes:["Cumulus Atlantic 150 L","Pose 2 techniciens","Trépied + groupe sécurité","Adapté 2 à 3 personnes"] },
+ { id:'loc-ce-150st', slug:'chauffe-eau-150-st', name:"Chauffe-eau 150 L Stéatite (mural)", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie', icon_emoji:'♨️', subcategory_slug:'chauffe-eau', subcategory_name:"♨️ Chauffe-eau & ECS",
+ short_desc:"Cumulus Atlantic 150 L stéatite — eau chaude longue durée.", price_ttc:961, deposit_pct:40, deposit_ttc:384.40, brand:"Atlantic",
+ duration_min:180, warranty:"Cuve 5 ans · Pièces 2 ans",
+ includes:["Cumulus Stéatite 150 L","Pose 2 techniciens","Trépied + groupe sécurité","Idéal eaux dures"] },
+ { id:'loc-ce-200eco', slug:'chauffe-eau-200-eco', name:"Chauffe-eau 200 L Éco (au sol)", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie', icon_emoji:'♨️', subcategory_slug:'chauffe-eau', subcategory_name:"♨️ Chauffe-eau & ECS",
+ short_desc:"Cumulus Atlantic 200 L au sol — famille de 4 personnes et +.", price_ttc:1332, deposit_pct:40, deposit_ttc:532.80, brand:"Atlantic",
+ duration_min:240, warranty:"Cuve 5 ans · Pièces 2 ans",
+ includes:["Cumulus Atlantic 200 L","Pose 2 techniciens","Groupe sécurité + siphon","Évacuation ancien matériel"] },
  { id:'loc-ce-contrat', slug:'contrat-entretien-chauffe-eau', name:"Contrat entretien chauffe-eau annuel", category_slug:'plomberie', category_name:'Plomberie & Sanitaires', category_icon:'plomberie', is_contrat:true, icon_emoji:'🛡️', subcategory_slug:'chauffe-eau', subcategory_name:"♨️ Chauffe-eau & ECS",
  short_desc:"Visite annuelle pour prolonger la durée de vie de votre cumulus.", price_ttc:220, deposit_pct:40, deposit_ttc:88,
  duration_min:90, warranty:"Engagement annuel",
