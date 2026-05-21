@@ -329,7 +329,8 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  .npce-card.is-featured .npce-cta:hover{box-shadow:0 14px 28px rgba(255,107,26,.4)}
  .npce-note{font-size:.78rem;color:#94a3b8;margin-top:12px;line-height:1.4;display:block}
  </style>
- <section class="nv-contrats-section" aria-label="Contrats d'entretien chauffage" style="margin-top:64px;padding:48px 28px;background:linear-gradient(180deg,#FFF9F0 0%,#FFF3E0 100%);border-radius:24px;border:1px solid rgba(255,107,26,.18)">
+ <!-- HC-FIX 2026-05-21 : section contrats chaudière visible UNIQUEMENT quand filtre Chauffage actif (sinon doublon Plomberie) -->
+ <section class="nv-contrats-section" id="nv-contrats-chauffage" data-show-when="chauffage" aria-label="Contrats d'entretien chauffage" style="margin-top:64px;padding:48px 28px;background:linear-gradient(180deg,#FFF9F0 0%,#FFF3E0 100%);border-radius:24px;border:1px solid rgba(255,107,26,.18);display:none">
  <div style="text-align:center;max-width:720px;margin:0 auto 12px">
  <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:#fff;color:#FF6B1A;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:14px;border:1px solid rgba(255,107,26,.25)">📋 Contrats d'entretien</span>
  <h2 style="font-size:clamp(1.5rem,2.6vw,2rem);font-weight:800;color:#0A1428;margin:0 0 10px;letter-spacing:-.02em">Vos contrats d'entretien <em style="font-family:'Playfair Display',Georgia,serif;font-style:italic;color:#FF6B1A;font-weight:500">en toute sérénité</em></h2>
