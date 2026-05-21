@@ -356,17 +356,14 @@ if (document.fonts && document.fonts.ready) {
  </div>
  </div>
  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px">
- <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:#fff;border:1px solid #E5EDF3;border-radius:999px;font-size:.86rem;font-weight:600;color:#0A1428">
- <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22A06B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
- Membres du réseau HELP Confort
- </span>
+ <!-- HC-CLEANUP 2026-05-21 : fusion 'Membres du réseau' + 'Réseau national' (doublon) → 1 seule pill -->
  <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:#fff;border:1px solid #E5EDF3;border-radius:999px;font-size:.86rem;font-weight:600;color:#0A1428">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22A06B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
  Réseau national HELP Confort
  </span>
  <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:#fff;border:1px solid #E5EDF3;border-radius:999px;font-size:.86rem;font-weight:600;color:#0A1428">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22A06B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
- Techniciens internes HELP Confort
+ Techniciens salariés internes
  </span>
  <span style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:#fff;border:1px solid #E5EDF3;border-radius:999px;font-size:.86rem;font-weight:600;color:#0A1428">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22A06B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -398,15 +395,48 @@ if (document.fonts && document.fonts.ready) {
   </div>
 
   <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px 12px;max-width:980px;margin:0 auto">
-   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:12px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04)">HomeServe <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Urgentiste · National</span></div>
-   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:12px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04)">Dynaren <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Réineur · National</span></div>
-   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:12px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04)">ViaREN <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Réseau · National</span></div>
-   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:12px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04)">Groupe IMA <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Assurance · National</span></div>
-   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:12px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04)">Domus <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Assurance · National</span></div>
-   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:12px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04)">Guy Hoquet <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Agence · National</span></div>
-   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:12px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04)">Citya <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Agence · Local</span></div>
-   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:12px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04)">AG-Copro <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Syndic · Local</span></div>
-   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:12px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04)">FMB <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Partenaire · Local</span></div>
+   <!-- HC-CLEANUP 2026-05-21 : ajout La Poste + structure prête pour logos (fallback texte si img manquant) -->
+   <!-- Pour mettre les vrais logos : déposer un SVG/PNG dans images/partenaires/ avec le slug correspondant -->
+   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:10px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04);display:inline-flex;align-items:center;gap:10px;min-height:48px">
+     <img src="images/partenaires/homeserve.svg" alt="HomeServe" style="height:24px;width:auto;max-width:90px;object-fit:contain" onerror="this.style.display='none'">
+     <span>HomeServe <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Urgentiste · National</span></span>
+   </div>
+   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:10px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04);display:inline-flex;align-items:center;gap:10px;min-height:48px">
+     <img src="images/partenaires/la-poste.svg" alt="La Poste" style="height:24px;width:auto;max-width:90px;object-fit:contain" onerror="this.style.display='none'">
+     <span>La Poste <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Logistique · National</span></span>
+   </div>
+   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:10px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04);display:inline-flex;align-items:center;gap:10px;min-height:48px">
+     <img src="images/partenaires/dynaren.svg" alt="Dynaren" style="height:24px;width:auto;max-width:90px;object-fit:contain" onerror="this.style.display='none'">
+     <span>Dynaren <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Réineur · National</span></span>
+   </div>
+   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:10px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04);display:inline-flex;align-items:center;gap:10px;min-height:48px">
+     <img src="images/partenaires/viaren.svg" alt="ViaREN" style="height:24px;width:auto;max-width:90px;object-fit:contain" onerror="this.style.display='none'">
+     <span>ViaREN <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Réseau · National</span></span>
+   </div>
+   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:10px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04);display:inline-flex;align-items:center;gap:10px;min-height:48px">
+     <img src="images/partenaires/groupe-ima.svg" alt="Groupe IMA" style="height:24px;width:auto;max-width:90px;object-fit:contain" onerror="this.style.display='none'">
+     <span>Groupe IMA <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Assurance · National</span></span>
+   </div>
+   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:10px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04);display:inline-flex;align-items:center;gap:10px;min-height:48px">
+     <img src="images/partenaires/domus.svg" alt="Domus" style="height:24px;width:auto;max-width:90px;object-fit:contain" onerror="this.style.display='none'">
+     <span>Domus <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Assurance · National</span></span>
+   </div>
+   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:10px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04);display:inline-flex;align-items:center;gap:10px;min-height:48px">
+     <img src="images/partenaires/guy-hoquet.svg" alt="Guy Hoquet" style="height:24px;width:auto;max-width:90px;object-fit:contain" onerror="this.style.display='none'">
+     <span>Guy Hoquet <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Agence · National</span></span>
+   </div>
+   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:10px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04);display:inline-flex;align-items:center;gap:10px;min-height:48px">
+     <img src="images/partenaires/citya.svg" alt="Citya" style="height:24px;width:auto;max-width:90px;object-fit:contain" onerror="this.style.display='none'">
+     <span>Citya <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Agence · Local</span></span>
+   </div>
+   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:10px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04);display:inline-flex;align-items:center;gap:10px;min-height:48px">
+     <img src="images/partenaires/ag-copro.svg" alt="AG-Copro" style="height:24px;width:auto;max-width:90px;object-fit:contain" onerror="this.style.display='none'">
+     <span>AG-Copro <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Syndic · Local</span></span>
+   </div>
+   <div style="background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:10px 18px;font-weight:700;color:#0A1428;font-size:.92rem;box-shadow:0 2px 6px rgba(11,18,32,.04);display:inline-flex;align-items:center;gap:10px;min-height:48px">
+     <img src="images/partenaires/fmb.svg" alt="FMB" style="height:24px;width:auto;max-width:90px;object-fit:contain" onerror="this.style.display='none'">
+     <span>FMB <span style="color:#94a3b8;font-size:.74rem;font-weight:600;margin-left:6px">Partenaire · Local</span></span>
+   </div>
   </div>
 
   <p style="text-align:center;margin:24px auto 0;color:#94a3b8;font-size:.78rem;max-width:600px;font-style:italic">
