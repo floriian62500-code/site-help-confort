@@ -101,13 +101,16 @@ window.HCLayout = (function() {
         { id:'alerts', href:'alerts.html', label:'Alertes & Monitoring', icon:'<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/>' }
       ]
     },
+    // HC-CLEANUP 2026-05-20 : sidebar Outils simplifiée (17 → 8 items).
+    // Retirés : LinkedIn (B2C en pause), Diagnostic setup + Diag connexions (fusion → Santé & Maintenance),
+    // Sync FB / Renouveler token FB / Sync avis Google / Test GA4 / OAuth GA4 (accessibles depuis wizards).
+    // Pages restent accessibles via URL directe.
     { id:'connexions', label:'Connexions API', module:'outils',
       sectionIcon:'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
       links: [
         { id:'social', href:'social.html', label:'Vue d\'ensemble', icon:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>' },
         { id:'wizard-google', href:'wizard-google.html', label:'Google Business', icon:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>' },
         { id:'wizard-meta', href:'wizard-meta.html', label:'Facebook + Instagram', icon:'<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>' },
-        { id:'wizard-linkedin', href:'wizard-linkedin.html', label:'LinkedIn', icon:'<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>' },
         { id:'wizard-ga4', href:'wizard-ga4.html', label:'Google Analytics 4', icon:'<path d="M22 12c0 5.5-4.5 10-10 10S2 17.5 2 12 6.5 2 12 2"/><path d="M22 4 12 14.01l-3-3"/>' }
       ]
     },
@@ -115,20 +118,13 @@ window.HCLayout = (function() {
       sectionIcon:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
       links: [
         { id:'settings', href:'settings.html', label:'Paramètres', icon:'<circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 10v6m11-11h-6M7 12H1m17.36 6.36-4.24-4.24M9.88 9.88 5.64 5.64m12.72 0-4.24 4.24M9.88 14.12l-4.24 4.24"/>' },
-        { id:'maintenance', href:'maintenance.html', label:'Santé & Maintenance', icon:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>' },
-        { id:'setup', href:'setup.html', label:'Diagnostic setup', icon:'<polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>' },
-        { id:'diagnostic-connexions', href:'diagnostic-connexions.html', label:'Diagnostic connexions', icon:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>' }
+        { id:'maintenance', href:'maintenance.html', label:'Santé & Diagnostics', icon:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>' }
       ]
     },
     { id:'outils', label:'Outils maintenance', module:'outils',
       sectionIcon:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
       links: [
         { id:'finalize-config', href:'finalize-config.html', label:'⚡ Finaliser config', icon:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>' },
-        { id:'sync-fb', href:'sync-fb.html', label:'Sync Facebook', icon:'<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>' },
-        { id:'refresh-meta-token-client', href:'refresh-meta-token-client.html', label:'Renouveler token FB', icon:'<polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>' },
-        { id:'sync-google-reviews', href:'sync-google-reviews.html', label:'Sync avis Google', icon:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>' },
-        { id:'sync-ga4', href:'sync-ga4.html', label:'Test GA4', icon:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>' },
-        { id:'oauth-ga4', href:'oauth-ga4.html', label:'OAuth GA4 (plan B)', icon:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>' },
         { id:'seed-catalog', href:'seed-catalog.html', label:'Seed catalogue', icon:'<path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93 4.93 19.07"/>' },
         { id:'purge-tests', href:'purge-tests.html', label:'Purge tests', icon:'<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>' }
       ]
