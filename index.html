@@ -620,12 +620,14 @@ v.addEventListener('pause', function(){ play.style.opacity = 1; });
  </span>
 </a>
 <style>
- .hc-scroll-cue{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);display:inline-flex;flex-direction:column;align-items:center;gap:6px;padding:12px 20px;background:rgba(50,60,75,.92);border:2px solid rgba(255,255,255,.55);border-radius:999px;text-decoration:none;color:#fff;font-size:.78rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;box-shadow:0 12px 32px rgba(10,20,40,.40);z-index:90;transition:transform.25s ease,box-shadow.25s ease,opacity.4s ease,background.2s ease;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+ /* HC-FIX 2026-05-22 : passage en layout row (label gauche, arrow droite) — évite rendu pill cropé */
+ .hc-scroll-cue{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);display:inline-flex;flex-direction:row;align-items:center;justify-content:center;gap:10px;padding:10px 14px 10px 18px;width:auto;max-width:240px;background:rgba(50,60,75,.92);border:2px solid rgba(255,255,255,.55);border-radius:999px;text-decoration:none;color:#fff;font-size:.78rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;white-space:nowrap;box-shadow:0 12px 32px rgba(10,20,40,.40);z-index:90;transition:transform.25s ease,box-shadow.25s ease,opacity.4s ease,background.2s ease;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-sizing:border-box;overflow:visible}
  .hc-scroll-cue:hover{transform:translateX(-50%) translateY(-3px);box-shadow:0 16px 38px rgba(0,0,0,.35);background:rgba(30,40,55,.96);border-color:#1FC4F0}
- .hc-scroll-cue .hsc-arrow{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#1FC4F0,#0DA0CF);color:#fff;animation:hscBounce 1.8s ease-in-out infinite;box-shadow:0 4px 10px rgba(13,160,207,.30)}
- @keyframes hscBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+ .hc-scroll-cue .hsc-label{line-height:1;flex:0 0 auto}
+ .hc-scroll-cue .hsc-arrow{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#1FC4F0,#0DA0CF);color:#fff;animation:hscBounce 1.8s ease-in-out infinite;box-shadow:0 4px 10px rgba(13,160,207,.30);flex:0 0 26px}
+ @keyframes hscBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
  .hc-scroll-cue.is-hidden{opacity:0;pointer-events:none;transform:translateX(-50%) translateY(20px)}
- @media(max-width:640px){.hc-scroll-cue{bottom:14px;padding:8px 12px;font-size:.68rem}.hc-scroll-cue .hsc-label{display:none}}
+ @media(max-width:640px){.hc-scroll-cue{bottom:14px;padding:8px 10px 8px 14px;font-size:.7rem;gap:8px}.hc-scroll-cue .hsc-label{display:none}.hc-scroll-cue{padding:8px}}
 </style>
 <script>
  (function(){
