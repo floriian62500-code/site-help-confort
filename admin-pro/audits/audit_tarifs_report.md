@@ -1,8 +1,8 @@
 # Audit Tarifs — Sonde IA #28
 
-_Généré le 2026-05-21 06:55 — `admin-pro/audits/audit_tarifs.py`_
+_Généré le 2026-05-22 06:51 — `admin-pro/audits/audit_tarifs.py`_
 
-- Pages publiques scannées : **82**
+- Pages publiques scannées : **84**
 - Montants validés (TARIFS_REFERENCE.md) : **53**
 - Alertes : **99**
 - Erreurs lecture : **0**
@@ -18,30 +18,30 @@ Tout montant `\d+\s*€` visible doit :
 | Page | Ligne | Montant | Contexte |
 |------|------:|--------:|----------|
 | `aides.html` | 633 | **50000 €** | iv> ⏎  <h3>Éco-PTZ</h3> ⏎  </div> ⏎  <div class="body"> ⏎  <div class="montant">Jusqu'à 50 000 € (selon barème en vigueur)</div> ⏎  <p class |
-| `chauffagiste-boulogne-sur-mer.html` | 1300 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
-| `chauffagiste-boulogne-sur-mer.html` | 1318 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
-| `chauffagiste-boulogne-sur-mer.html` | 1335 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
+| `chauffagiste-boulogne-sur-mer.html` | 1282 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
+| `chauffagiste-boulogne-sur-mer.html` | 1300 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
+| `chauffagiste-boulogne-sur-mer.html` | 1317 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
 | `chauffagiste-calais.html` | 1109 | **800 €** | uit ou un changement de circulateur peut prolonger sa vie 3-5 ans pour moins de 800€.</p></div></div> ⏎  ⏎ <section class="m-pourquoi-top" s |
-| `chauffagiste-calais.html` | 1300 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
-| `chauffagiste-calais.html` | 1318 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
-| `chauffagiste-calais.html` | 1335 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
-| `chauffagiste-dunkerque.html` | 1300 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
-| `chauffagiste-dunkerque.html` | 1318 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
-| `chauffagiste-dunkerque.html` | 1335 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
-| `chauffagiste-saint-omer.html` | 1307 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
-| `chauffagiste-saint-omer.html` | 1325 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
-| `chauffagiste-saint-omer.html` | 1342 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
-| `debouchage-canalisation.html` | 279 | **180 €** | papier accumulé, cheveux). Intervention courte (30 min à 1h) — tarif moyen 90 à 180€ TTC sur Saint-Omer / Dunkerque.</p> ⏎  ⏎ <h3>2. Hydrocu |
-| `debouchage-canalisation.html` | 282 | **400 €** | utile aussi en préventif après plusieurs bouchons rapprochés. Tarif moyen 180 à 400€ TTC selon l'accessibilité.</p> ⏎  ⏎ <h3>3. Inspection c |
-| `debouchage-canalisation.html` | 293 | **180 €** | c55e"> ⏎     <h3 style="color:#22c55e">Débouchage simple</h3> ⏎     <p><strong>90 à 180€ TTC</strong><br>Furet WC, évier, lavabo. Interventi |
-| `debouchage-canalisation.html` | 297 | **400 €** | r:#FF6B1A"> ⏎     <h3 style="color:#FF6B1A">Hydrocurage</h3> ⏎     <p><strong>180 à 400€ TTC</strong><br>Canalisation principale, collecteur |
-| `debouchage-canalisation.html` | 311 | **180 €** | débouchage de canalisation ?</h3> ⏎   <p>Sur Saint-Omer / Dunkerque, comptez 90 à 180€ TTC pour un débouchage simple au furet (WC, évier), e |
-| `debouchage-canalisation.html` | 311 | **400 €** | comptez 90 à 180€ TTC pour un débouchage simple au furet (WC, évier), et 180 à 400€ TTC pour un hydrocurage. Tarif annoncé avant interventio |
-| `diagnostic-electrique.html` | 215 | **180 €** | :14px">T2 - T3</td><td style="padding:14px;font-weight:700;color:#5B21B6">120 - 180€</td><td style="padding:14px">1h - 1h15</td></tr> ⏎      |
-| `diagnostic-electrique.html` | 216 | **250 €** | 14px">T4 - T5+</td><td style="padding:14px;font-weight:700;color:#5B21B6">180 - 250€</td><td style="padding:14px">1h30</td></tr> ⏎     <tr>< |
-| `entretien-chaudiere.html` | 219 | **130 €** | annuel + attestation</td><td style="padding:14px;font-weight:700;color:#FF6B1A">130€</td></tr> ⏎     <tr style="background:#FAFCFD"><td styl |
-| `entretien-chaudiere.html` | 220 | **175 €** | dépannage gratuit/an</td><td style="padding:14px;font-weight:700;color:#FF6B1A">175€</td></tr> ⏎     <tr><td style="padding:14px;font-weight |
-| `entretien-chaudiere.html` | 221 | **210 €** | s + pièces (limites)</td><td style="padding:14px;font-weight:700;color:#FF6B1A">210€</td></tr> ⏎   </tbody> ⏎ </table> ⏎  ⏎ <p style="margin |
+| `chauffagiste-calais.html` | 1282 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
+| `chauffagiste-calais.html` | 1300 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
+| `chauffagiste-calais.html` | 1317 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
+| `chauffagiste-dunkerque.html` | 1282 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
+| `chauffagiste-dunkerque.html` | 1300 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
+| `chauffagiste-dunkerque.html` | 1317 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
+| `chauffagiste-saint-omer.html` | 1289 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
+| `chauffagiste-saint-omer.html` | 1307 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
+| `chauffagiste-saint-omer.html` | 1324 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
+| `debouchage-canalisation.html` | 282 | **180 €** | papier accumulé, cheveux). Intervention courte (30 min à 1h) — tarif moyen 90 à 180€ TTC sur Saint-Omer / Dunkerque.</p> ⏎  ⏎ <h3>2. Hydrocu |
+| `debouchage-canalisation.html` | 285 | **400 €** | utile aussi en préventif après plusieurs bouchons rapprochés. Tarif moyen 180 à 400€ TTC selon l'accessibilité.</p> ⏎  ⏎ <h3>3. Inspection c |
+| `debouchage-canalisation.html` | 296 | **180 €** | c55e"> ⏎     <h3 style="color:#22c55e">Débouchage simple</h3> ⏎     <p><strong>90 à 180€ TTC</strong><br>Furet WC, évier, lavabo. Interventi |
+| `debouchage-canalisation.html` | 300 | **400 €** | r:#FF6B1A"> ⏎     <h3 style="color:#FF6B1A">Hydrocurage</h3> ⏎     <p><strong>180 à 400€ TTC</strong><br>Canalisation principale, collecteur |
+| `debouchage-canalisation.html` | 314 | **180 €** | débouchage de canalisation ?</h3> ⏎   <p>Sur Saint-Omer / Dunkerque, comptez 90 à 180€ TTC pour un débouchage simple au furet (WC, évier), e |
+| `debouchage-canalisation.html` | 314 | **400 €** | comptez 90 à 180€ TTC pour un débouchage simple au furet (WC, évier), et 180 à 400€ TTC pour un hydrocurage. Tarif annoncé avant interventio |
+| `diagnostic-electrique.html` | 218 | **180 €** | :14px">T2 - T3</td><td style="padding:14px;font-weight:700;color:#5B21B6">120 - 180€</td><td style="padding:14px">1h - 1h15</td></tr> ⏎      |
+| `diagnostic-electrique.html` | 219 | **250 €** | 14px">T4 - T5+</td><td style="padding:14px;font-weight:700;color:#5B21B6">180 - 250€</td><td style="padding:14px">1h30</td></tr> ⏎     <tr>< |
+| `entretien-chaudiere.html` | 222 | **130 €** | annuel + attestation</td><td style="padding:14px;font-weight:700;color:#FF6B1A">130€</td></tr> ⏎     <tr style="background:#FAFCFD"><td styl |
+| `entretien-chaudiere.html` | 223 | **175 €** | dépannage gratuit/an</td><td style="padding:14px;font-weight:700;color:#FF6B1A">175€</td></tr> ⏎     <tr><td style="padding:14px;font-weight |
+| `entretien-chaudiere.html` | 224 | **210 €** | s + pièces (limites)</td><td style="padding:14px;font-weight:700;color:#FF6B1A">210€</td></tr> ⏎   </tbody> ⏎ </table> ⏎  ⏎ <p style="margin |
 | `guide-adaptation-pmr.html` | 449 | **22000 €** | rir jusqu'à <strong>50 % à 70 % du coût des travaux</strong>, dans la limite de 22 000 € HT. Le bénéficiaire doit être propriétaire occupant |
 | `guide-adaptation-pmr.html` | 462 | **5500 €** | lète adaptée</strong> (douche italienne + WC rehaussés + barres d'appui)&nbsp;: 5 500 € → reste à charge ~1 800 € après MaPrimeAdapt'</li> ⏎ |
 | `guide-adaptation-pmr.html` | 462 | **1800 €** | che italienne + WC rehaussés + barres d'appui)&nbsp;: 5 500 € → reste à charge ~1 800 € après MaPrimeAdapt'</li> ⏎  <li><strong>Monte-escali |
@@ -59,20 +59,20 @@ Tout montant `\d+\s*€` visible doit :
 | `guide-mise-aux-normes-electriques.html` | 444 | **15000 €** | ;: 4 000 à 9 000 €</li> ⏎  <li><strong>Maison entière (100 m²)</strong> : 8 000 à 15 000 €</li> ⏎ </ul> ⏎ <p>Les <strong>aides MaPrimeRénov' |
 | `guide-mise-aux-normes-electriques.html` | 471 | **1080 €** | -right:auto">Diagnostic gratuit · Tableau standard à <strong style="color:#fff">1 080 € TTC</strong> · Aides CEE & MaPrimeRénov' éligibles.  |
 | `menuisier-dunkerque.html` | 1079 | **100 €** | ement de fenêtres / portes d'entrée donne droit à des aides cumulables (jusqu'à 100€/m² selon revenus). Nous vous accompagnons sur le dossie |
-| `nos-prestations.html` | 410 | **144 €** | ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="npce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="npce-baseline">L' |
-| `nos-prestations.html` | 428 | **192 €** | ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="npce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="npce-baseline">L' |
-| `nos-prestations.html` | 445 | **324 €** | ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="npce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="npce-baseline">To |
-| `ouverture-porte-claquee.html` | 253 | **29 €** | gin:0">Sur Internet, beaucoup d'annonces affichent des tarifs d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention. Av |
-| `ouverture-porte-claquee.html` | 253 | **39 €** | ">Sur Internet, beaucoup d'annonces affichent des tarifs d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention. Avant d |
-| `ouverture-porte-claquee.html` | 253 | **1500 €** | 'annonces affichent des tarifs d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention. Avant d'appeler n'importe qui dan |
-| `ouverture-porte-claquee.html` | 272 | **180 €** | tyle="color:#16a34a">Ouverture simple (heures ouvrées)</h3> ⏎     <p><strong>90 à 180€ TTC</strong><br>Sans casse, intervention sous 1-2h.</ |
-| `ouverture-porte-claquee.html` | 276 | **450 €** | <h3 style="color:#FF6B1A">Avec changement de cylindre</h3> ⏎     <p><strong>250 à 450€ TTC</strong><br>Cylindre standard, 3 clés fournies.</ |
-| `ouverture-porte-claquee.html` | 280 | **750 €** | > ⏎     <h3 style="color:#7C3AED">Serrure A2P 3 étoiles</h3> ⏎     <p><strong>450 à 750€ TTC</strong><br>Haute sécurité, anti-bumping, anti- |
-| `ouverture-porte-claquee.html` | 299 | **180 €** | s="op-faq"> ⏎   <h3>Combien coûte une ouverture de porte claquée ?</h3> ⏎   <p>90 à 180€ TTC pour une ouverture non destructive en heures ou |
-| `panne-chaudiere.html` | 213 | **180 €** | etit dépannage</td><td style="padding:14px;font-weight:700;color:#B91C1C">110 - 180€</td></tr> ⏎     <tr><td style="padding:14px">Remplaceme |
-| `panne-chaudiere.html` | 214 | **650 €** | sonde, vanne)</td><td style="padding:14px;font-weight:700;color:#B91C1C">250 - 650€</td></tr> ⏎     <tr><td style="padding:14px">Désembouage |
-| `panne-chaudiere.html` | 215 | **750 €** | ircuit complet</td><td style="padding:14px;font-weight:700;color:#B91C1C">450 - 750€</td></tr> ⏎     <tr><td style="padding:14px">Remplaceme |
-| `panne-chaudiere.html` | 216 | **6500 €** | condensation</td><td style="padding:14px;font-weight:700;color:#B91C1C">3 800 - 6 500€</td></tr> ⏎   </tbody> ⏎ </table> ⏎  ⏎ <p style="font |
+| `nos-prestations.html` | 411 | **144 €** | ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="npce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="npce-baseline">L' |
+| `nos-prestations.html` | 429 | **192 €** | ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="npce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="npce-baseline">L' |
+| `nos-prestations.html` | 446 | **324 €** | ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="npce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="npce-baseline">To |
+| `ouverture-porte-claquee.html` | 256 | **29 €** | gin:0">Sur Internet, beaucoup d'annonces affichent des tarifs d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention. Av |
+| `ouverture-porte-claquee.html` | 256 | **39 €** | ">Sur Internet, beaucoup d'annonces affichent des tarifs d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention. Avant d |
+| `ouverture-porte-claquee.html` | 256 | **1500 €** | 'annonces affichent des tarifs d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention. Avant d'appeler n'importe qui dan |
+| `ouverture-porte-claquee.html` | 275 | **180 €** | tyle="color:#16a34a">Ouverture simple (heures ouvrées)</h3> ⏎     <p><strong>90 à 180€ TTC</strong><br>Sans casse, intervention sous 1-2h.</ |
+| `ouverture-porte-claquee.html` | 279 | **450 €** | <h3 style="color:#FF6B1A">Avec changement de cylindre</h3> ⏎     <p><strong>250 à 450€ TTC</strong><br>Cylindre standard, 3 clés fournies.</ |
+| `ouverture-porte-claquee.html` | 283 | **750 €** | > ⏎     <h3 style="color:#7C3AED">Serrure A2P 3 étoiles</h3> ⏎     <p><strong>450 à 750€ TTC</strong><br>Haute sécurité, anti-bumping, anti- |
+| `ouverture-porte-claquee.html` | 302 | **180 €** | s="op-faq"> ⏎   <h3>Combien coûte une ouverture de porte claquée ?</h3> ⏎   <p>90 à 180€ TTC pour une ouverture non destructive en heures ou |
+| `panne-chaudiere.html` | 216 | **180 €** | etit dépannage</td><td style="padding:14px;font-weight:700;color:#B91C1C">110 - 180€</td></tr> ⏎     <tr><td style="padding:14px">Remplaceme |
+| `panne-chaudiere.html` | 217 | **650 €** | sonde, vanne)</td><td style="padding:14px;font-weight:700;color:#B91C1C">250 - 650€</td></tr> ⏎     <tr><td style="padding:14px">Désembouage |
+| `panne-chaudiere.html` | 218 | **750 €** | ircuit complet</td><td style="padding:14px;font-weight:700;color:#B91C1C">450 - 750€</td></tr> ⏎     <tr><td style="padding:14px">Remplaceme |
+| `panne-chaudiere.html` | 219 | **6500 €** | condensation</td><td style="padding:14px;font-weight:700;color:#B91C1C">3 800 - 6 500€</td></tr> ⏎   </tbody> ⏎ </table> ⏎  ⏎ <p style="font |
 | `pmr-dunkerque.html` | 1058 | **8000 €** | , siège mural, barres de maintien, robinetterie thermostatique. Compter 3 500 à 8 000€ TTC selon ampleur, souvent largement aidé.</p><p styl |
 | `remplacement-chauffe-eau.html` | 422 | **1100 €** | </thead> ⏎   <tbody> ⏎     <tr><td><strong>Électrique 200L</strong></td><td>750 - 1 100€</td><td>~2 500 kWh</td><td>—</td></tr> ⏎     <tr><t |
 | `remplacement-chauffe-eau.html` | 423 | **1300 €** | td><td>—</td></tr> ⏎     <tr><td><strong>Électrique blindé</strong></td><td>900 - 1 300€</td><td>~2 400 kWh</td><td>—</td></tr> ⏎     <tr><t |
@@ -169,8 +169,10 @@ Tout montant `\d+\s*€` visible doit :
 | `menuisier-dunkerque.html` | 0 | 0 | 0 | 0 | **1** |
 | `menuisier-saint-omer.html` | 0 | 0 | 0 | 0 | **0** |
 | `nos-metiers.html` | 0 | 0 | 0 | 0 | **0** |
-| `nos-prestations.html` | 9 | 0 | 0 | 15 | **3** |
+| `nos-prestations.html` | 9 | 0 | 0 | 16 | **3** |
 | `nos-villes.html` | 0 | 0 | 0 | 0 | **0** |
+| `notre-equipe 2.html` | 0 | 0 | 0 | 0 | **0** |
+| `notre-equipe.html` | 0 | 0 | 0 | 0 | **0** |
 | `ouverture-porte-claquee.html` | 2 | 0 | 0 | 6 | **7** |
 | `panne-chaudiere.html` | 0 | 0 | 0 | 0 | **4** |
 | `partenaires.html` | 0 | 0 | 0 | 0 | **0** |

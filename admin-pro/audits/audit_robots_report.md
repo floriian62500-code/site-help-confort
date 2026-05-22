@@ -1,6 +1,6 @@
 # 🤖 Audit robots.txt + sitemap.xml — P10
 
-*Généré le 2026-05-21 06:56 — `admin-pro/audits/audit_robots.py`*
+*Généré le 2026-05-22 06:52 — `admin-pro/audits/audit_robots.py`*
 
 **Findings totaux** : 1 (0 critical, 0 high, 1 med, 0 low)
 **Vérifications OK** : 8
@@ -19,8 +19,10 @@
 
 ## 🚨 Findings
 
-- 🟡 **MED** : 4 page(s) racine absente(s) du sitemap
+- 🟡 **MED** : 6 page(s) racine absente(s) du sitemap
   - `googlef09a1887914c5a23.html`
+  - `notre-equipe 2.html`
+  - `notre-equipe.html`
   - `realisation.html`
   - `reseau-help-confort.html`
   - `reset.html`

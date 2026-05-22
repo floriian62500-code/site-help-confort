@@ -1,11 +1,11 @@
 # Audit HTML double-encoding — Rapport
 
-_Généré le 2026-05-21 06:57_
+_Généré le 2026-05-22 06:53_
 
 ## Synthèse
 
-- Pages scannées : **97**
-- ✅ OK (aucune entité doublement encodée) : **97**
+- Pages scannées : **107**
+- ✅ OK (aucune entité doublement encodée) : **107**
 - ❌ Erreurs (entités doublement encodées) : **0**
 - Total occurrences : **0**
 

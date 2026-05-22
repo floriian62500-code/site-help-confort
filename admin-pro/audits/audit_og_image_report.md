@@ -1,7 +1,7 @@
-# Audit Open Graph images — 2026-05-21 06:56
+# Audit Open Graph images — 2026-05-22 06:52
 
-- **Pages scannées** : 80
-- **Pages avec og:image OK** : 76
+- **Pages scannées** : 82
+- **Pages avec og:image OK** : 78
 - **Pages alertées** : 4
 - **OG image externe (non testée)** : 0
 - **Pillow disponible** : oui
@@ -18,7 +18,7 @@
 
 ## Récap par statut
 
-- **ok** : 76
+- **ok** : 78
 - **MISSING-OG-IMAGE** : 2
 - **MISSING-FILE** : 1
 - **WRONG-SIZE** : 1

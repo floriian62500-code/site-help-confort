@@ -1,15 +1,15 @@
 # Audit og:url vs canonical — Rapport
 
-_Généré le 2026-05-21 06:56_
+_Généré le 2026-05-22 06:53_
 
 ## Synthèse
 
-- Pages scannées : **97**
-- ✅ OK : **42**
+- Pages scannées : **107**
+- ✅ OK : **50**
 - ❌ Erreurs : **0** (cumul 0 findings)
-- ⚠️  Avertissements (pages) : **54**
+- ⚠️  Avertissements (pages) : **56**
 - ℹ️  Info : **1**
-- ⚠️  Total warnings : **55**
+- ⚠️  Total warnings : **57**
 
 ## Findings
 
@@ -130,6 +130,14 @@ _Généré le 2026-05-21 06:56_
 
 ### `nos-villes.html`
 - canonical = `https://www.depan59-62.fr/nos-villes.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `notre-equipe 2.html`
+- canonical = `https://www.depan59-62.fr/notre-equipe.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `notre-equipe.html`
+- canonical = `https://www.depan59-62.fr/notre-equipe.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
 ### `ouverture-porte-claquee.html`

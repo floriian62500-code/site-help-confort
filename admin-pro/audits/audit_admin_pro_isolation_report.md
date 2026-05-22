@@ -1,12 +1,19 @@
 # Audit admin-pro isolation — Rapport
 
-_Généré le 2026-05-21 06:57_
+_Généré le 2026-05-22 06:53_
 
 ## Synthèse
 
-- Pages publiques scannées : **97**
-- Pages avec fuite admin-pro : **0**
-- Total fuites détectées : **0**
+- Pages publiques scannées : **107**
+- Pages avec fuite admin-pro : **1**
+- Total fuites détectées : **1**
 - Whitelist : `admin-pro/index.html, admin/index.html`
 
-_✅ Aucune fuite admin-pro depuis les pages publiques._
+## ❌ Fuites détectées
+
+Ces pages publiques référencent en clair une URL `admin-pro/...html` (ou `admin/...html` hors whitelist). Recommandation : retirer le lien — l'admin doit rester accessible uniquement via URL connue + login.
+
+### `nos-prestations.html` — 1 fuite(s)
+
+- Ligne 1014 → `admin-pro/services.html`  
+  `admin-pro/services.html`

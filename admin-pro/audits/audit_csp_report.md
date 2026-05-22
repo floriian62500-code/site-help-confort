@@ -1,9 +1,9 @@
 # 🛡️ Audit CSP whitelist — Sonde IA #41
 
-*Généré le 2026-05-21 06:55 — `admin-pro/audits/audit_csp.py`*
+*Généré le 2026-05-22 06:51 — `admin-pro/audits/audit_csp.py`*
 
-**Pages scannées** : 82
-**Hosts externes distincts détectés** : 6
+**Pages scannées** : 84
+**Hosts externes distincts détectés** : 5
 **Directives CSP parsées** : base-uri, connect-src, default-src, font-src, form-action, frame-ancestors, frame-src, img-src, script-src, style-src, upgrade-insecure-requests
 **Alertes CSP block** : **0**
 
@@ -29,11 +29,8 @@
 - ✅ `unpkg.com` — 1 page(s)
 
 ### style-src
-- ✅ `fonts.googleapis.com` — 80 page(s)
+- ✅ `fonts.googleapis.com` — 82 page(s)
 - ✅ `unpkg.com` — 1 page(s)
-
-### img-src
-- ✅ `logo.clearbit.com` — 23 page(s)
 
 ### frame-src
 - ✅ `www.google.com` — 1 page(s)

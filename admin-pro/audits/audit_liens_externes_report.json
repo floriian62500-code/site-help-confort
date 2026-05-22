@@ -1,7 +1,7 @@
 {
-  "scanned_pages": 81,
-  "tested_urls": 69,
-  "ok": 54,
+  "scanned_pages": 83,
+  "tested_urls": 73,
+  "ok": 64,
   "broken": [
     {
       "url": "https://comap.aalberts-hfc.com/fr",
@@ -68,28 +68,6 @@
       ]
     },
     {
-      "url": "https://www.chappee.com/",
-      "status": 0,
-      "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1010)>",
-      "ok": false,
-      "pages": [
-        "chauffagiste-boulogne-sur-mer.html",
-        "chauffagiste-calais.html",
-        "chauffagiste-dunkerque.html",
-        "chauffagiste-saint-omer.html",
-        "partenaires.html"
-      ]
-    },
-    {
-      "url": "https://www.ecologie.gouv.fr/dispositif-des-certificats-deconomies-denergie",
-      "status": 503,
-      "error": "Service Temporarily Unavailable",
-      "ok": false,
-      "pages": [
-        "aides.html"
-      ]
-    },
-    {
       "url": "https://www.hoppe.com/fr-fr/catalogue-produits/1001192940/solutions-pour-portes-interieures-poignees-pour-portes-interieures",
       "status": 403,
       "error": "Forbidden",
@@ -103,56 +81,12 @@
       ]
     },
     {
-      "url": "https://www.knauf.fr/",
-      "status": 403,
-      "error": "Forbidden",
-      "ok": false,
-      "pages": [
-        "travaux-dunkerque.html",
-        "travaux-saint-omer.html"
-      ]
-    },
-    {
-      "url": "https://www.mapei.fr/",
-      "status": 403,
-      "error": "Forbidden",
-      "ok": false,
-      "pages": [
-        "travaux-dunkerque.html",
-        "travaux-saint-omer.html"
-      ]
-    },
-    {
-      "url": "https://www.placo.fr/",
-      "status": 403,
-      "error": "Forbidden",
-      "ok": false,
-      "pages": [
-        "travaux-dunkerque.html",
-        "travaux-saint-omer.html"
-      ]
-    },
-    {
-      "url": "https://www.saint-gobain.com/fr",
-      "status": 403,
-      "error": "Forbidden",
-      "ok": false,
-      "pages": [
-        "travaux-dunkerque.html",
-        "travaux-saint-omer.html"
-      ]
-    },
-    {
-      "url": "https://www.soprofen.fr/",
+      "url": "https://www.laposte.fr/services-seniors/adapter-son-domicile",
       "status": 0,
-      "error": "URLError: <urlopen error timed out>",
+      "error": "TimeoutError: The read operation timed out",
       "ok": false,
       "pages": [
-        "menuisier-dunkerque.html",
-        "menuisier-saint-omer.html",
-        "partenaires.html",
-        "volets-dunkerque.html",
-        "volets-saint-omer.html"
+        "pro.html"
       ]
     },
     {
@@ -172,5 +106,5 @@
     "https://www.facebook.com/depanaudo/",
     "https://www.linkedin.com/in/florian-d-haillecourt-2a67bb207"
   ],
-  "generated_at": "2026-05-21T06:56:52"
+  "generated_at": "2026-05-22T06:52:54"
 }

@@ -1,11 +1,11 @@
 # Audit lang attribute — Rapport
 
-_Généré le 2026-05-21 06:57_
+_Généré le 2026-05-22 06:53_
 
 ## Synthèse
 
-- Pages scannées : **97**
-- ✅ OK (`fr` ou `fr-FR`) : **96**
+- Pages scannées : **107**
+- ✅ OK (`fr` ou `fr-FR`) : **106**
 - ⚠️  Warnings (variantes `fr-XX`) : **0**
 - ❌ Erreurs (lang manquant ou ≠ fr) : **1**
 - Findings totaux : **1**

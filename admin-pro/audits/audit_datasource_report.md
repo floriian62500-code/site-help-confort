@@ -1,10 +1,10 @@
 # Audit data-source — Sonde IA #29
 
-_Généré le 2026-05-21 06:55 — `admin-pro/audits/audit_datasource.py`_
+_Généré le 2026-05-22 06:51 — `admin-pro/audits/audit_datasource.py`_
 
-- Pages avec attribut `data-source` : **13**
-- Occurrences totales : **34**
-- Statuts : `ok` ×34
+- Pages avec attribut `data-source` : **1**
+- Occurrences totales : **2**
+- Statuts : `ok` ×2
 - Alertes : **0**
 
 ## Formats reconnus
@@ -20,24 +20,11 @@ _Généré le 2026-05-21 06:55 — `admin-pro/audits/audit_datasource.py`_
 
 | Page | OK | stale | unknown | empty |
 |------|---:|------:|--------:|------:|
-| `chauffagiste-boulogne-sur-mer.html` | 3 | 0 | 0 | 0 |
-| `chauffagiste-calais.html` | 3 | 0 | 0 | 0 |
-| `chauffagiste-dunkerque.html` | 3 | 0 | 0 | 0 |
-| `chauffagiste-saint-omer.html` | 3 | 0 | 0 | 0 |
-| `electricien-boulogne-sur-mer.html` | 2 | 0 | 0 | 0 |
-| `electricien-calais.html` | 2 | 0 | 0 | 0 |
-| `electricien-dunkerque.html` | 2 | 0 | 0 | 0 |
-| `electricien-saint-omer.html` | 2 | 0 | 0 | 0 |
 | `index.html` | 2 | 0 | 0 | 0 |
-| `serrurier-boulogne-sur-mer.html` | 3 | 0 | 0 | 0 |
-| `serrurier-calais.html` | 3 | 0 | 0 | 0 |
-| `serrurier-dunkerque.html` | 3 | 0 | 0 | 0 |
-| `serrurier-saint-omer.html` | 3 | 0 | 0 | 0 |
 
 ## Valeurs distinctes
 
 | `data-source` | Occurrences |
 |---------------|------------:|
-| `base-produits-2026-05` | 32 |
 | `google` | 1 |
 | `trustville` | 1 |

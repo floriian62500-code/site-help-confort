@@ -1,13 +1,13 @@
 # Audit Heading hierarchy — Rapport
 
-Généré le : `2026-05-21T06:56:54`
+Généré le : `2026-05-22T06:52:56`
 
 Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il y a exactement un <h1>, et que la séquence commence bien par un <h1>.
 
 ## Synthèse
 
-- Pages auditées : **80**
-- Pages clean : **77**
+- Pages auditées : **82**
+- Pages clean : **79**
 - Pages avec erreur(s) : **1**
 - Pages avec warning(s) : **3**
 - Findings totaux : **4**
@@ -39,8 +39,8 @@ Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il 
 ### `pmr-saint-omer.html`
 
 - h1 sur la page : **1**
-- Total headings : **17**
-- Séquence : `h1 → h3 → h2 → h3 → h3 → h3 → h2 → h2 → h2 → h2 → h3 → h4 → h2 → h2 → h3 → h3 → h3`
+- Total headings : **14**
+- Séquence : `h1 → h3 → h2 → h3 → h3 → h3 → h2 → h2 → h2 → h3 → h4 → h3 → h3 → h3`
 - ⚠️ **SKIP_LEVEL** — Saut h1 → h3 (de 'Adaptation PMR à domicile — Saint-Omer e' à "MaPrimeAdapt&apos; — jusqu'à 70 % d'aide").
 
 ## ✅ Pages sans finding
@@ -93,6 +93,8 @@ Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il 
 - `nos-metiers.html`
 - `nos-prestations.html`
 - `nos-villes.html`
+- `notre-equipe 2.html`
+- `notre-equipe.html`
 - `ouverture-porte-claquee.html`
 - `panne-chaudiere.html`
 - `partenaires.html`

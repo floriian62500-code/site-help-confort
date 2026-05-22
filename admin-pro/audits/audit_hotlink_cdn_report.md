@@ -1,14 +1,14 @@
 # 🖼️ Audit images hot-linkées CDN tiers — sonde #13
 
-_Généré le 2026-05-21 06:56_
+_Généré le 2026-05-22 06:53_
 
-- Pages HTML scannées : **80**
-- Fichiers JS scannés : **10**
-- Hosts uniques détectés : **80**
+- Pages HTML scannées : **82**
+- Fichiers JS scannés : **14**
+- Hosts uniques détectés : **83**
   - Self (HC) : 1
   - Supabase projet : 1
   - CDN tolérés (CSP-whitelistés) : 7
-  - **Externes non whitelistés** : **71**
+  - **Externes non whitelistés** : **74**
 
 ## ⚠️ Hosts externes non whitelistés
 
@@ -92,18 +92,6 @@ Fichiers concernés : `menuisier-dunkerque.html`, `menuisier-saint-omer.html`, `
 - `menuisier-dunkerque.html` → `https://groupe-millet.com/`
 - `menuisier-saint-omer.html` → `https://groupe-millet.com/`
 - `partenaires.html` → `https://groupe-millet.com/`
-
-→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
-
-### 📄 `logo.clearbit.com` — 94 occurrence(s) (0 image(s))
-
-Fichiers concernés : `chauffagiste-boulogne-sur-mer.html`, `chauffagiste-calais.html`, `chauffagiste-dunkerque.html`, `chauffagiste-saint-omer.html`, `electricien-boulogne-sur-mer.html`, `electricien-calais.html`, `electricien-dunkerque.html`, `electricien-saint-omer.html`, `menuisier-dunkerque.html`, `menuisier-saint-omer.html`
-
-- `chauffagiste-boulogne-sur-mer.html` → `https://logo.clearbit.com/comap.aalberts-hfc.com?size=200`
-- `chauffagiste-boulogne-sur-mer.html` → `https://logo.clearbit.com/dedietrich-thermique.fr?size=200`
-- `chauffagiste-boulogne-sur-mer.html` → `https://logo.clearbit.com/saunierduval.fr?size=200`
-- `chauffagiste-calais.html` → `https://logo.clearbit.com/comap.aalberts-hfc.com?size=200`
-- `chauffagiste-calais.html` → `https://logo.clearbit.com/dedietrich-thermique.fr?size=200`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
@@ -230,9 +218,9 @@ Fichiers concernés : `aides.html`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
-### 📄 `www.atlantic.fr` — 7 occurrence(s) (0 image(s))
+### 📄 `www.atlantic.fr` — 5 occurrence(s) (0 image(s))
 
-Fichiers concernés : `chauffagiste-boulogne-sur-mer.html`, `chauffagiste-calais.html`, `chauffagiste-dunkerque.html`, `chauffagiste-saint-omer.html`, `partenaires.html`, `travaux-dunkerque.html`, `travaux-saint-omer.html`
+Fichiers concernés : `chauffagiste-boulogne-sur-mer.html`, `chauffagiste-calais.html`, `chauffagiste-dunkerque.html`, `chauffagiste-saint-omer.html`, `partenaires.html`
 
 - `chauffagiste-boulogne-sur-mer.html` → `https://www.atlantic.fr/`
 - `chauffagiste-calais.html` → `https://www.atlantic.fr/`
@@ -271,6 +259,14 @@ Fichiers concernés : `chauffagiste-boulogne-sur-mer.html`, `chauffagiste-calais
 - `chauffagiste-dunkerque.html` → `https://www.chappee.com/`
 - `chauffagiste-saint-omer.html` → `https://www.chappee.com/`
 - `partenaires.html` → `https://www.chappee.com/`
+
+→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
+
+### 📄 `www.citya.com` — 1 occurrence(s) (0 image(s))
+
+Fichiers concernés : `pro.html`
+
+- `pro.html` → `https://www.citya.com`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
@@ -314,6 +310,22 @@ Fichiers concernés : `partenaires.html`, `plombier-boulogne-sur-mer.html`, `plo
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
+### 📄 `www.domusvi.com` — 1 occurrence(s) (0 image(s))
+
+Fichiers concernés : `pro.html`
+
+- `pro.html` → `https://www.domusvi.com`
+
+→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
+
+### 📄 `www.dynaren.com` — 1 occurrence(s) (0 image(s))
+
+Fichiers concernés : `pro.html`
+
+- `pro.html` → `https://www.dynaren.com`
+
+→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
+
 ### 📄 `www.ecologie.gouv.fr` — 1 occurrence(s) (0 image(s))
 
 Fichiers concernés : `aides.html`
@@ -322,7 +334,15 @@ Fichiers concernés : `aides.html`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
-### 📄 `www.facebook.com` — 99 occurrence(s) (0 image(s))
+### 📄 `www.esri.com` — 1 occurrence(s) (0 image(s))
+
+Fichiers concernés : `zones-intervention.html`
+
+- `zones-intervention.html` → `https://www.esri.com`
+
+→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
+
+### 📄 `www.facebook.com` — 98 occurrence(s) (0 image(s))
 
 Fichiers concernés : `a-propos.html`, `actualites.html`, `aides.html`, `avant-apres.html`, `blog.html`, `carrieres.html`, `chauffagiste-boulogne-sur-mer.html`, `chauffagiste-calais.html`, `chauffagiste-dunkerque.html`, `chauffagiste-saint-omer.html`
 
@@ -410,6 +430,14 @@ Fichiers concernés : `contact.html`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
+### 📄 `www.guy-hoquet.com` — 1 occurrence(s) (0 image(s))
+
+Fichiers concernés : `pro.html`
+
+- `pro.html` → `https://www.guy-hoquet.com`
+
+→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
+
 ### 📄 `www.hansgrohe.fr` — 5 occurrence(s) (0 image(s))
 
 Fichiers concernés : `partenaires.html`, `plombier-boulogne-sur-mer.html`, `plombier-calais.html`, `plombier-dunkerque.html`, `plombier-saint-omer.html`
@@ -428,6 +456,14 @@ Fichiers concernés : `mentions-legales.html`, `reseau-help-confort.html`
 
 - `mentions-legales.html` → `https://www.helpconfort.com`
 - `reseau-help-confort.html` → `https://www.helpconfort.com`
+
+→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
+
+### 📄 `www.homeserve.fr` — 1 occurrence(s) (0 image(s))
+
+Fichiers concernés : `pro.html`
+
+- `pro.html` → `https://www.homeserve.fr`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
@@ -461,6 +497,14 @@ Fichiers concernés : `partenaires.html`, `plombier-boulogne-sur-mer.html`, `plo
 - `plombier-calais.html` → `https://www.hsk.de/fr`
 - `plombier-dunkerque.html` → `https://www.hsk.de/fr`
 - `plombier-saint-omer.html` → `https://www.hsk.de/fr`
+
+→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
+
+### 📄 `www.ima.eu` — 1 occurrence(s) (0 image(s))
+
+Fichiers concernés : `pro.html`
+
+- `pro.html` → `https://www.ima.eu`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
@@ -498,15 +542,6 @@ Fichiers concernés : `partenaires.html`, `plombier-boulogne-sur-mer.html`, `plo
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
-### 📄 `www.knauf.fr` — 2 occurrence(s) (0 image(s))
-
-Fichiers concernés : `travaux-dunkerque.html`, `travaux-saint-omer.html`
-
-- `travaux-dunkerque.html` → `https://www.knauf.fr/`
-- `travaux-saint-omer.html` → `https://www.knauf.fr/`
-
-→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
-
 ### 📄 `www.kostum.fr` — 3 occurrence(s) (0 image(s))
 
 Fichiers concernés : `menuisier-dunkerque.html`, `menuisier-saint-omer.html`, `partenaires.html`
@@ -514,6 +549,14 @@ Fichiers concernés : `menuisier-dunkerque.html`, `menuisier-saint-omer.html`, `
 - `menuisier-dunkerque.html` → `https://www.kostum.fr/`
 - `menuisier-saint-omer.html` → `https://www.kostum.fr/`
 - `partenaires.html` → `https://www.kostum.fr/`
+
+→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
+
+### 📄 `www.laposte.fr` — 1 occurrence(s) (0 image(s))
+
+Fichiers concernés : `pro.html`
+
+- `pro.html` → `https://www.laposte.fr/services-seniors/adapter-son-domicile`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
@@ -553,15 +596,6 @@ Fichiers concernés : `partenaires.html`, `serrurier-boulogne-sur-mer.html`, `se
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
-### 📄 `www.mapei.fr` — 2 occurrence(s) (0 image(s))
-
-Fichiers concernés : `travaux-dunkerque.html`, `travaux-saint-omer.html`
-
-- `travaux-dunkerque.html` → `https://www.mapei.fr/`
-- `travaux-saint-omer.html` → `https://www.mapei.fr/`
-
-→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
-
 ### 📄 `www.maprimerenov.gouv.fr` — 1 occurrence(s) (0 image(s))
 
 Fichiers concernés : `aides.html`
@@ -597,23 +631,6 @@ Fichiers concernés : `menuisier-dunkerque.html`, `menuisier-saint-omer.html`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
-### 📄 `www.openstreetmap.org` — 1 occurrence(s) (0 image(s))
-
-Fichiers concernés : `zones-intervention.html`
-
-- `zones-intervention.html` → `https://www.openstreetmap.org/copyright`
-
-→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
-
-### 📄 `www.placo.fr` — 2 occurrence(s) (0 image(s))
-
-Fichiers concernés : `travaux-dunkerque.html`, `travaux-saint-omer.html`
-
-- `travaux-dunkerque.html` → `https://www.placo.fr/`
-- `travaux-saint-omer.html` → `https://www.placo.fr/`
-
-→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
-
 ### 📄 `www.riouglass.com` — 3 occurrence(s) (0 image(s))
 
 Fichiers concernés : `partenaires.html`, `vitrier-dunkerque.html`, `vitrier-saint-omer.html`
@@ -631,15 +648,6 @@ Fichiers concernés : `menuisier-dunkerque.html`, `menuisier-saint-omer.html`, `
 - `menuisier-dunkerque.html` → `https://www.roziere.fr/index.html`
 - `menuisier-saint-omer.html` → `https://www.roziere.fr/index.html`
 - `partenaires.html` → `https://www.roziere.fr/index.html`
-
-→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
-
-### 📄 `www.saint-gobain.com` — 2 occurrence(s) (0 image(s))
-
-Fichiers concernés : `travaux-dunkerque.html`, `travaux-saint-omer.html`
-
-- `travaux-dunkerque.html` → `https://www.saint-gobain.com/fr`
-- `travaux-saint-omer.html` → `https://www.saint-gobain.com/fr`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
@@ -741,6 +749,14 @@ Fichiers concernés : `menuisier-dunkerque.html`, `menuisier-saint-omer.html`, `
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
+### 📄 `www.viaren.fr` — 1 occurrence(s) (0 image(s))
+
+Fichiers concernés : `pro.html`
+
+- `pro.html` → `https://www.viaren.fr`
+
+→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
+
 ### 📄 `www.watermatic.fr` — 4 occurrence(s) (0 image(s))
 
 Fichiers concernés : `plombier-boulogne-sur-mer.html`, `plombier-calais.html`, `plombier-dunkerque.html`, `plombier-saint-omer.html`
@@ -772,20 +788,19 @@ Fichiers concernés : `partenaires.html`, `serrurier-boulogne-sur-mer.html`, `se
 | Host | Classification | Occurrences | Images |
 |------|----------------|-------------|--------|
 | `akw.fr` | 🔴 external | 5 | 0 |
-| `api-adresse.data.gouv.fr` | ⚪ trusted | 59 | 0 |
+| `api-adresse.data.gouv.fr` | ⚪ trusted | 61 | 0 |
 | `bricard.com` | 🔴 external | 5 | 0 |
-| `btcbjwqiivhpwoszomhg.supabase.co` | 🔵 supabase | 67 | 0 |
-| `cdn.jsdelivr.net` | ⚪ trusted | 66 | 0 |
+| `btcbjwqiivhpwoszomhg.supabase.co` | 🔵 supabase | 69 | 0 |
+| `cdn.jsdelivr.net` | ⚪ trusted | 65 | 0 |
 | `comap.aalberts-hfc.com` | 🔴 external | 5 | 0 |
 | `connect.facebook.net` | ⚪ trusted | 1 | 0 |
 | `coretecfloors.com` | 🔴 external | 3 | 0 |
-| `fonts.googleapis.com` | ⚪ trusted | 175 | 0 |
+| `fonts.googleapis.com` | ⚪ trusted | 177 | 0 |
 | `fonts.gstatic.com` | ⚪ trusted | 65 | 0 |
 | `fr.indeed.com` | 🔴 external | 1 | 0 |
 | `france-renov.gouv.fr` | 🔴 external | 2 | 0 |
 | `gef.fr` | 🔴 external | 3 | 0 |
 | `groupe-millet.com` | 🔴 external | 3 | 0 |
-| `logo.clearbit.com` | 🔴 external | 94 | 0 |
 | `maps.app.goo.gl` | 🔴 external | 68 | 0 |
 | `mon-installateur.atlantic.fr` | 🔴 external | 9 | 0 |
 | `new.abb.com` | 🔴 external | 5 | 0 |
@@ -798,17 +813,21 @@ Fichiers concernés : `partenaires.html`, `serrurier-boulogne-sur-mer.html`, `se
 | `unpkg.com` | ⚪ trusted | 2 | 0 |
 | `www.anah.fr` | 🔴 external | 1 | 0 |
 | `www.anah.gouv.fr` | 🔴 external | 2 | 0 |
-| `www.atlantic.fr` | 🔴 external | 7 | 0 |
+| `www.atlantic.fr` | 🔴 external | 5 | 0 |
 | `www.bremaud.com` | 🔴 external | 3 | 0 |
 | `www.bubendorff.com` | 🔴 external | 3 | 0 |
 | `www.chappee.com` | 🔴 external | 5 | 0 |
+| `www.citya.com` | 🔴 external | 1 | 0 |
 | `www.clarity.ms` | 🔴 external | 1 | 0 |
 | `www.cnil.fr` | 🔴 external | 1 | 0 |
 | `www.dedietrich-thermique.fr` | 🔴 external | 5 | 0 |
 | `www.delabie.fr` | 🔴 external | 5 | 0 |
-| `www.depan59-62.fr` | 🟢 self | 161 | 82 |
+| `www.depan59-62.fr` | 🟢 self | 165 | 84 |
+| `www.domusvi.com` | 🔴 external | 1 | 0 |
+| `www.dynaren.com` | 🔴 external | 1 | 0 |
 | `www.ecologie.gouv.fr` | 🔴 external | 1 | 0 |
-| `www.facebook.com` | 🔴 external | 99 | 0 |
+| `www.esri.com` | 🔴 external | 1 | 0 |
+| `www.facebook.com` | 🔴 external | 98 | 0 |
 | `www.ferco.fr` | 🔴 external | 5 | 0 |
 | `www.fichet-pointfort.com` | 🔴 external | 5 | 0 |
 | `www.finimetal.com` | 🔴 external | 5 | 0 |
@@ -817,29 +836,28 @@ Fichiers concernés : `partenaires.html`, `serrurier-boulogne-sur-mer.html`, `se
 | `www.geberit.fr` | 🔴 external | 5 | 0 |
 | `www.google.com` | 🔴 external | 1 | 0 |
 | `www.googletagmanager.com` | ⚪ trusted | 2 | 0 |
+| `www.guy-hoquet.com` | 🔴 external | 1 | 0 |
 | `www.hansgrohe.fr` | 🔴 external | 5 | 0 |
 | `www.helpconfort.com` | 🔴 external | 2 | 0 |
+| `www.homeserve.fr` | 🔴 external | 1 | 0 |
 | `www.hoppe.com` | 🔴 external | 5 | 0 |
 | `www.hormann.fr` | 🔴 external | 2 | 0 |
 | `www.hsk.de` | 🔴 external | 5 | 0 |
+| `www.ima.eu` | 🔴 external | 1 | 0 |
 | `www.iseo.com` | 🔴 external | 5 | 0 |
 | `www.jeld-wen.fr` | 🔴 external | 3 | 0 |
 | `www.kinedo.com` | 🔴 external | 5 | 0 |
-| `www.knauf.fr` | 🔴 external | 2 | 0 |
 | `www.kostum.fr` | 🔴 external | 3 | 0 |
+| `www.laposte.fr` | 🔴 external | 1 | 0 |
 | `www.legrand.fr` | 🔴 external | 5 | 0 |
 | `www.linkedin.com` | 🔴 external | 66 | 0 |
 | `www.maco.eu` | 🔴 external | 5 | 0 |
-| `www.mapei.fr` | 🔴 external | 2 | 0 |
 | `www.maprimerenov.gouv.fr` | 🔴 external | 1 | 0 |
 | `www.meister.com` | 🔴 external | 3 | 0 |
 | `www.netlify.com` | 🔴 external | 1 | 0 |
 | `www.novoferm.fr` | 🔴 external | 2 | 0 |
-| `www.openstreetmap.org` | 🔴 external | 1 | 0 |
-| `www.placo.fr` | 🔴 external | 2 | 0 |
 | `www.riouglass.com` | 🔴 external | 3 | 0 |
 | `www.roziere.fr` | 🔴 external | 3 | 0 |
-| `www.saint-gobain.com` | 🔴 external | 2 | 0 |
 | `www.saunierduval.fr` | 🔴 external | 5 | 0 |
 | `www.schueco.com` | 🔴 external | 5 | 0 |
 | `www.service-public.fr` | 🔴 external | 1 | 0 |
@@ -849,5 +867,6 @@ Fichiers concernés : `partenaires.html`, `serrurier-boulogne-sur-mer.html`, `se
 | `www.trenois.com` | 🔴 external | 5 | 0 |
 | `www.vachette.fr` | 🔴 external | 5 | 0 |
 | `www.velux.fr` | 🔴 external | 3 | 0 |
+| `www.viaren.fr` | 🔴 external | 1 | 0 |
 | `www.watermatic.fr` | 🔴 external | 4 | 0 |
 | `www.winkhaus.com` | 🔴 external | 5 | 0 |

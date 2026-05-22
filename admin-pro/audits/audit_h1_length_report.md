@@ -1,16 +1,16 @@
 # Audit H1 length — Rapport
 
-_Généré le 2026-05-21 06:56_
+_Généré le 2026-05-22 06:53_
 
 ## Synthèse
 
-- Pages scannées : **96**
-- ✅ OK (20-70 chars) : **66**
+- Pages scannées : **106**
+- ✅ OK (20-70 chars) : **68**
 - ⚠️  Warnings (h1 multiples, hors longueur) : **0**
-- ❌ Erreurs (< 20 ou > 70) : **29**
+- ❌ Erreurs (< 20 ou > 70) : **37**
 - ℹ️  Sans h1 ou parse error : **1**
-- Findings totaux : **30**
-  - Erreurs : 29
+- Findings totaux : **38**
+  - Erreurs : 37
   - Avertissements : 1
 
 ## Bornes appliquées
@@ -43,6 +43,30 @@ _Généré le 2026-05-21 06:56_
 ### `actualites/2026-04-14-votre-soupape-de-securite-ou-votre-manometre-est-defectueux.html`  (99 chars, n_h1=1)
 > Votre soupape de sécurité ou votre manomètre est défectueux, usé ou ne fonctionne plus correctement
 - ❌ H1-TOO-LONG : 99 chars > 70
+
+### `actualites/2026-05-19-maprimeadapt-2026-travaux-adaptation-pmr 2.html`  (77 chars, n_h1=1)
+> MaPrimeAdapt' 2026 : les travaux d'adaptation PMR pris en charge jusqu'à 70 %
+- ❌ H1-TOO-LONG : 77 chars > 70
+
+### `actualites/2026-05-19-maprimeadapt-2026-travaux-adaptation-pmr.html`  (77 chars, n_h1=1)
+> MaPrimeAdapt' 2026 : les travaux d'adaptation PMR pris en charge jusqu'à 70 %
+- ❌ H1-TOO-LONG : 77 chars > 70
+
+### `actualites/2026-05-19-quel-chauffe-eau-choisir-en-2026 2.html`  (78 chars, n_h1=1)
+> Quel chauffe-eau choisir en 2026 ? Comparatif électrique, thermodynamique, gaz
+- ❌ H1-TOO-LONG : 78 chars > 70
+
+### `actualites/2026-05-19-quel-chauffe-eau-choisir-en-2026.html`  (78 chars, n_h1=1)
+> Quel chauffe-eau choisir en 2026 ? Comparatif électrique, thermodynamique, gaz
+- ❌ H1-TOO-LONG : 78 chars > 70
+
+### `actualites/2026-05-19-tableau-electrique-aux-normes-nf-c-15-100 2.html`  (71 chars, n_h1=1)
+> Comment savoir si votre tableau électrique est aux normes NF C 15-100 ?
+- ❌ H1-TOO-LONG : 71 chars > 70
+
+### `actualites/2026-05-19-tableau-electrique-aux-normes-nf-c-15-100.html`  (71 chars, n_h1=1)
+> Comment savoir si votre tableau électrique est aux normes NF C 15-100 ?
+- ❌ H1-TOO-LONG : 71 chars > 70
 
 ### `agence-dunkerque.html`  (16 chars, n_h1=1)
 > Agence Dunkerque
@@ -119,6 +143,14 @@ _Généré le 2026-05-21 06:56_
 ### `nos-metiers.html`  (13 chars, n_h1=1)
 > Nos 8 métiers
 - ❌ H1-TOO-SHORT : 13 chars < 20
+
+### `notre-equipe 2.html`  (12 chars, n_h1=1)
+> Notre équipe
+- ❌ H1-TOO-SHORT : 12 chars < 20
+
+### `notre-equipe.html`  (12 chars, n_h1=1)
+> Notre équipe
+- ❌ H1-TOO-SHORT : 12 chars < 20
 
 ### `plan-du-site.html`  (12 chars, n_h1=1)
 > Plan du site

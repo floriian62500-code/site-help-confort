@@ -1,28 +1,28 @@
 # Audit HTML weight — Rapport
 
-_Généré le 2026-05-21 06:56_
+_Généré le 2026-05-22 06:53_
 
 ## Synthèse
 
-- Pages scannées : **97**
-- Poids cumulé : **7535.9 KB**
-- Poids moyen : **77.7 KB**
+- Pages scannées : **107**
+- Poids cumulé : **7414.7 KB**
+- Poids moyen : **69.3 KB**
 - ❌ Pages > 250 KB : **0**
-- ⚠️ Pages 150–250 KB : **24**
+- ⚠️ Pages 150–250 KB : **15**
 
 ## Top 10 pages les plus lourdes
 
 | # | Fichier | Total | `<style>` | `<script>` inline | `<svg>` inline |
 |---|---------|-------|-----------|-------------------|----------------|
-| 1 | ⚠️ `index.html` | **206.8 KB** | 58.1 KB | 81.6 KB | 17.2 KB |
-| 2 | ⚠️ `chauffagiste-dunkerque.html` | **173.8 KB** | 70.4 KB | 21.0 KB | 20.0 KB |
-| 3 | ⚠️ `chauffagiste-boulogne-sur-mer.html` | **173.8 KB** | 70.4 KB | 21.0 KB | 20.0 KB |
-| 4 | ⚠️ `chauffagiste-calais.html` | **173.5 KB** | 70.4 KB | 20.8 KB | 20.0 KB |
-| 5 | ⚠️ `chauffagiste-saint-omer.html` | **172.5 KB** | 70.4 KB | 21.0 KB | 20.0 KB |
-| 6 | ⚠️ `menuisier-dunkerque.html` | **171.9 KB** | 66.8 KB | 19.1 KB | 20.5 KB |
-| 7 | ⚠️ `menuisier-saint-omer.html` | **170.6 KB** | 66.8 KB | 19.1 KB | 20.5 KB |
-| 8 | ⚠️ `serrurier-dunkerque.html` | **169.5 KB** | 66.8 KB | 20.1 KB | 21.5 KB |
-| 9 | ⚠️ `serrurier-boulogne-sur-mer.html` | **169.5 KB** | 66.8 KB | 20.0 KB | 21.5 KB |
-| 10 | ⚠️ `serrurier-calais.html` | **169.2 KB** | 66.8 KB | 19.9 KB | 21.5 KB |
+| 1 | ⚠️ `index.html` | **199.5 KB** | 57.2 KB | 81.3 KB | 16.7 KB |
+| 2 | ⚠️ `menuisier-dunkerque.html` | **162.0 KB** | 64.2 KB | 18.0 KB | 24.0 KB |
+| 3 | ⚠️ `menuisier-saint-omer.html` | **160.8 KB** | 64.2 KB | 18.0 KB | 24.0 KB |
+| 4 | ⚠️ `chauffagiste-dunkerque.html` | **160.0 KB** | 67.8 KB | 19.4 KB | 20.6 KB |
+| 5 | ⚠️ `chauffagiste-boulogne-sur-mer.html` | **159.9 KB** | 67.8 KB | 19.3 KB | 20.6 KB |
+| 6 | ⚠️ `chauffagiste-calais.html` | **159.8 KB** | 67.8 KB | 19.2 KB | 20.6 KB |
+| 7 | ⚠️ `chauffagiste-saint-omer.html` | **158.8 KB** | 67.8 KB | 19.4 KB | 20.6 KB |
+| 8 | ⚠️ `serrurier-dunkerque.html` | **155.6 KB** | 64.2 KB | 18.5 KB | 23.2 KB |
+| 9 | ⚠️ `serrurier-boulogne-sur-mer.html` | **155.6 KB** | 64.2 KB | 18.5 KB | 23.2 KB |
+| 10 | ⚠️ `serrurier-calais.html` | **155.4 KB** | 64.2 KB | 18.3 KB | 23.2 KB |
 
 _✅ Aucune page ne dépasse 250 KB._

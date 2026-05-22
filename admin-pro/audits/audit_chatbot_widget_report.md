@@ -1,10 +1,10 @@
 # 🤖 Audit couverture chatbot widget — sonde #24
 
-_Généré le 2026-05-21 06:56_
+_Généré le 2026-05-22 06:52_
 
-- Pages publiques scannées : **80**
+- Pages publiques scannées : **82**
 - Pages avec widget chargé : **64**
-- Pages **sans widget** (alertes) : **16**
+- Pages **sans widget** (alertes) : **18**
 
 ## ❌ Pages sans `hc-widgets.js`
 
@@ -16,6 +16,8 @@ _Généré le 2026-05-21 06:56_
 - `googlef09a1887914c5a23.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `nos-metiers.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `nos-villes.html` — aucun `<script src=...hc-widgets.js>` détecté
+- `notre-equipe 2.html` — aucun `<script src=...hc-widgets.js>` détecté
+- `notre-equipe.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `ouverture-porte-claquee.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `panne-chaudiere.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `partenaires.html` — aucun `<script src=...hc-widgets.js>` détecté

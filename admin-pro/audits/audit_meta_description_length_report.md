@@ -1,16 +1,16 @@
 # Audit meta description length — Rapport
 
-_Généré le 2026-05-21 06:56_
+_Généré le 2026-05-22 06:53_
 
 ## Synthèse
 
-- Pages scannées : **96**
-- ✅ OK (120-158 chars) : **64**
+- Pages scannées : **106**
+- ✅ OK (120-158 chars) : **81**
 - ⚠️  Warnings (acceptable mais hors cible) : **10**
-- ❌ Erreurs (< 70 ou > 160) : **21**
+- ❌ Erreurs (< 70 ou > 160) : **14**
 - ℹ️  Sans description : **1**
-- Findings totaux : **32**
-  - Erreurs : 21
+- Findings totaux : **25**
+  - Erreurs : 14
   - Avertissements : 11
 
 ## Bornes appliquées
@@ -25,85 +25,57 @@ _Généré le 2026-05-21 06:56_
 > Demandez votre devis gratuit et sans engagement  www.helpconfort.com
 - ❌ DESC-TOO-SHORT : 68 chars < 70
 
-### `chauffagiste-boulogne-sur-mer.html`  (176 chars)
-> Chauffagiste à Boulogne-sur-Mer & Boulonnais : dépannage rapide, devis gratuit, techniciens HELP Confort. Saint-Martin-Boulogne, Outreau, Le Portel, Wimereux. ☎ 03 66 10 01 34.
-- ❌ DESC-TOO-LONG : 176 chars > 160
+### `actualites/2026-05-19-maprimeadapt-2026-travaux-adaptation-pmr 2.html`  (189 chars)
+> MaPrimeAdapt' 2026 : qui est éligible, quels travaux d'adaptation PMR sont financés, comment monter le dossier. Douche italienne, monte-escalier, barres d'appui. Saint-Omer &amp; Dunkerque.
+- ❌ DESC-TOO-LONG : 189 chars > 160
 
-### `chauffagiste-dunkerque.html`  (172 chars)
-> Chauffagiste à Dunkerque & littoral : dépannage rapide, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.
-- ❌ DESC-TOO-LONG : 172 chars > 160
+### `actualites/2026-05-19-maprimeadapt-2026-travaux-adaptation-pmr.html`  (189 chars)
+> MaPrimeAdapt' 2026 : qui est éligible, quels travaux d'adaptation PMR sont financés, comment monter le dossier. Douche italienne, monte-escalier, barres d'appui. Saint-Omer &amp; Dunkerque.
+- ❌ DESC-TOO-LONG : 189 chars > 160
+
+### `actualites/2026-05-19-quel-chauffe-eau-choisir-en-2026 2.html`  (169 chars)
+> Électrique, thermodynamique, gaz : comparatif des chauffe-eau en 2026. Capacité selon la famille, aides MaPrimeRénov', conseils d'installateur à Saint-Omer et Dunkerque.
+- ❌ DESC-TOO-LONG : 169 chars > 160
+
+### `actualites/2026-05-19-quel-chauffe-eau-choisir-en-2026.html`  (169 chars)
+> Électrique, thermodynamique, gaz : comparatif des chauffe-eau en 2026. Capacité selon la famille, aides MaPrimeRénov', conseils d'installateur à Saint-Omer et Dunkerque.
+- ❌ DESC-TOO-LONG : 169 chars > 160
+
+### `actualites/2026-05-19-recherche-de-fuite-techniques-modernes-vs-casse-inutile 2.html`  (182 chars)
+> Caméra thermique, gaz traceur, écoute acoustique : comment localiser une fuite d'eau sans casser. Comparatif des techniques modernes et coût d'intervention à Saint-Omer et Dunkerque.
+- ❌ DESC-TOO-LONG : 182 chars > 160
+
+### `actualites/2026-05-19-recherche-de-fuite-techniques-modernes-vs-casse-inutile.html`  (182 chars)
+> Caméra thermique, gaz traceur, écoute acoustique : comment localiser une fuite d'eau sans casser. Comparatif des techniques modernes et coût d'intervention à Saint-Omer et Dunkerque.
+- ❌ DESC-TOO-LONG : 182 chars > 160
+
+### `actualites/2026-05-19-tableau-electrique-aux-normes-nf-c-15-100 2.html`  (174 chars)
+> Différentiel 30 mA, prises terre, sections câbles : les points clés pour vérifier la conformité de votre tableau électrique NF C 15-100. Diagnostic à Saint-Omer et Dunkerque.
+- ❌ DESC-TOO-LONG : 174 chars > 160
+
+### `actualites/2026-05-19-tableau-electrique-aux-normes-nf-c-15-100.html`  (174 chars)
+> Différentiel 30 mA, prises terre, sections câbles : les points clés pour vérifier la conformité de votre tableau électrique NF C 15-100. Diagnostic à Saint-Omer et Dunkerque.
+- ❌ DESC-TOO-LONG : 174 chars > 160
 
 ### `chauffagiste-saint-omer.html`  (162 chars)
 > Chauffagiste à Saint-Omer & Dunkerque : entretien chaudière, dépannage rapide, contrats d'entretien annuels — forfait transparent, devis gratuit. ☎ 03 66 10 01 34
 - ❌ DESC-TOO-LONG : 162 chars > 160
 
-### `electricien-boulogne-sur-mer.html`  (175 chars)
-> Électricien à Boulogne-sur-Mer & Boulonnais : dépannage rapide, devis gratuit, techniciens HELP Confort. Saint-Martin-Boulogne, Outreau, Le Portel, Wimereux. ☎ 03 66 10 01 34.
-- ❌ DESC-TOO-LONG : 175 chars > 160
+### `notre-equipe 2.html`  (178 chars)
+> L'équipe HELP Confort Saint-Omer &amp; Dunkerque : techniciens diplômés, formation continue, intervention sans sous-traitance. Plombiers, chauffagistes, électriciens, serruriers.
+- ❌ DESC-TOO-LONG : 178 chars > 160
 
-### `electricien-dunkerque.html`  (171 chars)
-> Electricien à Dunkerque & littoral : dépannage rapide, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.
-- ❌ DESC-TOO-LONG : 171 chars > 160
-
-### `electricien-saint-omer.html`  (190 chars)
-> Électricien à Saint-Omer & Dunkerque : dépannage, recherche de panne, tableau électrique, rénovation. Techniciens qualifiés NF C 15-100 — forfait transparent, devis gratuit. ☎ 03 66 10 01 34
-- ❌ DESC-TOO-LONG : 190 chars > 160
-
-### `entretien-chaudiere.html`  (162 chars)
-> Entretien chaudière gaz, fioul, granulés à Saint-Omer & Dunkerque. Obligation légale annuelle. Contrat à tarif fixe, attestation, devis gratuit. ☎ 03 66 10 01 34.
-- ❌ DESC-TOO-LONG : 162 chars > 160
-
-### `menuisier-dunkerque.html`  (174 chars)
-> Menuisier à Dunkerque & littoral : interventions rapides, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.
-- ❌ DESC-TOO-LONG : 174 chars > 160
-
-### `partenaires.html`  (196 chars)
-> Découvrez les 45 marques de référence que nous installons à Saint-Omer et Dunkerque : plomberie, chauffage, électricité, serrurerie, vitrerie, menuiserie, volets. Fabricants français et européens.
-- ❌ DESC-TOO-LONG : 196 chars > 160
-
-### `plombier-boulogne-sur-mer.html`  (172 chars)
-> Plombier à Boulogne-sur-Mer & Boulonnais : dépannage rapide, devis gratuit, techniciens HELP Confort. Saint-Martin-Boulogne, Outreau, Le Portel, Wimereux. ☎ 03 66 10 01 34.
-- ❌ DESC-TOO-LONG : 172 chars > 160
-
-### `plombier-dunkerque.html`  (168 chars)
-> Plombier à Dunkerque & littoral : dépannage rapide, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.
-- ❌ DESC-TOO-LONG : 168 chars > 160
-
-### `pmr-dunkerque.html`  (179 chars)
-> Adaptation PMR à Dunkerque & littoral : interventions rapides, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.
-- ❌ DESC-TOO-LONG : 179 chars > 160
+### `notre-equipe.html`  (178 chars)
+> L'équipe HELP Confort Saint-Omer &amp; Dunkerque : techniciens diplômés, formation continue, intervention sans sous-traitance. Plombiers, chauffagistes, électriciens, serruriers.
+- ❌ DESC-TOO-LONG : 178 chars > 160
 
 ### `remplacement-chauffe-eau.html`  (164 chars)
 > Remplacement ballon d'eau chaude / chauffe-eau électrique, thermodynamique ou gaz à Saint-Omer & Dunkerque. Devis gratuit, pose conforme, garantie ☎ 03 66 10 01 34.
 - ❌ DESC-TOO-LONG : 164 chars > 160
 
-### `reseau-help-confort.html`  (173 chars)
-> HELP Confort : 1er réseau national d'urgence, dépannage et amélioration de l'habitat. Plomberie, chauffage, électricité, serrurerie, vitrerie — franchise du groupe La Poste.
-- ❌ DESC-TOO-LONG : 173 chars > 160
-
-### `serrurier-boulogne-sur-mer.html`  (173 chars)
-> Serrurier à Boulogne-sur-Mer & Boulonnais : dépannage rapide, devis gratuit, techniciens HELP Confort. Saint-Martin-Boulogne, Outreau, Le Portel, Wimereux. ☎ 03 66 10 01 34.
-- ❌ DESC-TOO-LONG : 173 chars > 160
-
-### `serrurier-dunkerque.html`  (169 chars)
-> Serrurier à Dunkerque & littoral : dépannage rapide, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.
+### `reseau-help-confort.html`  (169 chars)
+> HELP Confort : Réseau national d'urgence, dépannage et amélioration de l'habitat. Plomberie, chauffage, électricité, serrurerie, vitrerie — réseau national HELP Confort.
 - ❌ DESC-TOO-LONG : 169 chars > 160
-
-### `serrurier-saint-omer.html`  (183 chars)
-> Serrurier à Saint-Omer & Dunkerque : ouverture de porte sans dégradation dans 95% des cas, blindage A2P, cylindre haute sécurité. Forfait transparent — devis gratuit. ☎ 03 66 10 01 34
-- ❌ DESC-TOO-LONG : 183 chars > 160
-
-### `travaux-dunkerque.html`  (185 chars)
-> Travaux & Rénovation à Dunkerque & littoral : interventions rapides, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.
-- ❌ DESC-TOO-LONG : 185 chars > 160
-
-### `vitrier-dunkerque.html`  (172 chars)
-> Vitrier à Dunkerque & littoral : interventions rapides, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.
-- ❌ DESC-TOO-LONG : 172 chars > 160
-
-### `volets-dunkerque.html`  (171 chars)
-> Volets à Dunkerque & littoral : interventions rapides, devis gratuit, techniciens salariés HELP Confort. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.
-- ❌ DESC-TOO-LONG : 171 chars > 160
 
 ### `actualites/2026-01-07-votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-c.html`  (92 chars)
 > Help Confort intervient pour un remplacement complet, propre et sécurisé ! Nos prestations :

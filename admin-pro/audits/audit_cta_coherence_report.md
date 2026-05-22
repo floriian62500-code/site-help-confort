@@ -1,9 +1,9 @@
 # 🎯 Audit CTA cohérence URL — sonde #20
 
-_Généré le 2026-05-21 06:56_
+_Généré le 2026-05-22 06:52_
 
-- Pages scannées : **80**
-- CTA trouvés (toutes familles) : **66**
+- Pages scannées : **82**
+- CTA trouvés (toutes familles) : **65**
 - Familles avec ≥ 1 occurrence : **3**
 - Familles **divergentes** (alertes) : **2**
 
@@ -13,10 +13,10 @@ _Généré le 2026-05-21 06:56_
 
 ### Famille `devis` — 4 destinations
 
-- **`contact.html`** — 58 occurrence(s)
-  - `aides.html` : « Demander un devis » → `contact.html`
+- **`contact.html`** — 57 occurrence(s)
   - `avant-apres.html` : « Demander un devis → » → `contact.html#form`
   - `blog.html` : « Demander un devis » → `contact.html`
+  - `chauffagiste-boulogne-sur-mer.html` : « Demander un devis → » → `contact.html?metier=chauffage#form`
 - **`tel:+33366100134`** — 2 occurrence(s)
   - `remplacement-chauffe-eau.html` : « Demander un devis 03 66 10 01 34 » → `tel:+33366100134`
   - `tarifs.html` : « 📞 Devis gratuit 03 66 10 01 34 » → `tel:+33366100134`
@@ -38,8 +38,8 @@ _Généré le 2026-05-21 06:56_
 
 ## 📊 Stats par famille
 
-### ⚠️ `devis` — 62 occurrence(s), 4 destination(s)
-- `contact.html` × 58
+### ⚠️ `devis` — 61 occurrence(s), 4 destination(s)
+- `contact.html` × 57
 - `tel:+33366100134` × 2
 - `[button-js]` × 1
 - `devis-express.html` × 1
