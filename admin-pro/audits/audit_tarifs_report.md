@@ -1,6 +1,6 @@
 # Audit Tarifs — Sonde IA #28
 
-_Généré le 2026-05-22 06:51 — `admin-pro/audits/audit_tarifs.py`_
+_Généré le 2026-05-23 06:14 — `admin-pro/audits/audit_tarifs.py`_
 
 - Pages publiques scannées : **84**
 - Montants validés (TARIFS_REFERENCE.md) : **53**
