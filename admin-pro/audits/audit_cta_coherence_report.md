@@ -1,6 +1,6 @@
 # 🎯 Audit CTA cohérence URL — sonde #20
 
-_Généré le 2026-05-24 06:40_
+_Généré le 2026-05-25 07:18_
 
 - Pages scannées : **82**
 - CTA trouvés (toutes familles) : **65**
