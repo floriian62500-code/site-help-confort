@@ -912,210 +912,74 @@ if (document.fonts && document.fonts.ready) {
  })();
  </script>
  <!-- HC-FIX V3 2026-05-19 : SVG comme rendu principal (Leaflet désactivé) -->
- <svg class="z-hero-svg" viewBox="0 0 760 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="map-title" style="width:100%;height:100%;display:block;border-radius:24px">
- <title id="map-title">Carte des zones HELP Confort — Saint-Omer (Dépan'Audo) et Dunkerque (Dépan'DK)</title>
- <defs>
- <radialGradient id="zone-glow-so" cx="50%" cy="50%" r="50%">
- <stop offset="0%" stop-color="#1FC4F0" stop-opacity=".50"/>
- <stop offset="60%" stop-color="#0DA0CF" stop-opacity=".18"/>
- <stop offset="100%" stop-color="#0DA0CF" stop-opacity="0"/>
- </radialGradient>
- <radialGradient id="zone-glow-dk" cx="50%" cy="50%" r="50%">
- <stop offset="0%" stop-color="#FF6B1A" stop-opacity=".50"/>
- <stop offset="60%" stop-color="#FFB400" stop-opacity=".18"/>
- <stop offset="100%" stop-color="#FFB400" stop-opacity="0"/>
- </radialGradient>
- <filter id="zone-blur"><feGaussianBlur stdDeviation="10"/></filter>
- <linearGradient id="sea-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
- <stop offset="0%" stop-color="#dbeafe" stop-opacity=".6"/>
- <stop offset="100%" stop-color="#dbeafe" stop-opacity="0"/>
- </linearGradient>
- </defs>
+ <!-- HC-FIX V4 2026-05-22 : SVG carte cassée remplacée par 2 cards agence claires + CTA -->
+ <div class="z-agencies-cards" style="display:grid;grid-template-columns:1fr;gap:18px;padding:18px">
+  <!-- AGENCE SAINT-OMER -->
+  <a href="contact.html?metier=Multi&objet=Intervention+Saint-Omer#form" class="z-agency-card" style="display:flex;flex-direction:column;background:linear-gradient(135deg,#fff 0%,#F8FCFE 100%);border:2px solid #0DA0CF;border-radius:18px;padding:22px 24px;text-decoration:none;color:inherit;box-shadow:0 8px 22px rgba(13,160,207,.12);transition:transform .2s ease,box-shadow .2s ease">
+   <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+    <div style="width:52px;height:52px;border-radius:14px;background:#0DA0CF;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 14px rgba(13,160,207,.25)">
+     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="9" y2="9.5"/><line x1="15" y1="9" x2="15" y2="9.5"/><line x1="9" y1="14" x2="9" y2="14.5"/><line x1="15" y1="14" x2="15" y2="14.5"/><rect x="10" y="17" width="4" height="4"/></svg>
+    </div>
+    <div style="flex:1;min-width:0">
+     <div style="font-size:.74rem;font-weight:800;letter-spacing:1.5px;color:#0DA0CF;text-transform:uppercase">Agence Dépan'Audo</div>
+     <div style="font-size:1.4rem;font-weight:800;color:#0A1428;line-height:1.15;margin-top:2px">Saint-Omer · 62500</div>
+    </div>
+   </div>
+   <div style="font-size:.86rem;color:#475569;line-height:1.55;margin-bottom:14px">Couvre l'<strong>Audomarois</strong>, la <strong>vallée de l'Aa</strong>, le <strong>Boulonnais</strong> et l'arrière-pays jusqu'à <strong>Aire-sur-la-Lys</strong>.</div>
+   <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px">
+    <span style="font-size:.74rem;font-weight:600;background:rgba(13,160,207,.10);color:#0A5375;padding:5px 11px;border-radius:999px">Saint-Omer</span>
+    <span style="font-size:.74rem;font-weight:600;background:rgba(13,160,207,.10);color:#0A5375;padding:5px 11px;border-radius:999px">Longuenesse</span>
+    <span style="font-size:.74rem;font-weight:600;background:rgba(13,160,207,.10);color:#0A5375;padding:5px 11px;border-radius:999px">Arques</span>
+    <span style="font-size:.74rem;font-weight:600;background:rgba(13,160,207,.10);color:#0A5375;padding:5px 11px;border-radius:999px">Lumbres</span>
+    <span style="font-size:.74rem;font-weight:600;background:rgba(13,160,207,.10);color:#0A5375;padding:5px 11px;border-radius:999px">Aire-sur-la-Lys</span>
+    <span style="font-size:.74rem;font-weight:600;background:rgba(13,160,207,.10);color:#0A5375;padding:5px 11px;border-radius:999px">Boulogne-sur-Mer</span>
+    <span style="font-size:.74rem;font-weight:600;background:rgba(13,160,207,.10);color:#0A5375;padding:5px 11px;border-radius:999px">Hazebrouck</span>
+    <span style="font-size:.74rem;font-weight:600;background:rgba(13,160,207,.10);color:#0A5375;padding:5px 11px;border-radius:999px">+ communes alentour</span>
+   </div>
+   <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:14px;border-top:1px solid #E5EDF3">
+    <div style="font-size:.92rem;font-weight:700;color:#0DA0CF;display:flex;align-items:center;gap:8px">
+     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+     03 66 10 01 34
+    </div>
+    <div style="font-size:.82rem;font-weight:700;color:#fff;background:#0DA0CF;padding:8px 14px;border-radius:10px;display:inline-flex;align-items:center;gap:6px">Demander une intervention <span aria-hidden="true">→</span></div>
+   </div>
+  </a>
 
- <!-- Mer du Nord en filigrane (haut de la carte = littoral) -->
- <path d="M 0 0 L 760 0 L 760 110 Q 600 130 460 120 Q 320 110 180 130 Q 80 140 0 130 Z"
- fill="url(#sea-gradient)"/>
- <text x="30" y="40" font-size="11" font-weight="700" fill="#94a3b8" font-family="Inter, sans-serif" letter-spacing="3" opacity=".6">MER DU NORD</text>
-
- <!-- Trait géographique reliant les agences (axe Saint-Omer ↔ Dunkerque ~50km) -->
- <line class="z-map-line" x1="320" y1="430" x2="600" y2="200" stroke="#94a3b8" stroke-width="1.5" stroke-opacity=".5"/>
-
- <!-- ═══ ZONE D'INTERVENTION ÉLARGIE Dunkerque (Calais + littoral) ═══ -->
- <g class="z-map-zone-dunkerque">
- <!-- Large halo de couverture -->
- <ellipse cx="500" cy="200" rx="230" ry="160" fill="url(#zone-glow-dk)" filter="url(#zone-blur)"/>
- <ellipse cx="500" cy="200" rx="190" ry="130" fill="none" stroke="#FF6B1A" stroke-width="1.5" stroke-dasharray="5 6" opacity=".35"/>
-
- <!-- AGENCE DÉPAN'DK (badge agence avec icône bâtiment) -->
- <g class="z-map-agency">
- <circle cx="600" cy="200" r="26" fill="#FF6B1A" opacity=".18"/>
- <circle cx="600" cy="200" r="18" fill="#FF6B1A"/>
- <!-- Icône bâtiment -->
- <g transform="translate(600 200)" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
- <rect x="-7" y="-7" width="14" height="13" rx="1"/>
- <line x1="-3" y1="-3" x2="-3" y2="-2.5"/>
- <line x1="3" y1="-3" x2="3" y2="-2.5"/>
- <line x1="-3" y1="1" x2="-3" y2="1.5"/>
- <line x1="3" y1="1" x2="3" y2="1.5"/>
- <rect x="-2" y="3" width="4" height="3"/>
- </g>
- </g>
- <!-- Étiquette agence -->
- <g transform="translate(600 235)">
- <rect x="-58" y="0" width="116" height="36" rx="6" fill="#fff" stroke="#FF6B1A" stroke-width="1.5"/>
- <text x="0" y="14" font-size="8" font-weight="800" fill="#FF6B1A" font-family="Inter, sans-serif" text-anchor="middle" letter-spacing="1.5">AGENCE</text>
- <text x="0" y="29" font-size="13" font-weight="800" fill="#0A1428" font-family="Inter, sans-serif" text-anchor="middle">Dépan'DK · Dunkerque</text>
- </g>
-
- <!-- Bray-Dunes -->
- <g class="z-map-pin delay1">
- <circle cx="680" cy="120" r="8" fill="#FF6B1A" opacity=".35"/>
- <circle cx="680" cy="120" r="4" fill="#FF6B1A"/>
- </g>
- <text x="690" y="116" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Bray-Dunes</text>
-
- <!-- Calais (extrême nord-ouest, sur la côte) -->
- <g class="z-map-pin delay2">
- <circle cx="340" cy="135" r="11" fill="#FF6B1A" opacity=".30"/>
- <circle cx="340" cy="135" r="6" fill="#FF6B1A"/>
- <circle cx="340" cy="135" r="3" fill="#fff"/>
- </g>
- <text x="354" y="130" font-size="12" font-weight="800" fill="#0A1428" font-family="Inter, sans-serif">Calais</text>
-
- <!-- Gravelines (entre Calais et Dunkerque) -->
- <g class="z-map-pin delay3">
- <circle cx="450" cy="150" r="8" fill="#FF6B1A" opacity=".35"/>
- <circle cx="450" cy="150" r="4" fill="#FF6B1A"/>
- </g>
- <text x="455" y="143" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Gravelines</text>
-
- <!-- Grande-Synthe -->
- <g class="z-map-pin delay4">
- <circle cx="555" cy="220" r="8" fill="#FF6B1A" opacity=".35"/>
- <circle cx="555" cy="220" r="4" fill="#FF6B1A"/>
- </g>
- <text x="478" y="238" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Grande-Synthe</text>
-
- <!-- Coudekerque -->
- <g class="z-map-pin delay2">
- <circle cx="610" cy="245" r="8" fill="#FF6B1A" opacity=".35"/>
- <circle cx="610" cy="245" r="4" fill="#FF6B1A"/>
- </g>
- <text x="620" y="258" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Coudekerque</text>
-
- <!-- Bergues -->
- <g class="z-map-pin delay3">
- <circle cx="660" cy="155" r="8" fill="#FF6B1A" opacity=".35"/>
- <circle cx="660" cy="155" r="4" fill="#FF6B1A"/>
- </g>
- <text x="672" y="150" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Bergues</text>
- </g>
-
- <!-- ═══ ZONE D'INTERVENTION ÉLARGIE Saint-Omer (Boulogne + audomarois) ═══ -->
- <g class="z-map-zone-saint-omer">
- <!-- Large halo de couverture -->
- <ellipse cx="220" cy="430" rx="230" ry="170" fill="url(#zone-glow-so)" filter="url(#zone-blur)"/>
- <ellipse cx="220" cy="430" rx="190" ry="140" fill="none" stroke="#0DA0CF" stroke-width="1.5" stroke-dasharray="5 6" opacity=".35"/>
-
- <!-- AGENCE DÉPAN'AUDO (badge agence avec icône bâtiment) -->
- <g class="z-map-agency">
- <circle cx="320" cy="430" r="26" fill="#0DA0CF" opacity=".18"/>
- <circle cx="320" cy="430" r="18" fill="#0DA0CF"/>
- <g transform="translate(320 430)" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
- <rect x="-7" y="-7" width="14" height="13" rx="1"/>
- <line x1="-3" y1="-3" x2="-3" y2="-2.5"/>
- <line x1="3" y1="-3" x2="3" y2="-2.5"/>
- <line x1="-3" y1="1" x2="-3" y2="1.5"/>
- <line x1="3" y1="1" x2="3" y2="1.5"/>
- <rect x="-2" y="3" width="4" height="3"/>
- </g>
- </g>
- <g transform="translate(320 465)">
- <rect x="-65" y="0" width="130" height="36" rx="6" fill="#fff" stroke="#0DA0CF" stroke-width="1.5"/>
- <text x="0" y="14" font-size="8" font-weight="800" fill="#0DA0CF" font-family="Inter, sans-serif" text-anchor="middle" letter-spacing="1.5">AGENCE</text>
- <text x="0" y="29" font-size="13" font-weight="800" fill="#0A1428" font-family="Inter, sans-serif" text-anchor="middle">Dépan'Audo · Saint-Omer</text>
- </g>
-
- <!-- Longuenesse (proche Saint-Omer) -->
- <g class="z-map-pin delay1">
- <circle cx="280" cy="395" r="7" fill="#0DA0CF" opacity=".35"/>
- <circle cx="280" cy="395" r="4" fill="#0DA0CF"/>
- </g>
- <text x="200" y="392" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Longuenesse</text>
-
- <!-- Arques -->
- <g class="z-map-pin delay2">
- <circle cx="380" cy="445" r="7" fill="#0DA0CF" opacity=".35"/>
- <circle cx="380" cy="445" r="4" fill="#0DA0CF"/>
- </g>
- <text x="390" y="449" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Arques</text>
-
- <!-- Lumbres -->
- <g class="z-map-pin delay3">
- <circle cx="225" cy="445" r="7" fill="#0DA0CF" opacity=".35"/>
- <circle cx="225" cy="445" r="4" fill="#0DA0CF"/>
- </g>
- <text x="170" y="461" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Lumbres</text>
-
- <!-- Wizernes -->
- <g class="z-map-pin delay4">
- <circle cx="290" cy="495" r="7" fill="#0DA0CF" opacity=".35"/>
- <circle cx="290" cy="495" r="4" fill="#0DA0CF"/>
- </g>
- <text x="298" y="510" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Wizernes</text>
-
- <!-- Aire-sur-la-Lys (sud) -->
- <g class="z-map-pin delay2">
- <circle cx="400" cy="525" r="7" fill="#0DA0CF" opacity=".35"/>
- <circle cx="400" cy="525" r="4" fill="#0DA0CF"/>
- </g>
- <text x="410" y="540" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Aire-sur-la-Lys</text>
-
- <!-- Boulogne-sur-Mer (extrême ouest, sur la côte) -->
- <g class="z-map-pin delay3">
- <circle cx="70" cy="345" r="11" fill="#0DA0CF" opacity=".30"/>
- <circle cx="70" cy="345" r="6" fill="#0DA0CF"/>
- <circle cx="70" cy="345" r="3" fill="#fff"/>
- </g>
- <text x="40" y="370" font-size="12" font-weight="800" fill="#0A1428" font-family="Inter, sans-serif">Boulogne-sur-Mer</text>
-
- <!-- Hazebrouck (est) -->
- <g class="z-map-pin delay4">
- <circle cx="495" cy="495" r="7" fill="#0DA0CF" opacity=".35"/>
- <circle cx="495" cy="495" r="4" fill="#0DA0CF"/>
- </g>
- <text x="505" y="500" font-size="11" font-weight="700" fill="#475569" font-family="Inter, sans-serif">Hazebrouck</text>
- </g>
-
- <!-- Indicateur distance entre agences -->
- <g opacity=".7">
- <text x="465" y="328" font-size="10" font-weight="700" fill="#94a3b8" font-family="Inter, sans-serif" text-anchor="middle" letter-spacing="2">~ 55 km entre agences</text>
- </g>
-
- <!-- Légende -->
- <g transform="translate(20, 590)">
- <rect x="0" y="0" width="510" height="38" rx="19" fill="#fff" stroke="#E5EDF3" stroke-width="1.5"/>
- <g transform="translate(20 19)">
- <circle r="7" fill="#FF6B1A"/>
- <rect x="-2" y="-2" width="4" height="4" fill="#fff"/>
- </g>
- <text x="32" y="23" font-size="11" font-weight="700" fill="#0A1428" font-family="Inter, sans-serif">Agence Dépan'DK</text>
- <text x="135" y="23" font-size="10" font-weight="600" fill="#94a3b8" font-family="Inter, sans-serif">+ couverture</text>
- <g transform="translate(245 19)">
- <circle r="7" fill="#0DA0CF"/>
- <rect x="-2" y="-2" width="4" height="4" fill="#fff"/>
- </g>
- <text x="257" y="23" font-size="11" font-weight="700" fill="#0A1428" font-family="Inter, sans-serif">Agence Dépan'Audo</text>
- <text x="372" y="23" font-size="10" font-weight="600" fill="#94a3b8" font-family="Inter, sans-serif">+ couverture</text>
- </g>
-
- <!-- Boussole -->
- <g transform="translate(710, 50)" opacity=".55">
- <circle cx="0" cy="0" r="22" fill="#fff" stroke="#E5EDF3"/>
- <path d="M 0 -14 L 4 0 L 0 14 L -4 0 Z" fill="#E11D48"/>
- <text x="0" y="-26" font-size="9" font-weight="800" fill="#475569" font-family="Inter, sans-serif" text-anchor="middle">N</text>
- </g>
- </svg>
+  <!-- AGENCE DUNKERQUE -->
+  <a href="contact.html?metier=Multi&objet=Intervention+Dunkerque#form" class="z-agency-card" style="display:flex;flex-direction:column;background:linear-gradient(135deg,#fff 0%,#FFFBF6 100%);border:2px solid #FF6B1A;border-radius:18px;padding:22px 24px;text-decoration:none;color:inherit;box-shadow:0 8px 22px rgba(255,107,26,.12);transition:transform .2s ease,box-shadow .2s ease">
+   <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+    <div style="width:52px;height:52px;border-radius:14px;background:#FF6B1A;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 14px rgba(255,107,26,.25)">
+     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="9" y2="9.5"/><line x1="15" y1="9" x2="15" y2="9.5"/><line x1="9" y1="14" x2="9" y2="14.5"/><line x1="15" y1="14" x2="15" y2="14.5"/><rect x="10" y="17" width="4" height="4"/></svg>
+    </div>
+    <div style="flex:1;min-width:0">
+     <div style="font-size:.74rem;font-weight:800;letter-spacing:1.5px;color:#FF6B1A;text-transform:uppercase">Agence Dépan'DK</div>
+     <div style="font-size:1.4rem;font-weight:800;color:#0A1428;line-height:1.15;margin-top:2px">Dunkerque · 59140</div>
+    </div>
+   </div>
+   <div style="font-size:.86rem;color:#475569;line-height:1.55;margin-bottom:14px">Couvre la <strong>communauté urbaine de Dunkerque</strong>, le <strong>Calaisis</strong>, les <strong>Flandres maritimes</strong> et le littoral jusqu'à la <strong>frontière belge</strong>.</div>
+   <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px">
+    <span style="font-size:.74rem;font-weight:600;background:rgba(255,107,26,.10);color:#9A3A0A;padding:5px 11px;border-radius:999px">Dunkerque</span>
+    <span style="font-size:.74rem;font-weight:600;background:rgba(255,107,26,.10);color:#9A3A0A;padding:5px 11px;border-radius:999px">Grande-Synthe</span>
+    <span style="font-size:.74rem;font-weight:600;background:rgba(255,107,26,.10);color:#9A3A0A;padding:5px 11px;border-radius:999px">Coudekerque</span>
+    <span style="font-size:.74rem;font-weight:600;background:rgba(255,107,26,.10);color:#9A3A0A;padding:5px 11px;border-radius:999px">Bergues</span>
+    <span style="font-size:.74rem;font-weight:600;background:rgba(255,107,26,.10);color:#9A3A0A;padding:5px 11px;border-radius:999px">Bray-Dunes</span>
+    <span style="font-size:.74rem;font-weight:600;background:rgba(255,107,26,.10);color:#9A3A0A;padding:5px 11px;border-radius:999px">Gravelines</span>
+    <span style="font-size:.74rem;font-weight:600;background:rgba(255,107,26,.10);color:#9A3A0A;padding:5px 11px;border-radius:999px">Calais</span>
+    <span style="font-size:.74rem;font-weight:600;background:rgba(255,107,26,.10);color:#9A3A0A;padding:5px 11px;border-radius:999px">+ communes alentour</span>
+   </div>
+   <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:14px;border-top:1px solid #E5EDF3">
+    <div style="font-size:.92rem;font-weight:700;color:#FF6B1A;display:flex;align-items:center;gap:8px">
+     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+     03 66 10 01 34
+    </div>
+    <div style="font-size:.82rem;font-weight:700;color:#fff;background:#FF6B1A;padding:8px 14px;border-radius:10px;display:inline-flex;align-items:center;gap:6px">Demander une intervention <span aria-hidden="true">→</span></div>
+   </div>
+  </a>
+ </div>
+ <style>
+  @media (min-width: 760px) { .z-agencies-cards { grid-template-columns: 1fr 1fr !important; } }
+  .z-agency-card:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(10,20,40,.14) !important; }
+ </style>
  </div>
  </div>
 </section>
