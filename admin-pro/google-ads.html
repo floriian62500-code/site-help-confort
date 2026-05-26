@@ -132,7 +132,7 @@
     <div class="gads-lsa">
       <h3>⭐ Local Services Ads (LSA) <span class="gads-lsa-status" id="lsaStatus">Non démarré</span></h3>
       <p style="margin:0 0 12px;font-size:.88rem;color:#475569">Paiement <strong>au lead qualifié</strong> (~15-40 €/lead), badge <strong>Google Garanti</strong>, affichage au-dessus des résultats classiques.</p>
-      <a href="https://ads.google.com/local-services-ads/" target="_blank" class="gads-btn primary" rel="noopener">Ouvrir Google Local Services →</a>
+      <a href="https://ads.google.com/local-services/leads" target="_blank" class="gads-btn primary" rel="noopener">Ouvrir mon dashboard LSA (leads) →</a>
     </div>
 
     <!-- Tableau campagnes -->
@@ -175,8 +175,9 @@
 <script src="assets/layout.js"></script>
 <script>
 (async function(){
-  const c = window.sb;
-  const EF_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sync-google-ads';
+  // HC-FIX 2026-05-26 : utiliser window.HCSupabase (le bon nom dans admin-pro), pas window.sb
+  const c = await window.HCSupabase.init();
+  const EF_URL = window.HCSupabase.fnUrl('sync-google-ads');
 
   async function loadConfig() {
     const { data } = await c.from('app_settings').select('value').eq('key','google_ads').maybeSingle();
@@ -315,13 +316,10 @@
     btn.disabled = true;
     btn.textContent = 'Sync…';
     try {
-      const { data: { session } } = await c.auth.getSession();
+      const headers = await window.HCSupabase.authHeaders();
       const r = await fetch(EF_URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + (session?.access_token || '')
-        },
+        headers: headers,
         body: '{}'
       });
       const data = await r.json();
