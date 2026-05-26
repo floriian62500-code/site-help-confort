@@ -1,6 +1,6 @@
 # 📚 Audit JSON statique vs BDD — sonde #11
 
-_Généré le 2026-05-25 07:18_
+_Généré le 2026-05-26 06:51_
 
 - Fichiers JSON scannés : **5**
 - Accès Supabase : **❌ absent (log local uniquement)**
@@ -14,8 +14,8 @@ _Généré le 2026-05-25 07:18_
 
 | Fichier | Table | Local | Remote | Δ % | Méthode | Dernière MAJ |
 |---------|-------|-------|--------|-----|---------|--------------|
-| `content/actualites/index.json` | articles | 17 | _(`no-creds`)_ | — | `list` | 2026-05-25T07:17:03+00:00 |
-| `content/apporteurs/index.json` | apporteurs | 10 | _(`no-creds`)_ | — | `dict.apporteurs[list]` | 2026-05-25T07:17:03+00:00 |
-| `content/config/reviews.json` | reviews | 3 | _(`no-creds`)_ | — | `dict.sample_quotes[list]` | 2026-05-25T07:17:03+00:00 |
-| `content/fournisseurs/index.json` | fournisseurs | 11 | _(`no-creds`)_ | — | `dict.fournisseurs[list]` | 2026-05-25T07:17:03+00:00 |
-| `content/realisations/index.json` | realisations | 20 | _(`no-creds`)_ | — | `list` | 2026-05-25T07:17:03+00:00 |
+| `content/actualites/index.json` | articles | 17 | _(`no-creds`)_ | — | `list` | 2026-05-26T06:49:38+00:00 |
+| `content/apporteurs/index.json` | apporteurs | 10 | _(`no-creds`)_ | — | `dict.apporteurs[list]` | 2026-05-26T06:49:38+00:00 |
+| `content/config/reviews.json` | reviews | 3 | _(`no-creds`)_ | — | `dict.sample_quotes[list]` | 2026-05-26T06:49:38+00:00 |
+| `content/fournisseurs/index.json` | fournisseurs | 11 | _(`no-creds`)_ | — | `dict.fournisseurs[list]` | 2026-05-26T06:49:38+00:00 |
+| `content/realisations/index.json` | realisations | 20 | _(`no-creds`)_ | — | `list` | 2026-05-26T06:49:38+00:00 |
