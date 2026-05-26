@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Google Ads — HC Admin</title>
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+  .gads-page { padding: 24px; max-width: 1400px; margin: 0 auto; }
+  .gads-h1 { font-size: 1.6rem; font-weight: 800; margin: 0 0 4px; color: #0A1428; display: flex; align-items: center; gap: 12px; }
+  .gads-h1 .gads-badge { font-size: .7rem; padding: 4px 10px; background: #FFE8D6; color: #8B3A00; border-radius: 999px; font-weight: 700; }
+  .gads-h1 .gads-badge.live { background: #D1FAE5; color: #065F46; }
+  .gads-sub { color: #64748b; font-size: .92rem; margin: 0 0 24px; }
+
+  /* Bannière setup si pas configuré */
+  .gads-setup-banner { background: linear-gradient(135deg, #FFF8F1, #FFFFFF); border: 2px solid #FBBF24; border-radius: 16px; padding: 20px 24px; margin-bottom: 24px; }
+  .gads-setup-banner h3 { margin: 0 0 8px; color: #92400E; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
+  .gads-setup-banner ol { margin: 12px 0 0; padding-left: 24px; color: #475569; font-size: .92rem; line-height: 1.7; }
+  .gads-setup-banner ol li strong { color: #0A1428; }
+
+  /* KPI cards */
+  .gads-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 24px; }
+  .gads-kpi { background: #fff; border: 1px solid #E5EDF3; border-radius: 14px; padding: 16px 18px; }
+  .gads-kpi-label { font-size: .76rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+  .gads-kpi-value { font-size: 1.5rem; font-weight: 800; color: #0A1428; line-height: 1.1; }
+  .gads-kpi-sub { font-size: .8rem; color: #94a3b8; margin-top: 4px; }
+  .gads-kpi.alert { border-color: #FCA5A5; background: #FEF2F2; }
+  .gads-kpi.alert .gads-kpi-value { color: #B91C1C; }
+
+  /* Limite + jauge */
+  .gads-cap { background: #fff; border: 1px solid #E5EDF3; border-radius: 14px; padding: 18px 20px; margin-bottom: 24px; }
+  .gads-cap-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .gads-cap-head h3 { margin: 0; font-size: 1rem; font-weight: 700; color: #0A1428; }
+  .gads-cap-head a { color: #0DA0CF; font-size: .82rem; font-weight: 600; text-decoration: none; }
+  .gads-cap-bar { height: 12px; background: #F1F5F9; border-radius: 999px; overflow: hidden; }
+  .gads-cap-bar-fill { height: 100%; background: linear-gradient(90deg, #0DA0CF, #1FC4F0); border-radius: 999px; transition: width .4s ease; }
+  .gads-cap-bar-fill.warn { background: linear-gradient(90deg, #F59E0B, #FBBF24); }
+  .gads-cap-bar-fill.crit { background: linear-gradient(90deg, #DC2626, #EF4444); }
+
+  /* Tableau campagnes */
+  .gads-table-wrap { background: #fff; border: 1px solid #E5EDF3; border-radius: 14px; overflow: hidden; margin-bottom: 24px; }
+  .gads-table-head { padding: 16px 20px; border-bottom: 1px solid #E5EDF3; display: flex; justify-content: space-between; align-items: center; }
+  .gads-table-head h3 { margin: 0; font-size: 1rem; font-weight: 700; color: #0A1428; }
+  .gads-table { width: 100%; border-collapse: collapse; }
+  .gads-table th { background: #F8FAFC; padding: 10px 14px; text-align: left; font-size: .76rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: .04em; }
+  .gads-table td { padding: 14px; border-top: 1px solid #F1F5F9; font-size: .9rem; color: #0A1428; }
+  .gads-table tr:hover { background: #FAFCFE; }
+  .gads-status { display: inline-flex; padding: 3px 8px; border-radius: 6px; font-size: .72rem; font-weight: 700; text-transform: uppercase; }
+  .gads-status.ENABLED { background: #D1FAE5; color: #065F46; }
+  .gads-status.PAUSED { background: #FEF3C7; color: #92400E; }
+  .gads-status.REMOVED { background: #FEE2E2; color: #991B1B; }
+  .gads-actions { display: flex; gap: 6px; }
+  .gads-btn { padding: 6px 10px; border-radius: 6px; border: 1px solid #E5EDF3; background: #fff; cursor: pointer; font-size: .8rem; font-weight: 600; color: #0A1428; transition: all .15s; }
+  .gads-btn:hover { border-color: #0DA0CF; color: #0DA0CF; }
+  .gads-btn.primary { background: #0DA0CF; color: #fff; border-color: #0DA0CF; }
+  .gads-btn.primary:hover { background: #0987B0; }
+  .gads-btn.danger:hover { border-color: #DC2626; color: #DC2626; }
+
+  /* Alertes */
+  .gads-alerts { background: #fff; border: 1px solid #E5EDF3; border-radius: 14px; padding: 18px 20px; margin-bottom: 24px; }
+  .gads-alerts h3 { margin: 0 0 12px; font-size: 1rem; font-weight: 700; color: #0A1428; }
+  .gads-alert { display: flex; align-items: flex-start; gap: 12px; padding: 12px; border-radius: 8px; margin-bottom: 8px; background: #FFFBEB; border-left: 4px solid #F59E0B; }
+  .gads-alert.critical { background: #FEF2F2; border-left-color: #DC2626; }
+  .gads-alert-body { flex: 1; }
+  .gads-alert-title { font-weight: 700; font-size: .9rem; color: #0A1428; margin-bottom: 2px; }
+  .gads-alert-msg { font-size: .82rem; color: #475569; }
+  .gads-empty { text-align: center; padding: 40px 20px; color: #94a3b8; }
+
+  /* LSA bloc séparé */
+  .gads-lsa { background: linear-gradient(135deg, #F8FCFE, #fff); border: 1px solid #B3E4F2; border-radius: 14px; padding: 18px 20px; margin-bottom: 24px; }
+  .gads-lsa h3 { margin: 0 0 6px; color: #0A1428; display: flex; align-items: center; gap: 8px; font-size: 1rem; }
+  .gads-lsa-status { display: inline-flex; padding: 3px 10px; border-radius: 6px; font-size: .72rem; font-weight: 700; background: #FEF3C7; color: #92400E; }
+  .gads-lsa-status.active { background: #D1FAE5; color: #065F46; }
+</style>
+</head>
+<body>
+<div id="admin-sidebar-container"></div>
+<main class="admin-main">
+  <div class="gads-page">
+    <h1 class="gads-h1">
+      📊 Google Ads
+      <span class="gads-badge" id="gadsMode">Stub — pas encore configuré</span>
+    </h1>
+    <p class="gads-sub">Pilotage des campagnes Google Ads et Local Services Ads pour HELP Confort Saint-Omer & Dunkerque.</p>
+
+    <!-- Bannière setup (visible tant que non configuré) -->
+    <div class="gads-setup-banner" id="setupBanner" style="display:none">
+      <h3>🚀 Setup en 4 étapes (1-2 semaines)</h3>
+      <ol>
+        <li><strong>Créer compte Google Ads</strong> : <a href="https://ads.google.com" target="_blank" rel="noopener">ads.google.com</a> — CB + adresse fiscale.</li>
+        <li><strong>Demander Developer Token API</strong> : formulaire support Google (validation ~2 semaines, gratuit). <a href="https://developers.google.com/google-ads/api/docs/get-started/dev-token" target="_blank">Doc Google</a></li>
+        <li><strong>OAuth Google Ads</strong> : une fois token reçu, OAuth depuis <a href="settings.html#google-ads">Paramètres → Google Ads</a></li>
+        <li><strong>Local Services Ads</strong> : profil sur <a href="https://ads.google.com/local-services-ads/" target="_blank">Google Local Services</a> (Kbis, assurance, background check)</li>
+      </ol>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="gads-kpis">
+      <div class="gads-kpi">
+        <div class="gads-kpi-label">Dépense mois en cours</div>
+        <div class="gads-kpi-value" id="kpiSpend">—</div>
+        <div class="gads-kpi-sub" id="kpiSpendSub">vs mois dernier</div>
+      </div>
+      <div class="gads-kpi">
+        <div class="gads-kpi-label">Leads générés (30j)</div>
+        <div class="gads-kpi-value" id="kpiLeads">—</div>
+        <div class="gads-kpi-sub" id="kpiLeadsSub">contacts qualifiés</div>
+      </div>
+      <div class="gads-kpi">
+        <div class="gads-kpi-label">Coût par lead (CPL)</div>
+        <div class="gads-kpi-value" id="kpiCpl">—</div>
+        <div class="gads-kpi-sub">moyenne 30j</div>
+      </div>
+      <div class="gads-kpi">
+        <div class="gads-kpi-label">ROAS</div>
+        <div class="gads-kpi-value" id="kpiRoas">—</div>
+        <div class="gads-kpi-sub">retour / € dépensé</div>
+      </div>
+    </div>
+
+    <!-- Jauge plafond mensuel -->
+    <div class="gads-cap">
+      <div class="gads-cap-head">
+        <h3>Plafond mensuel : <span id="capLabel">— € / 1 500 €</span></h3>
+        <a href="settings.html#google-ads-cap">Modifier le plafond</a>
+      </div>
+      <div class="gads-cap-bar"><div class="gads-cap-bar-fill" id="capBarFill" style="width:0%"></div></div>
+      <p style="margin:8px 0 0;font-size:.82rem;color:#64748b" id="capInfo">Si dépassement à 80%, alerte. À 100%, pause auto des campagnes.</p>
+    </div>
+
+    <!-- LSA bloc -->
+    <div class="gads-lsa">
+      <h3>⭐ Local Services Ads (LSA) <span class="gads-lsa-status" id="lsaStatus">Non démarré</span></h3>
+      <p style="margin:0 0 12px;font-size:.88rem;color:#475569">Paiement <strong>au lead qualifié</strong> (~15-40 €/lead), badge <strong>Google Garanti</strong>, affichage au-dessus des résultats classiques.</p>
+      <a href="https://ads.google.com/local-services-ads/" target="_blank" class="gads-btn primary" rel="noopener">Ouvrir Google Local Services →</a>
+    </div>
+
+    <!-- Tableau campagnes -->
+    <div class="gads-table-wrap">
+      <div class="gads-table-head">
+        <h3>Campagnes</h3>
+        <button class="gads-btn primary" id="syncBtn">↻ Sync maintenant</button>
+      </div>
+      <table class="gads-table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Type</th>
+            <th>Statut</th>
+            <th>Budget /jour</th>
+            <th>Dépense 30j</th>
+            <th>Leads 30j</th>
+            <th>CPL</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="campaignsTable">
+          <tr><td colspan="8" class="gads-empty">Chargement…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Alertes -->
+    <div class="gads-alerts">
+      <h3>🔔 Alertes</h3>
+      <div id="alertsList">
+        <p class="gads-empty">Pas d'alerte active.</p>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+(async function(){
+  const c = window.sb;
+  const EF_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sync-google-ads';
+
+  async function loadConfig() {
+    const { data } = await c.from('app_settings').select('value').eq('key','google_ads').maybeSingle();
+    return data?.value || {};
+  }
+
+  function fmtEur(v) {
+    if (v == null || isNaN(v)) return '—';
+    return Number(v).toLocaleString('fr-FR', { style:'currency', currency:'EUR', maximumFractionDigits: 0 });
+  }
+  function fmtNum(v) {
+    if (v == null || isNaN(v)) return '—';
+    return Number(v).toLocaleString('fr-FR');
+  }
+
+  async function loadMetrics() {
+    // Charger métriques 30 derniers jours
+    const since = new Date();
+    since.setDate(since.getDate() - 30);
+    const { data: metrics } = await c.from('google_ads_metrics_daily')
+      .select('cost_eur, conversions, impressions, clicks, conversion_value_eur, campaign_id, date')
+      .gte('date', since.toISOString().slice(0,10));
+
+    const totalSpend = (metrics||[]).reduce((s,m) => s + (m.cost_eur||0), 0);
+    const totalLeads = (metrics||[]).reduce((s,m) => s + (m.conversions||0), 0);
+    const totalImpr  = (metrics||[]).reduce((s,m) => s + (m.impressions||0), 0);
+    const totalClicks= (metrics||[]).reduce((s,m) => s + (m.clicks||0), 0);
+    const totalValue = (metrics||[]).reduce((s,m) => s + (m.conversion_value_eur||0), 0);
+    const cpl = totalLeads > 0 ? totalSpend / totalLeads : null;
+    const roas= totalSpend > 0 ? totalValue / totalSpend : null;
+
+    return { totalSpend, totalLeads, totalImpr, totalClicks, cpl, roas, byCampaign: metrics||[] };
+  }
+
+  async function loadCampaigns() {
+    const { data } = await c.from('google_ads_campaigns').select('*').order('updated_at', { ascending: false });
+    return data || [];
+  }
+
+  async function loadAlerts() {
+    const { data } = await c.from('google_ads_alerts').select('*').is('acknowledged_at', null).order('created_at', { ascending: false }).limit(10);
+    return data || [];
+  }
+
+  function renderKpis(m, cfg) {
+    document.getElementById('kpiSpend').textContent = fmtEur(m.totalSpend);
+    document.getElementById('kpiLeads').textContent = fmtNum(Math.round(m.totalLeads));
+    document.getElementById('kpiCpl').textContent = m.cpl != null ? fmtEur(m.cpl) : '—';
+    document.getElementById('kpiRoas').textContent = m.roas != null ? (m.roas.toFixed(2) + '×') : '—';
+
+    // Jauge plafond
+    const cap = cfg.monthly_cap_eur || 1500;
+    const pct = Math.min(100, (m.totalSpend / cap) * 100);
+    document.getElementById('capLabel').textContent = `${fmtEur(m.totalSpend)} / ${fmtEur(cap)}`;
+    const fill = document.getElementById('capBarFill');
+    fill.style.width = pct + '%';
+    fill.className = 'gads-cap-bar-fill' + (pct > 95 ? ' crit' : pct > 80 ? ' warn' : '');
+  }
+
+  function renderCampaigns(campaigns, metrics) {
+    const tbody = document.getElementById('campaignsTable');
+    if (!campaigns.length) {
+      tbody.innerHTML = '<tr><td colspan="8" class="gads-empty">Aucune campagne. Crée la première depuis <a href="https://ads.google.com" target="_blank">Google Ads</a> ou via le bouton "Nouvelle campagne".</td></tr>';
+      return;
+    }
+    tbody.innerHTML = campaigns.map(c => {
+      const m = metrics.filter(x => x.campaign_id === c.id);
+      const spend = m.reduce((s,x) => s + (x.cost_eur||0), 0);
+      const leads = m.reduce((s,x) => s + (x.conversions||0), 0);
+      const cpl = leads > 0 ? spend / leads : null;
+      return `
+        <tr>
+          <td><strong>${c.name}</strong>${c.metier ? '<br><span style="font-size:.78rem;color:#64748b">'+c.metier+' · '+(c.ville||'-')+'</span>' : ''}</td>
+          <td>${c.type || 'SEARCH'}</td>
+          <td><span class="gads-status ${c.status}">${c.status}</span></td>
+          <td>${fmtEur(c.daily_budget_eur)}</td>
+          <td>${fmtEur(spend)}</td>
+          <td>${fmtNum(Math.round(leads))}</td>
+          <td>${cpl != null ? fmtEur(cpl) : '—'}</td>
+          <td><div class="gads-actions">
+            <button class="gads-btn" title="Pause/reprise" disabled>${c.status === 'ENABLED' ? '⏸' : '▶'}</button>
+            <button class="gads-btn" title="Modifier budget" disabled>€</button>
+          </div></td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function renderAlerts(alerts) {
+    const list = document.getElementById('alertsList');
+    if (!alerts.length) {
+      list.innerHTML = '<p class="gads-empty">Pas d\'alerte active.</p>';
+      return;
+    }
+    list.innerHTML = alerts.map(a => `
+      <div class="gads-alert ${a.severity}">
+        <div class="gads-alert-body">
+          <div class="gads-alert-title">${a.title}</div>
+          <div class="gads-alert-msg">${a.message || ''}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderConfigBanner(cfg) {
+    const banner = document.getElementById('setupBanner');
+    const mode = document.getElementById('gadsMode');
+    if (!cfg.configured) {
+      banner.style.display = 'block';
+      mode.textContent = 'Stub — pas encore configuré';
+      mode.className = 'gads-badge';
+    } else {
+      banner.style.display = 'none';
+      mode.textContent = 'Live · Dernière sync : ' + (cfg.last_sync_at ? new Date(cfg.last_sync_at).toLocaleString('fr-FR') : '—');
+      mode.className = 'gads-badge live';
+    }
+    // LSA
+    const lsa = document.getElementById('lsaStatus');
+    if (cfg.lsa_enabled) {
+      lsa.textContent = 'Actif';
+      lsa.className = 'gads-lsa-status active';
+    }
+  }
+
+  async function refresh() {
+    const cfg = await loadConfig();
+    renderConfigBanner(cfg);
+    const [m, campaigns, alerts] = await Promise.all([loadMetrics(), loadCampaigns(), loadAlerts()]);
+    renderKpis(m, cfg);
+    renderCampaigns(campaigns, m.byCampaign);
+    renderAlerts(alerts);
+  }
+
+  document.getElementById('syncBtn').addEventListener('click', async () => {
+    const btn = document.getElementById('syncBtn');
+    btn.disabled = true;
+    btn.textContent = 'Sync…';
+    try {
+      const { data: { session } } = await c.auth.getSession();
+      const r = await fetch(EF_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + (session?.access_token || '')
+        },
+        body: '{}'
+      });
+      const data = await r.json();
+      alert(data.success ? `Sync OK : ${data.campaigns_synced || 0} campagnes, ${data.metrics_synced || 0} métriques.${data.mode === 'stub' ? '\n\n(Mode stub — Google Ads pas encore configuré.)' : ''}` : 'Erreur : ' + (data.error || JSON.stringify(data)));
+      await refresh();
+    } catch (e) {
+      alert('Erreur sync : ' + e.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '↻ Sync maintenant';
+    }
+  });
+
+  await refresh();
+})();
+</script>
+</body>
+</html>
