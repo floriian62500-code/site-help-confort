@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paiements Stripe — HC Admin</title>
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+  .pay-page { padding: 24px; max-width: 1400px; margin: 0 auto; }
+  .pay-h1 { font-size: 1.6rem; font-weight: 800; margin: 0 0 4px; color: #0A1428; display: flex; align-items: center; gap: 12px; }
+  .pay-badge { font-size: .7rem; padding: 4px 10px; background: #D1FAE5; color: #065F46; border-radius: 999px; font-weight: 700; }
+  .pay-sub { color: #64748b; font-size: .92rem; margin: 0 0 24px; }
+
+  /* KPI */
+  .pay-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 24px; }
+  .pay-kpi { background: #fff; border: 1px solid #E5EDF3; border-radius: 14px; padding: 16px 18px; }
+  .pay-kpi-label { font-size: .74rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+  .pay-kpi-value { font-size: 1.6rem; font-weight: 800; color: #0A1428; line-height: 1.1; margin-top: 4px; }
+  .pay-kpi.success .pay-kpi-value { color: #065F46; }
+  .pay-kpi.pending .pay-kpi-value { color: #92400E; }
+  .pay-kpi.fail .pay-kpi-value { color: #B91C1C; }
+
+  /* Form nouveau lien */
+  .pay-form { background: #fff; border: 1px solid #E5EDF3; border-radius: 14px; padding: 20px 22px; margin-bottom: 24px; }
+  .pay-form h3 { margin: 0 0 16px; font-size: 1.05rem; font-weight: 700; color: #0A1428; }
+  .pay-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 12px; }
+  .pay-form label { display: block; font-size: .78rem; font-weight: 700; color: #475569; margin-bottom: 4px; }
+  .pay-form input, .pay-form textarea, .pay-form select { width: 100%; padding: 10px 12px; border: 1px solid #CBD5E1; border-radius: 8px; font-size: .92rem; box-sizing: border-box; }
+  .pay-form textarea { min-height: 60px; resize: vertical; }
+  .pay-form-actions { display: flex; gap: 10px; align-items: center; margin-top: 12px; }
+  .pay-btn { padding: 10px 18px; border-radius: 10px; border: 0; font-weight: 700; font-size: .92rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+  .pay-btn.primary { background: #635BFF; color: #fff; }
+  .pay-btn.primary:hover { background: #4F46E5; }
+  .pay-btn.primary:disabled { opacity: .6; cursor: not-allowed; }
+  .pay-btn.ghost { background: #fff; color: #635BFF; border: 1px solid #635BFF; }
+
+  /* Result preview */
+  .pay-result { display: none; background: linear-gradient(135deg, #F0FDF4, #fff); border: 2px solid #10B981; border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; }
+  .pay-result.show { display: block; }
+  .pay-result h4 { margin: 0 0 8px; color: #065F46; font-size: 1rem; }
+  .pay-result .pay-link { display: block; padding: 10px 14px; background: #fff; border: 1px dashed #10B981; border-radius: 8px; font-family: monospace; font-size: .82rem; word-break: break-all; color: #064E3B; margin-bottom: 12px; }
+  .pay-result-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* Table paiements */
+  .pay-table-wrap { background: #fff; border: 1px solid #E5EDF3; border-radius: 14px; overflow: hidden; }
+  .pay-table-head { padding: 16px 20px; border-bottom: 1px solid #E5EDF3; display: flex; justify-content: space-between; align-items: center; }
+  .pay-table-head h3 { margin: 0; font-size: 1rem; font-weight: 700; }
+  .pay-table { width: 100%; border-collapse: collapse; }
+  .pay-table th { background: #F8FAFC; padding: 10px 14px; text-align: left; font-size: .74rem; font-weight: 700; color: #64748b; text-transform: uppercase; }
+  .pay-table td { padding: 12px 14px; border-top: 1px solid #F1F5F9; font-size: .88rem; }
+  .pay-status { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: .72rem; font-weight: 700; text-transform: uppercase; }
+  .pay-status.pending { background: #FEF3C7; color: #92400E; }
+  .pay-status.paid { background: #D1FAE5; color: #065F46; }
+  .pay-status.failed { background: #FEE2E2; color: #991B1B; }
+  .pay-status.refunded { background: #E0E7FF; color: #3730A3; }
+  .pay-status.expired { background: #F3F4F6; color: #6B7280; }
+
+  .pay-empty { text-align: center; padding: 40px 20px; color: #94a3b8; }
+</style>
+</head>
+<body>
+<div id="admin-sidebar-container"></div>
+<main class="admin-main">
+  <div class="pay-page">
+    <h1 class="pay-h1">💳 Paiements Stripe <span class="pay-badge" id="modeBadge">LIVE</span></h1>
+    <p class="pay-sub">Génère des liens de paiement à envoyer aux clients après intervention. Compte : <strong>Dépan'audo</strong> (Saint-Omer).</p>
+
+    <!-- KPI -->
+    <div class="pay-kpis">
+      <div class="pay-kpi success">
+        <div class="pay-kpi-label">Encaissés (30j)</div>
+        <div class="pay-kpi-value" id="kpiPaid">—</div>
+      </div>
+      <div class="pay-kpi pending">
+        <div class="pay-kpi-label">En attente</div>
+        <div class="pay-kpi-value" id="kpiPending">—</div>
+      </div>
+      <div class="pay-kpi">
+        <div class="pay-kpi-label">Total mois en cours</div>
+        <div class="pay-kpi-value" id="kpiMonth">—</div>
+      </div>
+      <div class="pay-kpi fail">
+        <div class="pay-kpi-label">Échecs / expirés (30j)</div>
+        <div class="pay-kpi-value" id="kpiFail">—</div>
+      </div>
+    </div>
+
+    <!-- Form nouveau lien -->
+    <div class="pay-form">
+      <h3>➕ Nouveau lien de paiement</h3>
+      <div class="pay-form-row">
+        <div>
+          <label>Montant (€ TTC) *</label>
+          <input type="number" id="amount" placeholder="148.00" min="1" step="0.01" required>
+        </div>
+        <div>
+          <label>Description (visible client) *</label>
+          <input type="text" id="description" placeholder="Dépannage plomberie #1234" required>
+        </div>
+      </div>
+      <div class="pay-form-row">
+        <div>
+          <label>Nom client</label>
+          <input type="text" id="customer_name" placeholder="Dupont">
+        </div>
+        <div>
+          <label>Email client</label>
+          <input type="email" id="customer_email" placeholder="client@example.fr">
+        </div>
+      </div>
+      <div class="pay-form-row">
+        <div>
+          <label>Téléphone client (pour SMS)</label>
+          <input type="tel" id="customer_phone" placeholder="06 12 34 56 78">
+        </div>
+        <div>
+          <label>Agence</label>
+          <select id="agence">
+            <option value="depan-audo">Dépan'Audo (Saint-Omer)</option>
+            <option value="depan-dk">Dépan'DK (Dunkerque)</option>
+          </select>
+        </div>
+      </div>
+      <div class="pay-form-actions">
+        <button class="pay-btn primary" id="btnCreate">💳 Générer le lien</button>
+        <span style="font-size:.82rem;color:#64748b">Le lien sera valide 24h. Client paye par CB sécurisée.</span>
+      </div>
+    </div>
+
+    <!-- Result preview -->
+    <div class="pay-result" id="resultBox">
+      <h4>✅ Lien créé !</h4>
+      <a class="pay-link" id="resultLink" href="#" target="_blank"></a>
+      <div class="pay-result-actions">
+        <button class="pay-btn ghost" id="btnCopy">📋 Copier</button>
+        <a class="pay-btn ghost" id="btnSms" target="_blank">💬 SMS</a>
+        <a class="pay-btn ghost" id="btnMail" target="_blank">📧 Email</a>
+      </div>
+    </div>
+
+    <!-- Table paiements -->
+    <div class="pay-table-wrap">
+      <div class="pay-table-head">
+        <h3>Historique paiements</h3>
+        <button class="pay-btn ghost" id="btnRefresh">↻ Recharger</button>
+      </div>
+      <table class="pay-table">
+        <thead><tr><th>Date</th><th>Description</th><th>Client</th><th>Montant</th><th>Statut</th><th>Action</th></tr></thead>
+        <tbody id="paymentsTable"><tr><td colspan="6" class="pay-empty">Chargement…</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script src="assets/supabase.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+(async function(){
+  const c = window.sb;
+  const EF_CREATE = 'https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/stripe-create-payment-link';
+
+  function fmtEur(v){ if(v==null||isNaN(v)) return '—'; return Number(v).toLocaleString('fr-FR',{style:'currency',currency:'EUR'}); }
+  function fmtDate(s){ if(!s) return '—'; return new Date(s).toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}); }
+
+  async function loadPayments(){
+    const { data } = await c.from('payments').select('*').order('created_at',{ascending:false}).limit(100);
+    return data || [];
+  }
+
+  function renderKpis(p){
+    const now = new Date();
+    const month1 = new Date(now.getFullYear(), now.getMonth(), 1);
+    const since30 = new Date(now.getTime() - 30*86400000);
+    const paid30 = p.filter(x => x.status==='paid' && new Date(x.paid_at||x.created_at) >= since30);
+    const pending = p.filter(x => x.status==='pending');
+    const monthAll = p.filter(x => x.status==='paid' && new Date(x.paid_at||x.created_at) >= month1);
+    const fail30 = p.filter(x => ['failed','expired'].includes(x.status) && new Date(x.created_at) >= since30);
+    document.getElementById('kpiPaid').textContent = fmtEur(paid30.reduce((s,x)=>s+Number(x.amount_eur||0),0));
+    document.getElementById('kpiPending').textContent = fmtEur(pending.reduce((s,x)=>s+Number(x.amount_eur||0),0));
+    document.getElementById('kpiMonth').textContent = fmtEur(monthAll.reduce((s,x)=>s+Number(x.amount_eur||0),0));
+    document.getElementById('kpiFail').textContent = fail30.length;
+  }
+
+  function renderTable(p){
+    const tb = document.getElementById('paymentsTable');
+    if(!p.length){ tb.innerHTML = '<tr><td colspan="6" class="pay-empty">Aucun paiement pour l\'instant. Crée le premier ci-dessus.</td></tr>'; return; }
+    tb.innerHTML = p.map(x => `
+      <tr>
+        <td>${fmtDate(x.created_at)}</td>
+        <td>${x.description||'—'}</td>
+        <td>${x.customer_name||x.customer_email||'—'}</td>
+        <td><strong>${fmtEur(x.amount_eur)}</strong></td>
+        <td><span class="pay-status ${x.status}">${x.status}</span></td>
+        <td>${x.payment_url ? `<a href="${x.payment_url}" target="_blank" style="color:#635BFF;font-weight:600">Lien</a>` : '—'}</td>
+      </tr>
+    `).join('');
+  }
+
+  async function refresh(){
+    const p = await loadPayments();
+    renderKpis(p);
+    renderTable(p);
+  }
+
+  document.getElementById('btnCreate').addEventListener('click', async () => {
+    const btn = document.getElementById('btnCreate');
+    const amount = parseFloat(document.getElementById('amount').value);
+    const description = document.getElementById('description').value.trim();
+    if(!amount || !description){ alert('Montant + description obligatoires'); return; }
+    btn.disabled = true; btn.textContent = 'Création…';
+    try {
+      const { data: { session } } = await c.auth.getSession();
+      const r = await fetch(EF_CREATE, {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+(session?.access_token||'') },
+        body: JSON.stringify({
+          amount_eur: amount,
+          description,
+          customer_name: document.getElementById('customer_name').value,
+          customer_email: document.getElementById('customer_email').value,
+          customer_phone: document.getElementById('customer_phone').value,
+          agence: document.getElementById('agence').value
+        })
+      });
+      const d = await r.json();
+      if(!d.success){ alert('Erreur : '+(d.error||JSON.stringify(d))); return; }
+      // Affiche résultat
+      const box = document.getElementById('resultBox');
+      box.classList.add('show');
+      const link = document.getElementById('resultLink');
+      link.href = d.payment_url; link.textContent = d.payment_url;
+      const phone = document.getElementById('customer_phone').value.replace(/\s/g,'');
+      const email = document.getElementById('customer_email').value;
+      const smsMsg = encodeURIComponent('Bonjour, votre lien de paiement HELP Confort ('+fmtEur(amount)+') : '+d.payment_url+' — Merci !');
+      const mailMsg = encodeURIComponent('Bonjour,\n\nMerci de cliquer ce lien pour régler votre intervention HELP Confort ('+description+', '+fmtEur(amount)+') :\n\n'+d.payment_url+'\n\nCordialement,\nHELP Confort Saint-Omer & Dunkerque\n03 66 10 01 34');
+      document.getElementById('btnSms').href = phone ? 'sms:'+phone+'?body='+smsMsg : '#';
+      document.getElementById('btnMail').href = email ? 'mailto:'+email+'?subject='+encodeURIComponent('Lien de paiement HELP Confort')+'&body='+mailMsg : '#';
+      document.getElementById('btnCopy').onclick = () => { navigator.clipboard.writeText(d.payment_url); alert('Copié !'); };
+      await refresh();
+    } catch(e){ alert('Erreur : '+e.message); }
+    finally { btn.disabled = false; btn.textContent = '💳 Générer le lien'; }
+  });
+
+  document.getElementById('btnRefresh').addEventListener('click', refresh);
+  await refresh();
+})();
+</script>
+</body>
+</html>
