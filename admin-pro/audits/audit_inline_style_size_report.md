@@ -1,11 +1,11 @@
 # Audit inline `<style>` size — Rapport
 
-_Généré le 2026-05-26 06:51_
+_Généré le 2026-05-27 07:07_
 
 ## Synthèse
 
 - Pages scannées : **107**
-- CSS inline cumulé : **2716.2 KB**
+- CSS inline cumulé : **2716.7 KB**
 - CSS inline moyen : **25.4 KB / page**
 - ❌ Pages > 50 KB : **27**
 - ⚠️ Pages 25–50 KB : **11**
@@ -55,4 +55,4 @@ Ces pages gagneraient à voir leur CSS inline extrait vers un fichier `.css` ext
 - `vitrier-saint-omer.html` — **64.2 KB** (9 bloc(s) `<style>`)
 - `travaux-dunkerque.html` — **62.6 KB** (8 bloc(s) `<style>`)
 - `travaux-saint-omer.html` — **62.6 KB** (8 bloc(s) `<style>`)
-- `index.html` — **57.2 KB** (18 bloc(s) `<style>`)
+- `index.html` — **57.5 KB** (18 bloc(s) `<style>`)

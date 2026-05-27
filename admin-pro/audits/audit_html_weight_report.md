@@ -1,11 +1,11 @@
 # Audit HTML weight — Rapport
 
-_Généré le 2026-05-26 06:51_
+_Généré le 2026-05-27 07:07_
 
 ## Synthèse
 
 - Pages scannées : **107**
-- Poids cumulé : **7414.7 KB**
+- Poids cumulé : **7413.3 KB**
 - Poids moyen : **69.3 KB**
 - ❌ Pages > 250 KB : **0**
 - ⚠️ Pages 150–250 KB : **15**
@@ -14,7 +14,7 @@ _Généré le 2026-05-26 06:51_
 
 | # | Fichier | Total | `<style>` | `<script>` inline | `<svg>` inline |
 |---|---------|-------|-----------|-------------------|----------------|
-| 1 | ⚠️ `index.html` | **199.5 KB** | 57.2 KB | 81.3 KB | 16.7 KB |
+| 1 | ⚠️ `index.html` | **199.8 KB** | 57.5 KB | 81.3 KB | 16.7 KB |
 | 2 | ⚠️ `menuisier-dunkerque.html` | **162.0 KB** | 64.2 KB | 18.0 KB | 24.0 KB |
 | 3 | ⚠️ `menuisier-saint-omer.html` | **160.8 KB** | 64.2 KB | 18.0 KB | 24.0 KB |
 | 4 | ⚠️ `chauffagiste-dunkerque.html` | **160.0 KB** | 67.8 KB | 19.4 KB | 20.6 KB |

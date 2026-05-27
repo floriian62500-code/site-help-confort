@@ -1,6 +1,6 @@
 # 📐 Audit dimensions images (PIL) — extension CLS prevention
 
-_Généré le 2026-05-26 06:51_
+_Généré le 2026-05-27 07:07_
 
 - Pages scannées : **82**
 - `<img>` avec width+height : **1281**
@@ -48,10 +48,10 @@ _Généré le 2026-05-26 06:51_
 - L1221 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `index.html` — 4
-- L729 — `'+data.logo+'` (fichier introuvable sur disque)
-- L841 — `' + escapeHtml(a.logo) + '` (fichier introuvable sur disque)
-- L1360 — `'+a.image+'` (fichier introuvable sur disque)
-- L1449 — `'+p.dataUrl+'` (fichier introuvable sur disque)
+- L731 — `'+data.logo+'` (fichier introuvable sur disque)
+- L843 — `' + escapeHtml(a.logo) + '` (fichier introuvable sur disque)
+- L1362 — `'+a.image+'` (fichier introuvable sur disque)
+- L1451 — `'+p.dataUrl+'` (fichier introuvable sur disque)
 
 ### `menuisier-dunkerque.html` — 1
 - L1241 — `'+r.image+'` (fichier introuvable sur disque)
@@ -129,7 +129,7 @@ _Généré le 2026-05-26 06:51_
 - L1206 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `zones-intervention.html` — 1
-- L1352 — `'+r.image+'` (fichier introuvable sur disque)
+- L1216 — `'+r.image+'` (fichier introuvable sur disque)
 
 ## 🔁 Sources dynamiques (template JS)
 

@@ -1,6 +1,6 @@
 # Audit script async/defer — Rapport
 
-_Généré le 2026-05-26 06:51_
+_Généré le 2026-05-27 07:07_
 
 ## Synthèse
 
@@ -99,8 +99,8 @@ _Généré le 2026-05-26 06:51_
 - ⚠️ L.761 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `index.html`
-- ⚠️ L.2594 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.2685 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.2596 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.2687 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `mentions-legales.html`
 - ⚠️ L.708 (head) `script.js` — ajouter `defer` ou `async`
@@ -208,5 +208,5 @@ _Généré le 2026-05-26 06:51_
 
 ### `zones-intervention.html`
 - ⚠️ L.801 (head) `https://unpkg.com/leaflet@1.9.4/dist/leaflet.js` — ajouter `defer` ou `async`
-- ⚠️ L.1704 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.1948 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.1568 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.1812 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`

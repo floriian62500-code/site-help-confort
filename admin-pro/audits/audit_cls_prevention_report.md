@@ -1,6 +1,6 @@
 # 📐 Audit CLS prevention (img width/height) — sonde #56
 
-_Généré le 2026-05-26 06:51_
+_Généré le 2026-05-27 07:07_
 
 - Pages scannées : **82**
 - `<img>` total : **1335**
@@ -62,10 +62,10 @@ Taux de couverture dimensions : **96.0%**
 
 ### `index.html` — 4 `<img>` à corriger
 
-- L729 (width+height manquant) — `'+data.logo+'`
-- L841 (width+height manquant) — `' + escapeHtml(a.logo) + '`
-- L1360 (width+height manquant) — `'+a.image+'`
-- L1449 (width+height manquant) — `'+p.dataUrl+'`
+- L731 (width+height manquant) — `'+data.logo+'`
+- L843 (width+height manquant) — `' + escapeHtml(a.logo) + '`
+- L1362 (width+height manquant) — `'+a.image+'`
+- L1451 (width+height manquant) — `'+p.dataUrl+'`
 
 ### `menuisier-dunkerque.html` — 1 `<img>` à corriger
 
@@ -172,7 +172,7 @@ Taux de couverture dimensions : **96.0%**
 
 ### `zones-intervention.html` — 1 `<img>` à corriger
 
-- L1352 (width+height manquant) — `'+r.image+'`
+- L1216 (width+height manquant) — `'+r.image+'`
 
 ---
 

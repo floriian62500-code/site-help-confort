@@ -1,6 +1,6 @@
 # 🔗 Audit liens externes cassés — P10
 
-*Généré le 2026-05-26 06:51 — `admin-pro/audits/audit_liens_externes.py`*
+*Généré le 2026-05-27 07:07 — `admin-pro/audits/audit_liens_externes.py`*
 
 **Pages scannées** : 83
 **URLs externes uniques testés** : 73
@@ -19,7 +19,7 @@
 | 404 | `https://www.anah.gouv.fr/maprimeadapt` | aides.html | Not Found |
 | --- | `https://www.bremaud.com/` | menuisier-dunkerque.html, menuisier-saint-omer.html, partenaires.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
 | 403 | `https://www.hoppe.com/fr-fr/catalogue-produits/1001192940/solutions-pour-portes-interieures-poignees` | partenaires.html, serrurier-boulogne-sur-mer.html, serrurier-calais.html (+2) | Forbidden |
-| --- | `https://www.laposte.fr/services-seniors/adapter-son-domicile` | pro.html | TimeoutError: The read operation timed out |
+| --- | `https://www.viaren.fr` | pro.html | TimeoutError: The read operation timed out |
 | 403 | `https://www.watermatic.fr/` | plombier-boulogne-sur-mer.html, plombier-calais.html, plombier-dunkerque.html (+1) | Forbidden |
 
 ## 📊 Statistiques

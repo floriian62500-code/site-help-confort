@@ -1,6 +1,6 @@
 # 🛡️ Audit CSP whitelist — Sonde IA #41
 
-*Généré le 2026-05-26 06:49 — `admin-pro/audits/audit_csp.py`*
+*Généré le 2026-05-27 07:06 — `admin-pro/audits/audit_csp.py`*
 
 **Pages scannées** : 84
 **Hosts externes distincts détectés** : 5

@@ -1,4 +1,4 @@
-# Audit typographie FR (espaces insécables) — 2026-05-26 06:51
+# Audit typographie FR (espaces insécables) — 2026-05-27 07:07
 
 Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une espace **insécable** (`&nbsp;`, U+00A0, U+202F). Seuil d'alerte : > **5** occurrences fautives par page.
 
