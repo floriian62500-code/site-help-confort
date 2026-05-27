@@ -136,6 +136,10 @@
  body.is-locked .nv-btn-primary[data-action="quote"]{background:linear-gradient(135deg,#FF6B1A,#E55510) !important;color:#fff !important;font-weight:800;font-size:0;cursor:pointer}
  body.is-locked .nv-btn-primary[data-action="quote"] svg{display:none}
  body.is-locked .nv-btn-primary[data-action="quote"]::before{content:"🔓 Voir le tarif & réserver";font-size:.94rem}
+ /* HC-FIX 2026-05-28 : bouton ghost "Devis" en alternative à Réserver */
+ .nv-btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 14px;background:#fff;color:#0DA0CF;text-decoration:none;border:1.5px solid #0DA0CF;border-radius:10px;font-weight:700;font-size:.86rem;transition:all .15s ease;white-space:nowrap}
+ .nv-btn-ghost:hover{background:#0DA0CF;color:#fff;transform:translateY(-1px);box-shadow:0 4px 12px rgba(13,160,207,.25)}
+ body.is-locked .nv-btn-ghost{opacity:1;pointer-events:auto} /* le devis reste cliquable même verrouillé */
  /* HC-FIX 2026-05-27 : cadenas sur les CTA "Souscrire" des contrats */
  body.is-locked .npce-cta{position:relative;cursor:pointer}
  body.is-locked .npce-cta::after{content:" 🔒";margin-left:4px}
