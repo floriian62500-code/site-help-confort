@@ -446,10 +446,44 @@ if (document.fonts && document.fonts.ready) {
  <input type="hidden" id="presta-hidden" name="prestation_demandee">
  <script>
  (function(){
- // Lecture du param ?presta= ou ?metier= dans l'URL
+ // Lecture des params ?presta=, ?metier=, ?service= ou ?objet= dans l'URL
  var params = new URLSearchParams(location.search);
- var presta = params.get('presta');
+ var presta = params.get('presta') || params.get('service'); // ?service= = alias de ?presta=
  var metier = params.get('metier');
+ var objetParam = params.get('objet'); // ex: "Devis Entretien chaudière gaz"
+ // Pré-remplir la description si ?objet= fourni (depuis bouton Devis cartes prestations)
+ if (objetParam) {
+   setTimeout(function(){
+     var msg = document.getElementById('message');
+     if (msg && !msg.value) {
+       msg.value = 'Bonjour, je souhaite un devis pour : ' + decodeURIComponent(objetParam) + '.\n\nDétails complémentaires :\n';
+     }
+   }, 200);
+ }
+ // Auto-cocher la chip service correspondante (depuis ?service= ou ?metier=)
+ var serviceParam = params.get('service') || params.get('metier');
+ if (serviceParam) {
+   setTimeout(function(){
+     // Mapping slug service prestation → valeur de chip
+     var slug = serviceParam.toLowerCase();
+     var chipValue = null;
+     if (/plomb|fuite|d[ée]bouchage|chasse|sanitaire|mitigeur|robinet|chauffe-eau|cumulus/.test(slug)) chipValue = 'Plomberie';
+     else if (/chaud|chauffage|d[ée]semboua|radiateur|gaz/.test(slug)) chipValue = 'Chauffage';
+     else if (/electric|tableau|disjoncteur|prise|interrupteur|panne-elec/.test(slug)) chipValue = 'Électricité';
+     else if (/serrur|cl[eé]|verrou|cylindre|porte/.test(slug)) chipValue = 'Serrurerie';
+     else if (/vitr|verre|insert|bris/.test(slug)) chipValue = 'Vitrerie';
+     else if (/menuiser|panneau-pvc|fenetre/.test(slug)) chipValue = 'Menuiserie';
+     else if (/r[ée]nov|peinture|carrelage|plafond|isolation|enduit|salle-de-bain|cuisine/.test(slug)) chipValue = 'Rénovation';
+     else if (/volet/.test(slug)) chipValue = 'Volets';
+     else if (/pmr|handi|adaptation/.test(slug)) chipValue = 'Adaptation PMR';
+     else if (/contrat/.test(slug)) chipValue = 'Contrat entretien';
+     else if (/sinistre/.test(slug)) chipValue = 'Sinistre assurance';
+     if (chipValue) {
+       var cb = document.querySelector('input[name="services[]"][value="' + chipValue + '"]');
+       if (cb) cb.checked = true;
+     }
+   }, 250);
+ }
  // Auto-scroll vers le formulaire si on arrive avec ?presta= ou ?metier= ou hash #form
  // 2 essais : 1er après DOMContentLoaded, 2e à 800ms (anti-override navigateur)
  if (presta || metier || location.hash === '#form' || location.hash === '#rappel' || location.hash === '#catalogues') {
