@@ -1217,24 +1217,38 @@ if (document.fonts && document.fonts.ready) {
  });
  }
 
- // Submit form
+ // Submit form — HC-FIX 2026-05-27 : mailto navigue la page et tue submit-lead, remplacé par appel EF direct
  if(form){
- form.addEventListener('submit', function(e){
+ form.addEventListener('submit', async function(e){
  e.preventDefault();
  var tel = document.getElementById('chatTel').value.trim();
  var prec = document.getElementById('chatPrec').value.trim();
- // Construct mailto / formspree fallback
- var subject = encodeURIComponent('🚨 Demande urgente HELP Confort — ' + svcField.value);
- var bodyTxt = encodeURIComponent('Service : ' + svcField.value + '\nTéléphone : ' + tel + '\nPrécision : ' + prec);
- // Append confirmation
+ // UX confirmation immédiate
  var confirm = document.createElement('div');
  confirm.className = 'chat-msg chat-msg-bot';
  confirm.innerHTML = '<p>✅ Merci ! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
  body.appendChild(confirm);
  form.style.display = 'none';
  body.scrollTop = body.scrollHeight;
- // Open mailto in background as fallback so the email is actually triggered
- window.location.href = 'mailto:saint-omer@helpconfort.com?subject=' + subject + '&body=' + bodyTxt;
+ // Envoi RÉEL en BDD via Edge Function submit-lead + notif email serveur
+ try {
+   await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/submit-lead', {
+     method: 'POST',
+     headers: { 'Content-Type': 'application/json' },
+     body: JSON.stringify({
+       nom: 'Demande urgente (chat)',
+       telephone: tel,
+       message: prec || ('Demande urgente — ' + svcField.value),
+       metier: svcField.value,
+       type_demande: 'urgence',
+       source: 'chat_urgent_homepage',
+       source_page: location.pathname + location.search,
+       source_referer: document.referrer || null
+     })
+   });
+ } catch(err) {
+   console.error('[hc-chat-urgent] submit-lead error:', err);
+ }
  });
  }
 
