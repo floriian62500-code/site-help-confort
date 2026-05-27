@@ -615,8 +615,8 @@
         "<div class='opt' data-grp='type' data-v='renov'>🏗️ Rénovation</div>" +
       "</div></div>" +
       "<div class='hc-calc-grp'><label>Urgence</label><div class='opts'>" +
-        "<div class='opt' data-grp='urg' data-v='basse'>📅 Sous une semaine</div>" +
-        "<div class='opt' data-grp='urg' data-v='haute'>⚡ Sous 24h</div>" +
+        "<div class='opt' data-grp='urg' data-v='basse'>✅ Non</div>" +
+        "<div class='opt' data-grp='urg' data-v='haute'>🚨 Oui</div>" +
       "</div></div>" +
       "<div class='hc-result' id='hcCalcResult' style='display:none'>" +
         "<div class='label'>Estimation indicative</div>" +
