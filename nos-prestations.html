@@ -999,19 +999,19 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  // HC-FIX 2026-05-21 : refonte module — isolation, enduit, peinture, revêtements, plafond
  // (les anciens devis SDB/PMR/tableau/blindage retirés à la demande de Florian)
  { id:'loc-dev-isolation', slug:'devis-isolation', name:"Isolation thermique / phonique", requires_quote:true,
- category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure', icon_emoji:'🧱',
+ category_slug:'sur-mesure', category_name:'Rénovation', category_icon:'sur-mesure', icon_emoji:'🧱',
  short_desc:"Isolation murs, combles, plafond — laine de verre, ouate de cellulose, polystyrène. Devis après diagnostic thermique." },
  { id:'loc-dev-enduit', slug:'devis-enduit', name:"Enduit intérieur / extérieur", requires_quote:true,
- category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure', icon_emoji:'🪣',
+ category_slug:'sur-mesure', category_name:'Rénovation', category_icon:'sur-mesure', icon_emoji:'🪣',
  short_desc:"Enduit de lissage, ratissage, enduit décoratif ou extérieur (façade). Devis après visite et état des supports." },
  { id:'loc-dev-peinture', slug:'devis-peinture', name:"Peinture intérieure", requires_quote:true,
- category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure', icon_emoji:'🎨',
+ category_slug:'sur-mesure', category_name:'Rénovation', category_icon:'sur-mesure', icon_emoji:'🎨',
  short_desc:"Peinture murs, plafonds, boiseries — préparation des supports incluse. Devis selon surface et finition souhaitée." },
  { id:'loc-dev-revetements', slug:'devis-revetements-muraux', name:"Revêtements muraux", requires_quote:true,
- category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure', icon_emoji:'🖼️',
+ category_slug:'sur-mesure', category_name:'Rénovation', category_icon:'sur-mesure', icon_emoji:'🖼️',
  short_desc:"Pose papier peint, toile de verre, lambris, parement bois ou pierre. Devis selon nature du revêtement et m²." },
  { id:'loc-dev-plafond', slug:'devis-plafond', name:"Plafond (rénovation, pose)", requires_quote:true,
- category_slug:'sur-mesure', category_name:'Devis sur mesure', category_icon:'sur-mesure', icon_emoji:'🏠',
+ category_slug:'sur-mesure', category_name:'Rénovation', category_icon:'sur-mesure', icon_emoji:'🏠',
  short_desc:"Réfection plafond fissuré, pose placo, faux-plafond ou dalles décoratives. Devis après visite technique." }
  ];
 
@@ -1256,7 +1256,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  'electricite':'Électricité',
  'serrurerie':'Serrurerie',
  'vitrerie':'Vitrerie',
- 'sur-mesure':'Devis sur mesure'
+ 'sur-mesure':'Rénovation'
  };
  const grouped = {};
  // Pré-initialiser les catégories pour qu'elles apparaissent dans l'ordre voulu
