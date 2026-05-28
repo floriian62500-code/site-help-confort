@@ -2116,3 +2116,47 @@ p, li, .seo-section-lead, .nv-hero .nv-lead, .m-hero .promesse {
 input, select, textarea, label {
   font-family: var(--hc-font-body) !important;
 }
+
+/* ========================================
+   HC-ZONES-TREE — footer zones hiérarchisé
+   4 grandes villes + sous-communes repliées
+   ======================================== */
+.fv3-zones-tree { list-style:none; padding:0; margin:0; }
+.fv3-zones-tree .fv3-zone-main { margin:0 0 14px 0; padding:0; }
+.fv3-zones-tree .fv3-zone-main > a {
+  display:block;
+  color:#fff;
+  text-decoration:none;
+  font-size:1rem;
+  line-height:1.3;
+  margin-bottom:4px;
+  transition:color .2s ease;
+}
+.fv3-zones-tree .fv3-zone-main > a:hover { color:#1FC4F0; }
+.fv3-zones-tree .fv3-zone-main > a strong { font-weight:700; }
+.fv3-zones-tree .fv3-cp {
+  display:inline-block;
+  font-size:.72rem;
+  font-weight:600;
+  color:#1FC4F0;
+  background:rgba(31,196,240,.10);
+  border:1px solid rgba(31,196,240,.25);
+  padding:1px 7px;
+  border-radius:10px;
+  margin-left:6px;
+  letter-spacing:.02em;
+  vertical-align:middle;
+}
+.fv3-zones-tree .fv3-zone-sub {
+  display:block;
+  font-size:.78rem;
+  color:rgba(255,255,255,.55);
+  line-height:1.5;
+  padding-left:10px;
+  border-left:2px solid rgba(31,196,240,.25);
+  margin-top:2px;
+}
+@media (max-width: 768px) {
+  .fv3-zones-tree .fv3-zone-sub { font-size:.75rem; }
+  .fv3-zones-tree .fv3-cp { display:block; margin:3px 0 0 0; }
+}
