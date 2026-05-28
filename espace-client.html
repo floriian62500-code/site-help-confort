@@ -387,15 +387,35 @@ if (document.fonts && document.fonts.ready) {
  </div>
 </section>
 
-<!-- PRÉ-INSCRIPTION -->
+<!-- CONNEXION ESPACE CLIENT (MAGIC LINK) -->
 <section class="sec" id="preinscription" style="background:#fff">
- <div class="container">
+ <div class="container" style="max-width:560px">
  <div style="text-align:center;margin-bottom:30px">
- <span class="sec-eyebrow"><span style="width:6px;height:6px;border-radius:50%;background:#22A06B"></span>Pré-inscription</span>
- <h2>Soyez prévenu(e) <span class="accent">en avant-première.</span></h2>
- <p class="sub" style="margin:0 auto 30px">Pré-inscription gratuite, sans engagement. Vous serez les premiers à tester et à donner votre avis.</p>
+ <span class="sec-eyebrow"><span style="width:6px;height:6px;border-radius:50%;background:#22A06B;animation:pulse 2s ease-in-out infinite"></span>Connexion sécurisée</span>
+ <h2>Accéder à mon <span class="accent">espace client.</span></h2>
+ <p class="sub" style="margin:0 auto 30px">Saisissez votre email — vous recevrez un lien magique pour vous connecter. Pas de mot de passe à retenir.</p>
  </div>
 
+ <form id="hcAuthForm" action="javascript:void(0)" style="background:linear-gradient(135deg,#F7FBFD,#fff);border:1px solid #E5EDF3;border-radius:18px;padding:32px;box-shadow:0 8px 24px rgba(10,20,40,.06)">
+   <label for="hcAuthEmail" style="display:block;font-size:.84rem;font-weight:700;color:#0A1428;margin-bottom:8px">Votre adresse email</label>
+   <input type="email" id="hcAuthEmail" name="email" required placeholder="prenom.nom@exemple.fr" autocomplete="email" style="width:100%;padding:14px 16px;font-size:1rem;border:1.5px solid #E5EDF3;border-radius:12px;outline:none;transition:border-color .15s ease,box-shadow .15s ease;-webkit-appearance:none">
+   <button type="submit" id="hcAuthBtn" style="width:100%;margin-top:16px;padding:15px 24px;background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;border:0;border-radius:12px;font-family:inherit;font-size:1rem;font-weight:800;cursor:pointer;box-shadow:0 8px 22px rgba(13,160,207,.30);display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .2s ease,box-shadow .2s ease">
+     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+     Recevoir mon lien de connexion
+   </button>
+   <p style="margin:16px 0 0;font-size:.78rem;color:#64748b;line-height:1.5;text-align:center">
+     Un email vous sera envoyé sous 30 secondes. Pensez à vérifier vos spams.
+   </p>
+   <div id="hcAuthMsg" style="display:none;margin-top:14px;padding:14px 16px;border-radius:10px;font-size:.92rem;line-height:1.5"></div>
+ </form>
+
+ <p style="margin:18px 0 0;font-size:.78rem;color:#94a3b8;text-align:center;line-height:1.5">
+   🔒 Connexion sécurisée par lien magique — pas de mot de passe stocké.<br>
+   Première connexion ? Saisissez l'email utilisé lors de vos interventions HELP Confort.
+ </p>
+
+ <!-- Anciennement pré-inscription (caché mais préservé pour SEO/historique) -->
+ <div style="display:none">
  <div class="stub-banner">
  <strong style="color:#C0392B">À noter&nbsp;:</strong> votre pré-inscription envoie simplement un email à l'agence. Aucun compte n'est créé pour le moment — vous serez recontacté(e) dès l'ouverture officielle.
  </div>
