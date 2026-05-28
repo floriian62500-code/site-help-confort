@@ -392,6 +392,7 @@ let _editingId = null;
               <div><span class="iv-status ${x.status}">${STATUS_LABEL[x.status]||x.status}</span></div>
               <div class="iv-actions" onclick="event.stopPropagation()">
                 ${x.status !== 'done' ? `<button title="Marquer terminé" onclick="window.markDone('${x.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="20 6 9 17 4 12"/></svg></button>` : ''}
+                <button class="iv-act-pay" title="Demander paiement (Stripe)" onclick="window.askPayment('${x.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="3"/><line x1="2" y1="10" x2="22" y2="10"/></svg></button>
                 <button title="Éditer" onclick="window.editIv('${x.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
               </div>
             </div>`;
