@@ -234,6 +234,7 @@
 })();
 </script>
 
+<script src="assets/hc-before-after.js" defer></script>
 <script src="assets/hc-widgets.js" defer></script>
 <script>
 if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){r.unregister();});if('caches' in window)caches.keys().then(function(ks){ks.forEach(function(k){caches.delete(k);});});});});}
