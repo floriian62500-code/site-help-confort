@@ -90,6 +90,18 @@
  <button type="button" class="aa-filter" data-cat="renovation">🏠 Rénovation</button>
 </div>
 
+<!-- SECTION VEDETTE : sliders before/after (apparaît seulement si data dispo) -->
+<section class="aa-featured" id="aaFeatured" style="display:none">
+  <div style="max-width:1180px;margin:0 auto;padding:20px clamp(20px,4vw,40px) 0">
+    <div style="text-align:center;margin-bottom:24px">
+      <span class="aa-eyebrow">✨ Chantiers vedettes</span>
+      <h2 style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(1.4rem,3vw,2rem);margin:8px 0 6px;color:#0A1428;letter-spacing:-.02em">Glissez le curseur pour voir la <em style="font-family:'Playfair Display',Georgia,serif;color:#FF6B1A;font-weight:600">transformation</em></h2>
+      <p style="color:#64748b;font-size:.96rem;margin:0">Tirez horizontalement sur l'image pour comparer avant ↔ après.</p>
+    </div>
+    <div id="aaFeaturedGrid" style="display:grid;grid-template-columns:1fr;gap:24px"></div>
+  </div>
+</section>
+
 <main>
  <div class="aa-grid" id="aaGrid">
  <div class="aa-loading">
@@ -115,13 +127,41 @@
  var currentCat = '';
  var allChantiers = [];
 
- // Fetch réalisations publiées avec photos
+ // Fetch réalisations publiées avec photos (inclut image_before / image_after pour slider)
  try {
- var resp = await fetch(SUPABASE_URL + '/rest/v1/realisations?status=eq.publie&select=id,slug,title,description,metier,ville,photos,published_at&order=published_at.desc&limit=60', {
+ var resp = await fetch(SUPABASE_URL + '/rest/v1/realisations?status=eq.publie&select=id,slug,title,description,metier,ville,image_before,image_after,published_at&order=published_at.desc&limit=60', {
  headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY }
  });
  if (resp.ok) allChantiers = await resp.json();
  } catch(e) { console.warn('Fetch réalisations échoué', e); }
+
+ // SLIDER BEFORE/AFTER — afficher chantiers vedettes avec avant ET après
+ try {
+   var featured = allChantiers.filter(function(c){ return c.image_before && c.image_after; }).slice(0, 4);
+   if (featured.length > 0) {
+     var fSection = document.getElementById('aaFeatured');
+     var fGrid = document.getElementById('aaFeaturedGrid');
+     if (fGrid) {
+       fGrid.style.gridTemplateColumns = featured.length === 1 ? '1fr' : 'repeat(auto-fit,minmax(380px,1fr))';
+       fGrid.innerHTML = featured.map(function(c){
+         return '<div style="background:#fff;border-radius:18px;overflow:hidden;border:1px solid #E5EDF3">' +
+           '<div class="hc-ba" data-before="' + c.image_before + '" data-after="' + c.image_after + '"></div>' +
+           '<div style="padding:16px 18px">' +
+             '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px">' +
+               '<span style="font-size:.7rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#0DA0CF">' + (c.metier || 'Chantier') + '</span>' +
+               (c.ville ? '<span style="font-size:.78rem;color:#94a3b8">📍 ' + c.ville + '</span>' : '') +
+             '</div>' +
+             '<h3 style="font-size:1rem;font-weight:800;margin:0 0 6px;color:#0A1428">' + (c.title || 'Chantier') + '</h3>' +
+             '<a href="realisation.html?slug=' + (c.slug || c.id) + '" style="color:#0DA0CF;font-size:.86rem;font-weight:700;text-decoration:none">Voir le détail →</a>' +
+           '</div>' +
+         '</div>';
+       }).join('');
+       fSection.style.display = 'block';
+       // Init sliders après injection HTML
+       if (window.HC_BA) window.HC_BA.init();
+     }
+   }
+ } catch(e) { console.warn('Featured slider init failed', e); }
 
  // Fallback : utiliser le JSON local si Supabase vide
  if (!allChantiers.length) {
