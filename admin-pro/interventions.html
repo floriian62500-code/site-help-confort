@@ -65,8 +65,10 @@
 .iv-status.cancelled, .iv-status.no_show{background:rgba(217,45,32,.08);color:#b91c1c;opacity:.7}
 
 .iv-actions{display:flex;gap:4px}
-.iv-actions button{background:#fff;border:1px solid var(--ink-100);color:var(--ink-700);width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.iv-actions button{background:#fff;border:1px solid var(--ink-100);color:var(--ink-700);width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s ease}
 .iv-actions button:hover{border-color:var(--hc-primary);color:var(--hc-primary)}
+.iv-actions button.iv-act-pay{background:linear-gradient(135deg,#635bff 0%,#5a52e8 100%);border-color:#635bff;color:#fff}
+.iv-actions button.iv-act-pay:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(99,91,255,.30);background:linear-gradient(135deg,#5a52e8 0%,#4a44d6 100%)}
 .iv-actions button svg{width:12px;height:12px}
 
 @media (max-width:880px){.iv-card{grid-template-columns:1fr;gap:6px;padding:14px}}
@@ -494,6 +496,58 @@ let _editingId = null;
       toast('Intervention marquée terminée');
       await loadInterventions();
     } catch (e) { toast('Erreur : ' + e.message, 'err', 4500); }
+  };
+
+  // === DEMANDER PAIEMENT (Stripe) ===
+  window.askPayment = async (id) => {
+    const iv = _all.find(t => t.id === id);
+    if (!iv) { toast('Intervention introuvable', 'err'); return; }
+    const name = (iv.client_first_name ? iv.client_first_name + ' ' : '') + (iv.client_last_name || '');
+    const defaultDesc = `${iv.type || 'Intervention'} ${iv.metier || ''} — ${name}`.trim();
+    const amountStr = prompt(
+      `💳 Demander un paiement à ${name}\n\nMontant à encaisser (€) :`,
+      ''
+    );
+    if (!amountStr) return;
+    const amount = parseFloat(String(amountStr).replace(',', '.'));
+    if (!amount || amount <= 0 || amount > 10000) {
+      toast('Montant invalide (1€ à 10 000€)', 'err'); return;
+    }
+    const desc = prompt('Description (visible client) :', defaultDesc) || defaultDesc;
+    toast('Création du lien Stripe…', 'info');
+    try {
+      const { data: { session } } = await c.auth.getSession();
+      const SUPA_URL = window.SUPABASE_URL || 'https://btcbjwqiivhpwoszomhg.supabase.co';
+      const r = await fetch(SUPA_URL + '/functions/v1/stripe-create-payment-link', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + (session ? session.access_token : '')
+        },
+        body: JSON.stringify({
+          amount_eur: amount,
+          description: desc,
+          customer_name: name,
+          customer_email: iv.client_email || '',
+          customer_phone: iv.client_phone || '',
+          intervention_id: iv.id,
+          agence: iv.agence || ''
+        })
+      });
+      const j = await r.json();
+      if (!r.ok || !j.payment_url) throw new Error(j.error || 'Erreur Stripe');
+      // copier le lien dans le presse-papier
+      try { await navigator.clipboard.writeText(j.payment_url); } catch (e) {}
+      const choice = confirm(`✅ Lien Stripe créé et copié dans le presse-papier.\n\n${j.payment_url}\n\nOK = envoyer par SMS (s'ouvre dans votre messagerie)\nAnnuler = juste copier`);
+      if (choice && iv.client_phone) {
+        const smsBody = encodeURIComponent(`Bonjour ${iv.client_first_name || ''},\n\nVoici le lien pour régler votre intervention HELP Confort (${amount} €) :\n${j.payment_url}\n\nMerci !\n— HELP Confort 03 66 10 01 34`);
+        window.open(`sms:${iv.client_phone}?&body=${smsBody}`, '_blank');
+      }
+      toast('Lien de paiement créé ✓', 'ok');
+    } catch (e) {
+      console.error(e);
+      toast('Erreur création lien : ' + e.message, 'err', 5000);
+    }
   };
 })();
 </script>
