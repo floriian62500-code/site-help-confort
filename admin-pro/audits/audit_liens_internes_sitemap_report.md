@@ -1,9 +1,9 @@
-# Audit liens internes vs sitemap.xml — 2026-05-27 07:06
+# Audit liens internes vs sitemap.xml — 2026-05-28 06:56
 
 Sonde #61 : croise les `href` locaux `.html` avec `sitemap.xml` et le disque.
 
 - **Pages scannées** : 83
-- **Liens internes uniques (par page)** : 3135
+- **Liens internes uniques (par page)** : 2535
 - **URLs dans sitemap.xml** : 146
 - **🚨 Liens cassés (BROKEN)** : 0 (0 cibles uniques)
 - **🟠 Liens orphelins (ORPHAN — absents du sitemap)** : 162 (3 cibles uniques)

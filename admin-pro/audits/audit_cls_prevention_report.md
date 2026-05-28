@@ -1,20 +1,20 @@
 # 📐 Audit CLS prevention (img width/height) — sonde #56
 
-_Généré le 2026-05-27 07:07_
+_Généré le 2026-05-28 06:58_
 
 - Pages scannées : **82**
-- `<img>` total : **1335**
-- `<img>` avec width+height : **1281**
-- `<img>` **sans dimensions** (alertes CLS) : **54**
+- `<img>` total : **1345**
+- `<img>` avec width+height : **1290**
+- `<img>` **sans dimensions** (alertes CLS) : **55**
 - Pages avec au moins 1 alerte : **36**
 
-Taux de couverture dimensions : **96.0%**
+Taux de couverture dimensions : **95.9%**
 
 ## ⚠️ Pages avec `<img>` sans width/height
 
 ### `actualites.html` — 1 `<img>` à corriger
 
-- L757 (width+height manquant) — `'+a.image+'`
+- L760 (width+height manquant) — `'+a.image+'`
 
 ### `avant-apres.html` — 1 `<img>` à corriger
 
@@ -42,7 +42,7 @@ Taux de couverture dimensions : **96.0%**
 
 ### `contrats-entretien.html` — 1 `<img>` à corriger
 
-- L2075 (width+height manquant) — `' + p.data + '`
+- L2078 (width+height manquant) — `' + p.data + '`
 
 ### `electricien-boulogne-sur-mer.html` — 1 `<img>` à corriger
 
@@ -75,9 +75,10 @@ Taux de couverture dimensions : **96.0%**
 
 - L1250 (width+height manquant) — `'+r.image+'`
 
-### `nos-prestations.html` — 1 `<img>` à corriger
+### `nos-prestations.html` — 2 `<img>` à corriger
 
-- L832 (width+height manquant) — `' + src + '`
+- L851 (width+height manquant) — `' + src + '`
+- L1460 (width+height manquant) — `${imgUrl}`
 
 ### `plombier-boulogne-sur-mer.html` — 1 `<img>` à corriger
 
@@ -118,17 +119,17 @@ Taux de couverture dimensions : **96.0%**
 
 ### `realisation.html` — 4 `<img>` à corriger
 
-- L279 (width+height manquant) — `${r.image_before}`
-- L280 (width+height manquant) — `${r.image_after}`
-- L286 (width+height manquant) — `${photo}`
-- L351 (width+height manquant) — `${p}`
+- L282 (width+height manquant) — `${r.image_before}`
+- L283 (width+height manquant) — `${r.image_after}`
+- L289 (width+height manquant) — `${photo}`
+- L354 (width+height manquant) — `${p}`
 
 ### `realisations.html` — 4 `<img>` à corriger
 
 - L608 (width+height manquant) — `(no src)`
-- L1014 (width+height manquant) — `'+r.photo_apres+'`
-- L1015 (width+height manquant) — `'+r.photo_avant+'`
-- L1024 (width+height manquant) — `'+r.photo_apres+'`
+- L1017 (width+height manquant) — `'+r.photo_apres+'`
+- L1018 (width+height manquant) — `'+r.photo_avant+'`
+- L1027 (width+height manquant) — `'+r.photo_apres+'`
 
 ### `serrurier-boulogne-sur-mer.html` — 1 `<img>` à corriger
 
@@ -148,11 +149,11 @@ Taux de couverture dimensions : **96.0%**
 
 ### `travaux-dunkerque.html` — 1 `<img>` à corriger
 
-- L1146 (width+height manquant) — `'+r.image+'`
+- L1147 (width+height manquant) — `'+r.image+'`
 
 ### `travaux-saint-omer.html` — 1 `<img>` à corriger
 
-- L1155 (width+height manquant) — `'+r.image+'`
+- L1156 (width+height manquant) — `'+r.image+'`
 
 ### `vitrier-dunkerque.html` — 1 `<img>` à corriger
 

@@ -1,18 +1,18 @@
 # 📐 Audit dimensions images (PIL) — extension CLS prevention
 
-_Généré le 2026-05-27 07:07_
+_Généré le 2026-05-28 06:58_
 
 - Pages scannées : **82**
-- `<img>` avec width+height : **1281**
+- `<img>` avec width+height : **1290**
 - Patchables (dimensions lues PIL) : **0**
 - Externes (CDN/hot-link) : **0**
 - Non-résolues (fichier absent) : **50**
-- Dynamiques (template `${...}`) : **4**
+- Dynamiques (template `${...}`) : **5**
 
 ## ❓ Sources non résolues
 
 ### `actualites.html` — 1
-- L757 — `'+a.image+'` (fichier introuvable sur disque)
+- L760 — `'+a.image+'` (fichier introuvable sur disque)
 
 ### `avant-apres.html` — 1
 - L151 — `' + src + '` (fichier introuvable sur disque)
@@ -33,7 +33,7 @@ _Généré le 2026-05-27 07:07_
 - L1422 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `contrats-entretien.html` — 1
-- L2075 — `' + p.data + '` (fichier introuvable sur disque)
+- L2078 — `' + p.data + '` (fichier introuvable sur disque)
 
 ### `electricien-boulogne-sur-mer.html` — 1
 - L1213 — `'+r.image+'` (fichier introuvable sur disque)
@@ -60,7 +60,7 @@ _Généré le 2026-05-27 07:07_
 - L1250 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `nos-prestations.html` — 1
-- L832 — `' + src + '` (fichier introuvable sur disque)
+- L851 — `' + src + '` (fichier introuvable sur disque)
 
 ### `plombier-boulogne-sur-mer.html` — 1
 - L1248 — `'+r.image+'` (fichier introuvable sur disque)
@@ -94,9 +94,9 @@ _Généré le 2026-05-27 07:07_
 
 ### `realisations.html` — 4
 - L608 — `(empty)` (src vide)
-- L1014 — `'+r.photo_apres+'` (fichier introuvable sur disque)
-- L1015 — `'+r.photo_avant+'` (fichier introuvable sur disque)
-- L1024 — `'+r.photo_apres+'` (fichier introuvable sur disque)
+- L1017 — `'+r.photo_apres+'` (fichier introuvable sur disque)
+- L1018 — `'+r.photo_avant+'` (fichier introuvable sur disque)
+- L1027 — `'+r.photo_apres+'` (fichier introuvable sur disque)
 
 ### `serrurier-boulogne-sur-mer.html` — 1
 - L1213 — `'+r.image+'` (fichier introuvable sur disque)
@@ -111,10 +111,10 @@ _Généré le 2026-05-27 07:07_
 - L1220 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `travaux-dunkerque.html` — 1
-- L1146 — `'+r.image+'` (fichier introuvable sur disque)
+- L1147 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `travaux-saint-omer.html` — 1
-- L1155 — `'+r.image+'` (fichier introuvable sur disque)
+- L1156 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `vitrier-dunkerque.html` — 1
 - L1196 — `'+r.image+'` (fichier introuvable sur disque)
@@ -136,7 +136,8 @@ _Généré le 2026-05-27 07:07_
 Ces `<img>` reçoivent leur `src` via interpolation JS — dimensions doivent
 être ajoutées soit en dur dans le template, soit calculées via `onload`.
 
-- `realisation.html` (4) : L279, L280, L286, L351
+- `nos-prestations.html` (1) : L1460
+- `realisation.html` (4) : L282, L283, L289, L354
 
 ---
 

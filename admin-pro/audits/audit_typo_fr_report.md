@@ -1,4 +1,4 @@
-# Audit typographie FR (espaces insécables) — 2026-05-27 07:07
+# Audit typographie FR (espaces insécables) — 2026-05-28 06:58
 
 Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une espace **insécable** (`&nbsp;`, U+00A0, U+202F). Seuil d'alerte : > **5** occurrences fautives par page.
 
@@ -7,7 +7,7 @@ Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une
 - Pages auditées : **82**
 - Pages clean (≤ seuil) : **18**
 - Pages avec alerte : **64**
-- Occurrences fautives cumulées : **893**
+- Occurrences fautives cumulées : **849**
 
 ## ⚠️ Pages au-delà du seuil
 
@@ -28,49 +28,49 @@ Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une
 | `depannage-saint-omer.html` | **18** | `…uffage, une porte bloquée ? Notre équipe basée à Sai…` · `…Omer, le bâti est typique : maisons audomaroises en…` · `…ans une fermette d'Arques : on intervient avec le bo…` |
 | `guide-adaptation-pmr.html` | **18** | `…ment Adapter son logement : PMR & maintien à domicil…` · `…s , ce n'est plus un luxe : c'est une condition souv…` · `…quoi adapter son logement ? Le maintien à domicile e…` |
 | `ouverture-porte-claquee.html` | **16** | `…ns la serrure, clé perdue : nos serruriers intervien…` · `…dans la panique, vérifiez : numéro de SIRET, adresse…` · `…Décrivez votre situation : claquée, clé bloquée, se…` |
-| `serrurier-boulogne-sur-mer.html` | **15** | `…e, blindage, cylindre A2P : nos serruriers HELP Conf…` · `…le Indép. 👋 Porte claquée ? Clé cassée ? Un serrurie…` · `…orte claquée ? Clé cassée ? Un serrurier intervient…` |
 | `urgence.html` | **15** | `…rt-circuit, porte claquée : appelez-nous en priorité…` · `…l'assurance Appelez-nous : 03 66 10 01 34 → Guide c…` · `…) Code erreur sur l'écran ? Chauffage d'appoint sécu…` |
-| `chauffagiste-calais.html` | **14** | `…etien annuel, désembouage : nos chauffagistes HELP C…` · `…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…` · `…panne ? Plus d'eau chaude ? Je vous mets en relation…` |
-| `electricien-calais.html` | **14** | `…en sécurité, installation : nos électriciens HELP Co…` · `…dép. 👋 Coupure de courant ? Tableau qui saute ? J'en…` · `…urant ? Tableau qui saute ? J'envoie un électricien.…` |
 | `guide-fuite-eau.html` | **14** | `…Fuite d'eau : les 5 réflexes immédiats…` · `…eau Plomberie Fuite d'eau : les 5 réflexes immédiats…` · `…vrez une fuite. Réflexe 1 : Couper l'eau C'est la pr…` |
-| `menuisier-dunkerque.html` | **14** | `…es, panneaux PVC, parquet : nos menuisiers HELP Conf…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
 | `remplacement-chauffe-eau.html` | **14** | `…vieux ou trop énergivore : nos plombiers remplacent…` · `…remplacer son chauffe-eau ? Voici les signaux clairs…` · `…anticiper le remplacement : Plus de 12 ans Cuve frag…` |
-| `serrurier-calais.html` | **14** | `…age, cylindre de sécurité : nos serruriers HELP Conf…` · `…le Indép. 👋 Porte claquée ? Clé cassée ? Un serrurie…` · `…orte claquée ? Clé cassée ? Un serrurier intervient…` |
-| `serrurier-dunkerque.html` | **14** | `…age, cylindre de sécurité : nos serruriers HELP Conf…` · `…le Indép. 👋 Porte claquée ? Clé cassée ? Un serrurie…` · `…orte claquée ? Clé cassée ? Un serrurier intervient…` |
-| `vitrier-dunkerque.html` | **14** | `…é, fissure, bris de glace : nos vitriers HELP Confor…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
 | `diagnostic-electrique.html` | **13** | `…ntion ⚖️ Qui est concerné ? Le DEO est obligatoire s…` · `…s ou rénovations récentes : l'attestation Consuel su…` · `…suffit. Durée de validité : 3 ans pour vente · 6 ans…` |
-| `electricien-dunkerque.html` | **13** | `…en sécurité, installation : nos électriciens HELP Co…` · `…dép. 👋 Coupure de courant ? Tableau qui saute ? J'en…` · `…urant ? Tableau qui saute ? J'envoie un électricien.…` |
 | `index.html` | **13** | `…r avec un seul engagement : diagnostic clair, devis…` · `…pond rapidement 👋 Bonjour ! Je vous guide en 4 étape…` · `…Une question vous bloque ? Notre équipe finalise vo…` |
-| `volets-dunkerque.html` | **13** | `…isation, dépannage moteur : nos techniciens HELP Con…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
-| `chauffagiste-boulogne-sur-mer.html` | **12** | `…retien annuel obligatoire : nos chauffagistes HELP C…` · `…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…` · `…panne ? Plus d'eau chaude ? Je vous mets en relation…` |
-| `electricien-boulogne-sur-mer.html` | **12** | `…en sécurité, installation : nos électriciens HELP Co…` · `…dép. 👋 Coupure de courant ? Tableau qui saute ? J'en…` · `…urant ? Tableau qui saute ? J'envoie un électricien.…` |
-| `plombier-calais.html` | **12** | `…erche de fuite, sanitaire : nos plombiers HELP Confo…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
+| `serrurier-boulogne-sur-mer.html` | **13** | `…e, blindage, cylindre A2P : nos serruriers HELP Conf…` · `…le Indép. 👋 Porte claquée ? Clé cassée ? Un serrurie…` · `…orte claquée ? Clé cassée ? Un serrurier intervient…` |
+| `chauffagiste-calais.html` | **12** | `…etien annuel, désembouage : nos chauffagistes HELP C…` · `…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…` · `…panne ? Plus d'eau chaude ? Je vous mets en relation…` |
+| `electricien-calais.html` | **12** | `…en sécurité, installation : nos électriciens HELP Co…` · `…dép. 👋 Coupure de courant ? Tableau qui saute ? J'en…` · `…urant ? Tableau qui saute ? J'envoie un électricien.…` |
+| `menuisier-dunkerque.html` | **12** | `…es, panneaux PVC, parquet : nos menuisiers HELP Conf…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
 | `pmr-dunkerque.html` | **12** | `…monte-escalier, accès PMR : nos artisans labellisés…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
-| `chauffagiste-dunkerque.html` | **11** | `…etien annuel, désembouage : nos chauffagistes HELP C…` · `…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…` · `…panne ? Plus d'eau chaude ? Je vous mets en relation…` |
+| `serrurier-calais.html` | **12** | `…age, cylindre de sécurité : nos serruriers HELP Conf…` · `…le Indép. 👋 Porte claquée ? Clé cassée ? Un serrurie…` · `…orte claquée ? Clé cassée ? Un serrurier intervient…` |
+| `serrurier-dunkerque.html` | **12** | `…age, cylindre de sécurité : nos serruriers HELP Conf…` · `…le Indép. 👋 Porte claquée ? Clé cassée ? Un serrurie…` · `…orte claquée ? Clé cassée ? Un serrurier intervient…` |
+| `vitrier-dunkerque.html` | **12** | `…é, fissure, bris de glace : nos vitriers HELP Confor…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
 | `depannage-saint-martin-lez-tatinghem.html` | **11** | `…ez-Tatinghem ou Tatinghem ? Notre dépôt est sur la c…` · `…rerie, volets, rénovation : tous les métiers du bâti…` · `…llons de la rue de Calais : nous connaissons chaque…` |
-| `menuisier-saint-omer.html` | **11** | `…sur-mesure, sécurisation : nos vitriers intervienne…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
-| `plombier-boulogne-sur-mer.html` | **11** | `…erche de fuite, sanitaire : nos plombiers HELP Confo…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
-| `plombier-dunkerque.html` | **11** | `…erche de fuite, sanitaire : nos techniciens HELP Con…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
+| `electricien-dunkerque.html` | **11** | `…en sécurité, installation : nos électriciens HELP Co…` · `…dép. 👋 Coupure de courant ? Tableau qui saute ? J'en…` · `…urant ? Tableau qui saute ? J'envoie un électricien.…` |
 | `travaux-dunkerque.html` | **11** | `…e, plafond, peinture, sol : nos équipes HELP Confort…` · `…👋 Un projet de rénovation ? Salle de bain, cuisine,…` · `…lle de bain, cuisine, PMR : parlons de votre chantie…` |
-| `chauffagiste-saint-omer.html` | **10** | `…retien annuel obligatoire : nos chauffagistes interv…` · `…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…` · `…panne ? Plus d'eau chaude ? Je vous mets en relation…` |
+| `volets-dunkerque.html` | **11** | `…isation, dépannage moteur : nos techniciens HELP Con…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
+| `chauffagiste-boulogne-sur-mer.html` | **10** | `…retien annuel obligatoire : nos chauffagistes HELP C…` · `…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…` · `…panne ? Plus d'eau chaude ? Je vous mets en relation…` |
 | `debouchage-canalisation.html` | **10** | `…refoulement entre pièces : nos plombiers intervienn…` · `…un pro pour un débouchage ? Tous les bouchons ne se…` · `…ppeler un plombier équipé : Refoulement entre pièces…` |
-| `electricien-saint-omer.html` | **10** | `…se aux normes NF C 15-100 : nos électriciens qualifi…` · `…dép. 👋 Coupure de courant ? Tableau qui saute ? J'en…` · `…urant ? Tableau qui saute ? J'envoie un électricien.…` |
+| `electricien-boulogne-sur-mer.html` | **10** | `…en sécurité, installation : nos électriciens HELP Co…` · `…dép. 👋 Coupure de courant ? Tableau qui saute ? J'en…` · `…urant ? Tableau qui saute ? J'envoie un électricien.…` |
 | `entretien-chaudiere.html` | **10** | `…vous ⚖️ Obligation légale : en France, l'entretien a…` · `…oup d'œil + une signature : c'est 45 à 60 minutes de…` · `…geux qu'un passage unique : tarif fixe annuel, passa…` |
 | `guide-entretien-chaudiere.html` | **10** | `…Entretien chaudière : la loi — Guide HELP Conf…` · `…e Entretien chaudière gaz : tout ce que dit la loi 📖…` · `…nt. On vous explique tout : pourquoi c'est obligatoi…` |
-| `serrurier-saint-omer.html` | **10** | `…cée, clé cassée, blindage : nos serruriers intervien…` · `…le Indép. 👋 Porte claquée ? Clé cassée ? Un serrurie…` · `…orte claquée ? Clé cassée ? Un serrurier intervient…` |
-| `vitrier-saint-omer.html` | **10** | `…sur-mesure, sécurisation : nos vitriers intervienne…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
-| `volets-saint-omer.html` | **10** | `…tablier cassé, pose neuve : nos techniciens intervie…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
+| `plombier-calais.html` | **10** | `…erche de fuite, sanitaire : nos plombiers HELP Confo…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
 | `aides.html` | **9** | `…E, MaPrimeAdapt', éco-PTZ : les dispositifs sont nom…` · `…on Information importante : les aides présentées sur…` · `…P Confort des dispositifs : mai 2026 · Consultez les…` |
+| `chauffagiste-dunkerque.html` | **9** | `…etien annuel, désembouage : nos chauffagistes HELP C…` · `…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…` · `…panne ? Plus d'eau chaude ? Je vous mets en relation…` |
 | `contact.html` | **9** | `…remplissez le formulaire : nous vous rappelons rapi…` · `…es Bureaux &amp; standard : du lundi au vendredi 9h-…` · `…h-16h Urgences techniques : sur rendez-vous en journ…` |
 | `depannage-gravelines.html` | **9** | `…es ou Petit-Fort-Philippe ? Notre équipe HELP Confor…` · `…, c'est un mélange unique : maisons en brique du cen…` · `…nt pour les installations : corrosion accélérée, joi…` |
 | `depannage-longuenesse.html` | **9** | `…uffage, une porte bloquée ? Notre équipe basée juste…` · `…rès du parc Pierre Mauroy : intervention rapide, piè…` · `…ion urgente à Longuenesse ? Longuenesse étant juste…` |
-| `plombier-saint-omer.html` | **9** | `…erche de fuite, sanitaire : nos techniciens intervie…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
+| `menuisier-saint-omer.html` | **9** | `…sur-mesure, sécurisation : nos vitriers intervienne…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
+| `plombier-boulogne-sur-mer.html` | **9** | `…erche de fuite, sanitaire : nos plombiers HELP Confo…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
+| `plombier-dunkerque.html` | **9** | `…erche de fuite, sanitaire : nos techniciens HELP Con…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
 | `tarifs.html` | **9** | `…4 Engagement transparence : nous annonçons le tarif…` · `…ès intervention. Vérifiez : SIRET visible, adresse p…` · `…'un plombier à Saint-Omer ? Le forfait déplacement e…` |
+| `chauffagiste-saint-omer.html` | **8** | `…retien annuel obligatoire : nos chauffagistes interv…` · `…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…` · `…panne ? Plus d'eau chaude ? Je vous mets en relation…` |
 | `depannage-bergues.html` | **8** | `…ues, la « Bruges flamande » ? Notre équipe HELP Conf…` · `…s, la « Bruges flamande » ? Notre équipe HELP Confor…` · `…un patrimoine bâti unique : remparts Vauban, beffroi…` |
+| `electricien-saint-omer.html` | **8** | `…se aux normes NF C 15-100 : nos électriciens qualifi…` · `…dép. 👋 Coupure de courant ? Tableau qui saute ? J'en…` · `…urant ? Tableau qui saute ? J'envoie un électricien.…` |
 | `pmr-saint-omer.html` | **8** | `…PMR, élargissement portes : nos équipes adaptent vot…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
 | `pro.html` | **8** | `…ollectivités, entreprises : HELP Confort Saint-Omer…` · `…as de prestataire externe : la même équipe du devis…` · `…habitat traités de A à Z : intervention conservatoi…` |
+| `serrurier-saint-omer.html` | **8** | `…cée, clé cassée, blindage : nos serruriers intervien…` · `…le Indép. 👋 Porte claquée ? Clé cassée ? Un serrurie…` · `…orte claquée ? Clé cassée ? Un serrurier intervient…` |
+| `vitrier-saint-omer.html` | **8** | `…sur-mesure, sécurisation : nos vitriers intervienne…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
+| `volets-saint-omer.html` | **8** | `…tablier cassé, pose neuve : nos techniciens intervie…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
 | `zones-intervention.html` | **8** | `…e, vitrerie et rénovation : 2 agences locales (Dépan…` · `…recommande sans hésiter. » M Mathieu D. Saint-Omer…` · `…é, finitions impeccables. » S Sophie L. Dunkerque Vo…` |
 | `depannage-arques.html` | **7** | `…oin d'un dépannage rapide ? Notre équipe basée à Sai…` · `…la zone du Bras Delattre : on s'adapte au type d'ha…` · `…à Arques en cas d'urgence ? En horaires d'ouverture,…` |
+| `plombier-saint-omer.html` | **7** | `…erche de fuite, sanitaire : nos techniciens intervie…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` · `…ne fuite ? Un dégorgement ? Je vous oriente vers le…` |
 | `processus.html` | **7** | `…le site, message Facebook : peu importe le canal. Vo…` · `…t disponibilités. Urgence : intervention rapide sur…` · `…nkerque. Demande standard : créneau selon agenda. Tr…` |
 | `travaux-saint-omer.html` | **7** | `…enuiserie, adaptation PMR : un seul interlocuteur po…` · `…👋 Un projet de rénovation ? Salle de bain, cuisine,…` · `…lle de bain, cuisine, PMR : parlons de votre chantie…` |
 | `agence-dunkerque.html` | **6** | `…nformations légales Forme : Dépan'DK SIREN : 898 196…` · `…es Forme : Dépan'DK SIREN : 898 196 159 RCS : Boulog…` · `…K SIREN : 898 196 159 RCS : Boulogne-sur-Mer Assuran…` |

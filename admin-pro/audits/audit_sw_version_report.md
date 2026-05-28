@@ -1,13 +1,13 @@
-# Audit SW version freshness — 2026-05-27 07:07
+# Audit SW version freshness — 2026-05-28 06:57
 
 - **Fichier audité** : `sw.js`
 - **Mode détecté** : `kill-switch`
 - **VERSION** : *(non trouvée)*
 - **Dernier commit par répertoire asset** :
-  - `assets/` → `2026-05-26`
-  - `images/` → `2026-05-26`
-  - `og/` → `2026-05-26`
-- **Dernier commit asset global** : `2026-05-26`
+  - `assets/` → `2026-05-28`
+  - `images/` → `2026-05-28`
+  - `og/` → `2026-05-28`
+- **Dernier commit asset global** : `2026-05-28`
 - **Statut** : `killswitch`
 
 > ℹ️ SW en mode **kill-switch** — pas de cache versionné à entretenir. Quand le SW reviendra (réintroduction de `const VERSION`), cet audit vérifiera automatiquement la fraîcheur.

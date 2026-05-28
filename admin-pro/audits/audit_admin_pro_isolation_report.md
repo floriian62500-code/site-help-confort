@@ -1,6 +1,6 @@
 # Audit admin-pro isolation — Rapport
 
-_Généré le 2026-05-27 07:07_
+_Généré le 2026-05-28 06:58_
 
 ## Synthèse
 
@@ -15,5 +15,5 @@ Ces pages publiques référencent en clair une URL `admin-pro/...html` (ou `admi
 
 ### `nos-prestations.html` — 1 fuite(s)
 
-- Ligne 1014 → `admin-pro/services.html`  
+- Ligne 1033 → `admin-pro/services.html`  
   `admin-pro/services.html`
