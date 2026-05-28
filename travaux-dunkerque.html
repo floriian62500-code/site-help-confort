@@ -1134,6 +1134,7 @@ if (document.fonts && document.fonts.ready) {
  var plomb = list.filter(function(r){
  if(r.published === false) return false;
  if(TRAVAUX_METIERS.indexOf(r.metier) === -1) return false;
+ if (r.est_chantier === false) return false;
  var txt = (r.title||'') + ' ' + (r.description||'');
  if(EXCLUDE_KEYWORDS.test(txt)) return false;
  return true;
