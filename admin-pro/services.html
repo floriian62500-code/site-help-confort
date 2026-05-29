@@ -1114,9 +1114,10 @@
       const hiddenInput = document.querySelector(`[data-var-idx="${idx}"][data-var-field="image_url"]`);
       try {
         const blob = await resizeImageInline(f, 1400, 0.85);
-        const svc = currentEditingSvc || {};
+        const svc = editingId ? (allServices.find(s => s.id === editingId) || {}) : {};
         const variantKey = document.querySelector(`[data-var-idx="${idx}"][data-var-field="key"]`)?.value || ('variant-' + idx);
-        const filename = (svc.slug || 'service') + '-' + variantKey.toLowerCase().replace(/[^a-z0-9-]+/g,'-') + '.jpg';
+        const baseSlug = svc.slug || document.querySelector('[name="slug"]')?.value || 'service';
+        const filename = baseSlug + '-' + variantKey.toLowerCase().replace(/[^a-z0-9-]+/g,'-') + '.jpg';
         const { error: upErr } = await sb.storage.from('prestations').upload(filename, blob, {
           upsert: true, contentType: 'image/jpeg', cacheControl: '3600'
         });
