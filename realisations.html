@@ -465,8 +465,18 @@ if (document.fonts && document.fonts.ready) {
  </div>
 </section>
 
-<!-- Section "Le terrain raconte aussi." retirée 2026-05-29 sur demande Florian (mélange actus avec réalisations).
-     Pour les actualités, voir actualites.html dédiée. -->
+<!-- CTA vers la page Actualités dédiée (séparé visuellement des réalisations) -->
+<section style="background:linear-gradient(135deg,#0A1428,#172240);padding:50px 20px;text-align:center">
+  <div style="max-width:760px;margin:0 auto">
+    <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(31,196,240,.12);border:1px solid rgba(31,196,240,.25);color:#1FC4F0;border-radius:999px;font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:18px">📰 Aussi à consulter</span>
+    <h2 style="margin:0 0 12px;font-size:clamp(1.6rem,3vw,2.1rem);font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1.15">Actualités, conseils & nouveautés du terrain.</h2>
+    <p style="margin:0 0 26px;color:#cbd5e1;font-size:1rem;line-height:1.55">Guides saisonniers, aides 2026, retours d'intervention, conseils techniques. Une lecture séparée pour aller plus loin que les photos avant/après.</p>
+    <a href="actualites.html" style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:#FF6B1A;color:#fff;border-radius:12px;font-weight:800;font-size:1rem;text-decoration:none;box-shadow:0 10px 24px rgba(255,107,26,.35);transition:transform .2s ease,box-shadow .2s ease" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 14px 32px rgba(255,107,26,.45)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 10px 24px rgba(255,107,26,.35)'">
+      Voir toutes les actualités
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+</section>
 
 
 <script>
