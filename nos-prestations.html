@@ -1439,22 +1439,28 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  <div class="nv-variant-pick" id="nvVariantPick">
  <label class="nv-variant-opt">
  <input type="radio" name="variant" value="" checked>
+ <div style="width:60px;height:60px;flex-shrink:0;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,#FAFCFD,#F0F4F7);border:1px solid #E5EDF3;display:flex;align-items:center;justify-content:center"><img src="${svc.image_url || 'https://btcbjwqiivhpwoszomhg.supabase.co/storage/v1/object/public/prestations/' + svc.slug + '.jpg'}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" style="width:100%;height:100%;object-fit:contain;padding:4px"><span style="display:none;align-items:center;justify-content:center;color:#94a3b8;font-size:1.4rem">📷</span></div>
  <div class="nv-variant-label">
  <strong>Gamme Éco</strong>
  <small>${escapeHtml(svc.brand || '')} · qualité standard, rapport qualité/prix optimal</small>
  </div>
  <div class="nv-variant-price">${eurFmt(svc.price_ttc)}</div>
  </label>
- ${variants.map((v, i) => `
+ ${variants.map((v, i) => {
+   const variantPhoto = v.image_url || (svc.image_url || ('https://btcbjwqiivhpwoszomhg.supabase.co/storage/v1/object/public/prestations/' + svc.slug + '-' + (v.key||('variant-'+i)) + '.jpg'));
+   const variantFallback = svc.image_url || ('https://btcbjwqiivhpwoszomhg.supabase.co/storage/v1/object/public/prestations/' + svc.slug + '.jpg');
+   return `
  <label class="nv-variant-opt">
  <input type="radio" name="variant" value="${i}">
+ <div style="width:60px;height:60px;flex-shrink:0;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,#FAFCFD,#F0F4F7);border:1px solid #E5EDF3;display:flex;align-items:center;justify-content:center"><img src="${variantPhoto}" alt="" loading="lazy" onerror="this.onerror=null;this.src='${variantFallback}';this.dataset.fb='1';if(this.dataset.fb==='2')this.style.display='none'" style="width:100%;height:100%;object-fit:contain;padding:4px"></div>
  <div class="nv-variant-label">
  <strong>${escapeHtml(v.label)}</strong>
  <small>${escapeHtml(v.info || '')}</small>
  </div>
  <div class="nv-variant-price">${eurFmt(Number(v.price_ht) * (1 + Number(svc.vat_rate)))}</div>
  </label>
- `).join('')}
+ `;
+ }).join('')}
  </div>
  ` : ''}
 
