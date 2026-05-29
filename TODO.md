@@ -15,7 +15,7 @@
 - [x] Fix CSS footer-v3 manquant sur 12 pages (partenaires, reseau-help-confort, agence-*, nos-villes, nos-metiers, notre-equipe…) | source: audit autonome 2026-05-19 | sévérité: critique | (fait le 2026-05-19, injection CSS depuis index.html)
 
 # Ajout 2026-05-19 11:30 (session Cowork autonome)
-- [ ] BUG: drapeau Ukraine carte zones-intervention persiste malgré fix V1 (Wikimedia) et V2 (Esri ArcGIS) | source: chat 2026-05-19 | sévérité: normale
+- [x] BUG: drapeau Ukraine carte zones-intervention persiste malgré fix V1 (Wikimedia) et V2 (Esri ArcGIS) | source: chat 2026-05-19 | sévérité: normale (fait le 2026-05-29, RÉSOLU au niveau code : V3 a désactivé Leaflet — `if (true) return;` ligne 807 + tags <link>/<script> Leaflet commentés — et V4 du 2026-05-22 a remplacé la carte par 2 cartes agence + CTA. Plus aucune tuile ni asset tiers chargé sur la page → aucun drapeau possible côté site. Grep repo : zéro asset « ukrain » hors sélecteurs CSS du bloc Leaflet désactivé. Si un drapeau subsiste dans le navigateur de Florian = extension Chrome → cf. tâche « Test fenêtre privée »)
 - [ ] Test fenêtre privée drapeau Ukraine (validation extension Chrome vs vrai bug) — Florian
 - [x] Confirmer publication chasse d'eau 18:00 (Edge Function V5 + cron actif) (fait le 2026-05-19)
-- [ ] Si drapeau persiste en privé : remplacer Leaflet par carte SVG statique (fallback existant ligne 909+)
+- [x] Si drapeau persiste en privé : remplacer Leaflet par carte SVG statique (fallback existant ligne 909+) (fait le 2026-05-29, rendue caduque : V3 a basculé sur le SVG statique puis V4 du 2026-05-22 l'a remplacé par 2 cartes agence + CTA. Leaflet n'est plus chargé du tout. Rien à faire de plus côté code.)

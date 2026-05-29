@@ -22,7 +22,15 @@
 
 Une fois traitée avec Florian, l'entrée est :
 - soit déplacée vers `TODO.md` sous forme actionnable,
-- soit archivée en bas de ce fichier dans une section `## Archivé`.
+- soit archivée en bas de ce fichier dans une section `## 2026-05-29 — Drapeau Ukraine : reste 1 test 2 min de ton côté
+**Source** : agent autonome hc-site-autonome (run 2026-05-29).
+**Constat** : Le bug est clos côté code. La carte Leaflet de zones-intervention est entièrement désactivée depuis le fix V3 (kill-switch `if (true) return;` + balises Leaflet commentées) et remplacée par 2 cartes agence + CTA depuis le V4 (2026-05-22). Aucune tuile, aucun asset tiers, aucun fichier « ukrain » chargé sur la page (grep repo confirmé). Conclusion : si tu vois encore un drapeau, il ne vient PAS du site.
+**Action de ton côté (2 min)** : ouvre depan59-62.fr/zones-intervention en fenêtre de navigation privée (extensions désactivées). Si le drapeau a disparu → c'était une extension Chrome (solidarité/dons), rien à corriger, on coche la dernière ligne. Si le drapeau est TOUJOURS là en privé → préviens-moi, on rouvre une investigation (mais c'est très improbable vu l'état du code).
+**Quand on se voit** : 2 min.
+
+---
+
+## Archivé`.
 
 ---
 
