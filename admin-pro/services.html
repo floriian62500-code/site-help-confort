@@ -556,11 +556,17 @@
       const cat = allCats.find(c => c.id === s.category_id);
       const ttc = Math.round(s.price_ht * (1 + s.vat_rate) * 100) / 100;
       const nbVar = Array.isArray(s.variants) ? s.variants.length : 0;
+      const photoUrl = s.image_url || ('https://btcbjwqiivhpwoszomhg.supabase.co/storage/v1/object/public/prestations/' + (s.slug||'') + '.jpg');
+      const photoThumb = `<div style="position:relative;width:44px;height:44px;flex-shrink:0;border-radius:8px;overflow:hidden;background:#F0F4F7;border:1px solid #E5EDF3;display:flex;align-items:center;justify-content:center">
+        <img src="${photoUrl}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" style="width:100%;height:100%;object-fit:cover;display:block">
+        <div style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;color:#CBD5E1;font-size:1rem" title="Pas encore de photo">📷</div>
+      </div>`;
       return `
         <tr data-id="${s.id}">
           <td>
-            <div class="sv-row-name">
-              <div>
+            <div class="sv-row-name" style="display:flex;align-items:center;gap:10px">
+              ${photoThumb}
+              <div style="flex:1;min-width:0">
                 <strong>${escapeHtml(s.name)}</strong>
                 <small>${escapeHtml((s.short_desc||'').slice(0,80))}${s.short_desc && s.short_desc.length>80?'…':''}</small>
               </div>
