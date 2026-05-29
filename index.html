@@ -1513,9 +1513,44 @@ var hasPhoto = !!(window.__resaPhotos && window.__resaPhotos.length > 0);
 return hasDesc && hasMetier && hasPhoto;
 }
 if (current === 3) {
-return state.prenom.trim() && state.nom.trim() && state.tel.trim() &&
-/\S+@\S+\.\S+/.test(state.email) &&
-/^[0-9]{5}$/.test(state.cp);
+// Validation stricte — anti-fausses-données
+function nameOk(s) {
+  if (!s) return false;
+  var t = s.trim();
+  if (t.length < 2) return false;
+  // Au moins une voyelle (anti "vrfeve", "fghj")
+  if (!/[aeiouyàâäéèêëîïôöùûüÿAEIOUY]/.test(t)) return false;
+  // Pas que des caractères répétés (anti "aaaa")
+  if (/^(.)\1+$/.test(t)) return false;
+  // Que des lettres + espaces + tirets/apostrophes (anti chiffres et symboles)
+  if (!/^[a-zA-ZÀ-ÿ\s'-]{2,}$/.test(t)) return false;
+  return true;
+}
+function phoneFrOk(s) {
+  if (!s) return false;
+  var d = s.replace(/[\s.\-+]/g, '');
+  // Format FR : 10 chiffres commençant par 0[1-9], ou +33[1-9]xxxxxxxxx
+  if (/^0[1-9][0-9]{8}$/.test(d)) return true;
+  if (/^33[1-9][0-9]{8}$/.test(d)) return true;
+  return false;
+}
+function emailOk(s) {
+  if (!s) return false;
+  // RFC simplifié + TLD ≥ 2 lettres
+  if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(s.trim())) return false;
+  // Anti tld bidons (ex: vfre.fr OK mais @vrfe.x → reject)
+  var parts = s.trim().split('@');
+  if (!parts[1] || parts[1].length < 4) return false;
+  return true;
+}
+function cpFrOk(s) {
+  if (!/^[0-9]{5}$/.test(s)) return false;
+  // CP français valide (01-95 + DOM-TOM mais pas 00-)
+  var dep = parseInt(s.substring(0, 2));
+  if (dep < 1 || dep > 98) return false;
+  return true;
+}
+return nameOk(state.prenom) && nameOk(state.nom) && phoneFrOk(state.tel) && emailOk(state.email) && cpFrOk(state.cp);
 }
 return false;
 }
