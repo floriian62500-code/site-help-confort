@@ -1741,49 +1741,9 @@ return 'Saint-Omer · SARL Dépan’Audo';
 // Catalogue de prestations — synchronisé 1:1 avec nos-prestations.html LOCAL_CATALOG
 // Prix croisés avec TARIFS_REFERENCE.md (BAREME AGENCE) — aucun prix inventé.
 // "price" = prestation à prix fixe. "quote" = sur devis (pas de prix vitrine).
-var ALL_PRESTAS = [
- // ─── PLOMBERIE & SANITAIRES ─────────────────────────────────
- { id:'p-fuite', slug:'recherche-fuite-visuelle', icon:'💧', label:'Recherche de fuite visuelle', metier:'Plomberie', price:148, match: /fuite|gout|écoule|ruisselle|inonda|deau|humid/ },
- { id:'p-fuite-tech', slug:'recherche-fuite-technique', icon:'🔬', label:'Recherche de fuite technique (caméra, gaz traceur, acoustique)', metier:'Plomberie', price:383, match: /caméra|thermique|acoustique|traceur|encastr|fuite cachée/ },
- { id:'p-debouch', slug:'desengorgement', icon:'🚿', label:'Désengorgement canalisation', metier:'Plomberie', price:165, match: /débouch|wc bouch|évier bouch|canalisation|engorg/ },
- { id:'p-chasse-n', slug:'chasse-nicoll', icon:'🚽', label:"Mécanisme chasse d'eau — Nicoll", metier:'Plomberie', price:187, match: /chasse|nicoll/ },
- { id:'p-chasse-g', slug:'chasse-geberit', icon:'🚽', label:"Mécanisme chasse d'eau — Geberit (WC sol)", metier:'Plomberie', price:203, match: /geberit|wc sol/ },
- { id:'p-detartrage', slug:'detartrage-sanitaire', icon:'💎', label:'Détartrage installation sanitaire', metier:'Plomberie', price:237, match: /détartr|calcaire|tartre/ },
- { id:'p-chau-eau', slug:'chauffe-eau-100-eco', icon:'♨️', label:'Chauffe-eau Atlantic 100 L Éco', metier:'Plomberie', price:817, match: /chauffe.eau|cumulus|ballon eau chaude|100 ?l/ },
- { id:'p-chau-eau-100st',slug:'chauffe-eau-100-st', icon:'♨️', label:'Chauffe-eau Atlantic 100 L Stéatite', metier:'Plomberie', price:887, match: /st[ée]atite.*100|100 ?l.*st[ée]atite/ },
- { id:'p-chau-eau-150',slug:'chauffe-eau-150-eco', icon:'♨️', label:'Chauffe-eau Atlantic 150 L Éco', metier:'Plomberie', price:884, match: /150 ?l/ },
- { id:'p-chau-eau-150st',slug:'chauffe-eau-150-st', icon:'♨️', label:'Chauffe-eau Atlantic 150 L Stéatite', metier:'Plomberie', price:961, match: /st[ée]atite.*150|150 ?l.*st[ée]atite/ },
- { id:'p-chau-eau-200',slug:'chauffe-eau-200-eco', icon:'♨️', label:'Chauffe-eau Atlantic 200 L Éco', metier:'Plomberie', price:1332, match: /200 ?l|famille/ },
- { id:'p-ce-contrat', slug:'contrat-entretien-chauffe-eau',icon:'🛡️', label:'Contrat entretien chauffe-eau (annuel)', metier:'Plomberie', price:220, match: /entretien chauffe|détartrage cuve|contrat ecs/ },
- { id:'p-other', slug:'plomberie-sur-devis', icon:'🔧', label:'Autre dépannage plomberie', metier:'Plomberie', quote:true },
-
- // ─── CHAUFFAGE ──────────────────────────────────────────────
- { id:'c-entretien', slug:'entretien-chaudiere-gaz', icon:'🛠️', label:'Entretien annuel chaudière gaz', metier:'Chauffage', price:121, match: /entretien|contrôle|maintenance|annuel/ },
- { id:'c-desembouage', slug:'desembouage-radiateur', icon:'🌡️', label:'Désembouage par radiateur', metier:'Chauffage', price:105, match: /radiateur|circuit|désembou|desembou/ },
- { id:'c-depan', slug:'depannage-chaudiere-t1', icon:'🔥', label:'Dépannage chaudière (T1 semaine)', metier:'Chauffage', price:75, match: /chaudi[èe]re|brûleur|fioul|gaz(?! et)|pas de chauf|plus de chauf|froid maison|eau chaude/ },
- { id:'c-contrat-b', slug:'contrat-chauffage-basic', icon:'📅', label:'Contrat chauffage Basic (gaz)', metier:'Chauffage', price:108, match: /contrat basic|9 ?€/ },
- { id:'c-contrat-c', slug:'contrat-chauffage-confort', icon:'📅', label:'Contrat chauffage Confort (gaz)', metier:'Chauffage', price:156, match: /contrat confort|13 ?€/ },
-
- // ─── ÉLECTRICITÉ ────────────────────────────────────────────
- { id:'e-panne', slug:'recherche-panne-elec', icon:'⚡', label:'Recherche de panne électrique', metier:'Électricité', price:107, match: /[ée]lectric|courant|disjonct|coupure|panne courant|prise/ },
- { id:'e-tableau', slug:'tableau-electrique', icon:'🔲', label:'Tableau électrique complet', metier:'Électricité', quote:true, match: /tableau|normes|différentiel|interrupteur|consuel/ },
-
- // ─── SERRURERIE ─────────────────────────────────────────────
- { id:'s-simple', slug:'ouverture-porte-simple', icon:'🔓', label:'Ouverture porte simple (non blindée)', metier:'Serrurerie', price:108, match: /porte simple|sans clef/ },
- { id:'s-claquee', slug:'ouverture-porte-claquee', icon:'🔒', label:'Ouverture porte claquée', metier:'Serrurerie', price:176, match: /porte claqu|claqué|claquée|claque/ },
- { id:'s-fermee', slug:'ouverture-porte-fermee-cle', icon:'🗝️', label:'Ouverture porte fermée à clé', metier:'Serrurerie', price:228, match: /porte ferm|ferm[ée] à cl|verrouill/ },
- { id:'s-securite', slug:'ouverture-porte-securite', icon:'🛡️', label:'Ouverture porte de sécurité (A2P, multipoints)', metier:'Serrurerie', price:314, match: /blind|a2p|multipoint|s[ée]curit[ée]/ },
- { id:'s-blindage', slug:'blindage-porte', icon:'🚪', label:'Blindage de porte', metier:'Serrurerie', quote:true, match: /blindage/ },
-
- // ─── VITRERIE ───────────────────────────────────────────────
- { id:'v-secu', slug:'mise-en-securite-ouverture-ext',icon:'🪟', label:'Mise en sécurité ouverture extérieure (au m²)', metier:'Vitrerie', price:120, match: /vitre|vitrage|bris|cass[ée] glace|fen[êe]tre cass|panneau provisoire/ },
- { id:'v-gabarit', slug:'gabarit-vitrerie', icon:'📏', label:'Réalisation gabarit (vitrage sur mesure)', metier:'Vitrerie', price:184, match: /gabarit|sur mesure|prise mesure/ },
-
- // ─── TRAVAUX (devis sur mesure) ─────────────────────────────
- { id:'t-renov', slug:'renovation-salle-de-bain', icon:'🛁', label:'Rénovation salle de bain complète', metier:'Travaux', quote:true, match: /salle de bain|sdb|douche italien|baignoire/ },
- { id:'t-pmr', slug:'adaptation-pmr', icon:'♿', label:'Adaptation PMR / senior', metier:'Travaux', quote:true, match: /pmr|handicap|adaptation|mobilité réduite|senior/ },
- { id:'t-renov-g', slug:'travaux-renovation', icon:'🏗️', label:'Devis travaux / rénovation', metier:'Travaux', quote:true, match: /travaux|rénovation|renover|gros[ -]?œuvre|cuisine|peinture|plafond/ }
-];
+// 🚫 ALL_PRESTAS VIDÉ 2026-05-29 — source de vérité UNIQUE = Supabase (services)
+// Le wizard charge désormais le catalogue via fetch Supabase au démarrage.
+var ALL_PRESTAS = [];
 
 // Renvoie jusqu'à 4 prestations suggérées + une option "autre"
 // FILTRE STRICT : seules les prestations du/des métier(s) coché(s) en step 2 sont proposées
