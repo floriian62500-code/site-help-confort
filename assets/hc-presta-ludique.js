@@ -18,13 +18,8 @@
     'pmr':         { c1:'#0EA5E9', c2:'#38BDF8', soft:'rgba(14,165,233,.08)',  emoji:'♿' }
   };
 
-  var BADGES = {
-    'recherche-fuite-visuelle':   { label:'⭐ Le plus demandé', cls:'pop' },
-    'desengorgement':             { label:'⚡ Express',          cls:'express' },
-    'recherche-fuite-technique':  { label:'🔬 Sans casse',       cls:'tech' },
-    'ouverture-porte-claquee':    { label:'🚨 24/7',             cls:'urg' },
-    'entretien-chaudiere-gaz':    { label:'✓ Obligatoire',       cls:'oblig' }
-  };
+  // Badges automatiques désactivés sur demande Florian (2026-05-29)
+  var BADGES = {};
 
   var CSS = '\
 /* === HC PRESTA LUDIQUE === */\
@@ -42,7 +37,8 @@
 .pp-card.pp-selected .pp-icon{background:var(--pp-c1,#0DA0CF);color:#fff;animation:hcPpBounce .5s ease}\
 @keyframes hcPpBounce{0%,100%{transform:scale(1)}50%{transform:scale(1.15) rotate(8deg)}}\
 .pp-label{font-size:.96rem !important;font-weight:800 !important;color:#0A1428 !important;line-height:1.3;letter-spacing:-.01em}\
-.pp-metier{font-size:.74rem !important;font-weight:700 !important;color:var(--pp-c1,#0DA0CF) !important;text-transform:uppercase !important;letter-spacing:.06em !important;background:var(--pp-soft);padding:3px 10px;border-radius:999px;margin-top:auto;display:inline-block;width:fit-content}\
+.pp-metier{display:none !important}\
+.nv-card-cat{display:none !important}\
 .pp-badge{position:absolute;top:10px;left:10px;font-size:.66rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:4px 9px;border-radius:999px;line-height:1;z-index:2;box-shadow:0 4px 10px rgba(0,0,0,.08)}\
 .pp-badge.pop{background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff}\
 .pp-badge.express{background:linear-gradient(135deg,#EC4899,#F472B6);color:#fff}\
