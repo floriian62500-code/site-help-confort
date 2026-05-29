@@ -1424,15 +1424,64 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  </button>
  </div>
  <div class="nv-modal-body">
+ <!-- TVA Particulier 10% / Pro 20% — selector qui recalcule le prix dynamiquement -->
+ <div style="display:flex;gap:8px;margin-bottom:18px;padding:6px;background:#F4F7FB;border-radius:12px">
+   <label data-client-type="particulier" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 14px;border-radius:8px;cursor:pointer;font-size:.88rem;font-weight:700;background:#fff;color:#0A1428;box-shadow:0 2px 6px rgba(10,20,40,.08);transition:all .15s ease">
+     <input type="radio" name="nvClientType" value="particulier" checked style="display:none">
+     🏠 Particulier <span style="font-size:.74rem;color:#0DA0CF;font-weight:600">TVA 10%</span>
+   </label>
+   <label data-client-type="pro" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 14px;border-radius:8px;cursor:pointer;font-size:.88rem;font-weight:600;background:transparent;color:#64748b;transition:all .15s ease">
+     <input type="radio" name="nvClientType" value="pro" style="display:none">
+     💼 Professionnel <span style="font-size:.74rem;font-weight:600">TVA 20%</span>
+   </label>
+ </div>
+
  <div class="nv-summary">
  <div class="nv-summary-name">${escapeHtml(svc.name)}</div>
  ${svc.short_desc ? `<div style="font-size:.86rem;color:#475569;line-height:1.5">${escapeHtml(svc.short_desc)}</div>` : ''}
  <div class="nv-summary-price">
- <span>Prix forfait TTC</span>
+ <span><span id="nvPriceLabel">Prix forfait TTC</span> <small style="color:#94a3b8;font-weight:500" id="nvPriceTaxLabel">(TVA 10%)</small></span>
  <strong id="nvSummaryPrice">${eurFmt(svc.price_ttc)}</strong>
  </div>
  <span class="nv-summary-deposit" id="nvSummaryDeposit">Acompte ${svc.deposit_pct}% : ${eurFmt(svc.deposit_ttc)}</span>
  </div>
+ <script>
+ // Recalcul dynamique prix selon Particulier (10%) / Pro (20%)
+ (function(){
+   const priceHt = ${svc.price_ht || (svc.price_ttc / 1.10).toFixed(2)};
+   const depositPct = ${svc.deposit_pct || 40};
+   const fmt = n => new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',minimumFractionDigits:2}).format(n);
+   document.querySelectorAll('[name="nvClientType"]').forEach(r => {
+     r.addEventListener('change', e => {
+       const isParticulier = e.target.value === 'particulier';
+       const vat = isParticulier ? 0.10 : 0.20;
+       const ttc = priceHt * (1 + vat);
+       const deposit = ttc * depositPct / 100;
+       document.getElementById('nvSummaryPrice').textContent = fmt(ttc);
+       document.getElementById('nvPriceTaxLabel').textContent = isParticulier ? '(TVA 10%)' : '(TVA 20%)';
+       document.getElementById('nvSummaryDeposit').textContent = 'Acompte ' + depositPct + '% : ' + fmt(deposit);
+       // Update visuel des labels Particulier/Pro
+       document.querySelectorAll('[data-client-type]').forEach(l => {
+         const active = l.dataset.clientType === e.target.value;
+         l.style.background = active ? '#fff' : 'transparent';
+         l.style.color = active ? '#0A1428' : '#64748b';
+         l.style.fontWeight = active ? '700' : '600';
+         l.style.boxShadow = active ? '0 2px 6px rgba(10,20,40,.08)' : 'none';
+       });
+       // Recalcul variantes si présentes
+       document.querySelectorAll('.nv-variant-price[data-variant-ht]').forEach(el => {
+         const vht = Number(el.dataset.variantHt);
+         el.textContent = fmt(vht * (1 + vat));
+       });
+       // Update hidden field client_type
+       let hid = document.getElementById('nvClientTypeHidden');
+       if (hid) hid.value = e.target.value;
+     });
+     // Clic sur le label entier (pas seulement le radio caché)
+     r.closest('label').addEventListener('click', () => { r.checked = true; r.dispatchEvent(new Event('change')); });
+   });
+ })();
+ </script>
 
  ${hasVariants ? `
  <div style="font-size:.86rem;font-weight:700;color:#0A1428;margin-bottom:10px">Gamme</div>
@@ -1444,7 +1493,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  <strong>Gamme Éco</strong>
  <small>${escapeHtml(svc.brand || '')} · qualité standard, rapport qualité/prix optimal</small>
  </div>
- <div class="nv-variant-price">${eurFmt(svc.price_ttc)}</div>
+ <div class="nv-variant-price" data-variant-ht="${svc.price_ht || (svc.price_ttc/1.10).toFixed(2)}">${eurFmt(svc.price_ttc)}</div>
  </label>
  ${variants.map((v, i) => {
    const variantPhoto = v.image_url || (svc.image_url || ('https://btcbjwqiivhpwoszomhg.supabase.co/storage/v1/object/public/prestations/' + svc.slug + '-' + (v.key||('variant-'+i)) + '.jpg'));
@@ -1457,7 +1506,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  <strong>${escapeHtml(v.label)}</strong>
  <small>${escapeHtml(v.info || '')}</small>
  </div>
- <div class="nv-variant-price">${eurFmt(Number(v.price_ht) * (1 + Number(svc.vat_rate)))}</div>
+ <div class="nv-variant-price" data-variant-ht="${v.price_ht}">${eurFmt(Number(v.price_ht) * (1 + Number(svc.vat_rate)))}</div>
  </label>
  `;
  }).join('')}
