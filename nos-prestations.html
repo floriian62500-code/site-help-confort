@@ -1609,6 +1609,10 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  btn.disabled = true;
  btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9" stroke-opacity=".3"/><path d="M21 12a9 9 0 0 0-9-9"/></svg> Envoi…';
 
+ const clientType = (document.querySelector('input[name="nvClientType"]:checked')||{}).value || 'particulier';
+ const effectiveVat = clientType === 'pro' ? 0.20 : 0.10;
+ const recomputedTtc = finalHt * (1 + effectiveVat);
+ const recomputedDeposit = recomputedTtc * (svc.deposit_pct || 40) / 100;
  const payload = {
  service_id: svc.id,
  service_name: svc.name,
@@ -1620,13 +1624,13 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  address: data.address,
  postal_code: data.postal_code,
  city: data.city,
- notes: data.notes || null,
+ notes: (data.notes || '') + (clientType === 'pro' ? ' [CLIENT PRO — TVA 20%]' : ''),
  preferred_date: data.preferred_date || null,
  preferred_slot: data.preferred_slot || null,
  price_ht: finalHt,
- vat_rate: Number(svc.vat_rate),
- price_ttc: finalTtc,
- deposit_amount: deposit,
+ vat_rate: effectiveVat,
+ price_ttc: recomputedTtc,
+ deposit_amount: recomputedDeposit,
  status: 'pending'
  };
 
