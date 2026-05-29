@@ -1556,6 +1556,41 @@ return false;
 }
 function refreshNext() {
  btnNext.disabled = !canGoNext();
+ // Feedback rouge sur les champs invalides en step 3
+ if (current === 3) {
+   try {
+     var fields = [
+       { id:'resa-prenom', valid: nameOk(state.prenom), msg: 'Prénom invalide (lettres uniquement, ≥2 caractères)' },
+       { id:'resa-nom',    valid: nameOk(state.nom),    msg: 'Nom invalide (lettres uniquement, ≥2 caractères)' },
+       { id:'resa-tel',    valid: phoneFrOk(state.tel), msg: 'Téléphone FR invalide (ex: 06 12 34 56 78)' },
+       { id:'resa-email',  valid: emailOk(state.email), msg: 'Email invalide (format vous@domaine.fr)' },
+       { id:'resa-cp',     valid: cpFrOk(state.cp),     msg: 'Code postal FR invalide (5 chiffres, dép. 01-98)' }
+     ];
+     fields.forEach(function(f){
+       var el = document.getElementById(f.id);
+       if (!el) return;
+       var val = (el.value || '').trim();
+       var errEl = el.parentNode.querySelector('.resa-field-err');
+       // On affiche l'erreur uniquement si le champ a été touché (valeur non vide)
+       if (val.length > 0 && !f.valid) {
+         el.style.borderColor = '#DC2626';
+         el.style.background = 'rgba(220,38,38,.04)';
+         if (!errEl) {
+           errEl = document.createElement('div');
+           errEl.className = 'resa-field-err';
+           errEl.style.cssText = 'font-size:.74rem;color:#DC2626;font-weight:600;margin-top:4px';
+           el.parentNode.appendChild(errEl);
+         }
+         errEl.textContent = '⚠️ ' + f.msg;
+         errEl.style.display = 'block';
+       } else {
+         el.style.borderColor = '';
+         el.style.background = '';
+         if (errEl) errEl.style.display = 'none';
+       }
+     });
+   } catch(e){}
+ }
  // Hint visuel : message d'aide si le bouton est bloqué
  var hint = document.getElementById('resa-next-hint');
  if (!hint) {
