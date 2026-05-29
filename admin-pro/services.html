@@ -418,7 +418,8 @@
   function renderCatIcon(v, size) {
     size = size || 17;
     if (v.picto) {
-      return '<img src="' + v.picto + '" alt="" width="' + size + '" height="' + size + '" style="object-fit:contain;filter:brightness(0) invert(1)" loading="lazy" decoding="async">';
+      // Picto HC officiel : couleurs natives (PAS de filter qui écrase en blanc)
+      return '<img src="' + v.picto + '" alt="" width="' + size + '" height="' + size + '" style="object-fit:contain" loading="lazy" decoding="async">';
     }
     return '<svg width="' + size + '" height="' + size + '" ' + SVG_ATTRS + '>' + v.icon + '</svg>';
   }
