@@ -1745,6 +1745,51 @@ return 'Saint-Omer · SARL Dépan’Audo';
 // Le wizard charge désormais le catalogue via fetch Supabase au démarrage.
 var ALL_PRESTAS = [];
 
+// ═══════════════════════════════════════════════════════════════
+// LOAD CATALOGUE DEPUIS SUPABASE (remplace ALL_PRESTAS hardcoded)
+// ═══════════════════════════════════════════════════════════════
+(function loadCatalogFromSupabase() {
+ var SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+ var SUPABASE_PUB = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
+ // Mapping métier BDD → libellé attendu par le wizard
+ var CAT_TO_METIER = {
+   'plomberie': 'Plomberie',
+   'chauffage': 'Chauffage',
+   'electricite': 'Électricité',
+   'serrurerie': 'Serrurerie',
+   'vitrerie': 'Vitrerie',
+   'devis-sur-mesure': 'Travaux'
+ };
+ fetch(SUPABASE_URL + '/rest/v1/services?select=id,slug,name,short_desc,price_ht,vat_rate,requires_quote,category_id,active,service_categories!inner(slug)&active=eq.true&order=name', {
+   headers: { 'apikey': SUPABASE_PUB, 'Authorization': 'Bearer ' + SUPABASE_PUB }
+ })
+ .then(function(r){ return r.ok ? r.json() : []; })
+ .then(function(rows){
+   if (!Array.isArray(rows)) return;
+   ALL_PRESTAS = rows.map(function(s){
+     var catSlug = (s.service_categories && s.service_categories.slug) || 'plomberie';
+     var metier = CAT_TO_METIER[catSlug] || 'Plomberie';
+     // Icône simple par métier (fallback emoji)
+     var ICON = { 'Plomberie':'💧', 'Chauffage':'🔥', 'Électricité':'⚡', 'Serrurerie':'🔒', 'Vitrerie':'🪟', 'Travaux':'🛠️' };
+     return {
+       id: s.slug,           // utilisé par data-presta dans wizard
+       slug: s.slug,
+       label: s.name,
+       icon: ICON[metier] || '🛠️',
+       metier: metier,
+       price: s.requires_quote ? null : Math.round(s.price_ht * (1 + (s.vat_rate||0.10))),
+       quote: !!s.requires_quote,
+       // match regex large : nom + description
+       match: new RegExp(s.slug.replace(/-/g,'|') + (s.short_desc ? '|' + s.short_desc.split(' ').slice(0,5).join('|').toLowerCase() : ''), 'i')
+     };
+   });
+   console.log('[catalog] Chargé', ALL_PRESTAS.length, 'prestations depuis Supabase');
+   // Si une fonction de re-render est définie, la déclencher
+   if (typeof window.renderPrestaSuggestions === 'function') window.renderPrestaSuggestions();
+ })
+ .catch(function(e){ console.warn('[catalog] Erreur Supabase :', e); });
+})();
+
 // Renvoie jusqu'à 4 prestations suggérées + une option "autre"
 // FILTRE STRICT : seules les prestations du/des métier(s) coché(s) en step 2 sont proposées
 function proposePrestations() {
