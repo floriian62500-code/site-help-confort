@@ -1023,7 +1023,7 @@
       const inc = Array.isArray(v.includes) ? v.includes : [];
       const photoUrl = v.image_url || '';
       return `
-      <details class="sv-var-row" style="border:1.5px solid #E5EDF3;border-radius:12px;margin-bottom:10px;background:#fff;padding:0" ${!v.key ? 'open' : ''}>
+      <details class="sv-var-row" style="border:1.5px solid #E5EDF3;border-radius:12px;margin-bottom:10px;background:#fff;padding:0" open>
         <summary style="cursor:pointer;list-style:none;padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #F1F5F9;background:linear-gradient(135deg,#F7FBFD,#fff);border-radius:11px 11px 0 0">
           <span style="font-weight:800;color:#0DA0CF;font-size:.86rem;flex-shrink:0">▸ Variante ${i+1}</span>
           <strong style="font-size:.92rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(v.label || '(sans nom)')}</strong>
