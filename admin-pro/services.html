@@ -394,17 +394,30 @@
   // ─── Mapping catégorie → icône SVG + couleur ──────────────────
   // Permet d'afficher visuellement le métier de chaque prestation
   const CAT_VISUAL = {
-    'plomberie': { color: '#0DA0CF', bg: 'linear-gradient(135deg,#0A4F6E,#1FC4F0)', icon: '<path d="M22 12h-7l-2 4-3-8-2 4H2"/>' },
-    'plomberie-sanitaires': { color: '#0DA0CF', bg: 'linear-gradient(135deg,#0A4F6E,#1FC4F0)', icon: '<path d="M22 12h-7l-2 4-3-8-2 4H2"/>' },
-    'chauffe-eau': { color: '#FF8A3D', bg: 'linear-gradient(135deg,#0A4F6E,#FFB400)', icon: '<path d="M14 13.5a2.5 2.5 0 1 1-3 0V5l3-3v11.5z"/><path d="M11 5h3"/>' },
-    'chauffe-eau-production-ecs': { color: '#FF8A3D', bg: 'linear-gradient(135deg,#0A4F6E,#FFB400)', icon: '<path d="M14 13.5a2.5 2.5 0 1 1-3 0V5l3-3v11.5z"/><path d="M11 5h3"/>' },
-    'chauffage': { color: '#FF6B1A', bg: 'linear-gradient(135deg,#7A1F0A,#FF6B1A)', icon: '<path d="M12 2c1 4-2 4 0 8 2 4 4 4 0 12-1-4 2-4 0-8-2-4-4-4 0-12z"/>' },
-    'electricite': { color: '#FFB400', bg: 'linear-gradient(135deg,#5A4500,#FFB400)', icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' },
-    'serrurerie': { color: '#7C3AED', bg: 'linear-gradient(135deg,#3A1A6E,#7C3AED)', icon: '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>' },
-    'vitrerie': { color: '#22C55E', bg: 'linear-gradient(135deg,#0A4F38,#22C55E)', icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/>' },
-    'devis-sur-mesure': { color: '#A855F7', bg: 'linear-gradient(135deg,#0A1428,#FF6B1A)', icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>' }
+    'plomberie':                  { color: '#0DA0CF', bg: 'linear-gradient(135deg,#0A4F6E,#1FC4F0)', icon: '<path d="M22 12h-7l-2 4-3-8-2 4H2"/>', picto: '../images/picto-plomberie.png' },
+    'plomberie-sanitaires':       { color: '#0DA0CF', bg: 'linear-gradient(135deg,#0A4F6E,#1FC4F0)', icon: '<path d="M22 12h-7l-2 4-3-8-2 4H2"/>', picto: '../images/picto-plomberie.png' },
+    'chauffe-eau':                { color: '#FF8A3D', bg: 'linear-gradient(135deg,#0A4F6E,#FFB400)', icon: '<path d="M14 13.5a2.5 2.5 0 1 1-3 0V5l3-3v11.5z"/><path d="M11 5h3"/>', picto: '../images/picto-plomberie.png' },
+    'chauffe-eau-production-ecs': { color: '#FF8A3D', bg: 'linear-gradient(135deg,#0A4F6E,#FFB400)', icon: '<path d="M14 13.5a2.5 2.5 0 1 1-3 0V5l3-3v11.5z"/><path d="M11 5h3"/>', picto: '../images/picto-plomberie.png' },
+    'chauffage':                  { color: '#FF6B1A', bg: 'linear-gradient(135deg,#7A1F0A,#FF6B1A)', icon: '<path d="M12 2c1 4-2 4 0 8 2 4 4 4 0 12-1-4 2-4 0-8-2-4-4-4 0-12z"/>', picto: '../images/picto-chauffage.svg' },
+    'chauffage-climatisation':    { color: '#FF6B1A', bg: 'linear-gradient(135deg,#7A1F0A,#FF6B1A)', icon: '<path d="M12 2c1 4-2 4 0 8 2 4 4 4 0 12-1-4 2-4 0-8-2-4-4-4 0-12z"/>', picto: '../images/picto-chauffage.svg' },
+    'electricite':                { color: '#FFB400', bg: 'linear-gradient(135deg,#5A4500,#FFB400)', icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>', picto: '../images/picto-electricite.png' },
+    'serrurerie':                 { color: '#7C3AED', bg: 'linear-gradient(135deg,#3A1A6E,#7C3AED)', icon: '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>', picto: '../images/picto-serrurerie.png' },
+    'vitrerie':                   { color: '#22C55E', bg: 'linear-gradient(135deg,#0A4F38,#22C55E)', icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/>', picto: '../images/picto-vitrerie.png' },
+    'menuiserie':                 { color: '#A855F7', bg: 'linear-gradient(135deg,#3A1A6E,#A855F7)', icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>', picto: '../images/picto-menuiserie.png' },
+    'renovation':                 { color: '#FF6B1A', bg: 'linear-gradient(135deg,#7A1F0A,#FFB400)', icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>', picto: '../images/picto-renovation.png' },
+    'volets':                     { color: '#A578DC', bg: 'linear-gradient(135deg,#3A1A6E,#A578DC)', icon: '<rect x="3" y="3" width="18" height="18" rx="2"/>', picto: '../images/picto-volets.png' },
+    'pmr':                        { color: '#0EA5E9', bg: 'linear-gradient(135deg,#0A4F6E,#38BDF8)', icon: '<circle cx="12" cy="6" r="3"/>', picto: '../images/picto-pmr.png' },
+    'devis-sur-mesure':           { color: '#A855F7', bg: 'linear-gradient(135deg,#0A1428,#FF6B1A)', icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>' }
   };
   const SVG_ATTRS = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
+  // Rend l'icône d'une catégorie : picto HC officiel si dispo, sinon SVG inline fallback
+  function renderCatIcon(v, size) {
+    size = size || 17;
+    if (v.picto) {
+      return '<img src="' + v.picto + '" alt="" width="' + size + '" height="' + size + '" style="object-fit:contain;filter:brightness(0) invert(1)" loading="lazy" decoding="async">';
+    }
+    return '<svg width="' + size + '" height="' + size + '" ' + SVG_ATTRS + '>' + v.icon + '</svg>';
+  }
   function visualForCat(cat) {
     if (!cat) return { color: '#64748b', bg: 'linear-gradient(135deg,#1a2742,#0DA0CF)', icon: '<rect x="3" y="3" width="18" height="18" rx="2"/>' };
     return CAT_VISUAL[cat.slug] || CAT_VISUAL[cat.slug?.replace(/_/g,'-')] || { color: '#64748b', bg: 'linear-gradient(135deg,#1a2742,#0DA0CF)', icon: '<rect x="3" y="3" width="18" height="18" rx="2"/>' };
@@ -422,7 +435,11 @@
       if (count === 0) return;
       const v = visualForCat(cat);
       const isActive = catFilter === cat.id;
-      html += `<button type="button" class="sv-chip ${isActive?'is-active':''}" data-cat="${cat.id}" style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:.78rem;font-weight:700;border:1px solid ${isActive?v.color:'var(--ink-100)'};background:${isActive?v.color:'#fff'};color:${isActive?'#fff':'var(--ink-700)'};cursor:pointer;font:inherit"><svg width="12" height="12" ${SVG_ATTRS} style="color:${isActive?'#fff':v.color}">${v.icon}</svg>${escapeHtml(cat.name)} <span style="opacity:.7;font-size:.7rem">${count}</span></button>`;
+      // Chip filter : si picto HC dispo on l'affiche en mini (12px), filtre couleur si chip active (blanc) ou couleur catégorie
+      const chipIcon = v.picto
+        ? '<img src="' + v.picto + '" alt="" width="12" height="12" style="object-fit:contain;filter:' + (isActive?'brightness(0) invert(1)':'none') + ';flex-shrink:0">'
+        : '<svg width="12" height="12" ' + SVG_ATTRS + ' style="color:' + (isActive?'#fff':v.color) + '">' + v.icon + '</svg>';
+      html += `<button type="button" class="sv-chip ${isActive?'is-active':''}" data-cat="${cat.id}" style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:.78rem;font-weight:700;border:1px solid ${isActive?v.color:'var(--ink-100)'};background:${isActive?v.color:'#fff'};color:${isActive?'#fff':'var(--ink-700)'};cursor:pointer;font:inherit">${chipIcon}${escapeHtml(cat.name)} <span style="opacity:.7;font-size:.7rem">${count}</span></button>`;
     });
     chipsHost.innerHTML = html;
     chipsHost.querySelectorAll('.sv-chip').forEach(b => b.onclick = () => {
@@ -507,13 +524,10 @@
       const publicUrl = cat ? (CAT_PUBLIC_URL[cat.slug] || CAT_PUBLIC_URL[cat.slug?.replace(/_/g,'-')] || null) : null;
       // Header de catégorie (uniquement si pas filtré sur une seule cat ou s'il y a plusieurs groupes)
       if (groups.length > 1 || !catFilter) {
+        const catIconBig = renderCatIcon(v, 20);
         const pictoHtml = publicUrl
-          ? `<a href="${publicUrl}" target="_blank" rel="noopener noreferrer" title="Voir la page publique « ${escapeHtml(cat?.name||'')} »" style="width:34px;height:34px;border-radius:9px;background:${v.bg};color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 10px ${v.color}33;text-decoration:none;transition:transform .15s;cursor:pointer" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
-              <svg width="17" height="17" ${SVG_ATTRS}>${v.icon}</svg>
-            </a>`
-          : `<div style="width:34px;height:34px;border-radius:9px;background:${v.bg};color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 10px ${v.color}33">
-              <svg width="17" height="17" ${SVG_ATTRS}>${v.icon}</svg>
-            </div>`;
+          ? `<a href="${publicUrl}" target="_blank" rel="noopener noreferrer" title="Voir la page publique « ${escapeHtml(cat?.name||'')} »" style="width:34px;height:34px;border-radius:9px;background:${v.bg};color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 10px ${v.color}33;text-decoration:none;transition:transform .15s;cursor:pointer" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">${catIconBig}</a>`
+          : `<div style="width:34px;height:34px;border-radius:9px;background:${v.bg};color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 10px ${v.color}33">${catIconBig}</div>`;
         const titleHtml = publicUrl
           ? `<a href="${publicUrl}" target="_blank" rel="noopener noreferrer" style="color:#0A1428;text-decoration:none;border-bottom:1px dashed transparent;transition:border-color .15s" onmouseover="this.style.borderBottomColor='#0DA0CF'" onmouseout="this.style.borderBottomColor='transparent'">${escapeHtml(cat?.name || 'Sans catégorie')} <span style="font-size:.7rem;color:#0DA0CF;font-weight:600">↗</span></a>`
           : escapeHtml(cat?.name || 'Sans catégorie');
