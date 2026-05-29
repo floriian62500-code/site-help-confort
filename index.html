@@ -2188,10 +2188,27 @@ if (payBtn) payBtn.addEventListener('click', async function() {
 persistLeadToSupabase('home_wizard_reservation_paiement');
 var sug = state.suggested_presta || {};
 var slug = sug.slug || (state.presta || '');
-// 2. Si Stripe Payment Link configuré pour cette presta → paiement direct
+
+// Récupérer le montant de la prestation (TTC)
+var prestaLabel = (sug.label || (PRESTAS[state.presta] && PRESTAS[state.presta].label) || slug);
+var prixTtc = 0;
+try {
+  var priceText = (sug.prix || sug.price || '').toString();
+  var match = priceText.match(/(\d+([.,]\d+)?)/);
+  if (match) prixTtc = parseFloat(match[1].replace(',', '.'));
+  if (!prixTtc && sug.amount_eur) prixTtc = parseFloat(sug.amount_eur);
+} catch (_) {}
+
+// UI : disable le bouton + label loading
+var oldHtml = payBtn.innerHTML;
+payBtn.disabled = true;
+payBtn.style.opacity = '.6';
+payBtn.style.cursor = 'wait';
+payBtn.innerHTML = '<span style="display:inline-block;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;margin-right:8px;vertical-align:middle"></span>Création du lien sécurisé…';
+
+// 2. Si Payment Link Stripe pré-configuré, on l'utilise directement
 var stripeUrl = STRIPE_LINKS[slug];
 if (stripeUrl && stripeUrl.indexOf('https://') === 0) {
-  // Pré-remplir les champs client Stripe via query params
   var stripeParams = new URLSearchParams();
   if (state.email) stripeParams.set('prefilled_email', state.email);
   if (state.tel) stripeParams.set('prefilled_phone_number', state.tel);
@@ -2199,7 +2216,54 @@ if (stripeUrl && stripeUrl.indexOf('https://') === 0) {
   window.location.href = stripeUrl + sep + stripeParams.toString();
   return;
 }
-// 3. Sinon, fallback contact.html avec action=paiement (l'agence envoie un lien Stripe par email)
+
+// 3. NOUVEAU : appeler stripe-create-payment-link pour créer un Checkout Session à la volée
+if (prixTtc > 0) {
+  try {
+    var r = await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/stripe-create-payment-link', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0Y2Jqd3FpaXZocG93c3pvbWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMzMjY1NjUsImV4cCI6MjA3ODkwMjU2NX0.fJC6_VxoSxr2hf-NUS7Of4kbJ4f0Lv3PFG6JsLrqLng',
+        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0Y2Jqd3FpaXZocG93c3pvbWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMzMjY1NjUsImV4cCI6MjA3ODkwMjU2NX0.fJC6_VxoSxr2hf-NUS7Of4kbJ4f0Lv3PFG6JsLrqLng'
+      },
+      body: JSON.stringify({
+        amount_eur: prixTtc,
+        description: prestaLabel + ' — Prise en charge HELP Confort',
+        customer_name: ((state.prenom||'') + ' ' + (state.nom||'')).trim(),
+        customer_email: state.email || '',
+        customer_phone: state.tel || '',
+        agence: (state.cp && state.cp.substring(0,2) === '59') ? 'dunkerque' : 'saint-omer'
+      })
+    });
+    var j = await r.json();
+    if (r.ok && j.payment_url) {
+      window.location.href = j.payment_url;
+      return;
+    }
+    throw new Error(j.error || 'Erreur Stripe (HTTP ' + r.status + ')');
+  } catch (e) {
+    console.error('[resa-pay] Stripe link creation failed', e);
+    payBtn.innerHTML = oldHtml;
+    payBtn.disabled = false;
+    payBtn.style.opacity = '1';
+    payBtn.style.cursor = 'pointer';
+    alert('Impossible de créer le lien de paiement maintenant. Notre équipe vous l\'envoie par email. (' + (e.message || 'Erreur réseau') + ')');
+    // Fallback contact
+    var params = new URLSearchParams();
+    params.set('presta', slug || 'autre');
+    params.set('action', 'paiement');
+    if (state.prenom) params.set('prenom', state.prenom);
+    if (state.nom) params.set('nom', state.nom);
+    if (state.tel) params.set('tel', state.tel);
+    if (state.email) params.set('email', state.email);
+    if (state.cp) params.set('cp', state.cp);
+    window.location.href = 'contact.html?' + params.toString() + '#form';
+    return;
+  }
+}
+
+// 4. Fallback ultime : si pas de prix détectable
 var params = new URLSearchParams();
 params.set('presta', slug || 'autre');
 params.set('action', 'paiement');
