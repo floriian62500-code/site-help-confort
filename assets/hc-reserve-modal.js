@@ -82,30 +82,81 @@
       document.addEventListener('keydown', function(e){ if (e.key === 'Escape') modal.classList.remove('is-open'); });
     }
 
-    // Interception des clics
+    // === STRIPE DIRECT : créer un Checkout Session à la volée ===
+    async function createStripePayment(presta, amount_eur) {
+      var SUPA_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+      var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0Y2Jqd3FpaXZocG93c3pvbWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMzMjY1NjUsImV4cCI6MjA3ODkwMjU2NX0.fJC6_VxoSxr2hf-NUS7Of4kbJ4f0Lv3PFG6JsLrqLng';
+      var r = await fetch(SUPA_URL + '/functions/v1/stripe-create-payment-link', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + SUPA_KEY,
+          'apikey': SUPA_KEY
+        },
+        body: JSON.stringify({
+          amount_eur: amount_eur,
+          description: presta + ' — Prise en charge HELP Confort'
+        })
+      });
+      var j = await r.json();
+      if (!r.ok || !j.payment_url) throw new Error(j.error || 'Erreur Stripe');
+      return j.payment_url;
+    }
+
+    function parsePrice(str) {
+      if (!str) return 0;
+      var m = str.replace(/\s/g, '').match(/(\d+([.,]\d+)?)/);
+      return m ? parseFloat(m[1].replace(',', '.')) : 0;
+    }
+
+    function showLoader(text) {
+      var existing = document.getElementById('hcrmStripeLoader');
+      if (existing) existing.remove();
+      var l = document.createElement('div');
+      l.id = 'hcrmStripeLoader';
+      l.style.cssText = 'position:fixed;inset:0;background:rgba(10,20,40,.78);backdrop-filter:blur(8px);z-index:99999;display:flex;align-items:center;justify-content:center;color:#fff;font-family:Inter,sans-serif;flex-direction:column;gap:18px';
+      l.innerHTML = '<div style="width:54px;height:54px;border:4px solid rgba(255,255,255,.20);border-top-color:#FFB400;border-radius:50%;animation:spin .8s linear infinite"></div><div style="font-size:1rem;font-weight:700;text-align:center">' + (text || 'Préparation du paiement sécurisé…') + '</div><style>@keyframes spin{to{transform:rotate(360deg)}}</style>';
+      document.body.appendChild(l);
+    }
+    function hideLoader() {
+      var l = document.getElementById('hcrmStripeLoader');
+      if (l) l.remove();
+    }
+
+    // Interception des clics — DIRECT PAIEMENT, plus de modal intermédiaire
     reserveButtons.forEach(function(btn){
-      btn.addEventListener('click', function(e){
+      btn.addEventListener('click', async function(e){
         var card = btn.closest('.m-tarif-card');
         if (!card) return;
         var presta = card.getAttribute('data-presta') || 'Cette prestation';
         var prix = '';
         var prixEl = card.querySelector('.m-tarif-price');
         if (prixEl) prix = prixEl.textContent.trim();
+        var amount = parsePrice(prix);
 
-        // Si le href ne va PAS vers contact.html, on laisse passer (lien direct genre tel: ou page guide)
         var href = btn.getAttribute('href') || '';
-        if (!href.startsWith('contact.html')) return;
+        if (!href.startsWith('contact.html')) return; // lien tel:, etc. → laisser passer
 
         e.preventDefault();
 
-        var modal = document.getElementById('hcReserveModal');
+        // Si on a un prix valable → paiement Stripe direct
+        if (amount > 0) {
+          showLoader('Création du paiement sécurisé…');
+          try {
+            var url = await createStripePayment(presta, amount);
+            window.location.href = url;
+            return;
+          } catch (err) {
+            hideLoader();
+            console.error('[hc-reserve-modal] Stripe failed', err);
+            // Fallback : on continue vers contact (au lieu de bloquer)
+          }
+        }
+
+        // Fallback : prix non détecté ou erreur Stripe → contact.html
         var slugMatch = href.match(/[?&]presta=([^&#]+)/);
         var slug = slugMatch ? slugMatch[1] : '';
-
-        document.getElementById('hcrmPresta').textContent = presta + (prix ? ' · ' + prix : '');
-        document.getElementById('hcrmDevisLink').setAttribute('href', 'contact.html?presta=' + encodeURIComponent(slug) + '#form');
-        document.getElementById('hcrmPayLink').setAttribute('href', 'contact.html?presta=' + encodeURIComponent(slug) + '&action=paiement#form');
-        modal.classList.add('is-open');
+        window.location.href = 'contact.html?presta=' + encodeURIComponent(slug) + '&action=paiement#form';
       });
     });
   });
