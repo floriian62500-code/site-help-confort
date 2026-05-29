@@ -268,6 +268,24 @@
           <button type="button" class="sv-var-add" id="addVariantBtn">+ Ajouter une variante</button>
         </div>
 
+        <!-- ════════════ PHOTO PRODUIT ════════════ -->
+        <div>
+          <label>📷 Photo produit (visible sur le site)</label>
+          <div id="svImgWrap" style="display:flex;align-items:center;gap:14px;padding:14px;background:#F7FBFD;border:1.5px dashed #CBD5E1;border-radius:12px;cursor:pointer;transition:all .15s ease">
+            <div id="svImgPreview" style="width:80px;height:80px;background:#fff;border-radius:10px;border:1px solid #E5EDF3;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;color:#94a3b8;font-size:1.6rem">📷</div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:.92rem;font-weight:700;color:#0A1428;margin-bottom:3px">Glissez une photo ici ou cliquez pour choisir</div>
+              <div style="font-size:.78rem;color:#64748b;line-height:1.4">JPG ou PNG · 1400px max · La photo apparaît sur le site dans la card prestation (à la place de l'emoji).</div>
+              <div id="svImgStatus" style="font-size:.78rem;margin-top:4px;font-weight:600"></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+              <button type="button" id="svImgBtn" style="padding:8px 14px;background:#0DA0CF;color:#fff;border:0;border-radius:8px;font-family:inherit;font-size:.84rem;font-weight:700;cursor:pointer;white-space:nowrap">Choisir…</button>
+              <button type="button" id="svImgClear" style="padding:8px 14px;background:transparent;color:#DC2626;border:1px solid #FCA5A5;border-radius:8px;font-family:inherit;font-size:.78rem;font-weight:700;cursor:pointer;display:none">Supprimer</button>
+            </div>
+          </div>
+          <input type="file" id="svImgInput" accept="image/jpeg,image/png,image/webp" style="display:none">
+        </div>
+
         <div class="sv-grid-3">
           <div>
             <label style="text-transform:none;font-weight:500;font-size:.88rem;display:flex;align-items:center;gap:10px">
