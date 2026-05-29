@@ -988,7 +988,7 @@ if (document.fonts && document.fonts.ready) {
  // 2. Fallback JSON statique si Supabase n'a rien renvoyé
  if (!supabaseOk){
  try {
- var res = await fetch('content/realisations/index.json', {cache:'no-cache'});
+ var res = await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/realisations-json', {cache:'no-cache'});
  if (!res.ok) throw new Error('No index');
  allRealisations = await res.json();
  } catch(e) {

@@ -1334,7 +1334,7 @@ track.addEventListener('scroll',update);
 update();
 }).catch(()=>{track.innerHTML='<div class="hc-mini-loading">Indisponible</div>'});
 }
-setupMini('hc-mini-real-track','content/realisations/index.json',function(r){
+setupMini('hc-mini-real-track','https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/realisations-json',function(r){
 var url=r.url||'realisations.html';var photo='';
 if(r.source_facebook){var fb='https://www.facebook.com/plugins/post.php?href='+encodeURIComponent(r.source_facebook)+'&show_text=false&width=400';photo='<div class="photo"><iframe src="'+fb+'" loading="lazy" scrolling="no" frameborder="0"></iframe><span class="fb-tag">Facebook</span></div>';}
 else photo='<div class="photo"></div>';

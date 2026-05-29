@@ -1127,7 +1127,7 @@ if (document.fonts && document.fonts.ready) {
  (function(){
  var track = document.getElementById('m-real-travaux');
  if(!track) return;
- fetch('content/realisations/index.json?t=' + Date.now()).then(function(r){return r.ok?r.json():Promise.reject()}).then(function(list){
+ fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/realisations-json?t=' + Date.now()).then(function(r){return r.ok?r.json():Promise.reject()}).then(function(list){
  // Travaux/rénovation STRICT : SEUL le tag metier compte (pas de fallback keyword → évite faux positifs vitrerie/plomberie)
  var TRAVAUX_METIERS = ['Travaux','Rénovation','Renovation'];
  var EXCLUDE_KEYWORDS = /v[oeœ]ux|meilleurs.*vux|belles f[êe]tes|fin d.ann[ée]e/i;

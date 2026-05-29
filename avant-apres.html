@@ -166,7 +166,7 @@
  // Fallback : utiliser le JSON local si Supabase vide
  if (!allChantiers.length) {
  try {
- var r = await fetch('content/realisations/index.json?v=' + Date.now());
+ var r = await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/realisations-json?v=' + Date.now());
  if (r.ok) allChantiers = await r.json();
  } catch(_) {}
  }
