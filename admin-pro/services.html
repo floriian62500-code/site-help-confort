@@ -1016,28 +1016,138 @@
     renderIncludes(cur);
   });
 
-  // Variants editor
+  // Variants editor — version enrichie : photo + description + includes + durée + garantie + badge
   function renderVariants(list) {
     const root = document.getElementById('svVariants');
-    root.innerHTML = list.map((v, i) => `
-      <div class="sv-var-row">
-        <input type="text" placeholder="key (ex: premium)" value="${escapeHtml(v.key||'')}" data-var-idx="${i}" data-var-field="key">
-        <input type="text" placeholder="Label affiché" value="${escapeHtml(v.label||'')}" data-var-idx="${i}" data-var-field="label">
-        <input type="number" step="0.01" placeholder="Prix HT" value="${v.price_ht||''}" data-var-idx="${i}" data-var-field="price_ht">
-        <button type="button" class="sv-icon-btn danger" data-remove-var="${i}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-        <input type="text" placeholder="Info / description (optionnel)" value="${escapeHtml(v.info||'')}" data-var-idx="${i}" data-var-field="info" style="grid-column:1/-1">
-      </div>`).join('');
+    root.innerHTML = list.map((v, i) => {
+      const inc = Array.isArray(v.includes) ? v.includes : [];
+      const photoUrl = v.image_url || '';
+      return `
+      <details class="sv-var-row" style="border:1.5px solid #E5EDF3;border-radius:12px;margin-bottom:10px;background:#fff;padding:0" ${!v.key ? 'open' : ''}>
+        <summary style="cursor:pointer;list-style:none;padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #F1F5F9;background:linear-gradient(135deg,#F7FBFD,#fff);border-radius:11px 11px 0 0">
+          <span style="font-weight:800;color:#0DA0CF;font-size:.86rem;flex-shrink:0">▸ Variante ${i+1}</span>
+          <strong style="font-size:.92rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(v.label || '(sans nom)')}</strong>
+          ${v.price_ht ? `<span style="font-size:.82rem;font-weight:700;color:#0A1428;background:#E6F8FE;padding:3px 9px;border-radius:6px">${v.price_ht}€ HT</span>` : ''}
+          <button type="button" class="sv-icon-btn danger" data-remove-var="${i}" onclick="event.preventDefault();event.stopPropagation()" title="Supprimer cette variante"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </summary>
+        <div style="padding:14px;display:flex;flex-direction:column;gap:12px">
+          <!-- Photo de la variante -->
+          <div>
+            <label style="display:block;font-size:.74rem;font-weight:800;color:#FF6B1A;margin-bottom:6px;letter-spacing:.04em">📷 PHOTO DE LA VARIANTE</label>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px;background:#FFF4E6;border:1.5px dashed #FF6B1A;border-radius:10px">
+              <div data-var-img-preview="${i}" style="width:60px;height:60px;background:#fff;border-radius:8px;border:1px solid #E5EDF3;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;color:#94a3b8;font-size:1.3rem">${photoUrl ? `<img src="${photoUrl}" style="width:100%;height:100%;object-fit:contain">` : '📷'}</div>
+              <div style="flex:1;font-size:.78rem;color:#64748b">JPG/PNG · 1400px max</div>
+              <button type="button" data-var-img-btn="${i}" style="padding:7px 12px;background:#0DA0CF;color:#fff;border:0;border-radius:7px;font-family:inherit;font-size:.78rem;font-weight:700;cursor:pointer">Choisir…</button>
+            </div>
+            <input type="hidden" data-var-idx="${i}" data-var-field="image_url" value="${escapeHtml(photoUrl)}">
+          </div>
+          <!-- Identifiant + Label + Prix -->
+          <div class="sv-grid-3" style="display:grid;grid-template-columns:1fr 2fr 1fr;gap:10px">
+            <div>
+              <label style="display:block;font-size:.72rem;font-weight:800;color:#64748b;margin-bottom:4px;letter-spacing:.04em">CLÉ (UNIQUE)</label>
+              <input type="text" placeholder="ex: premium" value="${escapeHtml(v.key||'')}" data-var-idx="${i}" data-var-field="key" required>
+            </div>
+            <div>
+              <label style="display:block;font-size:.72rem;font-weight:800;color:#64748b;margin-bottom:4px;letter-spacing:.04em">LABEL AFFICHÉ AU CLIENT</label>
+              <input type="text" placeholder="Gamme Premium Stéatite (anti-calcaire)" value="${escapeHtml(v.label||'')}" data-var-idx="${i}" data-var-field="label" required>
+            </div>
+            <div>
+              <label style="display:block;font-size:.72rem;font-weight:800;color:#64748b;margin-bottom:4px;letter-spacing:.04em">PRIX HT (€)</label>
+              <input type="number" step="0.01" min="0" placeholder="0.00" value="${v.price_ht||''}" data-var-idx="${i}" data-var-field="price_ht">
+            </div>
+          </div>
+          <!-- Description courte -->
+          <div>
+            <label style="display:block;font-size:.72rem;font-weight:800;color:#64748b;margin-bottom:4px;letter-spacing:.04em">DESCRIPTION COURTE (PHRASE D'ACCROCHE)</label>
+            <input type="text" placeholder="Recommandé eau dure. Anode magnésium + résistance protégée." value="${escapeHtml(v.info||'')}" data-var-idx="${i}" data-var-field="info">
+          </div>
+          <!-- Description longue -->
+          <div>
+            <label style="display:block;font-size:.72rem;font-weight:800;color:#64748b;margin-bottom:4px;letter-spacing:.04em">DESCRIPTION LONGUE (MARKDOWN)</label>
+            <textarea rows="3" placeholder="**Forfait complet** pour la version Premium…" data-var-idx="${i}" data-var-field="description">${escapeHtml(v.description||'')}</textarea>
+          </div>
+          <!-- Ce qui est inclus (liste) -->
+          <div>
+            <label style="display:block;font-size:.72rem;font-weight:800;color:#64748b;margin-bottom:4px;letter-spacing:.04em">CE QUI EST INCLUS DANS LA VARIANTE</label>
+            <textarea rows="3" placeholder="Un élément par ligne&#10;Ex: Anode magnésium&#10;Résistance protégée stéatite" data-var-idx="${i}" data-var-field="includes_raw">${escapeHtml(inc.join('\n'))}</textarea>
+            <small style="color:#94a3b8;font-size:.72rem">Saisir un élément par ligne</small>
+          </div>
+          <!-- Durée + Garantie + Badge -->
+          <div class="sv-grid-3" style="display:grid;grid-template-columns:1fr 2fr 1fr;gap:10px">
+            <div>
+              <label style="display:block;font-size:.72rem;font-weight:800;color:#64748b;margin-bottom:4px;letter-spacing:.04em">DURÉE (MIN)</label>
+              <input type="number" min="0" placeholder="120" value="${v.duration_min||''}" data-var-idx="${i}" data-var-field="duration_min">
+            </div>
+            <div>
+              <label style="display:block;font-size:.72rem;font-weight:800;color:#64748b;margin-bottom:4px;letter-spacing:.04em">GARANTIE</label>
+              <input type="text" placeholder="Garantie 5 ans cuve · 2 ans pièces" value="${escapeHtml(v.warranty||'')}" data-var-idx="${i}" data-var-field="warranty">
+            </div>
+            <div>
+              <label style="display:block;font-size:.72rem;font-weight:800;color:#64748b;margin-bottom:4px;letter-spacing:.04em">BADGE</label>
+              <input type="text" placeholder="Premium" maxlength="20" value="${escapeHtml(v.badge||'')}" data-var-idx="${i}" data-var-field="badge">
+            </div>
+          </div>
+        </div>
+      </details>`;
+    }).join('');
+    // Bind boutons upload photo variante
+    document.querySelectorAll('[data-var-img-btn]').forEach(btn => {
+      btn.onclick = () => triggerVariantPhotoUpload(Number(btn.dataset.varImgBtn));
+    });
   }
+
+  function triggerVariantPhotoUpload(idx) {
+    let input = document.getElementById('hcVarPhotoInput');
+    if (!input) {
+      input = document.createElement('input');
+      input.type = 'file';
+      input.id = 'hcVarPhotoInput';
+      input.accept = 'image/jpeg,image/png,image/webp';
+      input.style.display = 'none';
+      document.body.appendChild(input);
+    }
+    input.onchange = async (e) => {
+      const f = e.target.files && e.target.files[0];
+      e.target.value = '';
+      if (!f) return;
+      const preview = document.querySelector(`[data-var-img-preview="${idx}"]`);
+      const hiddenInput = document.querySelector(`[data-var-idx="${idx}"][data-var-field="image_url"]`);
+      try {
+        const blob = await resizeImageInline(f, 1400, 0.85);
+        const svc = currentEditingSvc || {};
+        const variantKey = document.querySelector(`[data-var-idx="${idx}"][data-var-field="key"]`)?.value || ('variant-' + idx);
+        const filename = (svc.slug || 'service') + '-' + variantKey.toLowerCase().replace(/[^a-z0-9-]+/g,'-') + '.jpg';
+        const { error: upErr } = await sb.storage.from('prestations').upload(filename, blob, {
+          upsert: true, contentType: 'image/jpeg', cacheControl: '3600'
+        });
+        if (upErr) throw upErr;
+        const publicUrl = 'https://btcbjwqiivhpwoszomhg.supabase.co/storage/v1/object/public/prestations/' + filename + '?v=' + Date.now();
+        hiddenInput.value = publicUrl;
+        if (preview) preview.innerHTML = `<img src="${publicUrl}" style="width:100%;height:100%;object-fit:contain">`;
+      } catch (err) {
+        alert('Erreur upload variante : ' + (err.message || err));
+      }
+    };
+    input.click();
+  }
+
   function getVariants() {
     const map = {};
     document.querySelectorAll('[data-var-idx]').forEach(el => {
       const i = el.dataset.varIdx;
       if (!map[i]) map[i] = {};
-      map[i][el.dataset.varField] = el.dataset.varField === 'price_ht' ? Number(el.value || 0) : el.value;
+      const field = el.dataset.varField;
+      if (field === 'price_ht' || field === 'duration_min') {
+        map[i][field] = Number(el.value || 0);
+      } else if (field === 'includes_raw') {
+        map[i].includes = el.value.split('\n').map(s => s.trim()).filter(Boolean);
+      } else {
+        map[i][field] = el.value;
+      }
     });
     return Object.values(map).filter(v => v.key && v.label);
   }
-  document.getElementById('addVariantBtn').onclick = () => { renderVariants([...getVariants(), {key:'',label:'',price_ht:0,info:''}]); };
+  document.getElementById('addVariantBtn').onclick = () => { renderVariants([...getVariants(), {key:'',label:'',price_ht:0,info:'',description:'',includes:[],duration_min:0,warranty:'',badge:'',image_url:''}]); };
   document.getElementById('svVariants').addEventListener('click', (e) => {
     const btn = e.target.closest('[data-remove-var]');
     if (!btn) return;
