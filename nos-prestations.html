@@ -1504,10 +1504,14 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  const more = (s.includes || []).length - incl.length;
  return `
  <article class="nv-card" data-service-id="${s.id}">
- <div class="nv-card-visual" data-cat="${escapeHtml(catSlug)}">
+ <div class="nv-card-visual" data-cat="${escapeHtml(catSlug)}" style="position:relative;overflow:hidden">
  ${s.badge ? `<span class="nv-card-badge">${escapeHtml(s.badge)}</span>` : ''}
  <span class="nv-card-cat">${escapeHtml(s.category_name || '')}</span>
- ${s.icon_emoji ? `<span class="nv-card-emoji" aria-hidden="true">${s.icon_emoji}</span>` : pictoTag(catSlug, 64)}
+ ${(function(){
+   var u = s.image_url || ('https://btcbjwqiivhpwoszomhg.supabase.co/storage/v1/object/public/prestations/' + s.slug + '.jpg');
+   return '<img src="' + u + '" alt="' + escapeHtml(s.name) + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling&&(this.nextElementSibling.style.display=\'block\')" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">' +
+          '<div style="display:none;position:absolute;inset:0;display:flex;align-items:center;justify-content:center">' + (s.icon_emoji ? '<span class="nv-card-emoji" aria-hidden="true">' + s.icon_emoji + '</span>' : pictoTag(catSlug, 64)) + '</div>';
+ })()}
  </div>
  <div class="nv-card-body">
  <h3 class="nv-card-name">${escapeHtml(s.name)}</h3>
