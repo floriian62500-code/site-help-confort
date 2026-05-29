@@ -240,9 +240,10 @@
         </div>
 
         <!-- ════════════ PHOTO PRODUIT ════════════ -->
-        <div>
-          <label>📷 Photo produit (visible sur le site)</label>
-          <div id="svImgWrap" style="display:flex;align-items:center;gap:14px;padding:14px;background:#F7FBFD;border:1.5px dashed #CBD5E1;border-radius:12px;cursor:pointer;transition:all .15s ease">
+        <div style="margin:18px 0;padding:4px;background:linear-gradient(135deg,#FF6B1A 0%,#FFB400 100%);border-radius:14px;box-shadow:0 8px 24px rgba(255,107,26,.25)">
+        <div style="background:#fff;border-radius:11px;padding:18px 18px 14px">
+          <label style="display:block;font-size:.92rem;font-weight:800;color:#FF6B1A;margin-bottom:10px;text-transform:none;letter-spacing:0">📷 PHOTO DU PRODUIT — uploadable depuis ici</label>
+          <div id="svImgWrap" style="display:flex !important;align-items:center;gap:14px;padding:14px;background:#FFF4E6;border:2.5px dashed #FF6B1A;border-radius:12px;cursor:pointer;transition:all .15s ease">
             <div id="svImgPreview" style="width:80px;height:80px;background:#fff;border-radius:10px;border:1px solid #E5EDF3;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;color:#94a3b8;font-size:1.6rem">📷</div>
             <div style="flex:1;min-width:0">
               <div style="font-size:.92rem;font-weight:700;color:#0A1428;margin-bottom:3px">Glissez une photo ici ou cliquez pour choisir</div>
@@ -256,6 +257,8 @@
           </div>
           <input type="file" id="svImgInput" accept="image/jpeg,image/png,image/webp" style="display:none">
         </div>
+        </div>
+        <!-- ════════════ /PHOTO PRODUIT ════════════ -->
 
         <div class="sv-grid-2">
           <div><label>Catégorie *</label><select name="category_id" id="svCat" required></select></div>
