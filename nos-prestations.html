@@ -1448,9 +1448,10 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  <script>
  // Recalcul dynamique prix selon Particulier (10%) / Pro (20%)
  (function(){
-   const priceHt = ${svc.price_ht || (svc.price_ttc / 1.10).toFixed(2)};
-   const depositPct = ${svc.deposit_pct || 40};
+   const priceHt = ${Number(svc.price_ht) || Number(svc.price_ttc/1.10) || 0};
+   const depositPct = ${Number(svc.deposit_pct) || 40};
    const fmt = n => new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',minimumFractionDigits:2}).format(n);
+   if (!priceHt) return; // safety : si pas de prix, on n'attache rien
    document.querySelectorAll('[name="nvClientType"]').forEach(r => {
      r.addEventListener('change', e => {
        const isParticulier = e.target.value === 'particulier';
