@@ -1506,6 +1506,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  <article class="nv-card" data-service-id="${s.id}">
  <div class="nv-card-visual" data-cat="${escapeHtml(catSlug)}" style="position:relative;overflow:hidden;aspect-ratio:4/3;background:#F7FBFD">
  ${s.badge ? `<span class="nv-card-badge" style="z-index:3">${escapeHtml(s.badge)}</span>` : ''}
+ ${(Array.isArray(s.variants) && s.variants.length > 0) ? `<span style="position:absolute;top:14px;right:14px;z-index:3;padding:6px 12px;background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;border-radius:999px;font-size:.74rem;font-weight:800;letter-spacing:.03em;box-shadow:0 4px 12px rgba(13,160,207,.35);display:inline-flex;align-items:center;gap:5px">✨ ${s.variants.length} option${s.variants.length>1?'s':''} au choix</span>` : ''}
  ${(function(){
    var u = s.image_url || ('https://btcbjwqiivhpwoszomhg.supabase.co/storage/v1/object/public/prestations/' + s.slug + '.jpg');
    var fallback = '<div data-fallback style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">' + (s.icon_emoji ? '<span class="nv-card-emoji" aria-hidden="true">' + s.icon_emoji + '</span>' : pictoTag(catSlug, 64)) + '</div>';
