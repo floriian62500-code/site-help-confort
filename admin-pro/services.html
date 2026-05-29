@@ -727,12 +727,147 @@
       form.requires_quote.checked = !!svc.requires_quote;
       renderIncludes(svc.includes || []);
       renderVariants(svc.variants || []);
+      // Image
+      loadProductImage(svc);
     } else {
       renderIncludes([]);
       renderVariants([]);
+      loadProductImage(null);
     }
     document.getElementById('svModal').classList.add('is-open');
   }
+
+  // ════════════ UPLOAD PHOTO PRODUIT ════════════
+  const BUCKET_PRESTAS = 'prestations';
+  const STORAGE_BASE = SUPABASE_URL + '/storage/v1/object/public/' + BUCKET_PRESTAS + '/';
+
+  function loadProductImage(svc) {
+    const preview = document.getElementById('svImgPreview');
+    const clearBtn = document.getElementById('svImgClear');
+    const status = document.getElementById('svImgStatus');
+    status.textContent = '';
+    if (svc && svc.image_url) {
+      preview.innerHTML = '<img src="' + svc.image_url + '?t=' + Date.now() + '" alt="" style="width:100%;height:100%;object-fit:contain">';
+      clearBtn.style.display = '';
+    } else if (svc && svc.slug) {
+      // Essayer URL convention
+      const tryUrl = STORAGE_BASE + svc.slug + '.jpg';
+      const img = new Image();
+      img.onload = function () {
+        preview.innerHTML = '<img src="' + tryUrl + '?t=' + Date.now() + '" alt="" style="width:100%;height:100%;object-fit:contain">';
+        clearBtn.style.display = '';
+      };
+      img.onerror = function () {
+        preview.innerHTML = '📷';
+        clearBtn.style.display = 'none';
+      };
+      img.src = tryUrl;
+    } else {
+      preview.innerHTML = '📷';
+      clearBtn.style.display = 'none';
+    }
+  }
+
+  async function uploadProductImage(file) {
+    const slugField = document.querySelector('input[name="slug"]');
+    const slug = (slugField.value || '').trim();
+    if (!slug) {
+      alert('Renseignez d\'abord le slug (URL) avant d\'uploader une photo.');
+      return;
+    }
+    const status = document.getElementById('svImgStatus');
+    status.style.color = '#0DA0CF';
+    status.textContent = '⏳ Upload en cours…';
+
+    try {
+      // Compression / redimensionnement (max 1400px, qualité 85%)
+      const blob = await resizeImage(file, 1400, 0.85);
+      const filename = slug + '.jpg';
+      const { error } = await sb.storage.from(BUCKET_PRESTAS).upload(filename, blob, {
+        cacheControl: '60',
+        upsert: true,
+        contentType: 'image/jpeg'
+      });
+      if (error) throw error;
+      const publicUrl = STORAGE_BASE + filename;
+      // Update services.image_url si on est en mode édition
+      if (editingId) {
+        await sb.from('services').update({ image_url: publicUrl }).eq('id', editingId);
+      }
+      // Preview
+      const preview = document.getElementById('svImgPreview');
+      preview.innerHTML = '<img src="' + publicUrl + '?t=' + Date.now() + '" alt="" style="width:100%;height:100%;object-fit:contain">';
+      document.getElementById('svImgClear').style.display = '';
+      status.style.color = '#16A34A';
+      status.textContent = '✓ Photo enregistrée — visible sur le site dans 1 min';
+    } catch (e) {
+      console.error('[upload image]', e);
+      status.style.color = '#DC2626';
+      status.textContent = '✗ Erreur : ' + (e.message || 'upload échoué');
+    }
+  }
+
+  function resizeImage(file, maxW, quality) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const img = new Image();
+        img.onload = () => {
+          let w = img.width, h = img.height;
+          if (w > maxW) { h = h * maxW / w; w = maxW; }
+          const canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h);
+          ctx.drawImage(img, 0, 0, w, h);
+          canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error('toBlob failed')), 'image/jpeg', quality);
+        };
+        img.onerror = reject;
+        img.src = ev.target.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // Click handlers
+  document.getElementById('svImgBtn').onclick = (e) => { e.preventDefault(); document.getElementById('svImgInput').click(); };
+  document.getElementById('svImgWrap').onclick = (e) => {
+    if (e.target.closest('button')) return;
+    document.getElementById('svImgInput').click();
+  };
+  document.getElementById('svImgInput').onchange = (e) => {
+    const f = e.target.files && e.target.files[0];
+    if (f) uploadProductImage(f);
+  };
+  // Drag-drop
+  const dropZone = document.getElementById('svImgWrap');
+  dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.style.background = '#E6F8FE'; dropZone.style.borderColor = '#0DA0CF'; });
+  dropZone.addEventListener('dragleave', (e) => { e.preventDefault(); dropZone.style.background = '#F7FBFD'; dropZone.style.borderColor = '#CBD5E1'; });
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.style.background = '#F7FBFD'; dropZone.style.borderColor = '#CBD5E1';
+    const f = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f && f.type.startsWith('image/')) uploadProductImage(f);
+  });
+  // Supprimer
+  document.getElementById('svImgClear').onclick = async (e) => {
+    e.preventDefault();
+    if (!confirm('Supprimer la photo de cette prestation ?')) return;
+    const slug = document.querySelector('input[name="slug"]').value.trim();
+    const status = document.getElementById('svImgStatus');
+    try {
+      await sb.storage.from(BUCKET_PRESTAS).remove([slug + '.jpg']);
+      if (editingId) await sb.from('services').update({ image_url: null }).eq('id', editingId);
+      document.getElementById('svImgPreview').innerHTML = '📷';
+      document.getElementById('svImgClear').style.display = 'none';
+      status.style.color = '#16A34A';
+      status.textContent = '✓ Photo supprimée';
+    } catch (e) {
+      status.style.color = '#DC2626';
+      status.textContent = '✗ Erreur : ' + e.message;
+    }
+  };
 
   // Auto-slug
   document.querySelector('input[name="name"]').addEventListener('input', (e) => {
