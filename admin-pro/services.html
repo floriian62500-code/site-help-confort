@@ -591,6 +591,9 @@
               <button class="sv-icon-btn sv-icon-ai" data-action="ai" title="Générer SEO + FAQ + réseaux sociaux via IA" style="color:#A855F7">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2z"/></svg>
               </button>
+              <button class="sv-icon-btn sv-icon-photo" data-action="photo" title="Uploader / remplacer la photo" style="color:#FF6B1A">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              </button>
               <button class="sv-icon-btn" data-action="edit" title="Modifier">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
               </button>
@@ -637,7 +640,95 @@
     if (btn.dataset.action === 'ai') {
       await runAiGenerate(svc, btn);
     }
+    if (btn.dataset.action === 'photo') {
+      triggerPhotoUpload(svc, btn);
+    }
   });
+
+  // ═══════════════════════════════════════════════════════════════
+  // 📷 UPLOAD PHOTO INLINE (depuis bouton ligne tableau)
+  // ═══════════════════════════════════════════════════════════════
+  function triggerPhotoUpload(svc, btn) {
+    let input = document.getElementById('hcPhotoInputInline');
+    if (!input) {
+      input = document.createElement('input');
+      input.type = 'file';
+      input.id = 'hcPhotoInputInline';
+      input.accept = 'image/jpeg,image/png,image/webp';
+      input.style.display = 'none';
+      document.body.appendChild(input);
+    }
+    input.onchange = async (e) => {
+      const f = e.target.files && e.target.files[0];
+      e.target.value = '';
+      if (!f) return;
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<span style="font-size:.72rem">…</span>';
+      btn.disabled = true;
+      try {
+        const blob = await resizeImageInline(f, 1400, 0.85);
+        const slug = (svc.slug || svc.id).toLowerCase().replace(/[^a-z0-9-]+/g,'-');
+        const filename = slug + '.jpg';
+        const { error: upErr } = await sb.storage.from('prestations').upload(filename, blob, {
+          upsert: true, contentType: 'image/jpeg', cacheControl: '3600'
+        });
+        if (upErr) throw upErr;
+        const publicUrl = (window.SUPABASE_URL || 'https://btcbjwqiivhpwoszomhg.supabase.co') + '/storage/v1/object/public/prestations/' + filename + '?v=' + Date.now();
+        const { error: dbErr } = await sb.from('services').update({ image_url: publicUrl }).eq('id', svc.id);
+        if (dbErr) throw dbErr;
+        svc.image_url = publicUrl;
+        showInlineToast('✅ Photo de « ' + svc.name + ' » mise à jour', 'ok');
+      } catch (err) {
+        console.error('Upload photo failed', err);
+        showInlineToast('❌ Erreur upload : ' + (err.message || err), 'err');
+      } finally {
+        btn.innerHTML = orig;
+        btn.disabled = false;
+      }
+    };
+    input.click();
+  }
+
+  function resizeImageInline(file, maxW, quality) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        const ratio = Math.min(1, maxW / img.width);
+        const w = Math.round(img.width * ratio);
+        const h = Math.round(img.height * ratio);
+        const cv = document.createElement('canvas');
+        cv.width = w; cv.height = h;
+        const ctx = cv.getContext('2d');
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, w, h);
+        ctx.drawImage(img, 0, 0, w, h);
+        cv.toBlob(b => b ? resolve(b) : reject(new Error('canvas->blob failed')), 'image/jpeg', quality);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('image load failed')); };
+      img.src = url;
+    });
+  }
+
+  function showInlineToast(msg, type) {
+    let t = document.getElementById('hcInlineToast');
+    if (!t) {
+      t = document.createElement('div');
+      t.id = 'hcInlineToast';
+      t.style.cssText = 'position:fixed;bottom:24px;right:24px;padding:14px 20px;border-radius:12px;font-size:.92rem;font-weight:700;color:#fff;box-shadow:0 12px 30px rgba(10,20,40,.25);z-index:9999;transform:translateY(20px);opacity:0;transition:all .25s ease;max-width:380px';
+      document.body.appendChild(t);
+    }
+    t.style.background = type === 'ok' ? 'linear-gradient(135deg,#10B981,#16A34A)' : 'linear-gradient(135deg,#EF4444,#DC2626)';
+    t.textContent = msg;
+    t.style.transform = 'translateY(0)';
+    t.style.opacity = '1';
+    clearTimeout(t._tmo);
+    t._tmo = setTimeout(() => {
+      t.style.transform = 'translateY(20px)';
+      t.style.opacity = '0';
+    }, 3500);
+  }
 
   // ═══════════════════════════════════════════════════════════════
   // ✨ IA — Génération SEO + FAQ + posts via edge function
