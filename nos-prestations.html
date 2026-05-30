@@ -1411,44 +1411,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  </div>
  <span class="nv-summary-deposit" id="nvSummaryDeposit">Acompte ${svc.deposit_pct}% : ${eurFmt(svc.deposit_ttc)}</span>
  </div>
- <script>
- // Recalcul dynamique prix selon Particulier (10%) / Pro (20%)
- (function(){
-   const priceHt = ${Number(svc.price_ht) || Number(svc.price_ttc/1.10) || 0};
-   const depositPct = ${Number(svc.deposit_pct) || 40};
-   const fmt = n => new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',minimumFractionDigits:2}).format(n);
-   if (!priceHt) return; // safety : si pas de prix, on n'attache rien
-   document.querySelectorAll('[name="nvClientType"]').forEach(r => {
-     r.addEventListener('change', e => {
-       const isParticulier = e.target.value === 'particulier';
-       const vat = isParticulier ? 0.10 : 0.20;
-       const ttc = priceHt * (1 + vat);
-       const deposit = ttc * depositPct / 100;
-       document.getElementById('nvSummaryPrice').textContent = fmt(ttc);
-       document.getElementById('nvPriceTaxLabel').textContent = isParticulier ? '(TVA 10%)' : '(TVA 20%)';
-       document.getElementById('nvSummaryDeposit').textContent = 'Acompte ' + depositPct + '% : ' + fmt(deposit);
-       // Update visuel des labels Particulier/Pro
-       document.querySelectorAll('[data-client-type]').forEach(l => {
-         const active = l.dataset.clientType === e.target.value;
-         l.style.background = active ? '#fff' : 'transparent';
-         l.style.color = active ? '#0A1428' : '#64748b';
-         l.style.fontWeight = active ? '700' : '600';
-         l.style.boxShadow = active ? '0 2px 6px rgba(10,20,40,.08)' : 'none';
-       });
-       // Recalcul variantes si présentes
-       document.querySelectorAll('.nv-variant-price[data-variant-ht]').forEach(el => {
-         const vht = Number(el.dataset.variantHt);
-         el.textContent = fmt(vht * (1 + vat));
-       });
-       // Update hidden field client_type
-       let hid = document.getElementById('nvClientTypeHidden');
-       if (hid) hid.value = e.target.value;
-     });
-     // Clic sur le label entier (pas seulement le radio caché)
-     r.closest('label').addEventListener('click', () => { r.checked = true; r.dispatchEvent(new Event('change')); });
-   });
- })();
- </script>
+ <!-- Le binding du toggle Particulier/Pro est fait via JS externe après render de la modal (voir bindClientTypeToggle) -->
 
  ${hasVariants ? `
  <div style="font-size:.86rem;font-weight:700;color:#0A1428;margin-bottom:10px">Gamme</div>
