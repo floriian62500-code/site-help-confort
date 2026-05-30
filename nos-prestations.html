@@ -1101,15 +1101,15 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  return;
  }
 
- // Grouper par catégorie (ordre déterministe : Plo, ECS, Chauf, Élec, Serr, Vit, Sur-mesure)
- const CAT_ORDER = ['plomberie','chauffage','electricite','serrurerie','vitrerie','sur-mesure'];
+ // Grouper par catégorie (ordre déterministe : Plo, Chauf, Élec, Serr, Vit, Rénovation)
+ const CAT_ORDER = ['plomberie','chauffage','electricite','serrurerie','vitrerie','renovation'];
  const CAT_LABELS = {
  'plomberie':'Plomberie & Sanitaires',
  'chauffage':'Chauffage',
  'electricite':'Électricité',
  'serrurerie':'Serrurerie',
  'vitrerie':'Vitrerie',
- 'sur-mesure':'Rénovation'
+ 'renovation':'Rénovation'
  };
  const grouped = {};
  // Pré-initialiser les catégories pour qu'elles apparaissent dans l'ordre voulu
@@ -1117,7 +1117,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  // Exclure les contrats d'entretien du catalogue principal (module dédié séparé en bas)
  services = services.filter(s => !s.is_contrat);
  services.forEach(s => {
- const key = s.category_slug || 'sur-mesure';
+ const key = s.category_slug || 'renovation';
  if (!grouped[key]) grouped[key] = { name: s.category_name || 'Autre', icon: s.category_icon, slug: key, items: [] };
  grouped[key].items.push(s);
  });
