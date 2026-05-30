@@ -555,8 +555,9 @@ if (document.fonts && document.fonts.ready) {
  var SUPABASE_PUB = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
  var actus = [];
  try {
+   // ⚠️ 2026-05-30 — FIX MÉLANGE ACTU/CHANTIER : strict status=actu (avant: =publie → ramenait les chantiers)
    var res = await fetch(
-     SUPABASE_URL + '/rest/v1/realisations?select=id,slug,title,description,image_after,image_before,metier,ville,published_at,created_at&status=eq.publie&order=published_at.desc.nullslast,created_at.desc&limit=6',
+     SUPABASE_URL + '/rest/v1/realisations?select=id,slug,title,description,image_after,image_before,metier,ville,published_at,created_at&status=eq.actu&order=published_at.desc.nullslast,created_at.desc&limit=6',
      { headers: { 'apikey': SUPABASE_PUB, 'Authorization': 'Bearer ' + SUPABASE_PUB } }
    );
    if (res.ok) {
