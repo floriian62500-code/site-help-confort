@@ -829,10 +829,11 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  'electricite': '/images/picto-electricite.png',
  'serrurerie': '/images/picto-serrurerie.png',
  'vitrerie': '/images/picto-vitrerie.png',
+ 'renovation': '/images/picto-renovation.png',
  'sur-mesure': '/images/picto-renovation.png'
  };
  function pictoTag(slug, size){
- var src = CAT_PICTOS[slug] || CAT_PICTOS['sur-mesure'];
+ var src = CAT_PICTOS[slug] || CAT_PICTOS['renovation'];
  var s = size || 22;
  return '<img src="' + src + '" alt="" loading="lazy" decoding="async" style="width:' + s + 'px;height:' + s + 'px;object-fit:contain">';
  }
@@ -844,6 +845,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  'electricite': '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
  'serrurerie': '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
  'vitrerie': '<rect x="3" y="3" width="18" height="18" rx="2"/>',
+ 'renovation': '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>',
  'sur-mesure': '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>'
  };
  const SVG_ATTRS = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
