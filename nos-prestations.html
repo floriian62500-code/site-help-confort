@@ -870,9 +870,27 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
    } catch(_){}
  }, 10000);
  try {
- const { data, error } = await sb.from('v_services_public').select('*');
- if (!error && Array.isArray(data)) services = data;
- if (error) console.error('[catalog] Supabase error:', error);
+ // 2026-05-30 — FORCE no-cache (fetch direct PostgREST) pour que toute modif dashboard apparaisse instant.
+ // Sinon : Supabase JS + Browser pouvaient cacher la réponse → désynchro BDD ↔ site signalée par Florian.
+ const cacheBust = Date.now();
+ const resp = await fetch(`${SUPABASE_URL}/rest/v1/v_services_public?select=*&_ts=${cacheBust}`, {
+   headers: {
+     apikey: SUPABASE_ANON,
+     Authorization: `Bearer ${SUPABASE_ANON}`,
+     'Cache-Control': 'no-store, no-cache, must-revalidate',
+     Pragma: 'no-cache'
+   },
+   cache: 'no-store'
+ });
+ if (resp.ok) {
+   const data = await resp.json();
+   if (Array.isArray(data)) services = data;
+ } else {
+   console.error('[catalog] HTTP error:', resp.status, await resp.text().catch(()=>'(no body)'));
+   // Fallback Supabase JS client si fetch direct échoue
+   const { data, error } = await sb.from('v_services_public').select('*');
+   if (!error && Array.isArray(data)) services = data;
+ }
  } catch(e) { console.error('[catalog] Supabase fetch failed:', e); }
  // Une fois le fetch terminé, on annule le timeout (le render va s'occuper du DOM)
  clearTimeout(loaderTimeout);
