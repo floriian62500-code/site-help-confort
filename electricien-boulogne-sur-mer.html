@@ -1203,7 +1203,7 @@ if (document.fonts && document.fonts.ready) {
  if(!track) return;
  fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/realisations-json?t=' + Date.now()).then(function(r){return r.ok?r.json():Promise.reject()}).then(function(list){
  var plomb = list.filter(function(r){
- return r.published !== false && r.metier === 'Électricité' && r.est_chantier !== false;
+ return r.published !== false && (r.metier||'').toLowerCase() === 'electricite' && r.est_chantier !== false;
  }).slice(0, 2);
  if(!plomb.length) return; // pas de chantiers — empty state HTML reste affiché
  track.innerHTML = plomb.map(function(r){
