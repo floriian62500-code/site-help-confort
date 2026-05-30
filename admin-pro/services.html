@@ -128,6 +128,8 @@
             <option value="inactive">Désactivées</option>
             <option value="featured">Mises en avant</option>
             <option value="quote">Sur devis</option>
+            <option value="nophoto">📷 Sans photo</option>
+            <option value="novariants">⚙ Sans variantes</option>
           </select>
           <input type="search" id="searchSvc" placeholder="Rechercher une prestation…" class="grow">
           <a class="sv-cta" href="../nos-prestations.html" target="_blank" rel="noopener noreferrer" style="background:#fff;color:var(--ink-900);border:1px solid var(--ink-100);box-shadow:none">
@@ -471,6 +473,8 @@
       if (statusFilter === 'inactive' && s.active) return false;
       if (statusFilter === 'featured' && !s.featured) return false;
       if (statusFilter === 'quote' && !s.requires_quote) return false;
+      if (statusFilter === 'nophoto' && (s.image_url && s.image_url.trim())) return false;
+      if (statusFilter === 'novariants' && Array.isArray(s.variants) && s.variants.length > 0) return false;
       if (search && !(s.name.toLowerCase().includes(search) || (s.short_desc||'').toLowerCase().includes(search))) return false;
       return true;
     });

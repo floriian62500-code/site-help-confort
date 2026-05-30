@@ -188,6 +188,7 @@ function render() {
       </div>
       <div class="fr-card-actions">
         <button class="fr-icon-btn" data-action="edit">✏️ Modifier</button>
+        ${(Array.isArray(s.metiers) && s.metiers.length) ? `<a class="fr-icon-btn" href="https://depan59-62.fr/${ {plomberie:'plombier-saint-omer',chauffage:'chauffagiste-saint-omer',electricite:'electricien-saint-omer',serrurerie:'serrurier-saint-omer',vitrerie:'vitrier-saint-omer',menuiserie:'menuisier-saint-omer',volets:'volets-saint-omer',renovation:'travaux-saint-omer'}[s.metiers[0]] || 'plombier-saint-omer' }.html#fournisseurs" target="_blank" rel="noopener" style="text-decoration:none;color:#0DA0CF" title="Voir sur la page métier publique">🌐 Voir sur le site</a>` : ''}
         ${!s.active ? '<span style="font-size:.72rem;color:#94a3b8;padding:5px">(inactif)</span>' : ''}
       </div>
     </div>
