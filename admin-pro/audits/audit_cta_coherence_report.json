@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-05-29T06:58:13",
-  "scanned_pages": 82,
-  "total_ctas": 43,
+  "generated_at": "2026-05-30T06:27:03",
+  "scanned_pages": 114,
+  "total_ctas": 119,
   "families": {
     "estimation": {
       "occurrences": 2,
@@ -11,19 +11,20 @@
       }
     },
     "devis": {
-      "occurrences": 39,
+      "occurrences": 114,
       "unique_destinations": 4,
       "destinations": {
-        "contact.html": 35,
+        "contact.html": 108,
+        "tel:+33366100134": 4,
         "[button-js]": 1,
-        "devis-express.html": 1,
-        "tel:+33366100134": 2
+        "devis-express.html": 1
       }
     },
     "reserver": {
-      "occurrences": 2,
-      "unique_destinations": 2,
+      "occurrences": 3,
+      "unique_destinations": 3,
       "destinations": {
+        "tel:+33366100134": 1,
         "index.html": 1,
         "contact.html": 1
       }
@@ -36,7 +37,7 @@
       "destinations": [
         {
           "canon": "contact.html",
-          "count": 35,
+          "count": 108,
           "examples": [
             {
               "page": "avant-apres.html",
@@ -49,24 +50,29 @@
               "href": "contact.html"
             },
             {
-              "page": "contrats-entretien.html",
-              "text": "Demander un devis",
-              "href": "contact.html"
+              "page": "chauffagiste-coudekerque-branche.html",
+              "text": "Devis gratuit",
+              "href": "contact.html?presta=Chauffagiste&objet=Intervention Coudekerque-Branche#form"
             }
           ]
         },
         {
           "canon": "tel:+33366100134",
-          "count": 2,
+          "count": 4,
           "examples": [
             {
-              "page": "remplacement-chauffe-eau.html",
-              "text": "Demander un devis 03 66 10 01 34",
+              "page": "blog-cout-renovation-salle-de-bain.html",
+              "text": "Demander un devis",
               "href": "tel:+33366100134"
             },
             {
-              "page": "tarifs.html",
-              "text": "📞 Devis gratuit 03 66 10 01 34",
+              "page": "blog-fenetres-double-vitrage-pvc-alu-bois.html",
+              "text": "Demander un devis",
+              "href": "tel:+33366100134"
+            },
+            {
+              "page": "remplacement-chauffe-eau.html",
+              "text": "Demander un devis 03 66 10 01 34",
               "href": "tel:+33366100134"
             }
           ]
@@ -97,8 +103,19 @@
     },
     {
       "family": "reserver",
-      "destination_count": 2,
+      "destination_count": 3,
       "destinations": [
+        {
+          "canon": "tel:+33366100134",
+          "count": 1,
+          "examples": [
+            {
+              "page": "blog-preparer-sa-maison-hiver-checklist.html",
+              "text": "Réserver mon check-up",
+              "href": "tel:+33366100134"
+            }
+          ]
+        },
         {
           "canon": "index.html",
           "count": 1,

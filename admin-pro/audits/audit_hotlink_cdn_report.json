@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-05-29T06:58:14",
-  "scanned_html": 82,
-  "scanned_js": 14,
-  "total_hosts": 83,
+  "generated_at": "2026-05-30T06:27:03",
+  "scanned_html": 114,
+  "scanned_js": 35,
+  "total_hosts": 85,
   "by_class": {
     "self": [
       "www.depan59-62.fr"
@@ -92,8 +92,10 @@
       "www.vachette.fr",
       "www.velux.fr",
       "www.viaren.fr",
+      "www.w3.org",
       "www.watermatic.fr",
-      "www.winkhaus.com"
+      "www.winkhaus.com",
+      "{s}.tile.openstreetmap.org"
     ]
   },
   "external_findings": [
@@ -305,12 +307,13 @@
     },
     {
       "host": "maps.app.goo.gl",
-      "occurrences": 68,
+      "occurrences": 69,
       "image_occurrences": 0,
       "files": [
         "a-propos.html",
         "actualites.html",
         "aides.html",
+        "assets/hc-avis-carousel.js",
         "assets/hc-avis-live.js",
         "avant-apres.html",
         "blog.html",
@@ -2161,6 +2164,20 @@
       ]
     },
     {
+      "host": "www.w3.org",
+      "occurrences": 1,
+      "image_occurrences": 0,
+      "files": [
+        "assets/hc-before-after.js"
+      ],
+      "examples": [
+        {
+          "file": "assets/hc-before-after.js",
+          "url": "http://www.w3.org/2000/svg\\"
+        }
+      ]
+    },
+    {
       "host": "www.watermatic.fr",
       "occurrences": 4,
       "image_occurrences": 0,
@@ -2220,6 +2237,20 @@
         {
           "file": "serrurier-saint-omer.html",
           "url": "https://www.winkhaus.com/fr/"
+        }
+      ]
+    },
+    {
+      "host": "{s}.tile.openstreetmap.org",
+      "occurrences": 1,
+      "image_occurrences": 1,
+      "files": [
+        "assets/hc-map-zones.js"
+      ],
+      "examples": [
+        {
+          "file": "assets/hc-map-zones.js",
+          "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         }
       ]
     }

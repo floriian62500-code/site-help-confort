@@ -1,14 +1,14 @@
 # 🖼️ Audit images hot-linkées CDN tiers — sonde #13
 
-_Généré le 2026-05-29 06:58_
+_Généré le 2026-05-30 06:27_
 
-- Pages HTML scannées : **82**
-- Fichiers JS scannés : **14**
-- Hosts uniques détectés : **83**
+- Pages HTML scannées : **114**
+- Fichiers JS scannés : **35**
+- Hosts uniques détectés : **85**
   - Self (HC) : 1
   - Supabase projet : 1
   - CDN tolérés (CSP-whitelistés) : 7
-  - **Externes non whitelistés** : **74**
+  - **Externes non whitelistés** : **76**
 
 ## ⚠️ Hosts externes non whitelistés
 
@@ -95,9 +95,9 @@ Fichiers concernés : `menuisier-dunkerque.html`, `menuisier-saint-omer.html`, `
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
-### 📄 `maps.app.goo.gl` — 68 occurrence(s) (0 image(s))
+### 📄 `maps.app.goo.gl` — 69 occurrence(s) (0 image(s))
 
-Fichiers concernés : `a-propos.html`, `actualites.html`, `aides.html`, `assets/hc-avis-live.js`, `avant-apres.html`, `blog.html`, `carrieres.html`, `chauffagiste-boulogne-sur-mer.html`, `chauffagiste-calais.html`, `chauffagiste-dunkerque.html`
+Fichiers concernés : `a-propos.html`, `actualites.html`, `aides.html`, `assets/hc-avis-carousel.js`, `assets/hc-avis-live.js`, `avant-apres.html`, `blog.html`, `carrieres.html`, `chauffagiste-boulogne-sur-mer.html`, `chauffagiste-calais.html`
 
 - `a-propos.html` → `https://maps.app.goo.gl/B4BPVTiRp5rDp26fA`
 - `actualites.html` → `https://maps.app.goo.gl/B4BPVTiRp5rDp26fA`
@@ -757,6 +757,14 @@ Fichiers concernés : `pro.html`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
+### 📄 `www.w3.org` — 1 occurrence(s) (0 image(s))
+
+Fichiers concernés : `assets/hc-before-after.js`
+
+- `assets/hc-before-after.js` → `http://www.w3.org/2000/svg\`
+
+→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
+
 ### 📄 `www.watermatic.fr` — 4 occurrence(s) (0 image(s))
 
 Fichiers concernés : `plombier-boulogne-sur-mer.html`, `plombier-calais.html`, `plombier-dunkerque.html`, `plombier-saint-omer.html`
@@ -780,6 +788,14 @@ Fichiers concernés : `partenaires.html`, `serrurier-boulogne-sur-mer.html`, `se
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
+### 🖼️ `{s}.tile.openstreetmap.org` — 1 occurrence(s) (1 image(s))
+
+Fichiers concernés : `assets/hc-map-zones.js`
+
+- `assets/hc-map-zones.js` → `https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`
+
+→ **Recommandation** : télécharger les assets critiques dans `/images/` pour garantir le contrôle, le cache et la conformité CSP.
+
 
 ---
 
@@ -790,18 +806,18 @@ Fichiers concernés : `partenaires.html`, `serrurier-boulogne-sur-mer.html`, `se
 | `akw.fr` | 🔴 external | 5 | 0 |
 | `api-adresse.data.gouv.fr` | ⚪ trusted | 61 | 0 |
 | `bricard.com` | 🔴 external | 5 | 0 |
-| `btcbjwqiivhpwoszomhg.supabase.co` | 🔵 supabase | 69 | 0 |
-| `cdn.jsdelivr.net` | ⚪ trusted | 65 | 0 |
+| `btcbjwqiivhpwoszomhg.supabase.co` | 🔵 supabase | 75 | 0 |
+| `cdn.jsdelivr.net` | ⚪ trusted | 67 | 0 |
 | `comap.aalberts-hfc.com` | 🔴 external | 5 | 0 |
 | `connect.facebook.net` | ⚪ trusted | 1 | 0 |
 | `coretecfloors.com` | 🔴 external | 3 | 0 |
-| `fonts.googleapis.com` | ⚪ trusted | 177 | 0 |
-| `fonts.gstatic.com` | ⚪ trusted | 65 | 0 |
+| `fonts.googleapis.com` | ⚪ trusted | 239 | 0 |
+| `fonts.gstatic.com` | ⚪ trusted | 95 | 0 |
 | `fr.indeed.com` | 🔴 external | 1 | 0 |
 | `france-renov.gouv.fr` | 🔴 external | 2 | 0 |
 | `gef.fr` | 🔴 external | 3 | 0 |
 | `groupe-millet.com` | 🔴 external | 3 | 0 |
-| `maps.app.goo.gl` | 🔴 external | 68 | 0 |
+| `maps.app.goo.gl` | 🔴 external | 69 | 0 |
 | `mon-installateur.atlantic.fr` | 🔴 external | 9 | 0 |
 | `new.abb.com` | 🔴 external | 5 | 0 |
 | `parador.de` | 🔴 external | 3 | 0 |
@@ -810,7 +826,7 @@ Fichiers concernés : `partenaires.html`, `serrurier-boulogne-sur-mer.html`, `se
 | `shop.siegenia.com` | 🔴 external | 5 | 0 |
 | `siamp.fr` | 🔴 external | 5 | 0 |
 | `trustville.com` | 🔴 external | 27 | 0 |
-| `unpkg.com` | ⚪ trusted | 2 | 0 |
+| `unpkg.com` | ⚪ trusted | 4 | 0 |
 | `www.anah.fr` | 🔴 external | 1 | 0 |
 | `www.anah.gouv.fr` | 🔴 external | 2 | 0 |
 | `www.atlantic.fr` | 🔴 external | 5 | 0 |
@@ -822,7 +838,7 @@ Fichiers concernés : `partenaires.html`, `serrurier-boulogne-sur-mer.html`, `se
 | `www.cnil.fr` | 🔴 external | 1 | 0 |
 | `www.dedietrich-thermique.fr` | 🔴 external | 5 | 0 |
 | `www.delabie.fr` | 🔴 external | 5 | 0 |
-| `www.depan59-62.fr` | 🟢 self | 165 | 84 |
+| `www.depan59-62.fr` | 🟢 self | 227 | 115 |
 | `www.domusvi.com` | 🔴 external | 1 | 0 |
 | `www.dynaren.com` | 🔴 external | 1 | 0 |
 | `www.ecologie.gouv.fr` | 🔴 external | 1 | 0 |
@@ -868,5 +884,7 @@ Fichiers concernés : `partenaires.html`, `serrurier-boulogne-sur-mer.html`, `se
 | `www.vachette.fr` | 🔴 external | 5 | 0 |
 | `www.velux.fr` | 🔴 external | 3 | 0 |
 | `www.viaren.fr` | 🔴 external | 1 | 0 |
+| `www.w3.org` | 🔴 external | 1 | 0 |
 | `www.watermatic.fr` | 🔴 external | 4 | 0 |
 | `www.winkhaus.com` | 🔴 external | 5 | 0 |
+| `{s}.tile.openstreetmap.org` | 🔴 external | 1 | 1 |

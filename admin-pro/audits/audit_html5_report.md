@@ -1,15 +1,15 @@
-# Audit HTML5 — 2026-05-29 06:56
+# Audit HTML5 — 2026-05-30 06:25
 
 > Audit local rapide HTML5 + a11y de base. Lancement : `python3 admin-pro/audits/audit_html5.py`
 > ⚠️ Ce n'est pas un substitut au validateur W3C officiel, mais il pré-filtre les erreurs évidentes.
 
 ## Synthèse
 
-- Pages auditées : **84**
+- Pages auditées : **116**
 - Pages avec erreurs : **2**
-- Pages avec warnings : **3**
+- Pages avec warnings : **11**
 - Total erreurs : **10**
-- Total warnings : **3**
+- Total warnings : **11**
 
 ## Top patterns d'erreurs
 
@@ -43,6 +43,31 @@
 - ❌ <meta name="description"> manquant ou vide
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
+### `blog-cout-renovation-salle-de-bain.html`
+
+- ⚠️ <title> long (82 chars, >70 recommandé)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `blog-entretien-chaudiere-annuel-obligatoire.html`
+
+- ⚠️ <title> long (86 chars, >70 recommandé)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `blog-isolation-combles-aides-2026.html`
+
+- ⚠️ <title> long (85 chars, >70 recommandé)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `blog-pompe-a-chaleur-air-eau-tout-savoir.html`
+
+- ⚠️ <title> long (92 chars, >70 recommandé)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `nos-prestations.html`
+
+- ⚠️ balisage déséquilibré (indicatif) : <div> 90↗ / 91↘
+- ℹ️ 11 <img> avec alt vide (OK si décoratif)
+
 ### `notre-equipe 2.html`
 
 - ⚠️ meta description longue (178 chars, >170 → tronquée)
@@ -50,6 +75,21 @@
 ### `notre-equipe.html`
 
 - ⚠️ meta description longue (178 chars, >170 → tronquée)
+
+### `plombier-coudekerque-branche.html`
+
+- ⚠️ meta description longue (180 chars, >170 → tronquée)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `plombier-grande-synthe.html`
+
+- ⚠️ meta description longue (174 chars, >170 → tronquée)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `plombier-saint-martin-boulogne.html`
+
+- ⚠️ meta description longue (182 chars, >170 → tronquée)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `404.html`
 
@@ -75,6 +115,38 @@
 
 - ℹ️ 8 <img> avec alt vide (OK si décoratif)
 
+### `blog-comment-detecter-fuite-eau-cachee.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `blog-debouchage-canalisation-furet-hydrocurage.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `blog-fenetres-double-vitrage-pvc-alu-bois.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `blog-panne-electrique-disjoncteur-saute.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `blog-pmr-adapter-salle-de-bain-senior.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `blog-porte-claquee-cle-perdue-que-faire.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `blog-preparer-sa-maison-hiver-checklist.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `blog-remplacement-chaudiere-gaz-aides-2026.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
 ### `blog.html`
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
@@ -91,13 +163,29 @@
 
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
+### `chauffagiste-coudekerque-branche.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
 ### `chauffagiste-dunkerque.html`
 
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
+### `chauffagiste-marck.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `chauffagiste-outreau.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
 ### `chauffagiste-saint-omer.html`
 
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
+
+### `chauffagiste-wimereux.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `contact.html`
 
@@ -183,6 +271,10 @@
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
+### `garanties.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
 ### `guide-adaptation-pmr.html`
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
@@ -223,10 +315,6 @@
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
-### `nos-prestations.html`
-
-- ℹ️ 9 <img> avec alt vide (OK si décoratif)
-
 ### `nos-villes.html`
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
@@ -251,13 +339,41 @@
 
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
+### `plombier-coulogne.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
 ### `plombier-dunkerque.html`
 
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
+### `plombier-guines.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `plombier-le-portel.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `plombier-marck.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `plombier-outreau.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
 ### `plombier-saint-omer.html`
 
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
+
+### `plombier-teteghem.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `plombier-wimereux.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `pmr-dunkerque.html`
 
@@ -295,13 +411,29 @@
 
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
+### `serrurier-coudekerque-branche.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
 ### `serrurier-dunkerque.html`
 
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
+### `serrurier-marck.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `serrurier-outreau.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
 ### `serrurier-saint-omer.html`
 
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
+
+### `serrurier-wimereux.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `sinistres.html`
 
@@ -352,12 +484,24 @@
 - `agence-saint-omer.html`
 - `aides.html`
 - `avant-apres.html`
+- `blog-comment-detecter-fuite-eau-cachee.html`
+- `blog-debouchage-canalisation-furet-hydrocurage.html`
+- `blog-fenetres-double-vitrage-pvc-alu-bois.html`
+- `blog-panne-electrique-disjoncteur-saute.html`
+- `blog-pmr-adapter-salle-de-bain-senior.html`
+- `blog-porte-claquee-cle-perdue-que-faire.html`
+- `blog-preparer-sa-maison-hiver-checklist.html`
+- `blog-remplacement-chaudiere-gaz-aides-2026.html`
 - `blog.html`
 - `carrieres.html`
 - `chauffagiste-boulogne-sur-mer.html`
 - `chauffagiste-calais.html`
+- `chauffagiste-coudekerque-branche.html`
 - `chauffagiste-dunkerque.html`
+- `chauffagiste-marck.html`
+- `chauffagiste-outreau.html`
 - `chauffagiste-saint-omer.html`
+- `chauffagiste-wimereux.html`
 - `contact.html`
 - `contrats-entretien.html`
 - `debouchage-canalisation.html`
@@ -379,8 +523,10 @@
 - `electricien-dunkerque.html`
 - `electricien-saint-omer.html`
 - `entretien-chaudiere.html`
+- `espace-client-dashboard.html`
 - `espace-client.html`
 - `faq.html`
+- `garanties.html`
 - `guide-adaptation-pmr.html`
 - `guide-entretien-chaudiere.html`
 - `guide-fuite-eau.html`
@@ -391,7 +537,6 @@
 - `menuisier-dunkerque.html`
 - `menuisier-saint-omer.html`
 - `nos-metiers.html`
-- `nos-prestations.html`
 - `nos-villes.html`
 - `ouverture-porte-claquee.html`
 - `panne-chaudiere.html`
@@ -399,8 +544,15 @@
 - `plan-du-site.html`
 - `plombier-boulogne-sur-mer.html`
 - `plombier-calais.html`
+- `plombier-coulogne.html`
 - `plombier-dunkerque.html`
+- `plombier-guines.html`
+- `plombier-le-portel.html`
+- `plombier-marck.html`
+- `plombier-outreau.html`
 - `plombier-saint-omer.html`
+- `plombier-teteghem.html`
+- `plombier-wimereux.html`
 - `pmr-dunkerque.html`
 - `pmr-saint-omer.html`
 - `pro.html`
@@ -412,8 +564,12 @@
 - `reset.html`
 - `serrurier-boulogne-sur-mer.html`
 - `serrurier-calais.html`
+- `serrurier-coudekerque-branche.html`
 - `serrurier-dunkerque.html`
+- `serrurier-marck.html`
+- `serrurier-outreau.html`
 - `serrurier-saint-omer.html`
+- `serrurier-wimereux.html`
 - `sinistres.html`
 - `tarifs.html`
 - `temoignages.html`

@@ -1,10 +1,10 @@
-# Audit favicons / apple-touch-icon / manifest — 2026-05-29 06:56
+# Audit favicons / apple-touch-icon / manifest — 2026-05-30 06:25
 
-- **Pages scannées** : 83
-- **Références d'icônes trouvées** : 217
-- **Manquantes sur disque** : 82
+- **Pages scannées** : 115
+- **Références d'icônes trouvées** : 280
+- **Manquantes sur disque** : 114
 - **Externes (non testées)** : 0
-- **OK** : 135
+- **OK** : 166
 
 ## 🚨 Icônes manquantes
 
@@ -17,12 +17,28 @@
 | `agence-saint-omer.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `aides.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `avant-apres.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `blog-comment-detecter-fuite-eau-cachee.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `blog-cout-renovation-salle-de-bain.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `blog-debouchage-canalisation-furet-hydrocurage.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `blog-entretien-chaudiere-annuel-obligatoire.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `blog-fenetres-double-vitrage-pvc-alu-bois.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `blog-isolation-combles-aides-2026.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `blog-panne-electrique-disjoncteur-saute.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `blog-pmr-adapter-salle-de-bain-senior.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `blog-pompe-a-chaleur-air-eau-tout-savoir.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `blog-porte-claquee-cle-perdue-que-faire.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `blog-preparer-sa-maison-hiver-checklist.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `blog-remplacement-chaudiere-gaz-aides-2026.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `blog.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `carrieres.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `chauffagiste-boulogne-sur-mer.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `chauffagiste-calais.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `chauffagiste-coudekerque-branche.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `chauffagiste-dunkerque.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `chauffagiste-marck.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `chauffagiste-outreau.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `chauffagiste-saint-omer.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `chauffagiste-wimereux.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `contact.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `contrats-entretien.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `debouchage-canalisation.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
@@ -45,8 +61,10 @@
 | `electricien-dunkerque.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `electricien-saint-omer.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `entretien-chaudiere.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `espace-client-dashboard.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `espace-client.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `faq.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `garanties.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `guide-adaptation-pmr.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `guide-entretien-chaudiere.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `guide-fuite-eau.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
@@ -67,8 +85,18 @@
 | `plan-du-site.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `plombier-boulogne-sur-mer.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `plombier-calais.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `plombier-coudekerque-branche.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `plombier-coulogne.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `plombier-dunkerque.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `plombier-grande-synthe.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `plombier-guines.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `plombier-le-portel.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `plombier-marck.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `plombier-outreau.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `plombier-saint-martin-boulogne.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `plombier-saint-omer.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `plombier-teteghem.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `plombier-wimereux.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `pmr-dunkerque.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `pmr-saint-omer.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `pro.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
@@ -79,8 +107,12 @@
 | `remplacement-chauffe-eau.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `serrurier-boulogne-sur-mer.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `serrurier-calais.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `serrurier-coudekerque-branche.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `serrurier-dunkerque.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `serrurier-marck.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `serrurier-outreau.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `serrurier-saint-omer.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `serrurier-wimereux.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `sinistres.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `tarifs.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `temoignages.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
@@ -95,8 +127,8 @@
 
 ## Récap par type
 
-- **apple-touch-icon** : 70 déclarations (0 manquantes)
-- **icon** : 81 déclarations (81 manquantes)
+- **apple-touch-icon** : 101 déclarations (0 manquantes)
+- **icon** : 113 déclarations (113 manquantes)
 - **manifest** : 65 déclarations (0 manquantes)
 - **shortcut-icon** : 1 déclarations (1 manquantes)
 
@@ -109,12 +141,28 @@
 - `agence-saint-omer.html`
 - `aides.html`
 - `avant-apres.html`
+- `blog-comment-detecter-fuite-eau-cachee.html`
+- `blog-cout-renovation-salle-de-bain.html`
+- `blog-debouchage-canalisation-furet-hydrocurage.html`
+- `blog-entretien-chaudiere-annuel-obligatoire.html`
+- `blog-fenetres-double-vitrage-pvc-alu-bois.html`
+- `blog-isolation-combles-aides-2026.html`
+- `blog-panne-electrique-disjoncteur-saute.html`
+- `blog-pmr-adapter-salle-de-bain-senior.html`
+- `blog-pompe-a-chaleur-air-eau-tout-savoir.html`
+- `blog-porte-claquee-cle-perdue-que-faire.html`
+- `blog-preparer-sa-maison-hiver-checklist.html`
+- `blog-remplacement-chaudiere-gaz-aides-2026.html`
 - `blog.html`
 - `carrieres.html`
 - `chauffagiste-boulogne-sur-mer.html`
 - `chauffagiste-calais.html`
+- `chauffagiste-coudekerque-branche.html`
 - `chauffagiste-dunkerque.html`
+- `chauffagiste-marck.html`
+- `chauffagiste-outreau.html`
 - `chauffagiste-saint-omer.html`
+- `chauffagiste-wimereux.html`
 - `contact.html`
 - `contrats-entretien.html`
 - `debouchage-canalisation.html`
@@ -137,8 +185,10 @@
 - `electricien-dunkerque.html`
 - `electricien-saint-omer.html`
 - `entretien-chaudiere.html`
+- `espace-client-dashboard.html`
 - `espace-client.html`
 - `faq.html`
+- `garanties.html`
 - `guide-adaptation-pmr.html`
 - `guide-entretien-chaudiere.html`
 - `guide-fuite-eau.html`
@@ -159,8 +209,18 @@
 - `plan-du-site.html`
 - `plombier-boulogne-sur-mer.html`
 - `plombier-calais.html`
+- `plombier-coudekerque-branche.html`
+- `plombier-coulogne.html`
 - `plombier-dunkerque.html`
+- `plombier-grande-synthe.html`
+- `plombier-guines.html`
+- `plombier-le-portel.html`
+- `plombier-marck.html`
+- `plombier-outreau.html`
+- `plombier-saint-martin-boulogne.html`
 - `plombier-saint-omer.html`
+- `plombier-teteghem.html`
+- `plombier-wimereux.html`
 - `pmr-dunkerque.html`
 - `pmr-saint-omer.html`
 - `pro.html`
@@ -170,8 +230,12 @@
 - `remplacement-chauffe-eau.html`
 - `serrurier-boulogne-sur-mer.html`
 - `serrurier-calais.html`
+- `serrurier-coudekerque-branche.html`
 - `serrurier-dunkerque.html`
+- `serrurier-marck.html`
+- `serrurier-outreau.html`
 - `serrurier-saint-omer.html`
+- `serrurier-wimereux.html`
 - `sinistres.html`
 - `tarifs.html`
 - `temoignages.html`

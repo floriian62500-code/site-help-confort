@@ -1,13 +1,13 @@
 {
   "audit": "typo_fr",
-  "generated_at": "2026-05-29T06:58:11",
+  "generated_at": "2026-05-30T06:27:00",
   "threshold": 5,
   "stats": {
-    "pages_audited": 82,
-    "pages_alerted": 64,
-    "total_fautifs": 849,
+    "pages_audited": 114,
+    "pages_alerted": 79,
+    "total_fautifs": 1197,
     "code_distribution": {
-      "TYPO-FR": 64
+      "TYPO-FR": 79
     }
   },
   "results": [
@@ -107,6 +107,306 @@
       "findings": []
     },
     {
+      "file": "blog-comment-detecter-fuite-eau-cachee.html",
+      "fautifs": 15,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "15 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…fique Le test du compteur : 3 minutes pour confirmer…",
+            "…ntement, ne minimisez pas : une fuite de 1L/heure =…",
+            "…ous les éviers et lavabos : raccords, siphons, joint…",
+            "…ns, joint Derrière les WC : chasse d'eau, joint flex…",
+            "…us le ballon d'eau chaude : groupe de sécurité Compt…",
+            "…é Compteur d'eau lui-même : joint amont/aval Sous la…",
+            "…la cave ou vide sanitaire : nourrices, conduites Qua…",
+            "…un équipement spécialisé : caméra thermique pour dé…",
+            "…cipal) Si fuite chauffage : coupez la chaudière + le…",
+            "…trat assurance habitation : la garantie \"dégât des e…",
+            "…fuite suspectée chez vous ? Recherche de fuite par c…",
+            "…emplacement chaudière gaz : aides 2026 et démarches…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog-cout-renovation-salle-de-bain.html",
+      "fautifs": 24,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "24 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…savez pas combien prévoir ? Voici la décomposition d…",
+            "…hissement (5 000-8 000 €) : peinture, joints, robine…",
+            "…omplète (10 000-16 000 €) : nouveau carrelage + sani…",
+            "…premium (18 000-28 000 €) : douche italienne, double…",
+            "…C Démolition + évacuation : 1 200 € Plomberie (dépla…",
+            "…rie (déplacements + neuf) : 1 800 € Électricité (mis…",
+            "…(mise aux normes + spots) : 1 200 € Carrelage sol +…",
+            "…ge sol + mur (40 m² posé) : 3 500 € Faïence murs dou…",
+            "…nce murs douche/baignoire : 800 € Sanitaires (WC, la…",
+            "…s (WC, lavabo, mitigeurs) : 1 200 € Douche italienne…",
+            "…uche italienne + receveur : 1 100 € Meuble vasque +…",
+            "…€ Meuble vasque + miroir : 1 000 € Peinture + finit…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog-debouchage-canalisation-furet-hydrocurage.html",
+      "fautifs": 26,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "26 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…Canalisation bouchée : furet, hydrocurage ou pr…",
+            "…t, hydrocurage ou produit ? | Blog HELP Confort Sain…",
+            "…erie Canalisation bouchée : furet, hydrocurage ou pr…",
+            "…t, hydrocurage ou produit ? Évier qui se vide en 10…",
+            "…orde, WC qui ne tire plus : votre canalisation est b…",
+            "…ns dégrader la tuyauterie ? Voici le guide pratique.…",
+            "…its chimiques type Destop : agressent le PVC et le c…",
+            "…long terme Cintre déplié : raye l'émail et casse le…",
+            "…les joints Eau bouillante : déconseillé sur PVC (fis…",
+            "…s à terme) Aspirateur eau : fonctionne mais aggrave…",
+            "…n profond Le furet manuel : 80% des cas Le furet plo…",
+            "…ez le bouchon. Pour un WC : utilisez un furet spécif…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog-entretien-chaudiere-annuel-obligatoire.html",
+      "fautifs": 13,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "13 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…Entretien chaudière : pourquoi c'est obligatoi…",
+            "…ffage Entretien chaudière : pourquoi c'est obligatoi…",
+            "…e passe si vous l'oubliez ? Spoiler : amende ET refu…",
+            "…vous l'oubliez ? Spoiler : amende ET refus d'indemn…",
+            "…rticuliers). Mais surtout : votre assurance habitati…",
+            "…e Entretien chaudière gaz : 120 € à 180 € TTC Entret…",
+            "…Entretien chaudière fioul : 150 € à 220 € TTC Entret…",
+            "…chaudière à condensation : 130 € à 200 € Contrat d'…",
+            "…ien annuel (Essentiel HC) : 12,90 € / mois = 154,80…",
+            "…l'intervention. Avantages : entretien automatique pr…",
+            "…emplacement chaudière gaz : aides 2026 et démarches…",
+            "…e bain pour senior ou PMR : guide complet 🔑 Porte cl…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog-fenetres-double-vitrage-pvc-alu-bois.html",
+      "fautifs": 23,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "23 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…Fenêtres double vitrage : PVC, alu ou bois ? | Blo…",
+            "…itrage : PVC, alu ou bois ? | Blog HELP Confort Sain…",
+            "…e Fenêtres double vitrage : PVC, alu ou bois ? Rempl…",
+            "…itrage : PVC, alu ou bois ? Remplacer vos fenêtres s…",
+            "…ge. Mais PVC, alu ou bois ? Voici le comparatif sans…",
+            "…· ⏱️ Lecture 2 min Le PVC : le meilleur rapport qual…",
+            "…en France. Et pour cause : isolation thermique et p…",
+            "…nêtre posée. Inconvénient : esthétique moins haut de…",
+            "…one protégée. L'aluminium : esthétique moderne L'alu…",
+            "…urabilité (50 ans+). Mais : isolation thermique infé…",
+            "…s contemporaines. Le bois : le retour à la mode Le b…",
+            "…vation patrimoniale. Mais : entretien obligatoire (l…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog-isolation-combles-aides-2026.html",
+      "fautifs": 12,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "12 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…Isolation des combles : la meilleure rentabilité…",
+            "…ion Isolation des combles : la meilleure rentabilité…",
+            "…rgétique le plus rentable : amortissement en 3-5 ans…",
+            "…fenêtres). C'est physique : l'air chaud monte. Isole…",
+            "…ulables MaPrimeRenov 2026 : 7-25 €/m² selon tranche…",
+            "…aires) CEE primes énergie : 12 €/m² en moyenne (cumu…",
+            "…our les revenus modestes) : 20 € de + par m² Coût fi…",
+            "…isolés en laine minérale : 1 800 € TTC avant aides.…",
+            "…our aides) Devis détaillé : surface, épaisseur, maté…",
+            "…emplacement chaudière gaz : aides 2026 et démarches…",
+            "…e bain pour senior ou PMR : guide complet 🔑 Porte cl…",
+            "…rte claquée ou clé perdue : 5 réflexes avant d'appel…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog-panne-electrique-disjoncteur-saute.html",
+      "fautifs": 22,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "22 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…Panne électrique : décoder un disjoncteur q…",
+            "…ctricité Panne électrique : décoder un disjoncteur q…",
+            "…Plus de courant chez vous ? Avant d'appeler un élect…",
+            "…pteur en haut du tableau) : panne globale du logemen…",
+            "…ent Un différentiel 30 mA : protège un groupe de cir…",
+            "…aire (10A, 16A, 20A, 32A) : protège un circuit uniqu…",
+            "…sible (logements anciens) : à remplacer obligatoirem…",
+            "…ostic en 5 étapes Étape 1 : débranchez TOUS les appa…",
+            "…circuit concerné. Étape 2 : remontez le disjoncteur…",
+            "…reil défectueux). Étape 3 : rebranchez les appareils…",
+            "…des entre chaque. Étape 4 : l'appareil qui fait saut…",
+            "…est le coupable. Étape 5 : ne le rebranchez plus ta…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog-pmr-adapter-salle-de-bain-senior.html",
+      "fautifs": 13,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "13 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…e bain pour senior ou PMR : guide complet | Blog HEL…",
+            "…e bain pour senior ou PMR : guide complet Que ce soi…",
+            "…sage libre). Devant le WC : 80 cm × 130 cm de zone l…",
+            "…e libre. Devant le lavabo : 80 cm × 110 cm. Dans la…",
+            "…× 110 cm. Dans la douche : surface min 90 × 120 cm…",
+            "…cières 2026 MaPrimeAdapt' : jusqu'à 22 000 € selon r…",
+            "…dit d'impôt accessibilité : 25% des dépenses, plafon…",
+            "…SAT / caisses de retraite : aide travaux jusqu'à 3 5…",
+            "…us-dimensionner la douche : 90 cm c'est le minimum s…",
+            "…Adaptation salle de bain : diagnostic gratuit Visit…",
+            "…emplacement chaudière gaz : aides 2026 et démarches…",
+            "…rte claquée ou clé perdue : 5 réflexes avant d'appel…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog-pompe-a-chaleur-air-eau-tout-savoir.html",
+      "fautifs": 22,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "22 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…Pompe à chaleur air/eau : tout ce qu'il faut savoi…",
+            "…e Pompe à chaleur air/eau : tout ce qu'il faut savoi…",
+            "…térieur (oui, même à -5°C !) via un fluide réfrigéra…",
+            "…4,5 sur les bons modèles : 1 kWh d'électricité = 3…",
+            "…P nominal à 7°C extérieur : viser >4,0 SCOP saisonni…",
+            "…ier (mesure réelle hiver) : viser >3,8 Niveau sonore…",
+            "…8 Niveau sonore unité ext : Plage de fonctionnement…",
+            "…: Plage de fonctionnement : viser -15°C à +35°C Prod…",
+            "…igatoire) Dimensionnement : le critère N°1 Une PAC m…",
+            "…étique. Sous-dimensionnée : appoint électrique perma…",
+            "…bilité). Sur-dimensionnée : marche/arrêt fréquents (…",
+            "…uissance nécessaire selon : surface, isolation, expo…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog-porte-claquee-cle-perdue-que-faire.html",
+      "fautifs": 21,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "21 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…rte claquée ou clé perdue : 5 réflexes avant d'appel…",
+            "…rte claquée ou clé perdue : 5 réflexes avant d'appel…",
+            "…coincé devant votre porte ? Avant de céder à la pani…",
+            "…️ Lecture 2 min Réflexe 1 : Le double de clé Un proc…",
+            "…n proche a-t-il un double ? Conjoint au travail, par…",
+            "…iance, gardien d'immeuble ? Un trajet en taxi (10 €)…",
+            "…'urgence à clé. Réflexe 2 : Une fenêtre ou porte sec…",
+            "…une fenêtre entrebâillée ? Une porte-fenêtre côté j…",
+            "…porte-fenêtre côté jardin ? Si oui (et seulement si…",
+            "…ture serrurier. Attention : ne tentez JAMAIS d'escal…",
+            "…les fréquentes. Réflexe 3 : Le propriétaire ou syndi…",
+            "…offre sécurisé. Réflexe 4 : Votre assurance habitati…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog-preparer-sa-maison-hiver-checklist.html",
+      "fautifs": 15,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "15 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…er sa maison pour l'hiver : la checklist du pro | Bl…",
+            "…er sa maison pour l'hiver : la checklist du pro Sept…",
+            "…nts de fenêtres et portes : remplacer si écrasés Cal…",
+            "…placer si déchirés Volets : vérifier fonctionnement…",
+            "…joints Si simple vitrage : envisager remplacement (…",
+            "…uelle (jumelles ou drone) : tuiles cassées, faîtage…",
+            "…Coût inspection couvreur : 80-150 €. Coût intervent…",
+            "…ion de réparation moyenne : 250-800 €. La ventilatio…",
+            "…garanties. Vérifications : nettoyer les bouches d'e…",
+            "…t anormal ou débit faible : changer la VMC (200-450…",
+            "…secondaire fermée l'hiver : vidanger TOUT le circuit…",
+            "…heck-up complet pré-hiver : 1 technicien, 2h sur pla…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog-remplacement-chaudiere-gaz-aides-2026.html",
+      "fautifs": 16,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "16 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…emplacement chaudière gaz : aides 2026 et démarches…",
+            "…emplacement chaudière gaz : aides 2026 et démarches…",
+            "…re chaudière gaz a 15 ans ? Il est probablement temp…",
+            "…udière gaz à condensation : 3 200 € - 4 800 € posés,…",
+            "…% Pompe à chaleur air/eau : 12 000 € - 18 000 € posé…",
+            "…dière biomasse (granulés) : 14 000 € - 22 000 € posé…",
+            "…pe à chaleur géothermique : 22 000 € - 32 000 € posé…",
+            "…record MaPrimeRenov 2026 : barèmes Pour les tranche…",
+            "…énergie (CEE) PAC air/eau : 4 500 € en moyenne PAC g…",
+            "…moyenne PAC géothermique : 5 000 € Chaudière granul…",
+            "…000 € Chaudière granulés : 3 500 € Chaudière gaz TH…",
+            "…500 € Chaudière gaz THPE : 1 200 € (uniquement remp…"
+          ]
+        }
+      ]
+    },
+    {
       "file": "blog.html",
       "fautifs": 6,
       "findings": [
@@ -179,6 +479,11 @@
       ]
     },
     {
+      "file": "chauffagiste-coudekerque-branche.html",
+      "fautifs": 3,
+      "findings": []
+    },
+    {
       "file": "chauffagiste-dunkerque.html",
       "fautifs": 9,
       "findings": [
@@ -201,6 +506,16 @@
       ]
     },
     {
+      "file": "chauffagiste-marck.html",
+      "fautifs": 3,
+      "findings": []
+    },
+    {
+      "file": "chauffagiste-outreau.html",
+      "fautifs": 3,
+      "findings": []
+    },
+    {
       "file": "chauffagiste-saint-omer.html",
       "fautifs": 8,
       "findings": [
@@ -220,6 +535,11 @@
           ]
         }
       ]
+    },
+    {
+      "file": "chauffagiste-wimereux.html",
+      "fautifs": 3,
+      "findings": []
     },
     {
       "file": "contact.html",
@@ -722,9 +1042,28 @@
       ]
     },
     {
-      "file": "espace-client.html",
-      "fautifs": 5,
+      "file": "espace-client-dashboard.html",
+      "fautifs": 1,
       "findings": []
+    },
+    {
+      "file": "espace-client.html",
+      "fautifs": 6,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "6 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…etien, historique complet : nous construisons l'espa…",
+            "…ra-ce vraiment disponible ? Soyons transparents : no…",
+            "…ble ? Soyons transparents : nous sommes en train de…",
+            "…cement de l'espace client : connexion, suivi interve…",
+            "…tocké. Première connexion ? Saisissez l'email utilis…",
+            "…ons HELP Confort. À noter : votre pré-inscription en…"
+          ]
+        }
+      ]
     },
     {
       "file": "faq.html",
@@ -747,6 +1086,30 @@
             "…ment se passe le paiement ? Acompte 40 % à la comman…",
             "…s travaux. Modes acceptés : chèque, virement, espèce…",
             "…de la TVA réduite à 10 % ? Oui pour les travaux dan…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "garanties.html",
+      "fautifs": 11,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "11 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…nt ça marche concrètement ? Les détails de chaque ga…",
+            "…pièces &amp; main d'œuvre ? 1 an minimum sur la main…",
+            "…fait après l'intervention ? 1. Vous nous appelez (03…",
+            "…r en cours d'intervention ? Non, c'est notre engagem…",
+            "…i un imprévu apparait (ex : vétusté d'un raccord, pr…",
+            "…technicien est en retard ? Nous prévenons toujours…",
+            "…ât pendant l'intervention ? Oui, nous sommes couvert…",
+            "…tervention déjà planifiée ? Oui, sans frais si vous…",
+            "…de paiement acceptez-vous ? Tous les moyens classiqu…",
+            "…ous les moyens classiques : CB sur place (sans-conta…",
+            "…savez, passons à l'action ? Devis gratuit · Engageme…"
           ]
         }
       ]
@@ -963,12 +1326,32 @@
     },
     {
       "file": "nos-prestations.html",
-      "fautifs": 0,
-      "findings": []
+      "fautifs": 58,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "58 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…identialité ${hasVariants ? ` Gamme 📷 Gamme Éco ${es…",
+            "…('variant-'+i)) + '.jpg')); const variantFallback =…",
+            "…|| (' + svc.slug + '.jpg'); return ` ${escapeHtml(v.…",
+            "…Number(svc.vat_rate)))} `; }).join('')} ` : ''} Pré…",
+            "…ate)))} `; }).join('')} ` : ''} Prénom * Nom * Email…",
+            "…ionnel) Comment ça marche : votre demande nous parvi…",
+            "…ment sécurisé. Ou appelez : 03 66 10 01 34 Confirmer…",
+            "…34 Confirmer ma demande `; modal.classList.add('is-…",
+            "…l.classList.add('is-open'); document.body.style.over…",
+            "….style.overflow = 'hidden'; // Close handlers sheet.…",
+            "…et === modal) closeModal(); }; // Variant change → r…",
+            "…=== modal) closeModal(); }; // Variant change → reca…"
+          ]
+        }
+      ]
     },
     {
       "file": "nos-villes.html",
-      "fautifs": 2,
+      "fautifs": 3,
       "findings": []
     },
     {
@@ -1087,6 +1470,16 @@
       ]
     },
     {
+      "file": "plombier-coudekerque-branche.html",
+      "fautifs": 3,
+      "findings": []
+    },
+    {
+      "file": "plombier-coulogne.html",
+      "fautifs": 3,
+      "findings": []
+    },
+    {
       "file": "plombier-dunkerque.html",
       "fautifs": 9,
       "findings": [
@@ -1109,6 +1502,36 @@
       ]
     },
     {
+      "file": "plombier-grande-synthe.html",
+      "fautifs": 3,
+      "findings": []
+    },
+    {
+      "file": "plombier-guines.html",
+      "fautifs": 3,
+      "findings": []
+    },
+    {
+      "file": "plombier-le-portel.html",
+      "fautifs": 3,
+      "findings": []
+    },
+    {
+      "file": "plombier-marck.html",
+      "fautifs": 3,
+      "findings": []
+    },
+    {
+      "file": "plombier-outreau.html",
+      "fautifs": 3,
+      "findings": []
+    },
+    {
+      "file": "plombier-saint-martin-boulogne.html",
+      "fautifs": 3,
+      "findings": []
+    },
+    {
       "file": "plombier-saint-omer.html",
       "fautifs": 7,
       "findings": [
@@ -1127,6 +1550,16 @@
           ]
         }
       ]
+    },
+    {
+      "file": "plombier-teteghem.html",
+      "fautifs": 3,
+      "findings": []
+    },
+    {
+      "file": "plombier-wimereux.html",
+      "fautifs": 3,
+      "findings": []
     },
     {
       "file": "pmr-dunkerque.html",
@@ -1306,6 +1739,11 @@
       ]
     },
     {
+      "file": "serrurier-coudekerque-branche.html",
+      "fautifs": 3,
+      "findings": []
+    },
+    {
       "file": "serrurier-dunkerque.html",
       "fautifs": 12,
       "findings": [
@@ -1331,6 +1769,16 @@
       ]
     },
     {
+      "file": "serrurier-marck.html",
+      "fautifs": 3,
+      "findings": []
+    },
+    {
+      "file": "serrurier-outreau.html",
+      "fautifs": 3,
+      "findings": []
+    },
+    {
       "file": "serrurier-saint-omer.html",
       "fautifs": 8,
       "findings": [
@@ -1350,6 +1798,11 @@
           ]
         }
       ]
+    },
+    {
+      "file": "serrurier-wimereux.html",
+      "fautifs": 3,
+      "findings": []
     },
     {
       "file": "sinistres.html",

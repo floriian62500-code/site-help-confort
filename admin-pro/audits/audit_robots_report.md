@@ -1,6 +1,6 @@
 # 🤖 Audit robots.txt + sitemap.xml — P10
 
-*Généré le 2026-05-29 06:58 — `admin-pro/audits/audit_robots.py`*
+*Généré le 2026-05-30 06:26 — `admin-pro/audits/audit_robots.py`*
 
 **Findings totaux** : 1 (0 critical, 0 high, 1 med, 0 low)
 **Vérifications OK** : 8
@@ -19,13 +19,17 @@
 
 ## 🚨 Findings
 
-- 🟡 **MED** : 6 page(s) racine absente(s) du sitemap
-  - `googlef09a1887914c5a23.html`
-  - `notre-equipe 2.html`
-  - `notre-equipe.html`
-  - `realisation.html`
-  - `reseau-help-confort.html`
-  - `reset.html`
+- 🟡 **MED** : 38 page(s) racine absente(s) du sitemap
+  - `blog-comment-detecter-fuite-eau-cachee.html`
+  - `blog-cout-renovation-salle-de-bain.html`
+  - `blog-debouchage-canalisation-furet-hydrocurage.html`
+  - `blog-entretien-chaudiere-annuel-obligatoire.html`
+  - `blog-fenetres-double-vitrage-pvc-alu-bois.html`
+  - `blog-isolation-combles-aides-2026.html`
+  - `blog-panne-electrique-disjoncteur-saute.html`
+  - `blog-pmr-adapter-salle-de-bain-senior.html`
+  - `blog-pompe-a-chaleur-air-eau-tout-savoir.html`
+  - `blog-porte-claquee-cle-perdue-que-faire.html`
 
 ## 📋 robots.txt (extrait)
 

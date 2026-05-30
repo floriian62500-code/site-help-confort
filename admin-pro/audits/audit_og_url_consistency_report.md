@@ -1,15 +1,15 @@
 # Audit og:url vs canonical — Rapport
 
-_Généré le 2026-05-29 06:58_
+_Généré le 2026-05-30 06:27_
 
 ## Synthèse
 
-- Pages scannées : **107**
+- Pages scannées : **139**
 - ✅ OK : **50**
 - ❌ Erreurs : **0** (cumul 0 findings)
-- ⚠️  Avertissements (pages) : **56**
-- ℹ️  Info : **1**
-- ⚠️  Total warnings : **57**
+- ⚠️  Avertissements (pages) : **87**
+- ℹ️  Info : **2**
+- ⚠️  Total warnings : **89**
 
 ## Findings
 
@@ -29,6 +29,54 @@ _Généré le 2026-05-29 06:58_
 - canonical = `https://www.depan59-62.fr/agence-saint-omer.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
+### `blog-comment-detecter-fuite-eau-cachee.html`
+- canonical = `https://www.depan59-62.fr/blog-comment-detecter-fuite-eau-cachee.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `blog-cout-renovation-salle-de-bain.html`
+- canonical = `https://www.depan59-62.fr/blog-cout-renovation-salle-de-bain.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `blog-debouchage-canalisation-furet-hydrocurage.html`
+- canonical = `https://www.depan59-62.fr/blog-debouchage-canalisation-furet-hydrocurage.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `blog-entretien-chaudiere-annuel-obligatoire.html`
+- canonical = `https://www.depan59-62.fr/blog-entretien-chaudiere-annuel-obligatoire.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `blog-fenetres-double-vitrage-pvc-alu-bois.html`
+- canonical = `https://www.depan59-62.fr/blog-fenetres-double-vitrage-pvc-alu-bois.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `blog-isolation-combles-aides-2026.html`
+- canonical = `https://www.depan59-62.fr/blog-isolation-combles-aides-2026.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `blog-panne-electrique-disjoncteur-saute.html`
+- canonical = `https://www.depan59-62.fr/blog-panne-electrique-disjoncteur-saute.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `blog-pmr-adapter-salle-de-bain-senior.html`
+- canonical = `https://www.depan59-62.fr/blog-pmr-adapter-salle-de-bain-senior.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `blog-pompe-a-chaleur-air-eau-tout-savoir.html`
+- canonical = `https://www.depan59-62.fr/blog-pompe-a-chaleur-air-eau-tout-savoir.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `blog-porte-claquee-cle-perdue-que-faire.html`
+- canonical = `https://www.depan59-62.fr/blog-porte-claquee-cle-perdue-que-faire.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `blog-preparer-sa-maison-hiver-checklist.html`
+- canonical = `https://www.depan59-62.fr/blog-preparer-sa-maison-hiver-checklist.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `blog-remplacement-chaudiere-gaz-aides-2026.html`
+- canonical = `https://www.depan59-62.fr/blog-remplacement-chaudiere-gaz-aides-2026.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
 ### `chauffagiste-boulogne-sur-mer.html`
 - canonical = `https://www.depan59-62.fr/chauffagiste-boulogne-sur-mer.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
@@ -37,12 +85,28 @@ _Généré le 2026-05-29 06:58_
 - canonical = `https://www.depan59-62.fr/chauffagiste-calais.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
+### `chauffagiste-coudekerque-branche.html`
+- canonical = `https://www.depan59-62.fr/chauffagiste-coudekerque-branche.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
 ### `chauffagiste-dunkerque.html`
 - canonical = `https://www.depan59-62.fr/chauffagiste-dunkerque.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
+### `chauffagiste-marck.html`
+- canonical = `https://www.depan59-62.fr/chauffagiste-marck.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `chauffagiste-outreau.html`
+- canonical = `https://www.depan59-62.fr/chauffagiste-outreau.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
 ### `chauffagiste-saint-omer.html`
 - canonical = `https://www.depan59-62.fr/chauffagiste-saint-omer.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `chauffagiste-wimereux.html`
+- canonical = `https://www.depan59-62.fr/chauffagiste-wimereux.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
 ### `contact.html`
@@ -109,6 +173,13 @@ _Généré le 2026-05-29 06:58_
 - canonical = `https://www.depan59-62.fr/entretien-chaudiere.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
+### `espace-client-dashboard.html`
+- ⚠️ OG-URL-MISSING : `og:url` et canonical absents
+
+### `garanties.html`
+- canonical = `https://www.depan59-62.fr/garanties.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
 ### `googlef09a1887914c5a23.html`
 - ⚠️ OG-URL-MISSING : `og:url` et canonical absents
 
@@ -160,12 +231,52 @@ _Généré le 2026-05-29 06:58_
 - canonical = `https://www.depan59-62.fr/plombier-calais.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
+### `plombier-coudekerque-branche.html`
+- canonical = `https://www.depan59-62.fr/plombier-coudekerque-branche.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `plombier-coulogne.html`
+- canonical = `https://www.depan59-62.fr/plombier-coulogne.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
 ### `plombier-dunkerque.html`
 - canonical = `https://www.depan59-62.fr/plombier-dunkerque.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
+### `plombier-grande-synthe.html`
+- canonical = `https://www.depan59-62.fr/plombier-grande-synthe.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `plombier-guines.html`
+- canonical = `https://www.depan59-62.fr/plombier-guines.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `plombier-le-portel.html`
+- canonical = `https://www.depan59-62.fr/plombier-le-portel.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `plombier-marck.html`
+- canonical = `https://www.depan59-62.fr/plombier-marck.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `plombier-outreau.html`
+- canonical = `https://www.depan59-62.fr/plombier-outreau.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `plombier-saint-martin-boulogne.html`
+- canonical = `https://www.depan59-62.fr/plombier-saint-martin-boulogne.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
 ### `plombier-saint-omer.html`
 - canonical = `https://www.depan59-62.fr/plombier-saint-omer.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `plombier-teteghem.html`
+- canonical = `https://www.depan59-62.fr/plombier-teteghem.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `plombier-wimereux.html`
+- canonical = `https://www.depan59-62.fr/plombier-wimereux.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
 ### `pmr-dunkerque.html`
@@ -196,12 +307,28 @@ _Généré le 2026-05-29 06:58_
 - canonical = `https://www.depan59-62.fr/serrurier-calais.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
+### `serrurier-coudekerque-branche.html`
+- canonical = `https://www.depan59-62.fr/serrurier-coudekerque-branche.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
 ### `serrurier-dunkerque.html`
 - canonical = `https://www.depan59-62.fr/serrurier-dunkerque.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
+### `serrurier-marck.html`
+- canonical = `https://www.depan59-62.fr/serrurier-marck.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `serrurier-outreau.html`
+- canonical = `https://www.depan59-62.fr/serrurier-outreau.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
 ### `serrurier-saint-omer.html`
 - canonical = `https://www.depan59-62.fr/serrurier-saint-omer.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `serrurier-wimereux.html`
+- canonical = `https://www.depan59-62.fr/serrurier-wimereux.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
 ### `tarifs.html`

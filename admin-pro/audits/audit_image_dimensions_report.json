@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-05-29T06:58:16",
+  "generated_at": "2026-05-30T06:27:06",
   "pil_available": true,
-  "scanned": 82,
-  "imgs_ok": 1290,
-  "patchable": 0,
+  "scanned": 114,
+  "imgs_ok": 1631,
+  "patchable": 1,
   "external": 0,
-  "unresolved": 50,
-  "dynamic": 5,
+  "unresolved": 51,
+  "dynamic": 7,
   "by_page": [
     {
       "file": "actualites.html",
@@ -105,6 +105,27 @@
       "patches": []
     },
     {
+      "file": "espace-client-dashboard.html",
+      "patchable": 1,
+      "external": 0,
+      "unresolved": 0,
+      "dynamic": 0,
+      "patches": [
+        {
+          "line": 92,
+          "src": "logo-officiel.jpg",
+          "missing": [
+            "width",
+            "height"
+          ],
+          "real_width": 1080,
+          "real_height": 1080,
+          "snippet": "<img src=\"logo-officiel.jpg\" alt=\"HELP Confort\">",
+          "patch": "<img width=\"1080\" height=\"1080\" src=\"logo-officiel.jpg\" alt=\"HELP Confort\">"
+        }
+      ]
+    },
+    {
       "file": "index.html",
       "patchable": 0,
       "external": 0,
@@ -132,8 +153,8 @@
       "file": "nos-prestations.html",
       "patchable": 0,
       "external": 0,
-      "unresolved": 1,
-      "dynamic": 1,
+      "unresolved": 2,
+      "dynamic": 3,
       "patches": []
     },
     {

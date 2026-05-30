@@ -1,13 +1,13 @@
 {
-  "generated": "2026-05-29 06:58",
+  "generated": "2026-05-30 06:27",
   "thresholds": {
     "min_len": 20,
     "max_len": 70
   },
-  "n_total": 106,
-  "n_ok": 68,
+  "n_total": 138,
+  "n_ok": 93,
   "n_warn": 0,
-  "n_errors": 37,
+  "n_errors": 44,
   "n_info": 1,
   "results": [
     {
@@ -320,6 +320,116 @@
       "warnings": []
     },
     {
+      "file": "blog-comment-detecter-fuite-eau-cachee.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Comment détecter une fuite d'eau cachée chez soi",
+      "length": 48,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "blog-cout-renovation-salle-de-bain.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Combien coûte vraiment une rénovation de salle de bain en 2026",
+      "length": 62,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "blog-debouchage-canalisation-furet-hydrocurage.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Canalisation bouchée : furet, hydrocurage ou produit ?",
+      "length": 54,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "blog-entretien-chaudiere-annuel-obligatoire.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Entretien chaudière : pourquoi c'est obligatoire et quand le faire",
+      "length": 66,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "blog-fenetres-double-vitrage-pvc-alu-bois.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Fenêtres double vitrage : PVC, alu ou bois ?",
+      "length": 44,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "blog-isolation-combles-aides-2026.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Isolation des combles : la meilleure rentabilité énergétique 2026",
+      "length": 65,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "blog-panne-electrique-disjoncteur-saute.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Panne électrique : décoder un disjoncteur qui saute",
+      "length": 51,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "blog-pmr-adapter-salle-de-bain-senior.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Adapter sa salle de bain pour senior ou PMR : guide complet",
+      "length": 59,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "blog-pompe-a-chaleur-air-eau-tout-savoir.html",
+      "status": "error",
+      "n_h1": 1,
+      "h1_text": "Pompe à chaleur air/eau : tout ce qu'il faut savoir avant de l'installer",
+      "length": 72,
+      "errors": [
+        "H1-TOO-LONG : 72 chars > 70"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "blog-porte-claquee-cle-perdue-que-faire.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Porte claquée ou clé perdue : 5 réflexes avant d'appeler",
+      "length": 56,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "blog-preparer-sa-maison-hiver-checklist.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Préparer sa maison pour l'hiver : la checklist du pro",
+      "length": 53,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "blog-remplacement-chaudiere-gaz-aides-2026.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Remplacement chaudière gaz : aides 2026 et démarches",
+      "length": 52,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "blog.html",
       "status": "ok",
       "n_h1": 1,
@@ -358,11 +468,40 @@
       "warnings": []
     },
     {
+      "file": "chauffagiste-coudekerque-branche.html",
+      "status": "error",
+      "n_h1": 1,
+      "h1_text": "Chauffagiste Coudekerque-Branche chaudière, entretien, pompe à chaleur, radiateurs",
+      "length": 82,
+      "errors": [
+        "H1-TOO-LONG : 82 chars > 70"
+      ],
+      "warnings": []
+    },
+    {
       "file": "chauffagiste-dunkerque.html",
       "status": "ok",
       "n_h1": 1,
       "h1_text": "Chauffage & dépannage chaudière à Dunkerque & Saint-Omer",
       "length": 56,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "chauffagiste-marck.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Chauffagiste Marck chaudière, entretien, pompe à chaleur, radiateurs",
+      "length": 68,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "chauffagiste-outreau.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Chauffagiste Outreau chaudière, entretien, pompe à chaleur, radiateurs",
+      "length": 70,
       "errors": [],
       "warnings": []
     },
@@ -373,6 +512,17 @@
       "h1_text": "Chauffage & dépannage chaudière à Saint-Omer et Dunkerque",
       "length": 57,
       "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "chauffagiste-wimereux.html",
+      "status": "error",
+      "n_h1": 1,
+      "h1_text": "Chauffagiste Wimereux chaudière, entretien, pompe à chaleur, radiateurs",
+      "length": 71,
+      "errors": [
+        "H1-TOO-LONG : 71 chars > 70"
+      ],
       "warnings": []
     },
     {
@@ -598,6 +748,17 @@
       "warnings": []
     },
     {
+      "file": "espace-client-dashboard.html",
+      "status": "error",
+      "n_h1": 1,
+      "h1_text": "Bonjour 👋",
+      "length": 9,
+      "errors": [
+        "H1-TOO-SHORT : 9 chars < 20"
+      ],
+      "warnings": []
+    },
+    {
       "file": "espace-client.html",
       "status": "ok",
       "n_h1": 1,
@@ -612,6 +773,15 @@
       "n_h1": 1,
       "h1_text": "Tout savoir avant de nous appeler",
       "length": 33,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "garanties.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Zéro mauvaise surprise. C'est notre signature.",
+      "length": 46,
       "errors": [],
       "warnings": []
     },
@@ -819,6 +989,26 @@
       "warnings": []
     },
     {
+      "file": "plombier-coudekerque-branche.html",
+      "status": "error",
+      "n_h1": 1,
+      "h1_text": "Plombier Coudekerque-Branche fuite, débouchage, chauffe-eau, sanitaires",
+      "length": 71,
+      "errors": [
+        "H1-TOO-LONG : 71 chars > 70"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "plombier-coulogne.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Plombier Coulogne fuite, débouchage, chauffe-eau, sanitaires",
+      "length": 60,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "plombier-dunkerque.html",
       "status": "ok",
       "n_h1": 1,
@@ -828,11 +1018,85 @@
       "warnings": []
     },
     {
+      "file": "plombier-grande-synthe.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Plombier Grande-Synthe fuite, débouchage, chauffe-eau, sanitaires",
+      "length": 65,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "plombier-guines.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Plombier Guînes fuite, débouchage, chauffe-eau, sanitaires",
+      "length": 58,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "plombier-le-portel.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Plombier Le Portel fuite, débouchage, chauffe-eau, sanitaires",
+      "length": 61,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "plombier-marck.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Plombier Marck fuite, débouchage, chauffe-eau, sanitaires",
+      "length": 57,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "plombier-outreau.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Plombier Outreau fuite, débouchage, chauffe-eau, sanitaires",
+      "length": 59,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "plombier-saint-martin-boulogne.html",
+      "status": "error",
+      "n_h1": 1,
+      "h1_text": "Plombier Saint-Martin-Boulogne fuite, débouchage, chauffe-eau, sanitaires",
+      "length": 73,
+      "errors": [
+        "H1-TOO-LONG : 73 chars > 70"
+      ],
+      "warnings": []
+    },
+    {
       "file": "plombier-saint-omer.html",
       "status": "ok",
       "n_h1": 1,
       "h1_text": "Plomberie & dépannage rapide à Saint-Omer et Dunkerque",
       "length": 54,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "plombier-teteghem.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Plombier Téteghem fuite, débouchage, chauffe-eau, sanitaires",
+      "length": 60,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "plombier-wimereux.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Plombier Wimereux fuite, débouchage, chauffe-eau, sanitaires",
+      "length": 60,
       "errors": [],
       "warnings": []
     },
@@ -920,6 +1184,17 @@
       "warnings": []
     },
     {
+      "file": "serrurier-coudekerque-branche.html",
+      "status": "error",
+      "n_h1": 1,
+      "h1_text": "Serrurier Coudekerque-Branche ouverture de porte, serrure, effraction, blindage",
+      "length": 79,
+      "errors": [
+        "H1-TOO-LONG : 79 chars > 70"
+      ],
+      "warnings": []
+    },
+    {
       "file": "serrurier-dunkerque.html",
       "status": "ok",
       "n_h1": 1,
@@ -929,11 +1204,38 @@
       "warnings": []
     },
     {
+      "file": "serrurier-marck.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Serrurier Marck ouverture de porte, serrure, effraction, blindage",
+      "length": 65,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "serrurier-outreau.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Serrurier Outreau ouverture de porte, serrure, effraction, blindage",
+      "length": 67,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "serrurier-saint-omer.html",
       "status": "ok",
       "n_h1": 1,
       "h1_text": "Serrurerie & ouverture de porte à Saint-Omer et Dunkerque",
       "length": 57,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "serrurier-wimereux.html",
+      "status": "ok",
+      "n_h1": 1,
+      "h1_text": "Serrurier Wimereux ouverture de porte, serrure, effraction, blindage",
+      "length": 68,
       "errors": [],
       "warnings": []
     },

@@ -1,15 +1,15 @@
 {
-  "generated": "2026-05-29 06:58",
+  "generated": "2026-05-30 06:27",
   "thresholds": {
     "min_error": 70,
     "max_error": 160,
     "min_warn": 120,
     "max_warn": 158
   },
-  "n_total": 106,
-  "n_ok": 81,
-  "n_warn": 10,
-  "n_errors": 14,
+  "n_total": 138,
+  "n_ok": 96,
+  "n_warn": 15,
+  "n_errors": 26,
   "n_info": 1,
   "results": [
     {
@@ -295,6 +295,114 @@
       "warnings": []
     },
     {
+      "file": "blog-comment-detecter-fuite-eau-cachee.html",
+      "status": "ok",
+      "length": 130,
+      "description": "Indices qui ne trompent pas : signes visibles, factures qui grimpent, méthodes pro pour localiser une fuite encastrée sans casser.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "blog-cout-renovation-salle-de-bain.html",
+      "status": "warn",
+      "length": 118,
+      "description": "Rénovation salle de bain : 5 000 € à 25 000 €. Décomposition détaillée des coûts par poste et conseils pour optimiser.",
+      "errors": [],
+      "warnings": [
+        "DESC-SHORT : 118 chars < 120 (idéal 120-158)"
+      ]
+    },
+    {
+      "file": "blog-debouchage-canalisation-furet-hydrocurage.html",
+      "status": "warn",
+      "length": 96,
+      "description": "WC, évier, douche bouchés : quelle méthode utiliser selon le type de bouchon et la canalisation.",
+      "errors": [],
+      "warnings": [
+        "DESC-SHORT : 96 chars < 120 (idéal 120-158)"
+      ]
+    },
+    {
+      "file": "blog-entretien-chaudiere-annuel-obligatoire.html",
+      "status": "ok",
+      "length": 140,
+      "description": "L'entretien annuel chaudière est obligatoire : décret 2009-649. Conséquences en cas de non-respect, montant amende, attestation à conserver.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "blog-fenetres-double-vitrage-pvc-alu-bois.html",
+      "status": "warn",
+      "length": 108,
+      "description": "Comparatif des 3 matériaux de fenêtres : isolation, durée de vie, prix, esthétique. Comment choisir en 2026.",
+      "errors": [],
+      "warnings": [
+        "DESC-SHORT : 108 chars < 120 (idéal 120-158)"
+      ]
+    },
+    {
+      "file": "blog-isolation-combles-aides-2026.html",
+      "status": "warn",
+      "length": 118,
+      "description": "L'isolation des combles perdus reste l'investissement énergétique le plus rentable. Aides 2026, technique, durée, ROI.",
+      "errors": [],
+      "warnings": [
+        "DESC-SHORT : 118 chars < 120 (idéal 120-158)"
+      ]
+    },
+    {
+      "file": "blog-panne-electrique-disjoncteur-saute.html",
+      "status": "ok",
+      "length": 125,
+      "description": "Différentiel, divisionnaire, fusible : comprendre quel disjoncteur saute et pourquoi. Diagnostic en 5 étapes avant d'appeler.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "blog-pmr-adapter-salle-de-bain-senior.html",
+      "status": "ok",
+      "length": 154,
+      "description": "Douche italienne, barres d'appui, WC surélevés : les aménagements essentiels et les aides pour adapter une salle de bain au handicap ou au vieillissement.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "blog-pompe-a-chaleur-air-eau-tout-savoir.html",
+      "status": "warn",
+      "length": 103,
+      "description": "COP, dimensionnement, raccordement, aides, contraintes acoustiques : le guide complet PAC air/eau 2026.",
+      "errors": [],
+      "warnings": [
+        "DESC-SHORT : 103 chars < 120 (idéal 120-158)"
+      ]
+    },
+    {
+      "file": "blog-porte-claquee-cle-perdue-que-faire.html",
+      "status": "ok",
+      "length": 126,
+      "description": "Avant d'appeler un serrurier et payer 200€, vérifiez ces 5 points : voisin double, conjoint, fenêtre, propriétaire, assurance.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "blog-preparer-sa-maison-hiver-checklist.html",
+      "status": "warn",
+      "length": 109,
+      "description": "Avant l'hiver, vérifiez : chaudière, isolation, fenêtres, gouttières, joints, VMC. Notre checklist 12 points.",
+      "errors": [],
+      "warnings": [
+        "DESC-SHORT : 109 chars < 120 (idéal 120-158)"
+      ]
+    },
+    {
+      "file": "blog-remplacement-chaudiere-gaz-aides-2026.html",
+      "status": "ok",
+      "length": 125,
+      "description": "MaPrimeRenov + CEE + chèque énergie : tout sur les aides 2026 pour remplacer votre chaudière gaz par une PAC ou condensation.",
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "blog.html",
       "status": "ok",
       "length": 154,
@@ -327,10 +435,34 @@
       "warnings": []
     },
     {
+      "file": "chauffagiste-coudekerque-branche.html",
+      "status": "ok",
+      "length": 144,
+      "description": "Chauffagiste à Coudekerque-Branche (59210) : entretien chaudière, dépannage, remplacement gaz/PAC, pose radiateurs. Devis gratuit, certifié RGE.",
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "chauffagiste-dunkerque.html",
       "status": "ok",
       "length": 135,
       "description": "Chauffagiste Dunkerque & littoral : dépannage rapide, devis gratuit. Coudekerque, Grande-Synthe, Bergues, Gravelines. ☎ 03 66 10 01 34.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "chauffagiste-marck.html",
+      "status": "ok",
+      "length": 130,
+      "description": "Chauffagiste à Marck (62730) : entretien chaudière, dépannage, remplacement gaz/PAC, pose radiateurs. Devis gratuit, certifié RGE.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "chauffagiste-outreau.html",
+      "status": "ok",
+      "length": 132,
+      "description": "Chauffagiste à Outreau (62230) : entretien chaudière, dépannage, remplacement gaz/PAC, pose radiateurs. Devis gratuit, certifié RGE.",
       "errors": [],
       "warnings": []
     },
@@ -342,6 +474,14 @@
       "errors": [
         "DESC-TOO-LONG : 162 chars > 160"
       ],
+      "warnings": []
+    },
+    {
+      "file": "chauffagiste-wimereux.html",
+      "status": "ok",
+      "length": 133,
+      "description": "Chauffagiste à Wimereux (62930) : entretien chaudière, dépannage, remplacement gaz/PAC, pose radiateurs. Devis gratuit, certifié RGE.",
+      "errors": [],
       "warnings": []
     },
     {
@@ -523,6 +663,16 @@
       "warnings": []
     },
     {
+      "file": "espace-client-dashboard.html",
+      "status": "error",
+      "length": 67,
+      "description": "Dashboard client HELP Confort : interventions, paiements, factures.",
+      "errors": [
+        "DESC-TOO-SHORT : 67 chars < 70"
+      ],
+      "warnings": []
+    },
+    {
       "file": "espace-client.html",
       "status": "ok",
       "length": 158,
@@ -535,6 +685,14 @@
       "status": "ok",
       "length": 121,
       "description": "Toutes les réponses aux questions courantes : tarifs, intervention, contrats, aides MaPrimeRénov'. 18 Q&amp;R par métier.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "garanties.html",
+      "status": "ok",
+      "length": 145,
+      "description": "Découvrez les engagements HELP Confort : devis ferme, prix annoncé tenu, garantie 1 an pièces et main d'œuvre, satisfait ou intervention reprise.",
       "errors": [],
       "warnings": []
     },
@@ -638,13 +796,11 @@
     },
     {
       "file": "nos-villes.html",
-      "status": "warn",
-      "length": 159,
-      "description": "HELP Confort intervient sur Saint-Omer, Dunkerque, Calais, Boulogne-sur-Mer, Coquelles, Sangatte, Bergues, Gravelines & littoral du Nord. Cherchez votre ville.",
+      "status": "ok",
+      "length": 151,
+      "description": "HELP Confort intervient sur Saint-Omer, Dunkerque, Calais, Boulogne-sur-Mer et plus de 80 communes du littoral Nord/Pas-de-Calais. Trouvez votre ville.",
       "errors": [],
-      "warnings": [
-        "DESC-LONG : 159 chars > 158 (idéal 120-158)"
-      ]
+      "warnings": []
     },
     {
       "file": "notre-equipe 2.html",
@@ -715,6 +871,26 @@
       "warnings": []
     },
     {
+      "file": "plombier-coudekerque-branche.html",
+      "status": "error",
+      "length": 180,
+      "description": "Plombier à Coudekerque-Branche (59210) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.",
+      "errors": [
+        "DESC-TOO-LONG : 180 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "plombier-coulogne.html",
+      "status": "error",
+      "length": 169,
+      "description": "Plombier à Coulogne (62137) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.",
+      "errors": [
+        "DESC-TOO-LONG : 169 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
       "file": "plombier-dunkerque.html",
       "status": "ok",
       "length": 131,
@@ -723,11 +899,91 @@
       "warnings": []
     },
     {
+      "file": "plombier-grande-synthe.html",
+      "status": "error",
+      "length": 174,
+      "description": "Plombier à Grande-Synthe (59760) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.",
+      "errors": [
+        "DESC-TOO-LONG : 174 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "plombier-guines.html",
+      "status": "error",
+      "length": 167,
+      "description": "Plombier à Guînes (62340) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.",
+      "errors": [
+        "DESC-TOO-LONG : 167 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "plombier-le-portel.html",
+      "status": "error",
+      "length": 170,
+      "description": "Plombier à Le Portel (62480) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.",
+      "errors": [
+        "DESC-TOO-LONG : 170 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "plombier-marck.html",
+      "status": "error",
+      "length": 166,
+      "description": "Plombier à Marck (62730) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.",
+      "errors": [
+        "DESC-TOO-LONG : 166 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "plombier-outreau.html",
+      "status": "error",
+      "length": 168,
+      "description": "Plombier à Outreau (62230) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.",
+      "errors": [
+        "DESC-TOO-LONG : 168 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "plombier-saint-martin-boulogne.html",
+      "status": "error",
+      "length": 182,
+      "description": "Plombier à Saint-Martin-Boulogne (62280) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.",
+      "errors": [
+        "DESC-TOO-LONG : 182 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
       "file": "plombier-saint-omer.html",
       "status": "ok",
       "length": 155,
       "description": "Plombier à Saint-Omer & Dunkerque : fuite d'eau, dégorgement, recherche de fuite, ballon d'eau chaude. Intervention rapide, devis gratuit. ☎ 03 66 10 01 34",
       "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "plombier-teteghem.html",
+      "status": "error",
+      "length": 169,
+      "description": "Plombier à Téteghem (59229) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.",
+      "errors": [
+        "DESC-TOO-LONG : 169 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "plombier-wimereux.html",
+      "status": "error",
+      "length": 169,
+      "description": "Plombier à Wimereux (62930) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.",
+      "errors": [
+        "DESC-TOO-LONG : 169 chars > 160"
+      ],
       "warnings": []
     },
     {
@@ -807,6 +1063,16 @@
       "warnings": []
     },
     {
+      "file": "serrurier-coudekerque-branche.html",
+      "status": "error",
+      "length": 169,
+      "description": "Serrurier à Coudekerque-Branche (59210) : ouverture porte claquée, remplacement serrure 7j/7, réparation après effraction. Intervention rapide, devis avant intervention.",
+      "errors": [
+        "DESC-TOO-LONG : 169 chars > 160"
+      ],
+      "warnings": []
+    },
+    {
       "file": "serrurier-dunkerque.html",
       "status": "ok",
       "length": 132,
@@ -815,10 +1081,34 @@
       "warnings": []
     },
     {
+      "file": "serrurier-marck.html",
+      "status": "ok",
+      "length": 155,
+      "description": "Serrurier à Marck (62730) : ouverture porte claquée, remplacement serrure 7j/7, réparation après effraction. Intervention rapide, devis avant intervention.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "serrurier-outreau.html",
+      "status": "ok",
+      "length": 157,
+      "description": "Serrurier à Outreau (62230) : ouverture porte claquée, remplacement serrure 7j/7, réparation après effraction. Intervention rapide, devis avant intervention.",
+      "errors": [],
+      "warnings": []
+    },
+    {
       "file": "serrurier-saint-omer.html",
       "status": "ok",
       "length": 147,
       "description": "Serrurier Saint-Omer & Dunkerque : ouverture de porte sans dégradation, blindage A2P, cylindre haute sécurité. Forfait transparent — devis gratuit.",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "serrurier-wimereux.html",
+      "status": "ok",
+      "length": 158,
+      "description": "Serrurier à Wimereux (62930) : ouverture porte claquée, remplacement serrure 7j/7, réparation après effraction. Intervention rapide, devis avant intervention.",
       "errors": [],
       "warnings": []
     },

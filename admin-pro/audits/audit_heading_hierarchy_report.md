@@ -1,21 +1,21 @@
 # Audit Heading hierarchy — Rapport
 
-Généré le : `2026-05-29T06:58:10`
+Généré le : `2026-05-30T06:26:59`
 
 Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il y a exactement un <h1>, et que la séquence commence bien par un <h1>.
 
 ## Synthèse
 
-- Pages auditées : **82**
-- Pages clean : **79**
+- Pages auditées : **114**
+- Pages clean : **110**
 - Pages avec erreur(s) : **1**
-- Pages avec warning(s) : **3**
-- Findings totaux : **4**
+- Pages avec warning(s) : **4**
+- Findings totaux : **5**
 
 ## Top codes
 
+- **2×** `SKIP_LEVEL`
 - **1×** `NO_HEADINGS`
-- **1×** `SKIP_LEVEL`
 - **1×** `NO_H1`
 - **1×** `WRONG_START`
 
@@ -28,6 +28,13 @@ Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il 
 - Séquence : `h3 → h3 → h3`
 - ❌ **NO_H1** — La page ne contient pas de <h1>.
 - ⚠️ **WRONG_START** — Première heading = h3 (texte : 'Métiers'). Attendu : h1.
+
+### `espace-client-dashboard.html`
+
+- h1 sur la page : **1**
+- Total headings : **2**
+- Séquence : `h1 → h3`
+- ⚠️ **SKIP_LEVEL** — Saut h1 → h3 (de 'Bonjour 👋' à 'Une question ?').
 
 ### `googlef09a1887914c5a23.html`
 
@@ -51,12 +58,28 @@ Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il 
 - `agence-saint-omer.html`
 - `aides.html`
 - `avant-apres.html`
+- `blog-comment-detecter-fuite-eau-cachee.html`
+- `blog-cout-renovation-salle-de-bain.html`
+- `blog-debouchage-canalisation-furet-hydrocurage.html`
+- `blog-entretien-chaudiere-annuel-obligatoire.html`
+- `blog-fenetres-double-vitrage-pvc-alu-bois.html`
+- `blog-isolation-combles-aides-2026.html`
+- `blog-panne-electrique-disjoncteur-saute.html`
+- `blog-pmr-adapter-salle-de-bain-senior.html`
+- `blog-pompe-a-chaleur-air-eau-tout-savoir.html`
+- `blog-porte-claquee-cle-perdue-que-faire.html`
+- `blog-preparer-sa-maison-hiver-checklist.html`
+- `blog-remplacement-chaudiere-gaz-aides-2026.html`
 - `blog.html`
 - `carrieres.html`
 - `chauffagiste-boulogne-sur-mer.html`
 - `chauffagiste-calais.html`
+- `chauffagiste-coudekerque-branche.html`
 - `chauffagiste-dunkerque.html`
+- `chauffagiste-marck.html`
+- `chauffagiste-outreau.html`
 - `chauffagiste-saint-omer.html`
+- `chauffagiste-wimereux.html`
 - `contact.html`
 - `contrats-entretien.html`
 - `debouchage-canalisation.html`
@@ -81,6 +104,7 @@ Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il 
 - `entretien-chaudiere.html`
 - `espace-client.html`
 - `faq.html`
+- `garanties.html`
 - `guide-adaptation-pmr.html`
 - `guide-entretien-chaudiere.html`
 - `guide-fuite-eau.html`
@@ -101,8 +125,18 @@ Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il 
 - `plan-du-site.html`
 - `plombier-boulogne-sur-mer.html`
 - `plombier-calais.html`
+- `plombier-coudekerque-branche.html`
+- `plombier-coulogne.html`
 - `plombier-dunkerque.html`
+- `plombier-grande-synthe.html`
+- `plombier-guines.html`
+- `plombier-le-portel.html`
+- `plombier-marck.html`
+- `plombier-outreau.html`
+- `plombier-saint-martin-boulogne.html`
 - `plombier-saint-omer.html`
+- `plombier-teteghem.html`
+- `plombier-wimereux.html`
 - `pmr-dunkerque.html`
 - `pro.html`
 - `processus.html`
@@ -111,8 +145,12 @@ Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il 
 - `reseau-help-confort.html`
 - `serrurier-boulogne-sur-mer.html`
 - `serrurier-calais.html`
+- `serrurier-coudekerque-branche.html`
 - `serrurier-dunkerque.html`
+- `serrurier-marck.html`
+- `serrurier-outreau.html`
 - `serrurier-saint-omer.html`
+- `serrurier-wimereux.html`
 - `sinistres.html`
 - `tarifs.html`
 - `temoignages.html`

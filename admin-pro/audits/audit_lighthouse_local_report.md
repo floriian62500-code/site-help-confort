@@ -1,29 +1,55 @@
-# 🔦 Audit Lighthouse local — 2026-05-29 06:56
+# 🔦 Audit Lighthouse local — 2026-05-30 06:25
 
-**83 pages auditées** · **7 erreurs** · **32 warnings** · **Score moyen 97/100**
+**115 pages auditées** · **7 erreurs** · **64 warnings** · **Score moyen 97/100**
 
 ## 📊 Résumé par page
 
 | Page | Score | Erreurs | Warnings |
 |------|------:|--------:|---------:|
 | `googlef09a1887914c5a23.html` | **0/100** | 7 | 3 |
+| `espace-client-dashboard.html` | **88/100** | 0 | 3 |
 | `notre-equipe 2.html` | **88/100** | 0 | 3 |
 | `notre-equipe.html` | **88/100** | 0 | 3 |
+| `plombier-coudekerque-branche.html` | **92/100** | 0 | 2 |
+| `plombier-grande-synthe.html` | **92/100** | 0 | 2 |
+| `plombier-saint-martin-boulogne.html` | **92/100** | 0 | 2 |
 | `realisation.html` | **92/100** | 0 | 2 |
 | `remplacement-chauffe-eau.html` | **92/100** | 0 | 2 |
 | `reset.html` | **92/100** | 0 | 2 |
+| `serrurier-coudekerque-branche.html` | **92/100** | 0 | 2 |
 | `agence-dunkerque.html` | **96/100** | 0 | 1 |
 | `agence-saint-omer.html` | **96/100** | 0 | 1 |
+| `blog-comment-detecter-fuite-eau-cachee.html` | **96/100** | 0 | 1 |
+| `blog-cout-renovation-salle-de-bain.html` | **96/100** | 0 | 1 |
+| `blog-debouchage-canalisation-furet-hydrocurage.html` | **96/100** | 0 | 1 |
+| `blog-entretien-chaudiere-annuel-obligatoire.html` | **96/100** | 0 | 1 |
+| `blog-isolation-combles-aides-2026.html` | **96/100** | 0 | 1 |
+| `blog-panne-electrique-disjoncteur-saute.html` | **96/100** | 0 | 1 |
+| `blog-pmr-adapter-salle-de-bain-senior.html` | **96/100** | 0 | 1 |
+| `blog-pompe-a-chaleur-air-eau-tout-savoir.html` | **96/100** | 0 | 1 |
+| `blog-porte-claquee-cle-perdue-que-faire.html` | **96/100** | 0 | 1 |
+| `blog-preparer-sa-maison-hiver-checklist.html` | **96/100** | 0 | 1 |
+| `blog-remplacement-chaudiere-gaz-aides-2026.html` | **96/100** | 0 | 1 |
+| `chauffagiste-coudekerque-branche.html` | **96/100** | 0 | 1 |
 | `chauffagiste-saint-omer.html` | **96/100** | 0 | 1 |
+| `chauffagiste-wimereux.html` | **96/100** | 0 | 1 |
 | `debouchage-canalisation.html` | **96/100** | 0 | 1 |
 | `diagnostic-electrique.html` | **96/100** | 0 | 1 |
 | `entretien-chaudiere.html` | **96/100** | 0 | 1 |
+| `garanties.html` | **96/100** | 0 | 1 |
 | `nos-metiers.html` | **96/100** | 0 | 1 |
 | `nos-villes.html` | **96/100** | 0 | 1 |
 | `ouverture-porte-claquee.html` | **96/100** | 0 | 1 |
 | `panne-chaudiere.html` | **96/100** | 0 | 1 |
 | `partenaires.html` | **96/100** | 0 | 1 |
 | `plan-du-site.html` | **96/100** | 0 | 1 |
+| `plombier-coulogne.html` | **96/100** | 0 | 1 |
+| `plombier-guines.html` | **96/100** | 0 | 1 |
+| `plombier-le-portel.html` | **96/100** | 0 | 1 |
+| `plombier-marck.html` | **96/100** | 0 | 1 |
+| `plombier-outreau.html` | **96/100** | 0 | 1 |
+| `plombier-teteghem.html` | **96/100** | 0 | 1 |
+| `plombier-wimereux.html` | **96/100** | 0 | 1 |
 | `pro.html` | **96/100** | 0 | 1 |
 | `reseau-help-confort.html` | **96/100** | 0 | 1 |
 | `serrurier-saint-omer.html` | **96/100** | 0 | 1 |
@@ -33,11 +59,14 @@
 | `actualites.html` | **100/100** | 0 | 0 |
 | `aides.html` | **100/100** | 0 | 0 |
 | `avant-apres.html` | **100/100** | 0 | 0 |
+| `blog-fenetres-double-vitrage-pvc-alu-bois.html` | **100/100** | 0 | 0 |
 | `blog.html` | **100/100** | 0 | 0 |
 | `carrieres.html` | **100/100** | 0 | 0 |
 | `chauffagiste-boulogne-sur-mer.html` | **100/100** | 0 | 0 |
 | `chauffagiste-calais.html` | **100/100** | 0 | 0 |
 | `chauffagiste-dunkerque.html` | **100/100** | 0 | 0 |
+| `chauffagiste-marck.html` | **100/100** | 0 | 0 |
+| `chauffagiste-outreau.html` | **100/100** | 0 | 0 |
 | `contact.html` | **100/100** | 0 | 0 |
 | `contrats-entretien.html` | **100/100** | 0 | 0 |
 | `depannage-arques.html` | **100/100** | 0 | 0 |
@@ -80,6 +109,9 @@
 | `serrurier-boulogne-sur-mer.html` | **100/100** | 0 | 0 |
 | `serrurier-calais.html` | **100/100** | 0 | 0 |
 | `serrurier-dunkerque.html` | **100/100** | 0 | 0 |
+| `serrurier-marck.html` | **100/100** | 0 | 0 |
+| `serrurier-outreau.html` | **100/100** | 0 | 0 |
+| `serrurier-wimereux.html` | **100/100** | 0 | 0 |
 | `sinistres.html` | **100/100** | 0 | 0 |
 | `temoignages.html` | **100/100** | 0 | 0 |
 | `travaux-dunkerque.html` | **100/100** | 0 | 0 |
@@ -108,6 +140,13 @@
 - ⚠️ og:image manquant
 - ⚠️ Aucun rel=preconnect
 
+### espace-client-dashboard.html — 88/100
+
+**Warnings :**
+- ⚠️ <link rel="canonical"> manquant
+- ⚠️ og:image manquant
+- ⚠️ Aucun rel=preconnect
+
 ### notre-equipe 2.html — 88/100
 
 **Warnings :**
@@ -121,6 +160,24 @@
 - ⚠️ SEO title long (68 chars)
 - ⚠️ meta description longue (178 chars)
 - ⚠️ Aucun rel=preconnect
+
+### plombier-coudekerque-branche.html — 92/100
+
+**Warnings :**
+- ⚠️ SEO title long (73 chars)
+- ⚠️ meta description longue (180 chars)
+
+### plombier-grande-synthe.html — 92/100
+
+**Warnings :**
+- ⚠️ SEO title long (67 chars)
+- ⚠️ meta description longue (174 chars)
+
+### plombier-saint-martin-boulogne.html — 92/100
+
+**Warnings :**
+- ⚠️ SEO title long (75 chars)
+- ⚠️ meta description longue (182 chars)
 
 ### realisation.html — 92/100
 
@@ -140,6 +197,12 @@
 - ⚠️ og:image manquant
 - ⚠️ Aucun rel=preconnect
 
+### serrurier-coudekerque-branche.html — 92/100
+
+**Warnings :**
+- ⚠️ SEO title long (74 chars)
+- ⚠️ meta description longue (169 chars)
+
 ### agence-dunkerque.html — 96/100
 
 **Warnings :**
@@ -150,10 +213,75 @@
 **Warnings :**
 - ⚠️ Aucun rel=preconnect
 
+### blog-comment-detecter-fuite-eau-cachee.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (68 chars)
+
+### blog-cout-renovation-salle-de-bain.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (82 chars)
+
+### blog-debouchage-canalisation-furet-hydrocurage.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (74 chars)
+
+### blog-entretien-chaudiere-annuel-obligatoire.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (86 chars)
+
+### blog-isolation-combles-aides-2026.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (85 chars)
+
+### blog-panne-electrique-disjoncteur-saute.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (71 chars)
+
+### blog-pmr-adapter-salle-de-bain-senior.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (79 chars)
+
+### blog-pompe-a-chaleur-air-eau-tout-savoir.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (92 chars)
+
+### blog-porte-claquee-cle-perdue-que-faire.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (76 chars)
+
+### blog-preparer-sa-maison-hiver-checklist.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (73 chars)
+
+### blog-remplacement-chaudiere-gaz-aides-2026.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (72 chars)
+
+### chauffagiste-coudekerque-branche.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (77 chars)
+
 ### chauffagiste-saint-omer.html — 96/100
 
 **Warnings :**
 - ⚠️ meta description longue (162 chars)
+
+### chauffagiste-wimereux.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (66 chars)
 
 ### debouchage-canalisation.html — 96/100
 
@@ -166,6 +294,11 @@
 - ⚠️ Aucun rel=preconnect
 
 ### entretien-chaudiere.html — 96/100
+
+**Warnings :**
+- ⚠️ Aucun rel=preconnect
+
+### garanties.html — 96/100
 
 **Warnings :**
 - ⚠️ Aucun rel=preconnect
@@ -200,6 +333,41 @@
 **Warnings :**
 - ⚠️ Aucun rel=preconnect
 
+### plombier-coulogne.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (169 chars)
+
+### plombier-guines.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (167 chars)
+
+### plombier-le-portel.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (170 chars)
+
+### plombier-marck.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (166 chars)
+
+### plombier-outreau.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (168 chars)
+
+### plombier-teteghem.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (169 chars)
+
+### plombier-wimereux.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (169 chars)
+
 ### pro.html — 96/100
 
 **Warnings :**
@@ -231,11 +399,14 @@
 - actualites.html
 - aides.html
 - avant-apres.html
+- blog-fenetres-double-vitrage-pvc-alu-bois.html
 - blog.html
 - carrieres.html
 - chauffagiste-boulogne-sur-mer.html
 - chauffagiste-calais.html
 - chauffagiste-dunkerque.html
+- chauffagiste-marck.html
+- chauffagiste-outreau.html
 - contact.html
 - contrats-entretien.html
 - depannage-arques.html
@@ -278,6 +449,9 @@
 - serrurier-boulogne-sur-mer.html
 - serrurier-calais.html
 - serrurier-dunkerque.html
+- serrurier-marck.html
+- serrurier-outreau.html
+- serrurier-wimereux.html
 - sinistres.html
 - temoignages.html
 - travaux-dunkerque.html

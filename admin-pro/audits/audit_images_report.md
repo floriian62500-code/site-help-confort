@@ -1,4 +1,4 @@
-# Audit images perf — 2026-05-29 06:56
+# Audit images perf — 2026-05-30 06:25
 
 > Sonde performance HELP Confort — détecte les images > 200 KB et
 > alerte si elles sont au-dessus du fold ou utilisées sur ≥ 5 pages.
@@ -6,17 +6,19 @@
 
 ## Synthèse
 
-- Images scannées : **176** (11514.0 KB total)
-- Images > 200 KB : **8**
+- Images scannées : **178** (12295.4 KB total)
+- Images > 200 KB : **10**
 - Erreurs (>500 KB + ATF/5+ pages) : **0**
-- Warnings : **8**
+- Warnings : **10**
 
 ## Détail (par poids décroissant)
 
 | Sévérité | Fichier | Poids | Pages | ATF | Raisons |
 |----------|---------|-------|-------|-----|---------|
-| ⚠️ | `images/mascotte-opt.tmp.png` | 688.4 KB | 0 | — | poids élevé (688.4 KB), non référencée (mort ?) |
-| ⚠️ | `images/mascotte.tmp.png` | 688.4 KB | 0 | — | poids élevé (688.4 KB), non référencée (mort ?) |
+| ⚠️ | `images/_to_delete_mascotte-opt.tmp.png` | 688.4 KB | 0 | — | poids élevé (688.4 KB), non référencée (mort ?) |
+| ⚠️ | `images/_to_delete_mascotte.tmp.png` | 688.4 KB | 0 | — | poids élevé (688.4 KB), non référencée (mort ?) |
+| ⚠️ | `images/_to_delete_mascotte-with-bg.png` | 390.7 KB | 0 | — | non référencée (mort ?) |
+| ⚠️ | `images/_to_delete_mascotte1.png` | 390.7 KB | 0 | — | non référencée (mort ?) |
 | ⚠️ | `images/prestations/ramonage.jpg` | 344.0 KB | 0 | — | non référencée (mort ?) |
 | ⚠️ | `images/prestations/garde-corps-rampes.jpg` | 309.9 KB | 2 (`menuisier-dunkerque.html`, `menuisier-saint-omer.html`) | — | — |
 | ⚠️ | `images/prestations/fenetres-bois-alu-pvc.jpg` | 290.6 KB | 2 (`menuisier-dunkerque.html`, `menuisier-saint-omer.html`) | — | — |

@@ -1,18 +1,19 @@
-# Audit JSON-LD — 2026-05-29 06:56
+# Audit JSON-LD — 2026-05-30 06:25
 
 > Audit local des blocs `<script type="application/ld+json">` de chaque page HTML.
 > Lancement : `python3 admin-pro/audits/audit_jsonld.py`
 
 ## Synthèse
 
-- Pages auditées : **84**
-- Pages avec JSON-LD : **81**
-- Pages sans JSON-LD : **3**
+- Pages auditées : **116**
+- Pages avec JSON-LD : **112**
+- Pages sans JSON-LD : **4**
 - Erreurs de syntaxe JSON : **0**
-- Avertissements (champs manquants/dupliqués) : **688**
+- Avertissements (champs manquants/dupliqués) : **789**
 
 ## ⚠️ Pages sans aucun JSON-LD
 
+- `espace-client-dashboard.html`
 - `googlef09a1887914c5a23.html`
 - `realisation.html`
 - `reset.html`
@@ -54,6 +55,78 @@
 ### `avant-apres.html` — 1 bloc(s) — types : BreadcrumbList, ListItem
 
 - ✅ Bloc #0 (`BreadcrumbList, ListItem`) — OK
+
+### `blog-comment-detecter-fuite-eau-cachee.html` — 2 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem
+
+- ⚠️ Bloc #0 (`Article, Organization, ImageObject, WebPage`) :
+    - Article sans image (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+
+### `blog-cout-renovation-salle-de-bain.html` — 2 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem
+
+- ⚠️ Bloc #0 (`Article, Organization, ImageObject, WebPage`) :
+    - Article sans image (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+
+### `blog-debouchage-canalisation-furet-hydrocurage.html` — 2 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem
+
+- ⚠️ Bloc #0 (`Article, Organization, ImageObject, WebPage`) :
+    - Article sans image (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+
+### `blog-entretien-chaudiere-annuel-obligatoire.html` — 2 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem
+
+- ⚠️ Bloc #0 (`Article, Organization, ImageObject, WebPage`) :
+    - Article sans image (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+
+### `blog-fenetres-double-vitrage-pvc-alu-bois.html` — 2 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem
+
+- ⚠️ Bloc #0 (`Article, Organization, ImageObject, WebPage`) :
+    - Article sans image (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+
+### `blog-isolation-combles-aides-2026.html` — 2 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem
+
+- ⚠️ Bloc #0 (`Article, Organization, ImageObject, WebPage`) :
+    - Article sans image (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+
+### `blog-panne-electrique-disjoncteur-saute.html` — 2 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem
+
+- ⚠️ Bloc #0 (`Article, Organization, ImageObject, WebPage`) :
+    - Article sans image (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+
+### `blog-pmr-adapter-salle-de-bain-senior.html` — 2 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem
+
+- ⚠️ Bloc #0 (`Article, Organization, ImageObject, WebPage`) :
+    - Article sans image (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+
+### `blog-pompe-a-chaleur-air-eau-tout-savoir.html` — 2 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem
+
+- ⚠️ Bloc #0 (`Article, Organization, ImageObject, WebPage`) :
+    - Article sans image (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+
+### `blog-porte-claquee-cle-perdue-que-faire.html` — 2 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem
+
+- ⚠️ Bloc #0 (`Article, Organization, ImageObject, WebPage`) :
+    - Article sans image (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+
+### `blog-preparer-sa-maison-hiver-checklist.html` — 2 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem
+
+- ⚠️ Bloc #0 (`Article, Organization, ImageObject, WebPage`) :
+    - Article sans image (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+
+### `blog-remplacement-chaudiere-gaz-aides-2026.html` — 2 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem
+
+- ⚠️ Bloc #0 (`Article, Organization, ImageObject, WebPage`) :
+    - Article sans image (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
 
 ### `blog.html` — 2 bloc(s) — types : Blog, Organization, ImageObject, BlogPosting, BreadcrumbList, ListItem
 
@@ -125,6 +198,17 @@
     - LocalBusiness sans address (recommandé) @ racine
     - LocalBusiness sans url (recommandé) @ racine
 
+### `chauffagiste-coudekerque-branche.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
+
 ### `chauffagiste-dunkerque.html` — 4 bloc(s) — types : Service, LocalBusiness, PostalAddress, HVACBusiness, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem
 
 - ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
@@ -155,6 +239,28 @@
     - LocalBusiness sans address (recommandé) @ racine
     - LocalBusiness sans url (recommandé) @ racine
 
+### `chauffagiste-marck.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
+
+### `chauffagiste-outreau.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
+
 ### `chauffagiste-saint-omer.html` — 4 bloc(s) — types : Service, LocalBusiness, PostalAddress, HVACBusiness, GeoCoordinates, City, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem
 
 - ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
@@ -184,6 +290,17 @@
     - LocalBusiness sans telephone (recommandé) @ racine
     - LocalBusiness sans address (recommandé) @ racine
     - LocalBusiness sans url (recommandé) @ racine
+
+### `chauffagiste-wimereux.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
 
 ### `contact.html` — 2 bloc(s) — types : LocalBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, City, AggregateRating, BreadcrumbList, ListItem
 
@@ -430,6 +547,11 @@
 - ✅ Bloc #0 (`FAQPage, Question, Answer`) — OK
 - ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
 
+### `garanties.html` — 2 bloc(s) — types : BreadcrumbList, ListItem, FAQPage, Question, Answer
+
+- ✅ Bloc #0 (`BreadcrumbList, ListItem`) — OK
+- ✅ Bloc #1 (`FAQPage, Question, Answer`) — OK
+
 ### `guide-adaptation-pmr.html` — 4 bloc(s) — types : Article, Organization, ImageObject, WebPage, BreadcrumbList, ListItem, TechArticle, Audience, HowTo, HowToStep
 
 - ✅ Bloc #0 (`Article, Organization, ImageObject, WebPage`) — OK
@@ -577,12 +699,10 @@
     - @type manquant à la racine
     - LocalBusiness sans url (recommandé) @ @graph[1].provider
 
-### `nos-villes.html` — 3 bloc(s) — types : ItemList, ListItem, BreadcrumbList, LocalBusiness, PostalAddress, AggregateRating
+### `nos-villes.html` — 2 bloc(s) — types : ItemList, ListItem, BreadcrumbList
 
 - ✅ Bloc #0 (`ItemList, ListItem`) — OK
 - ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
-- ⚠️ Bloc #2 (`LocalBusiness, PostalAddress, AggregateRating`) :
-    - LocalBusiness sans url (recommandé) @ racine
 
 ### `notre-equipe 2.html` — 1 bloc(s) — types : BreadcrumbList, ListItem
 
@@ -689,6 +809,28 @@
     - LocalBusiness sans address (recommandé) @ racine
     - LocalBusiness sans url (recommandé) @ racine
 
+### `plombier-coudekerque-branche.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
+
+### `plombier-coulogne.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
+
 ### `plombier-dunkerque.html` — 4 bloc(s) — types : Service, LocalBusiness, PostalAddress, Plumber, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem
 
 - ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
@@ -719,6 +861,72 @@
     - LocalBusiness sans address (recommandé) @ racine
     - LocalBusiness sans url (recommandé) @ racine
 
+### `plombier-grande-synthe.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
+
+### `plombier-guines.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
+
+### `plombier-le-portel.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
+
+### `plombier-marck.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
+
+### `plombier-outreau.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
+
+### `plombier-saint-martin-boulogne.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
+
 ### `plombier-saint-omer.html` — 4 bloc(s) — types : Service, LocalBusiness, PostalAddress, Plumber, GeoCoordinates, City, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem
 
 - ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
@@ -748,6 +956,28 @@
     - LocalBusiness sans telephone (recommandé) @ racine
     - LocalBusiness sans address (recommandé) @ racine
     - LocalBusiness sans url (recommandé) @ racine
+
+### `plombier-teteghem.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
+
+### `plombier-wimereux.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
 
 ### `pmr-dunkerque.html` — 3 bloc(s) — types : Service, LocalBusiness, PostalAddress, HomeAndConstructionBusiness, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, AggregateRating, BreadcrumbList, ListItem
 
@@ -898,6 +1128,17 @@
     - LocalBusiness sans address (recommandé) @ racine
     - LocalBusiness sans url (recommandé) @ racine
 
+### `serrurier-coudekerque-branche.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
+
 ### `serrurier-dunkerque.html` — 4 bloc(s) — types : Service, LocalBusiness, PostalAddress, Locksmith, GeoCoordinates, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem
 
 - ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
@@ -928,6 +1169,28 @@
     - LocalBusiness sans address (recommandé) @ racine
     - LocalBusiness sans url (recommandé) @ racine
 
+### `serrurier-marck.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
+
+### `serrurier-outreau.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
+
 ### `serrurier-saint-omer.html` — 4 bloc(s) — types : Service, LocalBusiness, PostalAddress, Locksmith, GeoCoordinates, City, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem
 
 - ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
@@ -957,6 +1220,17 @@
     - LocalBusiness sans telephone (recommandé) @ racine
     - LocalBusiness sans address (recommandé) @ racine
     - LocalBusiness sans url (recommandé) @ racine
+
+### `serrurier-wimereux.html` — 3 bloc(s) — types : LocalBusiness, PostalAddress, City, AggregateRating, BreadcrumbList, ListItem, Service, OfferCatalog, Offer
+
+- ⚠️ Bloc #0 (`LocalBusiness, PostalAddress, City, AggregateRating`) :
+    - LocalBusiness sans url (recommandé) @ racine
+- ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
+- ⚠️ Bloc #2 (`Service, LocalBusiness, City, OfferCatalog, Offer`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans address (recommandé) @ provider
+    - LocalBusiness sans url (recommandé) @ provider
 
 ### `sinistres.html` — 2 bloc(s) — types : EmergencyService, PostalAddress, City, OpeningHoursSpecification, OfferCatalog, Offer, Service, BreadcrumbList, ListItem
 

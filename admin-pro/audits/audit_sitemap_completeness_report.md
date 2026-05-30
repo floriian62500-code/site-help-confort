@@ -1,15 +1,15 @@
 # Audit Sitemap completeness — Rapport
 
-Généré le : `2026-05-29T06:58:10`
+Généré le : `2026-05-30T06:26:59`
 
 Source de vérité : `sitemap.xml` (`<urlset>`) + `*.html` à la racine du repo.
 
 ## Synthèse
 
-- Pages HTML racine sur disque : **82**
+- Pages HTML racine sur disque : **114**
 - URLs dans sitemap.xml : **146**
 - Dont pages racine (`/X.html` ou `/`) : **77**
-- ⚠️ Pages absentes du sitemap : **5**
+- ⚠️ Pages absentes du sitemap : **37**
 - ❌ URLs sitemap orphelines (fichier introuvable) : **0**
 - ℹ️ `<lastmod>` dans le futur : **0**
 
@@ -18,11 +18,43 @@ Source de vérité : `sitemap.xml` (`<urlset>`) + `*.html` à la racine du repo.
 Ces pages HTML existent sur disque mais sont absentes du sitemap.
 Correction : ajouter une `<url>` dans `sitemap.xml`.
 
+- `blog-comment-detecter-fuite-eau-cachee.html`
+- `blog-cout-renovation-salle-de-bain.html`
+- `blog-debouchage-canalisation-furet-hydrocurage.html`
+- `blog-entretien-chaudiere-annuel-obligatoire.html`
+- `blog-fenetres-double-vitrage-pvc-alu-bois.html`
+- `blog-isolation-combles-aides-2026.html`
+- `blog-panne-electrique-disjoncteur-saute.html`
+- `blog-pmr-adapter-salle-de-bain-senior.html`
+- `blog-pompe-a-chaleur-air-eau-tout-savoir.html`
+- `blog-porte-claquee-cle-perdue-que-faire.html`
+- `blog-preparer-sa-maison-hiver-checklist.html`
+- `blog-remplacement-chaudiere-gaz-aides-2026.html`
+- `chauffagiste-coudekerque-branche.html`
+- `chauffagiste-marck.html`
+- `chauffagiste-outreau.html`
+- `chauffagiste-wimereux.html`
+- `espace-client-dashboard.html`
+- `garanties.html`
 - `googlef09a1887914c5a23.html`
 - `notre-equipe 2.html`
 - `notre-equipe.html`
+- `plombier-coudekerque-branche.html`
+- `plombier-coulogne.html`
+- `plombier-grande-synthe.html`
+- `plombier-guines.html`
+- `plombier-le-portel.html`
+- `plombier-marck.html`
+- `plombier-outreau.html`
+- `plombier-saint-martin-boulogne.html`
+- `plombier-teteghem.html`
+- `plombier-wimereux.html`
 - `realisation.html`
 - `reseau-help-confort.html`
+- `serrurier-coudekerque-branche.html`
+- `serrurier-marck.html`
+- `serrurier-outreau.html`
+- `serrurier-wimereux.html`
 
 ---
 

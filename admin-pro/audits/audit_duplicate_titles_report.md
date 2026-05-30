@@ -1,10 +1,10 @@
 # Audit duplicate titles & descriptions — Rapport
 
-_Généré le 2026-05-29 06:58_
+_Généré le 2026-05-30 06:27_
 
 ## Synthèse
 
-- Pages scannées : **106**
+- Pages scannées : **138**
 - Titres dupliqués (cross-page) : **5** (10 pages concernées)
 - Descriptions dupliquées : **5** (10 pages concernées)
 

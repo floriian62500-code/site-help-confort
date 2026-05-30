@@ -1,12 +1,12 @@
 # Audit inline `<style>` size — Rapport
 
-_Généré le 2026-05-29 06:58_
+_Généré le 2026-05-30 06:27_
 
 ## Synthèse
 
-- Pages scannées : **107**
-- CSS inline cumulé : **2718.1 KB**
-- CSS inline moyen : **25.4 KB / page**
+- Pages scannées : **139**
+- CSS inline cumulé : **2857.8 KB**
+- CSS inline moyen : **20.6 KB / page**
 - ❌ Pages > 50 KB : **27**
 - ⚠️ Pages 25–50 KB : **11**
 

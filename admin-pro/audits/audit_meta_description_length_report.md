@@ -1,17 +1,17 @@
 # Audit meta description length — Rapport
 
-_Généré le 2026-05-29 06:58_
+_Généré le 2026-05-30 06:27_
 
 ## Synthèse
 
-- Pages scannées : **106**
-- ✅ OK (120-158 chars) : **81**
-- ⚠️  Warnings (acceptable mais hors cible) : **10**
-- ❌ Erreurs (< 70 ou > 160) : **14**
+- Pages scannées : **138**
+- ✅ OK (120-158 chars) : **96**
+- ⚠️  Warnings (acceptable mais hors cible) : **15**
+- ❌ Erreurs (< 70 ou > 160) : **26**
 - ℹ️  Sans description : **1**
-- Findings totaux : **25**
-  - Erreurs : 14
-  - Avertissements : 11
+- Findings totaux : **42**
+  - Erreurs : 26
+  - Avertissements : 16
 
 ## Bornes appliquées
 
@@ -61,6 +61,10 @@ _Généré le 2026-05-29 06:58_
 > Chauffagiste à Saint-Omer & Dunkerque : entretien chaudière, dépannage rapide, contrats d'entretien annuels — forfait transparent, devis gratuit. ☎ 03 66 10 01 34
 - ❌ DESC-TOO-LONG : 162 chars > 160
 
+### `espace-client-dashboard.html`  (67 chars)
+> Dashboard client HELP Confort : interventions, paiements, factures.
+- ❌ DESC-TOO-SHORT : 67 chars < 70
+
 ### `notre-equipe 2.html`  (178 chars)
 > L'équipe HELP Confort Saint-Omer &amp; Dunkerque : techniciens diplômés, formation continue, intervention sans sous-traitance. Plombiers, chauffagistes, électriciens, serruriers.
 - ❌ DESC-TOO-LONG : 178 chars > 160
@@ -69,12 +73,56 @@ _Généré le 2026-05-29 06:58_
 > L'équipe HELP Confort Saint-Omer &amp; Dunkerque : techniciens diplômés, formation continue, intervention sans sous-traitance. Plombiers, chauffagistes, électriciens, serruriers.
 - ❌ DESC-TOO-LONG : 178 chars > 160
 
+### `plombier-coudekerque-branche.html`  (180 chars)
+> Plombier à Coudekerque-Branche (59210) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.
+- ❌ DESC-TOO-LONG : 180 chars > 160
+
+### `plombier-coulogne.html`  (169 chars)
+> Plombier à Coulogne (62137) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.
+- ❌ DESC-TOO-LONG : 169 chars > 160
+
+### `plombier-grande-synthe.html`  (174 chars)
+> Plombier à Grande-Synthe (59760) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.
+- ❌ DESC-TOO-LONG : 174 chars > 160
+
+### `plombier-guines.html`  (167 chars)
+> Plombier à Guînes (62340) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.
+- ❌ DESC-TOO-LONG : 167 chars > 160
+
+### `plombier-le-portel.html`  (170 chars)
+> Plombier à Le Portel (62480) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.
+- ❌ DESC-TOO-LONG : 170 chars > 160
+
+### `plombier-marck.html`  (166 chars)
+> Plombier à Marck (62730) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.
+- ❌ DESC-TOO-LONG : 166 chars > 160
+
+### `plombier-outreau.html`  (168 chars)
+> Plombier à Outreau (62230) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.
+- ❌ DESC-TOO-LONG : 168 chars > 160
+
+### `plombier-saint-martin-boulogne.html`  (182 chars)
+> Plombier à Saint-Martin-Boulogne (62280) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.
+- ❌ DESC-TOO-LONG : 182 chars > 160
+
+### `plombier-teteghem.html`  (169 chars)
+> Plombier à Téteghem (59229) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.
+- ❌ DESC-TOO-LONG : 169 chars > 160
+
+### `plombier-wimereux.html`  (169 chars)
+> Plombier à Wimereux (62930) : intervention rapide pour fuite d'eau, débouchage canalisation, remplacement chauffe-eau, pose sanitaires. Devis gratuit, prix annoncé tenu.
+- ❌ DESC-TOO-LONG : 169 chars > 160
+
 ### `remplacement-chauffe-eau.html`  (164 chars)
 > Remplacement ballon d'eau chaude / chauffe-eau électrique, thermodynamique ou gaz à Saint-Omer & Dunkerque. Devis gratuit, pose conforme, garantie ☎ 03 66 10 01 34.
 - ❌ DESC-TOO-LONG : 164 chars > 160
 
 ### `reseau-help-confort.html`  (169 chars)
 > HELP Confort : Réseau national d'urgence, dépannage et amélioration de l'habitat. Plomberie, chauffage, électricité, serrurerie, vitrerie — réseau national HELP Confort.
+- ❌ DESC-TOO-LONG : 169 chars > 160
+
+### `serrurier-coudekerque-branche.html`  (169 chars)
+> Serrurier à Coudekerque-Branche (59210) : ouverture porte claquée, remplacement serrure 7j/7, réparation après effraction. Intervention rapide, devis avant intervention.
 - ❌ DESC-TOO-LONG : 169 chars > 160
 
 ### `actualites/2026-01-07-votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-c.html`  (92 chars)
@@ -109,12 +157,32 @@ _Généré le 2026-05-29 06:58_
 > Agence HELP Confort Saint-Omer : Dépan'DK, agence littoral dunkerquois. Lun-Ven 9h-17h, Sam 9h-16h. ☎ 03 66 10 01 34.
 - ⚠️ DESC-SHORT : 117 chars < 120 (idéal 120-158)
 
+### `blog-cout-renovation-salle-de-bain.html`  (118 chars)
+> Rénovation salle de bain : 5 000 € à 25 000 €. Décomposition détaillée des coûts par poste et conseils pour optimiser.
+- ⚠️ DESC-SHORT : 118 chars < 120 (idéal 120-158)
+
+### `blog-debouchage-canalisation-furet-hydrocurage.html`  (96 chars)
+> WC, évier, douche bouchés : quelle méthode utiliser selon le type de bouchon et la canalisation.
+- ⚠️ DESC-SHORT : 96 chars < 120 (idéal 120-158)
+
+### `blog-fenetres-double-vitrage-pvc-alu-bois.html`  (108 chars)
+> Comparatif des 3 matériaux de fenêtres : isolation, durée de vie, prix, esthétique. Comment choisir en 2026.
+- ⚠️ DESC-SHORT : 108 chars < 120 (idéal 120-158)
+
+### `blog-isolation-combles-aides-2026.html`  (118 chars)
+> L'isolation des combles perdus reste l'investissement énergétique le plus rentable. Aides 2026, technique, durée, ROI.
+- ⚠️ DESC-SHORT : 118 chars < 120 (idéal 120-158)
+
+### `blog-pompe-a-chaleur-air-eau-tout-savoir.html`  (103 chars)
+> COP, dimensionnement, raccordement, aides, contraintes acoustiques : le guide complet PAC air/eau 2026.
+- ⚠️ DESC-SHORT : 103 chars < 120 (idéal 120-158)
+
+### `blog-preparer-sa-maison-hiver-checklist.html`  (109 chars)
+> Avant l'hiver, vérifiez : chaudière, isolation, fenêtres, gouttières, joints, VMC. Notre checklist 12 points.
+- ⚠️ DESC-SHORT : 109 chars < 120 (idéal 120-158)
+
 ### `depannage-boulogne-sur-mer.html`  (159 chars)
 > Dépannage Boulogne-sur-Mer (62200) : plombier, chauffagiste, électricien, serrurier. Forfait transparent — devis gratuit. 4,7/5 sur 343 avis. ☎ 03 66 10 01 34.
-- ⚠️ DESC-LONG : 159 chars > 158 (idéal 120-158)
-
-### `nos-villes.html`  (159 chars)
-> HELP Confort intervient sur Saint-Omer, Dunkerque, Calais, Boulogne-sur-Mer, Coquelles, Sangatte, Bergues, Gravelines & littoral du Nord. Cherchez votre ville.
 - ⚠️ DESC-LONG : 159 chars > 158 (idéal 120-158)
 
 ### `googlef09a1887914c5a23.html`  (0 chars)

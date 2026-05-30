@@ -1,14 +1,14 @@
 {
   "audit": "fallback_supabase",
-  "generated_at": "2026-05-29T06:58:10",
+  "generated_at": "2026-05-30T06:27:00",
   "stats": {
-    "pages_audited": 82,
-    "pages_using_supabase": 10,
-    "pages_with_fallback": 34,
-    "pages_alerted": 3,
-    "total_findings": 3,
+    "pages_audited": 114,
+    "pages_using_supabase": 12,
+    "pages_with_fallback": 7,
+    "pages_alerted": 6,
+    "total_findings": 6,
     "code_distribution": {
-      "NO-FALLBACK": 3
+      "NO-FALLBACK": 6
     }
   },
   "results": [
@@ -67,10 +67,122 @@
       "supabase_signatures": [
         "/rest/v1/realisations"
       ],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?v='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": [
+        {
+          "code": "NO-FALLBACK",
+          "severity": "error",
+          "detail": "Page utilise Supabase (1 appel(s) détecté(s)) mais aucun fallback local (`LOCAL_CATALOG`, `FALLBACK_DATA`, …) n'est déclaré dans les <script>. Aucun catch() de secours visible."
+        }
+      ]
+    },
+    {
+      "file": "blog-comment-detecter-fuite-eau-cachee.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "blog-cout-renovation-salle-de-bain.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "blog-debouchage-canalisation-furet-hydrocurage.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "blog-entretien-chaudiere-annuel-obligatoire.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "blog-fenetres-double-vitrage-pvc-alu-bois.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "blog-isolation-combles-aides-2026.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "blog-panne-electrique-disjoncteur-saute.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "blog-pmr-adapter-salle-de-bain-senior.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "blog-pompe-a-chaleur-air-eau-tout-savoir.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "blog-porte-claquee-cle-perdue-que-faire.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "blog-preparer-sa-maison-hiver-checklist.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "blog-remplacement-chaudiere-gaz-aides-2026.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -100,10 +212,8 @@
       "file": "chauffagiste-boulogne-sur-mer.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -111,10 +221,17 @@
       "file": "chauffagiste-calais.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "chauffagiste-coudekerque-branche.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -122,10 +239,26 @@
       "file": "chauffagiste-dunkerque.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "chauffagiste-marck.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "chauffagiste-outreau.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -133,10 +266,17 @@
       "file": "chauffagiste-saint-omer.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "chauffagiste-wimereux.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -313,10 +453,8 @@
       "file": "electricien-boulogne-sur-mer.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -324,10 +462,8 @@
       "file": "electricien-calais.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -335,10 +471,8 @@
       "file": "electricien-dunkerque.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -346,10 +480,8 @@
       "file": "electricien-saint-omer.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -363,7 +495,41 @@
       "findings": []
     },
     {
+      "file": "espace-client-dashboard.html",
+      "uses_supabase": true,
+      "supabase_signatures": [
+        "createClient("
+      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": [
+        {
+          "code": "NO-FALLBACK",
+          "severity": "warning",
+          "detail": "Page utilise Supabase (1 appel(s) détecté(s)) mais aucun fallback local (`LOCAL_CATALOG`, `FALLBACK_DATA`, …) n'est déclaré dans les <script>. Aucun catch() de secours visible."
+        }
+      ]
+    },
+    {
       "file": "espace-client.html",
+      "uses_supabase": true,
+      "supabase_signatures": [
+        "createClient("
+      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": [
+        {
+          "code": "NO-FALLBACK",
+          "severity": "warning",
+          "detail": "Page utilise Supabase (1 appel(s) détecté(s)) mais aucun fallback local (`LOCAL_CATALOG`, `FALLBACK_DATA`, …) n'est déclaré dans les <script>. Aucun catch() de secours visible."
+        }
+      ]
+    },
+    {
+      "file": "faq.html",
       "uses_supabase": false,
       "supabase_signatures": [],
       "has_fallback": false,
@@ -372,7 +538,7 @@
       "findings": []
     },
     {
-      "file": "faq.html",
+      "file": "garanties.html",
       "uses_supabase": false,
       "supabase_signatures": [],
       "has_fallback": false,
@@ -438,7 +604,8 @@
       "file": "index.html",
       "uses_supabase": true,
       "supabase_signatures": [
-        "/rest/v1/leads"
+        "/rest/v1/leads",
+        "/rest/v1/services"
       ],
       "has_fallback": true,
       "fallback_signatures": [
@@ -462,10 +629,8 @@
       "file": "menuisier-dunkerque.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -473,10 +638,8 @@
       "file": "menuisier-saint-omer.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -569,10 +732,8 @@
       "file": "plombier-boulogne-sur-mer.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -580,10 +741,26 @@
       "file": "plombier-calais.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "plombier-coudekerque-branche.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "plombier-coulogne.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -591,10 +768,62 @@
       "file": "plombier-dunkerque.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "plombier-grande-synthe.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "plombier-guines.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "plombier-le-portel.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "plombier-marck.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "plombier-outreau.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "plombier-saint-martin-boulogne.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -602,10 +831,26 @@
       "file": "plombier-saint-omer.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "plombier-teteghem.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "plombier-wimereux.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -613,10 +858,8 @@
       "file": "pmr-dunkerque.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -624,10 +867,8 @@
       "file": "pmr-saint-omer.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -675,8 +916,7 @@
       ],
       "has_fallback": true,
       "fallback_signatures": [
-        "actus = [\n { url:'guide-entretien-chaudiere.html', title:",
-        "fetch('content/realisations/index.json'"
+        "actus = [\n { url:'guide-entretien-chaudiere.html', title:"
       ],
       "soft_fallback_catch": false,
       "findings": []
@@ -703,10 +943,8 @@
       "file": "serrurier-boulogne-sur-mer.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -714,10 +952,17 @@
       "file": "serrurier-calais.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "serrurier-coudekerque-branche.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -725,10 +970,26 @@
       "file": "serrurier-dunkerque.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "serrurier-marck.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "serrurier-outreau.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -736,10 +997,17 @@
       "file": "serrurier-saint-omer.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "serrurier-wimereux.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -778,10 +1046,8 @@
       "file": "travaux-dunkerque.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -789,10 +1055,8 @@
       "file": "travaux-saint-omer.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -809,10 +1073,8 @@
       "file": "vitrier-dunkerque.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -820,10 +1082,8 @@
       "file": "vitrier-saint-omer.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -831,10 +1091,8 @@
       "file": "volets-dunkerque.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -842,10 +1100,8 @@
       "file": "volets-saint-omer.html",
       "uses_supabase": false,
       "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
     },
@@ -855,8 +1111,7 @@
       "supabase_signatures": [],
       "has_fallback": true,
       "fallback_signatures": [
-        "cities = [\n { lat: 50.9513, lng: 1.8587, name:",
-        "fetch('content/realisations/index.json?t='"
+        "cities = [\n { lat: 50.9513, lng: 1.8587, name:"
       ],
       "soft_fallback_catch": false,
       "findings": []

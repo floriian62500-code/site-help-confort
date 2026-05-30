@@ -1,31 +1,15 @@
 # 🤖 Audit couverture chatbot widget — sonde #24
 
-_Généré le 2026-05-29 06:58_
+_Généré le 2026-05-30 06:27_
 
-- Pages publiques scannées : **82**
-- Pages avec widget chargé : **64**
-- Pages **sans widget** (alertes) : **18**
+- Pages publiques scannées : **114**
+- Pages avec widget chargé : **112**
+- Pages **sans widget** (alertes) : **2**
 
 ## ❌ Pages sans `hc-widgets.js`
 
-- `agence-dunkerque.html` — aucun `<script src=...hc-widgets.js>` détecté
-- `agence-saint-omer.html` — aucun `<script src=...hc-widgets.js>` détecté
-- `debouchage-canalisation.html` — aucun `<script src=...hc-widgets.js>` détecté
-- `diagnostic-electrique.html` — aucun `<script src=...hc-widgets.js>` détecté
-- `entretien-chaudiere.html` — aucun `<script src=...hc-widgets.js>` détecté
+- `espace-client-dashboard.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `googlef09a1887914c5a23.html` — aucun `<script src=...hc-widgets.js>` détecté
-- `nos-metiers.html` — aucun `<script src=...hc-widgets.js>` détecté
-- `nos-villes.html` — aucun `<script src=...hc-widgets.js>` détecté
-- `notre-equipe 2.html` — aucun `<script src=...hc-widgets.js>` détecté
-- `notre-equipe.html` — aucun `<script src=...hc-widgets.js>` détecté
-- `ouverture-porte-claquee.html` — aucun `<script src=...hc-widgets.js>` détecté
-- `panne-chaudiere.html` — aucun `<script src=...hc-widgets.js>` détecté
-- `partenaires.html` — aucun `<script src=...hc-widgets.js>` détecté
-- `plan-du-site.html` — aucun `<script src=...hc-widgets.js>` détecté
-- `remplacement-chauffe-eau.html` — aucun `<script src=...hc-widgets.js>` détecté
-- `reseau-help-confort.html` — aucun `<script src=...hc-widgets.js>` détecté
-- `tarifs.html` — aucun `<script src=...hc-widgets.js>` détecté
-- `urgence.html` — aucun `<script src=...hc-widgets.js>` détecté
 
 → Ajouter `<script src="assets/hc-widgets.js" defer></script>` avant `</body>`.
 
@@ -35,16 +19,35 @@ _Généré le 2026-05-29 06:58_
 
 - `a-propos.html` — `<script defer src="assets/hc-widgets.js`
 - `actualites.html` — `<script defer src="assets/hc-widgets.js`
+- `agence-dunkerque.html` — `<script defer src="assets/hc-chat`
+- `agence-saint-omer.html` — `<script defer src="assets/hc-chat`
 - `aides.html` — `<script defer src="assets/hc-widgets.js`
 - `avant-apres.html` — `<script src="assets/hc-widgets.js`
+- `blog-comment-detecter-fuite-eau-cachee.html` — `<script defer src="assets/hc-chat`
+- `blog-cout-renovation-salle-de-bain.html` — `<script defer src="assets/hc-chat`
+- `blog-debouchage-canalisation-furet-hydrocurage.html` — `<script defer src="assets/hc-chat`
+- `blog-entretien-chaudiere-annuel-obligatoire.html` — `<script defer src="assets/hc-chat`
+- `blog-fenetres-double-vitrage-pvc-alu-bois.html` — `<script defer src="assets/hc-chat`
+- `blog-isolation-combles-aides-2026.html` — `<script defer src="assets/hc-chat`
+- `blog-panne-electrique-disjoncteur-saute.html` — `<script defer src="assets/hc-chat`
+- `blog-pmr-adapter-salle-de-bain-senior.html` — `<script defer src="assets/hc-chat`
+- `blog-pompe-a-chaleur-air-eau-tout-savoir.html` — `<script defer src="assets/hc-chat`
+- `blog-porte-claquee-cle-perdue-que-faire.html` — `<script defer src="assets/hc-chat`
+- `blog-preparer-sa-maison-hiver-checklist.html` — `<script defer src="assets/hc-chat`
+- `blog-remplacement-chaudiere-gaz-aides-2026.html` — `<script defer src="assets/hc-chat`
 - `blog.html` — `<script defer src="assets/hc-widgets.js`
 - `carrieres.html` — `<script defer src="assets/hc-widgets.js`
 - `chauffagiste-boulogne-sur-mer.html` — `<script defer src="assets/hc-widgets.js`
 - `chauffagiste-calais.html` — `<script defer src="assets/hc-widgets.js`
+- `chauffagiste-coudekerque-branche.html` — `<script defer src="assets/hc-chat`
 - `chauffagiste-dunkerque.html` — `<script defer src="assets/hc-widgets.js`
+- `chauffagiste-marck.html` — `<script defer src="assets/hc-chat`
+- `chauffagiste-outreau.html` — `<script defer src="assets/hc-chat`
 - `chauffagiste-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
+- `chauffagiste-wimereux.html` — `<script defer src="assets/hc-chat`
 - `contact.html` — `<script defer src="assets/hc-widgets.js`
 - `contrats-entretien.html` — `<script defer src="assets/hc-widgets.js`
+- `debouchage-canalisation.html` — `<script defer src="assets/hc-chat`
 - `depannage-arques.html` — `<script defer src="assets/hc-widgets.js`
 - `depannage-bergues.html` — `<script defer src="assets/hc-widgets.js`
 - `depannage-boulogne-sur-mer.html` — `<script defer src="assets/hc-widgets.js`
@@ -58,12 +61,15 @@ _Généré le 2026-05-29 06:58_
 - `depannage-saint-pol-sur-mer.html` — `<script defer src="assets/hc-widgets.js`
 - `depannage-sangatte.html` — `<script defer src="assets/hc-widgets.js`
 - `devis-express.html` — `<script src="assets/hc-widgets.js`
+- `diagnostic-electrique.html` — `<script defer src="assets/hc-chat`
 - `electricien-boulogne-sur-mer.html` — `<script defer src="assets/hc-widgets.js`
 - `electricien-calais.html` — `<script defer src="assets/hc-widgets.js`
 - `electricien-dunkerque.html` — `<script defer src="assets/hc-widgets.js`
 - `electricien-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
+- `entretien-chaudiere.html` — `<script defer src="assets/hc-chat`
 - `espace-client.html` — `<script defer src="assets/hc-widgets.js`
 - `faq.html` — `<script src="assets/hc-widgets.js`
+- `garanties.html` — `<script defer src="assets/hc-chat`
 - `guide-adaptation-pmr.html` — `<script defer src="assets/hc-widgets.js`
 - `guide-entretien-chaudiere.html` — `<script defer src="assets/hc-widgets.js`
 - `guide-fuite-eau.html` — `<script defer src="assets/hc-widgets.js`
@@ -73,25 +79,51 @@ _Généré le 2026-05-29 06:58_
 - `mentions-legales.html` — `<script defer src="assets/hc-widgets.js`
 - `menuisier-dunkerque.html` — `<script defer src="assets/hc-widgets.js`
 - `menuisier-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
+- `nos-metiers.html` — `<script defer src="assets/hc-chat`
 - `nos-prestations.html` — `<script src="assets/hc-widgets.js`
+- `nos-villes.html` — `<script defer src="assets/hc-chat`
+- `notre-equipe 2.html` — `<script defer src="assets/hc-chat`
+- `notre-equipe.html` — `<script defer src="assets/hc-chat`
+- `ouverture-porte-claquee.html` — `<script defer src="assets/hc-chat`
+- `panne-chaudiere.html` — `<script defer src="assets/hc-chat`
+- `partenaires.html` — `<script defer src="assets/hc-chat`
+- `plan-du-site.html` — `<script defer src="assets/hc-chat`
 - `plombier-boulogne-sur-mer.html` — `<script defer src="assets/hc-widgets.js`
 - `plombier-calais.html` — `<script defer src="assets/hc-widgets.js`
+- `plombier-coudekerque-branche.html` — `<script defer src="assets/hc-chat`
+- `plombier-coulogne.html` — `<script defer src="assets/hc-chat`
 - `plombier-dunkerque.html` — `<script defer src="assets/hc-widgets.js`
+- `plombier-grande-synthe.html` — `<script defer src="assets/hc-chat`
+- `plombier-guines.html` — `<script defer src="assets/hc-chat`
+- `plombier-le-portel.html` — `<script defer src="assets/hc-chat`
+- `plombier-marck.html` — `<script defer src="assets/hc-chat`
+- `plombier-outreau.html` — `<script defer src="assets/hc-chat`
+- `plombier-saint-martin-boulogne.html` — `<script defer src="assets/hc-chat`
 - `plombier-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
+- `plombier-teteghem.html` — `<script defer src="assets/hc-chat`
+- `plombier-wimereux.html` — `<script defer src="assets/hc-chat`
 - `pmr-dunkerque.html` — `<script defer src="assets/hc-widgets.js`
 - `pmr-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
 - `pro.html` — `<script defer src="assets/hc-widgets.js`
 - `processus.html` — `<script defer src="assets/hc-widgets.js`
 - `realisation.html` — `<script src="assets/hc-widgets.js`
 - `realisations.html` — `<script defer src="assets/hc-widgets.js`
+- `remplacement-chauffe-eau.html` — `<script defer src="assets/hc-chat`
+- `reseau-help-confort.html` — `<script defer src="assets/hc-chat`
 - `serrurier-boulogne-sur-mer.html` — `<script defer src="assets/hc-widgets.js`
 - `serrurier-calais.html` — `<script defer src="assets/hc-widgets.js`
+- `serrurier-coudekerque-branche.html` — `<script defer src="assets/hc-chat`
 - `serrurier-dunkerque.html` — `<script defer src="assets/hc-widgets.js`
+- `serrurier-marck.html` — `<script defer src="assets/hc-chat`
+- `serrurier-outreau.html` — `<script defer src="assets/hc-chat`
 - `serrurier-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
+- `serrurier-wimereux.html` — `<script defer src="assets/hc-chat`
 - `sinistres.html` — `<script defer src="assets/hc-widgets.js`
+- `tarifs.html` — `<script defer src="assets/hc-chat`
 - `temoignages.html` — `<script src="assets/hc-widgets.js`
 - `travaux-dunkerque.html` — `<script defer src="assets/hc-widgets.js`
 - `travaux-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
+- `urgence.html` — `<script defer src="assets/hc-chat`
 - `vitrier-dunkerque.html` — `<script defer src="assets/hc-widgets.js`
 - `vitrier-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
 - `volets-dunkerque.html` — `<script defer src="assets/hc-widgets.js`

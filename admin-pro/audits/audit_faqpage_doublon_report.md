@@ -1,8 +1,8 @@
-# Audit FAQPage doublon — 2026-05-29 06:58
+# Audit FAQPage doublon — 2026-05-30 06:26
 
-- **Pages scannées** : 83
-- **Pages avec 1 bloc FAQPage** : 24
-- **Pages sans FAQPage** : 59
+- **Pages scannées** : 115
+- **Pages avec 1 bloc FAQPage** : 25
+- **Pages sans FAQPage** : 90
 - **Pages avec > 1 bloc FAQPage (alertes)** : 0
 
 > Google recommande un seul bloc `FAQPage` par URL. Au-delà, le rich result peut être ignoré silencieusement.
@@ -29,6 +29,7 @@
 - `diagnostic-electrique.html` (4 blocs JSON-LD au total)
 - `entretien-chaudiere.html` (5 blocs JSON-LD au total)
 - `faq.html` (2 blocs JSON-LD au total)
+- `garanties.html` (2 blocs JSON-LD au total)
 - `ouverture-porte-claquee.html` (6 blocs JSON-LD au total)
 - `panne-chaudiere.html` (4 blocs JSON-LD au total)
 - `remplacement-chauffe-eau.html` (6 blocs JSON-LD au total)

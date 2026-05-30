@@ -1,27 +1,27 @@
 {
-  "generated": "2026-05-29 06:58",
-  "n_total": 107,
-  "n_ok": 55,
+  "generated": "2026-05-30 06:27",
+  "n_total": 139,
+  "n_ok": 86,
   "n_errors": 0,
-  "n_warnings": 52,
-  "scripts_total": 458,
-  "scripts_blocking": 94,
+  "n_warnings": 53,
+  "scripts_total": 1185,
+  "scripts_blocking": 96,
   "results": [
     {
       "file": "a-propos.html",
       "status": "warning",
-      "scripts_total": 7,
+      "scripts_total": 20,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 940,
+          "line": 968,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 1184,
+          "line": 1212,
           "position": "head",
           "severity": "warning"
         }
@@ -205,12 +205,12 @@
     {
       "file": "actualites.html",
       "status": "warning",
-      "scripts_total": 8,
+      "scripts_total": 15,
       "scripts_blocking": 1,
       "blocking": [
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 1050,
+          "line": 1054,
           "position": "head",
           "severity": "warning"
         }
@@ -219,49 +219,133 @@
     {
       "file": "agence-dunkerque.html",
       "status": "ok",
-      "scripts_total": 0,
+      "scripts_total": 5,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "agence-saint-omer.html",
       "status": "ok",
-      "scripts_total": 0,
+      "scripts_total": 5,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "aides.html",
       "status": "ok",
-      "scripts_total": 4,
+      "scripts_total": 13,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "avant-apres.html",
       "status": "warning",
-      "scripts_total": 3,
+      "scripts_total": 8,
       "scripts_blocking": 1,
       "blocking": [
         {
           "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js",
-          "line": 108,
+          "line": 120,
           "position": "head",
           "severity": "warning"
         }
       ]
     },
     {
+      "file": "blog-comment-detecter-fuite-eau-cachee.html",
+      "status": "ok",
+      "scripts_total": 6,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "blog-cout-renovation-salle-de-bain.html",
+      "status": "ok",
+      "scripts_total": 6,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "blog-debouchage-canalisation-furet-hydrocurage.html",
+      "status": "ok",
+      "scripts_total": 6,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "blog-entretien-chaudiere-annuel-obligatoire.html",
+      "status": "ok",
+      "scripts_total": 6,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "blog-fenetres-double-vitrage-pvc-alu-bois.html",
+      "status": "ok",
+      "scripts_total": 6,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "blog-isolation-combles-aides-2026.html",
+      "status": "ok",
+      "scripts_total": 6,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "blog-panne-electrique-disjoncteur-saute.html",
+      "status": "ok",
+      "scripts_total": 6,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "blog-pmr-adapter-salle-de-bain-senior.html",
+      "status": "ok",
+      "scripts_total": 6,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "blog-pompe-a-chaleur-air-eau-tout-savoir.html",
+      "status": "ok",
+      "scripts_total": 6,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "blog-porte-claquee-cle-perdue-que-faire.html",
+      "status": "ok",
+      "scripts_total": 6,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "blog-preparer-sa-maison-hiver-checklist.html",
+      "status": "ok",
+      "scripts_total": 6,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "blog-remplacement-chaudiere-gaz-aides-2026.html",
+      "status": "ok",
+      "scripts_total": 6,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
       "file": "blog.html",
       "status": "ok",
-      "scripts_total": 4,
+      "scripts_total": 10,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "carrieres.html",
       "status": "warning",
-      "scripts_total": 7,
+      "scripts_total": 12,
       "scripts_blocking": 1,
       "blocking": [
         {
@@ -275,18 +359,18 @@
     {
       "file": "chauffagiste-boulogne-sur-mer.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 16,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 2140,
+          "line": 2144,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 2383,
+          "line": 2387,
           "position": "head",
           "severity": "warning"
         }
@@ -295,78 +379,106 @@
     {
       "file": "chauffagiste-calais.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 16,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 2140,
+          "line": 2144,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 2383,
+          "line": 2387,
           "position": "head",
           "severity": "warning"
         }
       ]
+    },
+    {
+      "file": "chauffagiste-coudekerque-branche.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
     },
     {
       "file": "chauffagiste-dunkerque.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 20,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 2140,
+          "line": 2160,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 2383,
+          "line": 2403,
           "position": "head",
           "severity": "warning"
         }
       ]
+    },
+    {
+      "file": "chauffagiste-marck.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "chauffagiste-outreau.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
     },
     {
       "file": "chauffagiste-saint-omer.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 20,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 2147,
+          "line": 2167,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 2390,
+          "line": 2410,
           "position": "head",
           "severity": "warning"
         }
       ]
     },
     {
+      "file": "chauffagiste-wimereux.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
       "file": "contact.html",
       "status": "warning",
-      "scripts_total": 7,
+      "scripts_total": 14,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 1053,
+          "line": 1061,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 1311,
+          "line": 1319,
           "position": "head",
           "severity": "warning"
         }
@@ -375,24 +487,24 @@
     {
       "file": "contrats-entretien.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 16,
       "scripts_blocking": 3,
       "blocking": [
         {
           "src": "script.js",
-          "line": 903,
+          "line": 907,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js",
-          "line": 1574,
+          "line": 1578,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 1876,
+          "line": 1880,
           "position": "head",
           "severity": "warning"
         }
@@ -401,39 +513,39 @@
     {
       "file": "debouchage-canalisation.html",
       "status": "ok",
-      "scripts_total": 0,
+      "scripts_total": 5,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "depannage-arques.html",
       "status": "ok",
-      "scripts_total": 4,
+      "scripts_total": 9,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "depannage-bergues.html",
       "status": "ok",
-      "scripts_total": 4,
+      "scripts_total": 9,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "depannage-boulogne-sur-mer.html",
       "status": "warning",
-      "scripts_total": 7,
+      "scripts_total": 14,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 1048,
+          "line": 1052,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 1294,
+          "line": 1298,
           "position": "head",
           "severity": "warning"
         }
@@ -442,18 +554,18 @@
     {
       "file": "depannage-calais.html",
       "status": "warning",
-      "scripts_total": 7,
+      "scripts_total": 14,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 1048,
+          "line": 1052,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 1294,
+          "line": 1298,
           "position": "head",
           "severity": "warning"
         }
@@ -462,7 +574,7 @@
     {
       "file": "depannage-coquelles.html",
       "status": "warning",
-      "scripts_total": 7,
+      "scripts_total": 13,
       "scripts_blocking": 2,
       "blocking": [
         {
@@ -482,18 +594,18 @@
     {
       "file": "depannage-dunkerque.html",
       "status": "warning",
-      "scripts_total": 7,
+      "scripts_total": 15,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 1021,
+          "line": 1029,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 1267,
+          "line": 1275,
           "position": "head",
           "severity": "warning"
         }
@@ -502,39 +614,39 @@
     {
       "file": "depannage-gravelines.html",
       "status": "ok",
-      "scripts_total": 4,
+      "scripts_total": 9,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "depannage-longuenesse.html",
       "status": "ok",
-      "scripts_total": 4,
+      "scripts_total": 9,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "depannage-saint-martin-lez-tatinghem.html",
       "status": "ok",
-      "scripts_total": 4,
+      "scripts_total": 9,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "depannage-saint-omer.html",
       "status": "warning",
-      "scripts_total": 7,
+      "scripts_total": 15,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 1031,
+          "line": 1039,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 1277,
+          "line": 1285,
           "position": "head",
           "severity": "warning"
         }
@@ -543,7 +655,7 @@
     {
       "file": "depannage-saint-pol-sur-mer.html",
       "status": "warning",
-      "scripts_total": 7,
+      "scripts_total": 13,
       "scripts_blocking": 2,
       "blocking": [
         {
@@ -563,7 +675,7 @@
     {
       "file": "depannage-sangatte.html",
       "status": "warning",
-      "scripts_total": 7,
+      "scripts_total": 13,
       "scripts_blocking": 2,
       "blocking": [
         {
@@ -583,21 +695,21 @@
     {
       "file": "devis-express.html",
       "status": "ok",
-      "scripts_total": 3,
+      "scripts_total": 8,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "diagnostic-electrique.html",
       "status": "ok",
-      "scripts_total": 0,
+      "scripts_total": 5,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "electricien-boulogne-sur-mer.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 15,
       "scripts_blocking": 2,
       "blocking": [
         {
@@ -617,7 +729,7 @@
     {
       "file": "electricien-calais.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 15,
       "scripts_blocking": 2,
       "blocking": [
         {
@@ -637,18 +749,18 @@
     {
       "file": "electricien-dunkerque.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 16,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 1878,
+          "line": 1882,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 2121,
+          "line": 2125,
           "position": "head",
           "severity": "warning"
         }
@@ -657,18 +769,18 @@
     {
       "file": "electricien-saint-omer.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 16,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 1886,
+          "line": 1890,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 2129,
+          "line": 2133,
           "position": "head",
           "severity": "warning"
         }
@@ -677,19 +789,39 @@
     {
       "file": "entretien-chaudiere.html",
       "status": "ok",
-      "scripts_total": 0,
+      "scripts_total": 6,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
-      "file": "espace-client.html",
+      "file": "espace-client-dashboard.html",
       "status": "warning",
-      "scripts_total": 7,
+      "scripts_total": 2,
       "scripts_blocking": 1,
       "blocking": [
         {
+          "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js",
+          "line": 169,
+          "position": "head",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "file": "espace-client.html",
+      "status": "warning",
+      "scripts_total": 13,
+      "scripts_blocking": 2,
+      "blocking": [
+        {
+          "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js",
+          "line": 491,
+          "position": "head",
+          "severity": "warning"
+        },
+        {
           "src": "assets/hc-leads-capture.js",
-          "line": 764,
+          "line": 853,
           "position": "head",
           "severity": "warning"
         }
@@ -698,7 +830,14 @@
     {
       "file": "faq.html",
       "status": "ok",
-      "scripts_total": 2,
+      "scripts_total": 6,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "garanties.html",
+      "status": "ok",
+      "scripts_total": 7,
       "scripts_blocking": 0,
       "blocking": []
     },
@@ -712,53 +851,53 @@
     {
       "file": "guide-adaptation-pmr.html",
       "status": "ok",
-      "scripts_total": 4,
+      "scripts_total": 9,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "guide-entretien-chaudiere.html",
       "status": "ok",
-      "scripts_total": 4,
+      "scripts_total": 9,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "guide-fuite-eau.html",
       "status": "ok",
-      "scripts_total": 4,
+      "scripts_total": 9,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "guide-mise-aux-normes-electriques.html",
       "status": "ok",
-      "scripts_total": 4,
+      "scripts_total": 9,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "guides.html",
       "status": "ok",
-      "scripts_total": 4,
+      "scripts_total": 10,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "index.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 25,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 2599,
+          "line": 2760,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 2690,
+          "line": 2851,
           "position": "head",
           "severity": "warning"
         }
@@ -767,7 +906,7 @@
     {
       "file": "mentions-legales.html",
       "status": "warning",
-      "scripts_total": 7,
+      "scripts_total": 12,
       "scripts_blocking": 2,
       "blocking": [
         {
@@ -787,7 +926,7 @@
     {
       "file": "menuisier-dunkerque.html",
       "status": "warning",
-      "scripts_total": 10,
+      "scripts_total": 16,
       "scripts_blocking": 2,
       "blocking": [
         {
@@ -807,7 +946,7 @@
     {
       "file": "menuisier-saint-omer.html",
       "status": "warning",
-      "scripts_total": 10,
+      "scripts_total": 16,
       "scripts_blocking": 2,
       "blocking": [
         {
@@ -827,19 +966,19 @@
     {
       "file": "nos-metiers.html",
       "status": "ok",
-      "scripts_total": 0,
+      "scripts_total": 5,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "nos-prestations.html",
       "status": "warning",
-      "scripts_total": 5,
+      "scripts_total": 15,
       "scripts_blocking": 1,
       "blocking": [
         {
           "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js",
-          "line": 679,
+          "line": 665,
           "position": "head",
           "severity": "warning"
         }
@@ -848,67 +987,67 @@
     {
       "file": "nos-villes.html",
       "status": "ok",
-      "scripts_total": 0,
+      "scripts_total": 6,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "notre-equipe 2.html",
       "status": "ok",
-      "scripts_total": 0,
+      "scripts_total": 4,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "notre-equipe.html",
       "status": "ok",
-      "scripts_total": 0,
+      "scripts_total": 4,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "ouverture-porte-claquee.html",
       "status": "ok",
-      "scripts_total": 0,
+      "scripts_total": 5,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "panne-chaudiere.html",
       "status": "ok",
-      "scripts_total": 0,
+      "scripts_total": 5,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "partenaires.html",
       "status": "ok",
-      "scripts_total": 0,
+      "scripts_total": 5,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "plan-du-site.html",
       "status": "ok",
-      "scripts_total": 0,
+      "scripts_total": 4,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "plombier-boulogne-sur-mer.html",
       "status": "warning",
-      "scripts_total": 10,
+      "scripts_total": 18,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 2057,
+          "line": 2065,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 2300,
+          "line": 2308,
           "position": "head",
           "severity": "warning"
         }
@@ -917,67 +1056,137 @@
     {
       "file": "plombier-calais.html",
       "status": "warning",
-      "scripts_total": 10,
+      "scripts_total": 18,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 2057,
+          "line": 2065,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 2300,
+          "line": 2308,
           "position": "head",
           "severity": "warning"
         }
       ]
+    },
+    {
+      "file": "plombier-coudekerque-branche.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "plombier-coulogne.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
     },
     {
       "file": "plombier-dunkerque.html",
       "status": "warning",
-      "scripts_total": 10,
+      "scripts_total": 18,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 2057,
+          "line": 2065,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 2300,
+          "line": 2308,
           "position": "head",
           "severity": "warning"
         }
       ]
+    },
+    {
+      "file": "plombier-grande-synthe.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "plombier-guines.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "plombier-le-portel.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "plombier-marck.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "plombier-outreau.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "plombier-saint-martin-boulogne.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
     },
     {
       "file": "plombier-saint-omer.html",
       "status": "warning",
-      "scripts_total": 10,
+      "scripts_total": 18,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 2063,
+          "line": 2071,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 2306,
+          "line": 2314,
           "position": "head",
           "severity": "warning"
         }
       ]
     },
     {
+      "file": "plombier-teteghem.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "plombier-wimereux.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
       "file": "pmr-dunkerque.html",
       "status": "warning",
-      "scripts_total": 10,
+      "scripts_total": 16,
       "scripts_blocking": 2,
       "blocking": [
         {
@@ -997,7 +1206,7 @@
     {
       "file": "pmr-saint-omer.html",
       "status": "warning",
-      "scripts_total": 10,
+      "scripts_total": 16,
       "scripts_blocking": 2,
       "blocking": [
         {
@@ -1017,7 +1226,7 @@
     {
       "file": "pro.html",
       "status": "warning",
-      "scripts_total": 7,
+      "scripts_total": 12,
       "scripts_blocking": 1,
       "blocking": [
         {
@@ -1031,14 +1240,14 @@
     {
       "file": "processus.html",
       "status": "ok",
-      "scripts_total": 4,
+      "scripts_total": 10,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "realisation.html",
       "status": "warning",
-      "scripts_total": 3,
+      "scripts_total": 7,
       "scripts_blocking": 1,
       "blocking": [
         {
@@ -1052,18 +1261,18 @@
     {
       "file": "realisations.html",
       "status": "warning",
-      "scripts_total": 8,
+      "scripts_total": 16,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js",
-          "line": 903,
+          "line": 891,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 1356,
+          "line": 1344,
           "position": "head",
           "severity": "warning"
         }
@@ -1072,7 +1281,7 @@
     {
       "file": "remplacement-chauffe-eau.html",
       "status": "warning",
-      "scripts_total": 1,
+      "scripts_total": 6,
       "scripts_blocking": 1,
       "blocking": [
         {
@@ -1086,14 +1295,14 @@
     {
       "file": "reseau-help-confort.html",
       "status": "ok",
-      "scripts_total": 1,
+      "scripts_total": 6,
       "scripts_blocking": 0,
       "blocking": []
     },
     {
       "file": "serrurier-boulogne-sur-mer.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 15,
       "scripts_blocking": 2,
       "blocking": [
         {
@@ -1113,7 +1322,7 @@
     {
       "file": "serrurier-calais.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 15,
       "scripts_blocking": 2,
       "blocking": [
         {
@@ -1129,56 +1338,84 @@
           "severity": "warning"
         }
       ]
+    },
+    {
+      "file": "serrurier-coudekerque-branche.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
     },
     {
       "file": "serrurier-dunkerque.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 16,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 2019,
+          "line": 2023,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 2262,
+          "line": 2266,
           "position": "head",
           "severity": "warning"
         }
       ]
+    },
+    {
+      "file": "serrurier-marck.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
+      "file": "serrurier-outreau.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
     },
     {
       "file": "serrurier-saint-omer.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 16,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 2026,
+          "line": 2030,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 2269,
+          "line": 2273,
           "position": "head",
           "severity": "warning"
         }
       ]
     },
     {
+      "file": "serrurier-wimereux.html",
+      "status": "ok",
+      "scripts_total": 7,
+      "scripts_blocking": 0,
+      "blocking": []
+    },
+    {
       "file": "sinistres.html",
       "status": "warning",
-      "scripts_total": 8,
+      "scripts_total": 14,
       "scripts_blocking": 1,
       "blocking": [
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 857,
+          "line": 861,
           "position": "head",
           "severity": "warning"
         }
@@ -1187,12 +1424,12 @@
     {
       "file": "tarifs.html",
       "status": "warning",
-      "scripts_total": 1,
+      "scripts_total": 13,
       "scripts_blocking": 1,
       "blocking": [
         {
           "src": "script.js",
-          "line": 739,
+          "line": 767,
           "position": "head",
           "severity": "warning"
         }
@@ -1201,7 +1438,7 @@
     {
       "file": "temoignages.html",
       "status": "warning",
-      "scripts_total": 3,
+      "scripts_total": 8,
       "scripts_blocking": 1,
       "blocking": [
         {
@@ -1215,18 +1452,18 @@
     {
       "file": "travaux-dunkerque.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 17,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 1719,
+          "line": 1727,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 1962,
+          "line": 1970,
           "position": "head",
           "severity": "warning"
         }
@@ -1235,18 +1472,18 @@
     {
       "file": "travaux-saint-omer.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 17,
       "scripts_blocking": 2,
       "blocking": [
         {
           "src": "script.js",
-          "line": 1728,
+          "line": 1736,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 1971,
+          "line": 1979,
           "position": "head",
           "severity": "warning"
         }
@@ -1255,7 +1492,7 @@
     {
       "file": "urgence.html",
       "status": "warning",
-      "scripts_total": 1,
+      "scripts_total": 6,
       "scripts_blocking": 1,
       "blocking": [
         {
@@ -1269,7 +1506,7 @@
     {
       "file": "vitrier-dunkerque.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 15,
       "scripts_blocking": 2,
       "blocking": [
         {
@@ -1289,7 +1526,7 @@
     {
       "file": "vitrier-saint-omer.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 15,
       "scripts_blocking": 2,
       "blocking": [
         {
@@ -1309,7 +1546,7 @@
     {
       "file": "volets-dunkerque.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 15,
       "scripts_blocking": 2,
       "blocking": [
         {
@@ -1329,7 +1566,7 @@
     {
       "file": "volets-saint-omer.html",
       "status": "warning",
-      "scripts_total": 9,
+      "scripts_total": 15,
       "scripts_blocking": 2,
       "blocking": [
         {
@@ -1349,7 +1586,7 @@
     {
       "file": "zones-intervention.html",
       "status": "warning",
-      "scripts_total": 8,
+      "scripts_total": 15,
       "scripts_blocking": 3,
       "blocking": [
         {
@@ -1360,13 +1597,13 @@
         },
         {
           "src": "script.js",
-          "line": 1571,
+          "line": 1575,
           "position": "head",
           "severity": "warning"
         },
         {
           "src": "assets/hc-leads-capture.js",
-          "line": 1815,
+          "line": 1819,
           "position": "head",
           "severity": "warning"
         }

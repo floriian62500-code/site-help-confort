@@ -1,14 +1,14 @@
 # Audit canonical URL match — Rapport
 
-_Généré le 2026-05-29 06:58_
+_Généré le 2026-05-30 06:27_
 
 ## Synthèse
 
-- Pages scannées : **107**
-- ✅ OK : **101**
+- Pages scannées : **139**
+- ✅ OK : **132**
 - ❌ Erreurs : **5** (cumul 5 findings)
-- ℹ️  Sans canonical : **1**
-- ⚠️  Avertissements : **1**
+- ℹ️  Sans canonical : **2**
+- ⚠️  Avertissements : **2**
 
 ## Findings
 
@@ -27,6 +27,9 @@ _Généré le 2026-05-29 06:58_
 ### `actualites/2026-05-19-tableau-electrique-aux-normes-nf-c-15-100 2.html`
 - canonical = `https://www.depan59-62.fr/actualites/2026-05-19-tableau-electrique-aux-normes-nf-c-15-100.html`
 - ❌ CANONICAL-PATH-MISMATCH : '/actualites/2026-05-19-tableau-electrique-aux-normes-nf-c-15-100.html' ≠ attendu ['/actualites/2026-05-19-tableau-electrique-aux-normes-nf-c-15-100 2.html', '/actualites/2026-05-19-tableau-electrique-aux-normes-nf-c-15-100 2', '/actualites/2026-05-19-tableau-electrique-aux-normes-nf-c-15-100 2/']
+
+### `espace-client-dashboard.html`
+- ⚠️ Pas de canonical (vérifier audit_html5)
 
 ### `googlef09a1887914c5a23.html`
 - ⚠️ Pas de canonical (vérifier audit_html5)

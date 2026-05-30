@@ -1,18 +1,18 @@
 {
   "version": 1,
-  "generated_at": "2026-05-29T06:56:52",
+  "generated_at": "2026-05-30T06:25:25",
   "thresholds": {
     "warn_kb": 200,
     "error_kb": 500
   },
-  "scanned_images": 176,
-  "total_size_bytes": 11790345,
-  "heavy_count": 8,
-  "warnings": 8,
+  "scanned_images": 178,
+  "total_size_bytes": 12590505,
+  "heavy_count": 10,
+  "warnings": 10,
   "errors": 0,
   "findings": [
     {
-      "path": "images/mascotte-opt.tmp.png",
+      "path": "images/_to_delete_mascotte-opt.tmp.png",
       "size_bytes": 704876,
       "size_kb": 688.4,
       "n_pages": 0,
@@ -25,7 +25,7 @@
       ]
     },
     {
-      "path": "images/mascotte.tmp.png",
+      "path": "images/_to_delete_mascotte.tmp.png",
       "size_bytes": 704876,
       "size_kb": 688.4,
       "n_pages": 0,
@@ -34,6 +34,30 @@
       "severity": "warn",
       "reasons": [
         "poids élevé (688.4 KB)",
+        "non référencée (mort ?)"
+      ]
+    },
+    {
+      "path": "images/_to_delete_mascotte-with-bg.png",
+      "size_bytes": 400080,
+      "size_kb": 390.7,
+      "n_pages": 0,
+      "pages": [],
+      "atf": false,
+      "severity": "warn",
+      "reasons": [
+        "non référencée (mort ?)"
+      ]
+    },
+    {
+      "path": "images/_to_delete_mascotte1.png",
+      "size_bytes": 400080,
+      "size_kb": 390.7,
+      "n_pages": 0,
+      "pages": [],
+      "atf": false,
+      "severity": "warn",
+      "reasons": [
         "non référencée (mort ?)"
       ]
     },

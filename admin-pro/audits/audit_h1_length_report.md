@@ -1,16 +1,16 @@
 # Audit H1 length — Rapport
 
-_Généré le 2026-05-29 06:58_
+_Généré le 2026-05-30 06:27_
 
 ## Synthèse
 
-- Pages scannées : **106**
-- ✅ OK (20-70 chars) : **68**
+- Pages scannées : **138**
+- ✅ OK (20-70 chars) : **93**
 - ⚠️  Warnings (h1 multiples, hors longueur) : **0**
-- ❌ Erreurs (< 20 ou > 70) : **37**
+- ❌ Erreurs (< 20 ou > 70) : **44**
 - ℹ️  Sans h1 ou parse error : **1**
-- Findings totaux : **38**
-  - Erreurs : 37
+- Findings totaux : **45**
+  - Erreurs : 44
   - Avertissements : 1
 
 ## Bornes appliquées
@@ -80,9 +80,21 @@ _Généré le 2026-05-29 06:58_
 > Avant / Après
 - ❌ H1-TOO-SHORT : 13 chars < 20
 
+### `blog-pompe-a-chaleur-air-eau-tout-savoir.html`  (72 chars, n_h1=1)
+> Pompe à chaleur air/eau : tout ce qu'il faut savoir avant de l'installer
+- ❌ H1-TOO-LONG : 72 chars > 70
+
 ### `carrieres.html`  (80 chars, n_h1=1)
 > Rejoignez une équipe qui pense différemment l'artisanat moderne, ça commence ici
 - ❌ H1-TOO-LONG : 80 chars > 70
+
+### `chauffagiste-coudekerque-branche.html`  (82 chars, n_h1=1)
+> Chauffagiste Coudekerque-Branche chaudière, entretien, pompe à chaleur, radiateurs
+- ❌ H1-TOO-LONG : 82 chars > 70
+
+### `chauffagiste-wimereux.html`  (71 chars, n_h1=1)
+> Chauffagiste Wimereux chaudière, entretien, pompe à chaleur, radiateurs
+- ❌ H1-TOO-LONG : 71 chars > 70
 
 ### `depannage-arques.html`  (74 chars, n_h1=1)
 > Dépannage à Arques Plomberie, chauffage, électricité — intervention rapide
@@ -132,6 +144,10 @@ _Généré le 2026-05-29 06:58_
 > Dépannage à Sangatte Plomberie, chauffage, électricité — intervention rapide
 - ❌ H1-TOO-LONG : 76 chars > 70
 
+### `espace-client-dashboard.html`  (9 chars, n_h1=1)
+> Bonjour 👋
+- ❌ H1-TOO-SHORT : 9 chars < 20
+
 ### `guides.html`  (71 chars, n_h1=1)
 > Guides & conseils d'experts tout ce qu'il faut savoir sur votre habitat
 - ❌ H1-TOO-LONG : 71 chars > 70
@@ -156,9 +172,21 @@ _Généré le 2026-05-29 06:58_
 > Plan du site
 - ❌ H1-TOO-SHORT : 12 chars < 20
 
+### `plombier-coudekerque-branche.html`  (71 chars, n_h1=1)
+> Plombier Coudekerque-Branche fuite, débouchage, chauffe-eau, sanitaires
+- ❌ H1-TOO-LONG : 71 chars > 70
+
+### `plombier-saint-martin-boulogne.html`  (73 chars, n_h1=1)
+> Plombier Saint-Martin-Boulogne fuite, débouchage, chauffe-eau, sanitaires
+- ❌ H1-TOO-LONG : 73 chars > 70
+
 ### `pro.html`  (124 chars, n_h1=1)
 > Un partenaire local fiable pour vos interventions habitat. Techniciens salariés · zéro sous-traitance · réseau HELP Confort.
 - ❌ H1-TOO-LONG : 124 chars > 70
+
+### `serrurier-coudekerque-branche.html`  (79 chars, n_h1=1)
+> Serrurier Coudekerque-Branche ouverture de porte, serrure, effraction, blindage
+- ❌ H1-TOO-LONG : 79 chars > 70
 
 ### `sinistres.html`  (101 chars, n_h1=1)
 > Sinistre chez vous ? Nous intervenons techniquement à vos côtés mise en sécurité, diagnostic, travaux
