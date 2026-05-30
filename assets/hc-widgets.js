@@ -86,9 +86,9 @@
     ".hc-fab.open .hc-fab-btn--premium{background:linear-gradient(135deg,#0A1428,#0E2240);box-shadow:0 18px 40px rgba(10,20,40,.40)}" +
 
     /* Bulle de message dynamique premium au-dessus du bouton */
-    ".hc-fab-bubble{position:absolute;bottom:170px;right:8px;z-index:6;background:#fff;color:#0A1428;padding:11px 18px;border-radius:18px 18px 4px 18px;box-shadow:0 14px 32px rgba(13,160,207,.22),0 2px 6px rgba(10,20,40,.08);font-size:.92rem;font-weight:700;max-width:260px;white-space:nowrap;animation:hcBubbleFloat 5s ease-in-out infinite,hcBubbleEnter .5s ease-out;cursor:default;border:1.5px solid rgba(13,160,207,.18)}" +
-    ".hc-fab-bubble .hcfb-text{color:#0A1428;letter-spacing:-.005em}" +
-    ".hc-fab-bubble::after{content:'';position:absolute;bottom:-7px;right:18px;width:14px;height:14px;background:#fff;border-right:1px solid rgba(13,160,207,.12);border-bottom:1px solid rgba(13,160,207,.12);transform:rotate(45deg)}" +
+    ".hc-fab-bubble{position:absolute;bottom:40px;right:130px;z-index:6;background:#fff;color:#0A1428;padding:11px 18px;border-radius:18px 18px 4px 18px;box-shadow:0 14px 32px rgba(13,160,207,.22),0 2px 6px rgba(10,20,40,.08);font-size:.92rem;font-weight:700;max-width:240px;white-space:nowrap;animation:hcBubbleFloat 5s ease-in-out infinite,hcBubbleEnter .5s ease-out;cursor:default;border:1.5px solid rgba(13,160,207,.18)}" +
+    ".hc-fab-bubble .hcfb-text{color:#0A1428;letter-spacing:-.005em;display:inline-block}" +
+    ".hc-fab-bubble::after{content:'';position:absolute;bottom:14px;right:-7px;width:14px;height:14px;background:#fff;border-top:1px solid rgba(13,160,207,.12);border-right:1px solid rgba(13,160,207,.12);transform:rotate(45deg)}" +
     ".hc-fab.open .hc-fab-bubble{display:none}" +
     "@keyframes hcBubbleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}" +
     "@keyframes hcBubbleEnter{0%{opacity:0;transform:translateY(8px) scale(.92)}100%{opacity:1;transform:translateY(0) scale(1)}}" +
