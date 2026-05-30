@@ -328,19 +328,27 @@
       chauffagiste:['Plus de chauffage ?', 'Chaudière en panne ?', 'Entretien à prévoir ?', 'Besoin d\'un devis ?', 'On vous rappelle ?'],
       electricien: ['Panne de courant ?', 'Tableau électrique HS ?', 'Mise aux normes ?', 'Besoin d\'un devis ?', 'On vous rappelle ?'],
       serrurier:   ['Porte claquée ?', 'Serrure HS ?', 'Bris de glace ?', 'Besoin d\'un devis ?', 'On vous rappelle ?'],
+      vitrier:     ['Bris de glace ?', 'Vitrage cassé ?', 'Mise en sécurité ?', 'Devis sur mesure ?', 'On vous rappelle ?'],
+      menuisier:   ['Porte abîmée ?', 'Panneau cassé ?', 'Pose fenêtres ?', 'Devis sur mesure ?', 'On vous rappelle ?'],
+      volets:      ['Volet bloqué ?', 'Tablier cassé ?', 'Moteur HS ?', 'Pose neuve ?', 'On vous rappelle ?'],
+      pmr:         ['Adaptation PMR ?', 'Douche italienne ?', 'MaPrimeAdapt\' ?', 'Devis sur mesure ?', 'On vous rappelle ?'],
       travaux:     ['Projet rénovation ?', 'Devis sur mesure ?', 'Une question travaux ?', 'On vous rappelle ?'],
       contrats:    ['Un contrat sur mesure ?', 'Quelle formule ?', 'Une question ?', 'On vous rappelle ?'],
       contact:     ['Une question ?', 'Demande de devis ?', 'On vous rappelle ?'],
       'default':   ['Une question ?', 'Une fuite ?', 'Besoin d\'un devis ?', 'Plus de chauffage ?', 'Urgence serrurerie ?', 'On vous rappelle ?']
     };
     var key = 'default';
-    if (path.indexOf('plombier') >= 0 || path.indexOf('fuite') >= 0)              key = 'plombier';
-    else if (path.indexOf('chauffag') >= 0 || path.indexOf('chaudiere') >= 0)     key = 'chauffagiste';
-    else if (path.indexOf('electric') >= 0)                                       key = 'electricien';
-    else if (path.indexOf('serrur') >= 0)                                         key = 'serrurier';
-    else if (path.indexOf('travaux') >= 0 || path.indexOf('renovation') >= 0)     key = 'travaux';
-    else if (path.indexOf('contrats') >= 0)                                       key = 'contrats';
-    else if (path.indexOf('contact') >= 0)                                        key = 'contact';
+    if (path.indexOf('plombier') >= 0 || path.indexOf('fuite') >= 0 || path.indexOf('debouchage') >= 0) key = 'plombier';
+    else if (path.indexOf('chauffag') >= 0 || path.indexOf('chaudiere') >= 0 || path.indexOf('entretien') >= 0 || path.indexOf('panne') >= 0) key = 'chauffagiste';
+    else if (path.indexOf('electric') >= 0 || path.indexOf('diagnostic') >= 0) key = 'electricien';
+    else if (path.indexOf('serrur') >= 0 || path.indexOf('ouverture-porte') >= 0) key = 'serrurier';
+    else if (path.indexOf('vitrier') >= 0 || path.indexOf('bris-de-glace') >= 0) key = 'vitrier';
+    else if (path.indexOf('menuisier') >= 0) key = 'menuisier';
+    else if (path.indexOf('volets') >= 0)    key = 'volets';
+    else if (path.indexOf('pmr') >= 0)       key = 'pmr';
+    else if (path.indexOf('travaux') >= 0 || path.indexOf('renovation') >= 0) key = 'travaux';
+    else if (path.indexOf('contrats') >= 0)  key = 'contrats';
+    else if (path.indexOf('contact') >= 0)   key = 'contact';
     var msgs = MSGS_BY_CONTEXT[key] || MSGS_BY_CONTEXT['default'];
     var i = 0;
     setInterval(function() {
