@@ -137,12 +137,12 @@
   </div>
 </div>
 
-<script type="module">
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+// 2026-05-30 — refactor ESM → UMD (le module ESM échouait silencieusement, page bloquée sur "Chargement...")
 const SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
-const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 let allSuppliers = [];
 let editingId = null;
