@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fournisseurs · Back-Office HELP Confort</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+  .fr-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
+  .fr-toolbar .grow{flex:1}
+  .fr-toolbar input,.fr-toolbar select{padding:9px 13px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;font-size:.88rem;background:#fff}
+  .fr-toolbar input:focus,.fr-toolbar select:focus{outline:none;border-color:var(--hc-primary);box-shadow:0 0 0 3px rgba(13,160,207,.10)}
+  .fr-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;border:none;border-radius:10px;font:inherit;font-weight:800;font-size:.88rem;cursor:pointer;box-shadow:0 4px 14px rgba(255,107,26,.25)}
+  .fr-cta:hover{filter:brightness(1.05)}
+  .fr-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .fr-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:.78rem;font-weight:700;border:1px solid var(--ink-100);background:#fff;color:var(--ink-700);cursor:pointer;font:inherit}
+  .fr-chip.is-active{background:#0A1428;color:#fff;border-color:#0A1428}
+  .fr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+  .fr-card{background:#fff;border:1px solid var(--ink-100);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:all .15s ease;cursor:pointer}
+  .fr-card:hover{border-color:#0DA0CF;box-shadow:0 8px 20px rgba(13,160,207,.10);transform:translateY(-2px)}
+  .fr-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+  .fr-card-name{font-size:1.05rem;font-weight:800;color:#0A1428;line-height:1.2}
+  .fr-card-cat{font-size:.74rem;color:#64748b;margin-top:2px}
+  .fr-card-star{font-size:1.1rem;color:#FFB400;flex-shrink:0}
+  .fr-card-metiers{display:flex;flex-wrap:wrap;gap:4px}
+  .fr-card-metier-tag{font-size:.7rem;font-weight:700;padding:3px 8px;border-radius:6px;background:#F0F4F7;color:#475569;letter-spacing:.02em;text-transform:uppercase}
+  .fr-card-contact{font-size:.82rem;color:#64748b;display:flex;flex-direction:column;gap:3px;margin-top:auto;padding-top:10px;border-top:1px solid #F0F4F7}
+  .fr-card-contact a{color:#0DA0CF;text-decoration:none}
+  .fr-card-contact a:hover{text-decoration:underline}
+  .fr-card-actions{display:flex;gap:6px;margin-top:8px}
+  .fr-icon-btn{padding:7px 10px;background:#fff;border:1px solid #E5EDF3;border-radius:8px;color:#475569;cursor:pointer;font:inherit;font-size:.78rem;font-weight:700;display:inline-flex;align-items:center;gap:5px;transition:all .15s ease}
+  .fr-icon-btn:hover{border-color:#0DA0CF;color:#0DA0CF}
+  .fr-icon-btn.danger:hover{border-color:#DC2626;color:#DC2626}
+  .fr-modal{position:fixed;inset:0;background:rgba(10,20,40,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+  .fr-modal.is-open{display:flex}
+  .fr-modal-sheet{background:#fff;border-radius:20px;max-width:640px;width:100%;max-height:90vh;overflow:auto;padding:24px;display:flex;flex-direction:column;gap:14px}
+  .fr-modal-sheet h2{margin:0;font-size:1.3rem;font-weight:800;color:#0A1428}
+  .fr-modal-sheet label{display:block;font-size:.72rem;font-weight:800;color:#64748b;margin-bottom:4px;letter-spacing:.04em;text-transform:uppercase}
+  .fr-modal-sheet input,.fr-modal-sheet textarea,.fr-modal-sheet select{width:100%;padding:10px 12px;border:1px solid #E5EDF3;border-radius:8px;font:inherit;font-size:.92rem;background:#fff;box-sizing:border-box}
+  .fr-modal-sheet input:focus,.fr-modal-sheet textarea:focus,.fr-modal-sheet select:focus{outline:none;border-color:#0DA0CF;box-shadow:0 0 0 3px rgba(13,160,207,.12)}
+  .fr-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .fr-metiers-pick{display:flex;flex-wrap:wrap;gap:6px;padding:10px;background:#F7FBFD;border:1px solid #E5EDF3;border-radius:8px}
+  .fr-metier-cb{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:#fff;border:1px solid #E5EDF3;border-radius:6px;font-size:.78rem;font-weight:600;color:#475569;cursor:pointer}
+  .fr-metier-cb input{width:auto;margin:0}
+  .fr-metier-cb:has(input:checked){background:#0DA0CF;color:#fff;border-color:#0DA0CF}
+  .fr-modal-foot{display:flex;justify-content:space-between;gap:10px;margin-top:8px;padding-top:14px;border-top:1px solid #E5EDF3}
+  .fr-btn-primary{padding:10px 18px;background:#0A1428;color:#fff;border:0;border-radius:8px;font:inherit;font-weight:700;cursor:pointer}
+  .fr-btn-primary:hover{background:#0DA0CF}
+  .fr-btn-secondary{padding:10px 18px;background:transparent;color:#475569;border:1px solid #E5EDF3;border-radius:8px;font:inherit;font-weight:600;cursor:pointer}
+  .fr-btn-secondary:hover{border-color:#0A1428;color:#0A1428}
+  .fr-btn-danger{padding:10px 18px;background:transparent;color:#DC2626;border:1px solid #FCA5A5;border-radius:8px;font:inherit;font-weight:600;cursor:pointer}
+  .fr-btn-danger:hover{background:#FEE2E2}
+  .fr-empty{padding:60px 20px;text-align:center;color:#94a3b8}
+</style>
+</head>
+<body class="admin-body">
+<div class="admin-shell">
+  <main class="admin-main" id="adminMain">
+    <header class="admin-header">
+      <h1>Fournisseurs</h1>
+      <p class="admin-subtitle">Gérez vos partenaires et fournisseurs par métier. Ils alimentent l'autocomplete des prestations.</p>
+    </header>
+
+    <div class="fr-toolbar">
+      <input type="search" id="frSearch" placeholder="Rechercher un fournisseur…" class="grow">
+      <select id="frFilterMetier">
+        <option value="">Tous les métiers</option>
+        <option value="plomberie">Plomberie</option>
+        <option value="chauffage">Chauffage</option>
+        <option value="electricite">Électricité</option>
+        <option value="serrurerie">Serrurerie</option>
+        <option value="vitrerie">Vitrerie</option>
+        <option value="menuiserie">Menuiserie</option>
+        <option value="renovation">Rénovation</option>
+        <option value="volets">Volets</option>
+        <option value="pmr">PMR</option>
+      </select>
+      <button class="fr-cta" id="btnNewFr">+ Nouveau fournisseur</button>
+    </div>
+
+    <div id="frStats" style="font-size:.84rem;color:var(--ink-500);margin-bottom:14px"></div>
+
+    <div class="fr-grid" id="frGrid">
+      <div class="fr-empty">Chargement…</div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL FOURNISSEUR -->
+<div class="fr-modal" id="frModal">
+  <div class="fr-modal-sheet">
+    <h2 id="frModalTitle">Nouveau fournisseur</h2>
+    <form id="frForm">
+      <div class="fr-grid-2">
+        <div><label>Nom *</label><input name="name" required></div>
+        <div><label>Catégorie produit</label><input name="category" placeholder="ex: Chaudière gaz, Robinetterie…"></div>
+      </div>
+      <div style="margin-top:12px"><label>Métier(s) (sélection multiple)</label>
+        <div class="fr-metiers-pick" id="frMetiersPick">
+          <label class="fr-metier-cb"><input type="checkbox" value="plomberie">Plomberie</label>
+          <label class="fr-metier-cb"><input type="checkbox" value="chauffage">Chauffage</label>
+          <label class="fr-metier-cb"><input type="checkbox" value="electricite">Électricité</label>
+          <label class="fr-metier-cb"><input type="checkbox" value="serrurerie">Serrurerie</label>
+          <label class="fr-metier-cb"><input type="checkbox" value="vitrerie">Vitrerie</label>
+          <label class="fr-metier-cb"><input type="checkbox" value="menuiserie">Menuiserie</label>
+          <label class="fr-metier-cb"><input type="checkbox" value="renovation">Rénovation</label>
+          <label class="fr-metier-cb"><input type="checkbox" value="volets">Volets</label>
+          <label class="fr-metier-cb"><input type="checkbox" value="pmr">PMR</label>
+        </div>
+      </div>
+      <div class="fr-grid-2" style="margin-top:12px">
+        <div><label>Site web</label><input name="website" type="url" placeholder="https://..."></div>
+        <div><label>Email contact</label><input name="contact_email" type="email"></div>
+      </div>
+      <div class="fr-grid-2" style="margin-top:12px">
+        <div><label>Téléphone</label><input name="contact_phone" type="tel"></div>
+        <div><label>N° compte client</label><input name="account_number"></div>
+      </div>
+      <div class="fr-grid-2" style="margin-top:12px">
+        <div><label>Modalité de paiement</label><input name="payment_terms" placeholder="30j net, comptant…"></div>
+        <div><label style="text-transform:none;font-weight:500;display:flex;align-items:center;gap:8px"><input type="checkbox" name="is_preferred" style="width:auto"> Fournisseur préféré (★)</label></div>
+      </div>
+      <div style="margin-top:12px"><label>Notes</label><textarea name="notes" rows="3" placeholder="Conditions négociées, commercial dédié, etc."></textarea></div>
+      <div style="margin-top:12px"><label style="text-transform:none;font-weight:500;display:flex;align-items:center;gap:8px"><input type="checkbox" name="active" checked style="width:auto"> Actif (visible dans l'autocomplete prestations)</label></div>
+
+      <div class="fr-modal-foot">
+        <button type="button" class="fr-btn-danger" id="frDelete" style="display:none">Supprimer</button>
+        <span style="flex:1"></span>
+        <button type="button" class="fr-btn-secondary" id="frCancel">Annuler</button>
+        <button type="submit" class="fr-btn-primary">Enregistrer</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+const SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let allSuppliers = [];
+let editingId = null;
+
+const escHtml = (s) => (s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
+async function load() {
+  const { data, error } = await sb.from('suppliers').select('*').order('is_preferred',{ascending:false}).order('name');
+  if (error) { document.getElementById('frGrid').innerHTML = '<div class="fr-empty">Erreur : '+escHtml(error.message)+'</div>'; return; }
+  allSuppliers = data || [];
+  render();
+}
+
+function render() {
+  const q = document.getElementById('frSearch').value.toLowerCase();
+  const metierFilter = document.getElementById('frFilterMetier').value;
+  let filtered = allSuppliers.filter(s => {
+    if (q && !(s.name+' '+(s.category||'')).toLowerCase().includes(q)) return false;
+    if (metierFilter && !(s.metiers||[]).includes(metierFilter)) return false;
+    return true;
+  });
+  const grid = document.getElementById('frGrid');
+  document.getElementById('frStats').textContent = filtered.length + ' fournisseur'+(filtered.length>1?'s':'')+' affiché'+(filtered.length>1?'s':'')+' · ' + allSuppliers.length + ' au total';
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="fr-empty">Aucun fournisseur ne correspond. <a href="#" onclick="document.getElementById(\'btnNewFr\').click();return false" style="color:#0DA0CF">+ Ajouter</a></div>';
+    return;
+  }
+  grid.innerHTML = filtered.map(s => `
+    <div class="fr-card" data-id="${s.id}">
+      <div class="fr-card-head">
+        <div>
+          <div class="fr-card-name">${escHtml(s.name)}</div>
+          ${s.category ? `<div class="fr-card-cat">${escHtml(s.category)}</div>` : ''}
+        </div>
+        ${s.is_preferred ? '<span class="fr-card-star" title="Fournisseur préféré">★</span>' : ''}
+      </div>
+      ${Array.isArray(s.metiers) && s.metiers.length ? `<div class="fr-card-metiers">${s.metiers.map(m => `<span class="fr-card-metier-tag">${escHtml(m)}</span>`).join('')}</div>` : ''}
+      <div class="fr-card-contact">
+        ${s.website ? `<div>🌐 <a href="${escHtml(s.website)}" target="_blank" rel="noopener noreferrer">${escHtml(s.website.replace(/^https?:\/\//,'').slice(0,40))}</a></div>` : ''}
+        ${s.contact_email ? `<div>✉️ <a href="mailto:${escHtml(s.contact_email)}">${escHtml(s.contact_email)}</a></div>` : ''}
+        ${s.contact_phone ? `<div>☎ <a href="tel:${escHtml(s.contact_phone)}">${escHtml(s.contact_phone)}</a></div>` : ''}
+        ${!s.website && !s.contact_email && !s.contact_phone ? '<div style="color:#cbd5e1;font-style:italic">Pas de contact renseigné</div>' : ''}
+      </div>
+      <div class="fr-card-actions">
+        <button class="fr-icon-btn" data-action="edit">✏️ Modifier</button>
+        ${!s.active ? '<span style="font-size:.72rem;color:#94a3b8;padding:5px">(inactif)</span>' : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+document.getElementById('frSearch').addEventListener('input', render);
+document.getElementById('frFilterMetier').addEventListener('change', render);
+
+document.getElementById('frGrid').addEventListener('click', (e) => {
+  const card = e.target.closest('.fr-card');
+  if (!card) return;
+  const btn = e.target.closest('[data-action]');
+  if (!btn || btn.dataset.action !== 'edit') return;
+  const s = allSuppliers.find(x => x.id === card.dataset.id);
+  if (s) openModal(s);
+});
+
+document.getElementById('btnNewFr').addEventListener('click', () => openModal());
+
+function openModal(s) {
+  editingId = s ? s.id : null;
+  document.getElementById('frModalTitle').textContent = s ? 'Modifier le fournisseur' : 'Nouveau fournisseur';
+  document.getElementById('frDelete').style.display = s ? '' : 'none';
+  const form = document.getElementById('frForm');
+  form.reset();
+  if (s) {
+    form.name.value = s.name || '';
+    form.category.value = s.category || '';
+    form.website.value = s.website || '';
+    form.contact_email.value = s.contact_email || '';
+    form.contact_phone.value = s.contact_phone || '';
+    form.account_number.value = s.account_number || '';
+    form.payment_terms.value = s.payment_terms || '';
+    form.notes.value = s.notes || '';
+    form.is_preferred.checked = !!s.is_preferred;
+    form.active.checked = s.active !== false;
+    document.querySelectorAll('#frMetiersPick input').forEach(cb => { cb.checked = (s.metiers||[]).includes(cb.value); });
+  } else {
+    form.active.checked = true;
+  }
+  document.getElementById('frModal').classList.add('is-open');
+}
+
+document.getElementById('frCancel').addEventListener('click', () => document.getElementById('frModal').classList.remove('is-open'));
+document.getElementById('frModal').addEventListener('click', (e) => { if (e.target.id === 'frModal') document.getElementById('frModal').classList.remove('is-open'); });
+
+document.getElementById('frForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const metiers = Array.from(document.querySelectorAll('#frMetiersPick input:checked')).map(cb => cb.value);
+  const payload = {
+    name: fd.get('name'),
+    slug: (fd.get('name')||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''),
+    category: fd.get('category') || null,
+    metiers: metiers,
+    website: fd.get('website') || null,
+    contact_email: fd.get('contact_email') || null,
+    contact_phone: fd.get('contact_phone') || null,
+    account_number: fd.get('account_number') || null,
+    payment_terms: fd.get('payment_terms') || null,
+    notes: fd.get('notes') || null,
+    is_preferred: fd.get('is_preferred') === 'on',
+    active: fd.get('active') === 'on'
+  };
+  const { error } = editingId
+    ? await sb.from('suppliers').update(payload).eq('id', editingId)
+    : await sb.from('suppliers').insert(payload);
+  if (error) { alert('Erreur : ' + error.message); return; }
+  document.getElementById('frModal').classList.remove('is-open');
+  await load();
+});
+
+document.getElementById('frDelete').addEventListener('click', async () => {
+  if (!editingId) return;
+  if (!confirm('Supprimer définitivement ce fournisseur ?')) return;
+  const { error } = await sb.from('suppliers').delete().eq('id', editingId);
+  if (error) { alert('Erreur : ' + error.message); return; }
+  document.getElementById('frModal').classList.remove('is-open');
+  await load();
+});
+
+load();
+</script>
+<script defer src="assets/layout.js"></script>
+<script>if (window.HCLayout) HCLayout.mount('fournisseurs', 'Fournisseurs');</script>
+</body>
+</html>
