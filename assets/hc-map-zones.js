@@ -138,11 +138,10 @@
         </div>\
         <div class="hc-map-container">\
           <div class="hc-map-legend">\
-            <strong>Légende</strong>\
-            <div class="hc-map-legend-row"><span class="hc-map-legend-dot" style="background:#FF6B1A"></span>Saint-Omer</div>\
-            <div class="hc-map-legend-row"><span class="hc-map-legend-dot" style="background:#0DA0CF"></span>Dunkerque</div>\
-            <div class="hc-map-legend-row"><span class="hc-map-legend-dot" style="background:#FFB400"></span>Calais</div>\
-            <div class="hc-map-legend-row"><span class="hc-map-legend-dot" style="background:#22C55E"></span>Boulogne</div>\
+            <strong>Nos 2 agences</strong>\
+            <div class="hc-map-legend-row"><span class="hc-map-legend-dot" style="background:#FF6B1A"></span>Saint-Omer (Dépan\'Audo)</div>\
+            <div class="hc-map-legend-row"><span class="hc-map-legend-dot" style="background:#0DA0CF"></span>Dunkerque (Dépan\'DK)</div>\
+            <div style="margin-top:6px;font-size:.7rem;color:#94a3b8;line-height:1.4">Cercle = zone d\'intervention (~25 km autour de chaque agence)</div>\
           </div>\
           <div id="hcMapEl" role="application" aria-label="Carte interactive Leaflet"></div>\
           <div class="hc-map-info">\
@@ -166,17 +165,26 @@
       scrollWheelZoom: false,
       zoomControl: true
     });
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap',
+    // Tiles Esri (pas de drapeau ukrainien ajouté par OSM en attribution)
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tuiles © Esri',
       maxZoom: 18
     }).addTo(map);
+
+    // Masque agressif : tout overlay tiers (drapeau Ukraine OSM, etc.)
+    var styleFix = document.createElement('style');
+    styleFix.textContent = '#hcMapEl .leaflet-control-attribution a[href*="ukraine" i], #hcMapEl .leaflet-control-attribution img, #hcMapEl img[src*="ukraine" i], #hcMapEl img[alt*="ukraine" i], #hcMapEl [class*="ukraine" i] { display:none !important; }';
+    document.head.appendChild(styleFix);
 
     // Activer scroll wheel quand cliqué dedans
     map.on('focus', function () { map.scrollWheelZoom.enable(); });
     map.on('blur', function () { map.scrollWheelZoom.disable(); });
 
-    ZONES.forEach(function (z) {
-      // Marqueur principal (grosse pastille)
+    // Garder UNIQUEMENT les 2 agences : Saint-Omer + Dunkerque (Florian 2026-05-30)
+    var AGENCES = ZONES.filter(function(z){ return z.name === 'Saint-Omer' || z.name === 'Dunkerque'; });
+
+    AGENCES.forEach(function (z) {
+      // Marqueur agence
       var mainIcon = L.divIcon({
         className: 'hc-marker-main',
         html: '<div class="hc-marker-pin" style="background:' + z.color + '">' + z.name.substring(0, 1) + '</div>',
@@ -191,26 +199,19 @@
         '<a href="' + z.url + '">Voir la page ' + z.name + ' →</a>'
       );
 
-      // Sous-communes (petites pastilles)
-      z.subs.forEach(function (s) {
-        var subIcon = L.divIcon({
-          className: 'hc-marker-sub',
-          html: '<div class="hc-marker-sub-dot" style="background:' + z.color + ';opacity:.7"></div>',
-          iconSize: [14, 14],
-          iconAnchor: [7, 7]
-        });
-        var subMarker = L.marker([s.lat, s.lng], { icon: subIcon }).addTo(map);
-        subMarker.bindPopup(
-          '<small>' + z.zone + ' · ' + s.cp + '</small>' +
-          '<strong>' + s.name + '</strong>' +
-          'Rattaché à ' + z.name + '<br>' +
-          '<a href="' + z.url + '">Voir ' + z.name + ' →</a>'
-        );
-      });
+      // Cercle de couverture (rayon ~25 km) — image la zone d'intervention
+      L.circle([z.lat, z.lng], {
+        radius: 25000,
+        color: z.color,
+        fillColor: z.color,
+        fillOpacity: 0.12,
+        weight: 2,
+        opacity: 0.5
+      }).addTo(map);
     });
 
-    // Fit bounds aux 4 grandes villes
-    var bounds = L.latLngBounds(ZONES.map(function (z) { return [z.lat, z.lng]; }));
+    // Fit bounds sur les 2 agences avec marge généreuse pour montrer les cercles
+    var bounds = L.latLngBounds(AGENCES.map(function (z) { return [z.lat, z.lng]; })).pad(0.3);
     map.fitBounds(bounds, { padding: [40, 40] });
   }
 
