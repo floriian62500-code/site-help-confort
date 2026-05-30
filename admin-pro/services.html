@@ -1202,6 +1202,7 @@
     document.getElementById('cntCatalog').textContent = allServices.length;
     renderTable();
     closeModal();
+    showSyncToast(editingId ? 'modifiée' : 'ajoutée', res.data?.slug);
   });
 
   document.getElementById('svDelete').onclick = async () => {
@@ -1213,7 +1214,27 @@
     document.getElementById('cntCatalog').textContent = allServices.length;
     renderTable();
     closeModal();
+    showSyncToast('supprimée', null);
   };
+
+  // Toast confirmation sync site (2026-05-30 — Florian se plaignait que les modifs n'étaient pas visibles)
+  function showSyncToast(action, slug) {
+    var existing = document.getElementById('hcSyncToast');
+    if (existing) existing.remove();
+    var t = document.createElement('div');
+    t.id = 'hcSyncToast';
+    t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#0A1428;color:#fff;padding:16px 22px;border-radius:14px;font-weight:600;font-size:.95rem;box-shadow:0 18px 40px rgba(0,0,0,.28);z-index:99999;display:flex;align-items:center;gap:14px;max-width:420px;border-left:4px solid #1aa260;animation:hcToastIn .35s ease-out';
+    var msg = 'Prestation ' + action + ' — visible immédiatement sur le site';
+    t.innerHTML = '<span style="font-size:1.3rem">✓</span><div style="flex:1"><div>' + msg + '</div><a href="https://depan59-62.fr/nos-prestations" target="_blank" rel="noopener" style="color:#FFB400;font-size:.85rem;text-decoration:underline">Voir sur le site →</a></div><button onclick="this.parentElement.remove()" style="background:transparent;border:0;color:#fff;font-size:1.3rem;cursor:pointer;padding:0 4px;opacity:.6">×</button>';
+    if (!document.getElementById('hcToastKf')) {
+      var st = document.createElement('style');
+      st.id = 'hcToastKf';
+      st.textContent = '@keyframes hcToastIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}';
+      document.head.appendChild(st);
+    }
+    document.body.appendChild(t);
+    setTimeout(function(){ if (t.parentElement) t.style.transition='opacity .4s'; t.style.opacity='0'; setTimeout(()=>t.remove(), 400); }, 6000);
+  }
 
   // ─── Commandes ────────────────────────────────────────────
   async function loadOrders() {
