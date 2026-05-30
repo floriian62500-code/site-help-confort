@@ -81,7 +81,7 @@
     injectStyle();
     root.innerHTML = '<section class="hc-fournisseurs-section"><div class="container"><div class="hcf-head"><span class="hcf-eyebrow">Nos partenaires</span><h2 class="hcf-title">Marques <em>' + labelMetier(metier) + '</em> que nous installons</h2><p class="hcf-sub">Chargement…</p></div></div></section>';
     var suppliers = await fetchSuppliers(metier);
-    var html = '<section class="hc-fournisseurs-section"><div class="container">';
+    var html = '<section id="fournisseurs" class="hc-fournisseurs-section"><div class="container">';
     html += '<div class="hcf-head"><span class="hcf-eyebrow">Nos partenaires</span><h2 class="hcf-title">Marques <em>' + labelMetier(metier) + '</em> que nous installons</h2>';
     if (suppliers.length) {
       html += '<p class="hcf-sub">' + suppliers.length + ' fabricant' + (suppliers.length > 1 ? 's' : '') + ' référencé' + (suppliers.length > 1 ? 's' : '') + ' — pièces d\'origine, garanties constructeur honorées</p>';

@@ -645,7 +645,12 @@
       const val = toggle.checked;
       const { error } = await sb.from('services').update({ [field]: val }).eq('id', id);
       if (error) { toggle.checked = !val; alert('Erreur : ' + error.message); }
-      else { svc[field] = val; }
+      else {
+        svc[field] = val;
+        if (typeof showSyncToast === 'function') {
+          showSyncToast(field === 'active' ? (val ? 'activée' : 'désactivée') : (field === 'featured' ? (val ? 'mise en avant' : 'retirée de la mise en avant') : 'modifiée'), svc.slug);
+        }
+      }
       return;
     }
     const btn = e.target.closest('[data-action]');
@@ -655,7 +660,12 @@
       if (!confirm(`Supprimer définitivement "${svc.name}" ?`)) return;
       const { error } = await sb.from('services').delete().eq('id', id);
       if (error) alert('Erreur : ' + error.message);
-      else { allServices = allServices.filter(s => s.id !== id); renderTable(); document.getElementById('cntCatalog').textContent = allServices.length; }
+      else {
+        allServices = allServices.filter(s => s.id !== id);
+        renderTable();
+        document.getElementById('cntCatalog').textContent = allServices.length;
+        if (typeof showSyncToast === 'function') showSyncToast('supprimée', null);
+      }
     }
     if (btn.dataset.action === 'ai') {
       await runAiGenerate(svc, btn);
