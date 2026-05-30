@@ -793,8 +793,6 @@ if (document.fonts && document.fonts.ready) {
  </div>
 
  <div class="z-hero-map" aria-label="Carte des zones d'intervention HELP Confort">
- <!-- HC 2026-05-30 : carte Leaflet intégrée DANS le hero (à droite) sur demande Florian -->
- <div data-hc-map-zones></div>
  <!-- HC-FIX V3 2026-05-19 : Leaflet désactivé (drapeaux tiers tile providers / extensions Chrome) -->
  <!-- Le SVG statique du fallback ci-dessous est utilisé comme rendu principal. -->
  <!-- Pour réactiver Leaflet : décommenter les 3 lignes ci-dessous + retirer "style=display:none" du div leaflet -->
@@ -913,7 +911,8 @@ if (document.fonts && document.fonts.ready) {
  }
  })();
  </script>
- <!-- Doublon carte retiré 2026-05-30 — la carte est dans le hero ci-dessus -->
+ <!-- HC 2026-05-30 : carte Leaflet pleine largeur sous le hero (rendu propre) -->
+ <div data-hc-map-zones></div>
  <style>
   @media (min-width: 760px) { .z-agencies-cards { grid-template-columns: 1fr 1fr !important; } }
   .z-agency-card:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(10,20,40,.14) !important; }
