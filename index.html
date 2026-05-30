@@ -1335,9 +1335,11 @@ update();
 }).catch(()=>{track.innerHTML='<div class="hc-mini-loading">Indisponible</div>'});
 }
 setupMini('hc-mini-real-track','https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/realisations-json',function(r){
-var url=r.url||'realisations.html';var photo='';
-if(r.source_facebook){var fb='https://www.facebook.com/plugins/post.php?href='+encodeURIComponent(r.source_facebook)+'&show_text=false&width=400';photo='<div class="photo"><iframe src="'+fb+'" loading="lazy" scrolling="no" frameborder="0"></iframe><span class="fb-tag">Facebook</span></div>';}
-else photo='<div class="photo"></div>';
+var url = r.slug ? ('realisations/'+escHtml(r.slug)+'.html') : 'realisations.html';
+var imgUrl = r.image_after || r.image || r.photo_apres || '';
+var photo = imgUrl
+  ? '<div class="photo" style="background-image:url(\''+escHtml(imgUrl)+'\');background-size:cover;background-position:center"></div>'
+  : '<div class="photo" style="background:linear-gradient(135deg,#FF6B1A,#FFB400);display:flex;align-items:center;justify-content:center;color:#fff;font-size:2.4rem">🔧</div>';
 return '<a href="'+escHtml(url)+'" class="hc-mini-card">'+photo+'<div class="body"><div class="meta"><span class="tag-r">'+escHtml(r.metier)+'</span></div><h5>'+escHtml(r.title)+'</h5><p>'+escHtml((r.description||'').slice(0,80))+'</p></div></a>';
 });
 setupMini('hc-mini-actu-track','content/actualites/index.json',function(a){
