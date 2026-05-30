@@ -858,10 +858,22 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
 
  // Charger services + catégories (Supabase) + fusion avec catalogue local
  let services = [];
+ // Timeout 10s : si le loader reste, on affiche un fallback texte avec retry
+ const loaderTimeout = setTimeout(() => {
+   try {
+     const r = document.getElementById('catalogRoot');
+     if (r && r.querySelector('.nv-empty') === null && r.querySelector('.nv-grid') === null) {
+       r.innerHTML = '<div class="nv-empty" style="padding:40px;text-align:center"><h3 style="color:#0A1428;margin:0 0 12px">Le catalogue tarde à se charger…</h3><p style="color:#475569;margin:0 0 18px">Cliquez ci-dessous pour recharger, ou appelez-nous au <a href="tel:+33366100134" style="color:#0DA0CF;font-weight:700">03 66 10 01 34</a>.</p><button onclick="location.reload()" style="padding:12px 24px;background:#0DA0CF;color:#fff;border:0;border-radius:10px;font-weight:700;cursor:pointer">Recharger la page</button></div>';
+     }
+   } catch(_){}
+ }, 10000);
  try {
  const { data, error } = await sb.from('v_services_public').select('*');
  if (!error && Array.isArray(data)) services = data;
- } catch(e) { console.warn('[catalog] Supabase indisponible — fallback local'); }
+ if (error) console.error('[catalog] Supabase error:', error);
+ } catch(e) { console.error('[catalog] Supabase fetch failed:', e); }
+ // Une fois le fetch terminé, on annule le timeout (le render va s'occuper du DOM)
+ clearTimeout(loaderTimeout);
 
  // ─── DÉDOUBLONNAGE AUTOMATIQUE — fusionne les cartes au nom quasi-identique ───
  // (en attendant nettoyage côté base Supabase via admin-pro/services.html)
