@@ -1366,6 +1366,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
    var fallback = '<div data-fallback>' + (s.icon_emoji ? '<span class="nv-card-emoji" aria-hidden="true">' + s.icon_emoji + '</span>' : pictoTag(catSlug, 64)) + '</div>';
    return fallback + '<img src="' + u + '" alt="' + escapeHtml(s.name) + '" loading="lazy" onerror="this.remove()" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:2;background:linear-gradient(180deg,#FAFCFD,#F0F4F7);padding:8%">';
  })()}
+ ${(Array.isArray(s.variants) && s.variants.length > 0) ? `<div style="position:absolute;bottom:10px;left:10px;right:10px;background:rgba(13,160,207,.95);backdrop-filter:blur(8px);color:#fff;padding:7px 12px;border-radius:8px;font-size:.78rem;font-weight:700;text-align:center;z-index:3;box-shadow:0 4px 12px rgba(13,160,207,.35)">✨ ${s.variants.length + 1} options au choix (Éco + ${s.variants.length})</div>` : ''}
  </div>
  <div class="nv-card-body">
  <h3 class="nv-card-name">${escapeHtml(s.name)}</h3>
