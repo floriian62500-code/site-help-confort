@@ -1332,8 +1332,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  return `
  <article class="nv-card" data-service-id="${s.id}">
  <div class="nv-card-visual" data-cat="${escapeHtml(catSlug)}">
- ${s.badge ? `<span class="nv-card-badge" style="z-index:3">${escapeHtml(s.badge)}</span>` : ''}
- ${(function(){
+  ${(function(){
    var u = s.image_url || ('https://btcbjwqiivhpwoszomhg.supabase.co/storage/v1/object/public/prestations/' + s.slug + '.jpg');
    var fallback = '<div data-fallback>' + (s.icon_emoji ? '<span class="nv-card-emoji" aria-hidden="true">' + s.icon_emoji + '</span>' : pictoTag(catSlug, 64)) + '</div>';
    return fallback + '<img src="' + u + '" alt="' + escapeHtml(s.name) + '" loading="lazy" onerror="this.remove()" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:2;background:linear-gradient(180deg,#FAFCFD,#F0F4F7);padding:8%">';
