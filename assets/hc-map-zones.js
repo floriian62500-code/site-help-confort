@@ -1,69 +1,55 @@
 /* ============================================================
    HC-MAP-ZONES — Carte interactive Leaflet zones d'intervention
-   Marqueurs 4 grandes villes + sous-communes
+   V3 (2026-05-30) — 4 villes + polygone zone + tiles CartoDB neutres
    Utilisation : <div data-hc-map-zones></div>
    ============================================================ */
 (function () {
   'use strict';
 
-  var ZONES = [
+  // 4 villes principales — 2 agences + 2 zones intervention élargies
+  var VILLES = [
     {
       name: 'Saint-Omer', cp: '62500', zone: 'Audomarois',
       lat: 50.7508, lng: 2.2522, color: '#FF6B1A',
+      role: 'agence',
       url: 'depannage-saint-omer.html',
-      desc: 'Agence Dépan\'Audo · siège historique',
-      subs: [
-        { name: 'Longuenesse', cp: '62219', lat: 50.7392, lng: 2.2331 },
-        { name: 'Arques', cp: '62510', lat: 50.7397, lng: 2.3056 },
-        { name: 'Saint-Martin-lez-Tatinghem', cp: '62500', lat: 50.7497, lng: 2.2256 },
-        { name: 'Wizernes', cp: '62570', lat: 50.7236, lng: 2.2106 },
-        { name: 'Blendecques', cp: '62575', lat: 50.7253, lng: 2.2417 },
-        { name: 'Aire-sur-la-Lys', cp: '62120', lat: 50.6356, lng: 2.3956 },
-        { name: 'Lumbres', cp: '62380', lat: 50.7081, lng: 2.1267 }
-      ]
+      desc: "Agence Dépan'Audo · siège historique"
     },
     {
       name: 'Dunkerque', cp: '59140', zone: 'Dunkerquois',
       lat: 51.0344, lng: 2.3768, color: '#0DA0CF',
+      role: 'agence',
       url: 'depannage-dunkerque.html',
-      desc: 'Agence Dépan\'DK · littoral',
-      subs: [
-        { name: 'Saint-Pol-sur-Mer', cp: '59430', lat: 51.0258, lng: 2.3386 },
-        { name: 'Coudekerque-Branche', cp: '59210', lat: 51.0292, lng: 2.4011 },
-        { name: 'Bergues', cp: '59380', lat: 50.9683, lng: 2.4308 },
-        { name: 'Gravelines', cp: '59820', lat: 50.9847, lng: 2.1267 },
-        { name: 'Grande-Synthe', cp: '59760', lat: 51.0153, lng: 2.2972 },
-        { name: 'Téteghem', cp: '59229', lat: 51.0181, lng: 2.4486 },
-        { name: 'Bray-Dunes', cp: '59123', lat: 51.0719, lng: 2.5181 }
-      ]
+      desc: "Agence Dépan'DK · littoral"
     },
     {
       name: 'Calais', cp: '62100', zone: 'Calaisis',
       lat: 50.9513, lng: 1.8587, color: '#FFB400',
+      role: 'zone',
       url: 'depannage-calais.html',
-      desc: 'Zone Cité de l\'Europe',
-      subs: [
-        { name: 'Coquelles', cp: '62231', lat: 50.9311, lng: 1.8131 },
-        { name: 'Sangatte', cp: '62231', lat: 50.9417, lng: 1.7456 },
-        { name: 'Marck', cp: '62730', lat: 50.9603, lng: 1.9550 },
-        { name: 'Coulogne', cp: '62137', lat: 50.9244, lng: 1.8786 },
-        { name: 'Guînes', cp: '62340', lat: 50.8650, lng: 1.8697 }
-      ]
+      desc: "Zone Cité de l'Europe · Côte d'Opale"
     },
     {
       name: 'Boulogne-sur-Mer', cp: '62200', zone: 'Boulonnais',
       lat: 50.7264, lng: 1.6147, color: '#22C55E',
+      role: 'zone',
       url: 'depannage-boulogne-sur-mer.html',
-      desc: 'Port + agglo CAB',
-      subs: [
-        { name: 'Saint-Martin-Boulogne', cp: '62280', lat: 50.7242, lng: 1.6308 },
-        { name: 'Outreau', cp: '62230', lat: 50.7044, lng: 1.5828 },
-        { name: 'Le Portel', cp: '62480', lat: 50.7081, lng: 1.5697 },
-        { name: 'Wimereux', cp: '62930', lat: 50.7706, lng: 1.6094 },
-        { name: 'Saint-Léonard', cp: '62360', lat: 50.6961, lng: 1.6336 },
-        { name: 'Équihen-Plage', cp: '62224', lat: 50.6803, lng: 1.5739 }
-      ]
+      desc: "Port + agglomération CAB · sud Côte d'Opale"
     }
+  ];
+
+  // Polygone englobant la zone d'intervention complète (Côte d'Opale + arrière-pays + Audomarois + Dunkerquois)
+  // Trace approximative basée sur les frontières naturelles des bassins
+  var POLYGON_ZONE = [
+    [51.090, 1.520],  // NW Cap Gris-Nez
+    [51.090, 2.580],  // NE Bray-Dunes
+    [50.960, 2.690],  // E Bergues
+    [50.620, 2.520],  // SE Aire-sur-la-Lys / Hazebrouck
+    [50.560, 2.280],  // S Lillers
+    [50.520, 1.940],  // SW Desvres
+    [50.580, 1.560],  // SSW arrière-pays boulonnais
+    [50.700, 1.500],  // W Wimereux
+    [50.860, 1.480]   // NW Cap Blanc-Nez
   ];
 
   var CSS = '\
@@ -76,30 +62,40 @@
 .hc-map-head h2 em{font-family:"Playfair Display",Georgia,serif;font-style:italic;color:#0DA0CF;font-weight:600}\
 .hc-map-head p{color:#475569;margin:0;font-size:1rem;line-height:1.55}\
 .hc-map-container{position:relative;border-radius:20px;overflow:hidden;border:1px solid #E5EDF3;box-shadow:0 14px 40px rgba(10,20,40,.10);background:#fff}\
-#hcMapEl{height:520px;background:#E5EDF3}\
-.hc-map-legend{position:absolute;top:14px;left:14px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-radius:12px;padding:12px 14px;box-shadow:0 6px 18px rgba(10,20,40,.10);z-index:400;font-size:.78rem;color:#475569;line-height:1.5;max-width:200px}\
-.hc-map-legend strong{display:block;color:#0A1428;font-weight:800;margin-bottom:6px;font-size:.82rem}\
-.hc-map-legend-row{display:flex;align-items:center;gap:7px;margin-bottom:3px}\
-.hc-map-legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;box-shadow:0 0 0 2px rgba(255,255,255,.9)}\
-.hc-map-info{padding:20px 24px;background:linear-gradient(135deg,#0A1428,#172240);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}\
-.hc-map-info-stats{display:flex;gap:20px;flex-wrap:wrap}\
+#hcMapEl{height:560px;background:#E5EDF3}\
+.hc-map-legend{position:absolute;top:14px;left:14px;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-radius:14px;padding:14px 16px;box-shadow:0 8px 22px rgba(10,20,40,.12);z-index:400;font-size:.78rem;color:#475569;line-height:1.55;max-width:230px;border:1px solid rgba(13,160,207,.12)}\
+.hc-map-legend strong{display:block;color:#0A1428;font-weight:800;margin-bottom:8px;font-size:.86rem}\
+.hc-map-legend-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}\
+.hc-map-legend-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;box-shadow:0 0 0 2px rgba(255,255,255,.9)}\
+.hc-map-legend-zone{display:inline-block;width:18px;height:11px;border:1.5px dashed #0DA0CF;background:rgba(13,160,207,.10);border-radius:2px;flex-shrink:0;margin-right:8px}\
+.hc-map-info{padding:22px 26px;background:linear-gradient(135deg,#0A1428,#172240);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}\
+.hc-map-info-stats{display:flex;gap:24px;flex-wrap:wrap}\
 .hc-map-info-stat{display:flex;flex-direction:column;line-height:1.2}\
-.hc-map-info-stat strong{color:#1FC4F0;font-size:1.4rem;font-weight:800;letter-spacing:-.02em}\
+.hc-map-info-stat strong{color:#1FC4F0;font-size:1.5rem;font-weight:800;letter-spacing:-.02em}\
 .hc-map-info-stat span{color:rgba(255,255,255,.65);font-size:.74rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em}\
-.hc-map-info a{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:#FF6B1A;color:#fff;border-radius:10px;text-decoration:none;font-size:.92rem;font-weight:700;transition:transform .2s ease,box-shadow .2s ease}\
+.hc-map-info a{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:#FF6B1A;color:#fff;border-radius:10px;text-decoration:none;font-size:.94rem;font-weight:700;transition:transform .2s ease,box-shadow .2s ease}\
 .hc-map-info a:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(255,107,26,.40)}\
 .hc-marker-main{background:transparent;border:none}\
-.hc-marker-pin{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;color:#fff;font-weight:900;font-size:1rem;box-shadow:0 6px 16px rgba(0,0,0,.30);border:3px solid #fff;transition:transform .2s ease}\
-.hc-marker-pin:hover{transform:scale(1.1);cursor:pointer}\
-.hc-marker-sub{background:transparent;border:none}\
-.hc-marker-sub-dot{width:14px;height:14px;border-radius:50%;background:#475569;border:2px solid #fff;box-shadow:0 3px 8px rgba(0,0,0,.25);cursor:pointer;transition:transform .2s ease}\
-.hc-marker-sub-dot:hover{transform:scale(1.4);background:#0DA0CF}\
-.leaflet-popup-content-wrapper{border-radius:14px !important;box-shadow:0 18px 40px rgba(10,20,40,.20) !important}\
+.hc-marker-pin{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-weight:900;border:3px solid #fff;box-shadow:0 8px 18px rgba(0,0,0,.35);transition:transform .2s ease;text-align:center;line-height:1}\
+.hc-marker-pin.agence{width:54px;height:54px;border-radius:50%;font-size:.7rem;padding:3px}\
+.hc-marker-pin.agence span{font-size:.58rem;font-weight:600;opacity:.9;letter-spacing:.05em;text-transform:uppercase;margin-top:1px}\
+.hc-marker-pin.zone{width:38px;height:38px;border-radius:50%;font-size:1rem}\
+.hc-marker-pin:hover{transform:scale(1.12);cursor:pointer}\
+.leaflet-popup-content-wrapper{border-radius:14px !important;box-shadow:0 18px 40px rgba(10,20,40,.20) !important;padding:0 !important}\
 .leaflet-popup-content{margin:14px 18px !important;font-family:"Inter",sans-serif !important;font-size:.88rem !important;line-height:1.5 !important}\
-.leaflet-popup-content strong{color:#0A1428;font-weight:800;font-size:1.02rem;display:block;margin-bottom:4px}\
-.leaflet-popup-content small{color:#94a3b8;font-size:.74rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase}\
-.leaflet-popup-content a{display:inline-flex;align-items:center;gap:5px;color:#0DA0CF;font-weight:700;font-size:.86rem;text-decoration:none;margin-top:6px}\
-.leaflet-popup-content a:hover{color:#FF6B1A}';
+.leaflet-popup-content strong{color:#0A1428;font-weight:800;font-size:1.04rem;display:block;margin-bottom:4px}\
+.leaflet-popup-content small{color:#94a3b8;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}\
+.leaflet-popup-content a{display:inline-flex;align-items:center;gap:5px;color:#0DA0CF;font-weight:700;font-size:.86rem;text-decoration:none;margin-top:8px}\
+.leaflet-popup-content a:hover{color:#FF6B1A}\
+.leaflet-control-attribution{font-size:.62rem !important;background:rgba(255,255,255,.85) !important}\
+/* Anti-drapeau Ukraine : masquer tout overlay tiers depuis attribution, alt, src ou class */\
+.leaflet-container a[href*="ukraine" i],\
+.leaflet-container img[src*="ukraine" i],\
+.leaflet-container img[alt*="ukraine" i],\
+.leaflet-container [class*="ukraine" i],\
+.leaflet-container [style*="ukraine" i],\
+.leaflet-control-attribution a[href*="osm"],\
+.leaflet-control-attribution a[href*="openstreetmap"]{display:none !important;visibility:hidden !important;width:0 !important;height:0 !important}';
 
   function injectCSS() {
     if (document.getElementById('hc-map-style')) return;
@@ -111,14 +107,12 @@
 
   function loadLeaflet(cb) {
     if (window.L) { cb(); return; }
-    // CSS Leaflet
     var link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
     link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
     link.crossOrigin = '';
     document.head.appendChild(link);
-    // JS Leaflet
     var script = document.createElement('script');
     script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
     script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
@@ -133,22 +127,25 @@
       <div class="hc-map-wrap">\
         <div class="hc-map-head">\
           <span class="hc-map-eyebrow">Zones d\'intervention</span>\
-          <h2>Notre <em>zone d\'intervention</em> sur la carte</h2>\
-          <p>Cliquez sur un marqueur pour voir les détails de chaque ville et accéder à sa page dédiée.</p>\
+          <h2>Toute la <em>Côte d\'Opale</em> &amp; l\'arrière-pays</h2>\
+          <p>De Saint-Omer à Boulogne-sur-Mer en passant par Calais et Dunkerque — nos 2 agences locales couvrent la totalité du Pas-de-Calais nord et du Dunkerquois. Cliquez sur un marqueur pour voir les détails.</p>\
         </div>\
         <div class="hc-map-container">\
           <div class="hc-map-legend">\
-            <strong>Nos 2 agences</strong>\
-            <div class="hc-map-legend-row"><span class="hc-map-legend-dot" style="background:#FF6B1A"></span>Saint-Omer (Dépan\'Audo)</div>\
-            <div class="hc-map-legend-row"><span class="hc-map-legend-dot" style="background:#0DA0CF"></span>Dunkerque (Dépan\'DK)</div>\
-            <div style="margin-top:6px;font-size:.7rem;color:#94a3b8;line-height:1.4">Cercle = zone d\'intervention (~25 km autour de chaque agence)</div>\
+            <strong>Notre zone d\'intervention</strong>\
+            <div class="hc-map-legend-row"><span class="hc-map-legend-dot" style="background:#FF6B1A;width:13px;height:13px;border:2px solid #fff"></span><strong style="font-size:.78rem;color:#0A1428;font-weight:700">Saint-Omer</strong> <span style="opacity:.7;font-size:.72rem">· Dépan\'Audo</span></div>\
+            <div class="hc-map-legend-row"><span class="hc-map-legend-dot" style="background:#0DA0CF;width:13px;height:13px;border:2px solid #fff"></span><strong style="font-size:.78rem;color:#0A1428;font-weight:700">Dunkerque</strong> <span style="opacity:.7;font-size:.72rem">· Dépan\'DK</span></div>\
+            <div class="hc-map-legend-row"><span class="hc-map-legend-dot" style="background:#FFB400"></span><span style="font-size:.76rem">Calais &amp; Calaisis</span></div>\
+            <div class="hc-map-legend-row"><span class="hc-map-legend-dot" style="background:#22C55E"></span><span style="font-size:.76rem">Boulogne &amp; Boulonnais</span></div>\
+            <div style="margin-top:10px;padding-top:8px;border-top:1px solid #f0f4f7;display:flex;align-items:center;gap:8px"><span class="hc-map-legend-zone"></span><span style="font-size:.72rem">Zone d\'intervention complète</span></div>\
           </div>\
           <div id="hcMapEl" role="application" aria-label="Carte interactive Leaflet"></div>\
           <div class="hc-map-info">\
             <div class="hc-map-info-stats">\
-              <div class="hc-map-info-stat"><strong>4</strong><span>zones principales</span></div>\
-              <div class="hc-map-info-stat"><strong>80+</strong><span>communes</span></div>\
-              <div class="hc-map-info-stat"><strong>2</strong><span>agences locales</span></div>\
+              <div class="hc-map-info-stat"><strong>4</strong><span>Villes principales</span></div>\
+              <div class="hc-map-info-stat"><strong>80+</strong><span>Communes couvertes</span></div>\
+              <div class="hc-map-info-stat"><strong>2</strong><span>Agences locales</span></div>\
+              <div class="hc-map-info-stat"><strong>24h</strong><span>Devis ouvré</span></div>\
             </div>\
             <a href="nos-villes.html">Voir toutes nos villes →</a>\
           </div>\
@@ -157,62 +154,87 @@
     </section>';
   }
 
+  function killUkraineOverlay() {
+    // Boucle pour zapper tout élément qui contient "ukrain" dans son contenu/attributs
+    try {
+      document.querySelectorAll('#hcMapEl *').forEach(function (el) {
+        var blob = (el.outerHTML || '').toLowerCase();
+        if (blob.indexOf('ukrain') !== -1 || blob.indexOf('🇺🇦') !== -1) {
+          el.style.display = 'none';
+          el.style.visibility = 'hidden';
+        }
+      });
+      // Attribution Leaflet : remplacer entièrement
+      var attr = document.querySelector('#hcMapEl .leaflet-control-attribution');
+      if (attr) attr.innerHTML = 'Tuiles © <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>';
+    } catch (e) {}
+  }
+
   function buildMap() {
     var L = window.L;
     var map = L.map('hcMapEl', {
-      center: [50.92, 2.05],
+      center: [50.85, 1.95],
       zoom: 9,
       scrollWheelZoom: false,
-      zoomControl: true
+      zoomControl: true,
+      attributionControl: true
     });
-    // Tiles Esri (pas de drapeau ukrainien ajouté par OSM en attribution)
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tuiles © Esri',
+
+    // Tiles CartoDB Voyager — neutres, pas d'overlay drapeau Ukraine
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      attribution: 'Tuiles © CARTO',
+      subdomains: 'abcd',
       maxZoom: 18
     }).addTo(map);
 
-    // Masque agressif : tout overlay tiers (drapeau Ukraine OSM, etc.)
-    var styleFix = document.createElement('style');
-    styleFix.textContent = '#hcMapEl .leaflet-control-attribution a[href*="ukraine" i], #hcMapEl .leaflet-control-attribution img, #hcMapEl img[src*="ukraine" i], #hcMapEl img[alt*="ukraine" i], #hcMapEl [class*="ukraine" i] { display:none !important; }';
-    document.head.appendChild(styleFix);
+    // Kill overlay drapeau Ukraine après chargement + tous les 2s pendant 10s (parano)
+    setTimeout(killUkraineOverlay, 300);
+    setTimeout(killUkraineOverlay, 1500);
+    setTimeout(killUkraineOverlay, 3000);
+    setTimeout(killUkraineOverlay, 6000);
 
-    // Activer scroll wheel quand cliqué dedans
     map.on('focus', function () { map.scrollWheelZoom.enable(); });
     map.on('blur', function () { map.scrollWheelZoom.disable(); });
 
-    // Garder UNIQUEMENT les 2 agences : Saint-Omer + Dunkerque (Florian 2026-05-30)
-    var AGENCES = ZONES.filter(function(z){ return z.name === 'Saint-Omer' || z.name === 'Dunkerque'; });
-
-    AGENCES.forEach(function (z) {
-      // Marqueur agence
-      var mainIcon = L.divIcon({
-        className: 'hc-marker-main',
-        html: '<div class="hc-marker-pin" style="background:' + z.color + '">' + z.name.substring(0, 1) + '</div>',
-        iconSize: [42, 42],
-        iconAnchor: [21, 21]
-      });
-      var mainMarker = L.marker([z.lat, z.lng], { icon: mainIcon }).addTo(map);
-      mainMarker.bindPopup(
-        '<small style="color:' + z.color + '">' + z.zone + ' · ' + z.cp + '</small>' +
-        '<strong>' + z.name + '</strong>' +
-        z.desc + '<br>' +
-        '<a href="' + z.url + '">Voir la page ' + z.name + ' →</a>'
-      );
-
-      // Cercle de couverture (rayon ~25 km) — image la zone d'intervention
-      L.circle([z.lat, z.lng], {
-        radius: 25000,
-        color: z.color,
-        fillColor: z.color,
-        fillOpacity: 0.12,
-        weight: 2,
-        opacity: 0.5
-      }).addTo(map);
+    // ─── POLYGONE de la zone d'intervention complète ───
+    var zonePoly = L.polygon(POLYGON_ZONE, {
+      color: '#0DA0CF',
+      weight: 2.5,
+      opacity: 0.7,
+      fillColor: '#0DA0CF',
+      fillOpacity: 0.08,
+      dashArray: '6, 6',
+      lineJoin: 'round'
+    }).addTo(map);
+    zonePoly.bindTooltip('Zone d\'intervention HELP Confort', {
+      permanent: false, direction: 'center', className: 'hc-map-tooltip-zone',
+      offset: [0, 0]
     });
 
-    // Fit bounds sur les 2 agences avec marge généreuse pour montrer les cercles
-    var bounds = L.latLngBounds(AGENCES.map(function (z) { return [z.lat, z.lng]; })).pad(0.3);
-    map.fitBounds(bounds, { padding: [40, 40] });
+    // ─── Markers 4 villes ───
+    VILLES.forEach(function (v) {
+      var isAgence = v.role === 'agence';
+      var iconHtml = isAgence
+        ? '<div class="hc-marker-pin agence" style="background:' + v.color + '">' + v.name.substring(0, 2).toUpperCase() + '<span>★ Agence</span></div>'
+        : '<div class="hc-marker-pin zone" style="background:' + v.color + '">' + v.name.substring(0, 1) + '</div>';
+      var icon = L.divIcon({
+        className: 'hc-marker-main',
+        html: iconHtml,
+        iconSize: isAgence ? [54, 54] : [38, 38],
+        iconAnchor: isAgence ? [27, 27] : [19, 19]
+      });
+      var marker = L.marker([v.lat, v.lng], { icon: icon, zIndexOffset: isAgence ? 1000 : 500 }).addTo(map);
+      var roleLabel = isAgence ? '★ Agence locale' : 'Zone d\'intervention';
+      marker.bindPopup(
+        '<small style="color:' + v.color + '">' + roleLabel + ' · ' + v.zone + ' · ' + v.cp + '</small>' +
+        '<strong>' + v.name + '</strong>' +
+        v.desc + '<br>' +
+        '<a href="' + v.url + '">Voir la page ' + v.name + ' →</a>'
+      );
+    });
+
+    // Fit bounds sur le polygone (montre toute la zone)
+    map.fitBounds(zonePoly.getBounds(), { padding: [30, 30] });
   }
 
   function inject() {
@@ -221,7 +243,6 @@
       if (el.dataset.hcMapDone) return;
       el.dataset.hcMapDone = '1';
       el.innerHTML = buildSection();
-      // Observer pour init seulement quand visible (lazy)
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
