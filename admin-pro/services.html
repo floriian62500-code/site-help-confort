@@ -357,10 +357,16 @@
 
   // ─── Chargement initial ──────────────────────────────────
   async function loadAll() {
-    const [catsRes, svcRes] = await Promise.all([
+    const [catsRes, svcRes, suppliersRes] = await Promise.all([
       safe(sb.from('service_categories').select('*').order('position')),
-      safe(sb.from('services').select('*').order('position'))
+      safe(sb.from('services').select('*').order('position')),
+      safe(sb.from('suppliers').select('name,is_preferred,metiers').eq('active', true).order('is_preferred',{ascending:false}).order('name'))
   ]);
+    // Peupler la datalist autocomplete fournisseurs
+    if (suppliersRes.data) {
+      const dl = document.getElementById('frBrandList');
+      if (dl) dl.innerHTML = suppliersRes.data.map(s => `<option value="${escapeHtml(s.name)}">${s.is_preferred ? '★ ' : ''}${(s.metiers||[]).join(', ')}</option>`).join('');
+    }
     if (catsRes.error || svcRes.error) {
       document.getElementById('svTbody').innerHTML = `<tr><td colspan="9" style="padding:40px;text-align:center;color:#E11D48">Erreur : ${catsRes.error?.message || svcRes.error?.message}.<br><small>Vérifie que la migration <code>setup_services_catalog.sql</code> a été exécutée dans Supabase.</small></td></tr>`;
       return;
