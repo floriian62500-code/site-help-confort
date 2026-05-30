@@ -911,9 +911,10 @@ if (document.fonts && document.fonts.ready) {
  }
  })();
  </script>
- <!-- HC-FIX V3 2026-05-19 : SVG comme rendu principal (Leaflet désactivé) -->
- <!-- HC-FIX V4 2026-05-22 : SVG carte cassée remplacée par 2 cards agence claires + CTA -->
- <div class="z-agencies-cards" style="display:grid;grid-template-columns:1fr;gap:18px;padding:18px">
+ <!-- HC-FIX 2026-05-29 : Remplacement des 2 cards par la carte Leaflet interactive (même composant que /a-propos) sur demande Florian -->
+ <div data-hc-map-zones></div>
+ <!-- ════ Cards d'agence retirées 2026-05-29 (remplacées par carte ci-dessus) ════
+ <div class="z-agencies-cards-DISABLED" style="display:none;grid-template-columns:1fr;gap:18px;padding:18px">
   <!-- AGENCE SAINT-OMER -->
   <a href="contact.html?metier=Multi&objet=Intervention+Saint-Omer#form" class="z-agency-card" style="display:flex;flex-direction:column;background:linear-gradient(135deg,#fff 0%,#F8FCFE 100%);border:2px solid #0DA0CF;border-radius:18px;padding:22px 24px;text-decoration:none;color:inherit;box-shadow:0 8px 22px rgba(13,160,207,.12);transition:transform .2s ease,box-shadow .2s ease">
    <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
@@ -976,6 +977,7 @@ if (document.fonts && document.fonts.ready) {
    </div>
   </a>
  </div>
+ ════ /Cards d'agence retirées -->
  <style>
   @media (min-width: 760px) { .z-agencies-cards { grid-template-columns: 1fr 1fr !important; } }
   .z-agency-card:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(10,20,40,.14) !important; }
