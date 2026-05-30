@@ -1224,6 +1224,15 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
      }
      subs[sub].items.push(s);
    });
+   // Ordre prioritaire : contrats en premier (Florian 2026-05-30)
+   const PRIO = ['contrats', 'chaudiere', 'chauffe-eau'];
+   order.sort((a, b) => {
+     const ia = PRIO.indexOf(a); const ib = PRIO.indexOf(b);
+     if (ia === -1 && ib === -1) return 0;
+     if (ia === -1) return 1;
+     if (ib === -1) return -1;
+     return ia - ib;
+   });
    return order.map(k => subs[k]);
  }
 
