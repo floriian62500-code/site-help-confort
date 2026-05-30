@@ -568,7 +568,7 @@ if (document.fonts && document.fonts.ready) {
  padding: 0 clamp(20px, 4vw, 40px);
  display: grid; grid-template-columns: 1fr; gap: 36px; align-items: stretch;
  }
- @media (min-width: 1000px) {.z-hero-inner { grid-template-columns: 1fr 1fr; gap: 50px; } }.z-hero-text-col { display: flex; flex-direction: column; justify-content: center; }.z-hero-eye {
+ /* Carte en dessous du bandeau hero (Florian 2026-05-30) — désactivation grid 2 cols */.z-hero-text-col { display: flex; flex-direction: column; justify-content: center; }.z-hero-eye {
  display: inline-flex; align-items: center; gap: 8px;
  font-size:.76rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
  color: var(--m-color-dark); background: rgba(255,255,255,.85);
