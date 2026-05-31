@@ -1239,7 +1239,7 @@ if (document.fonts && document.fonts.ready) {
  if(!track) return;
  fetch('content/realisations/index.json?t=' + Date.now()).then(function(r){return r.ok?r.json():Promise.reject()}).then(function(list){
  var plomb = list.filter(function(r){
- return r.published !== false && (r.metier === 'Plomberie' || /plomb/i.test(r.metier||''));
+ return r.published !== false && (/^(plomberie|Plomberie|plomb)$/i.test(r.metier||'') || /plomb/i.test(r.metier||''));
  }).slice(0, 2);
  if(!plomb.length) return; // garde le fallback statique
  track.innerHTML = plomb.map(function(r){
