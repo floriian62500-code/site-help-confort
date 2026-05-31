@@ -894,10 +894,11 @@ function classifyReal(r) {
   if (r.image_before && r.image_after) return 'chantier';
 
   // 4) Mots-clés métier précis = chantier (même sans avant/après)
-  if (/remplacement|installation|pose|dépannage|réparation|débouchage|désengorgement|désembouage|détartrage|entretien|ouverture|fuite|chaudière|chauffe-eau|radiateur|mitigeur|robinet|chasse d'eau|porte de (garage|service|entrée|fenêtre)|volet|vitrage|insert|cylindre|cellier|plafond|peinture/.test(blob)) return 'chantier';
+  if (/remplacement|installation|pose|dépannage|réparation|débouchage|désengorgement|désembouage|détartrage|entretien|ouverture|fuite|chaudière|chauffe-eau|radiateur|mitigeur|robinet|chasse d'eau|porte de (garage|service|entrée|fenêtre)|volet|vitrage|insert|cylindre|cellier|plafond|peinture|r[ée]fection|r[ée]novation|enduit|carrelage|salle de bain|cuisine|isolation|sanitaire|baignoire|douche|moteur|tablier|ravalement|cl[ée] perdue|effraction/.test(blob)) return 'chantier';
 
-  // 5) Import FB sans rien d'identifiable = actu par défaut
-  if (r.ai_generated && /facebook_scrape/.test(r.ai_generated.imported_from || '')) return 'actualite';
+  // 5) Import FB SEULEMENT si pas de signal de chantier = actu (chantier prime)
+  // (avant : tout post FB sans rien d'identifiable → actu — trop agressif, ratait des chantiers comme "Réfection complète…")
+  if (r.ai_generated && /facebook_scrape/.test(r.ai_generated.imported_from || '') && r.metier && /^(autre|com|marketing)$/i.test(r.metier)) return 'actualite';
 
   // 6) Sinon, chantier par défaut
   return 'chantier';
