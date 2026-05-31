@@ -61,11 +61,13 @@
     }
 
     // Forcer le mode "left direct" (pas de translateX(-50%))
+    // Important : sélecteurs ultra-spécifiques pour battre les CSS inline :hover
     var style = document.createElement('style');
     style.textContent =
-      '.hc-megamenu{transform:translateY(-6px)!important;}' +
-      '.hc-megamenu.is-open,.hc-megamenu.is-hovered{transform:translateY(0)!important;}' +
-      '.hc-megamenu.mm-force-closed{transform:translateY(-6px)!important;}';
+      '.hc-nav{position:relative!important;}' +
+      '.hc-megamenu,html .hc-megamenu{transform:translateY(-6px)!important;}' +
+      '.hc-megamenu.is-open,.hc-megamenu.is-hovered,html .hc-megamenu.is-open,html .hc-megamenu.is-hovered,html .hc-nav-link[data-has-menu]:hover ~ .hc-megamenu,html .hc-megamenu:hover{transform:translateY(0)!important;}' +
+      '.hc-megamenu.mm-force-closed,html .hc-megamenu.mm-force-closed{transform:translateY(-6px)!important;}';
     document.head.appendChild(style);
 
     position();
