@@ -48,10 +48,15 @@
         var leftInNav = menuLeftAbs - navRect.left;
 
         // Appliquer SANS transform translateX (on positionne par left directement)
-        menu.style.left = leftInNav + 'px';
-        menu.style.right = 'auto';
-        menu.style.transform = 'translateY(0)';
-        menu.style.setProperty('--mm-tx', '0');
+        // Important : on force avec setProperty + 'important' pour overrider le CSS :hover
+        // qui réinjecte translateX(-50%) (bug décalage signalé par Florian 2026-05-31)
+        menu.style.setProperty('left', leftInNav + 'px', 'important');
+        menu.style.setProperty('right', 'auto', 'important');
+        menu.style.setProperty('--mm-tx', '0', 'important');
+        // Force la nav à être position:relative pour que le menu absolute s'y rattache
+        if (getComputedStyle(nav).position === 'static') {
+          nav.style.setProperty('position', 'relative', 'important');
+        }
       });
     }
 
