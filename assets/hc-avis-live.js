@@ -91,8 +91,8 @@
           reviews.map(function(r) {
             var initial = (r.author_name || 'A').charAt(0).toUpperCase();
             var hasReply = r.reply_text && r.reply_text.trim().length > 0;
-            // HC-FIX 2026-05-20 : carte entière cliquable → review_url (si dispo) ou fiche Google
-            var clickUrl = r.review_url || 'https://maps.app.goo.gl/B4BPVTiRp5rDp26fA';
+            // HC-FIX 2026-05-31 : carte entière cliquable → source_url (vrai avis Google) ou fiche Google
+            var clickUrl = r.source_url || r.review_url || 'https://maps.app.goo.gl/B4BPVTiRp5rDp26fA';
             return '\
               <a href="' + escapeHtml(clickUrl) + '" target="_blank" rel="noopener noreferrer" class="hcal-card" aria-label="Voir cet avis sur ' + (r.source || 'Google') + '">\
                 <div class="hcal-author-row">\
@@ -125,7 +125,7 @@
   function load() {
     // Fetch reviews depuis Supabase (anon = lecture des avis non flag/archive)
     // HC-FIX 2026-05-20 : on récupère AUSSI review_url pour pouvoir rendre la carte cliquable
-    fetch(SUPABASE_URL + '/rest/v1/reviews?status=neq.flagged&status=neq.archive&rating=gte.4&comment=not.is.null&order=posted_at.desc&limit=6&select=*,review_url', {
+    fetch(SUPABASE_URL + '/rest/v1/reviews?status=neq.flagged&status=neq.archive&rating=gte.4&comment=not.is.null&order=posted_at.desc&limit=6&select=*', {
       headers: {
         'apikey': SUPABASE_KEY,
         'Authorization': 'Bearer ' + SUPABASE_KEY
