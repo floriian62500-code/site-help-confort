@@ -1,9 +1,9 @@
 # 🤖 Audit couverture chatbot widget — sonde #24
 
-_Généré le 2026-05-30 06:27_
+_Généré le 2026-05-31 07:01_
 
-- Pages publiques scannées : **114**
-- Pages avec widget chargé : **112**
+- Pages publiques scannées : **115**
+- Pages avec widget chargé : **113**
 - Pages **sans widget** (alertes) : **2**
 
 ## ❌ Pages sans `hc-widgets.js`
@@ -128,4 +128,5 @@ _Généré le 2026-05-30 06:27_
 - `vitrier-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
 - `volets-dunkerque.html` — `<script defer src="assets/hc-widgets.js`
 - `volets-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
+- `volets-saint-omer.html 2.html` — `<script defer src="assets/hc-widgets.js`
 - `zones-intervention.html` — `<script defer src="assets/hc-widgets.js`

@@ -1,14 +1,14 @@
 {
   "audit": "fallback_supabase",
-  "generated_at": "2026-05-30T06:27:00",
+  "generated_at": "2026-05-31T07:01:13",
   "stats": {
-    "pages_audited": 114,
-    "pages_using_supabase": 12,
-    "pages_with_fallback": 7,
-    "pages_alerted": 6,
-    "total_findings": 6,
+    "pages_audited": 115,
+    "pages_using_supabase": 13,
+    "pages_with_fallback": 8,
+    "pages_alerted": 7,
+    "total_findings": 7,
     "code_distribution": {
-      "NO-FALLBACK": 6
+      "NO-FALLBACK": 7
     }
   },
   "results": [
@@ -656,6 +656,7 @@
       "file": "nos-prestations.html",
       "uses_supabase": true,
       "supabase_signatures": [
+        "/rest/v1/v_services_public",
         "createClient("
       ],
       "has_fallback": true,
@@ -667,12 +668,20 @@
     },
     {
       "file": "nos-villes.html",
-      "uses_supabase": false,
-      "supabase_signatures": [],
+      "uses_supabase": true,
+      "supabase_signatures": [
+        "/rest/v1/communes"
+      ],
       "has_fallback": false,
       "fallback_signatures": [],
-      "soft_fallback_catch": false,
-      "findings": []
+      "soft_fallback_catch": true,
+      "findings": [
+        {
+          "code": "NO-FALLBACK",
+          "severity": "warning",
+          "detail": "Page utilise Supabase (1 appel(s) détecté(s)) mais aucun fallback local (`LOCAL_CATALOG`, `FALLBACK_DATA`, …) n'est déclaré dans les <script>. Catch() de récupération douce détecté."
+        }
+      ]
     },
     {
       "file": "notre-equipe 2.html",
@@ -1102,6 +1111,17 @@
       "supabase_signatures": [],
       "has_fallback": false,
       "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
+      "file": "volets-saint-omer.html 2.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": true,
+      "fallback_signatures": [
+        "fetch('content/realisations/index.json?t='"
+      ],
       "soft_fallback_catch": false,
       "findings": []
     },

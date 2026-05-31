@@ -1,11 +1,11 @@
 # Audit meta description length — Rapport
 
-_Généré le 2026-05-30 06:27_
+_Généré le 2026-05-31 07:01_
 
 ## Synthèse
 
-- Pages scannées : **138**
-- ✅ OK (120-158 chars) : **96**
+- Pages scannées : **139**
+- ✅ OK (120-158 chars) : **97**
 - ⚠️  Warnings (acceptable mais hors cible) : **15**
 - ❌ Erreurs (< 70 ou > 160) : **26**
 - ℹ️  Sans description : **1**

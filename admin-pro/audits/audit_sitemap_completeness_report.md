@@ -1,15 +1,15 @@
 # Audit Sitemap completeness — Rapport
 
-Généré le : `2026-05-30T06:26:59`
+Généré le : `2026-05-31T07:01:12`
 
 Source de vérité : `sitemap.xml` (`<urlset>`) + `*.html` à la racine du repo.
 
 ## Synthèse
 
-- Pages HTML racine sur disque : **114**
+- Pages HTML racine sur disque : **115**
 - URLs dans sitemap.xml : **146**
 - Dont pages racine (`/X.html` ou `/`) : **77**
-- ⚠️ Pages absentes du sitemap : **37**
+- ⚠️ Pages absentes du sitemap : **38**
 - ❌ URLs sitemap orphelines (fichier introuvable) : **0**
 - ℹ️ `<lastmod>` dans le futur : **0**
 
@@ -55,6 +55,7 @@ Correction : ajouter une `<url>` dans `sitemap.xml`.
 - `serrurier-marck.html`
 - `serrurier-outreau.html`
 - `serrurier-wimereux.html`
+- `volets-saint-omer.html 2.html`
 
 ---
 

@@ -1,13 +1,13 @@
-# Audit fallback Supabase — 2026-05-30 06:27
+# Audit fallback Supabase — 2026-05-31 07:01
 
 Sonde MEMOIRE #49 — toute page qui consomme Supabase doit déclarer un `LOCAL_CATALOG` / `FALLBACK_DATA` pour éviter une page vide en cas de coupure ou de RLS bloquée.
 
 ## Synthèse
 
-- Pages auditées : **114**
-- Pages qui consomment Supabase : **12**
-- Pages avec fallback explicite : **7**
-- **Alertes** : **6** (3 erreur(s), 3 warning(s))
+- Pages auditées : **115**
+- Pages qui consomment Supabase : **13**
+- Pages avec fallback explicite : **8**
+- **Alertes** : **7** (3 erreur(s), 4 warning(s))
 
 ## 🚨 Pages sans fallback
 
@@ -18,6 +18,7 @@ Sonde MEMOIRE #49 — toute page qui consomme Supabase doit déclarer un `LOCAL_
 | `devis-express.html` | ❌ erreur | `/rest/v1/leads` | non |
 | `espace-client-dashboard.html` | ⚠️ warning | `createClient(` | non |
 | `espace-client.html` | ⚠️ warning | `createClient(` | non |
+| `nos-villes.html` | ⚠️ warning | `/rest/v1/communes` | oui |
 | `realisation.html` | ❌ erreur | `createClient(` | non |
 
 ## ✅ Pages avec fallback (Supabase + LOCAL_CATALOG/FALLBACK)

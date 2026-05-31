@@ -1,6 +1,6 @@
-# 🔦 Audit Lighthouse local — 2026-05-30 06:25
+# 🔦 Audit Lighthouse local — 2026-05-31 06:59
 
-**115 pages auditées** · **7 erreurs** · **64 warnings** · **Score moyen 97/100**
+**116 pages auditées** · **7 erreurs** · **65 warnings** · **Score moyen 97/100**
 
 ## 📊 Résumé par page
 
@@ -55,6 +55,7 @@
 | `serrurier-saint-omer.html` | **96/100** | 0 | 1 |
 | `tarifs.html` | **96/100** | 0 | 1 |
 | `urgence.html` | **96/100** | 0 | 1 |
+| `volets-saint-omer.html 2.html` | **96/100** | 0 | 1 |
 | `a-propos.html` | **100/100** | 0 | 0 |
 | `actualites.html` | **100/100** | 0 | 0 |
 | `aides.html` | **100/100** | 0 | 0 |
@@ -392,6 +393,11 @@
 
 **Warnings :**
 - ⚠️ Aucun rel=preconnect
+
+### volets-saint-omer.html 2.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (78 chars)
 
 ## ✅ Pages parfaites (100/100)
 

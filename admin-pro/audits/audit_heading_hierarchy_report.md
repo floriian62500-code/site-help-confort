@@ -1,13 +1,13 @@
 # Audit Heading hierarchy — Rapport
 
-Généré le : `2026-05-30T06:26:59`
+Généré le : `2026-05-31T07:01:12`
 
 Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il y a exactement un <h1>, et que la séquence commence bien par un <h1>.
 
 ## Synthèse
 
-- Pages auditées : **114**
-- Pages clean : **110**
+- Pages auditées : **115**
+- Pages clean : **111**
 - Pages avec erreur(s) : **1**
 - Pages avec warning(s) : **4**
 - Findings totaux : **5**
@@ -161,4 +161,5 @@ Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il 
 - `vitrier-saint-omer.html`
 - `volets-dunkerque.html`
 - `volets-saint-omer.html`
+- `volets-saint-omer.html 2.html`
 - `zones-intervention.html`

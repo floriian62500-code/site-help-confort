@@ -1,10 +1,10 @@
-# Audit favicons / apple-touch-icon / manifest — 2026-05-30 06:25
+# Audit favicons / apple-touch-icon / manifest — 2026-05-31 06:59
 
-- **Pages scannées** : 115
-- **Références d'icônes trouvées** : 280
-- **Manquantes sur disque** : 114
+- **Pages scannées** : 116
+- **Références d'icônes trouvées** : 283
+- **Manquantes sur disque** : 115
 - **Externes (non testées)** : 0
-- **OK** : 166
+- **OK** : 168
 
 ## 🚨 Icônes manquantes
 
@@ -123,13 +123,14 @@
 | `vitrier-saint-omer.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `volets-dunkerque.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `volets-saint-omer.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
+| `volets-saint-omer.html 2.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 | `zones-intervention.html` | icon | `logo.svg` | `logo.svg` | **MISSING** |
 
 ## Récap par type
 
-- **apple-touch-icon** : 101 déclarations (0 manquantes)
-- **icon** : 113 déclarations (113 manquantes)
-- **manifest** : 65 déclarations (0 manquantes)
+- **apple-touch-icon** : 102 déclarations (0 manquantes)
+- **icon** : 114 déclarations (114 manquantes)
+- **manifest** : 66 déclarations (0 manquantes)
 - **shortcut-icon** : 1 déclarations (1 manquantes)
 
 ## Pages concernées
@@ -246,4 +247,5 @@
 - `vitrier-saint-omer.html`
 - `volets-dunkerque.html`
 - `volets-saint-omer.html`
+- `volets-saint-omer.html 2.html`
 - `zones-intervention.html`

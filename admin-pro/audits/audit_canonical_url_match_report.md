@@ -1,12 +1,12 @@
 # Audit canonical URL match — Rapport
 
-_Généré le 2026-05-30 06:27_
+_Généré le 2026-05-31 07:01_
 
 ## Synthèse
 
-- Pages scannées : **139**
+- Pages scannées : **140**
 - ✅ OK : **132**
-- ❌ Erreurs : **5** (cumul 5 findings)
+- ❌ Erreurs : **6** (cumul 6 findings)
 - ℹ️  Sans canonical : **2**
 - ⚠️  Avertissements : **2**
 
@@ -37,3 +37,7 @@ _Généré le 2026-05-30 06:27_
 ### `notre-equipe 2.html`
 - canonical = `https://www.depan59-62.fr/notre-equipe.html`
 - ❌ CANONICAL-PATH-MISMATCH : '/notre-equipe.html' ≠ attendu ['/notre-equipe 2.html', '/notre-equipe 2', '/notre-equipe 2/']
+
+### `volets-saint-omer.html 2.html`
+- canonical = `https://www.depan59-62.fr/volets-saint-omer.html`
+- ❌ CANONICAL-PATH-MISMATCH : '/volets-saint-omer.html' ≠ attendu ['/volets-saint-omer.html 2.html', '/volets-saint-omer.html 2', '/volets-saint-omer.html 2/']

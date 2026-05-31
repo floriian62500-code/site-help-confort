@@ -1,7 +1,7 @@
 {
-  "scanned_pages": 115,
-  "tested_urls": 73,
-  "ok": 64,
+  "scanned_pages": 116,
+  "tested_urls": 69,
+  "ok": 61,
   "broken": [
     {
       "url": "https://comap.aalberts-hfc.com/fr",
@@ -9,10 +9,6 @@
       "error": "Forbidden",
       "ok": false,
       "pages": [
-        "chauffagiste-boulogne-sur-mer.html",
-        "chauffagiste-calais.html",
-        "chauffagiste-dunkerque.html",
-        "chauffagiste-saint-omer.html",
         "partenaires.html"
       ]
     },
@@ -31,10 +27,6 @@
       "error": "TimeoutError: The read operation timed out",
       "ok": false,
       "pages": [
-        "electricien-boulogne-sur-mer.html",
-        "electricien-calais.html",
-        "electricien-dunkerque.html",
-        "electricien-saint-omer.html",
         "partenaires.html"
       ]
     },
@@ -62,8 +54,6 @@
       "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>",
       "ok": false,
       "pages": [
-        "menuisier-dunkerque.html",
-        "menuisier-saint-omer.html",
         "partenaires.html"
       ]
     },
@@ -73,11 +63,7 @@
       "error": "Forbidden",
       "ok": false,
       "pages": [
-        "partenaires.html",
-        "serrurier-boulogne-sur-mer.html",
-        "serrurier-calais.html",
-        "serrurier-dunkerque.html",
-        "serrurier-saint-omer.html"
+        "partenaires.html"
       ]
     },
     {
@@ -88,23 +74,11 @@
       "pages": [
         "pro.html"
       ]
-    },
-    {
-      "url": "https://www.watermatic.fr/",
-      "status": 403,
-      "error": "Forbidden",
-      "ok": false,
-      "pages": [
-        "plombier-boulogne-sur-mer.html",
-        "plombier-calais.html",
-        "plombier-dunkerque.html",
-        "plombier-saint-omer.html"
-      ]
     }
   ],
   "skipped_social": [
     "https://www.facebook.com/depanaudo/",
     "https://www.linkedin.com/in/florian-d-haillecourt-2a67bb207"
   ],
-  "generated_at": "2026-05-30T06:26:57"
+  "generated_at": "2026-05-31T07:01:11"
 }

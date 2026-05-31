@@ -1,15 +1,15 @@
 # Audit og:url vs canonical — Rapport
 
-_Généré le 2026-05-30 06:27_
+_Généré le 2026-05-31 07:01_
 
 ## Synthèse
 
-- Pages scannées : **139**
+- Pages scannées : **140**
 - ✅ OK : **50**
 - ❌ Erreurs : **0** (cumul 0 findings)
-- ⚠️  Avertissements (pages) : **87**
+- ⚠️  Avertissements (pages) : **88**
 - ℹ️  Info : **2**
-- ⚠️  Total warnings : **89**
+- ⚠️  Total warnings : **90**
 
 ## Findings
 
@@ -360,6 +360,10 @@ _Généré le 2026-05-30 06:27_
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
 ### `volets-saint-omer.html`
+- canonical = `https://www.depan59-62.fr/volets-saint-omer.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `volets-saint-omer.html 2.html`
 - canonical = `https://www.depan59-62.fr/volets-saint-omer.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 

@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-05-30T06:27:03",
-  "scanned_html": 114,
-  "scanned_js": 35,
+  "generated_at": "2026-05-31T07:01:17",
+  "scanned_html": 115,
+  "scanned_js": 37,
   "total_hosts": 85,
   "by_class": {
     "self": [
@@ -22,16 +22,19 @@
     "external": [
       "akw.fr",
       "bricard.com",
+      "carto.com",
       "comap.aalberts-hfc.com",
       "coretecfloors.com",
       "fr.indeed.com",
       "france-renov.gouv.fr",
       "gef.fr",
       "groupe-millet.com",
+      "images.unsplash.com",
       "maps.app.goo.gl",
       "mon-installateur.atlantic.fr",
       "new.abb.com",
       "parador.de",
+      "plus.unsplash.com",
       "quaredesign.fr",
       "rsramonsoler.com",
       "shop.siegenia.com",
@@ -65,7 +68,6 @@
       "www.helpconfort.com",
       "www.homeserve.fr",
       "www.hoppe.com",
-      "www.hormann.fr",
       "www.hsk.de",
       "www.ima.eu",
       "www.iseo.com",
@@ -79,7 +81,6 @@
       "www.maprimerenov.gouv.fr",
       "www.meister.com",
       "www.netlify.com",
-      "www.novoferm.fr",
       "www.riouglass.com",
       "www.roziere.fr",
       "www.saunierduval.fr",
@@ -93,108 +94,61 @@
       "www.velux.fr",
       "www.viaren.fr",
       "www.w3.org",
-      "www.watermatic.fr",
       "www.winkhaus.com",
-      "{s}.tile.openstreetmap.org"
+      "{s}.basemaps.cartocdn.com"
     ]
   },
   "external_findings": [
     {
       "host": "akw.fr",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "plombier-boulogne-sur-mer.html",
-        "plombier-calais.html",
-        "plombier-dunkerque.html",
-        "plombier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://akw.fr/"
-        },
-        {
-          "file": "plombier-boulogne-sur-mer.html",
-          "url": "https://akw.fr/"
-        },
-        {
-          "file": "plombier-calais.html",
-          "url": "https://akw.fr/"
-        },
-        {
-          "file": "plombier-dunkerque.html",
-          "url": "https://akw.fr/"
-        },
-        {
-          "file": "plombier-saint-omer.html",
           "url": "https://akw.fr/"
         }
       ]
     },
     {
       "host": "bricard.com",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "serrurier-boulogne-sur-mer.html",
-        "serrurier-calais.html",
-        "serrurier-dunkerque.html",
-        "serrurier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
           "url": "https://bricard.com/particuliers/"
-        },
+        }
+      ]
+    },
+    {
+      "host": "carto.com",
+      "occurrences": 1,
+      "image_occurrences": 0,
+      "files": [
+        "assets/hc-map-zones.js"
+      ],
+      "examples": [
         {
-          "file": "serrurier-boulogne-sur-mer.html",
-          "url": "https://bricard.com/particuliers/"
-        },
-        {
-          "file": "serrurier-calais.html",
-          "url": "https://bricard.com/particuliers/"
-        },
-        {
-          "file": "serrurier-dunkerque.html",
-          "url": "https://bricard.com/particuliers/"
-        },
-        {
-          "file": "serrurier-saint-omer.html",
-          "url": "https://bricard.com/particuliers/"
+          "file": "assets/hc-map-zones.js",
+          "url": "https://carto.com/attributions"
         }
       ]
     },
     {
       "host": "comap.aalberts-hfc.com",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "chauffagiste-boulogne-sur-mer.html",
-        "chauffagiste-calais.html",
-        "chauffagiste-dunkerque.html",
-        "chauffagiste-saint-omer.html",
         "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "chauffagiste-boulogne-sur-mer.html",
-          "url": "https://comap.aalberts-hfc.com/fr"
-        },
-        {
-          "file": "chauffagiste-calais.html",
-          "url": "https://comap.aalberts-hfc.com/fr"
-        },
-        {
-          "file": "chauffagiste-dunkerque.html",
-          "url": "https://comap.aalberts-hfc.com/fr"
-        },
-        {
-          "file": "chauffagiste-saint-omer.html",
-          "url": "https://comap.aalberts-hfc.com/fr"
-        },
         {
           "file": "partenaires.html",
           "url": "https://comap.aalberts-hfc.com/fr"
@@ -203,22 +157,12 @@
     },
     {
       "host": "coretecfloors.com",
-      "occurrences": 3,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "menuisier-dunkerque.html",
-        "menuisier-saint-omer.html",
         "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "menuisier-dunkerque.html",
-          "url": "https://coretecfloors.com/fr-fr"
-        },
-        {
-          "file": "menuisier-saint-omer.html",
-          "url": "https://coretecfloors.com/fr-fr"
-        },
         {
           "file": "partenaires.html",
           "url": "https://coretecfloors.com/fr-fr"
@@ -259,46 +203,26 @@
     },
     {
       "host": "gef.fr",
-      "occurrences": 3,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "volets-dunkerque.html",
-        "volets-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://gef.fr/index.php/produits-gef/"
-        },
-        {
-          "file": "volets-dunkerque.html",
-          "url": "https://gef.fr/index.php/produits-gef/"
-        },
-        {
-          "file": "volets-saint-omer.html",
           "url": "https://gef.fr/index.php/produits-gef/"
         }
       ]
     },
     {
       "host": "groupe-millet.com",
-      "occurrences": 3,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "menuisier-dunkerque.html",
-        "menuisier-saint-omer.html",
         "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "menuisier-dunkerque.html",
-          "url": "https://groupe-millet.com/"
-        },
-        {
-          "file": "menuisier-saint-omer.html",
-          "url": "https://groupe-millet.com/"
-        },
         {
           "file": "partenaires.html",
           "url": "https://groupe-millet.com/"
@@ -306,8 +230,30 @@
       ]
     },
     {
+      "host": "images.unsplash.com",
+      "occurrences": 3,
+      "image_occurrences": 3,
+      "files": [
+        "volets-saint-omer.html 2.html"
+      ],
+      "examples": [
+        {
+          "file": "volets-saint-omer.html 2.html",
+          "url": "https://images.unsplash.com/photo-1676210133055-eab6ef033ce3?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop"
+        },
+        {
+          "file": "volets-saint-omer.html 2.html",
+          "url": "https://images.unsplash.com/photo-1744869524920-f0efc925b82f?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop"
+        },
+        {
+          "file": "volets-saint-omer.html 2.html",
+          "url": "https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop"
+        }
+      ]
+    },
+    {
       "host": "maps.app.goo.gl",
-      "occurrences": 69,
+      "occurrences": 70,
       "image_occurrences": 0,
       "files": [
         "a-propos.html",
@@ -378,6 +324,7 @@
         "vitrier-saint-omer.html",
         "volets-dunkerque.html",
         "volets-saint-omer.html",
+        "volets-saint-omer.html 2.html",
         "zones-intervention.html"
       ],
       "examples": [
@@ -405,36 +352,12 @@
     },
     {
       "host": "mon-installateur.atlantic.fr",
-      "occurrences": 9,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "chauffagiste-boulogne-sur-mer.html",
-        "chauffagiste-calais.html",
-        "chauffagiste-dunkerque.html",
-        "chauffagiste-saint-omer.html",
-        "partenaires.html",
-        "plombier-boulogne-sur-mer.html",
-        "plombier-calais.html",
-        "plombier-dunkerque.html",
-        "plombier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "chauffagiste-boulogne-sur-mer.html",
-          "url": "https://mon-installateur.atlantic.fr/Societe/DEPAN-AUDO-HELP-CONFORT"
-        },
-        {
-          "file": "chauffagiste-calais.html",
-          "url": "https://mon-installateur.atlantic.fr/Societe/DEPAN-AUDO-HELP-CONFORT"
-        },
-        {
-          "file": "chauffagiste-dunkerque.html",
-          "url": "https://mon-installateur.atlantic.fr/Societe/DEPAN-AUDO-HELP-CONFORT"
-        },
-        {
-          "file": "chauffagiste-saint-omer.html",
-          "url": "https://mon-installateur.atlantic.fr/Societe/DEPAN-AUDO-HELP-CONFORT"
-        },
         {
           "file": "partenaires.html",
           "url": "https://mon-installateur.atlantic.fr/Societe/DEPAN-AUDO-HELP-CONFORT"
@@ -443,32 +366,12 @@
     },
     {
       "host": "new.abb.com",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "electricien-boulogne-sur-mer.html",
-        "electricien-calais.html",
-        "electricien-dunkerque.html",
-        "electricien-saint-omer.html",
         "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "electricien-boulogne-sur-mer.html",
-          "url": "https://new.abb.com/fr"
-        },
-        {
-          "file": "electricien-calais.html",
-          "url": "https://new.abb.com/fr"
-        },
-        {
-          "file": "electricien-dunkerque.html",
-          "url": "https://new.abb.com/fr"
-        },
-        {
-          "file": "electricien-saint-omer.html",
-          "url": "https://new.abb.com/fr"
-        },
         {
           "file": "partenaires.html",
           "url": "https://new.abb.com/fr"
@@ -477,22 +380,12 @@
     },
     {
       "host": "parador.de",
-      "occurrences": 3,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "menuisier-dunkerque.html",
-        "menuisier-saint-omer.html",
         "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "menuisier-dunkerque.html",
-          "url": "https://parador.de/fr/"
-        },
-        {
-          "file": "menuisier-saint-omer.html",
-          "url": "https://parador.de/fr/"
-        },
         {
           "file": "partenaires.html",
           "url": "https://parador.de/fr/"
@@ -500,15 +393,34 @@
       ]
     },
     {
+      "host": "plus.unsplash.com",
+      "occurrences": 3,
+      "image_occurrences": 3,
+      "files": [
+        "volets-saint-omer.html 2.html"
+      ],
+      "examples": [
+        {
+          "file": "volets-saint-omer.html 2.html",
+          "url": "https://plus.unsplash.com/premium_photo-1664301972519-506636f0245d?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop"
+        },
+        {
+          "file": "volets-saint-omer.html 2.html",
+          "url": "https://plus.unsplash.com/premium_photo-1661301068444-8ac48208d017?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop"
+        },
+        {
+          "file": "volets-saint-omer.html 2.html",
+          "url": "https://plus.unsplash.com/premium_photo-1661884973994-d7625e52631a?fm=jpg&q=70&w=600&h=375&auto=format&fit=crop"
+        }
+      ]
+    },
+    {
       "host": "quaredesign.fr",
-      "occurrences": 5,
+      "occurrences": 2,
       "image_occurrences": 0,
       "files": [
         "partenaires.html",
-        "plombier-boulogne-sur-mer.html",
-        "plombier-calais.html",
-        "plombier-dunkerque.html",
-        "plombier-saint-omer.html"
+        "volets-saint-omer.html 2.html"
       ],
       "examples": [
         {
@@ -516,33 +428,18 @@
           "url": "https://quaredesign.fr/"
         },
         {
-          "file": "plombier-boulogne-sur-mer.html",
-          "url": "https://quaredesign.fr/"
-        },
-        {
-          "file": "plombier-calais.html",
-          "url": "https://quaredesign.fr/"
-        },
-        {
-          "file": "plombier-dunkerque.html",
-          "url": "https://quaredesign.fr/"
-        },
-        {
-          "file": "plombier-saint-omer.html",
+          "file": "volets-saint-omer.html 2.html",
           "url": "https://quaredesign.fr/"
         }
       ]
     },
     {
       "host": "rsramonsoler.com",
-      "occurrences": 5,
+      "occurrences": 2,
       "image_occurrences": 0,
       "files": [
         "partenaires.html",
-        "plombier-boulogne-sur-mer.html",
-        "plombier-calais.html",
-        "plombier-dunkerque.html",
-        "plombier-saint-omer.html"
+        "volets-saint-omer.html 2.html"
       ],
       "examples": [
         {
@@ -550,94 +447,42 @@
           "url": "https://rsramonsoler.com/fr/personnes"
         },
         {
-          "file": "plombier-boulogne-sur-mer.html",
-          "url": "https://rsramonsoler.com/fr/personnes"
-        },
-        {
-          "file": "plombier-calais.html",
-          "url": "https://rsramonsoler.com/fr/personnes"
-        },
-        {
-          "file": "plombier-dunkerque.html",
-          "url": "https://rsramonsoler.com/fr/personnes"
-        },
-        {
-          "file": "plombier-saint-omer.html",
+          "file": "volets-saint-omer.html 2.html",
           "url": "https://rsramonsoler.com/fr/personnes"
         }
       ]
     },
     {
       "host": "shop.siegenia.com",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "serrurier-boulogne-sur-mer.html",
-        "serrurier-calais.html",
-        "serrurier-dunkerque.html",
-        "serrurier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://shop.siegenia.com/siegenia/fr/Pi%C3%A8ces-de-rechange/Ferrures-de-portes/Serrures-%C3%A0-encastrer/c/shop_morits"
-        },
-        {
-          "file": "serrurier-boulogne-sur-mer.html",
-          "url": "https://shop.siegenia.com/siegenia/fr/Pi%C3%A8ces-de-rechange/Ferrures-de-portes/Serrures-%C3%A0-encastrer/c/shop_morits"
-        },
-        {
-          "file": "serrurier-calais.html",
-          "url": "https://shop.siegenia.com/siegenia/fr/Pi%C3%A8ces-de-rechange/Ferrures-de-portes/Serrures-%C3%A0-encastrer/c/shop_morits"
-        },
-        {
-          "file": "serrurier-dunkerque.html",
-          "url": "https://shop.siegenia.com/siegenia/fr/Pi%C3%A8ces-de-rechange/Ferrures-de-portes/Serrures-%C3%A0-encastrer/c/shop_morits"
-        },
-        {
-          "file": "serrurier-saint-omer.html",
           "url": "https://shop.siegenia.com/siegenia/fr/Pi%C3%A8ces-de-rechange/Ferrures-de-portes/Serrures-%C3%A0-encastrer/c/shop_morits"
         }
       ]
     },
     {
       "host": "siamp.fr",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "plombier-boulogne-sur-mer.html",
-        "plombier-calais.html",
-        "plombier-dunkerque.html",
-        "plombier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://siamp.fr/"
-        },
-        {
-          "file": "plombier-boulogne-sur-mer.html",
-          "url": "https://siamp.fr/"
-        },
-        {
-          "file": "plombier-calais.html",
-          "url": "https://siamp.fr/"
-        },
-        {
-          "file": "plombier-dunkerque.html",
-          "url": "https://siamp.fr/"
-        },
-        {
-          "file": "plombier-saint-omer.html",
           "url": "https://siamp.fr/"
         }
       ]
     },
     {
       "host": "trustville.com",
-      "occurrences": 27,
+      "occurrences": 28,
       "image_occurrences": 0,
       "files": [
         "chauffagiste-boulogne-sur-mer.html",
@@ -666,7 +511,8 @@
         "vitrier-dunkerque.html",
         "vitrier-saint-omer.html",
         "volets-dunkerque.html",
-        "volets-saint-omer.html"
+        "volets-saint-omer.html",
+        "volets-saint-omer.html 2.html"
       ],
       "examples": [
         {
@@ -725,56 +571,31 @@
     },
     {
       "host": "www.atlantic.fr",
-      "occurrences": 5,
+      "occurrences": 2,
       "image_occurrences": 0,
       "files": [
-        "chauffagiste-boulogne-sur-mer.html",
-        "chauffagiste-calais.html",
-        "chauffagiste-dunkerque.html",
-        "chauffagiste-saint-omer.html",
-        "partenaires.html"
+        "partenaires.html",
+        "volets-saint-omer.html 2.html"
       ],
       "examples": [
         {
-          "file": "chauffagiste-boulogne-sur-mer.html",
-          "url": "https://www.atlantic.fr/"
-        },
-        {
-          "file": "chauffagiste-calais.html",
-          "url": "https://www.atlantic.fr/"
-        },
-        {
-          "file": "chauffagiste-dunkerque.html",
-          "url": "https://www.atlantic.fr/"
-        },
-        {
-          "file": "chauffagiste-saint-omer.html",
-          "url": "https://www.atlantic.fr/"
-        },
-        {
           "file": "partenaires.html",
+          "url": "https://www.atlantic.fr/"
+        },
+        {
+          "file": "volets-saint-omer.html 2.html",
           "url": "https://www.atlantic.fr/"
         }
       ]
     },
     {
       "host": "www.bremaud.com",
-      "occurrences": 3,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "menuisier-dunkerque.html",
-        "menuisier-saint-omer.html",
         "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "menuisier-dunkerque.html",
-          "url": "https://www.bremaud.com/"
-        },
-        {
-          "file": "menuisier-saint-omer.html",
-          "url": "https://www.bremaud.com/"
-        },
         {
           "file": "partenaires.html",
           "url": "https://www.bremaud.com/"
@@ -783,56 +604,26 @@
     },
     {
       "host": "www.bubendorff.com",
-      "occurrences": 3,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "volets-dunkerque.html",
-        "volets-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://www.bubendorff.com/"
-        },
-        {
-          "file": "volets-dunkerque.html",
-          "url": "https://www.bubendorff.com/"
-        },
-        {
-          "file": "volets-saint-omer.html",
           "url": "https://www.bubendorff.com/"
         }
       ]
     },
     {
       "host": "www.chappee.com",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "chauffagiste-boulogne-sur-mer.html",
-        "chauffagiste-calais.html",
-        "chauffagiste-dunkerque.html",
-        "chauffagiste-saint-omer.html",
         "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "chauffagiste-boulogne-sur-mer.html",
-          "url": "https://www.chappee.com/"
-        },
-        {
-          "file": "chauffagiste-calais.html",
-          "url": "https://www.chappee.com/"
-        },
-        {
-          "file": "chauffagiste-dunkerque.html",
-          "url": "https://www.chappee.com/"
-        },
-        {
-          "file": "chauffagiste-saint-omer.html",
-          "url": "https://www.chappee.com/"
-        },
         {
           "file": "partenaires.html",
           "url": "https://www.chappee.com/"
@@ -883,32 +674,12 @@
     },
     {
       "host": "www.dedietrich-thermique.fr",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "chauffagiste-boulogne-sur-mer.html",
-        "chauffagiste-calais.html",
-        "chauffagiste-dunkerque.html",
-        "chauffagiste-saint-omer.html",
         "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "chauffagiste-boulogne-sur-mer.html",
-          "url": "https://www.dedietrich-thermique.fr/"
-        },
-        {
-          "file": "chauffagiste-calais.html",
-          "url": "https://www.dedietrich-thermique.fr/"
-        },
-        {
-          "file": "chauffagiste-dunkerque.html",
-          "url": "https://www.dedietrich-thermique.fr/"
-        },
-        {
-          "file": "chauffagiste-saint-omer.html",
-          "url": "https://www.dedietrich-thermique.fr/"
-        },
         {
           "file": "partenaires.html",
           "url": "https://www.dedietrich-thermique.fr/"
@@ -917,34 +688,14 @@
     },
     {
       "host": "www.delabie.fr",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "plombier-boulogne-sur-mer.html",
-        "plombier-calais.html",
-        "plombier-dunkerque.html",
-        "plombier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://www.delabie.fr/"
-        },
-        {
-          "file": "plombier-boulogne-sur-mer.html",
-          "url": "https://www.delabie.fr/"
-        },
-        {
-          "file": "plombier-calais.html",
-          "url": "https://www.delabie.fr/"
-        },
-        {
-          "file": "plombier-dunkerque.html",
-          "url": "https://www.delabie.fr/"
-        },
-        {
-          "file": "plombier-saint-omer.html",
           "url": "https://www.delabie.fr/"
         }
       ]
@@ -1007,7 +758,7 @@
     },
     {
       "host": "www.facebook.com",
-      "occurrences": 98,
+      "occurrences": 100,
       "image_occurrences": 0,
       "files": [
         "a-propos.html",
@@ -1076,6 +827,7 @@
         "vitrier-saint-omer.html",
         "volets-dunkerque.html",
         "volets-saint-omer.html",
+        "volets-saint-omer.html 2.html",
         "zones-intervention.html"
       ],
       "examples": [
@@ -1103,100 +855,40 @@
     },
     {
       "host": "www.ferco.fr",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "serrurier-boulogne-sur-mer.html",
-        "serrurier-calais.html",
-        "serrurier-dunkerque.html",
-        "serrurier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://www.ferco.fr/fr-fr/produits/technique-de-porte/gu-secury-serrures-multipoints"
-        },
-        {
-          "file": "serrurier-boulogne-sur-mer.html",
-          "url": "https://www.ferco.fr/fr-fr/produits/technique-de-porte/gu-secury-serrures-multipoints"
-        },
-        {
-          "file": "serrurier-calais.html",
-          "url": "https://www.ferco.fr/fr-fr/produits/technique-de-porte/gu-secury-serrures-multipoints"
-        },
-        {
-          "file": "serrurier-dunkerque.html",
-          "url": "https://www.ferco.fr/fr-fr/produits/technique-de-porte/gu-secury-serrures-multipoints"
-        },
-        {
-          "file": "serrurier-saint-omer.html",
           "url": "https://www.ferco.fr/fr-fr/produits/technique-de-porte/gu-secury-serrures-multipoints"
         }
       ]
     },
     {
       "host": "www.fichet-pointfort.com",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "serrurier-boulogne-sur-mer.html",
-        "serrurier-calais.html",
-        "serrurier-dunkerque.html",
-        "serrurier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://www.fichet-pointfort.com/fr/fr"
-        },
-        {
-          "file": "serrurier-boulogne-sur-mer.html",
-          "url": "https://www.fichet-pointfort.com/fr/fr"
-        },
-        {
-          "file": "serrurier-calais.html",
-          "url": "https://www.fichet-pointfort.com/fr/fr"
-        },
-        {
-          "file": "serrurier-dunkerque.html",
-          "url": "https://www.fichet-pointfort.com/fr/fr"
-        },
-        {
-          "file": "serrurier-saint-omer.html",
           "url": "https://www.fichet-pointfort.com/fr/fr"
         }
       ]
     },
     {
       "host": "www.finimetal.com",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "chauffagiste-boulogne-sur-mer.html",
-        "chauffagiste-calais.html",
-        "chauffagiste-dunkerque.html",
-        "chauffagiste-saint-omer.html",
         "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "chauffagiste-boulogne-sur-mer.html",
-          "url": "https://www.finimetal.com/fr-fr/"
-        },
-        {
-          "file": "chauffagiste-calais.html",
-          "url": "https://www.finimetal.com/fr-fr/"
-        },
-        {
-          "file": "chauffagiste-dunkerque.html",
-          "url": "https://www.finimetal.com/fr-fr/"
-        },
-        {
-          "file": "chauffagiste-saint-omer.html",
-          "url": "https://www.finimetal.com/fr-fr/"
-        },
         {
           "file": "partenaires.html",
           "url": "https://www.finimetal.com/fr-fr/"
@@ -1219,32 +911,12 @@
     },
     {
       "host": "www.frisquet.com",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "chauffagiste-boulogne-sur-mer.html",
-        "chauffagiste-calais.html",
-        "chauffagiste-dunkerque.html",
-        "chauffagiste-saint-omer.html",
         "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "chauffagiste-boulogne-sur-mer.html",
-          "url": "https://www.frisquet.com/"
-        },
-        {
-          "file": "chauffagiste-calais.html",
-          "url": "https://www.frisquet.com/"
-        },
-        {
-          "file": "chauffagiste-dunkerque.html",
-          "url": "https://www.frisquet.com/"
-        },
-        {
-          "file": "chauffagiste-saint-omer.html",
-          "url": "https://www.frisquet.com/"
-        },
         {
           "file": "partenaires.html",
           "url": "https://www.frisquet.com/"
@@ -1253,34 +925,14 @@
     },
     {
       "host": "www.geberit.fr",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "plombier-boulogne-sur-mer.html",
-        "plombier-calais.html",
-        "plombier-dunkerque.html",
-        "plombier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://www.geberit.fr/accueil/"
-        },
-        {
-          "file": "plombier-boulogne-sur-mer.html",
-          "url": "https://www.geberit.fr/accueil/"
-        },
-        {
-          "file": "plombier-calais.html",
-          "url": "https://www.geberit.fr/accueil/"
-        },
-        {
-          "file": "plombier-dunkerque.html",
-          "url": "https://www.geberit.fr/accueil/"
-        },
-        {
-          "file": "plombier-saint-omer.html",
           "url": "https://www.geberit.fr/accueil/"
         }
       ]
@@ -1315,14 +967,11 @@
     },
     {
       "host": "www.hansgrohe.fr",
-      "occurrences": 5,
+      "occurrences": 2,
       "image_occurrences": 0,
       "files": [
         "partenaires.html",
-        "plombier-boulogne-sur-mer.html",
-        "plombier-calais.html",
-        "plombier-dunkerque.html",
-        "plombier-saint-omer.html"
+        "volets-saint-omer.html 2.html"
       ],
       "examples": [
         {
@@ -1330,19 +979,7 @@
           "url": "https://www.hansgrohe.fr/"
         },
         {
-          "file": "plombier-boulogne-sur-mer.html",
-          "url": "https://www.hansgrohe.fr/"
-        },
-        {
-          "file": "plombier-calais.html",
-          "url": "https://www.hansgrohe.fr/"
-        },
-        {
-          "file": "plombier-dunkerque.html",
-          "url": "https://www.hansgrohe.fr/"
-        },
-        {
-          "file": "plombier-saint-omer.html",
+          "file": "volets-saint-omer.html 2.html",
           "url": "https://www.hansgrohe.fr/"
         }
       ]
@@ -1382,87 +1019,28 @@
     },
     {
       "host": "www.hoppe.com",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "serrurier-boulogne-sur-mer.html",
-        "serrurier-calais.html",
-        "serrurier-dunkerque.html",
-        "serrurier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
           "url": "https://www.hoppe.com/fr-fr/catalogue-produits/1001192940/solutions-pour-portes-interieures-poignees-pour-portes-interie"
-        },
-        {
-          "file": "serrurier-boulogne-sur-mer.html",
-          "url": "https://www.hoppe.com/fr-fr/catalogue-produits/1001192940/solutions-pour-portes-interieures-poignees-pour-portes-interie"
-        },
-        {
-          "file": "serrurier-calais.html",
-          "url": "https://www.hoppe.com/fr-fr/catalogue-produits/1001192940/solutions-pour-portes-interieures-poignees-pour-portes-interie"
-        },
-        {
-          "file": "serrurier-dunkerque.html",
-          "url": "https://www.hoppe.com/fr-fr/catalogue-produits/1001192940/solutions-pour-portes-interieures-poignees-pour-portes-interie"
-        },
-        {
-          "file": "serrurier-saint-omer.html",
-          "url": "https://www.hoppe.com/fr-fr/catalogue-produits/1001192940/solutions-pour-portes-interieures-poignees-pour-portes-interie"
-        }
-      ]
-    },
-    {
-      "host": "www.hormann.fr",
-      "occurrences": 2,
-      "image_occurrences": 0,
-      "files": [
-        "menuisier-dunkerque.html",
-        "menuisier-saint-omer.html"
-      ],
-      "examples": [
-        {
-          "file": "menuisier-dunkerque.html",
-          "url": "https://www.hormann.fr/"
-        },
-        {
-          "file": "menuisier-saint-omer.html",
-          "url": "https://www.hormann.fr/"
         }
       ]
     },
     {
       "host": "www.hsk.de",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "plombier-boulogne-sur-mer.html",
-        "plombier-calais.html",
-        "plombier-dunkerque.html",
-        "plombier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://www.hsk.de/fr"
-        },
-        {
-          "file": "plombier-boulogne-sur-mer.html",
-          "url": "https://www.hsk.de/fr"
-        },
-        {
-          "file": "plombier-calais.html",
-          "url": "https://www.hsk.de/fr"
-        },
-        {
-          "file": "plombier-dunkerque.html",
-          "url": "https://www.hsk.de/fr"
-        },
-        {
-          "file": "plombier-saint-omer.html",
           "url": "https://www.hsk.de/fr"
         }
       ]
@@ -1483,56 +1061,26 @@
     },
     {
       "host": "www.iseo.com",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "serrurier-boulogne-sur-mer.html",
-        "serrurier-calais.html",
-        "serrurier-dunkerque.html",
-        "serrurier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://www.iseo.com/fr"
-        },
-        {
-          "file": "serrurier-boulogne-sur-mer.html",
-          "url": "https://www.iseo.com/fr"
-        },
-        {
-          "file": "serrurier-calais.html",
-          "url": "https://www.iseo.com/fr"
-        },
-        {
-          "file": "serrurier-dunkerque.html",
-          "url": "https://www.iseo.com/fr"
-        },
-        {
-          "file": "serrurier-saint-omer.html",
           "url": "https://www.iseo.com/fr"
         }
       ]
     },
     {
       "host": "www.jeld-wen.fr",
-      "occurrences": 3,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "menuisier-dunkerque.html",
-        "menuisier-saint-omer.html",
         "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "menuisier-dunkerque.html",
-          "url": "https://www.jeld-wen.fr/"
-        },
-        {
-          "file": "menuisier-saint-omer.html",
-          "url": "https://www.jeld-wen.fr/"
-        },
         {
           "file": "partenaires.html",
           "url": "https://www.jeld-wen.fr/"
@@ -1541,14 +1089,11 @@
     },
     {
       "host": "www.kinedo.com",
-      "occurrences": 5,
+      "occurrences": 2,
       "image_occurrences": 0,
       "files": [
         "partenaires.html",
-        "plombier-boulogne-sur-mer.html",
-        "plombier-calais.html",
-        "plombier-dunkerque.html",
-        "plombier-saint-omer.html"
+        "volets-saint-omer.html 2.html"
       ],
       "examples": [
         {
@@ -1556,41 +1101,19 @@
           "url": "https://www.kinedo.com/"
         },
         {
-          "file": "plombier-boulogne-sur-mer.html",
-          "url": "https://www.kinedo.com/"
-        },
-        {
-          "file": "plombier-calais.html",
-          "url": "https://www.kinedo.com/"
-        },
-        {
-          "file": "plombier-dunkerque.html",
-          "url": "https://www.kinedo.com/"
-        },
-        {
-          "file": "plombier-saint-omer.html",
+          "file": "volets-saint-omer.html 2.html",
           "url": "https://www.kinedo.com/"
         }
       ]
     },
     {
       "host": "www.kostum.fr",
-      "occurrences": 3,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "menuisier-dunkerque.html",
-        "menuisier-saint-omer.html",
         "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "menuisier-dunkerque.html",
-          "url": "https://www.kostum.fr/"
-        },
-        {
-          "file": "menuisier-saint-omer.html",
-          "url": "https://www.kostum.fr/"
-        },
         {
           "file": "partenaires.html",
           "url": "https://www.kostum.fr/"
@@ -1613,32 +1136,12 @@
     },
     {
       "host": "www.legrand.fr",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "electricien-boulogne-sur-mer.html",
-        "electricien-calais.html",
-        "electricien-dunkerque.html",
-        "electricien-saint-omer.html",
         "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "electricien-boulogne-sur-mer.html",
-          "url": "https://www.legrand.fr/"
-        },
-        {
-          "file": "electricien-calais.html",
-          "url": "https://www.legrand.fr/"
-        },
-        {
-          "file": "electricien-dunkerque.html",
-          "url": "https://www.legrand.fr/"
-        },
-        {
-          "file": "electricien-saint-omer.html",
-          "url": "https://www.legrand.fr/"
-        },
         {
           "file": "partenaires.html",
           "url": "https://www.legrand.fr/"
@@ -1647,7 +1150,7 @@
     },
     {
       "host": "www.linkedin.com",
-      "occurrences": 66,
+      "occurrences": 67,
       "image_occurrences": 0,
       "files": [
         "a-propos.html",
@@ -1715,6 +1218,7 @@
         "vitrier-saint-omer.html",
         "volets-dunkerque.html",
         "volets-saint-omer.html",
+        "volets-saint-omer.html 2.html",
         "zones-intervention.html"
       ],
       "examples": [
@@ -1742,34 +1246,14 @@
     },
     {
       "host": "www.maco.eu",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "serrurier-boulogne-sur-mer.html",
-        "serrurier-calais.html",
-        "serrurier-dunkerque.html",
-        "serrurier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://www.maco.eu/fr-FR/Home"
-        },
-        {
-          "file": "serrurier-boulogne-sur-mer.html",
-          "url": "https://www.maco.eu/fr-FR/Home"
-        },
-        {
-          "file": "serrurier-calais.html",
-          "url": "https://www.maco.eu/fr-FR/Home"
-        },
-        {
-          "file": "serrurier-dunkerque.html",
-          "url": "https://www.maco.eu/fr-FR/Home"
-        },
-        {
-          "file": "serrurier-saint-omer.html",
           "url": "https://www.maco.eu/fr-FR/Home"
         }
       ]
@@ -1790,22 +1274,12 @@
     },
     {
       "host": "www.meister.com",
-      "occurrences": 3,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "menuisier-dunkerque.html",
-        "menuisier-saint-omer.html",
         "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "menuisier-dunkerque.html",
-          "url": "https://www.meister.com/fr"
-        },
-        {
-          "file": "menuisier-saint-omer.html",
-          "url": "https://www.meister.com/fr"
-        },
         {
           "file": "partenaires.html",
           "url": "https://www.meister.com/fr"
@@ -1827,66 +1301,27 @@
       ]
     },
     {
-      "host": "www.novoferm.fr",
-      "occurrences": 2,
-      "image_occurrences": 0,
-      "files": [
-        "menuisier-dunkerque.html",
-        "menuisier-saint-omer.html"
-      ],
-      "examples": [
-        {
-          "file": "menuisier-dunkerque.html",
-          "url": "https://www.novoferm.fr/"
-        },
-        {
-          "file": "menuisier-saint-omer.html",
-          "url": "https://www.novoferm.fr/"
-        }
-      ]
-    },
-    {
       "host": "www.riouglass.com",
-      "occurrences": 3,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "vitrier-dunkerque.html",
-        "vitrier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://www.riouglass.com/"
-        },
-        {
-          "file": "vitrier-dunkerque.html",
-          "url": "https://www.riouglass.com/"
-        },
-        {
-          "file": "vitrier-saint-omer.html",
           "url": "https://www.riouglass.com/"
         }
       ]
     },
     {
       "host": "www.roziere.fr",
-      "occurrences": 3,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "menuisier-dunkerque.html",
-        "menuisier-saint-omer.html",
         "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "menuisier-dunkerque.html",
-          "url": "https://www.roziere.fr/index.html"
-        },
-        {
-          "file": "menuisier-saint-omer.html",
-          "url": "https://www.roziere.fr/index.html"
-        },
         {
           "file": "partenaires.html",
           "url": "https://www.roziere.fr/index.html"
@@ -1895,32 +1330,12 @@
     },
     {
       "host": "www.saunierduval.fr",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "chauffagiste-boulogne-sur-mer.html",
-        "chauffagiste-calais.html",
-        "chauffagiste-dunkerque.html",
-        "chauffagiste-saint-omer.html",
         "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "chauffagiste-boulogne-sur-mer.html",
-          "url": "https://www.saunierduval.fr/particulier/"
-        },
-        {
-          "file": "chauffagiste-calais.html",
-          "url": "https://www.saunierduval.fr/particulier/"
-        },
-        {
-          "file": "chauffagiste-dunkerque.html",
-          "url": "https://www.saunierduval.fr/particulier/"
-        },
-        {
-          "file": "chauffagiste-saint-omer.html",
-          "url": "https://www.saunierduval.fr/particulier/"
-        },
         {
           "file": "partenaires.html",
           "url": "https://www.saunierduval.fr/"
@@ -1929,34 +1344,14 @@
     },
     {
       "host": "www.schueco.com",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "serrurier-boulogne-sur-mer.html",
-        "serrurier-calais.html",
-        "serrurier-dunkerque.html",
-        "serrurier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://www.schueco.com/fr/particuliers"
-        },
-        {
-          "file": "serrurier-boulogne-sur-mer.html",
-          "url": "https://www.schueco.com/fr/particuliers"
-        },
-        {
-          "file": "serrurier-calais.html",
-          "url": "https://www.schueco.com/fr/particuliers"
-        },
-        {
-          "file": "serrurier-dunkerque.html",
-          "url": "https://www.schueco.com/fr/particuliers"
-        },
-        {
-          "file": "serrurier-saint-omer.html",
           "url": "https://www.schueco.com/fr/particuliers"
         }
       ]
@@ -1977,172 +1372,82 @@
     },
     {
       "host": "www.somfypro.fr",
-      "occurrences": 3,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "volets-dunkerque.html",
-        "volets-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://www.somfypro.fr/"
-        },
-        {
-          "file": "volets-dunkerque.html",
-          "url": "https://www.somfypro.fr/"
-        },
-        {
-          "file": "volets-saint-omer.html",
           "url": "https://www.somfypro.fr/"
         }
       ]
     },
     {
       "host": "www.soprofen.fr",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "menuisier-dunkerque.html",
-        "menuisier-saint-omer.html",
-        "partenaires.html",
-        "volets-dunkerque.html",
-        "volets-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
-          "file": "menuisier-dunkerque.html",
-          "url": "https://www.soprofen.fr/"
-        },
-        {
-          "file": "menuisier-saint-omer.html",
-          "url": "https://www.soprofen.fr/"
-        },
-        {
           "file": "partenaires.html",
-          "url": "https://www.soprofen.fr/"
-        },
-        {
-          "file": "volets-dunkerque.html",
-          "url": "https://www.soprofen.fr/"
-        },
-        {
-          "file": "volets-saint-omer.html",
           "url": "https://www.soprofen.fr/"
         }
       ]
     },
     {
       "host": "www.sppf.fr",
-      "occurrences": 3,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "volets-dunkerque.html",
-        "volets-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://www.sppf.fr/"
-        },
-        {
-          "file": "volets-dunkerque.html",
-          "url": "https://www.sppf.fr/"
-        },
-        {
-          "file": "volets-saint-omer.html",
           "url": "https://www.sppf.fr/"
         }
       ]
     },
     {
       "host": "www.trenois.com",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "serrurier-boulogne-sur-mer.html",
-        "serrurier-calais.html",
-        "serrurier-dunkerque.html",
-        "serrurier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://www.trenois.com/"
-        },
-        {
-          "file": "serrurier-boulogne-sur-mer.html",
-          "url": "https://www.trenois.com/"
-        },
-        {
-          "file": "serrurier-calais.html",
-          "url": "https://www.trenois.com/"
-        },
-        {
-          "file": "serrurier-dunkerque.html",
-          "url": "https://www.trenois.com/"
-        },
-        {
-          "file": "serrurier-saint-omer.html",
           "url": "https://www.trenois.com/"
         }
       ]
     },
     {
       "host": "www.vachette.fr",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "serrurier-boulogne-sur-mer.html",
-        "serrurier-calais.html",
-        "serrurier-dunkerque.html",
-        "serrurier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
-          "url": "https://www.vachette.fr/particulier/fr"
-        },
-        {
-          "file": "serrurier-boulogne-sur-mer.html",
-          "url": "https://www.vachette.fr/particulier/fr"
-        },
-        {
-          "file": "serrurier-calais.html",
-          "url": "https://www.vachette.fr/particulier/fr"
-        },
-        {
-          "file": "serrurier-dunkerque.html",
-          "url": "https://www.vachette.fr/particulier/fr"
-        },
-        {
-          "file": "serrurier-saint-omer.html",
           "url": "https://www.vachette.fr/particulier/fr"
         }
       ]
     },
     {
       "host": "www.velux.fr",
-      "occurrences": 3,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "menuisier-dunkerque.html",
-        "menuisier-saint-omer.html",
         "partenaires.html"
       ],
       "examples": [
-        {
-          "file": "menuisier-dunkerque.html",
-          "url": "https://www.velux.fr/"
-        },
-        {
-          "file": "menuisier-saint-omer.html",
-          "url": "https://www.velux.fr/"
-        },
         {
           "file": "partenaires.html",
           "url": "https://www.velux.fr/"
@@ -2178,70 +1483,21 @@
       ]
     },
     {
-      "host": "www.watermatic.fr",
-      "occurrences": 4,
-      "image_occurrences": 0,
-      "files": [
-        "plombier-boulogne-sur-mer.html",
-        "plombier-calais.html",
-        "plombier-dunkerque.html",
-        "plombier-saint-omer.html"
-      ],
-      "examples": [
-        {
-          "file": "plombier-boulogne-sur-mer.html",
-          "url": "https://www.watermatic.fr/"
-        },
-        {
-          "file": "plombier-calais.html",
-          "url": "https://www.watermatic.fr/"
-        },
-        {
-          "file": "plombier-dunkerque.html",
-          "url": "https://www.watermatic.fr/"
-        },
-        {
-          "file": "plombier-saint-omer.html",
-          "url": "https://www.watermatic.fr/"
-        }
-      ]
-    },
-    {
       "host": "www.winkhaus.com",
-      "occurrences": 5,
+      "occurrences": 1,
       "image_occurrences": 0,
       "files": [
-        "partenaires.html",
-        "serrurier-boulogne-sur-mer.html",
-        "serrurier-calais.html",
-        "serrurier-dunkerque.html",
-        "serrurier-saint-omer.html"
+        "partenaires.html"
       ],
       "examples": [
         {
           "file": "partenaires.html",
           "url": "https://www.winkhaus.com/fr/"
-        },
-        {
-          "file": "serrurier-boulogne-sur-mer.html",
-          "url": "https://www.winkhaus.com/fr/"
-        },
-        {
-          "file": "serrurier-calais.html",
-          "url": "https://www.winkhaus.com/fr/"
-        },
-        {
-          "file": "serrurier-dunkerque.html",
-          "url": "https://www.winkhaus.com/fr/"
-        },
-        {
-          "file": "serrurier-saint-omer.html",
-          "url": "https://www.winkhaus.com/fr/"
         }
       ]
     },
     {
-      "host": "{s}.tile.openstreetmap.org",
+      "host": "{s}.basemaps.cartocdn.com",
       "occurrences": 1,
       "image_occurrences": 1,
       "files": [
@@ -2250,7 +1506,7 @@
       "examples": [
         {
           "file": "assets/hc-map-zones.js",
-          "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          "url": "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
         }
       ]
     }

@@ -1,10 +1,10 @@
 # ⏱️ Audit délais d'intervention promis — Sonde IA #43
 
-*Généré le 2026-05-30 06:25 — `admin-pro/audits/audit_delais.py`*
+*Généré le 2026-05-31 06:59 — `admin-pro/audits/audit_delais.py`*
 
-**Pages scannées** : 116
-**Findings (promesses commerciales détectées)** : **158**
-**Pages concernées** : 68
+**Pages scannées** : 117
+**Findings (promesses commerciales détectées)** : **162**
+**Pages concernées** : 69
 
 ## 🎯 Contexte
 
@@ -14,172 +14,176 @@ Décision Florian 15 mai 2026 : retirer tous les délais d'intervention promis d
 
 | Pattern | Occurrences |
 |---------|-------------|
-| engagement « sous X (h/min) » | 115 |
-| engagement « rappel sous … » | 41 |
+| engagement « sous X (h/min) » | 118 |
+| engagement « rappel sous … » | 42 |
 | engagement « intervention sous X » | 2 |
 
 ## 📋 Findings détaillés
 
 | Fichier | Ligne | Pattern | Match | Contexte |
 |---------|------:|---------|-------|----------|
-| `a-propos.html` | 1002 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `a-propos.html` | 991 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `actualites.html` | 842 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `blog-debouchage-canalisation-furet-hydrocurage.html` | 176 | engagement « sous X (h/min) » | `sous 2h` | …ret, hydrocurage ou caméra : on diagnostique et on débouche sous 2h.</p> <a href="tel:+33366100134"> <svg width="18" heig… |
-| `blog-entretien-chaudiere-annuel-obligatoire.html` | 173 | engagement « sous X (h/min) » | `sous 24h` | …s : entretien automatique programmé, dépannage prioritaire (sous 24h en formule Confort), pas de majoration soir/week-end, petit… |
-| `blog-panne-electrique-disjoncteur-saute.html` | 163 | engagement « sous X (h/min) » | `sous 2h` | …équipe intervient à Saint-Omer, Dunkerque, Calais, Boulogne sous 2h en urgence électrique.</p> </section> <section class="blog-… |
+| `blog-debouchage-canalisation-furet-hydrocurage.html` | 184 | engagement « sous X (h/min) » | `sous 2h` | …ret, hydrocurage ou caméra : on diagnostique et on débouche sous 2h.</p> <a href="tel:+33366100134"> <svg width="18" heig… |
+| `blog-entretien-chaudiere-annuel-obligatoire.html` | 181 | engagement « sous X (h/min) » | `sous 24h` | …s : entretien automatique programmé, dépannage prioritaire (sous 24h en formule Confort), pas de majoration soir/week-end, petit… |
+| `blog-panne-electrique-disjoncteur-saute.html` | 171 | engagement « sous X (h/min) » | `sous 2h` | …équipe intervient à Saint-Omer, Dunkerque, Calais, Boulogne sous 2h en urgence électrique.</p> </section> <section class="blog-… |
 | `chauffagiste-boulogne-sur-mer.html` | 974 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `chauffagiste-boulogne-sur-mer.html` | 974 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `chauffagiste-boulogne-sur-mer.html` | 974 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `chauffagiste-boulogne-sur-mer.html` | 2178 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `chauffagiste-boulogne-sur-mer.html` | 2015 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `chauffagiste-calais.html` | 974 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `chauffagiste-calais.html` | 974 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `chauffagiste-calais.html` | 974 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `chauffagiste-calais.html` | 2178 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `chauffagiste-coudekerque-branche.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `chauffagiste-calais.html` | 2015 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `chauffagiste-coudekerque-branche.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
 | `chauffagiste-dunkerque.html` | 974 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `chauffagiste-dunkerque.html` | 974 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `chauffagiste-dunkerque.html` | 974 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `chauffagiste-dunkerque.html` | 2194 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `chauffagiste-marck.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
-| `chauffagiste-outreau.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `chauffagiste-dunkerque.html` | 2020 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `chauffagiste-marck.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `chauffagiste-outreau.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
 | `chauffagiste-saint-omer.html` | 984 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `chauffagiste-saint-omer.html` | 984 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `chauffagiste-saint-omer.html` | 984 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `chauffagiste-saint-omer.html` | 2201 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `chauffagiste-wimereux.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
-| `contact.html` | 434 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.94rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.74rem;color… |
-| `contact.html` | 434 | engagement « sous X (h/min) » | `sous 24h` | …us adressons un <strong>devis gratuit et détaillé</strong> (sous 24h ouvrées pour les demandes simples)</li> <li>Vous décid… |
-| `contact.html` | 1095 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `chauffagiste-saint-omer.html` | 2026 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `chauffagiste-wimereux.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `contact.html` | 435 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.94rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.74rem;color… |
+| `contact.html` | 435 | engagement « sous X (h/min) » | `sous 24h` | …us adressons un <strong>devis gratuit et détaillé</strong> (sous 24h ouvrées pour les demandes simples)</li> <li>Vous décid… |
+| `contact.html` | 1092 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `contrats-entretien.html` | 1162 | engagement « sous X (h/min) » | `sous 24h` | …> · Renseignez le formulaire et nous validons votre dossier sous 24h ouvrées.</p> </div> <form id="sousForm" onsubmit="retu… |
 | `contrats-entretien.html` | 1162 | engagement « sous X (h/min) » | `sous 24h` | …oordonnées</h4> <p class="sw-step-hint">Pour vous rappeler sous 24h ouvrées et envoyer votre contrat.</p> </div> <div style="… |
 | `contrats-entretien.html` | 1162 | engagement « sous X (h/min) » | `sous 24h` | …ons puis envoyez votre demande. Un conseiller vous rappelle sous 24h ouvrées pour planifier la visite technique.</p> </div>… |
 | `contrats-entretien.html` | 1162 | engagement « sous X (h/min) » | `sous 24h` | …ata-validate="checked"> <span>J'accepte d'être contacté(e) sous 24h ouvrées pour finaliser mon contrat. Je reconnais que ce for… |
 | `contrats-entretien.html` | 941 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `depannage-boulogne-sur-mer.html` | 1087 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `depannage-calais.html` | 1087 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `depannage-coquelles.html` | 1067 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `depannage-dunkerque.html` | 1064 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `depannage-saint-omer.html` | 1074 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `depannage-saint-pol-sur-mer.html` | 1067 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `depannage-sangatte.html` | 1067 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `depannage-boulogne-sur-mer.html` | 1084 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `depannage-calais.html` | 1084 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `depannage-coquelles.html` | 1068 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `depannage-dunkerque.html` | 1061 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `depannage-saint-omer.html` | 1071 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `depannage-saint-pol-sur-mer.html` | 1068 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `depannage-sangatte.html` | 1068 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `diagnostic-electrique.html` | 57 | engagement « sous X (h/min) » | `sous 48h` | …tion de plus de 15 ans. Conforme arrêté 28/09/2017. Rapport sous 48h ouvrées.</p> <a href="tel:+33366100134" class="de-cta">📞… |
 | `diagnostic-electrique.html` | 57 | engagement « sous X (h/min) » | `sous 48h` | …<p style="font-size:.92rem;color:#64748b">📄 Rapport remis sous 48h ouvrées. Compatible toutes notariées + agences immobilières… |
 | `diagnostic-electrique.html` | 57 | engagement « sous X (h/min) » | `sous 48h` | …ur T2-T4 standard. Tarif annoncé avant déplacement, rapport sous 48h ouvrées.</p> </div> <div class="de-faq"> <h3>Mon install… |
 | `electricien-boulogne-sur-mer.html` | 950 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `electricien-boulogne-sur-mer.html` | 950 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `electricien-boulogne-sur-mer.html` | 950 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `electricien-boulogne-sur-mer.html` | 1912 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `electricien-boulogne-sur-mer.html` | 1813 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `electricien-calais.html` | 950 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `electricien-calais.html` | 950 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `electricien-calais.html` | 950 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `electricien-calais.html` | 1912 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `electricien-calais.html` | 1813 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `electricien-dunkerque.html` | 950 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `electricien-dunkerque.html` | 950 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `electricien-dunkerque.html` | 950 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `electricien-dunkerque.html` | 1916 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `electricien-dunkerque.html` | 1815 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `electricien-saint-omer.html` | 960 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `electricien-saint-omer.html` | 960 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `electricien-saint-omer.html` | 960 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `electricien-saint-omer.html` | 1924 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `faq.html` | 219 | engagement « sous X (h/min) » | `sous 24h` | …as votre réponse&nbsp;?</h3> <p>Notre équipe vous rappelle sous 24h ouvrées avec une réponse personnalisée.</p> <a href="conta… |
-| `guide-fuite-eau.html` | 455 | engagement « sous X (h/min) » | `Sous 24h` | …uite simple (joint d'évier, mitigeur usé)</li> <li><strong>Sous 24h ouvrées</strong> dans tous les cas — même si vous avez « ré… |
-| `index.html` | 2649 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `electricien-saint-omer.html` | 1822 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `faq.html` | 220 | engagement « sous X (h/min) » | `sous 24h` | …as votre réponse&nbsp;?</h3> <p>Notre équipe vous rappelle sous 24h ouvrées avec une réponse personnalisée.</p> <a href="conta… |
+| `guide-fuite-eau.html` | 456 | engagement « sous X (h/min) » | `Sous 24h` | …uite simple (joint d'évier, mitigeur usé)</li> <li><strong>Sous 24h ouvrées</strong> dans tous les cas — même si vous avez « ré… |
+| `index.html` | 2664 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `mentions-legales.html` | 745 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `menuisier-dunkerque.html` | 943 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `menuisier-dunkerque.html` | 943 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `menuisier-dunkerque.html` | 943 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `menuisier-dunkerque.html` | 2103 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `menuisier-dunkerque.html` | 1845 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `menuisier-saint-omer.html` | 953 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `menuisier-saint-omer.html` | 953 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `menuisier-saint-omer.html` | 953 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `menuisier-saint-omer.html` | 2112 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `nos-villes.html` | 331 | engagement « intervention sous X » | `intervention sous 2` | …~50 min depuis Saint-Omer. <strong>Devis gratuit</strong>, intervention sous 24-48h en standard.</p> <a href="depannage-boulogne-sur… |
-| `ouverture-porte-claquee.html` | 275 | engagement « intervention sous X » | `intervention sous 1` | …)</h3> <p><strong>90 à 180€ TTC</strong><br>Sans casse, intervention sous 1-2h.</p> </div> <div class="op-card" style="border-left-… |
+| `menuisier-saint-omer.html` | 1853 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `nos-villes.html` | 339 | engagement « intervention sous X » | `intervention sous 2` | …~50 min depuis Saint-Omer. <strong>Devis gratuit</strong>, intervention sous 24-48h en standard.</p> <a href="depannage-boulogne-sur… |
+| `ouverture-porte-claquee.html` | 283 | engagement « intervention sous X » | `intervention sous 1` | …)</h3> <p><strong>90 à 180€ TTC</strong><br>Sans casse, intervention sous 1-2h.</p> </div> <div class="op-card" style="border-left-… |
 | `plombier-boulogne-sur-mer.html` | 965 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `plombier-boulogne-sur-mer.html` | 965 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `plombier-boulogne-sur-mer.html` | 965 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `plombier-boulogne-sur-mer.html` | 2099 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `plombier-boulogne-sur-mer.html` | 1856 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `plombier-calais.html` | 965 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `plombier-calais.html` | 965 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `plombier-calais.html` | 965 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `plombier-calais.html` | 2099 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `plombier-coudekerque-branche.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
-| `plombier-coulogne.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `plombier-calais.html` | 1856 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `plombier-coudekerque-branche.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `plombier-coulogne.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
 | `plombier-dunkerque.html` | 965 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `plombier-dunkerque.html` | 965 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `plombier-dunkerque.html` | 965 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `plombier-dunkerque.html` | 2099 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `plombier-grande-synthe.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
-| `plombier-guines.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
-| `plombier-le-portel.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
-| `plombier-marck.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
-| `plombier-outreau.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
-| `plombier-saint-martin-boulogne.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `plombier-dunkerque.html` | 1858 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `plombier-grande-synthe.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `plombier-guines.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `plombier-le-portel.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `plombier-marck.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `plombier-outreau.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `plombier-saint-martin-boulogne.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
 | `plombier-saint-omer.html` | 975 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `plombier-saint-omer.html` | 975 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `plombier-saint-omer.html` | 975 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `plombier-saint-omer.html` | 2105 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `plombier-teteghem.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
-| `plombier-wimereux.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `plombier-saint-omer.html` | 1864 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `plombier-teteghem.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `plombier-wimereux.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
 | `pmr-dunkerque.html` | 922 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `pmr-dunkerque.html` | 922 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `pmr-dunkerque.html` | 922 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `pmr-dunkerque.html` | 1823 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `pmr-dunkerque.html` | 1822 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `pmr-saint-omer.html` | 932 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `pmr-saint-omer.html` | 932 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `pmr-saint-omer.html` | 932 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `pmr-saint-omer.html` | 1893 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `realisations.html` | 1132 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `pmr-saint-omer.html` | 1891 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `realisations.html` | 1162 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `serrurier-boulogne-sur-mer.html` | 966 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `serrurier-boulogne-sur-mer.html` | 966 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `serrurier-boulogne-sur-mer.html` | 966 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `serrurier-boulogne-sur-mer.html` | 2053 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `serrurier-boulogne-sur-mer.html` | 1812 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `serrurier-calais.html` | 966 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `serrurier-calais.html` | 966 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `serrurier-calais.html` | 966 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `serrurier-calais.html` | 2053 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `serrurier-coudekerque-branche.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `serrurier-calais.html` | 1812 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `serrurier-coudekerque-branche.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
 | `serrurier-dunkerque.html` | 966 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `serrurier-dunkerque.html` | 966 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `serrurier-dunkerque.html` | 966 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `serrurier-dunkerque.html` | 2057 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `serrurier-marck.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
-| `serrurier-outreau.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `serrurier-dunkerque.html` | 1815 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `serrurier-marck.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `serrurier-outreau.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
 | `serrurier-saint-omer.html` | 976 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `serrurier-saint-omer.html` | 976 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `serrurier-saint-omer.html` | 976 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `serrurier-saint-omer.html` | 2064 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `serrurier-wimereux.html` | 224 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
+| `serrurier-saint-omer.html` | 1821 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `serrurier-wimereux.html` | 231 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
 | `travaux-dunkerque.html` | 937 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `travaux-dunkerque.html` | 937 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `travaux-dunkerque.html` | 937 | engagement « sous X (h/min) » | `sous 24h` | …olor:#64748b">Catalogue tarifs transparents · devis gratuit sous 24h ouvrées</p> </div> </section> <section class="m-section"… |
 | `travaux-dunkerque.html` | 937 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `travaux-dunkerque.html` | 1761 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `travaux-dunkerque.html` | 1753 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `travaux-saint-omer.html` | 947 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `travaux-saint-omer.html` | 947 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `travaux-saint-omer.html` | 947 | engagement « sous X (h/min) » | `sous 24h` | …olor:#64748b">Catalogue tarifs transparents · devis gratuit sous 24h ouvrées</p> </div> </section> <section class="m-section"… |
 | `travaux-saint-omer.html` | 947 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `travaux-saint-omer.html` | 1770 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `urgence.html` | 364 | engagement « sous X (h/min) » | `sous 24h` | …ce</li> <li>Sécurisation temporaire (planche/bâche) sous 24h ouvrées</li> <li>Devis remplacement vitrage</li>… |
+| `travaux-saint-omer.html` | 1761 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `urgence.html` | 372 | engagement « sous X (h/min) » | `sous 24h` | …ce</li> <li>Sécurisation temporaire (planche/bâche) sous 24h ouvrées</li> <li>Devis remplacement vitrage</li>… |
 | `vitrier-dunkerque.html` | 943 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `vitrier-dunkerque.html` | 943 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `vitrier-dunkerque.html` | 943 | engagement « sous X (h/min) » | `sous 24h` | …accident&nbsp;? Nous posons une planche / bâche en attente sous 24h ouvrées, puis remplacons à votre rythme. Devis pour votre a… |
 | `vitrier-dunkerque.html` | 943 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `vitrier-dunkerque.html` | 1900 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `vitrier-dunkerque.html` | 1801 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `vitrier-saint-omer.html` | 953 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `vitrier-saint-omer.html` | 953 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `vitrier-saint-omer.html` | 953 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `vitrier-saint-omer.html` | 1909 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `vitrier-saint-omer.html` | 1809 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `volets-dunkerque.html` | 943 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `volets-dunkerque.html` | 943 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `volets-dunkerque.html` | 943 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `volets-dunkerque.html` | 1920 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `volets-dunkerque.html` | 1802 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `volets-saint-omer.html` | 953 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `volets-saint-omer.html` | 953 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `volets-saint-omer.html` | 953 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `volets-saint-omer.html` | 1929 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
-| `zones-intervention.html` | 790 | engagement « sous X (h/min) » | `sous 24h` | …lass="z-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> </div> <div class="… |
-| `zones-intervention.html` | 1609 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `volets-saint-omer.html` | 1831 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `volets-saint-omer.html 2.html` | 911 | engagement « sous X (h/min) » | `Sous 1h` | …span class="m-cta-text"><strong>Être rappelé</strong><small>Sous 1h ouvrée</small></span> </a> </div> <div class="m-trust-l… |
+| `volets-saint-omer.html 2.html` | 1129 | engagement « sous X (h/min) » | `sous 1h` | …pécifique, rénovation, projet sur mesure : on vous rappelle sous 1h ouvrée.</span> </span> <span class="m-cta-arrow" aria-hid… |
+| `volets-saint-omer.html 2.html` | 1149 | engagement « sous X (h/min) » | `sous 24h` | …ntervention rapide</strong> <span>Saint-Omer & Dunkerque — sous 24h en semaine.</span> </div> <div class="m-pourquoi-card">… |
+| `volets-saint-omer.html 2.html` | 2033 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `zones-intervention.html` | 791 | engagement « sous X (h/min) » | `sous 24h` | …lass="z-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> </div> <div class="… |
+| `zones-intervention.html` | 1370 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 
 ## 🛠️ Procédure de correction
 

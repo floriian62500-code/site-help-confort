@@ -1,12 +1,12 @@
 # Audit duplicate titles & descriptions — Rapport
 
-_Généré le 2026-05-30 06:27_
+_Généré le 2026-05-31 07:01_
 
 ## Synthèse
 
-- Pages scannées : **138**
+- Pages scannées : **139**
 - Titres dupliqués (cross-page) : **5** (10 pages concernées)
-- Descriptions dupliquées : **5** (10 pages concernées)
+- Descriptions dupliquées : **6** (12 pages concernées)
 
 ## ❌ Titres en doublon
 
@@ -61,3 +61,8 @@ _2 pages_
 _2 pages_
 - `notre-equipe 2.html`
 - `notre-equipe.html`
+
+### « Volets roulants, battants et stores : réparation, motorisation, pose neuve à Saint-Omer & Dunkerque. Devis gratuit au 03 66 10 01 34. »
+_2 pages_
+- `volets-saint-omer.html`
+- `volets-saint-omer.html 2.html`

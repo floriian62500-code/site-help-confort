@@ -1,15 +1,15 @@
-# Audit HTML5 — 2026-05-30 06:25
+# Audit HTML5 — 2026-05-31 06:59
 
 > Audit local rapide HTML5 + a11y de base. Lancement : `python3 admin-pro/audits/audit_html5.py`
 > ⚠️ Ce n'est pas un substitut au validateur W3C officiel, mais il pré-filtre les erreurs évidentes.
 
 ## Synthèse
 
-- Pages auditées : **116**
-- Pages avec erreurs : **2**
-- Pages avec warnings : **11**
-- Total erreurs : **10**
-- Total warnings : **11**
+- Pages auditées : **117**
+- Pages avec erreurs : **3**
+- Pages avec warnings : **10**
+- Total erreurs : **11**
+- Total warnings : **10**
 
 ## Top patterns d'erreurs
 
@@ -22,6 +22,7 @@
 - **1×** BODY-HEAD-MISSING : balise </head> introuvable
 - **1×** BODY-HEAD-MISSING : balise <body> introuvable
 - **1×** aucun <hN>
+- **1×** N id(s) dupliqué(s) : #hc-avis-live×N
 
 ## Détail par page (pages problématiques uniquement)
 
@@ -43,6 +44,11 @@
 - ❌ <meta name="description"> manquant ou vide
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
+### `index.html`
+
+- ❌ 1 id(s) dupliqué(s) : #hc-avis-live×2
+- ℹ️ 20 <img> avec alt vide (OK si décoratif)
+
 ### `blog-cout-renovation-salle-de-bain.html`
 
 - ⚠️ <title> long (82 chars, >70 recommandé)
@@ -62,11 +68,6 @@
 
 - ⚠️ <title> long (92 chars, >70 recommandé)
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
-
-### `nos-prestations.html`
-
-- ⚠️ balisage déséquilibré (indicatif) : <div> 90↗ / 91↘
-- ℹ️ 11 <img> avec alt vide (OK si décoratif)
 
 ### `notre-equipe 2.html`
 
@@ -295,10 +296,6 @@
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
-### `index.html`
-
-- ℹ️ 20 <img> avec alt vide (OK si décoratif)
-
 ### `mentions-legales.html`
 
 - ℹ️ 11 <img> avec alt vide (OK si décoratif)
@@ -312,6 +309,10 @@
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
 ### `nos-metiers.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `nos-prestations.html`
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
@@ -471,6 +472,10 @@
 
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
+### `volets-saint-omer.html 2.html`
+
+- ℹ️ 11 <img> avec alt vide (OK si décoratif)
+
 ### `zones-intervention.html`
 
 - ℹ️ 20 <img> avec alt vide (OK si décoratif)
@@ -532,11 +537,11 @@
 - `guide-fuite-eau.html`
 - `guide-mise-aux-normes-electriques.html`
 - `guides.html`
-- `index.html`
 - `mentions-legales.html`
 - `menuisier-dunkerque.html`
 - `menuisier-saint-omer.html`
 - `nos-metiers.html`
+- `nos-prestations.html`
 - `nos-villes.html`
 - `ouverture-porte-claquee.html`
 - `panne-chaudiere.html`
@@ -580,4 +585,5 @@
 - `vitrier-saint-omer.html`
 - `volets-dunkerque.html`
 - `volets-saint-omer.html`
+- `volets-saint-omer.html 2.html`
 - `zones-intervention.html`

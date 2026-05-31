@@ -1,10 +1,10 @@
 # Audit data-source — Sonde IA #29
 
-_Généré le 2026-05-30 06:25 — `admin-pro/audits/audit_datasource.py`_
+_Généré le 2026-05-31 06:59 — `admin-pro/audits/audit_datasource.py`_
 
-- Pages avec attribut `data-source` : **1**
-- Occurrences totales : **2**
-- Statuts : `ok` ×2
+- Pages avec attribut `data-source` : **2**
+- Occurrences totales : **6**
+- Statuts : `ok` ×6
 - Alertes : **0**
 
 ## Formats reconnus
@@ -21,10 +21,12 @@ _Généré le 2026-05-30 06:25 — `admin-pro/audits/audit_datasource.py`_
 | Page | OK | stale | unknown | empty |
 |------|---:|------:|--------:|------:|
 | `index.html` | 2 | 0 | 0 | 0 |
+| `volets-saint-omer.html 2.html` | 4 | 0 | 0 | 0 |
 
 ## Valeurs distinctes
 
 | `data-source` | Occurrences |
 |---------------|------------:|
+| `base-produits-2026-05` | 4 |
 | `google` | 1 |
 | `trustville` | 1 |

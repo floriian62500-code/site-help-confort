@@ -1,7 +1,7 @@
-# Audit FAQPage doublon — 2026-05-30 06:26
+# Audit FAQPage doublon — 2026-05-31 07:01
 
-- **Pages scannées** : 115
-- **Pages avec 1 bloc FAQPage** : 25
+- **Pages scannées** : 116
+- **Pages avec 1 bloc FAQPage** : 26
 - **Pages sans FAQPage** : 90
 - **Pages avec > 1 bloc FAQPage (alertes)** : 0
 
@@ -35,4 +35,5 @@
 - `remplacement-chauffe-eau.html` (6 blocs JSON-LD au total)
 - `tarifs.html` (4 blocs JSON-LD au total)
 - `urgence.html` (3 blocs JSON-LD au total)
+- `volets-saint-omer.html 2.html` (4 blocs JSON-LD au total)
 - `zones-intervention.html` (5 blocs JSON-LD au total)
