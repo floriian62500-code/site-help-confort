@@ -1326,12 +1326,22 @@ var next=box.querySelector('.hc-mini-next');
 var CHANTIER_TITLE=/remplacement|installation|d[ée]pose|r[ée]paration|intervention|chantier|votre [a-zéèàïêç' ]+(?:est|a|sont|ont) (?:cass|ab[îi]m|d[ée]fect|fissur|us[ée]|terni|endommag)|panneau pvc|bris de glace|votre [a-zéèàïêç' ]+pvc|votre soupape|votre manom[èe]tre|votre mitigeur|votre tablier|votre cumulus|votre chaudi[èe]re|vitre d['']insert|nous intervenons rapidement/i;
 var CHANTIER_RESUME=/help confort intervient pour|nos prestations\s*:|nous sommes (?:r[ée]cemment )?intervenus?|notre [ée]quipe est intervenue|nous intervenons rapidement|intervention r[ée]alis[ée]e|nous r[ée]alisons le remplacement/i;
 fetch(jsonUrl+'?v='+Date.now()).then(r=>r.ok?r.json():Promise.reject()).then(list=>{
-// Si on charge actualites, on EXCLUT les items qui ressemblent à un chantier (titre OU résumé OU type explicite)
+// 2026-05-31 — FIX DÉFINITIF mélange chantier/actu (Florian se plaignait du mélange persistant)
+// Tracker "real" : SEULS les items est_chantier=true + image valide + pas de titre promo
+// Tracker "actu" : EXCLUT tout ce qui ressemble à un chantier
 var isActu = trackId.indexOf('actu') >= 0;
 var items=list.filter(x=>{
   if (x.published === false) return false;
-  if (!isActu) return true;
+  if (!isActu) {
+    // Tracker CHANTIERS — strict
+    if (x.est_chantier === false) return false;
+    if (!x.image_after && !x.image_before && !x.image) return false;
+    if (/v[œoe]ux|meilleurs voeux|belles f[êe]tes|spot tv|sur vos [ée]crans|saviez-vous|envie de remplacer|en plein hiver|pourquoi changer|conseil|n.oubliez pas|gaspill/i.test(x.title||'')) return false;
+    return true;
+  }
+  // Tracker ACTUS
   if (/chantier|realisation/i.test(x.type||'')) return false;
+  if (x.est_chantier === true && x.image_before && x.image_after) return false;
   if (CHANTIER_TITLE.test(x.title||'')) return false;
   if (CHANTIER_RESUME.test(x.resume||'')) return false;
   return true;
