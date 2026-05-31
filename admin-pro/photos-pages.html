@@ -322,6 +322,51 @@ async function render() {
 }
 
 render();
+
+// ═══ Seed : import des photos déjà présentes sur le site (localFallback) ═══
+async function seedExistingPhotos() {
+  const seedBtn = document.getElementById('pgSeedBtn');
+  const report = document.getElementById('pgSeedReport');
+  const candidates = [];
+  PHOTO_SLOTS.forEach(group => {
+    group.slots.forEach(s => {
+      if (s.localFallback) candidates.push(s);
+    });
+  });
+  if (!candidates.length) {
+    alert('Aucune photo locale référencée à importer pour le moment.');
+    return;
+  }
+  if (!confirm('Importer ' + candidates.length + ' photo(s) locale(s) vers Supabase ?\n(Les emplacements déjà uploadés seront écrasés.)')) return;
+  seedBtn.disabled = true;
+  seedBtn.textContent = '⏳ Import en cours…';
+  report.style.display = 'block';
+  report.innerHTML = '<strong>Import en cours…</strong>';
+  const results = [];
+  for (const slot of candidates) {
+    try {
+      const resp = await fetch(slot.localFallback);
+      if (!resp.ok) { results.push({ slot: slot.key, ok: false, err: 'HTTP ' + resp.status }); continue; }
+      const blob = await resp.blob();
+      const filename = slot.key + '.jpg';
+      const { error } = await sb.storage.from(BUCKET).upload(filename, blob, {
+        cacheControl: '60', upsert: true, contentType: blob.type || 'image/jpeg'
+      });
+      if (error) { results.push({ slot: slot.key, ok: false, err: error.message }); continue; }
+      results.push({ slot: slot.key, ok: true });
+    } catch (e) {
+      results.push({ slot: slot.key, ok: false, err: e.message });
+    }
+  }
+  const ok = results.filter(r => r.ok).length;
+  const ko = results.filter(r => !r.ok);
+  report.innerHTML = '<strong>✓ Import terminé : ' + ok + ' / ' + results.length + ' photo(s)</strong>' +
+    (ko.length ? '<ul style="margin:6px 0 0;padding-left:18px">' + ko.map(r => '<li>' + r.slot + ' — ' + r.err + '</li>').join('') + '</ul>' : '');
+  seedBtn.disabled = false;
+  seedBtn.textContent = '🚀 Importer les photos déjà sur le site';
+  render();
+}
+document.getElementById('pgSeedBtn').addEventListener('click', seedExistingPhotos);
 </script>
 </body>
 </html>
