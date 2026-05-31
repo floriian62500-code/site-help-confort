@@ -63,16 +63,34 @@
     return ({ plomberie: 'plomberie', chauffage: 'chauffage', electricite: 'électricité', serrurerie: 'serrurerie', vitrerie: 'vitrerie', renovation: 'rénovation', menuiserie: 'menuiserie', volets: 'volets' })[m] || m;
   }
 
+  // Fallback statique si fetch Supabase échoue (cache navigateur, RLS, réseau…)
+  // — assure que le bandeau s'affiche TOUJOURS avec au moins quelques marques connues
+  var FALLBACK_BY_METIER = {
+    plomberie:   [['Atlantic',true],['Geberit',true],['Nicoll',true],['Grohe',false],['Jacob Delafon',false],['Carlo Frattini',false],['Hansgrohe',false],['Ramon Soler',false],['Roca',false]],
+    chauffage:   [['Atlantic',true],['Saunier Duval',true],['De Dietrich',false],['ELM Leblanc',false],['Frisquet',false],['Viessmann',false]],
+    electricite: [['Legrand',true],['Schneider Electric',true],['Hager',false],['Niko',false],['Somfy',true]],
+    serrurerie:  [['Bricard',true],['Vachette',true],['Fichet',false],['Heracles',false],['Picard',false]],
+    vitrerie:    [['Saint-Gobain',true],['Lapeyre',false],['Verissimo',false]],
+    menuiserie:  [['K-Line',false],['Lapeyre',false],['Tryba',false]],
+    volets:      [['Bubendorff',true],['Somfy',true],['Soprofen',true],['Profalux',false]],
+    renovation:  [['Knauf',false],['Placo',false],['Tollens',false],['Nuances Unikalo',true]]
+  };
+  function fallbackFor(metier) {
+    return (FALLBACK_BY_METIER[metier] || []).map(function(pair){ return { name: pair[0], slug: pair[0].toLowerCase().replace(/[^a-z0-9]+/g,'-'), is_preferred: pair[1], metiers:[metier], website: null, logo_url: null }; });
+  }
+
   async function fetchSuppliers(metier) {
     try {
       var resp = await fetch(SUPABASE_URL + '/rest/v1/suppliers?select=*&active=eq.true&order=is_preferred.desc,name.asc&_ts=' + Date.now(), {
         headers: { apikey: SUPABASE_ANON, Authorization: 'Bearer ' + SUPABASE_ANON, 'Cache-Control': 'no-store' },
         cache: 'no-store'
       });
-      if (!resp.ok) return [];
+      if (!resp.ok) { console.warn('[hc-fournisseurs] fetch HTTP', resp.status, '— fallback statique'); return fallbackFor(metier); }
       var data = await resp.json();
-      return data.filter(function (s) { return Array.isArray(s.metiers) && s.metiers.indexOf(metier) !== -1; });
-    } catch (e) { console.error('[hc-fournisseurs]', e); return []; }
+      var filtered = data.filter(function (s) { return Array.isArray(s.metiers) && s.metiers.indexOf(metier) !== -1; });
+      if (filtered.length === 0) { console.warn('[hc-fournisseurs] 0 résultat pour', metier, '— fallback statique'); return fallbackFor(metier); }
+      return filtered;
+    } catch (e) { console.error('[hc-fournisseurs]', e, '— fallback statique'); return fallbackFor(metier); }
   }
 
   async function render(root) {
