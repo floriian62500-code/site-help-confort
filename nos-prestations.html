@@ -1533,13 +1533,13 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  <div class="nv-form-field nv-form-full"><label>Adresse d'intervention *</label><input aria-label="3 Rue du Général Sarrail" name="address" required placeholder="3 Rue du Général Sarrail"></div>
  <div class="nv-form-field"><label>Code postal *</label><input aria-label="62500" name="postal_code" required placeholder="62500"></div>
  <div class="nv-form-field"><label>Ville *</label><input aria-label="Saint-Omer" name="city" required placeholder="Saint-Omer"></div>
- <div class="nv-form-field"><label>Date souhaitée</label><input aria-label="Preferred_date" name="preferred_date" type="date" min="${new Date().toISOString().slice(0,10)}"></div>
- <div class="nv-form-field"><label>Créneau</label>
+ <!-- 2026-06-01 — Florian : champ Date souhaitée retiré (promesse impossible à tenir + déception client). HC propose la date au rappel. -->
+ <div class="nv-form-field"><label>Niveau d'urgence</label>
  <select aria-label="preferred_slot" name="preferred_slot">
  <option value="">Sans préférence</option>
- <option value="matin">Matin (8h-12h)</option>
- <option value="apres-midi">Après-midi (13h-18h)</option>
- <option value="urgent">Urgent</option>
+ <option value="urgent">🔴 Urgent — sous 24h</option>
+ <option value="rapide">🟠 Rapide — dans la semaine</option>
+ <option value="planifie">🟢 À planifier ensemble</option>
  </select>
  </div>
  <div class="nv-form-field nv-form-full"><label>Précisions (optionnel)</label><textarea aria-label="Marque/modèle actuel, accès particulier, photos disponibles..." name="notes" placeholder="Marque/modèle actuel, accès particulier, photos disponibles..."></textarea></div>
@@ -1569,6 +1569,16 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
    var raw = localStorage.getItem('hc_lead_v1');
    if (raw) {
      var d = JSON.parse(raw);
+     // Si l'ancien leadgate avait tout fusionné dans `adresse` (avant la séparation CP/ville),
+     // on parse depuis le bloc texte. Format attendu : "3 Rue du Général Sarrail, 62500 Saint-Omer"
+     if (d.adresse && (!d.code_postal || !d.ville)) {
+       var m = d.adresse.match(/(.*?)[,\s]+(\d{5})\s+(.+?)$/);
+       if (m) {
+         d.adresse = m[1].replace(/[,\s]+$/, '').trim();
+         d.code_postal = d.code_postal || m[2];
+         d.ville = d.ville || m[3].trim();
+       }
+     }
      var mapping = { firstname: d.prenom, lastname: d.nom, email: d.email, phone: d.telephone, address: d.adresse, postal_code: d.code_postal, city: d.ville };
      Object.keys(mapping).forEach(function(name){
        var input = sheet.querySelector('[name="'+name+'"]');
