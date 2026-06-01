@@ -441,15 +441,18 @@ main.nv-main{max-width:1240px;margin:0 auto;padding:60px 20px 40px}
     var counter = document.getElementById('nvcCount');
     var allCommunes = [];
     var filterZone = '';
+    var filterAgence = '';
     var filterText = '';
 
     function metierUrlFor(nom) {
       var s = (nom || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
       return 'depannage-' + s + '.html';
     }
+    function agenceLabel(a) { return a === 'saint-omer' ? '🟠' : a === 'dunkerque' ? '🔵' : ''; }
     function render() {
       var filtered = allCommunes.filter(function(c){
         if (filterZone && c.zone !== filterZone) return false;
+        if (filterAgence && c.agence !== filterAgence) return false;
         if (filterText) {
           var blob = (c.nom + ' ' + c.code_postal).toLowerCase();
           if (blob.indexOf(filterText.toLowerCase()) === -1) return false;
@@ -462,7 +465,8 @@ main.nv-main{max-width:1240px;margin:0 auto;padding:60px 20px 40px}
         return;
       }
       list.innerHTML = filtered.map(function(c){
-        return '<a class="nvc-card" href="' + metierUrlFor(c.nom) + '" title="Voir nos interventions à ' + c.nom + '"><strong>' + c.nom + '</strong><span class="cp">' + c.code_postal + '</span></a>';
+        var dot = agenceLabel(c.agence);
+        return '<a class="nvc-card" href="' + metierUrlFor(c.nom) + '" title="Voir nos interventions à ' + c.nom + ' (agence ' + (c.agence||'') + ')"><strong>' + (dot ? dot + ' ' : '') + c.nom + '</strong><span class="cp">' + c.code_postal + '</span></a>';
       }).join('');
     }
     function load() {
@@ -477,11 +481,19 @@ main.nv-main{max-width:1240px;margin:0 auto;padding:60px 20px 40px}
         });
     }
     search.addEventListener('input', function(e){ filterText = e.target.value.trim(); render(); });
-    pills.forEach(function(p){
+    document.querySelectorAll('.nvc-pill[data-zone]').forEach(function(p){
       p.addEventListener('click', function(){
-        pills.forEach(function(x){ x.classList.remove('is-active'); });
+        document.querySelectorAll('.nvc-pill[data-zone]').forEach(function(x){ x.classList.remove('is-active'); });
         p.classList.add('is-active');
         filterZone = p.dataset.zone;
+        render();
+      });
+    });
+    document.querySelectorAll('.nvc-pill[data-agence]').forEach(function(p){
+      p.addEventListener('click', function(){
+        document.querySelectorAll('.nvc-pill[data-agence]').forEach(function(x){ x.classList.remove('is-active'); });
+        p.classList.add('is-active');
+        filterAgence = p.dataset.agence;
         render();
       });
     });

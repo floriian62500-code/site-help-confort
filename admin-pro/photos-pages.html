@@ -81,7 +81,7 @@ const PHOTO_SLOTS = [
   {
     page: 'volets-saint-omer', pageLabel: '🪟 Page Volets — Saint-Omer', pageUrl: '/volets-saint-omer',
     slots: [
-      { key: 'volets/hero',              label: 'Hero volets',                desc: 'Image principale (mascotte ou photo)' },
+      { key: 'volets/hero',              label: 'Hero volets',                desc: 'Image principale (mascotte ou photo)', localFallback: '/images/mascotte.webp' },
       { key: 'volets/volet-roulant',     label: 'Card Volet roulant',         desc: 'Card "Volet roulant" — pose neuve / remplacement' },
       { key: 'volets/depannage-urgence', label: 'Card Dépannage urgence',     desc: 'Card "Dépannage urgence" — volet bloqué' },
       { key: 'volets/motorisation-somfy',label: 'Card Motorisation Somfy',    desc: 'Card "Motorisation & modernisation"', localFallback: '/images/prestations/motorisation-volet-somfy.avif' },
@@ -105,10 +105,11 @@ const PHOTO_SLOTS = [
     page: 'plombier-saint-omer', pageLabel: '🔧 Page Plomberie — Saint-Omer', pageUrl: '/plombier-saint-omer',
     slots: [
       { key: 'plomberie/hero',         label: 'Hero plomberie',         desc: 'Image principale page plombier' },
-      { key: 'plomberie/fuite',        label: 'Card Recherche de fuite',desc: 'Card "Recherche fuite cachée"' },
-      { key: 'plomberie/debouchage',   label: 'Card Débouchage',        desc: 'Card "Débouchage canalisation"' },
-      { key: 'plomberie/chauffe-eau',  label: 'Card Chauffe-eau',       desc: 'Card "Pose / remplacement chauffe-eau"' },
-      { key: 'plomberie/sanitaire',    label: 'Card Sanitaires',        desc: 'Card "WC / mitigeur / lavabo"' }
+      { key: 'plomberie/fuite',        label: 'Card Recherche de fuite',desc: 'Card "Recherche fuite cachée"', localFallback: '/images/prestations/recherche-fuite.jpg' },
+      { key: 'plomberie/debouchage',   label: 'Card Débouchage',        desc: 'Card "Débouchage canalisation"', localFallback: '/images/prestations/debouchage.jpg' },
+      { key: 'plomberie/chauffe-eau',  label: 'Card Chauffe-eau',       desc: 'Card "Pose / remplacement chauffe-eau"', localFallback: '/images/prestations/chauffe-eau.jpg' },
+      { key: 'plomberie/sanitaire',    label: 'Card Sanitaires',        desc: 'Card "WC / mitigeur / lavabo"', localFallback: '/images/prestations/sanitaire.jpg' },
+      { key: 'plomberie/reseaux',      label: 'Card Réseaux plomberie', desc: 'Card "Réseaux et tuyauterie"', localFallback: '/images/prestations/reseaux-plomberie.jpg' }
     ]
   },
   {
