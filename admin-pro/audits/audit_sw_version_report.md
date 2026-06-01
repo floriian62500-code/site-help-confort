@@ -1,4 +1,4 @@
-# Audit SW version freshness — 2026-05-31 07:01
+# Audit SW version freshness — 2026-06-01 08:38
 
 - **Fichier audité** : `sw.js`
 - **Mode détecté** : `kill-switch`
