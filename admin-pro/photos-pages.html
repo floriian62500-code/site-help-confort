@@ -386,9 +386,19 @@ async function seedExistingPhotos(silent) {
 }
 document.getElementById('pgSeedBtn').addEventListener('click', function(){ seedExistingPhotos(false); });
 
-// 2026-06-01 — Cleanup retiré (avait viré par erreur les vraies photos menuiserie/plomberie validées)
-// Auto-import réactivé pour les photos avec localFallback (présentes en /images/prestations/)
-setTimeout(function(){ seedExistingPhotos(true); }, 800);
+// 2026-06-01 — Cleanup ciblé des photos parasites uploadées par erreur (volet-roulant médiocre, hero.jpg)
+async function cleanupParasites() {
+  const TARGETS = ['volets/volet-roulant.jpg', 'volets/hero.jpg'];
+  let removed = 0;
+  for (const p of TARGETS) {
+    try { const { error } = await sb.storage.from(BUCKET).remove([p]); if (!error) removed++; } catch(_){}
+  }
+  if (removed > 0) console.log('[cleanup-parasites]', removed, 'photo(s) parasite(s) supprimée(s)');
+}
+setTimeout(cleanupParasites, 400);
+
+// Auto-import des photos validées avec localFallback (présentes en /images/prestations/)
+setTimeout(function(){ seedExistingPhotos(true); }, 1200);
 </script>
     </div><!-- /.admin-content -->
   </main>
