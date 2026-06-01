@@ -1,0 +1,76 @@
+/* HELP Confort — Préremplissage modaux lead/réservation
+ * 2026-06-01 : conserve les coordonnées en localStorage pour pré-remplir tous les modaux
+ *              (modal Réserver pages métier, modal leadgate prestations, etc.)
+ * Auto-binding : tout formulaire avec [data-hc-lead] est préremplit à l'affichage.
+ */
+(function () {
+  'use strict';
+  var LS_KEY = 'hc_lead_v1';
+
+  // Mapping tolérant : on lit/écrit avec plusieurs noms possibles pour chaque champ
+  var FIELD_ALIASES = {
+    prenom: ['prenom', 'firstname', 'first_name'],
+    nom: ['nom', 'lastname', 'last_name', 'name'],
+    telephone: ['telephone', 'tel', 'phone'],
+    email: ['email'],
+    adresse: ['adresse', 'address'],
+    code_postal: ['code_postal', 'cp', 'postal_code', 'zip'],
+    ville: ['ville', 'city']
+  };
+
+  function readStore() {
+    try { return JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch (_) { return {}; }
+  }
+  function writeStore(d) {
+    try {
+      d.saved_at = new Date().toISOString();
+      localStorage.setItem(LS_KEY, JSON.stringify(d));
+    } catch (_) {}
+  }
+
+  function prefillForm(form) {
+    if (!form || form.dataset.hcPrefilled === '1') return;
+    var d = readStore();
+    if (!d || !Object.keys(d).length) return;
+    Object.keys(FIELD_ALIASES).forEach(function (canonical) {
+      var val = d[canonical];
+      if (!val) return;
+      FIELD_ALIASES[canonical].forEach(function (alias) {
+        var input = form.querySelector('[name="' + alias + '"]');
+        if (input && !input.value) input.value = val;
+      });
+    });
+    form.dataset.hcPrefilled = '1';
+  }
+
+  function harvestForm(form) {
+    var d = readStore();
+    Object.keys(FIELD_ALIASES).forEach(function (canonical) {
+      FIELD_ALIASES[canonical].forEach(function (alias) {
+        var input = form.querySelector('[name="' + alias + '"]');
+        if (input && input.value && !d[canonical]) d[canonical] = input.value;
+      });
+    });
+    writeStore(d);
+  }
+
+  function bind() {
+    document.querySelectorAll('form[data-hc-lead]').forEach(function (form) {
+      prefillForm(form);
+      // À la soumission, on garde les valeurs pour la prochaine fois
+      form.addEventListener('submit', function () { harvestForm(form); }, { capture: true });
+    });
+  }
+
+  // Watcher : les modaux peuvent apparaître après le load (innerHTML dynamique)
+  var mo = new MutationObserver(function () { bind(); });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      bind();
+      mo.observe(document.body, { childList: true, subtree: true });
+    });
+  } else {
+    bind();
+    mo.observe(document.body, { childList: true, subtree: true });
+  }
+})();
