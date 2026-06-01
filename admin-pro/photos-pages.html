@@ -411,6 +411,10 @@ async function cleanupGenericImports() {
 }
 // Lance le cleanup une fois au chargement (skip silencieux si rien à supprimer)
 setTimeout(cleanupGenericImports, 800);
+
+// 2026-06-01 — Auto-import UNIQUEMENT les photos qui ont un localFallback VALIDÉ
+// (ie. présent dans PHOTO_SLOTS avec mention "déjà sur le site") — actuellement uniquement parquet
+setTimeout(function(){ seedExistingPhotos(true); }, 1500);
 </script>
     </div><!-- /.admin-content -->
   </main>
