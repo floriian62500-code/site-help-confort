@@ -389,6 +389,8 @@ document.getElementById('frForm').addEventListener('submit', async (e) => {
     account_number: fd.get('account_number') || null,
     payment_terms: fd.get('payment_terms') || null,
     notes: fd.get('notes') || null,
+    catalogue_url: fd.get('catalogue_url') || null,
+    catalogue_type: fd.get('catalogue_url') ? 'link' : null,
     is_preferred: fd.get('is_preferred') === 'on',
     active: fd.get('active') === 'on'
   };
