@@ -14,6 +14,7 @@
 #hcChatFab{position:fixed;bottom:88px;right:18px;z-index:95;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#0DA0CF,#1FC4F0);border:0;box-shadow:0 12px 32px rgba(13,160,207,.45),0 4px 10px rgba(13,160,207,.30);cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;transition:transform .2s ease,box-shadow .2s ease}\
 #hcChatFab:hover{transform:scale(1.08);box-shadow:0 16px 40px rgba(13,160,207,.55)}\
 #hcChatFab svg{width:26px;height:26px;transition:transform .25s ease}\
+#hcChatFab.is-open{opacity:0;pointer-events:none;visibility:hidden;transform:scale(.8)}\
 #hcChatFab.is-open svg{transform:rotate(135deg)}\
 #hcChatFab::after{content:"";position:absolute;top:-3px;right:-3px;width:14px;height:14px;background:#FF6B1A;border-radius:50%;border:2px solid #fff;animation:hcChatPulse 2s ease-in-out infinite}\
 @keyframes hcChatPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,26,.6)}50%{box-shadow:0 0 0 8px rgba(255,107,26,0)}}\
