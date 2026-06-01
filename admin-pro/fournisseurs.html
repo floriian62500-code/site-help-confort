@@ -120,6 +120,11 @@
         <div><label>Site web</label><input name="website" type="url" placeholder="https://..."></div>
         <div><label>Email contact</label><input name="contact_email" type="email"></div>
       </div>
+      <div style="margin-top:12px">
+        <label>📚 Catalogue (lien externe vers le catalogue en ligne du fournisseur)</label>
+        <input name="catalogue_url" type="url" placeholder="https://www.fournisseur.com/catalogue ou laisser vide pour uploader un PDF depuis la card">
+        <small style="display:block;color:#94a3b8;font-size:.78rem;margin-top:4px">Astuce : pour uploader un PDF local, utilisez le bouton 📚 PDF directement sur la card du fournisseur.</small>
+      </div>
       <div class="fr-grid-2" style="margin-top:12px">
         <div><label>Téléphone</label><input name="contact_phone" type="tel"></div>
         <div><label>N° compte client</label><input name="account_number"></div>
@@ -356,6 +361,7 @@ function openModal(s) {
     form.account_number.value = s.account_number || '';
     form.payment_terms.value = s.payment_terms || '';
     form.notes.value = s.notes || '';
+    if (form.catalogue_url) form.catalogue_url.value = s.catalogue_url || '';
     form.is_preferred.checked = !!s.is_preferred;
     form.active.checked = s.active !== false;
     document.querySelectorAll('#frMetiersPick input').forEach(cb => { cb.checked = (s.metiers||[]).includes(cb.value); });
