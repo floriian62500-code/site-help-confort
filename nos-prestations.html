@@ -502,10 +502,12 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  <input aria-label="Email" type="email" name="email" placeholder="Email *" required autocomplete="email" class="nv-lg-inp" list="nv-email-domains" id="nvLgEmail">
  <datalist id="nv-email-domains"></datalist>
  <div style="position:relative">
- <input aria-label="Adresse postale" type="text" name="adresse" placeholder="Adresse postale *" required autocomplete="street-address" class="nv-lg-inp" id="nvLgAdresse">
- <input type="hidden" name="ville" id="nvLgVille">
- <input type="hidden" name="code_postal" id="nvLgCp">
+ <input aria-label="Adresse (rue + n°)" type="text" name="adresse" placeholder="Adresse (n° et rue) *" required autocomplete="street-address" class="nv-lg-inp" id="nvLgAdresse">
  <div id="nvLgAdresseSuggest" style="position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #E5EDF3;border-radius:10px;margin-top:4px;box-shadow:0 12px 32px rgba(10,20,40,.12);max-height:240px;overflow-y:auto;z-index:10;display:none"></div>
+ </div>
+ <div class="nv-lg-row">
+ <input aria-label="Code postal" type="text" name="code_postal" placeholder="Code postal *" required autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5" inputmode="numeric" class="nv-lg-inp" id="nvLgCp" style="flex:0 0 130px">
+ <input aria-label="Ville" type="text" name="ville" placeholder="Ville *" required autocomplete="address-level2" class="nv-lg-inp" id="nvLgVille">
  </div>
  <button type="submit" class="nv-lg-submit" id="nvLgSubmit">
  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
@@ -752,14 +754,16 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
          box.innerHTML = j.features.map(function(f){
            var p = f.properties;
            var label = p.label || (p.name + ' ' + p.postcode + ' ' + p.city);
-           return '<div class="nvLgAdrSugg" data-label="' + label.replace(/"/g,'&quot;') + '" data-ville="' + (p.city||'').replace(/"/g,'&quot;') + '" data-cp="' + (p.postcode||'') + '" style="padding:10px 14px;cursor:pointer;font-size:.92rem;border-bottom:1px solid #F0F4F7;line-height:1.4">' + label + '</div>';
+           // data-rue : juste le n° + voie (sans CP/ville) pour ne pas dupliquer dans le champ adresse
+           var rueOnly = p.name || label.replace(' ' + (p.postcode||'') + ' ' + (p.city||''), '').trim();
+           return '<div class="nvLgAdrSugg" data-rue="' + rueOnly.replace(/"/g,'&quot;') + '" data-ville="' + (p.city||'').replace(/"/g,'&quot;') + '" data-cp="' + (p.postcode||'') + '" style="padding:10px 14px;cursor:pointer;font-size:.92rem;border-bottom:1px solid #F0F4F7;line-height:1.4">' + label + '</div>';
          }).join('');
          box.style.display = 'block';
          box.querySelectorAll('.nvLgAdrSugg').forEach(function(el){
            el.addEventListener('mouseenter', function(){ el.style.background = '#F7FBFD'; });
            el.addEventListener('mouseleave', function(){ el.style.background = '#fff'; });
            el.addEventListener('click', function(){
-             addrInput.value = el.dataset.label;
+             addrInput.value = el.dataset.rue;
              if (villeInput) villeInput.value = el.dataset.ville || '';
              if (cpInput) cpInput.value = el.dataset.cp || '';
              box.style.display = 'none';
