@@ -107,7 +107,8 @@ const PHOTO_SLOTS = [
       { key: 'menuiserie/fenetres',     label: '✅ Card Fenêtres bois/alu/PVC',desc: 'Fenêtres Groupe Millet (déjà sur le site)', localFallback: '/images/prestations/fenetres-bois-alu-pvc.jpg' },
       { key: 'menuiserie/coulissant',   label: '✅ Card Coulissant & baie',    desc: 'Baie vitrée coulissante (déjà sur le site)', localFallback: '/images/prestations/coulissant-baie-vitree.jpg' },
       { key: 'menuiserie/garde-corps',  label: '✅ Card Garde-corps & rampes', desc: 'Garde-corps et rampes (déjà sur le site)', localFallback: '/images/prestations/garde-corps-rampes.jpg' },
-      { key: 'menuiserie/panneau-pvc',  label: '✅ Card Panneau PVC',          desc: 'Remplacement panneau de porte (déjà sur le site)', localFallback: '/images/prestations/remplacement-panneau-porte.jpg' }
+      { key: 'menuiserie/panneau-pvc',  label: '✅ Card Panneau PVC',          desc: 'Remplacement panneau de porte (déjà sur le site)', localFallback: '/images/prestations/remplacement-panneau-porte.jpg' },
+      { key: 'travaux/parquet',         label: '✅ Card Parquet',              desc: 'Parquet pose chevron (déjà sur le site)', localFallback: '/images/prestations/parquet.jpg' }
     ]
   },
   {
@@ -118,10 +119,12 @@ const PHOTO_SLOTS = [
       { key: 'pmr/salle-de-bain',    label: '✅ Card Salle de bain PMR',desc: 'Rénovation SDB Delpha (partagée avec plomberie)', localFallback: '/images/prestations/salle-de-bain.jpg' }
     ]
   },
+  // 2026-06-01 — Page Rénovation : aucune photo de contenu actuellement (Parquet déplacé vers Menuiserie où il est affiché)
+  // Florian ajoutera ici quand il y aura des photos de chantiers rénovation à mettre en avant
   {
-    page: 'travaux-saint-omer', pageLabel: '🏠 Page Rénovation — Saint-Omer', pageUrl: '/travaux-saint-omer',
+    page: 'travaux-saint-omer', pageLabel: '🏠 Page Rénovation — Saint-Omer (aucune photo de contenu actuellement)', pageUrl: '/travaux-saint-omer',
     slots: [
-      { key: 'travaux/parquet', label: '✅ Card Parquet', desc: 'Parquet pose chevron (utilisé sur menuiserie aussi)', localFallback: '/images/prestations/parquet.jpg' }
+      { key: 'travaux/hero', label: '⚪ Hero rénovation', desc: 'Image principale en haut de la page' }
     ]
   },
   // ───────── Pages métier SANS photo de contenu actuellement (cards en placeholder violet) ─────────
