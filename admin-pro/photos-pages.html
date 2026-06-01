@@ -341,7 +341,9 @@ async function render() {
 render();
 
 // ═══ Seed : import des photos déjà présentes sur le site (localFallback) ═══
-async function seedExistingPhotos() {
+// 2026-06-01 — AUTO-RUN au load : Florian n'a plus à cliquer, ça s'auto-déclenche.
+//             Skip silencieux pour les photos déjà uploadées.
+async function seedExistingPhotos(silent) {
   const seedBtn = document.getElementById('pgSeedBtn');
   const report = document.getElementById('pgSeedReport');
   const candidates = [];
@@ -351,16 +353,28 @@ async function seedExistingPhotos() {
     });
   });
   if (!candidates.length) {
-    alert('Aucune photo locale référencée à importer pour le moment.');
+    if (!silent) alert('Aucune photo locale référencée à importer.');
     return;
   }
-  if (!confirm('Importer ' + candidates.length + ' photo(s) locale(s) vers Supabase ?\n(Les emplacements déjà uploadés seront écrasés.)')) return;
-  seedBtn.disabled = true;
-  seedBtn.textContent = '⏳ Import en cours…';
-  report.style.display = 'block';
-  report.innerHTML = '<strong>Import en cours…</strong>';
+  // En mode silent (auto-run), on filtre celles déjà uploadées
+  let toUpload = candidates;
+  if (silent) {
+    const existing = await listExisting();
+    toUpload = candidates.filter(c => !existing.has(c.key));
+    if (!toUpload.length) return;  // rien à faire
+  } else {
+    if (!confirm('Importer ' + candidates.length + ' photo(s) locale(s) vers Supabase ?\n(Les emplacements déjà uploadés seront écrasés.)')) return;
+  }
+  if (seedBtn) {
+    seedBtn.disabled = true;
+    seedBtn.textContent = silent ? '⏳ Auto-import en cours…' : '⏳ Import en cours…';
+  }
+  if (report && !silent) {
+    report.style.display = 'block';
+    report.innerHTML = '<strong>Import en cours…</strong>';
+  }
   const results = [];
-  for (const slot of candidates) {
+  for (const slot of toUpload) {
     try {
       const resp = await fetch(slot.localFallback);
       if (!resp.ok) { results.push({ slot: slot.key, ok: false, err: 'HTTP ' + resp.status }); continue; }
@@ -377,13 +391,30 @@ async function seedExistingPhotos() {
   }
   const ok = results.filter(r => r.ok).length;
   const ko = results.filter(r => !r.ok);
-  report.innerHTML = '<strong>✓ Import terminé : ' + ok + ' / ' + results.length + ' photo(s)</strong>' +
-    (ko.length ? '<ul style="margin:6px 0 0;padding-left:18px">' + ko.map(r => '<li>' + r.slot + ' — ' + r.err + '</li>').join('') + '</ul>' : '');
-  seedBtn.disabled = false;
-  seedBtn.textContent = '🚀 Importer les photos déjà sur le site';
+  if (report) {
+    report.style.display = 'block';
+    if (silent && ok > 0) {
+      report.style.background = '#ECFDF5';
+      report.style.borderColor = '#10B981';
+      report.innerHTML = '<strong>✓ Auto-import : ' + ok + ' photo(s) du site uploadées dans Supabase</strong>' +
+        (ko.length ? '<ul style="margin:6px 0 0;padding-left:18px;font-size:.84rem;color:#7F1D1D">' + ko.map(r => '<li>' + r.slot + ' — ' + r.err + '</li>').join('') + '</ul>' : '');
+      setTimeout(() => { report.style.display = 'none'; }, 8000);
+    } else if (!silent) {
+      report.innerHTML = '<strong>✓ Import terminé : ' + ok + ' / ' + results.length + ' photo(s)</strong>' +
+        (ko.length ? '<ul style="margin:6px 0 0;padding-left:18px">' + ko.map(r => '<li>' + r.slot + ' — ' + r.err + '</li>').join('') + '</ul>' : '');
+    }
+  }
+  if (seedBtn) {
+    seedBtn.disabled = false;
+    seedBtn.textContent = '🚀 Re-importer les photos du site';
+  }
   render();
 }
-document.getElementById('pgSeedBtn').addEventListener('click', seedExistingPhotos);
+document.getElementById('pgSeedBtn').addEventListener('click', function(){ seedExistingPhotos(false); });
+
+// ═══ AUTO-RUN à l'ouverture de la page ═══
+// Dès que le dashboard charge, on importe TOUT ce qui est sur le site et pas encore en bucket
+setTimeout(function(){ seedExistingPhotos(true); }, 500);
 </script>
     </div><!-- /.admin-content -->
   </main>
