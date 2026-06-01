@@ -835,13 +835,35 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  var form = e.target;
  var btn = document.getElementById('nvLgSubmit');
  var fd = new FormData(form);
- // Validation rapide
- var bad = false;
- form.querySelectorAll('input[required]').forEach(function(i){
- if (!i.value.trim()) { i.classList.add('has-error'); bad = true; }
- else { i.classList.remove('has-error'); }
- });
- if (bad) return;
+ // 2026-06-01 — Validation stricte : empêche données bidons
+ form.querySelectorAll('.has-error').forEach(function(i){ i.classList.remove('has-error'); });
+ var errors = [];
+ var prenom = (fd.get('prenom')||'').trim();
+ var nom = (fd.get('nom')||'').trim();
+ var tel = (fd.get('telephone')||'').trim();
+ var email = (fd.get('email')||'').trim();
+ var adresse = (fd.get('adresse')||'').trim();
+ var cp = (fd.get('code_postal')||'').trim();
+ var ville = (fd.get('ville')||'').trim();
+ function flag(name, msg){ var inp = form.querySelector('[name="'+name+'"]'); if (inp) inp.classList.add('has-error'); errors.push(msg); }
+ if (prenom.length < 2 || /^[0-9]+$/.test(prenom)) flag('prenom', 'Prénom invalide');
+ if (nom.length < 2 || /^[0-9]+$/.test(nom)) flag('nom', 'Nom invalide');
+ var telDigits = tel.replace(/[^0-9]/g, '');
+ if (telDigits.length < 10 || telDigits.length > 13) flag('telephone', 'Téléphone invalide (10 chiffres)');
+ if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(email)) flag('email', 'Email invalide');
+ if (adresse.length < 6) flag('adresse', 'Adresse trop courte');
+ if (!/^[0-9]{5}$/.test(cp)) flag('code_postal', 'Code postal invalide');
+ if (ville.length < 2) flag('ville', 'Ville invalide');
+ if (errors.length) {
+   var existing = form.querySelector('.nv-lg-error-msg');
+   if (existing) existing.remove();
+   var em = document.createElement('div');
+   em.className = 'nv-lg-error-msg';
+   em.style.cssText = 'margin:8px 0 0;padding:10px 14px;background:rgba(225,29,72,.08);color:#9F0E2B;border-radius:10px;font-size:.84rem;border-left:3px solid #E11D48';
+   em.innerHTML = '<strong>Corrigez :</strong> ' + errors.join(' · ');
+   form.insertBefore(em, btn);
+   return;
+ }
 
  btn.disabled = true; btn.innerHTML = 'Envoi…';
 
@@ -1664,6 +1686,21 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  errBox.style.display = 'block';
  errBox.textContent = 'Merci de remplir les champs obligatoires : ' + missing.join(', ');
  return;
+ }
+ // 2026-06-01 — Validation stricte des données saisies
+ const errors = [];
+ if (data.firstname.trim().length < 2 || /^[0-9]+$/.test(data.firstname.trim())) errors.push('Prénom invalide (min 2 lettres)');
+ if (data.lastname.trim().length < 2 || /^[0-9]+$/.test(data.lastname.trim())) errors.push('Nom invalide (min 2 lettres)');
+ if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(data.email.trim())) errors.push('Email invalide');
+ var phoneDigits = data.phone.replace(/[^0-9]/g, '');
+ if (phoneDigits.length < 10 || phoneDigits.length > 13) errors.push('Téléphone invalide (10 chiffres attendus, ex. 06 12 34 56 78)');
+ if (!/^[0-9]{5}$/.test(data.postal_code.trim())) errors.push('Code postal invalide (5 chiffres)');
+ if (data.city.trim().length < 2) errors.push('Ville invalide');
+ if (data.address.trim().length < 6) errors.push('Adresse trop courte');
+ if (errors.length) {
+   errBox.style.display = 'block';
+   errBox.innerHTML = '<strong>Merci de corriger :</strong><br>• ' + errors.join('<br>• ');
+   return;
  }
  // 2026-06-01 — Mémorise les coordonnées pour les prochaines réservations
  try {
