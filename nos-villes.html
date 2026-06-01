@@ -390,8 +390,13 @@ main.nv-main{max-width:1240px;margin:0 auto;padding:60px 20px 40px}
       <p>HELP Confort intervient sur <strong id="nvcCount">…</strong> communes du Pas-de-Calais et du Nord — filtrez par zone ou recherchez votre commune.</p>
       <div class="nvc-tools">
         <input id="nvcSearch" type="search" placeholder="🔍 Rechercher votre commune ou code postal…" aria-label="Rechercher une commune">
+        <div class="nvc-filters" style="margin-bottom:8px">
+          <button class="nvc-pill is-active" data-agence="">Toutes agences</button>
+          <button class="nvc-pill" data-agence="saint-omer">🟠 Dépan'Audo (Saint-Omer)</button>
+          <button class="nvc-pill" data-agence="dunkerque">🔵 Dépan'DK (Dunkerque)</button>
+        </div>
         <div class="nvc-filters">
-          <button class="nvc-pill is-active" data-zone="">Toutes</button>
+          <button class="nvc-pill is-active" data-zone="">Toutes zones</button>
           <button class="nvc-pill" data-zone="audomarois">Audomarois</button>
           <button class="nvc-pill" data-zone="calaisis">Calaisis</button>
           <button class="nvc-pill" data-zone="boulonnais">Boulonnais</button>
