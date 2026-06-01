@@ -75,125 +75,86 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 const BUCKET = 'site-photos';
 const STORAGE_BASE = SUPABASE_URL + '/storage/v1/object/public/' + BUCKET + '/';
 
-// ═══ Mapping prédéfini des emplacements photo ═══
-// Tous les emplacements photo "manuels" des pages métier publiques
+// ═══ MAPPING RÉEL — Audit 2026-06-01 ═══
+// Liste UNIQUEMENT les emplacements photo qui apparaissent vraiment sur le site (HTML branché Supabase).
+// Pour chaque slot : badge ✅ = photo existe sur le site / ⚪ = emplacement à uploader.
+// Florian s'occupe d'uploader les ⚪ via les boutons Uploader ci-dessous.
 const PHOTO_SLOTS = [
-  {
-    page: 'index', pageLabel: '🏠 Page Accueil', pageUrl: '/',
-    slots: [
-      { key: 'index/hero', label: 'Image hero accueil', desc: 'Photo principale en haut de la home' }
-    ]
-  },
   {
     page: 'volets-saint-omer', pageLabel: '🪟 Page Volets — Saint-Omer', pageUrl: '/volets-saint-omer',
     slots: [
-      { key: 'volets/hero',              label: 'Hero volets',                desc: 'Image principale (mascotte ou photo)' },
-      { key: 'volets/volet-roulant',     label: 'Card Volet roulant',         desc: 'Card "Volet roulant" — pose neuve / remplacement' },
-      { key: 'volets/depannage-urgence', label: 'Card Dépannage urgence',     desc: 'Card "Dépannage urgence" — volet bloqué' },
-      { key: 'volets/motorisation-somfy',label: 'Card Motorisation Somfy',    desc: 'Card "Motorisation & modernisation"', localFallback: '/images/prestations/motorisation-volet-somfy.avif' },
-      { key: 'volets/reparation-tablier',label: 'Card Réparation tablier',    desc: 'Card "Réparation tablier / lames"' },
-      { key: 'volets/pose-neuve',        label: 'Card Pose neuve',            desc: 'Card "Pose neuve sur mesure"' },
-      { key: 'volets/store',             label: 'Card Stores / banne',        desc: 'Card "Stores intérieurs / extérieurs"' }
-    ]
-  },
-  {
-    page: 'travaux-saint-omer', pageLabel: '🏠 Page Rénovation — Saint-Omer', pageUrl: '/travaux-saint-omer',
-    slots: [
-      { key: 'travaux/hero',     label: 'Hero rénovation',  desc: 'Image principale en haut de la page' },
-      { key: 'travaux/enduit',   label: 'Enduit intérieur', desc: 'Photo prestation enduit' },
-      { key: 'travaux/peinture', label: 'Peinture intérieure', desc: 'Photo prestation peinture' },
-      { key: 'travaux/plafond',  label: 'Plafond / placo',  desc: 'Photo prestation plafond' },
-      { key: 'travaux/parquet',  label: 'Parquet', desc: 'Photo prestation parquet' },
-      { key: 'travaux/salle-de-bain',label: 'Salle de bain', desc: 'Photo prestation salle de bain' },
-      { key: 'travaux/isolation',label: 'Isolation',        desc: 'Photo prestation isolation' },
-      { key: 'travaux/revetements',label: 'Revêtements muraux',desc: 'Photo prestation revêtements' }
+      { key: 'volets/depannage-urgence', label: '✅ Card Dépannage urgence', desc: 'Mascotte HC réparant un volet (déjà sur le site)' },
+      { key: 'volets/motorisation-somfy', label: '✅ Card Motorisation Somfy', desc: 'Kit moteur Somfy PRO 30Nm (déjà sur le site)', localFallback: '/images/prestations/motorisation-volet-somfy.avif' },
+      { key: 'volets/volet-roulant', label: '⚪ Card Volet roulant', desc: 'À uploader — pose neuve / remplacement' }
     ]
   },
   {
     page: 'plombier-saint-omer', pageLabel: '🔧 Page Plomberie — Saint-Omer', pageUrl: '/plombier-saint-omer',
     slots: [
-      { key: 'plomberie/hero',         label: 'Hero plomberie',         desc: 'Image principale page plombier' },
-      { key: 'plomberie/fuite',        label: 'Card Recherche de fuite',desc: 'Card "Recherche fuite cachée"' },
-      { key: 'plomberie/debouchage',   label: 'Card Débouchage',        desc: 'Card "Débouchage canalisation"' },
-      { key: 'plomberie/chauffe-eau',  label: 'Card Chauffe-eau',       desc: 'Card "Pose / remplacement chauffe-eau"' },
-      { key: 'plomberie/sanitaire',    label: 'Card Sanitaires',        desc: 'Card "WC / mitigeur / lavabo"' },
-      { key: 'plomberie/reseaux',      label: 'Card Réseaux plomberie', desc: 'Card "Réseaux et tuyauterie"' }
-    ]
-  },
-  {
-    page: 'chauffagiste-saint-omer', pageLabel: '🔥 Page Chauffage — Saint-Omer', pageUrl: '/chauffagiste-saint-omer',
-    slots: [
-      { key: 'chauffage/hero',       label: 'Hero chauffage',     desc: 'Image principale page chauffagiste' },
-      { key: 'chauffage/entretien',  label: 'Card Entretien chaudière',  desc: 'Card "Entretien annuel"' },
-      { key: 'chauffage/panne',      label: 'Card Dépannage chaudière',  desc: 'Card "Dépannage chaudière"' /* dédoublonné — ne plus auto-importer la même image qu'entretien */ },
-      { key: 'chauffage/desembouage',label: 'Card Désembouage',          desc: 'Card "Désembouage radiateurs"' },
-      { key: 'chauffage/remplacement',label: 'Card Remplacement chaudière',desc: 'Card "Remplacement chaudière"' /* localFallback retiré : fichier source 4KB cassé */ }
-      /* ramonage retiré : HC n'effectue pas de ramonage + photo source = vieux ramoneur 19e siècle inappropriée */
-    ]
-  },
-  {
-    page: 'electricien-saint-omer', pageLabel: '⚡ Page Électricité — Saint-Omer', pageUrl: '/electricien-saint-omer',
-    slots: [
-      { key: 'electricite/hero',      label: 'Hero électricité',     desc: 'Image principale page électricien' },
-      { key: 'electricite/tableau',   label: 'Card Tableau électrique',desc: 'Card "Mise aux normes tableau"' },
-      { key: 'electricite/diagnostic',label: 'Card Diagnostic',      desc: 'Card "Diagnostic électrique"' },
-      { key: 'electricite/luminaire', label: 'Card Pose luminaire',  desc: 'Card "Pose luminaire / prise"' }
-    ]
-  },
-  {
-    page: 'serrurier-saint-omer', pageLabel: '🔐 Page Serrurerie — Saint-Omer', pageUrl: '/serrurier-saint-omer',
-    slots: [
-      { key: 'serrurerie/hero',         label: 'Hero serrurerie',     desc: 'Image principale page serrurier' },
-      { key: 'serrurerie/ouverture',    label: 'Card Ouverture porte',desc: 'Card "Porte claquée / fermée"' },
-      { key: 'serrurerie/porte-claquee',label: 'Card Porte claquée', desc: 'Card "Porte claquée"' },
-      { key: 'serrurerie/porte-fermee', label: 'Card Porte fermée à clé',desc: 'Card "Porte fermée à clé"' },
-      { key: 'serrurerie/cylindre',     label: 'Card Changement cylindre',desc: 'Card "Changement cylindre"' },
-      { key: 'serrurerie/mise-securite',label: 'Card Mise en sécurité',desc: 'Card "Après effraction"'}
-    ]
-  },
-  {
-    page: 'vitrier-saint-omer', pageLabel: '🪟 Page Vitrerie — Saint-Omer', pageUrl: '/vitrier-saint-omer',
-    slots: [
-      { key: 'vitrerie/hero',         label: 'Hero vitrerie',     desc: 'Image principale page vitrier' },
-      { key: 'vitrerie/bris-de-glace',label: 'Card Bris de glace',desc: 'Card "Remplacement vitre cassée"' },
-      { key: 'vitrerie/double-vitrage',label: 'Card Double vitrage',desc: 'Card "Double vitrage sur mesure"' },
-      { key: 'vitrerie/insert',       label: 'Card Vitre insert', desc: 'Card "Vitre poêle/insert haute T°"' }
+      { key: 'plomberie/fuite',       label: '✅ Card Recherche de fuite', desc: 'Caméra Milwaukee (déjà sur le site)' },
+      { key: 'plomberie/debouchage',  label: '✅ Card Débouchage',         desc: 'Furet professionnel (déjà sur le site)' },
+      { key: 'plomberie/chauffe-eau', label: '✅ Card Chauffe-eau',        desc: 'Chauffe-eau Atlantic (déjà sur le site)' },
+      { key: 'plomberie/sanitaire',   label: '✅ Card Sanitaires',         desc: 'WC suspendu (déjà sur le site)' },
+      { key: 'plomberie/reseaux',     label: '✅ Card Réseaux',            desc: 'Réseaux Geberit Duofix (déjà sur le site)' }
     ]
   },
   {
     page: 'menuisier-saint-omer', pageLabel: '🚪 Page Menuiserie — Saint-Omer', pageUrl: '/menuisier-saint-omer',
     slots: [
-      { key: 'menuiserie/hero',           label: 'Hero menuiserie',     desc: 'Image principale page menuisier' },
-      { key: 'menuiserie/porte-entree',   label: 'Card Porte entrée',   desc: 'Card "Porte d\'entrée PVC/alu"' },
-      { key: 'menuiserie/porte-garage',   label: 'Card Porte garage',   desc: 'Card "Porte de garage"' },
-      { key: 'menuiserie/portail',        label: 'Card Portail & clôture',desc: 'Card "Portail aluminium/PVC"' },
-      { key: 'menuiserie/fenetres',       label: 'Card Fenêtres bois/alu/PVC',desc: 'Card "Pose fenêtres"' },
-      { key: 'menuiserie/coulissant',     label: 'Card Coulissant & baie',desc: 'Card "Baie vitrée coulissante"' },
-      { key: 'menuiserie/garde-corps',    label: 'Card Garde-corps & rampes',desc: 'Card "Garde-corps et rampes"' },
-      { key: 'menuiserie/panneau-pvc',    label: 'Card Panneau PVC',    desc: 'Card "Remplacement panneau"' }
+      { key: 'menuiserie/porte-entree', label: '✅ Card Porte entrée',         desc: 'Porte d\'entrée Finstral (déjà sur le site)' },
+      { key: 'menuiserie/porte-garage', label: '✅ Card Porte garage',         desc: 'Porte garage motorisée Soprofen (déjà sur le site)' },
+      { key: 'menuiserie/portail',      label: '✅ Card Portail & clôture',    desc: 'Portail aluminium (déjà sur le site)' },
+      { key: 'menuiserie/fenetres',     label: '✅ Card Fenêtres bois/alu/PVC',desc: 'Fenêtres Groupe Millet (déjà sur le site)' },
+      { key: 'menuiserie/coulissant',   label: '✅ Card Coulissant & baie',    desc: 'Baie vitrée coulissante (déjà sur le site)' },
+      { key: 'menuiserie/garde-corps',  label: '✅ Card Garde-corps & rampes', desc: 'Garde-corps et rampes (déjà sur le site)' },
+      { key: 'menuiserie/panneau-pvc',  label: '✅ Card Panneau PVC',          desc: 'Remplacement panneau de porte (déjà sur le site)' }
     ]
   },
   {
     page: 'pmr-saint-omer', pageLabel: '♿ Page Adaptation PMR — Saint-Omer', pageUrl: '/pmr-saint-omer',
     slots: [
-      { key: 'pmr/hero',           label: 'Hero PMR',           desc: 'Image principale page PMR' },
-      { key: 'pmr/douche-italienne',label: 'Card Douche italienne',desc: 'Card "Remplacement baignoire"' },
-      { key: 'pmr/barre-appui',    label: 'Card Barres d\'appui',desc: 'Card "Barres et sécurité"' },
-      { key: 'pmr/salle-de-bain',  label: 'Card Salle de bain PMR',desc: 'Card "Salle de bain adaptée"' }
+      { key: 'pmr/douche-italienne', label: '✅ Card Douche italienne', desc: 'Salle de bain PMR (déjà sur le site)' },
+      { key: 'pmr/barre-appui',      label: '✅ Card Barres d\'appui',  desc: 'Barres d\'appui PMR (déjà sur le site)' },
+      { key: 'pmr/salle-de-bain',    label: '✅ Card Salle de bain PMR',desc: 'Rénovation SDB Delpha (partagée avec plomberie)' }
     ]
   },
   {
-    page: 'agence-saint-omer', pageLabel: '📍 Page Agence Saint-Omer', pageUrl: '/agence-saint-omer',
+    page: 'travaux-saint-omer', pageLabel: '🏠 Page Rénovation — Saint-Omer', pageUrl: '/travaux-saint-omer',
     slots: [
-      { key: 'agences/saint-omer-facade', label: 'Façade agence Saint-Omer', desc: 'Photo extérieure de l\'agence' },
-      { key: 'agences/saint-omer-equipe', label: 'Équipe Saint-Omer',        desc: 'Photo de groupe de l\'équipe' }
+      { key: 'travaux/parquet', label: '✅ Card Parquet', desc: 'Parquet pose chevron (utilisé sur menuiserie aussi)' }
+    ]
+  },
+  // ───────── Pages métier SANS photo de contenu actuellement (cards en placeholder violet) ─────────
+  // Florian peut uploader pour les activer
+  {
+    page: 'chauffagiste-saint-omer', pageLabel: '🔥 Page Chauffage — Saint-Omer (aucune photo de contenu actuellement)', pageUrl: '/chauffagiste-saint-omer',
+    slots: [
+      { key: 'chauffage/entretien',   label: '⚪ Card Entretien chaudière', desc: 'À uploader' },
+      { key: 'chauffage/panne',       label: '⚪ Card Dépannage chaudière', desc: 'À uploader' },
+      { key: 'chauffage/desembouage', label: '⚪ Card Désembouage',         desc: 'À uploader' }
     ]
   },
   {
-    page: 'agence-dunkerque', pageLabel: '📍 Page Agence Dunkerque', pageUrl: '/agence-dunkerque',
+    page: 'electricien-saint-omer', pageLabel: '⚡ Page Électricité — Saint-Omer (aucune photo de contenu actuellement)', pageUrl: '/electricien-saint-omer',
     slots: [
-      { key: 'agences/dunkerque-facade', label: 'Façade agence Dunkerque', desc: 'Photo extérieure de l\'agence' },
-      { key: 'agences/dunkerque-equipe', label: 'Équipe Dunkerque',        desc: 'Photo de groupe de l\'équipe' }
+      { key: 'electricite/tableau',   label: '⚪ Card Tableau électrique', desc: 'À uploader' },
+      { key: 'electricite/diagnostic',label: '⚪ Card Diagnostic',         desc: 'À uploader' },
+      { key: 'electricite/luminaire', label: '⚪ Card Pose luminaire',     desc: 'À uploader' }
+    ]
+  },
+  {
+    page: 'serrurier-saint-omer', pageLabel: '🔐 Page Serrurerie — Saint-Omer (aucune photo de contenu actuellement)', pageUrl: '/serrurier-saint-omer',
+    slots: [
+      { key: 'serrurerie/ouverture',     label: '⚪ Card Ouverture porte',   desc: 'À uploader' },
+      { key: 'serrurerie/mise-securite', label: '⚪ Card Mise en sécurité',  desc: 'À uploader' }
+    ]
+  },
+  {
+    page: 'vitrier-saint-omer', pageLabel: '🪟 Page Vitrerie — Saint-Omer (aucune photo de contenu actuellement)', pageUrl: '/vitrier-saint-omer',
+    slots: [
+      { key: 'vitrerie/bris-de-glace', label: '⚪ Card Bris de glace',  desc: 'À uploader' },
+      { key: 'vitrerie/double-vitrage',label: '⚪ Card Double vitrage', desc: 'À uploader' },
+      { key: 'vitrerie/insert',        label: '⚪ Card Vitre insert',   desc: 'À uploader' }
     ]
   },
   {
