@@ -239,15 +239,20 @@ function renderCardHtml(s) {
       ${Array.isArray(s.metiers) && s.metiers.length ? `<div class="fr-card-metiers">${s.metiers.map(m => `<span class="fr-card-metier-tag">${escHtml(m)}</span>`).join('')}</div>` : ''}
       <div class="fr-card-contact">
         ${s.website ? `<div>🌐 <a href="${escHtml(s.website)}" target="_blank" rel="noopener noreferrer">${escHtml(s.website.replace(/^https?:\/\//,'').slice(0,40))}</a></div>` : ''}
+        ${s.catalogue_url ? `<div>📚 <a href="${escHtml(s.catalogue_url)}" target="_blank" rel="noopener noreferrer" title="Voir le catalogue ${s.catalogue_type === 'pdf' ? 'PDF' : 'en ligne'}">${s.catalogue_type === 'pdf' ? 'Catalogue PDF' : 'Catalogue en ligne'}</a></div>` : ''}
         ${s.contact_email ? `<div>✉️ <a href="mailto:${escHtml(s.contact_email)}">${escHtml(s.contact_email)}</a></div>` : ''}
         ${s.contact_phone ? `<div>☎ <a href="tel:${escHtml(s.contact_phone)}">${escHtml(s.contact_phone)}</a></div>` : ''}
-        ${!s.website && !s.contact_email && !s.contact_phone ? '<div style="color:#cbd5e1;font-style:italic">Pas de contact renseigné</div>' : ''}
+        ${!s.website && !s.catalogue_url && !s.contact_email && !s.contact_phone ? '<div style="color:#cbd5e1;font-style:italic">Pas de contact renseigné</div>' : ''}
       </div>
       <div class="fr-card-actions">
         <button class="fr-icon-btn" data-action="edit">✏️ Modifier</button>
         <label class="fr-icon-btn" style="cursor:pointer">
           <input type="file" accept="image/*" data-action="upload-logo" data-id="${s.id}" data-slug="${escHtml(s.slug || s.name.toLowerCase().replace(/[^a-z0-9]+/g,'-'))}" style="display:none">
           📷 Logo
+        </label>
+        <label class="fr-icon-btn" style="cursor:pointer" title="Uploader un PDF catalogue ou cliquer Modifier pour saisir un lien">
+          <input type="file" accept="application/pdf" data-action="upload-catalogue" data-id="${s.id}" data-slug="${escHtml(s.slug || s.name.toLowerCase().replace(/[^a-z0-9]+/g,'-'))}" style="display:none">
+          📚 PDF
         </label>
         ${(Array.isArray(s.metiers) && s.metiers.length) ? `<a class="fr-icon-btn" href="https://depan59-62.fr/${ {plomberie:'plombier-saint-omer',chauffage:'chauffagiste-saint-omer',electricite:'electricien-saint-omer',serrurerie:'serrurier-saint-omer',vitrerie:'vitrier-saint-omer',menuiserie:'menuisier-saint-omer',volets:'volets-saint-omer',renovation:'travaux-saint-omer'}[s.metiers[0]] || 'plombier-saint-omer' }.html#fournisseurs" target="_blank" rel="noopener" style="text-decoration:none;color:#0DA0CF" title="Voir sur la page métier publique">🌐 Voir sur le site</a>` : ''}
         ${!s.active ? '<span style="font-size:.72rem;color:#94a3b8;padding:5px">(inactif)</span>' : ''}
