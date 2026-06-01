@@ -503,6 +503,22 @@ let _currentReply = null;
       const g = d.results.google;
       const so = g.byLocation?.['depan-audo'];
       const dk = g.byLocation?.['depan-dk'];
+      // 🔍 Détection token expiré dans les erreurs — alerte explicite
+      var allErrors = [].concat(so?.errors||[], dk?.errors||[], g.errors||[]).join(' ');
+      var tokenExpired = /invalid_grant|token has been expired|token expired|revoked|unauthorized/i.test(allErrors);
+      if (tokenExpired) {
+        report.innerHTML =
+          '<div style="padding:14px 18px;background:#FEE2E2;border-left:4px solid #DC2626;border-radius:10px;margin-bottom:12px">' +
+          '<strong style="color:#991B1B;font-size:1rem">🔴 Token Google Business expiré — Re-autorisation requise</strong>' +
+          '<p style="margin:6px 0 12px;color:#7F1D1D;font-size:.88rem;line-height:1.5">' +
+          'Le refresh token Google a été révoqué (compte Google déconnecté ou app retirée des autorisations). ' +
+          'Aucun nouvel avis ne sera synchronisé tant que tu ne re-fais pas la connexion. <strong>2 minutes max</strong>.</p>' +
+          '<a href="wizard-google.html" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:#DC2626;color:#fff;text-decoration:none;border-radius:10px;font-weight:800;box-shadow:0 4px 12px rgba(220,38,38,.30)">→ Reconnecter Google Business maintenant</a>' +
+          '<a href="settings.html#section-gbp" style="margin-left:8px;display:inline-flex;align-items:center;gap:6px;padding:11px 16px;background:#fff;color:#7F1D1D;border:1px solid #DC2626;text-decoration:none;border-radius:10px;font-weight:600">Paramètres GBP</a>' +
+          '</div>';
+        report.style.display = 'block';
+        return;
+      }
       const lines = [
         '<strong style="color:#007033">✓ Synchronisation terminée</strong>',
         '<div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:6px">'
