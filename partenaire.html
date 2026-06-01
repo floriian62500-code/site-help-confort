@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partenaire HELP Confort</title>
+<meta name="description" content="Compagnies d'assurance, syndics, plateformes nationales — réseau de confiance HELP Confort sur Saint-Omer et Dunkerque.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.depan59-62.fr/partenaire.html">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  body{font-family:'Inter',sans-serif;color:#0A1428;background:#F7FBFD;margin:0}
+  .pt-hero{background:linear-gradient(135deg,#0A1428,#172240);color:#fff;padding:60px 24px;text-align:center}
+  .pt-hero-inner{max-width:920px;margin:0 auto}
+  .pt-back{display:inline-flex;align-items:center;gap:6px;color:#1FC4F0;font-weight:600;text-decoration:none;font-size:.9rem;margin-bottom:18px;opacity:.85}
+  .pt-back:hover{opacity:1}
+  .pt-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#1FC4F0;margin-bottom:12px;padding:5px 14px;border:1px solid rgba(31,196,240,.30);border-radius:999px}
+  .pt-logo{display:inline-flex;align-items:center;justify-content:center;width:140px;height:110px;background:#fff;border-radius:18px;padding:18px;margin:0 auto 18px;box-shadow:0 18px 40px rgba(0,0,0,.30)}
+  .pt-logo img{max-width:100%;max-height:100%;object-fit:contain}
+  .pt-logo-fallback{display:flex;align-items:center;justify-content:center;width:90px;height:90px;border-radius:14px;color:#fff;font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700}
+  .pt-name{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-.02em;margin:0 0 8px}
+  .pt-type{font-size:1.05rem;color:rgba(255,255,255,.85);margin:0 0 8px}
+  .pt-scope{display:inline-block;font-size:.74rem;font-weight:700;padding:5px 14px;border-radius:999px;background:rgba(13,160,207,.20);color:#1FC4F0;text-transform:uppercase;letter-spacing:.06em}
+  .pt-scope.local{background:rgba(255,107,26,.20);color:#FF6B1A}
+
+  .pt-content{max-width:920px;margin:0 auto;padding:48px 24px 60px}
+  .pt-section{background:#fff;border:1px solid #E5EDF3;border-radius:18px;padding:32px;margin-bottom:24px;box-shadow:0 6px 18px rgba(10,20,40,.04)}
+  .pt-section h2{font-family:'Inter',sans-serif;font-size:1.3rem;font-weight:800;color:#0A1428;margin:0 0 16px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+  .pt-section h2::before{content:"";display:inline-block;width:4px;height:22px;background:linear-gradient(180deg,#0DA0CF,#0A4F6E);border-radius:2px}
+  .pt-desc{font-size:1rem;line-height:1.7;color:#475569;margin:0;white-space:pre-line}
+
+  .pt-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .pt-btn{display:flex;align-items:center;gap:14px;padding:18px 22px;background:#fff;border:1.5px solid #E5EDF3;border-radius:14px;text-decoration:none;color:#0A1428;font-weight:700;transition:.2s}
+  .pt-btn:hover{transform:translateY(-3px);box-shadow:0 14px 28px -8px rgba(13,160,207,.20);border-color:rgba(13,160,207,.45)}
+  .pt-btn-ic{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#0DA0CF,#0A4F6E);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.4rem}
+  .pt-btn.cta{background:linear-gradient(135deg,#FF6B1A,#E55510);border:0;color:#fff}
+  .pt-btn.cta .pt-btn-ic{background:rgba(255,255,255,.20)}
+  .pt-btn-text{display:flex;flex-direction:column;min-width:0}
+  .pt-btn-text strong{font-size:.96rem;line-height:1.2}
+  .pt-btn-text small{font-size:.78rem;opacity:.7;font-weight:500;margin-top:2px}
+
+  .pt-loading,.pt-error{text-align:center;padding:80px 24px;color:#64748b}
+  .pt-error h2{color:#9F1239;margin-bottom:8px}
+</style>
+</head>
+<body>
+
+<main id="ptRoot">
+  <div class="pt-loading">⏳ Chargement…</div>
+</main>
+
+<footer style="background:#0A1428;color:rgba(255,255,255,.7);padding:24px;text-align:center;font-size:.84rem">
+  © HELP Confort · <a href="index.html" style="color:#1FC4F0">Retour à l'accueil</a> · <a href="tel:+33366100134" style="color:#1FC4F0">03 66 10 01 34</a>
+</footer>
+
+<script>
+const SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
+
+const params = new URLSearchParams(location.search);
+const slug = (params.get('slug') || '').toLowerCase().replace(/[^a-z0-9-]/g, '');
+
+function esc(s) { return (s == null ? '' : String(s)).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+function paletteFor(name) {
+  const PAL = ['#0DA0CF','#FF6B1A','#FFB400','#7C3AED','#22C55E','#E11D48','#0EA5E9'];
+  let h = 0; for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
+  return PAL[h % PAL.length];
+}
+
+async function load() {
+  const root = document.getElementById('ptRoot');
+  if (!slug) {
+    root.innerHTML = '<div class="pt-error"><h2>Aucun partenaire sélectionné</h2><p><a href="index.html">Retour à l\'accueil</a></p></div>';
+    return;
+  }
+  try {
+    const resp = await fetch(SUPABASE_URL + '/rest/v1/partners?slug=eq.' + encodeURIComponent(slug) + '&select=*', {
+      headers: { apikey: SUPABASE_ANON, Authorization: 'Bearer ' + SUPABASE_ANON }
+    });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    if (!data.length) {
+      root.innerHTML = '<div class="pt-error"><h2>Partenaire introuvable</h2><p><a href="index.html">Retour à l\'accueil</a></p></div>';
+      return;
+    }
+    render(data[0]);
+  } catch (e) {
+    root.innerHTML = '<div class="pt-error"><h2>Erreur de chargement</h2><p>' + esc(e.message) + '</p></div>';
+  }
+}
+
+function render(p) {
+  document.title = p.name + ' — Partenaire HELP Confort';
+  const pal = paletteFor(p.name);
+  const initial = (p.name || '?').trim().charAt(0).toUpperCase();
+  const logoHtml = p.logo_url
+    ? '<img src="' + esc(p.logo_url) + '" alt="' + esc(p.name) + '" onerror="this.style.display=\'none\';var n=this.nextElementSibling;if(n)n.style.display=\'flex\'"><span class="pt-logo-fallback" style="display:none;background:linear-gradient(135deg,' + pal + ',#0A1428)">' + esc(initial) + '</span>'
+    : '<span class="pt-logo-fallback" style="background:linear-gradient(135deg,' + pal + ',#0A1428)">' + esc(initial) + '</span>';
+
+  document.getElementById('ptRoot').innerHTML = `
+    <section class="pt-hero">
+      <div class="pt-hero-inner">
+        <a href="index.html" class="pt-back">← Retour à l'accueil</a>
+        <span class="pt-eyebrow">✓ Réseau de confiance</span>
+        <div class="pt-logo">${logoHtml}</div>
+        <h1 class="pt-name">${esc(p.name)}</h1>
+        ${p.type ? `<p class="pt-type">${esc(p.type)}</p>` : ''}
+        <span class="pt-scope ${p.scope === 'local' ? 'local' : ''}">${p.scope === 'local' ? 'Partenaire local' : 'Partenaire national'}</span>
+      </div>
+    </section>
+    <div class="pt-content">
+      ${p.notes ? `
+      <section class="pt-section">
+        <h2>📋 À propos</h2>
+        <p class="pt-desc">${esc(p.notes)}</p>
+      </section>` : ''}
+
+      <section class="pt-section">
+        <h2>🔗 Contact &amp; ressources</h2>
+        <div class="pt-actions">
+          ${p.website ? `
+          <a class="pt-btn" href="${esc(p.website)}" target="_blank" rel="noopener noreferrer">
+            <span class="pt-btn-ic">🌐</span>
+            <span class="pt-btn-text"><strong>Site officiel</strong><small>${esc(p.website.replace(/^https?:\/\//,'').slice(0,40))}</small></span>
+          </a>` : ''}
+          ${p.contact_email ? `
+          <a class="pt-btn" href="mailto:${esc(p.contact_email)}">
+            <span class="pt-btn-ic">✉️</span>
+            <span class="pt-btn-text"><strong>Email</strong><small>${esc(p.contact_email)}</small></span>
+          </a>` : ''}
+          ${p.contact_phone ? `
+          <a class="pt-btn" href="tel:${esc(p.contact_phone)}">
+            <span class="pt-btn-ic">📞</span>
+            <span class="pt-btn-text"><strong>Téléphone</strong><small>${esc(p.contact_phone)}</small></span>
+          </a>` : ''}
+          <a class="pt-btn cta" href="contact.html?objet=${encodeURIComponent('Mandat ' + p.name)}#form">
+            <span class="pt-btn-ic">💬</span>
+            <span class="pt-btn-text"><strong>Mandater HELP Confort</strong><small>Devis express sous 24h</small></span>
+          </a>
+        </div>
+      </section>
+
+      <section class="pt-section" style="background:linear-gradient(135deg,#F0F9FF,#fff);border-color:rgba(13,160,207,.30)">
+        <h2>✓ Pourquoi HELP Confort intervient pour ${esc(p.name)}</h2>
+        <ul style="margin:0;padding-left:22px;line-height:1.8;color:#475569">
+          <li><strong>Délai d'intervention</strong> respecté (devis sous 24h, intervention rapide)</li>
+          <li><strong>Reporting complet</strong> (rapport photos, justificatifs)</li>
+          <li><strong>Techniciens salariés</strong> formés, pas de sous-traitance</li>
+          <li><strong>Garantie décennale</strong> et assurance RC pro</li>
+        </ul>
+      </section>
+    </div>
+  `;
+}
+
+load();
+</script>
+
+</body>
+</html>

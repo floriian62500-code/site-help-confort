@@ -59,8 +59,9 @@
     var logoHtml = p.logo_url
       ? '<img src="' + esc(p.logo_url) + '" alt="' + esc(p.name) + '" loading="lazy" onerror="this.style.display=\'none\';var n=this.nextElementSibling;if(n)n.style.display=\'flex\'"><span class="hcp-logo-fallback" style="display:none;background:linear-gradient(135deg,' + pal[0] + ' 0%,' + pal[1] + ' 100%)">' + esc(initial) + '</span>'
       : '<span class="hcp-logo-fallback" style="background:linear-gradient(135deg,' + pal[0] + ' 0%,' + pal[1] + ' 100%)">' + esc(initial) + '</span>';
-    var href = p.website || ('contact.html?objet=' + encodeURIComponent('Partenaire ' + p.name));
-    var targetAttr = p.website ? ' target="_blank" rel="noopener noreferrer"' : '';
+    // 2026-06-01 — pointe vers fiche partenaire HC interne au lieu du site externe
+    var href = 'partenaire.html?slug=' + encodeURIComponent(p.slug || (p.name || '').toLowerCase().replace(/[^a-z0-9]+/g,'-'));
+    var targetAttr = '';
     return '<a class="hcp-card ' + (p.scope === 'local' ? 'local' : '') + '" href="' + esc(href) + '"' + targetAttr + '>' +
       '<span class="hcp-type">' + esc(p.type || '') + '</span>' +
       '<div class="hcp-logo">' + logoHtml + '</div>' +
