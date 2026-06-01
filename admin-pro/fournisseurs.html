@@ -216,7 +216,14 @@ function renderCardHtml(s) {
       <div class="fr-card-head">
         <label class="fr-logo-zone" title="Cliquer pour uploader / remplacer le logo">
           <input type="file" accept="image/*" data-action="upload-logo" data-id="${s.id}" data-slug="${escHtml(s.slug || s.name.toLowerCase().replace(/[^a-z0-9]+/g,'-'))}" style="display:none">
-          ${s.logo_url ? `<img src="${escHtml(s.logo_url)}?t=${Date.now()}" alt="${escHtml(s.name)}" loading="lazy" style="width:100%;height:100%;object-fit:contain;padding:6px">` : `<span class="fr-logo-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><br><strong>+ Logo</strong></span>`}
+          ${(() => {
+            // 2026-06-01 — fix bug ?t= sur URLs contenant déjà ? (Google favicon, Wikipedia thumb)
+            const initial = (s.name || '?').trim().charAt(0).toUpperCase();
+            const palette = ['#0DA0CF','#FF6B1A','#FFB400','#7C3AED','#22C55E','#E11D48','#0EA5E9','#F97316','#10B981'][(s.name||'').charCodeAt(0)%9] || '#0DA0CF';
+            const fallback = `<span class="fr-logo-empty" style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;background:linear-gradient(135deg,${palette},#0A1428);color:#fff;font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;border-radius:8px">${initial}</span>`;
+            if (!s.logo_url) return fallback;
+            return `<img src="${escHtml(s.logo_url)}" alt="${escHtml(s.name)}" loading="lazy" onerror="this.outerHTML='${fallback.replace(/'/g,"\\'")}'" style="width:100%;height:100%;object-fit:contain;padding:6px">`;
+          })()}
         </label>
         <div style="flex:1;min-width:0">
           <div class="fr-card-name">${escHtml(s.name)}</div>
