@@ -37,7 +37,13 @@
 </style>
 </head>
 <body>
-<script defer src="assets/layout.js?v=20260530"></script>
+<div class="admin-overlay"></div>
+<div class="admin-shell">
+  <aside class="admin-sidebar"><!-- Injecté par HCLayout.mountSidebar() --></aside>
+  <main class="admin-main">
+    <header class="admin-topbar"></header>
+    <div class="admin-content">
+<script defer src="assets/layout.js?v=20260601"></script>
 <script>document.addEventListener('DOMContentLoaded', function(){ if (window.HCLayout) HCLayout.mount('photos-pages', 'Photos pages métier'); });</script>
 
 <main style="max-width:1400px;margin:0 auto;padding:24px clamp(16px,4vw,40px) 80px">
@@ -379,5 +385,8 @@ async function seedExistingPhotos() {
 }
 document.getElementById('pgSeedBtn').addEventListener('click', seedExistingPhotos);
 </script>
+    </div><!-- /.admin-content -->
+  </main>
+</div><!-- /.admin-shell -->
 </body>
 </html>
