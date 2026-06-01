@@ -383,38 +383,9 @@ async function seedExistingPhotos(silent) {
 }
 document.getElementById('pgSeedBtn').addEventListener('click', function(){ seedExistingPhotos(false); });
 
-// 2026-06-01 — AUTO-RUN DÉSACTIVÉ + cleanup des photos auto-importées non validées par Florian
-// Seules photos qui restent : celles uploadées MANUELLEMENT par Florian (volets/depannage-urgence, etc.)
-async function cleanupGenericImports() {
-  // Liste des photos auto-importées de qualité douteuse à supprimer
-  const KILL_LIST = [
-    'electricite/diagnostic.jpg','electricite/tableau.jpg','electricite/luminaire.jpg',
-    'plomberie/fuite.jpg','plomberie/debouchage.jpg','plomberie/chauffe-eau.jpg','plomberie/sanitaire.jpg','plomberie/reseaux.jpg',
-    'chauffage/entretien.jpg','chauffage/panne.jpg','chauffage/desembouage.jpg','chauffage/remplacement.jpg','chauffage/ramonage.jpg',
-    'serrurerie/ouverture.jpg','serrurerie/porte-claquee.jpg','serrurerie/porte-fermee.jpg','serrurerie/cylindre.jpg',
-    'vitrerie/bris-de-glace.jpg','vitrerie/double-vitrage.jpg',
-    'menuiserie/porte-entree.jpg','menuiserie/porte-garage.jpg','menuiserie/portail.jpg','menuiserie/fenetres.jpg','menuiserie/coulissant.jpg','menuiserie/garde-corps.jpg','menuiserie/panneau-pvc.jpg',
-    'pmr/douche-italienne.jpg','pmr/barre-appui.jpg','pmr/salle-de-bain.jpg',
-    'travaux/parquet.jpg','travaux/salle-de-bain.jpg'
-  ];
-  let removed = 0;
-  for (const path of KILL_LIST) {
-    try {
-      const { error } = await sb.storage.from(BUCKET).remove([path]);
-      if (!error) removed++;
-    } catch(_){}
-  }
-  if (removed > 0) {
-    console.log('[cleanup] ' + removed + ' photo(s) auto-importée(s) supprimée(s) du bucket');
-    render();
-  }
-}
-// Lance le cleanup une fois au chargement (skip silencieux si rien à supprimer)
-setTimeout(cleanupGenericImports, 800);
-
-// 2026-06-01 — Auto-import UNIQUEMENT les photos qui ont un localFallback VALIDÉ
-// (ie. présent dans PHOTO_SLOTS avec mention "déjà sur le site") — actuellement uniquement parquet
-setTimeout(function(){ seedExistingPhotos(true); }, 1500);
+// 2026-06-01 — Cleanup retiré (avait viré par erreur les vraies photos menuiserie/plomberie validées)
+// Auto-import réactivé pour les photos avec localFallback (présentes en /images/prestations/)
+setTimeout(function(){ seedExistingPhotos(true); }, 800);
 </script>
     </div><!-- /.admin-content -->
   </main>
