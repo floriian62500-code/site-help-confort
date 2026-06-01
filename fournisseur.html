@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fournisseur partenaire — HELP Confort</title>
+<meta name="description" content="Découvrez nos marques partenaires installées par HELP Confort sur Saint-Omer et Dunkerque.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.depan59-62.fr/fournisseur.html">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  body{font-family:'Inter',sans-serif;color:#0A1428;background:#F7FBFD;margin:0}
+  .frn-hero{background:linear-gradient(135deg,#0A1428,#172240);color:#fff;padding:60px 24px;text-align:center}
+  .frn-hero-inner{max-width:920px;margin:0 auto}
+  .frn-back{display:inline-flex;align-items:center;gap:6px;color:#1FC4F0;font-weight:600;text-decoration:none;font-size:.9rem;margin-bottom:18px;opacity:.85}
+  .frn-back:hover{opacity:1}
+  .frn-eyebrow{display:inline-block;font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#1FC4F0;margin-bottom:12px}
+  .frn-logo{display:inline-flex;align-items:center;justify-content:center;width:140px;height:110px;background:#fff;border-radius:18px;padding:18px;margin:0 auto 18px;box-shadow:0 18px 40px rgba(0,0,0,.30)}
+  .frn-logo img{max-width:100%;max-height:100%;object-fit:contain}
+  .frn-logo-fallback{display:flex;align-items:center;justify-content:center;width:90px;height:90px;border-radius:14px;color:#fff;font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700}
+  .frn-name{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-.02em;margin:0 0 8px}
+  .frn-tagline{font-size:1.05rem;color:rgba(255,255,255,.85);max-width:640px;margin:0 auto 18px;line-height:1.55}
+  .frn-meta{display:inline-flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:18px}
+  .frn-tag{padding:5px 12px;background:rgba(31,196,240,.18);color:#1FC4F0;border:1px solid rgba(31,196,240,.30);border-radius:999px;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+  .frn-badge-pref{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;border-radius:999px;font-size:.78rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 4px 12px rgba(255,107,26,.30);margin-bottom:10px}
+
+  .frn-content{max-width:920px;margin:0 auto;padding:48px 24px 60px}
+  .frn-section{background:#fff;border:1px solid #E5EDF3;border-radius:18px;padding:32px;margin-bottom:24px;box-shadow:0 6px 18px rgba(10,20,40,.04)}
+  .frn-section h2{font-family:'Inter',sans-serif;font-size:1.3rem;font-weight:800;color:#0A1428;margin:0 0 16px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+  .frn-section h2::before{content:"";display:inline-block;width:4px;height:22px;background:linear-gradient(180deg,#0DA0CF,#0A4F6E);border-radius:2px}
+  .frn-desc{font-size:1rem;line-height:1.7;color:#475569;margin:0;white-space:pre-line}
+  .frn-empty{text-align:center;color:#94a3b8;font-style:italic;padding:18px}
+
+  .frn-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .frn-btn{display:flex;align-items:center;gap:14px;padding:18px 22px;background:#fff;border:1.5px solid #E5EDF3;border-radius:14px;text-decoration:none;color:#0A1428;font-weight:700;transition:.2s}
+  .frn-btn:hover{transform:translateY(-3px);box-shadow:0 14px 28px -8px rgba(13,160,207,.20);border-color:rgba(13,160,207,.45)}
+  .frn-btn-ic{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#0DA0CF,#0A4F6E);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.4rem}
+  .frn-btn.cta{background:linear-gradient(135deg,#FF6B1A,#E55510);border:0;color:#fff}
+  .frn-btn.cta .frn-btn-ic{background:rgba(255,255,255,.20)}
+  .frn-btn-text{display:flex;flex-direction:column;min-width:0}
+  .frn-btn-text strong{font-size:.96rem;line-height:1.2}
+  .frn-btn-text small{font-size:.78rem;opacity:.7;font-weight:500;margin-top:2px}
+
+  .frn-loading,.frn-error{text-align:center;padding:80px 24px;color:#64748b}
+  .frn-error h2{color:#9F1239;margin-bottom:8px}
+</style>
+</head>
+<body>
+
+<div id="hcHeader"></div>
+
+<main id="frnRoot">
+  <div class="frn-loading">⏳ Chargement…</div>
+</main>
+
+<footer style="background:#0A1428;color:rgba(255,255,255,.7);padding:24px;text-align:center;font-size:.84rem">
+  © HELP Confort · <a href="index.html" style="color:#1FC4F0">Retour à l'accueil</a> · <a href="tel:+33366100134" style="color:#1FC4F0">03 66 10 01 34</a>
+</footer>
+
+<script>
+const SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
+
+const params = new URLSearchParams(location.search);
+const slug = (params.get('slug') || '').toLowerCase().replace(/[^a-z0-9-]/g, '');
+
+function esc(s) { return (s == null ? '' : String(s)).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+function paletteFor(name) {
+  const PAL = ['#0DA0CF','#FF6B1A','#FFB400','#7C3AED','#22C55E','#E11D48','#0EA5E9'];
+  let h = 0; for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
+  return PAL[h % PAL.length];
+}
+
+async function load() {
+  const root = document.getElementById('frnRoot');
+  if (!slug) {
+    root.innerHTML = '<div class="frn-error"><h2>Aucun fournisseur sélectionné</h2><p><a href="index.html">Retour à l\'accueil</a></p></div>';
+    return;
+  }
+  try {
+    const resp = await fetch(SUPABASE_URL + '/rest/v1/suppliers?slug=eq.' + encodeURIComponent(slug) + '&select=*', {
+      headers: { apikey: SUPABASE_ANON, Authorization: 'Bearer ' + SUPABASE_ANON }
+    });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    if (!data.length) {
+      root.innerHTML = '<div class="frn-error"><h2>Fournisseur introuvable</h2><p>La marque <code>' + esc(slug) + '</code> n\'existe pas dans notre catalogue.</p><p><a href="index.html">Retour à l\'accueil</a></p></div>';
+      return;
+    }
+    render(data[0]);
+  } catch (e) {
+    root.innerHTML = '<div class="frn-error"><h2>Erreur de chargement</h2><p>' + esc(e.message) + '</p></div>';
+  }
+}
+
+function render(s) {
+  document.title = s.name + ' — Partenaire HELP Confort';
+  const meta = document.querySelector('meta[name="description"]');
+  if (meta && s.tagline) meta.content = s.name + ' — ' + s.tagline + ' · Installé par HELP Confort sur Saint-Omer & Dunkerque.';
+
+  const pal = paletteFor(s.name);
+  const initial = (s.name || '?').trim().charAt(0).toUpperCase();
+  const logoHtml = s.logo_url
+    ? '<img src="' + esc(s.logo_url) + '" alt="' + esc(s.name) + '" onerror="this.style.display=\'none\';var n=this.nextElementSibling;if(n)n.style.display=\'flex\'"><span class="frn-logo-fallback" style="display:none;background:linear-gradient(135deg,' + pal + ',#0A1428)">' + esc(initial) + '</span>'
+    : '<span class="frn-logo-fallback" style="background:linear-gradient(135deg,' + pal + ',#0A1428)">' + esc(initial) + '</span>';
+
+  const metiers = (s.metiers || []).map(m => '<span class="frn-tag">' + esc(m) + '</span>').join('');
+  const FIRST_METIER = (s.metiers && s.metiers[0]) || 'plomberie';
+  const METIER_PAGE = { plomberie:'plombier-saint-omer', chauffage:'chauffagiste-saint-omer', electricite:'electricien-saint-omer', serrurerie:'serrurier-saint-omer', vitrerie:'vitrier-saint-omer', menuiserie:'menuisier-saint-omer', volets:'volets-saint-omer', renovation:'travaux-saint-omer' }[FIRST_METIER] || 'plombier-saint-omer';
+
+  document.getElementById('frnRoot').innerHTML = `
+    <section class="frn-hero">
+      <div class="frn-hero-inner">
+        <a href="${METIER_PAGE}.html#fournisseurs" class="frn-back">← Retour aux marques</a>
+        ${s.is_preferred ? '<div><span class="frn-badge-pref">★ Marque préférée HC</span></div>' : ''}
+        <span class="frn-eyebrow">Partenaire HELP Confort</span>
+        <div class="frn-logo">${logoHtml}</div>
+        <h1 class="frn-name">${esc(s.name)}</h1>
+        ${s.tagline ? `<p class="frn-tagline">${esc(s.tagline)}</p>` : (s.category ? `<p class="frn-tagline">${esc(s.category)}</p>` : '')}
+        <div class="frn-meta">${metiers}</div>
+      </div>
+    </section>
+    <div class="frn-content">
+      ${s.description ? `
+      <section class="frn-section">
+        <h2>📋 À propos de ${esc(s.name)}</h2>
+        <p class="frn-desc">${esc(s.description)}</p>
+      </section>` : ''}
+
+      <section class="frn-section">
+        <h2>🔗 Liens & ressources</h2>
+        <div class="frn-actions">
+          ${s.website ? `
+          <a class="frn-btn" href="${esc(s.website)}" target="_blank" rel="noopener noreferrer">
+            <span class="frn-btn-ic">🌐</span>
+            <span class="frn-btn-text"><strong>Site officiel</strong><small>${esc(s.website.replace(/^https?:\/\//,'').slice(0,40))}</small></span>
+          </a>` : ''}
+          ${s.catalogue_url ? `
+          <a class="frn-btn" href="${esc(s.catalogue_url)}" target="_blank" rel="noopener noreferrer">
+            <span class="frn-btn-ic">📚</span>
+            <span class="frn-btn-text"><strong>Catalogue ${s.catalogue_type === 'pdf' ? 'PDF' : 'en ligne'}</strong><small>Voir la gamme complète</small></span>
+          </a>` : ''}
+          <a class="frn-btn cta" href="contact.html?objet=${encodeURIComponent('Devis ' + s.name)}#form">
+            <span class="frn-btn-ic">💬</span>
+            <span class="frn-btn-text"><strong>Demander un devis</strong><small>Installation par HELP Confort</small></span>
+          </a>
+          <a class="frn-btn" href="tel:+33366100134">
+            <span class="frn-btn-ic">📞</span>
+            <span class="frn-btn-text"><strong>03 66 10 01 34</strong><small>Lun-Sam · réponse rapide</small></span>
+          </a>
+        </div>
+      </section>
+
+      <section class="frn-section" style="background:linear-gradient(135deg,#F0F9FF,#fff);border-color:rgba(13,160,207,.30)">
+        <h2>✓ Pourquoi installer du ${esc(s.name)} avec HELP Confort ?</h2>
+        <ul style="margin:0;padding-left:22px;line-height:1.8;color:#475569">
+          <li><strong>Pièces d'origine</strong> garanties</li>
+          <li><strong>Garanties constructeur</strong> honorées en cas de problème</li>
+          <li><strong>Techniciens salariés</strong> formés sur les gammes ${esc(s.name)}</li>
+          <li><strong>Devis transparent</strong> annoncé avant intervention</li>
+        </ul>
+      </section>
+    </div>
+  `;
+}
+
+load();
+</script>
+
+</body>
+</html>
