@@ -98,10 +98,9 @@
       ? '<img src="' + esc(s.logo_url) + '" alt="' + esc(s.name) + '" loading="lazy" onerror="this.style.display=\'none\';var n=this.nextElementSibling;if(n)n.style.display=\'flex\'">' +
         '<span class="hcf-logo-fallback" style="display:none;background:linear-gradient(135deg,' + pal[0] + ' 0%,' + pal[1] + ' 100%)">' + esc(initial) + '</span>'
       : '<span class="hcf-logo-fallback" style="background:linear-gradient(135deg,' + pal[0] + ' 0%,' + pal[1] + ' 100%)">' + esc(initial) + '</span>';
-    var hrefMain = s.website
-      ? esc(s.website)
-      : 'contact.html?objet=' + encodeURIComponent('Question fournisseur ' + s.name);
-    var targetAttr = s.website ? ' target="_blank" rel="noopener noreferrer"' : '';
+    // 2026-06-01 — pointe vers fiche fournisseur HC interne (descriptif + catalogue + lien officiel)
+    var hrefMain = 'fournisseur.html?slug=' + encodeURIComponent(s.slug || (s.name || '').toLowerCase().replace(/[^a-z0-9]+/g,'-'));
+    var targetAttr = ''; // navigation interne, même onglet
     var catalogueHtml = s.catalogue_url
       ? '<a class="hcf-catalogue" href="' + esc(s.catalogue_url) + '" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="Voir le catalogue ' + esc(s.name) + '">Catalogue ' + (s.catalogue_type === 'pdf' ? 'PDF' : '') + '</a>'
       : '';

@@ -133,6 +133,15 @@
         <input name="catalogue_url" type="url" placeholder="https://www.fournisseur.com/catalogue ou laisser vide pour uploader un PDF depuis la card">
         <small style="display:block;color:#94a3b8;font-size:.78rem;margin-top:4px">Astuce : pour uploader un PDF local, utilisez le bouton 📚 PDF directement sur la card du fournisseur.</small>
       </div>
+      <div style="margin-top:12px">
+        <label>✨ Tagline (phrase courte affichée sous le nom sur la fiche fournisseur)</label>
+        <input name="tagline" maxlength="120" placeholder="Ex: Leader français du chauffe-eau et de la pompe à chaleur">
+      </div>
+      <div style="margin-top:12px">
+        <label>📝 Description (texte long affiché sur la fiche fournisseur publique)</label>
+        <textarea name="description" rows="5" placeholder="Présentation du fournisseur, gamme, atouts, garanties…"></textarea>
+        <small style="display:block;color:#94a3b8;font-size:.78rem;margin-top:4px">Visible sur depan59-62.fr/fournisseur.html?slug=… — vide = section non affichée.</small>
+      </div>
       <div class="fr-grid-2" style="margin-top:12px">
         <div><label>Téléphone</label><input name="contact_phone" type="tel"></div>
         <div><label>N° compte client</label><input name="account_number"></div>
@@ -378,6 +387,8 @@ function openModal(s) {
     form.payment_terms.value = s.payment_terms || '';
     form.notes.value = s.notes || '';
     if (form.catalogue_url) form.catalogue_url.value = s.catalogue_url || '';
+    if (form.tagline) form.tagline.value = s.tagline || '';
+    if (form.description) form.description.value = s.description || '';
     form.is_preferred.checked = !!s.is_preferred;
     form.active.checked = s.active !== false;
     document.querySelectorAll('#frMetiersPick input').forEach(cb => { cb.checked = (s.metiers||[]).includes(cb.value); });
@@ -407,6 +418,8 @@ document.getElementById('frForm').addEventListener('submit', async (e) => {
     notes: fd.get('notes') || null,
     catalogue_url: fd.get('catalogue_url') || null,
     catalogue_type: fd.get('catalogue_url') ? 'link' : null,
+    tagline: fd.get('tagline') || null,
+    description: fd.get('description') || null,
     is_preferred: fd.get('is_preferred') === 'on',
     active: fd.get('active') === 'on'
   };
