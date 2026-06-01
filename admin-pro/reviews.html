@@ -587,7 +587,21 @@ let _currentReply = null;
       closeReply();
       await load();
     } catch (err) {
-      toast('Erreur : ' + err.message, 'err', 4500);
+      // 2026-06-01 — Fallback si token GBP expiré : copie réponse + ouvre Google
+      const isTokenIssue = /invalid_grant|token|expired|revoked|unauthorized|401|403/i.test(err.message || '');
+      if (isTokenIssue) {
+        try { await navigator.clipboard.writeText(text); } catch(_){}
+        const target = _currentReply.source_url || 'https://business.google.com/reviews';
+        if (confirm('⚠️ Token Google expiré.\n\nLa réponse a été COPIÉE dans le presse-papier ✓\n\nOK = ouvrir Google Business pour coller la réponse manuellement.\nAnnuler = juste fermer.')) {
+          window.open(target, '_blank', 'noopener');
+        }
+        // Sauve quand même la réponse en BDD pour ne pas la perdre
+        await sb.from('reviews').update({ reply_text: text, reply_posted_at: new Date().toISOString(), reply_by: 'manual' }).eq('id', _currentReply.id);
+        closeReply();
+        await load();
+      } else {
+        toast('Erreur : ' + err.message, 'err', 4500);
+      }
     }
   });
 
