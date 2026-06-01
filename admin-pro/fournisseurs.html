@@ -346,8 +346,16 @@ document.getElementById('frFilterMetier').addEventListener('change', render);
 document.getElementById('frGrid').addEventListener('click', (e) => {
   const card = e.target.closest('.fr-card');
   if (!card) return;
-  const btn = e.target.closest('[data-action]');
-  if (!btn || btn.dataset.action !== 'edit') return;
+  // Ne pas déclencher si clic sur lien, bouton, input ou label (boutons d'action interne)
+  if (e.target.closest('a, button, label, input')) {
+    const btn = e.target.closest('[data-action]');
+    if (btn && btn.dataset.action === 'edit') {
+      const s = allSuppliers.find(x => x.id === card.dataset.id);
+      if (s) openModal(s);
+    }
+    return;
+  }
+  // Clic ailleurs sur la card → ouvre modal Modifier
   const s = allSuppliers.find(x => x.id === card.dataset.id);
   if (s) openModal(s);
 });
