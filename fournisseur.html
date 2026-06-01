@@ -109,6 +109,8 @@ function render(s) {
   document.title = s.name + ' — Partenaire HELP Confort';
   const meta = document.querySelector('meta[name="description"]');
   if (meta && s.tagline) meta.content = s.name + ' — ' + s.tagline + ' · Installé par HELP Confort sur Saint-Omer & Dunkerque.';
+  const canonical = document.getElementById('frnCanonical');
+  if (canonical) canonical.href = 'https://www.depan59-62.fr/fournisseur.html?slug=' + encodeURIComponent(s.slug);
 
   const pal = paletteFor(s.name);
   const initial = (s.name || '?').trim().charAt(0).toUpperCase();
