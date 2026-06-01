@@ -1591,24 +1591,43 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  sheet.querySelector('.nv-modal-close').onclick = closeModal;
  modal.onclick = (e) => { if (e.target === modal) closeModal(); };
 
- // Variant change → recalcule prix
- if (hasVariants) {
- sheet.querySelectorAll('input[name="variant"]').forEach(r => {
- r.onchange = () => {
- let ttc, deposit;
- if (r.value === '') {
- ttc = svc.price_ttc;
- deposit = svc.deposit_ttc;
- } else {
- const v = variants[Number(r.value)];
- ttc = Math.round(Number(v.price_ht) * (1 + Number(svc.vat_rate)) * 100) / 100;
- deposit = Math.round(ttc * (svc.deposit_pct / 100) * 100) / 100;
+ // 2026-06-01 — Recalcul prix unifié : déclenché par variant OR toggle Particulier/Pro
+ function recomputeNvPrice(){
+   var vRadio = sheet.querySelector('input[name="variant"]:checked');
+   var cType = (sheet.querySelector('input[name="nvClientType"]:checked')||{}).value || 'particulier';
+   var vatRate = cType === 'pro' ? 0.20 : 0.10;
+   var priceHt;
+   if (!hasVariants || !vRadio || vRadio.value === '') {
+     priceHt = Number(svc.price_ht);
+   } else {
+     priceHt = Number(variants[Number(vRadio.value)].price_ht);
+   }
+   var ttc = Math.round(priceHt * (1 + vatRate) * 100) / 100;
+   var deposit = Math.round(ttc * (Number(svc.deposit_pct||40)) / 100 * 100) / 100;
+   var priceEl = document.getElementById('nvSummaryPrice');
+   var depEl = document.getElementById('nvSummaryDeposit');
+   var taxEl = document.getElementById('nvPriceTaxLabel');
+   if (priceEl) priceEl.textContent = eurFmt(ttc);
+   if (depEl) depEl.textContent = 'Acompte ' + (svc.deposit_pct||40) + '% : ' + eurFmt(deposit);
+   if (taxEl) taxEl.textContent = '(TVA ' + (vatRate*100) + '%)';
  }
- document.getElementById('nvSummaryPrice').textContent = eurFmt(ttc);
- document.getElementById('nvSummaryDeposit').textContent = `Acompte ${svc.deposit_pct}% : ${eurFmt(deposit)}`;
- };
+ // Branche variant radios
+ sheet.querySelectorAll('input[name="variant"]').forEach(function(r){ r.addEventListener('change', recomputeNvPrice); });
+ // Branche toggle Particulier/Pro (clic sur les labels)
+ sheet.querySelectorAll('label[data-client-type]').forEach(function(lbl){
+   lbl.addEventListener('click', function(){
+     sheet.querySelectorAll('input[name="nvClientType"]').forEach(function(r){ r.checked = (r.value === lbl.dataset.clientType); });
+     // Styles visuels actifs
+     sheet.querySelectorAll('label[data-client-type]').forEach(function(l){
+       var active = l.dataset.clientType === lbl.dataset.clientType;
+       l.style.background = active ? '#fff' : 'transparent';
+       l.style.color = active ? '#0A1428' : '#64748b';
+       l.style.boxShadow = active ? '0 2px 6px rgba(10,20,40,.08)' : 'none';
+       l.style.fontWeight = active ? '700' : '600';
+     });
+     recomputeNvPrice();
+   });
  });
- }
 
  // Submit
  document.getElementById('nvSubmitBtn').onclick = async () => {
