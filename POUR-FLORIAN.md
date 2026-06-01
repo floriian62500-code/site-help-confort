@@ -36,6 +36,12 @@ Une fois traitée avec Florian, l'entrée est :
 
 ## Items en attente
 
+## 2026-06-01 — Carte Ukraine : diagnostic « code propre » périmé, une carte tierce est de nouveau active
+**Source** : agent autonome hc-site-autonome (run 2026-06-01), traitement de la tâche TODO « Test fenêtre privée drapeau Ukraine — Florian ».
+**Constat** : la note du 2026-05-29 affirmait qu'aucune tuile/asset tiers n'était plus chargé sur la page zones — c'est faux aujourd'hui. `assets/hc-map-zones.js?v=20260531-v3` (V3, 2026-05-30/31) est désormais chargé sur 4 pages (zones-intervention, contact, a-propos, nos-villes), charge lui-même Leaflet depuis unpkg et affiche des tuiles CartoDB Voyager. L'ancien Leaflet inline est bien neutralisé mais a été remplacé par ce nouveau système.
+**Pourquoi je ne traite pas** : (1) le test fenêtre privée est une action manuelle qui t'est explicitement assignée ; (2) je n'applique pas de fix code spéculatif sur la carte live — CartoDB Voyager est en principe neutre et le script a déjà un `killUkraineOverlay()` défensif, donc rien à reproduire côté agent.
+**Ce que tu dois faire** : ouvrir zones-intervention.html en fenêtre privée. Drapeau présent → vrai bug carte (CartoDB/Leaflet), me redonner le GO pour investiguer l'overlay. Drapeau absent → c'était une extension Chrome, on clôt.
+
 ## 2026-05-30 12:25 — 19 photos réalisations : aucune source réelle à rapatrier
 **Source** : agent autonome hc-site-autonome (run 2026-05-30), traitement de la tâche TODO « Rapatrier 19 images Facebook CDN sur Supabase Storage ».
 **Constat** : Les 19 réalisations en fallback gradient n'ont PAS de vraie image à migrer. Dans `content/realisations/index.json`, les 19 champs `image` valent tous `https://scontent.xx.fbcdn.net/v/t39.30808-6/...` — un placeholder tronqué qui finit par « … », pas une URL signée valide. Vérifié partout : `index.json.bak` (0 fbcdn), `seed_realisations.sql` (0 fbcdn), grep repo complet (0 URL scontent longue), dossier `images/realisations/` vide. Il n'existe donc nulle part de fichier ni d'URL exploitable. La tâche telle qu'écrite (« télécharger puis héberger sur Supabase Storage ») est mécaniquement impossible : il n'y a rien à télécharger. Même si de vraies URLs fbcdn signées avaient existé, elles expirent en quelques jours et dateraient du 2026-05-19 → mortes aujourd'hui.
