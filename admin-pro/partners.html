@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Partenaires · Back-Office HELP Confort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/admin.css">
+<style>
+  .pt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+  .pt-card{background:#fff;border:1px solid var(--ink-100);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;transition:.15s}
+  .pt-card:hover{box-shadow:0 8px 20px rgba(10,20,40,.08);transform:translateY(-2px)}
+  .pt-head{display:flex;gap:12px;align-items:center}
+  .pt-logo-zone{width:48px;height:48px;border-radius:10px;border:1px solid #E5EDF3;background:#fafcfd;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;cursor:pointer;transition:.2s}
+  .pt-logo-zone:hover{border-color:#0DA0CF;transform:scale(1.03)}
+  .pt-logo-empty{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:#fff;width:100%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:10px}
+  .pt-card-name{font-weight:800;font-size:.96rem;color:var(--ink-900);line-height:1.2}
+  .pt-card-type{font-size:.78rem;color:var(--ink-500);margin-top:2px}
+  .pt-card-scope{display:inline-block;font-size:.68rem;font-weight:800;padding:2px 8px;border-radius:999px;background:#F0F9FF;color:#0369A1;margin-top:4px;text-transform:uppercase;letter-spacing:.04em}
+  .pt-card-scope.local{background:#FEF3C7;color:#92400E}
+  .pt-contact{font-size:.82rem;color:#475569;display:flex;flex-direction:column;gap:3px;padding-top:8px;border-top:1px solid #F0F4F7}
+  .pt-contact a{color:#0DA0CF;text-decoration:none}
+  .pt-actions{display:flex;gap:6px;flex-wrap:wrap}
+  .pt-icon-btn{flex:0 0 auto;padding:7px 10px;font-size:.74rem;font-weight:600;border-radius:8px;border:1px solid #E5EDF3;background:#fff;color:#475569;cursor:pointer;display:inline-flex;align-items:center;gap:5px;line-height:1.1;white-space:nowrap}
+  .pt-icon-btn:hover{border-color:#0DA0CF;color:#0DA0CF;background:#F0F9FF}
+  .pt-modal-bg{position:fixed;inset:0;background:rgba(10,20,40,.55);backdrop-filter:blur(4px);z-index:9000;display:none;align-items:center;justify-content:center;padding:20px}
+  .pt-modal-bg.is-open{display:flex}
+  .pt-modal{background:#fff;border-radius:18px;width:100%;max-width:560px;max-height:90vh;overflow:auto;padding:28px}
+  .pt-modal h2{margin:0 0 14px;font-size:1.2rem;font-weight:800;color:var(--ink-900)}
+  .pt-modal label{font-size:.82rem;font-weight:700;color:var(--ink-700);display:block;margin:10px 0 4px}
+  .pt-modal input, .pt-modal select, .pt-modal textarea{width:100%;padding:9px 12px;border:1px solid var(--ink-100);border-radius:9px;font:inherit;font-size:.92rem;box-sizing:border-box}
+  .pt-modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .pt-modal-foot{display:flex;gap:10px;margin-top:18px;justify-content:flex-end;align-items:center}
+</style>
+</head>
+<body class="admin-body">
+<div class="admin-overlay"></div>
+<div class="admin-shell">
+  <aside class="admin-sidebar"></aside>
+  <main class="admin-main">
+    <header class="admin-topbar"></header>
+    <div class="admin-content">
+<main style="max-width:1300px;margin:0 auto;padding:24px clamp(16px,4vw,40px) 80px">
+  <header class="admin-header">
+    <h1>🤝 Partenaires</h1>
+    <p class="admin-subtitle">Réseau de confiance (syndics, urgentistes, assurances, plateformes nationales). Affichés dans le bandeau "Ils nous confient leurs interventions habitat".</p>
+  </header>
+
+  <div style="display:flex;gap:12px;margin:18px 0;align-items:center;flex-wrap:wrap">
+    <input id="ptSearch" type="search" placeholder="Rechercher…" style="padding:9px 14px;border:1px solid var(--ink-100);border-radius:10px;flex:1;min-width:240px;font:inherit;font-size:.92rem">
+    <select id="ptFilterType" style="padding:9px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;font-size:.9rem">
+      <option value="">Tous types</option>
+    </select>
+    <select id="ptFilterScope" style="padding:9px 12px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;font-size:.9rem">
+      <option value="">Local + national</option>
+      <option value="local">Local</option>
+      <option value="national">National</option>
+    </select>
+    <button id="btnNewPt" style="padding:9px 18px;background:linear-gradient(135deg,#FF6B1A,#E85510);color:#fff;border:0;border-radius:10px;font-weight:700;cursor:pointer;font:inherit;font-size:.9rem">+ Nouveau partenaire</button>
+  </div>
+
+  <div id="ptStats" style="font-size:.84rem;color:var(--ink-500);margin-bottom:14px"></div>
+
+  <div id="ptGrid" class="pt-grid"></div>
+</main>
+    </div>
+  </main>
+</div>
+
+<div class="pt-modal-bg" id="ptModal">
+  <div class="pt-modal">
+    <h2 id="ptModalTitle">Nouveau partenaire</h2>
+    <form id="ptForm">
+      <div class="pt-modal-grid">
+        <div><label>Nom *</label><input name="name" required></div>
+        <div><label>Type *</label><input name="type" placeholder="Syndic / Urgentiste / Compagnie d'assurance…" required></div>
+      </div>
+      <div class="pt-modal-grid">
+        <div><label>Portée</label>
+          <select name="scope"><option value="local">Local</option><option value="national" selected>National</option></select>
+        </div>
+        <div><label>Position (tri)</label><input name="position" type="number" value="100"></div>
+      </div>
+      <label>Site web</label>
+      <input name="website" type="url" placeholder="https://...">
+      <div class="pt-modal-grid">
+        <div><label>Email</label><input name="contact_email" type="email"></div>
+        <div><label>Téléphone</label><input name="contact_phone" type="tel"></div>
+      </div>
+      <label>Notes</label>
+      <textarea name="notes" rows="3"></textarea>
+      <label><input type="checkbox" name="active" checked> Actif (visible sur le site)</label>
+      <div class="pt-modal-foot">
+        <button type="button" id="ptDelete" style="margin-right:auto;padding:9px 16px;background:#FEE2E2;color:#991B1B;border:0;border-radius:9px;font-weight:700;cursor:pointer;display:none">🗑 Supprimer</button>
+        <button type="button" id="ptCancel" style="padding:9px 18px;background:#fff;border:1px solid var(--ink-100);border-radius:9px;font:inherit;font-weight:600;cursor:pointer">Annuler</button>
+        <button type="submit" style="padding:9px 22px;background:linear-gradient(135deg,#0DA0CF,#0884AE);color:#fff;border:0;border-radius:9px;font-weight:700;cursor:pointer">Enregistrer</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const LOGO_BUCKET = 'site-photos';
+
+let allPartners = [];
+let editingId = null;
+
+const escHtml = (s) => (s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function paletteFor(name) {
+  const pal = [['#0DA0CF','#0A4F6E'],['#FF6B1A','#7A1F0A'],['#FFB400','#5A4500'],['#7C3AED','#3A1A6E'],['#22C55E','#0A4F38'],['#E11D48','#7F1D1D'],['#0EA5E9','#075985']];
+  let h=0; const n=name||''; for(let i=0;i<n.length;i++) h=(h*31+n.charCodeAt(i))>>>0;
+  return pal[h%pal.length];
+}
+
+async function load() {
+  const { data, error } = await sb.from('partners').select('*').order('position').order('name');
+  if (error) { document.getElementById('ptGrid').innerHTML = '<div style="color:#9F1239">Erreur : '+escHtml(error.message)+'</div>'; return; }
+  allPartners = data || [];
+  // Build types filter
+  const types = [...new Set(allPartners.map(p => p.type).filter(Boolean))].sort();
+  const sel = document.getElementById('ptFilterType');
+  sel.innerHTML = '<option value="">Tous types</option>' + types.map(t => `<option value="${escHtml(t)}">${escHtml(t)}</option>`).join('');
+  render();
+}
+
+function render() {
+  const q = document.getElementById('ptSearch').value.toLowerCase();
+  const tf = document.getElementById('ptFilterType').value;
+  const sf = document.getElementById('ptFilterScope').value;
+  const filtered = allPartners.filter(p => {
+    if (q && !(p.name + ' ' + (p.type||'')).toLowerCase().includes(q)) return false;
+    if (tf && p.type !== tf) return false;
+    if (sf && p.scope !== sf) return false;
+    return true;
+  });
+  document.getElementById('ptStats').textContent = filtered.length + ' partenaire' + (filtered.length>1?'s':'') + ' affiché' + (filtered.length>1?'s':'') + ' · ' + allPartners.length + ' au total';
+  const grid = document.getElementById('ptGrid');
+  if (!filtered.length) { grid.innerHTML = '<div style="grid-column:1/-1;padding:40px;text-align:center;color:#94a3b8">Aucun partenaire ne correspond.</div>'; return; }
+  grid.innerHTML = filtered.map(p => {
+    const pal = paletteFor(p.name);
+    const initial = (p.name||'?').trim().charAt(0).toUpperCase();
+    const logoHtml = p.logo_url
+      ? `<img src="${escHtml(p.logo_url)}" alt="${escHtml(p.name)}" loading="lazy" style="max-width:100%;max-height:100%;object-fit:contain;padding:4px" onerror="this.style.display='none';var n=this.nextElementSibling;if(n)n.style.display='flex'"><span class="pt-logo-empty" style="display:none;background:linear-gradient(135deg,${pal[0]},${pal[1]})">${initial}</span>`
+      : `<span class="pt-logo-empty" style="background:linear-gradient(135deg,${pal[0]},${pal[1]})">${initial}</span>`;
+    return `
+      <div class="pt-card" data-id="${p.id}">
+        <div class="pt-head">
+          <label class="pt-logo-zone" title="Cliquer pour uploader/remplacer le logo">
+            <input type="file" accept="image/*" data-action="upload-logo" data-id="${p.id}" data-slug="${escHtml(p.slug)}" style="display:none">
+            ${logoHtml}
+          </label>
+          <div style="flex:1;min-width:0">
+            <div class="pt-card-name">${escHtml(p.name)}</div>
+            <div class="pt-card-type">${escHtml(p.type||'')}</div>
+            <span class="pt-card-scope ${p.scope==='local'?'local':''}">${p.scope==='local'?'Local':'National'}</span>
+          </div>
+        </div>
+        <div class="pt-contact">
+          ${p.website ? `<div>🌐 <a href="${escHtml(p.website)}" target="_blank" rel="noopener noreferrer">${escHtml(p.website.replace(/^https?:\/\//,'').slice(0,40))}</a></div>` : ''}
+          ${p.contact_email ? `<div>✉️ <a href="mailto:${escHtml(p.contact_email)}">${escHtml(p.contact_email)}</a></div>` : ''}
+          ${p.contact_phone ? `<div>☎ <a href="tel:${escHtml(p.contact_phone)}">${escHtml(p.contact_phone)}</a></div>` : ''}
+          ${!p.website && !p.contact_email && !p.contact_phone ? '<div style="color:#cbd5e1;font-style:italic">Pas de contact</div>' : ''}
+        </div>
+        <div class="pt-actions">
+          <button class="pt-icon-btn" data-action="edit">✏️ Modifier</button>
+          <label class="pt-icon-btn" style="cursor:pointer">
+            <input type="file" accept="image/*" data-action="upload-logo" data-id="${p.id}" data-slug="${escHtml(p.slug)}" style="display:none">📷 Logo
+          </label>
+          ${!p.active ? '<span style="font-size:.72rem;color:#94a3b8;padding:5px">(inactif)</span>' : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+async function uploadLogo(id, slug, file) {
+  try {
+    const isSvg = file.type === 'image/svg+xml';
+    const path = 'partners/' + slug + (isSvg ? '.svg' : '.png');
+    const { error: upErr } = await sb.storage.from(LOGO_BUCKET).upload(path, file, {
+      cacheControl: '60', upsert: true, contentType: file.type || 'image/png'
+    });
+    if (upErr) throw upErr;
+    const publicUrl = SUPABASE_URL + '/storage/v1/object/public/' + LOGO_BUCKET + '/' + path + '?v=' + Date.now();
+    const { error: dbErr } = await sb.from('partners').update({ logo_url: publicUrl }).eq('id', id);
+    if (dbErr) throw dbErr;
+    await load();
+    alert('✓ Logo enregistré');
+  } catch(e) { alert('Erreur : ' + (e.message || e)); }
+}
+
+document.getElementById('ptSearch').addEventListener('input', render);
+document.getElementById('ptFilterType').addEventListener('change', render);
+document.getElementById('ptFilterScope').addEventListener('change', render);
+
+document.getElementById('ptGrid').addEventListener('click', (e) => {
+  const card = e.target.closest('.pt-card'); if (!card) return;
+  const btn = e.target.closest('[data-action]');
+  if (!btn || btn.dataset.action !== 'edit') return;
+  const p = allPartners.find(x => x.id === card.dataset.id);
+  if (p) openModal(p);
+});
+document.getElementById('ptGrid').addEventListener('change', (e) => {
+  const inp = e.target.closest('input[type="file"]');
+  if (!inp || !inp.files || !inp.files[0]) return;
+  uploadLogo(inp.dataset.id, inp.dataset.slug, inp.files[0]);
+});
+
+document.getElementById('btnNewPt').addEventListener('click', () => openModal());
+document.getElementById('ptCancel').addEventListener('click', () => document.getElementById('ptModal').classList.remove('is-open'));
+document.getElementById('ptModal').addEventListener('click', (e) => { if (e.target.id === 'ptModal') document.getElementById('ptModal').classList.remove('is-open'); });
+
+function openModal(p) {
+  editingId = p ? p.id : null;
+  document.getElementById('ptModalTitle').textContent = p ? 'Modifier le partenaire' : 'Nouveau partenaire';
+  document.getElementById('ptDelete').style.display = p ? '' : 'none';
+  const form = document.getElementById('ptForm');
+  form.reset();
+  if (p) {
+    form.name.value = p.name || '';
+    form.type.value = p.type || '';
+    form.scope.value = p.scope || 'national';
+    form.position.value = p.position ?? 100;
+    form.website.value = p.website || '';
+    form.contact_email.value = p.contact_email || '';
+    form.contact_phone.value = p.contact_phone || '';
+    form.notes.value = p.notes || '';
+    form.active.checked = p.active !== false;
+  }
+  document.getElementById('ptModal').classList.add('is-open');
+}
+
+document.getElementById('ptForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const name = (fd.get('name')||'').trim();
+  const slug = name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const payload = {
+    slug, name,
+    type: fd.get('type') || null,
+    scope: fd.get('scope') || 'national',
+    position: parseInt(fd.get('position')||'100'),
+    website: fd.get('website') || null,
+    contact_email: fd.get('contact_email') || null,
+    contact_phone: fd.get('contact_phone') || null,
+    notes: fd.get('notes') || null,
+    active: !!fd.get('active')
+  };
+  let res;
+  if (editingId) res = await sb.from('partners').update(payload).eq('id', editingId);
+  else res = await sb.from('partners').insert(payload);
+  if (res.error) { alert('Erreur : ' + res.error.message); return; }
+  document.getElementById('ptModal').classList.remove('is-open');
+  await load();
+});
+
+document.getElementById('ptDelete').addEventListener('click', async () => {
+  if (!editingId) return;
+  if (!confirm('Supprimer ce partenaire ?')) return;
+  const { error } = await sb.from('partners').delete().eq('id', editingId);
+  if (error) { alert('Erreur : ' + error.message); return; }
+  document.getElementById('ptModal').classList.remove('is-open');
+  await load();
+});
+
+load();
+</script>
+<script defer src="assets/layout.js?v=20260601"></script>
+<script>document.addEventListener('DOMContentLoaded', function(){ if (window.HCLayout) HCLayout.mount('partners', 'Partenaires'); });</script>
+</body>
+</html>
