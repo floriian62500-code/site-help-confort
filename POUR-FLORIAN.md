@@ -36,6 +36,19 @@ Une fois traitée avec Florian, l'entrée est :
 
 ## Items en attente
 
+## 2026-05-30 12:25 — 19 photos réalisations : aucune source réelle à rapatrier
+**Source** : agent autonome hc-site-autonome (run 2026-05-30), traitement de la tâche TODO « Rapatrier 19 images Facebook CDN sur Supabase Storage ».
+**Constat** : Les 19 réalisations en fallback gradient n'ont PAS de vraie image à migrer. Dans `content/realisations/index.json`, les 19 champs `image` valent tous `https://scontent.xx.fbcdn.net/v/t39.30808-6/...` — un placeholder tronqué qui finit par « … », pas une URL signée valide. Vérifié partout : `index.json.bak` (0 fbcdn), `seed_realisations.sql` (0 fbcdn), grep repo complet (0 URL scontent longue), dossier `images/realisations/` vide. Il n'existe donc nulle part de fichier ni d'URL exploitable. La tâche telle qu'écrite (« télécharger puis héberger sur Supabase Storage ») est mécaniquement impossible : il n'y a rien à télécharger. Même si de vraies URLs fbcdn signées avaient existé, elles expirent en quelques jours et dateraient du 2026-05-19 → mortes aujourd'hui.
+**Pourquoi je ne traite pas** : besoin de re-sourcer les vraies photos — accès à la page Facebook (connexion/token requis) ou fichiers originaux à fournir, choix métier + asset manquant.
+**Options** :
+  1. Tu me fournis les 19 photos originales (export depuis ton téléphone, drive, ou la page FB une fois connecté) → je les upload sur le bucket Supabase Storage `realisations`, je mets à jour `index.json` + table `realisations`, je régénère et je déploie.
+  2. On branche un accès Facebook (token Graph API page) pour ré-extraire automatiquement les visuels des posts → je scripte la migration de bout en bout.
+  3. On abandonne la galerie photo et on assume le fallback gradient stylé (déjà en place, propre) tant qu'on n'a pas de vrais visuels.
+**Reco** : option 1 (le plus rapide et fiable ; pas de dépendance API FB qui casse).
+**Quand on se voit** : 10 min pour récupérer les photos + me les déposer dans `images/realisations/`.
+
+---
+
 ## 2026-05-19 11:00 — sync-reviews retourne 401 (table reviews vide)
 **Source** : audit BDD via Supabase MCP session autonome 2026-05-19
 **Constat** : La table `reviews` contient **0 entrées** alors que tu as **343 avis Google**. Le cron `auto-sync-reviews` (jobid=1, toutes les 6h) tourne avec succès côté pg_cron, mais l'Edge Function `sync-reviews` répond **401 Unauthorized**. La clé `sync_reviews_service_key` stockée dans Supabase Vault est probablement expirée ou mal configurée. Conséquence : toolkit "Digest avis non répondus" sera vide tant que ça n'est pas résolu.
