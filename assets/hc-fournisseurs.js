@@ -38,6 +38,9 @@
       '.hcf-track{display:flex;gap:24px;animation:hcfScroll 36s linear infinite;width:max-content;padding:8px 0}' +
       '.hcf-marquee:hover .hcf-track{animation-play-state:paused}' +
       '@keyframes hcfScroll{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 12px))}}' +
+      '.hcf-card-wrap{display:flex;flex-direction:column;gap:6px;width:170px;flex-shrink:0}' +
+      '.hcf-catalogue{display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 8px;background:#fff;border:1px solid rgba(13,160,207,.25);border-radius:8px;font-size:.74rem;font-weight:700;color:#0DA0CF;text-decoration:none;text-align:center;transition:.15s}' +
+      '.hcf-catalogue:hover{background:#0DA0CF;color:#fff;border-color:#0DA0CF}' +
       '.hcf-card{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:18px 16px;background:#fff;border:1px solid #E5EDF3;border-radius:14px;text-decoration:none;transition:all .25s ease;color:#0A1428;min-width:170px;width:170px;height:130px;flex-shrink:0}' +
       '.hcf-card:hover{transform:translateY(-4px);box-shadow:0 14px 28px -8px rgba(13,160,207,.25);border-color:rgba(13,160,207,.40)}' +
       '.hcf-badge{position:absolute;top:6px;right:6px;width:20px;height:20px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;font-size:.7rem;border-radius:50%;box-shadow:0 3px 8px rgba(255,107,26,.30)}' +
@@ -70,16 +73,23 @@
     var pal = paletteFor(s.name);
     var initial = (s.name || '?').trim().charAt(0).toUpperCase();
     var logo = s.logo_url
-      ? '<img src="' + esc(s.logo_url) + '" alt="' + esc(s.name) + '" loading="lazy">'
-      : '<span class="hcf-logo-fallback" style="background:linear-gradient(135deg,' + pal[0] + ' 0%,' + pal[1] + ' 100%)">' + esc(initial) + '</span>';
+      ? '<img src="' + esc(s.logo_url) + '" alt="' + esc(s.name) + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
+        '<span class="hcf-logo-fallback" style="display:none;background:linear-gradient(135deg,' + pal[0] + ' 0%,' + pal[1] + ' 100%)">' + esc(initial) + '</span>'
+      : '<span class="hcf-logo-fallback" style="display:flex;background:linear-gradient(135deg,' + pal[0] + ' 0%,' + pal[1] + ' 100%)">' + esc(initial) + '</span>';
     var websiteAttr = s.website
       ? ' href="' + esc(s.website) + '" target="_blank" rel="noopener noreferrer"'
       : ' href="contact.html?objet=' + encodeURIComponent('Question fournisseur ' + s.name) + '"';
-    return '<a class="hcf-card"' + websiteAttr + ' aria-label="' + esc(s.name) + (s.website ? ' — ouvrir le site officiel' : '') + '">' +
-      (s.is_preferred ? '<span class="hcf-badge" title="Marque préférée HC">★</span>' : '') +
-      '<span class="hcf-logo">' + logo + '</span>' +
-      '<span class="hcf-name">' + esc(s.name) + '</span>' +
-      '</a>';
+    var catalogue = s.catalogue_url
+      ? '<a class="hcf-catalogue" href="' + esc(s.catalogue_url) + '" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="Voir le catalogue ' + esc(s.name) + '">📚 ' + (s.catalogue_type === 'pdf' ? 'Catalogue PDF' : 'Catalogue') + '</a>'
+      : '';
+    return '<div class="hcf-card-wrap">' +
+      '<a class="hcf-card"' + websiteAttr + ' aria-label="' + esc(s.name) + (s.website ? ' — ouvrir le site officiel' : '') + '">' +
+        (s.is_preferred ? '<span class="hcf-badge" title="Marque préférée HC">★</span>' : '') +
+        '<span class="hcf-logo">' + logo + '</span>' +
+        '<span class="hcf-name">' + esc(s.name) + '</span>' +
+      '</a>' +
+      catalogue +
+      '</div>';
   }
 
   async function render(root) {
