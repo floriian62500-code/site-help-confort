@@ -683,7 +683,37 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  function isUnlocked(){ return false; }
  function unlock(){ try { localStorage.setItem(LG_KEY, '1'); } catch(_) {} document.body.classList.remove('is-locked'); }
  function lock(){ document.body.classList.add('is-locked'); }
- function showLgModal(){ document.getElementById('nvLeadgateModal').hidden = false; document.body.style.overflow = 'hidden'; }
+ // 2026-06-01 — Coordonnées conservées localement pour relance mail/téléphone
+ const LG_DATA_KEY = 'hc_lead_v1';
+ function saveLeadData(fd){
+   try {
+     var data = {
+       prenom: fd.get('prenom') || '',
+       nom: fd.get('nom') || '',
+       telephone: fd.get('telephone') || '',
+       email: fd.get('email') || '',
+       adresse: fd.get('adresse') || '',
+       code_postal: fd.get('code_postal') || '',
+       ville: fd.get('ville') || '',
+       saved_at: new Date().toISOString()
+     };
+     localStorage.setItem(LG_DATA_KEY, JSON.stringify(data));
+   } catch(_) {}
+ }
+ function restoreLeadData(){
+   try {
+     var raw = localStorage.getItem(LG_DATA_KEY);
+     if (!raw) return;
+     var d = JSON.parse(raw);
+     var f = document.getElementById('nvLgForm');
+     if (!f) return;
+     ['prenom','nom','telephone','email','adresse','code_postal','ville'].forEach(function(k){
+       var input = f.querySelector('[name="'+k+'"]');
+       if (input && d[k] && !input.value) input.value = d[k];
+     });
+   } catch(_) {}
+ }
+ function showLgModal(){ document.getElementById('nvLeadgateModal').hidden = false; document.body.style.overflow = 'hidden'; restoreLeadData(); }
  function hideLgModal(){ document.getElementById('nvLeadgateModal').hidden = true; document.body.style.overflow = ''; }
 
  // Au chargement : lock systématique
@@ -793,6 +823,9 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  if (bad) return;
 
  btn.disabled = true; btn.innerHTML = 'Envoi…';
+
+ // 2026-06-01 — Mémorise les coordonnées pour pré-remplissage modal réservation + futurs leadgates
+ saveLeadData(fd);
 
  // Insert lead dans Supabase (table leads ou contracts avec status='lead')
  try {
@@ -1531,6 +1564,19 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  modal.classList.add('is-open');
  document.body.style.overflow = 'hidden';
 
+ // 2026-06-01 — Pré-remplissage des coordonnées depuis le leadgate (localStorage hc_lead_v1)
+ try {
+   var raw = localStorage.getItem('hc_lead_v1');
+   if (raw) {
+     var d = JSON.parse(raw);
+     var mapping = { firstname: d.prenom, lastname: d.nom, email: d.email, phone: d.telephone, address: d.adresse, postal_code: d.code_postal, city: d.ville };
+     Object.keys(mapping).forEach(function(name){
+       var input = sheet.querySelector('[name="'+name+'"]');
+       if (input && mapping[name]) input.value = mapping[name];
+     });
+   }
+ } catch(_){}
+
  // Close handlers
  sheet.querySelector('.nv-modal-close').onclick = closeModal;
  modal.onclick = (e) => { if (e.target === modal) closeModal(); };
@@ -1569,6 +1615,14 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  errBox.textContent = 'Merci de remplir les champs obligatoires : ' + missing.join(', ');
  return;
  }
+ // 2026-06-01 — Mémorise les coordonnées pour les prochaines réservations
+ try {
+   localStorage.setItem('hc_lead_v1', JSON.stringify({
+     prenom: data.firstname, nom: data.lastname, telephone: data.phone, email: data.email,
+     adresse: data.address, code_postal: data.postal_code, ville: data.city,
+     saved_at: new Date().toISOString()
+   }));
+ } catch(_){}
 
  // Variant
  let variantKey = null, variantLabel = null, finalHt = svc.price_ht, finalTtc = svc.price_ttc;
