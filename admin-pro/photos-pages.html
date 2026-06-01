@@ -91,31 +91,31 @@ const PHOTO_SLOTS = [
   {
     page: 'plombier-saint-omer', pageLabel: '🔧 Page Plomberie — Saint-Omer', pageUrl: '/plombier-saint-omer',
     slots: [
-      { key: 'plomberie/fuite',       label: '✅ Card Recherche de fuite', desc: 'Caméra Milwaukee (déjà sur le site)' },
-      { key: 'plomberie/debouchage',  label: '✅ Card Débouchage',         desc: 'Furet professionnel (déjà sur le site)' },
-      { key: 'plomberie/chauffe-eau', label: '✅ Card Chauffe-eau',        desc: 'Chauffe-eau Atlantic (déjà sur le site)' },
-      { key: 'plomberie/sanitaire',   label: '✅ Card Sanitaires',         desc: 'WC suspendu (déjà sur le site)' },
-      { key: 'plomberie/reseaux',     label: '✅ Card Réseaux',            desc: 'Réseaux Geberit Duofix (déjà sur le site)' }
+      { key: 'plomberie/fuite',       label: '✅ Card Recherche de fuite', desc: 'Caméra Milwaukee (déjà sur le site)', localFallback: '/images/prestations/recherche-fuite.jpg' },
+      { key: 'plomberie/debouchage',  label: '✅ Card Débouchage',         desc: 'Furet professionnel (déjà sur le site)', localFallback: '/images/prestations/debouchage.jpg' },
+      { key: 'plomberie/chauffe-eau', label: '✅ Card Chauffe-eau',        desc: 'Chauffe-eau Atlantic (déjà sur le site)', localFallback: '/images/prestations/chauffe-eau.jpg' },
+      { key: 'plomberie/sanitaire',   label: '✅ Card Sanitaires',         desc: 'WC suspendu (déjà sur le site)', localFallback: '/images/prestations/sanitaire.jpg' },
+      { key: 'plomberie/reseaux',     label: '✅ Card Réseaux',            desc: 'Réseaux Geberit Duofix (déjà sur le site)', localFallback: '/images/prestations/reseaux-plomberie.jpg' }
     ]
   },
   {
     page: 'menuisier-saint-omer', pageLabel: '🚪 Page Menuiserie — Saint-Omer', pageUrl: '/menuisier-saint-omer',
     slots: [
-      { key: 'menuiserie/porte-entree', label: '✅ Card Porte entrée',         desc: 'Porte d\'entrée Finstral (déjà sur le site)' },
-      { key: 'menuiserie/porte-garage', label: '✅ Card Porte garage',         desc: 'Porte garage motorisée Soprofen (déjà sur le site)' },
-      { key: 'menuiserie/portail',      label: '✅ Card Portail & clôture',    desc: 'Portail aluminium (déjà sur le site)' },
-      { key: 'menuiserie/fenetres',     label: '✅ Card Fenêtres bois/alu/PVC',desc: 'Fenêtres Groupe Millet (déjà sur le site)' },
-      { key: 'menuiserie/coulissant',   label: '✅ Card Coulissant & baie',    desc: 'Baie vitrée coulissante (déjà sur le site)' },
-      { key: 'menuiserie/garde-corps',  label: '✅ Card Garde-corps & rampes', desc: 'Garde-corps et rampes (déjà sur le site)' },
-      { key: 'menuiserie/panneau-pvc',  label: '✅ Card Panneau PVC',          desc: 'Remplacement panneau de porte (déjà sur le site)' }
+      { key: 'menuiserie/porte-entree', label: '✅ Card Porte entrée',         desc: 'Porte d\'entrée Finstral (déjà sur le site)', localFallback: '/images/prestations/porte-entree.jpg' },
+      { key: 'menuiserie/porte-garage', label: '✅ Card Porte garage',         desc: 'Porte garage motorisée Soprofen (déjà sur le site)', localFallback: '/images/prestations/porte-garage.jpg' },
+      { key: 'menuiserie/portail',      label: '✅ Card Portail & clôture',    desc: 'Portail aluminium (déjà sur le site)', localFallback: '/images/prestations/portail-cloture.jpg' },
+      { key: 'menuiserie/fenetres',     label: '✅ Card Fenêtres bois/alu/PVC',desc: 'Fenêtres Groupe Millet (déjà sur le site)', localFallback: '/images/prestations/fenetres-bois-alu-pvc.jpg' },
+      { key: 'menuiserie/coulissant',   label: '✅ Card Coulissant & baie',    desc: 'Baie vitrée coulissante (déjà sur le site)', localFallback: '/images/prestations/coulissant-baie-vitree.jpg' },
+      { key: 'menuiserie/garde-corps',  label: '✅ Card Garde-corps & rampes', desc: 'Garde-corps et rampes (déjà sur le site)', localFallback: '/images/prestations/garde-corps-rampes.jpg' },
+      { key: 'menuiserie/panneau-pvc',  label: '✅ Card Panneau PVC',          desc: 'Remplacement panneau de porte (déjà sur le site)', localFallback: '/images/prestations/remplacement-panneau-porte.jpg' }
     ]
   },
   {
     page: 'pmr-saint-omer', pageLabel: '♿ Page Adaptation PMR — Saint-Omer', pageUrl: '/pmr-saint-omer',
     slots: [
-      { key: 'pmr/douche-italienne', label: '✅ Card Douche italienne', desc: 'Salle de bain PMR (déjà sur le site)' },
-      { key: 'pmr/barre-appui',      label: '✅ Card Barres d\'appui',  desc: 'Barres d\'appui PMR (déjà sur le site)' },
-      { key: 'pmr/salle-de-bain',    label: '✅ Card Salle de bain PMR',desc: 'Rénovation SDB Delpha (partagée avec plomberie)' }
+      { key: 'pmr/douche-italienne', label: '✅ Card Douche italienne', desc: 'Salle de bain PMR (déjà sur le site)', localFallback: '/images/prestations/salle-de-bain-pmr.jpg' },
+      { key: 'pmr/barre-appui',      label: '✅ Card Barres d\'appui',  desc: 'Barres d\'appui PMR (déjà sur le site)', localFallback: '/images/prestations/barres-appui.jpg' },
+      { key: 'pmr/salle-de-bain',    label: '✅ Card Salle de bain PMR',desc: 'Rénovation SDB Delpha (partagée avec plomberie)', localFallback: '/images/prestations/salle-de-bain.jpg' }
     ]
   },
   {
