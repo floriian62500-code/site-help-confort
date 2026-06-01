@@ -122,10 +122,27 @@
       </div>';
   }
 
+  // 2026-06-01 — mode compact si attribut data-metier-page (placé en colonne avis sur pages métier)
+  var COMPACT = host.hasAttribute('data-metier-page');
+  var LIMIT = COMPACT ? 3 : 6;
+  if (COMPACT) {
+    var compactStyle = document.createElement('style');
+    compactStyle.textContent =
+      '#hc-avis-live[data-metier-page]{padding:0!important;background:transparent!important}' +
+      '#hc-avis-live[data-metier-page] .hcal-wrap{max-width:none}' +
+      '#hc-avis-live[data-metier-page] .hcal-head{margin-bottom:16px;text-align:left}' +
+      '#hc-avis-live[data-metier-page] .hcal-head h2{font-size:1.1rem!important;margin:0 0 4px}' +
+      '#hc-avis-live[data-metier-page] .hcal-head p{font-size:.84rem;margin:0}' +
+      '#hc-avis-live[data-metier-page] .hcal-grid{grid-template-columns:1fr!important;gap:10px}' +
+      '#hc-avis-live[data-metier-page] .hcal-card{padding:14px}' +
+      '#hc-avis-live[data-metier-page] .hcal-comment{font-size:.82rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}' +
+      '#hc-avis-live[data-metier-page] .hcal-reply{display:none}' +
+      '#hc-avis-live[data-metier-page] .hcal-cta{margin-top:12px}' +
+      '#hc-avis-live[data-metier-page] .hcal-cta a{padding:9px 16px;font-size:.84rem}';
+    document.head.appendChild(compactStyle);
+  }
   function load() {
-    // Fetch reviews depuis Supabase (anon = lecture des avis non flag/archive)
-    // HC-FIX 2026-05-20 : on récupère AUSSI review_url pour pouvoir rendre la carte cliquable
-    fetch(SUPABASE_URL + '/rest/v1/reviews?status=neq.flagged&status=neq.archive&rating=gte.4&comment=not.is.null&order=posted_at.desc&limit=6&select=*', {
+    fetch(SUPABASE_URL + '/rest/v1/reviews?status=neq.flagged&status=neq.archive&rating=gte.4&comment=not.is.null&order=posted_at.desc&limit=' + LIMIT + '&select=*', {
       headers: {
         'apikey': SUPABASE_KEY,
         'Authorization': 'Bearer ' + SUPABASE_KEY
