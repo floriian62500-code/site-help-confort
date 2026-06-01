@@ -125,10 +125,10 @@ const PHOTO_SLOTS = [
     slots: [
       { key: 'chauffage/hero',       label: 'Hero chauffage',     desc: 'Image principale page chauffagiste' },
       { key: 'chauffage/entretien',  label: 'Card Entretien chaudière',  desc: 'Card "Entretien annuel"', localFallback: '/images/prestations/depannage-chaudiere.jpg' },
-      { key: 'chauffage/panne',      label: 'Card Dépannage chaudière',  desc: 'Card "Dépannage chaudière"', localFallback: '/images/prestations/depannage-chaudiere.jpg' },
+      { key: 'chauffage/panne',      label: 'Card Dépannage chaudière',  desc: 'Card "Dépannage chaudière"' /* dédoublonné — ne plus auto-importer la même image qu'entretien */ },
       { key: 'chauffage/desembouage',label: 'Card Désembouage',          desc: 'Card "Désembouage radiateurs"', localFallback: '/images/prestations/desembouage.jpg' },
-      { key: 'chauffage/remplacement',label: 'Card Remplacement chaudière',desc: 'Card "Remplacement chaudière"', localFallback: '/images/prestations/remplacement-chaudiere.jpg' },
-      { key: 'chauffage/ramonage',   label: 'Card Ramonage',             desc: 'Card "Ramonage annuel"', localFallback: '/images/prestations/ramonage.jpg' }
+      { key: 'chauffage/remplacement',label: 'Card Remplacement chaudière',desc: 'Card "Remplacement chaudière"' /* localFallback retiré : fichier source 4KB cassé */ }
+      /* ramonage retiré : HC n'effectue pas de ramonage + photo source = vieux ramoneur 19e siècle inappropriée */
     ]
   },
   {
@@ -379,6 +379,16 @@ async function seedExistingPhotos(silent) {
       const resp = await fetch(slot.localFallback);
       if (!resp.ok) { results.push({ slot: slot.key, ok: false, err: 'HTTP ' + resp.status }); continue; }
       const blob = await resp.blob();
+      // GARDE-FOU 2026-06-01 : skip images suspectes (trop petites = SVG/icon/placeholder cassé)
+      if (blob.size < 20000) {
+        results.push({ slot: slot.key, ok: false, err: 'Image trop petite (' + blob.size + ' octets — probablement placeholder cassé)' });
+        continue;
+      }
+      // Skip si le content-type n'est pas une vraie image
+      if (!/^image\/(jpe?g|png|webp|avif)$/i.test(blob.type)) {
+        results.push({ slot: slot.key, ok: false, err: 'Type non supporté : ' + blob.type });
+        continue;
+      }
       const filename = slot.key + '.jpg';
       const { error } = await sb.storage.from(BUCKET).upload(filename, blob, {
         cacheControl: '60', upsert: true, contentType: blob.type || 'image/jpeg'
