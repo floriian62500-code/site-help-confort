@@ -386,19 +386,9 @@ async function seedExistingPhotos(silent) {
 }
 document.getElementById('pgSeedBtn').addEventListener('click', function(){ seedExistingPhotos(false); });
 
-// 2026-06-01 — Cleanup ciblé des photos parasites uploadées par erreur
-// Tourne CHAQUE chargement pour éviter ré-import via seedExistingPhotos
-async function cleanupParasites() {
-  const TARGETS = ['volets/volet-roulant.jpg', 'volets/hero.jpg'];
-  let removed = 0;
-  for (const p of TARGETS) {
-    try { const { error } = await sb.storage.from(BUCKET).remove([p]); if (!error) removed++; } catch(_){}
-  }
-  if (removed > 0) console.log('[cleanup-parasites]', removed, 'photo(s) parasite(s) supprimée(s)');
-  return removed;
-}
-// Cleanup AVANT seed pour qu'ils ne soient pas ré-uploadés
-(async function(){ await cleanupParasites(); })();
+// 2026-06-01 — cleanupParasites DÉSACTIVÉ : Florian peut uploader manuellement volets/volet-roulant.jpg
+// et le cleanup automatique le supprimait à chaque chargement (frustration garantie).
+// Si besoin, supprimer manuellement via le bouton 🗑 Supprimer.
 
 // Auto-import des photos validées avec localFallback (présentes en /images/prestations/)
 setTimeout(function(){ seedExistingPhotos(true); }, 1200);
