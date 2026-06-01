@@ -58,8 +58,12 @@
 </style>
 </head>
 <body class="admin-body">
+<div class="admin-overlay"></div>
 <div class="admin-shell">
+  <aside class="admin-sidebar"><!-- Injecté par HCLayout.mountSidebar() --></aside>
   <main class="admin-main" id="adminMain">
+    <header class="admin-topbar"></header>
+    <div class="admin-content">
     <header class="admin-header">
       <h1>Fournisseurs</h1>
       <p class="admin-subtitle">Gérez vos partenaires et fournisseurs par métier. Ils alimentent l'autocomplete des prestations.</p>
@@ -318,8 +322,53 @@ document.getElementById('frDelete').addEventListener('click', async () => {
 });
 
 load();
+
+// ═══ 2026-06-01 — AUTO-FETCH LOGOS via Clearbit / Wikipedia / Google favicon ═══
+// Pour chaque fournisseur sans logo : essaie Clearbit (domaine extrait du website),
+// puis fallback Wikipedia commons, puis Google favicon (toujours dispo).
+async function autoFetchLogos() {
+  const needs = allSuppliers.filter(s => !s.logo_url && s.website);
+  if (!needs.length) return;
+  let n = 0;
+  for (const s of needs) {
+    try {
+      const domain = (s.website || '').replace(/^https?:\/\//,'').replace(/^www\./,'').split('/')[0];
+      if (!domain) continue;
+      // Clearbit logo
+      const clearbitUrl = 'https://logo.clearbit.com/' + domain;
+      const resp = await fetch(clearbitUrl, { mode: 'cors' });
+      let blob = null;
+      if (resp.ok && resp.headers.get('content-type')?.startsWith('image/')) {
+        blob = await resp.blob();
+      } else {
+        // Fallback Google favicon (toujours dispo, 64px)
+        const gResp = await fetch('https://www.google.com/s2/favicons?domain=' + domain + '&sz=128');
+        if (gResp.ok) blob = await gResp.blob();
+      }
+      if (!blob || blob.size < 200) continue;
+      const path = 'logos/' + (s.slug || s.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')) + '.png';
+      const { error: upErr } = await sb.storage.from('site-photos').upload(path, blob, {
+        cacheControl: '60', upsert: true, contentType: blob.type || 'image/png'
+      });
+      if (upErr) continue;
+      const publicUrl = 'https://btcbjwqiivhpwoszomhg.supabase.co/storage/v1/object/public/site-photos/' + path + '?v=' + Date.now();
+      await sb.from('suppliers').update({ logo_url: publicUrl }).eq('id', s.id);
+      s.logo_url = publicUrl;
+      n++;
+    } catch(e){ console.warn('[autoFetch]', s.name, e.message); }
+  }
+  if (n > 0) {
+    render();
+    console.log('[autoFetchLogos] ' + n + ' logos récupérés automatiquement');
+  }
+}
+// Auto-déclenche 1.5s après le load (laisse load() finir)
+setTimeout(autoFetchLogos, 1500);
 </script>
-<script defer src="assets/layout.js"></script>
-<script>if (window.HCLayout) HCLayout.mount('fournisseurs', 'Fournisseurs');</script>
+    </div><!-- /.admin-content -->
+  </main>
+</div><!-- /.admin-shell -->
+<script defer src="assets/layout.js?v=20260601"></script>
+<script>document.addEventListener('DOMContentLoaded', function(){ if (window.HCLayout) HCLayout.mount('fournisseurs', 'Fournisseurs'); });</script>
 </body>
 </html>
