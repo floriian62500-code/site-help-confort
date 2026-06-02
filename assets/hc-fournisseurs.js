@@ -83,7 +83,6 @@
       var filtered = data.filter(function (s) {
         return s && Array.isArray(s.metiers) && s.metiers.indexOf(metier) !== -1;
       });
-      console.log(LOG_PREFIX, 'metier=' + metier, 'total=' + data.length, 'match=' + filtered.length);
       return filtered;
     } catch (e) {
       console.error(LOG_PREFIX, 'fetch error', e);
@@ -139,7 +138,6 @@
             '<p class="hcf-foot">Vous souhaitez une marque particulière non listée ? <a href="contact.html?objet=Demande%20marque%20sp%C3%A9cifique">Faites-nous votre demande →</a></p>' +
           '</div>' +
         '</section>';
-      console.log(LOG_PREFIX, 'rendered ' + n + ' cards for metier=' + metier);
     } catch (e) {
       console.error(LOG_PREFIX, 'render error', e);
     }
@@ -147,7 +145,6 @@
 
   function init() {
     var roots = document.querySelectorAll('[data-hc-fournisseurs]');
-    console.log(LOG_PREFIX, 'init — found ' + roots.length + ' container(s)');
     roots.forEach(function (r) { render(r); });
   }
   if (document.readyState === 'loading') {

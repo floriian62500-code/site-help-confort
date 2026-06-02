@@ -53,16 +53,21 @@
       }
     });
 
+    // 2026-06-02 — Helper escape XSS (le contenu vient de Supabase, anon peut potentiellement écrire)
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]); }); }
+    // Sanitize URL pour href (anti javascript:)
+    function escUrl(u) { var s = String(u || '#'); return /^(https?:|mailto:|tel:|\/|#)/i.test(s) ? esc(s) : '#'; }
+
     // Métiers : si une liste avec data-content-metiers est présente, on la régénère
     var metiersHost = document.querySelector('[data-content-metiers]');
     if (metiersHost && content.metiers && content.metiers.length) {
       var template = metiersHost.getAttribute('data-content-metiers-template') || 'default';
       if (template === 'default') {
         metiersHost.innerHTML = content.metiers.map(function(m) {
-          var html = '<a href="' + (m.url || '#') + '" class="metier-card">';
-          html += '<div class="metier-icon">' + (m.icon || '🔧') + '</div>';
-          html += '<h3>' + (m.name || '') + '</h3>';
-          if (m.desc) html += '<p>' + m.desc + '</p>';
+          var html = '<a href="' + escUrl(m.url) + '" class="metier-card">';
+          html += '<div class="metier-icon">' + esc(m.icon || '🔧') + '</div>';
+          html += '<h3>' + esc(m.name || '') + '</h3>';
+          if (m.desc) html += '<p>' + esc(m.desc) + '</p>';
           html += '</a>';
           return html;
         }).join('');
