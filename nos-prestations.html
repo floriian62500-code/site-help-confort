@@ -1762,6 +1762,29 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  return;
  }
 
+ // 2026-06-02 — Notifier Florian par email (edge function notify-lead)
+ try {
+   fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/notify-lead', {
+     method: 'POST',
+     headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON, 'Authorization': 'Bearer ' + SUPABASE_ANON },
+     body: JSON.stringify({
+       type: 'reservation',
+       order_number: inserted.order_number,
+       service_name: svc.name,
+       variant_label: variantLabel || 'Standard',
+       customer_name: data.firstname + ' ' + data.lastname,
+       customer_email: data.email,
+       customer_phone: data.phone,
+       address: data.address + ', ' + data.postal_code + ' ' + data.city,
+       price_ttc: recomputedTtc,
+       deposit_amount: recomputedDeposit,
+       preferred_slot: data.preferred_slot || '',
+       notes: data.notes || '',
+       client_type: clientType
+     })
+   }).catch(function(e){ console.warn('[notify-lead] erreur non bloquante', e); });
+ } catch(_){}
+
  // Succès
  sheet.innerHTML = `
  <div class="nv-success">
