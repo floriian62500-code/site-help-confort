@@ -1,12 +1,12 @@
 {
   "audit": "heading_hierarchy",
-  "date": "2026-06-01T08:38:23",
+  "date": "2026-06-02T07:27:23",
   "stats": {
     "pages_audited": 115,
-    "pages_clean": 111,
+    "pages_clean": 109,
     "pages_with_error": 1,
-    "pages_with_warning": 4,
-    "total_findings": 5
+    "pages_with_warning": 6,
+    "total_findings": 7
   },
   "results": [
     {
@@ -1199,6 +1199,19 @@
       "findings": []
     },
     {
+      "file": "fournisseur.html",
+      "h1_count": 0,
+      "total_headings": 0,
+      "sequence": [],
+      "findings": [
+        {
+          "code": "NO_HEADINGS",
+          "severity": "warning",
+          "detail": "Aucune balise <h1>..<h6> trouvée sur la page."
+        }
+      ]
+    },
+    {
       "file": "garanties.html",
       "h1_count": 1,
       "total_headings": 13,
@@ -1491,27 +1504,6 @@
       "findings": []
     },
     {
-      "file": "notre-equipe 2.html",
-      "h1_count": 1,
-      "total_headings": 13,
-      "sequence": [
-        1,
-        2,
-        2,
-        2,
-        2,
-        3,
-        3,
-        3,
-        3,
-        2,
-        3,
-        3,
-        3
-      ],
-      "findings": []
-    },
-    {
       "file": "notre-equipe.html",
       "h1_count": 1,
       "total_headings": 13,
@@ -1587,6 +1579,19 @@
         3
       ],
       "findings": []
+    },
+    {
+      "file": "partenaire.html",
+      "h1_count": 0,
+      "total_headings": 0,
+      "sequence": [],
+      "findings": [
+        {
+          "code": "NO_HEADINGS",
+          "severity": "warning",
+          "detail": "Aucune balise <h1>..<h6> trouvée sur la page."
+        }
+      ]
     },
     {
       "file": "partenaires.html",
@@ -2009,13 +2014,12 @@
     {
       "file": "pro.html",
       "h1_count": 1,
-      "total_headings": 31,
+      "total_headings": 30,
       "sequence": [
         1,
         2,
         3,
         3,
-        2,
         2,
         3,
         3,
@@ -2528,35 +2532,6 @@
         2,
         3,
         4,
-        3,
-        3,
-        3
-      ],
-      "findings": []
-    },
-    {
-      "file": "volets-saint-omer.html 2.html",
-      "h1_count": 1,
-      "total_headings": 21,
-      "sequence": [
-        1,
-        2,
-        3,
-        3,
-        3,
-        3,
-        3,
-        3,
-        2,
-        2,
-        3,
-        3,
-        2,
-        2,
-        3,
-        4,
-        2,
-        2,
         3,
         3,
         3

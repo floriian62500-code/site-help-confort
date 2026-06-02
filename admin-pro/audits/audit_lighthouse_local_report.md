@@ -1,6 +1,6 @@
-# 🔦 Audit Lighthouse local — 2026-06-01 08:37
+# 🔦 Audit Lighthouse local — 2026-06-02 07:26
 
-**116 pages auditées** · **7 erreurs** · **65 warnings** · **Score moyen 97/100**
+**116 pages auditées** · **7 erreurs** · **66 warnings** · **Score moyen 97/100**
 
 ## 📊 Résumé par page
 
@@ -8,8 +8,9 @@
 |------|------:|--------:|---------:|
 | `googlef09a1887914c5a23.html` | **0/100** | 7 | 3 |
 | `espace-client-dashboard.html` | **88/100** | 0 | 3 |
-| `notre-equipe 2.html` | **88/100** | 0 | 3 |
 | `notre-equipe.html` | **88/100** | 0 | 3 |
+| `partenaire.html` | **88/100** | 0 | 3 |
+| `fournisseur.html` | **92/100** | 0 | 2 |
 | `plombier-coudekerque-branche.html` | **92/100** | 0 | 2 |
 | `plombier-grande-synthe.html` | **92/100** | 0 | 2 |
 | `plombier-saint-martin-boulogne.html` | **92/100** | 0 | 2 |
@@ -55,7 +56,6 @@
 | `serrurier-saint-omer.html` | **96/100** | 0 | 1 |
 | `tarifs.html` | **96/100** | 0 | 1 |
 | `urgence.html` | **96/100** | 0 | 1 |
-| `volets-saint-omer.html 2.html` | **96/100** | 0 | 1 |
 | `a-propos.html` | **100/100** | 0 | 0 |
 | `actualites.html` | **100/100** | 0 | 0 |
 | `aides.html` | **100/100** | 0 | 0 |
@@ -148,18 +148,24 @@
 - ⚠️ og:image manquant
 - ⚠️ Aucun rel=preconnect
 
-### notre-equipe 2.html — 88/100
+### notre-equipe.html — 88/100
 
 **Warnings :**
 - ⚠️ SEO title long (68 chars)
 - ⚠️ meta description longue (178 chars)
 - ⚠️ Aucun rel=preconnect
 
-### notre-equipe.html — 88/100
+### partenaire.html — 88/100
 
 **Warnings :**
-- ⚠️ SEO title long (68 chars)
-- ⚠️ meta description longue (178 chars)
+- ⚠️ SEO title court (23 chars, idéal 30–65)
+- ⚠️ og:image manquant
+- ⚠️ Aucun rel=preconnect
+
+### fournisseur.html — 92/100
+
+**Warnings :**
+- ⚠️ og:image manquant
 - ⚠️ Aucun rel=preconnect
 
 ### plombier-coudekerque-branche.html — 92/100
@@ -372,7 +378,7 @@
 ### pro.html — 96/100
 
 **Warnings :**
-- ⚠️ lazy: 10/27 <img>
+- ⚠️ lazy: 10/17 <img>
 
 ### reseau-help-confort.html — 96/100
 
@@ -393,11 +399,6 @@
 
 **Warnings :**
 - ⚠️ Aucun rel=preconnect
-
-### volets-saint-omer.html 2.html — 96/100
-
-**Warnings :**
-- ⚠️ SEO title long (78 chars)
 
 ## ✅ Pages parfaites (100/100)
 

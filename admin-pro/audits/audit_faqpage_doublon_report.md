@@ -1,8 +1,8 @@
-# Audit FAQPage doublon — 2026-06-01 08:38
+# Audit FAQPage doublon — 2026-06-02 07:27
 
 - **Pages scannées** : 116
-- **Pages avec 1 bloc FAQPage** : 26
-- **Pages sans FAQPage** : 90
+- **Pages avec 1 bloc FAQPage** : 25
+- **Pages sans FAQPage** : 91
 - **Pages avec > 1 bloc FAQPage (alertes)** : 0
 
 > Google recommande un seul bloc `FAQPage` par URL. Au-delà, le rich result peut être ignoré silencieusement.
@@ -35,5 +35,4 @@
 - `remplacement-chauffe-eau.html` (6 blocs JSON-LD au total)
 - `tarifs.html` (4 blocs JSON-LD au total)
 - `urgence.html` (3 blocs JSON-LD au total)
-- `volets-saint-omer.html 2.html` (4 blocs JSON-LD au total)
 - `zones-intervention.html` (5 blocs JSON-LD au total)

@@ -1,10 +1,10 @@
 {
-  "generated": "2026-06-01 08:38",
+  "generated": "2026-06-02 07:27",
   "canonical_e164": "+33366100134",
   "canonical_local": "0366100134",
-  "n_total": 140,
-  "n_flagged_pages": 1,
-  "n_findings": 1,
+  "n_total": 136,
+  "n_flagged_pages": 2,
+  "n_findings": 2,
   "results": [
     {
       "file": "a-propos.html",
@@ -97,17 +97,7 @@
       "findings": []
     },
     {
-      "file": "actualites/2026-05-19-maprimeadapt-2026-travaux-adaptation-pmr 2.html",
-      "n_findings": 0,
-      "findings": []
-    },
-    {
       "file": "actualites/2026-05-19-maprimeadapt-2026-travaux-adaptation-pmr.html",
-      "n_findings": 0,
-      "findings": []
-    },
-    {
-      "file": "actualites/2026-05-19-quel-chauffe-eau-choisir-en-2026 2.html",
       "n_findings": 0,
       "findings": []
     },
@@ -117,17 +107,7 @@
       "findings": []
     },
     {
-      "file": "actualites/2026-05-19-recherche-de-fuite-techniques-modernes-vs-casse-inutile 2.html",
-      "n_findings": 0,
-      "findings": []
-    },
-    {
       "file": "actualites/2026-05-19-recherche-de-fuite-techniques-modernes-vs-casse-inutile.html",
-      "n_findings": 0,
-      "findings": []
-    },
-    {
-      "file": "actualites/2026-05-19-tableau-electrique-aux-normes-nf-c-15-100 2.html",
       "n_findings": 0,
       "findings": []
     },
@@ -397,6 +377,11 @@
       "findings": []
     },
     {
+      "file": "fournisseur.html",
+      "n_findings": 0,
+      "findings": []
+    },
+    {
       "file": "garanties.html",
       "n_findings": 0,
       "findings": []
@@ -437,7 +422,7 @@
       "findings": [
         {
           "type": "fr-display",
-          "line": 1588,
+          "line": 1589,
           "raw": "06 12 34 56 78",
           "normalized": "0612345678",
           "expected": "0366100134",
@@ -467,16 +452,20 @@
     },
     {
       "file": "nos-prestations.html",
-      "n_findings": 0,
-      "findings": []
+      "n_findings": 1,
+      "findings": [
+        {
+          "type": "fr-display",
+          "line": 1696,
+          "raw": "06 12 34 56 78",
+          "normalized": "0612345678",
+          "expected": "0366100134",
+          "snippet": "one invalide (10 chiffres attendus, ex. 06 12 34 56 78)');  if (!/^[0-9]{5}$/.test(data.postal"
+        }
+      ]
     },
     {
       "file": "nos-villes.html",
-      "n_findings": 0,
-      "findings": []
-    },
-    {
-      "file": "notre-equipe 2.html",
       "n_findings": 0,
       "findings": []
     },
@@ -492,6 +481,11 @@
     },
     {
       "file": "panne-chaudiere.html",
+      "n_findings": 0,
+      "findings": []
+    },
+    {
+      "file": "partenaire.html",
       "n_findings": 0,
       "findings": []
     },
@@ -702,11 +696,6 @@
     },
     {
       "file": "volets-saint-omer.html",
-      "n_findings": 0,
-      "findings": []
-    },
-    {
-      "file": "volets-saint-omer.html 2.html",
       "n_findings": 0,
       "findings": []
     },

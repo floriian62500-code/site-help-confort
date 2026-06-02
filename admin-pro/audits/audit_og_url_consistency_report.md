@@ -1,11 +1,11 @@
 # Audit og:url vs canonical — Rapport
 
-_Généré le 2026-06-01 08:38_
+_Généré le 2026-06-02 07:27_
 
 ## Synthèse
 
-- Pages scannées : **140**
-- ✅ OK : **50**
+- Pages scannées : **136**
+- ✅ OK : **46**
 - ❌ Erreurs : **0** (cumul 0 findings)
 - ⚠️  Avertissements (pages) : **88**
 - ℹ️  Info : **2**
@@ -176,6 +176,10 @@ _Généré le 2026-06-01 08:38_
 ### `espace-client-dashboard.html`
 - ⚠️ OG-URL-MISSING : `og:url` et canonical absents
 
+### `fournisseur.html`
+- canonical = `https://www.depan59-62.fr/fournisseur.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
 ### `garanties.html`
 - canonical = `https://www.depan59-62.fr/garanties.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
@@ -203,10 +207,6 @@ _Généré le 2026-06-01 08:38_
 - canonical = `https://www.depan59-62.fr/nos-villes.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
-### `notre-equipe 2.html`
-- canonical = `https://www.depan59-62.fr/notre-equipe.html`
-- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
-
 ### `notre-equipe.html`
 - canonical = `https://www.depan59-62.fr/notre-equipe.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
@@ -217,6 +217,10 @@ _Généré le 2026-06-01 08:38_
 
 ### `panne-chaudiere.html`
 - canonical = `https://www.depan59-62.fr/panne-chaudiere.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `partenaire.html`
+- canonical = `https://www.depan59-62.fr/partenaire.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
 ### `plan-du-site.html`
@@ -360,10 +364,6 @@ _Généré le 2026-06-01 08:38_
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
 ### `volets-saint-omer.html`
-- canonical = `https://www.depan59-62.fr/volets-saint-omer.html`
-- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
-
-### `volets-saint-omer.html 2.html`
 - canonical = `https://www.depan59-62.fr/volets-saint-omer.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 

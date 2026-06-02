@@ -1,6 +1,6 @@
 # 🤖 Audit robots.txt + sitemap.xml — P10
 
-*Généré le 2026-06-01 08:38 — `admin-pro/audits/audit_robots.py`*
+*Généré le 2026-06-02 07:27 — `admin-pro/audits/audit_robots.py`*
 
 **Findings totaux** : 1 (0 critical, 0 high, 1 med, 0 low)
 **Vérifications OK** : 8
@@ -12,14 +12,14 @@
 - ✅ User-agent: * présent
 - ✅ 14 pages publiques principales autorisées
 - ✅ Sitemap référencé dans robots.txt : 4
-- ✅ sitemap.xml présent + bien formé (146 URLs)
+- ✅ sitemap.xml présent + bien formé (189 URLs)
 - ✅ /robots.txt → HTTP 200 en prod
 - ✅ /sitemap.xml → HTTP 200 en prod
 - ✅ sitemap.xml content-type OK (application/xml; charset=utf-8)
 
 ## 🚨 Findings
 
-- 🟡 **MED** : 39 page(s) racine absente(s) du sitemap
+- 🟡 **MED** : 37 page(s) racine absente(s) du sitemap
   - `blog-comment-detecter-fuite-eau-cachee.html`
   - `blog-cout-renovation-salle-de-bain.html`
   - `blog-debouchage-canalisation-furet-hydrocurage.html`

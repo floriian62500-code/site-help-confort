@@ -1,13 +1,13 @@
-# Audit typographie FR (espaces insécables) — 2026-06-01 08:38
+# Audit typographie FR (espaces insécables) — 2026-06-02 07:27
 
 Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une espace **insécable** (`&nbsp;`, U+00A0, U+202F). Seuil d'alerte : > **5** occurrences fautives par page.
 
 ## Synthèse
 
 - Pages auditées : **115**
-- Pages clean (≤ seuil) : **37**
-- Pages avec alerte : **78**
-- Occurrences fautives cumulées : **1164**
+- Pages clean (≤ seuil) : **38**
+- Pages avec alerte : **77**
+- Occurrences fautives cumulées : **1132**
 
 ## ⚠️ Pages au-delà du seuil
 
@@ -15,7 +15,6 @@ Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une
 |------|---------|--------------|
 | `faq.html` | **38** | `…ies, zones d'intervention : les réponses aux 15 ques…` · `…n technicien HELP Confort ? Notre tarif horaire est…` · `…TC) pour tous nos métiers : plomberie, chauffage, él…` |
 | `mentions-legales.html` | **31** | `…ur du site Raison sociale : SARL Dépan'Audo Nom comm…` · `…Dépan'Audo Nom commercial : HELP Confort Saint-Omer…` · `…t Saint-Omer Siège social : 242 route de Boulogne, 6…` |
-| `volets-saint-omer.html 2.html` | **29** | `…motorisation, pose | HELP! Confort Aller au contenu…` · `…erche de fuite, sanitaire : nos techniciens intervie…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` |
 | `a-propos.html` | **26** | `…par deux agences locales : Dépan'Audo à Saint-Marti…` · `…vec une conviction simple : les habitants de Saint-O…` · `…manque souvent au métier : l'organisation. Un stand…` |
 | `blog-debouchage-canalisation-furet-hydrocurage.html` | **26** | `…Canalisation bouchée : furet, hydrocurage ou pr…` · `…t, hydrocurage ou produit ? | Blog HELP Confort Sain…` · `…erie Canalisation bouchée : furet, hydrocurage ou pr…` |
 | `blog-cout-renovation-salle-de-bain.html` | **24** | `…savez pas combien prévoir ? Voici la décomposition d…` · `…hissement (5 000-8 000 €) : peinture, joints, robine…` · `…omplète (10 000-16 000 €) : nouveau carrelage + sani…` |
@@ -96,6 +95,6 @@ Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une
 
 - `faq.html` : 38 occurrence(s)
 - `mentions-legales.html` : 31 occurrence(s)
-- `volets-saint-omer.html 2.html` : 29 occurrence(s)
 - `a-propos.html` : 26 occurrence(s)
 - `blog-debouchage-canalisation-furet-hydrocurage.html` : 26 occurrence(s)
+- `blog-cout-renovation-salle-de-bain.html` : 24 occurrence(s)

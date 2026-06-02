@@ -1,13 +1,13 @@
 {
   "audit": "typo_fr",
-  "generated_at": "2026-06-01T08:38:24",
+  "generated_at": "2026-06-02T07:27:24",
   "threshold": 5,
   "stats": {
     "pages_audited": 115,
-    "pages_alerted": 78,
-    "total_fautifs": 1164,
+    "pages_alerted": 77,
+    "total_fautifs": 1132,
     "code_distribution": {
-      "TYPO-FR": 78
+      "TYPO-FR": 77
     }
   },
   "results": [
@@ -1091,6 +1091,11 @@
       ]
     },
     {
+      "file": "fournisseur.html",
+      "fautifs": 0,
+      "findings": []
+    },
+    {
       "file": "garanties.html",
       "fautifs": 11,
       "findings": [
@@ -1335,11 +1340,6 @@
       "findings": []
     },
     {
-      "file": "notre-equipe 2.html",
-      "fautifs": 3,
-      "findings": []
-    },
-    {
       "file": "notre-equipe.html",
       "fautifs": 3,
       "findings": []
@@ -1393,6 +1393,11 @@
           ]
         }
       ]
+    },
+    {
+      "file": "partenaire.html",
+      "fautifs": 0,
+      "findings": []
     },
     {
       "file": "partenaires.html",
@@ -1985,31 +1990,6 @@
             "…fidentialité 👋 Urgence ? H! Assistant HELP Confort E…",
             "…Rappel sous 1h 👋 Bonjour ! Comment pouvons-nous vou…",
             "…t pouvons-nous vous aider ? Décrivez votre besoin en…"
-          ]
-        }
-      ]
-    },
-    {
-      "file": "volets-saint-omer.html 2.html",
-      "fautifs": 29,
-      "findings": [
-        {
-          "code": "TYPO-FR",
-          "severity": "warning",
-          "detail": "29 occurrences de ponctuation haute (?!:;») sans espace insécable.",
-          "samples": [
-            "…motorisation, pose | HELP! Confort Aller au contenu…",
-            "…erche de fuite, sanitaire : nos techniciens intervie…",
-            "…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…",
-            "…ne fuite ? Un dégorgement ? Je vous oriente vers le…",
-            "…oqué Manuel ou électrique : déblocage, remplacement…",
-            "…nes, vénitiens, ou screen : pose, réparation, motori…",
-            "…devis Prestations simples : réservez en ligne avec a…",
-            "…40%. Travaux spécifiques : devis gratuit après visi…",
-            "…ntion Catalogue plomberie : forfaits prix fixe, rése…",
-            "…vation, projet sur mesure : on vous rappelle sous 1h…",
-            "…arent, réparation propre. » M Mathieu D. Saint-Omer…",
-            "…port remis à l'assurance. » S Sophie L. Longuenesse…"
           ]
         }
       ]

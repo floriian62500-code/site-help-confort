@@ -1,15 +1,17 @@
 # 🤖 Audit couverture chatbot widget — sonde #24
 
-_Généré le 2026-06-01 08:38_
+_Généré le 2026-06-02 07:27_
 
 - Pages publiques scannées : **115**
-- Pages avec widget chargé : **113**
-- Pages **sans widget** (alertes) : **2**
+- Pages avec widget chargé : **111**
+- Pages **sans widget** (alertes) : **4**
 
 ## ❌ Pages sans `hc-widgets.js`
 
 - `espace-client-dashboard.html` — aucun `<script src=...hc-widgets.js>` détecté
+- `fournisseur.html` — aucun `<script src=...hc-widgets.js>` détecté
 - `googlef09a1887914c5a23.html` — aucun `<script src=...hc-widgets.js>` détecté
+- `partenaire.html` — aucun `<script src=...hc-widgets.js>` détecté
 
 → Ajouter `<script src="assets/hc-widgets.js" defer></script>` avant `</body>`.
 
@@ -82,7 +84,6 @@ _Généré le 2026-06-01 08:38_
 - `nos-metiers.html` — `<script defer src="assets/hc-chat`
 - `nos-prestations.html` — `<script src="assets/hc-widgets.js`
 - `nos-villes.html` — `<script defer src="assets/hc-chat`
-- `notre-equipe 2.html` — `<script defer src="assets/hc-chat`
 - `notre-equipe.html` — `<script defer src="assets/hc-chat`
 - `ouverture-porte-claquee.html` — `<script defer src="assets/hc-chat`
 - `panne-chaudiere.html` — `<script defer src="assets/hc-chat`
@@ -128,5 +129,4 @@ _Généré le 2026-06-01 08:38_
 - `vitrier-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
 - `volets-dunkerque.html` — `<script defer src="assets/hc-widgets.js`
 - `volets-saint-omer.html` — `<script defer src="assets/hc-widgets.js`
-- `volets-saint-omer.html 2.html` — `<script defer src="assets/hc-widgets.js`
 - `zones-intervention.html` — `<script defer src="assets/hc-widgets.js`

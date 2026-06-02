@@ -1,6 +1,6 @@
 # Audit Tarifs — Sonde IA #28
 
-_Généré le 2026-06-01 08:37 — `admin-pro/audits/audit_tarifs.py`_
+_Généré le 2026-06-02 07:26 — `admin-pro/audits/audit_tarifs.py`_
 
 - Pages publiques scannées : **117**
 - Montants validés (TARIFS_REFERENCE.md) : **53**
@@ -111,19 +111,19 @@ Tout montant `\d+\s*€` visible doit :
 | `blog-remplacement-chaudiere-gaz-aides-2026.html` | 164 | **3500 €** | yenne</li> ⏎     <li>PAC géothermique : 5 000 €</li> ⏎     <li>Chaudière granulés : 3 500 €</li> ⏎     <li>Chaudière gaz THPE : 1 200 € (uni |
 | `blog-remplacement-chaudiere-gaz-aides-2026.html` | 165 | **1200 €** | 0 €</li> ⏎     <li>Chaudière granulés : 3 500 €</li> ⏎     <li>Chaudière gaz THPE : 1 200 € (uniquement remplacement chaudière fioul ou >25  |
 | `blog-remplacement-chaudiere-gaz-aides-2026.html` | 170 | **277 €** | ction"> ⏎   <h2>Chèque énergie 2026</h2> ⏎   <p>Versement automatique entre 48 € et 277 € selon votre RFR. À conserver pour payer une factur |
-| `chauffagiste-boulogne-sur-mer.html` | 1280 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
-| `chauffagiste-boulogne-sur-mer.html` | 1298 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
-| `chauffagiste-boulogne-sur-mer.html` | 1315 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
-| `chauffagiste-calais.html` | 1107 | **800 €** | uit ou un changement de circulateur peut prolonger sa vie 3-5 ans pour moins de 800€.</p></div></div> ⏎  ⏎ <section class="m-pourquoi-top" s |
-| `chauffagiste-calais.html` | 1280 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
-| `chauffagiste-calais.html` | 1298 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
-| `chauffagiste-calais.html` | 1315 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
-| `chauffagiste-dunkerque.html` | 1282 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
-| `chauffagiste-dunkerque.html` | 1300 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
-| `chauffagiste-dunkerque.html` | 1317 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
-| `chauffagiste-saint-omer.html` | 1288 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
-| `chauffagiste-saint-omer.html` | 1306 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
-| `chauffagiste-saint-omer.html` | 1323 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
+| `chauffagiste-boulogne-sur-mer.html` | 1281 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
+| `chauffagiste-boulogne-sur-mer.html` | 1299 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
+| `chauffagiste-boulogne-sur-mer.html` | 1316 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
+| `chauffagiste-calais.html` | 1108 | **800 €** | uit ou un changement de circulateur peut prolonger sa vie 3-5 ans pour moins de 800€.</p></div></div> ⏎  ⏎ <section class="m-pourquoi-top" s |
+| `chauffagiste-calais.html` | 1281 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
+| `chauffagiste-calais.html` | 1299 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
+| `chauffagiste-calais.html` | 1316 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
+| `chauffagiste-dunkerque.html` | 1283 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
+| `chauffagiste-dunkerque.html` | 1301 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
+| `chauffagiste-dunkerque.html` | 1318 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
+| `chauffagiste-saint-omer.html` | 1289 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
+| `chauffagiste-saint-omer.html` | 1307 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
+| `chauffagiste-saint-omer.html` | 1324 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
 | `debouchage-canalisation.html` | 290 | **180 €** | papier accumulé, cheveux). Intervention courte (30 min à 1h) — tarif moyen 90 à 180€ TTC sur Saint-Omer / Dunkerque.</p> ⏎  ⏎ <h3>2. Hydrocu |
 | `debouchage-canalisation.html` | 293 | **400 €** | utile aussi en préventif après plusieurs bouchons rapprochés. Tarif moyen 180 à 400€ TTC selon l'accessibilité.</p> ⏎  ⏎ <h3>3. Inspection c |
 | `debouchage-canalisation.html` | 304 | **180 €** | c55e"> ⏎     <h3 style="color:#22c55e">Débouchage simple</h3> ⏎     <p><strong>90 à 180€ TTC</strong><br>Furet WC, évier, lavabo. Interventi |
@@ -151,7 +151,7 @@ Tout montant `\d+\s*€` visible doit :
 | `guide-mise-aux-normes-electriques.html` | 444 | **9000 €** | li> ⏎  <li><strong>Rénovation électrique complète</strong> d'un T3&nbsp;: 4 000 à 9 000 €</li> ⏎  <li><strong>Maison entière (100 m²)</stron |
 | `guide-mise-aux-normes-electriques.html` | 445 | **15000 €** | ;: 4 000 à 9 000 €</li> ⏎  <li><strong>Maison entière (100 m²)</strong> : 8 000 à 15 000 €</li> ⏎ </ul> ⏎ <p>Les <strong>aides MaPrimeRénov' |
 | `guide-mise-aux-normes-electriques.html` | 472 | **1080 €** | -right:auto">Diagnostic gratuit · Tableau standard à <strong style="color:#fff">1 080 € TTC</strong> · Aides CEE & MaPrimeRénov' éligibles.  |
-| `menuisier-dunkerque.html` | 1079 | **100 €** | ement de fenêtres / portes d'entrée donne droit à des aides cumulables (jusqu'à 100€/m² selon revenus). Nous vous accompagnons sur le dossie |
+| `menuisier-dunkerque.html` | 1080 | **100 €** | ement de fenêtres / portes d'entrée donne droit à des aides cumulables (jusqu'à 100€/m² selon revenus). Nous vous accompagnons sur le dossie |
 | `nos-prestations.html` | 402 | **144 €** | ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="npce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="npce-baseline">L' |
 | `nos-prestations.html` | 420 | **192 €** | ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="npce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="npce-baseline">L' |
 | `nos-prestations.html` | 437 | **324 €** | ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="npce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="npce-baseline">To |
@@ -166,7 +166,7 @@ Tout montant `\d+\s*€` visible doit :
 | `panne-chaudiere.html` | 225 | **650 €** | sonde, vanne)</td><td style="padding:14px;font-weight:700;color:#B91C1C">250 - 650€</td></tr> ⏎     <tr><td style="padding:14px">Désembouage |
 | `panne-chaudiere.html` | 226 | **750 €** | ircuit complet</td><td style="padding:14px;font-weight:700;color:#B91C1C">450 - 750€</td></tr> ⏎     <tr><td style="padding:14px">Remplaceme |
 | `panne-chaudiere.html` | 227 | **6500 €** | condensation</td><td style="padding:14px;font-weight:700;color:#B91C1C">3 800 - 6 500€</td></tr> ⏎   </tbody> ⏎ </table> ⏎  ⏎ <p style="font |
-| `pmr-dunkerque.html` | 1058 | **8000 €** | , siège mural, barres de maintien, robinetterie thermostatique. Compter 3 500 à 8 000€ TTC selon ampleur, souvent largement aidé.</p><p styl |
+| `pmr-dunkerque.html` | 1059 | **8000 €** | , siège mural, barres de maintien, robinetterie thermostatique. Compter 3 500 à 8 000€ TTC selon ampleur, souvent largement aidé.</p><p styl |
 | `remplacement-chauffe-eau.html` | 430 | **1100 €** | </thead> ⏎   <tbody> ⏎     <tr><td><strong>Électrique 200L</strong></td><td>750 - 1 100€</td><td>~2 500 kWh</td><td>—</td></tr> ⏎     <tr><t |
 | `remplacement-chauffe-eau.html` | 431 | **1300 €** | td><td>—</td></tr> ⏎     <tr><td><strong>Électrique blindé</strong></td><td>900 - 1 300€</td><td>~2 400 kWh</td><td>—</td></tr> ⏎     <tr><t |
 | `remplacement-chauffe-eau.html` | 432 | **4500 €** | d>—</td></tr> ⏎     <tr><td><strong>Thermodynamique 200L</strong></td><td>2 800 - 4 500€</td><td>~700 kWh</td><td>MaPrimeRénov + CEE</td></t |
@@ -205,7 +205,7 @@ Tout montant `\d+\s*€` visible doit :
 | `tarifs.html` | 426 | **39 €** | style="margin:0">Beaucoup de sociétés affichent un tarif d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention. Vérifie |
 | `tarifs.html` | 426 | **1500 €** | de sociétés affichent un tarif d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention. Vérifiez : SIRET visible, adresse |
 | `tarifs.html` | 443 | **1500 €** | <h3>Acceptez-vous le paiement échelonné ?</h3> ⏎   <p>Oui, pour les chantiers > 1 500€ TTC : 3-4 fois sans frais. Pour rénovations lourdes : |
-| `travaux-dunkerque.html` | 1070 | **12000 €** | (sol antidérapant, paroi vitrée, robinetterie thermostatique). Compter 3 500 à 12 000€ TTC selon ampleur.</p><p style="margin:0 0 10px"><str |
+| `travaux-dunkerque.html` | 1071 | **12000 €** | (sol antidérapant, paroi vitrée, robinetterie thermostatique). Compter 3 500 à 12 000€ TTC selon ampleur.</p><p style="margin:0 0 10px"><str |
 | `urgence.html` | 381 | **29 €** | 2> ⏎   <p>Sur Internet, beaucoup de sociétés affichent un tarif d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention e |
 | `urgence.html` | 381 | **39 €** | <p>Sur Internet, beaucoup de sociétés affichent un tarif d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention en préte |
 | `urgence.html` | 381 | **1500 €** | de sociétés affichent un tarif d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention en prétextant la nuit, le week-end |
@@ -268,6 +268,7 @@ Tout montant `\d+\s*€` visible doit :
 | `espace-client-dashboard.html` | 0 | 0 | 0 | 0 | **0** |
 | `espace-client.html` | 0 | 0 | 0 | 0 | **0** |
 | `faq.html` | 24 | 0 | 0 | 24 | **0** |
+| `fournisseur.html` | 0 | 0 | 0 | 0 | **0** |
 | `garanties.html` | 0 | 0 | 0 | 0 | **0** |
 | `googlef09a1887914c5a23.html` | 0 | 0 | 0 | 0 | **0** |
 | `guide-adaptation-pmr.html` | 0 | 0 | 0 | 0 | **9** |
@@ -282,10 +283,10 @@ Tout montant `\d+\s*€` visible doit :
 | `nos-metiers.html` | 0 | 0 | 0 | 0 | **0** |
 | `nos-prestations.html` | 9 | 0 | 0 | 0 | **3** |
 | `nos-villes.html` | 0 | 0 | 0 | 0 | **0** |
-| `notre-equipe 2.html` | 0 | 0 | 0 | 0 | **0** |
 | `notre-equipe.html` | 0 | 0 | 0 | 0 | **0** |
 | `ouverture-porte-claquee.html` | 2 | 0 | 0 | 6 | **7** |
 | `panne-chaudiere.html` | 0 | 0 | 0 | 0 | **4** |
+| `partenaire.html` | 0 | 0 | 0 | 0 | **0** |
 | `partenaires.html` | 0 | 0 | 0 | 0 | **0** |
 | `plan-du-site.html` | 0 | 0 | 0 | 0 | **0** |
 | `plombier-boulogne-sur-mer.html` | 0 | 0 | 0 | 0 | **0** |
@@ -329,7 +330,6 @@ Tout montant `\d+\s*€` visible doit :
 | `vitrier-saint-omer.html` | 0 | 0 | 0 | 0 | **0** |
 | `volets-dunkerque.html` | 0 | 0 | 0 | 0 | **0** |
 | `volets-saint-omer.html` | 0 | 0 | 0 | 0 | **0** |
-| `volets-saint-omer.html 2.html` | 6 | 0 | 0 | 3 | **0** |
 | `zones-intervention.html` | 0 | 0 | 0 | 0 | **0** |
 
 ## Montants valides reconnus depuis TARIFS_REFERENCE.md

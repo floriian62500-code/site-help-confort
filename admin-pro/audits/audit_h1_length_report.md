@@ -1,17 +1,17 @@
 # Audit H1 length — Rapport
 
-_Généré le 2026-06-01 08:38_
+_Généré le 2026-06-02 07:27_
 
 ## Synthèse
 
-- Pages scannées : **139**
-- ✅ OK (20-70 chars) : **94**
+- Pages scannées : **135**
+- ✅ OK (20-70 chars) : **92**
 - ⚠️  Warnings (h1 multiples, hors longueur) : **0**
-- ❌ Erreurs (< 20 ou > 70) : **44**
-- ℹ️  Sans h1 ou parse error : **1**
-- Findings totaux : **45**
-  - Erreurs : 44
-  - Avertissements : 1
+- ❌ Erreurs (< 20 ou > 70) : **40**
+- ℹ️  Sans h1 ou parse error : **3**
+- Findings totaux : **43**
+  - Erreurs : 40
+  - Avertissements : 3
 
 ## Bornes appliquées
 
@@ -44,25 +44,13 @@ _Généré le 2026-06-01 08:38_
 > Votre soupape de sécurité ou votre manomètre est défectueux, usé ou ne fonctionne plus correctement
 - ❌ H1-TOO-LONG : 99 chars > 70
 
-### `actualites/2026-05-19-maprimeadapt-2026-travaux-adaptation-pmr 2.html`  (77 chars, n_h1=1)
-> MaPrimeAdapt' 2026 : les travaux d'adaptation PMR pris en charge jusqu'à 70 %
-- ❌ H1-TOO-LONG : 77 chars > 70
-
 ### `actualites/2026-05-19-maprimeadapt-2026-travaux-adaptation-pmr.html`  (77 chars, n_h1=1)
 > MaPrimeAdapt' 2026 : les travaux d'adaptation PMR pris en charge jusqu'à 70 %
 - ❌ H1-TOO-LONG : 77 chars > 70
 
-### `actualites/2026-05-19-quel-chauffe-eau-choisir-en-2026 2.html`  (78 chars, n_h1=1)
-> Quel chauffe-eau choisir en 2026 ? Comparatif électrique, thermodynamique, gaz
-- ❌ H1-TOO-LONG : 78 chars > 70
-
 ### `actualites/2026-05-19-quel-chauffe-eau-choisir-en-2026.html`  (78 chars, n_h1=1)
 > Quel chauffe-eau choisir en 2026 ? Comparatif électrique, thermodynamique, gaz
 - ❌ H1-TOO-LONG : 78 chars > 70
-
-### `actualites/2026-05-19-tableau-electrique-aux-normes-nf-c-15-100 2.html`  (71 chars, n_h1=1)
-> Comment savoir si votre tableau électrique est aux normes NF C 15-100 ?
-- ❌ H1-TOO-LONG : 71 chars > 70
 
 ### `actualites/2026-05-19-tableau-electrique-aux-normes-nf-c-15-100.html`  (71 chars, n_h1=1)
 > Comment savoir si votre tableau électrique est aux normes NF C 15-100 ?
@@ -160,10 +148,6 @@ _Généré le 2026-06-01 08:38_
 > Nos 8 métiers
 - ❌ H1-TOO-SHORT : 13 chars < 20
 
-### `notre-equipe 2.html`  (12 chars, n_h1=1)
-> Notre équipe
-- ❌ H1-TOO-SHORT : 12 chars < 20
-
 ### `notre-equipe.html`  (12 chars, n_h1=1)
 > Notre équipe
 - ❌ H1-TOO-SHORT : 12 chars < 20
@@ -196,5 +180,11 @@ _Généré le 2026-06-01 08:38_
 > Nos équipes interviennent sur tout le secteur Saint-Omer · Dunkerque · Calais · Boulogne
 - ❌ H1-TOO-LONG : 88 chars > 70
 
+### `fournisseur.html`  (0 chars, n_h1=0)
+- ⚠️ H1-MISSING : aucun <h1> trouvé
+
 ### `googlef09a1887914c5a23.html`  (0 chars, n_h1=0)
+- ⚠️ H1-MISSING : aucun <h1> trouvé
+
+### `partenaire.html`  (0 chars, n_h1=0)
 - ⚠️ H1-MISSING : aucun <h1> trouvé
