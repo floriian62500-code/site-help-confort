@@ -196,20 +196,32 @@
     map.on('focus', function () { map.scrollWheelZoom.enable(); });
     map.on('blur', function () { map.scrollWheelZoom.disable(); });
 
-    // ─── POLYGONE de la zone d'intervention complète ───
+    // ─── 2 POLYGONES distincts par agence (couleur identité = repère pro) ───
+    // Zone Saint-Omer (Audomarois + Boulonnais + Calaisis sud)
+    var ZONE_SO = [
+      [50.860, 1.480], [50.700, 1.500], [50.580, 1.560], [50.520, 1.940],
+      [50.560, 2.280], [50.620, 2.520], [50.880, 2.380], [50.930, 1.890]
+    ];
+    // Zone Dunkerque (Dunkerquois + Calaisis nord)
+    var ZONE_DK = [
+      [51.090, 1.520], [51.090, 2.580], [50.960, 2.690],
+      [50.880, 2.380], [50.930, 1.890], [50.860, 1.480]
+    ];
+    L.polygon(ZONE_SO, {
+      color: '#FF6B1A', weight: 2.5, opacity: 0.85,
+      fillColor: '#FF6B1A', fillOpacity: 0.18, lineJoin: 'round'
+    }).addTo(map).bindTooltip('Zone agence Saint-Omer · Dépan\'Audo', { sticky: true });
+
+    L.polygon(ZONE_DK, {
+      color: '#0DA0CF', weight: 2.5, opacity: 0.85,
+      fillColor: '#0DA0CF', fillOpacity: 0.18, lineJoin: 'round'
+    }).addTo(map).bindTooltip('Zone agence Dunkerque · Dépan\'DK', { sticky: true });
+
     var zonePoly = L.polygon(POLYGON_ZONE, {
-      color: '#0DA0CF',
-      weight: 2.5,
-      opacity: 0.7,
-      fillColor: '#0DA0CF',
-      fillOpacity: 0.08,
-      dashArray: '6, 6',
-      lineJoin: 'round'
+      color: '#0A1428', weight: 2, opacity: 0.45,
+      fillColor: 'transparent', fillOpacity: 0,
+      dashArray: '8, 6', lineJoin: 'round'
     }).addTo(map);
-    zonePoly.bindTooltip('Zone d\'intervention HELP Confort', {
-      permanent: false, direction: 'center', className: 'hc-map-tooltip-zone',
-      offset: [0, 0]
-    });
 
     // ─── Markers 4 villes ───
     VILLES.forEach(function (v) {
