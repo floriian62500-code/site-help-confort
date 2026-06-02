@@ -226,8 +226,9 @@
     // ─── Markers 4 villes ───
     VILLES.forEach(function (v) {
       var isAgence = v.role === 'agence';
+      // Agences = pin gros avec étiquette ville visible, zones = petit point coloré
       var iconHtml = isAgence
-        ? '<div class="hc-marker-pin agence" style="background:' + v.color + '">' + v.name.substring(0, 2).toUpperCase() + '<span>★ Agence</span></div>'
+        ? '<div class="hc-marker-pin agence" style="background:' + v.color + '"><span style="font-size:.66rem;font-weight:800;line-height:1">★</span><span style="font-size:.7rem;font-weight:800;letter-spacing:.02em;margin-top:2px">' + v.name.split('-')[0].toUpperCase() + '</span></div>'
         : '<div class="hc-marker-pin zone" style="background:' + v.color + '">' + v.name.substring(0, 1) + '</div>';
       var icon = L.divIcon({
         className: 'hc-marker-main',
