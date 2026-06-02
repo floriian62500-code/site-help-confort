@@ -39,7 +39,13 @@
       '.hcp-logo-fallback{display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:10px;color:#fff;font-family:\'Playfair Display\',serif;font-size:1.4rem;font-weight:700;box-shadow:0 3px 8px rgba(10,20,40,.15)}' +
       '.hcp-name{font-weight:800;color:#0A1428;font-size:.94rem;line-height:1.2}' +
       '.hcp-scope{font-size:.7rem;font-weight:700;color:#0DA0CF;text-transform:uppercase;letter-spacing:.06em;margin-top:auto}' +
-      '.hcp-card.local .hcp-scope{color:#FF6B1A}';
+      '.hcp-card.local .hcp-scope{color:#FF6B1A}' +
+      /* 2026-06-02 — Mode marquee défilant (data-hc-partners="marquee") */
+      '.hcp-marquee{position:relative;overflow:hidden;margin-top:24px;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}' +
+      '.hcp-marquee-track{display:flex;gap:18px;width:max-content;animation:hcpScroll 38s linear infinite}' +
+      '.hcp-marquee:hover .hcp-marquee-track{animation-play-state:paused}' +
+      '@keyframes hcpScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}' +
+      '.hcp-marquee .hcp-card{flex:0 0 220px;min-height:140px}';
     document.head.appendChild(st);
   }
 
@@ -56,8 +62,9 @@
   function renderCard(p) {
     var pal = paletteFor(p.name);
     var initial = (p.name || '?').trim().charAt(0).toUpperCase();
+    // 2026-06-02 — Détection logo vide (Brandfetch retourne 1x1 si pas de logo) : bascule fallback si naturalWidth<10
     var logoHtml = p.logo_url
-      ? '<img src="' + esc(p.logo_url) + '" alt="' + esc(p.name) + '" loading="lazy" onerror="this.style.display=\'none\';var n=this.nextElementSibling;if(n)n.style.display=\'flex\'"><span class="hcp-logo-fallback" style="display:none;background:linear-gradient(135deg,' + pal[0] + ' 0%,' + pal[1] + ' 100%)">' + esc(initial) + '</span>'
+      ? '<img src="' + esc(p.logo_url) + '" alt="' + esc(p.name) + '" loading="lazy" onerror="this.style.display=\'none\';var n=this.nextElementSibling;if(n)n.style.display=\'flex\'" onload="if(this.naturalWidth<10){this.style.display=\'none\';var n=this.nextElementSibling;if(n)n.style.display=\'flex\'}"><span class="hcp-logo-fallback" style="display:none;background:linear-gradient(135deg,' + pal[0] + ' 0%,' + pal[1] + ' 100%)">' + esc(initial) + '</span>'
       : '<span class="hcp-logo-fallback" style="background:linear-gradient(135deg,' + pal[0] + ' 0%,' + pal[1] + ' 100%)">' + esc(initial) + '</span>';
     // 2026-06-01 — pointe vers fiche partenaire HC interne au lieu du site externe
     var href = 'partenaire.html?slug=' + encodeURIComponent(p.slug || (p.name || '').toLowerCase().replace(/[^a-z0-9]+/g,'-'));
@@ -73,8 +80,13 @@
   async function render(root) {
     try {
       injectStyle();
+      var mode = root.getAttribute('data-hc-partners') || '';
       var partners = await fetchPartners();
       if (!partners.length) { root.innerHTML = ''; return; }
+      // Mode marquee : duplique la liste pour boucle infinie fluide
+      var inner = mode === 'marquee'
+        ? '<div class="hcp-marquee"><div class="hcp-marquee-track">' + partners.map(renderCard).join('') + partners.map(renderCard).join('') + '</div></div>'
+        : '<div class="hcp-grid">' + partners.map(renderCard).join('') + '</div>';
       root.innerHTML =
         '<section class="hc-partners-section" id="partners">' +
           '<div class="container">' +
@@ -83,7 +95,7 @@
               '<h2 class="hcp-title">Ils nous confient leurs <em>interventions habitat</em></h2>' +
               '<p class="hcp-sub">Compagnies d\'assurance, syndics, bailleurs, plateformes nationales — un réseau structuré qui nous mandate au quotidien sur le bassin Saint-Omer / Dunkerque.</p>' +
             '</div>' +
-            '<div class="hcp-grid">' + partners.map(renderCard).join('') + '</div>' +
+            inner +
           '</div>' +
         '</section>';
     } catch (e) { console.error('[hc-partners]', e); root.innerHTML = ''; }
