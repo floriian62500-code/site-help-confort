@@ -101,16 +101,13 @@
     // 2026-06-01 — pointe vers fiche fournisseur HC interne (descriptif + catalogue + lien officiel)
     var hrefMain = 'fournisseur.html?slug=' + encodeURIComponent(s.slug || (s.name || '').toLowerCase().replace(/[^a-z0-9]+/g,'-'));
     var targetAttr = ''; // navigation interne, même onglet
-    var catalogueHtml = s.catalogue_url
-      ? '<a class="hcf-catalogue" href="' + esc(s.catalogue_url) + '" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="Voir le catalogue ' + esc(s.name) + '">Catalogue ' + (s.catalogue_type === 'pdf' ? 'PDF' : '') + '</a>'
-      : '';
+    // 2026-06-01 — Catalogue retiré du marquee (Florian : pas sa place ici, dispo sur fiche fournisseur)
     return '<div class="hcf-card-wrap">' +
       '<a class="hcf-card" href="' + hrefMain + '"' + targetAttr + ' aria-label="' + esc(s.name) + (s.website ? ' — site officiel' : '') + '">' +
         (s.is_preferred ? '<span class="hcf-badge" title="Marque préférée HC">★</span>' : '') +
         '<span class="hcf-logo">' + logoHtml + '</span>' +
         '<span class="hcf-name">' + esc(s.name) + '</span>' +
       '</a>' +
-      catalogueHtml +
       '</div>';
   }
 
