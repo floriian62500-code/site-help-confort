@@ -170,9 +170,9 @@ function render(s) {
             <span class="frn-btn-text"><strong>Site officiel</strong><small>${esc(s.website.replace(/^https?:\/\//,'').slice(0,40))}</small></span>
           </a>` : ''}
           ${s.catalogue_url ? `
-          <a class="frn-btn" href="${esc(s.catalogue_url)}" target="_blank" rel="noopener noreferrer">
-            <span class="frn-btn-ic">📚</span>
-            <span class="frn-btn-text"><strong>Catalogue ${s.catalogue_type === 'pdf' ? 'PDF' : 'en ligne'}</strong><small>Voir la gamme complète</small></span>
+          <a class="frn-btn" href="${esc(s.catalogue_url)}" target="_blank" rel="noopener noreferrer"${s.catalogue_type === 'pdf' ? ' download' : ''}>
+            <span class="frn-btn-ic">${s.catalogue_type === 'pdf' ? '📄' : '📚'}</span>
+            <span class="frn-btn-text"><strong>${s.catalogue_type === 'pdf' ? 'Catalogue PDF' : 'Catalogue en ligne'}</strong><small>${s.catalogue_type === 'pdf' ? 'Télécharger le PDF' : 'Voir la gamme complète'}</small></span>
           </a>` : ''}
           <a class="frn-btn cta" href="contact.html?objet=${encodeURIComponent('Devis ' + s.name)}#form">
             <span class="frn-btn-ic">💬</span>
