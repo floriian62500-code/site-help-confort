@@ -19,6 +19,9 @@ echo ""
 echo "→ .DS_Store:"
 find . -name ".DS_Store" -not -path "*/.git/*" 2>/dev/null | head -20
 echo ""
+echo "→ Mascottes PNG/PSD non servies (mascotte.png/mascotte-opt.png/mascotte1.png/mascotte-with-bg.png) :"
+ls -lh images/mascotte.png images/mascotte-opt.png images/mascotte1.png images/mascotte-with-bg.png images/_to_delete_*.png 2>/dev/null
+echo ""
 
 read -p "❓ Confirmer la suppression de tous ces fichiers ? (o/N) " confirm
 if [[ ! "$confirm" =~ ^[oOyY]$ ]]; then
