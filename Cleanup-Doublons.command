@@ -35,6 +35,8 @@ echo "🗑  Suppression en cours..."
 find . -name "* 2.*" -not -path "*/node_modules/*" -not -path "*/.git/*" -type f -delete 2>/dev/null
 find . -maxdepth 3 -type f \( -name "*.bak" -o -name "*.original" -o -name "*-OLD.*" -o -name "*-bak.*" \) -not -path "*/node_modules/*" -not -path "*/.git/*" -delete 2>/dev/null
 find . -name ".DS_Store" -not -path "*/.git/*" -delete 2>/dev/null
+# Mascottes PNG géantes non servies (le site utilise mascotte.webp)
+rm -f images/mascotte.png images/mascotte-opt.png images/mascotte1.png images/mascotte-with-bg.png images/_to_delete_*.png 2>/dev/null
 echo "✅ Nettoyage terminé"
 echo ""
 
