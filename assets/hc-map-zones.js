@@ -196,19 +196,18 @@
     map.on('focus', function () { map.scrollWheelZoom.enable(); });
     map.on('blur', function () { map.scrollWheelZoom.disable(); });
 
-    // ─── 2 CERCLES propres : rayon intervention par agence (plus visuel que polygones) ───
-    // Rayon ~30 km autour de chaque agence
-    L.circle([50.7508, 2.2522], {
-      radius: 30000, // 30 km
-      color: '#FF6B1A', weight: 2, opacity: 0.9,
-      fillColor: '#FF6B1A', fillOpacity: 0.15
-    }).addTo(map).bindTooltip('Rayon agence Saint-Omer · Dépan\'Audo', { sticky: true });
+    // ─── 2 CERCLES colorés visibles : rayon intervention par agence ───
+    var circleSO = L.circle([50.7508, 2.2522], {
+      radius: 30000,
+      color: '#FF6B1A', weight: 3, opacity: 1,
+      fillColor: '#FF6B1A', fillOpacity: 0.25
+    }).addTo(map).bindTooltip('Zone agence Saint-Omer · Dépan\'Audo', { sticky: true });
 
-    L.circle([51.0344, 2.3768], {
-      radius: 25000, // 25 km
-      color: '#0DA0CF', weight: 2, opacity: 0.9,
-      fillColor: '#0DA0CF', fillOpacity: 0.15
-    }).addTo(map).bindTooltip('Rayon agence Dunkerque · Dépan\'DK', { sticky: true });
+    var circleDK = L.circle([51.0344, 2.3768], {
+      radius: 25000,
+      color: '#0DA0CF', weight: 3, opacity: 1,
+      fillColor: '#0DA0CF', fillOpacity: 0.25
+    }).addTo(map).bindTooltip('Zone agence Dunkerque · Dépan\'DK', { sticky: true });
 
     // ─── Markers 4 villes ───
     VILLES.forEach(function (v) {
@@ -233,8 +232,9 @@
       );
     });
 
-    // Fit bounds sur le polygone (montre toute la zone)
-    map.fitBounds(zonePoly.getBounds(), { padding: [30, 30] });
+    // Fit bounds sur les cercles agences (zoom adapté pour voir les 2 zones)
+    var group = L.featureGroup([circleSO, circleDK]);
+    map.fitBounds(group.getBounds(), { padding: [40, 40] });
   }
 
   function inject() {
