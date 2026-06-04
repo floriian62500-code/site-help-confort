@@ -98,7 +98,7 @@
     ".hc-fab.open .hc-fab-bubble{display:none}" +
     "@keyframes hcBubbleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}" +
     "@keyframes hcBubbleEnter{0%{opacity:0;transform:translateY(8px) scale(.92)}100%{opacity:1;transform:translateY(0) scale(1)}}" +
-    "@media(max-width:480px){.hc-fab-bubble{display:none}.hc-fab-btn--premium{width:68px;height:68px}.hc-fab-btn--premium .hc-fab-masc{width:80px}}" +
+    "@media(max-width:480px){.hc-fab-bubble{display:none !important}.hc-fab-btn--premium{width:54px;height:54px}.hc-fab{bottom:14px;right:14px}}" +
 
     /* Menu d'actions */
     ".hc-menu{display:none;flex-direction:column;gap:10px;background:#fff;border-radius:18px;padding:12px;box-shadow:0 24px 60px rgba(10,20,40,.18),0 0 0 1px rgba(10,20,40,.04);min-width:280px;opacity:0;transform:translateY(10px) scale(.95);transition:all .25s cubic-bezier(.16,1,.3,1);transform-origin:bottom right}" +
