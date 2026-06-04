@@ -18,8 +18,21 @@
     ville: ['ville', 'city']
   };
 
+  // 2026-06-04 — Validation au read : si données stockées pourries, purger
+  function isValidStore(d) {
+    if (!d || typeof d !== 'object') return false;
+    var tel = (d.telephone || '').replace(/[^0-9]/g, '');
+    return (d.prenom || '').length >= 2 && !/^[0-9]+$/.test(d.prenom)
+        && (d.nom || '').length >= 2 && !/^[0-9]+$/.test(d.nom)
+        && tel.length >= 10 && tel.length <= 13
+        && /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(d.email || '');
+  }
   function readStore() {
-    try { return JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch (_) { return {}; }
+    try {
+      var d = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+      if (!isValidStore(d)) { localStorage.removeItem(LS_KEY); return {}; }
+      return d;
+    } catch (_) { return {}; }
   }
   function writeStore(d) {
     try {
