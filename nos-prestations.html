@@ -515,6 +515,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  Voir les tarifs
  </button>
  <p class="nv-lg-trust">🛡️ Vos données restent confidentielles. Voir nos <a href="mentions-legales.html" target="_blank" rel="noopener noreferrer">mentions légales</a>.</p>
+ <button type="button" id="nvLgClearData" onclick="clearLeadData()" style="display:none;margin:8px auto 0;background:transparent;border:0;color:#94a3b8;font-size:.78rem;text-decoration:underline;cursor:pointer;font-family:inherit">Effacer mes données enregistrées</button>
  </form>
  </div>
 </div>
@@ -688,11 +689,19 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  const LG_DATA_KEY = 'hc_lead_v1';
  function saveLeadData(fd){
    try {
+     // 2026-06-04 — Ne sauvegarder QUE des coordonnées valides (sinon localStorage pollué par des tests)
+     var prenom = (fd.get('prenom') || '').trim();
+     var nom = (fd.get('nom') || '').trim();
+     var tel = (fd.get('telephone') || '').trim();
+     var email = (fd.get('email') || '').trim();
+     var telDigits = tel.replace(/[^0-9]/g, '');
+     var validPrenom = prenom.length >= 2 && !/^[0-9]+$/.test(prenom);
+     var validNom = nom.length >= 2 && !/^[0-9]+$/.test(nom);
+     var validTel = telDigits.length >= 10 && telDigits.length <= 13;
+     var validEmail = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(email);
+     if (!(validPrenom && validNom && validTel && validEmail)) return;
      var data = {
-       prenom: fd.get('prenom') || '',
-       nom: fd.get('nom') || '',
-       telephone: fd.get('telephone') || '',
-       email: fd.get('email') || '',
+       prenom: prenom, nom: nom, telephone: tel, email: email,
        adresse: fd.get('adresse') || '',
        code_postal: fd.get('code_postal') || '',
        ville: fd.get('ville') || '',
@@ -701,17 +710,32 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
      localStorage.setItem(LG_DATA_KEY, JSON.stringify(data));
    } catch(_) {}
  }
+ function clearLeadData(){
+   try { localStorage.removeItem(LG_DATA_KEY); } catch(_) {}
+   var f = document.getElementById('nvLgForm');
+   if (f) f.querySelectorAll('input').forEach(function(i){ if (i.type !== 'hidden') i.value = ''; });
+ }
  function restoreLeadData(){
    try {
      var raw = localStorage.getItem(LG_DATA_KEY);
      if (!raw) return;
      var d = JSON.parse(raw);
+     // Validation au chargement aussi : si les données stockées sont pourries, on les vire
+     var telDigits = (d.telephone || '').replace(/[^0-9]/g, '');
+     var ok = (d.prenom || '').length >= 2 && !/^[0-9]+$/.test(d.prenom)
+           && (d.nom || '').length >= 2 && !/^[0-9]+$/.test(d.nom)
+           && telDigits.length >= 10 && telDigits.length <= 13
+           && /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(d.email || '');
+     if (!ok) { localStorage.removeItem(LG_DATA_KEY); return; }
      var f = document.getElementById('nvLgForm');
      if (!f) return;
      ['prenom','nom','telephone','email','adresse','code_postal','ville'].forEach(function(k){
        var input = f.querySelector('[name="'+k+'"]');
        if (input && d[k] && !input.value) input.value = d[k];
      });
+     // Afficher bouton "Effacer mes données"
+     var clearBtn = document.getElementById('nvLgClearData');
+     if (clearBtn) clearBtn.style.display = 'inline-flex';
    } catch(_) {}
  }
  function showLgModal(){ document.getElementById('nvLeadgateModal').hidden = false; document.body.style.overflow = 'hidden'; restoreLeadData(); }
