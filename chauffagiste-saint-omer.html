@@ -1971,5 +1971,127 @@ if (document.fonts && document.fonts.ready) {
 <script src="script.js"></script>
 <!-- ============ CHAT URGENCE FLOTTANT (suit le scroll) ============ -->
 <!-- 2026-06-04 — Widget chatUrg supprimé (doublon de hc-widgets.js) -->
+
+
+
+<script>
+(function(){
+ var btn = document.getElementById('chatUrgBtn');
+ var wrap = document.getElementById('chatUrg');
+ var quick = document.getElementById('chatQuick');
+ var form = document.getElementById('chatUrgForm');
+ var body = document.getElementById('chatUrgBody');
+ var svcField = document.getElementById('chatSvcField');
+ var step2Msg = document.getElementById('chatStep2Msg');
+ if(!btn || !wrap) return;
+
+ btn.addEventListener('click', function(){
+ var open = wrap.classList.toggle('open');
+ btn.setAttribute('aria-expanded', open);
+ });
+
+ // Quick replies → step 2
+ if(quick){
+ quick.addEventListener('click', function(e){
+ var b = e.target.closest('button[data-svc]');
+ if(!b) return;
+ var svc = b.getAttribute('data-svc');
+ var emoji = b.getAttribute('data-emoji') || '';
+ // Append user message
+ var userMsg = document.createElement('div');
+ userMsg.className = 'chat-msg chat-msg-user';
+ userMsg.innerHTML = '<p>' + emoji + ' ' + svc.split('/').pop().trim() + '</p>';
+ body.appendChild(userMsg);
+ svcField.value = svc;
+ step2Msg.querySelector('p').innerHTML = 'OK pour <strong>' + svc + '</strong> 👌 Laissez-nous votre <strong>numéro</strong> et un <strong>mot-clé</strong>, nous vous rappelons rapidement.';
+ // Hide quick replies, show form
+ quick.style.display = 'none';
+ form.style.display = 'flex';
+ body.scrollTop = body.scrollHeight;
+ setTimeout(function(){ document.getElementById('chatTel').focus(); }, 250);
+ });
+ }
+
+ // Submit form
+ if(form){
+ form.addEventListener('submit', function(e){
+ e.preventDefault();
+ var tel = document.getElementById('chatTel').value.trim();
+ var prec = document.getElementById('chatPrec').value.trim();
+ // Construct mailto / formspree fallback
+ var subject = encodeURIComponent('🚨 Demande urgente HELP Confort — ' + svcField.value);
+ var bodyTxt = encodeURIComponent('Service : ' + svcField.value + '\nTéléphone : ' + tel + '\nPrécision : ' + prec);
+ // Append confirmation
+ var confirm = document.createElement('div');
+ confirm.className = 'chat-msg chat-msg-bot';
+ confirm.innerHTML = '<p>✅ Merci ! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
+ body.appendChild(confirm);
+ form.style.display = 'none';
+ body.scrollTop = body.scrollHeight;
+ // Open mailto in background as fallback so the email is actually triggered
+ window.location.href = 'mailto:saint-omer@helpconfort.com?subject=' + subject + '&body=' + bodyTxt;
+ });
+ }
+
+ window.chatBack = function(){
+ form.style.display = 'none';
+ quick.style.display = 'flex';
+ // Remove last user message + confirmations
+ body.querySelectorAll('.chat-msg-user').forEach(function(m){m.remove()});
+ body.scrollTop = body.scrollHeight;
+ };
+})();
+</script>
+
+<!-- HC-LAZY-V1 -->
+
+<!-- HC-WIDGETS-V1 -->
+<script defer src="assets/hc-widgets.js?v=20260604-compact"></script>
+<script src="assets/hc-leads-capture.js"></script>
+<script src="assets/hc-content.js" defer></script>
+<script src="assets/hc-reserve-modal.js" defer></script>
+<script>
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){r.unregister();});if('caches' in window)caches.keys().then(function(ks){ks.forEach(function(k){caches.delete(k);});});});});}
+</script>
+<!-- HC-SW-KILL-V2 — désinscription SW + purge caches + reload (15/05 PM) -->
+<script>
+(function(){
+ if (!('serviceWorker' in navigator)) return;
+ var hadSW = false;
+ navigator.serviceWorker.getRegistrations().then(function(rs){
+ if (rs.length > 0) hadSW = true;
+ rs.forEach(function(r){ r.unregister(); });
+ });
+ if ('caches' in window) {
+ caches.keys().then(function(ks){
+ ks.forEach(function(k){ caches.delete(k); });
+ });
+ }
+ // Si on avait un SW actif et qu'on n'a pas encore rechargé une fois, force le reload (sans boucle)
+ setTimeout(function(){
+ try {
+ if (hadSW && !sessionStorage.getItem('__hc_sw_reset')) {
+ sessionStorage.setItem('__hc_sw_reset', '1');
+ location.reload(true);
+ }
+ } catch(_){}
+ }, 500);
+})();
+</script>
+<script src="assets/hc-form-autocomplete.js" defer></script>
+  <script defer src="assets/hc-megamenu-fix.js"></script>
+  <script defer src="assets/hc-engagements.js"></script>
+  <script defer src="assets/hc-form-validation.js"></script>
+  <script defer src="assets/hc-sticky-cta.js"></script>
+  <script src="assets/hc-avis-live.js?v=20260603" defer></script>
+  <script defer src="assets/hc-tracking.js"></script>
+  <script defer src="assets/hc-chat-widget.js"></script>
+  <script defer src="assets/hc-simulateur-aides.js"></script>
+  <script defer src="assets/hc-comparateur.js"></script>
+  <script defer src="assets/hc-a11y-fixes.js"></script>
+  <script defer src="assets/hc-pricing.js"></script>
+<script src="assets/hc-modal-prefill.js?v=20260604-clean" defer></script>
+<script src="assets/hc-rate-limit.js?v=20260603" defer></script>
+<script src="assets/hc-mini-zone.js?v=20260603" defer></script>
 </body>
 </html>

@@ -907,5 +907,1249 @@ if (document.fonts && document.fonts.ready) {
 <script src="script.js"></script>
 <!-- ============ CHAT URGENCE FLOTTANT (suit le scroll) ============ -->
 <!-- 2026-06-04 — Widget chatUrg supprimé (doublon de hc-widgets.js) -->
+
+
+
+<script>
+(function(){
+ var btn = document.getElementById('chatUrgBtn');
+ var wrap = document.getElementById('chatUrg');
+ var quick = document.getElementById('chatQuick');
+ var form = document.getElementById('chatUrgForm');
+ var body = document.getElementById('chatUrgBody');
+ var svcField = document.getElementById('chatSvcField');
+ var step2Msg = document.getElementById('chatStep2Msg');
+ if(!btn || !wrap) return;
+
+ btn.addEventListener('click', function(){
+ var open = wrap.classList.toggle('open');
+ btn.setAttribute('aria-expanded', open);
+ });
+
+ // Quick replies → step 2
+ if(quick){
+ quick.addEventListener('click', function(e){
+ var b = e.target.closest('button[data-svc]');
+ if(!b) return;
+ var svc = b.getAttribute('data-svc');
+ var emoji = b.getAttribute('data-emoji') || '';
+ // Append user message
+ var userMsg = document.createElement('div');
+ userMsg.className = 'chat-msg chat-msg-user';
+ userMsg.innerHTML = '<p>' + emoji + ' ' + svc.split('/').pop().trim() + '</p>';
+ body.appendChild(userMsg);
+ svcField.value = svc;
+ step2Msg.querySelector('p').innerHTML = 'OK pour <strong>' + svc + '</strong> 👌 Laissez-nous votre <strong>numéro</strong> et un <strong>mot-clé</strong>, nous vous rappelons rapidement.';
+ // Hide quick replies, show form
+ quick.style.display = 'none';
+ form.style.display = 'flex';
+ body.scrollTop = body.scrollHeight;
+ setTimeout(function(){ document.getElementById('chatTel').focus(); }, 250);
+ });
+ }
+
+ // Submit form
+ if(form){
+ form.addEventListener('submit', function(e){
+ e.preventDefault();
+ var tel = document.getElementById('chatTel').value.trim();
+ var prec = document.getElementById('chatPrec').value.trim();
+ // Construct mailto / formspree fallback
+ var subject = encodeURIComponent('🚨 Demande urgente HELP Confort — ' + svcField.value);
+ var bodyTxt = encodeURIComponent('Service : ' + svcField.value + '\nTéléphone : ' + tel + '\nPrécision : ' + prec);
+ // Append confirmation
+ var confirm = document.createElement('div');
+ confirm.className = 'chat-msg chat-msg-bot';
+ confirm.innerHTML = '<p>✅ Merci ! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
+ body.appendChild(confirm);
+ form.style.display = 'none';
+ body.scrollTop = body.scrollHeight;
+ // Open mailto in background as fallback so the email is actually triggered
+ window.location.href = 'mailto:saint-omer@helpconfort.com?subject=' + subject + '&body=' + bodyTxt;
+ });
+ }
+
+ window.chatBack = function(){
+ form.style.display = 'none';
+ quick.style.display = 'flex';
+ // Remove last user message + confirmations
+ body.querySelectorAll('.chat-msg-user').forEach(function(m){m.remove()});
+ body.scrollTop = body.scrollHeight;
+ };
+})();
+</script>
+
+<!-- ============ MODAL SOUSCRIPTION CONTRAT ============ -->
+<div id="souscriptionModal" class="sous-modal" role="dialog" aria-modal="true" aria-labelledby="sousTitle" style="position:fixed;inset:0;z-index:9999;display:none;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto">
+ <div class="sous-backdrop" onclick="closeSouscriptionModal()" style="position:fixed;inset:0;background:rgba(10,20,40,.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)"></div>
+
+ <div class="sous-card" style="position:relative;z-index:2;background:#fff;border-radius:20px;max-width:680px;width:100%;margin:20px auto;box-shadow:0 40px 90px rgba(10,20,40,.40);border:1px solid rgba(31,196,240,.20);overflow:hidden">
+
+ <!-- Header dégradé cyan -->
+ <div style="position:relative;background:linear-gradient(135deg,#0DA0CF 0%,#1FC4F0 100%);color:#fff;padding:24px 28px">
+ <button type="button" onclick="closeSouscriptionModal()" aria-label="Fermer" style="position:absolute;top:14px;right:14px;background:rgba(255,255,255,.18);border:0;width:34px;height:34px;border-radius:50%;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center">
+ <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+ </button>
+ <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);padding:5px 12px;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px">
+ <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M22 12v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+ Souscription en ligne
+ </div>
+ <h3 id="sousTitle" style="margin:0;font-size:1.4rem;font-weight:800;line-height:1.2">Contrat <span id="sousType">Gaz</span> — <span id="sousFormule">CONFORT</span></h3>
+ <p style="margin:6px 0 0;font-size:.92rem;color:rgba(255,255,255,.92);font-weight:500">Tarif&nbsp;: <strong id="sousPrix" style="color:#fff">13 € HT/mois</strong> · Renseignez le formulaire et nous validons votre dossier sous 24h ouvrées.</p>
+ </div>
+
+ <!-- Form -->
+ <form id="sousForm" onsubmit="return submitSouscription(event)" style="padding:24px 28px 28px" data-hc-lead="souscription" novalidate>
+ <!-- Anti-bot honeypot — laisser vide -->
+ <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" value="">
+ <input type="hidden" name="energie" id="f-energie">
+ <input type="hidden" name="formule" id="f-formule">
+ <input type="hidden" name="prix" id="f-prix">
+
+ <!-- Champ caché agence -->
+ <input type="hidden" name="agence" id="f-agence" value="Saint-Omer">
+
+ <!-- ═══ BARRE DE PROGRESSION ═══ -->
+ <div class="sw-progress" aria-hidden="true">
+ <div class="sw-progress-track">
+ <div class="sw-progress-fill" id="swProgressFill" style="width:20%"></div>
+ </div>
+ <div class="sw-progress-steps">
+ <div class="sw-pstep is-active" data-pstep="1"><span class="sw-pstep-circle">1</span><span class="sw-pstep-lbl">Coords</span></div>
+ <div class="sw-pstep" data-pstep="2"><span class="sw-pstep-circle">2</span><span class="sw-pstep-lbl">Adresse</span></div>
+ <div class="sw-pstep" data-pstep="3"><span class="sw-pstep-circle">3</span><span class="sw-pstep-lbl">Logement</span></div>
+ <div class="sw-pstep" data-pstep="4"><span class="sw-pstep-circle">4</span><span class="sw-pstep-lbl">Équipement</span></div>
+ <div class="sw-pstep" data-pstep="5"><span class="sw-pstep-circle">5</span><span class="sw-pstep-lbl">Documents</span></div>
+ <div class="sw-pstep" data-pstep="6"><span class="sw-pstep-circle">6</span><span class="sw-pstep-lbl">Envoyer</span></div>
+ </div>
+ </div>
+
+ <!-- ═══════════ ÉTAPE 1 — Coordonnées ═══════════ -->
+ <div class="sous-step is-active" data-step="1">
+ <div class="sw-intro">
+ <h4 class="sw-step-title">Vos coordonnées</h4>
+ <p class="sw-step-hint">Pour vous rappeler sous 24h ouvrées et envoyer votre contrat.</p>
+ </div>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+ <input aria-label="Prénom" type="text" name="prenom" placeholder="Prénom *" required class="sous-inp" data-validate="required">
+ <input aria-label="Nom" type="text" name="nom" placeholder="Nom *" required class="sous-inp" data-validate="required">
+ </div>
+ <input aria-label="Email" type="email" name="email" placeholder="Email *" required class="sous-inp" style="margin-bottom:10px" data-validate="email">
+ <input aria-label="Téléphone" type="tel" name="telephone" placeholder="Téléphone *" required class="sous-inp" data-validate="tel" pattern="[0-9 +.\-]{10,}" autocomplete="tel">
+ </div>
+
+ <!-- ═══════════ ÉTAPE 2 — Adresse ═══════════ -->
+ <div class="sous-step" data-step="2">
+ <div class="sw-intro">
+ <h4 class="sw-step-title">Adresse de l'installation</h4>
+ <p class="sw-step-hint">Commencez à taper votre adresse, on vous propose la liste.</p>
+ </div>
+
+ <div id="agency-detected" style="display:none;margin-bottom:14px;padding:12px 16px;background:linear-gradient(135deg,rgba(31,196,240,.10),rgba(31,196,240,.04));border:1px solid rgba(31,196,240,.30);border-radius:12px;align-items:center;gap:10px;font-size:.88rem">
+ <div style="width:36px;height:36px;border-radius:10px;background:#1FC4F0;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+ <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+ </div>
+ <div style="flex:1;line-height:1.3">
+ <div style="font-size:.7rem;color:#0DA0CF;font-weight:800;letter-spacing:1px;text-transform:uppercase">Agence rattachée à votre adresse</div>
+ <div style="color:#0A1428;font-weight:700;font-size:.98rem;margin-top:2px"><span id="agency-name">Saint-Omer</span> · <span id="agency-zone" style="color:#64748b;font-weight:500">Pas-de-Calais 62</span></div>
+ </div>
+ </div>
+
+ <div class="sous-addr-wrap" style="position:relative;margin-bottom:10px">
+ <input type="text" id="sousAdresse" name="adresse" placeholder="N°, rue *" required class="sous-inp" autocomplete="off" data-validate="required" aria-label="Adresse">
+ <div id="sousAdresseList" class="sous-addr-list" role="listbox" hidden></div>
+ </div>
+ <div style="display:grid;grid-template-columns:120px 1fr;gap:10px">
+ <input type="text" id="sousCp" name="cp" placeholder="Code postal *" required class="sous-inp" pattern="[0-9]{5}" maxlength="5" data-validate="cp" aria-label="Code postal">
+ <input type="text" id="sousVille" name="ville" placeholder="Ville *" required class="sous-inp" data-validate="required" aria-label="Ville">
+ </div>
+ </div>
+
+ <!-- ═══════════ ÉTAPE 3 — Logement ═══════════ -->
+ <div class="sous-step" data-step="3">
+ <div class="sw-intro">
+ <h4 class="sw-step-title">Votre logement</h4>
+ <p class="sw-step-hint">Quelques informations sur le bien à entretenir.</p>
+ </div>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+ <select aria-label="type_logement" name="type_logement" required class="sous-inp" data-validate="required">
+ <option value="">Type de logement *</option>
+ <option>Maison individuelle</option>
+ <option>Appartement</option>
+ <option>Local commercial / pro</option>
+ </select>
+ <select aria-label="statut" name="statut" required class="sous-inp" data-validate="required">
+ <option value="">Statut *</option>
+ <option>Propriétaire occupant</option>
+ <option>Propriétaire bailleur</option>
+ <option>Locataire (autorisé par le propriétaire)</option>
+ <option>Syndic / copropriété</option>
+ </select>
+ </div>
+ </div>
+
+ <!-- ═══════════ ÉTAPE 4 — Équipement (sélecteurs intelligents + photo) ═══════════ -->
+ <div class="sous-step" data-step="4" id="f-equipement-block">
+ <div class="sw-intro">
+ <h4 class="sw-step-title">Votre équipement</h4>
+ <p class="sw-step-hint">Ces infos nous aident à préparer votre intervention. <strong>Tous les champs sont obligatoires</strong>. La photo de votre chaudière nous fait gagner un temps précieux.</p>
+ </div>
+
+ <!-- Aide visuelle : où trouver les infos -->
+ <details class="sw-help">
+ <summary>
+ <span class="sw-help-icon">
+ <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+ </span>
+ <span class="sw-help-text">Où trouver ces informations&nbsp;?</span>
+ <span class="sw-help-chevron">▾</span>
+ </summary>
+ <div class="sw-help-body">
+ <div class="sw-help-illust" aria-hidden="true">
+ <svg viewBox="0 0 240 160" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+ <rect x="50" y="20" width="140" height="120" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="2"/>
+ <rect x="62" y="32" width="116" height="14" rx="3" fill="#0DA0CF" opacity=".15"/>
+ <text x="120" y="42" text-anchor="middle" font-family="Inter, Arial" font-size="9" font-weight="700" fill="#0DA0CF">SAUNIER DUVAL</text>
+ <rect x="62" y="52" width="116" height="78" rx="3" fill="#fff" stroke="#CBD5E1"/>
+ <line x1="68" y1="64" x2="172" y2="64" stroke="#E5E7EB"/>
+ <text x="72" y="62" font-family="Inter, Arial" font-size="6.5" fill="#64748B">Modèle&nbsp;:</text>
+ <text x="170" y="62" text-anchor="end" font-family="Inter, Arial" font-size="7" font-weight="700" fill="#0A1428">THEMA C 25</text>
+ <line x1="68" y1="76" x2="172" y2="76" stroke="#E5E7EB"/>
+ <text x="72" y="74" font-family="Inter, Arial" font-size="6.5" fill="#64748B">N° série&nbsp;:</text>
+ <text x="170" y="74" text-anchor="end" font-family="Inter, Arial" font-size="7" fill="#0A1428">7821-XX</text>
+ <line x1="68" y1="88" x2="172" y2="88" stroke="#E5E7EB"/>
+ <text x="72" y="86" font-family="Inter, Arial" font-size="6.5" fill="#64748B">Année&nbsp;:</text>
+ <text x="170" y="86" text-anchor="end" font-family="Inter, Arial" font-size="7" font-weight="700" fill="#FF6B1A">2019</text>
+ <line x1="68" y1="100" x2="172" y2="100" stroke="#E5E7EB"/>
+ <text x="72" y="98" font-family="Inter, Arial" font-size="6.5" fill="#64748B">Puissance&nbsp;:</text>
+ <text x="170" y="98" text-anchor="end" font-family="Inter, Arial" font-size="7" fill="#0A1428">24 kW</text>
+ <circle cx="195" cy="55" r="14" fill="#FF6B1A" opacity=".18"/>
+ <circle cx="195" cy="55" r="9" fill="#FF6B1A"/>
+ <text x="195" y="58" text-anchor="middle" font-family="Inter, Arial" font-size="9" font-weight="900" fill="#fff">!</text>
+ <path d="M180 55 Q195 75 215 70" stroke="#FF6B1A" stroke-width="1.8" fill="none" stroke-dasharray="3 3"/>
+ </svg>
+ </div>
+ <ul class="sw-help-list">
+ <li><strong>Étiquette signalétique</strong> — généralement collée sur le côté ou sous la chaudière / le ballon. Vous y trouverez la marque, le modèle, le numéro de série et l'année de fabrication.</li>
+ <li><strong>Carnet d'entretien</strong> — votre dernier rapport d'intervention indique aussi toutes ces informations.</li>
+ <li><strong>Facture d'achat ou d'installation</strong> — la facture du constructeur ou de l'installateur d'origine.</li>
+ <li>👉 Si vous ne trouvez pas, <strong>passez à l'étape suivante</strong> : notre technicien relèvera tout lors de la 1ʳᵉ visite.</li>
+ </ul>
+ </div>
+ </details>
+
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+ <select name="marque" id="eqMarque" required class="sous-inp" data-validate="required">
+ <option value="">Marque de votre chaudière *</option>
+ <option>Acleis</option>
+ <option>Atlantic</option>
+ <option>Auer</option>
+ <option>Bosch / Junkers</option>
+ <option>Brötje</option>
+ <option>Buderus</option>
+ <option>Chaffoteaux</option>
+ <option>Chappée</option>
+ <option>Cuenod</option>
+ <option>De Dietrich</option>
+ <option>Elco</option>
+ <option>ELM Leblanc</option>
+ <option>Ferroli</option>
+ <option>Franco Belge</option>
+ <option>Frisquet</option>
+ <option>Geminox</option>
+ <option>Idéal Standard</option>
+ <option>Immergas</option>
+ <option>Oertli</option>
+ <option>Radiant</option>
+ <option>Riello</option>
+ <option>Saunier Duval</option>
+ <option>Sime</option>
+ <option>Tifell</option>
+ <option>Unical</option>
+ <option>Vaillant</option>
+ <option>Viessmann</option>
+ <option>Weishaupt</option>
+ <option>Wolf</option>
+ <option>Zaegel-Held</option>
+ <option disabled>──────────</option>
+ <option>Autre / Je ne sais pas</option>
+ </select>
+ <select name="modele" id="eqModele" required class="sous-inp" data-validate="required">
+ <option value="">Modèle * (sélectionnez d'abord la marque)</option>
+ </select>
+ </div>
+ <!-- Année d'installation : SELECT + zone texte libre -->
+ <div class="sw-date-block">
+ <label class="sw-date-label">Année d'installation *</label>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+ <select name="annee" id="eqAnnee" required class="sous-inp" data-validate="required">
+ <option value="">— Choisir l'année —</option>
+ <option>2026</option><option>2025</option><option>2024</option><option>2023</option>
+ <option>2022</option><option>2021</option><option>2020</option><option>2019</option>
+ <option>2018</option><option>2017</option><option>2016</option><option>2015</option>
+ <option>2014</option><option>2013</option><option>2012</option><option>2011</option>
+ <option>2010</option><option>2005-2009</option><option>2000-2004</option>
+ <option>1995-1999</option><option>1990-1994</option><option>Avant 1990</option>
+ <option disabled>──────────</option>
+ <option>Je ne sais pas</option>
+ </select>
+ <input aria-label="Préciser (facultatif)" type="text" name="annee_precision" placeholder="Préciser (facultatif)" class="sous-inp">
+ </div>
+ </div>
+
+ <!-- Dernier entretien : SELECT mois + SELECT année + zone texte -->
+ <div class="sw-date-block" style="margin-top:14px">
+ <label class="sw-date-label">Dernier entretien *</label>
+ <div style="display:grid;grid-template-columns:1.2fr 1fr 1.4fr;gap:10px">
+ <select name="dernier_entretien_mois" id="eqEntretienMois" class="sous-inp">
+ <option value="">— Mois —</option>
+ <option value="01">Janvier</option><option value="02">Février</option>
+ <option value="03">Mars</option><option value="04">Avril</option>
+ <option value="05">Mai</option><option value="06">Juin</option>
+ <option value="07">Juillet</option><option value="08">Août</option>
+ <option value="09">Septembre</option><option value="10">Octobre</option>
+ <option value="11">Novembre</option><option value="12">Décembre</option>
+ </select>
+ <select name="dernier_entretien_annee" id="eqEntretienAnnee" required class="sous-inp" data-validate="required">
+ <option value="">— Année —</option>
+ <option>2026</option><option>2025</option><option>2024</option><option>2023</option>
+ <option>2022</option><option>2021</option><option>Avant 2021</option>
+ <option disabled>──────────</option>
+ <option>Jamais entretenu</option>
+ <option>Je ne sais pas</option>
+ </select>
+ <input type="text" name="dernier_entretien" id="eqEntretienTexte" placeholder="Précisions (facultatif)" class="sous-inp" aria-label="Précisions (facultatif)">
+ </div>
+ </div>
+
+ <!-- Upload PHOTO chaudière -->
+ <div class="sw-photo-wrap">
+ <label for="eqPhotos" class="sw-photo-label">
+ <div class="sw-photo-icon">
+ <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+ </div>
+ <div class="sw-photo-text">
+ <strong>📸 Photo de votre chaudière (1 à 3 photos)</strong>
+ <span>Étiquette signalétique + vue d'ensemble — JPG/PNG, 5 Mo max par photo</span>
+ </div>
+ <input type="file" id="eqPhotos" name="photos" accept="image/jpeg,image/png,image/webp" multiple required data-validate="files" hidden>
+ </label>
+ <div class="sw-photo-preview" id="eqPhotosPreview"></div>
+ </div>
+ </div>
+
+ <!-- ═══════════ ÉTAPE 5 — Documents juridiques (RIB, SEPA, facture entretien) ═══════════ -->
+ <div class="sous-step" data-step="5">
+ <div class="sw-intro">
+ <h4 class="sw-step-title">Documents juridiques &amp; bancaires</h4>
+ <p class="sw-step-hint">Pour finaliser votre dossier, nous avons besoin de quelques documents.<br><strong>Tous les formats acceptés</strong> : PDF, JPG, PNG (max 5 Mo par fichier).</p>
+ </div>
+
+ <!-- Bandeau visite obligatoire -->
+ <div class="sw-info-box">
+ <div class="sw-info-icon">
+ <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+ </div>
+ <div class="sw-info-text">
+ <strong>Important — Visite technique obligatoire</strong>
+ <span>Avant la <strong>signature définitive</strong> du contrat, un technicien HELP Confort se déplace gratuitement chez vous pour valider l'état de votre installation. Cette visite ne vous engage à rien — vous pouvez encore renoncer après.</span>
+ </div>
+ </div>
+
+ <!-- RIB obligatoire -->
+ <div class="sw-doc-row">
+ <div class="sw-doc-head">
+ <span class="sw-doc-num">1</span>
+ <div>
+ <strong class="sw-doc-title">Votre RIB <span class="sw-doc-required">*</span></strong>
+ <span class="sw-doc-hint">Pour le prélèvement automatique mensuel ou annuel.</span>
+ </div>
+ </div>
+ <label for="docRib" class="sw-doc-upload">
+ <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+ <span class="sw-doc-upload-text"><strong>Téléverser mon RIB</strong><span>PDF, JPG ou PNG · 5 Mo max</span></span>
+ <input type="file" id="docRib" name="rib" accept="image/jpeg,image/png,image/webp,application/pdf" required hidden data-validate="files-rib">
+ </label>
+ <div class="sw-doc-status" id="ribStatus" hidden></div>
+ </div>
+
+ <!-- Dernière facture entretien (recommandé) -->
+ <div class="sw-doc-row">
+ <div class="sw-doc-head">
+ <span class="sw-doc-num">2</span>
+ <div>
+ <strong class="sw-doc-title">Dernière facture d'entretien <span class="sw-doc-opt">(recommandé)</span></strong>
+ <span class="sw-doc-hint">Nous permet d'historiser votre installation et d'adapter le contrat.</span>
+ </div>
+ </div>
+ <label for="docFacture" class="sw-doc-upload" id="docFactureLabel">
+ <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+ <span class="sw-doc-upload-text"><strong>Téléverser la facture</strong><span>PDF, JPG ou PNG · 5 Mo max</span></span>
+ <input type="file" id="docFacture" name="facture_entretien" accept="image/jpeg,image/png,image/webp,application/pdf" hidden>
+ </label>
+ <div class="sw-doc-status" id="factureStatus" hidden></div>
+ <label class="sw-doc-nofact-toggle" style="display:flex;align-items:center;gap:8px;margin-top:10px;padding:9px 14px;background:#F7FBFD;border:1px dashed #CBD5E1;border-radius:10px;cursor:pointer;font-size:.86rem;color:#475569">
+ <input type="checkbox" id="docNoFacture" name="no_facture" style="width:16px;height:16px;accent-color:#64748b">
+ <span>Je n'ai pas de facture d'entretien</span>
+ </label>
+ </div>
+
+ <!-- Mandat SEPA - signature en ligne ou téléchargement -->
+ <div class="sw-doc-row">
+ <div class="sw-doc-head">
+ <span class="sw-doc-num">3</span>
+ <div>
+ <strong class="sw-doc-title">Mandat SEPA <span class="sw-doc-opt">(signé après visite technique)</span></strong>
+ <span class="sw-doc-hint">Vous acceptez le principe du prélèvement automatique. Le mandat SEPA officiel vous sera transmis par email <strong>après la visite technique</strong>, à signer électroniquement (DocuSign / Yousign).</span>
+ </div>
+ </div>
+ <label class="sw-doc-checkbox">
+ <input type="checkbox" name="sepa_principe" required data-validate="checked">
+ <span>J'accepte le principe du prélèvement SEPA (signature ferme après visite technique uniquement).</span>
+ </label>
+ </div>
+
+ </div>
+
+ <!-- ═══════════ ÉTAPE 6 — Récapitulatif + acceptation finale ═══════════ -->
+ <div class="sous-step" data-step="6">
+ <div class="sw-intro">
+ <h4 class="sw-step-title">Récapitulatif &amp; envoi</h4>
+ <p class="sw-step-hint">Vérifiez les informations puis envoyez votre demande. Un conseiller vous rappelle sous 24h ouvrées pour planifier la visite technique.</p>
+ </div>
+
+ <!-- Récap rapide -->
+ <div class="sw-recap" id="swRecap" aria-live="polite"></div>
+
+ <!-- Champ "Quand commencer ?" optionnel + commentaire libre -->
+ <details class="sw-optional-block" style="margin-top:16px;background:#F7FBFD;border:1px dashed #CBD5E1;border-radius:12px">
+ <summary style="padding:12px 16px;cursor:pointer;font-size:.88rem;font-weight:700;color:#0DA0CF;list-style:none;display:flex;align-items:center;gap:8px">
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+ Ajouter des précisions <span style="color:#94A3B8;font-weight:500;font-style:italic">(facultatif)</span>
+ </summary>
+ <div style="padding:0 16px 14px">
+ <input aria-label="Date de début souhaitée (ex : 1er du mois prochain)" type="text" name="date_debut" placeholder="Date de début souhaitée (ex : 1er du mois prochain)" class="sous-inp" style="margin-bottom:10px">
+ <textarea aria-label="Accessibilité, horaires, contraintes spécifiques…" name="commentaire" placeholder="Accessibilité, horaires, contraintes spécifiques…" rows="2" class="sous-inp" style="resize:vertical;min-height:60px"></textarea>
+ </div>
+ </details>
+
+ <!-- CGV : encadré attractif avec animation pulse pour montrer où cliquer -->
+ <label class="sw-cgv-box" style="display:flex;align-items:flex-start;gap:12px;margin:18px 0 6px;padding:14px 16px;background:linear-gradient(135deg,rgba(13,160,207,.06),rgba(255,107,26,.04));border:2px solid rgba(13,160,207,.30);border-radius:12px;font-size:.88rem;color:#0A1428;line-height:1.5;cursor:pointer;transition:all.25s ease;position:relative;animation:swCgvPulse 2.4s ease-in-out infinite">
+ <input type="checkbox" name="cgv" required style="margin-top:3px;flex-shrink:0;width:20px;height:20px;accent-color:#1FC4F0;cursor:pointer" data-validate="checked">
+ <span>J'accepte d'être contacté(e) sous 24h ouvrées pour finaliser mon contrat. Je reconnais que ce formulaire constitue une <strong>demande de souscription</strong>, non un engagement définitif. La signature ferme du contrat aura lieu <strong>après la visite technique gratuite</strong>. <strong style="color:#E11D48">*</strong></span>
+ <span class="sw-cgv-hint" aria-hidden="true" style="position:absolute;top:-12px;right:14px;background:#0DA0CF;color:#fff;padding:3px 10px;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 4px 10px rgba(13,160,207,.32);white-space:nowrap;animation:swCgvArrow 1.8s ease-in-out infinite">👇 Cliquez ici pour valider</span>
+ </label>
+ <style>
+ @keyframes swCgvPulse {
+ 0%, 100% { box-shadow: 0 0 0 0 rgba(13,160,207,.20); }
+ 50% { box-shadow: 0 0 0 6px rgba(13,160,207,0); }
+ }
+ @keyframes swCgvArrow {
+ 0%, 100% { transform: translateY(0); }
+ 50% { transform: translateY(-3px); }
+ }
+ /* Une fois cochée, on enlève l'animation et la flèche disparaît */.sw-cgv-box:has(input:checked) { animation: none; border-color: #16A34A; background: linear-gradient(135deg, rgba(34,197,94,.08), rgba(34,197,94,.02)); }.sw-cgv-box:has(input:checked).sw-cgv-hint { display: none; }
+ </style>
+ </div>
+
+ <!-- ═══ ZONE NAVIGATION + ERREURS ═══ -->
+ <div id="swError" class="sw-error" hidden></div>
+
+ <div class="sw-nav">
+ <button type="button" class="sw-btn sw-btn-prev" id="swPrev" hidden>
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+ Précédent
+ </button>
+ <div class="sw-step-counter" id="swCounter">Étape 1 sur 5</div>
+ <button type="button" class="sw-btn sw-btn-next" id="swNext">
+ Suivant
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+ </button>
+ <button type="submit" class="sw-btn sw-btn-submit" id="swSubmit" hidden>
+ <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M22 12v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+ Envoyer ma demande
+ </button>
+ </div>
+
+ <p style="margin:14px 0 0;font-size:.78rem;color:#64748b;text-align:center;line-height:1.5">
+ 🛡️ Vos données restent confidentielles. Aucun engagement ni paiement à ce stade — un conseiller vous rappelle pour finaliser.
+ </p>
+ </form>
+ </div>
+</div>
+
+<style>.sous-modal.open{display:flex !important;animation:sousFadeIn.25s ease}
+ @keyframes sousFadeIn{from{opacity:0}to{opacity:1}}.sous-modal.open.sous-card{animation:sousSlideUp.35s cubic-bezier(.16,1,.3,1)}
+ @keyframes sousSlideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}.sous-inp{width:100%;padding:11px 14px;border:1.5px solid #E5EDF3;border-radius:10px;background:#F7FBFD;color:#0A1428;font-size:.94rem;font-family:inherit;outline:none;transition:border-color.2s,background.2s;box-sizing:border-box}.sous-inp:focus{border-color:#1FC4F0;background:#fff}
+
+ /* ═══ WIZARD MULTI-ÉTAPES ═══ */.sous-step{display:none;animation:swFadeIn.3s ease}.sous-step.is-active{display:block}
+ @keyframes swFadeIn{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}.sw-intro{margin-bottom:16px}.sw-step-title{margin:0 0 4px;font-size:1.18rem;font-weight:800;color:#0A1428;letter-spacing:-.01em}.sw-step-hint{margin:0;font-size:.88rem;color:#64748b;line-height:1.5}
+
+ /* Progress bar */.sw-progress{margin:0 0 22px}.sw-progress-track{position:relative;height:4px;background:#E5EDF3;border-radius:99px;overflow:hidden;margin-bottom:8px}.sw-progress-fill{height:100%;background:linear-gradient(90deg,#0DA0CF,#1FC4F0);border-radius:99px;transition:width.35s cubic-bezier(.16,1,.3,1)}.sw-progress-steps{display:flex;justify-content:space-between;align-items:flex-start;gap:4px}.sw-pstep{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:default}.sw-pstep-circle{width:24px;height:24px;border-radius:50%;background:#E5EDF3;color:#94A3B8;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;transition:all.25s ease;border:2px solid transparent}.sw-pstep.is-active.sw-pstep-circle{background:#1FC4F0;color:#fff;border-color:#1FC4F0;box-shadow:0 0 0 4px rgba(31,196,240,.18)}.sw-pstep.is-done.sw-pstep-circle{background:#22C55E;color:#fff;border-color:#22C55E}.sw-pstep.is-done.sw-pstep-circle::before{content:"✓";font-size:.78rem}.sw-pstep.is-done.sw-pstep-circle>*{display:none}.sw-pstep-lbl{font-size:.66rem;color:#94A3B8;font-weight:700;letter-spacing:.04em;text-align:center}.sw-pstep.is-active.sw-pstep-lbl{color:#0DA0CF}.sw-pstep.is-done.sw-pstep-lbl{color:#22C55E}
+
+ /* Aide visuelle (étape équipement) */.sw-help{margin:0 0 16px;background:linear-gradient(135deg,rgba(13,160,207,.06),rgba(31,196,240,.02));border:1px solid rgba(13,160,207,.18);border-radius:12px;overflow:hidden}.sw-help summary{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;list-style:none;color:#0DA0CF;font-size:.88rem;font-weight:700;user-select:none}.sw-help summary::-webkit-details-marker{display:none}.sw-help summary:hover{background:rgba(13,160,207,.05)}.sw-help-icon{display:inline-flex;color:#0DA0CF;flex-shrink:0}.sw-help-text{flex:1}.sw-help-chevron{font-size:.9rem;transition:transform.2s ease;color:#94A3B8}.sw-help[open].sw-help-chevron{transform:rotate(180deg)}.sw-help-body{padding:0 14px 14px;display:grid;grid-template-columns:160px 1fr;gap:14px;align-items:start}.sw-help-illust{background:#fff;border:1px solid #E5EDF3;border-radius:10px;padding:8px}.sw-help-list{margin:0;padding:0;list-style:none;font-size:.84rem;color:#475569;line-height:1.5}.sw-help-list li{padding:6px 0 6px 18px;position:relative;border-bottom:1px dashed #E5EDF3}.sw-help-list li:last-child{border-bottom:0;color:#0DA0CF;font-weight:600}.sw-help-list li::before{content:"";position:absolute;left:4px;top:13px;width:6px;height:6px;border-radius:50%;background:#1FC4F0}.sw-help-list li:last-child::before{display:none}
+ @media (max-width:540px){.sw-help-body{grid-template-columns:1fr}.sw-help-illust{max-width:200px;margin:0 auto}
+ }
+
+ /* Navigation buttons */.sw-nav{display:flex;align-items:center;gap:12px;margin-top:8px;padding-top:18px;border-top:1px solid #E5EDF3}.sw-step-counter{flex:1;text-align:center;font-size:.78rem;color:#64748b;font-weight:700;letter-spacing:.06em;text-transform:uppercase}.sw-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-weight:700;font-size:.92rem;cursor:pointer;font-family:inherit;border:0;transition:all.2s ease;white-space:nowrap}.sw-btn[hidden],.sous-step:not(.is-active),#swError[hidden]{display:none !important}
+
+ /* ═══ DOCUMENTS JURIDIQUES (RIB, SEPA, facture) ═══ */.sw-info-box{display:flex;gap:14px;padding:16px 18px;background:linear-gradient(135deg,rgba(255,180,0,.10),rgba(255,107,26,.04));border:1.5px solid rgba(255,180,0,.30);border-radius:14px;margin-bottom:22px;align-items:flex-start}.sw-info-icon{flex-shrink:0;width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(255,180,0,.30)}.sw-info-text{flex:1;line-height:1.45;font-size:.88rem;color:#0A1428}.sw-info-text strong{display:block;color:#0A1428;font-weight:800;font-size:.95rem;margin-bottom:4px}.sw-info-text span{display:block;color:#475569;font-size:.85rem}.sw-info-text span strong{display:inline;font-weight:700;color:#C2510A}.sw-doc-row{padding:16px 18px;background:#fff;border:1.5px solid #E5EDF3;border-radius:14px;margin-bottom:14px;transition:border-color.2s ease}.sw-doc-row:hover{border-color:rgba(13,160,207,.35)}.sw-doc-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}.sw-doc-num{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.82rem;box-shadow:0 4px 10px rgba(13,160,207,.25)}.sw-doc-title{display:block;color:#0A1428;font-weight:800;font-size:.95rem;margin-bottom:2px}.sw-doc-required{color:#E11D48;font-weight:900;margin-left:3px}.sw-doc-opt{color:#64748b;font-weight:600;font-size:.78rem;margin-left:6px;padding:1px 8px;background:#F1F5F9;border-radius:6px}.sw-doc-hint{display:block;color:#64748b;font-size:.82rem;line-height:1.4}.sw-doc-upload{display:flex;align-items:center;gap:12px;padding:12px 14px;background:linear-gradient(135deg,rgba(31,196,240,.06),rgba(13,160,207,.02));border:1.5px dashed rgba(13,160,207,.40);border-radius:10px;cursor:pointer;color:#0DA0CF;transition:all.2s ease}.sw-doc-upload:hover{background:linear-gradient(135deg,rgba(31,196,240,.12),rgba(13,160,207,.04));border-color:#0DA0CF}.sw-doc-upload-text{display:flex;flex-direction:column;line-height:1.3;flex:1}.sw-doc-upload-text strong{color:#0A1428;font-weight:800;font-size:.9rem}.sw-doc-upload-text span{color:#64748b;font-size:.78rem;margin-top:2px}.sw-doc-status{margin-top:10px;padding:8px 12px;border-radius:8px;font-size:.85rem;display:flex;align-items:center;gap:8px}.sw-doc-status.ok{background:rgba(34,197,94,.10);color:#16A34A;font-weight:600}.sw-doc-status.ok::before{content:"✓ "}.sw-doc-checkbox{display:flex;align-items:flex-start;gap:10px;padding:10px 0;cursor:pointer;font-size:.86rem;color:#0A1428;line-height:1.4}.sw-doc-checkbox input{margin-top:3px;flex-shrink:0;width:18px;height:18px;accent-color:#1FC4F0}
+
+ /* ═══ UPLOAD PHOTOS chaudière ═══ */.sw-photo-wrap{margin-top:6px}.sw-photo-label{display:flex;align-items:center;gap:14px;padding:18px 20px;border:1.5px dashed rgba(13,160,207,.40);background:linear-gradient(135deg,rgba(31,196,240,.06),rgba(13,160,207,.02));border-radius:14px;cursor:pointer;transition:all.25s ease}.sw-photo-label:hover{border-color:#0DA0CF;background:linear-gradient(135deg,rgba(31,196,240,.10),rgba(13,160,207,.04))}.sw-photo-icon{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;flex-shrink:0;box-shadow:0 6px 14px rgba(13,160,207,.25)}.sw-photo-text{flex:1;line-height:1.4}.sw-photo-text strong{display:block;color:#0A1428;font-weight:800;font-size:.96rem;margin-bottom:3px}.sw-photo-text span{display:block;color:#64748b;font-size:.82rem}.sw-photo-preview{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.sw-photo-preview-item{position:relative;width:90px;height:90px;border-radius:10px;overflow:hidden;border:1.5px solid #E5EDF3;background:#F7FBFD}.sw-photo-preview-item img{width:100%;height:100%;object-fit:cover}.sw-photo-preview-item.sw-photo-rm{position:absolute;top:4px;right:4px;width:22px;height:22px;border:0;border-radius:50%;background:rgba(225,29,72,.92);color:#fff;cursor:pointer;font-size:.85rem;line-height:1;font-family:inherit;display:flex;align-items:center;justify-content:center}.sw-btn-prev{background:#F1F5F9;color:#475569}.sw-btn-prev:hover{background:#E2E8F0;color:#0A1428}.sw-btn-next{background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;box-shadow:0 8px 18px rgba(13,160,207,.28)}.sw-btn-next:hover{transform:translateY(-1px);box-shadow:0 12px 24px rgba(13,160,207,.40)}.sw-btn-submit{background:linear-gradient(135deg,#FF6B1A,#E55510);color:#fff;box-shadow:0 12px 28px rgba(255,107,26,.32);padding:13px 22px}.sw-btn-submit:hover{transform:translateY(-1px);box-shadow:0 16px 36px rgba(255,107,26,.42)}
+
+ /* Erreur */.sw-error{margin-top:10px;padding:10px 14px;background:rgba(225,29,72,.08);border:1px solid rgba(225,29,72,.30);border-radius:10px;color:#BE1238;font-size:.86rem;font-weight:600;display:flex;align-items:center;gap:8px}.sw-error::before{content:"⚠";font-size:1rem}.sous-inp.has-error{border-color:#E11D48 !important;background:rgba(225,29,72,.04) !important;animation:swShake.35s ease}
+ @keyframes swShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+ /* Récap final */.sw-recap{background:linear-gradient(135deg,rgba(34,197,94,.06),rgba(34,197,94,.02));border:1px solid rgba(34,197,94,.20);border-radius:12px;padding:14px 16px;font-size:.84rem;color:#0A1428}.sw-recap-title{font-size:.7rem;color:#16A34A;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px}.sw-recap-row{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px dashed rgba(34,197,94,.18);line-height:1.4}.sw-recap-row:last-child{border-bottom:0}.sw-recap-label{color:#64748b;font-weight:600;flex-shrink:0}.sw-recap-value{color:#0A1428;font-weight:700;text-align:right;word-break:break-word}
+
+ /* Autocomplete adresse (BAN) — z-index très haut + sous-card overflow:visible pour ne pas couper la liste */.sous-card{overflow:visible !important}.sous-card > div:first-child{border-radius:20px 20px 0 0}.sous-addr-wrap{position:relative}.sous-addr-list{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid #E5EDF3;border-radius:10px;box-shadow:0 12px 32px rgba(10,20,40,.18);max-height:240px;overflow-y:auto;z-index:9999}.sous-addr-list[hidden]{display:none}.sous-addr-item{display:block;padding:10px 14px;cursor:pointer;border-bottom:1px solid #F1F5F9;transition:background.15s ease}.sous-addr-item:last-child{border-bottom:0}.sous-addr-item:hover,.sous-addr-item.is-active{background:rgba(31,196,240,.08)}.sous-addr-item.saa-label{display:block;color:#0A1428;font-size:.92rem;font-weight:600;line-height:1.25}.sous-addr-item.saa-ctx{display:block;color:#64748b;font-size:.78rem;margin-top:2px}.sous-addr-empty{padding:12px 14px;color:#64748b;font-size:.85rem;font-style:italic}
+ select.sous-inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+
+ /* Agence radio cards */.agency-radio{cursor:pointer;display:block}.agency-radio input{display:none}.agency-pill{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14px 12px;background:#fff;border:1.5px solid #E5EDF3;border-radius:12px;transition:all.2s ease}.agency-pill strong{color:#0A1428;font-size:.96rem;font-weight:800}.agency-pill small{color:#64748b;font-size:.76rem;margin-top:3px}.agency-radio input:checked +.agency-pill{background:linear-gradient(135deg,rgba(31,196,240,.10),rgba(31,196,240,.04));border-color:#1FC4F0;box-shadow:0 6px 18px rgba(31,196,240,.20)}.agency-radio input:checked +.agency-pill strong{color:#0DA0CF}.sous-modal button[type=submit]:hover{transform:translateY(-2px);box-shadow:0 18px 36px rgba(255,107,26,.42)}.sous-card form > div h4 + div + div + div{margin-top:0}
+ @media(max-width:560px){.sous-card form > div > div[style*="grid-template-columns:1fr 1fr"],.sous-card form > div > div[style*="grid-template-columns:120px"]{grid-template-columns:1fr !important}
+ }
+</style>
+
+<!-- ═══════════ Chargement dynamique des offres depuis Supabase ═══════════ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(async function loadContractOffers() {
+ const SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+ const SUPABASE_ANON = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
+ if (!window.supabase) return;
+ const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+ const { data: offers, error } = await sb.from('v_contract_offers').select('*');
+ if (error || !offers) {
+ console.error('[contract_offers] load error:', error);
+ return; // garde le fallback "Chargement…" si pas accessible
+ }
+
+ // Pas d'offres en DB : laisse les panes vides
+ if (offers.length === 0) {
+ document.querySelectorAll('.energy-pane.formula-grid').forEach(g => {
+ g.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:#94a3b8">Offres en cours de configuration.</div>';
+ });
+ return;
+ }
+
+ const escapeHtml = (s) => String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ // On autorise <strong> dans les features (déjà encodé en jsonb) → on encode tout sauf <strong>...</strong>
+ function safeFeature(text) {
+ return String(text || '').replace(/<(?!\/?strong>)/g, '&lt;');
+ }
+
+ // Group by energy
+ const byEnergy = { gaz: [], fioul: [], adoucisseur: [] };
+ offers.forEach(o => {
+ if (byEnergy[o.energy]) byEnergy[o.energy].push(o);
+ });
+
+ // Map energy → pane DOM id
+ const PANE_ID = { gaz: 'pane-gaz', fioul: 'pane-fioul', adoucisseur: 'pane-eau' };
+
+ Object.keys(byEnergy).forEach(energyKey => {
+ const list = byEnergy[energyKey];
+ const pane = document.getElementById(PANE_ID[energyKey]);
+ if (!pane) return;
+ const grid = pane.querySelector('.formula-grid');
+ if (!grid) return;
+
+ // Adoucisseur : 1 seule colonne large
+ if (energyKey === 'adoucisseur') {
+ grid.style.gridTemplateColumns = '1fr';
+ grid.style.maxWidth = '680px';
+ }
+
+ grid.innerHTML = list.map(o => {
+ const featuresArr = Array.isArray(o.features) ? o.features : [];
+ const featuresHtml = featuresArr.map(f =>
+ `<li class="${f.included === false ? 'no' : 'yes'}">${safeFeature(f.text)}</li>`
+ ).join('');
+ const priceStr = o.price_label ? escapeHtml(o.price_label) : `${o.price_ht_month} € HT`;
+ const yearStr = o.price_label
+ ? '<div class="formula-price-year">tarif selon modèle &amp; volume</div>'
+ : (o.price_ht_year ? `<div class="formula-price-year">soit ${o.price_ht_year} € HT/an</div>` : '');
+ // Tier → classe CSS pour styler la card
+ const tierClass = { basic:'basic', confort:'confort', securite:'securite', custom:'confort' }[o.tier] || 'basic';
+ const dataPrix = o.price_label
+ ? `${o.price_label} /mois`
+ : `${o.price_ht_month} € HT/mois — ${o.price_ht_year || (o.price_ht_month*12)} €/an`;
+
+ return `
+ <div class="formula-card ${tierClass}"${o.is_recommended && energyKey==='adoucisseur' ? ' style="border-color:#1FC4F0"' : ''}>
+ ${o.badge ? `<span class="formula-badge">${escapeHtml(o.badge)}</span>` : ''}
+ <div class="formula-eyebrow">Formule ${escapeHtml(o.energy_label)}</div>
+ <h2 class="formula-name">${escapeHtml(o.tier_label)}</h2>
+ <div class="formula-price-block">
+ <div class="formula-price">${priceStr}<small> /mois</small></div>
+ ${yearStr}
+ </div>
+ <p class="formula-baseline">${escapeHtml(o.baseline || '')}</p>
+ <ul class="formula-list">${featuresHtml}</ul>
+ ${o.legal_note ? `<small class="formula-note">${escapeHtml(o.legal_note)}</small>` : ''}
+ <button type="button" class="formula-cta"${o.legal_note ? ' style="margin-top:14px"' : ''}
+ data-energie="${escapeHtml(o.energy_label)}"
+ data-formule="${escapeHtml(o.tier_label)}"
+ data-prix="${escapeHtml(dataPrix)}"
+ onclick="openSouscriptionModal(this)">${escapeHtml(o.cta_label || 'Souscrire')}</button>
+ </div>`;
+ }).join('');
+ });
+})();
+</script>
+
+<script>
+ // ===== Modal souscription contrat =====
+ function openSouscriptionModal(btn){
+ var modal = document.getElementById('souscriptionModal');
+ var energie = btn.getAttribute('data-energie') || 'Gaz';
+ var formule = btn.getAttribute('data-formule') || 'CONFORT';
+ var prix = btn.getAttribute('data-prix') || '';
+
+ document.getElementById('sousType').textContent = energie;
+ document.getElementById('sousFormule').textContent = formule;
+ document.getElementById('sousPrix').textContent = prix;
+
+ document.getElementById('f-energie').value = energie;
+ document.getElementById('f-formule').value = formule;
+ document.getElementById('f-prix').value = prix;
+
+ // Pour l'adoucisseur on cache le bloc "Marque/modèle chaudière" et on le renomme
+ var equipBlock = document.getElementById('f-equipement-block');
+ var heading = equipBlock.querySelector('h4');
+ if (energie.toLowerCase().includes('adoucisseur')){
+ heading.lastChild && (heading.lastChild.textContent = ' Votre adoucisseur');
+ } else {
+ heading.lastChild && (heading.lastChild.textContent = ' Votre équipement');
+ }
+
+ modal.classList.add('open');
+ document.body.style.overflow = 'hidden';
+ }
+
+ function closeSouscriptionModal(){
+ document.getElementById('souscriptionModal').classList.remove('open');
+ document.body.style.overflow = '';
+ }
+
+ // ===== Détection automatique de l'agence en fonction du code postal =====
+ // Règles :
+ // - 59xxx (Nord) → Dunkerque
+ // - 62xxx (Pas-de-Calais) → Saint-Omer (couvre aussi Boulogne, Calais, et alentours)
+ // - Autre → Saint-Omer par défaut
+ function detectAgency(cp){
+ var clean = (cp || '').replace(/\s/g,'').substring(0,2);
+ if (clean === '59') return {name:'Dunkerque', zone:'Nord 59 — littoral', email:'dunkerque@helpconfort.com'};
+ if (clean === '62') return {name:'Saint-Omer', zone:'Pas-de-Calais 62', email:'saint-omer@helpconfort.com'};
+ // Par défaut (autre département) : Saint-Omer
+ return {name:'Saint-Omer', zone:'Pas-de-Calais 62', email:'saint-omer@helpconfort.com'};
+ }
+
+ // Bind le listener sur l'input CP au chargement
+ document.addEventListener('DOMContentLoaded', function(){
+ var cpInput = document.querySelector('input[name="cp"]');
+ if (!cpInput) return;
+ cpInput.addEventListener('input', function(){
+ var agency = detectAgency(this.value);
+ document.getElementById('f-agence').value = agency.name;
+ document.getElementById('agency-name').textContent = agency.name;
+ document.getElementById('agency-zone').textContent = agency.zone;
+ // Affiche la pastille uniquement si CP a au moins 2 chiffres
+ var pill = document.getElementById('agency-detected');
+ if (this.value.length >= 2){
+ pill.style.display = 'flex';
+ } else {
+ pill.style.display = 'none';
+ }
+ });
+ });
+
+ // ESC ferme
+ document.addEventListener('keydown', function(e){
+ if (e.key === 'Escape'){
+ var m = document.getElementById('souscriptionModal');
+ if (m && m.classList.contains('open')) closeSouscriptionModal();
+ }
+ });
+
+ async function submitSouscription(e){
+ e.preventDefault();
+ var form = e.target;
+ var data = new FormData(form);
+
+ // ⚠️ Détection automatique de l'agence basée sur le CP saisi
+ var cp = data.get('cp') || '';
+ var agency = detectAgency(cp);
+ var agence = agency.name;
+ data.set('agence', agence);
+
+ var energie = data.get('energie') || 'gaz';
+ var formule = data.get('formule') || 'CONFORT';
+ var prix = data.get('prix') || '';
+
+ // Désactive le bouton submit
+ var btn = form.querySelector('button[type="submit"]');
+ var btnOriginalHTML = btn ? btn.innerHTML : '';
+ if (btn) { btn.disabled = true; btn.innerHTML = 'Envoi en cours…'; btn.style.opacity = '.7'; }
+
+ // ── 1. INSERT en DB Supabase (table contracts, status='prospect') ───
+ try {
+ if (!window.supabase) {
+ // Charge dynamiquement si la lib n'est pas déjà là
+ await new Promise((res, rej) => {
+ var s = document.createElement('script');
+ s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+ s.onload = res; s.onerror = rej;
+ document.head.appendChild(s);
+ });
+ }
+ var sb = window.supabase.createClient(
+ 'https://btcbjwqiivhpwoszomhg.supabase.co',
+ 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2'
+ );
+
+ // Mapping formule → tier DB
+ var tier = formule.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z]/g,'');
+ if (!['basic','confort','securite','custom'].includes(tier)) tier = 'custom';
+
+ // Extrait le prix mensuel HT depuis le label (ex: "9 € HT/mois — 108 €/an" → 9)
+ var monthlyMatch = /([\d.,]+)\s*€\s*(?:HT)?\s*\/?\s*mois/i.exec(prix || '');
+ var monthly = monthlyMatch ? parseFloat(monthlyMatch[1].replace(',','.')) : 0;
+
+ var payload = {
+ status: 'prospect',
+ subscription_source: 'public_form',
+ type: tier,
+ metier: (energie || '').toLowerCase() === 'fioul' ? 'chauffage' : ((energie||'').toLowerCase() === 'gaz' ? 'chauffage' : 'multiservice'),
+ agence: agence ? agence.toLowerCase().replace(/[^a-z-]/g, '-').replace(/-+/g,'-').replace(/^-|-$/g,'') : null,
+ monthly_amount: monthly,
+ client_first_name: data.get('prenom') || null,
+ client_last_name: data.get('nom') || 'Sans nom',
+ client_phone: data.get('telephone') || '',
+ client_email: data.get('email') || null,
+ client_address: data.get('adresse') || null,
+ client_postal_code: cp || null,
+ client_city: data.get('ville') || null,
+ notes: data.get('commentaire') || null,
+ metadata: {
+ energie: energie,
+ formule_label: formule,
+ prix_label: prix,
+ type_logement: data.get('type_logement') || null,
+ statut_logement: data.get('statut') || null,
+ marque: data.get('marque') || null,
+ modele: data.get('modele') || null,
+ annee: data.get('annee') || null,
+ dernier_entretien: data.get('dernier_entretien') || null,
+ date_debut_souhaitee: data.get('date_debut') || null,
+ commentaire: data.get('commentaire') || null,
+ photos: (function(){
+ var json = document.getElementById('eqPhotosJson');
+ if (!json) return [];
+ try {
+ var arr = JSON.parse(json.value || '[]');
+ // On ne stocke que name (data url trop gros pour metadata)
+ return arr.map(function(p){ return { name: p.name, size_kb: Math.round((p.data || '').length * 3 / 4 / 1024) }; });
+ } catch(_){ return []; }
+ })(),
+ photos_count: (function(){
+ var json = document.getElementById('eqPhotosJson');
+ try { return JSON.parse(json ? json.value : '[]').length; } catch(_){ return 0; }
+ })(),
+ rib_uploaded: (function(){
+ var ri = document.getElementById('docRib');
+ return ri && ri.files && ri.files[0] ? { name: ri.files[0].name, size_kb: Math.round(ri.files[0].size/1024) } : null;
+ })(),
+ facture_entretien_uploaded: (function(){
+ var fi = document.getElementById('docFacture');
+ return fi && fi.files && fi.files[0] ? { name: fi.files[0].name, size_kb: Math.round(fi.files[0].size/1024) } : null;
+ })(),
+ sepa_principe_accepted: !!data.get('sepa_principe'),
+ visite_technique_required: true,
+ cgv_accepted_at: new Date().toISOString(),
+ user_agent: navigator.userAgent,
+ referrer: document.referrer || null
+ }
+ };
+
+ var ins = await sb.from('contracts').insert(payload).select('id').single();
+ if (ins.error) throw new Error('insert: ' + ins.error.message);
+
+ // ── 2. Déclenche l'envoi d'email via le SDK Supabase (gère la nouvelle
+ // auth publishable_key et bypass les soucis UNAUTHORIZED_LEGACY_JWT) ──
+ try {
+ await sb.functions.invoke('notify-subscription', {
+ body: { contract_id: ins.data.id, agence: payload.agence }
+ });
+ } catch (mailErr) {
+ console.warn('[souscription] notify-subscription failed:', mailErr);
+ // Pas grave : la souscription est en DB, Florian la voit dans l'admin
+ }
+
+ // ── 3. Confirmation visuelle ───────────────────────────────────────
+ var card = document.querySelector('.sous-card');
+ card.innerHTML = '<div style="padding:60px 32px;text-align:center"><div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#22A06B,#16a34a);margin:0 auto 22px;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 32px rgba(34,160,107,.30)"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><h3 style="margin:0 0 12px;color:#0A1428;font-size:1.4rem;font-weight:800">✅ Demande enregistrée !</h3><p style="margin:0 0 20px;color:#475569;line-height:1.55">Votre demande de souscription <strong>' + energie + ' ' + formule + '</strong> est bien arrivée à l\'agence <strong>' + agence + '</strong>.<br><br>Un conseiller vous rappelle au <strong>' + (data.get('telephone') || '') + '</strong> sous <strong>24h ouvrées</strong> pour finaliser votre contrat.</p><button type="button" onclick="closeSouscriptionModal();location.reload()" style="background:#0A1428;color:#fff;border:0;padding:11px 24px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.92rem;font-family:inherit">Fermer</button></div>';
+
+ } catch (err) {
+ console.error('[souscription] error:', err);
+ if (btn) { btn.disabled = false; btn.innerHTML = btnOriginalHTML; btn.style.opacity = ''; }
+ var errBox = form.querySelector('[data-form-error]');
+ if (!errBox) {
+ errBox = document.createElement('div');
+ errBox.dataset.formError = '1';
+ errBox.style.cssText = 'margin-top:14px;padding:11px 14px;background:rgba(217,45,32,.08);border-left:3px solid #d92d20;border-radius:8px;color:#9F0E2B;font-size:.86rem';
+ form.appendChild(errBox);
+ }
+ errBox.innerHTML = '❌ Une erreur est survenue : ' + (err.message || 'inconnue') + '<br>Vous pouvez réessayer ou nous appeler au <a href="tel:+33366100134" style="color:#0DA0CF;font-weight:700">03 66 10 01 34</a>.';
+ }
+
+ return false;
+ }
+</script>
+
+
+<!-- HC-LAZY-V1 -->
+
+<!-- HC-WIDGETS-V1 -->
+<script defer src="assets/hc-widgets.js?v=20260604-compact"></script>
+<script src="assets/hc-leads-capture.js"></script>
+<script src="assets/hc-content.js" defer></script>
+
+<!-- WIZARD MULTI-ÉTAPES SOUSCRIPTION -->
+<script>
+(function(){
+ var TOTAL = 6;
+ var current = 1;
+
+ function $(s, ctx){ return (ctx||document).querySelector(s); }
+ function $$(s, ctx){ return Array.from((ctx||document).querySelectorAll(s)); }
+
+ function showStep(n){
+ current = Math.max(1, Math.min(TOTAL, n));
+ $$('.sous-step').forEach(function(el){
+ el.classList.toggle('is-active', parseInt(el.dataset.step,10) === current);
+ });
+ // Progress bar
+ var fill = $('#swProgressFill');
+ if (fill) fill.style.width = (current / TOTAL * 100) + '%';
+ // Steps pills
+ $$('.sw-pstep').forEach(function(el){
+ var n2 = parseInt(el.dataset.pstep, 10);
+ el.classList.toggle('is-active', n2 === current);
+ el.classList.toggle('is-done', n2 < current);
+ });
+ // Counter
+ var counter = $('#swCounter');
+ if (counter) counter.textContent = 'Étape ' + current + ' sur ' + TOTAL;
+ var stepLabels = ['', 'Coordonnées', 'Adresse', 'Logement', 'Équipement', 'Documents', 'Envoi'];
+ if (counter) counter.innerHTML = '<strong>Étape ' + current + '/' + TOTAL + '</strong> · ' + (stepLabels[current] || '');
+ // Buttons (hidden + style.display pour bulletproof)
+ var bPrev = $('#swPrev'), bNext = $('#swNext'), bSub = $('#swSubmit');
+ if (bPrev) { bPrev.hidden = (current === 1); bPrev.style.display = (current === 1) ? 'none' : ''; }
+ if (bNext) { bNext.hidden = (current === TOTAL); bNext.style.display = (current === TOTAL) ? 'none' : ''; }
+ if (bSub) { bSub.hidden = (current !== TOTAL); bSub.style.display = (current !== TOTAL) ? 'none' : ''; }
+ // Effacer erreur
+ hideError();
+ // Récap sur dernière étape
+ if (current === TOTAL) buildRecap();
+ // Scroll modal au top
+ var sheet = $('.sous-modal-sheet,.sous-card');
+ if (sheet) sheet.scrollTop = 0;
+ }
+
+ function showError(msg){
+ var el = $('#swError');
+ if (!el) return;
+ el.textContent = msg;
+ el.hidden = false;
+ }
+ function hideError(){
+ var el = $('#swError');
+ if (el) el.hidden = true;
+ $$('.sous-inp.has-error').forEach(function(i){ i.classList.remove('has-error'); });
+ }
+
+ function validateStep(n){
+ var step = document.querySelector('.sous-step[data-step="'+n+'"]');
+ if (!step) return true;
+ var inputs = $$('[data-validate]', step);
+ var firstBad = null;
+ var msg = '';
+ inputs.forEach(function(inp){
+ var rule = inp.dataset.validate;
+ var val = (inp.type === 'checkbox') ? inp.checked : (inp.value || '').trim();
+ var bad = false;
+ if (rule === 'required' && !val) { bad = true; msg = msg || 'Merci de remplir tous les champs marqués *.'; }
+ else if (rule === 'email' && (!val || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val))) { bad = true; msg = msg || 'Email invalide.'; }
+ else if (rule === 'tel' && (!val || val.replace(/\D/g,'').length < 8)) { bad = true; msg = msg || 'Numéro de téléphone invalide.'; }
+ else if (rule === 'cp' && (!val || !/^[0-9]{5}$/.test(val))) { bad = true; msg = msg || 'Code postal invalide (5 chiffres).'; }
+ else if (rule === 'checked' && !val) { bad = true; msg = msg || 'Merci d\'accepter la déclaration pour valider.'; }
+ else if (rule === 'files') {
+ var json = document.getElementById('eqPhotosJson');
+ var photos = json ? (function(){ try { return JSON.parse(json.value || '[]'); } catch(_){ return []; } })() : [];
+ if (photos.length === 0) { bad = true; msg = msg || 'Merci d\'ajouter au moins une photo de votre chaudière.'; }
+ }
+ else if (rule === 'files-rib') {
+ var ribInput = document.getElementById('docRib');
+ if (!ribInput || !ribInput.files || ribInput.files.length === 0) {
+ bad = true; msg = msg || 'Merci de téléverser votre RIB (obligatoire).';
+ }
+ }
+ if (bad){
+ inp.classList.add('has-error');
+ if (!firstBad) firstBad = inp;
+ } else {
+ inp.classList.remove('has-error');
+ }
+ });
+ if (firstBad){
+ showError(msg);
+ try { firstBad.focus(); } catch(e){}
+ return false;
+ }
+ hideError();
+ return true;
+ }
+
+ function buildRecap(){
+ var form = $('#sousForm');
+ if (!form) return;
+ var fd = new FormData(form);
+ var rows = [
+ ['Nom', ((fd.get('prenom')||'') + ' ' + (fd.get('nom')||'')).trim()],
+ ['Email', fd.get('email') || ''],
+ ['Tél.', fd.get('telephone') || ''],
+ ['Adresse', [(fd.get('adresse')||''), (fd.get('cp')||''), (fd.get('ville')||'')].filter(Boolean).join(' · ')],
+ ['Logement',[fd.get('type_logement'), fd.get('statut')].filter(Boolean).join(' / ')],
+ ['Équipt.', [fd.get('marque'), fd.get('modele'), fd.get('annee')].filter(Boolean).join(' · ') || '(à préciser sur place)']
+ ];
+ var html = '<div class="sw-recap-title">✓ Récapitulatif de votre demande</div>';
+ rows.forEach(function(r){
+ var v = r[1] || '—';
+ html += '<div class="sw-recap-row"><span class="sw-recap-label">'+r[0]+'</span><span class="sw-recap-value">'+v.replace(/</g,'&lt;')+'</span></div>';
+ });
+ var recap = $('#swRecap');
+ if (recap) recap.innerHTML = html;
+ }
+
+ // ═══════════════════════════════════════════════════════════════
+ // ÉQUIPEMENT : Modèles dynamiques selon marque + Upload photo + validation
+ // ═══════════════════════════════════════════════════════════════
+ var MODELES_PAR_MARQUE = {
+ 'Saunier Duval': ['Thema F / C', 'Thema Plus Condens', 'Themis Condens', 'Themaclassic', 'Themacondens F AS', 'Isofast Condens', 'Isotwin Condens', 'Semia Condens', 'Semia 25/30', 'Renova Plus', 'Combiplus 25', 'Combiplus 30', 'Duomax F 28', 'Initia Plus', 'Autre modèle'],
+ 'De Dietrich': ['Vivadens MCR P', 'Naneo PMC-M', 'Naneo PMW-M', 'Innovens MCA', 'Innovens Pro MCA', 'Modulens AGC', 'Modulens O', 'C 230 Eco', 'Olifix', 'Pluton', 'Mura One', 'GTU C', 'GT 120', 'Optima Pro', 'Autre modèle'],
+ 'Frisquet': ['Hydroconfort Condensation Visio', 'Hydromotrix Visio Évolution', 'Hydromotrix Tradition', 'Prestige Condensation Visio', 'Prestige Tradition', 'Eco Radio System Visio', 'Autre modèle'],
+ 'Vaillant': ['ecoTEC plus VU', 'ecoTEC plus VUI', 'ecoTEC pure', 'ecoTEC exclusive', 'turboTEC pro', 'turboTEC plus', 'atmoTEC plus', 'atmoTEC pro', 'ThermoCompact', 'icoVIT', 'Autre modèle'],
+ 'Viessmann': ['Vitodens 050-W', 'Vitodens 100-W', 'Vitodens 200-W', 'Vitodens 222-F', 'Vitodens 333-F', 'Vitoladens 300-C', 'Vitogas 200-F', 'Vitorondens 200-T', 'Vitocrossal 100', 'Vitocrossal 200', 'Autre modèle'],
+ 'ELM Leblanc': ['Egalis Condens NGLM', 'Mégalis Condens', 'Mégalia FF', 'Acleis NGLM', 'Odealis Condens', 'Acleis Sit', 'Aris', 'GLM 4-2', 'Autre modèle'],
+ 'Chappée': ['Initia HTE', 'Initia Plus HTE', 'Initia Pure', 'Luna Duo-tec MP', 'Luna Duo-tec MP+', 'Vesuvio', 'Inoa Green', 'Bora HTE', 'Autre modèle'],
+ 'Atlantic': ['Pleïade', 'Naïa Duo', 'Naïa Micro 25', 'Idra', 'Idra Premium Hybride', 'Perfinox', 'Sigma 5000', 'Autre modèle'],
+ 'Bosch / Junkers': ['Condens 2200i W', 'Condens 5000W', 'Condens 7000i W', 'Condens 8000', 'Cerapur Smart', 'Cerapur Comfort', 'Cerapur Maxx', 'Ceramini', 'ZWB / ZSB Condens', 'Autre modèle'],
+ 'Brötje': ['EcoTherm Plus WGB', 'EcoCondens BBS Evo', 'EcoCondens WGB-K', 'BS Evo', 'Sieger BK', 'Autre modèle'],
+ 'Buderus': ['Logamax plus GB172i', 'Logamax plus GB182i', 'Logamax plus GB192i', 'Logamax plus GB132', 'Logamax plus GB162', 'Logamax U042', 'Logano plus GB212', 'Logano G125', 'Autre modèle'],
+ 'Chaffoteaux': ['Mira Advance', 'Mira C Green', 'Talia Green System', 'Talia Green', 'Talia Green Hybrid', 'Pigma Green', 'Niagara C Green', 'Niagara Delta Green', 'Autre modèle'],
+ 'Cuenod': ['NC9 GX 207', 'C 1.40 GX', 'NC4 / NC6', 'Compact', 'Compact Plus', 'Nuway', 'Autre modèle'],
+ 'Elco': ['Thision S', 'Thision L Eco', 'Aerotop G', 'Straton L', 'Trigon L', 'Autre modèle'],
+ 'Ferroli': ['Diva F', 'Divatop F', 'Bluehelix Tech RRT', 'Bluehelix Pro RRT', 'Bluehelix Maxima', 'EconCEL', 'Pegasus', 'Energy Top W', 'GN 1 N', 'Autre modèle'],
+ 'Franco Belge': ['Sunagaz', 'Sunatherm', 'Estelle', 'Préférence', 'Souverain', 'Autre modèle'],
+ 'Geminox': ['THRi 5-25', 'THRi 5-35', 'THRs 5-25', 'THRs 5-35', 'Zem Premium', 'Autre modèle'],
+ 'Idéal Standard': ['Icos', 'Icos Domino', 'Esprit Condens', 'Esprit HE', 'Autre modèle'],
+ 'Immergas': ['Victrix Tera', 'Victrix Pro', 'Hercules Condensing', 'Mythos', 'Eolo Star Maior', 'Mini Eolo X', 'Autre modèle'],
+ 'Acleis': ['Acleis NGLM', 'Acleis 23 NGLA', 'Acleis 32 GLM', 'Autre modèle'],
+ 'Auer': ['Edel HRC', 'Edel Tek', 'EasyLife S', 'EasyLife Hybrid', 'Pulsatoire', 'Autre modèle'],
+ 'Oertli': ['OE-tronic 4', 'OE-tronic 2', 'OEnovia', 'GMR 1000', 'GMR 5/3', 'Autre modèle'],
+ 'Riello': ['Family Condens', 'Family Aqua Condens', 'Plus Condens', 'Tau N Condens', 'Residence Condens', 'Autre modèle'],
+ 'Sime': ['Murelle Equipe', 'Murelle Pro', 'Brava Slim', 'Format Dewy', 'Ecomfort Plus', 'Autre modèle'],
+ 'Tifell': ['Eurofell', 'Biotec', 'Acquatic Mini', 'Autre modèle'],
+ 'Unical': ['Alkon', 'Tristar 3 K', 'Alkon Plus', 'Modulex', 'Autre modèle'],
+ 'Weishaupt': ['WTC-GW', 'WTC-OB', 'WBC', 'Thermo Condens', 'Autre modèle'],
+ 'Wolf': ['CGB-2', 'CGB-2K', 'CGW-2', 'CGS-2', 'CGW Combi', 'TGB Sol', 'KGE Bois', 'Autre modèle'],
+ 'Radiant': ['RKA Condens', 'Pro 25', 'R2K 25', 'R2KS 24', 'Autre modèle'],
+ 'Zaegel-Held': ['ZH Compact', 'ZH Ecomax', 'ZH Hydromax', 'Autre modèle'],
+ 'Autre / Je ne sais pas': ['Je ne sais pas', 'Autre — je préciserai par téléphone']
+ };
+
+ function initEquipement(){
+ var marqueSel = $('#eqMarque');
+ var modeleSel = $('#eqModele');
+ if (!marqueSel || !modeleSel) return;
+
+ marqueSel.addEventListener('change', function(){
+ var brand = marqueSel.value;
+ modeleSel.innerHTML = '<option value="">Modèle * — sélectionnez</option>';
+ var models = MODELES_PAR_MARQUE[brand] || ['Je ne sais pas'];
+ models.forEach(function(m){
+ var opt = document.createElement('option');
+ opt.value = m;
+ opt.textContent = m;
+ modeleSel.appendChild(opt);
+ });
+ });
+
+ // PHOTO upload + preview
+ var photoInput = $('#eqPhotos');
+ var preview = $('#eqPhotosPreview');
+ var photosData = []; // base64 array, max 3
+
+ if (photoInput && preview) {
+ photoInput.addEventListener('change', function(e){
+ var files = Array.from(e.target.files || []).slice(0, 3 - photosData.length);
+ files.forEach(function(file){
+ if (!file.type.startsWith('image/')) return;
+ if (file.size > 5 * 1024 * 1024) {
+ alert(file.name + ' dépasse 5 Mo');
+ return;
+ }
+ var reader = new FileReader();
+ reader.onload = function(ev){
+ photosData.push({ name: file.name, data: ev.target.result });
+ renderPreview();
+ };
+ reader.readAsDataURL(file);
+ });
+ });
+
+ function renderPreview(){
+ preview.innerHTML = '';
+ photosData.forEach(function(p, i){
+ var item = document.createElement('div');
+ item.className = 'sw-photo-preview-item';
+ item.innerHTML = '<img loading="lazy" decoding="async" src="' + p.data + '" alt="' + p.name + '">' +
+ '<button type="button" class="sw-photo-rm" data-i="' + i + '" aria-label="Supprimer">×</button>';
+ preview.appendChild(item);
+ });
+ // Stocker en hidden field (JSON) pour récupération côté submit
+ var hid = $('#eqPhotosJson');
+ if (!hid){
+ hid = document.createElement('input');
+ hid.type = 'hidden';
+ hid.name = 'photos_json';
+ hid.id = 'eqPhotosJson';
+ photoInput.parentElement.appendChild(hid);
+ }
+ hid.value = JSON.stringify(photosData);
+ }
+
+ preview.addEventListener('click', function(e){
+ var btn = e.target.closest('.sw-photo-rm');
+ if (!btn) return;
+ photosData.splice(parseInt(btn.dataset.i, 10), 1);
+ renderPreview();
+ });
+ }
+ }
+ if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initEquipement);
+ else initEquipement();
+
+ // ═══════════════════════════════════════════════════════════════
+ // DOCUMENTS étape 5 : RIB + facture entretien — feedback upload
+ // ═══════════════════════════════════════════════════════════════
+ function initDocuments(){
+ function bindFile(inputId, statusId, label){
+ var input = document.getElementById(inputId);
+ var status = document.getElementById(statusId);
+ if (!input || !status) return;
+ input.addEventListener('change', function(){
+ var f = input.files && input.files[0];
+ if (!f) { status.hidden = true; return; }
+ if (f.size > 5 * 1024 * 1024) {
+ alert(f.name + ' dépasse 5 Mo. Choisissez un fichier plus léger.');
+ input.value = '';
+ return;
+ }
+ status.className = 'sw-doc-status ok';
+ status.textContent = label + ' : ' + f.name + ' (' + Math.round(f.size/1024) + ' Ko)';
+ status.hidden = false;
+ });
+ }
+ bindFile('docRib', 'ribStatus', 'RIB téléversé');
+ bindFile('docFacture', 'factureStatus', 'Facture téléversée');
+ }
+ if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initDocuments);
+ else initDocuments();
+
+ // Init handlers
+ function init(){
+ var nextBtn = $('#swNext');
+ var prevBtn = $('#swPrev');
+ if (!nextBtn || !prevBtn) return;
+ nextBtn.addEventListener('click', function(){
+ if (validateStep(current)) showStep(current + 1);
+ });
+ prevBtn.addEventListener('click', function(){
+ showStep(current - 1);
+ });
+ // Submit handler dans le form : valide la dernière étape
+ var form = $('#sousForm');
+ if (form){
+ form.addEventListener('submit', function(e){
+ if (!validateStep(TOTAL)){
+ e.preventDefault();
+ return false;
+ }
+ });
+ }
+ // ENTER avance d'une étape (au lieu de submit)
+ form && form.addEventListener('keydown', function(e){
+ if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && current !== TOTAL){
+ e.preventDefault();
+ nextBtn.click();
+ }
+ });
+ // Quand modal ouvre, reset au step 1
+ document.addEventListener('souscription:opened', function(){ showStep(1); });
+ // Init à step 1
+ showStep(1);
+ }
+
+ if (document.readyState === 'loading'){
+ document.addEventListener('DOMContentLoaded', init);
+ } else {
+ init();
+ }
+})();
+</script>
+
+<!-- AUTOCOMPLETE ADRESSE (BAN — api-adresse.data.gouv.fr) -->
+<script>
+(function(){
+ function initAddrAutocomplete(){
+ var input = document.getElementById('sousAdresse');
+ var list = document.getElementById('sousAdresseList');
+ var cp = document.getElementById('sousCp');
+ var ville = document.getElementById('sousVille');
+ if (!input || !list) return;
+
+ var timer = null;
+ var lastQuery = '';
+ var activeIdx = -1;
+ var items = [];
+
+ function close(){ list.hidden = true; list.innerHTML = ''; activeIdx = -1; items = []; }
+
+ function render(features){
+ items = features || [];
+ if (!items.length){
+ list.innerHTML = '<div class="sous-addr-empty">Aucune adresse trouvée</div>';
+ list.hidden = false;
+ return;
+ }
+ list.innerHTML = items.map(function(f, i){
+ var p = f.properties;
+ var label = p.name || '';
+ var ctx = (p.postcode || '') + ' ' + (p.city || '') + (p.context ? ' · ' + p.context : '');
+ return '<div class="sous-addr-item" role="option" data-i="'+i+'"><span class="saa-label">'+label.replace(/</g,'&lt;')+'</span><span class="saa-ctx">'+ctx.replace(/</g,'&lt;')+'</span></div>';
+ }).join('');
+ list.hidden = false;
+ }
+
+ function fill(feature){
+ var p = feature.properties;
+ // name = "13 rue X" pour type housenumber, sinon nom de rue
+ input.value = p.name || '';
+ if (cp) cp.value = p.postcode || '';
+ if (ville) ville.value = p.city || '';
+ close();
+ }
+
+ function search(q){
+ if (q.length < 3){ close(); return; }
+ if (q === lastQuery) return;
+ lastQuery = q;
+ var url = 'https://api-adresse.data.gouv.fr/search/?q=' + encodeURIComponent(q) + '&limit=6&autocomplete=1';
+ fetch(url).then(function(r){ return r.json(); }).then(function(data){
+ if (input.value.trim() === q) render(data.features || []);
+ }).catch(function(){ /* silencieux */ });
+ }
+
+ input.addEventListener('input', function(){
+ var q = input.value.trim();
+ if (timer) clearTimeout(timer);
+ timer = setTimeout(function(){ search(q); }, 220);
+ });
+
+ input.addEventListener('focus', function(){
+ if (items.length) list.hidden = false;
+ });
+
+ input.addEventListener('blur', function(){
+ // delay pour permettre le click sur un item
+ setTimeout(close, 180);
+ });
+
+ input.addEventListener('keydown', function(e){
+ if (list.hidden) return;
+ if (e.key === 'ArrowDown'){ e.preventDefault(); activeIdx = Math.min(activeIdx+1, items.length-1); updateActive(); }
+ else if (e.key === 'ArrowUp'){ e.preventDefault(); activeIdx = Math.max(activeIdx-1, 0); updateActive(); }
+ else if (e.key === 'Enter'){
+ if (activeIdx >= 0 && items[activeIdx]){ e.preventDefault(); fill(items[activeIdx]); }
+ }
+ else if (e.key === 'Escape'){ close(); }
+ });
+
+ function updateActive(){
+ list.querySelectorAll('.sous-addr-item').forEach(function(el, i){
+ el.classList.toggle('is-active', i === activeIdx);
+ });
+ }
+
+ list.addEventListener('mousedown', function(e){
+ // mousedown (pas click) pour empêcher le blur de fermer avant
+ var t = e.target.closest('.sous-addr-item');
+ if (!t) return;
+ e.preventDefault();
+ var i = parseInt(t.dataset.i, 10);
+ if (!isNaN(i) && items[i]) fill(items[i]);
+ });
+ }
+
+ // DÉSACTIVÉ : conflit avec le script global hc-address-autocomplete.js
+ // (le bandeau restait ouvert à cause des 2 systèmes en parallèle)
+ // if (document.readyState === 'loading'){
+ // document.addEventListener('DOMContentLoaded', initAddrAutocomplete);
+ // } else {
+ // initAddrAutocomplete();
+ // }
+})();
+</script>
+<script src="assets/hc-address-autocomplete.js" defer></script>
+<script>
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){r.unregister();});if('caches' in window)caches.keys().then(function(ks){ks.forEach(function(k){caches.delete(k);});});});});}
+</script>
+<!-- HC-SW-KILL-V2 — désinscription SW + purge caches + reload (15/05 PM) -->
+<script>
+(function(){
+ if (!('serviceWorker' in navigator)) return;
+ var hadSW = false;
+ navigator.serviceWorker.getRegistrations().then(function(rs){
+ if (rs.length > 0) hadSW = true;
+ rs.forEach(function(r){ r.unregister(); });
+ });
+ if ('caches' in window) {
+ caches.keys().then(function(ks){
+ ks.forEach(function(k){ caches.delete(k); });
+ });
+ }
+ // Si on avait un SW actif et qu'on n'a pas encore rechargé une fois, force le reload (sans boucle)
+ setTimeout(function(){
+ try {
+ if (hadSW && !sessionStorage.getItem('__hc_sw_reset')) {
+ sessionStorage.setItem('__hc_sw_reset', '1');
+ location.reload(true);
+ }
+ } catch(_){}
+ }, 500);
+})();
+</script>
+<script src="assets/hc-form-autocomplete.js" defer></script>
+  <script defer src="assets/hc-megamenu-fix.js"></script>
+  <script defer src="assets/hc-form-validation.js"></script>
+  <script defer src="assets/hc-sticky-cta.js"></script>
+  <script defer src="assets/hc-tracking.js"></script>
+  <script defer src="assets/hc-chat-widget.js"></script>
+  <script defer src="assets/hc-a11y-fixes.js"></script>
+  <script defer src="assets/hc-pricing.js"></script>
+<script src="assets/hc-rate-limit.js?v=20260603" defer></script>
 </body>
 </html>
