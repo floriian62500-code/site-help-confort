@@ -65,7 +65,10 @@
   var style = document.createElement('style');
   style.textContent = "" +
     /* Bouton principal flottant unifié */
-    ".hc-fab{position:fixed;right:18px;bottom:18px;z-index:9998;display:flex;flex-direction:column;align-items:flex-end;gap:12px;font-family:Inter,system-ui,sans-serif}" +
+    /* 2026-06-04 — Fix débordement chat widget : verrouiller la largeur pour ne JAMAIS s'étaler */
+    ".hc-fab{position:fixed;right:18px;bottom:18px;z-index:9998;display:flex;flex-direction:column;align-items:flex-end;gap:12px;font-family:Inter,system-ui,sans-serif;width:auto;max-width:108px;pointer-events:auto;contain:layout style}" +
+    ".hc-fab > *{max-width:100%}" +
+    ".hc-fab.open,.hc-fab.chat-open{max-width:none;width:auto}" +
     "@media(min-width:900px){.hc-fab{right:28px;bottom:28px}}" +
 
     /* Bouton premium avec mascotte intégrée */
