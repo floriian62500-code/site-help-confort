@@ -910,74 +910,7 @@ if (document.fonts && document.fonts.ready) {
 
 
 
-<script>
-(function(){
- var btn = document.getElementById('chatUrgBtn');
- var wrap = document.getElementById('chatUrg');
- var quick = document.getElementById('chatQuick');
- var form = document.getElementById('chatUrgForm');
- var body = document.getElementById('chatUrgBody');
- var svcField = document.getElementById('chatSvcField');
- var step2Msg = document.getElementById('chatStep2Msg');
- if(!btn || !wrap) return;
 
- btn.addEventListener('click', function(){
- var open = wrap.classList.toggle('open');
- btn.setAttribute('aria-expanded', open);
- });
-
- // Quick replies → step 2
- if(quick){
- quick.addEventListener('click', function(e){
- var b = e.target.closest('button[data-svc]');
- if(!b) return;
- var svc = b.getAttribute('data-svc');
- var emoji = b.getAttribute('data-emoji') || '';
- // Append user message
- var userMsg = document.createElement('div');
- userMsg.className = 'chat-msg chat-msg-user';
- userMsg.innerHTML = '<p>' + emoji + ' ' + svc.split('/').pop().trim() + '</p>';
- body.appendChild(userMsg);
- svcField.value = svc;
- step2Msg.querySelector('p').innerHTML = 'OK pour <strong>' + svc + '</strong> 👌 Laissez-nous votre <strong>numéro</strong> et un <strong>mot-clé</strong>, nous vous rappelons rapidement.';
- // Hide quick replies, show form
- quick.style.display = 'none';
- form.style.display = 'flex';
- body.scrollTop = body.scrollHeight;
- setTimeout(function(){ document.getElementById('chatTel').focus(); }, 250);
- });
- }
-
- // Submit form
- if(form){
- form.addEventListener('submit', function(e){
- e.preventDefault();
- var tel = document.getElementById('chatTel').value.trim();
- var prec = document.getElementById('chatPrec').value.trim();
- // Construct mailto / formspree fallback
- var subject = encodeURIComponent('🚨 Demande urgente HELP Confort — ' + svcField.value);
- var bodyTxt = encodeURIComponent('Service : ' + svcField.value + '\nTéléphone : ' + tel + '\nPrécision : ' + prec);
- // Append confirmation
- var confirm = document.createElement('div');
- confirm.className = 'chat-msg chat-msg-bot';
- confirm.innerHTML = '<p>✅ Merci ! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
- body.appendChild(confirm);
- form.style.display = 'none';
- body.scrollTop = body.scrollHeight;
- // Open mailto in background as fallback so the email is actually triggered
- window.location.href = 'mailto:saint-omer@helpconfort.com?subject=' + subject + '&body=' + bodyTxt;
- });
- }
-
- window.chatBack = function(){
- form.style.display = 'none';
- quick.style.display = 'flex';
- // Remove last user message + confirmations
- body.querySelectorAll('.chat-msg-user').forEach(function(m){m.remove()});
- body.scrollTop = body.scrollHeight;
- };
-})();
-</script>
 
 <!-- ============ MODAL SOUSCRIPTION CONTRAT ============ -->
 <div id="souscriptionModal" class="sous-modal" role="dialog" aria-modal="true" aria-labelledby="sousTitle" style="position:fixed;inset:0;z-index:9999;display:none;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto">
