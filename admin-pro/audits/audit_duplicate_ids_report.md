@@ -1,4 +1,4 @@
-# Audit duplicate IDs — 2026-06-03 08:21
+# Audit duplicate IDs — 2026-06-04 07:26
 
 Sonde #63 : détecte les `id="X"` répétés dans une page (HTML invalide) et les ids partagés par > 10 pages (potentielle factorisation).
 
