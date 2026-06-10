@@ -65,14 +65,18 @@
   var style = document.createElement('style');
   style.textContent = "" +
     /* Bouton principal flottant unifié */
-    ".hc-fab{position:fixed;right:18px;bottom:18px;z-index:9998;display:flex;flex-direction:column;align-items:flex-end;gap:12px;font-family:Inter,system-ui,sans-serif}" +
+    /* 2026-06-04 — Widget compact : taille verrouillée, bulle seulement au hover, mascotte cachée par défaut */
+    ".hc-fab{position:fixed;right:18px;bottom:18px;z-index:9998;display:flex;flex-direction:column;align-items:flex-end;gap:12px;font-family:Inter,system-ui,sans-serif;width:auto;max-width:60px;pointer-events:auto;contain:layout style}" +
+    ".hc-fab > *{max-width:100%}" +
+    ".hc-fab.open,.hc-fab.chat-open{max-width:none;width:auto}" +
     "@media(min-width:900px){.hc-fab{right:28px;bottom:28px}}" +
 
-    /* Bouton premium avec mascotte intégrée */
-    ".hc-fab-btn--premium{width:108px;height:108px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#1FC4F0 0%,#0DA0CF 60%,#0A7BA8 100%);color:#fff;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 24px 50px rgba(13,160,207,.55),0 0 0 8px rgba(31,196,240,.18),inset 0 -4px 14px rgba(0,0,0,.20);transition:all .35s cubic-bezier(.16,1,.3,1);position:relative;outline:none;overflow:visible}" +
+    /* 2026-06-04 — Bouton compact 60px (au lieu de 108px), mascotte cachée par défaut */
+    ".hc-fab-btn--premium{width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#1FC4F0 0%,#0DA0CF 60%,#0A7BA8 100%);color:#fff;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 24px rgba(13,160,207,.45);transition:all .35s cubic-bezier(.16,1,.3,1);position:relative;outline:none;overflow:hidden}" +
     ".hc-fab-btn--premium:hover{transform:scale(1.06) translateY(-2px);box-shadow:0 24px 50px rgba(13,160,207,.60),0 0 0 8px rgba(31,196,240,.18),inset 0 -3px 12px rgba(0,0,0,.18)}" +
     ".hc-fab-btn--premium:active{transform:scale(.95)}" +
-    ".hc-fab-btn--premium .hc-fab-masc{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:130px;height:auto;max-height:150px;object-fit:contain;object-position:center top;filter:drop-shadow(0 6px 12px rgba(0,0,0,.30));pointer-events:none;transition:transform .35s cubic-bezier(.16,1,.3,1)}" +
+    /* Mascotte CACHÉE par défaut (Florian : trop envahissante) — n'apparaît que sur écrans larges au hover éventuel */
+    ".hc-fab-btn--premium .hc-fab-masc{display:none !important}" +
     ".hc-fab-btn--premium:hover .hc-fab-masc{transform:translateX(-50%) translateY(-3px) rotate(-3deg)}" +
     ".hc-fab.open .hc-fab-btn--premium .hc-fab-masc{opacity:0;transform:translateX(-50%) scale(.6)}" +
     ".hc-fab.open .hc-fab-btn--premium .ic-open{display:none !important}" +
@@ -86,13 +90,15 @@
     ".hc-fab.open .hc-fab-btn--premium{background:linear-gradient(135deg,#0A1428,#0E2240);box-shadow:0 18px 40px rgba(10,20,40,.40)}" +
 
     /* Bulle de message dynamique premium au-dessus du bouton */
-    ".hc-fab-bubble{position:absolute;bottom:40px;right:130px;z-index:6;background:#fff;color:#0A1428;padding:11px 18px;border-radius:18px 18px 4px 18px;box-shadow:0 14px 32px rgba(13,160,207,.22),0 2px 6px rgba(10,20,40,.08);font-size:.92rem;font-weight:700;max-width:240px;white-space:nowrap;animation:hcBubbleFloat 5s ease-in-out infinite,hcBubbleEnter .5s ease-out;cursor:default;border:1.5px solid rgba(13,160,207,.18)}" +
+    /* 2026-06-04 — Bulle CACHÉE par défaut, n'apparaît qu'au hover du bouton (Florian : envahissante) */
+    ".hc-fab-bubble{position:absolute;bottom:8px;right:80px;z-index:6;background:#fff;color:#0A1428;padding:9px 16px;border-radius:14px 14px 4px 14px;box-shadow:0 8px 22px rgba(13,160,207,.18);font-size:.86rem;font-weight:700;max-width:200px;width:max-content;white-space:nowrap;cursor:default;border:1px solid rgba(13,160,207,.18);opacity:0;visibility:hidden;pointer-events:none;transform:translateX(8px);transition:opacity .25s ease,visibility .25s ease,transform .25s ease}" +
+    ".hc-fab:hover .hc-fab-bubble,.hc-fab .hc-fab-btn--premium:hover ~ .hc-fab-bubble,.hc-fab-bubble.show{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(0)}" +
     ".hc-fab-bubble .hcfb-text{color:#0A1428;letter-spacing:-.005em;display:inline-block}" +
     ".hc-fab-bubble::after{content:'';position:absolute;bottom:14px;right:-7px;width:14px;height:14px;background:#fff;border-top:1px solid rgba(13,160,207,.12);border-right:1px solid rgba(13,160,207,.12);transform:rotate(45deg)}" +
     ".hc-fab.open .hc-fab-bubble{display:none}" +
     "@keyframes hcBubbleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}" +
     "@keyframes hcBubbleEnter{0%{opacity:0;transform:translateY(8px) scale(.92)}100%{opacity:1;transform:translateY(0) scale(1)}}" +
-    "@media(max-width:480px){.hc-fab-bubble{display:none}.hc-fab-btn--premium{width:68px;height:68px}.hc-fab-btn--premium .hc-fab-masc{width:80px}}" +
+    "@media(max-width:480px){.hc-fab-bubble{display:none !important}.hc-fab-btn--premium{width:54px;height:54px}.hc-fab{bottom:14px;right:14px}}" +
 
     /* Menu d'actions */
     ".hc-menu{display:none;flex-direction:column;gap:10px;background:#fff;border-radius:18px;padding:12px;box-shadow:0 24px 60px rgba(10,20,40,.18),0 0 0 1px rgba(10,20,40,.04);min-width:280px;opacity:0;transform:translateY(10px) scale(.95);transition:all .25s cubic-bezier(.16,1,.3,1);transform-origin:bottom right}" +
