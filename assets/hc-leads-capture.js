@@ -83,6 +83,8 @@
         // Construire le payload
         const payload = {
           nom: (formData.get('nom') || formData.get('name') || formData.get('prenom_nom') || '').toString().trim() || 'Anonyme',
+          prenom: (formData.get('prenom') || formData.get('firstname') || '').toString().trim() || null,
+          adresse: (formData.get('adresse') || formData.get('address') || formData.get('rue') || '').toString().trim() || null,
           email: (formData.get('email') || formData.get('mail') || '').toString().trim() || null,
           telephone: (formData.get('telephone') || formData.get('tel') || formData.get('phone') || '').toString().trim() || null,
           ville: (formData.get('ville') || formData.get('city') || '').toString().trim() || null,
