@@ -22,7 +22,7 @@
   var hideOldEmerg = function() {
     var st = document.createElement('style');
     st.textContent =
-      '#hc-emerg, #chatUrg, .chat-urg, .chat-urg-fab { display: none !important; visibility: hidden !important; pointer-events: none !important; }' +
+      '#hc-emerg, #chatUrg, .chat-urg, .chat-urg-fab, .chat-urg-head-bubble, [aria-label="Zone d\'intervention plomberie"], [aria-label="Zone d\'intervention chauffage"], [aria-label="Zone d\'intervention électricité"], [aria-label="Zone d\'intervention serrurerie"], [aria-label="Zone d\'intervention vitrerie"], [aria-label="Zone d\'intervention menuiserie"], [aria-label="Zone d\'intervention volets"], [aria-label="Zone d\'intervention rénovation"], [aria-label="Zone d\'intervention PMR"], section[aria-label^="Zone d\'intervention"], .m-zone-compact { display: none !important; visibility: hidden !important; pointer-events: none !important; }' +
       // Fix dropdown menus
       '.nav-item-drop { position: relative !important; display: inline-block !important; }' +
       '.nav-dropdown { ' +
