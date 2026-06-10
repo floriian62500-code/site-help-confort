@@ -666,6 +666,17 @@ if (document.fonts && document.fonts.ready) {
 
  <div class="form-row two">
  <div class="form-group">
+ <label for="adresse">Adresse (n° + rue) *</label>
+ <input id="adresse" name="adresse" type="text" autocomplete="address-line1" placeholder="12 rue de la Gare" required>
+ </div>
+ <div class="form-group">
+ <label for="cp">Code postal *</label>
+ <input id="cp" name="cp" type="text" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="62500" required>
+ </div>
+ </div>
+
+ <div class="form-row two">
+ <div class="form-group">
  <label for="ville">Ville de l'intervention *</label>
  <input id="ville" name="ville" type="text" autocomplete="address-level2" placeholder="Saint-Omer, Dunkerque, Calais..." list="hc-villes" required>
  <datalist id="hc-villes">
