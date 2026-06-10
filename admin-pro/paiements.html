@@ -240,7 +240,7 @@
       await refresh();
     } catch(e){ alert('Erreur : '+e.message); }
     finally { btn.disabled = false; btn.textContent = '💳 Générer le lien'; }
-  })?
+  });
 
   document.getElementById('btnRefresh').addEventListener('click', refresh);
   await refresh();
