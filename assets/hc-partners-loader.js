@@ -62,5 +62,5 @@
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
-  }
-})();
+  BŸJJ
+NÂ
