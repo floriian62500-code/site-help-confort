@@ -9,9 +9,11 @@
 
   var SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
   var SUPABASE_KEY = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
+  // 2026-06-10 fix avis pages métiers — bump pour invalider cache navigateur
 
   var host = document.getElementById('hc-avis-live');
-  if (!host) return;
+  if (!host) { console.warn('[hc-avis-live] #hc-avis-live introuvable'); return; }
+  console.log('[hc-avis-live] init v2026-06-10 (compact=', host.hasAttribute('data-metier-page'), ')');
 
   function star(filled) {
     return '<svg viewBox="0 0 24 24" width="14" height="14" fill="' + (filled ? '#FFB400' : '#cbd5e1') + '" style="vertical-align:-2px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
