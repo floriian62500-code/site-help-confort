@@ -1,4 +1,4 @@
-# Audit favicons / apple-touch-icon / manifest — 2026-06-09 06:52
+# Audit favicons / apple-touch-icon / manifest — 2026-06-10 07:10
 
 - **Pages scannées** : 116
 - **Références d'icônes trouvées** : 281

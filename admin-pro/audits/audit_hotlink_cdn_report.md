@@ -1,9 +1,9 @@
 # 🖼️ Audit images hot-linkées CDN tiers — sonde #13
 
-_Généré le 2026-06-09 06:53_
+_Généré le 2026-06-10 07:11_
 
 - Pages HTML scannées : **115**
-- Fichiers JS scannés : **38**
+- Fichiers JS scannés : **39**
 - Hosts uniques détectés : **75**
   - Self (HC) : 1
   - Supabase projet : 1
@@ -569,7 +569,7 @@ Fichiers concernés : `assets/hc-map-zones.js`
 | `akw.fr` | 🔴 external | 1 | 0 |
 | `api-adresse.data.gouv.fr` | ⚪ trusted | 60 | 0 |
 | `bricard.com` | 🔴 external | 1 | 0 |
-| `btcbjwqiivhpwoszomhg.supabase.co` | 🔵 supabase | 123 | 47 |
+| `btcbjwqiivhpwoszomhg.supabase.co` | 🔵 supabase | 124 | 47 |
 | `carto.com` | 🔴 external | 1 | 0 |
 | `cdn.jsdelivr.net` | ⚪ trusted | 67 | 0 |
 | `comap.aalberts-hfc.com` | 🔴 external | 1 | 0 |

@@ -1,11 +1,11 @@
 # 🔗 Audit liens externes cassés — P10
 
-*Généré le 2026-06-09 06:53 — `admin-pro/audits/audit_liens_externes.py`*
+*Généré le 2026-06-10 07:11 — `admin-pro/audits/audit_liens_externes.py`*
 
 **Pages scannées** : 116
 **URLs externes uniques testés** : 61
-**URLs OK (2xx/3xx)** : 54
-**URLs cassés (4xx/5xx/timeout/DNS)** : **7**
+**URLs OK (2xx/3xx)** : 52
+**URLs cassés (4xx/5xx/timeout/DNS)** : **9**
 **URLs social-network ignorés** : 2 (whitelist : facebook/instagram/linkedin/twitter/tiktok/youtube/whatsapp)
 
 ## 🚨 Liens cassés
@@ -14,15 +14,17 @@
 |--------|-----|-------|--------|
 | 403 | `https://comap.aalberts-hfc.com/fr` | partenaires.html | Forbidden |
 | 403 | `https://fr.indeed.com/cmp/Help-Confort` | carrieres.html | Forbidden |
+| --- | `https://mon-installateur.atlantic.fr/Societe/DEPAN-AUDO-HELP-CONFORT` | partenaires.html | TimeoutError: The read operation timed out |
 | --- | `https://new.abb.com/fr` | partenaires.html | TimeoutError: The read operation timed out |
 | --- | `https://www.anah.fr` | aides.html | URLError: <urlopen error timed out> |
 | 404 | `https://www.anah.gouv.fr/maprimeadapt` | aides.html | Not Found |
 | --- | `https://www.bremaud.com/` | partenaires.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
 | 403 | `https://www.hoppe.com/fr-fr/catalogue-produits/1001192940/solutions-pour-portes-interieures-poignees` | partenaires.html | Forbidden |
+| 403 | `https://www.velux.fr/` | partenaires.html | Forbidden |
 
 ## 📊 Statistiques
 
-- Taux de succès : **88 %** (54/61)
+- Taux de succès : **85 %** (52/61)
 - URLs social-network non testés (à vérifier manuellement si nécessaire) : 2
 
 ## 🛠️ Procédure de correction
