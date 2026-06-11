@@ -133,6 +133,27 @@
         if (window.gtag) window.gtag('event', eventName, props);
         else if (window.dataLayer) window.dataLayer.push(Object.assign({ event: eventName }, props));
       } catch(_){}
+      // 2026-06-10 — Log aussi dans Supabase click_events pour funnel admin
+      try {
+        var typeMap = { click_phone: 'phone', click_email: 'email', click_whatsapp: 'whatsapp' };
+        var t = typeMap[eventName];
+        if (!t) return;
+        var sid = sessionStorage.getItem('hc_sid') || (function(){ var s = 'sid-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10); sessionStorage.setItem('hc_sid', s); return s; })();
+        fetch('https://btcbjwqiivhpwoszomhg.supabase.co/rest/v1/click_events', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2', 'Authorization': 'Bearer sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2', 'Prefer': 'return=minimal' },
+          body: JSON.stringify({
+            event_type: t,
+            page_path: location.pathname,
+            page_url: location.href.slice(0, 500),
+            link_text: (props.link_text || '').slice(0, 200),
+            link_href: (props.phone || props.email || props.url || '').slice(0, 500),
+            user_agent: navigator.userAgent.slice(0, 300),
+            referer: (document.referrer || '').slice(0, 500),
+            session_id: sid
+          })
+        }).catch(function(){});
+      } catch(_){}
     }
     document.addEventListener('click', function(e){
       var a = e.target.closest('a[href]');
