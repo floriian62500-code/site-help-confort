@@ -1,6 +1,6 @@
 # 📐 Audit dimensions images (PIL) — extension CLS prevention
 
-_Généré le 2026-06-10 07:12_
+_Généré le 2026-06-11 08:07_
 
 - Pages scannées : **115**
 - `<img>` avec width+height : **1459**
@@ -69,7 +69,7 @@ Recommandation : rapatrier en local (cf. `audit_hotlink_cdn.py`) puis re-runner.
 - L1213 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `fournisseur.html` — 1
-- L133 — `' + esc(s.logo_url) + '` (fichier introuvable sur disque)
+- L136 — `' + esc(s.logo_url) + '` (fichier introuvable sur disque)
 
 ### `index.html` — 4
 - L733 — `'+data.logo+'` (fichier introuvable sur disque)

@@ -1,6 +1,6 @@
 # Audit Heading hierarchy — Rapport
 
-Généré le : `2026-06-10T07:11:54`
+Généré le : `2026-06-11T08:07:04`
 
 Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il y a exactement un <h1>, et que la séquence commence bien par un <h1>.
 
@@ -60,8 +60,8 @@ Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il 
 ### `pmr-saint-omer.html`
 
 - h1 sur la page : **1**
-- Total headings : **14**
-- Séquence : `h1 → h3 → h2 → h3 → h3 → h3 → h2 → h2 → h2 → h3 → h4 → h3 → h3 → h3`
+- Total headings : **15**
+- Séquence : `h1 → h3 → h2 → h3 → h3 → h3 → h2 → h2 → h2 → h3 → h4 → h2 → h3 → h3 → h3`
 - ⚠️ **SKIP_LEVEL** — Saut h1 → h3 (de 'Adaptation PMR à domicile — Saint-Omer e' à "MaPrimeAdapt&apos; — jusqu'à 70 % d'aide").
 
 ## ✅ Pages sans finding

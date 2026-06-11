@@ -1,6 +1,6 @@
 # ⏱️ Audit délais d'intervention promis — Sonde IA #43
 
-*Généré le 2026-06-10 07:10 — `admin-pro/audits/audit_delais.py`*
+*Généré le 2026-06-11 08:06 — `admin-pro/audits/audit_delais.py`*
 
 **Pages scannées** : 117
 **Findings (promesses commerciales détectées)** : **158**
@@ -49,7 +49,7 @@ Décision Florian 15 mai 2026 : retirer tous les délais d'intervention promis d
 | `chauffagiste-wimereux.html` | 232 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
 | `contact.html` | 435 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.94rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.74rem;color… |
 | `contact.html` | 435 | engagement « sous X (h/min) » | `sous 24h` | …us adressons un <strong>devis gratuit et détaillé</strong> (sous 24h ouvrées pour les demandes simples)</li> <li>Vous décid… |
-| `contact.html` | 1092 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `contact.html` | 1103 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `contrats-entretien.html` | 1162 | engagement « sous X (h/min) » | `sous 24h` | …> · Renseignez le formulaire et nous validons votre dossier sous 24h ouvrées.</p> </div> <form id="sousForm" onsubmit="retu… |
 | `contrats-entretien.html` | 1162 | engagement « sous X (h/min) » | `sous 24h` | …oordonnées</h4> <p class="sw-step-hint">Pour vous rappeler sous 24h ouvrées et envoyer votre contrat.</p> </div> <div style="… |
 | `contrats-entretien.html` | 1162 | engagement « sous X (h/min) » | `sous 24h` | …ons puis envoyez votre demande. Un conseiller vous rappelle sous 24h ouvrées pour planifier la visite technique.</p> </div>… |
@@ -124,11 +124,11 @@ Décision Florian 15 mai 2026 : retirer tous les délais d'intervention promis d
 | `pmr-dunkerque.html` | 923 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `pmr-dunkerque.html` | 923 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `pmr-dunkerque.html` | 923 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `pmr-dunkerque.html` | 1817 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `pmr-dunkerque.html` | 1825 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `pmr-saint-omer.html` | 933 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `pmr-saint-omer.html` | 933 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `pmr-saint-omer.html` | 933 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
-| `pmr-saint-omer.html` | 1886 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
+| `pmr-saint-omer.html` | 1894 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `realisations.html` | 1162 | engagement « rappel sous … » | `Rappel sous` | …x-shadow:0 0 0 3px rgba(34,212,142,.3)"></span> En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong> </div> </div>… |
 | `serrurier-boulogne-sur-mer.html` | 967 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `serrurier-boulogne-sur-mer.html` | 967 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |

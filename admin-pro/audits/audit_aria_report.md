@@ -26,14 +26,14 @@ _Généré par `admin-pro/audits/audit_aria.py` — 116 pages scannées._
 
 - **INPUT-NO-LABEL** (avertissement, l. 407) — `<input type="text" name="website">`
 - **INPUT-NO-ARIA-LABEL** (avertissement, l. 407) — `<input type="text" name="website"> sans id`
-- **INPUT-NO-LABEL** (avertissement, l. 692) — `<input type="checkbox" name="services[]">`
-- **INPUT-NO-ARIA-LABEL** (avertissement, l. 692) — `<input type="checkbox" name="services[]"> sans id`
-- **INPUT-NO-LABEL** (avertissement, l. 693) — `<input type="checkbox" name="services[]">`
-- **INPUT-NO-ARIA-LABEL** (avertissement, l. 693) — `<input type="checkbox" name="services[]"> sans id`
-- **INPUT-NO-LABEL** (avertissement, l. 694) — `<input type="checkbox" name="services[]">`
-- **INPUT-NO-ARIA-LABEL** (avertissement, l. 694) — `<input type="checkbox" name="services[]"> sans id`
-- **INPUT-NO-LABEL** (avertissement, l. 695) — `<input type="checkbox" name="services[]">`
-- **INPUT-NO-ARIA-LABEL** (avertissement, l. 695) — `<input type="checkbox" name="services[]"> sans id`
+- **INPUT-NO-LABEL** (avertissement, l. 703) — `<input type="checkbox" name="services[]">`
+- **INPUT-NO-ARIA-LABEL** (avertissement, l. 703) — `<input type="checkbox" name="services[]"> sans id`
+- **INPUT-NO-LABEL** (avertissement, l. 704) — `<input type="checkbox" name="services[]">`
+- **INPUT-NO-ARIA-LABEL** (avertissement, l. 704) — `<input type="checkbox" name="services[]"> sans id`
+- **INPUT-NO-LABEL** (avertissement, l. 705) — `<input type="checkbox" name="services[]">`
+- **INPUT-NO-ARIA-LABEL** (avertissement, l. 705) — `<input type="checkbox" name="services[]"> sans id`
+- **INPUT-NO-LABEL** (avertissement, l. 706) — `<input type="checkbox" name="services[]">`
+- **INPUT-NO-ARIA-LABEL** (avertissement, l. 706) — `<input type="checkbox" name="services[]"> sans id`
 - _… et 18 autre(s)_
 
 ### `index.html` — 19 finding(s)
@@ -179,16 +179,16 @@ _Généré par `admin-pro/audits/audit_aria.py` — 116 pages scannées._
 - **DIALOG-NO-LABEL** (erreur, l. 1335) — `<div role="dialog">`
 - **INPUT-NO-LABEL** (avertissement, l. 1376) — `<input type="text" name="website">`
 - **INPUT-NO-ARIA-LABEL** (avertissement, l. 1376) — `<input type="text" name="website"> sans id`
-- **INPUT-NO-LABEL** (avertissement, l. 1847) — `<input type="text" name="website">`
-- **INPUT-NO-ARIA-LABEL** (avertissement, l. 1847) — `<input type="text" name="website"> sans id`
+- **INPUT-NO-LABEL** (avertissement, l. 1855) — `<input type="text" name="website">`
+- **INPUT-NO-ARIA-LABEL** (avertissement, l. 1855) — `<input type="text" name="website"> sans id`
 
 ### `pmr-saint-omer.html` — 5 finding(s)
 
 - **DIALOG-NO-LABEL** (erreur, l. 1404) — `<div role="dialog">`
 - **INPUT-NO-LABEL** (avertissement, l. 1445) — `<input type="text" name="website">`
 - **INPUT-NO-ARIA-LABEL** (avertissement, l. 1445) — `<input type="text" name="website"> sans id`
-- **INPUT-NO-LABEL** (avertissement, l. 1916) — `<input type="text" name="website">`
-- **INPUT-NO-ARIA-LABEL** (avertissement, l. 1916) — `<input type="text" name="website"> sans id`
+- **INPUT-NO-LABEL** (avertissement, l. 1924) — `<input type="text" name="website">`
+- **INPUT-NO-ARIA-LABEL** (avertissement, l. 1924) — `<input type="text" name="website"> sans id`
 
 ### `serrurier-boulogne-sur-mer.html` — 5 finding(s)
 
@@ -399,7 +399,7 @@ _Généré par `admin-pro/audits/audit_aria.py` — 116 pages scannées._
 
 ### `fournisseur.html` — 2 finding(s)
 
-- **A-NO-NAME** (avertissement, l. 54) — `<a href="index.html"></a>`
+- **A-NO-NAME** (avertissement, l. 57) — `<a href="index.html"></a>`
 - **H1-MISSING** (erreur, l. 0) — `Aucun <h1>`
 
 ### `mentions-legales.html` — 2 finding(s)

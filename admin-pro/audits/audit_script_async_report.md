@@ -1,11 +1,11 @@
 # Audit script async/defer — Rapport
 
-_Généré le 2026-06-10 07:11_
+_Généré le 2026-06-11 08:07_
 
 ## Synthèse
 
 - Pages scannées : **136**
-- Scripts externes total : **1362**
+- Scripts externes total : **1364**
 - Scripts render-blocking : **96**
 - ✅ OK : **83**
 - ❌ Erreurs (script bloquant dans `<head>`) : **0**
@@ -43,8 +43,8 @@ _Généré le 2026-06-10 07:11_
 - ⚠️ L.2229 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `contact.html`
-- ⚠️ L.1058 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.1316 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.1069 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.1327 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `contrats-entretien.html`
 - ⚠️ L.907 (head) `script.js` — ajouter `defer` ou `async`
@@ -138,12 +138,12 @@ _Généré le 2026-06-10 07:11_
 - ⚠️ L.2067 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `pmr-dunkerque.html`
-- ⚠️ L.1783 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.2027 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.1791 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.2035 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `pmr-saint-omer.html`
-- ⚠️ L.1852 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.2096 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
+- ⚠️ L.1860 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.2104 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`
 
 ### `pro.html`
 - ⚠️ L.1006 (head) `assets/hc-leads-capture.js` — ajouter `defer` ou `async`

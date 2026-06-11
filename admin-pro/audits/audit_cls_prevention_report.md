@@ -1,6 +1,6 @@
 # 📐 Audit CLS prevention (img width/height) — sonde #56
 
-_Généré le 2026-06-10 07:11_
+_Généré le 2026-06-11 08:07_
 
 - Pages scannées : **115**
 - `<img>` total : **1512**
@@ -66,7 +66,7 @@ Taux de couverture dimensions : **96.5%**
 
 ### `fournisseur.html` — 1 `<img>` à corriger
 
-- L133 (width+height manquant) — `' + esc(s.logo_url) + '`
+- L136 (width+height manquant) — `' + esc(s.logo_url) + '`
 
 ### `index.html` — 4 `<img>` à corriger
 

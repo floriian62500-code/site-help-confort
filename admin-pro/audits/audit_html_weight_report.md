@@ -1,11 +1,11 @@
 # Audit HTML weight — Rapport
 
-_Généré le 2026-06-10 07:11_
+_Généré le 2026-06-11 08:07_
 
 ## Synthèse
 
 - Pages scannées : **136**
-- Poids cumulé : **7965.5 KB**
+- Poids cumulé : **7968.3 KB**
 - Poids moyen : **58.6 KB**
 - ❌ Pages > 250 KB : **0**
 - ⚠️ Pages 150–250 KB : **1**
@@ -22,7 +22,7 @@ _Généré le 2026-06-10 07:11_
 | 6 | ✅ `chauffagiste-saint-omer.html` | **144.7 KB** | 67.8 KB | 19.5 KB | 14.7 KB |
 | 7 | ✅ `menuisier-dunkerque.html` | **139.3 KB** | 64.2 KB | 18.1 KB | 13.1 KB |
 | 8 | ✅ `menuisier-saint-omer.html` | **138.1 KB** | 64.2 KB | 18.1 KB | 13.1 KB |
-| 9 | ✅ `plombier-dunkerque.html` | **135.3 KB** | 64.4 KB | 18.6 KB | 12.6 KB |
-| 10 | ✅ `plombier-boulogne-sur-mer.html` | **135.3 KB** | 64.4 KB | 18.5 KB | 12.6 KB |
+| 9 | ✅ `pmr-dunkerque.html` | **136.0 KB** | 64.9 KB | 17.5 KB | 14.1 KB |
+| 10 | ✅ `pmr-saint-omer.html` | **135.3 KB** | 65.1 KB | 17.6 KB | 14.1 KB |
 
 _✅ Aucune page ne dépasse 250 KB._
