@@ -726,7 +726,16 @@
 })();
 
 /* ─────────────────────────────────────────────────────────────
-   HC-TRUST-BAND 2026-06-12 : bandeau confiance auto-injecté
+   HC-SEO-STATS-HIDER 2026-06-12 : masque les bandeaux ".seo-stats" hardcoded sur 50+ pages prestations
+   ("1 à 3 semaines / Décennale + constructeur / MaPrimeAdapt 70%") -- promesses non vérifiables */
+(function(){
+  if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
+  var s = document.createElement('style');
+  s.textContent = '.seo-stats{display:none !important}';
+  document.head.appendChild(s);
+})();
+
+/* HC-TRUST-BAND 2026-06-12 : bandeau confiance auto-injecté
    sur toutes les pages publiques juste avant le footer.
    ────────────────────────────────────────────────────────── */
 (function(){
