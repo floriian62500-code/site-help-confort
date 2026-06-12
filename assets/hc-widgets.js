@@ -687,6 +687,44 @@
 
 })();
 
+/* HC-PRICE-HIDER 2026-06-12 : masque tout bouton "options au choix" / "Voir le tarif" / "Voir les tarifs" via MutationObserver */
+(function(){
+  if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
+  var KEYWORDS = ["options au choix","Voir le tarif","Voir les tarifs","voir le tarif"];
+  function hideBy(el){
+    if (!el || el.nodeType !== 1) return;
+    var t = (el.textContent || "").trim();
+    if (!t || t.length > 80) return;
+    for (var i=0; i<KEYWORDS.length; i++){
+      if (t.indexOf(KEYWORDS[i]) !== -1){
+        el.style.display = "none";
+        return;
+      }
+    }
+  }
+  function sweep(root){
+    if (!root || !root.querySelectorAll) return;
+    var nodes = root.querySelectorAll("button, a");
+    for (var i=0; i<nodes.length; i++) hideBy(nodes[i]);
+  }
+  function init(){
+    sweep(document.body);
+    if (window.MutationObserver) {
+      var obs = new MutationObserver(function(muts){
+        for (var i=0; i<muts.length; i++){
+          for (var j=0; j<muts[i].addedNodes.length; j++){
+            var n = muts[i].addedNodes[j];
+            if (n.nodeType === 1) { hideBy(n); sweep(n); }
+          }
+        }
+      });
+      obs.observe(document.body, { childList: true, subtree: true });
+    }
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+
 /* ─────────────────────────────────────────────────────────────
    HC-TRUST-BAND 2026-06-12 : bandeau confiance auto-injecté
    sur toutes les pages publiques juste avant le footer.
