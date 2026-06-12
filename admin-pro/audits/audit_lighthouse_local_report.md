@@ -1,12 +1,13 @@
-# 🔦 Audit Lighthouse local — 2026-06-11 08:06
+# 🔦 Audit Lighthouse local — 2026-06-12 07:25
 
-**116 pages auditées** · **7 erreurs** · **66 warnings** · **Score moyen 97/100**
+**117 pages auditées** · **7 erreurs** · **70 warnings** · **Score moyen 97/100**
 
 ## 📊 Résumé par page
 
 | Page | Score | Erreurs | Warnings |
 |------|------:|--------:|---------:|
 | `googlef09a1887914c5a23.html` | **0/100** | 7 | 3 |
+| `maprimeadapt.html` | **84/100** | 0 | 4 |
 | `espace-client-dashboard.html` | **88/100** | 0 | 3 |
 | `notre-equipe.html` | **88/100** | 0 | 3 |
 | `partenaire.html` | **88/100** | 0 | 3 |
@@ -138,6 +139,14 @@
 
 **Warnings :**
 - ⚠️ <link rel="canonical"> manquant
+- ⚠️ og:image manquant
+- ⚠️ Aucun rel=preconnect
+
+### maprimeadapt.html — 84/100
+
+**Warnings :**
+- ⚠️ SEO title long (72 chars)
+- ⚠️ meta description longue (191 chars)
 - ⚠️ og:image manquant
 - ⚠️ Aucun rel=preconnect
 

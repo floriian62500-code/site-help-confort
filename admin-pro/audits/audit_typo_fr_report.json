@@ -1,13 +1,13 @@
 {
   "audit": "typo_fr",
-  "generated_at": "2026-06-11T08:07:05",
+  "generated_at": "2026-06-12T07:26:18",
   "threshold": 5,
   "stats": {
-    "pages_audited": 115,
-    "pages_alerted": 77,
-    "total_fautifs": 1132,
+    "pages_audited": 116,
+    "pages_alerted": 78,
+    "total_fautifs": 1148,
     "code_distribution": {
-      "TYPO-FR": 77
+      "TYPO-FR": 78
     }
   },
   "results": [
@@ -1248,6 +1248,31 @@
             "…👋 Urgence ? Une fuite ? H! Assistant HELP Confort E…",
             "…Rappel sous 1h 👋 Bonjour ! Comment pouvons-nous vou…",
             "…t pouvons-nous vous aider ? Décrivez votre besoin en…"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "maprimeadapt.html",
+      "fautifs": 16,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "16 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…'est-ce que MaPrimeAdapt' ? MaPrimeAdapt' est une ai…",
+            "…vous accompagne de A à Z : diagnostic, montage doss…",
+            "…ement. ✓ Suis-je éligible ? Eligible si : (1) propri…",
+            "…je éligible ? Eligible si : (1) propriétaire occupan…",
+            "…ax (70%). 🔧 Quels travaux ? 🚿 Douche italienne Pose…",
+            "…lable avec d'autres aides ? Oui : TVA 10%, crédit d'…",
+            "…avec d'autres aides ? Oui : TVA 10%, crédit d'impôt…",
+            "…acile. Logement ancien ok ? Oui pour tous les logeme…",
+            "…udaine. Je suis locataire ? Oui avec accord écrit du…",
+            "…Faut-il avancer l'argent ? Très modestes : avance d…",
+            "…l'argent ? Très modestes : avance de 70% possible.…",
+            "…de 70% possible. Modestes : échéancier HELP Confort…"
           ]
         }
       ]

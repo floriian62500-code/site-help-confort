@@ -1,8 +1,8 @@
 # 🖼️ Audit images hot-linkées CDN tiers — sonde #13
 
-_Généré le 2026-06-11 08:07_
+_Généré le 2026-06-12 07:26_
 
-- Pages HTML scannées : **115**
+- Pages HTML scannées : **116**
 - Fichiers JS scannés : **39**
 - Hosts uniques détectés : **75**
   - Self (HC) : 1
@@ -569,7 +569,7 @@ Fichiers concernés : `assets/hc-map-zones.js`
 | `akw.fr` | 🔴 external | 1 | 0 |
 | `api-adresse.data.gouv.fr` | ⚪ trusted | 60 | 0 |
 | `bricard.com` | 🔴 external | 1 | 0 |
-| `btcbjwqiivhpwoszomhg.supabase.co` | 🔵 supabase | 124 | 47 |
+| `btcbjwqiivhpwoszomhg.supabase.co` | 🔵 supabase | 125 | 47 |
 | `carto.com` | 🔴 external | 1 | 0 |
 | `cdn.jsdelivr.net` | ⚪ trusted | 67 | 0 |
 | `comap.aalberts-hfc.com` | 🔴 external | 1 | 0 |
@@ -601,7 +601,7 @@ Fichiers concernés : `assets/hc-map-zones.js`
 | `www.cnil.fr` | 🔴 external | 1 | 0 |
 | `www.dedietrich-thermique.fr` | 🔴 external | 1 | 0 |
 | `www.delabie.fr` | 🔴 external | 1 | 0 |
-| `www.depan59-62.fr` | 🟢 self | 228 | 114 |
+| `www.depan59-62.fr` | 🟢 self | 229 | 114 |
 | `www.ecologie.gouv.fr` | 🔴 external | 1 | 0 |
 | `www.esri.com` | 🔴 external | 1 | 0 |
 | `www.facebook.com` | 🔴 external | 98 | 0 |

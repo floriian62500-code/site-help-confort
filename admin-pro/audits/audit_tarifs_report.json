@@ -1073,6 +1073,38 @@
       "context": "-right:auto\">Diagnostic gratuit · Tableau standard à <strong style=\"color:#fff\">1 080 € TTC</strong> · Aides CEE & MaPrimeRénov' éligibles. Devis détaillé gratu"
     },
     {
+      "page": "maprimeadapt.html",
+      "value": 22000,
+      "line": 59,
+      "severity": "ALERT",
+      "reason": "Montant absent de TARIFS_REFERENCE.md et sans data-source ni mention 'estimation marché'.",
+      "context": "<strong>70%</strong><span>d'aide max</span></div> ⏎ <div class=\"mpa-knum\"><strong>22 000€</strong><span>plafond HT</span></div> ⏎ <div class=\"mpa-knum\"><strong>2-4"
+    },
+    {
+      "page": "maprimeadapt.html",
+      "value": 22000,
+      "line": 71,
+      "severity": "ALERT",
+      "reason": "Montant absent de TARIFS_REFERENCE.md et sans data-source ni mention 'estimation marché'.",
+      "context": "du montant des travaux</strong> d'adaptation du logement. Plafond de travaux à 22 000 € HT. Jusqu'à 15 400 € d'aide pour une douche italienne, monte-escalier o"
+    },
+    {
+      "page": "maprimeadapt.html",
+      "value": 15400,
+      "line": 71,
+      "severity": "ALERT",
+      "reason": "Montant absent de TARIFS_REFERENCE.md et sans data-source ni mention 'estimation marché'.",
+      "context": "ux</strong> d'adaptation du logement. Plafond de travaux à 22 000 € HT. Jusqu'à 15 400 € d'aide pour une douche italienne, monte-escalier ou élargissement de po"
+    },
+    {
+      "page": "maprimeadapt.html",
+      "value": 34884,
+      "line": 75,
+      "severity": "ALERT",
+      "reason": "Montant absent de TARIFS_REFERENCE.md et sans data-source ni mention 'estimation marché'.",
+      "context": ") ressources modestes (revenu fiscal référence). Couple à Saint-Omer avec RFR ≤ 34 884 € = aide au taux max (70%).</p> ⏎ </section> ⏎ <section class=\"mpa-section\"> ⏎"
+    },
+    {
       "page": "menuisier-dunkerque.html",
       "value": 100,
       "line": 1080,
@@ -1977,6 +2009,13 @@
       "exempt": 0,
       "data_source": 0,
       "alert": 0,
+      "in_script": 0
+    },
+    "maprimeadapt.html": {
+      "ok": 0,
+      "exempt": 0,
+      "data_source": 0,
+      "alert": 4,
       "in_script": 0
     },
     "mentions-legales.html": {

@@ -1,14 +1,14 @@
 # Audit Sitemap completeness — Rapport
 
-Généré le : `2026-06-11T08:07:04`
+Généré le : `2026-06-12T07:26:17`
 
 Source de vérité : `sitemap.xml` (`<urlset>`) + `*.html` à la racine du repo.
 
 ## Synthèse
 
-- Pages HTML racine sur disque : **115**
-- URLs dans sitemap.xml : **189**
-- Dont pages racine (`/X.html` ou `/`) : **77**
+- Pages HTML racine sur disque : **116**
+- URLs dans sitemap.xml : **190**
+- Dont pages racine (`/X.html` ou `/`) : **78**
 - ⚠️ Pages absentes du sitemap : **38**
 - ❌ URLs sitemap orphelines (fichier introuvable) : **0**
 - ℹ️ `<lastmod>` dans le futur : **0**

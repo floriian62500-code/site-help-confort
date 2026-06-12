@@ -1,16 +1,16 @@
 # Audit meta description length — Rapport
 
-_Généré le 2026-06-11 08:07_
+_Généré le 2026-06-12 07:26_
 
 ## Synthèse
 
-- Pages scannées : **135**
+- Pages scannées : **136**
 - ✅ OK (120-158 chars) : **96**
 - ⚠️  Warnings (acceptable mais hors cible) : **17**
-- ❌ Erreurs (< 70 ou > 160) : **21**
+- ❌ Erreurs (< 70 ou > 160) : **22**
 - ℹ️  Sans description : **1**
-- Findings totaux : **39**
-  - Erreurs : 21
+- Findings totaux : **40**
+  - Erreurs : 22
   - Avertissements : 18
 
 ## Bornes appliquées
@@ -48,6 +48,10 @@ _Généré le 2026-06-11 08:07_
 ### `espace-client-dashboard.html`  (67 chars)
 > Dashboard client HELP Confort : interventions, paiements, factures.
 - ❌ DESC-TOO-SHORT : 67 chars < 70
+
+### `maprimeadapt.html`  (191 chars)
+> MaPrimeAdapt' à Saint-Omer & Dunkerque : jusqu'à 70% d'aide pour adapter votre logement (douche italienne, monte-escalier, barres d'appui). Diagnostic gratuit, dossier monté par HELP Confort.
+- ❌ DESC-TOO-LONG : 191 chars > 160
 
 ### `notre-equipe.html`  (178 chars)
 > L'équipe HELP Confort Saint-Omer &amp; Dunkerque : techniciens diplômés, formation continue, intervention sans sous-traitance. Plombiers, chauffagistes, électriciens, serruriers.

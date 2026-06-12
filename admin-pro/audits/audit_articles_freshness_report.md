@@ -1,6 +1,6 @@
 # Audit fraîcheur articles — Rapport
 
-_Généré le 2026-06-11 08:07_
+_Généré le 2026-06-12 07:26_
 
 ## Synthèse
 

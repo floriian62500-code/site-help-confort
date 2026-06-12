@@ -1,13 +1,13 @@
 # Audit script async/defer — Rapport
 
-_Généré le 2026-06-11 08:07_
+_Généré le 2026-06-12 07:26_
 
 ## Synthèse
 
-- Pages scannées : **136**
-- Scripts externes total : **1364**
+- Pages scannées : **137**
+- Scripts externes total : **1366**
 - Scripts render-blocking : **96**
-- ✅ OK : **83**
+- ✅ OK : **84**
 - ❌ Erreurs (script bloquant dans `<head>`) : **0**
 - ⚠️ Avertissements (script bloquant en fin de `<body>`) : **53**
 

@@ -1,15 +1,15 @@
 # Audit og:url vs canonical — Rapport
 
-_Généré le 2026-06-11 08:07_
+_Généré le 2026-06-12 07:26_
 
 ## Synthèse
 
-- Pages scannées : **136**
+- Pages scannées : **137**
 - ✅ OK : **46**
 - ❌ Erreurs : **0** (cumul 0 findings)
-- ⚠️  Avertissements (pages) : **88**
+- ⚠️  Avertissements (pages) : **89**
 - ℹ️  Info : **2**
-- ⚠️  Total warnings : **90**
+- ⚠️  Total warnings : **91**
 
 ## Findings
 
@@ -189,6 +189,10 @@ _Généré le 2026-06-11 08:07_
 
 ### `index.html`
 - canonical = `https://www.depan59-62.fr/`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `maprimeadapt.html`
+- canonical = `https://www.depan59-62.fr/maprimeadapt.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
 ### `menuisier-dunkerque.html`

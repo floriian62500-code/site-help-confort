@@ -1,15 +1,15 @@
 {
-  "generated": "2026-06-11 08:07",
+  "generated": "2026-06-12 07:26",
   "thresholds": {
     "min_error": 70,
     "max_error": 160,
     "min_warn": 120,
     "max_warn": 158
   },
-  "n_total": 135,
+  "n_total": 136,
   "n_ok": 96,
   "n_warn": 17,
-  "n_errors": 21,
+  "n_errors": 22,
   "n_info": 1,
   "results": [
     {
@@ -722,6 +722,16 @@
       "length": 138,
       "description": "Dépannage plomberie, chauffage, électricité, serrurerie à Saint-Omer &amp; Dunkerque. 4,7/5 sur 343 avis. Devis gratuit au 03 66 10 01 34.",
       "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "maprimeadapt.html",
+      "status": "error",
+      "length": 191,
+      "description": "MaPrimeAdapt' à Saint-Omer & Dunkerque : jusqu'à 70% d'aide pour adapter votre logement (douche italienne, monte-escalier, barres d'appui). Diagnostic gratuit, dossier monté par HELP Confort.",
+      "errors": [
+        "DESC-TOO-LONG : 191 chars > 160"
+      ],
       "warnings": []
     },
     {

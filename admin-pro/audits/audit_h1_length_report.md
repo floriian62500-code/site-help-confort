@@ -1,11 +1,11 @@
 # Audit H1 length — Rapport
 
-_Généré le 2026-06-11 08:07_
+_Généré le 2026-06-12 07:26_
 
 ## Synthèse
 
-- Pages scannées : **135**
-- ✅ OK (20-70 chars) : **92**
+- Pages scannées : **136**
+- ✅ OK (20-70 chars) : **93**
 - ⚠️  Warnings (h1 multiples, hors longueur) : **0**
 - ❌ Erreurs (< 20 ou > 70) : **40**
 - ℹ️  Sans h1 ou parse error : **3**

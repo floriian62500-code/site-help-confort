@@ -1,9 +1,9 @@
 # 🤖 Audit couverture chatbot widget — sonde #24
 
-_Généré le 2026-06-11 08:07_
+_Généré le 2026-06-12 07:26_
 
-- Pages publiques scannées : **115**
-- Pages avec widget chargé : **111**
+- Pages publiques scannées : **116**
+- Pages avec widget chargé : **112**
 - Pages **sans widget** (alertes) : **4**
 
 ## ❌ Pages sans `hc-widgets.js`
@@ -78,6 +78,7 @@ _Généré le 2026-06-11 08:07_
 - `guide-mise-aux-normes-electriques.html` — `<script defer src="assets/hc-widgets.js`
 - `guides.html` — `<script defer src="assets/hc-widgets.js`
 - `index.html` — `<script defer src="assets/hc-widgets.js`
+- `maprimeadapt.html` — `<script defer src="assets/hc-widgets.js`
 - `mentions-legales.html` — `<script defer src="assets/hc-widgets.js`
 - `menuisier-dunkerque.html` — `<script defer src="assets/hc-widgets.js`
 - `menuisier-saint-omer.html` — `<script defer src="assets/hc-widgets.js`

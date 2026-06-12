@@ -1,10 +1,10 @@
 # Audit admin-pro isolation — Rapport
 
-_Généré le 2026-06-11 08:07_
+_Généré le 2026-06-12 07:26_
 
 ## Synthèse
 
-- Pages publiques scannées : **136**
+- Pages publiques scannées : **137**
 - Pages avec fuite admin-pro : **1**
 - Total fuites détectées : **1**
 - Whitelist : `admin-pro/index.html, admin/index.html`

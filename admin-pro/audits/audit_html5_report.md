@@ -1,15 +1,15 @@
-# Audit HTML5 — 2026-06-11 08:06
+# Audit HTML5 — 2026-06-12 07:25
 
 > Audit local rapide HTML5 + a11y de base. Lancement : `python3 admin-pro/audits/audit_html5.py`
 > ⚠️ Ce n'est pas un substitut au validateur W3C officiel, mais il pré-filtre les erreurs évidentes.
 
 ## Synthèse
 
-- Pages auditées : **117**
+- Pages auditées : **118**
 - Pages avec erreurs : **3**
-- Pages avec warnings : **9**
+- Pages avec warnings : **10**
 - Total erreurs : **11**
-- Total warnings : **9**
+- Total warnings : **10**
 
 ## Top patterns d'erreurs
 
@@ -68,6 +68,10 @@
 
 - ⚠️ <title> long (92 chars, >70 recommandé)
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `maprimeadapt.html`
+
+- ⚠️ meta description longue (191 chars, >170 → tronquée)
 
 ### `notre-equipe.html`
 

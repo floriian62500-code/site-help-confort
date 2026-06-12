@@ -1,13 +1,13 @@
 # Audit ARIA / a11y — HELP Confort
 
-_Généré par `admin-pro/audits/audit_aria.py` — 116 pages scannées._
+_Généré par `admin-pro/audits/audit_aria.py` — 117 pages scannées._
 
 ## Synthèse
 
-- Pages scannées : **116**
+- Pages scannées : **117**
 - Pages 100% clean : **30**
 - Pages avec ≥ 1 erreur : **31**
-- Total findings : **278**
+- Total findings : **279**
 
 ### Répartition par code
 
@@ -15,7 +15,7 @@ _Généré par `admin-pro/audits/audit_aria.py` — 116 pages scannées._
 |------|----------|-------------|
 | `INPUT-NO-LABEL` | avertissement | 97 |
 | `INPUT-NO-ARIA-LABEL` | avertissement | 96 |
-| `A-NO-NAME` | avertissement | 52 |
+| `A-NO-NAME` | avertissement | 53 |
 | `DIALOG-NO-LABEL` | erreur | 28 |
 | `H1-MISSING` | erreur | 4 |
 | `DUP-ID` | erreur | 1 |
@@ -472,6 +472,10 @@ _Généré par `admin-pro/audits/audit_aria.py` — 116 pages scannées._
 ### `googlef09a1887914c5a23.html` — 1 finding(s)
 
 - **H1-MISSING** (erreur, l. 0) — `Aucun <h1>`
+
+### `maprimeadapt.html` — 1 finding(s)
+
+- **A-NO-NAME** (avertissement, l. 44) — `<a href="index.html"></a>`
 
 ### `plombier-coudekerque-branche.html` — 1 finding(s)
 

@@ -1,11 +1,11 @@
 # Audit meta viewport — Rapport
 
-_Généré le 2026-06-11 08:07_
+_Généré le 2026-06-12 07:26_
 
 ## Synthèse
 
-- Pages scannées : **136**
-- ✅ OK (`width=device-width, initial-scale=1`) : **135**
+- Pages scannées : **137**
+- ✅ OK (`width=device-width, initial-scale=1`) : **136**
 - ⚠️  Warnings (zoom bloqué ou initial-scale absent) : **0**
 - ❌ Erreurs (viewport absent ou cassé) : **1**
 - Findings totaux : **1**

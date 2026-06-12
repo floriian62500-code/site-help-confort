@@ -1,11 +1,11 @@
 # Audit canonical URL match — Rapport
 
-_Généré le 2026-06-11 08:07_
+_Généré le 2026-06-12 07:26_
 
 ## Synthèse
 
-- Pages scannées : **136**
-- ✅ OK : **134**
+- Pages scannées : **137**
+- ✅ OK : **135**
 - ❌ Erreurs : **0** (cumul 0 findings)
 - ℹ️  Sans canonical : **2**
 - ⚠️  Avertissements : **2**

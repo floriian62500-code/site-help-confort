@@ -1,13 +1,13 @@
 # Audit Heading hierarchy — Rapport
 
-Généré le : `2026-06-11T08:07:04`
+Généré le : `2026-06-12T07:26:17`
 
 Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il y a exactement un <h1>, et que la séquence commence bien par un <h1>.
 
 ## Synthèse
 
-- Pages auditées : **115**
-- Pages clean : **109**
+- Pages auditées : **116**
+- Pages clean : **110**
 - Pages avec erreur(s) : **1**
 - Pages avec warning(s) : **6**
 - Findings totaux : **7**
@@ -125,6 +125,7 @@ Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il 
 - `guide-mise-aux-normes-electriques.html`
 - `guides.html`
 - `index.html`
+- `maprimeadapt.html`
 - `mentions-legales.html`
 - `menuisier-dunkerque.html`
 - `menuisier-saint-omer.html`

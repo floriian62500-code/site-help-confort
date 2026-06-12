@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "scanned_pages": 116,
-  "total_findings": 278,
+  "scanned_pages": 117,
+  "total_findings": 279,
   "by_code": {
     "INPUT-NO-LABEL": 97,
     "INPUT-NO-ARIA-LABEL": 96,
-    "A-NO-NAME": 52,
+    "A-NO-NAME": 53,
     "DIALOG-NO-LABEL": 28,
     "H1-MISSING": 4,
     "DUP-ID": 1
@@ -1441,6 +1441,22 @@
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
           "line": 2694
+        }
+      ]
+    },
+    {
+      "file": "maprimeadapt.html",
+      "lang": "fr",
+      "h1_count": 1,
+      "findings_total": 1,
+      "by_code": {
+        "A-NO-NAME": 1
+      },
+      "findings": [
+        {
+          "code": "A-NO-NAME",
+          "snippet": "<a href=\"index.html\"></a>",
+          "line": 44
         }
       ]
     },

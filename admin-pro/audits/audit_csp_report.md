@@ -1,8 +1,8 @@
 # 🛡️ Audit CSP whitelist — Sonde IA #41
 
-*Généré le 2026-06-11 08:06 — `admin-pro/audits/audit_csp.py`*
+*Généré le 2026-06-12 07:25 — `admin-pro/audits/audit_csp.py`*
 
-**Pages scannées** : 117
+**Pages scannées** : 118
 **Hosts externes distincts détectés** : 6
 **Directives CSP parsées** : base-uri, connect-src, default-src, font-src, form-action, frame-ancestors, frame-src, img-src, script-src, style-src, upgrade-insecure-requests
 **Alertes CSP block** : **0**

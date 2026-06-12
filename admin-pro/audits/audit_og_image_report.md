@@ -1,8 +1,8 @@
-# Audit Open Graph images — 2026-06-11 08:07
+# Audit Open Graph images — 2026-06-12 07:26
 
-- **Pages scannées** : 115
+- **Pages scannées** : 116
 - **Pages avec og:image OK** : 108
-- **Pages alertées** : 7
+- **Pages alertées** : 8
 - **OG image externe (non testée)** : 0
 - **Pillow disponible** : oui
 - **Cible** : 1200×630 px ±5%
@@ -14,6 +14,7 @@
 | `espace-client-dashboard.html` | **MISSING-OG-IMAGE** | `(absent)` | — | Pas de <meta property="og:image"> sur la page |
 | `fournisseur.html` | **MISSING-OG-IMAGE** | `(absent)` | — | Pas de <meta property="og:image"> sur la page |
 | `googlef09a1887914c5a23.html` | **MISSING-OG-IMAGE** | `(absent)` | — | Pas de <meta property="og:image"> sur la page |
+| `maprimeadapt.html` | **MISSING-OG-IMAGE** | `(absent)` | — | Pas de <meta property="og:image"> sur la page |
 | `partenaire.html` | **MISSING-OG-IMAGE** | `(absent)` | — | Pas de <meta property="og:image"> sur la page |
 | `partenaires.html` | **MISSING-FILE** | `https://www.depan59-62.fr/og/partenaires.png` | — | Fichier référencé absent sur disque : og/partenaires.png |
 | `realisation.html` | **MISSING-OG-IMAGE** | `(absent)` | — | Pas de <meta property="og:image"> sur la page |
@@ -22,6 +23,6 @@
 ## Récap par statut
 
 - **ok** : 108
-- **MISSING-OG-IMAGE** : 5
+- **MISSING-OG-IMAGE** : 6
 - **MISSING-FILE** : 1
 - **WRONG-SIZE** : 1

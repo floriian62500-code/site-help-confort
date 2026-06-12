@@ -1,13 +1,13 @@
-# Audit typographie FR (espaces insécables) — 2026-06-11 08:07
+# Audit typographie FR (espaces insécables) — 2026-06-12 07:26
 
 Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une espace **insécable** (`&nbsp;`, U+00A0, U+202F). Seuil d'alerte : > **5** occurrences fautives par page.
 
 ## Synthèse
 
-- Pages auditées : **115**
+- Pages auditées : **116**
 - Pages clean (≤ seuil) : **38**
-- Pages avec alerte : **77**
-- Occurrences fautives cumulées : **1132**
+- Pages avec alerte : **78**
+- Occurrences fautives cumulées : **1148**
 
 ## ⚠️ Pages au-delà du seuil
 
@@ -34,6 +34,7 @@ Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une
 | `depannage-saint-omer.html` | **18** | `…uffage, une porte bloquée ? Notre équipe basée à Sai…` · `…Omer, le bâti est typique : maisons audomaroises en…` · `…ans une fermette d'Arques : on intervient avec le bo…` |
 | `guide-adaptation-pmr.html` | **18** | `…ment Adapter son logement : PMR & maintien à domicil…` · `…s , ce n'est plus un luxe : c'est une condition souv…` · `…quoi adapter son logement ? Le maintien à domicile e…` |
 | `blog-remplacement-chaudiere-gaz-aides-2026.html` | **16** | `…emplacement chaudière gaz : aides 2026 et démarches…` · `…emplacement chaudière gaz : aides 2026 et démarches…` · `…re chaudière gaz a 15 ans ? Il est probablement temp…` |
+| `maprimeadapt.html` | **16** | `…'est-ce que MaPrimeAdapt' ? MaPrimeAdapt' est une ai…` · `…vous accompagne de A à Z : diagnostic, montage doss…` · `…ement. ✓ Suis-je éligible ? Eligible si : (1) propri…` |
 | `ouverture-porte-claquee.html` | **16** | `…ns la serrure, clé perdue : nos serruriers intervien…` · `…dans la panique, vérifiez : numéro de SIRET, adresse…` · `…Décrivez votre situation : claquée, clé bloquée, se…` |
 | `blog-comment-detecter-fuite-eau-cachee.html` | **15** | `…fique Le test du compteur : 3 minutes pour confirmer…` · `…ntement, ne minimisez pas : une fuite de 1L/heure =…` · `…ous les éviers et lavabos : raccords, siphons, joint…` |
 | `blog-preparer-sa-maison-hiver-checklist.html` | **15** | `…er sa maison pour l'hiver : la checklist du pro | Bl…` · `…er sa maison pour l'hiver : la checklist du pro Sept…` · `…nts de fenêtres et portes : remplacer si écrasés Cal…` |

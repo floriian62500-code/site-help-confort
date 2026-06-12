@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-06-11 08:07",
-  "pages_scanned": 115,
+  "generated_at": "2026-06-12 07:26",
+  "pages_scanned": 116,
   "ok": 108,
-  "alerts": 7,
+  "alerts": 8,
   "external_skipped": 0,
   "pil_available": true,
   "target_width": 1200,
@@ -10,7 +10,7 @@
   "tolerance_pct": 5,
   "by_status": {
     "ok": 108,
-    "MISSING-OG-IMAGE": 5,
+    "MISSING-OG-IMAGE": 6,
     "MISSING-FILE": 1,
     "WRONG-SIZE": 1
   },
@@ -862,6 +862,21 @@
       "image_h": 630,
       "status": "ok",
       "alerts": []
+    },
+    {
+      "page": "maprimeadapt.html",
+      "og_url": null,
+      "twitter_url": null,
+      "og_w_declared": null,
+      "og_h_declared": null,
+      "external": false,
+      "resolved": null,
+      "image_w": null,
+      "image_h": null,
+      "status": "MISSING-OG-IMAGE",
+      "alerts": [
+        "Pas de <meta property=\"og:image\"> sur la page"
+      ]
     },
     {
       "page": "mentions-legales.html",

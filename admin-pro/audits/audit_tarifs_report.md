@@ -1,10 +1,10 @@
 # Audit Tarifs — Sonde IA #28
 
-_Généré le 2026-06-11 08:06 — `admin-pro/audits/audit_tarifs.py`_
+_Généré le 2026-06-12 07:25 — `admin-pro/audits/audit_tarifs.py`_
 
-- Pages publiques scannées : **117**
+- Pages publiques scannées : **118**
 - Montants validés (TARIFS_REFERENCE.md) : **53**
-- Alertes : **192**
+- Alertes : **196**
 - Erreurs lecture : **0**
 
 ## Règle
@@ -151,6 +151,10 @@ Tout montant `\d+\s*€` visible doit :
 | `guide-mise-aux-normes-electriques.html` | 444 | **9000 €** | li> ⏎  <li><strong>Rénovation électrique complète</strong> d'un T3&nbsp;: 4 000 à 9 000 €</li> ⏎  <li><strong>Maison entière (100 m²)</stron |
 | `guide-mise-aux-normes-electriques.html` | 445 | **15000 €** | ;: 4 000 à 9 000 €</li> ⏎  <li><strong>Maison entière (100 m²)</strong> : 8 000 à 15 000 €</li> ⏎ </ul> ⏎ <p>Les <strong>aides MaPrimeRénov' |
 | `guide-mise-aux-normes-electriques.html` | 472 | **1080 €** | -right:auto">Diagnostic gratuit · Tableau standard à <strong style="color:#fff">1 080 € TTC</strong> · Aides CEE & MaPrimeRénov' éligibles.  |
+| `maprimeadapt.html` | 59 | **22000 €** | <strong>70%</strong><span>d'aide max</span></div> ⏎ <div class="mpa-knum"><strong>22 000€</strong><span>plafond HT</span></div> ⏎ <div class |
+| `maprimeadapt.html` | 71 | **22000 €** | du montant des travaux</strong> d'adaptation du logement. Plafond de travaux à 22 000 € HT. Jusqu'à 15 400 € d'aide pour une douche italienn |
+| `maprimeadapt.html` | 71 | **15400 €** | ux</strong> d'adaptation du logement. Plafond de travaux à 22 000 € HT. Jusqu'à 15 400 € d'aide pour une douche italienne, monte-escalier ou |
+| `maprimeadapt.html` | 75 | **34884 €** | ) ressources modestes (revenu fiscal référence). Couple à Saint-Omer avec RFR ≤ 34 884 € = aide au taux max (70%).</p> ⏎ </section> ⏎ <secti |
 | `menuisier-dunkerque.html` | 1080 | **100 €** | ement de fenêtres / portes d'entrée donne droit à des aides cumulables (jusqu'à 100€/m² selon revenus). Nous vous accompagnons sur le dossie |
 | `nos-prestations.html` | 402 | **144 €** | ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="npce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="npce-baseline">L' |
 | `nos-prestations.html` | 420 | **192 €** | ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="npce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="npce-baseline">L' |
@@ -277,6 +281,7 @@ Tout montant `\d+\s*€` visible doit :
 | `guide-mise-aux-normes-electriques.html` | 0 | 0 | 0 | 1 | **5** |
 | `guides.html` | 0 | 0 | 0 | 0 | **0** |
 | `index.html` | 1 | 0 | 0 | 0 | **0** |
+| `maprimeadapt.html` | 0 | 0 | 0 | 0 | **4** |
 | `mentions-legales.html` | 0 | 0 | 0 | 0 | **0** |
 | `menuisier-dunkerque.html` | 0 | 0 | 0 | 0 | **1** |
 | `menuisier-saint-omer.html` | 0 | 0 | 0 | 0 | **0** |

@@ -1,15 +1,15 @@
-# Audit JSON-LD — 2026-06-11 08:06
+# Audit JSON-LD — 2026-06-12 07:25
 
 > Audit local des blocs `<script type="application/ld+json">` de chaque page HTML.
 > Lancement : `python3 admin-pro/audits/audit_jsonld.py`
 
 ## Synthèse
 
-- Pages auditées : **117**
-- Pages avec JSON-LD : **111**
+- Pages auditées : **118**
+- Pages avec JSON-LD : **112**
 - Pages sans JSON-LD : **6**
 - Erreurs de syntaxe JSON : **0**
-- Avertissements (champs manquants/dupliqués) : **789**
+- Avertissements (champs manquants/dupliqués) : **792**
 
 ## ⚠️ Pages sans aucun JSON-LD
 
@@ -622,6 +622,13 @@
     - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
     - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
 - ✅ Bloc #1 (`WebSite, Organization, ImageObject`) — OK
+
+### `maprimeadapt.html` — 1 bloc(s) — types : Service, LocalBusiness, PostalAddress
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
 
 ### `mentions-legales.html` — 2 bloc(s) — types : LocalBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, City, AggregateRating, BreadcrumbList, ListItem
 

@@ -1,8 +1,8 @@
 # ⏱️ Audit délais d'intervention promis — Sonde IA #43
 
-*Généré le 2026-06-11 08:06 — `admin-pro/audits/audit_delais.py`*
+*Généré le 2026-06-12 07:25 — `admin-pro/audits/audit_delais.py`*
 
-**Pages scannées** : 117
+**Pages scannées** : 118
 **Findings (promesses commerciales détectées)** : **158**
 **Pages concernées** : 68
 
