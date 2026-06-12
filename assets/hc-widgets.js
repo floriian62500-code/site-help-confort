@@ -686,3 +686,52 @@
   document.querySelectorAll('[data-hc-action="chat"]').forEach(function(el) { el.addEventListener('click', function(e) { e.preventDefault(); fab.classList.add('open'); openChat(); }); });
 
 })();
+
+/* ─────────────────────────────────────────────────────────────
+   HC-TRUST-BAND 2026-06-12 : bandeau confiance auto-injecté
+   sur toutes les pages publiques juste avant le footer.
+   ────────────────────────────────────────────────────────── */
+(function(){
+  // Skip back-office et pages avec opt-out
+  if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
+  if (document.body.classList.contains('no-trust-band')) return;
+
+  function build(){
+    if (document.querySelector('.hc-trust-band-global')) return; // déjà présent
+
+    var css = '<style>' +
+      '.hc-trust-band-global{background:#0A1428;padding:22px 16px;border-top:1px solid rgba(255,255,255,.08)}' +
+      '.hc-trust-band-global .hctb-wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px 28px;color:#fff}' +
+      '.hc-trust-band-global .hctb-item{display:flex;align-items:center;gap:12px}' +
+      '.hc-trust-band-global .hctb-icon{width:38px;height:38px;border-radius:10px;background:rgba(13,160,207,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#0DA0CF}' +
+      '.hc-trust-band-global .hctb-icon svg{width:20px;height:20px}' +
+      '.hc-trust-band-global .hctb-text strong{display:block;color:#fff;font-size:.94rem;font-weight:700;line-height:1.2;margin-bottom:3px}' +
+      '.hc-trust-band-global .hctb-text span{display:block;color:rgba(255,255,255,.65);font-size:.78rem;line-height:1.3}' +
+      '@media(max-width:640px){.hc-trust-band-global{padding:18px 12px}.hc-trust-band-global .hctb-wrap{gap:14px}.hc-trust-band-global .hctb-text strong{font-size:.88rem}.hc-trust-band-global .hctb-text span{font-size:.74rem}}' +
+      '</style>';
+
+    var html = css + '<section class="hc-trust-band-global" aria-label="Garanties HELP Confort">' +
+      '<div class="hctb-wrap">' +
+        '<div class="hctb-item"><div class="hctb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="hctb-text"><strong>Garantie décennale</strong><span>Assurance professionnelle</span></div></div>' +
+        '<div class="hctb-item"><div class="hctb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div><div class="hctb-text"><strong>Labellisée</strong><span>Qualibat &amp; certifications</span></div></div>' +
+        '<div class="hctb-item"><div class="hctb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="hctb-text"><strong>Techniciens salariés</strong><span>Diplômés et formés HC</span></div></div>' +
+        '<div class="hctb-item"><div class="hctb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="hctb-text"><strong>Standard ouvert</strong><span>Lun-Ven 9h-17h · Sam 9h-16h</span></div></div>' +
+      '</div>' +
+    '</section>';
+
+    var footer = document.querySelector('footer, .footer, .footer-v3');
+    var container = document.createElement('div');
+    container.innerHTML = html;
+    if (footer && footer.parentNode){
+      footer.parentNode.insertBefore(container, footer);
+    } else {
+      document.body.appendChild(container);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', build);
+  } else {
+    build();
+  }
+})();
