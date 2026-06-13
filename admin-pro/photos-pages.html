@@ -224,19 +224,21 @@ async function deleteSlot(slotKey) {
 }
 
 async function listExisting() {
-  // Liste les objets dans toutes les sous-folders du bucket
-  const { data, error } = await sb.storage.from(BUCKET).list('', { limit: 500 });
-  if (error) return new Set();
+  // 2026-06-12 — Remplacement listExisting par HEAD requests parallèles
+  // (le .list() Supabase ne détectait pas correctement certains dossiers selon version SDK)
   const set = new Set();
-  // Browser le dossier racine + sous-dossiers
-  for (const item of (data || [])) {
-    if (item.id) set.add(item.name.replace(/\.jpg$/, ''));
-    if (!item.id) {  // c'est un dossier
-      const { data: sub } = await sb.storage.from(BUCKET).list(item.name, { limit: 200 });
-      for (const f of (sub || [])) {
-        if (f.id) set.add(item.name + '/' + f.name.replace(/\.jpg$/, ''));
-      }
+  const allKeys = [];
+  for (const page of PHOTO_SLOTS) {
+    for (const slot of (page.slots || [])) {
+      if (slot.key) allKeys.push(slot.key);
     }
+  }
+  // HEAD parallèles
+  const checks = await Promise.allSettled(
+    allKeys.map(k => fetch(STORAGE_BASE + k + '.jpg', { method: 'HEAD', cache: 'no-cache' }).then(r => r.ok ? k : null).catch(() => null))
+  );
+  for (const c of checks) {
+    if (c.status === 'fulfilled' && c.value) set.add(c.value);
   }
   return set;
 }
