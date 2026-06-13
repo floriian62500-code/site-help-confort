@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Valider staging — HELP Confort</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:#F4F7FB;color:#0A1428;padding:0}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+header.main{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+header.main h1{margin:0;font-size:1.6rem;font-weight:800;letter-spacing:-.02em}
+header.main .sub{color:#64748b;font-size:.88rem;margin-top:4px}
+.progress-box{background:#fff;border:1px solid #E5EDF3;border-radius:14px;padding:18px 22px;margin-bottom:22px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.progress-stat{font-size:1.6rem;font-weight:800;color:#0A1428;line-height:1}
+.progress-stat small{font-size:.86rem;font-weight:500;color:#64748b}
+.progress-bar{flex:1;height:10px;background:#F1F5F9;border-radius:999px;overflow:hidden;min-width:200px}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#0DA0CF,#22C55E);transition:width .3s}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:14px}
+.card{background:#fff;border:1px solid #E5EDF3;border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:all .2s}
+.card.ok{background:#F0FDF4;border-color:#86EFAC;box-shadow:0 4px 12px rgba(34,197,94,.10)}
+.card.ko{background:#FEF2F2;border-color:#FCA5A5;box-shadow:0 4px 12px rgba(239,68,68,.10)}
+.card-num{font-size:.74rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em}
+.card-title{font-size:1rem;font-weight:800;color:#0A1428;letter-spacing:-.01em;line-height:1.3}
+.card-desc{font-size:.84rem;color:#475569;line-height:1.5}
+.card-check{font-size:.82rem;color:#0A1428;background:#FAFCFD;border-left:4px solid #0DA0CF;padding:10px 12px;border-radius:0 8px 8px 0;line-height:1.5}
+.card-status{font-size:.74rem;font-weight:700;padding:4px 10px;border-radius:20px;background:#F1F5F9;color:#64748b;display:inline-block;width:fit-content}
+.card.ok .card-status{background:#22C55E;color:#fff}
+.card.ko .card-status{background:#EF4444;color:#fff}
+.card .ko-reason{font-size:.78rem;color:#7F1D1D;background:#FEE2E2;padding:8px 10px;border-radius:6px;font-style:italic}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+.btn{flex:1;border:1px solid #E5EDF3;background:#fff;border-radius:8px;padding:10px;font-size:.86rem;font-weight:700;cursor:pointer;color:#475569;font-family:inherit;min-width:90px;transition:all .15s}
+.btn.view{background:#0DA0CF;color:#fff;border-color:#0DA0CF}
+.btn.view:hover{background:#0a82a8}
+.btn.ok{background:#22C55E;color:#fff;border-color:#22C55E}
+.btn.ok:hover{background:#16a34a}
+.btn.ko{background:#EF4444;color:#fff;border-color:#EF4444}
+.btn.ko:hover{background:#dc2626}
+.promote-box{position:sticky;bottom:0;background:#fff;border:2px solid #E5EDF3;border-radius:14px;padding:20px;margin-top:24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;box-shadow:0 -8px 24px rgba(10,20,40,.08)}
+.promote-box .info{flex:1;min-width:200px}
+.promote-box h3{margin:0 0 4px;font-size:1.04rem;font-weight:800}
+.promote-box p{margin:0;font-size:.84rem;color:#64748b}
+#btn-promote{background:#22C55E;color:#fff;border:none;border-radius:10px;padding:14px 28px;font-weight:800;font-size:1rem;cursor:pointer;font-family:inherit;transition:all .15s}
+#btn-promote:hover{background:#16a34a}
+#btn-promote:disabled{background:#CBD5E1;cursor:not-allowed}
+.empty{text-align:center;padding:60px 20px;color:#94a3b8}
+.warn{background:#FEF3C7;border:1px solid #FDE68A;color:#92400E;padding:14px 18px;border-radius:10px;margin-bottom:20px;font-size:.92rem}
+.toast{position:fixed;top:20px;right:20px;background:#0A1428;color:#fff;padding:14px 22px;border-radius:10px;font-weight:700;z-index:9999;box-shadow:0 8px 24px rgba(10,20,40,.30);opacity:0;transform:translateY(-12px);transition:all .25s}
+.toast.show{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="main">
+    <div>
+      <h1>🔍 Valider les modifs staging</h1>
+      <div class="sub">Batch 2026-06-12 · Tu coches OK ou KO sur chaque page, puis tu promeus en prod en 1 clic.</div>
+    </div>
+  </header>
+
+  <div class="warn">⚠️ Tu es sur la version <strong>STAGING</strong> (test). Aucune modif visible côté client tant que tu n'as pas validé tout et cliqué "Promouvoir en prod".</div>
+
+  <div class="progress-box">
+    <div>
+      <div class="progress-stat" id="stat-ok">0<small> / 0 validés</small></div>
+    </div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="bar-fill" style="width:0%"></div></div>
+    <div>
+      <div class="progress-stat" id="stat-ko" style="color:#EF4444">0<small> KO</small></div>
+    </div>
+  </div>
+
+  <div class="cards" id="cards"><div class="empty">Chargement…</div></div>
+
+  <div class="promote-box">
+    <div class="info">
+      <h3>Promouvoir staging → prod</h3>
+      <p>Smoke tests s'exécutent automatiquement avant le merge. Si tout vert, déploiement live en 2 min sur depan59-62.fr.</p>
+    </div>
+    <button id="btn-promote" disabled>Reste à valider…</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPA_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+const SUPA_KEY = 'publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
+const BATCH = '2026-06-12';
+
+let items = [];
+
+function api(path, opts = {}){
+  opts.headers = Object.assign({
+    'apikey': SUPA_KEY,
+    'Authorization': 'Bearer ' + SUPA_KEY,
+    'Content-Type': 'application/json',
+    'Prefer': 'return=representation'
+  }, opts.headers || {});
+  return fetch(SUPA_URL + '/rest/v1/' + path, opts).then(r => r.json());
+}
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function esc(s){
+  return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function render(){
+  const cards = document.getElementById('cards');
+  if (!items.length){
+    cards.innerHTML = '<div class="empty">Aucune modif à valider pour ce batch.</div>';
+    return;
+  }
+  cards.innerHTML = items.map(it => {
+    const cls = it.status === 'ok' ? ' ok' : (it.status === 'ko' ? ' ko' : '');
+    const statusLabel = it.status === 'ok' ? '✅ Validé' : (it.status === 'ko' ? '❌ Refusé' : '⏳ À valider');
+    const num = Math.round((it.position || 0) / 10);
+    return `<div class="card${cls}" data-id="${it.id}">
+      <div class="card-num">Modif ${num}</div>
+      <div class="card-title">${esc(it.title)}</div>
+      <div class="card-desc">${esc(it.description || '')}</div>
+      ${it.what_to_check ? `<div class="card-check"><strong>👁 À vérifier :</strong><br>${esc(it.what_to_check)}</div>` : ''}
+      <div class="card-status">${statusLabel}</div>
+      ${it.ko_reason ? `<div class="ko-reason">💬 ${esc(it.ko_reason)}</div>` : ''}
+      <div class="actions">
+        <button class="btn view" data-url="${esc(it.page_url)}">👁 Voir la page</button>
+        <button class="btn ok" data-act="ok" data-id="${it.id}">✅ OK</button>
+        <button class="btn ko" data-act="ko" data-id="${it.id}">❌ KO</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  cards.querySelectorAll('button.btn.view').forEach(b => {
+    b.addEventListener('click', () => { window.open(b.dataset.url, '_blank'); });
+  });
+  cards.querySelectorAll('button[data-act]').forEach(b => {
+    b.addEventListener('click', () => updateStatus(b.dataset.id, b.dataset.act));
+  });
+
+  // Stats
+  const ok = items.filter(i => i.status === 'ok').length;
+  const ko = items.filter(i => i.status === 'ko').length;
+  const total = items.length;
+  document.getElementById('stat-ok').innerHTML = `${ok}<small> / ${total} validés</small>`;
+  document.getElementById('stat-ko').innerHTML = `${ko}<small> KO</small>`;
+  document.getElementById('bar-fill').style.width = (ok / total * 100) + '%';
+
+  const pb = document.getElementById('btn-promote');
+  pb.disabled = !(ok === total && ko === 0);
+  pb.textContent = pb.disabled
+    ? (ko > 0 ? `🔴 ${ko} KO à fixer d'abord` : `Reste ${total - ok} à valider`)
+    : `🚀 Tout OK — Promouvoir en prod`;
+}
+
+async function updateStatus(id, status){
+  let reason = null;
+  if (status === 'ko'){
+    reason = prompt('Pourquoi cette modif ne va pas ? (description courte)') || 'Non précisé';
+  }
+  const it = items.find(i => i.id === id);
+  if (!it) return;
+  it.status = status;
+  it.ko_reason = reason;
+  await api('staging_validations?id=eq.' + id, {
+    method: 'PATCH',
+    body: JSON.stringify({
+      status: status,
+      ko_reason: reason,
+      validated_at: new Date().toISOString(),
+      validated_by: 'Florian'
+    })
+  });
+  toast(status === 'ok' ? '✅ Validé' : '❌ KO enregistré');
+  render();
+}
+
+document.getElementById('btn-promote').addEventListener('click', async () => {
+  if (!confirm('Promouvoir staging → prod ?\n\nLes smoke tests s\'exécutent avant le merge.\nSi un test échoue, le merge est annulé.')) return;
+  const token = prompt('Token GitHub PAT (ghp_...) :');
+  if (!token) return;
+  const pb = document.getElementById('btn-promote');
+  pb.disabled = true;
+  pb.textContent = '⏳ Smoke tests + merge en cours...';
+  try {
+    const res = await fetch(SUPA_URL + '/functions/v1/promote-to-prod', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token })
+    });
+    const d = await res.json();
+    if (d.success){
+      alert('✅ Promote réussi !\nCommit : ' + (d.merge_sha || '') + '\n\nDéploiement Netlify en cours, live dans 2 min sur depan59-62.fr');
+      pb.textContent = '✅ Promoted en prod';
+    } else {
+      alert('❌ Erreur :\n' + JSON.stringify(d, null, 2));
+      pb.disabled = false;
+      pb.textContent = '🚀 Tout OK — Promouvoir en prod';
+    }
+  } catch (e) {
+    alert('Erreur réseau : ' + e.message);
+    pb.disabled = false;
+    pb.textContent = '🚀 Tout OK — Promouvoir en prod';
+  }
+});
+
+async function init(){
+  const data = await api('staging_validations?batch_id=eq.' + BATCH + '&order=position.asc');
+  items = Array.isArray(data) ? data : [];
+  render();
+}
+
+init();
+</script>
+</body>
+</html>
