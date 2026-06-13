@@ -726,7 +726,53 @@
 })();
 
 /* ─────────────────────────────────────────────────────────────
-   HC-SEO-STATS-HIDER 2026-06-12 : masque les bandeaux ".seo-stats" hardcoded sur 50+ pages prestations
+   HC-PRESTATION-ENRICH 2026-06-12 : ajoute Processus 4 étapes + Aides financières + FAQ sur pages /prestations/* */
+(function(){
+  if (!/\/prestations\//.test(location.pathname)) return;
+  if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
+  function build(){
+    if (document.querySelector('.hc-presta-enrich')) return;
+    var html = '<section class="hc-presta-enrich" style="padding:40px 16px;background:#fff">'+
+      '<div style="max-width:1100px;margin:0 auto">'+
+        '<div style="text-align:center;margin-bottom:32px"><div style="font-size:.74rem;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:#0DA0CF;margin-bottom:8px">Notre méthode</div><h2 style="font-size:1.8rem;font-weight:800;letter-spacing:-.02em;margin:0;color:#0A1428">Comment ça se passe ?</h2></div>'+
+        '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:48px">'+
+          '<div style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:14px;padding:22px"><div style="width:42px;height:42px;border-radius:50%;background:#0DA0CF;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:14px">1</div><h3 style="font-size:1.02rem;font-weight:700;margin:0 0 6px;color:#0A1428">Demande en ligne</h3><p style="font-size:.86rem;color:#475569;margin:0;line-height:1.5">Remplissez le formulaire ou appelez le 03 66 10 01 34. Nous vous recontactons sous 24h ouvrées.</p></div>'+
+          '<div style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:14px;padding:22px"><div style="width:42px;height:42px;border-radius:50%;background:#0DA0CF;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:14px">2</div><h3 style="font-size:1.02rem;font-weight:700;margin:0 0 6px;color:#0A1428">Visite technique</h3><p style="font-size:.86rem;color:#475569;margin:0;line-height:1.5">Un technicien salarié HC vient sur place, étudie votre projet et établit le devis détaillé.</p></div>'+
+          '<div style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:14px;padding:22px"><div style="width:42px;height:42px;border-radius:50%;background:#0DA0CF;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:14px">3</div><h3 style="font-size:1.02rem;font-weight:700;margin:0 0 6px;color:#0A1428">Travaux</h3><p style="font-size:.86rem;color:#475569;margin:0;line-height:1.5">Réalisation par nos équipes salariées HC, fournitures comprises, propreté et finitions soignées.</p></div>'+
+          '<div style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:14px;padding:22px"><div style="width:42px;height:42px;border-radius:50%;background:#0DA0CF;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:14px">4</div><h3 style="font-size:1.02rem;font-weight:700;margin:0 0 6px;color:#0A1428">Garantie & SAV</h3><p style="font-size:.86rem;color:#475569;margin:0;line-height:1.5">Garantie décennale + assurance pro. Service après-vente local Saint-Omer / Dunkerque.</p></div>'+
+        '</div>'+
+        '<div style="background:linear-gradient(135deg,#0DA0CF08,#FF6B1A08);border:1px solid #E5EDF3;border-radius:14px;padding:28px;margin-bottom:48px">'+
+          '<div style="font-size:.74rem;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:#FF6B1A;margin-bottom:8px">Aides financières possibles</div>'+
+          '<h3 style="font-size:1.3rem;font-weight:800;margin:0 0 16px;color:#0A1428">Vous pourriez bénéficier d'aides selon votre situation</h3>'+
+          '<ul style="margin:0;padding-left:20px;line-height:1.7;color:#334155;font-size:.92rem">'+
+            '<li><strong>MaPrimeAdapt'</strong> — pour l'adaptation du logement (PMR, seniors). Conditions et montant selon situation.</li>'+
+            '<li><strong>Éco-PTZ</strong> — prêt à taux zéro pour la rénovation énergétique.</li>'+
+            '<li><strong>Certificats d'Économies d'Énergie (CEE)</strong> — bonus financier pour certains travaux d'économie d'énergie.</li>'+
+            '<li><strong>TVA 10%</strong> — taux réduit pour les travaux d'amélioration dans un logement de plus de 2 ans.</li>'+
+          '</ul>'+
+          '<p style="margin:14px 0 0;font-size:.82rem;color:#64748b">Nous étudions votre éligibilité au moment du devis et vous accompagnons sur les démarches.</p>'+
+        '</div>'+
+        '<div style="margin-bottom:24px"><div style="font-size:.74rem;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:#0DA0CF;margin-bottom:8px">FAQ</div><h2 style="font-size:1.5rem;font-weight:800;letter-spacing:-.02em;margin:0 0 20px;color:#0A1428">Questions fréquentes</h2></div>'+
+        '<div style="display:grid;gap:10px">'+
+          '<details style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:10px;padding:14px 18px"><summary style="cursor:pointer;font-weight:700;color:#0A1428;font-size:.96rem">Combien de temps pour recevoir un devis ?</summary><div style="margin-top:10px;font-size:.88rem;color:#475569;line-height:1.55">Après votre demande, nous reprenons contact sous 24h ouvrées pour fixer une visite technique. Le devis détaillé vous est remis sous 5 à 10 jours selon la complexité du projet.</div></details>'+
+          '<details style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:10px;padding:14px 18px"><summary style="cursor:pointer;font-weight:700;color:#0A1428;font-size:.96rem">Les techniciens HC sont-ils salariés ou sous-traitants ?</summary><div style="margin-top:10px;font-size:.88rem;color:#475569;line-height:1.55">Tous nos techniciens sont salariés HELP Confort, formés en interne, basés à Saint-Omer et Dunkerque. Pas de sous-traitance commerciale.</div></details>'+
+          '<details style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:10px;padding:14px 18px"><summary style="cursor:pointer;font-weight:700;color:#0A1428;font-size:.96rem">Quels labels et certifications HELP Confort possède ?</summary><div style="margin-top:10px;font-size:.88rem;color:#475569;line-height:1.55">HC est qualifiée Qualibat et possède les certifications nécessaires pour les travaux d'amélioration de l'habitat. Voir la page À propos pour la liste complète et numéros de qualification.</div></details>'+
+          '<details style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:10px;padding:14px 18px"><summary style="cursor:pointer;font-weight:700;color:#0A1428;font-size:.96rem">Que couvre la garantie décennale ?</summary><div style="margin-top:10px;font-size:.88rem;color:#475569;line-height:1.55">La garantie décennale couvre les dommages compromettant la solidité de l'ouvrage ou le rendant impropre à sa destination, pendant 10 ans après réception. HC est couvert par une assurance professionnelle.</div></details>'+
+          '<details style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:10px;padding:14px 18px"><summary style="cursor:pointer;font-weight:700;color:#0A1428;font-size:.96rem">Le devis est-il vraiment gratuit ?</summary><div style="margin-top:10px;font-size:.88rem;color:#475569;line-height:1.55">Oui, totalement gratuit et sans engagement. Vous pouvez accepter, refuser ou comparer.</div></details>'+
+        '</div>'+
+      '</div>'+
+    '</section>';
+    var anchor = document.querySelector('.seo-body, .seo-grid, footer, .footer-v3');
+    var container = document.createElement('div');
+    container.innerHTML = html;
+    if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(container, anchor);
+    else document.body.appendChild(container);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build);
+  else build();
+})();
+
+/* HC-SEO-STATS-HIDER 2026-06-12 : masque les bandeaux ".seo-stats" hardcoded sur 50+ pages prestations
    ("1 à 3 semaines / Décennale + constructeur / MaPrimeAdapt 70%") -- promesses non vérifiables */
 (function(){
   if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
