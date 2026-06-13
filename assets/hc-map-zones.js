@@ -198,17 +198,24 @@
 
     // ─── 2 CERCLES propres : rayon intervention par agence (plus visuel que polygones) ───
     // Rayon ~30 km autour de chaque agence
-    L.circle([50.7508, 2.2522], {
-      radius: 30000, // 30 km
-      color: '#FF6B1A', weight: 2, opacity: 0.9,
-      fillColor: '#FF6B1A', fillOpacity: 0.15
-    }).addTo(map).bindTooltip('Rayon agence Saint-Omer · Dépan\'Audo', { sticky: true });
-
-    L.circle([51.0344, 2.3768], {
-      radius: 25000, // 25 km
-      color: '#0DA0CF', weight: 2, opacity: 0.9,
-      fillColor: '#0DA0CF', fillOpacity: 0.15
-    }).addTo(map).bindTooltip('Rayon agence Dunkerque · Dépan\'DK', { sticky: true });
+    // Polygone unique englobant TOUTE la zone d'intervention HC
+    // (Audomarois + Calaisis + Dunkerquois + Boulonnais + Flandre intérieure)
+    var ZONE_HC = [
+      [51.10, 1.50],   // NO - côte Calais/mer
+      [51.10, 2.55],   // NE - Dunkerque nord
+      [50.95, 2.75],   // E  - Hazebrouck/Bailleul
+      [50.55, 2.55],   // SE - Lillers/Aire-sur-la-Lys
+      [50.55, 1.60],   // SO - sud Boulogne
+      [50.85, 1.40]    // O  - côte entre Boulogne et Calais
+    ];
+    L.polygon(ZONE_HC, {
+      color: '#0DA0CF', weight: 2.5, opacity: 0.9,
+      fillColor: '#0DA0CF', fillOpacity: 0.10,
+      smoothFactor: 1.5
+    }).addTo(map).bindTooltip(
+      '<strong>Notre zone d\'intervention</strong><br>Du Calaisis au Dunkerquois,<br>de Saint-Omer à Boulogne-sur-Mer',
+      { sticky: true, direction: 'top', className: 'hc-zone-tooltip' }
+    );
 
     // ─── Markers 4 villes ───
     VILLES.forEach(function (v) {
