@@ -1,6 +1,6 @@
 # Audit robots.txt — directive Sitemap — Rapport
 
-_Généré le 2026-06-12 07:26_
+_Généré le 2026-06-13 07:01_
 
 ## Synthèse
 
