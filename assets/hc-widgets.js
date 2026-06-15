@@ -1141,6 +1141,7 @@
   if (!/\/prestations\//.test(location.pathname)) return;
   if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
   function build(){
+    return; // DISABLED 2026-06-12 - apostrophes repetees cassaient le JS
     if (document.querySelector('.hc-presta-enrich')) return;
     var html = '<section class="hc-presta-enrich" style="padding:40px 16px;background:#fff">'+
       '<div style="max-width:1100px;margin:0 auto">'+
