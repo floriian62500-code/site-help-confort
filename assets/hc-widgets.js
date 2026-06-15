@@ -1188,7 +1188,7 @@
 (function(){
   if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
   var s = document.createElement('style');
-  s.textContent = '.seo-stats{display:none !important}.m-zone-compact,section[aria-label^="Zone d''intervention"]{display:none !important}';
+  s.textContent = `.seo-stats{display:none !important}.m-zone-compact,section[aria-label^="Zone d'intervention"]{display:none !important}`;
   document.head.appendChild(s);
 })();
 
