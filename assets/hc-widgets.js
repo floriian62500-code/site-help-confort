@@ -1079,10 +1079,11 @@
 
   function init(){
     injectStyle();
+    renderFab(); // Affiche le FAB immédiatement même avant fetch
     api("staging_validations?batch_id=eq."+BATCH+"&order=position.asc").then(function(data){
       items = Array.isArray(data) ? data : [];
       renderFab();
-    });
+    }).catch(function(e){ console.warn("[hc-sv] api failed:", e); renderFab(); });
   }
   if (document.readyState==="loading") document.addEventListener("DOMContentLoaded", init);
   else init();
