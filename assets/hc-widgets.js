@@ -687,6 +687,14 @@
 
 })();
 
+/* HC-CHAT-HIDER staging : masque chat widget redondant */
+(function(){
+  if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
+  var s = document.createElement('style');
+  s.textContent = '#hcChatFab,#hcChatWin,#chatUrg,.hc-chat-widget,.hc-chat-prompt,.hc-prompt-bubble,#hc-chat,#hc-chat-fab,.hc-chat-toast{display:none !important}';
+  document.head.appendChild(s);
+})();
+
 /* HC-WYSIWYG 2026-06-12 : mode edition images sur staging via ?edit=1 ou cookie hc_edit=1 */
 (function(){
   var host = location.hostname;
