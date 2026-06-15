@@ -1147,7 +1147,7 @@
           '<div style="font-size:.74rem;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:#FF6B1A;margin-bottom:8px">Aides financières possibles</div>'+
           '<h3 style="font-size:1.3rem;font-weight:800;margin:0 0 16px;color:#0A1428">Vous pourriez bénéficier d’aides selon votre situation</h3>'+
           '<ul style="margin:0;padding-left:20px;line-height:1.7;color:#334155;font-size:.92rem">'+
-            '<li><strong>MaPrimeAdapt'</strong> — pour l'adaptation du logement (PMR, seniors). Conditions et montant selon situation.</li>'+
+            '<li><strong>MaPrimeAdapt’</strong> — pour l’adaptation du logement (PMR, seniors). Conditions et montant selon situation.</li>'+
             '<li><strong>Éco-PTZ</strong> — prêt à taux zéro pour la rénovation énergétique.</li>'+
             '<li><strong>Certificats d'Économies d'Énergie (CEE)</strong> — bonus financier pour certains travaux d'économie d'énergie.</li>'+
             '<li><strong>TVA 10%</strong> — taux réduit pour les travaux d'amélioration dans un logement de plus de 2 ans.</li>'+
