@@ -859,6 +859,23 @@ ${l.assigned_to ? `<div class="row"><strong>Assigné à</strong><span>${escapeHt
       w.document.write(pdfHTML);
       w.document.close();
     };
+    // Handler boutons action rapide — set status + note + save auto
+    document.querySelectorAll('.quick-status').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const newStatusValue = btn.getAttribute('data-status');
+        const sel = document.getElementById('newStatus');
+        if (sel) sel.value = newStatusValue;
+        const txt = document.getElementById('newNotes');
+        if (txt) {
+          const now = new Date().toLocaleString('fr-FR');
+          const label = btn.textContent.trim();
+          const prefix = txt.value ? txt.value + '\n' : '';
+          txt.value = prefix + '[' + now + '] ' + label + ' (action rapide)';
+        }
+        document.getElementById('btnSaveLead').click();
+      });
+    });
+
     document.getElementById('btnSaveLead').onclick = async () => {
       const newStatus = document.getElementById('newStatus').value;
       const newNotes = document.getElementById('newNotes').value.trim() || null;
