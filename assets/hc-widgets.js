@@ -686,3 +686,11 @@
   document.querySelectorAll('[data-hc-action="chat"]').forEach(function(el) { el.addEventListener('click', function(e) { e.preventDefault(); fab.classList.add('open'); openChat(); }); });
 
 })();
+
+/* HC-CHAT-HIDER 2026-06-12 : masque le chat widget redondant (3 icones dans le coin) */
+(function(){
+  if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
+  var s = document.createElement('style');
+  s.textContent = '#hcChatFab,#hcChatWin,#chatUrg,.hc-chat-widget,.hc-chat-prompt,.hc-prompt-bubble,#hc-chat,#hc-chat-fab,.hc-chat-toast{display:none !important}';
+  document.head.appendChild(s);
+})();
