@@ -1150,7 +1150,7 @@
             '<li><strong>MaPrimeAdapt’</strong> — pour l’adaptation du logement (PMR, seniors). Conditions et montant selon situation.</li>'+
             '<li><strong>Éco-PTZ</strong> — prêt à taux zéro pour la rénovation énergétique.</li>'+
             '<li><strong>Certificats d’Économies d’Énergie (CEE)</strong> — bonus financier pour certains travaux d’économie d’énergie.</li>'+
-            '<li><strong>TVA 10%</strong> — taux réduit pour les travaux d'amélioration dans un logement de plus de 2 ans.</li>'+
+            '<li><strong>TVA 10%</strong> — taux réduit pour les travaux d’amélioration dans un logement de plus de 2 ans.</li>'+
           '</ul>'+
           '<p style="margin:14px 0 0;font-size:.82rem;color:#64748b">Nous étudions votre éligibilité au moment du devis et vous accompagnons sur les démarches.</p>'+
         '</div>'+
