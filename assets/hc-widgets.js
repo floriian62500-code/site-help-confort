@@ -691,7 +691,7 @@
 (function(){
   if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
   var s = document.createElement('style');
-  s.textContent = '#hcChatFab,#hcChatWin,#chatUrg,.hc-chat-widget,.hc-chat-prompt,.hc-prompt-bubble,#hc-chat,#hc-chat-fab,.hc-chat-toast{display:none !important}';
+  s.textContent = '#hcChatFab,#hcChatWin,#chatUrg,.hc-chat-widget,.hc-chat-prompt,.hc-prompt-bubble,#hc-chat,#hc-chat-fab,.hc-chat-toast,.hc-fab,.hc-fab-btn--premium,.hc-fab-bubble,.hc-menu,.hc-chat-panel{display:none !important;visibility:hidden !important;pointer-events:none !important}';
   document.head.appendChild(s);
 })();
 
