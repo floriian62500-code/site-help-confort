@@ -235,7 +235,7 @@
       const smsMsg = encodeURIComponent('Bonjour, votre lien de paiement HELP Confort ('+fmtEur(amount)+') : '+d.payment_url+' — Merci !');
       const mailMsg = encodeURIComponent('Bonjour,\n\nMerci de cliquer ce lien pour régler votre intervention HELP Confort ('+description+', '+fmtEur(amount)+') :\n\n'+d.payment_url+'\n\nCordialement,\nHELP Confort Saint-Omer & Dunkerque\n03 66 10 01 34');
       document.getElementById('btnSms').href = phone ? 'sms:'+phone+'?body='+smsMsg : '#';
-      document.getElementById('btnMail').href = email ? 'mailto:'+email+'?subject='+encodeURIComponent('Lien de paiement HELP Confort')+'&body='+mailMsg : '#');
+      document.getElementById('btnMail').href = email ? 'mailto:'+email+'?subject='+encodeURIComponent('Lien de paiement HELP Confort')+'&body='+mailMsg : '#';
       document.getElementById('btnCopy').onclick = () => { navigator.clipboard.writeText(d.payment_url); alert('Copicé !'); };
       await refresh();
     } catch(e){ alert('Erreur : '+e.message); }
