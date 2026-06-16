@@ -712,7 +712,10 @@
   document.head.appendChild(s);
 })();
 
-/* HC-WYSIWYG-LEGACY 2026-06-12 : ancien mode images-only (désactivé) */
+/* HC-WYSIWYG-LEGACY 2026-06-12 : ancien mode images-only DÉSACTIVÉ (conflit avec hc-edit-mode.js) */
+(function(){ return; /* legacy disabled */ })();
+
+/* HC-WYSIWYG-LEGACY-ORIG (suit, neutralisé par early return ci-dessus) */
 (function(){
   var host = location.hostname;
   if (!/staging|netlify\.app/.test(host)) return;
