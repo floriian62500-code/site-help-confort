@@ -687,10 +687,351 @@
 
 })();
 
-/* HC-CHAT-HIDER 2026-06-12 : masque le chat widget redondant (3 icones dans le coin) */
+/* HC-CHAT-HIDER staging : masque chat widget redondant */
 (function(){
   if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
   var s = document.createElement('style');
-  s.textContent = '#hcChatFab,#hcChatWin,#chatUrg,.hc-chat-widget,.hc-chat-prompt,.hc-prompt-bubble,#hc-chat,#hc-chat-fab,.hc-chat-toast{display:none !important}';
+  s.textContent = '#hcChatFab,#hcChatWin,#chatUrg,.hc-chat-widget,.hc-chat-prompt,.hc-prompt-bubble,#hc-chat,#hc-chat-fab,.hc-chat-toast,.hc-fab,.hc-fab-btn--premium,.hc-fab-bubble,.hc-menu,.hc-chat-panel{display:none !important;visibility:hidden !important;pointer-events:none !important}';
   document.head.appendChild(s);
+})();
+
+/* HC-WYSIWYG 2026-06-16 : loader dynamique pour hc-edit-mode.js (CMS complet textes+images) */
+(function(){
+  var h = location.hostname;
+  if (!/staging|netlify\.app/.test(h)) return;
+  if (/depan59-62\.fr$/.test(h)) return;
+  if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
+  var qs = new URLSearchParams(location.search);
+  if (qs.get("edit") === "1") document.cookie = "hc_edit=1; path=/; max-age=86400";
+  if (qs.get("edit") === "0") document.cookie = "hc_edit=; path=/; max-age=0";
+  if (!/(?:^|;\s*)hc_edit=1/.test(document.cookie)) return;
+  if (window.__HC_EDIT_LOADED__) return; window.__HC_EDIT_LOADED__ = true;
+  var s = document.createElement("script");
+  s.src = "/assets/hc-edit-mode.js?v=" + Date.now();
+  s.defer = true;
+  document.head.appendChild(s);
+})();
+
+/* HC-WYSIWYG-LEGACY 2026-06-12 : ancien mode images-only — code mort retiré 2026-06-16, remplacé par hc-edit-mode.js */
+/* HC-STAGING-VALIDATOR 2026-06-12 : widget de validation flottant visible UNIQUEMENT sur staging */
+(function(){
+  var host = location.hostname;
+  if (!/staging|netlify\.app/.test(host)) return;
+  if (/depan59-62\.fr$/.test(host)) return;
+  if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
+
+  var SUPA_URL = "https://btcbjwqiivhpwoszomhg.supabase.co";
+  var SUPA_KEY = "sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2";
+  var BATCH = "2026-06-12";
+
+  function api(path, opts){
+    opts = opts || {};
+    opts.headers = Object.assign({
+      "apikey": SUPA_KEY,
+      "Authorization": "Bearer " + SUPA_KEY,
+      "Content-Type": "application/json",
+      "Prefer": "return=representation"
+    }, opts.headers || {});
+    return fetch(SUPA_URL + "/rest/v1/" + path, opts).then(function(r){ return r.json(); });
+  }
+
+  function esc(s){ return String(s||"").replace(/[&<>"]/g, function(c){return ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"})[c];}); }
+
+  var items = [];
+  function counters(){
+    var ok = items.filter(function(i){return i.status==="ok";}).length;
+    var ko = items.filter(function(i){return i.status==="ko";}).length;
+    return { ok: ok, ko: ko, total: items.length, all_ok: items.length>0 && ok===items.length };
+  }
+
+  function injectStyle(){
+    if (document.getElementById("hc-sv-style")) return;
+    var s = document.createElement("style");
+    s.id = "hc-sv-style";
+    s.textContent = [
+      "#hc-sv-fab{position:fixed;bottom:18px;left:18px;z-index:99999;background:#FF6B1A;color:#fff;border:none;border-radius:50px;padding:12px 18px;font-weight:800;font-family:Inter,system-ui,sans-serif;font-size:.9rem;cursor:pointer;box-shadow:0 8px 24px rgba(255,107,26,.4);display:flex;align-items:center;gap:10px}",
+      "#hc-sv-fab:hover{background:#E55510}",
+      "#hc-sv-fab .count{background:rgba(0,0,0,.2);padding:2px 8px;border-radius:20px;font-size:.78rem}",
+      "#hc-sv-panel{position:fixed;bottom:80px;left:18px;width:440px;max-width:calc(100vw - 36px);max-height:75vh;background:#fff;border:1px solid #E5EDF3;border-radius:14px;box-shadow:0 20px 60px rgba(10,20,40,.25);z-index:99998;overflow:hidden;display:none;flex-direction:column;font-family:Inter,system-ui,sans-serif}",
+      "#hc-sv-panel.open{display:flex}",
+      "#hc-sv-head{background:#0A1428;color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}",
+      "#hc-sv-head h3{margin:0;font-size:.96rem;font-weight:800}",
+      "#hc-sv-head .close{background:transparent;border:none;color:#fff;font-size:1.4rem;cursor:pointer;padding:0;line-height:1}",
+      "#hc-sv-list{overflow-y:auto;flex:1;padding:8px}",
+      ".hc-sv-item{border:1px solid #E5EDF3;border-radius:10px;padding:10px 12px;margin-bottom:8px;background:#fff}",
+      ".hc-sv-item.ok{background:#F0FDF4;border-color:#86EFAC}",
+      ".hc-sv-item.ko{background:#FEF2F2;border-color:#FCA5A5}",
+      ".hc-sv-item.here{outline:2px solid #0DA0CF;outline-offset:1px}",
+      ".hc-sv-t{font-size:.86rem;font-weight:700;color:#0A1428;margin-bottom:4px}",
+      ".hc-sv-d{font-size:.74rem;color:#64748b;line-height:1.35;margin-bottom:6px}",
+      ".hc-sv-c{font-size:.74rem;color:#475569;background:#FAFCFD;padding:6px 8px;border-radius:6px;margin-bottom:8px;border-left:3px solid #0DA0CF;line-height:1.4}",
+      ".hc-sv-act{display:flex;gap:6px;flex-wrap:wrap}",
+      ".hc-sv-b{flex:1;border:1px solid #E5EDF3;background:#fff;border-radius:6px;padding:6px 8px;font-size:.74rem;font-weight:700;cursor:pointer;color:#475569;font-family:inherit;min-width:60px}",
+      ".hc-sv-b.v{background:#0DA0CF;color:#fff;border-color:#0DA0CF}",
+      ".hc-sv-b.o{background:#22C55E;color:#fff;border-color:#22C55E}",
+      ".hc-sv-b.k{background:#EF4444;color:#fff;border-color:#EF4444}",
+      "#hc-sv-foot{padding:12px;border-top:1px solid #E5EDF3;background:#FAFCFD}",
+      "#hc-sv-promote{width:100%;background:#22C55E;color:#fff;border:none;border-radius:8px;padding:11px;font-weight:800;font-size:.92rem;cursor:pointer;font-family:inherit}",
+      "#hc-sv-promote:disabled{background:#CBD5E1;cursor:not-allowed}"
+    ].join("");
+    document.head.appendChild(s);
+  }
+
+  function isHere(it){
+    try{ var u = new URL(it.page_url, location.origin); return u.pathname === location.pathname; }catch(e){ return false; }
+  }
+
+  function renderFab(){
+    var fab = document.getElementById("hc-sv-fab");
+    var c = counters();
+    if (!fab){
+      fab = document.createElement("button");
+      fab.id = "hc-sv-fab";
+      fab.addEventListener("click", togglePanel);
+      document.body.appendChild(fab);
+    }
+    fab.innerHTML = "\u2713 Modifs <span class=\"count\">"+c.ok+"/"+c.total+(c.ko?" \u00b7 "+c.ko+" KO":"")+"</span>";
+  }
+
+  function togglePanel(){
+    var p = document.getElementById("hc-sv-panel");
+    if (!p){ renderPanel(); return; }
+    p.classList.toggle("open");
+  }
+
+  function renderPanel(){
+    var p = document.createElement("div");
+    p.id = "hc-sv-panel";
+    p.className = "open";
+    p.innerHTML =
+      "<div id=\"hc-sv-head\"><h3>Valider modifs staging</h3><button class=\"close\" id=\"hc-sv-close\">\u00d7</button></div>"+
+      "<div id=\"hc-sv-list\"></div>"+
+      "<div id=\"hc-sv-foot\"><button id=\"hc-sv-promote\" disabled>Reste \u00e0 valider</button></div>";
+    document.body.appendChild(p);
+    document.getElementById("hc-sv-close").addEventListener("click", function(){ p.classList.remove("open"); });
+    document.getElementById("hc-sv-promote").addEventListener("click", promote);
+    refresh();
+  }
+
+  function refresh(){
+    var list = document.getElementById("hc-sv-list");
+    if (!list) return;
+    var c = counters();
+    // Tri : items de la page courante en premier
+    var sorted = items.slice().sort(function(a,b){
+      var aH = isHere(a) ? 0 : 1;
+      var bH = isHere(b) ? 0 : 1;
+      return aH - bH || (a.position||0) - (b.position||0);
+    });
+    list.innerHTML = sorted.map(function(it){
+      var cls = it.status==="ok"?" ok":(it.status==="ko"?" ko":"");
+      if (isHere(it)) cls += " here";
+      var num = Math.round((it.position||0)/10);
+      var emoji = it.status==="ok"?" \u2705":(it.status==="ko"?" \u274c":"");
+      return "<div class=\"hc-sv-item"+cls+"\" data-id=\""+it.id+"\">"+
+        "<div class=\"hc-sv-t\">"+num+". "+esc(it.title)+emoji+"</div>"+
+        "<div class=\"hc-sv-d\">"+esc(it.description||"")+"</div>"+
+        (it.what_to_check?"<div class=\"hc-sv-c\">"+esc(it.what_to_check)+"</div>":"")+
+        "<div class=\"hc-sv-act\">"+
+          "<button class=\"hc-sv-b v\" data-url=\""+esc(it.page_url)+"\">Voir</button>"+
+          "<button class=\"hc-sv-b o\" data-act=\"ok\" data-id=\""+it.id+"\">OK</button>"+
+          "<button class=\"hc-sv-b k\" data-act=\"ko\" data-id=\""+it.id+"\">KO</button>"+
+        "</div>"+
+      "</div>";
+    }).join("");
+    list.querySelectorAll("button.hc-sv-b.v").forEach(function(b){
+      b.addEventListener("click", function(){ location.href = b.getAttribute("data-url"); });
+    });
+    list.querySelectorAll("button[data-act]").forEach(function(b){
+      b.addEventListener("click", function(){ updateStatus(b.getAttribute("data-id"), b.getAttribute("data-act")); });
+    });
+    var pb = document.getElementById("hc-sv-promote");
+    if (pb){
+      pb.disabled = !c.all_ok;
+      pb.textContent = c.all_ok ? "\ud83d\ude80 Promouvoir en prod" : (c.ko>0?"\ud83d\udd34 "+c.ko+" KO \u00e0 fixer":"Reste "+(c.total-c.ok)+" \u00e0 valider");
+    }
+  }
+
+  function updateStatus(id, status){
+    var it = items.find(function(i){return i.id===id;});
+    if (!it) return;
+    var reason = null;
+    if (status==="ko") reason = prompt("Pourquoi ce point n est pas OK ?") || "Non pr\u00e9cis\u00e9";
+    it.status = status;
+    it.ko_reason = reason;
+    api("staging_validations?id=eq."+id, {
+      method: "PATCH",
+      body: JSON.stringify({ status: status, ko_reason: reason, validated_at: new Date().toISOString(), validated_by: "Florian" })
+    }).then(function(){ renderFab(); refresh(); });
+  }
+
+  function promote(){
+    if (!confirm("Promouvoir staging vers prod ?\nLes smoke tests vont s ex\u00e9cuter avant.")) return;
+    var token = prompt("Token GitHub PAT (ghp_...) :");
+    if (!token) return;
+    var pb = document.getElementById("hc-sv-promote");
+    pb.disabled = true; pb.textContent = "\u23f3 En cours...";
+    fetch(SUPA_URL+"/functions/v1/promote-to-prod", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ token: token })
+    }).then(function(r){return r.json();}).then(function(d){
+      if (d.success){ alert("\u2705 Promote r\u00e9ussi ! Commit "+(d.merge_sha||"")); pb.textContent = "\u2705 Promoted"; }
+      else { alert("\u274c "+JSON.stringify(d)); pb.disabled = false; pb.textContent = "\ud83d\ude80 Promouvoir en prod"; }
+    }).catch(function(e){ alert("Erreur : "+e.message); pb.disabled=false; pb.textContent="\ud83d\ude80 Promouvoir en prod"; });
+  }
+
+  function init(){
+    injectStyle();
+    renderFab(); // Affiche le FAB immédiatement même avant fetch
+    api("staging_validations?batch_id=eq."+BATCH+"&order=position.asc").then(function(data){
+      items = Array.isArray(data) ? data : [];
+      renderFab();
+    }).catch(function(e){ console.warn("[hc-sv] api failed:", e); renderFab(); });
+  }
+  if (document.readyState==="loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+
+/* HC-PRICE-HIDER 2026-06-12 : masque tout bouton "options au choix" / "Voir le tarif" / "Voir les tarifs" via MutationObserver */
+(function(){
+  if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
+  var KEYWORDS = ["options au choix","Voir le tarif","Voir les tarifs","voir le tarif"];
+  function hideBy(el){
+    if (!el || el.nodeType !== 1) return;
+    var t = (el.textContent || "").trim();
+    if (!t || t.length > 80) return;
+    for (var i=0; i<KEYWORDS.length; i++){
+      if (t.indexOf(KEYWORDS[i]) !== -1){
+        el.style.display = "none";
+        return;
+      }
+    }
+  }
+  function sweep(root){
+    if (!root || !root.querySelectorAll) return;
+    var nodes = root.querySelectorAll("button, a");
+    for (var i=0; i<nodes.length; i++) hideBy(nodes[i]);
+  }
+  function init(){
+    sweep(document.body);
+    if (window.MutationObserver) {
+      var obs = new MutationObserver(function(muts){
+        for (var i=0; i<muts.length; i++){
+          for (var j=0; j<muts[i].addedNodes.length; j++){
+            var n = muts[i].addedNodes[j];
+            if (n.nodeType === 1) { hideBy(n); sweep(n); }
+          }
+        }
+      });
+      obs.observe(document.body, { childList: true, subtree: true });
+    }
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+
+/* ─────────────────────────────────────────────────────────────
+   HC-PRESTATION-ENRICH 2026-06-12 : ajoute Processus 4 étapes + Aides financières + FAQ sur pages /prestations/* */
+(function(){
+  if (!/\/prestations\//.test(location.pathname)) return;
+  if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
+  function build(){
+    return; // DISABLED 2026-06-12 - apostrophes repetees cassaient le JS
+    if (document.querySelector('.hc-presta-enrich')) return;
+    var html = '<section class="hc-presta-enrich" style="padding:40px 16px;background:#fff">'+
+      '<div style="max-width:1100px;margin:0 auto">'+
+        '<div style="text-align:center;margin-bottom:32px"><div style="font-size:.74rem;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:#0DA0CF;margin-bottom:8px">Notre méthode</div><h2 style="font-size:1.8rem;font-weight:800;letter-spacing:-.02em;margin:0;color:#0A1428">Comment ça se passe ?</h2></div>'+
+        '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:48px">'+
+          '<div style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:14px;padding:22px"><div style="width:42px;height:42px;border-radius:50%;background:#0DA0CF;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:14px">1</div><h3 style="font-size:1.02rem;font-weight:700;margin:0 0 6px;color:#0A1428">Demande en ligne</h3><p style="font-size:.86rem;color:#475569;margin:0;line-height:1.5">Remplissez le formulaire ou appelez le 03 66 10 01 34. Nous vous recontactons sous 24h ouvrées.</p></div>'+
+          '<div style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:14px;padding:22px"><div style="width:42px;height:42px;border-radius:50%;background:#0DA0CF;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:14px">2</div><h3 style="font-size:1.02rem;font-weight:700;margin:0 0 6px;color:#0A1428">Visite technique</h3><p style="font-size:.86rem;color:#475569;margin:0;line-height:1.5">Un technicien salarié HC vient sur place, étudie votre projet et établit le devis détaillé.</p></div>'+
+          '<div style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:14px;padding:22px"><div style="width:42px;height:42px;border-radius:50%;background:#0DA0CF;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:14px">3</div><h3 style="font-size:1.02rem;font-weight:700;margin:0 0 6px;color:#0A1428">Travaux</h3><p style="font-size:.86rem;color:#475569;margin:0;line-height:1.5">Réalisation par nos équipes salariées HC, fournitures comprises, propreté et finitions soignées.</p></div>'+
+          '<div style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:14px;padding:22px"><div style="width:42px;height:42px;border-radius:50%;background:#0DA0CF;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:14px">4</div><h3 style="font-size:1.02rem;font-weight:700;margin:0 0 6px;color:#0A1428">Garantie & SAV</h3><p style="font-size:.86rem;color:#475569;margin:0;line-height:1.5">Garantie décennale + assurance pro. Service après-vente local Saint-Omer / Dunkerque.</p></div>'+
+        '</div>'+
+        '<div style="background:linear-gradient(135deg,#0DA0CF08,#FF6B1A08);border:1px solid #E5EDF3;border-radius:14px;padding:28px;margin-bottom:48px">'+
+          '<div style="font-size:.74rem;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:#FF6B1A;margin-bottom:8px">Aides financières possibles</div>'+
+          '<h3 style="font-size:1.3rem;font-weight:800;margin:0 0 16px;color:#0A1428">Vous pourriez bénéficier d’aides selon votre situation</h3>'+
+          '<ul style="margin:0;padding-left:20px;line-height:1.7;color:#334155;font-size:.92rem">'+
+            '<li><strong>MaPrimeAdapt’</strong> — pour l’adaptation du logement (PMR, seniors). Conditions et montant selon situation.</li>'+
+            '<li><strong>Éco-PTZ</strong> — prêt à taux zéro pour la rénovation énergétique.</li>'+
+            '<li><strong>Certificats d’Économies d’Énergie (CEE)</strong> — bonus financier pour certains travaux d’économie d’énergie.</li>'+
+            '<li><strong>TVA 10%</strong> — taux réduit pour les travaux d’amélioration dans un logement de plus de 2 ans.</li>'+
+          '</ul>'+
+          '<p style="margin:14px 0 0;font-size:.82rem;color:#64748b">Nous étudions votre éligibilité au moment du devis et vous accompagnons sur les démarches.</p>'+
+        '</div>'+
+        '<div style="margin-bottom:24px"><div style="font-size:.74rem;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:#0DA0CF;margin-bottom:8px">FAQ</div><h2 style="font-size:1.5rem;font-weight:800;letter-spacing:-.02em;margin:0 0 20px;color:#0A1428">Questions fréquentes</h2></div>'+
+        '<div style="display:grid;gap:10px">'+
+          '<details style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:10px;padding:14px 18px"><summary style="cursor:pointer;font-weight:700;color:#0A1428;font-size:.96rem">Combien de temps pour recevoir un devis ?</summary><div style="margin-top:10px;font-size:.88rem;color:#475569;line-height:1.55">Après votre demande, nous reprenons contact sous 24h ouvrées pour fixer une visite technique. Le devis détaillé vous est remis sous 5 à 10 jours selon la complexité du projet.</div></details>'+
+          '<details style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:10px;padding:14px 18px"><summary style="cursor:pointer;font-weight:700;color:#0A1428;font-size:.96rem">Les techniciens HC sont-ils salariés ou sous-traitants ?</summary><div style="margin-top:10px;font-size:.88rem;color:#475569;line-height:1.55">Tous nos techniciens sont salariés HELP Confort, formés en interne, basés à Saint-Omer et Dunkerque. Pas de sous-traitance commerciale.</div></details>'+
+          '<details style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:10px;padding:14px 18px"><summary style="cursor:pointer;font-weight:700;color:#0A1428;font-size:.96rem">Quels labels et certifications HELP Confort possède ?</summary><div style="margin-top:10px;font-size:.88rem;color:#475569;line-height:1.55">HC est qualifiée Qualibat et possède les certifications nécessaires pour les travaux d’amélioration de l’habitat. Voir la page À propos pour la liste complète et numéros de qualification.</div></details>'+
+          '<details style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:10px;padding:14px 18px"><summary style="cursor:pointer;font-weight:700;color:#0A1428;font-size:.96rem">Que couvre la garantie décennale ?</summary><div style="margin-top:10px;font-size:.88rem;color:#475569;line-height:1.55">La garantie décennale couvre les dommages compromettant la solidité de l’ouvrage ou le rendant impropre à sa destination, pendant 10 ans après réception. HC est couvert par une assurance professionnelle.</div></details>'+
+          '<details style="background:#FAFCFD;border:1px solid #E5EDF3;border-radius:10px;padding:14px 18px"><summary style="cursor:pointer;font-weight:700;color:#0A1428;font-size:.96rem">Le devis est-il vraiment gratuit ?</summary><div style="margin-top:10px;font-size:.88rem;color:#475569;line-height:1.55">Oui, totalement gratuit et sans engagement. Vous pouvez accepter, refuser ou comparer.</div></details>'+
+        '</div>'+
+      '</div>'+
+    '</section>';
+    var anchor = document.querySelector('.seo-body, .seo-grid, footer, .footer-v3');
+    var container = document.createElement('div');
+    container.innerHTML = html;
+    if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(container, anchor);
+    else document.body.appendChild(container);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build);
+  else build();
+})();
+
+/* HC-SEO-STATS-HIDER 2026-06-12 : masque les bandeaux ".seo-stats" hardcoded sur 50+ pages prestations
+   ("1 à 3 semaines / Décennale + constructeur / MaPrimeAdapt 70%") -- promesses non vérifiables */
+(function(){
+  if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
+  var s = document.createElement('style');
+  s.textContent = `.seo-stats{display:none !important}.m-zone-compact,section[aria-label^="Zone d'intervention"]{display:none !important}`;
+  document.head.appendChild(s);
+})();
+
+/* HC-TRUST-BAND 2026-06-12 : bandeau confiance auto-injecté
+   sur toutes les pages publiques juste avant le footer.
+   ────────────────────────────────────────────────────────── */
+(function(){
+  // Skip back-office et pages avec opt-out
+  if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
+  if (document.body.classList.contains('no-trust-band')) return;
+
+  function build(){
+    if (document.querySelector('.hc-trust-band-global')) return; // déjà présent
+
+    var css = '<style>' +
+      '.hc-trust-band-global{background:#0A1428;padding:22px 16px;border-top:1px solid rgba(255,255,255,.08)}' +
+      '.hc-trust-band-global .hctb-wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px 28px;color:#fff}' +
+      '.hc-trust-band-global .hctb-item{display:flex;align-items:center;gap:12px}' +
+      '.hc-trust-band-global .hctb-icon{width:38px;height:38px;border-radius:10px;background:rgba(13,160,207,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#0DA0CF}' +
+      '.hc-trust-band-global .hctb-icon svg{width:20px;height:20px}' +
+      '.hc-trust-band-global .hctb-text strong{display:block;color:#fff;font-size:.94rem;font-weight:700;line-height:1.2;margin-bottom:3px}' +
+      '.hc-trust-band-global .hctb-text span{display:block;color:rgba(255,255,255,.65);font-size:.78rem;line-height:1.3}' +
+      '@media(max-width:640px){.hc-trust-band-global{padding:18px 12px}.hc-trust-band-global .hctb-wrap{gap:14px}.hc-trust-band-global .hctb-text strong{font-size:.88rem}.hc-trust-band-global .hctb-text span{font-size:.74rem}}' +
+      '</style>';
+
+    var html = css + '<section class="hc-trust-band-global" aria-label="Garanties HELP Confort">' +
+      '<div class="hctb-wrap">' +
+        '<div class="hctb-item"><div class="hctb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="hctb-text"><strong>Garantie décennale</strong><span>Assurance professionnelle</span></div></div>' +
+        '<div class="hctb-item"><div class="hctb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div><div class="hctb-text"><strong>Labellisée</strong><span>Qualibat &amp; certifications</span></div></div>' +
+        '<div class="hctb-item"><div class="hctb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="hctb-text"><strong>Techniciens salariés</strong><span>Diplômés et formés HC</span></div></div>' +
+        '<div class="hctb-item"><div class="hctb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="hctb-text"><strong>Standard ouvert</strong><span>Lun-Ven 9h-17h · Sam 9h-16h</span></div></div>' +
+      '</div>' +
+    '</section>';
+
+    var footer = document.querySelector('footer, .footer, .footer-v3');
+    var container = document.createElement('div');
+    container.innerHTML = html;
+    if (footer && footer.parentNode){
+      footer.parentNode.insertBefore(container, footer);
+    } else {
+      document.body.appendChild(container);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', build);
+  } else {
+    build();
+  }
 })();
