@@ -82,21 +82,23 @@
           var ttc = s.price_ht * (1 + (s.vat_rate || 0.20));
           priceTxt = '<div style="font-weight:700;color:' + color + ';font-size:1.05rem;margin:6px 0 10px">' + ttc.toFixed(0).replace('.', ',') + ' € TTC</div>';
         }
-        var actionUrl = s.requires_quote
-          ? fallbackUrl + (fallbackUrl.indexOf('?') === -1 ? '?' : '&') + 'presta=' + encodeURIComponent(s.slug) + '#form'
-          : 'contact.html?presta=' + encodeURIComponent(s.slug) + '#form';
-        var actionLabel = s.requires_quote ? 'Demander un devis' : 'Voir le tarif & réserver';
-        var actionStyle = s.requires_quote
-          ? 'background:#fff;color:' + color + ';border:1.5px solid ' + color
-          : 'background:' + color + ';color:#fff;border:none';
+        var slugEnc = encodeURIComponent(s.slug);
+        var reserveUrl = 'contact.html?presta=' + slugEnc + '&action=paiement#form';
+        var devisUrl = (s.requires_quote && fallbackUrl !== 'contact.html')
+          ? fallbackUrl + (fallbackUrl.indexOf('?') === -1 ? '?' : '&') + 'presta=' + slugEnc + '#form'
+          : 'contact.html?presta=' + slugEnc + '#form';
+        var reserveLabel = s.requires_quote ? '🛒 Commander' : '🛒 Réserver';
 
-        return '<a href="' + actionUrl + '" class="hcsvc-card" style="display:flex;flex-direction:column;padding:18px;background:#fff;border:1px solid #E5EDF3;border-radius:14px;text-decoration:none;color:inherit;transition:.2s;box-shadow:0 1px 3px rgba(11,18,32,.04)" onmouseover="this.style.borderColor=\'' + color + '\';this.style.boxShadow=\'0 8px 18px rgba(13,160,207,.10)\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.borderColor=\'#E5EDF3\';this.style.boxShadow=\'0 1px 3px rgba(11,18,32,.04)\';this.style.transform=\'translateY(0)\'">' +
+        return '<div class="hcsvc-card" style="display:flex;flex-direction:column;padding:18px;background:#fff;border:1px solid #E5EDF3;border-radius:14px;color:inherit;transition:.2s;box-shadow:0 1px 3px rgba(11,18,32,.04)" onmouseover="this.style.borderColor=\'' + color + '\';this.style.boxShadow=\'0 8px 18px rgba(13,160,207,.10)\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.borderColor=\'#E5EDF3\';this.style.boxShadow=\'0 1px 3px rgba(11,18,32,.04)\';this.style.transform=\'translateY(0)\'">' +
           '<div style="width:42px;height:42px;border-radius:10px;background:' + color + '15;color:' + color + ';display:flex;align-items:center;justify-content:center;margin-bottom:10px">' + iconFor(s.name) + '</div>' +
           '<h3 style="font-size:1.02rem;font-weight:700;color:#0A1428;margin:0 0 6px;line-height:1.3">' + name + '</h3>' +
           '<p style="font-size:.84rem;color:#475569;margin:0 0 8px;line-height:1.45;flex-grow:1">' + desc + '</p>' +
           priceTxt +
-          '<span style="display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:10px;font-weight:700;font-size:.86rem;margin-top:auto;' + actionStyle + '">' + actionLabel + '</span>' +
-        '</a>';
+          '<div style="display:flex;flex-direction:column;gap:6px;margin-top:auto">' +
+            '<a href="' + reserveUrl + '" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 14px;border-radius:10px;font-weight:700;font-size:.86rem;background:' + color + ';color:#fff;text-decoration:none;border:none">' + reserveLabel + '</a>' +
+            '<a href="' + devisUrl + '" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 14px;border-radius:10px;font-weight:600;font-size:.82rem;background:#fff;color:' + color + ';text-decoration:none;border:1.5px solid ' + color + '">💬 Devis gratuit</a>' +
+          '</div>' +
+        '</div>';
       }).join('');
     } catch(e) {
       el.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;background:#F7FBFD;border-radius:14px;color:#475569"><strong style="display:block;margin-bottom:6px;color:#0A1428">Notre catalogue se met à jour</strong><span style="font-size:.88rem">Demandez votre devis au <a href="tel:+33366100134" style="color:' + color + ';font-weight:700">03 66 10 01 34</a> ou via <a href="' + fallbackUrl + '" style="color:' + color + ';font-weight:700">le formulaire contact</a>.</span></div>';
