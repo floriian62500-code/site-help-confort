@@ -46,10 +46,11 @@ body.hcem-on{padding-top:48px}
 function init(){
 var s=document.createElement('style');s.textContent=css;document.head.appendChild(s);
 var bar=document.createElement('div');bar.id='hcem-bar';
-bar.innerHTML='<div class="l"><span class="dot"></span><strong>Mode édition WYSIWYG</strong><span class="pg">'+esc(P)+'</span></div><div class="m"><span class="hcem-st" id="hcem-st">Prêt — clique sur n\'importe quel texte/image</span></div><div><button id="hcem-i">ℹ️</button> <button class="qt" id="hcem-q">✕ Quitter</button></div>';
+bar.innerHTML='<div class="l"><span class="dot"></span><strong>Mode édition WYSIWYG</strong><span class="pg">'+esc(P)+'</span></div><div class="m"><span class="hcem-st" id="hcem-st">Prêt — clique sur n\'importe quel texte/image</span></div><div><button id="hcem-seo" title="Éditer titre + meta description">🔧 SEO</button> <button id="hcem-i">ℹ️</button> <button class="qt" id="hcem-q">✕ Quitter</button></div>';
 document.body.appendChild(bar);document.body.classList.add('hcem-on');
 document.getElementById('hcem-q').onclick=function(){document.cookie='hc_edit=; path=/; max-age=0';location.href=location.pathname+'?edit=0'};
 document.getElementById('hcem-i').onclick=function(){alert('💡 Clique sur n\'importe quel texte/image pour modifier. Tes modifs partent sur STAGING (jamais en prod tant que tu n\'as pas validé via le widget orange).\n\nPath actuel : '+P)};
+document.getElementById('hcem-seo').onclick=function(){startSeo()};
 tagAll();
 new MutationObserver(tagAll).observe(document.body,{childList:true,subtree:true});
 }
@@ -139,5 +140,42 @@ var ed=e.target.closest('.hcem-ed');if(!ed)return;
 if(ed.dataset.hcemT==='t'){if(cur&&cur!==ed)return;if(ed.contentEditable==='true')return;e.preventDefault();e.stopPropagation();startT(ed)}
 else if(ed.dataset.hcemT==='i'||ed.dataset.hcemT==='b'){e.preventDefault();e.stopPropagation();startI(ed)}
 },true);
+function startSeo(){
+  var head = document.head;
+  var titleEl = head.querySelector('title');
+  var metaEl = head.querySelector('meta[name="description"]');
+  var oldTitle = titleEl ? titleEl.textContent : '';
+  var oldDesc = metaEl ? metaEl.getAttribute('content') : '';
+  var m=document.createElement('div');m.className='hcem-md';
+  m.innerHTML='<div class="pn"><h3>🔧 Mode SEO — Titre + Description</h3><p>Modifie le <code style="background:#F1F5F9;padding:2px 6px;border-radius:4px;font:.84rem ui-monospace,monospace">&lt;title&gt;</code> et la <code style="background:#F1F5F9;padding:2px 6px;border-radius:4px;font:.84rem ui-monospace,monospace">&lt;meta description&gt;</code> de cette page. Sauvegarde directement sur staging.</p><label style="display:block;margin-bottom:6px;font-weight:600;color:#0A1428">Titre (60 car. max recommandés)</label><input id="hcem-seo-t" type="text" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:6px;font:.86rem inherit;margin-bottom:14px" value="'+esc(oldTitle)+'"><label style="display:block;margin-bottom:6px;font-weight:600;color:#0A1428">Meta description (160 car. max)</label><textarea id="hcem-seo-d" rows="3" style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:6px;font:.86rem inherit;resize:vertical">'+esc(oldDesc)+'</textarea><div class="ac"><button id="hcem-seo-c">Annuler</button><button id="hcem-seo-s" style="background:#22C55E;color:#fff">💾 Sauvegarder</button></div></div>';
+  document.body.appendChild(m);
+  m.querySelector('#hcem-seo-c').onclick=function(){m.remove()};
+  m.onclick=function(e){if(e.target===m)m.remove()};
+  m.querySelector('#hcem-seo-s').onclick=function(){
+    var nt=(m.querySelector('#hcem-seo-t').value||'').trim();
+    var nd=(m.querySelector('#hcem-seo-d').value||'').trim();
+    var tk=tok();if(!tk){alert('⚠️ Renseigne ton PAT GitHub d\'abord (depuis /admin-pro/photos.html)');return}
+    setSt('💾 SEO save...','saving');
+    var jobs=[];
+    if(nt!==oldTitle){jobs.push({find:'<title>'+oldTitle+'</title>',replace:'<title>'+nt+'</title>'})}
+    if(nd!==oldDesc){
+      var oldMetaTag='<meta name="description" content="'+oldDesc+'">';
+      var newMetaTag='<meta name="description" content="'+nd+'">';
+      jobs.push({find:oldMetaTag,replace:newMetaTag});
+    }
+    if(jobs.length===0){setSt('Aucun changement','');toast('ℹ️ Aucun changement','');m.remove();return}
+    var done=0,errs=[];
+    jobs.forEach(function(j){
+      fetch(SU+'/functions/v1/gh-edit-file',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:tk,owner:'floriian62500-code',repo:'site-help-confort',branch:'staging',file_path:P,find:j.find,replace:j.replace,message:'feat(seo): '+P+' '+(j.find.indexOf('<title>')>=0?'titre':'description')})}).then(function(r){return r.json()}).then(function(d){
+        done++;
+        if(!d.success)errs.push(d.error||'err');
+        if(done===jobs.length){
+          if(errs.length){setSt('❌ '+errs.join(' / '),'err');toast('❌ '+errs.join(' / '),'err')}
+          else{setSt('✅ SEO sauvegardé — Netlify ~1 min','ok');toast('✅ SEO mis à jour','ok');if(titleEl&&nt!==oldTitle)titleEl.textContent=nt;if(metaEl&&nd!==oldDesc)metaEl.setAttribute('content',nd);m.remove()}
+        }
+      }).catch(function(e){done++;errs.push(e.message);if(done===jobs.length){setSt('❌ '+errs.join(' / '),'err');toast('❌ Réseau','err')}});
+    });
+  };
+}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
