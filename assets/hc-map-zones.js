@@ -208,10 +208,11 @@
       [50.55, 1.60],   // SO - sud Boulogne
       [50.85, 1.40]    // O  - côte entre Boulogne et Calais
     ];
-    L.polygon(ZONE_HC, {
-      color: '#0DA0CF', weight: 2.5, opacity: 0.9,
-      fillColor: '#0DA0CF', fillOpacity: 0.10,
-      smoothFactor: 1.5
+    var zonePoly = L.polygon(ZONE_HC, {
+      color: '#0DA0CF', weight: 3, opacity: 0.95,
+      fillColor: '#0DA0CF', fillOpacity: 0.14,
+      smoothFactor: 1.2,
+      dashArray: '6 6'
     }).addTo(map).bindTooltip(
       '<strong>Notre zone d\'intervention</strong><br>Du Calaisis au Dunkerquois,<br>de Saint-Omer à Boulogne-sur-Mer',
       { sticky: true, direction: 'top', className: 'hc-zone-tooltip' }
