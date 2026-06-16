@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Gestion photos — HELP Confort</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:#F4F7FB;color:#0A1428}
+.wrap{max-width:1300px;margin:0 auto;padding:24px 16px 80px}
+h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.02em}
+.sub{color:#64748b;font-size:.88rem;margin-bottom:24px}
+.warn{background:#FEF3C7;border:1px solid #FDE68A;color:#92400E;padding:12px 16px;border-radius:10px;margin-bottom:20px;font-size:.86rem}
+.warn strong{display:block;margin-bottom:4px}
+
+.section{background:#fff;border:1px solid #E5EDF3;border-radius:14px;padding:20px;margin-bottom:18px}
+.section h2{margin:0 0 4px;font-size:1.12rem;font-weight:800;letter-spacing:-.01em}
+.section .hint{color:#64748b;font-size:.82rem;margin-bottom:14px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.slot{border:1px solid #E5EDF3;border-radius:10px;background:#FAFCFD;overflow:hidden;display:flex;flex-direction:column;transition:all .15s}
+.slot:hover{border-color:#0DA0CF;box-shadow:0 4px 12px rgba(13,160,207,.08)}
+.slot.uploading{opacity:.6;pointer-events:none}
+.slot-preview{height:140px;background:#fff;display:flex;align-items:center;justify-content:center;position:relative;border-bottom:1px solid #E5EDF3}
+.slot-preview img{max-width:100%;max-height:100%;object-fit:contain}
+.slot-preview .empty{color:#94a3b8;font-size:.78rem}
+.slot-body{padding:10px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
+.slot-label{font-size:.84rem;font-weight:700;color:#0A1428;line-height:1.2}
+.slot-path{font-size:.7rem;color:#94a3b8;font-family:ui-monospace,monospace;word-break:break-all}
+.slot-actions{display:flex;gap:6px;margin-top:6px}
+.btn{flex:1;border:1px solid #E5EDF3;background:#fff;border-radius:6px;padding:7px 10px;font-size:.74rem;font-weight:700;cursor:pointer;color:#475569;font-family:inherit;text-align:center}
+.btn.primary{background:#0DA0CF;color:#fff;border-color:#0DA0CF}
+.btn.primary:hover{background:#0a82a8}
+.btn:hover{background:#F1F5F9}
+.toast{position:fixed;top:20px;right:20px;background:#0A1428;color:#fff;padding:14px 22px;border-radius:10px;font-weight:700;z-index:9999;opacity:0;transform:translateY(-10px);transition:all .2s;max-width:340px}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.err{background:#EF4444}
+.toast.ok{background:#22C55E}
+
+.dropzone{border:2px dashed #CBD5E1;border-radius:10px;padding:30px;text-align:center;color:#64748b;font-size:.86rem;margin:8px 0;transition:all .15s}
+.dropzone.over{border-color:#0DA0CF;background:#EFF8FE;color:#0DA0CF}
+
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid #E5EDF3;border-top-color:#0DA0CF;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+#token-bar{position:sticky;top:0;background:#0A1428;color:#fff;padding:10px 14px;margin:-24px -16px 18px;display:flex;align-items:center;gap:12px;font-size:.84rem;z-index:100}
+#token-bar input{flex:1;padding:8px 12px;border-radius:6px;border:none;font-family:ui-monospace,monospace;font-size:.78rem;background:#172240;color:#fff}
+#token-bar input::placeholder{color:#94a3b8}
+#token-bar .lbl{color:#94a3b8;flex-shrink:0;font-weight:700;font-size:.78rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="token-bar">
+    <span class="lbl">🔐 PAT GitHub :</span>
+    <input id="gh-token" type="password" placeholder="ghp_..." autocomplete="off">
+    <button class="btn primary" id="save-token">Mémoriser</button>
+  </div>
+
+  <h1>🖼️ Gestion des photos du site</h1>
+  <div class="sub">Remplacer toutes les images du site depuis ce dashboard. Les modifs partent sur la branche staging. Tu valides ensuite via le widget de validation pour promouvoir en prod.</div>
+
+  <div class="warn">
+    <strong>⚠️ Toutes les modifs vont sur la branche STAGING</strong>
+    Tu vois le résultat dans 2 min sur <a href="https://staging--remarkable-dragon-364e2b.netlify.app/" target="_blank">staging</a>. Quand t'es content, promote prod via le widget bleu en bas à gauche.
+  </div>
+
+  <div id="content"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPA_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
+const GH_OWNER = 'floriian62500-code';
+const GH_REPO = 'site-help-confort';
+const GH_BRANCH = 'staging';
+
+// Slots organisés par catégorie
+const SLOTS = [
+  { cat: 'Identité de marque', items: [
+    { label: '🎨 Mascotte HERO', path: 'images/mascotte.webp', desc: 'Mascotte affichée sur le hero de la home' },
+    { label: '🏠 Logo HELP Confort', path: 'images/logo-HC.png', desc: 'Logo principal (footer, headers, mails)' },
+    { label: '📱 Icon app 192x192', path: 'images/icon-192.png', desc: 'Icône PWA / favicon Apple' },
+    { label: '📱 Icon app 512x512', path: 'images/icon-512.png', desc: 'Icône PWA grande taille' },
+    { label: '🍎 Apple touch icon', path: 'images/apple-touch-icon.png', desc: 'Bookmark iOS' },
+  ]},
+  { cat: 'Pictos métiers', items: [
+    { label: '🔧 Plomberie', path: 'images/picto-plomberie.png', desc: 'Picto métier plomberie' },
+    { label: '🔥 Chauffage', path: 'images/picto-chauffage.svg', desc: 'Picto métier chauffage' },
+    { label: '⚡ Électricité', path: 'images/picto-electricite.png', desc: 'Picto métier électricité' },
+    { label: '🔐 Serrurerie', path: 'images/picto-serrurerie.png', desc: 'Picto métier serrurerie' },
+    { label: '🪟 Vitrerie', path: 'images/picto-vitrerie.png', desc: 'Picto métier vitrerie' },
+    { label: '🚪 Menuiserie', path: 'images/picto-menuiserie.png', desc: 'Picto métier menuiserie' },
+    { label: '🔨 Rénovation', path: 'images/picto-renovation.png', desc: 'Picto métier rénovation' },
+    { label: '🪜 Volets', path: 'images/picto-volets.png', desc: 'Picto métier volets' },
+    { label: '♿ Adaptation PMR', path: 'images/picto-pmr.png', desc: 'Picto adaptation logement PMR' },
+  ]},
+];
+
+let token = localStorage.getItem('hc_gh_token') || '';
+document.getElementById('gh-token').value = token;
+document.getElementById('save-token').addEventListener('click', () => {
+  token = document.getElementById('gh-token').value.trim();
+  localStorage.setItem('hc_gh_token', token);
+  toast(token ? '✅ Token mémorisé' : '⚠️ Token vidé', token ? 'ok' : 'err');
+});
+
+function toast(msg, type){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type ? ' ' + type : '');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function previewUrl(path){
+  // Charge depuis staging pour preview à jour
+  return 'https://staging--remarkable-dragon-364e2b.netlify.app/' + path + '?t=' + Date.now();
+}
+
+function fileToBase64(file){
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(String(r.result).split(',')[1]);
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+
+async function uploadFile(slot, file, slotEl){
+  if (!token){
+    toast('❌ Renseigne ton PAT GitHub en haut', 'err');
+    return;
+  }
+  if (!file) return;
+  slotEl.classList.add('uploading');
+  toast('⏳ Upload ' + file.name + '...');
+  try {
+    // On respecte l'extension du fichier original (.webp, .png, .svg, .jpg)
+    const targetPath = slot.path;
+    const b64 = await fileToBase64(file);
+    const res = await fetch(SUPA_URL + '/functions/v1/gh-push-inline', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token: token,
+        owner: GH_OWNER,
+        repo: GH_REPO,
+        branch: GH_BRANCH,
+        message: 'feat(photo): replace ' + targetPath + ' (' + Math.round(file.size/1024) + ' KB)',
+        files: [{ path: targetPath, content_b64: b64 }]
+      })
+    });
+    const d = await res.json();
+    if (d.success){
+      toast('✅ Photo poussée sur staging ! Recharge dans 2 min', 'ok');
+      // Refresh preview après 60s
+      setTimeout(() => {
+        const img = slotEl.querySelector('img');
+        if (img) img.src = previewUrl(targetPath);
+      }, 60000);
+    } else {
+      toast('❌ ' + (d.error || JSON.stringify(d)), 'err');
+    }
+  } catch (e){
+    toast('❌ Erreur : ' + e.message, 'err');
+  } finally {
+    slotEl.classList.remove('uploading');
+  }
+}
+
+function renderSlot(slot, categoryEl){
+  const el = document.createElement('div');
+  el.className = 'slot';
+  el.innerHTML = `
+    <div class="slot-preview">
+      <img src="${previewUrl(slot.path)}" alt="${slot.label}" onerror="this.style.display='none';this.parentElement.innerHTML+='<span class=empty>(pas de preview)</span>'">
+    </div>
+    <div class="slot-body">
+      <div class="slot-label">${slot.label}</div>
+      <div class="slot-path">${slot.path}</div>
+      <div class="slot-actions">
+        <label class="btn primary" style="cursor:pointer">
+          <span>📤 Remplacer</span>
+          <input type="file" accept="image/*,.svg" style="display:none">
+        </label>
+        <a class="btn" href="https://staging--remarkable-dragon-364e2b.netlify.app/${slot.path}" target="_blank">👁 Voir</a>
+      </div>
+    </div>
+  `;
+  // Listener file input
+  const input = el.querySelector('input[type=file]');
+  input.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (file) uploadFile(slot, file, el);
+    input.value = '';
+  });
+  // Drag drop sur la card
+  el.addEventListener('dragover', e => { e.preventDefault(); el.style.borderColor='#0DA0CF'; });
+  el.addEventListener('dragleave', () => { el.style.borderColor=''; });
+  el.addEventListener('drop', e => {
+    e.preventDefault();
+    el.style.borderColor='';
+    const file = e.dataTransfer.files[0];
+    if (file) uploadFile(slot, file, el);
+  });
+  categoryEl.appendChild(el);
+}
+
+function render(){
+  const root = document.getElementById('content');
+  SLOTS.forEach(cat => {
+    const section = document.createElement('div');
+    section.className = 'section';
+    section.innerHTML = `<h2>${cat.cat}</h2><div class="hint">Drag-drop ou clique "Remplacer" sur chaque card.</div>`;
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    section.appendChild(grid);
+    cat.items.forEach(slot => renderSlot(slot, grid));
+    root.appendChild(section);
+  });
+}
+render();
+</script>
+</body>
+</html>
