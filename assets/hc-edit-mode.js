@@ -53,7 +53,19 @@ document.getElementById('hcem-i').onclick=function(){alert('💡 Clique sur n\'i
 tagAll();
 new MutationObserver(tagAll).observe(document.body,{childList:true,subtree:true});
 }
+function tagBgImages(){
+document.querySelectorAll('div,section,article,aside,header,footer,figure,picture,span,a,button').forEach(function(el){
+if(el.classList.contains('hcem-ed'))return;
+if(el.closest('#hcem-bar')||el.closest('.hcem-md')||el.closest('.hcem-sb'))return;
+var bg=getComputedStyle(el).backgroundImage;
+if(!bg||bg==='none'||!bg.startsWith('url('))return;
+var m=bg.match(/url\(["']?([^"'\)]+)["']?\)/);if(!m)return;
+var url=m[1];if(!url||url.startsWith('data:')||url.startsWith('http'))return;
+var w=el.offsetWidth,h=el.offsetHeight;if(w<40||h<40||w>900)return;
+el.classList.add('hcem-ed','hcem-ed-bg');el.dataset.hcemT='b';el.dataset.hcemBgUrl=url;
+})}
 function tagAll(){
+tagBgImages();
 document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,span,a,button,li,strong,em,label,figcaption,blockquote,summary,td,th,img').forEach(function(el){
 if(el.classList.contains('hcem-ed'))return;
 if(el.closest('#hcem-bar')||el.closest('.hcem-md')||el.closest('.hcem-sb'))return;
