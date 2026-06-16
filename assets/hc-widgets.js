@@ -695,7 +695,24 @@
   document.head.appendChild(s);
 })();
 
-/* HC-WYSIWYG 2026-06-12 : mode edition images sur staging via ?edit=1 ou cookie hc_edit=1 */
+/* HC-WYSIWYG 2026-06-16 : loader dynamique pour hc-edit-mode.js (CMS complet textes+images) */
+(function(){
+  var h = location.hostname;
+  if (!/staging|netlify\.app/.test(h)) return;
+  if (/depan59-62\.fr$/.test(h)) return;
+  if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
+  var qs = new URLSearchParams(location.search);
+  if (qs.get("edit") === "1") document.cookie = "hc_edit=1; path=/; max-age=86400";
+  if (qs.get("edit") === "0") document.cookie = "hc_edit=; path=/; max-age=0";
+  if (!/(?:^|;\s*)hc_edit=1/.test(document.cookie)) return;
+  if (window.__HC_EDIT_LOADED__) return; window.__HC_EDIT_LOADED__ = true;
+  var s = document.createElement("script");
+  s.src = "/assets/hc-edit-mode.js?v=" + Date.now();
+  s.defer = true;
+  document.head.appendChild(s);
+})();
+
+/* HC-WYSIWYG-LEGACY 2026-06-12 : ancien mode images-only (désactivé) */
 (function(){
   var host = location.hostname;
   if (!/staging|netlify\.app/.test(host)) return;
