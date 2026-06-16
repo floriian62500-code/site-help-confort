@@ -137,7 +137,7 @@ document.addEventListener('click',function(e){
 if(!e.target.closest)return;
 var ed=e.target.closest('.hcem-ed');if(!ed)return;
 if(ed.dataset.hcemT==='t'){if(cur&&cur!==ed)return;if(ed.contentEditable==='true')return;e.preventDefault();e.stopPropagation();startT(ed)}
-else if(ed.dataset.hcemT==='i'){e.preventDefault();e.stopPropagation();startI(ed)}
+else if(ed.dataset.hcemT==='i'||ed.dataset.hcemT==='b'){e.preventDefault();e.stopPropagation();startI(ed)}
 },true);
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
