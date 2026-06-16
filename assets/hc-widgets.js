@@ -9,6 +9,7 @@
 (function() {
   'use strict';
 
+  return; // HC-WIDGET-UNIFIE désactivé définitivement (rond bleu en bas droite inutile)
   if (window.__HC_WIDGETS__) return;
   window.__HC_WIDGETS__ = true;
 
