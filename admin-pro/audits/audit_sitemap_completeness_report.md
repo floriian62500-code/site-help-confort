@@ -1,6 +1,6 @@
 # Audit Sitemap completeness — Rapport
 
-Généré le : `2026-06-16T08:48:50`
+Généré le : `2026-06-17T08:31:12`
 
 Source de vérité : `sitemap.xml` (`<urlset>`) + `*.html` à la racine du repo.
 

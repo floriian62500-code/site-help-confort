@@ -1,6 +1,6 @@
 # Audit inline `<style>` size — Rapport
 
-_Généré le 2026-06-16 08:48_
+_Généré le 2026-06-17 08:31_
 
 ## Synthèse
 
