@@ -1,6 +1,6 @@
 # 📐 Audit dimensions images (PIL) — extension CLS prevention
 
-_Généré le 2026-06-19 08:35_
+_Généré le 2026-06-20 07:03_
 
 - Pages scannées : **116**
 - `<img>` avec width+height : **1460**
