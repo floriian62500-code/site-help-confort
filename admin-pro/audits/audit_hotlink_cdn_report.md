@@ -1,6 +1,6 @@
 # 🖼️ Audit images hot-linkées CDN tiers — sonde #13
 
-_Généré le 2026-06-22 09:13_
+_Généré le 2026-06-23 06:53_
 
 - Pages HTML scannées : **116**
 - Fichiers JS scannés : **40**

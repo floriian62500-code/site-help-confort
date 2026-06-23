@@ -1,4 +1,4 @@
-# Audit JSON-LD — 2026-06-22 09:11
+# Audit JSON-LD — 2026-06-23 06:52
 
 > Audit local des blocs `<script type="application/ld+json">` de chaque page HTML.
 > Lancement : `python3 admin-pro/audits/audit_jsonld.py`
