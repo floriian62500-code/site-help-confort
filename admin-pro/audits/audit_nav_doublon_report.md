@@ -1,6 +1,6 @@
 # 🧭 Audit double nav identique — sonde #51
 
-_Généré le 2026-06-23 06:53_
+_Généré le 2026-06-24 06:52_
 
 - Source nav : `index.html` (nav.hc-nav détectée)
 - Liens internes uniques scannés : **17**
