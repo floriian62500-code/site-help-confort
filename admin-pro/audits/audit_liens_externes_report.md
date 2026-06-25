@@ -1,11 +1,11 @@
 # 🔗 Audit liens externes cassés — P10
 
-*Généré le 2026-06-24 06:52 — `admin-pro/audits/audit_liens_externes.py`*
+*Généré le 2026-06-25 06:51 — `admin-pro/audits/audit_liens_externes.py`*
 
 **Pages scannées** : 117
 **URLs externes uniques testés** : 61
-**URLs OK (2xx/3xx)** : 53
-**URLs cassés (4xx/5xx/timeout/DNS)** : **8**
+**URLs OK (2xx/3xx)** : 52
+**URLs cassés (4xx/5xx/timeout/DNS)** : **9**
 **URLs social-network ignorés** : 2 (whitelist : facebook/instagram/linkedin/twitter/tiktok/youtube/whatsapp)
 
 ## 🚨 Liens cassés
@@ -20,10 +20,11 @@
 | --- | `https://www.bremaud.com/` | partenaires.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
 | 403 | `https://www.helpconfort.com` | mentions-legales.html, reseau-help-confort.html | Forbidden |
 | 403 | `https://www.hoppe.com/fr-fr/catalogue-produits/1001192940/solutions-pour-portes-interieures-poignees` | partenaires.html | Forbidden |
+| --- | `https://www.riouglass.com/` | partenaires.html | TimeoutError: The read operation timed out |
 
 ## 📊 Statistiques
 
-- Taux de succès : **86 %** (53/61)
+- Taux de succès : **85 %** (52/61)
 - URLs social-network non testés (à vérifier manuellement si nécessaire) : 2
 
 ## 🛠️ Procédure de correction
