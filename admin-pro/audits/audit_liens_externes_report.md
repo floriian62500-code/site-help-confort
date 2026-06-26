@@ -1,6 +1,6 @@
 # 🔗 Audit liens externes cassés — P10
 
-*Généré le 2026-06-25 06:51 — `admin-pro/audits/audit_liens_externes.py`*
+*Généré le 2026-06-26 06:57 — `admin-pro/audits/audit_liens_externes.py`*
 
 **Pages scannées** : 117
 **URLs externes uniques testés** : 61
@@ -20,7 +20,7 @@
 | --- | `https://www.bremaud.com/` | partenaires.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
 | 403 | `https://www.helpconfort.com` | mentions-legales.html, reseau-help-confort.html | Forbidden |
 | 403 | `https://www.hoppe.com/fr-fr/catalogue-produits/1001192940/solutions-pour-portes-interieures-poignees` | partenaires.html | Forbidden |
-| --- | `https://www.riouglass.com/` | partenaires.html | TimeoutError: The read operation timed out |
+| 503 | `https://www.maco.eu/fr-FR/Home` | partenaires.html | Service Unavailable |
 
 ## 📊 Statistiques
 
