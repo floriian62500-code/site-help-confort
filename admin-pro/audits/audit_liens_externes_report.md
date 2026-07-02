@@ -1,6 +1,6 @@
 # 🔗 Audit liens externes cassés — P10
 
-*Généré le 2026-07-01 07:14 — `admin-pro/audits/audit_liens_externes.py`*
+*Généré le 2026-07-02 06:43 — `admin-pro/audits/audit_liens_externes.py`*
 
 **Pages scannées** : 117
 **URLs externes uniques testés** : 61
@@ -18,9 +18,9 @@
 | --- | `https://www.anah.fr` | aides.html | URLError: <urlopen error timed out> |
 | 404 | `https://www.anah.gouv.fr/maprimeadapt` | aides.html | Not Found |
 | --- | `https://www.bremaud.com/` | partenaires.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
-| --- | `https://www.ecologie.gouv.fr/dispositif-des-certificats-deconomies-denergie` | aides.html | URLError: <urlopen error timed out> |
 | 403 | `https://www.helpconfort.com` | mentions-legales.html, reseau-help-confort.html | Forbidden |
 | 403 | `https://www.hoppe.com/fr-fr/catalogue-produits/1001192940/solutions-pour-portes-interieures-poignees` | partenaires.html | Forbidden |
+| --- | `https://www.schueco.com/fr/particuliers` | partenaires.html | TimeoutError: The read operation timed out |
 
 ## 📊 Statistiques
 
