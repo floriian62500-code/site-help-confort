@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-07-03 — Sitemap Supabase servait toutes les URLs sur mauvais domaine (SEO ~189 URLs cassées)
+- **Symptôme** : mail Google Search Console "De nouvelles raisons empêchent l'indexation des pages d'un sitemap : Page avec redirection" sur `https://www.depan59-62.fr/`. Toutes ou presque des 189 URLs du sitemap remontées comme "Non indexée".
+- **Cause** : Edge Function `supabase/functions/sitemap/index.ts` ligne 13 : `const SITE_URL = "https://www.helpconfort-saintomer.fr"` au lieu de `"https://www.depan59-62.fr"`. `_redirects` Netlify fait un rewrite `/sitemap.xml → https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sitemap` (statut 200) donc le sitemap servi à Google contenait 189 URLs vers un domaine qui redirigeait/n'existait pas.
+- **Fix** : 1 ligne (`const SITE_URL = "https://www.depan59-62.fr"`) + redéploiement Edge Function `sitemap` v6 via Supabase MCP (`deploy_edge_function`). Vérifié live via GET `/functions/v1/sitemap` : URLs toutes en `depan59-62.fr` OK. Commit local `ef4f221b` (push distant en attente cf POUR-FLORIAN).
+- **Durée** : ~15 min (détection → prod).
+- **Pattern** : **grep systématique du domaine partout dans le repo au moins 1×/trimestre** (`grep -rn "helpconfort-saintomer\|help-confort\|depan59"`). Toute URL absolue hardcodée dans une Edge Function doit avoir un test end-to-end (curl du sitemap + vérif du hostname retourné). À ajouter à `smoke-tests-prod` Edge Function.
+- **Volet** : supabase (Edge Function) → impact SEO Google
+
+---
+
 ## Format d'entrée
 
 ```markdown
