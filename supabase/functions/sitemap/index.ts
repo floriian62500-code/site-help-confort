@@ -10,7 +10,7 @@
 // @ts-ignore Deno
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const SITE_URL = "https://www.helpconfort-saintomer.fr";
+const SITE_URL = "https://www.depan59-62.fr";
 
 const STATIC_PAGES = [
   { path: "/", priority: 1.0, freq: "weekly" },
