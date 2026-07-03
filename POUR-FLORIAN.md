@@ -22,7 +22,40 @@
 
 Une fois traitée avec Florian, l'entrée est :
 - soit déplacée vers `TODO.md` sous forme actionnable,
-- soit archivée en bas de ce fichier dans une section `## 2026-05-29 — Drapeau Ukraine : reste 1 test 2 min de ton côté
+- soit archivée en bas de ce fichier dans une section `
+
+---
+
+## 2026-07-03 18:35 — DMARC : arbitrer canal des rapports (mail pollue Outlook)
+
+**Source** : chat 2026-07-03 (Florian montre mail quotidien `DMARC Aggregate Report <dmarcreport@microsoft.com>` reçu chaque jour).
+**Constat** : L'enregistrement DNS `_dmarc.depan59-62.fr` a un tag `rua=mailto:florian.dhaillecourt@helpconfort.com`. Résultat : chaque provider mail (Microsoft, Google, Free, Orange...) envoie 1 rapport agrégé XML par jour à ton adresse → 5-20 mails/jour pollution garantie.
+**Pourquoi je ne traite pas** : modif DNS Gandi hors périmètre autonome (nécessite login registrar).
+**Options** :
+  1. **Suppression pure** — retirer `rua=` du DMARC. Zéro pollution, zéro surveillance. Aucun impact délivrabilité mails HC.
+  2. **Alias jetable** — créer `dmarc@depan59-62.fr` + filtre Outlook auto-delete 30j. Garde la trace au cas où.
+  3. **Service tiers gratuit** (Postmark DMARC Digest ou EasyDMARC free) — 1 mail hebdo lisible en FR, alertes usurpation identité. Setup 5 min sur postmarkapp.com/dmarc-digest.
+**Reco** : **option 3** (Postmark). Protection contre faux devis "de la part de HELP Confort", zéro pollution quotidienne. Sinon option 1 si tu veux zapper le sujet 5 min sans compte tiers.
+**Valeur DNS à coller chez Gandi** (Option 1) : remplacer TXT `_dmarc` par `v=DMARC1; p=quarantine; adkim=r; aspf=r;`
+**Quand on se voit** : 5 min (choix + copier coller dans Gandi).
+
+---
+
+## 2026-07-03 18:38 — Push GitHub : divergence git à résoudre (37↑ / 60↓)
+
+**Source** : session Cowork autonome 2026-07-03.
+**Constat** : Branche `main` locale = ahead 37 / behind 60 vs origin/main. Le fix critique du sitemap Search Console (voir BUGS-HISTORY) est déjà en prod côté Supabase Edge Function v6, mais le fichier `supabase/functions/sitemap/index.ts` n'est **pas encore poussé sur GitHub**. Sans push, prochain deploy manuel de la fonction depuis un poste jour risque de réintroduire l'ancien SITE_URL erroné.
+**Pourquoi je ne traite pas** : sandbox Cowork = proxy sortant fermé (curl vers GitHub / Supabase POST bloqué, HTTP 403). LaunchAgent auto-push local semble gelé depuis mi-juin (dernier push distant confirmé 21 juin).
+**Options** :
+  1. Double-cliquer sur `tools/Push-Force-Fix-Sitemap.command` (créé aujourd'hui) — pull rebase + push, ~30 sec.
+  2. Ouvrir Terminal → `cd "SITE INTERNET" && git pull --rebase origin main && git push origin main`.
+  3. Ignorer, redéployer manuellement Edge Function `sitemap` avec `supabase functions deploy sitemap --no-verify-jwt` si un jour nécessaire (mais tu perds l'historique Git de ce fix).
+**Reco** : **option 1** (script). ~30 sec, résout aussi la divergence globale qui traîne.
+**Quand on se voit** : 30 sec.
+
+---
+
+## 2026-05-29 — Drapeau Ukraine : reste 1 test 2 min de ton côté
 **Source** : agent autonome hc-site-autonome (run 2026-05-29).
 **Constat** : Le bug est clos côté code. La carte Leaflet de zones-intervention est entièrement désactivée depuis le fix V3 (kill-switch `if (true) return;` + balises Leaflet commentées) et remplacée par 2 cartes agence + CTA depuis le V4 (2026-05-22). Aucune tuile, aucun asset tiers, aucun fichier « ukrain » chargé sur la page (grep repo confirmé). Conclusion : si tu vois encore un drapeau, il ne vient PAS du site.
 **Action de ton côté (2 min)** : ouvre depan59-62.fr/zones-intervention en fenêtre de navigation privée (extensions désactivées). Si le drapeau a disparu → c'était une extension Chrome (solidarité/dons), rien à corriger, on coche la dernière ligne. Si le drapeau est TOUJOURS là en privé → préviens-moi, on rouvre une investigation (mais c'est très improbable vu l'état du code).
