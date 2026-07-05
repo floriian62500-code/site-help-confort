@@ -1,7 +1,7 @@
 {
   "scanned_pages": 117,
   "tested_urls": 61,
-  "ok": 51,
+  "ok": 50,
   "broken": [
     {
       "url": "https://comap.aalberts-hfc.com/fr",
@@ -37,6 +37,15 @@
       "ok": false,
       "pages": [
         "aides.html"
+      ]
+    },
+    {
+      "url": "https://mon-installateur.atlantic.fr/Societe/DEPAN-AUDO-HELP-CONFORT",
+      "status": 0,
+      "error": "TimeoutError: The read operation timed out",
+      "ok": false,
+      "pages": [
+        "partenaires.html"
       ]
     },
     {
@@ -99,5 +108,5 @@
     "https://www.facebook.com/depanaudo/",
     "https://www.linkedin.com/in/florian-d-haillecourt-2a67bb207"
   ],
-  "generated_at": "2026-07-04T06:23:01"
+  "generated_at": "2026-07-05T06:43:16"
 }
