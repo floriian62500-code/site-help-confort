@@ -1,6 +1,6 @@
 # 📐 Audit CLS prevention (img width/height) — sonde #56
 
-_Généré le 2026-07-05 06:43_
+_Généré le 2026-07-06 07:16_
 
 - Pages scannées : **116**
 - `<img>` total : **1513**
