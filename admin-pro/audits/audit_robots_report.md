@@ -1,6 +1,6 @@
 # 🤖 Audit robots.txt + sitemap.xml — P10
 
-*Généré le 2026-07-06 07:16 — `admin-pro/audits/audit_robots.py`*
+*Généré le 2026-07-07 06:49 — `admin-pro/audits/audit_robots.py`*
 
 **Findings totaux** : 1 (0 critical, 0 high, 1 med, 0 low)
 **Vérifications OK** : 8
