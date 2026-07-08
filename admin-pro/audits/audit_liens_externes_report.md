@@ -1,6 +1,6 @@
 # 🔗 Audit liens externes cassés — P10
 
-*Généré le 2026-07-07 06:49 — `admin-pro/audits/audit_liens_externes.py`*
+*Généré le 2026-07-08 05:54 — `admin-pro/audits/audit_liens_externes.py`*
 
 **Pages scannées** : 117
 **URLs externes uniques testés** : 61
@@ -14,15 +14,15 @@
 |--------|-----|-------|--------|
 | 403 | `https://comap.aalberts-hfc.com/fr` | partenaires.html | Forbidden |
 | 403 | `https://fr.indeed.com/cmp/Help-Confort` | carrieres.html | Forbidden |
-| --- | `https://france-renov.gouv.fr` | aides.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
-| --- | `https://france-renov.gouv.fr/aides/simulation` | aides.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
+| --- | `https://france-renov.gouv.fr` | aides.html | URLError: <urlopen error timed out> |
+| --- | `https://france-renov.gouv.fr/aides/simulation` | aides.html | URLError: <urlopen error timed out> |
 | --- | `https://new.abb.com/fr` | partenaires.html | TimeoutError: The read operation timed out |
 | --- | `https://www.anah.fr` | aides.html | URLError: <urlopen error timed out> |
-| 404 | `https://www.anah.gouv.fr/maprimeadapt` | aides.html | Not Found |
+| --- | `https://www.anah.gouv.fr` | aides.html | URLError: <urlopen error timed out> |
+| --- | `https://www.anah.gouv.fr/maprimeadapt` | aides.html | URLError: <urlopen error timed out> |
 | --- | `https://www.bremaud.com/` | partenaires.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
 | 403 | `https://www.helpconfort.com` | mentions-legales.html, reseau-help-confort.html | Forbidden |
 | 403 | `https://www.hoppe.com/fr-fr/catalogue-produits/1001192940/solutions-pour-portes-interieures-poignees` | partenaires.html | Forbidden |
-| --- | `https://www.kostum.fr/` | partenaires.html | URLError: <urlopen error timed out> |
 
 ## 📊 Statistiques
 
