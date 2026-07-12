@@ -1,6 +1,6 @@
 # 🔄 Audit synchronisation wizard ↔ catalogue — Sonde IA #59
 
-*Généré le 2026-07-11 05:42 — `admin-pro/audits/audit_catalogue_sync.py`*
+*Généré le 2026-07-12 06:05 — `admin-pro/audits/audit_catalogue_sync.py`*
 
 **Wizard home (`ALL_PRESTAS` d'index.html)** : 0 prestations
 **Catalogue (`LOCAL_CATALOG` de nos-prestations.html)** : 0 prestations
