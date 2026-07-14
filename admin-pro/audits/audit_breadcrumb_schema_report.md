@@ -1,6 +1,6 @@
 # Audit BreadcrumbList JSON-LD — Rapport
 
-_Généré le 2026-07-13 06:22_
+_Généré le 2026-07-14 05:33_
 
 ## Synthèse
 
