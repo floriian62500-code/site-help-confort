@@ -309,12 +309,16 @@
       } catch(_){}
       console.info('[analytics] GA4 via OAuth user — OK');
     } catch(e) {
-      ga4Error = '[OAuth] ' + (e.message || 'erreur');
-      console.warn('[analytics] OAuth fail, fallback SA :', ga4Error);
+      // OAuth échec → afficher l'erreur OAuth EXPLICITEMENT, ne PAS fallback silencieux sur SA
+      // (le SA n'a plus les droits property GA4 depuis mai 2026, cf project_ga4_oauth_success)
+      ga4Error = 'GA4 OAuth cassé : ' + (e.message || 'refresh_token invalide') + ' — reconnecte via /admin-pro/oauth-ga4.html';
+      console.warn('[analytics] OAuth fail :', ga4Error);
     }
   }
 
-  if (!ga4Stats && ga4Ready && saJsonStr) {
+  // Fallback SA désactivé (SA depuis mai 2026 ne renvoie plus les data property GA4).
+  // Si un jour on veut le réactiver, remettre "!ga4Stats &&" devant.
+  if (false && ga4Ready && saJsonStr) {
     try {
       const sa = typeof saJsonStr === 'string' ? JSON.parse(saJsonStr) : saJsonStr;
       if (!sa.client_email || !sa.private_key || !String(sa.private_key).includes('BEGIN PRIVATE KEY')) {
