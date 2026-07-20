@@ -26,6 +26,19 @@ Une fois traitée avec Florian, l'entrée est :
 
 ---
 
+## 2026-07-20 19:35 — 🔧 Reconnecter GA4 OAuth (5 min, refresh_token révoqué)
+
+**Source** : Florian ouvre `/admin-pro/analytics.html` le 20/07 → voit "GA4 ne renvoie pas de données — User does not have sufficient permissions" (message trompeur, en fait c'est OAuth qui est cassé, pas le Service Account).
+**Constat exact** : refresh_token GA4 OAuth invalidé par Google (`invalid_grant`). Cause probable : 7j+ d'inactivité, changement mdp Google, ou révocation manuelle dans myaccount.google.com/permissions.
+**Fix côté serveur** :
+- Ajout GA4 dans `pipeline-health-check` v5 → alerte immédiate si le refresh casse à nouveau
+- Message d'erreur sur analytics.html corrigé pour indiquer clairement "OAuth cassé, reconnecte via /admin-pro/oauth-ga4.html"
+**Action toi (5 min)** : ouvre https://www.depan59-62.fr/admin-pro/oauth-ga4.html → clique "Se connecter à Google" → autorise le scope Analytics.readonly → le refresh_token est ré-écrit dans app_settings.ga4_oauth automatiquement.
+**Vérification** : recharge /admin-pro/analytics.html — tu dois voir les KPI (sessions, users, top sources, etc.).
+**Reco long terme** : comme pour Meta, on pourrait migrer vers un Service Account Google Cloud avec un JSON qui n'expire jamais et attribuer le rôle "Viewer" sur la property GA4 depuis analytics.google.com → Property Access Management. Mais ça demande d'activer l'API Analytics Data et de configurer un projet Google Cloud. Item à programmer en S2/S3.
+
+---
+
 ## 2026-07-20 19:15 — ✅ RÉSOLU : Token Meta migré vers System User (permanent)
 
 **État final** :
