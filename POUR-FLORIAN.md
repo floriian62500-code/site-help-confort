@@ -26,7 +26,24 @@ Une fois traitée avec Florian, l'entrée est :
 
 ---
 
-## 2026-07-20 18:47 — 🚨 URGENT : Régénérer token Facebook (chantiers ne se publient plus depuis 53j)
+## 2026-07-20 19:15 — ✅ RÉSOLU : Token Meta migré vers System User (permanent)
+
+**État final** :
+- System User `Helpconfortapi` (ID `61591756427273`, rôle Admin) créé dans Business Manager HELP Confort
+- Attribué à la Page "Help Confort ST OMER" avec accès total + à l'App "Help Confort Back-Office" avec accès total
+- Page Access Token permanent généré avec scopes : pages_show_list, pages_read_engagement, pages_read_user_content, pages_manage_posts, pages_manage_metadata
+- Token écrit dans `app_settings.meta` avec `token_source=system_user_never_expires`
+- Test `/me` OK (retourne "Help Confort ST OMER")
+- Trigger sync FB OK (0 nouveau, tout déjà en base)
+- Cron pg_cron `auto-sync-facebook-posts` (jobid 12) actif */30 8-22
+
+**Conséquence** : plus JAMAIS besoin de régénérer le token Meta. Ne dépend plus de ton mot de passe FB perso. Ne peut plus être invalidé par un changement de session sécurité côté FB.
+
+**Historique** : après le bug "chantiers pas publiés depuis 53j" (dernier cron_fb_sync 28 mai → 20 juillet), token FB perso invalidé après changement mdp FB → cron pg_cron manquant → double bug. Fix racine appliqué par migration System User Token, monitoring pipeline-health-check v4 ajouté qui surveille désormais le token FB et l'âge du dernier sync (alerte WARN >45j, CRITICAL si cassé ou >14j sans sync).
+
+---
+
+## ~~2026-07-20 18:47 — 🚨 URGENT : Régénérer token Facebook~~ (RÉSOLU cf entrée du dessus)
 
 **Source** : Florian signale RÉCURRENT "les chantiers ne se publient toujours pas auto sur le site depuis Facebook".
 **Constat** :
