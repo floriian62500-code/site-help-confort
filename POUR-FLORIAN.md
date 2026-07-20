@@ -26,6 +26,28 @@ Une fois traitée avec Florian, l'entrée est :
 
 ---
 
+## 2026-07-20 18:47 — 🚨 URGENT : Régénérer token Facebook (chantiers ne se publient plus depuis 53j)
+
+**Source** : Florian signale RÉCURRENT "les chantiers ne se publient toujours pas auto sur le site depuis Facebook".
+**Constat** :
+- Dernier chantier synchronisé depuis FB → BDD : **28 mai 2026** (il y a 53 jours).
+- Cause exacte confirmée par appel `refresh-meta-token` : `"user changed their password or Facebook has changed the session for security reasons"` → token Meta invalidé côté FB, non rafraîchissable automatiquement.
+- Deuxième bug corrigé côté serveur : le cron `auto-sync-facebook-posts` n'existait pas dans pg_cron (créé aujourd'hui, tournera toutes les 30 min entre 8h-22h dès que le token sera restauré).
+**Pourquoi je ne traite pas** : régénération du token nécessite login FB Business Manager + validation Graph API Explorer + copie du token dans le wizard → impossible sans tes identifiants.
+**Procédure** (~15 min) :
+  1. Ouvrir https://www.depan59-62.fr/admin-pro/wizard-meta.html (le wizard 6 étapes est déjà prêt)
+  2. Suivre les étapes 4-6 (les 3 premières sont déjà faites) : Générer User Access Token via Graph API Explorer, autoriser les scopes, échanger contre Page Token longue durée
+  3. Coller le nouveau Page Token dans l'étape 6.2 du wizard
+  4. Le wizard écrit automatiquement dans `app_settings.meta`
+**Ce qui reprendra tout seul après ça** :
+  - Cron pg_cron `auto-sync-facebook-posts` toutes les 30 min → détecte les nouveaux posts FB → insère comme chantiers dans `realisations`
+  - Chaîne migrate-fb-images → download les images FB en local
+  - Sync JSON statique (regen manuel encore nécessaire, cf `project_sync_realisations_supabase_json`)
+**Reco après reprise** : IMPORTANT — ne plus jamais changer le mot de passe FB HELP Confort sans regénérer immédiatement le Page Token. Le message dans le wizard est explicite : "Le Page Token n'expire JAMAIS (sauf si tu changes ton mot de passe FB ou révoques l'App)".
+**Quand on se voit** : 15 min pour la wizard, puis attendre 30 min pour voir un chantier récent (ou trigger manuel via l'edge fn).
+
+---
+
 ## 2026-07-03 18:35 — DMARC : arbitrer canal des rapports (mail pollue Outlook)
 
 **Source** : chat 2026-07-03 (Florian montre mail quotidien `DMARC Aggregate Report <dmarcreport@microsoft.com>` reçu chaque jour).

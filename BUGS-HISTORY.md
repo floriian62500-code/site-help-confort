@@ -5,6 +5,21 @@
 
 ---
 
+## 2026-07-20 — Chantiers FB ne s'auto-publient plus depuis 53 jours (token invalidé + cron absent)
+- **Symptôme** : Florian récurrent "les chantiers ne se publient toujours pas sur le site depuis Facebook". Home affiche 2 chantiers dont le plus récent = 28 mai 2026.
+- **Cause double** :
+  1. **Cron pg_cron `auto-sync-facebook-posts` n'existait pas** — la Edge Function `sync-facebook-posts` v9 était fonctionnelle mais personne ne la déclenchait automatiquement. Autres crons OK (sync-reviews, sync-google-ads, indexnow, pipeline-health, publish-scheduled, weekly-recap, smoke-tests) mais pas Facebook.
+  2. **Token Meta invalidé côté FB** — `refresh-meta-token` renvoie `"user changed their password or Facebook has changed the session for security reasons"`. Refresh auto échoue → nécessite re-génération manuelle via wizard.
+- **Fix côté serveur** : cron `auto-sync-facebook-posts` créé avec `cron.schedule('*/30 8-22 * * *', ...)` → tourne toutes les 30 min entre 8h-22h, appelle l'edge fn avec HC_CRON_SECRET.
+- **Fix côté humain** : Florian doit ouvrir `/admin-pro/wizard-meta.html` étapes 4-6 → régénérer Page Token → coller dans wizard (procédure documentée dans POUR-FLORIAN.md).
+- **Durée** : diag 15 min, fix serveur 5 min. Fix humain restant ~15 min.
+- **Pattern à surveiller** :
+  - **Health-check pipeline actuellement AVEUGLE sur Facebook** (aucune section `facebook`/`meta` dans le rapport). À ajouter à `pipeline-health-check` : appel test à l'edge fn `refresh-meta-token`, alerte CRITICAL si `refreshed=false` OU `token_refreshed_at < now - 45 jours`.
+  - **Grep pg_cron systématique** : pour chaque edge fn stratégique (sync-*, refresh-*, publish-*), vérifier qu'un cron pg_cron l'appelle. À automatiser via un job `check-orphan-edge-functions`.
+- **Volet** : supabase (cron manquant) + intégration Meta (token invalidé) → impact publi auto site
+
+---
+
 ## 2026-07-03 — Sitemap Supabase servait toutes les URLs sur mauvais domaine (SEO ~189 URLs cassées)
 - **Symptôme** : mail Google Search Console "De nouvelles raisons empêchent l'indexation des pages d'un sitemap : Page avec redirection" sur `https://www.depan59-62.fr/`. Toutes ou presque des 189 URLs du sitemap remontées comme "Non indexée".
 - **Cause** : Edge Function `supabase/functions/sitemap/index.ts` ligne 13 : `const SITE_URL = "https://www.helpconfort-saintomer.fr"` au lieu de `"https://www.depan59-62.fr"`. `_redirects` Netlify fait un rewrite `/sitemap.xml → https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sitemap` (statut 200) donc le sitemap servi à Google contenait 189 URLs vers un domaine qui redirigeait/n'existait pas.
