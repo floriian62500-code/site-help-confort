@@ -1,6 +1,6 @@
 # Audit HTML weight — Rapport
 
-_Généré le 2026-07-21 05:54_
+_Généré le 2026-07-22 05:53_
 
 ## Synthèse
 
