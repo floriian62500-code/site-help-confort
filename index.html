@@ -1530,11 +1530,12 @@ function canGoNext() {
 if (current === 1) return !!state.presta;
 if (current === 2) {
 if (state.flow === 'callback') return true;
-// Description : au moins 3 caractères + au moins UN métier coché + au moins UNE photo
+// Description : au moins 3 caractères + au moins UN métier coché.
+// Photo n'est plus obligatoire depuis 2026-07-25 (règle "photo incitative pas bloquante" —
+// le visiteur en urgence, main mouillée, ne doit pas être bloqué par un upload photo).
 var hasDesc = !!state.desc && state.desc.trim().length >= 3;
 var hasMetier = (state.metiers || []).length > 0;
-var hasPhoto = !!(window.__resaPhotos && window.__resaPhotos.length > 0);
-return hasDesc && hasMetier && hasPhoto;
+return hasDesc && hasMetier;
 }
 if (current === 3) {
 // Validation stricte — anti-fausses-données
@@ -1626,15 +1627,12 @@ function refreshNext() {
  if (btnNext.disabled && current === 2 && state.flow !== 'callback') {
  var need = state.desc ? state.desc.trim().length : 0;
  var hasMetier = (state.metiers || []).length > 0;
- var hasPhoto = !!(window.__resaPhotos && window.__resaPhotos.length > 0);
+ // Photo retirée des conditions bloquantes (règle "photo incitative pas bloquante" 2026-07-25)
  if (need < 3) {
  hint.textContent = '💡 Tapez quelques mots de plus pour décrire votre situation';
  hint.style.display = 'block';
  } else if (!hasMetier) {
  hint.textContent = '💡 Cochez au moins un métier concerné';
- hint.style.display = 'block';
- } else if (!hasPhoto) {
- hint.textContent = '📸 Ajoutez au moins 1 photo pour qu\'on puisse diagnostiquer';
  hint.style.display = 'block';
  } else { hint.style.display = 'none'; }
  } else if (btnNext.disabled && current === 3) {
