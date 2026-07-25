@@ -1048,7 +1048,7 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
  </div>
 
  <div class="form-row">
- <div style="display:block;font-size:.84rem;font-weight:700;color:#0A1428;margin-bottom:8px;letter-spacing:-.005em">Ajoutez au moins 1 photo <span class="req">*</span></div>
+ <div style="display:block;font-size:.84rem;font-weight:700;color:#0A1428;margin-bottom:8px;letter-spacing:-.005em">📸 Ajoutez une photo <span style="font-weight:500;color:#94a3b8;font-size:.78rem;margin-left:4px">(optionnel — mais très utile)</span></div>
  <input type="file" id="resa-photos-input" accept="image/*,video/*" multiple style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
  <label for="resa-photos-input" class="photo-drop-v2" id="resaDropZone">
  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0DA0CF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -1056,12 +1056,13 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
  <span>JPEG, PNG, MP4 · max 10 Mo par fichier</span>
  </label>
  <div id="resaPhotosPreview" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"></div>
- <div id="resaPhotosError" style="display:none;margin-top:8px;padding:8px 12px;background:rgba(225,29,72,.08);border-left:3px solid #E11D48;border-radius:6px;color:#9F1239;font-size:.82rem;font-weight:600">⚠ Merci d'ajouter au moins 1 photo pour qu'on puisse diagnostiquer.</div>
+ <!-- Élément conservé pour compat JS (display:none permanent — photo n'est plus obligatoire depuis 2026-07-25). -->
+ <div id="resaPhotosError" style="display:none"></div>
  </div>
 
- <div class="resa-tip">
+ <div class="resa-tip" style="background:rgba(13,160,207,.06);border-left:3px solid #0DA0CF">
  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
- <span>Une photo claire = un diagnostic plus rapide et un devis plus précis.</span>
+ <span>Une photo nous permet de préparer l'intervention et de vous répondre plus vite. Si vous n'en avez pas maintenant (main mouillée, urgence…), passez à l'étape suivante en toute tranquillité.</span>
  </div>
  </div>
 
