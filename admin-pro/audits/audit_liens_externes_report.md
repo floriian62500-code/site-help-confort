@@ -1,6 +1,6 @@
 # 🔗 Audit liens externes cassés — P10
 
-*Généré le 2026-07-25 05:45 — `admin-pro/audits/audit_liens_externes.py`*
+*Généré le 2026-07-26 06:08 — `admin-pro/audits/audit_liens_externes.py`*
 
 **Pages scannées** : 117
 **URLs externes uniques testés** : 61
