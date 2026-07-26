@@ -913,6 +913,8 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
   .hc-resa-journey .hrj-num{width:28px;height:28px;border-radius:50%;background:#fff;border:1.5px solid #0DA0CF;color:#0DA0CF;font-weight:800;font-size:.82rem;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(13,160,207,.15)}
   .hc-resa-journey .hrj-lbl{font-size:.76rem;font-weight:600;color:#0A1428;line-height:1.3;max-width:110px}
   @media(max-width:720px){.hc-resa-journey{padding:14px 12px}.hc-resa-journey .hrj-lbl{font-size:.68rem;max-width:70px}.hc-resa-journey .hrj-num{width:24px;height:24px;font-size:.72rem}.hc-resa-journey .hrj-steps::before{top:12px}}
+  /* Mobile < 480px : vertical timeline, plus lisible que 5 étapes serrées horizontalement */
+  @media(max-width:480px){.hc-resa-journey .hrj-steps{flex-direction:column;gap:12px;align-items:stretch}.hc-resa-journey .hrj-steps::before{display:none}.hc-resa-journey .hrj-steps li{flex-direction:row;text-align:left;gap:12px;align-items:center}.hc-resa-journey .hrj-lbl{font-size:.86rem;max-width:none;text-align:left;flex:1;font-weight:600}.hc-resa-journey .hrj-num{width:28px;height:28px;font-size:.82rem;flex-shrink:0}}
  </style>
  </div>
  </div>
