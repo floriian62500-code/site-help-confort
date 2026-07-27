@@ -1,6 +1,6 @@
 # Audit font-display: swap — Rapport
 
-_Généré le 2026-07-26 06:08_
+_Généré le 2026-07-27 06:33_
 
 ## Synthèse
 
