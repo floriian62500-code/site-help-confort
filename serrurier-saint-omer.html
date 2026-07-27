@@ -1135,6 +1135,56 @@ if (document.fonts && document.fonts.ready) {
  </style>
 </section>
 
+<!-- Zone d'intervention (Lot 2 §2). Alimenté par Edge Function communes-list (Supabase). -->
+<section class="hc-metier-zones" aria-label="Zone d'intervention HELP Confort">
+ <div class="container" style="max-width:1180px">
+  <div class="hmz-head">
+   <span class="hmz-eyebrow">Zone d'intervention</span>
+   <h2 class="hmz-title">Nous intervenons <em>chez vous</em></h2>
+   <p class="hmz-lead">Deux agences locales couvrent plus de 220 communes du Nord et du Pas-de-Calais. Trouvez la vôtre ci-dessous.</p>
+  </div>
+  <div class="hmz-zones" id="hmz-zones"><div class="hmz-loading">Chargement des communes desservies…</div></div>
+  <div class="hmz-footer"><a href="zones-intervention.html" class="hmz-link">Voir la carte complète et toutes les communes →</a></div>
+ </div>
+ <style>
+  .hc-metier-zones{padding:56px 20px;background:linear-gradient(180deg,#F8FCFE,#fff)}
+  .hc-metier-zones .hmz-head{text-align:center;max-width:760px;margin:0 auto 36px}
+  .hc-metier-zones .hmz-eyebrow{display:inline-block;padding:5px 12px;background:linear-gradient(135deg,rgba(13,160,207,.12),rgba(31,196,240,.06));color:#0DA0CF;font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;border-radius:999px;margin-bottom:14px}
+  .hc-metier-zones .hmz-title{font-size:clamp(1.5rem,2.6vw,2rem);font-weight:800;color:#0A1428;letter-spacing:-.02em;margin:0 0 10px;line-height:1.15}
+  .hc-metier-zones .hmz-title em{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:500;color:#0DA0CF}
+  .hc-metier-zones .hmz-lead{font-size:.98rem;color:#475569;line-height:1.55;margin:0}
+  .hc-metier-zones .hmz-zones{display:grid;gap:20px;grid-template-columns:1fr}
+  @media(min-width:760px){.hc-metier-zones .hmz-zones{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:1080px){.hc-metier-zones .hmz-zones{grid-template-columns:repeat(4,1fr)}}
+  .hc-metier-zones .hmz-zone{background:#fff;border:1px solid #E5EDF3;border-radius:14px;padding:22px 20px;box-shadow:0 2px 8px rgba(10,20,40,.03);display:flex;flex-direction:column;gap:12px;transition:all .28s ease}
+  .hc-metier-zones .hmz-zone:hover{transform:translateY(-3px);border-color:#0DA0CF;box-shadow:0 14px 32px -8px rgba(13,160,207,.15)}
+  .hc-metier-zones .hmz-zone-name{font-size:1rem;font-weight:800;color:#0A1428;margin:0;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+  .hc-metier-zones .hmz-zone-count{background:rgba(13,160,207,.10);color:#0DA0CF;font-size:.7rem;font-weight:800;padding:2px 8px;border-radius:999px;letter-spacing:.05em}
+  .hc-metier-zones .hmz-zone-agence{font-size:.7rem;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+  .hc-metier-zones .hmz-chips{display:flex;flex-wrap:wrap;gap:6px}
+  .hc-metier-zones .hmz-chip{font-size:.78rem;font-weight:600;color:#0A1428;background:#F7FBFD;border:1px solid #E5EDF3;border-radius:8px;padding:4px 10px}
+  .hc-metier-zones .hmz-more{font-size:.76rem;color:#94a3b8;font-style:italic;margin-top:auto}
+  .hc-metier-zones .hmz-footer{text-align:center;margin-top:32px}
+  .hc-metier-zones .hmz-link{display:inline-flex;align-items:center;gap:6px;color:#0DA0CF;font-weight:700;font-size:.92rem;text-decoration:none;padding:12px 24px;border:1.5px solid #0DA0CF;border-radius:999px;transition:all .2s ease}
+  .hc-metier-zones .hmz-link:hover{background:#0DA0CF;color:#fff;transform:translateY(-2px);box-shadow:0 8px 20px -4px rgba(13,160,207,.35)}
+  .hc-metier-zones .hmz-loading{grid-column:1/-1;text-align:center;color:#94a3b8;padding:24px;font-size:.9rem}
+ </style>
+ <script>(function(){
+  var container=document.getElementById('hmz-zones');if(!container)return;
+  var ZLABELS={audomarois:{name:'Audomarois',agence:'Agence Saint-Omer'},calaisis:{name:'Calaisis',agence:'Agence Saint-Omer'},boulonnais:{name:'Boulonnais',agence:'Agence Saint-Omer'},dunkerque:{name:'Dunkerquois & Flandre',agence:'Agence Dunkerque'}};
+  function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]});}
+  fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/communes-list').then(function(r){return r.ok?r.json():Promise.reject(r.status);}).then(function(data){
+    var zones=data.zones||{};var order=['audomarois','calaisis','boulonnais','dunkerque'];
+    container.innerHTML=order.filter(function(z){return(zones[z]||[]).length>0;}).map(function(z){
+      var list=zones[z]||[];var meta=ZLABELS[z]||{name:z,agence:''};var maxShow=Math.min(list.length,10);
+      var chips=list.slice(0,maxShow).map(function(c){return '<span class="hmz-chip">'+esc(c.nom)+'</span>';}).join('');
+      var more=list.length>maxShow?'<span class="hmz-more">+ '+(list.length-maxShow)+' autres communes</span>':'';
+      return '<div class="hmz-zone"><h3 class="hmz-zone-name">'+esc(meta.name)+' <span class="hmz-zone-count">'+list.length+'</span></h3><div class="hmz-zone-agence">'+esc(meta.agence)+'</div><div class="hmz-chips">'+chips+'</div>'+more+'</div>';
+    }).join('');
+  }).catch(function(){container.innerHTML='<div class="hmz-loading">Impossible de charger les communes desservies.</div>';});
+ })();</script>
+</section>
+
 
 <!-- ─── 3. CATALOGUE DÉTAILLÉ — Toutes nos interventions serrurerie ─── -->
 <section class="m-section" aria-label="Détail des interventions serrurerie">
