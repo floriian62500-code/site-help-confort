@@ -1477,10 +1477,10 @@ if (document.fonts && document.fonts.ready) {
  fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/realisations-json?t=' + Date.now()).then(function(r){return r.ok?r.json():Promise.reject()}).then(function(list){
  var plomb = list.filter(function(r){
  return r.published !== false && (r.metier||'').toLowerCase() === 'chauffage' && r.est_chantier !== false;
- }).slice(0, 2);
+ }).slice(0, 4); // 4 chantiers pour plus de preuve sociale (Lot 2 §3, 2026-07-25)
  if(!plomb.length) return; // pas de chantiers — empty state HTML reste affiché
  track.innerHTML = plomb.map(function(r){
- var url = r.url || 'realisations.html';
+ var url = r.slug ? 'realisation.html?slug=' + encodeURIComponent(r.slug) : 'realisations.html';
  var img = '';
  if(r.image){
  img = '<img decoding="async" src="'+r.image+'" alt="'+r.title+'" loading="lazy">';
