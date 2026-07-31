@@ -1,4 +1,4 @@
-# Audit Schema.org @type métier — 2026-07-30 05:43
+# Audit Schema.org @type métier — 2026-07-31 06:16
 
 - **Pages métier attendues** : 5
 - **Pages trouvées sur disque** : 5
