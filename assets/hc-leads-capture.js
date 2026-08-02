@@ -6,6 +6,18 @@
 // ═══════════════════════════════════════════════════════════════
 
 (function() {
+  // 2026-06-10 — Force vide formulaires au load pour éviter Chrome autofill avec données précédentes
+  document.addEventListener('DOMContentLoaded', function(){
+    if (location.search.indexOf('keep=1') >= 0) return;
+    document.querySelectorAll('form[data-hc-lead]').forEach(function(f){
+      setTimeout(function(){
+        f.querySelectorAll('input:not([type=hidden]):not([type=submit]):not([type=button]):not([name=website]), textarea').forEach(function(e){
+          if (e.type === 'checkbox' || e.type === 'radio') { e.checked = false; }
+          else { e.value = ''; }
+        });
+      }, 200);
+    });
+  });
   const SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
   // ─── HC-FIX 2026-05-20 ────────────────────────────────────────────────
   // On n'utilise PLUS le client supabase-js anon : la clé sb_publishable_*
@@ -83,6 +95,8 @@
         // Construire le payload
         const payload = {
           nom: (formData.get('nom') || formData.get('name') || formData.get('prenom_nom') || '').toString().trim() || 'Anonyme',
+          prenom: (formData.get('prenom') || formData.get('firstname') || '').toString().trim() || null,
+          adresse: (formData.get('adresse') || formData.get('address') || formData.get('rue') || '').toString().trim() || null,
           email: (formData.get('email') || formData.get('mail') || '').toString().trim() || null,
           telephone: (formData.get('telephone') || formData.get('tel') || formData.get('phone') || '').toString().trim() || null,
           ville: (formData.get('ville') || formData.get('city') || '').toString().trim() || null,

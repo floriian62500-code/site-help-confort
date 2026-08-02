@@ -1,20 +1,22 @@
-# Audit JSON-LD — 2026-06-01 08:37
+# Audit JSON-LD — 2026-08-02 06:04
 
 > Audit local des blocs `<script type="application/ld+json">` de chaque page HTML.
 > Lancement : `python3 admin-pro/audits/audit_jsonld.py`
 
 ## Synthèse
 
-- Pages auditées : **117**
-- Pages avec JSON-LD : **113**
-- Pages sans JSON-LD : **4**
+- Pages auditées : **118**
+- Pages avec JSON-LD : **112**
+- Pages sans JSON-LD : **6**
 - Erreurs de syntaxe JSON : **0**
-- Avertissements (champs manquants/dupliqués) : **809**
+- Avertissements (champs manquants/dupliqués) : **792**
 
 ## ⚠️ Pages sans aucun JSON-LD
 
 - `espace-client-dashboard.html`
+- `fournisseur.html`
 - `googlef09a1887914c5a23.html`
+- `partenaire.html`
 - `realisation.html`
 - `reset.html`
 
@@ -621,6 +623,13 @@
     - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
 - ✅ Bloc #1 (`WebSite, Organization, ImageObject`) — OK
 
+### `maprimeadapt.html` — 1 bloc(s) — types : Service, LocalBusiness, PostalAddress
+
+- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
+    - Service sans name (requis) @ racine
+    - Service sans offers (recommandé) @ racine
+    - LocalBusiness sans url (recommandé) @ provider
+
 ### `mentions-legales.html` — 2 bloc(s) — types : LocalBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, City, AggregateRating, BreadcrumbList, ListItem
 
 - ✅ Bloc #0 (`LocalBusiness, PostalAddress, GeoCoordinates, OpeningHoursSpecification, City, AggregateRating`) — OK
@@ -703,10 +712,6 @@
 
 - ✅ Bloc #0 (`ItemList, ListItem`) — OK
 - ✅ Bloc #1 (`BreadcrumbList, ListItem`) — OK
-
-### `notre-equipe 2.html` — 1 bloc(s) — types : BreadcrumbList, ListItem
-
-- ✅ Bloc #0 (`BreadcrumbList, ListItem`) — OK
 
 ### `notre-equipe.html` — 1 bloc(s) — types : BreadcrumbList, ListItem
 
@@ -1446,33 +1451,6 @@
     - LocalBusiness sans telephone (recommandé) @ racine
     - LocalBusiness sans address (recommandé) @ racine
     - LocalBusiness sans url (recommandé) @ racine
-
-### `volets-saint-omer.html 2.html` — 4 bloc(s) — types : Service, LocalBusiness, PostalAddress, HomeAndConstructionBusiness, GeoCoordinates, City, OpeningHoursSpecification, OfferCatalog, Offer, UnitPriceSpecification, QuantitativeValue, AggregateRating, BreadcrumbList, ListItem, FAQPage, Question, Answer
-
-- ⚠️ Bloc #0 (`Service, LocalBusiness, PostalAddress`) :
-    - Service sans offers (recommandé) @ racine
-    - LocalBusiness sans url (recommandé) @ provider
-- ⚠️ Bloc #1 (`HomeAndConstructionBusiness, PostalAddress, GeoCoordinates, City, OpeningHoursSpecification, OfferCatalog, Offer, Service, UnitPriceSpecification, QuantitativeValue, AggregateRating`) :
-    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
-    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
-    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[0].itemOffered
-    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
-    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
-    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[1].itemOffered
-    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
-    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
-    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[2].itemOffered
-    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
-    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
-    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[3].itemOffered
-    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
-    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
-    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[4].itemOffered
-    - Service sans provider (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
-    - Service sans areaServed (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
-    - Service sans offers (recommandé) @ hasOfferCatalog.itemListElement[5].itemOffered
-- ✅ Bloc #2 (`BreadcrumbList, ListItem`) — OK
-- ✅ Bloc #3 (`FAQPage, Question, Answer`) — OK
 
 ### `zones-intervention.html` — 5 bloc(s) — types : Service, LocalBusiness, PostalAddress, Plumber, City, OpeningHoursSpecification, OfferCatalog, Offer, AggregateRating, FAQPage, Question, Answer, BreadcrumbList, ListItem, AdministrativeArea
 

@@ -1,14 +1,18 @@
-# Audit liens internes vs sitemap.xml — 2026-06-01 08:37
+# Audit liens internes vs sitemap.xml — 2026-08-02 06:04
 
 Sonde #61 : croise les `href` locaux `.html` avec `sitemap.xml` et le disque.
 
-- **Pages scannées** : 116
-- **Liens internes uniques (par page)** : 3487
-- **URLs dans sitemap.xml** : 146
-- **🚨 Liens cassés (BROKEN)** : 0 (0 cibles uniques)
-- **🟠 Liens orphelins (ORPHAN — absents du sitemap)** : 260 (9 cibles uniques)
+- **Pages scannées** : 117
+- **Liens internes uniques (par page)** : 3446
+- **URLs dans sitemap.xml** : 190
+- **🚨 Liens cassés (BROKEN)** : 1 (1 cibles uniques)
+- **🟠 Liens orphelins (ORPHAN — absents du sitemap)** : 259 (9 cibles uniques)
 
-## ✅ Aucun lien interne cassé
+## 🚨 Cibles introuvables sur le disque
+
+| Cible | Pointée par |
+|-------|-------------|
+| `${METIER_PAGE}.html` | 1× — `fournisseur.html` |
 
 ## 🟠 Pages existantes mais absentes du sitemap.xml
 
@@ -18,8 +22,8 @@ explicitement (whitelist du script si page technique/noindex).
 
 | Cible | Pointée par |
 |-------|-------------|
-| `notre-equipe.html` | 99× — `a-propos.html`, `actualites.html`, `agence-dunkerque.html`, `agence-saint-omer.html`, `aides.html` … (+94) |
 | `reseau-help-confort.html` | 98× — `404.html`, `a-propos.html`, `actualites.html`, `agence-dunkerque.html`, `agence-saint-omer.html` … (+93) |
+| `notre-equipe.html` | 98× — `a-propos.html`, `actualites.html`, `agence-dunkerque.html`, `agence-saint-omer.html`, `aides.html` … (+93) |
 | `garanties.html` | 13× — `blog-comment-detecter-fuite-eau-cachee.html`, `blog-cout-renovation-salle-de-bain.html`, `blog-debouchage-canalisation-furet-hydrocurage.html`, `blog-entretien-chaudiere-annuel-obligatoire.html`, `blog-fenetres-double-vitrage-pvc-alu-bois.html` … (+8) |
 | `blog-remplacement-chaudiere-gaz-aides-2026.html` | 11× — `blog-comment-detecter-fuite-eau-cachee.html`, `blog-cout-renovation-salle-de-bain.html`, `blog-debouchage-canalisation-furet-hydrocurage.html`, `blog-entretien-chaudiere-annuel-obligatoire.html`, `blog-fenetres-double-vitrage-pvc-alu-bois.html` … (+6) |
 | `blog-pmr-adapter-salle-de-bain-senior.html` | 11× — `blog-comment-detecter-fuite-eau-cachee.html`, `blog-cout-renovation-salle-de-bain.html`, `blog-debouchage-canalisation-furet-hydrocurage.html`, `blog-entretien-chaudiere-annuel-obligatoire.html`, `blog-fenetres-double-vitrage-pvc-alu-bois.html` … (+6) |

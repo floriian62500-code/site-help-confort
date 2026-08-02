@@ -1,11 +1,11 @@
 # Audit fraîcheur articles — Rapport
 
-_Généré le 2026-06-01 08:38_
+_Généré le 2026-08-02 06:05_
 
 ## Synthèse
 
-- Articles scannés : **25**
-- ✅ OK (≤ 12 mois) : **25**
+- Articles scannés : **21**
+- ✅ OK (≤ 12 mois) : **21**
 - ⚠️  Warnings (12-24 mois — à rafraîchir) : **0**
 - ❌ Erreurs (> 24 mois — à archiver/refondre) : **0**
 

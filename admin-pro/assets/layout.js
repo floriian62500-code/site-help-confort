@@ -67,6 +67,7 @@ window.HCLayout = (function() {
         { id:'leads', href:'leads.html', label:'Demandes clients', icon:'<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>', badge:'<span class="admin-nav-item-badge alert" id="navLeadsCount" style="display:none"></span>' },
         { id:'reviews', href:'reviews.html', label:'Avis clients', icon:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>' },
         { id:'google-ads', href:'google-ads.html', label:'Google Ads', icon:'<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="9" y2="15"/><line x1="13" y1="6" x2="13" y2="18"/><line x1="17" y1="11" x2="17" y2="15"/>' },
+        { id:'analytics', href:'analytics.html', label:'Stats trafic (GA4)', icon:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>' },
         { id:'paiements', href:'paiements.html', label:'Paiements Stripe', icon:'<rect x="2" y="5" width="20" height="14" rx="3"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/>' },
         { id:'crm-external', href:'#open-crm', label:'Mon CRM (interventions)', icon:'<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>', dataAttrs:'data-action="open-crm"' }
       ]
@@ -80,7 +81,9 @@ window.HCLayout = (function() {
         // photos-prestations retirée 2026-06-01 : doublon avec services.html (upload photo direct sur chaque ligne)
         { id:'photos-pages', href:'photos-pages.html', label:'Photos pages métier', icon:'<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>' },
         { id:'realisations', href:'realisations.html', label:'Chantiers & Actus', icon:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>', badge:'<span class="admin-nav-item-badge" id="navRealCount">—</span>' },
-        { id:'content-site', href:'content-site.html', label:'Pages du site', icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/>' }
+        { id:'content-site', href:'content-site.html', label:'Pages du site', icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/>' },
+        { id:'edit-site', href:'https://staging--remarkable-dragon-364e2b.netlify.app/?edit=1', label:'🎨 Éditer mon site', icon:'<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>', dataAttrs:'target="_blank" rel="noopener" title="Ouvre staging avec mode édition WYSIWYG actif"' },
+        { id:'valider-staging', href:'valider-staging.html', label:'🚀 Promouvoir en prod', icon:'<polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/>', dataAttrs:'title="Valider tes modifs staging puis pousser sur depan59-62.fr"' }
       ]
     },
     // HC-CLEANUP 2026-05-20 : sidebar Outils simplifiée (17 → 8 items).

@@ -1,14 +1,14 @@
 {
   "audit": "fallback_supabase",
-  "generated_at": "2026-06-01T08:38:24",
+  "generated_at": "2026-08-02T06:05:18",
   "stats": {
-    "pages_audited": 115,
-    "pages_using_supabase": 13,
-    "pages_with_fallback": 8,
-    "pages_alerted": 7,
-    "total_findings": 7,
+    "pages_audited": 116,
+    "pages_using_supabase": 15,
+    "pages_with_fallback": 7,
+    "pages_alerted": 9,
+    "total_findings": 9,
     "code_distribution": {
-      "NO-FALLBACK": 7
+      "NO-FALLBACK": 9
     }
   },
   "results": [
@@ -538,6 +538,23 @@
       "findings": []
     },
     {
+      "file": "fournisseur.html",
+      "uses_supabase": true,
+      "supabase_signatures": [
+        "/rest/v1/suppliers"
+      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": [
+        {
+          "code": "NO-FALLBACK",
+          "severity": "warning",
+          "detail": "Page utilise Supabase (1 appel(s) détecté(s)) mais aucun fallback local (`LOCAL_CATALOG`, `FALLBACK_DATA`, …) n'est déclaré dans les <script>. Aucun catch() de secours visible."
+        }
+      ]
+    },
+    {
       "file": "garanties.html",
       "uses_supabase": false,
       "supabase_signatures": [],
@@ -617,6 +634,15 @@
       "findings": []
     },
     {
+      "file": "maprimeadapt.html",
+      "uses_supabase": false,
+      "supabase_signatures": [],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": []
+    },
+    {
       "file": "mentions-legales.html",
       "uses_supabase": false,
       "supabase_signatures": [],
@@ -684,15 +710,6 @@
       ]
     },
     {
-      "file": "notre-equipe 2.html",
-      "uses_supabase": false,
-      "supabase_signatures": [],
-      "has_fallback": false,
-      "fallback_signatures": [],
-      "soft_fallback_catch": false,
-      "findings": []
-    },
-    {
       "file": "notre-equipe.html",
       "uses_supabase": false,
       "supabase_signatures": [],
@@ -718,6 +735,23 @@
       "fallback_signatures": [],
       "soft_fallback_catch": false,
       "findings": []
+    },
+    {
+      "file": "partenaire.html",
+      "uses_supabase": true,
+      "supabase_signatures": [
+        "/rest/v1/partners"
+      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
+      "soft_fallback_catch": false,
+      "findings": [
+        {
+          "code": "NO-FALLBACK",
+          "severity": "warning",
+          "detail": "Page utilise Supabase (1 appel(s) détecté(s)) mais aucun fallback local (`LOCAL_CATALOG`, `FALLBACK_DATA`, …) n'est déclaré dans les <script>. Aucun catch() de secours visible."
+        }
+      ]
     },
     {
       "file": "partenaires.html",
@@ -1111,17 +1145,6 @@
       "supabase_signatures": [],
       "has_fallback": false,
       "fallback_signatures": [],
-      "soft_fallback_catch": false,
-      "findings": []
-    },
-    {
-      "file": "volets-saint-omer.html 2.html",
-      "uses_supabase": false,
-      "supabase_signatures": [],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "fetch('content/realisations/index.json?t='"
-      ],
       "soft_fallback_catch": false,
       "findings": []
     },

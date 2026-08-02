@@ -1,4 +1,4 @@
-# Audit images perf — 2026-06-01 08:37
+# Audit images perf — 2026-08-02 06:04
 
 > Sonde performance HELP Confort — détecte les images > 200 KB et
 > alerte si elles sont au-dessus du fold ou utilisées sur ≥ 5 pages.
@@ -6,7 +6,7 @@
 
 ## Synthèse
 
-- Images scannées : **178** (12295.4 KB total)
+- Images scannées : **153** (11808.5 KB total)
 - Images > 200 KB : **10**
 - Erreurs (>500 KB + ATF/5+ pages) : **0**
 - Warnings : **10**

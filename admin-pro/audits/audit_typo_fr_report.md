@@ -1,13 +1,13 @@
-# Audit typographie FR (espaces insécables) — 2026-06-01 08:38
+# Audit typographie FR (espaces insécables) — 2026-08-02 06:05
 
 Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une espace **insécable** (`&nbsp;`, U+00A0, U+202F). Seuil d'alerte : > **5** occurrences fautives par page.
 
 ## Synthèse
 
-- Pages auditées : **115**
-- Pages clean (≤ seuil) : **37**
+- Pages auditées : **116**
+- Pages clean (≤ seuil) : **38**
 - Pages avec alerte : **78**
-- Occurrences fautives cumulées : **1164**
+- Occurrences fautives cumulées : **1148**
 
 ## ⚠️ Pages au-delà du seuil
 
@@ -15,7 +15,6 @@ Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une
 |------|---------|--------------|
 | `faq.html` | **38** | `…ies, zones d'intervention : les réponses aux 15 ques…` · `…n technicien HELP Confort ? Notre tarif horaire est…` · `…TC) pour tous nos métiers : plomberie, chauffage, él…` |
 | `mentions-legales.html` | **31** | `…ur du site Raison sociale : SARL Dépan'Audo Nom comm…` · `…Dépan'Audo Nom commercial : HELP Confort Saint-Omer…` · `…t Saint-Omer Siège social : 242 route de Boulogne, 6…` |
-| `volets-saint-omer.html 2.html` | **29** | `…motorisation, pose | HELP! Confort Aller au contenu…` · `…erche de fuite, sanitaire : nos techniciens intervie…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? Je vous…` |
 | `a-propos.html` | **26** | `…par deux agences locales : Dépan'Audo à Saint-Marti…` · `…vec une conviction simple : les habitants de Saint-O…` · `…manque souvent au métier : l'organisation. Un stand…` |
 | `blog-debouchage-canalisation-furet-hydrocurage.html` | **26** | `…Canalisation bouchée : furet, hydrocurage ou pr…` · `…t, hydrocurage ou produit ? | Blog HELP Confort Sain…` · `…erie Canalisation bouchée : furet, hydrocurage ou pr…` |
 | `blog-cout-renovation-salle-de-bain.html` | **24** | `…savez pas combien prévoir ? Voici la décomposition d…` · `…hissement (5 000-8 000 €) : peinture, joints, robine…` · `…omplète (10 000-16 000 €) : nouveau carrelage + sani…` |
@@ -35,6 +34,7 @@ Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une
 | `depannage-saint-omer.html` | **18** | `…uffage, une porte bloquée ? Notre équipe basée à Sai…` · `…Omer, le bâti est typique : maisons audomaroises en…` · `…ans une fermette d'Arques : on intervient avec le bo…` |
 | `guide-adaptation-pmr.html` | **18** | `…ment Adapter son logement : PMR & maintien à domicil…` · `…s , ce n'est plus un luxe : c'est une condition souv…` · `…quoi adapter son logement ? Le maintien à domicile e…` |
 | `blog-remplacement-chaudiere-gaz-aides-2026.html` | **16** | `…emplacement chaudière gaz : aides 2026 et démarches…` · `…emplacement chaudière gaz : aides 2026 et démarches…` · `…re chaudière gaz a 15 ans ? Il est probablement temp…` |
+| `maprimeadapt.html` | **16** | `…'est-ce que MaPrimeAdapt' ? MaPrimeAdapt' est une ai…` · `…vous accompagne de A à Z : diagnostic, montage doss…` · `…ement. ✓ Suis-je éligible ? Eligible si : (1) propri…` |
 | `ouverture-porte-claquee.html` | **16** | `…ns la serrure, clé perdue : nos serruriers intervien…` · `…dans la panique, vérifiez : numéro de SIRET, adresse…` · `…Décrivez votre situation : claquée, clé bloquée, se…` |
 | `blog-comment-detecter-fuite-eau-cachee.html` | **15** | `…fique Le test du compteur : 3 minutes pour confirmer…` · `…ntement, ne minimisez pas : une fuite de 1L/heure =…` · `…ous les éviers et lavabos : raccords, siphons, joint…` |
 | `blog-preparer-sa-maison-hiver-checklist.html` | **15** | `…er sa maison pour l'hiver : la checklist du pro | Bl…` · `…er sa maison pour l'hiver : la checklist du pro Sept…` · `…nts de fenêtres et portes : remplacer si écrasés Cal…` |
@@ -96,6 +96,6 @@ Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une
 
 - `faq.html` : 38 occurrence(s)
 - `mentions-legales.html` : 31 occurrence(s)
-- `volets-saint-omer.html 2.html` : 29 occurrence(s)
 - `a-propos.html` : 26 occurrence(s)
 - `blog-debouchage-canalisation-furet-hydrocurage.html` : 26 occurrence(s)
+- `blog-cout-renovation-salle-de-bain.html` : 24 occurrence(s)

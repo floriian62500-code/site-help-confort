@@ -667,6 +667,14 @@ let _filterStatusOverride = null;
         ${l.email ? `<a class="btn" href="mailto:${l.email}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</a>` : ''}
       </div>
       <div style="display:grid;gap:10px">
+        <label style="font-size:.78rem;font-weight:700;color:var(--ink-700);margin-top:14px">⚡ Actions rapides</label>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;margin-bottom:6px">
+          <button class="btn quick-status" data-status="called" style="background:#22C55E;color:#fff;border:0;padding:9px 8px;border-radius:8px;font-weight:700;font-size:.78rem;cursor:pointer">✅ Appelé</button>
+          <button class="btn quick-status" data-status="devis_sent" style="background:#3B82F6;color:#fff;border:0;padding:9px 8px;border-radius:8px;font-weight:700;font-size:.78rem;cursor:pointer">✉️ Devis envoyé</button>
+          <button class="btn quick-status" data-status="reschedule" style="background:#F59E0B;color:#fff;border:0;padding:9px 8px;border-radius:8px;font-weight:700;font-size:.78rem;cursor:pointer">⏰ Rappeler</button>
+          <button class="btn quick-status" data-status="won" style="background:#16A34A;color:#fff;border:0;padding:9px 8px;border-radius:8px;font-weight:700;font-size:.78rem;cursor:pointer">🏆 Gagné</button>
+          <button class="btn quick-status" data-status="lost" style="background:#EF4444;color:#fff;border:0;padding:9px 8px;border-radius:8px;font-weight:700;font-size:.78rem;cursor:pointer">❌ Perdu</button>
+        </div>
         <label style="font-size:.78rem;font-weight:700;color:var(--ink-700)">Changer le statut</label>
         <select id="newStatus" style="padding:9px 11px;border:1px solid var(--ink-100);border-radius:10px;font:inherit;font-size:.88rem">
           ${Object.entries(STATUS_LABELS).map(([k,v]) => `<option value="${k}" ${k===l.status?'selected':''}>${v}</option>`).join('')}
@@ -852,6 +860,23 @@ ${l.assigned_to ? `<div class="row"><strong>Assigné à</strong><span>${escapeHt
       w.document.write(pdfHTML);
       w.document.close();
     };
+    // Handler boutons action rapide — set status + note + save auto
+    document.querySelectorAll('.quick-status').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const newStatusValue = btn.getAttribute('data-status');
+        const sel = document.getElementById('newStatus');
+        if (sel) sel.value = newStatusValue;
+        const txt = document.getElementById('newNotes');
+        if (txt) {
+          const now = new Date().toLocaleString('fr-FR');
+          const label = btn.textContent.trim();
+          const prefix = txt.value ? txt.value + '\n' : '';
+          txt.value = prefix + '[' + now + '] ' + label + ' (action rapide)';
+        }
+        document.getElementById('btnSaveLead').click();
+      });
+    });
+
     document.getElementById('btnSaveLead').onclick = async () => {
       const newStatus = document.getElementById('newStatus').value;
       const newNotes = document.getElementById('newNotes').value.trim() || null;

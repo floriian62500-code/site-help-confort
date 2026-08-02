@@ -1,14 +1,14 @@
 # Audit Sitemap completeness — Rapport
 
-Généré le : `2026-06-01T08:38:23`
+Généré le : `2026-08-02T06:05:18`
 
 Source de vérité : `sitemap.xml` (`<urlset>`) + `*.html` à la racine du repo.
 
 ## Synthèse
 
-- Pages HTML racine sur disque : **115**
-- URLs dans sitemap.xml : **146**
-- Dont pages racine (`/X.html` ou `/`) : **77**
+- Pages HTML racine sur disque : **116**
+- URLs dans sitemap.xml : **190**
+- Dont pages racine (`/X.html` ou `/`) : **78**
 - ⚠️ Pages absentes du sitemap : **38**
 - ❌ URLs sitemap orphelines (fichier introuvable) : **0**
 - ℹ️ `<lastmod>` dans le futur : **0**
@@ -35,10 +35,11 @@ Correction : ajouter une `<url>` dans `sitemap.xml`.
 - `chauffagiste-outreau.html`
 - `chauffagiste-wimereux.html`
 - `espace-client-dashboard.html`
+- `fournisseur.html`
 - `garanties.html`
 - `googlef09a1887914c5a23.html`
-- `notre-equipe 2.html`
 - `notre-equipe.html`
+- `partenaire.html`
 - `plombier-coudekerque-branche.html`
 - `plombier-coulogne.html`
 - `plombier-grande-synthe.html`
@@ -55,7 +56,6 @@ Correction : ajouter une `<url>` dans `sitemap.xml`.
 - `serrurier-marck.html`
 - `serrurier-outreau.html`
 - `serrurier-wimereux.html`
-- `volets-saint-omer.html 2.html`
 
 ---
 

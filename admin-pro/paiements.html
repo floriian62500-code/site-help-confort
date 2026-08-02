@@ -59,8 +59,12 @@
 </style>
 </head>
 <body>
+<<<<<<< HEAD
 <script src="assets/hc-admin-auth.js?v=20260603"></script>
 <div id="admin-sidebar-container"></div>
+=======
+<aside class="admin-sidebar"></aside>
+>>>>>>> origin/main
 <main class="admin-main">
   <div class="pay-page">
     <h1 class="pay-h1">💳 Paiements Stripe <span class="pay-badge" id="modeBadge">LIVE</span></h1>
@@ -216,7 +220,7 @@
         headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+(session?.access_token||'') },
         body: JSON.stringify({
           amount_eur: amount,
-          description,
+          description: description,
           customer_name: document.getElementById('customer_name').value,
           customer_email: document.getElementById('customer_email').value,
           customer_phone: document.getElementById('customer_phone').value,

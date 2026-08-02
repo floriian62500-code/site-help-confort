@@ -1,11 +1,11 @@
 # Audit font-display: swap — Rapport
 
-_Généré le 2026-06-01 08:38_
+_Généré le 2026-08-02 06:05_
 
 ## Synthèse
 
-- Pages HTML scannées : **140**
-  - ✅ OK : **140**
+- Pages HTML scannées : **137**
+  - ✅ OK : **137**
   - ❌ Erreurs : **0**
   - ⚠️  Warnings : **0**
 - Fichiers CSS externes avec `@font-face` : **0**

@@ -1,11 +1,11 @@
-# Audit HTML5 — 2026-06-01 08:37
+# Audit HTML5 — 2026-08-02 06:04
 
 > Audit local rapide HTML5 + a11y de base. Lancement : `python3 admin-pro/audits/audit_html5.py`
 > ⚠️ Ce n'est pas un substitut au validateur W3C officiel, mais il pré-filtre les erreurs évidentes.
 
 ## Synthèse
 
-- Pages auditées : **117**
+- Pages auditées : **118**
 - Pages avec erreurs : **3**
 - Pages avec warnings : **10**
 - Total erreurs : **11**
@@ -69,9 +69,9 @@
 - ⚠️ <title> long (92 chars, >70 recommandé)
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
-### `notre-equipe 2.html`
+### `maprimeadapt.html`
 
-- ⚠️ meta description longue (178 chars, >170 → tronquée)
+- ⚠️ meta description longue (191 chars, >170 → tronquée)
 
 ### `notre-equipe.html`
 
@@ -272,6 +272,10 @@
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
+### `fournisseur.html`
+
+- ℹ️ aucun <h1> statique — injecté par JS (page dynamique)
+
 ### `garanties.html`
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
@@ -327,6 +331,10 @@
 ### `panne-chaudiere.html`
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `partenaire.html`
+
+- ℹ️ aucun <h1> statique — injecté par JS (page dynamique)
 
 ### `partenaires.html`
 
@@ -472,10 +480,6 @@
 
 - ℹ️ 12 <img> avec alt vide (OK si décoratif)
 
-### `volets-saint-omer.html 2.html`
-
-- ℹ️ 11 <img> avec alt vide (OK si décoratif)
-
 ### `zones-intervention.html`
 
 - ℹ️ 20 <img> avec alt vide (OK si décoratif)
@@ -531,6 +535,7 @@
 - `espace-client-dashboard.html`
 - `espace-client.html`
 - `faq.html`
+- `fournisseur.html`
 - `garanties.html`
 - `guide-adaptation-pmr.html`
 - `guide-entretien-chaudiere.html`
@@ -545,6 +550,7 @@
 - `nos-villes.html`
 - `ouverture-porte-claquee.html`
 - `panne-chaudiere.html`
+- `partenaire.html`
 - `partenaires.html`
 - `plan-du-site.html`
 - `plombier-boulogne-sur-mer.html`
@@ -585,5 +591,4 @@
 - `vitrier-saint-omer.html`
 - `volets-dunkerque.html`
 - `volets-saint-omer.html`
-- `volets-saint-omer.html 2.html`
 - `zones-intervention.html`

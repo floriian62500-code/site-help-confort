@@ -1,17 +1,17 @@
 # Audit meta description length — Rapport
 
-_Généré le 2026-06-01 08:38_
+_Généré le 2026-08-02 06:05_
 
 ## Synthèse
 
-- Pages scannées : **139**
-- ✅ OK (120-158 chars) : **97**
-- ⚠️  Warnings (acceptable mais hors cible) : **15**
-- ❌ Erreurs (< 70 ou > 160) : **26**
+- Pages scannées : **136**
+- ✅ OK (120-158 chars) : **96**
+- ⚠️  Warnings (acceptable mais hors cible) : **17**
+- ❌ Erreurs (< 70 ou > 160) : **22**
 - ℹ️  Sans description : **1**
-- Findings totaux : **42**
-  - Erreurs : 26
-  - Avertissements : 16
+- Findings totaux : **40**
+  - Erreurs : 22
+  - Avertissements : 18
 
 ## Bornes appliquées
 
@@ -25,33 +25,17 @@ _Généré le 2026-06-01 08:38_
 > Demandez votre devis gratuit et sans engagement  www.helpconfort.com
 - ❌ DESC-TOO-SHORT : 68 chars < 70
 
-### `actualites/2026-05-19-maprimeadapt-2026-travaux-adaptation-pmr 2.html`  (189 chars)
-> MaPrimeAdapt' 2026 : qui est éligible, quels travaux d'adaptation PMR sont financés, comment monter le dossier. Douche italienne, monte-escalier, barres d'appui. Saint-Omer &amp; Dunkerque.
-- ❌ DESC-TOO-LONG : 189 chars > 160
-
 ### `actualites/2026-05-19-maprimeadapt-2026-travaux-adaptation-pmr.html`  (189 chars)
 > MaPrimeAdapt' 2026 : qui est éligible, quels travaux d'adaptation PMR sont financés, comment monter le dossier. Douche italienne, monte-escalier, barres d'appui. Saint-Omer &amp; Dunkerque.
 - ❌ DESC-TOO-LONG : 189 chars > 160
-
-### `actualites/2026-05-19-quel-chauffe-eau-choisir-en-2026 2.html`  (169 chars)
-> Électrique, thermodynamique, gaz : comparatif des chauffe-eau en 2026. Capacité selon la famille, aides MaPrimeRénov', conseils d'installateur à Saint-Omer et Dunkerque.
-- ❌ DESC-TOO-LONG : 169 chars > 160
 
 ### `actualites/2026-05-19-quel-chauffe-eau-choisir-en-2026.html`  (169 chars)
 > Électrique, thermodynamique, gaz : comparatif des chauffe-eau en 2026. Capacité selon la famille, aides MaPrimeRénov', conseils d'installateur à Saint-Omer et Dunkerque.
 - ❌ DESC-TOO-LONG : 169 chars > 160
 
-### `actualites/2026-05-19-recherche-de-fuite-techniques-modernes-vs-casse-inutile 2.html`  (182 chars)
-> Caméra thermique, gaz traceur, écoute acoustique : comment localiser une fuite d'eau sans casser. Comparatif des techniques modernes et coût d'intervention à Saint-Omer et Dunkerque.
-- ❌ DESC-TOO-LONG : 182 chars > 160
-
 ### `actualites/2026-05-19-recherche-de-fuite-techniques-modernes-vs-casse-inutile.html`  (182 chars)
 > Caméra thermique, gaz traceur, écoute acoustique : comment localiser une fuite d'eau sans casser. Comparatif des techniques modernes et coût d'intervention à Saint-Omer et Dunkerque.
 - ❌ DESC-TOO-LONG : 182 chars > 160
-
-### `actualites/2026-05-19-tableau-electrique-aux-normes-nf-c-15-100 2.html`  (174 chars)
-> Différentiel 30 mA, prises terre, sections câbles : les points clés pour vérifier la conformité de votre tableau électrique NF C 15-100. Diagnostic à Saint-Omer et Dunkerque.
-- ❌ DESC-TOO-LONG : 174 chars > 160
 
 ### `actualites/2026-05-19-tableau-electrique-aux-normes-nf-c-15-100.html`  (174 chars)
 > Différentiel 30 mA, prises terre, sections câbles : les points clés pour vérifier la conformité de votre tableau électrique NF C 15-100. Diagnostic à Saint-Omer et Dunkerque.
@@ -65,9 +49,9 @@ _Généré le 2026-06-01 08:38_
 > Dashboard client HELP Confort : interventions, paiements, factures.
 - ❌ DESC-TOO-SHORT : 67 chars < 70
 
-### `notre-equipe 2.html`  (178 chars)
-> L'équipe HELP Confort Saint-Omer &amp; Dunkerque : techniciens diplômés, formation continue, intervention sans sous-traitance. Plombiers, chauffagistes, électriciens, serruriers.
-- ❌ DESC-TOO-LONG : 178 chars > 160
+### `maprimeadapt.html`  (191 chars)
+> MaPrimeAdapt' à Saint-Omer & Dunkerque : jusqu'à 70% d'aide pour adapter votre logement (douche italienne, monte-escalier, barres d'appui). Diagnostic gratuit, dossier monté par HELP Confort.
+- ❌ DESC-TOO-LONG : 191 chars > 160
 
 ### `notre-equipe.html`  (178 chars)
 > L'équipe HELP Confort Saint-Omer &amp; Dunkerque : techniciens diplômés, formation continue, intervention sans sous-traitance. Plombiers, chauffagistes, électriciens, serruriers.
@@ -184,6 +168,14 @@ _Généré le 2026-06-01 08:38_
 ### `depannage-boulogne-sur-mer.html`  (159 chars)
 > Dépannage Boulogne-sur-Mer (62200) : plombier, chauffagiste, électricien, serrurier. Forfait transparent — devis gratuit. 4,7/5 sur 343 avis. ☎ 03 66 10 01 34.
 - ⚠️ DESC-LONG : 159 chars > 158 (idéal 120-158)
+
+### `fournisseur.html`  (90 chars)
+> Découvrez nos marques partenaires installées par HELP Confort sur Saint-Omer et Dunkerque.
+- ⚠️ DESC-SHORT : 90 chars < 120 (idéal 120-158)
+
+### `partenaire.html`  (119 chars)
+> Compagnies d'assurance, syndics, plateformes nationales — réseau de confiance HELP Confort sur Saint-Omer et Dunkerque.
+- ⚠️ DESC-SHORT : 119 chars < 120 (idéal 120-158)
 
 ### `googlef09a1887914c5a23.html`  (0 chars)
 - ⚠️ DESC-MISSING : pas de meta description
