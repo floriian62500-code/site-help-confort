@@ -65,15 +65,6 @@
         .hcal-head h2{font-size:clamp(1.5rem,2.6vw,1.9rem);font-weight:800;color:#0A1428;margin:0 0 8px;letter-spacing:-.02em}\
         .hcal-head p{font-size:.95rem;color:#64748b;margin:0;line-height:1.5}\
         .hcal-head strong{color:#FFB400}\
-<<<<<<< HEAD
-        /* 2026-06-03 — Avis sur 1 ligne en scroll horizontal (Florian : trop massif en grille) */\
-        .hcal-grid{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:4px 4px 16px;scrollbar-width:thin}\
-        .hcal-grid::-webkit-scrollbar{height:6px}\
-        .hcal-grid::-webkit-scrollbar-thumb{background:rgba(13,160,207,.3);border-radius:3px}\
-        .hcal-grid > .hcal-card{flex:0 0 280px;scroll-snap-align:start;min-height:0}\
-        @media(min-width:1180px){.hcal-grid > .hcal-card{flex:1 1 0;min-width:0}}\
-        .hcal-card{background:#fff;border:1px solid #E5EDF3;border-radius:14px;padding:20px;box-shadow:0 1px 2px rgba(11,18,32,.04);transition:.2s;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;color:inherit;text-decoration:none;cursor:pointer}\
-=======
         /* MOBILE : scroll horizontal compact */\
         .hcal-grid{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:4px 4px 16px;scrollbar-width:thin}\
         .hcal-grid::-webkit-scrollbar{height:6px}\
@@ -85,7 +76,6 @@
           .hcal-grid > .hcal-card{flex:none;min-width:0;width:auto}\
         }\
         .hcal-card{background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:14px 14px 16px;box-shadow:0 1px 2px rgba(11,18,32,.04);transition:.2s;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden;color:inherit;text-decoration:none;cursor:pointer;font-size:.86rem}\
->>>>>>> origin/main
         .hcal-card::before{content:"\\201C";position:absolute;top:-10px;right:14px;font-size:4rem;color:rgba(13,160,207,.10);font-family:Georgia,serif;line-height:1}\
         .hcal-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(11,18,32,.08);border-color:rgba(13,160,207,.30)}\
         .hcal-open-hint{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:.74rem;font-weight:700;color:#0DA0CF;letter-spacing:.01em;opacity:.85;align-self:flex-start}\
