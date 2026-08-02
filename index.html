@@ -1766,6 +1766,7 @@ btnNext.addEventListener('click', function() { gotoStep(current + 1); });
  var p = it.properties || {};
  input.value = p.label || (p.name + ', ' + (p.postcode || '') + ' ' + (p.city || ''));
  state.adresse = input.value;
+ if (p.city) { state.ville = p.city; } // HC-FIX 2026-08-02 : capte la ville (requise par submit-lead)
  if (cpInput && p.postcode) {
  cpInput.value = p.postcode;
  state.cp = p.postcode;
@@ -2222,13 +2223,17 @@ return [
 async function persistLeadToSupabase(source){
  try {
  var SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
- var ANON_KEY = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
+ // HC-FIX 2026-08-02 : le wizard passe désormais par l'Edge Function submit-lead
+ // (service_role côté serveur), comme le formulaire contact. L'ancien POST direct
+ // /rest/v1/leads en clé sb_publishable_* était rejeté par la RLS => 0 lead wizard.
+ // submit-lead valide, insère, ET déclenche notify-lead + lead-auto-reply.
  var sug = state.suggested_presta || {};
- var fullName = ((state.prenom || '') + ' ' + (state.nom || '')).trim();
  var payload = {
- nom: fullName || 'Visiteur (wizard home)', // not null
+ prenom: state.prenom || null,
+ nom: state.nom || null,
  email: state.email || null,
  telephone: state.tel || null,
+ ville: state.ville || null,
  code_postal: state.cp || null,
  adresse: state.adresse || null,
  metier: sug.metier || (state.metiers && state.metiers[0]) || null,
@@ -2236,31 +2241,27 @@ async function persistLeadToSupabase(source){
  message: (sug.label ? '[' + sug.label + '] ' : '') + (state.desc || ''),
  source: source || 'home_wizard',
  source_page: location.href,
- status: 'nouveau',
- tags: [
- 'wizard-home',
- sug.id || 'presta-' + (sug.label || 'unknown'),
- state.habitat ? 'habitat:' + state.habitat : null
- ].filter(Boolean),
  utm: {
  metiers_selectionnes: state.metiers || [],
  flow: (PRESTAS[state.presta] && PRESTAS[state.presta].flow) || null,
  presta_key: state.presta || null,
  urgence: state.urg || null,
- habitat: state.habitat || null
+ habitat: state.habitat || null,
+ wizard_tags: ['wizard-home', sug.id || ('presta-' + (sug.label || 'unknown'))]
  }
  };
- await fetch(SUPABASE_URL + '/rest/v1/leads', {
+ var r = await fetch(SUPABASE_URL + '/functions/v1/submit-lead', {
  method: 'POST',
- headers: {
- 'apikey': ANON_KEY,
- 'Authorization': 'Bearer ' + ANON_KEY,
- 'Content-Type': 'application/json',
- 'Prefer': 'return=minimal'
- },
+ headers: { 'Content-Type': 'application/json' },
  body: JSON.stringify(payload)
  });
- } catch (e) { /* best-effort */ }
+ if (!r.ok) {
+ var errBody = await r.json().catch(function(){ return {}; });
+ console.error('[wizard] submit-lead a rejeté le lead (' + r.status + ')', errBody);
+ return { ok: false, status: r.status, error: errBody };
+ }
+ return { ok: true };
+ } catch (e) { console.error('[wizard] submit-lead échec réseau:', e); return { ok: false, error: e }; }
 }
 
 var sendComplex = document.getElementById('resa-send-complex');
