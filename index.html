@@ -2304,7 +2304,8 @@ async function persistLeadToSupabase(source){
  var r = await fetch(SUPABASE_URL + '/functions/v1/submit-lead', {
  method: 'POST',
  headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify(payload)
+ body: JSON.stringify(payload),
+ keepalive: true // HC-FIX 2026-08-04 : survit à la navigation (paiement/mailto) — sinon lead perdu
  });
  if (!r.ok) {
  var errBody = await r.json().catch(function(){ return {}; });
