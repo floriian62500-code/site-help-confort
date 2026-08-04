@@ -237,10 +237,12 @@
  // Payload Supabase leads
  try {
  var SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
- var ANON_KEY = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
- await fetch(SUPABASE_URL + '/rest/v1/leads', {
+ // HC-FIX 2026-08-04 : passe par l'Edge Function submit-lead (comme contact/wizard).
+ // L'ancien POST direct /rest/v1/leads en clé sb_publishable_* était rejeté par la RLS => 0 lead devis-express.
+ await fetch(SUPABASE_URL + '/functions/v1/submit-lead', {
  method: 'POST',
- headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+ headers: { 'Content-Type': 'application/json' },
+ keepalive: true,
  body: JSON.stringify({
  nom: state.nom || 'Visiteur devis-express',
  telephone: state.tel,
@@ -250,12 +252,10 @@
  message: '[DEVIS EXPRESS] ' + state.metier + ' · ' + (state.urg === 'urgent' ? 'URGENT' : 'planifié') + (state.desc ? '\n\n' + state.desc : ''),
  source: 'devis-express',
  source_page: location.href,
- status: 'nouveau',
- tags: ['devis-express', state.metier.toLowerCase(), state.urg],
- utm: { metier: state.metier, urgence: state.urg, ref: ref }
+ utm: { metier: state.metier, urgence: state.urg, ref: ref, tags: ['devis-express', (state.metier||'').toLowerCase(), state.urg] }
  })
  });
- } catch(err) { /* fallback : on enregistre rien, mais on continue */ }
+ } catch(err) { /* best-effort : keepalive assure l'envoi même après navigation */ }
 
  // Affiche le succès
  form.style.display = 'none';

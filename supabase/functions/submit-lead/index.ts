@@ -90,8 +90,8 @@ Deno.serve(async (req: Request) => {
     if (!hasValidPhone && !hasValidEmail) errors.contact = 'Fournissez un téléphone ou un email valide';
   }
 
-  // 3) Message : requis mais sans plancher de longueur (les formulaires courts sont acceptés)
-  if (!message) errors.message = 'Message requis';
+  // 3) Message : OPTIONNEL (les formulaires express tel+nom+cp doivent passer).
+  //    Les formulaires qui en ont un (contact, wizard) l'envoient quand même.
 
   // 4) Formats optionnels validés seulement si fournis
   if (cp && !isValidCP(cp)) errors.code_postal = 'Code postal invalide (5 chiffres)';
