@@ -38,8 +38,8 @@ Légende par item : `Dev · Rec · Préprod · Prod` → ✅ validé · 🟡 par
 | Edge Function upload-lead-photos (jeton, MIME réel, chemin serveur) | ✅ | ⬜ | ⬜ | ⬜ |
 | Bucket privé lead-photos + migration | ✅(migr) | ⬜ | ⬜ | ⬜ |
 | submit-lead renvoie jeton d'upload | ✅ | ⬜ | ⬜ | ⬜ |
-| Câblage client (upload post-lead) | ⬜ | ⬜ | ⬜ | ⬜ |
-| UX échec partiel (« photos non jointes ») | ⬜ | ⬜ | ⬜ | ⬜ |
+| Câblage client (upload post-lead) | ✅ | ⬜ | ⬜ | ⬜ |
+| UX échec partiel (« photos non jointes ») | ✅ | ⬜ | ⬜ | ⬜ |
 | Tests 0/1/3 · trop lourd · format · réseau | ⬜ | ⬜ | ⬜ | ⬜ |
 
 ## PAGES (par gabarit)
@@ -49,10 +49,10 @@ Légende par item : `Dev · Rec · Préprod · Prod` → ✅ validé · 🟡 par
 | Contact | ✅ | ✅ | 🟡 | ⬜ | ⬜ |
 | Page métier (plombier) | ✅ | ✅ | 🟡 | ⬜ | ⬜ |
 | Page prestation (chauffe-eau) | ✅ | ✅ | ⬜ | ⬜ | ⬜ |
-| Gabarit guide | ✅ | ⬜ | ⬜ | ⬜ | ⬜ |
-| Gabarit actualité | ✅ | ⬜ | ⬜ | ⬜ | ⬜ |
-| Réalisations | ✅ | ⬜ | ⬜ | ⬜ | ⬜ |
-| Zones d'intervention | ✅ | ⬜ | ⬜ | ⬜ | ⬜ |
+| Gabarit guide | ✅ | ✅ | ⬜ | ⬜ | ⬜ |
+| Gabarit actualité | ✅ | ✅ | ⬜ | ⬜ | ⬜ |
+| Réalisations | ✅ | ✅ | ⬜ | ⬜ | ⬜ |
+| Zones d'intervention | ✅ | ✅ | ⬜ | ⬜ | ⬜ |
 
 ## MOBILE (largeurs 320/360/375/390/412/430)
 | Élément | Dev | Rec | Préprod | Prod |
@@ -81,7 +81,11 @@ Légende par item : `Dev · Rec · Préprod · Prod` → ✅ validé · 🟡 par
 | Sitemap dynamique | ⬜ | ⬜ | ⬜ | ⬜ |
 | Canonical | ⬜ | ⬜ | ⬜ | ⬜ |
 | Redirections (_redirects) | ⬜ | ⬜ | ⬜ | ⬜ |
-| Meta no-cache retiré (indexation) | 🟡 | ⬜ | ⬜ | ⬜ |
+| Meta no-cache retiré (93 pages, perf+indexation) | ✅ | ✅ | ⬜ | ⬜ |
+| Canonical présent (tous gabarits) | ✅ | ✅ | ⬜ | ⬜ |
+| JSON-LD (LocalBusiness/Breadcrumb/Offer/FAQ) | ✅ | ✅ | ⬜ | ⬜ |
+| Sitemap + robots (référencé) | ✅ | ✅ | ⬜ | ⬜ |
+| og:title manquant sur contact.html | 🟡 | — | ⬜ | ⬜ |
 
 ## PERFORMANCE
 | Contrôle | Dev | Rec | Préprod | Prod |
