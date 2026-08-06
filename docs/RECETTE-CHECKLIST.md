@@ -85,7 +85,7 @@ Légende par item : `Dev · Rec · Préprod · Prod` → ✅ validé · 🟡 par
 | Canonical présent (tous gabarits) | ✅ | ✅ | ⬜ | ⬜ |
 | JSON-LD (LocalBusiness/Breadcrumb/Offer/FAQ) | ✅ | ✅ | ⬜ | ⬜ |
 | Sitemap + robots (référencé) | ✅ | ✅ | ⬜ | ⬜ |
-| og:title manquant sur contact.html | 🟡 | — | ⬜ | ⬜ |
+| og:title/description/url (contact.html) ajoutés | ✅ | ✅ | ⬜ | ⬜ |
 
 ## PERFORMANCE
 | Contrôle | Dev | Rec | Préprod | Prod |
