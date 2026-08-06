@@ -1728,7 +1728,11 @@ function refreshNext() {
 document.querySelectorAll('.resa-metier-chips input[type="checkbox"]').forEach(function(cb){
  cb.addEventListener('change', function(){
  var checked = Array.from(document.querySelectorAll('.resa-metier-chips input[type="checkbox"]:checked')).map(function(x){return x.value;});
+ var metiersAvant = (state.metiers || []).join(',');
  state.metiers = checked;
+ // HC-FIX 2026-08-06 : au CHANGEMENT de métier, on efface la prestation suggérée (réponse
+ // incompatible avec le nouveau métier) pour forcer sa ré-évaluation au récap.
+ if (checked.join(',') !== metiersAvant) { state.suggested_presta = null; }
  refreshNext();
  });
 });
