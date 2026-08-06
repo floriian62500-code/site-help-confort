@@ -249,6 +249,7 @@
  code_postal: state.cp,
  metier: state.metier,
  type_demande: state.urg === 'urgent' ? 'urgence' : 'devis',
+ form_type: 'devis_express',
  message: '[DEVIS EXPRESS] ' + state.metier + ' · ' + (state.urg === 'urgent' ? 'URGENT' : 'planifié') + (state.desc ? '\n\n' + state.desc : ''),
  source: 'devis-express',
  source_page: location.href,

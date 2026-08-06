@@ -473,6 +473,28 @@ if (document.fonts && document.fonts.ready) {
  (function(){
  // Lecture des params ?presta=, ?metier=, ?service= ou ?objet= dans l'URL
  var params = new URLSearchParams(location.search);
+ // HC-FIX 2026-08-06 : purge défensive de tout PII résiduel dans l'URL (anciens liens/historique).
+ // Aucun prénom/nom/tél/email/adresse ne doit rester dans la query string ni dans l'historique.
+ try {
+   var PII_KEYS = ['prenom','nom','tel','telephone','email','adresse','cp','code_postal'];
+   var hadPii = false, store = {};
+   var MAP = { tel:'telephone', code_postal:'code_postal', cp:'code_postal' };
+   PII_KEYS.forEach(function(k){
+     if (params.has(k)) {
+       hadPii = true;
+       var v = params.get(k);
+       var canon = MAP[k] || k;
+       if (v) store[canon] = v;      // on récupère la valeur pour préremplir localement
+       params.delete(k);             // puis on la retire de l'URL
+     }
+   });
+   if (hadPii) {
+     // conserve en localStorage (lu par hc-modal-prefill) — jamais dans l'URL
+     try { var ex = JSON.parse(localStorage.getItem('hc_lead_v1')||'{}'); Object.assign(ex, store); ex.saved_at = new Date().toISOString(); localStorage.setItem('hc_lead_v1', JSON.stringify(ex)); } catch(_){}
+     var clean = location.pathname + (params.toString() ? ('?' + params.toString()) : '') + location.hash;
+     history.replaceState(null, '', clean); // nettoie l'historique
+   }
+ } catch(_){}
  var presta = params.get('presta') || params.get('service'); // ?service= = alias de ?presta=
  var metier = params.get('metier');
  var objetParam = params.get('objet'); // ex: "Devis Entretien chaudière gaz"

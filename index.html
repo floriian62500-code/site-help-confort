@@ -2301,6 +2301,7 @@ async function persistLeadToSupabase(source){
  adresse: state.adresse || null,
  metier: (state.metiers && state.metiers[0]) || (sug.metier && sug.metier !== '—' ? sug.metier : null) || null,
  type_demande: (sug.metier === 'Travaux') ? 'devis' : 'urgence',
+ form_type: 'wizard_urgence',
  message: (sug.label ? '[' + sug.label + '] ' : '') + (state.desc || ''),
  source: source || 'home_wizard',
  source_page: location.href,

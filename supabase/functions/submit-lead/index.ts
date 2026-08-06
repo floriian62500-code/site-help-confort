@@ -76,44 +76,47 @@ Deno.serve(async (req: Request) => {
 
   const errors: Record<string, string> = {};
 
-  // 1) Identité : au moins un nom OU prénom
-  if (!nom && !prenom) errors.nom = 'Nom ou prénom requis';
-
-  // 2) Au moins un canal de contact valide (téléphone OU email)
-  const hasValidPhone = !!tel && isValidFrenchPhone(tel);
-  const hasValidEmail = !!email && isValidEmail(email);
-  if (!tel && !email) {
-    errors.contact = 'Téléphone ou email requis';
-  } else {
-    if (tel && !hasValidPhone) errors.telephone = 'Téléphone invalide (format français)';
-    if (email && !hasValidEmail) errors.email = 'Email invalide';
-    if (!hasValidPhone && !hasValidEmail) errors.contact = 'Fournissez un téléphone ou un email valide';
-  }
-
-  // 3) Message requis (tous les formulaires en fournissent un — synthétisé pour l'express)
-  if (!message) errors.message = 'Message requis';
-
-  // 4) Géo — on préserve la qualité : la VILLE reste exigée pour les parcours "complets"
-  //    (contact, pages métiers, wizard). Exception explicite : formulaires COURTS/express
-  //    (devis-express) où le code postal suffit au routage agence.
-  const srcLower = (sanitize(body.source, 100) || '').toLowerCase();
-  const isExpress = srcLower.includes('devis-express') || srcLower.includes('express');
-  if (!isExpress && !ville) {
-    errors.ville = 'Ville requise';
-  }
-  // Dans tous les cas, au moins un repère géo (ville OU code postal) pour router l'agence
-  if (!ville && !cp) {
-    errors.geo = 'Ville ou code postal requis';
-  }
-
-  // 5) Formats optionnels validés seulement si fournis (adresse reste facultative)
-  if (cp && !isValidCP(cp)) errors.code_postal = 'Code postal invalide (5 chiffres)';
-
-  // Services / métier : max 3 valeurs
+  // Services / métier calculés tôt (nécessaires à la validation par contrat)
   let services: string[] = [];
   if (Array.isArray(body.services)) services = body.services.filter((s: any) => typeof s === 'string').slice(0, 3);
   else if (Array.isArray(body['services[]'])) services = body['services[]'].filter((s: any) => typeof s === 'string').slice(0, 3);
   const metier = sanitize(body.metier, 200) || (services.length ? services.join(', ') : null);
+
+  // ─── VALIDATION CONDITIONNELLE PAR TYPE DE FORMULAIRE (form_type) ───────────
+  // Chaque parcours déclare son type ; le serveur applique le contrat correspondant
+  // et REFUSE tout payload non conforme. On ne relâche pas globalement la qualité.
+  const formType = (sanitize(body.form_type, 40) || '').toLowerCase();
+  type Contract = { name: boolean; contact: boolean; cp: boolean; ville: boolean; adresse: boolean; message: boolean; metier: boolean };
+  const CONTRACTS: Record<string, Contract> = {
+    contact_complet: { name: true, contact: true, cp: true,  ville: true,  adresse: true,  message: true,  metier: false }, // contact.html
+    demande_metier:  { name: true, contact: true, cp: true,  ville: true,  adresse: false, message: true,  metier: false }, // pages métiers/prestations (sans adresse)
+    wizard_urgence:  { name: true, contact: true, cp: true,  ville: true,  adresse: false, message: true,  metier: true  }, // wizard in-page
+    devis_express:   { name: true, contact: true, cp: true,  ville: false, adresse: false, message: true,  metier: true  }, // tel+nom+cp+métier+message synthétisé
+    rappel:          { name: true, contact: true, cp: false, ville: false, adresse: false, message: false, metier: false }, // callback minimal
+  };
+  const contract: Contract = CONTRACTS[formType] || CONTRACTS['demande_metier']; // défaut sûr si non déclaré
+
+  const hasValidPhone = !!tel && isValidFrenchPhone(tel);
+  const hasValidEmail = !!email && isValidEmail(email);
+
+  if (contract.name && !nom && !prenom) errors.nom = 'Nom requis';
+  if (contract.contact) {
+    if (!tel && !email) errors.contact = 'Téléphone ou email requis';
+    else {
+      if (tel && !hasValidPhone) errors.telephone = 'Téléphone invalide (format français)';
+      if (email && !hasValidEmail) errors.email = 'Email invalide';
+      if (!hasValidPhone && !hasValidEmail) errors.contact = 'Fournissez un téléphone ou un email valide';
+    }
+  } else {
+    if (tel && !hasValidPhone) errors.telephone = 'Téléphone invalide (format français)';
+    if (email && !hasValidEmail) errors.email = 'Email invalide';
+  }
+  if (contract.adresse && (!adresse || adresse.length < 5)) errors.adresse = 'Adresse requise';
+  if (contract.cp && !cp) errors.code_postal = 'Code postal requis';
+  if (cp && !isValidCP(cp)) errors.code_postal = 'Code postal invalide (5 chiffres)';
+  if (contract.ville && !ville) errors.ville = 'Ville requise';
+  if (contract.message && !message) errors.message = 'Message requis';
+  if (contract.metier && !metier) errors.metier = 'Métier ou besoin requis';
 
   if (Object.keys(errors).length > 0) {
     return json(400, { error: 'Champs requis manquants ou invalides', errors });
@@ -134,7 +137,7 @@ Deno.serve(async (req: Request) => {
     source: sanitize(body.source, 100) || 'formulaire_site',
     source_page: sanitize(body.source_page, 500),
     source_referer: sanitize(body.source_referer, 500),
-    utm: (body.utm && typeof body.utm === 'object') ? body.utm : {},
+    utm: Object.assign({}, (body.utm && typeof body.utm === 'object') ? body.utm : {}, { form_type: formType || 'demande_metier' }),
     status: 'nouveau',
     priority: 'normale',
     realisation_id: typeof body.realisation_id === 'string' ? body.realisation_id : null,
