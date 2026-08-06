@@ -159,10 +159,14 @@ Deno.serve(async (req: Request) => {
   // via l'Edge Function upload-lead-photos (aucun upload anonyme direct dans Storage).
   const uploadToken = crypto.randomUUID() + crypto.randomUUID().replace(/-/g, '');
   const uploadExpires = Date.now() + 15 * 60 * 1000;
+  // Auto-archivage des leads de test (nom contenant TEST RECETTE / NE PAS TRAITER)
+  const isTestLead = /TEST\s*RECETTE|NE\s*PAS\s*TRAITER/i.test(`${nom || ''} ${prenom || ''}`);
   try {
-    await supabase.from('leads').update({
+    const upd: Record<string, unknown> = {
       metadata: { form_type: formType || 'demande_metier', upload_token: uploadToken, upload_expires: uploadExpires },
-    }).eq('id', data.id);
+    };
+    if (isTestLead) upd.status = 'archive';
+    await supabase.from('leads').update(upd).eq('id', data.id);
   } catch (_) { /* non bloquant : le lead existe déjà */ }
 
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
