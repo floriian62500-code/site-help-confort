@@ -2492,7 +2492,7 @@ if (prixTtc > 0) {
       if (state.cp) _pre1.code_postal = state.cp;
       if (state.ville) _pre1.ville = state.ville;
       if (state.adresse) _pre1.adresse = state.adresse;
-      localStorage.setItem('hc_lead_v1', JSON.stringify(_pre1));
+      _pre1._ts = Date.now(); sessionStorage.setItem('hc_wizard_prefill', JSON.stringify(_pre1)); // HC 2026-08-06 : sessionStorage temporaire, consommé+supprimé par contact.html
     } catch(_){}
     var params = new URLSearchParams();
     params.set('presta', slug || 'autre');
@@ -2512,7 +2512,7 @@ try {
   if (state.cp) _pre2.code_postal = state.cp;
   if (state.ville) _pre2.ville = state.ville;
   if (state.adresse) _pre2.adresse = state.adresse;
-  localStorage.setItem('hc_lead_v1', JSON.stringify(_pre2));
+  _pre2._ts = Date.now(); sessionStorage.setItem('hc_wizard_prefill', JSON.stringify(_pre2)); // HC 2026-08-06 : sessionStorage temporaire
 } catch(_){}
 var params = new URLSearchParams();
 params.set('presta', slug || 'autre');

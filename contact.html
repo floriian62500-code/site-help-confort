@@ -400,6 +400,7 @@ if (document.fonts && document.fonts.ready) {
  </div>
 
  <form id="form" class="contact-form" action="javascript:void(0)" method="post" enctype="text/plain" novalidate data-hc-lead="contact">
+<input type="hidden" name="form_type" value="contact_complet">
  <span id="rappel" style="position:absolute;left:0;top:-80px"></span>
  <span id="catalogues" style="position:absolute;left:0;top:-80px"></span>
  <!-- Anti-bot honeypot — laisser vide -->
@@ -489,12 +490,35 @@ if (document.fonts && document.fonts.ready) {
      }
    });
    if (hadPii) {
-     // conserve en localStorage (lu par hc-modal-prefill) — jamais dans l'URL
-     try { var ex = JSON.parse(localStorage.getItem('hc_lead_v1')||'{}'); Object.assign(ex, store); ex.saved_at = new Date().toISOString(); localStorage.setItem('hc_lead_v1', JSON.stringify(ex)); } catch(_){}
+     // conserve en sessionStorage TEMPORAIRE (jamais localStorage, jamais l'URL) — consommé+supprimé après préremplissage
+     try { store._ts = Date.now(); sessionStorage.setItem('hc_wizard_prefill', JSON.stringify(store)); } catch(_){}
      var clean = location.pathname + (params.toString() ? ('?' + params.toString()) : '') + location.hash;
      history.replaceState(null, '', clean); // nettoie l'historique
    }
  } catch(_){}
+ // HC-FIX 2026-08-06 : consomme le transfert temporaire wizard->contact (sessionStorage), préremplit puis SUPPRIME immédiatement.
+ (function(){
+   var TTL = 10 * 60 * 1000; // 10 min max
+   var raw; try { raw = sessionStorage.getItem('hc_wizard_prefill'); } catch(_){ return; }
+   if (!raw) return;
+   var d; try { d = JSON.parse(raw); } catch(_){ try{sessionStorage.removeItem('hc_wizard_prefill');}catch(e){} return; }
+   // expiration courte
+   if (!d || !d._ts || (Date.now() - d._ts) > TTL) { try{sessionStorage.removeItem('hc_wizard_prefill');}catch(e){} return; }
+   var ALIAS = { prenom:['prenom'], nom:['nom'], telephone:['telephone','tel'], email:['email'], adresse:['adresse'], code_postal:['code_postal','cp'], ville:['ville'] };
+   function fill(){
+     var form = document.querySelector('form[data-hc-lead]'); if(!form) return false;
+     Object.keys(ALIAS).forEach(function(canon){
+       var val = d[canon]; if(!val) return;
+       ALIAS[canon].forEach(function(name){ var i = form.querySelector('[name="'+name+'"]'); if(i && !i.value) i.value = val; });
+     });
+     try { sessionStorage.removeItem('hc_wizard_prefill'); } catch(_){}  // SUPPRESSION immédiate après préremplissage
+     return true;
+   }
+   if (!fill()) {
+     // le formulaire peut arriver après (modal/injection) : on retente brièvement puis on purge
+     var tries = 0, iv = setInterval(function(){ tries++; if (fill() || tries > 20) { clearInterval(iv); try{sessionStorage.removeItem('hc_wizard_prefill');}catch(e){} } }, 200);
+   }
+ })();
  var presta = params.get('presta') || params.get('service'); // ?service= = alias de ?presta=
  var metier = params.get('metier');
  var objetParam = params.get('objet'); // ex: "Devis Entretien chaudière gaz"

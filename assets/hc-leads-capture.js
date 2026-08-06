@@ -103,9 +103,9 @@
           code_postal: (formData.get('code_postal') || formData.get('cp') || formData.get('zip') || '').toString().trim() || null,
           metier: (formData.get('metier') || formData.get('service') || '').toString().trim() || null,
           type_demande: form.dataset.hcLead || 'devis',
-          // HC 2026-08-06 : déclare le contrat de validation serveur.
-          // contact.html a un champ adresse => contact_complet ; les pages métiers n'en ont pas => demande_metier.
-          form_type: (form.dataset.formType || (form.querySelector('[name="adresse"]') ? 'contact_complet' : 'demande_metier')),
+          // HC 2026-08-06 : le contrat de validation serveur est DÉCLARÉ explicitement par le formulaire
+          // via <input type="hidden" name="form_type" value="..."> (ou data-form-type). Pas de déduction fragile.
+          form_type: (function(){ var fi = form.querySelector('[name="form_type"]'); if (fi && fi.value) return fi.value.trim(); return form.dataset.formType || 'demande_metier'; })(),
           message: (formData.get('message') || formData.get('description') || formData.get('demande') || '').toString().trim() || null,
           source: 'formulaire_site',
           source_page: location.pathname + location.search,
