@@ -1178,6 +1178,11 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
  </style>
  </div>
 
+ <div class="form-row">
+ <label for="resa-ville">Ville <span class="req">*</span></label>
+ <input type="text" id="resa-ville" autocomplete="address-level2" placeholder="Saint-Omer (remplie via l'adresse, ou saisissez-la)" required>
+ </div>
+
  <div class="form-row two">
  <div>
  <label for="resa-cp">Code postal *</label>
@@ -1651,7 +1656,8 @@ function cpFrOk(s) {
   if (dep < 1 || dep > 98) return false;
   return true;
 }
-return nameOk(state.prenom) && nameOk(state.nom) && phoneFrOk(state.tel) && emailOk(state.email) && cpFrOk(state.cp);
+function villeOk(s){ return !!s && s.trim().length >= 2 && /[a-zA-ZÀ-ÿ]/.test(s); }
+return nameOk(state.prenom) && nameOk(state.nom) && phoneFrOk(state.tel) && emailOk(state.email) && cpFrOk(state.cp) && villeOk(state.ville);
 }
 return false;
 }
@@ -1775,6 +1781,7 @@ refreshNext();
 ['resa-tel', 'tel'],
 ['resa-email', 'email'],
 ['resa-cp', 'cp'],
+['resa-ville', 'ville'],
 ['resa-adresse', 'adresse']
 ].forEach(function(p) {
 var el = document.getElementById(p[0]);
@@ -1817,7 +1824,12 @@ btnNext.addEventListener('click', function() { gotoStep(current + 1); });
  var p = it.properties || {};
  input.value = p.label || (p.name + ', ' + (p.postcode || '') + ' ' + (p.city || ''));
  state.adresse = input.value;
- if (p.city) { state.ville = p.city; } // HC-FIX 2026-08-02 : capte la ville (requise par submit-lead)
+ if (p.city) {
+   state.ville = p.city; // HC-FIX 2026-08-02 : capte la ville (requise par submit-lead)
+   // HC-FIX 2026-08-04 : préremplit le champ Ville visible (modifiable ensuite manuellement)
+   var villeInput = document.getElementById('resa-ville');
+   if (villeInput) { villeInput.value = p.city; villeInput.dispatchEvent(new Event('input', { bubbles: true })); }
+ }
  if (cpInput && p.postcode) {
  cpInput.value = p.postcode;
  state.cp = p.postcode;
@@ -2287,7 +2299,7 @@ async function persistLeadToSupabase(source){
  ville: state.ville || null,
  code_postal: state.cp || null,
  adresse: state.adresse || null,
- metier: sug.metier || (state.metiers && state.metiers[0]) || null,
+ metier: (state.metiers && state.metiers[0]) || (sug.metier && sug.metier !== '—' ? sug.metier : null) || null,
  type_demande: (sug.metier === 'Travaux') ? 'devis' : 'urgence',
  message: (sug.label ? '[' + sug.label + '] ' : '') + (state.desc || ''),
  source: source || 'home_wizard',
@@ -2316,13 +2328,48 @@ async function persistLeadToSupabase(source){
  } catch (e) { console.error('[wizard] submit-lead échec réseau:', e); return { ok: false, error: e }; }
 }
 
+// HC-FIX 2026-08-04 : feedback wizard (message succès/erreur par champ) — reste sur la page en cas d'échec
+function resaMsg(ok, text){
+  var box = document.getElementById('resa-submit-msg');
+  if(!box){
+    box = document.createElement('div');
+    box.id = 'resa-submit-msg';
+    box.style.cssText = 'margin:12px 0;padding:12px 14px;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.45';
+    var anchor = document.getElementById('resa-pay') || document.getElementById('resa-send-complex');
+    if(anchor && anchor.parentNode) anchor.parentNode.insertBefore(box, anchor);
+  }
+  box.style.background = ok ? 'rgba(0,170,80,.10)' : 'rgba(220,38,38,.08)';
+  box.style.color = ok ? '#007033' : '#a51919';
+  box.style.borderLeft = '3px solid ' + (ok ? '#00aa50' : '#DC2626');
+  box.textContent = text;
+  box.scrollIntoView({ behavior:'smooth', block:'center' });
+}
+function resaErrorText(res){
+  var msg = 'Envoi impossible pour le moment. Vérifiez vos informations ou appelez-nous au 03 66 10 01 34.';
+  if(res && res.error && res.error.errors && typeof res.error.errors === 'object'){
+    var LB = {prenom:'Prénom',nom:'Nom',telephone:'Téléphone',tel:'Téléphone',email:'Email',adresse:'Adresse',code_postal:'Code postal',cp:'Code postal',ville:'Ville',message:'Message',contact:'Téléphone ou email',geo:'Ville ou code postal'};
+    var parts = Object.keys(res.error.errors).map(function(k){ return (LB[k]||k) + ' : ' + res.error.errors[k]; });
+    if(parts.length) msg = 'Merci de corriger : ' + parts.join(' · ');
+  }
+  return msg;
+}
 var sendComplex = document.getElementById('resa-send-complex');
 if (sendComplex) sendComplex.addEventListener('click', async function() {
-persistLeadToSupabase('home_wizard_callback');
-var subject = encodeURIComponent('[Demande] ' + (PRESTAS[state.presta] && PRESTAS[state.presta].label));
-var to = state.cp && state.cp.substring(0,2) === '59'
-? 'dunkerque@helpconfort.com' : 'saint-omer@helpconfort.com';
-window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + encodeURIComponent(buildMailBody());
+  if (sendComplex.dataset.sending === '1') return; // anti double-clic
+  sendComplex.dataset.sending = '1';
+  var _orig = sendComplex.innerHTML;
+  sendComplex.disabled = true; sendComplex.innerHTML = 'Envoi en cours…';
+  var res = await persistLeadToSupabase('home_wizard_callback'); // ATTEND la réponse serveur
+  if (!res || !res.ok) {
+    sendComplex.disabled = false; sendComplex.innerHTML = _orig; sendComplex.dataset.sending = '0';
+    resaMsg(false, resaErrorText(res)); // reste sur la page + erreur précise
+    return;
+  }
+  resaMsg(true, 'Demande envoyée avec succès ! Nous vous rappelons rapidement. Ouverture de votre email…');
+  var subject = encodeURIComponent('[Demande] ' + (PRESTAS[state.presta] && PRESTAS[state.presta].label));
+  var to = state.cp && state.cp.substring(0,2) === '59'
+  ? 'dunkerque@helpconfort.com' : 'saint-omer@helpconfort.com';
+  window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + encodeURIComponent(buildMailBody());
 });
 // ═══════════════════════════════════════════════════════════════
 // STRIPE PAYMENT LINKS — table de correspondance slug → URL Stripe
@@ -2359,8 +2406,18 @@ var STRIPE_LINKS = {
 
 var payBtn = document.getElementById('resa-pay');
 if (payBtn) payBtn.addEventListener('click', async function() {
-// 1. Enregistre le lead côté Supabase
-persistLeadToSupabase('home_wizard_reservation_paiement');
+if (payBtn.dataset.sending === '1') return; // anti double-clic
+payBtn.dataset.sending = '1';
+// 1. Enregistre le lead côté Supabase — ATTEND la réponse serveur AVANT toute navigation (paiement)
+var _payOrig0 = payBtn.innerHTML;
+payBtn.disabled = true; payBtn.innerHTML = 'Envoi en cours…';
+var leadRes = await persistLeadToSupabase('home_wizard_reservation_paiement');
+if (!leadRes || !leadRes.ok) {
+  payBtn.disabled = false; payBtn.innerHTML = _payOrig0; payBtn.dataset.sending = '0';
+  resaMsg(false, resaErrorText(leadRes)); // reste sur la page + erreur précise, PAS de navigation
+  return;
+}
+resaMsg(true, 'Demande enregistrée ✓ Redirection vers le paiement sécurisé…');
 var sug = state.suggested_presta || {};
 var slug = sug.slug || (state.presta || '');
 
@@ -2424,29 +2481,41 @@ if (prixTtc > 0) {
     payBtn.style.opacity = '1';
     payBtn.style.cursor = 'pointer';
     alert('Impossible de créer le lien de paiement maintenant. Notre équipe vous l\'envoie par email. (' + (e.message || 'Erreur réseau') + ')');
-    // Fallback contact
+    // Fallback contact — PII via localStorage (hc_lead_v1, lu par hc-modal-prefill), JAMAIS dans l'URL (HC-FIX 2026-08-04)
+    try {
+      var _pre1 = { saved_at: new Date().toISOString() };
+      if (state.prenom) _pre1.prenom = state.prenom;
+      if (state.nom) _pre1.nom = state.nom;
+      if (state.tel) _pre1.telephone = state.tel;
+      if (state.email) _pre1.email = state.email;
+      if (state.cp) _pre1.code_postal = state.cp;
+      if (state.ville) _pre1.ville = state.ville;
+      if (state.adresse) _pre1.adresse = state.adresse;
+      localStorage.setItem('hc_lead_v1', JSON.stringify(_pre1));
+    } catch(_){}
     var params = new URLSearchParams();
     params.set('presta', slug || 'autre');
     params.set('action', 'paiement');
-    if (state.prenom) params.set('prenom', state.prenom);
-    if (state.nom) params.set('nom', state.nom);
-    if (state.tel) params.set('tel', state.tel);
-    if (state.email) params.set('email', state.email);
-    if (state.cp) params.set('cp', state.cp);
     window.location.href = 'contact.html?' + params.toString() + '#form';
     return;
   }
 }
 
-// 4. Fallback ultime : si pas de prix détectable
+// 4. Fallback ultime : si pas de prix détectable — PII via localStorage, JAMAIS dans l'URL (HC-FIX 2026-08-04)
+try {
+  var _pre2 = { saved_at: new Date().toISOString() };
+  if (state.prenom) _pre2.prenom = state.prenom;
+  if (state.nom) _pre2.nom = state.nom;
+  if (state.tel) _pre2.telephone = state.tel;
+  if (state.email) _pre2.email = state.email;
+  if (state.cp) _pre2.code_postal = state.cp;
+  if (state.ville) _pre2.ville = state.ville;
+  if (state.adresse) _pre2.adresse = state.adresse;
+  localStorage.setItem('hc_lead_v1', JSON.stringify(_pre2));
+} catch(_){}
 var params = new URLSearchParams();
 params.set('presta', slug || 'autre');
 params.set('action', 'paiement');
-if (state.prenom) params.set('prenom', state.prenom);
-if (state.nom) params.set('nom', state.nom);
-if (state.tel) params.set('tel', state.tel);
-if (state.email) params.set('email', state.email);
-if (state.cp) params.set('cp', state.cp);
 window.location.href = 'contact.html?' + params.toString() + '#form';
 });
 gotoStep(1);

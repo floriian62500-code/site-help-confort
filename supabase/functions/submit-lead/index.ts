@@ -90,10 +90,23 @@ Deno.serve(async (req: Request) => {
     if (!hasValidPhone && !hasValidEmail) errors.contact = 'Fournissez un téléphone ou un email valide';
   }
 
-  // 3) Message : OPTIONNEL (les formulaires express tel+nom+cp doivent passer).
-  //    Les formulaires qui en ont un (contact, wizard) l'envoient quand même.
+  // 3) Message requis (tous les formulaires en fournissent un — synthétisé pour l'express)
+  if (!message) errors.message = 'Message requis';
 
-  // 4) Formats optionnels validés seulement si fournis
+  // 4) Géo — on préserve la qualité : la VILLE reste exigée pour les parcours "complets"
+  //    (contact, pages métiers, wizard). Exception explicite : formulaires COURTS/express
+  //    (devis-express) où le code postal suffit au routage agence.
+  const srcLower = (sanitize(body.source, 100) || '').toLowerCase();
+  const isExpress = srcLower.includes('devis-express') || srcLower.includes('express');
+  if (!isExpress && !ville) {
+    errors.ville = 'Ville requise';
+  }
+  // Dans tous les cas, au moins un repère géo (ville OU code postal) pour router l'agence
+  if (!ville && !cp) {
+    errors.geo = 'Ville ou code postal requis';
+  }
+
+  // 5) Formats optionnels validés seulement si fournis (adresse reste facultative)
   if (cp && !isValidCP(cp)) errors.code_postal = 'Code postal invalide (5 chiffres)';
 
   // Services / métier : max 3 valeurs
