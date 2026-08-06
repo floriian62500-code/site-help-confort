@@ -30,6 +30,10 @@
   function readStore() {
     try {
       var d = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+      // HC 2026-08-06 : expiration courte des PII (24 h). On ne conserve pas durablement
+      // nom/téléphone/email/adresse — au-delà, on purge et le visiteur re-saisit.
+      var MAX_AGE = 24 * 3600 * 1000;
+      if (d.saved_at && (Date.now() - new Date(d.saved_at).getTime()) > MAX_AGE) { localStorage.removeItem(LS_KEY); return {}; }
       if (!isValidStore(d)) { localStorage.removeItem(LS_KEY); return {}; }
       return d;
     } catch (_) { return {}; }
