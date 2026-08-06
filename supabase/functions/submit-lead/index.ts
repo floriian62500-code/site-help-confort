@@ -155,6 +155,16 @@ Deno.serve(async (req: Request) => {
     return json(500, { error: 'Erreur d’enregistrement', detail: error.message });
   }
 
+  // Jeton d'upload photo court (15 min, usage unique) — permet un upload SÉCURISÉ post-lead
+  // via l'Edge Function upload-lead-photos (aucun upload anonyme direct dans Storage).
+  const uploadToken = crypto.randomUUID() + crypto.randomUUID().replace(/-/g, '');
+  const uploadExpires = Date.now() + 15 * 60 * 1000;
+  try {
+    await supabase.from('leads').update({
+      metadata: { form_type: formType || 'demande_metier', upload_token: uploadToken, upload_expires: uploadExpires },
+    }).eq('id', data.id);
+  } catch (_) { /* non bloquant : le lead existe déjà */ }
+
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const svcKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${svcKey}` };
@@ -164,5 +174,5 @@ Deno.serve(async (req: Request) => {
   // Accusé de réception client — uniquement si email fourni (lead-auto-reply gère le cas no_client_email)
   try { fetch(`${supabaseUrl}/functions/v1/lead-auto-reply`, { method: 'POST', headers, body: efBody }).catch(() => {}); } catch (_) {}
 
-  return json(200, { success: true, id: data.id, contract_v5: true });
+  return json(200, { success: true, id: data.id, upload_token: uploadToken, contract_v5: true });
 });
