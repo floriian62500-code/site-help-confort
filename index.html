@@ -2329,8 +2329,40 @@ async function persistLeadToSupabase(source){
  console.error('[wizard] submit-lead a rejeté le lead (' + r.status + ')', errBody);
  return { ok: false, status: r.status, error: errBody };
  }
- return { ok: true };
+ var data = await r.json().catch(function(){ return {}; });
+ var result = { ok: true, lead_id: data.id, photos: null };
+ // Upload photos SÉCURISÉ (post-lead, Edge Function dédiée) si présentes. Le lead ne dépend jamais des photos.
+ var photos = (window.__resaPhotos || []);
+ if (data.id && data.upload_token && photos.length) {
+ result.photos = await uploadWizardPhotos(SUPABASE_URL, data.id, data.upload_token, photos);
+ }
+ return result;
  } catch (e) { console.error('[wizard] submit-lead échec réseau:', e); return { ok: false, error: e }; }
+}
+
+// Upload sécurisé des photos vers l'Edge Function dédiée (JAMAIS d'upload anonyme direct dans Storage).
+async function uploadWizardPhotos(baseUrl, leadId, token, photos){
+ try {
+ var fd = new FormData();
+ fd.append('lead_id', leadId);
+ fd.append('upload_token', token);
+ photos.slice(0, 3).forEach(function(p, i){
+ var blob = dataUrlToBlob(p.dataUrl);
+ if (blob) fd.append('files', blob, (p.name || ('photo-' + (i + 1))));
+ });
+ var r = await fetch(baseUrl + '/functions/v1/upload-lead-photos', { method: 'POST', body: fd, keepalive: true });
+ if (!r.ok) return { ok: false, stored: 0 };
+ var d = await r.json().catch(function(){ return {}; });
+ return { ok: true, stored: d.stored || 0, partial: !!d.partial };
+ } catch (e) { console.error('[wizard] upload photos échec', e); return { ok: false, stored: 0 }; }
+}
+function dataUrlToBlob(dataUrl){
+ try {
+ var parts = dataUrl.split(','); var mime = (parts[0].match(/:(.*?);/) || [])[1] || 'image/jpeg';
+ var bin = atob(parts[1]); var arr = new Uint8Array(bin.length);
+ for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+ return new Blob([arr], { type: mime });
+ } catch (e) { return null; }
 }
 
 // HC-FIX 2026-08-04 : feedback wizard (message succès/erreur par champ) — reste sur la page en cas d'échec
@@ -2370,7 +2402,8 @@ if (sendComplex) sendComplex.addEventListener('click', async function() {
     resaMsg(false, resaErrorText(res)); // reste sur la page + erreur précise
     return;
   }
-  resaMsg(true, 'Demande envoyée avec succès ! Nous vous rappelons rapidement. Ouverture de votre email…');
+  var photoNote = (res.photos && res.photos.ok === false) ? ' (vos photos n\'ont pas pu être jointes, notre équipe vous les redemandera si besoin)' : '';
+  resaMsg(true, 'Demande envoyée avec succès ! Nous vous rappelons rapidement.' + photoNote + ' Ouverture de votre email…');
   var subject = encodeURIComponent('[Demande] ' + (PRESTAS[state.presta] && PRESTAS[state.presta].label));
   var to = state.cp && state.cp.substring(0,2) === '59'
   ? 'dunkerque@helpconfort.com' : 'saint-omer@helpconfort.com';
@@ -2422,7 +2455,8 @@ if (!leadRes || !leadRes.ok) {
   resaMsg(false, resaErrorText(leadRes)); // reste sur la page + erreur précise, PAS de navigation
   return;
 }
-resaMsg(true, 'Demande enregistrée ✓ Redirection vers le paiement sécurisé…');
+var payPhotoNote = (leadRes.photos && leadRes.photos.ok === false) ? ' (vos photos n\'ont pas pu être jointes)' : '';
+resaMsg(true, 'Demande enregistrée ✓' + payPhotoNote + ' Redirection vers le paiement sécurisé…');
 var sug = state.suggested_presta || {};
 var slug = sug.slug || (state.presta || '');
 
