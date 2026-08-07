@@ -2204,7 +2204,18 @@ if (sug && sug.quote) {
 } else {
  priceEl.textContent = 'Sur devis';
 }
-simpleBlock.hidden = false;
+// HC-FIX 2026-08-06 (P1) : le PAIEMENT n'est proposé QUE si la prestation est réellement éligible
+// (prix TTC fixe, pas "à diagnostiquer"/sur devis). Sinon -> parcours rappel/intervention, sans paiement.
+var payable = !!(sug && typeof sug.price === 'number' && sug.price > 0 && !sug.quote);
+if (payable) {
+ simpleBlock.hidden = false;
+} else {
+ var pnc = document.getElementById('resa-presta-name-c'); if (pnc) pnc.innerHTML = sug.icon + ' ' + sug.label + (sug.metier !== '—' ? ' · ' + sug.metier : '');
+ var anc = document.getElementById('resa-agence-name-c'); if (anc) anc.textContent = detectAgence(state.cp);
+ var rfc = document.getElementById('resa-ref'); if (rfc) rfc.textContent = 'HC-' + Date.now().toString(36).slice(-6).toUpperCase();
+ complexBlock.hidden = false;
+ return;
+}
 // Reset recherche/showAll au passage à l'étape 4
 prestaSearchState = { query:'', showAll:false };
 var searchInput = document.getElementById('resa-presta-search');
