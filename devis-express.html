@@ -240,7 +240,7 @@
  var SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
  // HC-FIX 2026-08-04 : passe par l'Edge Function submit-lead (comme contact/wizard).
  // L'ancien POST direct /rest/v1/leads en clé sb_publishable_* était rejeté par la RLS => 0 lead devis-express.
- await fetch(SUPABASE_URL + '/functions/v1/submit-lead', {
+ await fetch(SUPABASE_URL + '/functions/v1/submit-lead-v6', {
  method: 'POST',
  headers: { 'Content-Type': 'application/json' },
  keepalive: true,

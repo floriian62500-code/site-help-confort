@@ -1,15 +1,6 @@
-// HELP Confort — submit-lead v5 (2026-08-02)
-// ─────────────────────────────────────────────────────────────────────────
-// CHANGEMENT v4 → v5 : validation ASSOUPLIE pour arrêter la perte silencieuse
-// de leads. Le "lockdown v4" (2026-06-12) exigeait adresse+cp+ville+message≥20,
-// or ~55 formulaires du site (pages métiers, prestations, wizard, devis-express)
-// ne collectent PAS ces champs → tous leurs leads partaient en 400 silencieux.
-//
-// NOUVEAU CONTRAT (minimum viable pour rappeler un prospect) :
-//   OBLIGATOIRE : nom (ou prénom) + AU MOINS un contact (téléphone OU email) + message
-//   OPTIONNEL   : prénom, adresse, code_postal, ville, budget, métier
-// Les formats téléphone/email restent validés SI fournis. Honeypot + rate-limit conservés.
-// ─────────────────────────────────────────────────────────────────────────
+// HELP Confort — submit-lead v4 (2026-06-12) : validation stricte serveur + patterns
+// ⚠️ VERSION ACTUELLEMENT EN PRODUCTION. NE PAS MODIFIER/REMPLACER (blue/green).
+//    La nouvelle chaîne est dans supabase/functions/submit-lead-v6/. Le cutover se fait via le runbook.
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
@@ -64,7 +55,7 @@ Deno.serve(async (req: Request) => {
     return json(200, { success: true, silent: true });
   }
 
-  // Champs (tous optionnels sauf règles ci-dessous)
+  // Validation stricte des champs OBLIGATOIRES
   const prenom = sanitize(body.prenom, 200);
   const nom = sanitize(body.nom, 200);
   const tel = sanitize(body.telephone || body.tel, 50);
@@ -75,58 +66,33 @@ Deno.serve(async (req: Request) => {
   const message = sanitize(body.message, 4000);
 
   const errors: Record<string, string> = {};
+  if (!prenom) errors.prenom = 'Prénom requis';
+  if (!nom) errors.nom = 'Nom requis';
+  if (!tel) errors.telephone = 'Téléphone requis';
+  else if (!isValidFrenchPhone(tel)) errors.telephone = 'Téléphone invalide (format français 10 chiffres)';
+  if (!email) errors.email = 'Email requis';
+  else if (!isValidEmail(email)) errors.email = 'Email invalide';
+  if (!adresse) errors.adresse = 'Adresse requise';
+  else if (adresse.length < 5) errors.adresse = 'Adresse trop courte';
+  if (!cp) errors.code_postal = 'Code postal requis';
+  else if (!isValidCP(cp)) errors.code_postal = 'Code postal invalide (5 chiffres)';
+  if (!ville) errors.ville = 'Ville requise';
+  if (!message) errors.message = 'Message requis';
+  else if (message.length < 20) errors.message = 'Message trop court (min 20 caractères)';
 
-  // Services / métier calculés tôt (nécessaires à la validation par contrat)
+  // Services / métier : max 3 valeurs
   let services: string[] = [];
   if (Array.isArray(body.services)) services = body.services.filter((s: any) => typeof s === 'string').slice(0, 3);
   else if (Array.isArray(body['services[]'])) services = body['services[]'].filter((s: any) => typeof s === 'string').slice(0, 3);
   const metier = sanitize(body.metier, 200) || (services.length ? services.join(', ') : null);
-
-  // ─── VALIDATION CONDITIONNELLE PAR TYPE DE FORMULAIRE (form_type) ───────────
-  // Chaque parcours déclare son type ; le serveur applique le contrat correspondant
-  // et REFUSE tout payload non conforme. On ne relâche pas globalement la qualité.
-  const formType = (sanitize(body.form_type, 40) || '').toLowerCase();
-  type Contract = { name: boolean; contact: boolean; cp: boolean; ville: boolean; adresse: boolean; message: boolean; metier: boolean };
-  const CONTRACTS: Record<string, Contract> = {
-    contact_complet: { name: true, contact: true, cp: true,  ville: true,  adresse: true,  message: true,  metier: false }, // contact.html
-    demande_metier:  { name: true, contact: true, cp: true,  ville: true,  adresse: false, message: true,  metier: false }, // pages métiers/prestations (sans adresse)
-    wizard_urgence:  { name: true, contact: true, cp: true,  ville: true,  adresse: false, message: true,  metier: true  }, // wizard in-page
-    devis_express:   { name: true, contact: true, cp: true,  ville: false, adresse: false, message: true,  metier: true  }, // tel+nom+cp+métier+message synthétisé
-    rappel:          { name: true, contact: true, cp: false, ville: false, adresse: false, message: false, metier: false }, // callback minimal
-  };
-  const contract: Contract = CONTRACTS[formType] || CONTRACTS['demande_metier']; // défaut sûr si non déclaré
-
-  const hasValidPhone = !!tel && isValidFrenchPhone(tel);
-  const hasValidEmail = !!email && isValidEmail(email);
-
-  if (contract.name && !nom && !prenom) errors.nom = 'Nom requis';
-  if (contract.contact) {
-    if (!tel && !email) errors.contact = 'Téléphone ou email requis';
-    else {
-      if (tel && !hasValidPhone) errors.telephone = 'Téléphone invalide (format français)';
-      if (email && !hasValidEmail) errors.email = 'Email invalide';
-      if (!hasValidPhone && !hasValidEmail) errors.contact = 'Fournissez un téléphone ou un email valide';
-    }
-  } else {
-    if (tel && !hasValidPhone) errors.telephone = 'Téléphone invalide (format français)';
-    if (email && !hasValidEmail) errors.email = 'Email invalide';
-  }
-  if (contract.adresse && (!adresse || adresse.length < 5)) errors.adresse = 'Adresse requise';
-  if (contract.cp && !cp) errors.code_postal = 'Code postal requis';
-  if (cp && !isValidCP(cp)) errors.code_postal = 'Code postal invalide (5 chiffres)';
-  if (contract.ville && !ville) errors.ville = 'Ville requise';
-  if (contract.message && !message) errors.message = 'Message requis';
-  if (contract.metier && !metier) errors.metier = 'Métier ou besoin requis';
 
   if (Object.keys(errors).length > 0) {
     return json(400, { error: 'Champs requis manquants ou invalides', errors });
   }
 
   const payload = {
-    nom: nom || prenom || 'Prospect',
-    prenom,
-    email,
-    telephone: tel ? normalizePhone(tel) : null,
+    nom, prenom, email,
+    telephone: normalizePhone(tel!),
     ville,
     code_postal: cp,
     adresse,
@@ -137,7 +103,7 @@ Deno.serve(async (req: Request) => {
     source: sanitize(body.source, 100) || 'formulaire_site',
     source_page: sanitize(body.source_page, 500),
     source_referer: sanitize(body.source_referer, 500),
-    utm: Object.assign({}, (body.utm && typeof body.utm === 'object') ? body.utm : {}, { form_type: formType || 'demande_metier' }),
+    utm: (body.utm && typeof body.utm === 'object') ? body.utm : {},
     status: 'nouveau',
     priority: 'normale',
     realisation_id: typeof body.realisation_id === 'string' ? body.realisation_id : null,
@@ -155,28 +121,12 @@ Deno.serve(async (req: Request) => {
     return json(500, { error: 'Erreur d’enregistrement', detail: error.message });
   }
 
-  // Jeton d'upload photo court (15 min, usage unique) — permet un upload SÉCURISÉ post-lead
-  // via l'Edge Function upload-lead-photos (aucun upload anonyme direct dans Storage).
-  const uploadToken = crypto.randomUUID() + crypto.randomUUID().replace(/-/g, '');
-  const uploadExpires = Date.now() + 15 * 60 * 1000;
-  // Auto-archivage des leads de test (nom contenant TEST RECETTE / NE PAS TRAITER)
-  const isTestLead = /TEST\s*RECETTE|NE\s*PAS\s*TRAITER/i.test(`${nom || ''} ${prenom || ''}`);
-  try {
-    const upd: Record<string, unknown> = {
-      metadata: { form_type: formType || 'demande_metier', upload_token: uploadToken, upload_expires: uploadExpires },
-    };
-    if (isTestLead) upd.status = 'archive';
-    await supabase.from('leads').update(upd).eq('id', data.id);
-  } catch (_) { /* non bloquant : le lead existe déjà */ }
-
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const svcKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${svcKey}` };
   const efBody = JSON.stringify({ lead_id: data.id });
-  // Notification interne (email agence) — cœur du rappel <30 min
   try { fetch(`${supabaseUrl}/functions/v1/notify-lead`, { method: 'POST', headers, body: efBody }).catch(() => {}); } catch (_) {}
-  // Accusé de réception client — uniquement si email fourni (lead-auto-reply gère le cas no_client_email)
   try { fetch(`${supabaseUrl}/functions/v1/lead-auto-reply`, { method: 'POST', headers, body: efBody }).catch(() => {}); } catch (_) {}
 
-  return json(200, { success: true, id: data.id, upload_token: uploadToken, contract_v5: true });
+  return json(200, { success: true, id: data.id, lockdown_v4: true });
 });

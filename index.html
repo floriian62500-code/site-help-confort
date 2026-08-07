@@ -2328,7 +2328,7 @@ async function persistLeadToSupabase(source){
  wizard_tags: ['wizard-home', sug.id || ('presta-' + (sug.label || 'unknown'))]
  }
  };
- var r = await fetch(SUPABASE_URL + '/functions/v1/submit-lead', {
+ var r = await fetch(SUPABASE_URL + '/functions/v1/submit-lead-v6', {
  method: 'POST',
  headers: { 'Content-Type': 'application/json' },
  body: JSON.stringify(payload),

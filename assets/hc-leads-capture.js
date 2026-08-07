@@ -25,7 +25,7 @@
   // submit-lead (service_role côté serveur, anon-callable, verify_jwt=false).
   // L'Edge Function gère aussi le déclenchement de notify-lead côté serveur.
   // ─────────────────────────────────────────────────────────────────────
-  const SUBMIT_LEAD_URL = SUPABASE_URL + '/functions/v1/submit-lead';
+  const SUBMIT_LEAD_URL = SUPABASE_URL + '/functions/v1/submit-lead-v6';
 
   async function pushLead(payload) {
     try {
