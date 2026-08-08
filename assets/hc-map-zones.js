@@ -232,12 +232,14 @@
       );
     });
 
-    // Fit bounds sur les cercles agences (zoom adapté pour voir les 2 zones)
-    var group = L.featureGroup([circleSO, circleDK]);
+    // Cadrage DÉTERMINISTE sur la couverture réelle (Boulogne SW → Bray-Dunes NE) :
+    // couvre les 4 villes quel que soit le ratio du conteneur (hero portrait ou section large).
+    // Le fitBounds sur les cercles dérivait vers l'est (mer + Belgique) dans le bloc hero.
+    var COVER = L.latLngBounds([[50.66, 1.56], [51.09, 2.52]]);
     function refit(){
       try {
         map.invalidateSize(false);
-        map.fitBounds(group.getBounds(), { padding: [40, 40] });
+        map.fitBounds(COVER, { padding: [24, 24] });
       } catch (e) {}
     }
     refit();
