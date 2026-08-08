@@ -15,6 +15,12 @@
 | ID | URL / zone | Catégorie | Anomalie | Sév. | Correction | Test Claude | Recette | Validé Florian | Prod | Vérifié Prod |
 |----|-----------|-----------|----------|------|-----------|-------------|---------|----------------|------|--------------|
 | A01 | realisation.html + /realisations/* | UX | Double bouton « retour » (header + contenu) | P2 | Header dédupliqué | ✅ 1 seul lien | ✅ | ⏳ | — | — |
+| A09 | carte zones (hc-map-zones, 4 pages) | UX/Design | Style multicolore jugé « peu classe » par Florian | P3 | Restyle façon référence : points bleus + labels permanents + halo unique + communes secondaires ; légende retirée | ✅ desktop+mobile | ✅ | ⏳ | — | — |
+| A10 | actualites.html:714 | Routing | Dernier lien à l'ancienne convention `/realisation/<slug>.html` | P2 | → `/realisations/<slug>` | ✅ 0 ancien motif sur tout le site | ✅ | ⏳ | — | — |
+| A11 | realisation.html (legacy) | Nettoyage | Page orpheline noindex | P3 | Redirect 301 forcé → listing | ✅ 301 vérifié recette | ✅ | ⏳ | — | — |
+| A12 | routing réalisations (global) | Routing | Sweep : cards, pages métiers, actus, sitemap, breadcrumbs | P1 | Convention unique `/realisations/<slug>` | ✅ clics testés : cards+métier = 200 ; legacy = 301 | ✅ | ⏳ | — | — |
+| A13 | homepage + pages métiers | UX/CTA | Doublon CTA téléphone (header + hero « Appeler maintenant ») | P3 | À harmoniser (header desktop plus discret) — lot suivant | — | — | ⏳ | — | — |
+| A14 | nos-prestations « Voir le tarif » | **Revenu** | Le formulaire tarif doit créer un **lead exploitable** (form_type `tarif_prestation`, notif agence, statut CRM « Tarif consulté », tracking) | **P1** | À construire (front + submit-lead-v6 + routing agence + dashboard) — lot suivant, test DB requis | — | — | ⏳ | — | — |
 | A02 | zones-intervention (carte hero) | Bug carte | Carte rognée par `.z-hero-map` (overflow) → n'affichait que la mer | P1 | Structure + invalidateSize/ResizeObserver/setView | ✅ 4 tuiles/4 marqueurs desktop+mobile | ✅ | ⏳ | — | — |
 | A03 | 104 pages | CSS/CLS | `@media` avalés du correctif CLS topbar (media-queries invalides) | P1 | Sweep 104 pages `@media(...)` | ✅ 0 restant | ✅ | ⏳ | — | — |
 | A04 | realisation.html (header) | NAP | `tel:0366100134` ≠ `+33366100134` | P3 | Aligné `+33366100134` | ✅ | ✅ | ⏳ | — | — |
