@@ -235,11 +235,15 @@
     // Cadrage DÉTERMINISTE sur la couverture réelle (Boulogne SW → Bray-Dunes NE) :
     // couvre les 4 villes quel que soit le ratio du conteneur (hero portrait ou section large).
     // Le fitBounds sur les cercles dérivait vers l'est (mer + Belgique) dans le bloc hero.
-    var COVER = L.latLngBounds([[50.66, 1.56], [51.09, 2.52]]);
+    // Centre FIXE entre les 4 villes ; le zoom s'adapte à la largeur du conteneur
+    // (hero étroit ≈ 530px → zoom 9 ; section pleine largeur → zoom 10).
+    // fitBounds recalculait un centre/zoom erroné dans le bloc hero → on fige le centre.
     function refit(){
       try {
         map.invalidateSize(false);
-        map.fitBounds(COVER, { padding: [24, 24] });
+        var el = document.getElementById('hcMapEl');
+        var wide = el && el.offsetWidth > 760;
+        map.setView([50.82, 2.02], wide ? 10 : 9, { animate: false });
       } catch (e) {}
     }
     refit();
