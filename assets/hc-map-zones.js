@@ -192,8 +192,8 @@
     // ─── Halo de couverture unique, doux (style référence Florian) ───
     L.circle([50.86, 2.02], {
       radius: 34000,
-      color: '#1D6FE0', weight: 1.5, opacity: 0.30,
-      fillColor: '#3B82F6', fillOpacity: 0.12
+      color: '#2563EB', weight: 1.5, opacity: 0.35,
+      fillColor: '#3B82F6', fillOpacity: 0.16
     }).addTo(map);
 
     // ─── Villes principales : point bleu + label permanent (façon référence) ───
