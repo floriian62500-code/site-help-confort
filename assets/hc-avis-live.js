@@ -169,7 +169,7 @@
     })
     .catch(function(e) {
       console.warn('[hc-avis-live] Erreur chargement :', e.message);
-      host.style.display = 'none');
+      host.style.display = 'none';
     });
   }
 
