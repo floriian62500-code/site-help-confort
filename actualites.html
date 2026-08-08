@@ -711,7 +711,7 @@ if (document.fonts && document.fonts.ready) {
  actus.forEach(function(r){
  allArticles.push({
  title: r.title,
- url: r.slug ? '/realisation/' + r.slug + '.html' : '#',
+ url: r.slug ? '/realisations/' + r.slug : '#',
  date: r.published_at || r.date_intervention || r.created_at,
  image: r.image_after || r.image_before || null,
  resume: (r.description || '').slice(0,180),
