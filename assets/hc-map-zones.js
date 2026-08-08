@@ -133,15 +133,6 @@
         </div>\
         <div class="hc-map-container">\
           <div id="hcMapEl" role="application" aria-label="Carte interactive des zones d\'intervention HELP Confort"></div>\
-          <div class="hc-map-info">\
-            <div class="hc-map-info-stats">\
-              <div class="hc-map-info-stat"><strong>4</strong><span>Villes principales</span></div>\
-              <div class="hc-map-info-stat"><strong>80+</strong><span>Communes couvertes</span></div>\
-              <div class="hc-map-info-stat"><strong>2</strong><span>Agences locales</span></div>\
-              <div class="hc-map-info-stat"><strong>24h</strong><span>Devis ouvré</span></div>\
-            </div>\
-            <a href="nos-villes.html">Voir toutes nos villes →</a>\
-          </div>\
         </div>\
       </div>\
     </section>';
@@ -173,11 +164,12 @@
       attributionControl: true
     });
 
-    // Tiles CartoDB Voyager — neutres, pas d'overlay drapeau Ukraine
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    // Tiles CartoDB Positron (light_all) — fond clair minimal, labels discrets
+    // → nos labels de villes ressortent, plus de collision visuelle. Aspect premium/épuré.
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       attribution: 'Tuiles © CARTO',
       subdomains: 'abcd',
-      maxZoom: 18
+      maxZoom: 19
     }).addTo(map);
 
     // Kill overlay drapeau Ukraine après chargement + tous les 2s pendant 10s (parano)
@@ -214,8 +206,7 @@
       { name: 'Gravelines', lat: 50.987, lng: 2.128, dir: 'top' },
       { name: 'Bourbourg', lat: 50.948, lng: 2.194, dir: 'right' },
       { name: 'Watten', lat: 50.834, lng: 2.213, dir: 'right' },
-      { name: 'Guînes', lat: 50.869, lng: 1.867, dir: 'left' },
-      { name: 'Béthune', lat: 50.530, lng: 2.640, dir: 'left' }
+      { name: 'Guînes', lat: 50.869, lng: 1.867, dir: 'left' }
     ].forEach(function (c) {
       var icon = L.divIcon({ className: 'hc-city sec', html: '<div class="hc-city-dot"></div>', iconSize: [11, 11], iconAnchor: [6, 6] });
       var off = c.dir === 'left' ? [-7, 0] : c.dir === 'top' ? [0, -7] : [7, 0];
