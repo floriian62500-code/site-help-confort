@@ -43,7 +43,6 @@ const HEADER = `<header style="background:rgba(255,255,255,.95);backdrop-filter:
 <div style="max-width:1480px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px">
 <a href="/" style="display:flex;align-items:center;text-decoration:none"><img width="200" height="60" decoding="async" src="/logo-officiel.jpg" alt="HELP Confort Saint-Omer & Dunkerque" style="height:44px;width:auto"></a>
 <nav style="display:flex;align-items:center;gap:16px">
-<a href="/realisations.html" style="color:#0DA0CF;font-weight:600;text-decoration:none;font-size:.9rem">← Réalisations</a>
 <a href="tel:${TEL}" style="background:#FF6B1A;color:#fff;padding:9px 16px;border-radius:10px;font-weight:800;text-decoration:none;font-size:.9rem">📞 ${PHONE}</a>
 </nav></div></header>`;
 
