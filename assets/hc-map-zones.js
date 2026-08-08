@@ -234,7 +234,22 @@
 
     // Fit bounds sur les cercles agences (zoom adapté pour voir les 2 zones)
     var group = L.featureGroup([circleSO, circleDK]);
-    map.fitBounds(group.getBounds(), { padding: [40, 40] });
+    function refit(){
+      try {
+        map.invalidateSize(false);
+        map.fitBounds(group.getBounds(), { padding: [40, 40] });
+      } catch (e) {}
+    }
+    refit();
+    // HC-FIX 2026-08-08 : forcer invalidateSize après stabilisation du layout
+    // (conteneur hero-droite redimensionné après init → Leaflet n'affichait que la mer).
+    [60, 250, 700, 1500].forEach(function (ms) { setTimeout(refit, ms); });
+    window.addEventListener('load', refit, { once: true });
+    // Recalcule dès que le conteneur change de taille (responsive, fonts, hero)
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(function () { refit(); });
+      ro.observe(document.getElementById('hcMapEl'));
+    }
   }
 
   function inject() {
