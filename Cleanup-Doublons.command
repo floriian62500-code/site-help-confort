@@ -1,48 +1,31 @@
 #!/bin/bash
-# 2026-06-02 — Supprime tous les fichiers parasites du projet
+# 2026-06-03 — Nettoyage AUTO (sans confirmation) du projet
 # Florian : double-clique ce fichier dans Finder pour nettoyer.
 
-set -e
 cd "$(dirname "$0")"
 
-echo "🧹 Nettoyage du projet : $(pwd)"
+echo "🧹 Nettoyage AUTO du projet : $(pwd)"
 echo ""
 
-# Liste avant
-echo "=== Fichiers à supprimer ==="
-echo "→ Doublons Mac (* 2.ext):"
-find . -name "* 2.*" -not -path "*/node_modules/*" -not -path "*/.git/*" 2>/dev/null
-echo ""
-echo "→ Backups (*.bak, *.original, *-OLD.*, *-bak.*):"
-find . -maxdepth 3 -type f \( -name "*.bak" -o -name "*.original" -o -name "*-OLD.*" -o -name "*-bak.*" \) -not -path "*/node_modules/*" -not -path "*/.git/*" 2>/dev/null | head -100
-echo ""
-echo "→ .DS_Store:"
-find . -name ".DS_Store" -not -path "*/.git/*" 2>/dev/null | head -20
-echo ""
-
-read -p "❓ Confirmer la suppression de tous ces fichiers ? (o/N) " confirm
-if [[ ! "$confirm" =~ ^[oOyY]$ ]]; then
-  echo "❌ Annulé."
-  exit 0
-fi
-
-# Suppression
-echo ""
-echo "🗑  Suppression en cours..."
+# Suppression immédiate sans confirmation
 find . -name "* 2.*" -not -path "*/node_modules/*" -not -path "*/.git/*" -type f -delete 2>/dev/null
 find . -maxdepth 3 -type f \( -name "*.bak" -o -name "*.original" -o -name "*-OLD.*" -o -name "*-bak.*" \) -not -path "*/node_modules/*" -not -path "*/.git/*" -delete 2>/dev/null
 find . -name ".DS_Store" -not -path "*/.git/*" -delete 2>/dev/null
-echo "✅ Nettoyage terminé"
-echo ""
+rm -f images/mascotte.png images/mascotte-opt.png images/mascotte1.png images/mascotte-with-bg.png images/_to_delete_*.png 2>/dev/null
 
 # Bilan
+echo "✅ Nettoyage terminé"
+echo ""
 echo "=== Restant éventuellement ==="
-echo "  ' 2.' : $(find . -name "* 2.*" -not -path "*/node_modules/*" -not -path "*/.git/*" 2>/dev/null | wc -l | tr -d ' ')"
-echo "  .bak : $(find . -maxdepth 3 -name "*.bak" -not -path "*/.git/*" 2>/dev/null | wc -l | tr -d ' ')"
-echo "  .DS_Store : $(find . -name ".DS_Store" -not -path "*/.git/*" 2>/dev/null | wc -l | tr -d ' ')"
-
-# Push automatique via LaunchAgent (le watcher détecte les suppressions)
+echo "  ' 2.'      : $(find . -name "* 2.*" -not -path "*/node_modules/*" -not -path "*/.git/*" 2>/dev/null | wc -l | tr -d ' ')"
+echo "  .bak       : $(find . -maxdepth 3 -name "*.bak" -not -path "*/.git/*" 2>/dev/null | wc -l | tr -d ' ')"
+echo "  .DS_Store  : $(find . -name ".DS_Store" -not -path "*/.git/*" 2>/dev/null | wc -l | tr -d ' ')"
+echo "  PNG masc.  : $(ls images/mascotte*.png images/_to_delete_*.png 2>/dev/null | wc -l | tr -d ' ')"
 echo ""
-echo "📤 Le LaunchAgent va automatiquement pousser le nettoyage dans 1-2 min."
+echo "📤 Le LaunchAgent push automatiquement dans 1-2 min."
 echo ""
-read -p "Appuyez sur Entrée pour fermer..."
+echo "Cette fenêtre se fermera dans 5 secondes..."
+sleep 5
+# Auto-close du Terminal
+osascript -e 'tell application "Terminal" to close (every window whose name contains "Cleanup-Doublons")' 2>/dev/null &
+exit 0

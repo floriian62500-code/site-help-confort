@@ -65,5 +65,9 @@ secrets/*
 *.client_secret*.json
 client_secret_*.json
 *-credentials.json
+
+# Token Netlify local (deploy staging/prod — JAMAIS commité)
+tools/.netlify-access-token
+*.netlify-access-token
 *.html.bak
 *.bak

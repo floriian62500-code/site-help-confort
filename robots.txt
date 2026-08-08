@@ -35,7 +35,8 @@ Disallow: /.autopush/
 Disallow: /.env
 Disallow: /.git/
 
-Sitemap: https://www.depan59-62.fr/sitemap-index.xml
+# Sitemap unique servi dynamiquement par Edge Function Supabase (_redirects vers /functions/v1/sitemap).
+# Simplifié 2026-07-25 : les anciens sitemap-index/pages/actus étaient redondants et provoquaient
+# les alertes "Pages avec redirection" dans Google Search Console (chaque URL redirigée était comptée).
+# Florian : retirer aussi manuellement les anciens sitemaps depuis Search Console (Propriétés → Sitemaps).
 Sitemap: https://www.depan59-62.fr/sitemap.xml
-Sitemap: https://www.depan59-62.fr/sitemap-pages.xml
-Sitemap: https://www.depan59-62.fr/sitemap-actus.xml

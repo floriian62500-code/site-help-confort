@@ -1,0 +1,36 @@
+#!/bin/bash
+# HELP Confort - Push silencieux background
+# Pas de Terminal visible, lance git push, quit auto
+REPO="/Users/HP/Documents/Claude/Projects/SITE INTERNET"
+LOG="$HOME/Library/Logs/helpconfort-push-silent.log"
+mkdir -p "$(dirname "$LOG")"
+{
+  echo "=== $(date '+%Y-%m-%d %H:%M:%S') Push-Silent triggered ==="
+  cd "$REPO" || { echo "Repo introuvable"; exit 1; }
+  # Reset orphan locks
+  rm -f .git/index.lock .git/HEAD.lock 2>/dev/null
+  # Stash any uncommitted changes (avoid blocking)
+  git stash push -m "auto-stash silent-push" 2>&1
+  # Pull rebase to align with remote
+  git fetch origin 2>&1
+  git pull --rebase origin main 2>&1
+  # Push
+  git push origin main 2>&1
+  # Restore stash
+  git stash pop 2>/dev/null
+  # Trigger Netlify build hook
+  HOOK=$(cat "$REPO/tools/.netlify-build-hook" 2>/dev/null)
+  if [ -n "$HOOK" ]; then
+    curl -s -X POST -d '{}' "$HOOK" > /dev/null 2>&1
+    echo "Netlify build hook triggered"
+  fi
+  # Reload LaunchAgent (if exists)
+  PLIST="$HOME/Library/LaunchAgents/com.helpconfort.autopush.plist"
+  if [ -f "$PLIST" ]; then
+    launchctl unload "$PLIST" 2>/dev/null
+    launchctl load "$PLIST" 2>/dev/null
+    echo "LaunchAgent reloaded"
+  fi
+  echo "=== Push-Silent done ==="
+} >> "$LOG" 2>&1
+exit 0

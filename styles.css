@@ -1912,8 +1912,10 @@ html .header .nav-desktop{overflow:visible !important}
     box-shadow: 0 8px 18px rgba(13, 160, 207, .25);
   }
   @media (max-width: 720px) {
+    /* HC-UX 2026-08-02 : label "Appeler" visible en mobile (au lieu de l'icône seule) */
     .hc-btn-tel-num { display: none; }
-    .hc-btn-tel { padding: 9px 11px; }
+    .hc-btn-tel { padding: 10px 14px; min-height: 44px; box-sizing: border-box; }
+    .hc-btn-tel::after { content: "Appeler"; font-weight: 700; font-size: .92rem; letter-spacing: -.005em; }
   }
 
   /* === BURGER === */

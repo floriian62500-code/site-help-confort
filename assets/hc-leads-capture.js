@@ -25,7 +25,7 @@
   // submit-lead (service_role côté serveur, anon-callable, verify_jwt=false).
   // L'Edge Function gère aussi le déclenchement de notify-lead côté serveur.
   // ─────────────────────────────────────────────────────────────────────
-  const SUBMIT_LEAD_URL = SUPABASE_URL + '/functions/v1/submit-lead';
+  const SUBMIT_LEAD_URL = SUPABASE_URL + '/functions/v1/submit-lead-v6';
 
   async function pushLead(payload) {
     try {
@@ -36,7 +36,7 @@
       });
       const data = await r.json().catch(() => ({}));
       if (!r.ok || data.error) {
-        return { data: null, error: new Error(data.error || ('HTTP ' + r.status)) };
+        return { data: null, error: new Error(data.error || ('HTTP ' + r.status)), fieldErrors: data.errors || null };
       }
       return { data: { id: data.id }, error: null };
     } catch (err) {
@@ -103,6 +103,9 @@
           code_postal: (formData.get('code_postal') || formData.get('cp') || formData.get('zip') || '').toString().trim() || null,
           metier: (formData.get('metier') || formData.get('service') || '').toString().trim() || null,
           type_demande: form.dataset.hcLead || 'devis',
+          // HC 2026-08-06 : le contrat de validation serveur est DÉCLARÉ explicitement par le formulaire
+          // via <input type="hidden" name="form_type" value="..."> (ou data-form-type). Pas de déduction fragile.
+          form_type: (function(){ var fi = form.querySelector('[name="form_type"]'); if (fi && fi.value) return fi.value.trim(); return form.dataset.formType || 'demande_metier'; })(),
           message: (formData.get('message') || formData.get('description') || formData.get('demande') || '').toString().trim() || null,
           source: 'formulaire_site',
           source_page: location.pathname + location.search,
@@ -116,18 +119,28 @@
         }
 
         try {
-          const { data, error } = await pushLead(payload);
-          if (error) throw error;
-
-          // Succès : afficher message + reset form
-          showMessage(form, true, 'Demande envoyée avec succès ! Nous vous contacterons rapidement.');
-          form.reset();
-
-          // Si callback custom défini, on l'appelle
-          if (typeof window.onHCLeadSubmit === 'function') window.onHCLeadSubmit(payload);
+          const res = await pushLead(payload);
+          if (res.error) {
+            // HC-FIX 2026-08-04 : afficher l'erreur PAR CHAMP renvoyée par submit-lead
+            // (au lieu d'un message générique) pour guider le visiteur et éviter l'abandon.
+            var friendly = 'Erreur d\'envoi. Veuillez nous appeler directement au 03 66 10 01 34.';
+            if (res.fieldErrors && typeof res.fieldErrors === 'object') {
+              var LB = { prenom:'Prénom', nom:'Nom', telephone:'Téléphone', tel:'Téléphone', email:'Email', adresse:'Adresse', code_postal:'Code postal', cp:'Code postal', ville:'Ville', message:'Message', contact:'Téléphone ou email' };
+              var msgs = Object.keys(res.fieldErrors).map(function(k){ return (LB[k]||k) + ' : ' + res.fieldErrors[k]; });
+              if (msgs.length) friendly = 'Merci de corriger : ' + msgs.join(' · ');
+            }
+            console.error('Lead submit error:', res.error, res.fieldErrors || '');
+            showMessage(form, false, friendly);
+          } else {
+            // Succès : afficher message + reset form
+            showMessage(form, true, 'Demande envoyée avec succès ! Nous vous contacterons rapidement.');
+            form.reset();
+            // Si callback custom défini, on l'appelle
+            if (typeof window.onHCLeadSubmit === 'function') window.onHCLeadSubmit(payload);
+          }
         } catch (err) {
-          console.error('Lead submit error:', err);
-          showMessage(form, false, 'Erreur d\'envoi. Veuillez nous appeler directement au 03 66 10 01 34.');
+          console.error('Lead submit error (réseau):', err);
+          showMessage(form, false, 'Impossible d\'envoyer pour le moment (connexion ?). Appelez-nous au 03 66 10 01 34.');
         } finally {
           if (submitBtn) {
             submitBtn.disabled = false;

@@ -5,7 +5,6 @@
  <link rel="dns-prefetch" href="https://api-adresse.data.gouv.fr">
 
 <meta charset="UTF-8">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nos prestations — Forfaits prix fixe Saint-Omer | HELP Confort</title>
 <meta name="description" content="Forfaits plomberie, chauffe-eau, dépannage à prix fixe. Réservation en ligne avec acompte 40%, devis rapide pour projets sur mesure.">
@@ -62,7 +61,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://btcbjwqiivhpwoszomhg.supabase.co" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=1778685798">
+<link rel="stylesheet" href="styles.css?v=20260802">
 
 <style id="hc-critical-header">
 /* CSS critique — header + megamenu (inline pour garantir le rendu même si cache foireux) */.hc-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.92); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(229,237,243,.5); }.hc-header-row { display: flex; align-items: center; justify-content: space-between; padding: 12px clamp(20px, 4vw, 64px); max-width: 1480px; margin: 0 auto; gap: 24px; }.hc-logo { display: flex; align-items: center; flex-shrink: 0; }.hc-logo img { height: 56px; width: auto; max-width: none; display: block; }.hc-nav { display: none; }
@@ -158,7 +157,7 @@
  <script src="assets/hc-consent.js" defer></script>
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style id="hc-skip-style">.hc-skip-link{position:absolute;top:-100px;left:0;background:#0A1428;color:#fff;padding:10px 18px;text-decoration:none;font-weight:700;font-size:.92rem;border-radius:0 0 8px 0;z-index:10000}.hc-skip-link:focus{top:0}</style>
-</head>
+<style>.hc-topbar{min-height:44px}(max-width:1023px){.hc-topbar{min-height:60px}}(max-width:767px){.hc-topbar{min-height:86px}}(max-width:429px){.hc-topbar{min-height:136px}}</style></head>
 <body>
 <a href="#main-content" class="hc-skip-link">Aller au contenu principal</a>
 
@@ -515,6 +514,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  Voir les tarifs
  </button>
  <p class="nv-lg-trust">🛡️ Vos données restent confidentielles. Voir nos <a href="mentions-legales.html" target="_blank" rel="noopener noreferrer">mentions légales</a>.</p>
+ <button type="button" id="nvLgClearData" onclick="clearLeadData()" style="display:none;margin:8px auto 0;background:transparent;border:0;color:#94a3b8;font-size:.78rem;text-decoration:underline;cursor:pointer;font-family:inherit">Effacer mes données enregistrées</button>
  </form>
  </div>
 </div>
@@ -549,7 +549,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  </li>
  <li>
  <a href="mailto:saint-omer@helpconfort.com" aria-label="Envoyer un email">
- <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2.9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
  <span><strong>saint-omer@helpconfort.com</strong></span>
  </a>
  </li>
@@ -629,11 +629,11 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  </span>
  <div class="fv3-social-links">
  <a href="https://www.facebook.com/depanaudo/" data-content="footer.fb_url" data-content-attr="href" target="_blank" rel="noopener noreferrer" class="fv3-soc fv3-soc-fb" aria-label="Facebook HELP Confort Saint-Omer">
- <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1.45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+ <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
  Facebook
  </a>
  <a href="https://www.linkedin.com/in/florian-d-haillecourt-2a67bb207" data-content="footer.linkedin_url" data-content-attr="href" target="_blank" rel="noopener noreferrer" class="fv3-soc fv3-soc-li" aria-label="LinkedIn HELP Confort">
- <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 11.01-4.13 2.06 2.06 0 010 4.13zM3.56 20.45h3.55V9H3.56v11.45zM22.22 0H1.77C.79 0 0.77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24.77 23.2 0 22.22 0z"/></svg>
+ <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 11.01-4.13 2.06 2.06 0 010 4.13zM3.56 20.45h3.55V9H3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23 .79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
  LinkedIn
  </a>
  <a href="https://maps.app.goo.gl/B4BPVTiRp5rDp26fA" target="_blank" rel="noopener noreferrer" class="fv3-soc fv3-soc-go" aria-label="Avis Google">
@@ -688,11 +688,19 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  const LG_DATA_KEY = 'hc_lead_v1';
  function saveLeadData(fd){
    try {
+     // 2026-06-04 — Ne sauvegarder QUE des coordonnées valides (sinon localStorage pollué par des tests)
+     var prenom = (fd.get('prenom') || '').trim();
+     var nom = (fd.get('nom') || '').trim();
+     var tel = (fd.get('telephone') || '').trim();
+     var email = (fd.get('email') || '').trim();
+     var telDigits = tel.replace(/[^0-9]/g, '');
+     var validPrenom = prenom.length >= 2 && !/^[0-9]+$/.test(prenom);
+     var validNom = nom.length >= 2 && !/^[0-9]+$/.test(nom);
+     var validTel = telDigits.length >= 10 && telDigits.length <= 13;
+     var validEmail = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(email);
+     if (!(validPrenom && validNom && validTel && validEmail)) return;
      var data = {
-       prenom: fd.get('prenom') || '',
-       nom: fd.get('nom') || '',
-       telephone: fd.get('telephone') || '',
-       email: fd.get('email') || '',
+       prenom: prenom, nom: nom, telephone: tel, email: email,
        adresse: fd.get('adresse') || '',
        code_postal: fd.get('code_postal') || '',
        ville: fd.get('ville') || '',
@@ -701,17 +709,32 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
      localStorage.setItem(LG_DATA_KEY, JSON.stringify(data));
    } catch(_) {}
  }
+ function clearLeadData(){
+   try { localStorage.removeItem(LG_DATA_KEY); } catch(_) {}
+   var f = document.getElementById('nvLgForm');
+   if (f) f.querySelectorAll('input').forEach(function(i){ if (i.type !== 'hidden') i.value = ''; });
+ }
  function restoreLeadData(){
    try {
      var raw = localStorage.getItem(LG_DATA_KEY);
      if (!raw) return;
      var d = JSON.parse(raw);
+     // Validation au chargement aussi : si les données stockées sont pourries, on les vire
+     var telDigits = (d.telephone || '').replace(/[^0-9]/g, '');
+     var ok = (d.prenom || '').length >= 2 && !/^[0-9]+$/.test(d.prenom)
+           && (d.nom || '').length >= 2 && !/^[0-9]+$/.test(d.nom)
+           && telDigits.length >= 10 && telDigits.length <= 13
+           && /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(d.email || '');
+     if (!ok) { localStorage.removeItem(LG_DATA_KEY); return; }
      var f = document.getElementById('nvLgForm');
      if (!f) return;
      ['prenom','nom','telephone','email','adresse','code_postal','ville'].forEach(function(k){
        var input = f.querySelector('[name="'+k+'"]');
        if (input && d[k] && !input.value) input.value = d[k];
      });
+     // Afficher bouton "Effacer mes données"
+     var clearBtn = document.getElementById('nvLgClearData');
+     if (clearBtn) clearBtn.style.display = 'inline-flex';
    } catch(_) {}
  }
  function showLgModal(){ document.getElementById('nvLeadgateModal').hidden = false; document.body.style.overflow = 'hidden'; restoreLeadData(); }
@@ -1814,7 +1837,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
 </script>
 
 <script src="assets/hc-address-autocomplete.js" defer></script>
-<script src="assets/hc-widgets.js" defer></script>
+<script src="assets/hc-widgets.js?v=20260604-clean-final" defer></script>
 <script>
 if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){r.unregister();});if('caches' in window)caches.keys().then(function(ks){ks.forEach(function(k){caches.delete(k);});});});});}
 </script>
@@ -1847,14 +1870,14 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
   <script defer src="assets/hc-megamenu-fix.js"></script>
   <script defer src="assets/hc-engagements.js"></script>
   <script defer src="assets/hc-sticky-cta.js"></script>
-  <script src="assets/hc-avis-live.js" defer></script>
+  <script src="assets/hc-avis-live.js?v=20260603" defer></script>
   <script defer src="assets/hc-calculator.js"></script>
   <script defer src="assets/hc-tracking.js"></script>
   <script defer src="assets/hc-chat-widget.js"></script>
   <script defer src="assets/hc-tools-showcase.js"></script>
   <script defer src="assets/hc-a11y-fixes.js"></script>
   <script defer src="assets/hc-process.js"></script>
-<script src="assets/hc-modal-prefill.js?v=20260601" defer></script>
-<script src="assets/hc-form-validation.js?v=20260601" defer></script>
+<script src="assets/hc-modal-prefill.js?v=20260604-clean" defer></script>
+<script src="assets/hc-form-validation.js?v=20260603" defer></script>
 </body>
 </html>

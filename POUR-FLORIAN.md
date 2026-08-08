@@ -22,7 +22,92 @@
 
 Une fois traitée avec Florian, l'entrée est :
 - soit déplacée vers `TODO.md` sous forme actionnable,
-- soit archivée en bas de ce fichier dans une section `## 2026-05-29 — Drapeau Ukraine : reste 1 test 2 min de ton côté
+- soit archivée en bas de ce fichier dans une section `
+
+---
+
+## 2026-07-20 19:35 — 🔧 Reconnecter GA4 OAuth (5 min, refresh_token révoqué)
+
+**Source** : Florian ouvre `/admin-pro/analytics.html` le 20/07 → voit "GA4 ne renvoie pas de données — User does not have sufficient permissions" (message trompeur, en fait c'est OAuth qui est cassé, pas le Service Account).
+**Constat exact** : refresh_token GA4 OAuth invalidé par Google (`invalid_grant`). Cause probable : 7j+ d'inactivité, changement mdp Google, ou révocation manuelle dans myaccount.google.com/permissions.
+**Fix côté serveur** :
+- Ajout GA4 dans `pipeline-health-check` v5 → alerte immédiate si le refresh casse à nouveau
+- Message d'erreur sur analytics.html corrigé pour indiquer clairement "OAuth cassé, reconnecte via /admin-pro/oauth-ga4.html"
+**Action toi (5 min)** : ouvre https://www.depan59-62.fr/admin-pro/oauth-ga4.html → clique "Se connecter à Google" → autorise le scope Analytics.readonly → le refresh_token est ré-écrit dans app_settings.ga4_oauth automatiquement.
+**Vérification** : recharge /admin-pro/analytics.html — tu dois voir les KPI (sessions, users, top sources, etc.).
+**Reco long terme** : comme pour Meta, on pourrait migrer vers un Service Account Google Cloud avec un JSON qui n'expire jamais et attribuer le rôle "Viewer" sur la property GA4 depuis analytics.google.com → Property Access Management. Mais ça demande d'activer l'API Analytics Data et de configurer un projet Google Cloud. Item à programmer en S2/S3.
+
+---
+
+## 2026-07-20 19:15 — ✅ RÉSOLU : Token Meta migré vers System User (permanent)
+
+**État final** :
+- System User `Helpconfortapi` (ID `61591756427273`, rôle Admin) créé dans Business Manager HELP Confort
+- Attribué à la Page "Help Confort ST OMER" avec accès total + à l'App "Help Confort Back-Office" avec accès total
+- Page Access Token permanent généré avec scopes : pages_show_list, pages_read_engagement, pages_read_user_content, pages_manage_posts, pages_manage_metadata
+- Token écrit dans `app_settings.meta` avec `token_source=system_user_never_expires`
+- Test `/me` OK (retourne "Help Confort ST OMER")
+- Trigger sync FB OK (0 nouveau, tout déjà en base)
+- Cron pg_cron `auto-sync-facebook-posts` (jobid 12) actif */30 8-22
+
+**Conséquence** : plus JAMAIS besoin de régénérer le token Meta. Ne dépend plus de ton mot de passe FB perso. Ne peut plus être invalidé par un changement de session sécurité côté FB.
+
+**Historique** : après le bug "chantiers pas publiés depuis 53j" (dernier cron_fb_sync 28 mai → 20 juillet), token FB perso invalidé après changement mdp FB → cron pg_cron manquant → double bug. Fix racine appliqué par migration System User Token, monitoring pipeline-health-check v4 ajouté qui surveille désormais le token FB et l'âge du dernier sync (alerte WARN >45j, CRITICAL si cassé ou >14j sans sync).
+
+---
+
+## ~~2026-07-20 18:47 — 🚨 URGENT : Régénérer token Facebook~~ (RÉSOLU cf entrée du dessus)
+
+**Source** : Florian signale RÉCURRENT "les chantiers ne se publient toujours pas auto sur le site depuis Facebook".
+**Constat** :
+- Dernier chantier synchronisé depuis FB → BDD : **28 mai 2026** (il y a 53 jours).
+- Cause exacte confirmée par appel `refresh-meta-token` : `"user changed their password or Facebook has changed the session for security reasons"` → token Meta invalidé côté FB, non rafraîchissable automatiquement.
+- Deuxième bug corrigé côté serveur : le cron `auto-sync-facebook-posts` n'existait pas dans pg_cron (créé aujourd'hui, tournera toutes les 30 min entre 8h-22h dès que le token sera restauré).
+**Pourquoi je ne traite pas** : régénération du token nécessite login FB Business Manager + validation Graph API Explorer + copie du token dans le wizard → impossible sans tes identifiants.
+**Procédure** (~15 min) :
+  1. Ouvrir https://www.depan59-62.fr/admin-pro/wizard-meta.html (le wizard 6 étapes est déjà prêt)
+  2. Suivre les étapes 4-6 (les 3 premières sont déjà faites) : Générer User Access Token via Graph API Explorer, autoriser les scopes, échanger contre Page Token longue durée
+  3. Coller le nouveau Page Token dans l'étape 6.2 du wizard
+  4. Le wizard écrit automatiquement dans `app_settings.meta`
+**Ce qui reprendra tout seul après ça** :
+  - Cron pg_cron `auto-sync-facebook-posts` toutes les 30 min → détecte les nouveaux posts FB → insère comme chantiers dans `realisations`
+  - Chaîne migrate-fb-images → download les images FB en local
+  - Sync JSON statique (regen manuel encore nécessaire, cf `project_sync_realisations_supabase_json`)
+**Reco après reprise** : IMPORTANT — ne plus jamais changer le mot de passe FB HELP Confort sans regénérer immédiatement le Page Token. Le message dans le wizard est explicite : "Le Page Token n'expire JAMAIS (sauf si tu changes ton mot de passe FB ou révoques l'App)".
+**Quand on se voit** : 15 min pour la wizard, puis attendre 30 min pour voir un chantier récent (ou trigger manuel via l'edge fn).
+
+---
+
+## 2026-07-03 18:35 — DMARC : arbitrer canal des rapports (mail pollue Outlook)
+
+**Source** : chat 2026-07-03 (Florian montre mail quotidien `DMARC Aggregate Report <dmarcreport@microsoft.com>` reçu chaque jour).
+**Constat** : L'enregistrement DNS `_dmarc.depan59-62.fr` a un tag `rua=mailto:florian.dhaillecourt@helpconfort.com`. Résultat : chaque provider mail (Microsoft, Google, Free, Orange...) envoie 1 rapport agrégé XML par jour à ton adresse → 5-20 mails/jour pollution garantie.
+**Pourquoi je ne traite pas** : modif DNS Gandi hors périmètre autonome (nécessite login registrar).
+**Options** :
+  1. **Suppression pure** — retirer `rua=` du DMARC. Zéro pollution, zéro surveillance. Aucun impact délivrabilité mails HC.
+  2. **Alias jetable** — créer `dmarc@depan59-62.fr` + filtre Outlook auto-delete 30j. Garde la trace au cas où.
+  3. **Service tiers gratuit** (Postmark DMARC Digest ou EasyDMARC free) — 1 mail hebdo lisible en FR, alertes usurpation identité. Setup 5 min sur postmarkapp.com/dmarc-digest.
+**Reco** : **option 3** (Postmark). Protection contre faux devis "de la part de HELP Confort", zéro pollution quotidienne. Sinon option 1 si tu veux zapper le sujet 5 min sans compte tiers.
+**Valeur DNS à coller chez Gandi** (Option 1) : remplacer TXT `_dmarc` par `v=DMARC1; p=quarantine; adkim=r; aspf=r;`
+**Quand on se voit** : 5 min (choix + copier coller dans Gandi).
+
+---
+
+## 2026-07-03 18:38 — Push GitHub : divergence git à résoudre (37↑ / 60↓)
+
+**Source** : session Cowork autonome 2026-07-03.
+**Constat** : Branche `main` locale = ahead 37 / behind 60 vs origin/main. Le fix critique du sitemap Search Console (voir BUGS-HISTORY) est déjà en prod côté Supabase Edge Function v6, mais le fichier `supabase/functions/sitemap/index.ts` n'est **pas encore poussé sur GitHub**. Sans push, prochain deploy manuel de la fonction depuis un poste jour risque de réintroduire l'ancien SITE_URL erroné.
+**Pourquoi je ne traite pas** : sandbox Cowork = proxy sortant fermé (curl vers GitHub / Supabase POST bloqué, HTTP 403). LaunchAgent auto-push local semble gelé depuis mi-juin (dernier push distant confirmé 21 juin).
+**Options** :
+  1. Double-cliquer sur `tools/Push-Force-Fix-Sitemap.command` (créé aujourd'hui) — pull rebase + push, ~30 sec.
+  2. Ouvrir Terminal → `cd "SITE INTERNET" && git pull --rebase origin main && git push origin main`.
+  3. Ignorer, redéployer manuellement Edge Function `sitemap` avec `supabase functions deploy sitemap --no-verify-jwt` si un jour nécessaire (mais tu perds l'historique Git de ce fix).
+**Reco** : **option 1** (script). ~30 sec, résout aussi la divergence globale qui traîne.
+**Quand on se voit** : 30 sec.
+
+---
+
+## 2026-05-29 — Drapeau Ukraine : reste 1 test 2 min de ton côté
 **Source** : agent autonome hc-site-autonome (run 2026-05-29).
 **Constat** : Le bug est clos côté code. La carte Leaflet de zones-intervention est entièrement désactivée depuis le fix V3 (kill-switch `if (true) return;` + balises Leaflet commentées) et remplacée par 2 cartes agence + CTA depuis le V4 (2026-05-22). Aucune tuile, aucun asset tiers, aucun fichier « ukrain » chargé sur la page (grep repo confirmé). Conclusion : si tu vois encore un drapeau, il ne vient PAS du site.
 **Action de ton côté (2 min)** : ouvre depan59-62.fr/zones-intervention en fenêtre de navigation privée (extensions désactivées). Si le drapeau a disparu → c'était une extension Chrome (solidarité/dons), rien à corriger, on coche la dernière ligne. Si le drapeau est TOUJOURS là en privé → préviens-moi, on rouvre une investigation (mais c'est très improbable vu l'état du code).

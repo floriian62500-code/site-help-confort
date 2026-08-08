@@ -4,9 +4,7 @@
  <link rel="dns-prefetch" href="https://api-adresse.data.gouv.fr">
 
 <meta charset="UTF-8">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Plombier, Chauffagiste, Électricien Saint-Omer | HELP Confort</title>
 <meta name="description" content="Dépannage plomberie, chauffage, électricité, serrurerie à Saint-Omer &amp; Dunkerque. 4,7/5 sur 343 avis. Devis gratuit au 03 66 10 01 34.">
@@ -34,7 +32,7 @@
 <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 <link rel="dns-prefetch" href="https://www.facebook.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=1778685798">
+<link rel="stylesheet" href="styles.css?v=20260802">
 <link rel="stylesheet" href="assets/index-hero.css?v=1778688817">
 <style id="hc-critical-header">
 /* CSS critique — header + megamenu (inline pour garantir le rendu même si cache foireux) */.hc-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.92); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(229,237,243,.5); }.hc-header-row { display: flex; align-items: center; justify-content: space-between; padding: 12px clamp(20px, 4vw, 64px); max-width: 1480px; margin: 0 auto; gap: 24px; }.hc-logo { display: flex; align-items: center; flex-shrink: 0; }.hc-logo img { height: 56px; width: auto; max-width: none; display: block; }.hc-nav { display: none; }
@@ -141,7 +139,7 @@
  <meta name="theme-color" content="#0DA0CF">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style id="hc-skip-style">.hc-skip-link{position:absolute;top:-100px;left:0;background:#0A1428;color:#fff;padding:10px 18px;text-decoration:none;font-weight:700;font-size:.92rem;border-radius:0 0 8px 0;z-index:10000}.hc-skip-link:focus{top:0}</style>
-</head>
+<style>.hc-topbar{min-height:44px}(max-width:1023px){.hc-topbar{min-height:60px}}(max-width:767px){.hc-topbar{min-height:86px}}(max-width:429px){.hc-topbar{min-height:136px}}</style></head>
 <body>
 <a href="#main-content" class="hc-skip-link">Aller au contenu principal</a>
 
@@ -396,6 +394,57 @@ window.addEventListener('scroll', function() {
  </p>
 
  
+ <!-- HC-UX 2026-08-02 : 2 CTA primaires sous le sous-titre (visibles 1er écran mobile).
+      Le bloc hero4-ctas-v2 plus bas est masqué pour éviter la répétition. -->
+ <style>
+ .hero4-primary-cta{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0 12px}
+ .h4pc{display:inline-flex;align-items:center;gap:12px;padding:14px 20px;border-radius:14px;text-decoration:none;font-weight:800;transition:transform .2s ease,box-shadow .2s ease;min-height:58px;box-sizing:border-box}
+ .h4pc svg{flex-shrink:0}
+ .h4pc-txt{display:flex;flex-direction:column;line-height:1.15;align-items:flex-start}
+ .h4pc-txt strong{font-size:1.02rem;letter-spacing:-.01em}
+ .h4pc-txt span{font-size:.78rem;font-weight:600;opacity:.92}
+ .h4pc--call{background:linear-gradient(135deg,#FF6B1A,#FF4D1A);color:#fff;box-shadow:0 10px 26px rgba(255,90,20,.34)}
+ .h4pc--call:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(255,90,20,.44)}
+ .h4pc--describe{background:#fff;color:#0A1428;border:2px solid #0DA0CF;box-shadow:0 6px 18px rgba(13,160,207,.14)}
+ .h4pc--describe:hover{transform:translateY(-2px);background:#F4FBFE}
+ .hero4-ctas-v2{display:none !important} /* remplacé par les 2 CTA primaires ci-dessus */
+ @media(max-width:600px){
+   .hero4-primary-cta{flex-direction:column;gap:10px;margin:14px 0 8px}
+   .h4pc{width:100%;justify-content:flex-start}
+   /* HC-UX : compacte le hero mobile pour que les 2 CTA soient visibles sans scroll */
+   .hc-hero4{padding-top:16px !important}
+   .hero4-h1{font-size:clamp(1.6rem,6vw,2.15rem) !important;line-height:1.1 !important;margin-bottom:10px !important}
+   .hero4-lead{font-size:1rem !important;line-height:1.5 !important;margin-bottom:0 !important}
+ }
+ /* HC-UX : label "Appeler" à côté de l'icône tel du header en mobile */
+ @media(max-width:720px){
+   .hc-btn-tel{padding:10px 14px !important;min-height:44px;box-sizing:border-box;gap:8px}
+   .hc-btn-tel::after{content:"Appeler";font-weight:700;font-size:.92rem;letter-spacing:-.005em}
+   /* évite la collision de l'indice de scroll avec les CTA primaires remontés */
+   .hc-scroll-cue{display:none !important}
+ }
+ /* HC-UX : écrans mobiles COURTS (SE2 667, petits Android 640) — compacte le hero
+    pour que les 2 CTA restent visibles sans scroll malgré le bandeau haut. */
+ @media(max-width:720px) and (max-height:740px){
+   .hc-hero4{padding-top:6px !important}
+   .hero4-h1{font-size:1.42rem !important;line-height:1.1 !important;margin-bottom:6px !important}
+   .hero4-lead{font-size:.9rem !important;line-height:1.4 !important}
+   .hero4-primary-cta{margin:10px 0 4px !important;gap:8px !important}
+   .h4pc{min-height:50px;padding:11px 16px}
+   .h4pc-txt strong{font-size:.98rem}
+ }
+ </style>
+ <div class="hero4-primary-cta">
+ <a href="tel:+33366100134" class="h4pc h4pc--call" data-action="call" aria-label="Appeler maintenant HELP Confort au 03 66 10 01 34">
+ <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81 .7A2 2 0 0 1 22 16.92z"/></svg>
+ <span class="h4pc-txt"><strong>Appeler maintenant</strong><span>03 66 10 01 34</span></span>
+ </a>
+ <a href="#hc-reservation" class="h4pc h4pc--describe" aria-label="Décrire mon besoin en ligne, sans engagement">
+ <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+ <span class="h4pc-txt"><strong>Décrire mon besoin</strong><span>en 1 min, sans engagement</span></span>
+ </a>
+ </div>
+
  <div class="hero4-trust hero4-trust-v2">
  <a href="https://maps.app.goo.gl/B4BPVTiRp5rDp26fA" target="_blank" rel="noopener noreferrer" class="ht-google-big" aria-label="Voir les 343 avis Google vérifiés">
  <span class="htg-logo" aria-hidden="true">
@@ -514,7 +563,7 @@ window.addEventListener('scroll', function() {
 
  
  <div class="hero4-bgvideo" aria-hidden="true">
- <video id="hc-hero-video" autoplay muted loop playsinline preload="auto" disablepictureinpicture poster="logo-officiel.jpg">
+ <video id="hc-hero-video" autoplay muted loop playsinline preload="none" disablepictureinpicture poster="logo-officiel.jpg">
  <source src="videos/hero-metier-720p.mp4" type="video/mp4">
  </video>
  <div class="hero4-bgvideo-veil"></div>
@@ -893,6 +942,31 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
  <div class="container">
  <div class="hc-resa-head" style="margin-bottom:24px">
  <h2 class="hc-resa-title" style="margin:0">Décrivez votre besoin, <span class="accent">on s'occupe du reste.</span></h2>
+
+ <!-- Parcours client narratif : ce qui se passe APRÈS le formulaire (rassurance visiteur — ajouté 2026-07-25).
+      Sans délai hardcodé (règle "ne pas hardcoder promesses commerciales"). -->
+ <div class="hc-resa-journey" aria-label="Voici comment ça se passe">
+ <div class="hrj-title">Voici comment ça se passe</div>
+ <ol class="hrj-steps">
+  <li><span class="hrj-num">1</span><span class="hrj-lbl">Décrivez votre besoin</span></li>
+  <li><span class="hrj-num">2</span><span class="hrj-lbl">Nous préparons votre dossier</span></li>
+  <li><span class="hrj-num">3</span><span class="hrj-lbl">Un conseiller vous rappelle</span></li>
+  <li><span class="hrj-num">4</span><span class="hrj-lbl">Vous recevez votre devis</span></li>
+  <li><span class="hrj-num">5</span><span class="hrj-lbl">Nos techniciens interviennent</span></li>
+ </ol>
+ <style>
+  .hc-resa-journey{margin:24px auto 0;max-width:720px;padding:18px 20px;background:linear-gradient(135deg,#F7FBFD,#FFFFFF);border:1px solid #E5EDF3;border-radius:14px;box-shadow:0 4px 12px rgba(10,20,40,.03)}
+  .hc-resa-journey .hrj-title{font-size:.78rem;font-weight:800;color:#0DA0CF;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;text-align:center}
+  .hc-resa-journey .hrj-steps{list-style:none;margin:0;padding:0;display:flex;justify-content:space-between;align-items:flex-start;gap:6px;position:relative}
+  .hc-resa-journey .hrj-steps::before{content:'';position:absolute;top:14px;left:14px;right:14px;height:2px;background:repeating-linear-gradient(90deg,#CBD5E1 0 6px,transparent 6px 12px);z-index:0}
+  .hc-resa-journey .hrj-steps li{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;position:relative;z-index:1}
+  .hc-resa-journey .hrj-num{width:28px;height:28px;border-radius:50%;background:#fff;border:1.5px solid #0DA0CF;color:#0DA0CF;font-weight:800;font-size:.82rem;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(13,160,207,.15)}
+  .hc-resa-journey .hrj-lbl{font-size:.76rem;font-weight:600;color:#0A1428;line-height:1.3;max-width:110px}
+  @media(max-width:720px){.hc-resa-journey{padding:14px 12px}.hc-resa-journey .hrj-lbl{font-size:.68rem;max-width:70px}.hc-resa-journey .hrj-num{width:24px;height:24px;font-size:.72rem}.hc-resa-journey .hrj-steps::before{top:12px}}
+  /* Mobile < 480px : vertical timeline, plus lisible que 5 étapes serrées horizontalement */
+  @media(max-width:480px){.hc-resa-journey .hrj-steps{flex-direction:column;gap:12px;align-items:stretch}.hc-resa-journey .hrj-steps::before{display:none}.hc-resa-journey .hrj-steps li{flex-direction:row;text-align:left;gap:12px;align-items:center}.hc-resa-journey .hrj-lbl{font-size:.86rem;max-width:none;text-align:left;flex:1;font-weight:600}.hc-resa-journey .hrj-num{width:28px;height:28px;font-size:.82rem;flex-shrink:0}}
+ </style>
+ </div>
  </div>
 
  <div class="hc-resa-layout">
@@ -1049,7 +1123,7 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
  </div>
 
  <div class="form-row">
- <div style="display:block;font-size:.84rem;font-weight:700;color:#0A1428;margin-bottom:8px;letter-spacing:-.005em">Ajoutez au moins 1 photo <span class="req">*</span></div>
+ <div style="display:block;font-size:.84rem;font-weight:700;color:#0A1428;margin-bottom:8px;letter-spacing:-.005em">📸 Ajoutez une photo <span style="font-weight:500;color:#94a3b8;font-size:.78rem;margin-left:4px">(optionnel — mais très utile)</span></div>
  <input type="file" id="resa-photos-input" accept="image/*,video/*" multiple style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
  <label for="resa-photos-input" class="photo-drop-v2" id="resaDropZone">
  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0DA0CF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -1057,12 +1131,13 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
  <span>JPEG, PNG, MP4 · max 10 Mo par fichier</span>
  </label>
  <div id="resaPhotosPreview" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"></div>
- <div id="resaPhotosError" style="display:none;margin-top:8px;padding:8px 12px;background:rgba(225,29,72,.08);border-left:3px solid #E11D48;border-radius:6px;color:#9F1239;font-size:.82rem;font-weight:600">⚠ Merci d'ajouter au moins 1 photo pour qu'on puisse diagnostiquer.</div>
+ <!-- Élément conservé pour compat JS (display:none permanent — photo n'est plus obligatoire depuis 2026-07-25). -->
+ <div id="resaPhotosError" style="display:none"></div>
  </div>
 
- <div class="resa-tip">
+ <div class="resa-tip" style="background:rgba(13,160,207,.06);border-left:3px solid #0DA0CF">
  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
- <span>Une photo claire = un diagnostic plus rapide et un devis plus précis.</span>
+ <span>Une photo nous permet de préparer l'intervention et de vous répondre plus vite. Si vous n'en avez pas maintenant (main mouillée, urgence…), passez à l'étape suivante en toute tranquillité.</span>
  </div>
  </div>
 
@@ -1100,6 +1175,11 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
  <small style="display:block;margin-top:4px;font-size:.74rem;color:#94a3b8">💡 Code postal et ville se compléteront automatiquement à la sélection.</small>
  <style>.resa-addr-suggest{position:absolute;left:0;right:0;top:calc(100% + 2px);background:#fff;border:1px solid #E5EDF3;border-radius:10px;box-shadow:0 8px 24px rgba(11,18,32,.10);max-height:240px;overflow-y:auto;z-index:50}.resa-addr-suggest-item{padding:9px 12px;cursor:pointer;font-size:.86rem;border-bottom:1px solid rgba(229,237,243,.5)}.resa-addr-suggest-item:last-child{border-bottom:none}.resa-addr-suggest-item:hover,.resa-addr-suggest-item.is-focus{background:rgba(13,160,207,.08);color:#0DA0CF}.resa-addr-suggest-item small{display:block;font-size:.74rem;color:#94a3b8;margin-top:2px}
  </style>
+ </div>
+
+ <div class="form-row">
+ <label for="resa-ville">Ville <span class="req">*</span></label>
+ <input type="text" id="resa-ville" autocomplete="address-level2" placeholder="Saint-Omer (remplie via l'adresse, ou saisissez-la)" required>
  </div>
 
  <div class="form-row two">
@@ -1530,11 +1610,12 @@ function canGoNext() {
 if (current === 1) return !!state.presta;
 if (current === 2) {
 if (state.flow === 'callback') return true;
-// Description : au moins 3 caractères + au moins UN métier coché + au moins UNE photo
+// Description : au moins 3 caractères + au moins UN métier coché.
+// Photo n'est plus obligatoire depuis 2026-07-25 (règle "photo incitative pas bloquante" —
+// le visiteur en urgence, main mouillée, ne doit pas être bloqué par un upload photo).
 var hasDesc = !!state.desc && state.desc.trim().length >= 3;
 var hasMetier = (state.metiers || []).length > 0;
-var hasPhoto = !!(window.__resaPhotos && window.__resaPhotos.length > 0);
-return hasDesc && hasMetier && hasPhoto;
+return hasDesc && hasMetier;
 }
 if (current === 3) {
 // Validation stricte — anti-fausses-données
@@ -1574,7 +1655,8 @@ function cpFrOk(s) {
   if (dep < 1 || dep > 98) return false;
   return true;
 }
-return nameOk(state.prenom) && nameOk(state.nom) && phoneFrOk(state.tel) && emailOk(state.email) && cpFrOk(state.cp);
+function villeOk(s){ return !!s && s.trim().length >= 2 && /[a-zA-ZÀ-ÿ]/.test(s); }
+return nameOk(state.prenom) && nameOk(state.nom) && phoneFrOk(state.tel) && emailOk(state.email) && cpFrOk(state.cp) && villeOk(state.ville);
 }
 return false;
 }
@@ -1626,15 +1708,12 @@ function refreshNext() {
  if (btnNext.disabled && current === 2 && state.flow !== 'callback') {
  var need = state.desc ? state.desc.trim().length : 0;
  var hasMetier = (state.metiers || []).length > 0;
- var hasPhoto = !!(window.__resaPhotos && window.__resaPhotos.length > 0);
+ // Photo retirée des conditions bloquantes (règle "photo incitative pas bloquante" 2026-07-25)
  if (need < 3) {
  hint.textContent = '💡 Tapez quelques mots de plus pour décrire votre situation';
  hint.style.display = 'block';
  } else if (!hasMetier) {
  hint.textContent = '💡 Cochez au moins un métier concerné';
- hint.style.display = 'block';
- } else if (!hasPhoto) {
- hint.textContent = '📸 Ajoutez au moins 1 photo pour qu\'on puisse diagnostiquer';
  hint.style.display = 'block';
  } else { hint.style.display = 'none'; }
  } else if (btnNext.disabled && current === 3) {
@@ -1648,7 +1727,11 @@ function refreshNext() {
 document.querySelectorAll('.resa-metier-chips input[type="checkbox"]').forEach(function(cb){
  cb.addEventListener('change', function(){
  var checked = Array.from(document.querySelectorAll('.resa-metier-chips input[type="checkbox"]:checked')).map(function(x){return x.value;});
+ var metiersAvant = (state.metiers || []).join(',');
  state.metiers = checked;
+ // HC-FIX 2026-08-06 : au CHANGEMENT de métier, on efface la prestation suggérée (réponse
+ // incompatible avec le nouveau métier) pour forcer sa ré-évaluation au récap.
+ if (checked.join(',') !== metiersAvant) { state.suggested_presta = null; }
  refreshNext();
  });
 });
@@ -1701,6 +1784,7 @@ refreshNext();
 ['resa-tel', 'tel'],
 ['resa-email', 'email'],
 ['resa-cp', 'cp'],
+['resa-ville', 'ville'],
 ['resa-adresse', 'adresse']
 ].forEach(function(p) {
 var el = document.getElementById(p[0]);
@@ -1743,6 +1827,12 @@ btnNext.addEventListener('click', function() { gotoStep(current + 1); });
  var p = it.properties || {};
  input.value = p.label || (p.name + ', ' + (p.postcode || '') + ' ' + (p.city || ''));
  state.adresse = input.value;
+ if (p.city) {
+   state.ville = p.city; // HC-FIX 2026-08-02 : capte la ville (requise par submit-lead)
+   // HC-FIX 2026-08-04 : préremplit le champ Ville visible (modifiable ensuite manuellement)
+   var villeInput = document.getElementById('resa-ville');
+   if (villeInput) { villeInput.value = p.city; villeInput.dispatchEvent(new Event('input', { bubbles: true })); }
+ }
  if (cpInput && p.postcode) {
  cpInput.value = p.postcode;
  state.cp = p.postcode;
@@ -2114,7 +2204,18 @@ if (sug && sug.quote) {
 } else {
  priceEl.textContent = 'Sur devis';
 }
-simpleBlock.hidden = false;
+// HC-FIX 2026-08-06 (P1) : le PAIEMENT n'est proposé QUE si la prestation est réellement éligible
+// (prix TTC fixe, pas "à diagnostiquer"/sur devis). Sinon -> parcours rappel/intervention, sans paiement.
+var payable = !!(sug && typeof sug.price === 'number' && sug.price > 0 && !sug.quote);
+if (payable) {
+ simpleBlock.hidden = false;
+} else {
+ var pnc = document.getElementById('resa-presta-name-c'); if (pnc) pnc.innerHTML = sug.icon + ' ' + sug.label + (sug.metier !== '—' ? ' · ' + sug.metier : '');
+ var anc = document.getElementById('resa-agence-name-c'); if (anc) anc.textContent = detectAgence(state.cp);
+ var rfc = document.getElementById('resa-ref'); if (rfc) rfc.textContent = 'HC-' + Date.now().toString(36).slice(-6).toUpperCase();
+ complexBlock.hidden = false;
+ return;
+}
 // Reset recherche/showAll au passage à l'étape 4
 prestaSearchState = { query:'', showAll:false };
 var searchInput = document.getElementById('resa-presta-search');
@@ -2199,54 +2300,124 @@ return [
 async function persistLeadToSupabase(source){
  try {
  var SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
- var ANON_KEY = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
+ // HC-FIX 2026-08-02 : le wizard passe désormais par l'Edge Function submit-lead
+ // (service_role côté serveur), comme le formulaire contact. L'ancien POST direct
+ // /rest/v1/leads en clé sb_publishable_* était rejeté par la RLS => 0 lead wizard.
+ // submit-lead valide, insère, ET déclenche notify-lead + lead-auto-reply.
  var sug = state.suggested_presta || {};
- var fullName = ((state.prenom || '') + ' ' + (state.nom || '')).trim();
  var payload = {
- nom: fullName || 'Visiteur (wizard home)', // not null
+ prenom: state.prenom || null,
+ nom: state.nom || null,
  email: state.email || null,
  telephone: state.tel || null,
+ ville: state.ville || null,
  code_postal: state.cp || null,
  adresse: state.adresse || null,
- metier: sug.metier || (state.metiers && state.metiers[0]) || null,
+ metier: (state.metiers && state.metiers[0]) || (sug.metier && sug.metier !== '—' ? sug.metier : null) || null,
  type_demande: (sug.metier === 'Travaux') ? 'devis' : 'urgence',
+ form_type: 'wizard_urgence',
  message: (sug.label ? '[' + sug.label + '] ' : '') + (state.desc || ''),
  source: source || 'home_wizard',
  source_page: location.href,
- status: 'nouveau',
- tags: [
- 'wizard-home',
- sug.id || 'presta-' + (sug.label || 'unknown'),
- state.habitat ? 'habitat:' + state.habitat : null
- ].filter(Boolean),
  utm: {
  metiers_selectionnes: state.metiers || [],
  flow: (PRESTAS[state.presta] && PRESTAS[state.presta].flow) || null,
  presta_key: state.presta || null,
  urgence: state.urg || null,
- habitat: state.habitat || null
+ habitat: state.habitat || null,
+ wizard_tags: ['wizard-home', sug.id || ('presta-' + (sug.label || 'unknown'))]
  }
  };
- await fetch(SUPABASE_URL + '/rest/v1/leads', {
+ var r = await fetch(SUPABASE_URL + '/functions/v1/submit-lead-v6', {
  method: 'POST',
- headers: {
- 'apikey': ANON_KEY,
- 'Authorization': 'Bearer ' + ANON_KEY,
- 'Content-Type': 'application/json',
- 'Prefer': 'return=minimal'
- },
- body: JSON.stringify(payload)
+ headers: { 'Content-Type': 'application/json' },
+ body: JSON.stringify(payload),
+ keepalive: true // HC-FIX 2026-08-04 : survit à la navigation (paiement/mailto) — sinon lead perdu
  });
- } catch (e) { /* best-effort */ }
+ if (!r.ok) {
+ var errBody = await r.json().catch(function(){ return {}; });
+ console.error('[wizard] submit-lead a rejeté le lead (' + r.status + ')', errBody);
+ return { ok: false, status: r.status, error: errBody };
+ }
+ var data = await r.json().catch(function(){ return {}; });
+ var result = { ok: true, lead_id: data.id, photos: null };
+ // Upload photos SÉCURISÉ (post-lead, Edge Function dédiée) si présentes. Le lead ne dépend jamais des photos.
+ var photos = (window.__resaPhotos || []);
+ if (data.id && data.upload_token && photos.length) {
+ result.photos = await uploadWizardPhotos(SUPABASE_URL, data.id, data.upload_token, photos);
+ }
+ return result;
+ } catch (e) { console.error('[wizard] submit-lead échec réseau:', e); return { ok: false, error: e }; }
 }
 
+// Upload sécurisé des photos vers l'Edge Function dédiée (JAMAIS d'upload anonyme direct dans Storage).
+async function uploadWizardPhotos(baseUrl, leadId, token, photos){
+ try {
+ var fd = new FormData();
+ fd.append('lead_id', leadId);
+ fd.append('upload_token', token);
+ photos.slice(0, 3).forEach(function(p, i){
+ var blob = dataUrlToBlob(p.dataUrl);
+ if (blob) fd.append('files', blob, (p.name || ('photo-' + (i + 1))));
+ });
+ var r = await fetch(baseUrl + '/functions/v1/upload-lead-photos', { method: 'POST', body: fd, keepalive: true });
+ if (!r.ok) return { ok: false, stored: 0 };
+ var d = await r.json().catch(function(){ return {}; });
+ return { ok: true, stored: d.stored || 0, partial: !!d.partial };
+ } catch (e) { console.error('[wizard] upload photos échec', e); return { ok: false, stored: 0 }; }
+}
+function dataUrlToBlob(dataUrl){
+ try {
+ var parts = dataUrl.split(','); var mime = (parts[0].match(/:(.*?);/) || [])[1] || 'image/jpeg';
+ var bin = atob(parts[1]); var arr = new Uint8Array(bin.length);
+ for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+ return new Blob([arr], { type: mime });
+ } catch (e) { return null; }
+}
+
+// HC-FIX 2026-08-04 : feedback wizard (message succès/erreur par champ) — reste sur la page en cas d'échec
+function resaMsg(ok, text){
+  var box = document.getElementById('resa-submit-msg');
+  if(!box){
+    box = document.createElement('div');
+    box.id = 'resa-submit-msg';
+    box.style.cssText = 'margin:12px 0;padding:12px 14px;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.45';
+    var anchor = document.getElementById('resa-pay') || document.getElementById('resa-send-complex');
+    if(anchor && anchor.parentNode) anchor.parentNode.insertBefore(box, anchor);
+  }
+  box.style.background = ok ? 'rgba(0,170,80,.10)' : 'rgba(220,38,38,.08)';
+  box.style.color = ok ? '#007033' : '#a51919';
+  box.style.borderLeft = '3px solid ' + (ok ? '#00aa50' : '#DC2626');
+  box.textContent = text;
+  box.scrollIntoView({ behavior:'smooth', block:'center' });
+}
+function resaErrorText(res){
+  var msg = 'Envoi impossible pour le moment. Vérifiez vos informations ou appelez-nous au 03 66 10 01 34.';
+  if(res && res.error && res.error.errors && typeof res.error.errors === 'object'){
+    var LB = {prenom:'Prénom',nom:'Nom',telephone:'Téléphone',tel:'Téléphone',email:'Email',adresse:'Adresse',code_postal:'Code postal',cp:'Code postal',ville:'Ville',message:'Message',contact:'Téléphone ou email',geo:'Ville ou code postal'};
+    var parts = Object.keys(res.error.errors).map(function(k){ return (LB[k]||k) + ' : ' + res.error.errors[k]; });
+    if(parts.length) msg = 'Merci de corriger : ' + parts.join(' · ');
+  }
+  return msg;
+}
 var sendComplex = document.getElementById('resa-send-complex');
 if (sendComplex) sendComplex.addEventListener('click', async function() {
-persistLeadToSupabase('home_wizard_callback');
-var subject = encodeURIComponent('[Demande] ' + (PRESTAS[state.presta] && PRESTAS[state.presta].label));
-var to = state.cp && state.cp.substring(0,2) === '59'
-? 'dunkerque@helpconfort.com' : 'saint-omer@helpconfort.com';
-window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + encodeURIComponent(buildMailBody());
+  if (sendComplex.dataset.sending === '1') return; // anti double-clic
+  sendComplex.dataset.sending = '1';
+  var _orig = sendComplex.innerHTML;
+  sendComplex.disabled = true; sendComplex.innerHTML = 'Envoi en cours…';
+  var res = await persistLeadToSupabase('home_wizard_callback'); // ATTEND la réponse serveur
+  if (!res || !res.ok) {
+    sendComplex.disabled = false; sendComplex.innerHTML = _orig; sendComplex.dataset.sending = '0';
+    resaMsg(false, resaErrorText(res)); // reste sur la page + erreur précise
+    return;
+  }
+  var photoNote = (res.photos && res.photos.ok === false) ? ' (vos photos n\'ont pas pu être jointes, notre équipe vous les redemandera si besoin)' : '';
+  resaMsg(true, 'Demande envoyée avec succès ! Nous vous rappelons rapidement.' + photoNote + ' Ouverture de votre email…');
+  var subject = encodeURIComponent('[Demande] ' + (PRESTAS[state.presta] && PRESTAS[state.presta].label));
+  var to = state.cp && state.cp.substring(0,2) === '59'
+  ? 'dunkerque@helpconfort.com' : 'saint-omer@helpconfort.com';
+  window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + encodeURIComponent(buildMailBody());
 });
 // ═══════════════════════════════════════════════════════════════
 // STRIPE PAYMENT LINKS — table de correspondance slug → URL Stripe
@@ -2283,8 +2454,19 @@ var STRIPE_LINKS = {
 
 var payBtn = document.getElementById('resa-pay');
 if (payBtn) payBtn.addEventListener('click', async function() {
-// 1. Enregistre le lead côté Supabase
-persistLeadToSupabase('home_wizard_reservation_paiement');
+if (payBtn.dataset.sending === '1') return; // anti double-clic
+payBtn.dataset.sending = '1';
+// 1. Enregistre le lead côté Supabase — ATTEND la réponse serveur AVANT toute navigation (paiement)
+var _payOrig0 = payBtn.innerHTML;
+payBtn.disabled = true; payBtn.innerHTML = 'Envoi en cours…';
+var leadRes = await persistLeadToSupabase('home_wizard_reservation_paiement');
+if (!leadRes || !leadRes.ok) {
+  payBtn.disabled = false; payBtn.innerHTML = _payOrig0; payBtn.dataset.sending = '0';
+  resaMsg(false, resaErrorText(leadRes)); // reste sur la page + erreur précise, PAS de navigation
+  return;
+}
+var payPhotoNote = (leadRes.photos && leadRes.photos.ok === false) ? ' (vos photos n\'ont pas pu être jointes)' : '';
+resaMsg(true, 'Demande enregistrée ✓' + payPhotoNote + ' Redirection vers le paiement sécurisé…');
 var sug = state.suggested_presta || {};
 var slug = sug.slug || (state.presta || '');
 
@@ -2348,29 +2530,41 @@ if (prixTtc > 0) {
     payBtn.style.opacity = '1';
     payBtn.style.cursor = 'pointer';
     alert('Impossible de créer le lien de paiement maintenant. Notre équipe vous l\'envoie par email. (' + (e.message || 'Erreur réseau') + ')');
-    // Fallback contact
+    // Fallback contact — PII via localStorage (hc_lead_v1, lu par hc-modal-prefill), JAMAIS dans l'URL (HC-FIX 2026-08-04)
+    try {
+      var _pre1 = { saved_at: new Date().toISOString() };
+      if (state.prenom) _pre1.prenom = state.prenom;
+      if (state.nom) _pre1.nom = state.nom;
+      if (state.tel) _pre1.telephone = state.tel;
+      if (state.email) _pre1.email = state.email;
+      if (state.cp) _pre1.code_postal = state.cp;
+      if (state.ville) _pre1.ville = state.ville;
+      if (state.adresse) _pre1.adresse = state.adresse;
+      _pre1._ts = Date.now(); sessionStorage.setItem('hc_wizard_prefill', JSON.stringify(_pre1)); // HC 2026-08-06 : sessionStorage temporaire, consommé+supprimé par contact.html
+    } catch(_){}
     var params = new URLSearchParams();
     params.set('presta', slug || 'autre');
     params.set('action', 'paiement');
-    if (state.prenom) params.set('prenom', state.prenom);
-    if (state.nom) params.set('nom', state.nom);
-    if (state.tel) params.set('tel', state.tel);
-    if (state.email) params.set('email', state.email);
-    if (state.cp) params.set('cp', state.cp);
     window.location.href = 'contact.html?' + params.toString() + '#form';
     return;
   }
 }
 
-// 4. Fallback ultime : si pas de prix détectable
+// 4. Fallback ultime : si pas de prix détectable — PII via localStorage, JAMAIS dans l'URL (HC-FIX 2026-08-04)
+try {
+  var _pre2 = { saved_at: new Date().toISOString() };
+  if (state.prenom) _pre2.prenom = state.prenom;
+  if (state.nom) _pre2.nom = state.nom;
+  if (state.tel) _pre2.telephone = state.tel;
+  if (state.email) _pre2.email = state.email;
+  if (state.cp) _pre2.code_postal = state.cp;
+  if (state.ville) _pre2.ville = state.ville;
+  if (state.adresse) _pre2.adresse = state.adresse;
+  _pre2._ts = Date.now(); sessionStorage.setItem('hc_wizard_prefill', JSON.stringify(_pre2)); // HC 2026-08-06 : sessionStorage temporaire
+} catch(_){}
 var params = new URLSearchParams();
 params.set('presta', slug || 'autre');
 params.set('action', 'paiement');
-if (state.prenom) params.set('prenom', state.prenom);
-if (state.nom) params.set('nom', state.nom);
-if (state.tel) params.set('tel', state.tel);
-if (state.email) params.set('email', state.email);
-if (state.cp) params.set('cp', state.cp);
 window.location.href = 'contact.html?' + params.toString() + '#form';
 });
 gotoStep(1);
@@ -2453,7 +2647,7 @@ try {
 
 <!-- HC-AVIS-LIVE — Témoignages clients live depuis Supabase (s'affiche uniquement si des avis sont en base) -->
 <div id="hc-avis-live"></div>
-<script src="assets/hc-avis-live.js" defer></script>
+<script src="assets/hc-avis-live.js?v=20260603" defer></script>
 
 <!-- HC-CONTENT — Contenu éditable depuis le back-office (Paramètres → Contenu du site) -->
 <script src="assets/hc-content.js" defer></script>
@@ -2497,7 +2691,7 @@ try {
  </li>
  <li>
  <a href="mailto:saint-omer@helpconfort.com" aria-label="Envoyer un email">
- <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2.9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
  <span><strong>saint-omer@helpconfort.com</strong></span>
  </a>
  </li>
@@ -2577,11 +2771,11 @@ try {
  </span>
  <div class="fv3-social-links">
  <a href="https://www.facebook.com/depanaudo/" data-content="footer.fb_url" data-content-attr="href" target="_blank" rel="noopener noreferrer" class="fv3-soc fv3-soc-fb" aria-label="Facebook HELP Confort Saint-Omer">
- <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1.45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+ <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
  Facebook
  </a>
  <a href="https://www.linkedin.com/in/florian-d-haillecourt-2a67bb207" data-content="footer.linkedin_url" data-content-attr="href" target="_blank" rel="noopener noreferrer" class="fv3-soc fv3-soc-li" aria-label="LinkedIn HELP Confort">
- <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 11.01-4.13 2.06 2.06 0 010 4.13zM3.56 20.45h3.55V9H3.56v11.45zM22.22 0H1.77C.79 0 0.77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24.77 23.2 0 22.22 0z"/></svg>
+ <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 11.01-4.13 2.06 2.06 0 010 4.13zM3.56 20.45h3.55V9H3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23 .79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
  LinkedIn
  </a>
  <a href="https://maps.app.goo.gl/B4BPVTiRp5rDp26fA" target="_blank" rel="noopener noreferrer" class="fv3-soc fv3-soc-go" aria-label="Avis Google">
@@ -2611,164 +2805,11 @@ try {
 
  <style>.footer-v3{position:relative;background:radial-gradient(ellipse 80% 60% at 80% 0%,rgba(31,196,240,.06),transparent 65%),radial-gradient(ellipse 60% 50% at 10% 100%,rgba(255,107,26,.035),transparent 65%),linear-gradient(180deg,#0A1428 0%,#060E1D 100%);color:rgba(255,255,255,.82);padding:56px 0 0;overflow:hidden}.footer-v3-wrap{width:100%;max-width:1280px;margin:0 auto;padding:0 clamp(24px,4vw,56px);box-sizing:border-box}.fv3-grid{display:grid;grid-template-columns:1fr;gap:40px;padding-bottom:40px}@media (min-width:720px){.fv3-grid{grid-template-columns:1fr 1fr;gap:36px 40px}}@media (min-width:1080px){.fv3-grid{grid-template-columns:1.5fr 1fr 1fr 1fr;gap:56px}}.fv3-logo{display:inline-block;margin-bottom:14px;padding:10px 14px;background:#fff;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.20),0 0 0 1px rgba(255,255,255,.06) inset;transition:transform.2s ease}.fv3-logo:hover{transform:translateY(-2px)}.fv3-logo img{display:block;width:180px;height:auto;max-height:56px;object-fit:contain}.fv3-zones{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;background:rgba(31,196,240,.08);border:1px solid rgba(31,196,240,.22);border-radius:999px;color:rgba(255,255,255,.78);font-size:.82rem;margin-bottom:16px}.fv3-zones svg{color:#1FC4F0;flex-shrink:0}.fv3-zones strong{color:#fff;font-weight:700}.fv3-tagline{font-size:.95rem;line-height:1.55;color:rgba(255,255,255,.74);margin:0 0 22px;max-width:320px}.fv3-tagline em{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:500;color:#1FC4F0}.fv3-contact{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}.fv3-contact li a{display:flex;align-items:flex-start;gap:11px;color:rgba(255,255,255,.82);text-decoration:none;transition:color.15s ease,transform.15s ease}.fv3-contact li a:hover{color:#1FC4F0;transform:translateX(2px)}.fv3-contact svg{color:#1FC4F0;flex-shrink:0;margin-top:3px;opacity:.9}.fv3-contact span{display:flex;flex-direction:column;line-height:1.35}.fv3-contact strong{font-weight:600;font-size:.88rem;color:#fff}.fv3-contact em{font-style:normal;font-size:.74rem;color:rgba(255,255,255,.5);margin-top:2px}.fv3-col h3,.fv3-col h4,.fv3-brand h3,.fv3-brand h4{color:#fff;font-size:.74rem;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;margin:0 0 18px}.fv3-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}.fv3-col li{color:rgba(255,255,255,.6);font-size:.87rem}.fv3-col li a{color:rgba(255,255,255,.74);text-decoration:none;transition:color.15s ease}.fv3-col li a:hover{color:#1FC4F0}.fv3-col li.fv3-more{color:rgba(255,255,255,.45);font-size:.78rem;line-height:1.5;padding-top:6px;border-top:1px dashed rgba(255,255,255,.10);margin-top:4px}.fv3-social{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px 18px;padding:22px 0;border-top:1px solid rgba(255,255,255,.09);border-bottom:1px solid rgba(255,255,255,.09)}.fv3-social-label{display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.62);font-size:.82rem;font-weight:600;letter-spacing:.01em}.fv3-social-label svg{color:#1FC4F0;opacity:.85}.fv3-social-links{display:flex;flex-wrap:wrap;gap:10px}.fv3-soc{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:10px;text-decoration:none;font-size:.86rem;font-weight:600;color:#fff;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);transition:transform.2s ease,background.2s ease,border-color.2s ease}.fv3-soc:hover{transform:translateY(-2px);background:rgba(255,255,255,.10)}.fv3-soc-fb{color:#5996F2}.fv3-soc-fb:hover{border-color:rgba(89,150,242,.45);background:rgba(24,119,242,.18)}.fv3-soc-li{color:#5B9BDD}.fv3-soc-li:hover{border-color:rgba(91,155,221,.45);background:rgba(10,102,194,.18)}.fv3-soc-go strong{color:#FFC107;font-weight:700}.fv3-soc-go.fv3-soc-meta{color:rgba(255,255,255,.55);font-weight:500;font-size:.78rem;margin-left:2px}.fv3-soc-go:hover{border-color:rgba(255,193,7,.40);background:rgba(255,193,7,.08)}.fv3-legal{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:22px 0 26px;font-size:.78rem}.fv3-legal-line{margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;color:rgba(255,255,255,.54);line-height:1.5}.fv3-legal-line strong{color:rgba(255,255,255,.78);font-weight:600}.fv3-sep{color:rgba(255,255,255,.22)}.fv3-legal-links{display:inline-flex;align-items:center;gap:18px}.fv3-legal-links a{color:rgba(255,255,255,.62);text-decoration:none;font-size:.78rem;font-weight:500;transition:color.15s ease;position:relative}.fv3-legal-links a:not(:last-child)::after{content:'·';color:rgba(255,255,255,.22);position:absolute;right:-12px;top:50%;transform:translateY(-50%);pointer-events:none}.fv3-legal-links a:hover{color:#1FC4F0}@media (max-width:720px){.footer-v3{padding:40px 0 0}.fv3-grid{padding-bottom:28px}.fv3-social{justify-content:flex-start;gap:14px}.fv3-legal{flex-direction:column;align-items:flex-start;gap:12px}.fv3-legal-line{font-size:.74rem}}</style>
  </footer>
-<div id="chatUrg" class="chat-urg" aria-live="polite">
- 
- <div class="chat-urg-head-bubble" aria-hidden="true">
- <img height="1500" width="503" src="images/mascotte.webp" alt="" loading="lazy" decoding="async">
- <span class="chat-urg-head-mini" aria-hidden="true">👋</span>
- </div>
+<!-- 2026-06-04 — Widget chatUrg supprimé (doublon de hc-widgets.js?v=20260604-clean-final) -->
 
- 
- <button type="button" id="chatUrgBtn" class="chat-urg-btn" aria-expanded="false" aria-controls="chatUrgPanel" aria-label="Ouvrir l'assistant urgence">
- <span class="chat-urg-pulse" aria-hidden="true"></span>
- <svg class="chat-urg-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
- <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
- </svg>
- <svg class="chat-urg-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none">
- <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
- </svg>
- <span class="chat-urg-label" id="chatUrgRotatingLabel">Urgence&nbsp;?</span>
- </button>
- 
- <div id="chatUrgBubble" class="chat-urg-bubble" aria-hidden="true">
- <span id="chatUrgBubbleText">Une fuite&nbsp;?</span>
- </div>
- <style>.chat-urg-bubble{position:absolute;right:0;bottom:calc(100% + 12px);background:#fff;color:#0A1428;padding:10px 16px;border-radius:14px 14px 4px 14px;box-shadow:0 14px 28px rgba(10,20,40,.18),0 0 0 1px rgba(229,237,243,.8);font-size:.86rem;font-weight:700;white-space:nowrap;animation:chatBubbleIn.5s cubic-bezier(.34,1.56,.64,1);pointer-events:none;z-index:10001}.chat-urg-bubble::after{content:'';position:absolute;right:18px;bottom:-6px;width:12px;height:12px;background:#fff;transform:rotate(45deg);box-shadow:2px 2px 4px rgba(10,20,40,.06)}@keyframes chatBubbleIn{0%{opacity:0;transform:translateY(8px) scale(.85)}100%{opacity:1;transform:translateY(0) scale(1)}}.chat-urg.is-open.chat-urg-bubble{display:none}</style>
- <script>(function(){
-var bubble = document.getElementById('chatUrgBubbleText');
-if (!bubble) return;
-var msgs = ['Une fuite ?', 'Plus de chauffage ?', 'Besoin d’un devis ?', 'On vous rappelle ?', 'Vitre cassée ?', 'Panne électrique ?'];
-var i = 0;
-setInterval(function(){
-i = (i + 1) % msgs.length;
-bubble.style.animation = 'none';
-void bubble.offsetWidth;
-bubble.textContent = msgs[i];
-bubble.parentElement.style.animation = 'chatBubbleIn.4s cubic-bezier(.34,1.56,.64,1)';
-}, 4500);
-})();
-</script>
 
- 
- <div id="chatUrgPanel" class="chat-urg-panel" role="dialog" aria-labelledby="chatUrgTitle">
- 
- <div class="chat-urg-head">
- <div style="display:flex;align-items:center;gap:11px">
- <div class="chat-urg-avatar">
- <img height="1500" width="503" src="images/mascotte.webp" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" loading="lazy" decoding="async">
- <span style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:#1FC4F0;color:#fff;font-weight:800;font-size:1rem">H!</span>
- </div>
- <div>
- <div id="chatUrgTitle" style="font-size:.95rem;font-weight:800;line-height:1.1;color:#fff">Assistant HELP Confort</div>
- <div style="display:flex;align-items:center;gap:6px;font-size:.74rem;color:rgba(255,255,255,.72);font-weight:500;margin-top:3px">
- <span style="width:6px;height:6px;border-radius:50%;background:#22D48E;box-shadow:0 0 0 3px rgba(34,212,142,.3)"></span>
- En ligne · Rappel sous&nbsp;<strong style="color:#fff">1h</strong>
- </div>
- </div>
- </div>
- <button type="button" class="chat-urg-min" aria-label="Réduire" onclick="document.getElementById('chatUrg').classList.remove('open')">
- <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
- </button>
- </div>
 
- 
- <div class="chat-urg-body" id="chatUrgBody">
- <div class="chat-msg chat-msg-bot">
- <p>👋 Bonjour&nbsp;! Comment pouvons-nous vous aider&nbsp;?</p>
- <p>Décrivez votre besoin en 1 clic — un conseiller vous rappelle rapidement.</p>
- </div>
 
- <div class="chat-quick" id="chatQuick">
- <button type="button" data-svc="Plomberie / Fuite d'eau" data-emoji="💧">💧 Fuite d'eau</button>
- <button type="button" data-svc="Chauffage / Plus de chauffage" data-emoji="🔥">🔥 Plus de chauffage</button>
- <button type="button" data-svc="Électricité / Coupure" data-emoji="⚡">⚡ Coupure électrique</button>
- <button type="button" data-svc="Serrurerie / Porte bloquée" data-emoji="🔒">🔒 Porte bloquée</button>
- <button type="button" data-svc="Sinistre / Dégât des eaux" data-emoji="🚨">🚨 Sinistre / dégât</button>
- <button type="button" data-svc="Autre urgence" data-emoji="❓">❓ Autre urgence</button>
- </div>
- </div>
-
- 
- <form id="chatUrgForm" action="javascript:void(0)" class="chat-urg-form" style="display:none" data-hc-lead="urgence">
- <!-- Anti-bot honeypot — laisser vide -->
- <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" value="">
- <div class="chat-msg chat-msg-bot" id="chatStep2Msg">
- <p>OK 👌 — laissez-moi votre <strong>numéro</strong> et un <strong>mot clé</strong>, je transfère immédiatement au technicien.</p>
- </div>
- <input type="hidden" name="service" id="chatSvcField" value="">
- <input type="tel" name="telephone" id="chatTel" required placeholder="📞 Votre téléphone" autocomplete="tel" pattern="[0-9 +.\-]{10,}" autocomplete="tel" aria-label="Numéro de téléphone">
- <input type="text" name="precision" id="chatPrec" placeholder="📝 1 mot (rue, étage, urgence…)" maxlength="80" aria-label="📝 1 mot (rue, étage, urgence…)">
- <button type="submit" class="chat-urg-send">
- <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
- Être rappelé(e)
- </button>
- <button type="button" class="chat-urg-back" onclick="chatBack()">← Choisir un autre besoin</button>
- </form>
-
- 
- <div class="chat-urg-foot">
- <span>🛡️ Données confidentielles · Rappel Lun-Ven 9h-17h · Sam 9h-16h</span>
- </div>
- </div>
-</div>
-
-<style>.chat-urg{position:fixed;bottom:24px;right:24px;z-index:9998;font-family:Inter,sans-serif}.chat-urg-head-bubble{position:absolute;bottom:calc(100% - 6px);right:14px;width:62px;height:62px;border-radius:50%;background:#fff;border:3px solid #FF6B1A;overflow:hidden;box-shadow:0 10px 24px rgba(10,20,40,.22),0 0 0 5px rgba(255,107,26,.10);z-index:2;pointer-events:none;animation:chatUrgHeadBounce 4s ease-in-out infinite}.chat-urg-head-bubble img{width:160%;height:auto;position:absolute;top:-2px;left:50%;transform:translateX(-50%);display:block}.chat-urg-head-mini{position:absolute;top:-6px;right:-6px;width:24px;height:24px;background:#fff;border-radius:50%;border:1.5px solid #FF6B1A;display:flex;align-items:center;justify-content:center;font-size:.85rem;box-shadow:0 4px 10px rgba(10,20,40,.15)}@keyframes chatUrgHeadBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}.chat-urg.open.chat-urg-head-bubble{display:none}.chat-urg-btn{position:relative;display:inline-flex;align-items:center;gap:9px;background:linear-gradient(135deg,#FF6B1A,#E55510);color:#fff;border:0;cursor:pointer;padding:14px 22px 14px 18px;border-radius:999px;font-weight:800;font-size:.92rem;letter-spacing:.01em;box-shadow:0 0 0 6px rgba(255,107,26,.15),0 14px 32px rgba(255,107,26,.42);transition:transform.25s ease,box-shadow.25s ease;font-family:inherit}.chat-urg-btn:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 0 8px rgba(255,107,26,.18),0 18px 36px rgba(255,107,26,.5)}.chat-urg-pulse{position:absolute;inset:-6px;border-radius:999px;border:2px solid rgba(255,107,26,.5);animation:chatUrgPulse 2s ease-out infinite;pointer-events:none}@keyframes chatUrgPulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.4);opacity:0}}.chat-urg-label{font-weight:800}.chat-urg-icon,.chat-urg-close{display:block}.chat-urg.open.chat-urg-icon{display:none}.chat-urg.open.chat-urg-close{display:block}.chat-urg.open.chat-urg-label{display:none}.chat-urg.open.chat-urg-pulse{display:none}.chat-urg.open.chat-urg-btn{padding:14px;border-radius:50%;width:54px;height:54px;justify-content:center}.chat-urg-panel{position:absolute;bottom:72px;right:0;width:360px;max-width:calc(100vw - 32px);background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 30px 80px rgba(10,20,40,.30),0 0 0 1px rgba(31,196,240,.12);display:none;flex-direction:column;max-height:560px;animation:chatUrgIn.3s cubic-bezier(.16,1,.3,1)}.chat-urg.open.chat-urg-panel{display:flex}@keyframes chatUrgIn{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}.chat-urg-head{background:linear-gradient(135deg,#0A1428 0%,#0E2240 100%);color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid rgba(31,196,240,.18)}.chat-urg-avatar{width:42px;height:42px;border-radius:50%;overflow:hidden;background:#1FC4F0;flex-shrink:0;display:flex;align-items:flex-end;justify-content:center;border:2px solid rgba(31,196,240,.4)}.chat-urg-avatar img{width:42px;height:54px;object-fit:cover;object-position:center top;display:block}.chat-urg-min{background:rgba(255,255,255,.10);border:0;width:30px;height:30px;border-radius:50%;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}.chat-urg-min:hover{background:rgba(255,255,255,.20)}.chat-urg-body{padding:16px;overflow-y:auto;background:#F7FBFD;flex:1}.chat-msg{margin-bottom:10px;animation:chatMsgIn.35s ease}@keyframes chatMsgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}.chat-msg p{margin:0 0 6px;font-size:.88rem;line-height:1.45;color:#0A1428}.chat-msg p:last-child{margin-bottom:0}.chat-msg-bot{background:#fff;border:1px solid #E5EDF3;border-radius:14px 14px 14px 4px;padding:11px 14px;max-width:85%}.chat-msg-user{background:#1FC4F0;color:#fff;border-radius:14px 14px 4px 14px;padding:10px 14px;margin-left:auto;max-width:85%}.chat-msg-user p{color:#fff;font-weight:600}.chat-quick{display:flex;flex-direction:column;gap:7px;margin-top:14px}.chat-quick button{background:#fff;border:1px solid #E5EDF3;color:#0A1428;font-weight:600;padding:10px 14px;border-radius:10px;cursor:pointer;font-size:.86rem;text-align:left;transition:all.2s ease;font-family:inherit}.chat-quick button:hover{border-color:#FF6B1A;background:#FFF5EE;transform:translateX(2px);color:#FF6B1A}.chat-urg-form{padding:14px 16px 16px;background:#F7FBFD;border-top:1px solid #E5EDF3;display:flex;flex-direction:column;gap:8px}.chat-urg-form.shown{display:flex !important}.chat-urg-form input[type=tel],.chat-urg-form input[type=text]{background:#fff;border:1.5px solid #E5EDF3;border-radius:10px;padding:11px 14px;font-size:.9rem;font-family:inherit;color:#0A1428;outline:none;transition:border-color.2s}.chat-urg-form input:focus{border-color:#FF6B1A}.chat-urg-send{background:#FF6B1A;color:#fff;border:0;padding:12px 16px;border-radius:10px;font-weight:700;font-size:.92rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;box-shadow:0 8px 22px rgba(255,107,26,.30);transition:all.2s ease}.chat-urg-send:hover{background:#FF7B30;transform:translateY(-1px);box-shadow:0 12px 26px rgba(255,107,26,.45)}.chat-urg-back{background:transparent;border:0;color:#64748b;font-size:.78rem;cursor:pointer;text-align:center;font-family:inherit;padding:6px;margin-top:2px}.chat-urg-back:hover{color:#0DA0CF}.chat-urg-foot{padding:8px 14px;background:#F0F5F9;border-top:1px solid #E5EDF3;font-size:.7rem;color:#64748b;text-align:center;font-weight:500}@media(max-width:520px){.chat-urg{bottom:16px;right:16px}.chat-urg-btn{padding:12px 16px 12px 14px;font-size:.84rem}.chat-urg.open.chat-urg-btn{width:50px;height:50px;padding:12px}.chat-urg-label{display:none}.chat-urg-panel{width:calc(100vw - 32px);bottom:64px}}</style>
-
-<script>(function(){
-var btn = document.getElementById('chatUrgBtn');
-var wrap = document.getElementById('chatUrg');
-var quick = document.getElementById('chatQuick');
-var form = document.getElementById('chatUrgForm');
-var body = document.getElementById('chatUrgBody');
-var svcField = document.getElementById('chatSvcField');
-var step2Msg = document.getElementById('chatStep2Msg');
-if(!btn || !wrap) return;
-btn.addEventListener('click', function(){
-var open = wrap.classList.toggle('open');
-btn.setAttribute('aria-expanded', open);
-});
-if(quick){
-quick.addEventListener('click', function(e){
-var b = e.target.closest('button[data-svc]');
-if(!b) return;
-var svc = b.getAttribute('data-svc');
-var emoji = b.getAttribute('data-emoji') || '';
-var userMsg = document.createElement('div');
-userMsg.className = 'chat-msg chat-msg-user';
-userMsg.innerHTML = '<p>' + emoji + ' ' + svc.split('/').pop().trim() + '</p>';
-body.appendChild(userMsg);
-svcField.value = svc;
-step2Msg.querySelector('p').innerHTML = 'OK pour <strong>' + svc + '</strong> 👌 Laissez-nous votre <strong>numéro</strong> et un <strong>mot-clé</strong>, nous vous rappelons rapidement.';
-quick.style.display = 'none';
-form.style.display = 'flex';
-body.scrollTop = body.scrollHeight;
-setTimeout(function(){ document.getElementById('chatTel').focus(); }, 250);
-});
-}
-if(form){
-form.addEventListener('submit', function(e){
-e.preventDefault();
-var tel = document.getElementById('chatTel').value.trim();
-var prec = document.getElementById('chatPrec').value.trim();
-var subject = encodeURIComponent('🚨 Demande urgente HELP Confort — ' + svcField.value);
-var bodyTxt = encodeURIComponent('Service : ' + svcField.value + '\nTéléphone : ' + tel + '\nPrécision : ' + prec);
-var confirm = document.createElement('div');
-confirm.className = 'chat-msg chat-msg-bot';
-confirm.innerHTML = '<p>✅ Merci ! Votre demande est bien envoyée.</p><p>Un conseiller vous rappelle au <strong>' + tel + '</strong> dans l\'heure (en horaires d\'ouverture).</p>';
-body.appendChild(confirm);
-form.style.display = 'none';
-body.scrollTop = body.scrollHeight;
-window.location.href = 'mailto:saint-omer@helpconfort.com?subject=' + subject + '&body=' + bodyTxt;
-});
-}
-window.chatBack = function(){
-form.style.display = 'none';
-quick.style.display = 'flex';
-body.querySelectorAll('.chat-msg-user').forEach(function(m){m.remove()});
-body.scrollTop = body.scrollHeight;
-};
-})();
-</script>
 
 <!-- HC-CLEANUP 2026-05-20 : #urgenceModal supprimé (orphelin, aucun trigger). Remplacé par #hcUrgModal V3 (choix appel/chat) ouvert via #hcUrgenceTrigger. -->
 
@@ -2863,8 +2904,8 @@ if(e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') close();
 </script>
 
 <!-- HC-WIDGETS-V1 -->
-<script defer src="assets/hc-widgets.js?v=1778686417"></script>
-<script src="assets/hc-leads-capture.js"></script>
+<script defer src="assets/hc-widgets.js?v=20260604-clean-final"></script>
+<script src="assets/hc-leads-capture.js?v=20260804"></script>
 <script src="assets/hc-address-autocomplete.js" defer></script>
 <script>
 if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){r.unregister();});if('caches' in window)caches.keys().then(function(ks){ks.forEach(function(k){caches.delete(k);});});});});}
@@ -2900,7 +2941,7 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
   <script defer src="assets/hc-live-stats.js"></script>
   <script defer src="assets/hc-form-validation.js"></script>
   <script defer src="assets/hc-sticky-cta.js"></script>
-  <script src="assets/hc-avis-live.js" defer></script>
+  <script src="assets/hc-avis-live.js?v=20260603" defer></script>
   <script defer src="assets/hc-calculator.js"></script>
   <script defer src="assets/hc-tracking.js"></script>
   <script defer src="assets/hc-chat-widget.js"></script>
@@ -2911,7 +2952,7 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
   <script defer src="assets/hc-process.js"></script>
   <script defer src="assets/hc-pricing.js"></script>
   <script defer src="assets/hc-presta-icons.js"></script>
-<script src="assets/hc-modal-prefill.js?v=20260601" defer></script>
-<script src="assets/hc-rate-limit.js?v=20260602" defer></script>
+<script src="assets/hc-modal-prefill.js?v=20260604-clean" defer></script>
+<script src="assets/hc-rate-limit.js?v=20260603" defer></script>
 </body>
 </html>

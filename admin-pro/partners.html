@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Partenaires · Back-Office HELP Confort</title>
@@ -148,7 +147,7 @@ function render() {
     const pal = paletteFor(p.name);
     const initial = (p.name||'?').trim().charAt(0).toUpperCase();
     const logoHtml = p.logo_url
-      ? `<img src="${escHtml(p.logo_url)}" alt="${escHtml(p.name)}" loading="lazy" style="max-width:100%;max-height:100%;object-fit:contain;padding:4px" onerror="this.style.display='none';var n=this.nextElementSibling;if(n)n.style.display='flex'"><span class="pt-logo-empty" style="display:none;background:linear-gradient(135deg,${pal[0]},${pal[1]})">${initial}</span>`
+      ? `<img src="${escHtml(p.logo_url)}" alt="${escHtml(p.name)}" loading="lazy" style="max-width:100%;max-height:100%;object-fit:contain;padding:4px" onerror="this.style.display='none';var n=this.nextElementSibling;if(n)n.style.display='flex'" onload="if(this.naturalWidth<10){this.style.display='none';var n=this.nextElementSibling;if(n)n.style.display='flex'}"><span class="pt-logo-empty" style="display:none;background:linear-gradient(135deg,${pal[0]},${pal[1]})">${initial}</span>`
       : `<span class="pt-logo-empty" style="background:linear-gradient(135deg,${pal[0]},${pal[1]})">${initial}</span>`;
     return `
       <div class="pt-card" data-id="${p.id}">

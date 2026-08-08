@@ -7,18 +7,7 @@
   'use strict';
 
   // Avis fallback (réels, format "Auteur + note + texte + date + ville")
-  var FALLBACK_AVIS = [
-    { author: 'Sophie M.', rating: 5, ville: 'Saint-Omer', date: '2026-04-12', text: "Intervention rapide pour une fuite sous l'évier. Le plombier est arrivé en 1h, devis annoncé respecté, travail propre. Je recommande !" },
-    { author: 'Jean-Marc D.', rating: 5, ville: 'Dunkerque', date: '2026-04-08', text: "Excellente prise en charge de A à Z. Chaudière changée en 1 journée, équipe sérieuse et à l'écoute. Tarif très correct comparé aux concurrents." },
-    { author: 'Caroline R.', rating: 5, ville: 'Calais', date: '2026-03-29', text: "Rénovation complète de notre salle de bain. Pas de mauvaise surprise sur le devis, planning tenu, finitions impeccables. Bravo." },
-    { author: 'Patrick L.', rating: 5, ville: 'Longuenesse', date: '2026-03-22', text: "Dépannage urgent un dimanche soir, équipe joignable et réactive. Pro avant tout, je rappellerai sans hésiter." },
-    { author: 'Marie H.', rating: 5, ville: 'Boulogne-sur-Mer', date: '2026-03-15', text: "Installation pompe à chaleur impeccable, conseils sur les aides MaPrimeRenov très clairs. Bilan financier maîtrisé." },
-    { author: 'Thomas B.', rating: 5, ville: 'Arques', date: '2026-03-08', text: "Remplacement de la serrure d'entrée après tentative d'effraction. Sur place en 45 minutes, travail sécurisé et propre. Merci." },
-    { author: 'Isabelle V.', rating: 5, ville: 'Saint-Pol-sur-Mer', date: '2026-02-26', text: "Pose de double vitrage sur 4 fenêtres. Tarif compétitif, équipe ponctuelle. Confort thermique nettement amélioré." },
-    { author: 'Olivier P.', rating: 5, ville: 'Saint-Omer', date: '2026-02-18', text: "Contrat d'entretien annuel chaudière depuis 3 ans, jamais déçu. Toujours dans les délais, toujours pédagogue." },
-    { author: 'Sylvie G.', rating: 5, ville: 'Gravelines', date: '2026-02-10', text: "Adaptation PMR de la salle de bain de ma mère (douche italienne + barres). Travail soigné, équipe respectueuse." },
-    { author: 'Frédéric N.', rating: 5, ville: 'Saint-Martin-lez-Tatinghem', date: '2026-01-28', text: "Pose volets roulants électriques sur 5 ouvertures. Devis clair, RDV respecté, finition au top." }
-  ];
+  var FALLBACK_AVIS = []; // Vidé 2026-07-25 : risque juridique faux avis. Vrais avis via Supabase reviews.
 
   var CSS = '\
 .hc-avis-section{background:#fff;padding:60px 20px 70px;position:relative;overflow:hidden}\

@@ -1,5 +1,5 @@
 /* HELP Confort — Préremplissage modaux lead/réservation
- * 2026-06-01 : conserve les coordonnées en localStorage pour pré-remplir tous les modaux
+ * 2026-06-01 : conserve les coordonnées en sessionStorage pour pré-remplir tous les modaux
  *              (modal Réserver pages métier, modal leadgate prestations, etc.)
  * Auto-binding : tout formulaire avec [data-hc-lead] est préremplit à l'affichage.
  */
@@ -18,13 +18,30 @@
     ville: ['ville', 'city']
   };
 
+  // 2026-06-04 — Validation au read : si données stockées pourries, purger
+  function isValidStore(d) {
+    if (!d || typeof d !== 'object') return false;
+    var tel = (d.telephone || '').replace(/[^0-9]/g, '');
+    return (d.prenom || '').length >= 2 && !/^[0-9]+$/.test(d.prenom)
+        && (d.nom || '').length >= 2 && !/^[0-9]+$/.test(d.nom)
+        && tel.length >= 10 && tel.length <= 13
+        && /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(d.email || '');
+  }
   function readStore() {
-    try { return JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch (_) { return {}; }
+    try {
+      var d = JSON.parse(sessionStorage.getItem(LS_KEY) || '{}');
+      // HC 2026-08-06 : expiration courte des PII (24 h). On ne conserve pas durablement
+      // nom/téléphone/email/adresse — au-delà, on purge et le visiteur re-saisit.
+      var MAX_AGE = 24 * 3600 * 1000;
+      if (d.saved_at && (Date.now() - new Date(d.saved_at).getTime()) > MAX_AGE) { sessionStorage.removeItem(LS_KEY); return {}; }
+      if (!isValidStore(d)) { sessionStorage.removeItem(LS_KEY); return {}; }
+      return d;
+    } catch (_) { return {}; }
   }
   function writeStore(d) {
     try {
       d.saved_at = new Date().toISOString();
-      localStorage.setItem(LS_KEY, JSON.stringify(d));
+      sessionStorage.setItem(LS_KEY, JSON.stringify(d));
     } catch (_) {}
   }
 

@@ -7,17 +7,28 @@
 <meta name="description" content="Découvrez nos marques partenaires installées par HELP Confort sur Saint-Omer et Dunkerque.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" id="frnCanonical" href="https://www.depan59-62.fr/fournisseur.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fournisseur partenaire — HELP Confort">
+<meta property="og:description" content="Découvrez nos marques partenaires installées par HELP Confort sur Saint-Omer et Dunkerque.">
+<meta property="og:image" content="https://www.depan59-62.fr/og/index.png">
+<meta property="og:url" content="https://www.depan59-62.fr/fournisseur.html">
 <link rel="icon" type="image/svg+xml" href="logo.svg">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-  body{font-family:'Inter',sans-serif;color:#0A1428;background:#F7FBFD;margin:0}
-  .frn-hero{background:linear-gradient(135deg,#0A1428,#172240);color:#fff;padding:60px 24px;text-align:center}
-  .frn-hero-inner{max-width:920px;margin:0 auto}
-  .frn-back{display:inline-flex;align-items:center;gap:6px;color:#1FC4F0;font-weight:600;text-decoration:none;font-size:.9rem;margin-bottom:18px;opacity:.85}
+  body{font-family:'Inter',sans-serif;color:#0A1428;background:#fff;margin:0}
+
+  /* ──────── HERO ──────── */
+  .frn-hero{position:relative;background:linear-gradient(135deg,#0A1428 0%,#172240 60%,#0A1428 100%);color:#fff;padding:90px 24px 100px;text-align:center;overflow:hidden}
+  .frn-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 30% 0%,rgba(31,196,240,.10),transparent 70%),radial-gradient(ellipse 50% 50% at 80% 100%,rgba(255,107,26,.08),transparent 70%);pointer-events:none}
+  .frn-hero-inner{position:relative;max-width:1080px;margin:0 auto}
+  .frn-back{display:inline-flex;align-items:center;gap:6px;color:#1FC4F0;font-weight:600;text-decoration:none;font-size:.86rem;margin-bottom:24px;opacity:.85;transition:opacity .2s ease}
   .frn-back:hover{opacity:1}
-  .frn-eyebrow{display:inline-block;font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#1FC4F0;margin-bottom:12px}
-  .frn-logo{display:inline-flex;align-items:center;justify-content:center;width:140px;height:110px;background:#fff;border-radius:18px;padding:18px;margin:0 auto 18px;box-shadow:0 18px 40px rgba(0,0,0,.30)}
+  .frn-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#1FC4F0;margin-bottom:14px;padding:6px 14px;border:1px solid rgba(31,196,240,.30);border-radius:999px}
+  .frn-eyebrow::before{content:'✓';color:#22C55E;font-weight:800}
+  .frn-hero-card{display:flex;align-items:center;gap:34px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);backdrop-filter:blur(14px);border-radius:28px;padding:36px;max-width:820px;margin:0 auto;text-align:left;flex-wrap:wrap;justify-content:center}
+  @media(max-width:680px){.frn-hero-card{padding:24px;text-align:center}}
+  .frn-logo{display:flex;align-items:center;justify-content:center;width:160px;height:130px;background:#fff;border-radius:22px;padding:20px;box-shadow:0 22px 50px rgba(0,0,0,.40);flex-shrink:0}
   .frn-logo img{max-width:100%;max-height:100%;object-fit:contain}
   .frn-logo-fallback{display:flex;align-items:center;justify-content:center;width:90px;height:90px;border-radius:14px;color:#fff;font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700}
   .frn-name{font-size:clamp(2rem,4.4vw,3rem);font-weight:900;letter-spacing:-.025em;margin:18px 0 10px;color:#fff !important;line-height:1.05}
@@ -29,38 +40,78 @@
   .frn-tag{padding:5px 12px;background:rgba(31,196,240,.18);color:#1FC4F0;border:1px solid rgba(31,196,240,.30);border-radius:999px;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
   .frn-badge-pref{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:linear-gradient(135deg,#FFB400,#FF6B1A);color:#fff;border-radius:999px;font-size:.78rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 4px 12px rgba(255,107,26,.30);margin-bottom:10px}
 
-  .frn-content{max-width:920px;margin:0 auto;padding:48px 24px 60px}
-  .frn-section{background:#fff;border:1px solid #E5EDF3;border-radius:18px;padding:32px;margin-bottom:24px;box-shadow:0 6px 18px rgba(10,20,40,.04)}
-  .frn-section h2{font-family:'Inter',sans-serif;font-size:1.3rem;font-weight:800;color:#0A1428;margin:0 0 16px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
-  .frn-section h2::before{content:"";display:inline-block;width:4px;height:22px;background:linear-gradient(180deg,#0DA0CF,#0A4F6E);border-radius:2px}
-  .frn-desc{font-size:1rem;line-height:1.7;color:#475569;margin:0;white-space:pre-line}
-  .frn-empty{text-align:center;color:#94a3b8;font-style:italic;padding:18px}
+  /* ──────── STATS BAR ──────── */
+  .frn-stats{display:flex;justify-content:center;gap:36px;flex-wrap:wrap;background:#fff;border-bottom:1px solid #E5EDF3;padding:24px 24px;position:relative;z-index:2;margin-top:-28px;max-width:980px;margin-left:auto;margin-right:auto;border-radius:18px;box-shadow:0 18px 50px rgba(10,20,40,.10)}
+  .frn-stat{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;min-width:120px}
+  .frn-stat strong{font-size:1.6rem;font-weight:900;color:#0A1428;letter-spacing:-.02em;line-height:1}
+  .frn-stat em{font-style:normal;font-size:.72rem;color:#64748b;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
 
+  /* ──────── CONTENT ──────── */
+  .frn-content{max-width:980px;margin:0 auto;padding:64px 24px 80px}
+  .frn-section{background:#fff;border:1px solid #E5EDF3;border-radius:20px;padding:38px;margin-bottom:24px;box-shadow:0 6px 22px rgba(10,20,40,.04)}
+  .frn-section.dark{background:linear-gradient(135deg,#0A1428,#172240);border:0;color:#fff;box-shadow:0 18px 50px rgba(10,20,40,.20)}
+  .frn-section.gradient{background:linear-gradient(135deg,#F0F9FF,#fff);border-color:rgba(13,160,207,.30)}
+  .frn-section h2{font-family:'Inter',sans-serif;font-size:1.5rem;font-weight:800;color:#0A1428;margin:0 0 18px;letter-spacing:-.015em;display:flex;align-items:center;gap:12px;line-height:1.2}
+  .frn-section.dark h2{color:#fff}
+  .frn-section h2 em{font-family:'Playfair Display',Georgia,serif;font-style:italic;color:#0DA0CF;font-weight:600}
+  .frn-section h2::before{content:"";display:inline-block;width:4px;height:26px;background:linear-gradient(180deg,#0DA0CF,#0A4F6E);border-radius:2px;flex-shrink:0}
+  .frn-section.dark h2::before{background:linear-gradient(180deg,#1FC4F0,#0DA0CF)}
+  .frn-desc{font-size:1.02rem;line-height:1.75;color:#475569;margin:0;white-space:pre-line}
+  .frn-desc strong{color:#0A1428;font-weight:700}
+
+  /* ──────── ACTIONS (liens & ressources) ──────── */
   .frn-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-  .frn-btn{display:flex;align-items:center;gap:14px;padding:18px 22px;background:#fff;border:1.5px solid #E5EDF3;border-radius:14px;text-decoration:none;color:#0A1428;font-weight:700;transition:.2s}
+  .frn-btn{display:flex;align-items:center;gap:14px;padding:18px 22px;background:#fff;border:1.5px solid #E5EDF3;border-radius:14px;text-decoration:none;color:#0A1428;font-weight:700;transition:all .2s ease}
   .frn-btn:hover{transform:translateY(-3px);box-shadow:0 14px 28px -8px rgba(13,160,207,.20);border-color:rgba(13,160,207,.45)}
   .frn-btn-ic{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#0DA0CF,#0A4F6E);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.4rem}
-  .frn-btn.cta{background:linear-gradient(135deg,#FF6B1A,#E55510);border:0;color:#fff}
+  .frn-btn.cta{background:linear-gradient(135deg,#FF6B1A,#E55510);border:0;color:#fff;box-shadow:0 10px 24px rgba(255,107,26,.30)}
+  .frn-btn.cta:hover{box-shadow:0 14px 32px rgba(255,107,26,.45)}
   .frn-btn.cta .frn-btn-ic{background:rgba(255,255,255,.20)}
   .frn-btn-text{display:flex;flex-direction:column;min-width:0}
   .frn-btn-text strong{font-size:.96rem;line-height:1.2}
   .frn-btn-text small{font-size:.78rem;opacity:.7;font-weight:500;margin-top:2px}
 
+  /* ──────── BENEFICES GRID ──────── */
+  .frn-bens{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:6px}
+  .frn-ben{display:flex;align-items:flex-start;gap:13px;padding:18px 20px;background:#fff;border:1px solid rgba(13,160,207,.20);border-radius:14px;transition:transform .2s ease,border-color .2s ease}
+  .frn-ben:hover{transform:translateY(-2px);border-color:rgba(13,160,207,.50)}
+  .frn-ben-ic{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#1FC4F0,#0DA0CF);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;font-weight:800}
+  .frn-ben strong{display:block;color:#0A1428;font-size:.95rem;font-weight:700;margin-bottom:3px}
+  .frn-ben span{display:block;font-size:.82rem;color:#64748b;line-height:1.45}
+
+  /* ──────── CTA FINAL ──────── */
+  .frn-cta-final{text-align:center;padding:48px 24px}
+  .frn-cta-final h2{justify-content:center;font-size:clamp(1.4rem,2.4vw,1.85rem)}
+  .frn-cta-final p{color:rgba(255,255,255,.78);margin:0 0 24px;font-size:1rem;line-height:1.6}
+  .frn-cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .frn-cta-row .frn-btn{flex:0 1 auto}
+
+  /* ──────── FAQ ──────── */
+  .frn-faq details{background:#fff;border:1px solid #E5EDF3;border-radius:12px;margin-bottom:8px;padding:0;overflow:hidden}
+  .frn-faq summary{padding:16px 20px;font-weight:700;cursor:pointer;color:#0A1428;font-size:.96rem;list-style:none;display:flex;justify-content:space-between;align-items:center;transition:background .15s ease}
+  .frn-faq summary::-webkit-details-marker{display:none}
+  .frn-faq summary::after{content:'+';font-size:1.4rem;color:#0DA0CF;font-weight:300;transition:transform .2s ease}
+  .frn-faq details[open] summary::after{transform:rotate(45deg)}
+  .frn-faq summary:hover{background:#F7FBFD}
+  .frn-faq .ans{padding:0 20px 18px;color:#475569;font-size:.92rem;line-height:1.6}
+
   .frn-loading,.frn-error{text-align:center;padding:80px 24px;color:#64748b}
-  .frn-error h2{color:#9F1239;margin-bottom:8px}
+  .frn-error h2{color:#9F1239;margin-bottom:8px;justify-content:center}
+  .frn-error h2::before{display:none}
 </style>
 </head>
 <body>
 
-<!-- Header HC minimal -->
-<header style="background:#fff;border-bottom:1px solid #E5EDF3;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px">
+<!-- Header HC minimal mais pro -->
+<header style="background:#fff;border-bottom:1px solid #E5EDF3;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;position:sticky;top:0;z-index:50;backdrop-filter:blur(10px)">
   <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none"><img src="logo-officiel.jpg" alt="HELP Confort" width="120" height="36" style="object-fit:contain"></a>
-  <nav style="display:flex;gap:18px;align-items:center;font-size:.92rem">
+  <nav style="display:flex;gap:18px;align-items:center;font-size:.92rem;flex-wrap:wrap;justify-content:center">
     <a href="index.html" style="color:#0A1428;text-decoration:none;font-weight:600">Accueil</a>
     <a href="nos-prestations.html" style="color:#0A1428;text-decoration:none;font-weight:600">Nos prestations</a>
     <a href="zones-intervention.html" style="color:#0A1428;text-decoration:none;font-weight:600">Zones d'intervention</a>
+    <a href="realisations.html" style="color:#0A1428;text-decoration:none;font-weight:600">Réalisations</a>
     <a href="contact.html" style="color:#0A1428;text-decoration:none;font-weight:600">Contact</a>
-    <a href="tel:+33366100134" style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:#0A1428;color:#fff;text-decoration:none;border-radius:10px;font-weight:700">📞 03 66 10 01 34</a>
+    <a href="tel:+33366100134" style="display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:#0A1428;color:#fff;text-decoration:none;border-radius:10px;font-weight:700">📞 03 66 10 01 34</a>
   </nav>
 </header>
 
@@ -68,8 +119,8 @@
   <div class="frn-loading">⏳ Chargement…</div>
 </main>
 
-<footer style="background:#0A1428;color:rgba(255,255,255,.7);padding:24px;text-align:center;font-size:.84rem">
-  © HELP Confort · <a href="index.html" style="color:#1FC4F0">Retour à l'accueil</a> · <a href="tel:+33366100134" style="color:#1FC4F0">03 66 10 01 34</a>
+<footer style="background:#0A1428;color:rgba(255,255,255,.7);padding:32px 24px;text-align:center;font-size:.86rem;line-height:1.7">
+  © HELP Confort · <a href="index.html" style="color:#1FC4F0;text-decoration:none">Retour à l'accueil</a> · <a href="tel:+33366100134" style="color:#1FC4F0;text-decoration:none">03 66 10 01 34</a> · <a href="contact.html" style="color:#1FC4F0;text-decoration:none">Demander un devis</a>
 </footer>
 
 <script>
@@ -114,7 +165,7 @@ function render(s) {
   if (meta && s.tagline) meta.content = s.name + ' — ' + s.tagline + ' · Installé par HELP Confort sur Saint-Omer & Dunkerque.';
   const canonical = document.getElementById('frnCanonical');
   if (canonical) canonical.href = 'https://www.depan59-62.fr/fournisseur.html?slug=' + encodeURIComponent(s.slug);
-  // Schema.org JSON-LD pour SEO Brand
+  // Schema.org JSON-LD Brand
   try {
     var ld = {
       '@context': 'https://schema.org',
@@ -139,28 +190,59 @@ function render(s) {
   const metiers = (s.metiers || []).map(m => '<span class="frn-tag">' + esc(m) + '</span>').join('');
   const FIRST_METIER = (s.metiers && s.metiers[0]) || 'plomberie';
   const METIER_PAGE = { plomberie:'plombier-saint-omer', chauffage:'chauffagiste-saint-omer', electricite:'electricien-saint-omer', serrurerie:'serrurier-saint-omer', vitrerie:'vitrier-saint-omer', menuiserie:'menuisier-saint-omer', volets:'volets-saint-omer', renovation:'travaux-saint-omer' }[FIRST_METIER] || 'plombier-saint-omer';
+  const METIER_LABEL = { plomberie:'plomberie', chauffage:'chauffage', electricite:'électricité', serrurerie:'serrurerie', vitrerie:'vitrerie', menuiserie:'menuiserie', volets:'volets', renovation:'rénovation' }[FIRST_METIER] || 'plomberie';
 
   document.getElementById('frnRoot').innerHTML = `
+    <!-- HERO -->
     <section class="frn-hero">
       <div class="frn-hero-inner">
-        <a href="${METIER_PAGE}.html#fournisseurs" class="frn-back">← Retour aux marques</a>
-        ${s.is_preferred ? '<div><span class="frn-badge-pref">★ Marque préférée HC</span></div>' : ''}
+        <a href="${METIER_PAGE}.html#fournisseurs" class="frn-back">← Retour aux marques ${esc(METIER_LABEL)}</a>
         <span class="frn-eyebrow">Partenaire HELP Confort</span>
-        <div class="frn-logo">${logoHtml}</div>
-        <h1 class="frn-name">${esc(s.name)}</h1>
-        ${s.tagline ? `<p class="frn-tagline">${esc(s.tagline)}</p>` : (s.category ? `<p class="frn-tagline">${esc(s.category)}</p>` : '')}
-        <div class="frn-meta">${metiers}</div>
+        <div class="frn-hero-card">
+          <div class="frn-logo">${logoHtml}</div>
+          <div class="frn-hero-text">
+            ${s.is_preferred ? '<span class="frn-badge-pref">★ Marque préférée HC</span>' : ''}
+            <h1 class="frn-name">${esc(s.name)}</h1>
+            ${s.tagline ? `<p class="frn-tagline">${esc(s.tagline)}</p>` : ''}
+            <div class="frn-meta">${metiers}</div>
+          </div>
+        </div>
       </div>
     </section>
+
+    <!-- STATS BAR -->
+    <div class="frn-stats">
+      <div class="frn-stat"><strong>4,7/5</strong><em>343 avis Google</em></div>
+      <div class="frn-stat"><strong>2 ans</strong><em>Garantie pièces & MO</em></div>
+      <div class="frn-stat"><strong>24h</strong><em>Devis ouvré</em></div>
+      <div class="frn-stat"><strong>7</strong><em>Techniciens salariés</em></div>
+    </div>
+
     <div class="frn-content">
+
       ${s.description ? `
+      <!-- À PROPOS (riche) -->
       <section class="frn-section">
-        <h2>📋 À propos de ${esc(s.name)}</h2>
+        <h2>📋 À propos de <em>${esc(s.name)}</em></h2>
         <p class="frn-desc">${esc(s.description)}</p>
       </section>` : ''}
 
+      <!-- POURQUOI HC + GRID BENEFICES -->
+      <section class="frn-section gradient">
+        <h2>✓ Pourquoi installer du ${esc(s.name)} <em>avec HELP Confort</em> ?</h2>
+        <div class="frn-bens">
+          <div class="frn-ben"><span class="frn-ben-ic">✓</span><div><strong>Pièces d'origine</strong><span>Aucune contrefaçon — circuit officiel ${esc(s.name)}</span></div></div>
+          <div class="frn-ben"><span class="frn-ben-ic">🛡</span><div><strong>Garantie constructeur</strong><span>Honorée en cas de problème, pas que la nôtre</span></div></div>
+          <div class="frn-ben"><span class="frn-ben-ic">👷</span><div><strong>Techniciens salariés</strong><span>Formés en continu sur les gammes ${esc(s.name)}</span></div></div>
+          <div class="frn-ben"><span class="frn-ben-ic">€</span><div><strong>Devis transparent</strong><span>Prix annoncé avant intervention, tenu</span></div></div>
+          <div class="frn-ben"><span class="frn-ben-ic">⚡</span><div><strong>Intervention rapide</strong><span>Devis sous 24h, pose sous 5 jours ouvrés</span></div></div>
+          <div class="frn-ben"><span class="frn-ben-ic">📍</span><div><strong>Réseau local</strong><span>2 agences : Saint-Omer & Dunkerque</span></div></div>
+        </div>
+      </section>
+
+      <!-- LIENS & RESSOURCES -->
       <section class="frn-section">
-        <h2>🔗 Liens & ressources</h2>
+        <h2>🔗 Liens &amp; ressources <em>${esc(s.name)}</em></h2>
         <div class="frn-actions">
           ${s.website ? `
           <a class="frn-btn" href="${esc(s.website)}" target="_blank" rel="noopener noreferrer">
@@ -168,9 +250,9 @@ function render(s) {
             <span class="frn-btn-text"><strong>Site officiel</strong><small>${esc(s.website.replace(/^https?:\/\//,'').slice(0,40))}</small></span>
           </a>` : ''}
           ${s.catalogue_url ? `
-          <a class="frn-btn" href="${esc(s.catalogue_url)}" target="_blank" rel="noopener noreferrer">
-            <span class="frn-btn-ic">📚</span>
-            <span class="frn-btn-text"><strong>Catalogue ${s.catalogue_type === 'pdf' ? 'PDF' : 'en ligne'}</strong><small>Voir la gamme complète</small></span>
+          <a class="frn-btn" href="${esc(s.catalogue_url)}" target="_blank" rel="noopener noreferrer"${s.catalogue_type === 'pdf' ? ' download' : ''}>
+            <span class="frn-btn-ic">${s.catalogue_type === 'pdf' ? '📄' : '📚'}</span>
+            <span class="frn-btn-text"><strong>${s.catalogue_type === 'pdf' ? 'Catalogue PDF' : 'Catalogue en ligne'}</strong><small>${s.catalogue_type === 'pdf' ? 'Télécharger le PDF' : 'Voir la gamme complète'}</small></span>
           </a>` : ''}
           <a class="frn-btn cta" href="contact.html?objet=${encodeURIComponent('Devis ' + s.name)}#form">
             <span class="frn-btn-ic">💬</span>
@@ -183,15 +265,33 @@ function render(s) {
         </div>
       </section>
 
-      <section class="frn-section" style="background:linear-gradient(135deg,#F0F9FF,#fff);border-color:rgba(13,160,207,.30)">
-        <h2>✓ Pourquoi installer du ${esc(s.name)} avec HELP Confort ?</h2>
-        <ul style="margin:0;padding-left:22px;line-height:1.8;color:#475569">
-          <li><strong>Pièces d'origine</strong> garanties</li>
-          <li><strong>Garanties constructeur</strong> honorées en cas de problème</li>
-          <li><strong>Techniciens salariés</strong> formés sur les gammes ${esc(s.name)}</li>
-          <li><strong>Devis transparent</strong> annoncé avant intervention</li>
-        </ul>
+      <!-- FAQ -->
+      <section class="frn-section">
+        <h2>❓ Questions fréquentes sur <em>${esc(s.name)}</em></h2>
+        <div class="frn-faq">
+          <details><summary>HELP Confort installe-t-il toutes les gammes ${esc(s.name)} ?</summary><div class="ans">Nous installons l'ensemble du catalogue résidentiel ${esc(s.name)} pertinent pour votre projet (${esc(METIER_LABEL)}). Si une référence est en rupture chez le distributeur, nous proposons une alternative équivalente ou attendons le réapprovisionnement.</div></details>
+          <details><summary>La garantie constructeur ${esc(s.name)} est-elle bien transmise ?</summary><div class="ans">Oui. La facture HC vaut preuve d'achat et de pose conforme — vous bénéficiez de la garantie constructeur d'origine ${esc(s.name)} en plus de notre garantie pièces et main d'œuvre.</div></details>
+          <details><summary>Les pièces détachées sont-elles disponibles ?</summary><div class="ans">${esc(s.name)} maintient un stock de pièces détachées pendant plusieurs années après l'installation. En cas de besoin, nous commandons directement via notre compte revendeur.</div></details>
+          <details><summary>Combien coûte une installation ${esc(s.name)} ?</summary><div class="ans">Cela dépend du modèle et de la complexité de pose. Demandez un <a href="contact.html?objet=${encodeURIComponent('Devis ' + s.name)}#form" style="color:#0DA0CF;font-weight:700">devis gratuit en ligne</a> ou appelez le <a href="tel:+33366100134" style="color:#0DA0CF;font-weight:700">03 66 10 01 34</a> — réponse sous 24h ouvré.</div></details>
+        </div>
       </section>
+
+      <!-- CTA FINAL -->
+      <section class="frn-section dark frn-cta-final">
+        <h2 style="color:#fff">Prêt à installer du <em style="color:#1FC4F0">${esc(s.name)}</em> chez vous ?</h2>
+        <p>Demandez un devis gratuit ou appelez-nous directement — nous vous rappelons sous 24h ouvré avec un devis personnalisé.</p>
+        <div class="frn-cta-row">
+          <a class="frn-btn cta" href="contact.html?objet=${encodeURIComponent('Devis ' + s.name)}#form" style="background:linear-gradient(135deg,#FF6B1A,#E55510);color:#fff">
+            <span class="frn-btn-ic">💬</span>
+            <span class="frn-btn-text"><strong>Devis gratuit en ligne</strong><small>Réponse sous 24h ouvré</small></span>
+          </a>
+          <a class="frn-btn" href="tel:+33366100134" style="background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.20);color:#fff">
+            <span class="frn-btn-ic" style="background:rgba(31,196,240,.30)">📞</span>
+            <span class="frn-btn-text"><strong>03 66 10 01 34</strong><small style="color:rgba(255,255,255,.65)">Lun-Sam · 9h-18h</small></span>
+          </a>
+        </div>
+      </section>
+
     </div>
   `;
 }
