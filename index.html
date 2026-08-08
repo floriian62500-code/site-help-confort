@@ -32,7 +32,7 @@
 <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 <link rel="dns-prefetch" href="https://www.facebook.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20260802">
+<link rel="stylesheet" href="styles.css?v=20260808">
 <link rel="stylesheet" href="assets/index-hero.css?v=1778688817">
 <style id="hc-critical-header">
 /* CSS critique — header + megamenu (inline pour garantir le rendu même si cache foireux) */.hc-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.92); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(229,237,243,.5); }.hc-header-row { display: flex; align-items: center; justify-content: space-between; padding: 12px clamp(20px, 4vw, 64px); max-width: 1480px; margin: 0 auto; gap: 24px; }.hc-logo { display: flex; align-items: center; flex-shrink: 0; }.hc-logo img { height: 56px; width: auto; max-width: none; display: block; }.hc-nav { display: none; }
@@ -1357,6 +1357,15 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
  }
  @media(min-width:1280px){
    .hc-resa-sides-row .hc-mini-track > *{flex:0 0 calc(50% - 9px) !important}
+ }
+ /* Desktop large : la section chantiers/actualités SORT du wizard (plafonné 920px)
+    pour occuper une largeur généreuse et centrée → cartes plus grandes, fin du vide latéral.
+    Bornée par vw (jamais de scroll horizontal), désactivée sous 1160px (tablette/mobile intacts). */
+ @media(min-width:1160px){
+   .hc-resa-sides-row{width:min(1300px,94vw) !important;margin-left:calc(50% - min(650px,47vw)) !important}
+ }
+ @media(min-width:1600px){
+   .hc-resa-sides-row{width:min(1440px,92vw) !important;margin-left:calc(50% - min(720px,46vw)) !important}
  }
  /* Asides : couleur de bordure différenciée pour clarifier les blocs */
  .hc-resa-sides-row .hc-side-real, .hc-resa-sides-row .hc-side-news{
