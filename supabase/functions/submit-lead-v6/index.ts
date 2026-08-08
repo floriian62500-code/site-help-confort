@@ -173,10 +173,14 @@ Deno.serve(async (req: Request) => {
   const svcKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${svcKey}` };
   const efBody = JSON.stringify({ lead_id: data.id });
-  // Notification interne (email agence) — cœur du rappel <30 min
-  try { fetch(`${supabaseUrl}/functions/v1/notify-lead-v6`, { method: 'POST', headers, body: efBody }).catch(() => {}); } catch (_) {}
-  // Accusé de réception client — uniquement si email fourni (lead-auto-reply gère le cas no_client_email)
-  try { fetch(`${supabaseUrl}/functions/v1/lead-auto-reply`, { method: 'POST', headers, body: efBody }).catch(() => {}); } catch (_) {}
+  // Hygiène recette : les leads de test (TEST RECETTE / NE PAS TRAITER) ne notifient PAS l'agence
+  // (ils sont déjà auto-archivés) — évite de polluer la vraie boîte saint-omer@helpconfort.com.
+  if (!isTestLead) {
+    // Notification interne (email agence) — cœur du rappel <30 min
+    try { fetch(`${supabaseUrl}/functions/v1/notify-lead-v6`, { method: 'POST', headers, body: efBody }).catch(() => {}); } catch (_) {}
+    // Accusé de réception client — uniquement si email fourni (lead-auto-reply gère le cas no_client_email)
+    try { fetch(`${supabaseUrl}/functions/v1/lead-auto-reply`, { method: 'POST', headers, body: efBody }).catch(() => {}); } catch (_) {}
+  }
 
-  return json(200, { success: true, id: data.id, upload_token: uploadToken, contract_v5: true });
+  return json(200, { success: true, id: data.id, upload_token: uploadToken, contract_v6: true });
 });
