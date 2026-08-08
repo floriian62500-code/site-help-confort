@@ -350,7 +350,7 @@
  const p = s.image_after || s.image_before;
  const m = METIER_LABELS[s.metier] || s.metier;
  return `
- <a href="realisation.html?slug=${encodeURIComponent(s.slug)}" class="real-similar-card">
+ <a href="/realisations/${encodeURIComponent(s.slug)}" class="real-similar-card">
  <div class="photo">${p ? `<img decoding="async" src="${p}" alt="" loading="lazy">` : ''}</div>
  <div class="body">
  <h4>${escapeHtml(s.title)}</h4>

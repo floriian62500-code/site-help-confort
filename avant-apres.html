@@ -153,7 +153,7 @@
                (c.ville ? '<span style="font-size:.78rem;color:#94a3b8">📍 ' + c.ville + '</span>' : '') +
              '</div>' +
              '<h3 style="font-size:1rem;font-weight:800;margin:0 0 6px;color:#0A1428">' + (c.title || 'Chantier') + '</h3>' +
-             '<a href="realisation.html?slug=' + (c.slug || c.id) + '" style="color:#0DA0CF;font-size:.86rem;font-weight:700;text-decoration:none">Voir le détail →</a>' +
+             '<a href="/realisations/' + (c.slug || c.id) + '" style="color:#0DA0CF;font-size:.86rem;font-weight:700;text-decoration:none">Voir le détail →</a>' +
            '</div>' +
          '</div>';
        }).join('');
@@ -205,7 +205,7 @@
  }
  var dateStr = '';
  try { dateStr = new Date(c.published_at).toLocaleDateString('fr-FR', { month:'short', year:'numeric' }); } catch(_){}
- return '<a href="realisation.html?slug=' + (c.slug || c.id) + '" class="aa-card">' +
+ return '<a href="/realisations/' + (c.slug || c.id) + '" class="aa-card">' +
  '<div class="aa-card-img">' + img +
  '<span class="tag">' + (c.metier || 'Chantier') + '</span>' +
  (Array.isArray(photos) && photos.length > 1 ? '<span class="badge-ap">AVANT/APRÈS</span>' : '') +

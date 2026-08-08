@@ -313,7 +313,7 @@ function toast(msg,type='ok',d=2600){
       if (status === 'publie') {
         const channels = [];
         // Site toujours
-        if (r.publish_targets?.site !== false) channels.push({ key:'site', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>', label:'Site', ok:true, url:`../realisation.html?slug=${r.id}` });
+        if (r.publish_targets?.site !== false) channels.push({ key:'site', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>', label:'Site', ok:true, url:`..//realisations/${r.id}` });
         if (log.meta) {
           if (log.meta.results?.facebook?.success) channels.push({ key:'fb', icon:'<svg viewBox="0 0 24 24" fill="#1877F2"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>', label:'FB', ok:true, url:log.meta.results.facebook.url });
           else if (log.meta.results?.facebook?.error) channels.push({ key:'fb', icon:'<svg viewBox="0 0 24 24" fill="#1877F2" opacity=".4"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12z"/></svg>', label:'FB', ok:false, error:log.meta.results.facebook.error });
