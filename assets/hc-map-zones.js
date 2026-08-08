@@ -182,10 +182,10 @@
     map.on('blur', function () { map.scrollWheelZoom.disable(); });
 
     // ─── Halo de couverture unique, doux (style référence Florian) ───
-    L.circle([50.86, 2.02], {
-      radius: 34000,
-      color: '#2563EB', weight: 1.5, opacity: 0.35,
-      fillColor: '#3B82F6', fillOpacity: 0.16
+    L.circle([50.84, 2.00], {
+      radius: 36000,
+      color: '#2563EB', weight: 2, opacity: 0.55,
+      fillColor: '#60A5FA', fillOpacity: 0.22
     }).addTo(map);
 
     // ─── Villes principales : point bleu + label permanent (façon référence) ───
