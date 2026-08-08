@@ -21,10 +21,12 @@
 | A05 | /admin-pro/* (prod) | **Sécurité** | Back-office (HTML+md+json+sql+py) **servi publiquement** (noindex ≠ non accessible) | **P1** | Authentification requise (méthode + mdp = décision Florian) | — | — | **GATE FLORIAN** | — | — |
 | A06 | realisation.html (legacy) | SEO/polish | Sans title, H1×3 (page noindex, remplacée par /realisations/*) | P3 | À nettoyer ou retirer du déploiement | — | — | ⏳ | — | — |
 | A07 | 3 formulaires | Lead | `form_type` non explicite (défaut `demande_metier`) | P2 | Vérifier pertinence par page | — | — | ⏳ | — | — |
-| A08 | 26 pages métiers (m-tarif-action) | **Revenu/Paiement** | Montant Stripe venait du DOM (client pouvait payer 1€) ; endpoint verify_jwt:false | **P0** | Paiement public GELÉ → route vers devis/lead ; usage admin intact | ✅ code | ⏳ | ⏳ | — | — |
+| A08 | 26 pages métiers (hc-reserve-modal) | Revenu/Paiement | Frontend créait un paiement Stripe avec montant lu dans le DOM. **Dormant** aujourd'hui (toutes cartes = `complex`/devis) mais dangereux dès l'ajout d'une carte prix-fixe | P2 | Frontend GELÉ → route devis/lead (défense) | ✅ test : 0 appel Stripe | ⏳ | ⏳ | — | — |
+| A08b | edge `stripe-create-payment-link` (Supabase prod) | **Sécurité/Paiement** | Fonction **ouverte** (verify_jwt:false, CORS \*) qui crée un Checkout pour le **montant fourni par l'appelant** (aucun prix serveur, min 1€). Abus possible par appel direct | **P1** | Hardening backend requis (catalogue prix serveur OU restreindre à admin authentifié) + webhook signé + idempotence | — | — | **GATE FLORIAN (backend prod)** | — | — |
 
 ## Gates Florian (décision requise)
 - **A05** : méthode d'authentification du back-office `/admin-pro/*` (mot de passe Netlify site-wide ? Identity ? blocage sélectif ?). Je ne modifie pas sans ton choix pour ne pas casser tes outils admin.
+- **A08b** : hardening backend paiement (action Supabase prod = GO requis). Deux failles : (1) `stripe-create-payment-link` accepte un montant arbitraire de l'appelant ; (2) `stripe-webhook` **ne vérifie pas la signature Stripe** (`TODO`) → statut « payé » forgeable. **Conclusion : paiement client à garder GELÉ** tant que : prix serveur (catalogue) + endpoint restreint + signature webhook (`webhook_secret`) + idempotence ne sont pas en place et prouvés en TEST.
 
 ## Notes
 - `secrets/ga4-service-account.json` : gitignore + **404 prod** → non exposé (OK).
