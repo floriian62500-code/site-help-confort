@@ -2475,7 +2475,14 @@ if (!leadRes || !leadRes.ok) {
   return;
 }
 var payPhotoNote = (leadRes.photos && leadRes.photos.ok === false) ? ' (vos photos n\'ont pas pu être jointes)' : '';
-resaMsg(true, 'Demande enregistrée ✓' + payPhotoNote + ' Redirection vers le paiement sécurisé…');
+// ═══ HC-FIX SÉCURITÉ 2026-08-09 (A08 / contrôle Home) : PAIEMENT EN LIGNE GELÉ ═══
+// Le wizard envoyait un montant CLIENT (prixTtc, manipulable) à stripe-create-payment-link,
+// endpoint non sécurisé (montant navigateur + webhook sans signature). Tant que la matrice
+// Stripe TEST n'est pas PASS, on s'ARRÊTE proprement sur le LEAD (déjà enregistré ci-dessus) :
+// l'agence recontacte / transmet un lien de paiement à montant fixé côté staff.
+resaMsg(true, 'Votre demande est bien enregistrée ✓' + payPhotoNote + '. Notre équipe vous recontacte rapidement pour finaliser votre prise en charge.');
+payBtn.disabled = false; payBtn.innerHTML = _payOrig0; payBtn.dataset.sending = '0';
+return;
 var sug = state.suggested_presta || {};
 var slug = sug.slug || (state.presta || '');
 
