@@ -89,7 +89,8 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-ser
 (function(){
   'use strict';
   var SUPA='https://btcbjwqiivhpwoszomhg.supabase.co';
-  var ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0Y2Jqd3FpaXZocG93c3pvbWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMzMjY1NjUsImV4cCI6MjA3ODkwMjU2NX0.fJC6_VxoSxr2hf-NUS7Of4kbJ4f0Lv3PFG6JsLrqLng';
+  // Clé publishable (l'ancienne clé anon JWT est désactivée côté Supabase → 401 sur l'API REST)
+  var ANON='sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
   var RECETTE_VERSION='2026-08-09-a'; // bumpé à chaque dépôt significatif sur recette
 
   // Gate : masquer en production (apex/www depan59-62.fr)
