@@ -1,15 +1,15 @@
 # Audit og:url vs canonical — Rapport
 
-_Généré le 2026-08-08 04:12_
+_Généré le 2026-08-09 04:20_
 
 ## Synthèse
 
 - Pages scannées : **137**
-- ✅ OK : **46**
+- ✅ OK : **49**
 - ❌ Erreurs : **0** (cumul 0 findings)
-- ⚠️  Avertissements (pages) : **89**
+- ⚠️  Avertissements (pages) : **86**
 - ℹ️  Info : **2**
-- ⚠️  Total warnings : **91**
+- ⚠️  Total warnings : **88**
 
 ## Findings
 
@@ -109,10 +109,6 @@ _Généré le 2026-08-08 04:12_
 - canonical = `https://www.depan59-62.fr/chauffagiste-wimereux.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
-### `contact.html`
-- canonical = `https://www.depan59-62.fr/contact.html`
-- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
-
 ### `contrats-entretien.html`
 - canonical = `https://www.depan59-62.fr/contrats-entretien.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
@@ -176,10 +172,6 @@ _Généré le 2026-08-08 04:12_
 ### `espace-client-dashboard.html`
 - ⚠️ OG-URL-MISSING : `og:url` et canonical absents
 
-### `fournisseur.html`
-- canonical = `https://www.depan59-62.fr/fournisseur.html`
-- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
-
 ### `garanties.html`
 - canonical = `https://www.depan59-62.fr/garanties.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
@@ -221,10 +213,6 @@ _Généré le 2026-08-08 04:12_
 
 ### `panne-chaudiere.html`
 - canonical = `https://www.depan59-62.fr/panne-chaudiere.html`
-- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
-
-### `partenaire.html`
-- canonical = `https://www.depan59-62.fr/partenaire.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
 ### `plan-du-site.html`

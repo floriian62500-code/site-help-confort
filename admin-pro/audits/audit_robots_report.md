@@ -1,6 +1,6 @@
 # 🤖 Audit robots.txt + sitemap.xml — P10
 
-*Généré le 2026-08-08 04:12 — `admin-pro/audits/audit_robots.py`*
+*Généré le 2026-08-09 04:19 — `admin-pro/audits/audit_robots.py`*
 
 **Findings totaux** : 1 (0 critical, 0 high, 1 med, 0 low)
 **Vérifications OK** : 8
@@ -11,7 +11,7 @@
 - ✅ robots.txt présent
 - ✅ User-agent: * présent
 - ✅ 14 pages publiques principales autorisées
-- ✅ Sitemap référencé dans robots.txt : 4
+- ✅ Sitemap référencé dans robots.txt : 1
 - ✅ sitemap.xml présent + bien formé (190 URLs)
 - ✅ /robots.txt → HTTP 200 en prod
 - ✅ /sitemap.xml → HTTP 200 en prod

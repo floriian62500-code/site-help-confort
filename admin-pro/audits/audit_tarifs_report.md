@@ -1,6 +1,6 @@
 # Audit Tarifs — Sonde IA #28
 
-_Généré le 2026-08-08 04:11 — `admin-pro/audits/audit_tarifs.py`_
+_Généré le 2026-08-09 04:18 — `admin-pro/audits/audit_tarifs.py`_
 
 - Pages publiques scannées : **118**
 - Montants validés (TARIFS_REFERENCE.md) : **53**
@@ -17,7 +17,7 @@ Tout montant `\d+\s*€` visible doit :
 
 | Page | Ligne | Montant | Contexte |
 |------|------:|--------:|----------|
-| `aides.html` | 634 | **50000 €** | iv> ⏎  <h3>Éco-PTZ</h3> ⏎  </div> ⏎  <div class="body"> ⏎  <div class="montant">Jusqu'à 50 000 € (selon barème en vigueur)</div> ⏎  <p class |
+| `aides.html` | 632 | **50000 €** | iv> ⏎  <h3>Éco-PTZ</h3> ⏎  </div> ⏎  <div class="body"> ⏎  <div class="montant">Jusqu'à 50 000 € (selon barème en vigueur)</div> ⏎  <p class |
 | `blog-comment-detecter-fuite-eau-cachee.html` | 160 | **30 €** | me très lentement, ne minimisez pas : une fuite de 1L/heure = 8 760 L/an, soit ~30 € à 40 € de surconsommation chez Veolia ou Eau et Force.< |
 | `blog-comment-detecter-fuite-eau-cachee.html` | 160 | **40 €** | lentement, ne minimisez pas : une fuite de 1L/heure = 8 760 L/an, soit ~30 € à 40 € de surconsommation chez Veolia ou Eau et Force.</p> ⏎ </ |
 | `blog-comment-detecter-fuite-eau-cachee.html` | 175 | **180 €** | de amplifiée. Chez HELP Confort, l'intervention de recherche de fuite démarre à 180 € TTC, garantie sans casse en cas de localisation positi |
@@ -111,19 +111,19 @@ Tout montant `\d+\s*€` visible doit :
 | `blog-remplacement-chaudiere-gaz-aides-2026.html` | 164 | **3500 €** | yenne</li> ⏎     <li>PAC géothermique : 5 000 €</li> ⏎     <li>Chaudière granulés : 3 500 €</li> ⏎     <li>Chaudière gaz THPE : 1 200 € (uni |
 | `blog-remplacement-chaudiere-gaz-aides-2026.html` | 165 | **1200 €** | 0 €</li> ⏎     <li>Chaudière granulés : 3 500 €</li> ⏎     <li>Chaudière gaz THPE : 1 200 € (uniquement remplacement chaudière fioul ou >25  |
 | `blog-remplacement-chaudiere-gaz-aides-2026.html` | 170 | **277 €** | ction"> ⏎   <h2>Chèque énergie 2026</h2> ⏎   <p>Versement automatique entre 48 € et 277 € selon votre RFR. À conserver pour payer une factur |
-| `chauffagiste-boulogne-sur-mer.html` | 1281 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
-| `chauffagiste-boulogne-sur-mer.html` | 1299 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
-| `chauffagiste-boulogne-sur-mer.html` | 1316 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
-| `chauffagiste-calais.html` | 1108 | **800 €** | uit ou un changement de circulateur peut prolonger sa vie 3-5 ans pour moins de 800€.</p></div></div> ⏎  ⏎ <section class="m-pourquoi-top" s |
-| `chauffagiste-calais.html` | 1281 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
-| `chauffagiste-calais.html` | 1299 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
-| `chauffagiste-calais.html` | 1316 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
-| `chauffagiste-dunkerque.html` | 1283 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
-| `chauffagiste-dunkerque.html` | 1301 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
-| `chauffagiste-dunkerque.html` | 1318 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
-| `chauffagiste-saint-omer.html` | 1289 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
-| `chauffagiste-saint-omer.html` | 1307 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
-| `chauffagiste-saint-omer.html` | 1324 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
+| `chauffagiste-boulogne-sur-mer.html` | 1279 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
+| `chauffagiste-boulogne-sur-mer.html` | 1297 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
+| `chauffagiste-boulogne-sur-mer.html` | 1314 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
+| `chauffagiste-calais.html` | 1106 | **800 €** | uit ou un changement de circulateur peut prolonger sa vie 3-5 ans pour moins de 800€.</p></div></div> ⏎  ⏎ <section class="m-pourquoi-top" s |
+| `chauffagiste-calais.html` | 1279 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
+| `chauffagiste-calais.html` | 1297 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
+| `chauffagiste-calais.html` | 1314 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
+| `chauffagiste-dunkerque.html` | 1281 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
+| `chauffagiste-dunkerque.html` | 1299 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
+| `chauffagiste-dunkerque.html` | 1316 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
+| `chauffagiste-saint-omer.html` | 1363 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
+| `chauffagiste-saint-omer.html` | 1381 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
+| `chauffagiste-saint-omer.html` | 1398 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
 | `debouchage-canalisation.html` | 290 | **180 €** | papier accumulé, cheveux). Intervention courte (30 min à 1h) — tarif moyen 90 à 180€ TTC sur Saint-Omer / Dunkerque.</p> ⏎  ⏎ <h3>2. Hydrocu |
 | `debouchage-canalisation.html` | 293 | **400 €** | utile aussi en préventif après plusieurs bouchons rapprochés. Tarif moyen 180 à 400€ TTC selon l'accessibilité.</p> ⏎  ⏎ <h3>3. Inspection c |
 | `debouchage-canalisation.html` | 304 | **180 €** | c55e"> ⏎     <h3 style="color:#22c55e">Débouchage simple</h3> ⏎     <p><strong>90 à 180€ TTC</strong><br>Furet WC, évier, lavabo. Interventi |
@@ -135,30 +135,30 @@ Tout montant `\d+\s*€` visible doit :
 | `entretien-chaudiere.html` | 230 | **130 €** | annuel + attestation</td><td style="padding:14px;font-weight:700;color:#FF6B1A">130€</td></tr> ⏎     <tr style="background:#FAFCFD"><td styl |
 | `entretien-chaudiere.html` | 231 | **175 €** | dépannage gratuit/an</td><td style="padding:14px;font-weight:700;color:#FF6B1A">175€</td></tr> ⏎     <tr><td style="padding:14px;font-weight |
 | `entretien-chaudiere.html` | 232 | **210 €** | s + pièces (limites)</td><td style="padding:14px;font-weight:700;color:#FF6B1A">210€</td></tr> ⏎   </tbody> ⏎ </table> ⏎  ⏎ <p style="margin |
-| `guide-adaptation-pmr.html` | 450 | **22000 €** | rir jusqu'à <strong>50 % à 70 % du coût des travaux</strong>, dans la limite de 22 000 € HT. Le bénéficiaire doit être propriétaire occupant |
-| `guide-adaptation-pmr.html` | 463 | **5500 €** | lète adaptée</strong> (douche italienne + WC rehaussés + barres d'appui)&nbsp;: 5 500 € → reste à charge ~1 800 € après MaPrimeAdapt'</li> ⏎ |
-| `guide-adaptation-pmr.html` | 463 | **1800 €** | che italienne + WC rehaussés + barres d'appui)&nbsp;: 5 500 € → reste à charge ~1 800 € après MaPrimeAdapt'</li> ⏎  <li><strong>Monte-escali |
-| `guide-adaptation-pmr.html` | 464 | **3800 €** | > ⏎  <li><strong>Monte-escaliers droit</strong> + main courante secondaire&nbsp;: 3 800 € → reste à charge ~1 200 €</li> ⏎  <li><strong>Élar |
-| `guide-adaptation-pmr.html` | 464 | **1200 €** | iers droit</strong> + main courante secondaire&nbsp;: 3 800 € → reste à charge ~1 200 €</li> ⏎  <li><strong>Élargissement de 3 portes intéri |
-| `guide-adaptation-pmr.html` | 465 | **2200 €** | g>Élargissement de 3 portes intérieures</strong> + suppression de seuils&nbsp;: 2 200 € → reste à charge ~700 €</li> ⏎  <li><strong>Pack glo |
-| `guide-adaptation-pmr.html` | 465 | **700 €** | s intérieures</strong> + suppression de seuils&nbsp;: 2 200 € → reste à charge ~700 €</li> ⏎  <li><strong>Pack global maintien à domicile</s |
-| `guide-adaptation-pmr.html` | 466 | **9800 €** | al maintien à domicile</strong> (douche + WC + barres + monte-escaliers)&nbsp;: 9 800 € → reste à charge ~3 200 €</li> ⏎ </ul> ⏎ <h2>6. Comm |
-| `guide-adaptation-pmr.html` | 466 | **3200 €** | rong> (douche + WC + barres + monte-escaliers)&nbsp;: 9 800 € → reste à charge ~3 200 €</li> ⏎ </ul> ⏎ <h2>6. Comment démarrer&nbsp;?</h2> ⏎ |
-| `guide-entretien-chaudiere.html` | 435 | **100 €** | p;?</h2> ⏎ <p>Le prix moyen d'un entretien chaudière gaz en France se situe entre 100 € et 180 € TTC selon la marque, la puissance et la rég |
-| `guide-entretien-chaudiere.html` | 435 | **180 €** | <p>Le prix moyen d'un entretien chaudière gaz en France se situe entre 100 € et 180 € TTC selon la marque, la puissance et la région. Chez < |
-| `guide-mise-aux-normes-electriques.html` | 442 | **800 €** | ng>Petite mise en conformité</strong> (quelques anomalies ciblées)&nbsp;: 300 à 800 €</li> ⏎  <li><strong>Mise aux normes du tableau électri |
-| `guide-mise-aux-normes-electriques.html` | 443 | **1500 €** | > ⏎  <li><strong>Mise aux normes du tableau électrique</strong> seul&nbsp;: 600 à 1 500 €</li> ⏎  <li><strong>Rénovation électrique complète |
-| `guide-mise-aux-normes-electriques.html` | 444 | **9000 €** | li> ⏎  <li><strong>Rénovation électrique complète</strong> d'un T3&nbsp;: 4 000 à 9 000 €</li> ⏎  <li><strong>Maison entière (100 m²)</stron |
-| `guide-mise-aux-normes-electriques.html` | 445 | **15000 €** | ;: 4 000 à 9 000 €</li> ⏎  <li><strong>Maison entière (100 m²)</strong> : 8 000 à 15 000 €</li> ⏎ </ul> ⏎ <p>Les <strong>aides MaPrimeRénov' |
-| `guide-mise-aux-normes-electriques.html` | 472 | **1080 €** | -right:auto">Diagnostic gratuit · Tableau standard à <strong style="color:#fff">1 080 € TTC</strong> · Aides CEE & MaPrimeRénov' éligibles.  |
+| `guide-adaptation-pmr.html` | 448 | **22000 €** | rir jusqu'à <strong>50 % à 70 % du coût des travaux</strong>, dans la limite de 22 000 € HT. Le bénéficiaire doit être propriétaire occupant |
+| `guide-adaptation-pmr.html` | 461 | **5500 €** | lète adaptée</strong> (douche italienne + WC rehaussés + barres d'appui)&nbsp;: 5 500 € → reste à charge ~1 800 € après MaPrimeAdapt'</li> ⏎ |
+| `guide-adaptation-pmr.html` | 461 | **1800 €** | che italienne + WC rehaussés + barres d'appui)&nbsp;: 5 500 € → reste à charge ~1 800 € après MaPrimeAdapt'</li> ⏎  <li><strong>Monte-escali |
+| `guide-adaptation-pmr.html` | 462 | **3800 €** | > ⏎  <li><strong>Monte-escaliers droit</strong> + main courante secondaire&nbsp;: 3 800 € → reste à charge ~1 200 €</li> ⏎  <li><strong>Élar |
+| `guide-adaptation-pmr.html` | 462 | **1200 €** | iers droit</strong> + main courante secondaire&nbsp;: 3 800 € → reste à charge ~1 200 €</li> ⏎  <li><strong>Élargissement de 3 portes intéri |
+| `guide-adaptation-pmr.html` | 463 | **2200 €** | g>Élargissement de 3 portes intérieures</strong> + suppression de seuils&nbsp;: 2 200 € → reste à charge ~700 €</li> ⏎  <li><strong>Pack glo |
+| `guide-adaptation-pmr.html` | 463 | **700 €** | s intérieures</strong> + suppression de seuils&nbsp;: 2 200 € → reste à charge ~700 €</li> ⏎  <li><strong>Pack global maintien à domicile</s |
+| `guide-adaptation-pmr.html` | 464 | **9800 €** | al maintien à domicile</strong> (douche + WC + barres + monte-escaliers)&nbsp;: 9 800 € → reste à charge ~3 200 €</li> ⏎ </ul> ⏎ <h2>6. Comm |
+| `guide-adaptation-pmr.html` | 464 | **3200 €** | rong> (douche + WC + barres + monte-escaliers)&nbsp;: 9 800 € → reste à charge ~3 200 €</li> ⏎ </ul> ⏎ <h2>6. Comment démarrer&nbsp;?</h2> ⏎ |
+| `guide-entretien-chaudiere.html` | 433 | **100 €** | p;?</h2> ⏎ <p>Le prix moyen d'un entretien chaudière gaz en France se situe entre 100 € et 180 € TTC selon la marque, la puissance et la rég |
+| `guide-entretien-chaudiere.html` | 433 | **180 €** | <p>Le prix moyen d'un entretien chaudière gaz en France se situe entre 100 € et 180 € TTC selon la marque, la puissance et la région. Chez < |
+| `guide-mise-aux-normes-electriques.html` | 440 | **800 €** | ng>Petite mise en conformité</strong> (quelques anomalies ciblées)&nbsp;: 300 à 800 €</li> ⏎  <li><strong>Mise aux normes du tableau électri |
+| `guide-mise-aux-normes-electriques.html` | 441 | **1500 €** | > ⏎  <li><strong>Mise aux normes du tableau électrique</strong> seul&nbsp;: 600 à 1 500 €</li> ⏎  <li><strong>Rénovation électrique complète |
+| `guide-mise-aux-normes-electriques.html` | 442 | **9000 €** | li> ⏎  <li><strong>Rénovation électrique complète</strong> d'un T3&nbsp;: 4 000 à 9 000 €</li> ⏎  <li><strong>Maison entière (100 m²)</stron |
+| `guide-mise-aux-normes-electriques.html` | 443 | **15000 €** | ;: 4 000 à 9 000 €</li> ⏎  <li><strong>Maison entière (100 m²)</strong> : 8 000 à 15 000 €</li> ⏎ </ul> ⏎ <p>Les <strong>aides MaPrimeRénov' |
+| `guide-mise-aux-normes-electriques.html` | 470 | **1080 €** | -right:auto">Diagnostic gratuit · Tableau standard à <strong style="color:#fff">1 080 € TTC</strong> · Aides CEE & MaPrimeRénov' éligibles.  |
 | `maprimeadapt.html` | 59 | **22000 €** | <strong>70%</strong><span>d'aide max</span></div> ⏎ <div class="mpa-knum"><strong>22 000€</strong><span>plafond HT</span></div> ⏎ <div class |
 | `maprimeadapt.html` | 71 | **22000 €** | du montant des travaux</strong> d'adaptation du logement. Plafond de travaux à 22 000 € HT. Jusqu'à 15 400 € d'aide pour une douche italienn |
 | `maprimeadapt.html` | 71 | **15400 €** | ux</strong> d'adaptation du logement. Plafond de travaux à 22 000 € HT. Jusqu'à 15 400 € d'aide pour une douche italienne, monte-escalier ou |
 | `maprimeadapt.html` | 75 | **34884 €** | ) ressources modestes (revenu fiscal référence). Couple à Saint-Omer avec RFR ≤ 34 884 € = aide au taux max (70%).</p> ⏎ </section> ⏎ <secti |
-| `menuisier-dunkerque.html` | 1080 | **100 €** | ement de fenêtres / portes d'entrée donne droit à des aides cumulables (jusqu'à 100€/m² selon revenus). Nous vous accompagnons sur le dossie |
-| `nos-prestations.html` | 402 | **144 €** | ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="npce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="npce-baseline">L' |
-| `nos-prestations.html` | 420 | **192 €** | ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="npce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="npce-baseline">L' |
-| `nos-prestations.html` | 437 | **324 €** | ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="npce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="npce-baseline">To |
+| `menuisier-dunkerque.html` | 1078 | **100 €** | ement de fenêtres / portes d'entrée donne droit à des aides cumulables (jusqu'à 100€/m² selon revenus). Nous vous accompagnons sur le dossie |
+| `nos-prestations.html` | 401 | **144 €** | ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="npce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="npce-baseline">L' |
+| `nos-prestations.html` | 419 | **192 €** | ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="npce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="npce-baseline">L' |
+| `nos-prestations.html` | 436 | **324 €** | ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="npce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="npce-baseline">To |
 | `ouverture-porte-claquee.html` | 264 | **29 €** | gin:0">Sur Internet, beaucoup d'annonces affichent des tarifs d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention. Av |
 | `ouverture-porte-claquee.html` | 264 | **39 €** | ">Sur Internet, beaucoup d'annonces affichent des tarifs d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention. Avant d |
 | `ouverture-porte-claquee.html` | 264 | **1500 €** | 'annonces affichent des tarifs d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention. Avant d'appeler n'importe qui dan |
@@ -170,7 +170,7 @@ Tout montant `\d+\s*€` visible doit :
 | `panne-chaudiere.html` | 225 | **650 €** | sonde, vanne)</td><td style="padding:14px;font-weight:700;color:#B91C1C">250 - 650€</td></tr> ⏎     <tr><td style="padding:14px">Désembouage |
 | `panne-chaudiere.html` | 226 | **750 €** | ircuit complet</td><td style="padding:14px;font-weight:700;color:#B91C1C">450 - 750€</td></tr> ⏎     <tr><td style="padding:14px">Remplaceme |
 | `panne-chaudiere.html` | 227 | **6500 €** | condensation</td><td style="padding:14px;font-weight:700;color:#B91C1C">3 800 - 6 500€</td></tr> ⏎   </tbody> ⏎ </table> ⏎  ⏎ <p style="font |
-| `pmr-dunkerque.html` | 1059 | **8000 €** | , siège mural, barres de maintien, robinetterie thermostatique. Compter 3 500 à 8 000€ TTC selon ampleur, souvent largement aidé.</p><p styl |
+| `pmr-dunkerque.html` | 1057 | **8000 €** | , siège mural, barres de maintien, robinetterie thermostatique. Compter 3 500 à 8 000€ TTC selon ampleur, souvent largement aidé.</p><p styl |
 | `remplacement-chauffe-eau.html` | 430 | **1100 €** | </thead> ⏎   <tbody> ⏎     <tr><td><strong>Électrique 200L</strong></td><td>750 - 1 100€</td><td>~2 500 kWh</td><td>—</td></tr> ⏎     <tr><t |
 | `remplacement-chauffe-eau.html` | 431 | **1300 €** | td><td>—</td></tr> ⏎     <tr><td><strong>Électrique blindé</strong></td><td>900 - 1 300€</td><td>~2 400 kWh</td><td>—</td></tr> ⏎     <tr><t |
 | `remplacement-chauffe-eau.html` | 432 | **4500 €** | d>—</td></tr> ⏎     <tr><td><strong>Thermodynamique 200L</strong></td><td>2 800 - 4 500€</td><td>~700 kWh</td><td>MaPrimeRénov + CEE</td></t |
@@ -209,7 +209,7 @@ Tout montant `\d+\s*€` visible doit :
 | `tarifs.html` | 426 | **39 €** | style="margin:0">Beaucoup de sociétés affichent un tarif d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention. Vérifie |
 | `tarifs.html` | 426 | **1500 €** | de sociétés affichent un tarif d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention. Vérifiez : SIRET visible, adresse |
 | `tarifs.html` | 443 | **1500 €** | <h3>Acceptez-vous le paiement échelonné ?</h3> ⏎   <p>Oui, pour les chantiers > 1 500€ TTC : 3-4 fois sans frais. Pour rénovations lourdes : |
-| `travaux-dunkerque.html` | 1071 | **12000 €** | (sol antidérapant, paroi vitrée, robinetterie thermostatique). Compter 3 500 à 12 000€ TTC selon ampleur.</p><p style="margin:0 0 10px"><str |
+| `travaux-dunkerque.html` | 1069 | **12000 €** | (sol antidérapant, paroi vitrée, robinetterie thermostatique). Compter 3 500 à 12 000€ TTC selon ampleur.</p><p style="margin:0 0 10px"><str |
 | `urgence.html` | 381 | **29 €** | 2> ⏎   <p>Sur Internet, beaucoup de sociétés affichent un tarif d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention e |
 | `urgence.html` | 381 | **39 €** | <p>Sur Internet, beaucoup de sociétés affichent un tarif d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention en préte |
 | `urgence.html` | 381 | **1500 €** | de sociétés affichent un tarif d'appel très bas (29€, 39€) puis facturent 800 à 1 500€ après intervention en prétextant la nuit, le week-end |
