@@ -762,11 +762,19 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
      var nameEl = card && card.querySelector('.nv-card-name');
      var priceEl = card && card.querySelector('.nv-card-price');
      var visual = card && card.querySelector('.nv-card-visual');
+     // slug réel depuis le lien devis (?service=slug), sinon dérivé du nom
+     var devisLink = card && card.querySelector('a[href*="service="]');
+     var slug = null;
+     if (devisLink) { var m = (devisLink.getAttribute('href')||'').match(/[?&]service=([^&#]+)/); if (m) slug = decodeURIComponent(m[1]); }
+     if (!slug && nameEl) slug = nameEl.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
      window.__hcTarifCtx = {
+       // id serveur = référence AUTORITAIRE : le prix réel reste dérivable du catalogue (v_services_public),
+       // le prix DOM n'est qu'un instantané d'affichage (non autoritaire).
+       id: card ? card.getAttribute('data-service-id') : null,
        name: nameEl ? nameEl.textContent.trim() : null,
-       prix: priceEl ? priceEl.textContent.replace(/\s+/g,' ').trim() : null,
+       prix_affiche: priceEl ? priceEl.textContent.replace(/\s+/g,' ').trim() : null,
        metier: visual ? (visual.getAttribute('data-cat') || null) : null,
-       slug: (card && card.getAttribute('data-slug')) || (nameEl ? nameEl.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') : null)
+       slug: slug
      };
    } catch(_) { window.__hcTarifCtx = {}; }
    track('tariff_modal_open', { prestation: (window.__hcTarifCtx||{}).name || null });
@@ -934,10 +942,12 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
        source_page: location.pathname + location.search,
        source_referer: document.referrer || null,
        metier: ctx.metier || 'multiservice',
-       message: 'Consultation tarif' + (ctx.name ? ' : ' + ctx.name : '') + (ctx.prix ? ' — ' + ctx.prix : '') + ' (page nos-prestations)',
+       message: 'Consultation tarif' + (ctx.name ? ' : ' + ctx.name : '') + (ctx.prix_affiche ? ' — ' + ctx.prix_affiche : '') + ' (page nos-prestations)',
        utm: {
-         prestation: ctx.name || null, prestation_slug: ctx.slug || null,
-         prestation_metier: ctx.metier || null, prix_consulte: ctx.prix || null,
+         prestation_id: ctx.id || null, prestation: ctx.name || null, prestation_slug: ctx.slug || null,
+         prestation_metier: ctx.metier || null,
+         // prix affiché = instantané DOM (non autoritaire) ; le prix réel se relit du catalogue via prestation_id
+         prix_affiche: ctx.prix_affiche || null,
          agence: agence, etape_funnel: 'tarif_consulte'
        }
      };
