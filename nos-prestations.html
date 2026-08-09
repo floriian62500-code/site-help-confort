@@ -915,6 +915,11 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
    return;
  }
 
+ // Anti-doublon synchrone (double-clic / double requestSubmit dans le même tick) :
+ // le verrou est posé AVANT tout await, donc le 2e submit est ignoré net.
+ if (window.__hcTarifSubmitting) return;
+ window.__hcTarifSubmitting = true;
+
  btn.disabled = true; btn.innerHTML = 'Envoi…';
 
  // 2026-06-01 — Mémorise les coordonnées pour pré-remplissage modal réservation + futurs leadgates
@@ -967,6 +972,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  track('tariff_revealed', { prestation: ctx.name || null });
  hideLgModal();
  btn.disabled = false; btn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg> Voir les tarifs';
+ window.__hcTarifSubmitting = false;
  });
 
  // Icônes catégories — vrais pictos HC (images dans /images/)
