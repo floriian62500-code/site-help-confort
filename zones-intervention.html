@@ -804,7 +804,7 @@ if (document.fonts && document.fonts.ready) {
  </div>
  </div>
 
- <div class="z-hero-map" aria-label="Carte des zones d'intervention HELP Confort">
+ <div class="z-hero-map" data-review-id="zones-map" aria-label="Carte des zones d'intervention HELP Confort">
  <!-- HC-FIX V3 2026-05-19 : Leaflet désactivé (drapeaux tiers tile providers / extensions Chrome) -->
  <!-- Le SVG statique du fallback ci-dessous est utilisé comme rendu principal. -->
  <!-- Pour réactiver Leaflet : décommenter les 3 lignes ci-dessous + retirer "style=display:none" du div leaflet -->
@@ -1396,5 +1396,6 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
   <script defer src="assets/hc-chat-widget.js"></script>
   <script defer src="assets/hc-a11y-fixes.js"></script>
 <script src="assets/hc-rate-limit.js?v=20260603" defer></script>
+<script defer src="assets/hc-review.js?v=1"></script>
 </body>
 </html>

@@ -452,7 +452,7 @@ if (document.fonts && document.fonts.ready) {
 
  <div class="ra-carousel" data-ra-car>
  <button type="button" class="ra-car-arrow ra-car-prev" aria-label="Réalisations précédentes"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
- <div class="real-grid ra-car-track" id="realGrid">
+ <div class="real-grid ra-car-track" id="realGrid" data-review-id="real-routing">
  <div class="real-empty" style="flex:1 0 100%">
  <h2>Chargement des réalisations…</h2>
  <p>Les chantiers publiés via le back-office <a href="admin/index.html" style="color:#FF6B1A;font-weight:700">/admin/</a> apparaîtront ici.</p>
@@ -1028,5 +1028,6 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
   <script defer src="assets/hc-newsletter.js"></script>
   <script defer src="assets/hc-a11y-fixes.js"></script>
 <script src="assets/hc-rate-limit.js?v=20260603" defer></script>
+<script defer src="assets/hc-review.js?v=1"></script>
 </body>
 </html>

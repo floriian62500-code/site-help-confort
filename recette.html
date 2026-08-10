@@ -6,215 +6,220 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Centre de validation — HELP Confort (recette)</title>
 <style>
-:root{--bleu:#0DA0CF;--bleu-d:#0A7FA3;--orange:#FF6B1A;--vert:#16A34A;--rouge:#E11D48;--nuit:#0A1428;--gris:#475569;--bord:#E5EDF3}
+:root{--bleu:#0DA0CF;--orange:#FF6B1A;--vert:#16A34A;--rouge:#E11D48;--ambre:#D97706;--nuit:#0A1428;--gris:#475569;--bord:#E5EDF3}
 *{box-sizing:border-box}
 body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#F4F8FB;color:var(--nuit);line-height:1.5}
 .rc-top{background:linear-gradient(135deg,#0A1428,#12233f);color:#fff;padding:22px clamp(16px,4vw,40px)}
 .rc-top h1{margin:0;font-size:clamp(1.3rem,3.5vw,1.7rem);font-weight:800;letter-spacing:-.02em}
 .rc-top p{margin:6px 0 0;color:rgba(255,255,255,.72);font-size:.92rem}
 .rc-badge{display:inline-block;margin-top:10px;padding:4px 12px;border-radius:999px;background:rgba(255,180,0,.18);color:#FFD166;font-size:.74rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
-.rc-wrap{max-width:840px;margin:0 auto;padding:20px clamp(12px,4vw,24px) 120px}
-.rc-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:18px 0 26px}
-.rc-stat{background:#fff;border:1px solid var(--bord);border-radius:14px;padding:14px 16px;text-align:center}
-.rc-stat strong{display:block;font-size:1.6rem;font-weight:800;line-height:1}
-.rc-stat span{font-size:.72rem;color:var(--gris);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.rc-wrap{max-width:840px;margin:0 auto;padding:20px clamp(12px,4vw,24px) 130px}
+.rc-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin:18px 0 22px}
+.rc-stat{background:#fff;border:1px solid var(--bord);border-radius:14px;padding:14px 12px;text-align:center}
+.rc-stat strong{display:block;font-size:1.5rem;font-weight:800;line-height:1}
+.rc-stat span{font-size:.7rem;color:var(--gris);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.rc-prod-box{background:#fff;border:1px solid var(--bord);border-radius:16px;padding:16px 18px;margin-bottom:22px}
+.rc-prod-box h2{margin:0 0 8px;font-size:.95rem;font-weight:800;display:flex;align-items:center;gap:8px}
+.rc-prod-box .rc-prod-line{font-size:.88rem;color:var(--gris)}
 .rc-page{margin-bottom:24px}
 .rc-page-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px;flex-wrap:wrap}
 .rc-page-head h2{margin:0;font-size:1.05rem;font-weight:800}
-.rc-page-prog{font-size:.82rem;color:var(--gris);font-weight:600}
+.rc-page-prog{font-size:.82rem;color:var(--gris);font-weight:700}
+.rc-page-prog.done{color:var(--vert)}
+.rc-freeze{background:var(--vert);color:#fff;border:0;border-radius:10px;padding:9px 14px;font-weight:800;font-size:.84rem;cursor:pointer;font-family:inherit}
+.rc-freeze:disabled{opacity:.4;cursor:not-allowed}
+.rc-frozen{font-size:.82rem;font-weight:800;color:var(--vert)}
 .rc-card{background:#fff;border:1px solid var(--bord);border-radius:16px;padding:16px 18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(10,20,40,.04)}
 .rc-card.is-ok{border-color:rgba(22,163,74,.4);background:#f6fdf9}
 .rc-card.is-ko{border-color:rgba(225,29,72,.4);background:#fff6f8}
+.rc-card.is-stale{border-color:rgba(217,119,6,.5);background:#fffaf0}
 .rc-card h3{margin:0 0 4px;font-size:1rem;font-weight:800}
 .rc-card .rc-desc{margin:0 0 8px;font-size:.9rem;color:var(--gris)}
 .rc-look{margin:0 0 12px;padding:9px 12px;background:#F1F7FB;border-left:3px solid var(--bleu);border-radius:8px;font-size:.84rem;color:#0a3550}
 .rc-look b{color:var(--nuit)}
 .rc-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.rc-btn{border:0;border-radius:10px;padding:10px 16px;font-weight:800;font-size:.9rem;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px;transition:transform .12s,box-shadow .12s,opacity .12s}
+.rc-btn{border:0;border-radius:10px;padding:10px 16px;font-weight:800;font-size:.9rem;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px;transition:transform .12s}
 .rc-btn:active{transform:scale(.97)}
-.rc-btn.voir{background:var(--nuit);color:#fff}
-.rc-btn.ok{background:var(--vert);color:#fff}
-.rc-btn.ko{background:#fff;color:var(--rouge);border:1.5px solid var(--rouge)}
-.rc-btn:disabled{opacity:.5;cursor:default}
+.rc-btn.voir{background:var(--nuit);color:#fff}.rc-btn.ok{background:var(--vert);color:#fff}.rc-btn.ko{background:#fff;color:var(--rouge);border:1.5px solid var(--rouge)}
 .rc-state{margin-left:auto;font-size:.8rem;font-weight:800}
-.rc-state.ok{color:var(--vert)}
-.rc-state.ko{color:var(--rouge)}
-.rc-fix{margin-top:12px;display:none}
-.rc-fix.open{display:block}
-.rc-fix textarea{width:100%;border:1.5px solid var(--bord);border-radius:10px;padding:10px 12px;font:inherit;font-size:.9rem;resize:vertical;min-height:64px}
+.rc-state.ok{color:var(--vert)}.rc-state.ko{color:var(--rouge)}.rc-state.stale{color:var(--ambre)}
+.rc-fix{margin-top:12px;display:none}.rc-fix.open{display:block}
+.rc-fix textarea{width:100%;border:1.5px solid var(--bord);border-radius:10px;padding:10px 12px;font:inherit;font-size:.9rem;resize:vertical;min-height:60px}
 .rc-fix .rc-btn{margin-top:8px}
-.rc-comment{margin-top:8px;font-size:.84rem;color:var(--rouge);background:rgba(225,29,72,.06);padding:8px 12px;border-radius:8px}
 .rc-prod{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--bord);padding:14px clamp(12px,4vw,24px);box-shadow:0 -8px 24px rgba(10,20,40,.08)}
 .rc-prod-inner{max-width:840px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:space-between}
-.rc-prod-txt{font-size:.86rem;color:var(--gris);font-weight:600}
+.rc-prod-txt{font-size:.86rem;color:var(--gris);font-weight:700}
 .rc-prod-btn{background:linear-gradient(135deg,var(--orange),#E55510);color:#fff;border:0;border-radius:12px;padding:14px 22px;font-weight:900;font-size:1rem;cursor:pointer;font-family:inherit;box-shadow:0 10px 22px rgba(255,107,26,.32)}
-.rc-prod-btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
-.rc-note{font-size:.78rem;color:#94a3b8;text-align:center;margin-top:22px}
+.rc-prod-btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.rc-note{font-size:.78rem;color:#94a3b8;text-align:center;margin-top:20px}
 .rc-guard{max-width:560px;margin:60px auto;padding:0 20px;text-align:center}
-.rc-guard h2{font-size:1.3rem}
 .rc-toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:var(--nuit);color:#fff;padding:12px 20px;border-radius:12px;font-weight:700;font-size:.9rem;z-index:9999;opacity:0;transition:opacity .25s;box-shadow:0 12px 28px rgba(0,0,0,.3)}
 .rc-toast.show{opacity:1}
 </style>
 </head>
 <body>
 <div class="rc-toast" id="rcToast"></div>
-
-<div id="rcGuard" class="rc-guard" hidden>
-  <h2>🔒 Réservé à la recette</h2>
-  <p>Ce centre de validation n'est disponible que sur l'instance de recette, pas en production.</p>
-</div>
+<div id="rcGuard" class="rc-guard" hidden><h2>🔒 Réservé à la recette</h2><p>Ce centre de validation n'est disponible que sur l'instance de recette, pas en production.</p></div>
 
 <div id="rcApp" hidden>
   <div class="rc-top">
     <h1>🧭 Centre de validation</h1>
-    <p>Parcourez les modifications, cliquez <b>OK</b> ou <b>À corriger</b>. Quand tout est OK, validez pour la production.</p>
+    <p>Parcourez les modifications, cliquez <b>OK</b> ou <b>À corriger</b>. Une page validée peut être gelée. Quand tout est prêt, validez pour la production.</p>
     <span class="rc-badge">Instance RECETTE · aucune modification n'est en production</span>
   </div>
-
   <div class="rc-wrap">
     <div class="rc-summary" id="rcSummary"></div>
+    <div class="rc-prod-box" id="rcProdBox"></div>
     <div id="rcPages"></div>
     <p class="rc-note" id="rcVer"></p>
   </div>
-
-  <div class="rc-prod">
-    <div class="rc-prod-inner">
-      <div class="rc-prod-txt" id="rcProdTxt">—</div>
-      <button class="rc-prod-btn" id="rcProdBtn" disabled>🚀 Valider cette version pour la production</button>
-    </div>
-  </div>
+  <div class="rc-prod"><div class="rc-prod-inner">
+    <div class="rc-prod-txt" id="rcProdTxt">—</div>
+    <button class="rc-prod-btn" id="rcProdBtn" disabled>🚀 Valider cette version pour la production</button>
+  </div></div>
 </div>
 
 <script>
 (function(){
   'use strict';
   var SUPA='https://btcbjwqiivhpwoszomhg.supabase.co';
-  // Clé publishable (l'ancienne clé anon JWT est désactivée côté Supabase → 401 sur l'API REST)
-  var ANON='sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
-  var RECETTE_VERSION='2026-08-09-a'; // bumpé à chaque dépôt significatif sur recette
+  var KEY='sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
 
-  // Gate : masquer en production (apex/www depan59-62.fr)
-  var IS_PROD=/(^|\.)depan59-62\.fr$/.test(location.hostname);
-  if(IS_PROD){ document.getElementById('rcGuard').hidden=false; return; }
+  if(/(^|\.)depan59-62\.fr$/.test(location.hostname)){ document.getElementById('rcGuard').hidden=false; return; }
   document.getElementById('rcApp').hidden=false;
-  document.getElementById('rcVer').textContent='Version recette : '+RECETTE_VERSION;
 
-  // ── Les modifications à valider (mises à jour par Claude au fil des lots) ──
+  // ── Modifications à valider. `v` = version de l'item : je l'incrémente quand JE modifie cet item
+  //    → tout OK donné sur une version antérieure repasse automatiquement en « à revalider ». ──
   var MODS=[
-    {id:'home-wizard-freeze',page:'HOME',p:'P0',label:'Wizard : paiement en ligne sécurisé (gelé)',desc:"Le questionnaire s'arrête sur la demande enregistrée — plus de paiement en ligne tant qu'il n'est pas totalement sécurisé.",url:'/',look:"Home → « Décrivez votre besoin » → Urgence → allez jusqu'au bout : vous devez voir « Votre demande est bien enregistrée », <b>jamais</b> une page de paiement."},
-    {id:'home-desktop-width',page:'HOME',label:'Largeur desktop — section chantiers / actualités',desc:"La section utilise beaucoup mieux la largeur de l'écran (avant : petite colonne centrée).",url:'/',look:"Sur grand écran, la section « Nos derniers chantiers / Nos dernières actualités » est <b>large</b>, avec des cartes plus grandes et sans grands vides sur les côtés."},
-    {id:'zones-map',page:'HOME',label:'Carte des zones refaite (plus épurée)',desc:"Fond clair, halo de couverture bleu, villes lisibles — plus « pro ».",url:'/zones-intervention.html',look:"La carte (à droite du hero, et page Zones) : <b>points bleus + noms de villes</b> + halo bleu de couverture. Regardez desktop et mobile."},
-    {id:'tarif-lead',page:'PRESTATIONS',label:'« Voir le tarif » enregistre un vrai prospect',desc:"Renseigner ses coordonnées crée un prospect exploitable (avec la prestation et l'agence) puis affiche le tarif.",url:'/nos-prestations.html',look:"Cliquez « 🔒 Voir le tarif » sur une prestation, renseignez vos coordonnées → le prix apparaît. (Un prospect « Tarif consulté » est créé côté agence.)"},
-    {id:'real-routing',page:'RÉALISATIONS',label:'Liens des chantiers fiabilisés + 1 seul bouton « retour »',desc:"Une seule adresse par chantier, plus d'erreur 404, un seul bouton retour.",url:'/realisations.html',look:"Ouvrez plusieurs chantiers depuis la liste : bonne fiche à chaque fois, aucune page d'erreur, un seul lien « retour »."},
-    {id:'sitemap',page:'SEO',label:'Plan de site complet (25 réalisations)',desc:"Le plan de site vu par Google liste bien les 25 réalisations (avant : 19).",url:'/sitemap.xml',look:"(Technique) Le plan de site sert 25 réalisations. Rien à contrôler visuellement, juste bon à savoir."}
+    {id:'home-wizard-freeze',page:'HOME',p:'P0',v:'1',label:'Wizard : paiement en ligne sécurisé (gelé)',desc:"Le questionnaire s'arrête sur la demande enregistrée — plus de paiement en ligne tant qu'il n'est pas totalement sécurisé.",url:'/',look:"Home → « Décrivez votre besoin » → Urgence → allez jusqu'au bout : vous devez voir « Votre demande est bien enregistrée », <b>jamais</b> une page de paiement."},
+    {id:'home-desktop-width',page:'HOME',v:'1',label:'Largeur desktop — section chantiers / actualités',desc:"La section utilise beaucoup mieux la largeur de l'écran.",url:'/',look:"Sur grand écran, la section « chantiers / actualités » est <b>large</b>, cartes plus grandes, sans grands vides sur les côtés."},
+    {id:'zones-map',page:'HOME',v:'1',label:'Carte des zones refaite (plus épurée)',desc:"Fond clair, halo de couverture bleu, villes lisibles.",url:'/zones-intervention.html',look:"La carte : <b>points bleus + noms de villes</b> + halo bleu. Regardez desktop et mobile."},
+    {id:'tarif-lead',page:'PRESTATIONS',v:'1',label:'« Voir le tarif » enregistre un vrai prospect',desc:"Renseigner ses coordonnées crée un prospect exploitable puis affiche le tarif.",url:'/nos-prestations.html',look:"Cliquez « 🔒 Voir le tarif », renseignez vos coordonnées → le prix apparaît."},
+    {id:'real-routing',page:'RÉALISATIONS',v:'1',label:'Liens des chantiers fiabilisés + 1 seul bouton « retour »',desc:"Une seule adresse par chantier, plus d'erreur 404, un seul bouton retour.",url:'/realisations.html',look:"Ouvrez plusieurs chantiers : bonne fiche à chaque fois, aucune 404, un seul lien « retour »."},
+    {id:'sitemap',page:'SEO',v:'1',label:'Plan de site complet (25 réalisations)',desc:"Le plan de site vu par Google liste bien les 25 réalisations (avant : 19).",url:'/sitemap.xml',look:"(Technique) Le plan de site sert 25 réalisations. Rien à contrôler visuellement."}
   ];
-
   var PAGE_ORDER=['HOME','PRESTATIONS','RÉALISATIONS','SEO'];
-  var state={}; // mod_id -> {status, comment}
 
-  function toast(msg){ var t=document.getElementById('rcToast'); t.textContent=msg; t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},1800); }
+  var decisions={}, freezes={}, goProd=null, prodDeploy=null;
 
-  function api(path,opts){ opts=opts||{}; opts.headers=Object.assign({apikey:ANON,Authorization:'Bearer '+ANON,'Content-Type':'application/json'},opts.headers||{}); return fetch(SUPA+'/rest/v1/'+path,opts); }
+  function hashStr(s){ var h=5381,i; for(i=0;i<s.length;i++){ h=((h<<5)+h+s.charCodeAt(i))>>>0; } return h.toString(36); }
+  function pageSig(pg){ return hashStr(MODS.filter(function(m){return m.page===pg;}).map(function(m){return m.id+'@'+m.v;}).sort().join('|')); }
+  function globalSig(){ return hashStr(MODS.map(function(m){return m.id+'@'+m.v;}).sort().join('|')); }
+  function toast(msg){ var t=document.getElementById('rcToast'); t.textContent=msg; t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},1900); }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function api(path,opts){ opts=opts||{}; opts.headers=Object.assign({apikey:KEY,Authorization:'Bearer '+KEY,'Content-Type':'application/json'},opts.headers||{}); return fetch(SUPA+'/rest/v1/'+path,opts); }
 
-  async function loadState(){
+  // état effectif d'un item : ok / a_corriger seulement si la décision porte sur la version courante ; sinon stale/pending
+  function eff(m){
+    var d=decisions[m.id];
+    if(!d) return {s:'pending'};
+    if(String(d.version)!==String(m.v)) return {s:'stale'};
+    return {s:d.status};
+  }
+  function pageState(pg){
+    var ms=MODS.filter(function(m){return m.page===pg;});
+    var okN=ms.filter(function(m){return eff(m).s==='ok';}).length;
+    var allOk=ms.length>0 && okN===ms.length;
+    var frozen = allOk && freezes[pg]===pageSig(pg);
+    return {ms:ms,okN:okN,allOk:allOk,frozen:frozen};
+  }
+
+  async function load(){
+    decisions={};freezes={};goProd=null;prodDeploy=null;
     try{
-      var r=await api('recette_validation?select=mod_id,status,comment,kind,created_at&order=created_at.desc&limit=500');
-      var rows=await r.json();
-      if(!Array.isArray(rows)) return;
-      var goSeen=false;
+      var r=await api('recette_validation_status?select=mod_id,page,status,kind,recette_version,created_at&order=created_at.desc&limit=800');
+      var rows=await r.json(); if(!Array.isArray(rows)) rows=[];
       rows.forEach(function(row){
-        if(row.kind==='go_prod'){ if(!goSeen){ state.__go=row; goSeen=true; } return; }
-        if(row.mod_id && !state[row.mod_id]) state[row.mod_id]={status:row.status,comment:row.comment}; // 1re = plus récente
+        if(row.kind==='feedback'){ if(row.mod_id && !decisions[row.mod_id]) decisions[row.mod_id]={status:row.status,version:row.recette_version}; }
+        else if(row.kind==='page_gelee'){ if(row.page && !(row.page in freezes)) freezes[row.page]=row.recette_version; }
+        else if(row.kind==='go_prod'){ if(!goProd) goProd=row; }
+        else if(row.kind==='prod_deploy'){ if(!prodDeploy) prodDeploy=row; }
       });
-    }catch(e){ /* hors-ligne : on affiche quand même */ }
+    }catch(e){}
   }
 
-  async function saveDecision(mod,status,comment){
-    state[mod.id]={status:status,comment:comment||null};
-    render();
-    try{
-      await api('recette_validation',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({kind:'feedback',page:mod.page,mod_id:mod.id,mod_label:mod.label,status:status,comment:comment||null,recette_version:RECETTE_VERSION})});
-      toast(status==='ok'?'✅ Validé':'❌ Retour enregistré');
-    }catch(e){ toast('⚠️ Enregistrement différé (réseau)'); }
+  function save(fields){ return api('recette_validation',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify(fields)}); }
+
+  async function decide(m,status,comment){
+    decisions[m.id]={status:status,version:m.v}; render();
+    try{ await save({kind:'feedback',page:m.page,mod_id:m.id,mod_label:m.label,status:status,comment:comment||null,recette_version:m.v}); toast(status==='ok'?'✅ Validé':'❌ Retour enregistré'); }
+    catch(e){ toast('⚠️ Enregistrement différé'); }
+  }
+  async function freezePage(pg){
+    freezes[pg]=pageSig(pg); render();
+    try{ await save({kind:'page_gelee',page:pg,mod_id:'PAGE:'+pg,mod_label:'Page gelée',status:'gelee',recette_version:pageSig(pg)}); toast('🔒 Page gelée'); }
+    catch(e){ toast('⚠️ Réessayez'); }
   }
 
-  function counts(){
-    var ok=0,ko=0,total=MODS.length,p0=0,p1=0;
-    MODS.forEach(function(m){ var s=state[m.id]; if(s&&s.status==='ok')ok++; if(s&&s.status==='a_corriger')ko++; if(m.p==='P0')p0++; if(m.p==='P1')p1++; });
-    return {ok:ok,ko:ko,total:total,p0:p0,p1:p1};
-  }
+  function stat(v,l){ return '<div class="rc-stat"><strong>'+v+'</strong><span>'+l+'</span></div>'; }
 
   function render(){
-    // résumé
-    var c=counts();
-    var pagesTotal=PAGE_ORDER.filter(function(p){return MODS.some(function(m){return m.page===p;});}).length;
-    var pagesOk=PAGE_ORDER.filter(function(p){ var ms=MODS.filter(function(m){return m.page===p;}); return ms.length && ms.every(function(m){return state[m.id]&&state[m.id].status==='ok';}); }).length;
+    var pages=PAGE_ORDER.filter(function(p){return MODS.some(function(m){return m.page===p;});});
+    var okC=0,koC=0,staleC=0,p0=0,p1=0,pagesFrozen=0;
+    MODS.forEach(function(m){ var e=eff(m).s; if(e==='ok')okC++; if(e==='a_corriger')koC++; if(e==='stale')staleC++; if(m.p==='P0')p0++; if(m.p==='P1')p1++; });
+    pages.forEach(function(p){ if(pageState(p).frozen) pagesFrozen++; });
     document.getElementById('rcSummary').innerHTML=
-      stat(pagesOk+'/'+pagesTotal,'Pages validées')+stat(c.ok,'Points OK')+stat(c.ko,'À corriger')+stat(c.p0,'P0')+stat(c.p1,'P1');
+      stat(pagesFrozen+'/'+pages.length,'Pages gelées')+stat(okC,'Points OK')+stat(koC,'À corriger')+stat(staleC,'À revalider')+stat(p0+p1,'P0 / P1');
 
-    // pages
+    // CE QUI EST EN PROD
+    var pb=document.getElementById('rcProdBox');
+    if(prodDeploy){
+      pb.innerHTML='<h2>🌐 En production</h2><div class="rc-prod-line">✅ Version mise en ligne le <b>'+new Date(prodDeploy.created_at).toLocaleString('fr-FR')+'</b>. '+(globalSig()===prodDeploy.recette_version?'La recette est identique à la production.':'⚠️ La recette contient des changements <b>non encore en production</b>.')+'</div>';
+    } else {
+      pb.innerHTML='<h2>🌐 En production</h2><div class="rc-prod-line">Aucune version publiée en production pour l\'instant — tout est en recette.</div>';
+    }
+
     var html='';
-    PAGE_ORDER.forEach(function(pg){
-      var ms=MODS.filter(function(m){return m.page===pg;});
-      if(!ms.length) return;
-      var okN=ms.filter(function(m){return state[m.id]&&state[m.id].status==='ok';}).length;
-      var allOk=okN===ms.length;
-      html+='<div class="rc-page"><div class="rc-page-head"><h2>'+pg+'</h2><span class="rc-page-prog">'+(allOk?'✅ page validée':okN+' / '+ms.length+' validées')+'</span></div>';
-      ms.forEach(function(m){
-        var s=state[m.id]||{};
-        var cls=s.status==='ok'?' is-ok':(s.status==='a_corriger'?' is-ko':'');
+    pages.forEach(function(pg){
+      var ps=pageState(pg);
+      var prog = ps.frozen ? '<span class="rc-frozen">🔒 Page gelée</span>'
+               : (ps.allOk ? '<button class="rc-freeze" data-freeze="'+pg+'">✅ Valider et geler cette page</button>'
+                           : '<span class="rc-page-prog">'+ps.okN+' / '+ps.ms.length+' validés</span>');
+      html+='<div class="rc-page"><div class="rc-page-head"><h2>'+pg+'</h2>'+prog+'</div>';
+      ps.ms.forEach(function(m){
+        var e=eff(m).s;
+        var cls=e==='ok'?' is-ok':(e==='a_corriger'?' is-ko':(e==='stale'?' is-stale':''));
+        var stateHtml=e==='ok'?'<span class="rc-state ok">✅ Validé</span>':(e==='a_corriger'?'<span class="rc-state ko">❌ À corriger</span>':(e==='stale'?'<span class="rc-state stale">🔄 À revalider (modifié)</span>':''));
         html+='<div class="rc-card'+cls+'" data-mod="'+m.id+'">'
-          +'<h3>'+(m.p?('<span style="color:#E11D48">['+m.p+'] </span>'):'')+esc(m.label)+'</h3>'
+          +'<h3>'+(m.p?'<span style="color:#E11D48">['+m.p+'] </span>':'')+esc(m.label)+'</h3>'
           +'<p class="rc-desc">'+esc(m.desc)+'</p>'
           +'<div class="rc-look">👉 <b>À regarder :</b> '+m.look+'</div>'
-          +'<div class="rc-actions">'
-          +'<button class="rc-btn voir" data-act="voir">👁️ Voir</button>'
-          +'<button class="rc-btn ok" data-act="ok">✅ OK</button>'
-          +'<button class="rc-btn ko" data-act="ko">❌ À corriger</button>'
-          +(s.status==='ok'?'<span class="rc-state ok">✅ Validé</span>':(s.status==='a_corriger'?'<span class="rc-state ko">❌ À corriger</span>':''))
-          +'</div>'
-          +(s.status==='a_corriger'&&s.comment?'<div class="rc-comment">💬 '+esc(s.comment)+'</div>':'')
-          +'<div class="rc-fix"><textarea placeholder="Qu\'est-ce qui ne va pas ? (ex : carte trop grosse, je préfère l\'ancien titre…)"></textarea><button class="rc-btn ko" data-act="send-ko">Envoyer le retour</button></div>'
+          +'<div class="rc-actions"><button class="rc-btn voir" data-act="voir">👁️ Voir</button><button class="rc-btn ok" data-act="ok">✅ OK</button><button class="rc-btn ko" data-act="ko">❌ À corriger</button>'+stateHtml+'</div>'
+          +'<div class="rc-fix"><textarea placeholder="Qu\'est-ce qui ne va pas ?"></textarea><button class="rc-btn ko" data-act="send-ko">Envoyer le retour</button></div>'
           +'</div>';
       });
       html+='</div>';
     });
     document.getElementById('rcPages').innerHTML=html;
 
-    // bouton prod
-    var ready=c.ok===c.total && c.ko===0;
-    var btn=document.getElementById('rcProdBtn');
-    btn.disabled=!ready || !!state.__go;
-    document.getElementById('rcProdTxt').innerHTML = state.__go
-      ? '✅ Version envoyée en production le '+new Date(state.__go.created_at).toLocaleString('fr-FR')+' — Claude vérifie et déploie.'
-      : (ready?'Tout est validé ✔ — vous pouvez envoyer en production.':('Encore '+(c.total-c.ok)+' point(s) à valider'+(c.ko?' · '+c.ko+' à corriger':'')));
+    var allFrozen = pages.every(function(p){return pageState(p).frozen;});
+    var goValid = goProd && goProd.recette_version===globalSig();
+    var btn=document.getElementById('rcProdBtn'); btn.disabled=!allFrozen || goValid;
+    document.getElementById('rcProdTxt').innerHTML = goValid
+      ? '✅ Version validée le '+new Date(goProd.created_at).toLocaleString('fr-FR')+' — Claude vérifie et déploie.'
+      : (allFrozen?'Toutes les pages sont gelées ✔ — vous pouvez envoyer en production.':'Gelez toutes les pages pour pouvoir valider la production.');
+    document.getElementById('rcVer').textContent='Version recette : '+globalSig();
   }
 
-  function stat(v,l){ return '<div class="rc-stat"><strong>'+v+'</strong><span>'+l+'</span></div>'; }
-  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
-
-  // interactions
   document.getElementById('rcPages').addEventListener('click',function(e){
-    var btn=e.target.closest('[data-act]'); if(!btn) return;
-    var card=btn.closest('[data-mod]'); var mod=MODS.find(function(m){return m.id===card.getAttribute('data-mod');}); if(!mod) return;
-    var act=btn.getAttribute('data-act');
-    if(act==='voir'){ window.open(mod.url+(mod.url.indexOf('?')>-1?'&':'?')+'vr='+mod.id,'_blank','noopener'); return; }
-    if(act==='ok'){ saveDecision(mod,'ok',null); return; }
+    var fb=e.target.closest('[data-freeze]'); if(fb){ freezePage(fb.getAttribute('data-freeze')); return; }
+    var b=e.target.closest('[data-act]'); if(!b) return;
+    var card=b.closest('[data-mod]'); var m=MODS.find(function(x){return x.id===card.getAttribute('data-mod');}); if(!m) return;
+    var act=b.getAttribute('data-act');
+    if(act==='voir'){ var u=m.url+(m.url.indexOf('?')>-1?'&':'?')+'review='+encodeURIComponent(m.id)+'&rv='+encodeURIComponent(m.v)+'&pg='+encodeURIComponent(m.page)+'&lbl='+encodeURIComponent(m.label); window.open(u,'_blank','noopener'); return; }
+    if(act==='ok'){ decide(m,'ok',null); return; }
     if(act==='ko'){ card.querySelector('.rc-fix').classList.add('open'); card.querySelector('.rc-fix textarea').focus(); return; }
-    if(act==='send-ko'){ var txt=card.querySelector('.rc-fix textarea').value.trim(); saveDecision(mod,'a_corriger',txt||'(sans détail)'); return; }
+    if(act==='send-ko'){ decide(m,'a_corriger',card.querySelector('.rc-fix textarea').value.trim()||'(sans détail)'); return; }
   });
 
   document.getElementById('rcProdBtn').addEventListener('click',async function(){
-    if(!confirm('Envoyer cette version validée en production ?\n\nCela enregistre votre décision. Claude vérifiera que rien n\'a changé, puis déploiera et testera la production.')) return;
+    if(!confirm('Envoyer cette version validée en production ?\n\nCela enregistre votre décision. Claude vérifiera que rien n\'a changé, sauvegarde un rollback, déploie, puis teste la production.')) return;
     this.disabled=true;
-    try{
-      await api('recette_validation',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({kind:'go_prod',recette_version:RECETTE_VERSION,actor:'florian',status:'go'})});
-      state.__go={created_at:new Date().toISOString()};
-      render(); toast('🚀 Décision enregistrée — Claude prend le relais');
-    }catch(e){ this.disabled=false; toast('⚠️ Réessayez (réseau)'); }
+    try{ await save({kind:'go_prod',mod_id:'GO',mod_label:'GO PROD',status:'go',recette_version:globalSig(),actor:'florian'}); goProd={created_at:new Date().toISOString(),recette_version:globalSig()}; render(); toast('🚀 Décision enregistrée — Claude prend le relais'); }
+    catch(e){ this.disabled=false; toast('⚠️ Réessayez'); }
   });
 
-  (async function init(){ await loadState(); render(); })();
+  (async function(){ await load(); render(); })();
 })();
 </script>
 </body>

@@ -1419,7 +1419,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
      ? subgroups.map(sg => `
        <div class="nv-subgroup" data-subcat-slug="${escapeHtml(sg.slug || '_default')}">
        ${sg.name ? `<h3 class="nv-subcat-head" data-subcat-slug="${escapeHtml(sg.slug || '_default')}"><span class="nv-subcat-emoji">${sg.name.match(/^\S+/)?.[0] || ''}</span><span class="nv-subcat-label">${escapeHtml((sg.name||'').replace(/^\S+\s*/, ''))}</span><span class="nv-subcat-count">${sg.items.length}</span></h3>` : ''}
-       <div class="nv-grid">
+       <div class="nv-grid" data-review-id="tarif-lead">
          ${sg.items.map(s => renderCard(s, g.slug)).join('')}
        </div>
        </div>
@@ -1930,5 +1930,6 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
   <script defer src="assets/hc-process.js"></script>
 <script src="assets/hc-modal-prefill.js?v=20260604-clean" defer></script>
 <script src="assets/hc-form-validation.js?v=20260603" defer></script>
+<script defer src="assets/hc-review.js?v=1"></script>
 </body>
 </html>
