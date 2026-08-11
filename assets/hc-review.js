@@ -22,8 +22,8 @@
 
   ready(function () {
     var CSS = '\
-@keyframes hcrvPulse{0%,100%{box-shadow:0 0 0 3px rgba(13,160,207,.85),0 0 0 9px rgba(13,160,207,.25)}50%{box-shadow:0 0 0 4px rgba(255,107,26,.9),0 0 0 14px rgba(255,107,26,.22)}}\
-.hcrv-hl{outline:0 !important;border-radius:12px;animation:hcrvPulse 1.6s ease-in-out 4;scroll-margin-top:120px;position:relative;z-index:2}\
+@keyframes hcrvPulse{0%,100%{box-shadow:0 0 0 2px rgba(255,107,26,.5),0 0 22px 6px rgba(255,107,26,.14)}50%{box-shadow:0 0 0 2px rgba(255,107,26,.75),0 0 34px 12px rgba(255,107,26,.24)}}\
+.hcrv-hl{outline:0 !important;border-radius:18px;animation:hcrvPulse 1.9s ease-in-out 3;scroll-margin-top:120px;position:relative;z-index:2}\
 .hcrv-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:2147483000;background:#0A1428;color:#fff;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.4);padding:14px 16px;width:min(560px,94vw);font-family:Inter,system-ui,sans-serif;display:flex;flex-direction:column;gap:10px;animation:hcrvUp .3s cubic-bezier(.16,1,.3,1)}\
 @keyframes hcrvUp{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translate(-50%,0)}}\
 .hcrv-bar .t{font-size:.86rem;line-height:1.4}.hcrv-bar .t b{color:#1FC4F0}\

@@ -44,6 +44,8 @@
 
 | A22 | pages métiers — cartes savoir-faire (m-svc) | UX/Nav/SEO | 24/28 cartes (86%) pointent vers le catalogue générique `nos-prestations#sec-*` au lieu de pages sous-métier dédiées ; 0 page dédiée (sauf PMR) | P1 | Inventaire fait (`docs/AUDIT-A22-CARTES-METIERS.md`). Plan : 1) rebrancher vers pages dédiées existantes 2) créer les manquantes (contenu/photos/fournisseurs/questionnaire/lead/SEO/maillage). Chantier page par page | ⏳ inventaire | — | ⏳ | — | — |
 
+| A23 | centre — surlignage « Voir » (hc-review.js) | UX | Retour Florian sur `tarif-lead` : « le carré bleu autour me dérange » (le cadre de revue bleu vif entoure tout le bloc) | P2 | Adoucir le surlignage : halo orange doux arrondi, sans carré bleu | 🔄 en cours → à revalider | — | ⏳ | — | — |
+
 ## Gates Florian (décision requise)
 - **A05** : méthode d'authentification du back-office `/admin-pro/*` (mot de passe Netlify site-wide ? Identity ? blocage sélectif ?). Je ne modifie pas sans ton choix pour ne pas casser tes outils admin.
 - **A08b** : hardening backend paiement (action Supabase prod = GO requis). Deux failles : (1) `stripe-create-payment-link` accepte un montant arbitraire de l'appelant ; (2) `stripe-webhook` **ne vérifie pas la signature Stripe** (`TODO`) → statut « payé » forgeable. **Conclusion : paiement client à garder GELÉ** tant que : prix serveur (catalogue) + endpoint restreint + signature webhook (`webhook_secret`) + idempotence ne sont pas en place et prouvés en TEST.
