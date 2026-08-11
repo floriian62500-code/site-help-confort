@@ -96,9 +96,10 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-ser
     {id:'zones-map',page:'HOME',v:'1',label:'Carte des zones refaite (plus épurée)',desc:"Fond clair, halo de couverture bleu, villes lisibles.",url:'/zones-intervention.html',look:"La carte : <b>points bleus + noms de villes</b> + halo bleu. Regardez desktop et mobile."},
     {id:'tarif-lead',page:'PRESTATIONS',v:'2',label:'« Voir le tarif » enregistre un vrai prospect',desc:"Renseigner ses coordonnées crée un prospect exploitable puis affiche le tarif.",url:'/nos-prestations.html',look:"Cliquez « 🔒 Voir le tarif », renseignez vos coordonnées → le prix apparaît."},
     {id:'real-routing',page:'RÉALISATIONS',v:'1',label:'Liens des chantiers fiabilisés + 1 seul bouton « retour »',desc:"Une seule adresse par chantier, plus d'erreur 404, un seul bouton retour.",url:'/realisations.html',look:"Ouvrez plusieurs chantiers : bonne fiche à chaque fois, aucune 404, un seul lien « retour »."},
-    {id:'sitemap',page:'SEO',v:'1',label:'Plan de site complet (25 réalisations)',desc:"Le plan de site vu par Google liste bien les 25 réalisations (avant : 19).",url:'/sitemap.xml',look:"(Technique) Le plan de site sert 25 réalisations. Rien à contrôler visuellement."}
+    {id:'sitemap',page:'SEO',v:'1',label:'Plan de site complet (25 réalisations)',desc:"Le plan de site vu par Google liste bien les 25 réalisations (avant : 19).",url:'/sitemap.xml',look:"(Technique) Le plan de site sert 25 réalisations. Rien à contrôler visuellement."},
+    {id:'menuiserie-cards',page:'MENUISERIE',v:'1',label:'Cartes savoir-faire → pages dédiées',desc:"Les 8 cartes menuiserie (porte d'entrée, porte de garage, fenêtres, portail…) mènent maintenant à LEUR page dédiée, au lieu du catalogue générique.",url:'/menuisier-saint-omer.html',look:"Sur la page menuiserie, la grille « savoir-faire » : cliquez <b>Porte d'entrée</b> → vous arrivez sur la vraie page Porte d'entrée (plus le catalogue générique). Idem porte de garage, fenêtres, portail & clôture…"}
   ];
-  var PAGE_ORDER=['HOME','PRESTATIONS','RÉALISATIONS','SEO'];
+  var PAGE_ORDER=['HOME','PRESTATIONS','MENUISERIE','RÉALISATIONS','SEO'];
 
   var decisions={}, freezes={}, goProd=null, prodDeploy=null;
 
