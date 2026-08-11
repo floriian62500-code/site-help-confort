@@ -1,0 +1,35 @@
+{
+  "project": "HELP CONFORT Saint-Omer / Dunkerque website",
+  "repository": "floriian62500-code/site-help-confort",
+  "production_domain": "https://depan59-62.fr",
+  "production_branch": "main",
+  "validation_branch": "recette",
+  "validation_center": "/recette.html",
+  "control_plane_version": 1,
+  "mode": "human-gated-production",
+  "roles": {
+    "claude": "technical_executor",
+    "chatgpt": "controller_and_pilot",
+    "florian": "business_decider"
+  },
+  "human_gates": [
+    "production deployment",
+    "live payment activation or mutation",
+    "sensitive production data mutation",
+    "destructive database or Git operation",
+    "authentication/RLS security change with production impact",
+    "DNS/domain change",
+    "major legal, financial or contractual decision",
+    "visual/business validation in recette center"
+  ],
+  "forbidden_without_gate": [
+    "force push",
+    "destructive reset",
+    "mass deletion",
+    "security bypass",
+    "secrets committed to Git",
+    "live payment tests with real customer money"
+  ],
+  "current_policy": "All visible changes go through recette.html page-by-page validation before production.",
+  "initialized_at": "2026-08-11"
+}
