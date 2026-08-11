@@ -11,7 +11,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'realisations');
 const SUPA = 'https://btcbjwqiivhpwoszomhg.supabase.co';
-const SITE = 'https://www.depan59-62.fr';
+const SITE = 'https://depan59-62.fr';
 const PHONE = '03 66 10 01 34', TEL = '+33366100134';
 
 const METIERS = {
