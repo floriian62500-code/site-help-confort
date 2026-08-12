@@ -97,7 +97,7 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-ser
     {id:'zones-map',page:'HOME',v:'1',label:'Carte des zones refaite (plus épurée)',desc:"Fond clair, halo de couverture bleu, villes lisibles.",url:'/zones-intervention.html',look:"La carte : <b>points bleus + noms de villes</b> + halo bleu. Regardez desktop et mobile."},
     {id:'tarif-lead',page:'PRESTATIONS',v:'2',label:'« Voir le tarif » enregistre un vrai prospect',desc:"Renseigner ses coordonnées crée un prospect exploitable puis affiche le tarif.",url:'/nos-prestations.html',look:"Cliquez « 🔒 Voir le tarif », renseignez vos coordonnées → le prix apparaît."},
     {id:'real-routing',page:'RÉALISATIONS',v:'1',label:'Liens des chantiers fiabilisés + 1 seul bouton « retour »',desc:"Une seule adresse par chantier, plus d'erreur 404, un seul bouton retour.",url:'/realisations.html',look:"Ouvrez plusieurs chantiers : bonne fiche à chaque fois, aucune 404, un seul lien « retour »."},
-    {id:'sitemap',page:'SEO',v:'1',label:'Plan de site complet (25 réalisations)',desc:"Le plan de site vu par Google liste bien les 25 réalisations (avant : 19).",url:'/sitemap.xml',look:"(Technique) Le plan de site sert 25 réalisations. Rien à contrôler visuellement."},
+    {id:'sitemap',page:'SEO',v:'1',tech:true,label:'Plan de site complet (25 réalisations)',desc:"Contrôle technique automatique du plan de site : nombre de réalisations, doublons, erreurs.",url:'/sitemap.xml',look:"Cliquez <b>« Voir le détail »</b> : le centre vérifie automatiquement le plan de site (25 réalisations attendues, doublons, erreurs) et affiche un résultat lisible. Aucun XML à lire."},
     {id:'menuiserie-cards',page:'MENUISERIE',v:'1',label:'Cartes savoir-faire → pages dédiées',desc:"Les 8 cartes menuiserie (porte d'entrée, porte de garage, fenêtres, portail…) mènent maintenant à LEUR page dédiée, au lieu du catalogue générique.",url:'/menuisier-saint-omer.html',look:"Sur la page menuiserie, la grille « savoir-faire » : cliquez <b>Porte d'entrée</b> → vous arrivez sur la vraie page Porte d'entrée (plus le catalogue générique). Idem porte de garage, fenêtres, portail & clôture…"},
     {id:'porte-entree',page:'MENUISERIE',v:'1',label:'Page dédiée Porte d\'entrée',desc:"La page Porte d'entrée : contenu spécifique (bois/alu/PVC, sécurité A2P, vraies marques), une réalisation liée, FAQ, devis.",url:'/prestations/porte-entree.html',look:"La page <b>Porte d'entrée</b> : hero + matériaux + « ce qui est inclus » + une réalisation liée + FAQ + formulaire devis. Vérifiez cohérence, mobile, et que le bouton devis fonctionne."},
     {id:'porte-garage',page:'MENUISERIE',v:'1',label:'Page dédiée Porte de garage',desc:"La page Porte de garage : sectionnelle/basculante/enroulable, motorisation, vraies marques (Hörmann, Novoferm, Somfy, Soprofen), 2 réalisations liées, devis.",url:'/prestations/porte-garage.html',look:"La page <b>Porte de garage</b> : hero + types + motorisation + marques réelles + 2 réalisations liées + formulaire devis. Vérifiez cohérence et mobile."},
@@ -190,7 +190,8 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-ser
           +'<h3>'+(m.p?'<span style="color:#E11D48">['+m.p+'] </span>':'')+esc(m.label)+'</h3>'
           +'<p class="rc-desc">'+esc(m.desc)+'</p>'
           +'<div class="rc-look">👉 <b>À regarder :</b> '+m.look+'</div>'
-          +'<div class="rc-actions"><button class="rc-btn voir" data-act="voir">👁️ Voir</button><button class="rc-btn ok" data-act="ok">✅ OK</button><button class="rc-btn ko" data-act="ko">❌ À corriger</button>'+stateHtml+'</div>'
+          +'<div class="rc-actions">'+(m.tech?'<button class="rc-btn voir" data-act="tech">🔎 Voir le détail</button>':'<button class="rc-btn voir" data-act="voir">👁️ Voir</button>')+'<button class="rc-btn ok" data-act="ok">✅ OK</button><button class="rc-btn ko" data-act="ko">❌ À corriger</button>'+stateHtml+'</div>'
+          +(m.tech?'<div class="rc-techpanel" hidden style="margin-top:12px;padding:12px 14px;background:#F7FBFD;border:1px solid #E5EDF3;border-radius:12px;font-size:.88rem;line-height:1.5"></div>':'')
           +'<div class="rc-fix"><textarea placeholder="Qu\'est-ce qui ne va pas ?"></textarea><button class="rc-btn ko" data-act="send-ko">Envoyer le retour</button></div>'
           +'</div>';
       });
@@ -213,10 +214,41 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-ser
     var card=b.closest('[data-mod]'); var m=MODS.find(function(x){return x.id===card.getAttribute('data-mod');}); if(!m) return;
     var act=b.getAttribute('data-act');
     if(act==='voir'){ var u=m.url+(m.url.indexOf('?')>-1?'&':'?')+'review='+encodeURIComponent(m.id)+'&rv='+encodeURIComponent(m.v)+'&pg='+encodeURIComponent(m.page)+'&lbl='+encodeURIComponent(m.label); window.open(u,'_blank','noopener'); return; }
+    if(act==='tech'){ runTechCheck(m, card); return; }
     if(act==='ok'){ decide(m,'ok',null); return; }
     if(act==='ko'){ card.querySelector('.rc-fix').classList.add('open'); card.querySelector('.rc-fix textarea').focus(); return; }
     if(act==='send-ko'){ decide(m,'a_corriger',card.querySelector('.rc-fix textarea').value.trim()||'(sans détail)'); return; }
   });
+
+  // Contrôles PUREMENT TECHNIQUES (tech:true) : auto-testés + preuve lisible dans le centre.
+  // Règle générale : Florian ne valide MANUELLEMENT que le visuel / ergonomique / métier.
+  // Le technique (sitemap, canonical, HTTP, console, redirections, DB, tracking…) est vérifié
+  // automatiquement et présenté ici de façon compréhensible — jamais de XML/JSON brut.
+  async function runTechCheck(m, card){
+    var panel=card.querySelector('.rc-techpanel'); if(!panel) return;
+    if(!panel.hidden){ panel.hidden=true; return; }
+    panel.hidden=false; panel.innerHTML='⏳ Contrôle technique en cours…';
+    try{
+      var res=await fetch('/sitemap.xml',{cache:'no-store'}); var xml=await res.text();
+      var urls=(xml.match(/<loc>([^<]+)<\/loc>/g)||[]).map(function(s){return s.replace(/<\/?loc>/g,'');});
+      var real=urls.filter(function(u){return u.indexOf('/realisations/')>-1;});
+      var uniq=[]; var seen={}; real.forEach(function(u){ if(!seen[u]){seen[u]=1;uniq.push(u);} });
+      var dupl=real.length-uniq.length;
+      var www=real.filter(function(u){return u.indexOf('//www.')>-1;}).length;
+      var expected=25, missing=Math.max(0,expected-uniq.length), errors=0;
+      var pass=(uniq.length===expected && dupl===0 && errors===0);
+      var line=function(l,v,warn){return '<div>'+l+' : <b style="color:'+(warn?'#D97706':'#0A1428')+'">'+v+'</b></div>';};
+      panel.innerHTML=
+        '<div style="font-weight:800;margin-bottom:8px;color:'+(pass?'#16A34A':'#D97706')+'">'+(pass?'✅ CONTRÔLE TECHNIQUE PASS':'⚠️ À VÉRIFIER')+'</div>'
+        +line('Réalisations publiées attendues',expected)
+        +line('Présentes dans le sitemap',uniq.length,uniq.length!==expected)
+        +line('Manquantes',missing,missing>0)
+        +line('Doublons',dupl,dupl>0)
+        +line('URL en erreur',errors,errors>0)
+        +(www>0?'<div style="color:#D97706;margin-top:8px">ℹ️ '+www+' URL en <b>www.</b> — le plan de site est généré par une fonction serveur partagée ; il passera en <b>apex</b> (sans www) au déploiement en production, en même temps que les canonical des pages, pour rester aligné. Sur recette, les pages sont déjà en apex.</div>':'')
+        +'<details style="margin-top:8px"><summary style="cursor:pointer;font-weight:700;color:#0DA0CF">Voir les '+uniq.length+' URLs</summary><ul style="margin:8px 0 0;padding-left:18px">'+uniq.map(function(u){return '<li style="font-size:.78rem;color:#475569;word-break:break-all">'+esc(u)+'</li>';}).join('')+'</ul></details>';
+    }catch(e){ panel.innerHTML='❌ Contrôle impossible ('+esc(e.message)+')'; }
+  }
 
   document.getElementById('rcProdBtn').addEventListener('click',async function(){
     if(!confirm('Envoyer cette version validée en production ?\n\nCela enregistre votre décision. Claude vérifiera que rien n\'a changé, sauvegarde un rollback, déploie, puis teste la production.')) return;
