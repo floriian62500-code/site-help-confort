@@ -1260,9 +1260,9 @@ document.querySelectorAll('.hc-resa-step').forEach(s => observer.observe(s, {att
 
  <div class="resa-actions">
  <button type="button" class="resa-act resa-act-prim" id="resa-pay">
- <span class="ic">💳</span>
- <strong>Confirmer &amp; payer en ligne</strong>
- <span>Paiement sécurisé · CB, Apple Pay, Google Pay</span>
+ <span class="ic">📅</span>
+ <strong>Réserver ma prise en charge</strong>
+ <span>Sans paiement en ligne · on vous rappelle pour finaliser</span>
  </button>
  <a href="tel:+33366100134" class="resa-act resa-act-sec">
  <span class="ic">📞</span>
@@ -2468,7 +2468,7 @@ payBtn.dataset.sending = '1';
 // 1. Enregistre le lead côté Supabase — ATTEND la réponse serveur AVANT toute navigation (paiement)
 var _payOrig0 = payBtn.innerHTML;
 payBtn.disabled = true; payBtn.innerHTML = 'Envoi en cours…';
-var leadRes = await persistLeadToSupabase('home_wizard_reservation_paiement');
+var leadRes = await persistLeadToSupabase('home_wizard_reservation_rappel');
 if (!leadRes || !leadRes.ok) {
   payBtn.disabled = false; payBtn.innerHTML = _payOrig0; payBtn.dataset.sending = '0';
   resaMsg(false, resaErrorText(leadRes)); // reste sur la page + erreur précise, PAS de navigation
@@ -2480,7 +2480,7 @@ var payPhotoNote = (leadRes.photos && leadRes.photos.ok === false) ? ' (vos phot
 // endpoint non sécurisé (montant navigateur + webhook sans signature). Tant que la matrice
 // Stripe TEST n'est pas PASS, on s'ARRÊTE proprement sur le LEAD (déjà enregistré ci-dessus) :
 // l'agence recontacte / transmet un lien de paiement à montant fixé côté staff.
-resaMsg(true, 'Votre demande est bien enregistrée ✓' + payPhotoNote + '. Notre équipe vous recontacte rapidement pour finaliser votre prise en charge.');
+resaMsg(true, 'Votre réservation est bien enregistrée ✓' + payPhotoNote + '. Notre équipe vous rappelle rapidement pour convenir du créneau et finaliser votre prise en charge — aucun paiement en ligne à ce stade.');
 payBtn.disabled = false; payBtn.innerHTML = _payOrig0; payBtn.dataset.sending = '0';
 return;
 var sug = state.suggested_presta || {};
