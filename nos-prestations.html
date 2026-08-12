@@ -274,7 +274,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  </nav>
 
  <!-- CATALOGUE -->
- <div class="nv-catalog" id="catalogRoot">
+ <div class="nv-catalog" id="catalogRoot" data-review-id="tarif-lead">
  <div class="nv-loading">
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9" stroke-opacity=".2"/><path d="M21 12a9 9 0 0 0-9-9"/></svg>
  <p style="margin-top:14px">Chargement du catalogue…</p>
@@ -1419,7 +1419,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
      ? subgroups.map(sg => `
        <div class="nv-subgroup" data-subcat-slug="${escapeHtml(sg.slug || '_default')}">
        ${sg.name ? `<h3 class="nv-subcat-head" data-subcat-slug="${escapeHtml(sg.slug || '_default')}"><span class="nv-subcat-emoji">${sg.name.match(/^\S+/)?.[0] || ''}</span><span class="nv-subcat-label">${escapeHtml((sg.name||'').replace(/^\S+\s*/, ''))}</span><span class="nv-subcat-count">${sg.items.length}</span></h3>` : ''}
-       <div class="nv-grid" data-review-id="tarif-lead">
+       <div class="nv-grid">
          ${sg.items.map(s => renderCard(s, g.slug)).join('')}
        </div>
        </div>
