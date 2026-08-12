@@ -1225,8 +1225,8 @@ if (document.fonts && document.fonts.ready) {
  </div>
  <!-- 6 cartes prestations avec photos Unsplash vérifiées (URLs validées par fetch direct) -->
  <style>.m-svc-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--m-color),var(--m-color-dark));color:#fff}.m-svc-placeholder svg{width:64px;height:64px;opacity:.85}</style>
-            <div class="m-services-grid">
- <a href="nos-prestations.html#sec-plomberie" class="m-svc">
+            <div class="m-services-grid" data-review-id="plomberie-cards">
+ <a href="prestations/recherche-fuite.html" class="m-svc">
  <div class="m-svc-img">
  <img width="1300" height="941" src="https://btcbjwqiivhpwoszomhg.supabase.co/storage/v1/object/public/site-photos/plomberie/fuite.jpg" alt="Recherche de fuite — caméra Milwaukee" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" onerror="this.onerror=null;this.src='images/prestations/recherche-fuite.jpg'">
  </div>
@@ -1262,7 +1262,7 @@ if (document.fonts && document.fonts.ready) {
  <span class="m-svc-arrow" aria-hidden="true">→</span>
  </div>
  </a>
- <a href="nos-prestations.html#sec-plomberie" class="m-svc">
+ <a href="prestations/sanitaire.html" class="m-svc">
  <div class="m-svc-img">
  <img width="1040" height="730" src="https://btcbjwqiivhpwoszomhg.supabase.co/storage/v1/object/public/site-photos/pmr/salle-de-bain.jpg" alt="Rénovation salle de bain Delpha" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" onerror="this.onerror=null;this.src='images/prestations/salle-de-bain.jpg'">
  </div>
@@ -2098,5 +2098,6 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
 <script src="assets/hc-modal-prefill.js?v=20260604-clean" defer></script>
 <script src="assets/hc-rate-limit.js?v=20260603" defer></script>
 <script src="assets/hc-mini-zone.js?v=20260603" defer></script>
+<script src="/assets/hc-review.js" defer></script>
 </body>
 </html>
