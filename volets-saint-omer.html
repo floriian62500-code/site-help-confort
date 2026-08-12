@@ -1104,8 +1104,8 @@ if (document.fonts && document.fonts.ready) {
  </div>
  <!-- 6 cartes prestations volets — placeholders métier (photos réelles à insérer par Florian) -->
  <style>.m-svc-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--m-color),var(--m-color-dark));color:#fff}.m-svc-placeholder svg{width:64px;height:64px;opacity:.85}</style>
- <div class="m-services-grid">
- <a href="nos-prestations.html#sec-volets" class="m-svc">
+ <div class="m-services-grid" data-review-id="volets-cards">
+ <a href="prestations/volet-roulant.html" class="m-svc">
  <div class="m-svc-img" style="position:relative;overflow:hidden;background:linear-gradient(180deg,#1a1a1a 0%,#000 100%);display:flex;align-items:center;justify-content:center" data-photo-slot="volets/volet-roulant">
  <img src="https://btcbjwqiivhpwoszomhg.supabase.co/storage/v1/object/public/site-photos/volets/volet-roulant.jpg?v=20260601" alt="Volet roulant noir installé par HELP Confort" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2">
  <svg style="display:none;width:80%;max-width:200px;height:auto;opacity:.85" viewBox="0 0 200 240" fill="none"><rect x="10" y="10" width="180" height="20" rx="3" fill="#444"/><g stroke="#222" stroke-width="1.5">
@@ -1827,5 +1827,6 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
 <script src="assets/hc-modal-prefill.js?v=20260604-clean" defer></script>
 <script src="assets/hc-rate-limit.js?v=20260603" defer></script>
 <script src="assets/hc-mini-zone.js?v=20260603" defer></script>
+<script src="/assets/hc-review.js" defer></script>
 </body>
 </html>
