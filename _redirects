@@ -1,3 +1,8 @@
+# SÉCURITÉ : ne jamais servir les fichiers internes (suivi control-plane, docs/audits, scripts, sources edge/SQL)
+/docs/*      /404.html 404!
+/scripts/*   /404.html 404!
+/supabase/*  /404.html 404!
+
 # Sitemap dynamique servi par Edge Function Supabase
 /sitemap.xml https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sitemap 200!
 
