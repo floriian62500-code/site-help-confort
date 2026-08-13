@@ -1,12 +1,12 @@
 {
-  "runner_activation_state": "REPO_PRIVATE_OK · RUNNER_WRITE_BLOCKED_NONINTERACTIVE",
+  "runner_activation_state": "GATED — nécessite (a) accès Netlify-repo-privé réparé côté humain, (b) écriture runner en session claude interactive",
   "site_work_state": "PAUSED_PER_CP-0011 (runner d'abord)",
   "state": "RUNNER_GATED · SITE_WORK_ACTIVE",
   "pid_session": null,
   "pid": null,
   "session": null,
   "last_poll_at": null,
-  "current_action": "repo privé effectué + Netlify vérifié ; runner à finaliser en session claude interactive",
+  "current_action": "finding Netlify/privé documenté (CP-0014) ; repo restauré public ; audit reprend",
   "last_action_id": "CP-0011",
   "last_outbox_id": null,
   "last_error": null,
@@ -35,5 +35,6 @@
     "3_unblock_harness_write": "Pour lever le refus du classifier sur l'écriture du script runner local (voie non payante) : dans un terminal INTERACTIF `claude`, exécuter /permissions et ajouter une règle ALLOW pour Write(scripts/control/**) et Bash(launchctl:*) ; OU relancer la demande en mode interactif et approuver le prompt d'outil manuellement. (Alternative sans permission : Florian crée lui-même scripts/control/site-runner.sh depuis le texte fourni.)",
     "4_api_cost_decision": "SEULEMENT si voie hébergée GitHub Actions retenue : accepter le coût ANTHROPIC_API_KEY (sinon rester sur la voie locale non payante)."
   },
-  "repo_visibility": "PRIVATE (2026-08-13, GO chat direct Florian)"
+  "repo_visibility": "PUBLIC (revert après test privé — build Netlify cassé en privé)",
+  "netlify_private_compat": "FALSE (prouvé: privé=no build; public=build OK). App GitHub Netlify perd l'accès au repo privé."
 }
