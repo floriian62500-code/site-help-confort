@@ -1,9 +1,11 @@
 {
-  "state": "BOOTSTRAPPED_NO_RUNNER_YET",
+  "state": "DESIGN_READY_DISABLED_PENDING_PRIVATE_REPO_AND_WRITE_PERMISSION",
   "pid_session": null,
+  "pid": null,
+  "session": null,
   "last_poll_at": null,
-  "current_action": "bootstrap_control_plane",
-  "last_action_id": null,
+  "current_action": "awaiting_human_gate",
+  "last_action_id": "CP-0007/CP-0008",
   "last_outbox_id": null,
   "last_error": null,
   "consecutive_failures": 0,
@@ -11,5 +13,17 @@
   "heartbeat": null,
   "watchdog": "not_installed",
   "dedup_store": "not_installed",
-  "note": "Persistent Git control-plane created. Continuous runner must still be implemented and proven before claiming autonomous background operation."
+  "activation_conditions": [
+    "harness_write_permission_for_runner_script (bloqué par classifier Claude Code)",
+    "repo PRIVATE avant activation (CP-0007: jamais d'exécuteur autonome sur inbox de repo PUBLIC)",
+    "verifier build recette apres passage private"
+  ],
+  "hard_gates": [
+    "push integration+recette uniquement, jamais main",
+    "no deploy/apply prod",
+    "no secret",
+    "no force-push",
+    "Stripe LIVE gelé"
+  ],
+  "note": "Runner conçu (repo site uniquement). NON actif: bloqué par (a) permission harness d'écriture du script, (b) condition CP-0007 repo PRIVATE avant activation. Ne pas déclarer autonome tant qu'un cycle réel n'est pas prouvé."
 }
