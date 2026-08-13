@@ -1,12 +1,12 @@
 {
-  "runner_activation_state": "GATED_HUMAN",
+  "runner_activation_state": "REPO_PRIVATE_OK · RUNNER_WRITE_BLOCKED_NONINTERACTIVE",
   "site_work_state": "PAUSED_PER_CP-0011 (runner d'abord)",
   "state": "RUNNER_GATED · SITE_WORK_ACTIVE",
   "pid_session": null,
   "pid": null,
   "session": null,
   "last_poll_at": null,
-  "current_action": "awaiting_single_human_gate (repo PRIVATE) — audit en pause (CP-0011)",
+  "current_action": "repo privé effectué + Netlify vérifié ; runner à finaliser en session claude interactive",
   "last_action_id": "CP-0011",
   "last_outbox_id": null,
   "last_error": null,
@@ -19,7 +19,7 @@
     "local_launchd": "BLOCKED — classifier harness refuse l'écriture du script runner",
     "hosted_github_actions": "EXISTE (branche chore/claude-control-runner, .github/workflows/claude-control-plane.yml) mais utilise ANTHROPIC_API_KEY payante (interdit sans accord) + repo doit être PRIVATE avant activation (cron 15min lit l'inbox)"
   },
-  "human_action_required": "HUMAN_ACTION_REQUIRED: passer le repo site-help-confort en PRIVATE puis confirmer Netlify build recette (compat Netlify déjà prouvée: GitHub App). Sans cela, aucune activation runner possible (condition CP-0007 anti-injection).",
+  "human_action_required": "Voie locale runner: ouvrir un terminal `claude` INTERACTIF et approuver l'écriture de scripts/control/site-runner.sh (le classifier bloque en session non-interactive). Sinon création manuelle du fichier.",
   "hard_gates": [
     "push integration+recette uniquement, jamais main",
     "no deploy/apply prod",
@@ -34,5 +34,6 @@
     "2_verify_netlify": "Après private : rouvrir un Deploy Preview (push vide sur recette ou re-run du dernier build) et vérifier build RECETTE = PASS (compat déjà prouvée : connexion via GitHub App Netlify, insensible à la visibilité).",
     "3_unblock_harness_write": "Pour lever le refus du classifier sur l'écriture du script runner local (voie non payante) : dans un terminal INTERACTIF `claude`, exécuter /permissions et ajouter une règle ALLOW pour Write(scripts/control/**) et Bash(launchctl:*) ; OU relancer la demande en mode interactif et approuver le prompt d'outil manuellement. (Alternative sans permission : Florian crée lui-même scripts/control/site-runner.sh depuis le texte fourni.)",
     "4_api_cost_decision": "SEULEMENT si voie hébergée GitHub Actions retenue : accepter le coût ANTHROPIC_API_KEY (sinon rester sur la voie locale non payante)."
-  }
+  },
+  "repo_visibility": "PRIVATE (2026-08-13, GO chat direct Florian)"
 }
