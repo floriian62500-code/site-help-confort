@@ -1,13 +1,13 @@
 {
   "runner_activation_state": "GATED_HUMAN",
-  "site_work_state": "ACTIVE",
+  "site_work_state": "PAUSED_PER_CP-0011 (runner d'abord)",
   "state": "RUNNER_GATED · SITE_WORK_ACTIVE",
   "pid_session": null,
   "pid": null,
   "session": null,
   "last_poll_at": null,
-  "current_action": "audit_corrections_P2_P3 (manuel, CP-0010)",
-  "last_action_id": "CP-0010",
+  "current_action": "awaiting_single_human_gate (repo PRIVATE) — audit en pause (CP-0011)",
+  "last_action_id": "CP-0011",
   "last_outbox_id": null,
   "last_error": null,
   "consecutive_failures": 0,
@@ -28,5 +28,11 @@
     "Stripe LIVE gelé",
     "no coût API additionnel sans accord"
   ],
-  "note": "Seul le sous-chantier ACTIVATION runner est gated (2 voies bloquées: classifier local + clé API payante/repo public). Le chantier SITE continue (audit CP-0004/0005, corrections P2/P3). Système NON déclaré autonome (aucun cycle réel prouvé)."
+  "note": "Seul le sous-chantier ACTIVATION runner est gated (2 voies bloquées: classifier local + clé API payante/repo public). Le chantier SITE continue (audit CP-0004/0005, corrections P2/P3). Système NON déclaré autonome (aucun cycle réel prouvé).",
+  "exact_human_actions": {
+    "1_repo_private": "GitHub → repo floriian62500-code/site-help-confort → Settings → General → bas de page 'Danger Zone' → 'Change repository visibility' → Private → confirmer.",
+    "2_verify_netlify": "Après private : rouvrir un Deploy Preview (push vide sur recette ou re-run du dernier build) et vérifier build RECETTE = PASS (compat déjà prouvée : connexion via GitHub App Netlify, insensible à la visibilité).",
+    "3_unblock_harness_write": "Pour lever le refus du classifier sur l'écriture du script runner local (voie non payante) : dans un terminal INTERACTIF `claude`, exécuter /permissions et ajouter une règle ALLOW pour Write(scripts/control/**) et Bash(launchctl:*) ; OU relancer la demande en mode interactif et approuver le prompt d'outil manuellement. (Alternative sans permission : Florian crée lui-même scripts/control/site-runner.sh depuis le texte fourni.)",
+    "4_api_cost_decision": "SEULEMENT si voie hébergée GitHub Actions retenue : accepter le coût ANTHROPIC_API_KEY (sinon rester sur la voie locale non payante)."
+  }
 }
