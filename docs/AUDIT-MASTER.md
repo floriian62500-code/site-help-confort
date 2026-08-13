@@ -60,3 +60,9 @@
 | **A-2026-002** (P1) | �️ PARTIEL (recette) | `nos-prestations.html` meta + hero : « Réservez en ligne… acompte 40 %… solde » → « Devis rapide / prise en charge sur rendez-vous ». Reste : garanties/contact/espace-client (moyens de paiement post-intervention = revue nuancée, pas de suppression aveugle du lien Stripe staff). | résidu 0 sur nos-prestations |
 
 > Les autres anomalies (P2 SEO bi-ville, realisation.html, A-2026-003 espace-client « à venir », etc.) restent en DÉTECTÉ, à traiter dans l'ordre P1 restant → P2.
+
+### Corrections complémentaires (recette)
+| ID | Statut | Note |
+|----|--------|------|
+| **A-2026-003** (P2) | ✅ CORRIGÉ (recette) | `espace-client.html` : « paiement en ligne des contrats d'entretien » → « … (à venir) » (paiement gelé). |
+| **A-2026-004** (P2) | ⚪ REQUALIFIÉ non-bug | `/realisation.html` renvoie un **301 intentionnel** vers `/realisations.html` (nettoyage legacy, `_redirects`). Le 301 est correct ; l'agent attendait 200 à tort. Aucune action. |
