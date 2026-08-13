@@ -1,11 +1,13 @@
 {
-  "state": "DESIGN_READY_DISABLED_PENDING_PRIVATE_REPO_AND_WRITE_PERMISSION",
+  "runner_activation_state": "GATED_HUMAN",
+  "site_work_state": "ACTIVE",
+  "state": "RUNNER_GATED · SITE_WORK_ACTIVE",
   "pid_session": null,
   "pid": null,
   "session": null,
   "last_poll_at": null,
-  "current_action": "awaiting_human_gate",
-  "last_action_id": "CP-0007/CP-0008",
+  "current_action": "audit_corrections_P2_P3 (manuel, CP-0010)",
+  "last_action_id": "CP-0010",
   "last_outbox_id": null,
   "last_error": null,
   "consecutive_failures": 0,
@@ -13,17 +15,18 @@
   "heartbeat": null,
   "watchdog": "not_installed",
   "dedup_store": "not_installed",
-  "activation_conditions": [
-    "harness_write_permission_for_runner_script (bloqué par classifier Claude Code)",
-    "repo PRIVATE avant activation (CP-0007: jamais d'exécuteur autonome sur inbox de repo PUBLIC)",
-    "verifier build recette apres passage private"
-  ],
+  "runner_paths_evaluated": {
+    "local_launchd": "BLOCKED — classifier harness refuse l'écriture du script runner",
+    "hosted_github_actions": "EXISTE (branche chore/claude-control-runner, .github/workflows/claude-control-plane.yml) mais utilise ANTHROPIC_API_KEY payante (interdit sans accord) + repo doit être PRIVATE avant activation (cron 15min lit l'inbox)"
+  },
+  "human_action_required": "HUMAN_ACTION_REQUIRED: passer le repo site-help-confort en PRIVATE puis confirmer Netlify build recette (compat Netlify déjà prouvée: GitHub App). Sans cela, aucune activation runner possible (condition CP-0007 anti-injection).",
   "hard_gates": [
     "push integration+recette uniquement, jamais main",
     "no deploy/apply prod",
     "no secret",
     "no force-push",
-    "Stripe LIVE gelé"
+    "Stripe LIVE gelé",
+    "no coût API additionnel sans accord"
   ],
-  "note": "Runner conçu (repo site uniquement). NON actif: bloqué par (a) permission harness d'écriture du script, (b) condition CP-0007 repo PRIVATE avant activation. Ne pas déclarer autonome tant qu'un cycle réel n'est pas prouvé."
+  "note": "Seul le sous-chantier ACTIVATION runner est gated (2 voies bloquées: classifier local + clé API payante/repo public). Le chantier SITE continue (audit CP-0004/0005, corrections P2/P3). Système NON déclaré autonome (aucun cycle réel prouvé)."
 }

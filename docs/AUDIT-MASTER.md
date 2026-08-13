@@ -66,3 +66,11 @@
 |----|--------|------|
 | **A-2026-003** (P2) | ✅ CORRIGÉ (recette) | `espace-client.html` : « paiement en ligne des contrats d'entretien » → « … (à venir) » (paiement gelé). |
 | **A-2026-004** (P2) | ⚪ REQUALIFIÉ non-bug | `/realisation.html` renvoie un **301 intentionnel** vers `/realisations.html` (nettoyage legacy, `_redirects`). Le 301 est correct ; l'agent attendait 200 à tort. Aucune action. |
+
+### Corrections P2/P3 (recette, cycle CP-0010)
+| ID | Statut | Note |
+|----|--------|------|
+| **A-2026-013** (P2) | ✅ CORRIGÉ | Title `salle-de-bain-pmr.html` dé-dupliqué → « Salle de bain PMR & adaptée séniors — accès sécurisé | … ». |
+| **A-2026-017** (P3) | ✅ CORRIGÉ | Titles Dunkerque alignés sur le gabarit sibling : « {Métier} Dunkerque (59140) — Dépannage & intervention rapide | HELP Confort » (chauffagiste + plombier). |
+| **A-2026-018** (P3) | ✅ CORRIGÉ | `urgence.html` : double-espace avant le pipe retiré (title + og:title + twitter:title). |
+| **A-2026-019** (P3) | ⚪ REQUALIFIÉ non-bug | Les « grohe » sont dans « **Hansgrohe** » (marque, casse correcte) ≠ « Grohe » (autre marque). Aucune incohérence. |
