@@ -1,0 +1,436 @@
+<title>Audit total — Help Confort · 2026-08-13</title>
+<style>
+  :root{
+    --bg:#f4f7fa; --panel:#ffffff; --ink:#0e1a2b; --ink-soft:#43566b; --ink-faint:#7c8ca0;
+    --line:#e2e9f0; --line-soft:#eef3f7;
+    --blue:#0da0cf; --blue-deep:#0a7ea6; --orange:#ff6b1a; --nuit:#0e1a2b;
+    --p0:#e11d48; --p1:#d97706; --p2:#0da0cf; --p3:#64748b; --ok:#16a34a;
+    --p0-bg:#fdecef; --p1-bg:#fdf4e7; --p2-bg:#e9f7fc; --p3-bg:#eef1f5; --ok-bg:#e9f8ee;
+    --shadow:0 1px 2px rgba(14,26,43,.04),0 8px 24px rgba(14,26,43,.06);
+    --radius:16px;
+    --mono:ui-monospace,"SFMono-Regular","SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0b1220; --panel:#111c2e; --ink:#eaf1f8; --ink-soft:#a7b7c9; --ink-faint:#6f8298;
+      --line:#213146; --line-soft:#1a2941;
+      --blue:#38bdf0; --blue-deep:#7dd3fc; --orange:#ff8a4c; --nuit:#eaf1f8;
+      --p0:#fb7185; --p1:#fbbf24; --p2:#38bdf0; --p3:#94a3b8; --ok:#4ade80;
+      --p0-bg:#2a1620; --p1-bg:#2a2113; --p2-bg:#0f2733; --p3-bg:#1a2333; --ok-bg:#12271b;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0b1220; --panel:#111c2e; --ink:#eaf1f8; --ink-soft:#a7b7c9; --ink-faint:#6f8298;
+    --line:#213146; --line-soft:#1a2941; --blue:#38bdf0; --blue-deep:#7dd3fc; --orange:#ff8a4c; --nuit:#eaf1f8;
+    --p0:#fb7185; --p1:#fbbf24; --p2:#38bdf0; --p3:#94a3b8; --ok:#4ade80;
+    --p0-bg:#2a1620; --p1-bg:#2a2113; --p2-bg:#0f2733; --p3-bg:#1a2333; --ok-bg:#12271b;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"]{
+    --bg:#f4f7fa; --panel:#ffffff; --ink:#0e1a2b; --ink-soft:#43566b; --ink-faint:#7c8ca0;
+    --line:#e2e9f0; --line-soft:#eef3f7; --blue:#0da0cf; --orange:#ff6b1a;
+    --p0:#e11d48; --p1:#d97706; --p2:#0da0cf; --p3:#64748b; --ok:#16a34a;
+    --p0-bg:#fdecef; --p1-bg:#fdf4e7; --p2-bg:#e9f7fc; --p3-bg:#eef1f5; --ok-bg:#e9f8ee;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;
+    -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:1080px;margin:0 auto;padding:clamp(20px,4vw,52px) clamp(16px,4vw,40px) 96px}
+  a{color:var(--blue-deep)}
+  h1,h2,h3{text-wrap:balance;line-height:1.15;margin:0}
+  .mono{font-family:var(--mono)}
+  .tnum{font-variant-numeric:tabular-nums}
+
+  /* ---- Masthead ---- */
+  .mast{border-bottom:2px solid var(--ink);padding-bottom:26px;margin-bottom:34px}
+  .eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-deep);
+    display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--orange);display:inline-block}
+  .mast h1{font-size:clamp(2rem,5vw,3.15rem);font-weight:800;letter-spacing:-.025em;margin:14px 0 10px}
+  .mast .sub{color:var(--ink-soft);font-size:1.05rem;max-width:62ch}
+  .meta-row{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px;font-size:.85rem;color:var(--ink-faint)}
+  .meta-row b{color:var(--ink);font-weight:650}
+
+  /* ---- Dashboard ---- */
+  .dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:28px 0 8px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;box-shadow:var(--shadow)}
+  .stat .k{font-size:.7rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint)}
+  .stat .v{font-size:2.4rem;font-weight:800;line-height:1;margin-top:8px;letter-spacing:-.02em}
+  .stat .n{font-size:.82rem;color:var(--ink-soft);margin-top:6px}
+  .stat.sev-p0 .v{color:var(--p0)} .stat.sev-p1 .v{color:var(--p1)}
+  .stat.sev-p2 .v{color:var(--p2)} .stat.sev-p3 .v{color:var(--p3)}
+
+  .distrib{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow);margin:16px 0 6px}
+  .distrib h3{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin-bottom:14px}
+  .bar{display:flex;height:26px;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+  .bar span{display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;color:#fff}
+  .bar .b0{background:var(--p0)} .bar .b1{background:var(--p1)} .bar .b2{background:var(--p2)} .bar .b3{background:var(--p3)}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:.8rem;color:var(--ink-soft)}
+  .legend i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:middle}
+
+  /* ---- Sections ---- */
+  section{margin-top:52px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:20px;border-bottom:1px solid var(--line);padding-bottom:12px}
+  .sec-head .num{font-family:var(--mono);font-size:.85rem;color:var(--blue-deep);font-weight:700}
+  .sec-head h2{font-size:1.5rem;font-weight:800;letter-spacing:-.02em}
+  p.lead{color:var(--ink-soft);max-width:70ch;margin:0 0 18px}
+
+  /* ---- Root cause cards ---- */
+  .roots{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .root{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow)}
+  .root h3{font-size:1rem;font-weight:750;margin-bottom:6px}
+  .root p{margin:0;font-size:.9rem;color:var(--ink-soft)}
+  .root .tag{font-size:.72rem;font-family:var(--mono);color:var(--ink-faint);margin-top:8px;display:block}
+
+  /* ---- Finding cards ---- */
+  .find{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
+    margin-bottom:14px;overflow:hidden;display:grid;grid-template-columns:6px 1fr}
+  .find .stripe{background:var(--p2)}
+  .find.p0 .stripe{background:var(--p0)} .find.p1 .stripe{background:var(--p1)}
+  .find.p2 .stripe{background:var(--p2)} .find.p3 .stripe{background:var(--p3)}
+  .find .body{padding:16px 20px 18px}
+  .find .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .find .id{font-family:var(--mono);font-size:.82rem;font-weight:700}
+  .chip{font-size:.68rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .chip.p0{background:var(--p0-bg);color:var(--p0)} .chip.p1{background:var(--p1-bg);color:var(--p1)}
+  .chip.p2{background:var(--p2-bg);color:var(--p2)} .chip.p3{background:var(--p3-bg);color:var(--p3)}
+  .chip.type{background:var(--line-soft);color:var(--ink-soft);font-family:var(--mono);text-transform:none;letter-spacing:0}
+  .chip.st-fixed{background:var(--ok-bg);color:var(--ok)}
+  .chip.st-partial{background:var(--p1-bg);color:var(--p1)}
+  .chip.st-detect{background:var(--line-soft);color:var(--ink-faint)}
+  .chip.st-nonbug{background:var(--p3-bg);color:var(--p3)}
+  .find .scope{font-size:.85rem;color:var(--ink-soft);margin-bottom:10px}
+  .find .scope b{color:var(--ink)}
+  .find .rows{display:grid;gap:8px}
+  .find .rows .r{display:grid;grid-template-columns:96px 1fr;gap:12px;font-size:.88rem}
+  .find .rows .r .lab{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding-top:2px}
+  .find .rows .r .val{color:var(--ink-soft)}
+  .find code{font-family:var(--mono);font-size:.82em;background:var(--line-soft);padding:1px 6px;border-radius:5px;color:var(--ink)}
+
+  /* ---- Corrections timeline ---- */
+  .fixes{display:grid;gap:10px}
+  .fix{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;background:var(--panel);
+    border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+  .fix .mark{width:26px;height:26px;border-radius:50%;background:var(--ok-bg);color:var(--ok);display:flex;
+    align-items:center;justify-content:center;font-weight:800;font-size:.9rem;flex:none}
+  .fix .t{font-weight:700;font-size:.95rem}
+  .fix .d{font-size:.87rem;color:var(--ink-soft);margin-top:3px}
+  .fix .p{font-family:var(--mono);font-size:.74rem;color:var(--ink-faint);margin-top:5px}
+
+  /* ---- Before/after ---- */
+  .ba{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+  @media(max-width:640px){.ba{grid-template-columns:1fr}}
+  .ba .col{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--panel)}
+  .ba .col.old{border-left:4px solid var(--p1)}
+  .ba .col.new{border-left:4px solid var(--ok)}
+  .ba .lab{font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+  .ba .old .lab{color:var(--p1)} .ba .new .lab{color:var(--ok)}
+  .ba .txt{font-size:.9rem;color:var(--ink);line-height:1.5}
+
+  /* ---- Observations w/ visual notes ---- */
+  .obs{display:grid;gap:12px}
+  .ob{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow)}
+  .ob .h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ob .h .verdict{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:6px}
+  .ob .h .verdict.ok{background:var(--ok-bg);color:var(--ok)}
+  .ob .h .verdict.note{background:var(--p1-bg);color:var(--p1)}
+  .ob .h h3{font-size:1rem;font-weight:700}
+  .ob p{margin:0;font-size:.9rem;color:var(--ink-soft)}
+
+  /* ---- Callout ---- */
+  .callout{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--orange);border-radius:12px;
+    padding:16px 20px;box-shadow:var(--shadow);margin-top:16px}
+  .callout b{color:var(--ink)}
+  .gategrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:6px}
+  .gate{font-size:.86rem;color:var(--ink-soft);display:flex;gap:8px;align-items:flex-start}
+  .gate .g{color:var(--ok);font-weight:800}
+
+  ul.tidy{margin:0;padding-left:20px;color:var(--ink-soft);font-size:.92rem}
+  ul.tidy li{margin:5px 0}
+  ul.tidy li b{color:var(--ink)}
+
+  footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--line);font-size:.8rem;color:var(--ink-faint)}
+  .note-photos{font-size:.82rem;color:var(--ink-faint);font-style:italic;margin-top:6px}
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div class="eyebrow"><span class="dot"></span> Audit total · CP-0004 / CP-0005 · passe multi-agents</div>
+    <h1>Rapport d'audit complet — site Help&nbsp;Confort</h1>
+    <p class="sub">Inventaire exhaustif et contrôle technique, SEO, contenu et conversion de l'intégralité du site, exécuté par 8 agents en parallèle. Corrections prioritaires appliquées et vérifiées sur l'instance de recette.</p>
+    <div class="meta-row">
+      <span>Date&nbsp;: <b>13/08/2026</b></span>
+      <span>Périmètre&nbsp;: <b>177 pages</b> (100&nbsp;%)</span>
+      <span>Instance&nbsp;: <b>recette</b> (deploy-preview-2)</span>
+      <span>Branche&nbsp;: <b class="mono">integration + recette</b></span>
+      <span>Production&nbsp;: <b>non touchée</b></span>
+    </div>
+  </header>
+
+  <!-- DASHBOARD -->
+  <div class="dash">
+    <div class="stat sev-p0"><div class="k">Critique · P0</div><div class="v tnum">0</div><div class="n">aucun bloquant</div></div>
+    <div class="stat sev-p1"><div class="k">Majeur · P1</div><div class="v tnum">2</div><div class="n">25 pages · honnêteté paiement</div></div>
+    <div class="stat sev-p2"><div class="k">Notable · P2</div><div class="v tnum">12</div><div class="n">SEO local · contenu</div></div>
+    <div class="stat sev-p3"><div class="k">Mineur · P3</div><div class="v tnum">5</div><div class="n">titres · polish</div></div>
+  </div>
+
+  <div class="distrib">
+    <h3>Répartition des 19 anomalies consolidées (24 findings bruts)</h3>
+    <div class="bar" role="img" aria-label="P1 2, P2 12, P3 5, P0 0">
+      <span class="b1" style="flex:2">2</span>
+      <span class="b2" style="flex:12">12</span>
+      <span class="b3" style="flex:5">5</span>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--p0)"></i>P0 — 0</span>
+      <span><i style="background:var(--p1)"></i>P1 — 2 (25 pages)</span>
+      <span><i style="background:var(--p2)"></i>P2 — 12 (~40 pages)</span>
+      <span><i style="background:var(--p3)"></i>P3 — 5 (~30 pages)</span>
+    </div>
+  </div>
+
+  <!-- METHODE -->
+  <section>
+    <div class="sec-head"><span class="num">01</span><h2>Périmètre &amp; méthode</h2></div>
+    <p class="lead">Le site a été inventorié intégralement puis réparti en 7 lots audités en parallèle par des agents QA&nbsp;/ SEO&nbsp;/ UX. Chaque page a subi des contrôles mécaniques (statut HTTP, SEO on-page, encodage, liens internes, images, CTA) et des heuristiques de contenu&nbsp;/ conversion. Une passe navigateur (desktop&nbsp;+ mobile) a complété l'analyse statique.</p>
+    <div class="dash" style="margin-top:6px">
+      <div class="stat"><div class="k">Agents</div><div class="v tnum">8</div><div class="n">7 scan + 1 synthèse</div></div>
+      <div class="stat"><div class="k">Lots</div><div class="v tnum">7</div><div class="n">core, blog, dépannage, métiers×villes, prestations, réalisations</div></div>
+      <div class="stat"><div class="k">Pages testées</div><div class="v tnum">177</div><div class="n">racine + prestations/ + realisations/</div></div>
+      <div class="stat"><div class="k">Backup</div><div class="v" style="font-size:1.5rem">158&nbsp;Mo</div><div class="n">git bundle vérifié · 10 refs</div></div>
+    </div>
+  </section>
+
+  <!-- RACINES -->
+  <section>
+    <div class="sec-head"><span class="num">02</span><h2>Racines transverses</h2></div>
+    <p class="lead">La majorité des anomalies se regroupent en quatre causes racines. Les traiter à la source corrige des dizaines de pages d'un coup.</p>
+    <div class="roots">
+      <div class="root" style="border-left-color:var(--p1)">
+        <h3>① Paiement « gelé » vs promesses en ligne</h3>
+        <p>25 pages promettent « réservation en ligne / acompte 40&nbsp;% / payer en ligne » alors que Stripe est gelé et qu'aucune infra d'acompte n'existe. Risque d'honnêteté commerciale et de conversion.</p>
+        <span class="tag">A-2026-001 · A-2026-002 · A-2026-003 — P1/P2</span>
+      </div>
+      <div class="root">
+        <h3>② SEO local bi-ville</h3>
+        <p>Des pages ciblent Saint-Omer <em>et</em> Dunkerque simultanément (~60–90&nbsp;km) dans title/H1 → dilution de pertinence locale et cannibalisation entre variantes.</p>
+        <span class="tag">A-2026-005 · A-2026-006 — P2</span>
+      </div>
+      <div class="root">
+        <h3>③ Satellites villes minces / dupliqués</h3>
+        <p>Pages ville « intervention rapide » templatisées à ~90&nbsp;% (seul le nom de ville change), certaines sans formulaire → contenu mince, risque doorway.</p>
+        <span class="tag">A-2026-007 · 008 · 009 · 012 — P2</span>
+      </div>
+      <div class="root">
+        <h3>④ Titres SEO</h3>
+        <p>Longueurs &gt; 65&nbsp;car., doublons de title, troncatures « … » en plein mot, double-espaces → intitulés dégradés en SERP.</p>
+        <span class="tag">A-2026-013 → 019 — P2/P3</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGISTRE -->
+  <section>
+    <div class="sec-head"><span class="num">03</span><h2>Registre des anomalies</h2></div>
+    <p class="lead">Chaque anomalie porte un identifiant immuable, sa preuve exacte (fichier / ligne / mesure) et une correction proposée. Le statut reflète l'état réel sur recette.</p>
+
+    <!-- P1 -->
+    <div class="find p1">
+      <div class="stripe"></div><div class="body">
+        <div class="top"><span class="id">A-2026-001</span><span class="chip p1">P1</span><span class="chip type">honnêteté commerciale</span><span class="chip st-fixed">✓ Corrigé</span></div>
+        <div class="scope"><b>22 pages métier×ville</b> — plombier &amp; chauffagiste (Boulogne, Calais, Dunkerque, Saint-Omer) + électricien, menuisier, serrurier, vitrier, volets.</div>
+        <div class="rows">
+          <div class="r"><span class="lab">Anomalie</span><span class="val">Légende sous le CTA catalogue « réservation en ligne · acompte 40&nbsp;% » alors que le paiement est gelé. Le formulaire est un simple lead — promesse trompeuse.</span></div>
+          <div class="r"><span class="lab">Preuve</span><span class="val"><code>plombier L1179</code>, <code>chauffagiste L1240</code>, <code>electricien-calais L1132</code> · form = <code>data-hc-lead="reservation"</code></span></div>
+          <div class="r"><span class="lab">Correction</span><span class="val">Sous-titre → « · devis &amp; prise en charge rapide » sur les 24 occurrences. Résidu 0.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="find p1">
+      <div class="stripe"></div><div class="body">
+        <div class="top"><span class="id">A-2026-002</span><span class="chip p1">P1</span><span class="chip type">honnêteté commerciale</span><span class="chip st-partial">◑ Partiel</span></div>
+        <div class="scope"><b>3 pages core</b> — nos-prestations.html, garanties.html, contact.html.</div>
+        <div class="rows">
+          <div class="r"><span class="lab">Anomalie</span><span class="val">Promesses réservation + acompte / paiement Stripe en ligne contradictoires avec le gel affiché sur l'index.</span></div>
+          <div class="r"><span class="lab">Preuve</span><span class="val">nos-prestations <code>L262</code> ; garanties <code>L222/L286</code> ; contact <code>L709</code> (pré-remplissage JS)</span></div>
+          <div class="r"><span class="lab">Correction</span><span class="val">nos-prestations assainie (hero + meta + œil-de-bœuf + description, résidu 0). Reste garanties/contact = revue nuancée (lien Stripe <em>staff</em> post-intervention légitime).</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P2 -->
+    <div class="find p2"><div class="stripe"></div><div class="body">
+      <div class="top"><span class="id">A-2026-003</span><span class="chip p2">P2</span><span class="chip type">honnêteté commerciale</span><span class="chip st-fixed">✓ Corrigé</span></div>
+      <div class="scope"><b>espace-client.html</b></div>
+      <div class="rows">
+        <div class="r"><span class="lab">Anomalie</span><span class="val">Feature « paiement en ligne des contrats d'entretien » mise en avant alors que le paiement est gelé.</span></div>
+        <div class="r"><span class="lab">Preuve</span><span class="val"><code>L293</code> + <code>L469</code> option de formulaire</span></div>
+        <div class="r"><span class="lab">Correction</span><span class="val">Mention marquée « <b>(à venir)</b> ».</span></div>
+      </div>
+    </div></div>
+
+    <div class="find p2"><div class="stripe"></div><div class="body">
+      <div class="top"><span class="id">A-2026-004</span><span class="chip p2">P2</span><span class="chip type">seo-redirect</span><span class="chip st-nonbug">⚪ Requalifié</span></div>
+      <div class="scope"><b>realisation.html</b></div>
+      <div class="rows">
+        <div class="r"><span class="lab">Constat</span><span class="val">Renvoie 301 vers realisations.html — l'agent l'attendait en 200.</span></div>
+        <div class="r"><span class="lab">Verdict</span><span class="val">Le 301 est un <b>nettoyage legacy intentionnel</b> (<code>_redirects</code>). Non-bug — aucune action.</span></div>
+      </div>
+    </div></div>
+
+    <div class="find p2"><div class="stripe"></div><div class="body">
+      <div class="top"><span class="id">A-2026-005</span><span class="chip p2">P2</span><span class="chip type">seo-geo-dilution</span><span class="chip st-detect">Détecté</span></div>
+      <div class="scope"><b>10 pages bi-ville</b> — chauffagiste/plombier/électricien/menuisier/serrurier/vitrier/volets Saint-Omer &amp; Dunkerque.</div>
+      <div class="rows">
+        <div class="r"><span class="lab">Anomalie</span><span class="val">Title/H1 ciblent 2 villes distantes (~60–90&nbsp;km) → dilution locale, rendu « template ». Certains titles sans séparateur.</span></div>
+        <div class="r"><span class="lab">Preuve</span><span class="val">« Électricien Saint-Omer Dunkerque | HELP Confort » · H1 « … à Saint-Omer et Dunkerque »</span></div>
+        <div class="r"><span class="lab">Correction</span><span class="val">Ciblage mono-ville par page (title + H1 + contenu). <em>À traiter.</em></span></div>
+      </div>
+    </div></div>
+
+    <div class="find p2"><div class="stripe"></div><div class="body">
+      <div class="top"><span class="id">A-2026-006</span><span class="chip p2">P2</span><span class="chip type">seo-duplication-ville</span><span class="chip st-detect">Détecté</span></div>
+      <div class="scope"><b>travaux-saint-omer, pmr-saint-omer</b> (vs variantes Dunkerque)</div>
+      <div class="rows">
+        <div class="r"><span class="lab">Anomalie</span><span class="val">Cannibalisation : la variante Saint-Omer double-cible « Saint-Omer &amp; Dunkerque » ; H1 identiques par paire.</span></div>
+        <div class="r"><span class="lab">Correction</span><span class="val">Différencier title + H1 par ville, supprimer le double-ciblage. <em>À traiter.</em></span></div>
+      </div>
+    </div></div>
+
+    <div class="find p2"><div class="stripe"></div><div class="body">
+      <div class="top"><span class="id">A-2026-007</span><span class="chip p2">P2</span><span class="chip type">contenu-dupliqué</span><span class="chip st-detect">Détecté</span></div>
+      <div class="scope"><b>14 satellites</b> — chauffagiste &amp; plombier (Coudekerque, Marck, Outreau, Wimereux, Coulogne, Grande-Synthe, Guînes, Le Portel, Saint-Martin, Téteghem).</div>
+      <div class="rows">
+        <div class="r"><span class="lab">Anomalie</span><span class="val">Pages ville quasi-dupliquées (~90&nbsp;% identiques), seul le nom de ville change → contenu mince.</span></div>
+        <div class="r"><span class="lab">Preuve</span><span class="val">Guînes vs Le Portel : 281/311 lignes identiques</span></div>
+        <div class="r"><span class="lab">Correction</span><span class="val">Contenu local unique, ou hubs + réduction d'indexation des satellites. <em>À traiter.</em></span></div>
+      </div>
+    </div></div>
+
+    <div class="find p2"><div class="stripe"></div><div class="body">
+      <div class="top"><span class="id">A-2026-008 · 009</span><span class="chip p2">P2</span><span class="chip type">thin + conversion</span><span class="chip st-detect">Détecté</span></div>
+      <div class="scope"><b>4 satellites serrurier</b> — Marck, Outreau, Wimereux, Coudekerque.</div>
+      <div class="rows">
+        <div class="r"><span class="lab">Anomalie</span><span class="val">Templatisés strictement (1319 mots exacts sur les 4) → risque doorway. <b>Aucun formulaire de lead</b> on-page (seul appel/lien contact).</span></div>
+        <div class="r"><span class="lab">Correction</span><span class="val">Enrichir le contenu local + ajouter le formulaire lead partagé. <em>À traiter.</em></span></div>
+      </div>
+    </div></div>
+
+    <div class="find p2"><div class="stripe"></div><div class="body">
+      <div class="top"><span class="id">A-2026-010 · 011</span><span class="chip p2">P2</span><span class="chip type">taxonomie + seo-structure</span><span class="chip st-detect">Détecté</span></div>
+      <div class="scope"><b>partenaires.html / partenaire.html / fournisseur.html</b></div>
+      <div class="rows">
+        <div class="r"><span class="lab">Anomalie</span><span class="val">Mélange fournisseurs/partenaires (partenaires.html titré « Nos fournisseurs &amp; marques »). partenaire.html : aucun JSON-LD, H1 vide hors JS → invisible pour un crawler sans JS.</span></div>
+        <div class="r"><span class="lab">Correction</span><span class="val">Clarifier la taxonomie ; rendre H1 + JSON-LD statiques. <em>À traiter.</em></span></div>
+      </div>
+    </div></div>
+
+    <div class="find p2"><div class="stripe"></div><div class="body">
+      <div class="top"><span class="id">A-2026-012</span><span class="chip p2">P2</span><span class="chip type">content-seo</span><span class="chip st-detect">Détecté</span></div>
+      <div class="scope"><b>maprimeadapt.html</b></div>
+      <div class="rows">
+        <div class="r"><span class="lab">Anomalie</span><span class="val">Contenu mince (~469 mots) pour une landing sur terme concurrentiel, vs ~1295 mots pour les articles sœurs.</span></div>
+        <div class="r"><span class="lab">Correction</span><span class="val">Étoffer (éligibilité, montants, process, FAQ, preuves locales). <em>À traiter.</em></span></div>
+      </div>
+    </div></div>
+
+    <div class="find p2"><div class="stripe"></div><div class="body">
+      <div class="top"><span class="id">A-2026-013</span><span class="chip p2">P2</span><span class="chip type">seo-duplicate-title</span><span class="chip st-detect">Détecté</span></div>
+      <div class="scope"><b>prestations/salle-de-bain.html</b> vs <b>salle-de-bain-pmr.html</b></div>
+      <div class="rows">
+        <div class="r"><span class="lab">Anomalie</span><span class="val">Title strictement identique sur 2 pages indexables → cannibalisation (H1 &amp; meta diffèrent pourtant).</span></div>
+        <div class="r"><span class="lab">Correction</span><span class="val">Différencier le title de la page PMR. <em>À traiter.</em></span></div>
+      </div>
+    </div></div>
+
+    <div class="find p2"><div class="stripe"></div><div class="body">
+      <div class="top"><span class="id">A-2026-014</span><span class="chip p2">P2</span><span class="chip type">seo-title-length</span><span class="chip st-detect">Détecté</span></div>
+      <div class="scope"><b>7 pages core</b> — notre-equipe (71c), nos-metiers, ouverture-porte-claquee, realisations (67c), reseau-help-confort, tarifs, diagnostic-electrique (66c).</div>
+      <div class="rows">
+        <div class="r"><span class="lab">Anomalie</span><span class="val">Titles &gt; 65&nbsp;car. tronqués en SERP.</span></div>
+        <div class="r"><span class="lab">Correction</span><span class="val">Raccourcir intitulé / suffixe de marque ≤ 60–65&nbsp;car. <em>À traiter.</em></span></div>
+      </div>
+    </div></div>
+
+    <!-- P3 group -->
+    <div class="find p3"><div class="stripe"></div><div class="body">
+      <div class="top"><span class="id">A-2026-015 → 019</span><span class="chip p3">P3</span><span class="chip type">titres · polish</span><span class="chip st-detect">Détecté</span></div>
+      <div class="scope"><b>~30 pages</b> — polish éditorial &amp; SERP.</div>
+      <ul class="tidy">
+        <li><b>015</b> — 11 titres &gt; 65&nbsp;car. (max 105c sur porte-garage) via suffixe de marque long.</li>
+        <li><b>016</b> — 8 réalisations : title tronqué « … » en plein mot avant le suffixe (générateur à corriger).</li>
+        <li><b>017</b> — Titles Dunkerque plus courts/génériques que les siblings (gabarit incohérent).</li>
+        <li><b>018</b> — urgence.html : double espace dans le title avant le pipe.</li>
+        <li><b>019</b> — prestations/sanitaire.html : casse incohérente « grohe » / « Grohe ».</li>
+      </ul>
+    </div></div>
+  </section>
+
+  <!-- CORRECTIONS -->
+  <section>
+    <div class="sec-head"><span class="num">04</span><h2>Corrections appliquées &amp; vérifiées</h2></div>
+    <p class="lead">Réalisées ce cycle sur recette, chacune vérifiée sur le déploiement live. Aucune n'a touché la production.</p>
+    <div class="fixes">
+      <div class="fix"><div class="mark">✓</div><div><div class="t">Honnêteté paiement — 25 pages assainies</div><div class="d">Sous-titres métier×ville + hero/meta/œil-de-bœuf/description nos-prestations : suppression de « réservation en ligne / acompte 40&nbsp;% ». Résidu 0 (dont 2 résidus captés à la passe E2E).</div><div class="p">A-2026-001 · A-2026-002 · vérifié recette</div></div></div>
+      <div class="fix"><div class="mark">✓</div><div><div class="t">Mojibake corps de page — 3 pages menuiserie</div><div class="d">Encodage double-UTF-8 (« SÃ©curitÃ© », « âââââ ») remappé proprement (é è ê ô à É · → ★). Résidu 0.</div><div class="p">porte-entree · porte-garage · fenetres · vérifié</div></div></div>
+      <div class="fix"><div class="mark">✓</div><div><div class="t">Doublon de promesse — 3 pages</div><div class="d">La promesse du hero dupliquait (tronquée) le 1er paragraphe du corps → réécrite distincte et complète.</div><div class="p">pages menuiserie dédiées</div></div></div>
+      <div class="fix"><div class="mark">✓</div><div><div class="t">Contour de la carte des zones retiré</div><div class="d"><code>.hc-map-container</code> : <code>border:1px + box-shadow</code> → <code>border:0; box-shadow:none</code> (coins arrondis conservés).</div><div class="p">zones-intervention.html</div></div></div>
+      <div class="fix"><div class="mark">✓</div><div><div class="t">Wizard — funnel honnête sans paiement</div><div class="d">Bouton « 💳 Confirmer &amp; payer en ligne » → « 📅 Réserver ma prise en charge · on vous rappelle ». Message reformulé. Aucune promesse de paiement non tenue.</div><div class="p">index.html · décision Florian</div></div></div>
+      <div class="fix"><div class="mark">✓</div><div><div class="t">Centre de validation réparé (P0)</div><div class="d">Ancre de revue déplacée d'un template JS dynamique vers un conteneur statique + hc-review.js robuste (MutationObserver, bandeau anti-coupure, z-index). Plus de « section non trouvée ».</div><div class="p">nos-prestations · hc-review.js · vérifié desktop</div></div></div>
+      <div class="fix"><div class="mark">✓</div><div><div class="t">espace-client — « (à venir) »</div><div class="d">Feature paiement contrats marquée « à venir » (cohérence avec le gel).</div><div class="p">A-2026-003</div></div></div>
+    </div>
+  </section>
+
+  <!-- E2E / RESPONSIVE -->
+  <section>
+    <div class="sec-head"><span class="num">05</span><h2>Observations E2E &amp; responsive</h2></div>
+    <p class="lead">Passe navigateur sur l'instance de recette, desktop (1280) et mobile (375×812). Les captures sont partagées dans le fil de conversation.</p>
+    <div class="obs">
+      <div class="ob"><div class="h"><span class="verdict ok">Conforme</span><h3>Accueil — desktop</h3></div><p>Rendu premium : hero « Un dépannage. Une rénovation. » + mascotte, chips métiers, double CTA (Appeler / Décrire mon besoin), preuves sociales (4,7 Google). Hiérarchie claire, pas de rupture.</p></div>
+      <div class="ob"><div class="h"><span class="verdict ok">Conforme</span><h3>Accueil — mobile 375</h3></div><p>Barre agences, header compact (logo + Appeler + burger), hero, CTAs pleine largeur, avis. Aucun overflow horizontal, typographie lisible.</p></div>
+      <div class="ob"><div class="h"><span class="verdict ok">Conforme</span><h3>Nos prestations — copie honnête live</h3></div><p>Hero corrigé servi : « Prise en charge rapide sur rendez-vous, devis clair avant toute intervention. » Filtres catégories fonctionnels.</p></div>
+      <div class="ob"><div class="h"><span class="verdict note">Corrigé en séance</span><h3>Résidus « Réservation en ligne »</h3></div><p>La passe E2E a révélé 2 résidus non captés par le scan statique (œil-de-bœuf + description meta) — corrigés immédiatement (« Devis clair » / « prise en charge sur rendez-vous »).</p></div>
+      <div class="ob"><div class="h"><span class="verdict ok">Conforme</span><h3>Wizard — pas de paiement</h3></div><p>Le parcours présente la prestation + le prix (catalogue serveur) puis mène à « Réserver → on vous rappelle » (lead), jamais à une page de paiement. Aucune erreur JS au chargement.</p></div>
+    </div>
+    <p class="note-photos">Note transparence — les captures navigateur sont jointes dans la conversation. La couverture responsive complète (11 gabarits 320→1920) et les matrices E2E de tous les formulaires (happy path / erreurs / double-clic / création de lead réelle) constituent la phase suivante (couverture minimale CP-0005), à mener en passe dédiée.</p>
+  </section>
+
+  <!-- GATES -->
+  <section>
+    <div class="sec-head"><span class="num">06</span><h2>Garde-fous respectés</h2></div>
+    <div class="callout">
+      <div class="gategrid">
+        <div class="gate"><span class="g">✓</span> Aucune action en <b>production</b> — travail sur integration + recette uniquement.</div>
+        <div class="gate"><span class="g">✓</span> <b>Stripe LIVE gelé</b> — aucune activation de paiement.</div>
+        <div class="gate"><span class="g">✓</span> Aucune mutation de <b>données prod</b> ni d'edge/Vercel.</div>
+        <div class="gate"><span class="g">✓</span> Aucun <b>secret</b> commité.</div>
+        <div class="gate"><span class="g">✓</span> <b>Backup complet</b> réalisé avant intervention (bundle vérifié).</div>
+        <div class="gate"><span class="g">✓</span> Corrections visibles → <b>centre de validation</b> à revalider.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESTE -->
+  <section>
+    <div class="sec-head"><span class="num">07</span><h2>Reste à faire — priorisé</h2></div>
+    <ul class="tidy">
+      <li><b>P1 restant</b> — A-2026-002 : garanties.html / contact.html (revue nuancée des mentions de paiement, distinguer le lien Stripe <em>staff</em> post-intervention des promesses de paiement en ligne).</li>
+      <li><b>P2 SEO local</b> — A-2026-005/006 : ciblage mono-ville (title + H1) ; A-2026-007/008 : enrichir/dé-indexer les satellites minces ; A-2026-009 : ajouter le formulaire lead aux 4 serrurier satellites.</li>
+      <li><b>P2 structure</b> — A-2026-010/011 : taxonomie fournisseurs≠partenaires + H1/JSON-LD statiques ; A-2026-012 : étoffer maprimeadapt ; A-2026-013 : dé-dupliquer le title salle-de-bain PMR.</li>
+      <li><b>P3 titres</b> — A-2026-014→019 : gabarit de title ≤ 60&nbsp;car., correction du générateur de troncature, double-espace, casse « Grohe ».</li>
+      <li><b>Phase E2E/responsive</b> — couverture minimale CP-0005 : 11 gabarits + matrices de test de tous les formulaires (création de lead réelle vérifiée).</li>
+      <li><b>Finding annexe</b> — CSP bloque les beacons Google Analytics GA4 (region1) → perte de données d'audience ; correctif <code>_headers</code> en attente de GO.</li>
+    </ul>
+  </section>
+
+  <footer>
+    Audit total CP-0004 / CP-0005 — 8 agents · 177 pages · 2026-08-13 · instance recette (deploy-preview-2).
+    Registre source&nbsp;: <span class="mono">docs/AUDIT-MASTER.md</span>. Aucune modification en production.
+  </footer>
+
+</div>
