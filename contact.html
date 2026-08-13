@@ -692,7 +692,7 @@ if (document.fonts && document.fonts.ready) {
  var n = document.createElement('div');
  n.className = 'pay-note';
  n.style.cssText = 'margin-top:8px;padding:10px 12px;background:#fff;border-radius:8px;font-size:.82rem;color:#475569;border:1px dashed rgba(255,107,26,.25)';
- n.innerHTML = '⏱️ <strong>Étape suivante :</strong> nous vous envoyons un lien de paiement sécurisé par email après validation rapide de votre demande (rapidement).';
+ n.innerHTML = '⏱️ <strong>Étape suivante :</strong> nous vous recontactons rapidement pour convenir de l'intervention et des modalités de règlement.';
  banner.appendChild(n);
  }
  } else {
@@ -706,7 +706,7 @@ if (document.fonts && document.fonts.ready) {
  var msg = document.getElementById('message');
  if (msg && !msg.value) {
  if (isPaiement) {
- msg.value = 'Bonjour, je souhaite réserver et payer en ligne pour : ' + label.replace(/^[^\s]+ /, '') + '\n\nMerci de m\'envoyer le lien de paiement sécurisé.\n\n';
+ msg.value = 'Bonjour, je souhaite réserver une intervention pour : ' + label.replace(/^[^\s]+ /, '') + '\n\nMerci de me recontacter pour convenir d\'un créneau.\n\n';
  } else {
  msg.value = 'Bonjour, je souhaite un devis pour : ' + label.replace(/^[^\s]+ /, '') + '\n\n';
  }

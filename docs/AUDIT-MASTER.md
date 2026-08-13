@@ -74,3 +74,8 @@
 | **A-2026-017** (P3) | ✅ CORRIGÉ | Titles Dunkerque alignés sur le gabarit sibling : « {Métier} Dunkerque (59140) — Dépannage & intervention rapide | HELP Confort » (chauffagiste + plombier). |
 | **A-2026-018** (P3) | ✅ CORRIGÉ | `urgence.html` : double-espace avant le pipe retiré (title + og:title + twitter:title). |
 | **A-2026-019** (P3) | ⚪ REQUALIFIÉ non-bug | Les « grohe » sont dans « **Hansgrohe** » (marque, casse correcte) ≠ « Grohe » (autre marque). Aucune incohérence. |
+
+### A-2026-002 — clôture P1 (recette, CP-0013)
+| ID | Statut | Note |
+|----|--------|------|
+| **A-2026-002** (P1) | ✅ CORRIGÉ (complet) | contact.html : message client « réserver et payer en ligne / envoyer lien de paiement » → « réserver une intervention / me recontacter pour un créneau ». garanties.html : « paiement en ligne sécurisé Stripe / lien SMS » → « règlement sécurisé à l'intervention / par lien envoyé par l'équipe ». **0 résidu** de promesse paiement en ligne client. (Cohérent Stripe LIVE gelé + distinction règlement staff post-intervention.) |
