@@ -1,11 +1,11 @@
 # 🔗 Audit liens externes cassés — P10
 
-*Généré le 2026-08-14 04:49 — `admin-pro/audits/audit_liens_externes.py`*
+*Généré le 2026-08-15 03:41 — `admin-pro/audits/audit_liens_externes.py`*
 
 **Pages scannées** : 117
 **URLs externes uniques testés** : 61
-**URLs OK (2xx/3xx)** : 52
-**URLs cassés (4xx/5xx/timeout/DNS)** : **9**
+**URLs OK (2xx/3xx)** : 51
+**URLs cassés (4xx/5xx/timeout/DNS)** : **10**
 **URLs social-network ignorés** : 2 (whitelist : facebook/instagram/linkedin/twitter/tiktok/youtube/whatsapp)
 
 ## 🚨 Liens cassés
@@ -16,6 +16,7 @@
 | 403 | `https://fr.indeed.com/cmp/Help-Confort` | carrieres.html | Forbidden |
 | --- | `https://france-renov.gouv.fr` | aides.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
 | --- | `https://france-renov.gouv.fr/aides/simulation` | aides.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
+| --- | `https://gef.fr/index.php/produits-gef/` | partenaires.html | TimeoutError: The read operation timed out |
 | --- | `https://new.abb.com/fr` | partenaires.html | TimeoutError: The read operation timed out |
 | --- | `https://www.anah.fr` | aides.html | URLError: <urlopen error timed out> |
 | 404 | `https://www.anah.gouv.fr/maprimeadapt` | aides.html | Not Found |
@@ -24,7 +25,7 @@
 
 ## 📊 Statistiques
 
-- Taux de succès : **85 %** (52/61)
+- Taux de succès : **83 %** (51/61)
 - URLs social-network non testés (à vérifier manuellement si nécessaire) : 2
 
 ## 🛠️ Procédure de correction
