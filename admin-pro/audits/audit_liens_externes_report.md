@@ -1,11 +1,11 @@
 # 🔗 Audit liens externes cassés — P10
 
-*Généré le 2026-08-16 03:50 — `admin-pro/audits/audit_liens_externes.py`*
+*Généré le 2026-08-17 03:52 — `admin-pro/audits/audit_liens_externes.py`*
 
 **Pages scannées** : 117
 **URLs externes uniques testés** : 61
-**URLs OK (2xx/3xx)** : 51
-**URLs cassés (4xx/5xx/timeout/DNS)** : **10**
+**URLs OK (2xx/3xx)** : 50
+**URLs cassés (4xx/5xx/timeout/DNS)** : **11**
 **URLs social-network ignorés** : 2 (whitelist : facebook/instagram/linkedin/twitter/tiktok/youtube/whatsapp)
 
 ## 🚨 Liens cassés
@@ -17,6 +17,7 @@
 | --- | `https://france-renov.gouv.fr` | aides.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
 | --- | `https://france-renov.gouv.fr/aides/simulation` | aides.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
 | --- | `https://new.abb.com/fr` | partenaires.html | TimeoutError: The read operation timed out |
+| --- | `https://trustville.com/avis-clients/pc/6D2evM/services_a_la_personne/saint_martin_lez_tatinghem/help` | chauffagiste-boulogne-sur-mer.html, chauffagiste-calais.html, chauffagiste-dunkerque.html (+24) | TimeoutError: The read operation timed out |
 | --- | `https://www.anah.fr` | aides.html | URLError: <urlopen error timed out> |
 | 404 | `https://www.anah.gouv.fr/maprimeadapt` | aides.html | Not Found |
 | --- | `https://www.bremaud.com/` | partenaires.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
@@ -25,7 +26,7 @@
 
 ## 📊 Statistiques
 
-- Taux de succès : **83 %** (51/61)
+- Taux de succès : **81 %** (50/61)
 - URLs social-network non testés (à vérifier manuellement si nécessaire) : 2
 
 ## 🛠️ Procédure de correction
