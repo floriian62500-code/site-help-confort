@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-08-02T06:05:20",
+  "generated_at": "2026-08-12T04:48:51",
   "scanned": 116,
   "pages_with_findings": 1,
-  "findings_total": 7,
+  "findings_total": 8,
   "per_page": {
     "index.html": [
       {
         "tag": "textarea",
-        "line": 1048,
+        "line": 1122,
         "type": "",
         "name": "resa-desc",
         "triggers": [
@@ -16,7 +16,7 @@
       },
       {
         "tag": "input",
-        "line": 1077,
+        "line": 1152,
         "type": "text",
         "name": "resa-prenom",
         "triggers": [
@@ -25,7 +25,7 @@
       },
       {
         "tag": "input",
-        "line": 1081,
+        "line": 1156,
         "type": "text",
         "name": "resa-nom",
         "triggers": [
@@ -34,7 +34,7 @@
       },
       {
         "tag": "input",
-        "line": 1088,
+        "line": 1163,
         "type": "tel",
         "name": "resa-tel",
         "triggers": [
@@ -44,7 +44,7 @@
       },
       {
         "tag": "input",
-        "line": 1092,
+        "line": 1167,
         "type": "email",
         "name": "resa-email",
         "triggers": [
@@ -53,7 +53,7 @@
       },
       {
         "tag": "input",
-        "line": 1098,
+        "line": 1173,
         "type": "text",
         "name": "resa-adresse",
         "triggers": [
@@ -62,7 +62,16 @@
       },
       {
         "tag": "input",
-        "line": 1108,
+        "line": 1182,
+        "type": "text",
+        "name": "resa-ville",
+        "triggers": [
+          "required"
+        ]
+      },
+      {
+        "tag": "input",
+        "line": 1188,
         "type": "text",
         "name": "resa-cp",
         "triggers": [
