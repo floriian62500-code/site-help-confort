@@ -1,6 +1,6 @@
 # 🔗 Audit liens externes cassés — P10
 
-*Généré le 2026-08-17 03:52 — `admin-pro/audits/audit_liens_externes.py`*
+*Généré le 2026-08-18 03:46 — `admin-pro/audits/audit_liens_externes.py`*
 
 **Pages scannées** : 117
 **URLs externes uniques testés** : 61
@@ -17,12 +17,12 @@
 | --- | `https://france-renov.gouv.fr` | aides.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
 | --- | `https://france-renov.gouv.fr/aides/simulation` | aides.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
 | --- | `https://new.abb.com/fr` | partenaires.html | TimeoutError: The read operation timed out |
-| --- | `https://trustville.com/avis-clients/pc/6D2evM/services_a_la_personne/saint_martin_lez_tatinghem/help` | chauffagiste-boulogne-sur-mer.html, chauffagiste-calais.html, chauffagiste-dunkerque.html (+24) | TimeoutError: The read operation timed out |
 | --- | `https://www.anah.fr` | aides.html | URLError: <urlopen error timed out> |
 | 404 | `https://www.anah.gouv.fr/maprimeadapt` | aides.html | Not Found |
 | --- | `https://www.bremaud.com/` | partenaires.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
-| --- | `https://www.ecologie.gouv.fr/dispositif-des-certificats-deconomies-denergie` | aides.html | URLError: <urlopen error timed out> |
+| 403 | `https://www.helpconfort.com` | mentions-legales.html, reseau-help-confort.html | Forbidden |
 | 403 | `https://www.hoppe.com/fr-fr/catalogue-produits/1001192940/solutions-pour-portes-interieures-poignees` | partenaires.html | Forbidden |
+| --- | `https://www.service-public.fr/particuliers/vosdroits/F19905` | aides.html | RemoteDisconnected: Remote end closed connection without response |
 
 ## 📊 Statistiques
 

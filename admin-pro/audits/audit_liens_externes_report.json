@@ -49,41 +49,6 @@
       ]
     },
     {
-      "url": "https://trustville.com/avis-clients/pc/6D2evM/services_a_la_personne/saint_martin_lez_tatinghem/help_confort_saint_omer",
-      "status": 0,
-      "error": "TimeoutError: The read operation timed out",
-      "ok": false,
-      "pages": [
-        "chauffagiste-boulogne-sur-mer.html",
-        "chauffagiste-calais.html",
-        "chauffagiste-dunkerque.html",
-        "chauffagiste-saint-omer.html",
-        "electricien-boulogne-sur-mer.html",
-        "electricien-calais.html",
-        "electricien-dunkerque.html",
-        "electricien-saint-omer.html",
-        "index.html",
-        "menuisier-dunkerque.html",
-        "menuisier-saint-omer.html",
-        "plombier-boulogne-sur-mer.html",
-        "plombier-calais.html",
-        "plombier-dunkerque.html",
-        "plombier-saint-omer.html",
-        "pmr-dunkerque.html",
-        "pmr-saint-omer.html",
-        "serrurier-boulogne-sur-mer.html",
-        "serrurier-calais.html",
-        "serrurier-dunkerque.html",
-        "serrurier-saint-omer.html",
-        "travaux-dunkerque.html",
-        "travaux-saint-omer.html",
-        "vitrier-dunkerque.html",
-        "vitrier-saint-omer.html",
-        "volets-dunkerque.html",
-        "volets-saint-omer.html"
-      ]
-    },
-    {
       "url": "https://www.anah.fr",
       "status": 0,
       "error": "URLError: <urlopen error timed out>",
@@ -111,12 +76,13 @@
       ]
     },
     {
-      "url": "https://www.ecologie.gouv.fr/dispositif-des-certificats-deconomies-denergie",
-      "status": 0,
-      "error": "URLError: <urlopen error timed out>",
+      "url": "https://www.helpconfort.com",
+      "status": 403,
+      "error": "Forbidden",
       "ok": false,
       "pages": [
-        "aides.html"
+        "mentions-legales.html",
+        "reseau-help-confort.html"
       ]
     },
     {
@@ -127,11 +93,20 @@
       "pages": [
         "partenaires.html"
       ]
+    },
+    {
+      "url": "https://www.service-public.fr/particuliers/vosdroits/F19905",
+      "status": 0,
+      "error": "RemoteDisconnected: Remote end closed connection without response",
+      "ok": false,
+      "pages": [
+        "aides.html"
+      ]
     }
   ],
   "skipped_social": [
     "https://www.facebook.com/depanaudo/",
     "https://www.linkedin.com/in/florian-d-haillecourt-2a67bb207"
   ],
-  "generated_at": "2026-08-17T03:52:26"
+  "generated_at": "2026-08-18T03:46:27"
 }
