@@ -1970,12 +1970,9 @@ function proposePrestations() {
 
  // 3. Fallback si aucun métier coché : 4 prestations vedette par métier
  if (top.length === 0) {
- top = [
- ALL_PRESTAS.find(function(p){ return p.id === 'p-fuite'; }),
- ALL_PRESTAS.find(function(p){ return p.id === 'c-chaudiere'; }),
- ALL_PRESTAS.find(function(p){ return p.id === 'e-panne'; }),
- ALL_PRESTAS.find(function(p){ return p.id === 's-ouverture'; })
- ].filter(Boolean);
+ // #6 FIX : fallback sur les vraies prestations forfaitaires du catalogue Supabase (prix fixe),
+ // au lieu d'ids hardcodés périmés (p-fuite, c-chaudiere…) absents du catalogue actuel.
+ top = ALL_PRESTAS.filter(function(p){ return !p.quote && typeof p.price === 'number'; }).slice(0, 4);
  }
  return top;
 }
@@ -2213,18 +2210,11 @@ if (sug && sug.quote) {
 } else {
  priceEl.textContent = 'Sur devis';
 }
-// HC-FIX 2026-08-06 (P1) : le PAIEMENT n'est proposé QUE si la prestation est réellement éligible
-// (prix TTC fixe, pas "à diagnostiquer"/sur devis). Sinon -> parcours rappel/intervention, sans paiement.
-var payable = !!(sug && typeof sug.price === 'number' && sug.price > 0 && !sug.quote);
-if (payable) {
- simpleBlock.hidden = false;
-} else {
- var pnc = document.getElementById('resa-presta-name-c'); if (pnc) pnc.innerHTML = sug.icon + ' ' + sug.label + (sug.metier !== '—' ? ' · ' + sug.metier : '');
- var anc = document.getElementById('resa-agence-name-c'); if (anc) anc.textContent = detectAgence(state.cp);
- var rfc = document.getElementById('resa-ref'); if (rfc) rfc.textContent = 'HC-' + Date.now().toString(36).slice(-6).toUpperCase();
- complexBlock.hidden = false;
- return;
-}
+// #6 FIX 2026-08-17 (P0) : le parcours prestation montre TOUJOURS le choix de prestation +
+// la réservation. On ne dump plus vers « on vous recontacte » quand l'auto-détection ne trouve
+// pas de prix (régression HC-FIX 2026-08-06 qui court-circuitait renderPrestaProposals) :
+// l'utilisateur choisit lui-même une prestation forfaitaire dans le catalogue et peut réserver.
+simpleBlock.hidden = false;
 // Reset recherche/showAll au passage à l'étape 4
 prestaSearchState = { query:'', showAll:false };
 var searchInput = document.getElementById('resa-presta-search');
