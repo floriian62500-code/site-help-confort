@@ -1937,8 +1937,15 @@ var ALL_PRESTAS = [];
        metier: metier,
        price: s.requires_quote ? null : Math.round(s.price_ht * (1 + (s.vat_rate||0.10))),
        quote: !!s.requires_quote,
-       // match regex large : nom + description
-       match: new RegExp(s.slug.replace(/-/g,'|') + (s.short_desc ? '|' + s.short_desc.split(' ').slice(0,5).join('|').toLowerCase() : ''), 'i')
+       // match regex large : nom + description — #6 FIX 2026-08-17 (CAUSE RACINE) : les caractères
+       // spéciaux regex (ex. un « + » dans short_desc) n'étaient pas échappés → l'exception cassait
+       // TOUT le chargement du catalogue (ALL_PRESTAS vide) → funnel systématiquement en « recontacte ».
+       match: (function(){
+         var esc = function(t){ return String(t||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); };
+         var parts = String(s.slug||'').split('-').map(esc).filter(Boolean);
+         if (s.short_desc) parts = parts.concat(String(s.short_desc).toLowerCase().split(/\s+/).slice(0,5).map(esc).filter(Boolean));
+         try { return new RegExp(parts.join('|') || '(?!)', 'i'); } catch(e){ return /(?!)/; }
+       })()
      };
    });
    console.log('[catalog] Chargé', ALL_PRESTAS.length, 'prestations depuis Supabase');
