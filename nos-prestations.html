@@ -1026,8 +1026,9 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  try {
  // 2026-05-30 — FORCE no-cache (fetch direct PostgREST) pour que toute modif dashboard apparaisse instant.
  // Sinon : Supabase JS + Browser pouvaient cacher la réponse → désynchro BDD ↔ site signalée par Florian.
- const cacheBust = Date.now();
- const resp = await fetch(`${SUPABASE_URL}/rest/v1/v_services_public?select=*&_ts=${cacheBust}`, {
+ // #audit 2026-08-21 : retrait du cache-buster `_ts` — PostgREST le lisait comme un filtre de colonne
+ // malformé → HTTP 400 systématique (le no-cache est déjà assuré par Cache-Control + cache:'no-store').
+ const resp = await fetch(`${SUPABASE_URL}/rest/v1/v_services_public?select=*`, {
    headers: {
      apikey: SUPABASE_ANON,
      Authorization: `Bearer ${SUPABASE_ANON}`,
