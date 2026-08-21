@@ -1714,7 +1714,7 @@ function refreshNext() {
  hint.style.cssText = 'font-size:.78rem;color:#d97706;font-weight:600;text-align:right;margin-top:6px;display:none';
  if (btnNext.parentNode) btnNext.parentNode.insertAdjacentElement('afterend', hint);
  }
- if (btnNext.disabled && current === 2 && state.flow !== 'callback') {
+ if (!canGoNext() && current === 2 && state.flow !== 'callback') {
  var need = state.desc ? state.desc.trim().length : 0;
  var hasMetier = (state.metiers || []).length > 0;
  // Photo retirée des conditions bloquantes (règle "photo incitative pas bloquante" 2026-07-25)
@@ -1725,7 +1725,7 @@ function refreshNext() {
  hint.textContent = '💡 Cochez au moins un métier concerné';
  hint.style.display = 'block';
  } else { hint.style.display = 'none'; }
- } else if (btnNext.disabled && current === 3) {
+ } else if (!canGoNext() && current === 3) {
  hint.textContent = '💡 Renseignez vos coordonnées complètes (nom, téléphone, email, code postal)';
  hint.style.display = 'block';
  } else {
