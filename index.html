@@ -1607,7 +1607,7 @@ stepsContent.forEach(function(c) {
 c.classList.toggle('active', parseInt(c.dataset.step) === current);
 });
 btnBack.disabled = (current === 1);
-btnNext.disabled = !canGoNext();
+btnNext.disabled = (current >= 4); btnNext.style.opacity = (current < 4 && !canGoNext()) ? '0.65' : '';
 btnNext.textContent = current < 4 ? 'Continuer →' : 'Terminer';
 if (current === 4) buildResult();
 var section = document.getElementById('hc-reservation');
@@ -1670,7 +1670,7 @@ return nameOk(state.prenom) && nameOk(state.nom) && phoneFrOk(state.tel) && emai
 return false;
 }
 function refreshNext() {
- btnNext.disabled = !canGoNext();
+ btnNext.disabled = (current >= 4); btnNext.style.opacity = (current < 4 && !canGoNext()) ? '0.65' : '';
  // Feedback rouge sur les champs invalides en step 3
  if (current === 3) {
    try {
@@ -1802,7 +1802,29 @@ if (el) el.addEventListener('input', function(e) { state[p[1]] = e.target.value;
 var habitatEl = document.getElementById('resa-habitat');
 if (habitatEl) habitatEl.addEventListener('change', function(e) { state.habitat = e.target.value; });
 btnBack.addEventListener('click', function() { gotoStep(current - 1); });
-btnNext.addEventListener('click', function() { gotoStep(current + 1); });
+// #5/#6 FIX 2026-08-20 : « Continuer » n'est plus désactivé silencieusement. Au clic, si l'étape
+// est invalide, on révèle le message + on scrolle/focus le 1er champ problématique (a11y aria-invalid).
+function tryNext() {
+  if (canGoNext()) { gotoStep(current + 1); return; }
+  refreshNext(); // affiche hint global + erreurs des champs déjà saisis
+  var target = null;
+  if (current === 2) {
+    if (!(state.desc && state.desc.trim().length >= 3)) target = document.getElementById('resa-desc');
+    else target = document.querySelector('.resa-metier-chips') || document.querySelector('input[name="resa-metiers[]"]');
+  } else if (current === 3) {
+    var ids = ['resa-prenom','resa-nom','resa-tel','resa-email','resa-cp'];
+    for (var i = 0; i < ids.length; i++) { var el = document.getElementById(ids[i]); if (el && !(el.value || '').trim()) { target = el; break; } }
+    if (!target) { var firstErr = document.querySelector('.hc-resa-step[data-step="3"] .resa-field-err'); target = firstErr ? (firstErr.parentNode.querySelector('input') || firstErr) : document.getElementById('resa-prenom'); }
+  }
+  var hint = document.getElementById('resa-next-hint');
+  if (hint) { hint.style.display = 'block'; try { hint.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (e) {} }
+  if (target) {
+    try { target.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
+    try { if (target.focus) target.focus(); } catch (e) {}
+    if (target.setAttribute) target.setAttribute('aria-invalid', 'true');
+  }
+}
+btnNext.addEventListener('click', tryNext);
 
 // ═══════════════════════════════════════════════════════════════
 // AUTOCOMPLETE BAN sur le champ adresse — pré-remplit CP + ville
