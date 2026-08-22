@@ -1,6 +1,6 @@
 # ASSAINISSEMENT TOTAL DU DÉPÔT — CHECKLIST DE PREUVE
 
-Statut : EN COURS. `recette` uniquement. Mise à jour 2026-08-22.
+Statut : 15 tâches #9 traitées (FAIT/BLOQUÉ). `recette` uniquement. Journal : `ASSAINISSEMENT-15-TACHES-LOG.md`. Mise à jour 2026-08-22.
 Légende : `[x]` fait+prouvé · `[~]` partiel · `[gate]` bloqué validation humaine · `[ ]` à faire.
 
 ## 1. Parcours commercial critique
@@ -104,7 +104,7 @@ Légende : `[x]` fait+prouvé · `[~]` partiel · `[gate]` bloqué validation hu
 - [x] Architecture · [x] Arborescence · [x] Politique branches · [x] Règles recette/main
 - [x] Modifier page métier · [x] Ajouter prestation (Supabase services) · [x] Supabase/Netlify/Stripe TEST
 - [x] Release/rollback · [x] Points sensibles à ne pas casser
-- [~] Conventions commits · [~] Lancer tests (site statique — pas de suite formelle)
+- [x] Conventions commits (ARCHITECTURE.md §14) · [x] Lancer tests (`node scripts/tests/smoke.mjs`, 12 checks)
 
 ## 13. Rapport de fin — matrice
 Voir §1-12 + `docs/maintainer/ARCHITECTURE.md` (branches+décisions) + `docs/audits/SECURITY-AUDIT-2026-08.md` + `docs/RELEASE-FLOW-PROPOSAL.md` + `docs/AUDIT-MASTER.md`.

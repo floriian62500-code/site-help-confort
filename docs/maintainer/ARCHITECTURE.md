@@ -86,11 +86,22 @@
 - **Tester** : recette Deploy Preview + centre `/recette.html`.
 - **Sécurité** : voir `docs/audits/SECURITY-AUDIT-2026-08.md`.
 
-## 14. Dette résiduelle (voir aussi AUDIT-MASTER.md)
+## 14. Conventions de commit
+- Format : `type(scope): résumé` — `type` ∈ {feat, fix, chore, docs, security, test, perf}.
+- Scope utile : la zone (`#57`, `#9 T6`, `wizard`, `T8`…). Résumé à l'impératif, en français.
+- Corps : cause racine + preuve (SHA, test, mesure). Un commit = un changement atomique et testable.
+- `recette` uniquement ; jamais de `--force` ; jamais de secret ni de donnée métier supprimée sans preuve+tag.
+
+## 15. Journal d'audit / assainissement
+- **Registre de preuve** : `docs/audit/ASSAINISSEMENT-DEPOT-CHECKLIST.md` (13 sections cochées + SHA).
+- **Journal des 15 tâches #9** : `docs/audit/ASSAINISSEMENT-15-TACHES-LOG.md` (statut FAIT/BLOQUÉ + SHA par tâche).
+- **Sécurité** : `docs/audits/SECURITY-AUDIT-2026-08.md` (findings + migrations proposées).
+- **Release flow** : `docs/RELEASE-FLOW-PROPOSAL.md` + `scripts/control/build-release-lot.mjs`.
+
+## 16. Dette résiduelle & gates
+- **Gates DB (GO Florian)** : migrations durcissement `leads` + Storage `site-photos` + release flow 4 tables ; réécriture `/recette.html` (4 états).
+- **Gate Stripe** : clé `sk_test_` pour l'achat en ligne réel + durcissement `stripe-create-payment-link` (**P1 : montant client, endpoint LIVE public** — voir SECURITY-AUDIT + `PROPOSED_index.ts`).
 - Branche `staging` : 62 commits WYSIWYG à trier (merge sélectif ou archive+tag).
-- 3 scripts orphelins (`hc-avis*`, `hc-edit-mode`) à supprimer si confirmés inutiles.
-- CSS `.m-suppliers` orphelin (marquee non rendu) inline dans les pages métier.
-- `images/_backup_png/` (4.6M, exclu du build) — backup à archiver hors repo.
-- Migrations durcissement leads + release flow **à appliquer** (gates DB).
-- Réécriture `/recette.html` (release flow 4 états) — à faire.
+- 18 `images/prestations/*.jpg` candidats orphelins — à confirmer (sources Supabase ?) avant retrait.
 - SEO bi-ville (Saint-Omer+Dunkerque simultané) — décision stratégique.
+- *(Résolu ce run : `.m-suppliers` CSS, `hc-mini-zone.js`, `images/_backup_png/`, `images/metiers/`, erreurs inline wizard, carte zone partout, blocage pages admin PAT.)*

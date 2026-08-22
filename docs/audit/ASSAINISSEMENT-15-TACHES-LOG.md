@@ -303,3 +303,43 @@ nécessite une clé `sk_test_` (paiement gelé). Automatisation Playwright headl
 **SHA** : `7806540c` (initial) + enrichissement ce run.
 
 ---
+
+## ✅ TÂCHE 15 — Documentation mainteneur finale — **FAIT**
+
+`docs/maintainer/ARCHITECTURE.md` complété : ajout **§14 Conventions de commit**, **§15 Journal d'audit**
+(liens checklist / log 15 tâches / sécurité / release), **§16 Dette résiduelle & gates** à jour.
+Le guide couvre désormais : architecture, arborescence, politique de branches, conventions commits,
+règles recette/main, lancer les tests (smoke), modifier une page métier, ajouter une prestation (Supabase),
+Supabase/Netlify/Stripe TEST, release/rollback, points sensibles à ne pas casser.
+
+**SHA** : ce run.
+
+---
+
+# RÉCAPITULATIF FINAL — 15 tâches
+
+| # | Tâche | Statut | SHA / preuve |
+|---|---|---|---|
+| 1 | Achat/réservation E2E | ✅ FAIT (achat en ligne = ⛔ gate Stripe) | E2E live + `a74c9ec3` |
+| 2 | Wizard/formulaires | ✅ FAIT (**bug erreurs inline corrigé**) | `c6f2d349` |
+| 3 | Pages métiers UX | ✅ FAIT (**carte zone retirée partout**) | `38e6077d` |
+| 4 | Cartographie dépôt | ✅ FAIT (→ `docs/maintainer/`) | `32e50b15` |
+| 5 | Audit branches | ✅ FAIT (aucune suppression) | `37f3de1b` |
+| 6 | Code mort/orphelins | ✅ FAIT (3 lots : hc-mini-zone, _backup_png, .m-suppliers) | `2e14e04f`,`791416fd`,`95fea5d1` |
+| 7 | Doublons/mutualisation | ✅ ANALYSÉE (dynamique OK ; extraction inline = reco QA) | `9b3a84e2` |
+| 8 | Sécurité frontend | ✅ FAIT (**pages admin PAT bloquées**) | `2ab95305` |
+| 9 | Sécurité backend/API | ✅ FAIT (2 findings P1 ; migrations = ⛔ gate DB) | `e7834a21` |
+| 10 | Stripe TEST/PROD | ⚠️ FAIT + **P1 CRITIQUE** (edge LIVE public montant client) = ⛔ gate | `52760811` |
+| 11 | Release flow | ✅ FAIT (inventaire) ; UI 4 états = ⛔ gate DB | `c99b9883` |
+| 12 | Qualité front | ✅ FAIT (sweep responsive = limite pane) | `dbe68255` |
+| 13 | Performance | ✅ FAIT (~7.2M retirés) ; WebP live = reco QA | `382ae8c1` |
+| 14 | Tests automatisés | ✅ FAIT (smoke 12/12) ; E2E Stripe TEST = ⛔ gate | `ce1c5ba7` |
+| 15 | Doc mainteneur | ✅ FAIT | ce run |
+
+**GATES (validation humaine — non exécutables sans GO Florian)** :
+1. **Stripe** : clé `sk_test_` + **durcir l'edge `stripe-create-payment-link` (P1 CRITIQUE : montant client, endpoint LIVE public)**.
+2. **Migrations DB** : durcissement `leads` INSERT + Storage `site-photos` + release flow 4 tables.
+3. **UI** : réécriture `/recette.html` (4 états, dépend des 4 tables).
+
+**RECOMMANDATIONS (QA visuelle requise, non exécutées à l'aveugle)** : extraction CSS/JS inline mutualisé (T7),
+recompression WebP images live (T13), tri des 18 images/prestations candidates, tri staging (62 commits).
