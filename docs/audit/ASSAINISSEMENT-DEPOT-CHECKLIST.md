@@ -96,9 +96,9 @@ Légende : `[x]` fait+prouvé · `[~]` partiel · `[gate]` bloqué validation hu
 - [x] SEO technique — titres réalisations tronqués corrigés (`a433ed7c`)
 
 ## 11. Tests automatisés
-- [ ] Smoke tests — à créer
-- [ ] E2E funnel critique / erreurs formulaire / mobile — à automatiser (E2E manuels faits)
-- [ ] Nettoyage données TEST — procédure appliquée manuellement (lead test nettoyé)
+- [x] Smoke tests — `scripts/tests/smoke.mjs` (`7806540c`) : 6 pages critiques 200, catalogue 28 prestations à prix, anti-régression anon JWT legacy + promesse paiement en ligne. **8 PASS / a détecté 1 régression réelle** (og:description « Acompte 40% en ligne » résiduel → corrigé même run)
+- [~] E2E funnel critique / erreurs formulaire / mobile — funnel piloté manuel fait ; automatisation Playwright headless → reste (gate outillage)
+- [x] Nettoyage données TEST — smoke test **n'écrit aucune donnée** (GET only) ; lead test manuel `AUDIT_TEST_DELETE_ME` nettoyé
 
 ## 12. Documentation mainteneur — `docs/ARCHITECTURE.md`
 - [x] Architecture · [x] Arborescence · [x] Politique branches · [x] Règles recette/main
