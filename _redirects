@@ -2,6 +2,11 @@
 /docs/*      /404.html 404!
 /scripts/*   /404.html 404!
 /supabase/*  /404.html 404!
+# SÉCURITÉ (#9 T8) : pages admin manipulant un PAT GitHub / la promotion prod côté client
+# étaient publiquement accessibles (HTTP 200) → bloquées. Si besoin d'y accéder : passer par une
+# authentification (Netlify Identity / mot de passe), pas par une URL publique.
+/admin-pro/valider-staging.html  /404.html 404!
+/admin-pro/photos.html           /404.html 404!
 
 # Sitemap dynamique servi par Edge Function Supabase
 /sitemap.xml https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sitemap 200!
