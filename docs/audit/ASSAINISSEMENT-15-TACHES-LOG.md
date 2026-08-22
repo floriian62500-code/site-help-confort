@@ -1,0 +1,34 @@
+# Journal d'exécution — 15 tâches issue #9
+
+> Exécution séquentielle. Une tâche = analyse → correction → test → commit → push recette → SHA.
+> Statut : ✅ FAIT / ⛔ BLOQUÉE (validation humaine) / 🔄 EN COURS.
+> `recette` uniquement. Aucun main, aucune PROD, aucun Stripe LIVE. Mise à jour 2026-08-22.
+
+---
+
+## ✅ TÂCHE 1 — P0 achat/réservation E2E — **FAIT**
+
+**Test E2E réel piloté sur la recette live** (`deploy-preview-2--…`), funnel complet :
+1. Étape 1 — catégorie « 🚨 Urgence · Prise en charge rapide » (parcours tarifé simple).
+2. Étape 2 — métier **Plomberie** coché + description « Fuite sous l'évier, urgent ».
+3. Étape 3 — coordonnées : Test / Recette / 0612345678 / test-recette-e2e@example.fr / 12 rue de Dunkerque / Saint-Omer / 62500 / maison.
+4. Étape 4 — **résultat catalogue réel** : prestation auto-suggérée **« 💧 Chauffe-eau 100L mural Atlantic — 771 € TTC »** ; catalogue complet avec prix (837 €, 907 €, 1214 €, 1333 €, 242 €, contrat 220 €).
+
+**Réservation réellement créée (preuve base)** : clic `#resa-pay` → lead inséré en base
+`id=4797d9e5-…`, `source=home_wizard_reservation_rappel`, `metier=Plomberie` (vérifié en SQL, **puis supprimé** — nettoyage donnée test TÂCHE 14).
+
+**Verdict — peut-on acheter/payer en ligne aujourd'hui ? NON, par gel délibéré (sûr).**
+- CTA final = « 📅 Réserver ma prise en charge · **Sans paiement en ligne · on vous rappelle pour finaliser** ».
+- `window.createStripePayment` = **undefined** (aucune fonction de paiement chargée).
+- **Cause racine prouvée** : `index.html:2504` — un `return;` **arrête le handler juste après l'enregistrement du lead**. Tout le bloc Stripe (`STRIPE_LINKS`, `stripe-create-payment-link` avec montant DOM) aux lignes **2505-2572 est du code MORT inatteignable** (gel HC-FIX A08 : l'ancien code envoyait un montant client manipulable = exploit 1 €).
+- **Ce n'est pas une régression** : c'est le gel voulu. Le parcours réservation=lead fonctionne de bout en bout.
+
+**Anomalie annexe corrigée pendant l'audit** : promesse « Acompte 40 % en ligne » résiduelle dans l'`og:description` de `nos-prestations.html` (incohérente avec le gel) → retirée (`a74c9ec3`), détectée par le smoke test.
+
+**Faux positif écarté** : le blocage initial « étape 3 » venait d'une **donnée test invalide** (nom « RECETTE E2E » contient le chiffre 2, rejeté par l'anti-fausses-données `nameOk` — **bonne feature**), pas d'un bug. Avec un nom valide, l'étape passe.
+
+⛔ **Sous-point BLOQUÉ (gate humain)** : *achat en ligne réel + Stripe TEST*. Nécessite une clé `sk_test_` + durcissement serveur de `stripe-create-payment-link` (montant serveur + webhook signé + idempotence) avant de retirer le `return;` 2504. Voir TÂCHE 10.
+
+**SHA E2E / preuves** : parcours live + `a74c9ec3` (honnêteté) + `7806540c` (smoke test anti-régression).
+
+---
