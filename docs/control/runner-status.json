@@ -1,40 +1,35 @@
 {
-  "runner_activation_state": "GATED — nécessite (a) accès Netlify-repo-privé réparé côté humain, (b) écriture runner en session claude interactive",
-  "site_work_state": "PAUSED_PER_CP-0011 (runner d'abord)",
-  "state": "RUNNER_GATED · SITE_WORK_ACTIVE",
-  "pid_session": null,
-  "pid": null,
-  "session": null,
-  "last_poll_at": null,
-  "current_action": "finding Netlify/privé documenté (CP-0014) ; repo restauré public ; audit reprend",
-  "last_action_id": "CP-0011",
-  "last_outbox_id": null,
-  "last_error": null,
-  "consecutive_failures": 0,
-  "uptime": null,
-  "heartbeat": null,
-  "watchdog": "not_installed",
-  "dedup_store": "not_installed",
-  "runner_paths_evaluated": {
-    "local_launchd": "BLOCKED — classifier harness refuse l'écriture du script runner",
-    "hosted_github_actions": "EXISTE (branche chore/claude-control-runner, .github/workflows/claude-control-plane.yml) mais utilise ANTHROPIC_API_KEY payante (interdit sans accord) + repo doit être PRIVATE avant activation (cron 15min lit l'inbox)"
-  },
-  "human_action_required": "Voie locale runner: ouvrir un terminal `claude` INTERACTIF et approuver l'écriture de scripts/control/site-runner.sh (le classifier bloque en session non-interactive). Sinon création manuelle du fichier.",
+  "state": "SITE_WORK_ACTIVE",
+  "current_task": "control-plane traceability repair (outbox + runner-status + test de cycle réel)",
+  "last_completed_task": "Issue #9 — 15 tâches d'assainissement (T1..T15 FAIT/BLOQUÉ, voir RUN-2026-08-22-1228.md)",
+  "last_report": "docs/control/outbox/claude/RUN-2026-08-22-1228.md",
+  "last_commit_sha": "76303934",
+  "last_poll_at": "2026-08-22T12:29:35Z",
+  "heartbeat": "2026-08-22T12:29:35Z",
+  "branch": "recette",
+  "remaining_tasks": [
+    "GATE: clé Stripe TEST + durcir edge stripe-create-payment-link (P1 CRITIQUE montant client)",
+    "GATE: appliquer migrations DB (leads insert hardening + storage site-photos hardening + release flow 4 tables)",
+    "GATE: réécriture /recette.html 4 états (dépend des 4 tables)",
+    "RECO QA: extraction CSS/JS inline mutualisé (T7)",
+    "RECO QA: recompression WebP images live + tri 18 images/prestations candidates (T13)",
+    "RECO: tri des 62 commits staging (merge sélectif ou archive+tag)"
+  ],
+  "blocked_tasks": [
+    "T1 sous-point achat en ligne — gate Stripe TEST",
+    "T9 durcissement leads/storage — gate DB (GO Florian)",
+    "T10 edge stripe P1 CRITIQUE — gate (durcir+déployer OU couper endpoint)",
+    "T11 UI /recette.html 4 états — gate DB",
+    "T14 E2E Stripe TEST — gate clé sk_test_"
+  ],
   "hard_gates": [
-    "push integration+recette uniquement, jamais main",
-    "no deploy/apply prod",
+    "push recette + integration uniquement, jamais main",
+    "no deploy/apply prod sans GO",
     "no secret",
     "no force-push",
-    "Stripe LIVE gelé",
-    "no coût API additionnel sans accord"
+    "Stripe LIVE gelé"
   ],
-  "note": "Seul le sous-chantier ACTIVATION runner est gated (2 voies bloquées: classifier local + clé API payante/repo public). Le chantier SITE continue (audit CP-0004/0005, corrections P2/P3). Système NON déclaré autonome (aucun cycle réel prouvé).",
-  "exact_human_actions": {
-    "1_repo_private": "GitHub → repo floriian62500-code/site-help-confort → Settings → General → bas de page 'Danger Zone' → 'Change repository visibility' → Private → confirmer.",
-    "2_verify_netlify": "Après private : rouvrir un Deploy Preview (push vide sur recette ou re-run du dernier build) et vérifier build RECETTE = PASS (compat déjà prouvée : connexion via GitHub App Netlify, insensible à la visibilité).",
-    "3_unblock_harness_write": "Pour lever le refus du classifier sur l'écriture du script runner local (voie non payante) : dans un terminal INTERACTIF `claude`, exécuter /permissions et ajouter une règle ALLOW pour Write(scripts/control/**) et Bash(launchctl:*) ; OU relancer la demande en mode interactif et approuver le prompt d'outil manuellement. (Alternative sans permission : Florian crée lui-même scripts/control/site-runner.sh depuis le texte fourni.)",
-    "4_api_cost_decision": "SEULEMENT si voie hébergée GitHub Actions retenue : accepter le coût ANTHROPIC_API_KEY (sinon rester sur la voie locale non payante)."
-  },
-  "repo_visibility": "PUBLIC (revert après test privé — build Netlify cassé en privé)",
-  "netlify_private_compat": "FALSE (prouvé: privé=no build; public=build OK). App GitHub Netlify perd l'accès au repo privé."
+  "needs_florian": true,
+  "note": "Chantier #9 TERMINÉ (15 tâches FAIT ou BLOQUÉ avec raison). Control-plane en réparation : chaque cycle produit désormais un outbox RUN-<horodatage>.md poussé sur recette AVANT tout 'terminé'. Anciens états contradictoires (PAUSED_PER_CP-0011 / RUNNER_GATED) supprimés — le runner autonome hébergé reste hors périmètre (non activé), distinct du travail applicatif de session.",
+  "runner_autonomous_activation": "NON ACTIVÉ (hors périmètre ; gates historiques Netlify-privé/coût-API inchangés) — ne pas confondre avec le travail de session Claude, qui lui est actif et tracé par outbox."
 }
