@@ -88,3 +88,23 @@ et `travaux-*`**. Retrait complété ce run (`38e6077d`, 14 pages) → **0 page 
 **SHA** : voir commit de déplacement ci-dessous.
 
 ---
+
+## ✅ TÂCHE 5 — Audit branches — **FAIT (re-vérifié 2026-08-22)**
+
+| Branche | Tip | ∉ recette | Rôle | Décision |
+|---|---|---|---|---|
+| `main` | `970375e8` | 21 | PROD apex | **CONSERVER (intouchable)** — les 21 commits ∉ recette sont **tous** des `chore(audits): rapports nightly [skip ci]` (bot) + 1 merge PR#1 = bénins |
+| `recette` | `32e50b15` | — | Travail applicatif | **CONSERVER (intouchable)** — 148 commits ∉ main = travaux en attente de promotion (gate release) |
+| `staging` | `6d05c311` | 62 | WYSIWYG/edit-mode + SEO | **MERGER SÉLECTIVEMENT** — tag de sauvegarde requis, ne PAS supprimer |
+| `integration/lot1-lot2-vs-prod` | `32e50b15` | 0 | Miroir de recette | **CONSERVER/ARCHIVER** — 0 commit unique, aucune perte |
+| `chore/control-plane-bootstrap` | `6fdde716` | 4 | Bootstrap control-plane | **ARCHIVER + tag** |
+| `chore/claude-control-runner` | `3a4610ca` | 12 | Runner GitHub Actions | **CONSERVER** (design runner) |
+
+**Décisions & preuves** :
+- **Aucune branche supprimée** (règle #9 : pas de suppression sans preuve d'absence de perte + tag). `integration` = miroir voulu (0 unique) ; toutes les autres portent des commits uniques.
+- **SHA de sauvegarde** = tip courant de chaque branche (ci-dessus).
+- **Constat** : `main` **n'est pas figée** — un cron nightly y committe des rapports `[skip ci]` (docs-only → ne déclenchent pas de déploiement). La vraie divergence applicative = 148 commits recette non promus (gate release flow, GO humain).
+
+**SHA** : voir commit de log.
+
+---

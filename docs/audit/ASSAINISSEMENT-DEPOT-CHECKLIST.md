@@ -37,8 +37,8 @@ Légende : `[x]` fait+prouvé · `[~]` partiel · `[gate]` bloqué validation hu
 - [x] recette — travail (123∉main) — **CONSERVER (intouchable)**
 - [x] staging — WYSIWYG+SEO mode, **62 commits uniques** — **MERGER SÉLECTIVEMENT** (tag requis, ne pas supprimer)
 - [x] integration/lot1-lot2-vs-prod — miroir recette, **0 commit unique** — CONSERVER/ARCHIVER (aucune perte)
-- [x] chore/control-plane-bootstrap — 4 commits control — **ARCHIVER + tag**
-- [x] chore/claude-control-runner — workflow runner hébergé, 1 commit — **CONSERVER**
+- [x] chore/control-plane-bootstrap — 4 commits control — **ARCHIVER + tag** (main∉recette = 21, tous nightly bot [skip ci])
+- [x] chore/claude-control-runner — workflow runner hébergé, **12 commits** — **CONSERVER**
 > SHA de sauvegarde = tip courant de chaque branche (aucune suppression effectuée).
 
 ## 5. Cartographie architecture — `docs/maintainer/ARCHITECTURE.md` (`fd276717`)
