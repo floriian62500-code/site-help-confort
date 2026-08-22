@@ -108,3 +108,32 @@ et `travaux-*`**. Retrait complété ce run (`38e6077d`, 14 pages) → **0 page 
 **SHA** : voir commit de log.
 
 ---
+
+## ✅ TÂCHE 6 — Code mort / fichiers orphelins — **FAIT (3 lots atomiques)**
+
+**Lot A — composant carte-zone mort** (`2e14e04f`) : après retrait des mounts (T3),
+`hc-mini-zone.js` était monté nulle part (unique trigger `querySelectorAll('[data-hc-mini-zone]')`
+= 0 élément). Supprimé : `assets/hc-mini-zone.js` (110 l) + **54 includes `<script>`**. 0 référence résiduelle.
+
+**Lot B — backups** (`791416fd`) : `images/_backup_png/` (**4.6M, 43 fichiers**) référencés nulle part
+(grep html/css/js = 0) + déjà exclus du build. **Tag de sauvegarde `savepoint/backup-png-pre-removal`
+poussé** avant retrait (récup triviale). Supprimé réellement (git history conserve).
+
+**Lot C — CSS mort `.m-suppliers`** (`95fea5d1`) : **16 règles × 26 pages** (773 suppressions).
+0 usage HTML de la classe, 0 rendu. Retrait par **parseur conscient des accolades, par bloc `<style>`**
+(jamais de traversée de balise — une 1re version naïve corrompait `<style>`, prouvé et rejeté).
+Garde-fous vérifiés/fichier : `<style>` préservées, accolades équilibrées, 0 règle restante,
+classes voisines intactes (`.m-modal`/`.m-supp-logo-img`/`.m-pourquoi`/`.m-hero`). Inclut le compound
+mort `.m-suppliers-intro.made-in` (made-in : 0 HTML, aucune règle standalone).
+
+**Tests** : smoke **9/9 PASS** après déploiement ; carrousel fournisseurs **réel** (`data-hc-fournisseurs`
++ `hc-fournisseurs.js`) intact — seul le mort a été retiré.
+
+**Scan assets/*.js** : aucun autre JS orphelin (seul `hc-edit-mode.js` html=0 = chargé dynamiquement
+par `hc-widgets.js`, faux positif connu → conservé).
+
+**Reste mineur** : `scripts/tmp/plomberie-body.html` (scratch suivi, hors build) — candidat nettoyage annexe.
+
+**SHA** : `2e14e04f`, `791416fd`, `95fea5d1`.
+
+---

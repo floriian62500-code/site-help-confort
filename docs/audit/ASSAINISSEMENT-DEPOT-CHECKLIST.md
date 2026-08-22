@@ -24,12 +24,12 @@ Légende : `[x]` fait+prouvé · `[~]` partiel · `[gate]` bloqué validation hu
 
 ## 3. Pages métiers
 - [x] Grande carte de zone supprimée des pages métiers — `2a7494b8` (40 pages, `data-hc-mini-zone` retiré)
-- [x] Carte conservée uniquement ailleurs — `hc-mini-zone.js` gardé (14 pages non-métier)
+- [x] Carte de zone retirée **partout** — `38e6077d` (14 pages manquées : depannage-*/travaux-*) ; `hc-mini-zone.js` désormais orphelin **supprimé** (`2e14e04f`)
 - [x] Bloc fournisseurs doublon supprimé — `44771708` (7 pages, section statique `hc-metier-brands`), carrousel `hc-fournisseurs.js` conservé
 - [x] Bloc 6 engagements compacté — `458a1928` (7 pages, padding/icônes/gaps réduits) + item centre `2ca85333`
 - [x] Pas de répétition avec bandeau réassurance — engagements distincts du bandeau (Certifié/Devis/Techniciens/Standard)
 - [x] Templates/composants communs corrigés à la source — éditions CSS communes scriptées (identiques sur les 7)
-- [ ] CSS/JS/Leaflet inutiles retirés — `.m-suppliers` CSS orphelin inline reste (§6)
+- [x] CSS/JS/Leaflet inutiles retirés — `.m-suppliers` CSS mort retiré (16 règles × 26 pages, `95fea5d1`) ; `hc-mini-zone.js` orphelin retiré (`2e14e04f`)
 - [~] Desktop + mobile testés — valeurs CSS vérifiées ; test visuel 11 gabarits limité (pane viewport)
 
 ## 4. Branches (audit complet — ARCHITECTURE.md §2)
@@ -53,8 +53,8 @@ Légende : `[x]` fait+prouvé · `[~]` partiel · `[gate]` bloqué validation hu
 - [x] Anciens systèmes de validation retirés — ex-widget OK/KO + promote-prod (`4b592aff`)
 - [x] Anciens mécanismes PROD dangereux — bouton « Promouvoir en prod » + PAT retiré (CP-0015)
 - [x] Duplications HTML/JS/CSS recherchées — fournisseurs/zone/engagements mutualisés à la source
-- [ ] CSS `.m-suppliers` orphelin (marquee non rendu, inline pages métier) — à retirer
-- [ ] `images/_backup_png/` (4.6M, exclu build) — à archiver hors repo
+- [x] CSS `.m-suppliers` mort retiré — 16 règles × 26 pages (`95fea5d1`), parseur accolades par bloc `<style>`, 0 régression
+- [x] `images/_backup_png/` (4.6M, 43 fichiers) retiré (`791416fd`) + tag `savepoint/backup-png-pre-removal`
 
 ## 7. Sécurité — `docs/audits/SECURITY-AUDIT-2026-08.md` (`e2d58346`)
 - [x] Secrets/tokens/PAT repo — **0 exposé** (grep sk_live/ghp_/service_role)
