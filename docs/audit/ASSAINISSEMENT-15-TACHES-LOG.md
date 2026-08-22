@@ -264,3 +264,19 @@ Recommandé : QA visuelle dédiée (mêmes gabarits que T3/T7).
 **SHA** : log ce run.
 
 ---
+
+## ✅ TÂCHE 13 — Performance — **FAIT (gains mesurables livrés) ; recompression images live = reco**
+
+**Gains mesurables livrés ce run** :
+- **JS/CSS mort retiré** (T6) : `hc-mini-zone.js` (110 l + 54 includes) + `.m-suppliers` (16 règles × 26 pages, 773 lignes) → HTML/JS plus légers.
+- **Images orphelines retirées** : `images/_backup_png/` (**4.6M**, `791416fd`) + `images/metiers/` (**2.6M**, `62d83216`) = **~7.2M** retirés. `images/` : 11M → **8.5M**.
+- **Lazy-loading** : excellent (home 27/28, métier 19/21 ; la seule `eager` = mascotte hero, correct pour le LCP).
+- **Cache** : `netlify.toml` — assets/images/js/css `max-age` long + immutable ; HTML `max-age=0 must-revalidate` (correct).
+
+**Recommandé (gain mesurable, non exécuté = QA visuelle requise)** :
+- **Recompression WebP des images live référencées** : `mascotte.png` (604K, hero LCP, 27 pages) + prestations lourdes (ramonage 348K, garde-corps 312K, fenetres 292K…). `cwebp` disponible. Gain estimé ~1–2 M + LCP. Nécessite génération `.webp` + mise à jour des `src`/`<picture>` + QA visuelle (non fiable dans ce pane).
+- **18 `images/prestations/*.jpg` sans référence** : candidats orphelins MAIS **non retirés** — images servies via **Supabase Storage** par slug + fallbacks `onerror` ; possibles **sources** du catalogue live. À confirmer (sont-ce les sources uploadées ?) avant tout retrait.
+
+**SHA** : `791416fd`, `62d83216` (+ T6 dead-code).
+
+---
