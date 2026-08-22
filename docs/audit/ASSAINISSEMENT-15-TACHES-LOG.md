@@ -137,3 +137,27 @@ par `hc-widgets.js`, faux positif connu → conservé).
 **SHA** : `2e14e04f`, `791416fd`, `95fea5d1`.
 
 ---
+
+## ✅ TÂCHE 7 — Doublons et mutualisation — **ANALYSÉE (mutualisation dynamique OK ; extraction inline = recommandation chiffrée)**
+
+**Déjà mutualisé (composants dynamiques)** — aucune logique copiée, tout via `assets/hc-*.js` :
+`hc-chat-widget.js` (111 pages), `hc-tracking.js` (113), `hc-a11y-fixes.js` (114),
+`hc-sticky-cta.js` (104), `hc-fournisseurs.js` (56), `hc-engagements.js` (53), etc.
+Les blocs fournisseurs/zone/engagements sont montés par attribut `data-hc-*` (source unique).
+
+**Duplication résiduelle mesurée (inline, pages métier×ville)** :
+| Type | Blocs | Pages/ bloc | Taille |
+|---|---|---|---|
+| CSS `<style>` inline | 4 blocs identiques | 22–25 pages | ~65 Ko CSS/page cumulés |
+| JS `<script>` inline | 2–3 blocs identiques | 22–25 pages | ~3.4–4.0 Ko/bloc |
+
+**Décision (conforme T7 « centraliser uniquement si ça réduit la duplication ET le risque » + règle no-big-bang)** :
+l'extraction de ces blocs vers des fichiers `.css`/`.js` **cachés** réduirait nettement la duplication et le
+poids, MAIS c'est un refactor sur **~25 pages live** dont je **ne peux pas prouver l'absence de régression
+visuelle** dans cet environnement (screenshots du pane blancs). Exécuter à l'aveugle **augmenterait** le risque.
+→ **Recommandé** en session avec QA visuelle (strangler : 1 bloc → 1 fichier caché → vérif 25 pages → suivant).
+Gain estimé : −~65 Ko HTML/page + cache mutualisé. **Non exécuté à l'aveugle (choix de sûreté).**
+
+**Statut** : dynamique mutualisé = FAIT ; extraction inline = **recommandation documentée** (QA visuelle requise).
+
+---
