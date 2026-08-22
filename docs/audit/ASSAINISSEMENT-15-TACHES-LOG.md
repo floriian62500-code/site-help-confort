@@ -192,3 +192,25 @@ Gain estimé : −~65 Ko HTML/page + cache mutualisé. **Non exécuté à l'aveu
 **SHA** : findings documentés dans `docs/audits/SECURITY-AUDIT-2026-08.md` (`f771c259` + ce run).
 
 ---
+
+## ⚠️ TÂCHE 10 — Stripe et séparation TEST/PROD — **FAIT (audit) + 1 finding P1 CRITIQUE (gate)**
+
+**Côté frontend (site) — sain** :
+- **0 clé Stripe** dans le front (grep pk_live/pk_test/sk_* = 0).
+- `STRIPE_LINKS` **vide** (aucun lien LIVE configuré).
+- **Gel** : `index.html:2503 return;` s'exécute avant tout appel Stripe → le site ne peut PAS déclencher de paiement. `createStripePayment` undefined (confirmé E2E T1). Montant DOM non envoyé.
+
+**🔴 Côté edge — finding P1 CRITIQUE** :
+- `stripe-create-payment-link` : `verify_jwt: false`, **montant `amount_eur` fourni par le client** (validé seulement `≥1`), et `app_settings.stripe.configured=true` avec **clé `sk_live_`**.
+- ⇒ **endpoint de paiement LIVE public à montant contrôlé par le client** : appelable directement avec la clé publishable (publique) → Checkout Stripe LIVE à 1 € pour n'importe quelle prestation, abus de ressources, liens arbitraires. Le gel frontend ne protège pas l'edge.
+- **« impossibilité d'utiliser Stripe LIVE depuis recette »** : VRAIE pour le site, **FAUSSE au niveau edge**.
+- **« montant calculé serveur »** : **NON** — le montant vient du client.
+- Remédiation proposée (non déployée) : `supabase/functions/stripe-create-payment-link/PROPOSED_index.ts` (montant serveur via `services`, auth secret partagé, idempotence).
+
+**Séparation données TEST/PROD** : leads recette = même Supabase que prod (base partagée) ; Stripe frozen côté site donc pas de paiement test ; lead de test T1 nettoyé.
+
+⛔ **BLOQUÉ (gate + needs_florian)** : durcir/déployer l'edge OU couper l'endpoint si inutilisé. Nécessite décision Florian + clé Stripe TEST pour tester. **Aucune action prod sans GO.**
+
+**SHA** : proposition + audit (ce run).
+
+---

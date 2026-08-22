@@ -22,6 +22,11 @@ Projet Supabase : `btcbjwqiivhpwoszomhg`.
 - **P2 — Vue `recette_validation_status` en `SECURITY DEFINER`** (advisor ERROR) : contourne la RLS de l'appelant. Délibéré pour la lecture anon du statut, mais à revoir en `security_invoker` + policy dédiée.
 - **P3 — extensions `pg_net`/`pg_trgm` en schéma `public`** (advisor WARN) ; **fonctions `current_role()`/`is_owner()` SECURITY DEFINER exécutables** par `authenticated` ; **protection mots de passe compromis désactivée** (Auth). Durcissements mineurs (dashboard/migration).
 
+## 🔴 P1 CRITIQUE (2026-08-22, #9 T10) — endpoint de paiement LIVE public à montant client
+- **`stripe-create-payment-link`** : `verify_jwt: false` + montant `amount_eur` **lu depuis le corps client** (validé seulement `>= 1`) + `app_settings.stripe` = **configured=true avec une clé `sk_live_`** (107 car.). ⇒ **quiconque possède la clé publishable (publique dans le front) peut appeler l'edge directement et créer un Checkout Stripe LIVE au montant de son choix** (exploit sous-paiement 1 €, abus de ressources / pollution `payments`, liens de paiement arbitraires sur le compte Stripe HELP Confort). Le gel frontend (`index.html:2503 return;`) empêche le *site* d'appeler, **mais pas l'edge**.
+- **Remédiation proposée** (NON déployée = GATE) : `supabase/functions/stripe-create-payment-link/PROPOSED_index.ts` — montant **serveur** (lookup `services.base_price_ttc` par slug, client ignoré), auth par secret partagé `HC_PAYMENT_SECRET`, idempotence, rejet des prestations sur devis.
+- **needs_florian** : décider (a) durcir + déployer l'edge (tester d'abord en Stripe TEST), ou (b) si l'endpoint n'est plus utilisé par le dashboard manuel, le retirer / passer `app_settings.stripe.configured=false`. **Aucune action prod effectuée sans GO.**
+
 ## Migration proposée (NON appliquée — gate)
 Voir `supabase/migrations/PROPOSED_20260821_leads_insert_hardening.sql`.
 
