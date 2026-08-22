@@ -73,6 +73,8 @@
 
 ## 12. Procédures
 - **Dev local** : site statique → ouvrir les `.html` ou servir la racine (`python3 -m http.server`). Pas de build.
+- **Tests** : `node scripts/tests/smoke.mjs [baseURL]` — smoke test des parcours critiques (pages 200, catalogue Supabase à prix, anti-régression anon JWT legacy + promesse paiement en ligne). Aucune écriture de données. Défaut = recette Deploy Preview. Pas de suite unitaire formelle (site statique).
+- **CI/CD** : pas de pipeline de build applicatif ; le « build » Netlify = publication statique conditionnée par l'`ignore rule` (§5). Runner control-plane = GitHub Actions `.github/workflows/claude-control-plane.yml` (gates : repo privé + coût API).
 - **Recette** : pousser sur `recette` → Netlify build le Deploy Preview PR #2. Vérifier sur `deploy-preview-2--…`. Toute modif visible → item dans `/recette.html`.
 - **Release/prod** : **jamais** de merge aveugle recette→main. Utiliser le lot de release (cherry-pick des commits validés, hors control-plane), vérifier la PROD réellement, marquer déployé. **GO humain obligatoire.**
 - **Ne pas toucher** : `main`, PROD, Stripe LIVE, secrets, données métier.

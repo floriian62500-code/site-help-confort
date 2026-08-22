@@ -78,3 +78,13 @@ et `travaux-*`**. Retrait complété ce run (`38e6077d`, 14 pages) → **0 page 
 **SHA** : `38e6077d`.
 
 ---
+
+## ✅ TÂCHE 4 — Cartographie complète du dépôt — **FAIT**
+
+- Doc de cartographie **déplacé au chemin exact demandé** : `docs/ARCHITECTURE.md` → **`docs/maintainer/ARCHITECTURE.md`** (git mv, références .md mises à jour).
+- Contenu couvre : arborescence, pages/templates/composants, JS/CSS partagés, Netlify (`netlify.toml`, `_redirects`, `_headers`, ignore rule), Supabase (edge functions, catalogue, RLS), Stripe TEST (gel), leads/wizard, centre de validation, release flow, control plane, variables d'env (sans secret), procédures locale/test/recette/release/rollback, « où intervenir », dette résiduelle.
+- Complété ce run : section **Tests** (`scripts/tests/smoke.mjs`) + **CI/CD** (build Netlify conditionnel + runner GitHub Actions).
+
+**SHA** : voir commit de déplacement ci-dessous.
+
+---

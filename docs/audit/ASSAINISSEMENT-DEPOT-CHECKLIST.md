@@ -41,7 +41,7 @@ Légende : `[x]` fait+prouvé · `[~]` partiel · `[gate]` bloqué validation hu
 - [x] chore/claude-control-runner — workflow runner hébergé, 1 commit — **CONSERVER**
 > SHA de sauvegarde = tip courant de chaque branche (aucune suppression effectuée).
 
-## 5. Cartographie architecture — `docs/ARCHITECTURE.md` (`fd276717`)
+## 5. Cartographie architecture — `docs/maintainer/ARCHITECTURE.md` (`fd276717`)
 - [x] Arborescence · [x] Pages/templates/composants · [x] JS globaux/spécifiques · [x] CSS
 - [x] Netlify · [x] Supabase · [x] Fonctions serverless · [x] Stripe TEST · [x] Leads/commandes
 - [x] Centre de validation · [x] CI/CD · [x] Control plane · [x] Variables d'env (sans secrets)
@@ -100,14 +100,14 @@ Légende : `[x]` fait+prouvé · `[~]` partiel · `[gate]` bloqué validation hu
 - [~] E2E funnel critique / erreurs formulaire / mobile — funnel piloté manuel fait ; automatisation Playwright headless → reste (gate outillage)
 - [x] Nettoyage données TEST — smoke test **n'écrit aucune donnée** (GET only) ; lead test manuel `AUDIT_TEST_DELETE_ME` nettoyé
 
-## 12. Documentation mainteneur — `docs/ARCHITECTURE.md`
+## 12. Documentation mainteneur — `docs/maintainer/ARCHITECTURE.md`
 - [x] Architecture · [x] Arborescence · [x] Politique branches · [x] Règles recette/main
 - [x] Modifier page métier · [x] Ajouter prestation (Supabase services) · [x] Supabase/Netlify/Stripe TEST
 - [x] Release/rollback · [x] Points sensibles à ne pas casser
 - [~] Conventions commits · [~] Lancer tests (site statique — pas de suite formelle)
 
 ## 13. Rapport de fin — matrice
-Voir §1-12 + `docs/ARCHITECTURE.md` (branches+décisions) + `docs/audits/SECURITY-AUDIT-2026-08.md` + `docs/RELEASE-FLOW-PROPOSAL.md` + `docs/AUDIT-MASTER.md`.
+Voir §1-12 + `docs/maintainer/ARCHITECTURE.md` (branches+décisions) + `docs/audits/SECURITY-AUDIT-2026-08.md` + `docs/RELEASE-FLOW-PROPOSAL.md` + `docs/AUDIT-MASTER.md`.
 
 ### Gates (bloqués validation humaine — non exécutables par Claude)
 1. **Stripe TEST** : fournir `sk_test_` → achat en ligne réel + E2E complet (tâches 1/10).
