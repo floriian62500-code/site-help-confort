@@ -59,13 +59,13 @@ Légende : `[x]` fait+prouvé · `[~]` partiel · `[gate]` bloqué validation hu
 ## 7. Sécurité — `docs/audits/SECURITY-AUDIT-2026-08.md` (`e2d58346`)
 - [x] Secrets/tokens/PAT repo — **0 exposé** (grep sk_live/ghp_/service_role)
 - [x] Clés privilégiées frontend — aucune (seul publishable, public par design)
-- [ ] XSS/innerHTML/paramètres URL — audit en cours (§ tâche 8)
-- [x] Validation/sanitation — client (wizard) + serveur (edge submit-lead)
-- [ ] CORS — à vérifier (edge functions)
-- [x] Endpoints publics/permissifs — **P1 : INSERT anon `leads`** (vecteur spam) → migration proposée
-- [~] Rate limit/anti-spam — anti-double-clic front ; rate-limit serveur à évaluer
+- [x] XSS/innerHTML/paramètres URL — scan clean (params URL, review/chat échappés `esc()`)
+- [x] Validation/sanitation — client (wizard) + serveur (edge `submit-lead-v6` : sanitize+validation tel/email/CP)
+- [x] CORS — edge `submit-lead-v6` : `Access-Control-Allow-Origin:*` **acceptable** (endpoint form public, POST/OPTIONS, sans credentials/cookies) ; pas de wildcard sur ressource authentifiée
+- [x] Endpoints publics/permissifs — **P1 : INSERT anon `leads`** (`leads_public_insert` court-circuite la validation/rate-limit/honeypot de l'edge) → migration proposée
+- [x] Rate limit/anti-spam — **serveur** : edge rate-limit 5/min/IP + honeypot (`website`/`url_site`) + hygiène leads test ; front anti-double-clic
 - [x] Supabase RLS — PII non lisible anon (leads/newsletter 0 ligne) ; tables sensibles verrouillées
-- [ ] Storage permissions — à vérifier
+- [x] Storage permissions — 5 buckets audités : `lead-photos` **privé** (correct) ; **P1 `site-photos` écriture publique anon** (INSERT/UPDATE/DELETE = défacement/DoS ; front ne fait que lire) → migration `PROPOSED_20260822_storage_site_photos_hardening.sql` (gate) ; `realisations` policies mortes (accent `réalisations`≠id)
 - [x] Headers sécurité — HSTS, X-CTO, Referrer, Permissions-Policy, CSP (GA corrigé `c77fa5bd`)
 - [ ] Dépendances vulnérables — site statique, pas de package.json applicatif (à confirmer)
 - [x] Stripe TEST/LIVE — chemin client **gelé**, impossible LIVE depuis recette (montant DOM neutralisé)
