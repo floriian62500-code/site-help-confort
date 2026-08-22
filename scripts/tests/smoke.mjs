@@ -34,6 +34,14 @@ async function run() {
   // 4. Anti-régression : pas de promesse « payer en ligne » client (Stripe gelé)
   const nosprest = await (await fetch(BASE + '/nos-prestations.html?z=' + Date.now())).text();
   /r[ée]servation en ligne|acompte 40/i.test(nosprest) ? ko('Honnêteté paiement', 'promesse en ligne résiduelle') : ok('Pas de promesse paiement en ligne résiduelle');
+  // 5. Funnel présent : le wizard de réservation + son CTA « sans paiement en ligne » (T1)
+  (home.includes('id="hc-reservation"') && /sans paiement en ligne/i.test(home)) ? ok('Funnel réservation présent (CTA sans paiement en ligne)') : ko('Funnel réservation', 'wizard/CTA introuvable');
+  // 6. Anti-régression sécurité (T8) : pages admin PAT/promote-to-prod NON servies publiquement
+  const s1 = await status('/admin-pro/valider-staging.html');
+  const s2 = await status('/admin-pro/photos.html');
+  (s1 === 404 && s2 === 404) ? ok('Pages admin PAT/promote bloquées (404/404)') : ko('Sécurité admin', `valider-staging=${s1} photos=${s2} (attendu 404)`);
+  // 7. Anti-régression : validateurs wizard hoistés présents (fix erreurs inline T2)
+  home.includes('Validateurs partagés (hoistés)') ? ok('Wizard : validateurs hoistés présents (erreurs inline)') : ko('Wizard validateurs', 'hoist absent (régression T2)');
 
   console.log(`\nRÉSULTAT : ${pass} PASS / ${fail} FAIL`);
   process.exit(fail > 0 ? 1 : 0);

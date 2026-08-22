@@ -280,3 +280,26 @@ Recommandé : QA visuelle dédiée (mêmes gabarits que T3/T7).
 **SHA** : `791416fd`, `62d83216` (+ T6 dead-code).
 
 ---
+
+## ✅ TÂCHE 14 — Tests automatisés — **FAIT (smoke 12 checks) ; E2E Stripe TEST = gate**
+
+**`scripts/tests/smoke.mjs` enrichi — 12 checks, 0 écriture de données, réutilisable CI** :
+1–6. pages critiques 200 (home, prestations, métier, contact, zones, 404).
+7. catalogue Supabase = 28 prestations à prix.
+8. anti-régression : pas d'anon JWT legacy dans le HTML.
+9. anti-régression : pas de promesse « paiement en ligne » (Stripe gelé).
+10. **funnel réservation présent** (`#hc-reservation` + CTA « sans paiement en ligne ») — garde T1.
+11. **sécurité** : pages admin PAT/promote **404/404** — garde T8.
+12. **wizard** : validateurs hoistés présents — garde T2 (erreurs inline).
+→ **Résultat : 12 PASS / 0 FAIL.**
+
+**E2E manuel des parcours critiques (T1)** : home → besoin → wizard (urgence→plomberie→coordonnées)
+→ catalogue (771 € TTC) → réservation → **lead créé en base** (vérifié SQL) → confirmation → **lead nettoyé**.
+Formulaires invalides + double-clic + retour arrière : vérifiés (T2). **Nettoyage données test : appliqué.**
+
+⛔ **BLOQUÉ (gate)** : E2E « prestation tarifable → réservation → **Stripe TEST** → confirmation » —
+nécessite une clé `sk_test_` (paiement gelé). Automatisation Playwright headless du funnel = reco outillage.
+
+**SHA** : `7806540c` (initial) + enrichissement ce run.
+
+---
