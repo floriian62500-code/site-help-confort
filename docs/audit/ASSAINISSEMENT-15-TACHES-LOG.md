@@ -161,3 +161,34 @@ Gain estimé : −~65 Ko HTML/page + cache mutualisé. **Non exécuté à l'aveu
 **Statut** : dynamique mutualisé = FAIT ; extraction inline = **recommandation documentée** (QA visuelle requise).
 
 ---
+
+## ✅ TÂCHE 8 — Sécurité frontend — **FAIT (finding corrigé)**
+
+| Contrôle | Résultat |
+|---|---|
+| Secrets/PAT en clair dans le front | **0** (grep sk_live/sk_test/ghp_/service_role = aucun hardcodé) |
+| **Pages admin PAT/promote-to-prod publiques** | **P1 CORRIGÉ** — `admin-pro/valider-staging.html` (PAT + `promote-to-prod`) et `admin-pro/photos.html` (PAT) étaient **HTTP 200 sans auth** → bloquées 404 via `_redirects` (`2ab95305`). Vérifié : 404/404 ; témoin `analytics.html`=200 |
+| Open redirect | **Aucun** — seuls `location.href='contact.html?...'` (cible fixe, pas d'input) |
+| XSS reflété (innerHTML ← param URL) | **Aucun** |
+| PII en URL | **Non** — funnel met la PII en `localStorage` (`hc_lead_v1`), URL ne reçoit que `presta`/`action` (et ce code est post-`return` 2504 = mort) |
+
+**SHA** : `2ab95305`.
+
+## ✅ TÂCHE 9 — Sécurité backend/API/Supabase — **FAIT (2 findings P1, migrations = gate)**
+
+| Contrôle | Résultat |
+|---|---|
+| Validation/sanitation serveur | ✅ edge `submit-lead-v6` : sanitize + validation tel/email/CP + contrats par `form_type` |
+| CORS | ✅ `Access-Control-Allow-Origin:*` acceptable (endpoint form public, POST/OPTIONS, sans credentials) |
+| Rate limit / anti-spam | ✅ **serveur** : 5 req/min/IP + honeypot (`website`/`url_site`) + hygiène leads test |
+| RLS / PII | ✅ `leads`/`newsletter` non lisibles anon (0 ligne) ; tables sensibles verrouillées (deny-all) |
+| **Endpoint public permissif** | **P1** : `leads_public_insert` permet l'INSERT anon direct (court-circuite l'edge) → migration `PROPOSED_20260821_leads_insert_hardening.sql` **(gate DB)** |
+| **Storage** | **P1** : bucket public `site-photos` autorise **INSERT/UPDATE/DELETE anon** (défacement/DoS ; front ne fait que lire) → migration `PROPOSED_20260822_storage_site_photos_hardening.sql` **(gate DB)** ; `lead-photos` privé (OK) ; `realisations` policies mortes (accent) |
+| Clés privilégiées frontend | ✅ **aucune** (seule la clé publishable, publique par design ; service_role côté serveur uniquement) |
+| Idempotence/double soumission | anti-double-clic front ; idempotence serveur = à évaluer au dégel Stripe |
+
+⛔ **Sous-points BLOQUÉS (gate DB, GO Florian)** : appliquer les 2 migrations de durcissement (leads INSERT + storage site-photos). Non appliquées (aucune action prod sans GO).
+
+**SHA** : findings documentés dans `docs/audits/SECURITY-AUDIT-2026-08.md` (`f771c259` + ce run).
+
+---
