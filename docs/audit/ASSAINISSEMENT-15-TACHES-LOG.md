@@ -58,3 +58,23 @@
 **SHA** : `c6f2d349`.
 
 ---
+
+## ✅ TÂCHE 3 — Pages métiers : nettoyage UX — **FAIT (complété)**
+
+**Anomalie réelle trouvée et corrigée** : la grande carte de zone n'avait PAS été retirée
+« partout » — le commit initial `2a7494b8` (40 pages) avait **sauté les familles `depannage-*`
+et `travaux-*`**. Retrait complété ce run (`38e6077d`, 14 pages) → **0 page ne monte plus la carte**.
+
+| Élément | État | Preuve |
+|---|---|---|
+| Grande carte de zone (`data-hc-mini-zone`) | ✅ retirée **partout** | 0 mount sur tout le repo (grep) ; `38e6077d` (travaux-saint-omer + travaux-dunkerque + 12 depannage-*) |
+| Bloc fournisseurs doublon (`hc-metier-brands`) | ✅ retiré | 0 sur les 7 pages métier (grep) ; `44771708` |
+| Bloc « 6 engagements » | ✅ compacté | CSS `.m-pourquoi`/`mpq-` réduit présent (31-37 refs) ; `458a1928` |
+| Overflow horizontal mobile (dépannage 375) | ✅ aucun | `documentElement.scrollWidth == viewport` ; carte zone absente (0 rendu) |
+
+**Note** : le script `hc-mini-zone.js` reste inclus (mais monté nulle part) sur **54 pages** →
+**orphelin dead-include**, traité en TÂCHE 6. Responsive complet 320→1920 = TÂCHE 12.
+
+**SHA** : `38e6077d`.
+
+---
