@@ -1,6 +1,6 @@
 # 🔒 Audit RGPD strict — état par défaut consent
 
-_Généré le 2026-08-21 03:52_
+_Généré le 2026-08-22 03:43_
 
 **Règle vérifiée :** aucun cookie / localStorage / sessionStorage
 ne doit être posé tant que l'utilisateur n'a pas explicitement
