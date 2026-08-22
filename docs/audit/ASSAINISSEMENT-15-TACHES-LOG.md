@@ -214,3 +214,32 @@ Gain estimé : −~65 Ko HTML/page + cache mutualisé. **Non exécuté à l'aveu
 **SHA** : proposition + audit (ce run).
 
 ---
+
+## ✅ TÂCHE 11 — Release flow / recette → prod — **FAIT (socle + inventaire) ; UI 4 états = gate DB**
+
+**Audit `/recette.html`** : centre de validation unique (items `data-review-id`, table `recette_validation`,
+versionné `v` → bump = à revalider). Source de OK / À corriger / commentaire.
+
+**Mécanismes dangereux identifiés & neutralisés** :
+- ex-widget OK/KO + bouton « Promouvoir en prod » + PAT (CP-0015, `4b592aff`).
+- pages admin `valider-staging.html`/`photos.html` (PAT/promote-to-prod) **bloquées** ce run (`2ab95305`, T8).
+
+**Inventaire main vs recette (`REL-2026-08-22-DRAFT`, base `970375e8` → head `52760811`)** :
+| Catégorie | Nombre |
+|---|---|
+| DÉJÀ PROD | main `970375e8` |
+| NON PROMU (recette∉main) | **148 commits** = 97 promotables + 51 exclus (control-plane/docs/scripts) |
+| VALIDÉ RECETTE (`ok`) | **3 items** (`recette_validation`) → candidats PRÊT PROD |
+| À CORRIGER / À REVALIDER | **6 items** (`a_corriger`) |
+| NON VALIDÉ | reste des 97 promotables (non encore revus) |
+| Fichiers impactés | 256 |
+
+**Promotion** : générateur `scripts/control/build-release-lot.mjs` (cherry-pick contrôlé, exclut
+docs/control + scripts/control). **Aucune promotion prod effectuée.** Aucun token de promotion frontend.
+
+⛔ **BLOQUÉ (gate DB)** : réécriture `/recette.html` avec 4 états visibles (À TESTER / VALIDÉ RECETTE /
+PRÊT PROD / DÉPLOYÉ PROD) — dépend de la migration 4 tables `20260820_release_flow.sql` (non appliquée, GO Florian).
+
+**SHA** : socle `1d4f0c23` + inventaire ce run.
+
+---
