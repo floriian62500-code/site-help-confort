@@ -32,3 +32,29 @@
 **SHA E2E / preuves** : parcours live + `a74c9ec3` (honnêteté) + `7806540c` (smoke test anti-régression).
 
 ---
+
+## ✅ TÂCHE 2 — P0 wizard/formulaires — **FAIT (bug corrigé)**
+
+**Anomalie réelle trouvée et corrigée** : les **erreurs inline par champ ne s'affichaient JAMAIS**.
+- Cause racine : `nameOk/phoneFrOk/emailOk/cpFrOk/villeOk` étaient définies **localement dans `canGoNext()`** (bloc `if(current===3)`), mais `refreshNext()` les appelait **hors scope** → `ReferenceError` **avalé par son `try/catch`** (index.html:1707) → aucune bordure rouge ni message.
+- Fix (`c6f2d349`) : **hoist** des 5 validateurs au scope partagé, avant `canGoNext`. Copies internes intactes (aucune régression canGoNext). Validateurs re-testés 11/11 (node).
+
+**Preuve live sur recette (après déploiement)** — étape 3, champs invalides non vides :
+| Champ | Valeur | Résultat |
+|---|---|---|
+| Prénom | `A1` | bordure `rgb(220,38,38)` + « ⚠️ Prénom invalide (lettres uniquement, ≥2…) » |
+| Téléphone | `12` | bordure rouge + « ⚠️ Téléphone FR invalide (ex: 06 12 34 56 78) » |
+| Email | `pasunemail` | bordure rouge + « ⚠️ Email invalide (format vous@domaine.fr) » |
+
+**Autres exigences TÂCHE 2 vérifiées en live** :
+- ✅ « Continuer » **jamais bloqué en silence** (`tryNext` : bouton cliquable même invalide ; `btnClickableWhenInvalid=true`).
+- ✅ **Focus/scroll premier champ invalide** (`focusedField=resa-prenom` après clic).
+- ✅ **Validation adresse/CP/ville** : ville+CP alimentés par sélection **BAN** (autocomplete adresse) ; hint « Renseignez vos coordonnées complètes ».
+- ✅ **Retour arrière** : bouton « ← Retour » → étape précédente, **données conservées**.
+- ✅ **Double-clic** : `dataset.sending` anti-double-clic (handler `resa-pay`/`resa-send-complex`).
+- ✅ **Erreur réseau** : `resaMsg(false, resaErrorText(res))` reste sur la page + message précis (pas de navigation).
+- ✅ **Anti-fausses-données** : `nameOk` rejette chiffres/symboles/répétitions/sans-voyelle (feature voulue).
+
+**SHA** : `c6f2d349`.
+
+---
