@@ -243,3 +243,24 @@ PRÊT PROD / DÉPLOYÉ PROD) — dépend de la migration 4 tables `20260820_rele
 **SHA** : socle `1d4f0c23` + inventaire ce run.
 
 ---
+
+## ✅ TÂCHE 12 — Qualité front complète — **FAIT (items vérifiables) ; sweep responsive limité (pane)**
+
+| Contrôle | Résultat |
+|---|---|
+| Console JS | **Propre** — seul le framing toolbar `app.netlify.com` bloqué par CSP = **bénin, recette-only** (bannière Deploy Preview, absente en prod, pas notre code) |
+| Liens internes cassés | **0** (scan href→.html sur pages clés) |
+| Images sans `alt` | **0 / 1469** |
+| `<h1>` par page | **exactement 1** (index + 4 pages métier + nos-prestations + contact) |
+| 404/500 involontaires | aucun (scan liens) ; smoke test 6 pages = 200 |
+| Overflow horizontal | **spot-vérifié** : depannage-saint-omer mobile = `scrollWidth==viewport` (0 débordement) |
+| Erreurs réseau | gérées (catalogue fallback, `resaMsg`) |
+
+**Limite environnementale** : le sweep responsive complet 320→1920 sur les 7 gabarits n'est pas
+mesurable de façon fiable ici — le Browser pane rapporte `innerWidth/bodyW = 0` sur la home (rendu
+collapsé), rendant le scan overflow non concluant sur cette page (la mesure a fonctionné sur depannage).
+Recommandé : QA visuelle dédiée (mêmes gabarits que T3/T7).
+
+**SHA** : log ce run.
+
+---
