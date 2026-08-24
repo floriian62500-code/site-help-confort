@@ -93,7 +93,7 @@ ChatGPT relit l'outbox/commentaire --> boucle suivante, sans Florian
 ---
 
 ## 12. Tests du préflight (PASS/FAIL attendus) — `scripts/control/runner-preflight.test.sh`
-Sandbox isolée, aucun effet sur le repo réel. **Résultat : 6 PASS / 0 FAIL.**
+Sandbox isolée, aucun effet sur le repo réel. **Résultat (préflight+postflight) : 12 PASS / 0 FAIL.**
 | Scénario | Attendu | Obtenu |
 |---|---|---|
 | Mauvais nom CP (`CP-XX-bad.md`) | SKIP aucun CP valide | ✅ |
@@ -142,5 +142,33 @@ Les trois sont indépendants et suffisants isolément.
 Workflow finalisé + préflight testé (5/5) + PR technique préparée + checklist + E2E + rollback documentés.
 **Manque uniquement** : les 3 actions Florian (token OAuth, secret, merge PR + branch protection). Aucune activation faite.
 
-## RUNNER_STATE
-`RUNNER_STATE = READY_FOR_HUMAN_ACTIVATION`
+
+---
+
+## 18. Durcissements sécurité PR #10 (revue ChatGPT 5394944983) — matrice GARDE | TEST | RÉSULTAT
+| # | GARDE | Implémentation | TEST | RÉSULTAT |
+|---|---|---|---|---|
+| 1 | Supply chain | `actions/checkout@11d5960a…` (v4) + `claude-code-action@c81e3bc6…` (v1) **pinnés SHA** | revue diff | ✅ |
+| 2 | Least privilege | `issues:write` **retiré** (commentaires #9 restent manuels) ; seul `contents:write` | revue perms | ✅ |
+| 3 | Garde branche avant/après | step « Garde branche (avant) » + postflight (après) : `HEAD==recette` sinon FAIL | POSTFLIGHT « branche != recette » | ✅ FAIL |
+| 4 | Fichiers sensibles | postflight refuse diff touchant `.github/workflows/**`, `scripts/control/runner-*`, `.plist`, `.env`, secret | POSTFLIGHT « modif garde-fou » | ✅ FAIL |
+| 5a | Outbox obligatoire | postflight exige un `RUN-*.md` dans le diff sinon FAIL | POSTFLIGHT « outbox manquant » | ✅ FAIL |
+| 5b | runner-status JSON | postflight exige status modifié + JSON valide | POSTFLIGHT « JSON invalide » | ✅ FAIL |
+| 6 | Distinction échec | step `Trace d'échec` (`RUN-FAIL-*.md`) sur `failure()` — claude/postflight/push distingués | revue workflow | ✅ |
+| 7 | Anti-mélange auteur | préflight refuse un CP dont le commit touche aussi du code applicatif | PREFLIGHT « commit mélangé » | ✅ SKIP |
+| 8 | Planif / Claude jamais appelé si skip | job `execute` gardé par `if: decision == process` ; préflight seul sinon | revue workflow | ✅ |
+
+**Tests : 12/12 PASS** (7 préflight + 5 postflight) — `scripts/control/runner-preflight.test.sh`.
+
+### Limite connue (#7) — provenance auteur
+Le préflight compare `git log %an/%ae` (nom/email Git, **falsifiables** localement), **pas** un login GitHub signé.
+Mitigations en place : allowlist email exact + CP dans un commit **control-only** (refus si mélange applicatif) +
+inbox lu uniquement sur `recette` (write = collaborateurs). **Évolution recommandée** : exiger des **commits signés
+vérifiés GitHub** (branch protection « require signed commits ») pour une provenance forte.
+
+### Coût / quota (#8)
+Cron */20 = ~72 déclenchements/j. Si aucun CP : **seul le job préflight** s'exécute (~secondes, Claude non appelé) →
+consommation Actions négligeable, **0 usage abonnement**. Claude n'est invoqué que sur un CP PROCESS.
+
+## RUNNER_STATE (mis à jour)
+`RUNNER_STATE = READY_FOR_HUMAN_ACTIVATION_FINAL`
