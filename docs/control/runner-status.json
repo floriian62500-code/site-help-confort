@@ -1,11 +1,11 @@
 {
   "state": "SITE_WORK_ACTIVE",
-  "current_task": "runner durci READY_FOR_HUMAN_ACTIVATION_FINAL (PR #10 tip 52046e56)",
-  "last_completed_task": "10 durcissements sécurité PR #10 + tests 12/12",
-  "last_report": "docs/control/outbox/claude/RUN-2026-08-24-1212.md",
-  "last_commit_sha": "329eaf8b",
-  "last_poll_at": "2026-08-24T12:12:37Z",
-  "heartbeat": "2026-08-24T12:12:37Z",
+  "current_task": "runner renforts revue #2 (14/14) — PR #10 tip 30eaf6e3",
+  "last_completed_task": "github.actor + garde remote + cohérence champs status ; tests 14/14",
+  "last_report": "docs/control/outbox/claude/RUN-2026-08-24-1217.md",
+  "last_commit_sha": "ca0801fd",
+  "last_poll_at": "2026-08-24T12:17:00Z",
+  "heartbeat": "2026-08-24T12:17:00Z",
   "branch": "recette",
   "remaining_tasks": [
     "GATE: clé Stripe TEST + durcir edge stripe-create-payment-link (P1 CRITIQUE montant client)",
@@ -30,5 +30,5 @@
   ],
   "needs_florian": true,
   "note": "Chantier #9 TERMINÉ (15 tâches FAIT ou BLOQUÉ avec raison). Control-plane en réparation : chaque cycle produit désormais un outbox RUN-<horodatage>.md poussé sur recette AVANT tout 'terminé'. Anciens états contradictoires (PAUSED_PER_CP-0011 / RUNNER_GATED) supprimés — le runner autonome hébergé reste hors périmètre (non activé), distinct du travail applicatif de session.",
-  "runner_autonomous_activation": "READY_FOR_HUMAN_ACTIVATION_FINAL — PR #10 (tip 52046e56) durcie (SHA pins, least-priv, gardes branche, postflight, 12/12 tests). Manque: secret CLAUDE_CODE_OAUTH_TOKEN + merge PR #10 + branch protection main."
+  "runner_autonomous_activation": "READY_FOR_HUMAN_ACTIVATION_FINAL — PR #10 tip 30eaf6e3 (14/14 gardes : pins, least-priv, actor, préflight+postflight, denylist, outbox, status). Manque: secret + merge PR #10 + branch protection main."
 }
