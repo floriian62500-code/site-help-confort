@@ -32,3 +32,19 @@ Voir `supabase/migrations/PROPOSED_20260821_leads_insert_hardening.sql`.
 
 ## Gates
 Aucune migration appliquée sans GO Florian. Aucune donnée métier supprimée (seul 1 lead de test `AUDIT_TEST_DELETE_ME` créé pendant l'audit a été nettoyé). Aucune PROD.
+
+## Matrice RLS (audit table par table, 2026-08-24)
+| TABLE | RLS | anon | authenticated | risque |
+|---|---|---|---|---|
+| `leads` | on | INSERT | ALL | **P1** INSERT anon direct (leads_public_insert) — migration proposée |
+| `newsletter_subscribers` | on | INSERT | SELECT | OK (anon signup, non lisible) |
+| `payments` | on | — | ALL | OK (non lisible anon ; insert via service_role) |
+| `services` | on | SELECT (public) | ALL | OK (catalogue public) |
+| `recette_validation` | on | INSERT | INSERT | OK (centre recette) |
+| `lead_action_tokens` | on | — | — | OK (deny-all) |
+| `app_settings` | on | — | ALL | **P2** contient la clé Stripe → lisible par `authenticated` (devrait être service_role only) |
+| `staging_validations` | on | **ALL** | ALL | **P2** accès anon complet (table obsolète ex-widget) → verrouiller/DROP |
+
+**Nouveaux findings (remédiation = gate DB, non appliquée)** :
+- **P2 `app_settings`** : restreindre SELECT/ALL au `service_role` (retirer l'accès `authenticated` à une table portant un secret Stripe).
+- **P2 `staging_validations`** : `revoke`/DROP (table de l'ex-widget retiré CP-0015, plus utilisée).
