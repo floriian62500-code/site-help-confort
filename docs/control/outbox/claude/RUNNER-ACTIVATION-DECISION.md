@@ -93,7 +93,7 @@ ChatGPT relit l'outbox/commentaire --> boucle suivante, sans Florian
 ---
 
 ## 12. Tests du préflight (PASS/FAIL attendus) — `scripts/control/runner-preflight.test.sh`
-Sandbox isolée, aucun effet sur le repo réel. **Résultat (préflight+postflight) : 14 PASS / 0 FAIL.**
+Sandbox isolée, aucun effet sur le repo réel. **Résultat (préflight+postflight) : 16 PASS / 0 FAIL.**
 | Scénario | Attendu | Obtenu |
 |---|---|---|
 | Mauvais nom CP (`CP-XX-bad.md`) | SKIP aucun CP valide | ✅ |
@@ -115,15 +115,16 @@ GitHub → Settings → Branches → Add rule (`main`) :
 - ☑ Do not allow bypassing the above settings.
 - ☑ Block force pushes. ☑ Restrict deletions.
 - (option) Require status checks : préflight/smoke si exposés en checks.
-→ Backstop serveur : même si un prompt tentait de pousser main, le `GITHUB_TOKEN` est refusé.
+- ⚠️ **NE PAS ajouter « GitHub Actions » ni aucun rôle dans la bypass list du ruleset** (sinon le `GITHUB_TOKEN` du runner contournerait la protection).
+- **Vérifier l'absence de bypass** : Settings → Rules → Rulesets → (le ruleset main) → « Bypass list » doit être **vide** ; ou API `gh api repos/OWNER/site-help-confort/rulesets` → `bypass_actors: []`. Test concret : tenter un push direct sur main via un run Actions doit être **refusé** (403).
+→ Backstop serveur : même si un prompt tentait de pousser main, le `GITHUB_TOKEN` est refusé (à condition que la bypass list soit vide).
 
-## 15. ACTIVATION CHECKLIST (Florian — 5 cases max)
-- [ ] **1.** Terminal : lancer `claude setup-token`, copier le token affiché.
-- [ ] **2.** GitHub → Settings → Secrets and variables → Actions → New repository secret : nom `CLAUDE_CODE_OAUTH_TOKEN`, valeur = le token. (Ne le colle nulle part d'autre.)
-- [ ] **3.** Ouvrir la PR technique « runner » et l'approuver/merger (place le workflow sur `main`).
-- [ ] **4.** Activer la branch protection `main` (§14).
-- [ ] **5.** Onglet Actions → lancer « Claude Runner (OAuth) » via *Run workflow* pour le test E2E témoin.
-> Après la case 5, l'automatisation est active et se relance seule au cron.
+## 15. ACTIVATION CHECKLIST (Florian — ordre STRICT : protéger main AVANT de merger)
+- [ ] **A.** Terminal : `claude setup-token` → GitHub → Settings → Secrets and variables → Actions → New repository secret : nom `CLAUDE_CODE_OAUTH_TOKEN`, valeur = le token. (Ne le colle nulle part d'autre.)
+- [ ] **B.** **Activer la branch protection / ruleset `main` AVANT tout** (§14) : require PR, block push direct/force/suppression, **bypass list vide** (pas d'exception Actions). Vérifier l'absence de bypass.
+- [ ] **C.** **Seulement ensuite**, merger la PR #10 (place le workflow sur `main`, désormais protégé).
+- [ ] **D.** Onglet Actions → « Claude Runner (OAuth) » → *Run workflow* = test E2E témoin.
+> L'ordre B avant C est impératif : le workflow autonome a `contents:write` ; le backstop serveur doit exister AVANT que le workflow existe sur main.
 
 ## 16. Test E2E d'activation NON destructif (à exécuter après les 5 cases)
 1. Commit un `docs/control/inbox/chatgpt/CP-9999-ping.md` (auteur = Florian) sur `recette` : contenu « ping runner, écris un outbox témoin et t'arrête ».
@@ -158,7 +159,7 @@ Workflow finalisé + préflight testé (5/5) + PR technique préparée + checkli
 | 7 | Anti-mélange auteur | préflight refuse un CP dont le commit touche aussi du code applicatif | PREFLIGHT « commit mélangé » | ✅ SKIP |
 | 8 | Planif / Claude jamais appelé si skip | job `execute` gardé par `if: decision == process` ; préflight seul sinon | revue workflow | ✅ |
 
-**Tests : 14/14 PASS** (7 préflight + 7 postflight) — `scripts/control/runner-preflight.test.sh`.
+**Tests : 16/16 PASS** (7 préflight + 9 postflight) — `scripts/control/runner-preflight.test.sh`.
 
 ### Limite connue (#7) — provenance auteur
 Le préflight compare `git log %an/%ae` (nom/email Git, **falsifiables** localement), **pas** un login GitHub signé.
