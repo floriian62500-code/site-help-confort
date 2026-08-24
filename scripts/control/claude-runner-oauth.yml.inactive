@@ -66,13 +66,24 @@ jobs:
             SHA, preuves, anomalies, gates, needs_florian, next) ET mets à jour docs/control/runner-status.json
             (heartbeat/state/last_report/last_commit_sha). Si aucune tâche : audit/nettoyage/sécurité sûr.
           claude_args: '--max-turns 60'
-      - name: Persist (recette only)
+      - name: Persist (recette only — garde anti-main)
+        if: always()
         shell: bash
         run: |
           set -euo pipefail
-          git diff --quiet && { echo "no changes"; exit 0; }
+          # GARDE DURE : ne jamais pousser main. Le checkout est ref=recette ; on refuse tout push main.
+          TARGET="recette"
+          if [ "$TARGET" = "main" ] || [ "$TARGET" = "master" ]; then
+            echo "::error::refus de pousser sur une branche protégée"; exit 1
+          fi
+          if git diff --quiet && git diff --cached --quiet; then echo "no changes"; exit 0; fi
           git config user.name "helpconfort-runner[bot]"
           git config user.email "helpconfort-runner[bot]@users.noreply.github.com"
           git add -A
           git commit -m "chore(runner): sortie Claude autonome [skip ci]"
-          git push origin HEAD:recette      # jamais main
+          # push explicite recette uniquement ; refname en dur, jamais main
+          git push origin "HEAD:refs/heads/${TARGET}"
+      - name: Heartbeat en cas d'échec
+        if: failure()
+        shell: bash
+        run: echo "::warning::run runner en échec — voir logs. runner-status/heartbeat inchangé ; kill-switch = docs/control/RUNNER_STOP."

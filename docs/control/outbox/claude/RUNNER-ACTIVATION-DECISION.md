@@ -89,3 +89,54 @@ ChatGPT relit l'outbox/commentaire --> boucle suivante, sans Florian
 
 ## Décision
 **Recommandé : Option A (GitHub Actions + Claude Code Action OAuth, durci).** Tout est préparé sur la branche technique ; activation = 1 secret + 1 merge de workflow vers main + branch protection. Sinon repli Option C (local launchd) si Florian préfère ne pas toucher main (dépend du Mac allumé).
+
+---
+
+## 12. Tests du préflight (PASS/FAIL attendus) — `scripts/control/runner-preflight.test.sh`
+Sandbox isolée, aucun effet sur le repo réel. **Résultat : 5 PASS / 0 FAIL.**
+| Scénario | Attendu | Obtenu |
+|---|---|---|
+| Mauvais nom CP (`CP-XX-bad.md`) | SKIP aucun CP valide | ✅ |
+| Instruction valide + auteur allowlisté | PROCESS <path> | ✅ |
+| Mauvais auteur (`attaquant-random`) | SKIP auteur non autorisé | ✅ |
+| Doublon (outbox déjà présent) | SKIP déjà traité | ✅ |
+| Kill-switch (`RUNNER_STOP`) | SKIP kill-switch | ✅ |
+
+## 13. Pourquoi le workflow doit être sur `main` alors qu'il ne touche QUE `recette`
+GitHub **n'exécute les triggers `schedule` (cron) et `workflow_dispatch` que depuis la branche par défaut** (`main`).
+Un workflow présent uniquement sur `recette` ne serait jamais planifié. **Mais** le workflow, à l'exécution :
+`checkout ref: recette` → travaille sur recette → `git push origin HEAD:refs/heads/recette` **uniquement**.
+Garde dure dans le job (refus explicite de pousser `main`/`master`). Donc : **fichier sur main = obligatoire pour le scheduler ; exécution/écriture = recette exclusivement.** Le fichier workflow est de la config CI, pas du contenu site.
+
+## 14. Branch protection minimale recommandée sur `main`
+GitHub → Settings → Branches → Add rule (`main`) :
+- ☑ Require a pull request before merging (pas de push direct).
+- ☑ Do not allow bypassing the above settings.
+- ☑ Block force pushes. ☑ Restrict deletions.
+- (option) Require status checks : préflight/smoke si exposés en checks.
+→ Backstop serveur : même si un prompt tentait de pousser main, le `GITHUB_TOKEN` est refusé.
+
+## 15. ACTIVATION CHECKLIST (Florian — 5 cases max)
+- [ ] **1.** Terminal : lancer `claude setup-token`, copier le token affiché.
+- [ ] **2.** GitHub → Settings → Secrets and variables → Actions → New repository secret : nom `CLAUDE_CODE_OAUTH_TOKEN`, valeur = le token. (Ne le colle nulle part d'autre.)
+- [ ] **3.** Ouvrir la PR technique « runner » et l'approuver/merger (place le workflow sur `main`).
+- [ ] **4.** Activer la branch protection `main` (§14).
+- [ ] **5.** Onglet Actions → lancer « Claude Runner (OAuth) » via *Run workflow* pour le test E2E témoin.
+> Après la case 5, l'automatisation est active et se relance seule au cron.
+
+## 16. Test E2E d'activation NON destructif (à exécuter après les 5 cases)
+1. Commit un `docs/control/inbox/chatgpt/CP-9999-ping.md` (auteur = Florian) sur `recette` : contenu « ping runner, écris un outbox témoin et t'arrête ».
+2. Actions → Run workflow (ou attendre le cron).
+3. Vérifier : préflight = PROCESS ; run vert ; `docs/control/outbox/claude/RUN-*.md` témoin créé ; `runner-status.json` heartbeat mis à jour ; **`git log origin/main` inchangé** (aucune écriture main).
+4. Nettoyer : supprimer `CP-9999-ping.md` + l'outbox témoin. Documenter les SHA.
+→ **PASS** = outbox témoin + heartbeat + 0 modif main/prod. Tant que non PASS, automatisation **non déclarée fonctionnelle**.
+
+## 17. Rollback immédiat (preuve d'arrêt)
+- **Kill-switch** : créer `docs/control/RUNNER_STOP` → au prochain run le préflight sort en SKIP (prouvé par le test #5) → **aucune tâche ne continue**.
+- **Disable** : Actions → workflow → « Disable workflow » → plus aucun cron.
+- **Secret** : supprimer `CLAUDE_CODE_OAUTH_TOKEN` → `claude-code-action` échoue au démarrage → aucune exécution.
+Les trois sont indépendants et suffisants isolément.
+
+## STATUT : `READY_FOR_HUMAN_ACTIVATION`
+Workflow finalisé + préflight testé (5/5) + PR technique préparée + checklist + E2E + rollback documentés.
+**Manque uniquement** : les 3 actions Florian (token OAuth, secret, merge PR + branch protection). Aucune activation faite.
