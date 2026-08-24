@@ -1,19 +1,18 @@
 {
   "state": "SITE_WORK_ACTIVE",
-  "current_task": "traçabilité : compte rendu T1→T15 publié en commentaire #9 (5394597122)",
-  "last_completed_task": "publication compte rendu T1→T15 + smoke test frais",
-  "last_report": "docs/control/outbox/claude/RUN-2026-08-22-1231.md",
-  "last_commit_sha": "dddc691e",
-  "last_poll_at": "2026-08-24T11:32:55Z",
-  "heartbeat": "2026-08-24T11:32:55Z",
+  "current_task": "tri branche staging (T5) — MERGE SÉLECTIF documenté",
+  "last_completed_task": "triage staging (docs/audit/STAGING-TRIAGE.md, 03041db6)",
+  "last_report": "docs/control/outbox/claude/RUN-2026-08-24-1134.md",
+  "last_commit_sha": "03041db6",
+  "last_poll_at": "2026-08-24T11:34:55Z",
+  "heartbeat": "2026-08-24T11:34:55Z",
   "branch": "recette",
   "remaining_tasks": [
     "GATE: clé Stripe TEST + durcir edge stripe-create-payment-link (P1 CRITIQUE montant client)",
     "GATE: appliquer migrations DB (leads insert hardening + storage site-photos hardening + release flow 4 tables)",
     "GATE: réécriture /recette.html 4 états (dépend des 4 tables)",
     "RECO QA: extraction CSS/JS inline mutualisé (T7)",
-    "RECO QA: recompression WebP images live + tri 18 images/prestations candidates (T13)",
-    "RECO: tri des 62 commits staging (merge sélectif ou archive+tag)"
+    "RECO QA: recompression WebP images live + tri 18 images/prestations candidates (T13)"
   ],
   "blocked_tasks": [
     "T1 sous-point achat en ligne — gate Stripe TEST",
