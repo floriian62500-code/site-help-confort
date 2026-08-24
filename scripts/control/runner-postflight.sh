@@ -26,9 +26,12 @@ if printf '%s\n' "$CHANGED" | grep -qE '(^|/)\.github/workflows/|^scripts/contro
   echo "FAIL diff touche un garde-fou/secret (workflow/preflight/postflight/plist/env/secret) — passer par PR humaine"; exit 1
 fi
 
-# (5) outbox obligatoire : un run PROCESS doit produire un nouvel outbox RUN-*.md
-if ! printf '%s\n' "$CHANGED" | grep -qE '(^|/)docs/control/outbox/claude/RUN-[0-9A-Za-z._-]+\.md$'; then
-  echo "FAIL aucun outbox RUN-*.md produit (push silencieux refusé)"; exit 1
+# (5) outbox obligatoire : un run PROCESS doit produire un NOUVEAU outbox RUN-*.md (créé, pas juste modifié).
+# On exige un fichier AJOUTÉ (git status ?? ou A), un vieux RUN modifié (M) ne suffit pas.
+NEW_OUTBOX="${POST_NEW_OUTBOX:-$(git status --porcelain -- docs/control/outbox/claude/ 2>/dev/null \
+  | grep -E '^(\?\?|A ).*RUN-[^/]+\.md$' | sed -E 's/^...//')}"
+if [ -z "$NEW_OUTBOX" ]; then
+  echo "FAIL aucun NOUVEAU outbox RUN-*.md créé ce run (un vieux RUN modifié ne suffit pas)"; exit 1
 fi
 
 # (5) runner-status.json doit être présent, modifié et JSON valide
@@ -43,6 +46,29 @@ if ! python3 -c "import json,sys;d=json.load(open('$STATUS'));\
 k=[x for x in ('heartbeat','state','last_report') if not d.get(x)];\
 sys.exit(1 if k else 0)" 2>/dev/null; then
   echo "FAIL runner-status.json incohérent (heartbeat/state/last_report manquant)"; exit 1
+fi
+
+# (5bis) last_report doit pointer EXACTEMENT vers le NOUVEL outbox de ce run
+LR="$(python3 -c "import json;print(json.load(open('$STATUS')).get('last_report',''))" 2>/dev/null)"
+if ! printf '%s\n' "$NEW_OUTBOX" | grep -qxF "$LR"; then
+  echo "FAIL last_report ('$LR') ne pointe pas vers le nouvel outbox de ce run"; exit 1
+fi
+
+# (5ter) heartbeat = timestamp ISO 8601 valide ET récent (fenêtre [now-2h, now+5min])
+if ! python3 - "$STATUS" "${POST_NOW:-}" <<'PY' 2>/dev/null
+import json,sys,datetime
+d=json.load(open(sys.argv[1])); hb=d.get('heartbeat','')
+try:
+    t=datetime.datetime.fromisoformat(hb.replace('Z','+00:00'))
+except Exception:
+    sys.exit(1)
+now = datetime.datetime.fromisoformat(sys.argv[2].replace('Z','+00:00')) if sys.argv[2] else datetime.datetime.now(datetime.timezone.utc)
+if t.tzinfo is None: t=t.replace(tzinfo=datetime.timezone.utc)
+delta=(now-t).total_seconds()
+sys.exit(0 if -300 <= delta <= 7200 else 1)
+PY
+then
+  echo "FAIL heartbeat absent/non-ISO/non-récent"; exit 1
 fi
 
 echo "OK postflight"
