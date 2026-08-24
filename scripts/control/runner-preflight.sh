@@ -4,9 +4,10 @@
 # Aucune exécution de contenu : ne fait que sélectionner/valider un fichier d'inbox de confiance.
 set -euo pipefail
 
-INBOX="docs/control/inbox/chatgpt"
-OUTBOX="docs/control/outbox/claude"
-STOP="docs/control/RUNNER_STOP"
+# Paths overridables (pour tests) — défaut = arborescence réelle du repo.
+INBOX="${PF_INBOX:-docs/control/inbox/chatgpt}"
+OUTBOX="${PF_OUTBOX:-docs/control/outbox/claude}"
+STOP="${PF_STOP:-docs/control/RUNNER_STOP}"
 # Allowlist des auteurs autorisés (login GitHub OU email). Adapter si un connecteur ChatGPT dédié est ajouté.
 ALLOWLIST_LOGINS="floriian62500-code helpconfort"
 ALLOWLIST_EMAILS="florian.dhaillecourt@helpconfort.com"
@@ -35,8 +36,13 @@ if [ "$dedup" = "1" ]; then
 fi
 
 # 3. allowlist auteur du dernier commit ayant modifié ce fichier
-author_login="$(git log -1 --format='%an' -- "$latest" 2>/dev/null || true)"
-author_email="$(git log -1 --format='%ae' -- "$latest" 2>/dev/null || true)"
+# (overridable en test via PF_TEST_AUTHOR_LOGIN/EMAIL ; en prod = auteur du dernier commit git)
+if [ -n "${PF_TEST_AUTHOR_LOGIN:-}" ]; then
+  author_login="$PF_TEST_AUTHOR_LOGIN"; author_email="${PF_TEST_AUTHOR_EMAIL:-}"
+else
+  author_login="$(git log -1 --format='%an' -- "$latest" 2>/dev/null || true)"
+  author_email="$(git log -1 --format='%ae' -- "$latest" 2>/dev/null || true)"
+fi
 ok=0
 for l in $ALLOWLIST_LOGINS; do [ "$author_login" = "$l" ] && ok=1; done
 for e in $ALLOWLIST_EMAILS; do [ "$author_email" = "$e" ] && ok=1; done
