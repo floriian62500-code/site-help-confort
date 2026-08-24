@@ -57,4 +57,17 @@ if [ "$ok" != "1" ]; then
   echo "SKIP $cpid auteur non autorisé (login='$author_login' email='$author_email')"; exit 0
 fi
 
+# 4. anti-mélange : le commit qui a introduit/modifié le CP ne doit toucher QUE des fichiers control.
+#    Un CP arrivé dans un commit contenant du code applicatif = provenance douteuse → SKIP.
+#    (overridable en test via PF_COMMIT_FILES = liste de fichiers du commit)
+if [ -n "${PF_COMMIT_FILES:-}" ]; then
+  commit_files="$PF_COMMIT_FILES"
+else
+  commit_sha="$(git log -1 --format='%H' -- "$latest" 2>/dev/null || true)"
+  commit_files="$(git show --name-only --format='' "$commit_sha" 2>/dev/null || true)"
+fi
+if printf '%s\n' "$commit_files" | grep -vE '^(docs/control/|scripts/control/|[[:space:]]*$)' | grep -q .; then
+  echo "SKIP $cpid commit mélange control + applicatif (provenance douteuse)"; exit 0
+fi
+
 echo "PROCESS $latest"
