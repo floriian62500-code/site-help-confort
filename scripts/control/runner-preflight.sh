@@ -26,8 +26,11 @@ done
 
 cpid="$(basename "$latest" | grep -oE '^CP-[0-9]{4}')"
 
-# 2. dedup : déjà traité si un outbox correspondant existe
-if ls "$OUTBOX/${cpid}".md "$OUTBOX/${cpid}-"*.md >/dev/null 2>&1; then
+# 2. dedup : déjà traité si un outbox correspondant existe (test robuste, sans faux négatif sous set -e)
+dedup=0
+[ -f "$OUTBOX/${cpid}.md" ] && dedup=1
+for g in "$OUTBOX/${cpid}-"*.md; do [ -f "$g" ] && dedup=1; done
+if [ "$dedup" = "1" ]; then
   echo "SKIP $cpid déjà traité (outbox présent)"; exit 0
 fi
 
