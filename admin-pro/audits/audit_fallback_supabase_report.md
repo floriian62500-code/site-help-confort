@@ -1,4 +1,4 @@
-# Audit fallback Supabase — 2026-08-23 03:52
+# Audit fallback Supabase — 2026-08-24 03:56
 
 Sonde MEMOIRE #49 — toute page qui consomme Supabase doit déclarer un `LOCAL_CATALOG` / `FALLBACK_DATA` pour éviter une page vide en cas de coupure ou de RLS bloquée.
 
