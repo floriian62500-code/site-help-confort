@@ -131,11 +131,11 @@
     <!-- Result preview -->
     <div class="pay-result" id="resultBox">
       <h4>✅ Lien créé !</h4>
-      <a class="pay-link" id="resultLink" href="#" target="_blank"></a>
+      <a class="pay-link" id="resultLink" href="#" target="_blank" rel="noopener noreferrer"></a>
       <div class="pay-result-actions">
         <button class="pay-btn ghost" id="btnCopy">📋 Copier</button>
-        <a class="pay-btn ghost" id="btnSms" target="_blank">💬 SMS</a>
-        <a class="pay-btn ghost" id="btnMail" target="_blank">📧 Email</a>
+        <a class="pay-btn ghost" id="btnSms" target="_blank" rel="noopener noreferrer">💬 SMS</a>
+        <a class="pay-btn ghost" id="btnMail" target="_blank" rel="noopener noreferrer">📧 Email</a>
       </div>
     </div>
 
@@ -192,7 +192,7 @@
         <td>${x.customer_name||x.customer_email||'—'}</td>
         <td><strong>${fmtEur(x.amount_eur)}</strong></td>
         <td><span class="pay-status ${x.status}">${x.status}</span></td>
-        <td>${x.payment_url ? `<a href="${x.payment_url}" target="_blank" style="color:#635BFF;font-weight:600">Lien</a>` : '—'}</td>
+        <td>${x.payment_url ? `<a href="${x.payment_url}" target="_blank" style="color:#635BFF;font-weight:600" rel="noopener noreferrer">Lien</a>` : '—'}</td>
       </tr>
     `).join('');
   }
