@@ -21,9 +21,15 @@ if ! printf '%s' "$REMOTE" | grep -Eq "$EXPECT_REMOTE_RE"; then
 fi
 
 # (4) garde fichiers sensibles : un CP métier ne doit JAMAIS auto-modifier ses propres garde-fous/secrets.
-#     Tout changement runner/workflow/secret => repasse par PR humaine dédiée.
+#     Tout changement runner/workflow/secret (y compris via rename : les 2 chemins apparaissent) => PR humaine.
 if printf '%s\n' "$CHANGED" | grep -qE '(^|/)\.github/workflows/|^scripts/control/(runner-|claude-runner)|\.plist$|(^|/)\.env($|\.)|(^|/)secrets?(/|\.)|CLAUDE_CODE_OAUTH_TOKEN'; then
   echo "FAIL diff touche un garde-fou/secret (workflow/preflight/postflight/plist/env/secret) — passer par PR humaine"; exit 1
+fi
+# (4bis) garde symlink : refuser tout lien symbolique ajouté/modifié (mode 120000) — évite un symlink
+#        vers un fichier sensible hors denylist. Overridable en test via POST_SYMLINKS.
+SYMLINKS="${POST_SYMLINKS:-$(git diff --cached --raw 2>/dev/null; git diff --raw 2>/dev/null)}"
+if printf '%s\n' "$SYMLINKS" | grep -qE '^:?[0-9]*120000|120000 '; then
+  echo "FAIL symlink ajouté/modifié détecté (interdit — vecteur d'accès fichier sensible)"; exit 1
 fi
 
 # (5) outbox obligatoire : un run PROCESS doit produire un NOUVEAU outbox RUN-*.md (créé, pas juste modifié).

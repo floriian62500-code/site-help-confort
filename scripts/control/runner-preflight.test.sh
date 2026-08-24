@@ -64,6 +64,10 @@ STAT2="$SB/status2.json"; echo "{\"heartbeat\":\"2026-01-01T00:00:00Z\",\"state\
 checkpost "last_report incohérent" "FAIL last_report" "${OKENV[@]}" POST_STATUS="$STAT2"
 # 16. heartbeat périmé (>2h) => FAIL
 checkpost "heartbeat périmé" "FAIL heartbeat" "${OKENV[@]}" POST_NOW="2026-01-01T05:00:00Z"
+# 17. rename vers chemin sensible (le chemin sensible apparaît dans le diff) => FAIL
+checkpost "rename vers workflow sensible" "FAIL diff touche un garde-fou" "${OKENV[@]}" POST_CHANGED=$'.github/workflows/x.yml\ndocs/control/outbox/claude/RUN-2026-01-01-0000.md\ndocs/control/runner-status.json'
+# 18. symlink ajouté => FAIL
+checkpost "symlink ajouté" "FAIL symlink" "${OKENV[@]}" POST_SYMLINKS=$':000000 120000 0000000 1111111 A\tevil-link'
 
 echo ""; echo "RÉSULTAT GARDES RUNNER : $pass PASS / $fail FAIL"
 exit $((fail>0?1:0))
