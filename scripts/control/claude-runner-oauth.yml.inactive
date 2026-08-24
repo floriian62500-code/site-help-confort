@@ -1,0 +1,78 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# INACTIF — modèle de workflow runner autonome (Option A, OAuth, coût nul).
+# Fichier volontairement stocké hors de .github/workflows/ (extension .inactive) :
+# il NE s'exécute PAS. Activation = (1) secret CLAUDE_CODE_OAUTH_TOKEN, (2) déplacer ce fichier
+# vers .github/workflows/claude-runner-oauth.yml sur la BRANCHE PAR DÉFAUT (main) via PR approuvée,
+# (3) branch protection sur main. Voir docs/control/outbox/claude/RUNNER-ACTIVATION-DECISION.md.
+# ─────────────────────────────────────────────────────────────────────────────
+name: Claude Runner (OAuth, hardened)
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '*/20 * * * *'   # toutes les 20 min ; ajuster selon budget usage
+
+concurrency:
+  group: claude-runner        # lock : un seul run à la fois
+  cancel-in-progress: false
+
+permissions:
+  contents: write             # push recette uniquement (main protégé par branch protection)
+  issues: write               # commenter l'issue de pilotage #9
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    outputs:
+      decision: ${{ steps.pf.outputs.decision }}
+      cp_path: ${{ steps.pf.outputs.cp_path }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: recette, fetch-depth: 0 }
+      - id: pf
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$(bash scripts/control/runner-preflight.sh | tail -1)"
+          echo "preflight: $out"
+          if echo "$out" | grep -q '^PROCESS '; then
+            echo "decision=process" >> "$GITHUB_OUTPUT"
+            echo "cp_path=$(echo "$out" | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+          else
+            echo "decision=skip" >> "$GITHUB_OUTPUT"
+          fi
+
+  execute:
+    needs: preflight
+    if: needs.preflight.outputs.decision == 'process'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: recette, fetch-depth: 0 }
+      - name: Run Claude (OAuth — coût nul)
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Tu es l'exécuteur technique du site HELP CONFORT. Traite UNIQUEMENT le fichier de pilotage :
+            ${{ needs.preflight.outputs.cp_path }}
+            Lis d'abord docs/control/README.md et docs/control/PROJECT_STATE.json.
+            Exécute du travail réel + tests + preuves. Ne t'arrête pas à l'analyse.
+            INTERDIT ABSOLU : pousser main, déployer PROD, activer/muter Stripe LIVE, muter des données
+            prod sensibles, contourner la sécurité, committer un secret, force-push, opération destructive.
+            Toute modification visible reste sur recette et passe par /recette.html.
+            AVANT de finir : écris docs/control/outbox/claude/RUN-<horodatage>.md (statut, fichiers, tests,
+            SHA, preuves, anomalies, gates, needs_florian, next) ET mets à jour docs/control/runner-status.json
+            (heartbeat/state/last_report/last_commit_sha). Si aucune tâche : audit/nettoyage/sécurité sûr.
+          claude_args: '--max-turns 60'
+      - name: Persist (recette only)
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --quiet && { echo "no changes"; exit 0; }
+          git config user.name "helpconfort-runner[bot]"
+          git config user.email "helpconfort-runner[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore(runner): sortie Claude autonome [skip ci]"
+          git push origin HEAD:recette      # jamais main

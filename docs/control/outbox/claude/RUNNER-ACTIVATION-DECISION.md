@@ -51,10 +51,11 @@ ChatGPT relit l'outbox/commentaire --> boucle suivante, sans Florian
 4. Le workflow doit vivre sur la **branche par défaut** (main) pour que `schedule`/`workflow_dispatch` s'activent.
 5. **Branch protection sur `main`** (empêche tout push main par le runner).
 
-## 5. Ce que j'ai déjà implémenté (branche technique `chore/claude-control-runner`)
-- Workflow durci **OAuth** `.github/workflows/claude-runner-oauth.yml` (préflight allowlist auteur + kill-switch + dedup + OAuth + recette-only + outbox obligatoire). **NON actif** (sur branche technique, secret absent).
-- Préflight script `scripts/control/runner-preflight.sh` (validation auteur/format/kill-switch/dedup).
-- L'ancien `claude-control-plane.yml` (API payante) reste sur sa branche, **non recommandé** (coût).
+## 5. Ce que j'ai déjà implémenté (stagé **inerte** sur recette)
+- **Modèle de workflow durci OAuth** : `scripts/control/claude-runner-oauth.yml.inactive` — volontairement **hors** `.github/workflows/` et suffixé `.inactive` → **ne s'exécute pas**. Contient : préflight allowlist auteur + kill-switch + dedup + OAuth (coût nul) + recette-only + outbox obligatoire + permissions minimales.
+- **Préflight anti-injection** : `scripts/control/runner-preflight.sh` (kill-switch, format strict CP-####, dedup outbox, **allowlist auteur du dernier commit**). Testé localement.
+- L'ancien `claude-control-plane.yml` (API **payante**) reste sur la branche `chore/claude-control-runner`, **non recommandé** (coût).
+- Activation = déplacer le `.inactive` vers `.github/workflows/claude-runner-oauth.yml` sur **main** (PR approuvée) + ajouter le secret. Rien d'autre à coder.
 
 ## 6. Ce qui manque (bloquant humain)
 - **Le secret `CLAUDE_CODE_OAUTH_TOKEN`** (Florian, via son abonnement).
