@@ -42,7 +42,11 @@ if [ "$dedup" = "1" ]; then
   echo "SKIP $cpid déjà traité (outbox présent)"; exit 0
 fi
 
-# 3. allowlist auteur du dernier commit ayant modifié ce fichier
+# 3. allowlist auteur du dernier commit ayant modifié ce fichier.
+# ⚠️ COUCHE FAIBLE : %an/%ae = nom/email Git DÉCLARATIFS (falsifiables via user.name), PAS une identité
+#    GitHub signée. L'identité forte est fournie par : (a) `github.actor` au dispatch (garde workflow),
+#    (b) inbox modifiable seulement par collaborateurs sur recette, (c) commit control-only (§4 ci-dessous).
+#    Évolution recommandée : commits signés vérifiés (branch protection « require signed commits »).
 # (overridable en test via PF_TEST_AUTHOR_LOGIN/EMAIL ; en prod = auteur du dernier commit git)
 if [ -n "${PF_TEST_AUTHOR_LOGIN:-}" ]; then
   author_login="$PF_TEST_AUTHOR_LOGIN"; author_email="${PF_TEST_AUTHOR_EMAIL:-}"
