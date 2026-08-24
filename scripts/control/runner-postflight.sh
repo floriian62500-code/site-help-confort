@@ -48,4 +48,27 @@ sys.exit(1 if k else 0)" 2>/dev/null; then
   echo "FAIL runner-status.json incohérent (heartbeat/state/last_report manquant)"; exit 1
 fi
 
+# (5bis) last_report doit pointer EXACTEMENT vers le NOUVEL outbox de ce run
+LR="$(python3 -c "import json;print(json.load(open('$STATUS')).get('last_report',''))" 2>/dev/null)"
+if ! printf '%s\n' "$NEW_OUTBOX" | grep -qxF "$LR"; then
+  echo "FAIL last_report ('$LR') ne pointe pas vers le nouvel outbox de ce run"; exit 1
+fi
+
+# (5ter) heartbeat = timestamp ISO 8601 valide ET récent (fenêtre [now-2h, now+5min])
+if ! python3 - "$STATUS" "${POST_NOW:-}" <<'PY' 2>/dev/null
+import json,sys,datetime
+d=json.load(open(sys.argv[1])); hb=d.get('heartbeat','')
+try:
+    t=datetime.datetime.fromisoformat(hb.replace('Z','+00:00'))
+except Exception:
+    sys.exit(1)
+now = datetime.datetime.fromisoformat(sys.argv[2].replace('Z','+00:00')) if sys.argv[2] else datetime.datetime.now(datetime.timezone.utc)
+if t.tzinfo is None: t=t.replace(tzinfo=datetime.timezone.utc)
+delta=(now-t).total_seconds()
+sys.exit(0 if -300 <= delta <= 7200 else 1)
+PY
+then
+  echo "FAIL heartbeat absent/non-ISO/non-récent"; exit 1
+fi
+
 echo "OK postflight"
