@@ -42,7 +42,7 @@ NEWOB="docs/control/outbox/claude/RUN-2026-01-01-0000.md"
 NOW="2026-01-01T00:01:00Z"                    # 1 min après heartbeat => récent
 STAT="$SB/status.json"; echo "{\"heartbeat\":\"2026-01-01T00:00:00Z\",\"state\":\"SITE_WORK_ACTIVE\",\"last_report\":\"$NEWOB\"}" > "$STAT"
 OK_CHANGED=$'docs/control/outbox/claude/RUN-2026-01-01-0000.md\ndocs/control/runner-status.json'
-OKENV=(POST_BRANCH=recette POST_REMOTE="$OKREM" POST_STATUS="$STAT" POST_CHANGED="$OK_CHANGED" POST_NEW_OUTBOX="$NEWOB" POST_NOW="$NOW")
+OKENV=(POST_BRANCH=recette POST_REMOTE="$OKREM" POST_STATUS="$STAT" POST_CHANGED="$OK_CHANGED" POST_NEW_OUTBOX="$NEWOB" POST_NOW="$NOW" POST_SYMLINKS="")
 # 8. cas nominal OK
 checkpost "nominal OK" "OK postflight" "${OKENV[@]}"
 # 9. tentative modif workflow => FAIL

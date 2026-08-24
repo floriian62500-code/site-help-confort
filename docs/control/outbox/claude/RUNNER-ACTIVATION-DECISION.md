@@ -93,7 +93,7 @@ ChatGPT relit l'outbox/commentaire --> boucle suivante, sans Florian
 ---
 
 ## 12. Tests du préflight (PASS/FAIL attendus) — `scripts/control/runner-preflight.test.sh`
-Sandbox isolée, aucun effet sur le repo réel. **Résultat (préflight+postflight) : 16 PASS / 0 FAIL.**
+Sandbox isolée, aucun effet sur le repo réel. **Résultat (préflight+postflight) : 18 PASS / 0 FAIL.**
 | Scénario | Attendu | Obtenu |
 |---|---|---|
 | Mauvais nom CP (`CP-XX-bad.md`) | SKIP aucun CP valide | ✅ |
@@ -159,7 +159,7 @@ Workflow finalisé + préflight testé (5/5) + PR technique préparée + checkli
 | 7 | Anti-mélange auteur | préflight refuse un CP dont le commit touche aussi du code applicatif | PREFLIGHT « commit mélangé » | ✅ SKIP |
 | 8 | Planif / Claude jamais appelé si skip | job `execute` gardé par `if: decision == process` ; préflight seul sinon | revue workflow | ✅ |
 
-**Tests : 16/16 PASS** (7 préflight + 9 postflight) — `scripts/control/runner-preflight.test.sh`.
+**Tests : 18/18 PASS** (7 préflight + 11 postflight) — `scripts/control/runner-preflight.test.sh`.
 
 ### Limite connue (#7) — provenance auteur
 Le préflight compare `git log %an/%ae` (nom/email Git, **falsifiables** localement), **pas** un login GitHub signé.
