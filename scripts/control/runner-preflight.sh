@@ -15,6 +15,13 @@ ALLOWLIST_EMAILS="florian.dhaillecourt@helpconfort.com"
 # 0. kill-switch
 if [ -f "$STOP" ]; then echo "SKIP kill-switch ($STOP présent)"; exit 0; fi
 
+# 0bis. garde branche (défense en profondeur) : ne traiter que sur recette.
+# En CI le checkout ref:recette donne un HEAD détaché → on tolère 'HEAD'. Toute autre branche = SKIP sûr.
+BRANCH="${PF_BRANCH:-$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo unknown)}"
+if [ "$BRANCH" != "recette" ] && [ "$BRANCH" != "HEAD" ]; then
+  echo "SKIP branche non-recette ($BRANCH)"; exit 0
+fi
+
 # 1. dernier CP au format strict CP-####-*.md
 latest=""
 for f in $(ls -1 "$INBOX"/CP-[0-9][0-9][0-9][0-9]-*.md 2>/dev/null | sort); do

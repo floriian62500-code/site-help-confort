@@ -5,6 +5,7 @@ PF="scripts/control/runner-preflight.sh"
 SB="$(mktemp -d)"; trap 'rm -rf "$SB"' EXIT
 mkdir -p "$SB/inbox" "$SB/outbox"
 export PF_INBOX="$SB/inbox" PF_OUTBOX="$SB/outbox" PF_STOP="$SB/RUNNER_STOP"
+export PF_BRANCH="recette"   # défaut des tests = sur recette (sauf test #6)
 pass=0; fail=0
 check(){ local name="$1" expect="$2" got; got="$(bash "$PF" 2>/dev/null | tail -1)"; 
   if echo "$got" | grep -q "$expect"; then echo "  ✅ $name → $got"; pass=$((pass+1));
@@ -30,6 +31,9 @@ rm -f "$SB/outbox/CP-9001.md"
 : > "$SB/RUNNER_STOP"
 PF_TEST_AUTHOR_LOGIN="floriian62500-code" check "kill-switch" "SKIP kill-switch"
 rm -f "$SB/RUNNER_STOP"
+
+# 6. branche autre que recette => SKIP sûr
+PF_BRANCH="main" PF_TEST_AUTHOR_LOGIN="floriian62500-code" check "branche non-recette (main)" "SKIP branche non-recette"
 
 echo ""; echo "RÉSULTAT PRÉFLIGHT : $pass PASS / $fail FAIL"
 exit $((fail>0?1:0))

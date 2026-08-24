@@ -93,7 +93,7 @@ ChatGPT relit l'outbox/commentaire --> boucle suivante, sans Florian
 ---
 
 ## 12. Tests du préflight (PASS/FAIL attendus) — `scripts/control/runner-preflight.test.sh`
-Sandbox isolée, aucun effet sur le repo réel. **Résultat : 5 PASS / 0 FAIL.**
+Sandbox isolée, aucun effet sur le repo réel. **Résultat : 6 PASS / 0 FAIL.**
 | Scénario | Attendu | Obtenu |
 |---|---|---|
 | Mauvais nom CP (`CP-XX-bad.md`) | SKIP aucun CP valide | ✅ |
@@ -101,6 +101,7 @@ Sandbox isolée, aucun effet sur le repo réel. **Résultat : 5 PASS / 0 FAIL.**
 | Mauvais auteur (`attaquant-random`) | SKIP auteur non autorisé | ✅ |
 | Doublon (outbox déjà présent) | SKIP déjà traité | ✅ |
 | Kill-switch (`RUNNER_STOP`) | SKIP kill-switch | ✅ |
+| Branche autre que recette (`main`) | SKIP branche non-recette | ✅ |
 
 ## 13. Pourquoi le workflow doit être sur `main` alors qu'il ne touche QUE `recette`
 GitHub **n'exécute les triggers `schedule` (cron) et `workflow_dispatch` que depuis la branche par défaut** (`main`).
@@ -140,3 +141,6 @@ Les trois sont indépendants et suffisants isolément.
 ## STATUT : `READY_FOR_HUMAN_ACTIVATION`
 Workflow finalisé + préflight testé (5/5) + PR technique préparée + checklist + E2E + rollback documentés.
 **Manque uniquement** : les 3 actions Florian (token OAuth, secret, merge PR + branch protection). Aucune activation faite.
+
+## RUNNER_STATE
+`RUNNER_STATE = READY_FOR_HUMAN_ACTIVATION`
