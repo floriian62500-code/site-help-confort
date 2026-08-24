@@ -343,3 +343,5 @@ Supabase/Netlify/Stripe TEST, release/rollback, points sensibles à ne pas casse
 
 **RECOMMANDATIONS (QA visuelle requise, non exécutées à l'aveugle)** : extraction CSS/JS inline mutualisé (T7),
 recompression WebP images live (T13), tri des 18 images/prestations candidates, tri staging (62 commits).
+
+**Résolution item T13 (18 images/prestations)** — investigation 2026-08-24 : les 18 fichiers sont (a) référencés **nulle part** dans le code, (b) **absents** du bucket Supabase `prestations` (vérifié SQL, 0 correspondance). Ce sont donc des fichiers locaux **inutilisés** — mais du **contenu photo métier** possiblement destiné à un usage futur. **Non supprimés** (pas de suppression de média métier sans GO Florian). Décision = needs_florian.
