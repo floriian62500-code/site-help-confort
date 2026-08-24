@@ -20,6 +20,19 @@ jobs:
       decision: ${{ steps.pf.outputs.decision }}
       cp_path: ${{ steps.pf.outputs.cp_path }}
     steps:
+      # (7) IDENTITÉ FORTE au déclenchement manuel : github.actor (login GitHub authentifié, NON falsifiable
+      #     contrairement au nom Git du commit). Pour un dispatch, seul un acteur allowlisté est autorisé.
+      #     Pour un cron (schedule), github.actor = dernier auteur du workflow sur main (déjà protégé par PR).
+      - name: Garde acteur (dispatch)
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          ACTOR: ${{ github.actor }}
+        run: |
+          set -euo pipefail
+          case "$ACTOR" in
+            floriian62500-code) echo "acteur autorisé: $ACTOR" ;;
+            *) echo "::error::acteur non autorisé pour le dispatch: $ACTOR"; exit 1 ;;
+          esac
       # SHA pinné (supply chain) — actions/checkout v4
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with: { ref: recette, fetch-depth: 0 }
