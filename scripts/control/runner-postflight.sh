@@ -26,9 +26,12 @@ if printf '%s\n' "$CHANGED" | grep -qE '(^|/)\.github/workflows/|^scripts/contro
   echo "FAIL diff touche un garde-fou/secret (workflow/preflight/postflight/plist/env/secret) — passer par PR humaine"; exit 1
 fi
 
-# (5) outbox obligatoire : un run PROCESS doit produire un nouvel outbox RUN-*.md
-if ! printf '%s\n' "$CHANGED" | grep -qE '(^|/)docs/control/outbox/claude/RUN-[0-9A-Za-z._-]+\.md$'; then
-  echo "FAIL aucun outbox RUN-*.md produit (push silencieux refusé)"; exit 1
+# (5) outbox obligatoire : un run PROCESS doit produire un NOUVEAU outbox RUN-*.md (créé, pas juste modifié).
+# On exige un fichier AJOUTÉ (git status ?? ou A), un vieux RUN modifié (M) ne suffit pas.
+NEW_OUTBOX="${POST_NEW_OUTBOX:-$(git status --porcelain -- docs/control/outbox/claude/ 2>/dev/null \
+  | grep -E '^(\?\?|A ).*RUN-[^/]+\.md$' | sed -E 's/^...//')}"
+if [ -z "$NEW_OUTBOX" ]; then
+  echo "FAIL aucun NOUVEAU outbox RUN-*.md créé ce run (un vieux RUN modifié ne suffit pas)"; exit 1
 fi
 
 # (5) runner-status.json doit être présent, modifié et JSON valide
