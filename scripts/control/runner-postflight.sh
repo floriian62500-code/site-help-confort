@@ -77,4 +77,15 @@ then
   echo "FAIL heartbeat absent/non-ISO/non-récent"; exit 1
 fi
 
+# (5quater) run_id : status ET le nouvel outbox doivent porter le MÊME run_id de CE run (anti-réutilisation).
+RID_STATUS="$(python3 -c "import json;print(json.load(open('$STATUS')).get('run_id',''))" 2>/dev/null)"
+if [ -z "$RID_STATUS" ]; then
+  echo "FAIL run_id absent de runner-status.json"; exit 1
+fi
+# le nouvel outbox doit contenir ce run_id (grep). Overridable en test via POST_OUTBOX_RID.
+RID_OUTBOX="${POST_OUTBOX_RID:-$(grep -hoE 'run_id[:= ]+[A-Za-z0-9._-]+' $NEW_OUTBOX 2>/dev/null | grep -oE '[A-Za-z0-9._-]+$' | head -1)}"
+if [ "$RID_OUTBOX" != "$RID_STATUS" ]; then
+  echo "FAIL run_id incohérent (status='$RID_STATUS' outbox='$RID_OUTBOX')"; exit 1
+fi
+
 echo "OK postflight"

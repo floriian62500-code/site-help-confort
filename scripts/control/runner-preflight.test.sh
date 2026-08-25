@@ -40,9 +40,10 @@ echo "— POSTFLIGHT —"
 OKREM="git@github.com:floriian62500-code/site-help-confort.git"
 NEWOB="docs/control/outbox/claude/RUN-2026-01-01-0000.md"
 NOW="2026-01-01T00:01:00Z"                    # 1 min après heartbeat => récent
-STAT="$SB/status.json"; echo "{\"heartbeat\":\"2026-01-01T00:00:00Z\",\"state\":\"SITE_WORK_ACTIVE\",\"last_report\":\"$NEWOB\"}" > "$STAT"
+RID="run-20260101-0000-abc"
+STAT="$SB/status.json"; echo "{\"heartbeat\":\"2026-01-01T00:00:00Z\",\"state\":\"SITE_WORK_ACTIVE\",\"last_report\":\"$NEWOB\",\"run_id\":\"$RID\"}" > "$STAT"
 OK_CHANGED=$'docs/control/outbox/claude/RUN-2026-01-01-0000.md\ndocs/control/runner-status.json'
-OKENV=(POST_BRANCH=recette POST_REMOTE="$OKREM" POST_STATUS="$STAT" POST_CHANGED="$OK_CHANGED" POST_NEW_OUTBOX="$NEWOB" POST_NOW="$NOW" POST_SYMLINKS="")
+OKENV=(POST_BRANCH=recette POST_REMOTE="$OKREM" POST_STATUS="$STAT" POST_CHANGED="$OK_CHANGED" POST_NEW_OUTBOX="$NEWOB" POST_NOW="$NOW" POST_SYMLINKS="" POST_OUTBOX_RID="$RID")
 # 8. cas nominal OK
 checkpost "nominal OK" "OK postflight" "${OKENV[@]}"
 # 9. tentative modif workflow => FAIL
@@ -68,6 +69,11 @@ checkpost "heartbeat périmé" "FAIL heartbeat" "${OKENV[@]}" POST_NOW="2026-01-
 checkpost "rename vers workflow sensible" "FAIL diff touche un garde-fou" "${OKENV[@]}" POST_CHANGED=$'.github/workflows/x.yml\ndocs/control/outbox/claude/RUN-2026-01-01-0000.md\ndocs/control/runner-status.json'
 # 18. symlink ajouté => FAIL
 checkpost "symlink ajouté" "FAIL symlink" "${OKENV[@]}" POST_SYMLINKS=$':000000 120000 0000000 1111111 A\tevil-link'
+# 19. run_id absent du status => FAIL
+STAT3="$SB/status3.json"; echo "{\"heartbeat\":\"2026-01-01T00:00:00Z\",\"state\":\"X\",\"last_report\":\"$NEWOB\"}" > "$STAT3"
+checkpost "run_id absent status" "FAIL run_id absent" "${OKENV[@]}" POST_STATUS="$STAT3"
+# 20. run_id status != outbox (réutilisation ancien run) => FAIL
+checkpost "run_id incohérent (ancien réutilisé)" "FAIL run_id incohérent" "${OKENV[@]}" POST_OUTBOX_RID="run-AUTRE-999"
 
 echo ""; echo "RÉSULTAT GARDES RUNNER : $pass PASS / $fail FAIL"
 exit $((fail>0?1:0))
