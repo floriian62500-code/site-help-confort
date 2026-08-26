@@ -1,6 +1,6 @@
 # Audit admin-pro isolation — Rapport
 
-_Généré le 2026-08-25 03:51_
+_Généré le 2026-08-26 03:55_
 
 ## Synthèse
 

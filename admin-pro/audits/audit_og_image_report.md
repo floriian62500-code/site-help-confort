@@ -1,4 +1,4 @@
-# Audit Open Graph images — 2026-08-25 03:50
+# Audit Open Graph images — 2026-08-26 03:55
 
 - **Pages scannées** : 116
 - **Pages avec og:image OK** : 110
