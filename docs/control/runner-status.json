@@ -1,11 +1,11 @@
 {
   "state": "SITE_WORK_ACTIVE",
-  "current_task": "Retour séquence applicative : CMD-5 retrait ancien sélecteur (= 1re étape UX-COMMERCE-1)",
-  "last_completed_task": "RUN-1 finalisation paquet activation runner PREP_COMPLETE (413d49e5)",
-  "last_report": "docs/control/outbox/claude/RUN-2026-08-27-1621.md",
-  "last_commit_sha": "413d49e5",
-  "last_poll_at": "2026-08-27T16:21:20Z",
-  "heartbeat": "2026-08-27T16:21:20Z",
+  "current_task": "UX-C-e (migration buildResult.simple + récap → panier) débloque CMD-5 ; en parallèle UX-C-a",
+  "last_completed_task": "CMD-5 analyse réf : précondition 0-réf fausse → reséquencé sous UX-C-e (9d90fb6d)",
+  "last_report": "docs/control/outbox/claude/RUN-2026-08-27-1624.md",
+  "last_commit_sha": "9d90fb6d",
+  "last_poll_at": "2026-08-27T16:24:12Z",
+  "heartbeat": "2026-08-27T16:24:12Z",
   "branch": "recette",
   "remaining_tasks": [
     "CMD-5 retrait ancien sélecteur",
@@ -31,7 +31,7 @@
   "needs_florian": true,
   "note": "Chantier #9 EN COURS (state ACTIVE/INCOMPLETE). Restent : sections C→J du second pass, catalogue/panier sous-lots 2-3, gates (Stripe P1 / migrations / pricing serveur). Discipline persistance : run_id par cycle (outbox==status), verif origin/recette avant tout etat terminal. Ne jamais marquer le chantier clos tant que ces items ne sont pas prouves.",
   "runner_autonomous_activation": "PREP_COMPLETE=YES — PR #10 tip RÉEL cdcafcac (MERGEABLE, diff 3 fichiers, 0 dérive app), 20/20 gardes PASS. Docs: RUNNER-ACTIVATION-CHECKLIST.md + RUNNER-E2E-WITNESS.md. Ordre gestes Florian: secret CLAUDE_CODE_OAUTH_TOKEN -> branch protection main SANS bypass Actions -> merge PR #10 -> E2E témoin. RUN-1 reste BLOCKED_HUMAN tant que E2E témoin réel non PASS.",
-  "run_id": "run-20260827-162120-413d49e5",
+  "run_id": "run-20260827-162412-9d90fb6d",
   "ledger": "docs/control/MASTER-TASK-LEDGER.md",
   "open_p0": [
     "CMD-1 modale (READY_FOR_QA)",
