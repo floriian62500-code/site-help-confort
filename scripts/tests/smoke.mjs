@@ -47,6 +47,8 @@ async function run() {
   const cat = await status('/catalogue.html');
   const catHtml = cat===200 ? await (await fetch(BASE+'/catalogue.html?z='+Date.now())).text() : '';
   (cat===200 && catHtml.includes('id="families"') && catHtml.includes('hc-cart.js')) ? ok('Catalogue multi-panier présent (familles + hc-cart)') : ko('Catalogue', 'catalogue.html/hc-cart absent (HTTP '+cat+')');
+  // 9. Wizard = catalogue multi-panier (plus le sélecteur unique)
+  (home.includes('hc-cat-families') && home.includes('hc-cart.js') && !home.includes('Prise en charge TTC')) ? ok('Wizard = catalogue multi-panier (ancien sélecteur retiré)') : ko('Wizard catalogue', 'sélecteur unique encore présent');
   console.log(`\nRÉSULTAT : ${pass} PASS / ${fail} FAIL`);
   process.exit(fail > 0 ? 1 : 0);
 }
