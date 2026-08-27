@@ -180,7 +180,7 @@
     injectStyles();
     // Sélectionne tous les champs adresse
     var inputs = document.querySelectorAll(
-      'input[name="adresse"], input[name="address"], input[data-hc-address]'
+      'input[name="adresse"]:not([data-autocomplete-skip]), input[name="address"]:not([data-autocomplete-skip]), input[data-hc-address]:not([data-autocomplete-skip])'
     );
     inputs.forEach(attachOne);
 
@@ -189,11 +189,11 @@
       muts.forEach(function (m) {
         m.addedNodes.forEach(function (n) {
           if (n.nodeType !== 1) return;
-          if (n.matches && n.matches('input[name="adresse"], input[name="address"], input[data-hc-address]')) {
+          if (n.matches && n.matches('input[name="adresse"]:not([data-autocomplete-skip]), input[name="address"]:not([data-autocomplete-skip]), input[data-hc-address]:not([data-autocomplete-skip])')) {
             attachOne(n);
           }
           if (n.querySelectorAll) {
-            n.querySelectorAll('input[name="adresse"], input[name="address"], input[data-hc-address]')
+            n.querySelectorAll('input[name="adresse"]:not([data-autocomplete-skip]), input[name="address"]:not([data-autocomplete-skip]), input[data-hc-address]:not([data-autocomplete-skip])')
               .forEach(attachOne);
           }
         });
