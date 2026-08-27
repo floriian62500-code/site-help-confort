@@ -29,7 +29,7 @@
     "Stripe LIVE gelé"
   ],
   "needs_florian": true,
-  "note": "Chantier #9 TERMINÉ (15 tâches FAIT ou BLOQUÉ avec raison). Control-plane en réparation : chaque cycle produit désormais un outbox RUN-<horodatage>.md poussé sur recette AVANT tout 'terminé'. Anciens états contradictoires (PAUSED_PER_CP-0011 / RUNNER_GATED) supprimés — le runner autonome hébergé reste hors périmètre (non activé), distinct du travail applicatif de session.",
+  "note": "Chantier #9 EN COURS (ACTIVE/INCOMPLETE) : restent sections C→J du second pass, catalogue/panier sous-lots 2-3, et gates (Stripe P1/migrations/pricing). Ne PAS écrire TERMINÉ tant que ces items ne sont pas clos avec preuves. Persistance: run_id par cycle (outbox==status), vérif remote avant tout état terminal.",
   "runner_autonomous_activation": "READY_FOR_HUMAN_ACTIVATION_FINAL — PR #10 tip fd300550 (16/16 gardes). Ordre: secret -> branch protection main SANS bypass Actions -> merge PR #10 -> E2E.",
   "run_id": "run-20260825-052455-23f6109f"
 }
