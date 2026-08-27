@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,follow"><!-- SEO: wizard non indexé (pages métier = portes SEO) -->
+<title>Catalogue des prestations — HELP Confort</title>
+<style>
+:root{--bleu:#0DA0CF;--nuit:#0A1428;--ok:#16a34a;--gris:#64748b;--bord:#E5EDF3;--bg:#F7FAFC}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;color:var(--nuit);background:var(--bg)}
+.wrap{max-width:1180px;margin:0 auto;padding:16px}
+h1{font-size:1.5rem;margin:.2em 0}
+.sub{color:var(--gris);margin:0 0 16px}
+.search{width:100%;max-width:520px;padding:10px 14px;border:1px solid var(--bord);border-radius:10px;font-size:1rem}
+.fam-grid,.prod-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));margin:16px 0}
+.card{background:#fff;border:1px solid var(--bord);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.fam-card{cursor:pointer;align-items:flex-start}
+.fam-card:hover{border-color:var(--bleu)}
+.fam-ico{font-size:1.6rem}
+.prod-img{width:100%;height:120px;object-fit:cover;border-radius:10px;background:#eef4f8}
+.prod-name{font-weight:700;line-height:1.25}
+.brand{color:var(--gris);font-size:.82rem}
+.ttc{font-weight:800;color:var(--bleu)}
+.devis{font-weight:700;color:#d97706}
+.btn{border:0;border-radius:10px;padding:9px 12px;font-weight:700;cursor:pointer;font-size:.92rem}
+.btn-add{background:var(--bleu);color:#fff}.btn-devis{background:#fff;border:1px solid #d97706;color:#d97706}
+.back{background:none;border:0;color:var(--bleu);cursor:pointer;font-weight:600;padding:8px 0}
+/* panier */
+#cartBar{position:sticky;top:0;z-index:20;background:var(--nuit);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:10px 16px}
+#cartBar b{color:#fff}
+#cartPanel{position:fixed;right:0;top:0;height:100vh;width:min(380px,92vw);background:#fff;border-left:1px solid var(--bord);transform:translateX(100%);transition:transform .2s;z-index:30;display:flex;flex-direction:column}
+#cartPanel.open{transform:none}
+.cart-line{display:flex;justify-content:space-between;gap:8px;padding:10px 14px;border-bottom:1px solid var(--bord)}
+.qty button{width:26px;height:26px;border:1px solid var(--bord);background:#fff;border-radius:6px;cursor:pointer}
+.cart-foot{margin-top:auto;padding:14px;border-top:1px solid var(--bord)}
+.muted{color:var(--gris);font-size:.85rem}
+@media(max-width:600px){.prod-img{height:100px}}
+</style>
+</head>
+<body>
+<div id="cartBar">
+  <a href="/" class="back" style="color:#fff">← Accueil</a>
+  <button id="cartToggle" class="btn btn-add" aria-label="Ouvrir le panier">🛒 Mon panier (<span id="cartCount">0</span>) — <span id="cartTotal">0</span> € TTC</button>
+</div>
+
+<div class="wrap">
+  <h1>Choisissez vos prestations</h1>
+  <p class="sub">Parcourez les familles, ajoutez plusieurs prestations à votre panier, puis finalisez.</p>
+  <input id="search" class="search" type="search" placeholder="Rechercher (chauffe-eau, fuite, serrure…)" aria-label="Rechercher une prestation">
+  <div id="families" class="fam-grid" aria-live="polite"></div>
+  <div id="products" hidden>
+    <button class="back" id="backFam">← Toutes les familles</button>
+    <h2 id="famTitle"></h2>
+    <div id="prodGrid" class="prod-grid"></div>
+  </div>
+  <p id="loadMsg" class="muted">Chargement du catalogue…</p>
+</div>
+
+<aside id="cartPanel" aria-label="Panier">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--bord)">
+    <strong>Mon panier</strong><button class="back" id="cartClose">Fermer ✕</button>
+  </div>
+  <div id="cartLines" style="overflow:auto;flex:1"></div>
+  <div class="cart-foot">
+    <div style="display:flex;justify-content:space-between;font-weight:800"><span>Total (indicatif)</span><span><span id="footTotal">0</span> € TTC</span></div>
+    <p id="cartMode" class="muted" style="margin:6px 0"></p>
+    <button id="cartNext" class="btn btn-add" style="width:100%" disabled>Continuer</button>
+    <p class="muted" style="margin-top:8px">Le montant final et l'éligibilité au paiement sont confirmés côté serveur. Aucun paiement en ligne à ce stade.</p>
+  </div>
+</aside>
+
+<script src="/assets/hc-cart.js"></script>
+<script>
+(function(){
+  var SUPA='https://btcbjwqiivhpwoszomhg.supabase.co';
+  var KEY='sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
+  var cart = (window.HcCart||{create:function(){return null;}}).create();
+  var ALL=[], byFam={};
+  var $=function(s){return document.querySelector(s);};
+  var esc=function(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
+
+  function refreshCart(){
+    if(!cart) return;
+    var n=cart.count(), tot=Math.round(cart.totalTtcDisplay());
+    $('#cartCount').textContent=n; $('#cartTotal').textContent=tot; $('#footTotal').textContent=tot;
+    var mode=cart.mode();
+    var txt={vide:'Panier vide',paiement:'Prestations à prix ferme — réservation.',devis:'Demande de devis — sans paiement.',mixte:'Panier mixte (prix ferme + devis) — demande globale, sans paiement immédiat.'}[mode]||'';
+    $('#cartMode').textContent=txt;
+    $('#cartNext').disabled = (mode==='vide');
+    var html=cart.lines().map(function(l){
+      return '<div class="cart-line"><div><div class="prod-name" style="font-size:.9rem">'+esc(l.name)+'</div>'+
+        (l.requires_quote?'<span class="devis">sur devis</span>':'<span class="ttc">'+Math.round(l.ttc)+' € TTC</span>')+'</div>'+
+        '<div class="qty" style="display:flex;align-items:center;gap:6px">'+
+        (l.requires_quote?'':'<button data-dec="'+esc(l.id)+'">−</button><span>'+l.qty+'</span><button data-inc="'+esc(l.id)+'">+</button>')+
+        '<button data-rm="'+esc(l.id)+'" aria-label="Retirer">🗑</button></div></div>';
+    }).join('') || '<p class="muted" style="padding:14px">Votre panier est vide.</p>';
+    $('#cartLines').innerHTML=html;
+  }
+
+  function renderFamilies(){
+    var seen={}, out=[];
+    ALL.forEach(function(s){ var k=s.category_slug||s.category_name||'autre'; if(!seen[k]){seen[k]=1; out.push(s);} });
+    $('#families').innerHTML = out.map(function(s){
+      var slug=s.category_slug||s.category_name; var n=(byFam[slug]||[]).length;
+      return '<div class="card fam-card" data-fam="'+esc(slug)+'" role="button" tabindex="0">'+
+        '<div class="fam-ico">'+esc(s.category_icon||'🔧')+'</div>'+
+        '<div class="prod-name">'+esc(s.category_name||slug)+'</div>'+
+        '<div class="muted">'+n+' prestation'+(n>1?'s':'')+'</div></div>';
+    }).join('');
+  }
+  function renderProducts(slug){
+    var list=byFam[slug]||[];
+    $('#famTitle').textContent=(list[0]&&list[0].category_name)||slug;
+    $('#prodGrid').innerHTML=list.map(function(s){
+      var ferme = !s.requires_quote && s.price_ttc>0 && s.active!==false;
+      var img=s.image_url||(SUPA+'/storage/v1/object/public/prestations/'+s.slug+'.jpg');
+      return '<div class="card"><img class="prod-img" loading="lazy" alt="'+esc(s.name)+'" src="'+esc(img)+'" onerror="this.style.visibility=\'hidden\'">'+
+        '<div class="prod-name">'+esc(s.name)+'</div>'+
+        (s.brand?'<div class="brand">'+esc(s.brand)+'</div>':'')+
+        (s.short_desc?'<div class="muted">'+esc(s.short_desc)+'</div>':'')+
+        '<div style="margin-top:auto">'+(ferme?'<span class="ttc">'+Math.round(s.price_ttc)+' € TTC</span>':'<span class="devis">Sur devis</span>')+'</div>'+
+        (ferme
+          ? '<button class="btn btn-add" data-add="'+esc(s.id)+'">Ajouter au panier</button>'
+          : '<a class="btn btn-devis" href="/contact.html?prestation='+esc(s.slug)+'" style="text-align:center;text-decoration:none">Demander un diagnostic / devis</a>')+
+        '</div>';
+    }).join('');
+    $('#families').hidden=true; $('#products').hidden=false;
+  }
+
+  document.addEventListener('click', function(e){
+    var t=e.target;
+    var fam=t.closest && t.closest('[data-fam]'); if(fam){ location.hash='cat='+fam.getAttribute('data-fam'); renderProducts(fam.getAttribute('data-fam')); return; }
+    if(t.dataset&&t.dataset.add){ var s=ALL.find(function(x){return x.id===t.dataset.add;}); if(s&&cart){ cart.add({id:s.id,slug:s.slug,name:s.name,brand:s.brand,ttc:s.price_ttc,requires_quote:s.requires_quote,active:s.active}); refreshCart(); openCart(); } }
+    if(t.dataset&&t.dataset.inc){ cart.setQty(t.dataset.inc,(cart.lines().find(function(l){return l.id===t.dataset.inc;})||{}).qty+1); refreshCart(); }
+    if(t.dataset&&t.dataset.dec){ var ln=cart.lines().find(function(l){return l.id===t.dataset.dec;}); cart.setQty(t.dataset.dec,(ln?ln.qty:1)-1); refreshCart(); }
+    if(t.dataset&&t.dataset.rm){ cart.remove(t.dataset.rm); refreshCart(); }
+  });
+  function openCart(){ $('#cartPanel').classList.add('open'); }
+  $('#cartToggle').addEventListener('click',openCart);
+  $('#cartClose').addEventListener('click',function(){$('#cartPanel').classList.remove('open');});
+  $('#backFam').addEventListener('click',function(){ $('#products').hidden=true; $('#families').hidden=false; location.hash=''; });
+  $('#cartNext').addEventListener('click',function(){ location.href='/#hc-reservation'; });
+  $('#search').addEventListener('input',function(){
+    var q=this.value.toLowerCase().trim(); if(!q){ $('#products').hidden=true; $('#families').hidden=false; return; }
+    var res=ALL.filter(function(s){return (s.name+' '+(s.brand||'')+' '+(s.category_name||'')).toLowerCase().indexOf(q)>=0;});
+    $('#famTitle').textContent='Résultats « '+q+' »'; byFam.__search=res; renderProducts('__search');
+  });
+
+  fetch(SUPA+'/rest/v1/v_services_public?select=*&active=eq.true&order=position.asc',{headers:{apikey:KEY,Authorization:'Bearer '+KEY}})
+    .then(function(r){return r.json();})
+    .then(function(rows){
+      ALL=Array.isArray(rows)?rows:[]; byFam={};
+      ALL.forEach(function(s){ var k=s.category_slug||s.category_name||'autre'; (byFam[k]=byFam[k]||[]).push(s); });
+      $('#loadMsg').hidden=true; renderFamilies(); refreshCart();
+      var m=(location.hash||'').match(/cat=([^&]+)/); if(m && byFam[decodeURIComponent(m[1])]) renderProducts(decodeURIComponent(m[1]));
+    })
+    .catch(function(e){ $('#loadMsg').textContent='Catalogue momentanément indisponible.'; });
+})();
+</script>
+</body>
+</html>
