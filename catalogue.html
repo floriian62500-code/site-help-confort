@@ -44,9 +44,15 @@ h1{font-size:1.5rem;margin:.2em 0}
 </div>
 
 <div class="wrap">
-  <h1>Choisissez vos prestations</h1>
-  <p class="sub">Parcourez les familles, ajoutez plusieurs prestations à votre panier, puis finalisez.</p>
+  <h1>Commandez vos prestations en ligne</h1>
+  <p class="sub">Choisissez une famille, ajoutez <strong>une ou plusieurs prestations</strong> à votre panier, puis validez votre commande. Prix fermes affichés ; devis clair pour les projets sur mesure.</p>
   <input id="search" class="search" type="search" placeholder="Rechercher (chauffe-eau, fuite, serrure…)" aria-label="Rechercher une prestation">
+  <!-- parcours secondaires : urgence & devis (ne détournent pas l'achat) -->
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 4px">
+    <a href="/#hc-reservation" class="btn btn-devis" style="text-decoration:none">🚨 J'ai une urgence</a>
+    <a href="/contact.html" class="btn btn-devis" style="text-decoration:none">✎ Projet sur mesure — demander un devis</a>
+    <a href="tel:+33366100134" class="btn btn-devis" style="text-decoration:none">📞 03 66 10 01 34</a>
+  </div>
   <div id="families" class="fam-grid" aria-live="polite"></div>
   <div id="products" hidden>
     <button class="back" id="backFam">← Toutes les familles</button>
