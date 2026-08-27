@@ -8,7 +8,7 @@
 ## Zone COMMANDE / CATALOGUE (P0)
 | ID | source | prio | demande | statut | SHA recette | tests | preview | validation Florian | reste |
 |---|---|---|---|---|---|---|---|---|---|
-| CMD-1 | 5439085965/5439129350 | P0 | Bug modale tarifs /nos-prestations : autocomplete vide CP/ville → CTA bloqué | **READY_FOR_QA** | `fa662525` | smoke 15/15 + E2E live | CP/ville persist, CTA actif prouvés | validation visuelle Florian |
+| CMD-1 | 5439085965/5439129350/5443945285 | P0 | Bug modale tarifs /nos-prestations : **CTA de validation invisible** (+ autocomplete CP/ville) | **READY_FOR_QA** (cause racine corrigée) | `fa662525`,`a29e290f` | E2E navigateur 390x600 + 1440x900 : CTA visible, validation OK | CAUSE : sweep HC-PRICE-HIDER (hc-widgets.js) masquait tout `Voir les tarifs` dont le submit ; fix = exclusion modale/submit + modale scrollable/sticky + cache-bust 65 pages | validation visuelle Florian |
 | CMD-2 | 5439214830 | P0 | Entrée transactionnelle = catalogue + deep-links métiers→famille | **READY_FOR_QA** | `f61f35e7`,`3d11b469` | smoke 16/16 | /catalogue 6 familles + 26 pages métiers → /catalogue#cat=famille (prouvé, 15 produits Plomberie) | validation Florian |
 | CMD-3 | 5438316639/5438366099 | P0 | Catalogue familles + multi-panier | **READY_FOR_QA** (moteur unifié) | `859aea37` | E2E multi-cart PASS | moteur `catalogue.html` : 6 familles/34 items, panier multi (prouvé) | validation Florian |
 | CMD-4 | 5439065455 | P0 | Checkout panier→coordonnées→confirmation récap | **READY_FOR_QA** (moteur unifié) | `859aea37` | E2E 2 familles→confirmation PASS | étapes dédiées urgence/adresse/coords/créneau/confirmation (prouvé) | validation Florian |
