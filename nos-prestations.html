@@ -501,7 +501,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  <input aria-label="Email" type="email" name="email" placeholder="Email *" required autocomplete="email" class="nv-lg-inp" list="nv-email-domains" id="nvLgEmail">
  <datalist id="nv-email-domains"></datalist>
  <div style="position:relative">
- <input aria-label="Adresse (rue + n°)" type="text" name="adresse" placeholder="Adresse (n° et rue) *" required autocomplete="street-address" class="nv-lg-inp" id="nvLgAdresse" style="padding-right:38px">
+ <input aria-label="Adresse (rue + n°)" type="text" name="adresse" placeholder="Adresse (n° et rue) *" required autocomplete="street-address" class="nv-lg-inp" id="nvLgAdresse" data-autocomplete-skip style="padding-right:38px">
  <button type="button" id="nvLgAdresseClear" aria-label="Effacer l'adresse" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);width:24px;height:24px;border:0;background:#E5EDF3;color:#475569;border-radius:50%;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:14px;line-height:1;padding:0;font-family:inherit">✕</button>
  <div id="nvLgAdresseSuggest" style="position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #E5EDF3;border-radius:10px;margin-top:4px;box-shadow:0 12px 32px rgba(10,20,40,.12);max-height:240px;overflow-y:auto;z-index:10;display:none"></div>
  </div>
@@ -821,9 +821,10 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
    var debounceTimer = null;
    addrInput.addEventListener('input', function(){
      var q = addrInput.value.trim();
-     // Reset cachés à chaque frappe
-     if (villeInput) villeInput.value = '';
-     if (cpInput) cpInput.value = '';
+     // Ne PAS vider CP/ville à chaque frappe (cassait la saisie manuelle et effaçait les valeurs
+     // après sélection). CP/ville se remplissent à la sélection d'une suggestion ou manuellement ;
+     // le bouton ✕ les vide volontairement. On ne vide que si l'adresse est repartie de zéro.
+     if (q.length < 4) { if (villeInput) villeInput.value=''; if (cpInput) cpInput.value=''; }
      clearTimeout(debounceTimer);
      if (q.length < 4) { box.style.display = 'none'; box.innerHTML = ''; return; }
      debounceTimer = setTimeout(async function(){
