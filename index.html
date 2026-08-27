@@ -2520,12 +2520,24 @@ if (!leadRes || !leadRes.ok) {
   return;
 }
 var payPhotoNote = (leadRes.photos && leadRes.photos.ok === false) ? ' (vos photos n\'ont pas pu être jointes)' : '';
-// ═══ HC-FIX SÉCURITÉ 2026-08-09 (A08 / contrôle Home) : PAIEMENT EN LIGNE GELÉ ═══
-// Le wizard envoyait un montant CLIENT (prixTtc, manipulable) à stripe-create-payment-link,
-// endpoint non sécurisé (montant navigateur + webhook sans signature). Tant que la matrice
-// Stripe TEST n'est pas PASS, on s'ARRÊTE proprement sur le LEAD (déjà enregistré ci-dessus) :
-// l'agence recontacte / transmet un lien de paiement à montant fixé côté staff.
-resaMsg(true, 'Votre réservation est bien enregistrée ✓' + payPhotoNote + '. Notre équipe vous rappelle rapidement pour convenir du créneau et finaliser votre prise en charge — aucun paiement en ligne à ce stade.');
+// ═══ CONFIRMATION avec récapitulatif complet du PANIER (toutes les lignes) ═══
+// Créneau = rappel humain (aucun créneau inventé). Paiement prix ferme = GELÉ (gate Stripe TEST) :
+// on n'encaisse jamais un montant ambigu ; le montant sera recalculé SERVEUR au dégel.
+var ref = 'HC-' + new Date().getFullYear().toString().slice(-2) + String(new Date().getMonth()+1).padStart(2,'0') + '-' + Math.floor(Math.random()*9000+1000);
+var recap = '', mode = 'devis', total = 0;
+try {
+  if (window.__hcCart && window.__hcCart.lines().length) {
+    mode = window.__hcCart.mode(); total = Math.round(window.__hcCart.totalTtcDisplay());
+    recap = '\n\nVotre demande (' + window.__hcCart.count() + ' prestation(s)) :\n' +
+      window.__hcCart.lines().map(function(l){ return '• ' + l.name + ' ×' + l.qty + (l.requires_quote ? ' — sur devis' : ' — ' + Math.round(l.ttc)*l.qty + ' € TTC'); }).join('\n');
+  }
+} catch(e){}
+var statut = mode === 'paiement'
+  ? 'Prestations à prix ferme (total indicatif ' + total + ' € TTC, confirmé côté agence). Aucun paiement en ligne à ce stade.'
+  : (mode === 'mixte'
+      ? 'Panier mixte (prix ferme + prestations sur devis) : demande globale, sans encaissement. L\'agence vous transmet un chiffrage complet.'
+      : 'Demande de devis / diagnostic : sans paiement, l\'agence vous répond avec un chiffrage.');
+resaMsg(true, 'Demande enregistrée ✓ — référence ' + ref + payPhotoNote + '.' + recap + '\n\n' + statut + '\nNotre équipe vous rappelle rapidement pour convenir du créneau et finaliser (agence ' + detectAgence(state.cp) + ').');
 payBtn.disabled = false; payBtn.innerHTML = _payOrig0; payBtn.dataset.sending = '0';
 return;
 var sug = state.suggested_presta || {};
