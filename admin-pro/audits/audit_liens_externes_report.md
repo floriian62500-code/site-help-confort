@@ -1,11 +1,11 @@
 # 🔗 Audit liens externes cassés — P10
 
-*Généré le 2026-08-26 03:55 — `admin-pro/audits/audit_liens_externes.py`*
+*Généré le 2026-08-27 13:54 — `admin-pro/audits/audit_liens_externes.py`*
 
 **Pages scannées** : 117
 **URLs externes uniques testés** : 61
-**URLs OK (2xx/3xx)** : 51
-**URLs cassés (4xx/5xx/timeout/DNS)** : **10**
+**URLs OK (2xx/3xx)** : 50
+**URLs cassés (4xx/5xx/timeout/DNS)** : **11**
 **URLs social-network ignorés** : 2 (whitelist : facebook/instagram/linkedin/twitter/tiktok/youtube/whatsapp)
 
 ## 🚨 Liens cassés
@@ -20,12 +20,13 @@
 | --- | `https://www.anah.fr` | aides.html | URLError: <urlopen error timed out> |
 | 404 | `https://www.anah.gouv.fr/maprimeadapt` | aides.html | Not Found |
 | --- | `https://www.bremaud.com/` | partenaires.html | URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai |
+| --- | `https://www.ecologie.gouv.fr/dispositif-des-certificats-deconomies-denergie` | aides.html | URLError: <urlopen error timed out> |
 | 403 | `https://www.helpconfort.com` | mentions-legales.html, reseau-help-confort.html | Forbidden |
 | 403 | `https://www.hoppe.com/fr-fr/catalogue-produits/1001192940/solutions-pour-portes-interieures-poignees` | partenaires.html | Forbidden |
 
 ## 📊 Statistiques
 
-- Taux de succès : **83 %** (51/61)
+- Taux de succès : **81 %** (50/61)
 - URLs social-network non testés (à vérifier manuellement si nécessaire) : 2
 
 ## 🛠️ Procédure de correction
