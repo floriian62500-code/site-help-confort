@@ -43,6 +43,10 @@ async function run() {
   // 7. Anti-régression : validateurs wizard hoistés présents (fix erreurs inline T2)
   home.includes('Validateurs partagés (hoistés)') ? ok('Wizard : validateurs hoistés présents (erreurs inline)') : ko('Wizard validateurs', 'hoist absent (régression T2)');
 
+  // 8. Catalogue multi-panier présent (sous-lot 2)
+  const cat = await status('/catalogue.html');
+  const catHtml = cat===200 ? await (await fetch(BASE+'/catalogue.html?z='+Date.now())).text() : '';
+  (cat===200 && catHtml.includes('id="families"') && catHtml.includes('hc-cart.js')) ? ok('Catalogue multi-panier présent (familles + hc-cart)') : ko('Catalogue', 'catalogue.html/hc-cart absent (HTTP '+cat+')');
   console.log(`\nRÉSULTAT : ${pass} PASS / ${fail} FAIL`);
   process.exit(fail > 0 ? 1 : 0);
 }
