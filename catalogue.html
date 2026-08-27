@@ -3,164 +3,663 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex,follow"><!-- SEO: wizard non indexé (pages métier = portes SEO) -->
-<title>Catalogue des prestations — HELP Confort</title>
+<meta name="robots" content="noindex,follow"><!-- SEO: tunnel transactionnel non indexé (pages métier = portes SEO) -->
+<title>Commander une intervention — HELP Confort</title>
+<meta name="description" content="Commandez une intervention HELP Confort : catalogue de prestations à prix ferme, panier multi-prestations, réservation avec rappel humain. Saint-Omer & Dunkerque.">
+<link rel="preconnect" href="https://btcbjwqiivhpwoszomhg.supabase.co" crossorigin>
 <style>
-:root{--bleu:#0DA0CF;--nuit:#0A1428;--ok:#16a34a;--gris:#64748b;--bord:#E5EDF3;--bg:#F7FAFC}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;color:var(--nuit);background:var(--bg)}
-.wrap{max-width:1180px;margin:0 auto;padding:16px}
-h1{font-size:1.5rem;margin:.2em 0}
+:root{--bleu:#0DA0CF;--bleu-d:#0A86ad;--nuit:#0A1428;--ok:#16a34a;--gris:#64748b;--bord:#E5EDF3;--bg:#F7FAFC;--orange:#E55510;--devis:#d97706}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:system-ui,Segoe UI,Roboto,sans-serif;color:var(--nuit);background:var(--bg);line-height:1.4}
+.topbar{position:sticky;top:0;z-index:40;background:var(--nuit);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 16px}
+.topbar a.exit{color:#cfe6f0;text-decoration:none;font-weight:600;font-size:.9rem}
+.topbar a.exit:hover{color:#fff}
+.cartbtn{border:0;border-radius:10px;padding:8px 12px;font-weight:800;cursor:pointer;background:var(--bleu);color:#fff;font-size:.9rem}
+.cartbtn[disabled]{opacity:.55;cursor:not-allowed}
+.layout{max-width:1180px;margin:0 auto;padding:16px;display:grid;grid-template-columns:1fr;gap:20px}
+@media(min-width:1024px){.layout.with-summary{grid-template-columns:1fr 340px}}
+.main{min-width:0}
+h1{font-size:1.5rem;margin:.1em 0 .3em}
+h2{font-size:1.2rem;margin:.2em 0}
 .sub{color:var(--gris);margin:0 0 16px}
-.search{width:100%;max-width:520px;padding:10px 14px;border:1px solid var(--bord);border-radius:10px;font-size:1rem}
-.fam-grid,.prod-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));margin:16px 0}
-.card{background:#fff;border:1px solid var(--bord);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
-.fam-card{cursor:pointer;align-items:flex-start}
-.fam-card:hover{border-color:var(--bleu)}
-.fam-ico{font-size:1.6rem}
-.prod-img{width:100%;height:120px;object-fit:cover;border-radius:10px;background:#eef4f8}
-.prod-name{font-weight:700;line-height:1.25}
+.muted{color:var(--gris);font-size:.85rem}
+.screen{display:none}
+.screen.active{display:block;animation:fade .18s ease}
+@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+.search{width:100%;max-width:520px;padding:11px 14px;border:1px solid var(--bord);border-radius:10px;font-size:1rem}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));margin:16px 0}
+.card{background:#fff;border:1px solid var(--bord);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.card.click{cursor:pointer;text-align:left;font:inherit;color:inherit}
+.card.click:hover,.card.click:focus-visible{border-color:var(--bleu);outline:none;box-shadow:0 2px 10px rgba(13,160,207,.12)}
+.ico{font-size:1.7rem}
+.name{font-weight:700;line-height:1.25}
 .brand{color:var(--gris);font-size:.82rem}
 .ttc{font-weight:800;color:var(--bleu)}
-.devis{font-weight:700;color:#d97706}
-.btn{border:0;border-radius:10px;padding:9px 12px;font-weight:700;cursor:pointer;font-size:.92rem}
-.btn-add{background:var(--bleu);color:#fff}.btn-devis{background:#fff;border:1px solid #d97706;color:#d97706}
-.back{background:none;border:0;color:var(--bleu);cursor:pointer;font-weight:600;padding:8px 0}
-/* panier */
-#cartBar{position:sticky;top:0;z-index:20;background:var(--nuit);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:10px 16px}
-#cartBar b{color:#fff}
-#cartPanel{position:fixed;right:0;top:0;height:100vh;width:min(380px,92vw);background:#fff;border-left:1px solid var(--bord);transform:translateX(100%);transition:transform .2s;z-index:30;display:flex;flex-direction:column}
-#cartPanel.open{transform:none}
-.cart-line{display:flex;justify-content:space-between;gap:8px;padding:10px 14px;border-bottom:1px solid var(--bord)}
-.qty button{width:26px;height:26px;border:1px solid var(--bord);background:#fff;border-radius:6px;cursor:pointer}
-.cart-foot{margin-top:auto;padding:14px;border-top:1px solid var(--bord)}
-.muted{color:var(--gris);font-size:.85rem}
-@media(max-width:600px){.prod-img{height:100px}}
+.range{font-weight:700;color:var(--nuit)}
+.dvis{font-weight:700;color:var(--devis)}
+.prod-img{width:100%;height:120px;object-fit:cover;border-radius:10px;background:#eef4f8}
+.btn{border:0;border-radius:10px;padding:11px 14px;font-weight:700;cursor:pointer;font-size:.95rem;text-align:center;text-decoration:none;display:inline-block}
+.btn-primary{background:var(--bleu);color:#fff}.btn-primary:hover{background:var(--bleu-d)}
+.btn-ghost{background:#fff;border:1px solid var(--bord);color:var(--nuit)}
+.btn-devis{background:#fff;border:1px solid var(--devis);color:var(--devis)}
+.btn-lg{padding:14px 18px;font-size:1.02rem;width:100%}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.back{background:none;border:0;color:var(--bleu);cursor:pointer;font-weight:600;padding:8px 0;font-size:.95rem}
+.launch-grid{display:grid;gap:16px;grid-template-columns:1fr;margin:8px 0 18px}
+@media(min-width:680px){.launch-grid{grid-template-columns:1fr 1fr}}
+.launch{padding:22px;border:2px solid var(--bord);border-radius:16px;background:#fff;cursor:pointer;text-align:left;font:inherit;color:inherit;display:flex;flex-direction:column;gap:8px;min-height:150px}
+.launch:hover,.launch:focus-visible{border-color:var(--bleu);outline:none;box-shadow:0 6px 20px rgba(13,160,207,.14)}
+.launch .ico{font-size:2.2rem}
+.launch strong{font-size:1.15rem}
+.secondary-cta{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 2px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.chip{border:1px solid var(--bord);background:#fff;border-radius:999px;padding:9px 14px;cursor:pointer;font-weight:600;font-size:.92rem}
+.chip:hover,.chip:focus-visible{border-color:var(--bleu);outline:none}
+.field{margin:0 0 14px}
+.field label{display:block;font-weight:600;margin:0 0 5px;font-size:.92rem}
+.field input,.field textarea,.field select{width:100%;padding:11px 13px;border:1px solid var(--bord);border-radius:10px;font-size:1rem;font-family:inherit}
+.field input:focus,.field textarea:focus{outline:2px solid var(--bleu);border-color:var(--bleu)}
+.field .err{color:#dc2626;font-size:.82rem;margin:5px 0 0;display:none}
+.field.invalid input,.field.invalid textarea{border-color:#dc2626}
+.field.invalid .err{display:block}
+.two{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:520px){.two{grid-template-columns:1fr 1fr}}
+.ac-wrap{position:relative}
+.ac-list{position:absolute;left:0;right:0;top:100%;z-index:5;background:#fff;border:1px solid var(--bord);border-top:0;border-radius:0 0 10px 10px;max-height:230px;overflow:auto;box-shadow:0 8px 22px rgba(10,20,40,.12)}
+.ac-list button{display:block;width:100%;text-align:left;border:0;background:#fff;padding:10px 13px;cursor:pointer;font:inherit;border-bottom:1px solid var(--bg)}
+.ac-list button:hover,.ac-list button.hl{background:#eef7fb}
+.note{background:#eff8fc;border:1px solid #cfe9f4;border-radius:12px;padding:12px 14px;margin:12px 0;font-size:.92rem}
+.note.warn{background:#fff7ed;border-color:#fed7aa}
+.note.ok{background:#f0fdf4;border-color:#bbf7d0}
+.yn{display:grid;gap:12px;grid-template-columns:1fr 1fr;max-width:420px;margin:10px 0}
+.yn button{padding:18px;border:2px solid var(--bord);border-radius:14px;background:#fff;cursor:pointer;font-weight:800;font-size:1.05rem}
+.yn button.sel{border-color:var(--bleu);background:#eef7fb}
+/* résumé sticky / bottom-sheet */
+.summary{background:#fff;border:1px solid var(--bord);border-radius:14px;padding:14px}
+@media(min-width:1024px){.summary{position:sticky;top:70px}}
+.summary h3{margin:.1em 0 .5em;font-size:1.02rem}
+.sum-line{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--bg);font-size:.9rem}
+.sum-line .qty-c{display:flex;align-items:center;gap:6px}
+.sum-line button.q{width:24px;height:24px;border:1px solid var(--bord);background:#fff;border-radius:6px;cursor:pointer}
+.sum-ctx{font-size:.85rem;color:var(--gris);margin:8px 0 0}
+.sum-total{display:flex;justify-content:space-between;font-weight:800;margin-top:10px;padding-top:10px;border-top:1px solid var(--bord)}
+.mobile-cartbar{display:none}
+@media(max-width:1023px){
+  .mobile-cartbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:35;background:#fff;border-top:1px solid var(--bord);padding:10px 14px;justify-content:space-between;align-items:center;box-shadow:0 -4px 16px rgba(10,20,40,.08)}
+  .sheet-backdrop{position:fixed;inset:0;background:rgba(10,20,40,.4);z-index:44;display:none}
+  .sheet-backdrop.open{display:block}
+  .bottom-sheet{position:fixed;left:0;right:0;bottom:0;z-index:45;background:#fff;border-radius:16px 16px 0 0;max-height:82vh;overflow:auto;transform:translateY(100%);transition:transform .22s;padding:16px 16px 90px}
+  .bottom-sheet.open{transform:none}
+  .desktop-summary{display:none}
+}
+.pill{display:inline-block;background:#eef7fb;color:var(--bleu-d);border-radius:999px;padding:2px 10px;font-size:.78rem;font-weight:700}
+.incl li{margin:2px 0}
+.step-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 6px}
+.step-head .pill{background:#f1f5f9;color:var(--gris)}
 </style>
 </head>
 <body>
-<div id="cartBar">
-  <a href="/" class="back" style="color:#fff">← Accueil</a>
-  <button id="cartToggle" class="btn btn-add" aria-label="Ouvrir le panier">🛒 Mon panier (<span id="cartCount">0</span>) — <span id="cartTotal">0</span> € TTC</button>
+<div class="topbar">
+  <a class="exit" href="/" aria-label="Quitter et revenir à l'accueil">← Quitter</a>
+  <strong style="font-size:.95rem">Commander une intervention</strong>
+  <button class="cartbtn" id="cartBtn" aria-label="Voir mon panier">🛒 Mon panier (<span id="cartCount">0</span>)</button>
 </div>
 
-<div class="wrap">
-  <h1>Commandez vos prestations en ligne</h1>
-  <p class="sub">Choisissez une famille, ajoutez <strong>une ou plusieurs prestations</strong> à votre panier, puis validez votre commande. Prix fermes affichés ; devis clair pour les projets sur mesure.</p>
-  <input id="search" class="search" type="search" placeholder="Rechercher (chauffe-eau, fuite, serrure…)" aria-label="Rechercher une prestation">
-  <!-- parcours secondaires : urgence & devis (ne détournent pas l'achat) -->
-  <div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 4px">
-    <a href="/#hc-reservation" class="btn btn-devis" style="text-decoration:none">🚨 J'ai une urgence</a>
-    <a href="/contact.html" class="btn btn-devis" style="text-decoration:none">✎ Projet sur mesure — demander un devis</a>
-    <a href="tel:+33366100134" class="btn btn-devis" style="text-decoration:none">📞 03 66 10 01 34</a>
-  </div>
-  <div id="families" class="fam-grid" aria-live="polite"></div>
-  <div id="products" hidden>
-    <button class="back" id="backFam">← Toutes les familles</button>
-    <h2 id="famTitle"></h2>
-    <div id="prodGrid" class="prod-grid"></div>
-  </div>
-  <p id="loadMsg" class="muted">Chargement du catalogue…</p>
+<div class="layout" id="layout">
+ <div class="main">
+
+  <!-- 0. LAUNCHER -->
+  <section class="screen active" id="s-launcher" data-step="launcher">
+    <h1>Que souhaitez-vous faire ?</h1>
+    <p class="sub">Commandez une ou plusieurs prestations, ou laissez-vous guider pour identifier votre besoin. Techniciens salariés, agences locales Saint-Omer &amp; Dunkerque.</p>
+    <div class="launch-grid">
+      <button class="launch" id="mode-know" data-step-go="catalogue">
+        <span class="ico">🧰</span>
+        <strong>Je sais ce qu'il me faut</strong>
+        <span class="muted">Parcourez le catalogue par famille et ajoutez vos prestations au panier.</span>
+      </button>
+      <button class="launch" id="mode-help" data-step-go="diagnosis">
+        <span class="ico">🧭</span>
+        <strong>Aidez-moi à identifier mon problème</strong>
+        <span class="muted">Quelques questions simples pour trouver la bonne prestation.</span>
+      </button>
+    </div>
+    <div class="secondary-cta">
+      <a class="btn btn-devis" href="tel:+33366100134">🚨 Urgence — 03 66 10 01 34</a>
+      <a class="btn btn-ghost" href="/contact.html">✎ Projet sur mesure — devis</a>
+    </div>
+  </section>
+
+  <!-- 1. CATALOGUE (mode "je sais") -->
+  <section class="screen" id="s-catalogue" data-step="catalogue">
+    <button class="back" data-step-go="launcher">← Retour</button>
+    <div class="step-head"><h1 style="margin:0">Catalogue des prestations</h1></div>
+    <p class="sub">Choisissez une famille puis ajoutez une ou plusieurs prestations. Prix fermes affichés ; devis clair pour le sur-mesure.</p>
+    <input id="search" class="search" type="search" placeholder="Rechercher (chauffe-eau, fuite, serrure…)" aria-label="Rechercher une prestation">
+    <div id="families" class="grid" aria-live="polite"></div>
+    <div id="products" hidden>
+      <button class="back" id="backFam">← Toutes les familles</button>
+      <h2 id="famTitle"></h2>
+      <div id="prodGrid" class="grid"></div>
+    </div>
+    <p id="loadMsg" class="muted">Chargement du catalogue…</p>
+  </section>
+
+  <!-- 2. DIAGNOSIS (mode "j'hésite") -->
+  <section class="screen" id="s-diagnosis" data-step="diagnosis">
+    <button class="back" data-step-go="launcher">← Retour</button>
+    <div id="diag-1">
+      <h1>Quel domaine concerne votre besoin ?</h1>
+      <p class="sub">Une décision à la fois. Choisissez le métier le plus proche de votre problème.</p>
+      <div id="diagFamilies" class="grid" aria-live="polite"></div>
+    </div>
+    <div id="diag-2" hidden>
+      <button class="back" id="diagBack">← Changer de domaine</button>
+      <h1 id="diagTitle">Quel est le problème ?</h1>
+      <p class="sub">Sélectionnez ce qui ressemble le plus à votre situation, ou recherchez par mot-clé.</p>
+      <input id="diagSearch" class="search" type="search" placeholder="Décrire en un mot (fuite, panne, serrure…)" aria-label="Décrire le problème">
+      <div id="diagResults" class="grid" aria-live="polite"></div>
+      <div class="note">Vous ne trouvez pas ? <a href="/contact.html">Demandez un diagnostic sur mesure</a> — un technicien évalue et chiffre sans engagement.</div>
+    </div>
+  </section>
+
+  <!-- 3. SHEET (fiche prestation) -->
+  <section class="screen" id="s-sheet" data-step="sheet">
+    <button class="back" id="sheetBack">← Retour</button>
+    <div id="sheetBody"></div>
+  </section>
+
+  <!-- 4. CART -->
+  <section class="screen" id="s-cart" data-step="cart">
+    <button class="back" data-step-go="catalogue">← Continuer mes achats</button>
+    <h1>Mon panier</h1>
+    <div id="cartFull"></div>
+    <div id="cartEmpty" class="note" hidden>Votre panier est vide. <button class="back" data-step-go="launcher">Commencer une commande</button></div>
+    <div id="cartActions" style="margin-top:16px">
+      <button class="btn btn-primary btn-lg" id="toCheckout">Continuer ma demande →</button>
+    </div>
+  </section>
+
+  <!-- 5. URGENCE -->
+  <section class="screen" id="s-urgence" data-step="urgence">
+    <button class="back" data-step-go="cart">← Retour au panier</button>
+    <h1>Votre demande est-elle urgente ?</h1>
+    <p class="sub">Cela nous aide à prioriser. Sans engagement.</p>
+    <div class="yn">
+      <button id="urg-yes" data-urg="oui">Oui, c'est urgent</button>
+      <button id="urg-no" data-urg="non">Non, à planifier</button>
+    </div>
+    <div class="field" style="max-width:560px">
+      <label for="urg-desc">Décrire brièvement (facultatif)</label>
+      <textarea id="urg-desc" rows="3" placeholder="Ex. fuite sous l'évier depuis ce matin…"></textarea>
+    </div>
+    <button class="btn btn-primary btn-lg" id="urgNext" style="max-width:560px" disabled>Continuer →</button>
+  </section>
+
+  <!-- 6. ADDRESS -->
+  <section class="screen" id="s-address" data-step="address">
+    <button class="back" data-step-go="urgence">← Retour</button>
+    <h1>Où doit avoir lieu l'intervention ?</h1>
+    <p class="sub">Adresse de l'intervention. Vous pouvez saisir manuellement.</p>
+    <div style="max-width:560px">
+      <div class="field ac-wrap" id="adrWrap">
+        <label for="f-adresse">Adresse</label>
+        <input id="f-adresse" type="text" autocomplete="off" data-autocomplete-skip placeholder="12 rue de la Paix">
+        <div class="err">Adresse requise.</div>
+        <div id="acList" class="ac-list" hidden></div>
+      </div>
+      <div class="two">
+        <div class="field"><label for="f-cp">Code postal</label><input id="f-cp" inputmode="numeric" maxlength="5" placeholder="62500"><div class="err">Code postal à 5 chiffres.</div></div>
+        <div class="field"><label for="f-ville">Ville</label><input id="f-ville" type="text" placeholder="Saint-Omer"><div class="err">Ville requise.</div></div>
+      </div>
+      <div id="zoneNote" class="note" hidden></div>
+      <button class="btn btn-primary btn-lg" id="adrNext">Continuer →</button>
+    </div>
+  </section>
+
+  <!-- 7. COORDS -->
+  <section class="screen" id="s-coords" data-step="coords">
+    <button class="back" data-step-go="address">← Retour</button>
+    <h1>Vos coordonnées</h1>
+    <p class="sub">Pour vous rappeler et confirmer l'intervention.</p>
+    <div style="max-width:560px">
+      <div class="two">
+        <div class="field"><label for="f-prenom">Prénom</label><input id="f-prenom" type="text" autocomplete="given-name"><div class="err">Prénom requis.</div></div>
+        <div class="field"><label for="f-nom">Nom</label><input id="f-nom" type="text" autocomplete="family-name"><div class="err">Nom requis.</div></div>
+      </div>
+      <div class="field"><label for="f-tel">Téléphone</label><input id="f-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 12 34 56 78"><div class="err">Numéro français valide requis.</div></div>
+      <div class="field"><label for="f-email">Email</label><input id="f-email" type="email" inputmode="email" autocomplete="email" placeholder="vous@exemple.fr"><div class="err">Email valide requis.</div></div>
+      <div class="note">📅 Créneau : nous ne bloquons pas de créneau en ligne. <strong>Nous vous rappelons pour confirmer le créneau</strong> selon les disponibilités réelles de l'agence.</div>
+      <button class="btn btn-primary btn-lg" id="coordsNext">Voir le récapitulatif →</button>
+    </div>
+  </section>
+
+  <!-- 8. CONFIRM / FINALIZE -->
+  <section class="screen" id="s-confirm" data-step="confirm">
+    <button class="back" data-step-go="coords" id="confBack">← Retour</button>
+    <h1>Récapitulatif de votre demande</h1>
+    <div id="confRecap"></div>
+    <div id="confActions" style="max-width:560px;margin-top:16px">
+      <div class="note">Aucun paiement en ligne à ce stade. Le montant final et l'éligibilité sont confirmés par l'agence (paiement à l'intervention). Réservation non bloquée par le paiement.</div>
+      <button class="btn btn-primary btn-lg" id="submitBtn">Envoyer ma demande</button>
+    </div>
+    <div id="confDone" hidden></div>
+  </section>
+
+ </div>
+
+ <!-- résumé sticky desktop -->
+ <aside class="desktop-summary" id="desktopSummary" hidden>
+   <div class="summary" id="summaryBox"></div>
+ </aside>
 </div>
 
-<aside id="cartPanel" aria-label="Panier">
-  <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--bord)">
-    <strong>Mon panier</strong><button class="back" id="cartClose">Fermer ✕</button>
+<!-- barre panier mobile + bottom-sheet -->
+<div class="mobile-cartbar">
+  <div><strong id="mCount">0</strong> prestation(s) · <span id="mTotal">0</span> € TTC</div>
+  <button class="cartbtn" id="mCartBtn">Voir le panier</button>
+</div>
+<div class="sheet-backdrop" id="sheetBackdrop"></div>
+<div class="bottom-sheet" id="bottomSheet">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <strong>Mon panier</strong><button class="back" id="sheetClose">Fermer ✕</button>
   </div>
-  <div id="cartLines" style="overflow:auto;flex:1"></div>
-  <div class="cart-foot">
-    <div style="display:flex;justify-content:space-between;font-weight:800"><span>Total (indicatif)</span><span><span id="footTotal">0</span> € TTC</span></div>
-    <p id="cartMode" class="muted" style="margin:6px 0"></p>
-    <button id="cartNext" class="btn btn-add" style="width:100%" disabled>Valider ma commande →</button>
-    <p class="muted" style="margin-top:8px">Le montant final et l'éligibilité au paiement sont confirmés côté serveur. Aucun paiement en ligne à ce stade.</p>
-  </div>
-</aside>
+  <div id="sheetSummary"></div>
+</div>
 
 <script src="/assets/hc-cart.js"></script>
 <script>
 (function(){
+  'use strict';
   var SUPA='https://btcbjwqiivhpwoszomhg.supabase.co';
   var KEY='sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
-  var cart = (window.HcCart||{create:function(){return null;}}).create();
-  var ALL=[], byFam={};
-  var $=function(s){return document.querySelector(s);};
+  var cart=(window.HcCart||{create:function(){return null;}}).create();
+  var ALL=[], byFam={}, loaded=false;
+  var state=(function(){ try{return JSON.parse(localStorage.getItem('hc_book_v1'))||{};}catch(e){return {};} })();
+  var $=function(s,r){return (r||document).querySelector(s);};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
   var esc=function(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
+  function saveState(){ try{localStorage.setItem('hc_book_v1',JSON.stringify(state));}catch(e){} }
+  // instrumentation funnel — SANS PII
+  function track(ev){ try{ (window.__hcFunnel=window.__hcFunnel||[]).push({ev:ev,t:(new Date()).getTime()}); if(window.dataLayer) window.dataLayer.push({event:'hc_'+ev}); }catch(e){} }
 
-  function refreshCart(){
-    if(!cart) return;
-    var n=cart.count(), tot=Math.round(cart.totalTtcDisplay());
-    $('#cartCount').textContent=n; $('#cartTotal').textContent=tot; $('#footTotal').textContent=tot;
-    var mode=cart.mode();
-    var txt={vide:'Panier vide',paiement:'Prestations à prix ferme — réservation.',devis:'Demande de devis — sans paiement.',mixte:'Panier mixte (prix ferme + devis) — demande globale, sans paiement immédiat.'}[mode]||'';
-    $('#cartMode').textContent=txt;
-    $('#cartNext').disabled = (mode==='vide');
-    var html=cart.lines().map(function(l){
-      return '<div class="cart-line"><div><div class="prod-name" style="font-size:.9rem">'+esc(l.name)+'</div>'+
-        (l.requires_quote?'<span class="devis">sur devis</span>':'<span class="ttc">'+Math.round(l.ttc)+' € TTC</span>')+'</div>'+
-        '<div class="qty" style="display:flex;align-items:center;gap:6px">'+
-        (l.requires_quote?'':'<button data-dec="'+esc(l.id)+'">−</button><span>'+l.qty+'</span><button data-inc="'+esc(l.id)+'">+</button>')+
-        '<button data-rm="'+esc(l.id)+'" aria-label="Retirer">🗑</button></div></div>';
-    }).join('') || '<p class="muted" style="padding:14px">Votre panier est vide.</p>';
-    $('#cartLines').innerHTML=html;
+  // ---------- navigation entre écrans ----------
+  var STEPS=['launcher','catalogue','diagnosis','sheet','cart','urgence','address','coords','confirm'];
+  function go(step, opts){
+    opts=opts||{};
+    if(STEPS.indexOf(step)<0) step='launcher';
+    $$('.screen').forEach(function(s){ s.classList.toggle('active', s.getAttribute('data-step')===step); });
+    // résumé visible dès qu'il y a un panier et hors launcher
+    var showSummary = step!=='launcher' && cart && cart.count()>0;
+    $('#layout').classList.toggle('with-summary', showSummary);
+    $('#desktopSummary').hidden = !showSummary;
+    state._step=step; saveState();
+    if(!opts.noHash){ var h='#step='+step+(state._fam?('&cat='+state._fam):''); if(location.hash!==h){ history.pushState({step:step},'',h); } }
+    window.scrollTo(0,0);
+    track('step_'+step);
+    if(step==='cart') renderCartFull();
+    if(step==='confirm') renderConfirm();
+    if(step==='diagnosis') renderDiagFamilies();
+    refreshSummary();
+  }
+  window.addEventListener('popstate', function(){ restoreFromHash({noHash:true}); });
+
+  // ---------- data ----------
+  function famKey(s){ return s.category_slug||s.category_name||'autre'; }
+  function priced(s){ return !s.requires_quote && Number(s.price_ttc)>0 && s.active!==false; }
+  function loadCatalogue(){
+    return fetch(SUPA+'/rest/v1/v_services_public?select=*&active=eq.true&order=position.asc',{headers:{apikey:KEY,Authorization:'Bearer '+KEY}})
+      .then(function(r){return r.json();})
+      .then(function(rows){
+        ALL=Array.isArray(rows)?rows:[]; byFam={};
+        ALL.forEach(function(s){ var k=famKey(s); (byFam[k]=byFam[k]||[]).push(s); });
+        loaded=true;
+        var lm=$('#loadMsg'); if(lm) lm.hidden=true;
+        renderFamilies();
+      })
+      .catch(function(){ var lm=$('#loadMsg'); if(lm) lm.textContent='Catalogue momentanément indisponible. Vous pouvez nous appeler au 03 66 10 01 34.'; });
   }
 
+  // ---------- CATALOGUE ----------
   function renderFamilies(){
     var seen={}, out=[];
-    ALL.forEach(function(s){ var k=s.category_slug||s.category_name||'autre'; if(!seen[k]){seen[k]=1; out.push(s);} });
-    $('#families').innerHTML = out.map(function(s){
-      var slug=s.category_slug||s.category_name; var n=(byFam[slug]||[]).length;
-      return '<div class="card fam-card" data-fam="'+esc(slug)+'" role="button" tabindex="0">'+
-        '<div class="fam-ico">'+esc(s.category_icon||'🔧')+'</div>'+
-        '<div class="prod-name">'+esc(s.category_name||slug)+'</div>'+
-        '<div class="muted">'+n+' prestation'+(n>1?'s':'')+'</div></div>';
+    ALL.forEach(function(s){ var k=famKey(s); if(!seen[k]){seen[k]=1; out.push(s);} });
+    $('#families').innerHTML=out.map(function(s){
+      var slug=famKey(s), n=(byFam[slug]||[]).length;
+      return '<button class="card click fam-card" data-fam="'+esc(slug)+'">'+
+        '<span class="ico">'+esc(s.category_icon||'🔧')+'</span>'+
+        '<span class="name">'+esc(s.category_name||slug)+'</span>'+
+        '<span class="muted">'+n+' prestation'+(n>1?'s':'')+'</span></button>';
     }).join('');
   }
   function renderProducts(slug){
     var list=byFam[slug]||[];
     $('#famTitle').textContent=(list[0]&&list[0].category_name)||slug;
     $('#prodGrid').innerHTML=list.map(function(s){
-      var ferme = !s.requires_quote && s.price_ttc>0 && s.active!==false;
       var img=s.image_url||(SUPA+'/storage/v1/object/public/prestations/'+s.slug+'.jpg');
-      return '<div class="card"><img class="prod-img" loading="lazy" alt="'+esc(s.name)+'" src="'+esc(img)+'" onerror="this.style.visibility=\'hidden\'">'+
-        '<div class="prod-name">'+esc(s.name)+'</div>'+
+      return '<div class="card">'+
+        '<img class="prod-img" loading="lazy" alt="'+esc(s.name)+'" src="'+esc(img)+'" onerror="this.style.visibility=\'hidden\'">'+
+        '<div class="name">'+esc(s.name)+'</div>'+
         (s.brand?'<div class="brand">'+esc(s.brand)+'</div>':'')+
         (s.short_desc?'<div class="muted">'+esc(s.short_desc)+'</div>':'')+
-        '<div style="margin-top:auto">'+(ferme?'<span class="ttc">'+Math.round(s.price_ttc)+' € TTC</span>':'<span class="devis">Sur devis</span>')+'</div>'+
-        (ferme
-          ? '<button class="btn btn-add" data-add="'+esc(s.id)+'">Ajouter au panier</button>'
-          : '<a class="btn btn-devis" href="/contact.html?prestation='+esc(s.slug)+'" style="text-align:center;text-decoration:none">Demander un diagnostic / devis</a>')+
+        '<div style="margin-top:auto">'+(priced(s)?'<span class="ttc">'+Math.round(s.price_ttc)+' € TTC</span>':'<span class="dvis">Sur devis</span>')+'</div>'+
+        '<button class="btn btn-ghost" data-sheet="'+esc(s.id)+'">Voir la prestation</button>'+
+        (priced(s)?'<button class="btn btn-primary" data-add="'+esc(s.id)+'">Ajouter au panier</button>':'')+
         '</div>';
     }).join('');
     $('#families').hidden=true; $('#products').hidden=false;
+    state._fam=slug; saveState();
+  }
+  function backToFamilies(){ $('#products').hidden=true; $('#families').hidden=false; state._fam=null; saveState(); }
+
+  // ---------- DIAGNOSIS ----------
+  function renderDiagFamilies(){
+    if(!loaded) return;
+    var seen={}, out=[];
+    ALL.forEach(function(s){ var k=famKey(s); if(!seen[k]){seen[k]=1; out.push(s);} });
+    $('#diagFamilies').innerHTML=out.map(function(s){
+      var slug=famKey(s);
+      return '<button class="card click" data-diagfam="'+esc(slug)+'">'+
+        '<span class="ico">'+esc(s.category_icon||'🔧')+'</span>'+
+        '<span class="name">'+esc(s.category_name||slug)+'</span></button>';
+    }).join('');
+  }
+  function diagShowProblems(slug, q){
+    var list=(byFam[slug]||[]);
+    if(q){ q=q.toLowerCase(); list=list.filter(function(s){return (s.name+' '+(s.short_desc||'')).toLowerCase().indexOf(q)>=0;}); }
+    $('#diagTitle').textContent='Quel est le problème ? ('+((byFam[slug][0]&&byFam[slug][0].category_name)||slug)+')';
+    $('#diagResults').innerHTML=list.map(function(s){
+      return '<button class="card click" data-sheet="'+esc(s.id)+'">'+
+        '<span class="name">'+esc(s.name)+'</span>'+
+        (s.short_desc?'<span class="muted">'+esc(s.short_desc)+'</span>':'')+
+        '<span style="margin-top:auto">'+(priced(s)?'<span class="ttc">'+Math.round(s.price_ttc)+' € TTC</span>':'<span class="dvis">Sur devis</span>')+'</span></button>';
+    }).join('') || '<p class="muted">Aucune prestation ne correspond. <a href="/contact.html">Demander un diagnostic sur mesure</a>.</p>';
+    $('#diag-1').hidden=true; $('#diag-2').hidden=false;
+    state._diagFam=slug; saveState();
   }
 
+  // ---------- SHEET ----------
+  function openSheet(id, from){
+    var s=ALL.find(function(x){return x.id===id;}); if(!s) return;
+    state._sheetFrom=from||state._step||'catalogue'; saveState();
+    var img=s.image_url||(SUPA+'/storage/v1/object/public/prestations/'+s.slug+'.jpg');
+    var priceHtml = priced(s)
+      ? '<span class="ttc" style="font-size:1.3rem">'+Math.round(s.price_ttc)+' € TTC</span> <span class="pill">prix ferme</span>'
+      : '<span class="dvis" style="font-size:1.2rem">Sur devis</span> <span class="pill">après diagnostic</span>';
+    var incl = s.included ? String(s.included).split(/\s*[;|\n]\s*/).filter(Boolean) : [];
+    var excl = s.excluded ? String(s.excluded).split(/\s*[;|\n]\s*/).filter(Boolean) : [];
+    var html='<div class="step-head"><h1 style="margin:0">'+esc(s.name)+'</h1>'+(s.brand?'<span class="pill">'+esc(s.brand)+'</span>':'')+'</div>'+
+      '<div style="display:grid;gap:16px;grid-template-columns:1fr;max-width:720px">'+
+      '<img class="prod-img" style="height:200px" alt="'+esc(s.name)+'" src="'+esc(img)+'" onerror="this.style.display=\'none\'">'+
+      '<div>'+priceHtml+'</div>'+
+      (s.short_desc?'<p>'+esc(s.short_desc)+'</p>':'')+
+      (incl.length?'<div><strong>Inclus</strong><ul class="incl">'+incl.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div>':'')+
+      (excl.length?'<div><strong>Non inclus</strong><ul class="incl">'+excl.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div>':'')+
+      (priced(s)?'<p class="muted">Déplacement et main-d\'œuvre inclus dans le tarif catalogue sauf mention contraire. Fournitures spécifiques éventuelles confirmées par l\'agence avant intervention.</p>'
+                :'<p class="muted">Le prix dépend du diagnostic : un technicien évalue puis chiffre sans engagement.</p>')+
+      '<div>'+(priced(s)
+        ? '<button class="btn btn-primary btn-lg" data-add="'+esc(s.id)+'">Ajouter au panier</button>'
+        : '<button class="btn btn-devis btn-lg" data-addquote="'+esc(s.id)+'">Ajouter à ma demande de devis</button>')+'</div>'+
+      '</div>';
+    $('#sheetBody').innerHTML=html;
+    go('sheet');
+  }
+
+  // ---------- PANIER ----------
+  function addToCart(id){
+    var s=ALL.find(function(x){return x.id===id;}); if(!s||!cart) return;
+    cart.add({id:s.id,slug:s.slug,name:s.name,brand:s.brand,ttc:s.price_ttc,requires_quote:s.requires_quote,active:s.active});
+    refreshCartUI(); track('add_to_cart');
+  }
+  function refreshCartUI(){
+    var n=cart?cart.count():0, tot=cart?Math.round(cart.totalTtcDisplay()):0;
+    $('#cartCount').textContent=n; $('#mCount').textContent=n; $('#mTotal').textContent=tot;
+    $('#cartBtn').disabled=(n===0);
+    refreshSummary();
+    if(state._step==='cart') renderCartFull();
+  }
+  function cartLineHtml(l, compact){
+    return '<div class="sum-line"><div><div class="name" style="font-size:.9rem">'+esc(l.name)+'</div>'+
+      (l.requires_quote?'<span class="dvis">sur devis</span>':'<span class="ttc">'+Math.round(l.ttc)+' € TTC</span>')+'</div>'+
+      '<div class="qty-c">'+
+      (l.requires_quote?'':'<button class="q" data-dec="'+esc(l.id)+'" aria-label="Moins">−</button><span>'+l.qty+'</span><button class="q" data-inc="'+esc(l.id)+'" aria-label="Plus">+</button>')+
+      '<button class="q" data-rm="'+esc(l.id)+'" aria-label="Retirer">🗑</button></div></div>';
+  }
+  function summaryHtml(){
+    if(!cart||!cart.count()) return '<p class="muted">Panier vide.</p>';
+    var mode=cart.mode(), tot=Math.round(cart.totalTtcDisplay());
+    var modeTxt={paiement:'Prestations à prix ferme.',devis:'Demande de devis — sans paiement.',mixte:'Panier mixte (ferme + devis) — sans paiement immédiat.'}[mode]||'';
+    var ctx='';
+    if(state.urg) ctx+='<div class="sum-ctx">⏱ '+(state.urg==='oui'?'Urgent':'À planifier')+'</div>';
+    if(state.cp||state.ville) ctx+='<div class="sum-ctx">📍 '+esc([state.adresse,state.cp,state.ville].filter(Boolean).join(' '))+'</div>';
+    if(state.cp) ctx+='<div class="sum-ctx">🏢 Agence '+esc(detectAgence(state.cp))+'</div>';
+    return '<h3>Mon panier ('+cart.count()+')</h3>'+
+      cart.lines().map(function(l){return cartLineHtml(l);}).join('')+
+      '<div class="sum-total"><span>Total (indicatif)</span><span>'+tot+' € TTC</span></div>'+
+      '<p class="muted" style="margin:6px 0 0">'+modeTxt+'</p>'+ctx;
+  }
+  function refreshSummary(){
+    var html=summaryHtml();
+    $('#summaryBox').innerHTML=html;
+    $('#sheetSummary').innerHTML=html;
+  }
+  function renderCartFull(){
+    var empty=!cart||!cart.count();
+    $('#cartEmpty').hidden=!empty;
+    $('#cartActions').hidden=empty;
+    $('#cartFull').innerHTML = empty ? '' :
+      cart.lines().map(function(l){return cartLineHtml(l);}).join('')+
+      '<div class="sum-total"><span>Total (indicatif)</span><span>'+Math.round(cart.totalTtcDisplay())+' € TTC</span></div>'+
+      '<p class="muted">'+({paiement:'Prestations à prix ferme.',devis:'Demande de devis — sans paiement.',mixte:'Panier mixte (ferme + devis) — demande globale sans paiement immédiat.'}[cart.mode()]||'')+'</p>';
+  }
+
+  // ---------- AGENCE / ZONE ----------
+  function detectAgence(cp){ if(!cp) return 'Saint-Omer'; var d=String(cp).substring(0,2); if(d==='59') return 'Dunkerque · SARL Dépan’DK'; return 'Saint-Omer · SARL Dépan’Audo'; }
+  function inZone(cp){ return /^(62|59)\d{3}$/.test(String(cp||'')); }
+
+  // ---------- ADRESSE autocomplete (BAN, dégradation manuelle) ----------
+  var acTimer=null, acItems=[], acHl=-1;
+  function acSearch(q){
+    if(!q||q.length<4){ hideAc(); return; }
+    fetch('https://api-adresse.data.gouv.fr/search/?limit=5&q='+encodeURIComponent(q))
+      .then(function(r){return r.json();})
+      .then(function(d){
+        acItems=(d&&d.features)||[]; acHl=-1;
+        if(!acItems.length){ hideAc(); return; }
+        $('#acList').innerHTML=acItems.map(function(f,i){ return '<button type="button" data-ac="'+i+'">'+esc(f.properties.label)+'</button>'; }).join('');
+        $('#acList').hidden=false;
+      }).catch(function(){ hideAc(); });   // API bloquée → saisie manuelle, aucun blocage
+  }
+  function hideAc(){ var l=$('#acList'); if(l){ l.hidden=true; l.innerHTML=''; } acItems=[]; acHl=-1; }
+  function pickAc(i){
+    var f=acItems[i]; if(!f) return; var p=f.properties;
+    $('#f-adresse').value=[p.housenumber,p.street||p.name].filter(Boolean).join(' ')||p.label;
+    if(p.postcode) $('#f-cp').value=p.postcode;
+    if(p.city) $('#f-ville').value=p.city;
+    hideAc();
+  }
+
+  // ---------- VALIDATION ----------
+  function nameOk(v){ return String(v||'').trim().length>=2; }
+  function phoneFrOk(v){ return /^(?:\+33|0)[1-9](?:[\s.\-]?\d{2}){4}$/.test(String(v||'').trim()); }
+  function emailOk(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v||'').trim()); }
+  function cpOk(v){ return /^\d{5}$/.test(String(v||'').trim()); }
+  function setInvalid(fieldEl, bad){ fieldEl.classList.toggle('invalid', !!bad); }
+  function fieldOf(inputId){ return $('#'+inputId).closest('.field'); }
+
+  // ---------- CONFIRMATION / SUBMIT ----------
+  function confRecapHtml(){
+    var lines = cart&&cart.count() ? cart.lines() : [];
+    var tot=cart?Math.round(cart.totalTtcDisplay()):0, mode=cart?cart.mode():'vide';
+    var statut = mode==='paiement'
+      ? 'Prestations à prix ferme (total indicatif '+tot+' € TTC, confirmé par l\'agence). Aucun paiement en ligne à ce stade.'
+      : (mode==='mixte'
+          ? 'Panier mixte (prix ferme + sur devis) : demande globale, sans encaissement. L\'agence transmet un chiffrage complet.'
+          : 'Demande de devis / diagnostic : sans paiement, l\'agence répond avec un chiffrage.');
+    return '<div style="max-width:640px">'+
+      '<div class="summary" style="position:static">'+
+      '<h3>'+cart.count()+' prestation(s)</h3>'+
+      lines.map(function(l){return '<div class="sum-line"><span>'+esc(l.name)+' ×'+l.qty+'</span><span>'+(l.requires_quote?'sur devis':(Math.round(l.ttc)*l.qty)+' € TTC')+'</span></div>';}).join('')+
+      '<div class="sum-total"><span>Total (indicatif)</span><span>'+tot+' € TTC</span></div>'+
+      '</div>'+
+      '<div class="note">'+statut+'</div>'+
+      '<p><strong>Intervention :</strong> '+esc([state.adresse,state.cp,state.ville].filter(Boolean).join(' '))+'<br>'+
+      '<strong>Agence :</strong> '+esc(detectAgence(state.cp))+'<br>'+
+      '<strong>Urgence :</strong> '+(state.urg==='oui'?'Oui':'À planifier')+'<br>'+
+      '<strong>Contact :</strong> '+esc([state.prenom,state.nom].filter(Boolean).join(' '))+' · '+esc(state.tel||'')+' · '+esc(state.email||'')+'</p>'+
+      '</div>';
+  }
+  function renderConfirm(){ if(cart&&cart.count()) $('#confRecap').innerHTML=confRecapHtml(); else $('#confRecap').innerHTML='<div class="note warn">Votre panier est vide. <button class="back" data-step-go="launcher">Recommencer</button></div>'; }
+
+  function buildLeadPayload(){
+    var lines = cart&&cart.count() ? cart.lines() : [];
+    var mode = cart?cart.mode():'devis';
+    var famList = lines.map(function(l){return l.slug;});
+    var recapMsg = lines.map(function(l){ return '• '+l.name+' ×'+l.qty+(l.requires_quote?' — sur devis':' — '+(Math.round(l.ttc)*l.qty)+' € TTC'); }).join('\n');
+    return {
+      prenom: state.prenom||null, nom: state.nom||null, email: state.email||null, telephone: state.tel||null,
+      ville: state.ville||null, code_postal: state.cp||null, adresse: state.adresse||null,
+      metier: (lines[0]&&(byFam[state._diagFam]||[]).length? null : null),
+      type_demande: (mode==='paiement'?'reservation':(mode==='mixte'?'mixte':'devis')),
+      form_type: 'commerce_engine',
+      message: 'Commande via moteur unifié ('+ (cart?cart.count():0) +' prestation(s)) :\n'+recapMsg+(state.urgDesc?('\n\nPrécision client : '+state.urgDesc):''),
+      source: 'commerce_engine', source_page: location.href,
+      utm: { cart: (cart?cart.serverPayload():[]), cart_mode: mode, urgence: (state.urg||null), slugs: famList, wizard_tags:['commerce-engine'] }
+    };
+  }
+  function submit(){
+    var btn=$('#submitBtn');
+    if(btn.dataset.sending==='1') return; btn.dataset.sending='1';
+    if(!cart||!cart.count()){ go('cart'); btn.dataset.sending='0'; return; }
+    var orig=btn.innerHTML; btn.disabled=true; btn.innerHTML='Envoi en cours…';
+    fetch(SUPA+'/functions/v1/submit-lead-v6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(buildLeadPayload()),keepalive:true})
+      .then(function(r){ return r.ok? r.json().catch(function(){return {};}) : Promise.reject(r.status); })
+      .then(function(data){
+        var ref='HC-'+(new Date()).getFullYear().toString().slice(-2)+String((new Date()).getMonth()+1).padStart(2,'0')+'-'+Math.floor(Math.random()*9000+1000);
+        track('confirmation');
+        $('#confActions').hidden=true; $('#confBack').hidden=true;
+        $('#confDone').hidden=false;
+        $('#confDone').innerHTML='<div class="note ok" style="max-width:640px">'+
+          '<h2 style="margin:.1em 0">Demande enregistrée ✓</h2>'+
+          '<p>Référence <strong>'+ref+'</strong>'+(data&&data.id?' · dossier '+esc(String(data.id)):'')+'</p>'+
+          '<p>'+cart.count()+' prestation(s) · Agence '+esc(detectAgence(state.cp))+'</p>'+
+          '<p><strong>Prochaines étapes :</strong> notre équipe vous rappelle sous 2 h ouvrées pour confirmer le créneau et finaliser. Contact direct : <a href="tel:+33366100134">03 66 10 01 34</a>.</p>'+
+          '<p class="muted">Aucun paiement en ligne : le règlement se fait à l\'intervention, montant confirmé par l\'agence.</p>'+
+          '<a class="btn btn-ghost" href="/">Revenir à l\'accueil</a></div>';
+        try{ cart.clear(); }catch(e){} refreshCartUI();
+        state.urg=null; state.urgDesc=null; saveState();
+      })
+      .catch(function(){
+        btn.disabled=false; btn.innerHTML=orig; btn.dataset.sending='0';
+        $('#confActions').insertAdjacentHTML('afterbegin','<div class="note warn" id="submitErr">L\'envoi a échoué. Réessayez, ou appelez le 03 66 10 01 34.</div>');
+      });
+  }
+
+  // ---------- restore depuis hash / draft ----------
+  function restoreFromHash(opts){
+    var h=location.hash||'';
+    var stepM=h.match(/step=([a-z]+)/); var catM=h.match(/cat=([^&]+)/);
+    if(catM){ var fam=decodeURIComponent(catM[1]); state._fam=fam; if(loaded && byFam[fam]) renderProducts(fam); }
+    if(stepM){ go(stepM[1], opts||{noHash:true}); }
+    else if(state._step){ go(state._step, {noHash:true}); }
+    else go('launcher',{noHash:true});
+  }
+
+  // ---------- EVENTS ----------
   document.addEventListener('click', function(e){
-    var t=e.target;
-    var fam=t.closest && t.closest('[data-fam]'); if(fam){ location.hash='cat='+fam.getAttribute('data-fam'); renderProducts(fam.getAttribute('data-fam')); return; }
-    if(t.dataset&&t.dataset.add){ var s=ALL.find(function(x){return x.id===t.dataset.add;}); if(s&&cart){ cart.add({id:s.id,slug:s.slug,name:s.name,brand:s.brand,ttc:s.price_ttc,requires_quote:s.requires_quote,active:s.active}); refreshCart(); openCart(); } }
-    if(t.dataset&&t.dataset.inc){ cart.setQty(t.dataset.inc,(cart.lines().find(function(l){return l.id===t.dataset.inc;})||{}).qty+1); refreshCart(); }
-    if(t.dataset&&t.dataset.dec){ var ln=cart.lines().find(function(l){return l.id===t.dataset.dec;}); cart.setQty(t.dataset.dec,(ln?ln.qty:1)-1); refreshCart(); }
-    if(t.dataset&&t.dataset.rm){ cart.remove(t.dataset.rm); refreshCart(); }
+    var t=e.target; if(!t.closest) return;
+    var go2=t.closest('[data-step-go]'); if(go2){ e.preventDefault(); go(go2.getAttribute('data-step-go')); return; }
+    var fam=t.closest('[data-fam]'); if(fam){ renderProducts(fam.getAttribute('data-fam')); return; }
+    var dfam=t.closest('[data-diagfam]'); if(dfam){ $('#diagSearch').value=''; diagShowProblems(dfam.getAttribute('data-diagfam'),''); return; }
+    var sh=t.closest('[data-sheet]'); if(sh){ openSheet(sh.getAttribute('data-sheet')); return; }
+    var ad=t.closest('[data-add]'); if(ad){ addToCart(ad.getAttribute('data-add')); if(state._step==='sheet'){ go('cart'); } return; }
+    var aq=t.closest('[data-addquote]'); if(aq){ addToCart(aq.getAttribute('data-addquote')); go('cart'); return; }
+    var inc=t.closest('[data-inc]'); if(inc){ var li=cart.lines().find(function(l){return l.id===inc.getAttribute('data-inc');}); cart.setQty(inc.getAttribute('data-inc'),(li?li.qty:1)+1); refreshCartUI(); return; }
+    var dec=t.closest('[data-dec]'); if(dec){ var ld=cart.lines().find(function(l){return l.id===dec.getAttribute('data-dec');}); cart.setQty(dec.getAttribute('data-dec'),(ld?ld.qty:1)-1); refreshCartUI(); return; }
+    var rm=t.closest('[data-rm]'); if(rm){ cart.remove(rm.getAttribute('data-rm')); refreshCartUI(); return; }
+    var ac=t.closest('[data-ac]'); if(ac){ pickAc(parseInt(ac.getAttribute('data-ac'),10)); return; }
   });
-  function openCart(){ $('#cartPanel').classList.add('open'); }
-  $('#cartToggle').addEventListener('click',openCart);
-  $('#cartClose').addEventListener('click',function(){$('#cartPanel').classList.remove('open');});
-  $('#backFam').addEventListener('click',function(){ $('#products').hidden=true; $('#families').hidden=false; location.hash=''; });
-  $('#cartNext').addEventListener('click',function(){ location.href='/#hc-reservation'; });
-  $('#search').addEventListener('input',function(){
-    var q=this.value.toLowerCase().trim(); if(!q){ $('#products').hidden=true; $('#families').hidden=false; return; }
-    var res=ALL.filter(function(s){return (s.name+' '+(s.brand||'')+' '+(s.category_name||'')).toLowerCase().indexOf(q)>=0;});
+  $('#backFam').addEventListener('click', backToFamilies);
+  $('#sheetBack').addEventListener('click', function(){ go(state._sheetFrom||'catalogue'); });
+  $('#diagBack').addEventListener('click', function(){ $('#diag-2').hidden=true; $('#diag-1').hidden=false; });
+  $('#cartBtn').addEventListener('click', function(){ if(window.matchMedia('(max-width:1023px)').matches){ openMobileSheet(); } else { go('cart'); } });
+  $('#mCartBtn').addEventListener('click', openMobileSheet);
+  function openMobileSheet(){ $('#sheetBackdrop').classList.add('open'); $('#bottomSheet').classList.add('open'); refreshSummary(); }
+  function closeMobileSheet(){ $('#sheetBackdrop').classList.remove('open'); $('#bottomSheet').classList.remove('open'); }
+  $('#sheetClose').addEventListener('click', closeMobileSheet);
+  $('#sheetBackdrop').addEventListener('click', closeMobileSheet);
+  $('#toCheckout').addEventListener('click', function(){ if(cart&&cart.count()) go('urgence'); });
+
+  // search catalogue
+  $('#search').addEventListener('input', function(){
+    var q=this.value.toLowerCase().trim();
+    if(!q){ $('#products').hidden=true; $('#families').hidden=false; return; }
+    var res=ALL.filter(function(s){return (s.name+' '+(s.brand||'')+' '+(s.category_name||'')+' '+(s.short_desc||'')).toLowerCase().indexOf(q)>=0;});
     $('#famTitle').textContent='Résultats « '+q+' »'; byFam.__search=res; renderProducts('__search');
   });
+  // search diagnosis
+  $('#diagSearch').addEventListener('input', function(){ if(state._diagFam) diagShowProblems(state._diagFam,this.value.trim()); });
 
-  fetch(SUPA+'/rest/v1/v_services_public?select=*&active=eq.true&order=position.asc',{headers:{apikey:KEY,Authorization:'Bearer '+KEY}})
-    .then(function(r){return r.json();})
-    .then(function(rows){
-      ALL=Array.isArray(rows)?rows:[]; byFam={};
-      ALL.forEach(function(s){ var k=s.category_slug||s.category_name||'autre'; (byFam[k]=byFam[k]||[]).push(s); });
-      $('#loadMsg').hidden=true; renderFamilies(); refreshCart();
-      var m=(location.hash||'').match(/cat=([^&]+)/); if(m && byFam[decodeURIComponent(m[1])]) renderProducts(decodeURIComponent(m[1]));
-    })
-    .catch(function(e){ $('#loadMsg').textContent='Catalogue momentanément indisponible.'; });
+  // urgence
+  $$('#s-urgence [data-urg]').forEach(function(b){ b.addEventListener('click', function(){
+    state.urg=b.getAttribute('data-urg'); saveState();
+    $$('#s-urgence [data-urg]').forEach(function(x){x.classList.toggle('sel',x===b);});
+    $('#urgNext').disabled=false;
+  }); });
+  $('#urg-desc').addEventListener('input', function(){ state.urgDesc=this.value; saveState(); });
+  $('#urgNext').addEventListener('click', function(){ if(state.urg) go('address'); });
+
+  // address
+  var adr=$('#f-adresse');
+  adr.addEventListener('input', function(){ state.adresse=this.value; saveState(); clearTimeout(acTimer); var v=this.value; acTimer=setTimeout(function(){acSearch(v);},220); });
+  adr.addEventListener('blur', function(){ setTimeout(hideAc,180); });
+  adr.addEventListener('keydown', function(e){
+    if($('#acList').hidden) return;
+    if(e.key==='ArrowDown'){ e.preventDefault(); acHl=Math.min(acItems.length-1,acHl+1); }
+    else if(e.key==='ArrowUp'){ e.preventDefault(); acHl=Math.max(0,acHl-1); }
+    else if(e.key==='Enter'){ if(acHl>=0){ e.preventDefault(); pickAc(acHl); } return; }
+    else return;
+    $$('#acList button').forEach(function(b,i){ b.classList.toggle('hl',i===acHl); });
+  });
+  $('#f-cp').addEventListener('input', function(){ this.value=this.value.replace(/\D/g,'').slice(0,5); state.cp=this.value; saveState(); });
+  $('#f-ville').addEventListener('input', function(){ state.ville=this.value; saveState(); });
+  $('#adrNext').addEventListener('click', function(){
+    var badA=!nameOk($('#f-adresse').value), badC=!cpOk($('#f-cp').value), badV=!nameOk($('#f-ville').value);
+    setInvalid(fieldOf('f-adresse'),badA); setInvalid(fieldOf('f-cp'),badC); setInvalid(fieldOf('f-ville'),badV);
+    var zn=$('#zoneNote');
+    if(!badC && !inZone($('#f-cp').value)){ zn.hidden=false; zn.className='note warn'; zn.innerHTML='Votre code postal semble hors de notre zone principale (Saint-Omer 62 / Dunkerque 59). Nous pouvons quand même étudier votre demande et vous rappeler.'; }
+    else { zn.hidden=true; }
+    var el=badA?'f-adresse':badC?'f-cp':badV?'f-ville':null;
+    if(el){ $('#'+el).focus(); return; }
+    state.adresse=$('#f-adresse').value; state.cp=$('#f-cp').value; state.ville=$('#f-ville').value; saveState();
+    go('coords');
+  });
+
+  // coords
+  ['f-prenom','f-nom','f-tel','f-email'].forEach(function(id){ $('#'+id).addEventListener('input', function(){ var k={ 'f-prenom':'prenom','f-nom':'nom','f-tel':'tel','f-email':'email'}[id]; state[k]=this.value; saveState(); }); });
+  $('#coordsNext').addEventListener('click', function(){
+    var bP=!nameOk($('#f-prenom').value), bN=!nameOk($('#f-nom').value), bT=!phoneFrOk($('#f-tel').value), bE=!emailOk($('#f-email').value);
+    setInvalid(fieldOf('f-prenom'),bP); setInvalid(fieldOf('f-nom'),bN); setInvalid(fieldOf('f-tel'),bT); setInvalid(fieldOf('f-email'),bE);
+    var el=bP?'f-prenom':bN?'f-nom':bT?'f-tel':bE?'f-email':null;
+    if(el){ $('#'+el).focus(); return; }
+    go('confirm');
+  });
+  $('#submitBtn').addEventListener('click', submit);
+
+  // ---------- rehydrate inputs from draft ----------
+  function rehydrate(){
+    [['f-adresse','adresse'],['f-cp','cp'],['f-ville','ville'],['f-prenom','prenom'],['f-nom','nom'],['f-tel','tel'],['f-email','email'],['urg-desc','urgDesc']].forEach(function(p){ if(state[p[1]]) { var el=$('#'+p[0]); if(el) el.value=state[p[1]]; } });
+    if(state.urg){ var b=$('#s-urgence [data-urg="'+state.urg+'"]'); if(b){ b.classList.add('sel'); $('#urgNext').disabled=false; } }
+  }
+
+  // ---------- INIT ----------
+  refreshCartUI(); rehydrate();
+  loadCatalogue().then(function(){
+    if(state._fam && byFam[state._fam]) renderProducts(state._fam);
+    if(state._diagFam) { /* diag re-render handled on entering step */ }
+    restoreFromHash({noHash:true});
+  });
 })();
 </script>
 </body>
