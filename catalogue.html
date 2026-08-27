@@ -622,16 +622,23 @@ h2{font-size:1.2rem;margin:.2em 0}
     else return;
     $$('#acList button').forEach(function(b,i){ b.classList.toggle('hl',i===acHl); });
   });
-  $('#f-cp').addEventListener('input', function(){ this.value=this.value.replace(/\D/g,'').slice(0,5); state.cp=this.value; saveState(); });
+  $('#f-cp').addEventListener('input', function(){ this.value=this.value.replace(/\D/g,'').slice(0,5); state.cp=this.value; state._zoneAck=false; saveState(); $('#adrNext').textContent='Continuer →'; $('#zoneNote').hidden=true; });
   $('#f-ville').addEventListener('input', function(){ state.ville=this.value; saveState(); });
   $('#adrNext').addEventListener('click', function(){
     var badA=!nameOk($('#f-adresse').value), badC=!cpOk($('#f-cp').value), badV=!nameOk($('#f-ville').value);
     setInvalid(fieldOf('f-adresse'),badA); setInvalid(fieldOf('f-cp'),badC); setInvalid(fieldOf('f-ville'),badV);
-    var zn=$('#zoneNote');
-    if(!badC && !inZone($('#f-cp').value)){ zn.hidden=false; zn.className='note warn'; zn.innerHTML='Votre code postal semble hors de notre zone principale (Saint-Omer 62 / Dunkerque 59). Nous pouvons quand même étudier votre demande et vous rappeler.'; }
-    else { zn.hidden=true; }
     var el=badA?'f-adresse':badC?'f-cp':badV?'f-ville':null;
     if(el){ $('#'+el).focus(); return; }
+    // hors zone : on AVERTIT sans bloquer (l'utilisateur voit le message puis confirme). Jamais de blocage silencieux.
+    var zn=$('#zoneNote');
+    if(!inZone($('#f-cp').value) && !state._zoneAck){
+      zn.hidden=false; zn.className='note warn';
+      zn.innerHTML='Votre code postal semble hors de notre zone principale (Saint-Omer 62 / Dunkerque 59). Nous pouvons tout de même étudier votre demande et vous rappeler. Cliquez à nouveau pour continuer.';
+      state._zoneAck=true; saveState();
+      $('#adrNext').textContent='Continuer quand même →';
+      return;
+    }
+    zn.hidden=true;
     state.adresse=$('#f-adresse').value; state.cp=$('#f-cp').value; state.ville=$('#f-ville').value; saveState();
     go('coords');
   });
