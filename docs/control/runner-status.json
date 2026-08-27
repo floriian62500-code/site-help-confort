@@ -1,11 +1,11 @@
 {
   "state": "SITE_WORK_ACTIVE",
-  "current_task": "checkout complet panier→confirmation (CHECKOUT_FLOW=PASS)",
-  "last_completed_task": "confirmation récap complet + E2E 2 familles→confirmation prouvé",
-  "last_report": "docs/control/outbox/claude/RUN-2026-08-27-1229.md",
-  "last_commit_sha": "6cedb087",
-  "last_poll_at": "2026-08-27T12:29:10Z",
-  "heartbeat": "2026-08-27T12:29:10Z",
+  "current_task": "fix modale tarifs nos-prestations (CP/ville persist + CTA actionable)",
+  "last_completed_task": "fix autocomplete adresse modale (fa662525) prouvé live",
+  "last_report": "docs/control/outbox/claude/RUN-2026-08-27-1236.md",
+  "last_commit_sha": "fa662525",
+  "last_poll_at": "2026-08-27T12:36:29Z",
+  "heartbeat": "2026-08-27T12:36:29Z",
   "branch": "recette",
   "remaining_tasks": [
     "GATE: clé Stripe TEST + durcir edge stripe-create-payment-link (P1 CRITIQUE montant client)",
@@ -31,5 +31,5 @@
   "needs_florian": true,
   "note": "Chantier #9 EN COURS (state ACTIVE/INCOMPLETE). Restent : sections C→J du second pass, catalogue/panier sous-lots 2-3, gates (Stripe P1 / migrations / pricing serveur). Discipline persistance : run_id par cycle (outbox==status), verif origin/recette avant tout etat terminal. Ne jamais marquer le chantier clos tant que ces items ne sont pas prouves.",
   "runner_autonomous_activation": "READY_FOR_HUMAN_ACTIVATION_FINAL — PR #10 tip fd300550 (16/16 gardes). Ordre: secret -> branch protection main SANS bypass Actions -> merge PR #10 -> E2E.",
-  "run_id": "run-20260827-122910-6cedb087"
+  "run_id": "run-20260827-123629-fa662525"
 }

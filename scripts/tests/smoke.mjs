@@ -49,6 +49,9 @@ async function run() {
   (cat===200 && catHtml.includes('id="families"') && catHtml.includes('hc-cart.js')) ? ok('Catalogue multi-panier présent (familles + hc-cart)') : ko('Catalogue', 'catalogue.html/hc-cart absent (HTTP '+cat+')');
   // 9. Wizard = catalogue multi-panier (plus le sélecteur unique)
   (home.includes('hc-cat-families') && home.includes('hc-cart.js') && !home.includes('Prise en charge TTC')) ? ok('Wizard = catalogue multi-panier (ancien sélecteur retiré)') : ko('Wizard catalogue', 'sélecteur unique encore présent');
+  // 10. Non-régression modale tarifs : input adresse marqué data-autocomplete-skip (évite le wipe CP/ville)
+  const nosp = await (await fetch(BASE+'/nos-prestations.html?z='+Date.now())).text();
+  (nosp.includes('id="nvLgAdresse"') && /nvLgAdresse[^>]*data-autocomplete-skip|data-autocomplete-skip[^>]*id="nvLgAdresse"/.test(nosp)) ? ok('Modale tarifs : adresse skip (CP/ville non wipes)') : ko('Modale tarifs adresse', 'skip absent');
   console.log(`\nRÉSULTAT : ${pass} PASS / ${fail} FAIL`);
   process.exit(fail > 0 ? 1 : 0);
 }
