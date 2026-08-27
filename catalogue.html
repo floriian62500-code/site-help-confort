@@ -46,13 +46,37 @@ h2{font-size:1.2rem;margin:.2em 0}
 .btn-lg{padding:14px 18px;font-size:1.02rem;width:100%}
 .btn[disabled]{opacity:.5;cursor:not-allowed}
 .back{background:none;border:0;color:var(--bleu);cursor:pointer;font-weight:600;padding:8px 0;font-size:.95rem}
-.launch-grid{display:grid;gap:16px;grid-template-columns:1fr;margin:8px 0 18px}
+.lchr-head{max-width:620px;margin:4px 0 20px}
+.lchr-head h1{font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-.02em;margin:.1em 0 .3em}
+.launch-grid{display:grid;gap:16px;grid-template-columns:1fr;margin:8px 0 16px}
 @media(min-width:680px){.launch-grid{grid-template-columns:1fr 1fr}}
-.launch{padding:22px;border:2px solid var(--bord);border-radius:16px;background:#fff;cursor:pointer;text-align:left;font:inherit;color:inherit;display:flex;flex-direction:column;gap:8px;min-height:150px}
-.launch:hover,.launch:focus-visible{border-color:var(--bleu);outline:none;box-shadow:0 6px 20px rgba(13,160,207,.14)}
-.launch .ico{font-size:2.2rem}
-.launch strong{font-size:1.15rem}
-.secondary-cta{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 2px}
+.launch{position:relative;padding:26px 24px 20px;border:1px solid #E9EFF4;border-radius:18px;background:#fff;cursor:pointer;text-align:left;font:inherit;color:inherit;display:flex;flex-direction:column;gap:12px;overflow:hidden;box-shadow:0 6px 20px rgba(10,20,40,.05);transition:transform .28s cubic-bezier(.16,1,.3,1),border-color .28s,box-shadow .28s}
+.launch::before{content:'';position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--lc),var(--lc2));transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.launch::after{content:'';position:absolute;inset:0;background:radial-gradient(120% 80% at 100% 0%,var(--lcSoft),transparent 55%);opacity:0;transition:opacity .35s ease;pointer-events:none}
+.launch:hover,.launch:focus-visible{border-color:var(--lc);outline:none;transform:translateY(-5px);box-shadow:0 22px 44px -16px var(--lcSh)}
+.launch:hover::before,.launch:focus-visible::before{transform:scaleX(1)}
+.launch:hover::after,.launch:focus-visible::after{opacity:1}
+.launch--know{--lc:#0DA0CF;--lc2:#1FC4F0;--lcSoft:rgba(13,160,207,.10);--lcSh:rgba(13,160,207,.30)}
+.launch--help{--lc:#7C3AED;--lc2:#9F67FF;--lcSoft:rgba(124,58,237,.10);--lcSh:rgba(124,58,237,.28)}
+.launch-ic{position:relative;z-index:1;width:52px;height:52px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(135deg,var(--lc),var(--lc2));box-shadow:0 8px 18px -6px var(--lcSh)}
+.launch-t{position:relative;z-index:1;font-size:1.18rem;font-weight:800;color:var(--nuit);line-height:1.2;letter-spacing:-.01em}
+.launch-d{position:relative;z-index:1;flex:1;font-size:.9rem;color:#546074;line-height:1.5}
+.launch-foot{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:2px}
+.launch-hint{font-size:.72rem;font-weight:800;letter-spacing:.02em;color:var(--lc);background:var(--lcSoft);padding:4px 10px;border-radius:999px}
+.launch-arrow{width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:var(--lc);background:var(--lcSoft);transition:transform .28s cubic-bezier(.16,1,.3,1),background .28s}
+.launch:hover .launch-arrow,.launch:focus-visible .launch-arrow{transform:translateX(3px);background:var(--lc);color:#fff}
+.assist{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:14px 16px;background:#fff;border:1px solid #E9EFF4;border-radius:14px;box-shadow:0 4px 14px rgba(10,20,40,.04);margin:0 0 16px}
+.assist-label{font-weight:800;color:var(--nuit);font-size:.9rem;margin-right:2px}
+.assist-item{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.88rem;color:var(--nuit);background:#F4F8FB;border:1px solid transparent;transition:background .2s,border-color .2s,transform .2s}
+.assist-item svg{color:var(--bleu)}
+.assist-item:hover{background:#EAF6FB;border-color:rgba(13,160,207,.25);transform:translateY(-1px)}
+.assist-urg{background:linear-gradient(135deg,rgba(255,107,26,.10),rgba(255,180,0,.06));color:#C2510A}
+.assist-urg svg{color:#E55510}
+.assist-urg:hover{background:linear-gradient(135deg,rgba(255,107,26,.16),rgba(255,180,0,.10));border-color:rgba(255,107,26,.3)}
+.lchr-reassure{list-style:none;display:flex;flex-wrap:wrap;gap:8px 20px;margin:0;padding:2px}
+.lchr-reassure li{display:inline-flex;align-items:center;gap:7px;font-size:.84rem;font-weight:600;color:#3D4759}
+.lchr-reassure svg{color:var(--bleu);flex-shrink:0}
+@media(prefers-reduced-motion:reduce){.launch,.launch::before,.launch::after,.launch-arrow,.assist-item{transition:none !important}.launch:hover{transform:none}}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
 .chip{border:1px solid var(--bord);background:#fff;border-radius:999px;padding:9px 14px;cursor:pointer;font-weight:600;font-size:.92rem}
 .chip:hover,.chip:focus-visible{border-color:var(--bleu);outline:none}
@@ -114,24 +138,35 @@ h2{font-size:1.2rem;margin:.2em 0}
 
   <!-- 0. LAUNCHER -->
   <section class="screen active" id="s-launcher" data-step="launcher">
-    <h1>Que souhaitez-vous faire ?</h1>
-    <p class="sub">Commandez une ou plusieurs prestations, ou laissez-vous guider pour identifier votre besoin. Techniciens salariés, agences locales Saint-Omer &amp; Dunkerque.</p>
+    <div class="lchr-head">
+      <h1>Comment pouvons-nous vous aider ?</h1>
+      <p class="sub">Deux façons de commander votre intervention — chacune vous mène au même panier et à une prise en charge par un interlocuteur humain.</p>
+    </div>
     <div class="launch-grid">
-      <button class="launch" id="mode-know" data-step-go="catalogue">
-        <span class="ico">🧰</span>
-        <strong>Je sais ce qu'il me faut</strong>
-        <span class="muted">Parcourez le catalogue par famille et ajoutez vos prestations au panier.</span>
+      <button class="launch launch--know" id="mode-know" data-step-go="catalogue">
+        <span class="launch-ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg></span>
+        <span class="launch-t">Je sais ce qu'il me faut</span>
+        <span class="launch-d">Parcourez le catalogue par famille et ajoutez une ou plusieurs prestations à prix affiché.</span>
+        <span class="launch-foot"><span class="launch-hint">Catalogue &amp; prix</span><span class="launch-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
       </button>
-      <button class="launch" id="mode-help" data-step-go="diagnosis">
-        <span class="ico">🧭</span>
-        <strong>Aidez-moi à identifier mon problème</strong>
-        <span class="muted">Quelques questions simples pour trouver la bonne prestation.</span>
+      <button class="launch launch--help" id="mode-help" data-step-go="diagnosis">
+        <span class="launch-ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v.01M11 11v3"/></svg></span>
+        <span class="launch-t">Aidez-moi à identifier mon problème</span>
+        <span class="launch-d">Quelques questions simples — métier, équipement, symptôme — pour trouver la bonne prestation.</span>
+        <span class="launch-foot"><span class="launch-hint">Diagnostic guidé</span><span class="launch-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
       </button>
     </div>
-    <div class="secondary-cta">
-      <a class="btn btn-devis" href="tel:+33366100134">🚨 Urgence — 03 66 10 01 34</a>
-      <a class="btn btn-ghost" href="/contact.html">✎ Projet sur mesure — devis</a>
+    <div class="assist">
+      <span class="assist-label">Autre besoin&nbsp;?</span>
+      <a class="assist-item assist-urg" href="tel:+33366100134"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg> Urgence — 03 66 10 01 34</a>
+      <a class="assist-item" href="/devis-express.html"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg> Projet sur mesure — devis</a>
+      <a class="assist-item" href="/contrats-entretien.html"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3v6c0 5-3.4 8.5-8 11-4.6-2.5-8-6-8-11V5z"/></svg> Entretien &amp; contrats</a>
     </div>
+    <ul class="lchr-reassure">
+      <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M16 11l2 2 4-4"/></svg> Techniciens salariés</li>
+      <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Saint-Omer &amp; Dunkerque</li>
+      <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4L12 22l-9-9V3h10z"/></svg> Prix &amp; devis clairs</li>
+    </ul>
   </section>
 
   <!-- 1. CATALOGUE (mode "je sais") -->
