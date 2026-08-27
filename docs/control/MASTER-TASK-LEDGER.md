@@ -9,7 +9,7 @@
 | ID | source | prio | demande | statut | SHA recette | tests | preview | validation Florian | reste |
 |---|---|---|---|---|---|---|---|---|---|
 | CMD-1 | 5439085965/5439129350 | P0 | Bug modale tarifs /nos-prestations : autocomplete vide CP/ville → CTA bloqué | **READY_FOR_QA** | `fa662525` | smoke 15/15 + E2E live | CP/ville persist, CTA actif prouvés | validation visuelle Florian |
-| CMD-2 | 5439214830 | P0 | Entrée transactionnelle = catalogue (plus 3-voies) | **READY_FOR_QA** | `f61f35e7` | smoke 16/16 | /catalogue = 6 familles, 0 3-voies (prouvé) | validation Florian |
+| CMD-2 | 5439214830 | P0 | Entrée transactionnelle = catalogue + deep-links métiers→famille | **READY_FOR_QA** | `f61f35e7`,`3d11b469` | smoke 16/16 | /catalogue 6 familles + 26 pages métiers → /catalogue#cat=famille (prouvé, 15 produits Plomberie) | validation Florian |
 | CMD-3 | 5438316639/5438366099 | P0 | Catalogue familles + multi-panier dans le wizard | **READY_FOR_QA** | `ecf1b1a0` | E2E multi-cart PASS | 6 familles/36 items, panier multi (prouvé) | ré-ordonnancement étapes ; retrait ancien code |
 | CMD-4 | 5439065455 | P0 | Checkout panier→coordonnées→confirmation récap | **READY_FOR_QA** | `6cedb087` | E2E 2 familles→confirmation PASS | confirmation récap complet (prouvé) | étapes dédiées Panier/Créneau |
 | CMD-5 | 5438316639 | P1 | Retrait complet ancien sélecteur unique (proposePrestations/detectDetailedPresta) après preuve 0-réf | **BACKLOG** | — | — | — | vérif 0-réf puis suppression |
