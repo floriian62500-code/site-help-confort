@@ -1,14 +1,13 @@
 {
   "state": "SITE_WORK_ACTIVE",
-  "current_task": "QA Florian /catalogue.html ; gate paiement CMD-6 ; puis TUN-2/SEO-2/SEC-5",
-  "last_completed_task": "UX-COMMERCE-1 moteur unifié A→F — COMMERCE_FLOW=READY_FOR_QA (859aea37/95b50cf3/e5f919bb)",
-  "last_report": "docs/control/outbox/claude/RUN-2026-08-27-1914.md",
-  "last_commit_sha": "cf972f40",
-  "last_poll_at": "2026-08-27T19:14:30Z",
-  "heartbeat": "2026-08-27T19:14:30Z",
+  "current_task": "QA moteur /catalogue.html ; gate paiement CMD-6 ; puis TUN-2/SEO-2/SEC-5",
+  "last_completed_task": "Contrôle environnement PASS + garde preflight-repo (8df607e4)",
+  "last_report": "docs/control/outbox/claude/RUN-2026-08-27-1922.md",
+  "last_commit_sha": "8df607e4",
+  "last_poll_at": "2026-08-27T19:22:00Z",
+  "heartbeat": "2026-08-27T19:22:00Z",
   "branch": "recette",
   "remaining_tasks": [
-    "CMD-5 retrait ancien sélecteur",
     "SEC-5 second pass C→J",
     "TUN-2 tunnel S2-S7",
     "SEO-2 archi locale",
@@ -31,14 +30,15 @@
   "needs_florian": true,
   "note": "Chantier #9 EN COURS (state ACTIVE/INCOMPLETE). Restent : sections C→J du second pass, catalogue/panier sous-lots 2-3, gates (Stripe P1 / migrations / pricing serveur). Discipline persistance : run_id par cycle (outbox==status), verif origin/recette avant tout etat terminal. Ne jamais marquer le chantier clos tant que ces items ne sont pas prouves.",
   "runner_autonomous_activation": "PREP_COMPLETE=YES — PR #10 tip RÉEL cdcafcac (MERGEABLE, diff 3 fichiers, 0 dérive app), 20/20 gardes PASS. Docs: RUNNER-ACTIVATION-CHECKLIST.md + RUNNER-E2E-WITNESS.md. Ordre gestes Florian: secret CLAUDE_CODE_OAUTH_TOKEN -> branch protection main SANS bypass Actions -> merge PR #10 -> E2E témoin. RUN-1 reste BLOCKED_HUMAN tant que E2E témoin réel non PASS.",
-  "run_id": "run-20260827-191430-cf972f40",
+  "run_id": "run-20260827-192200-8df607e4",
   "ledger": "docs/control/MASTER-TASK-LEDGER.md",
   "open_p0": [
     "CMD-1 modale (READY_FOR_QA)",
-    "CMD-2 entrée catalogue (READY_FOR_QA)",
+    "CMD-2 entrée moteur (READY_FOR_QA)",
     "CMD-3 catalogue multi-panier (READY_FOR_QA)",
     "CMD-4 checkout (READY_FOR_QA)",
-    "UX-COMMERCE-1 benchmark+archi (IN_PROGRESS docs)",
+    "CMD-5 legacy retiré (READY_FOR_QA)",
+    "UX-COMMERCE-1 moteur A→F (READY_FOR_QA)",
     "SEC-3 Stripe P1 (BLOCKED_HUMAN)",
     "MET-1 pages métiers (READY_FOR_QA)"
   ],
@@ -65,10 +65,10 @@
     "SEC-6 RLS P2"
   ],
   "next_tasks": [
-    "CMD-5 retrait ancien sélecteur",
-    "SEC-5 second pass C→J",
-    "TUN-2 tunnel S2-S7",
-    "SEO-2 archi locale",
-    "CLN-3 mutualisation CSS/JS"
+    "QA Florian moteur",
+    "gate paiement CMD-6",
+    "TUN-2",
+    "SEO-2",
+    "SEC-5"
   ]
 }
