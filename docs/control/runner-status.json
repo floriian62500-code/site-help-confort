@@ -1,11 +1,11 @@
 {
   "state": "SITE_WORK_ACTIVE",
-  "current_task": "catalogue sous-lot 2 (UI familles/panier prouvée) + fix contradiction status",
-  "last_completed_task": "catalogue.html fonctionnel (6 familles, A/B, panier)",
-  "last_report": "docs/control/outbox/claude/RUN-2026-08-27-1117.md",
-  "last_commit_sha": "0107128d",
-  "last_poll_at": "2026-08-27T11:17:47Z",
-  "heartbeat": "2026-08-27T11:17:47Z",
+  "current_task": "SEO LOT 1 audit technique + masterplan (baseline saine)",
+  "last_completed_task": "SEO-TECHNICAL-AUDIT + MASTERPLAN (711a3204)",
+  "last_report": "docs/control/outbox/claude/RUN-2026-08-27-1124.md",
+  "last_commit_sha": "711a3204",
+  "last_poll_at": "2026-08-27T11:24:57Z",
+  "heartbeat": "2026-08-27T11:24:57Z",
   "branch": "recette",
   "remaining_tasks": [
     "GATE: clé Stripe TEST + durcir edge stripe-create-payment-link (P1 CRITIQUE montant client)",
@@ -31,5 +31,5 @@
   "needs_florian": true,
   "note": "Chantier #9 EN COURS (state ACTIVE/INCOMPLETE). Restent : sections C→J du second pass, catalogue/panier sous-lots 2-3, gates (Stripe P1 / migrations / pricing serveur). Discipline persistance : run_id par cycle (outbox==status), verif origin/recette avant tout etat terminal. Ne jamais marquer le chantier clos tant que ces items ne sont pas prouves.",
   "runner_autonomous_activation": "READY_FOR_HUMAN_ACTIVATION_FINAL — PR #10 tip fd300550 (16/16 gardes). Ordre: secret -> branch protection main SANS bypass Actions -> merge PR #10 -> E2E.",
-  "run_id": "run-20260827-111747-0107128d"
+  "run_id": "run-20260827-112457-711a3204"
 }
