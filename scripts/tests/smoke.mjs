@@ -52,6 +52,8 @@ async function run() {
   // 10. Non-régression modale tarifs : input adresse marqué data-autocomplete-skip (évite le wipe CP/ville)
   const nosp = await (await fetch(BASE+'/nos-prestations.html?z='+Date.now())).text();
   (nosp.includes('id="nvLgAdresse"') && /nvLgAdresse[^>]*data-autocomplete-skip|data-autocomplete-skip[^>]*id="nvLgAdresse"/.test(nosp)) ? ok('Modale tarifs : adresse skip (CP/ville non wipes)') : ko('Modale tarifs adresse', 'skip absent');
+  // 11. Entrée transactionnelle principale = catalogue (plus le 3-voies)
+  (home.includes('Commander en ligne') && home.includes('/catalogue') && !home.includes('Décrire mon besoin')) ? ok('Entrée principale = catalogue (CTA Commander en ligne)') : ko('Entrée catalogue', 'CTA principal ne pointe pas /catalogue');
   console.log(`\nRÉSULTAT : ${pass} PASS / ${fail} FAIL`);
   process.exit(fail > 0 ? 1 : 0);
 }
