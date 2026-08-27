@@ -26,7 +26,7 @@
 ## Zone RUNNER / CONTROL-PLANE (non-prod, critère = READY_FOR_HUMAN_ACTIVATION)
 | ID | source | prio | demande | statut | SHA/PR | reste |
 |---|---|---|---|---|---|---|
-| RUN-1 | 5394672383+ | P1 | Runner autonome OAuth durci (20 gardes, PR #10) | **BLOCKED_HUMAN** | PR #10 tip `cdcafcac` | secret CLAUDE_CODE_OAUTH_TOKEN + branch protection main + merge |
+| RUN-1 | 5394672383+ / 5441844560 | P1 | Runner autonome OAuth durci (PR #10) — **PREP_COMPLETE=YES** | **BLOCKED_HUMAN** (prep complète, 5 gestes humains) | PR #10 tip réel `cdcafcac` (MERGEABLE, diff = 3 fichiers workflow/preflight/postflight, 0 dérive app) | 20/20 gardes PASS ; workflow durci (cron+dispatch, contents:write, concurrency, timeout 45, checkout+push recette only, SHAs pinnés) ; checklist `RUNNER-ACTIVATION-CHECKLIST.md` + plan `RUNNER-E2E-WITNESS.md`. Reste = gestes Florian : secret OAuth + protection main + merge + E2E témoin. Ne passe `CLOSED` qu'après E2E réel PASS. |
 | RUN-2 | 5398603764 | P0 | Persistance run_id (anti-perte) | **CLOSED** (non-prod, prouvé remote) | `23f6109f` | — |
 | RUN-3 | 5439235448 | P0 | MASTER-TASK-LEDGER + DELIVERY-WORKFLOW + sync status | **IN_PROGRESS** | ce commit | contrôle auto ledger |
 
