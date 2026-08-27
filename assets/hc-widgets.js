@@ -745,6 +745,11 @@
   var KEYWORDS = ["options au choix","Voir le tarif","Voir les tarifs","voir le tarif"];
   function hideBy(el){
     if (!el || el.nodeType !== 1) return;
+    // NE JAMAIS masquer les contrôles légitimes : le CTA de la modale lead-gate
+    // ("Voir les tarifs") et tout vrai bouton d'envoi de formulaire. Sinon le sweep
+    // texte casse la validation du tunnel (bug modale sans bouton — 2026-08-27).
+    if (el.closest && el.closest("#nvLeadgateModal, form")) return;
+    if (el.type === "submit" || (el.getAttribute && el.getAttribute("type") === "submit")) return;
     var t = (el.textContent || "").trim();
     if (!t || t.length > 80) return;
     for (var i=0; i<KEYWORDS.length; i++){
