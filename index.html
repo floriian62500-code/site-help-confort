@@ -2303,8 +2303,15 @@ complexBlock.hidden = false;
 }
 function buildMailBody() {
 var presta = PRESTAS[state.presta] || {};
+var cartTxt = '';
+try {
+  if (window.__hcCart && window.__hcCart.lines().length) {
+    cartTxt = '\n— Panier (' + window.__hcCart.count() + ' ligne(s), total indicatif ' + Math.round(window.__hcCart.totalTtcDisplay()) + ' € TTC) —\n' +
+      window.__hcCart.lines().map(function(l){ return '• ' + l.name + ' ×' + l.qty + (l.requires_quote ? ' (sur devis)' : ' — ' + Math.round(l.ttc) + ' € TTC'); }).join('\n');
+  }
+} catch(e){}
 return [
-'Prestation : ' + (presta.label || state.presta),
+'Prestation : ' + (presta.label || state.presta) + cartTxt,
 'Flow : ' + (presta.flow || ''),
 'Métiers concernés : ' + ((state.metiers && state.metiers.length) ? state.metiers.join(', ') : '—'),
 'Urgence : ' + (URG_LABELS[state.urg] || ''),
@@ -3009,5 +3016,74 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
 <script src="assets/hc-modal-prefill.js?v=20260604-clean" defer></script>
 <script src="assets/hc-rate-limit.js?v=20260603" defer></script>
 <script defer src="assets/hc-review.js?v=2"></script>
+<script src="/assets/hc-cart.js"></script>
+<script>
+/* Catalogue multi-panier dans le wizard Home (remplace le sélecteur unique). */
+(function(){
+  var SUPA='https://btcbjwqiivhpwoszomhg.supabase.co', KEY='sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
+  var cart = window.__hcCart = (window.HcCart||{create:function(){return null;}}).create();
+  var ALL=[], byFam={}, loaded=false;
+  var $=function(s){return document.querySelector(s);};
+  var esc=function(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
+  function refreshCart(){
+    if(!cart) return;
+    var n=cart.count(), tot=Math.round(cart.totalTtcDisplay());
+    if($('#hc-cart-count')) $('#hc-cart-count').textContent=n;
+    if($('#hc-cart-total')) $('#hc-cart-total').textContent=tot+' €';
+    var box=$('#hc-cart-lines'); if(!box) return;
+    box.innerHTML = cart.lines().map(function(l){
+      return '<div class="hc-cl"><span>'+esc(l.name)+(l.requires_quote?' <em class="hc-dv">(devis)</em>':'')+'</span>'+
+        '<span style="white-space:nowrap">'+(l.requires_quote?'':'<button data-cdec="'+esc(l.id)+'">−</button> '+l.qty+' <button data-cinc="'+esc(l.id)+'">+</button> · '+Math.round(l.ttc)*l.qty+' € ')+
+        '<button data-crm="'+esc(l.id)+'" aria-label="Retirer">🗑</button></span></div>';
+    }).join('') || '<p style="color:#94a3b8;font-size:.86rem;margin:6px 0">Ajoutez une ou plusieurs prestations depuis le catalogue.</p>';
+  }
+  function famList(){ var seen={},out=[]; ALL.forEach(function(s){var k=s.category_slug||s.category_name||'autre'; if(!seen[k]){seen[k]=1;out.push(s);}}); return out; }
+  function renderFamilies(){
+    var el=$('#hc-cat-families'); if(!el) return;
+    el.innerHTML = famList().map(function(s){ var slug=s.category_slug||s.category_name; var n=(byFam[slug]||[]).length;
+      return '<div class="hc-cat-card hc-fam" data-fam="'+esc(slug)+'" role="button" tabindex="0"><div class="hc-ico">'+esc(s.category_icon||'🔧')+'</div>'+
+        '<div class="hc-nm">'+esc(s.category_name||slug)+'</div><div class="hc-br">'+n+' prestation'+(n>1?'s':'')+'</div></div>';}).join('');
+    $('#hc-cat-families').hidden=false; if($('#hc-cat-products')) $('#hc-cat-products').hidden=true;
+  }
+  function renderProducts(slug){
+    var list=byFam[slug]||[]; if($('#hc-cat-famtitle')) $('#hc-cat-famtitle').textContent=(list[0]&&list[0].category_name)||slug;
+    $('#hc-cat-prodgrid').innerHTML=list.map(function(s){
+      var ferme=!s.requires_quote && s.price_ttc>0 && s.active!==false;
+      var img=s.image_url||(SUPA+'/storage/v1/object/public/prestations/'+s.slug+'.jpg');
+      return '<div class="hc-cat-card"><div class="hc-nm">'+esc(s.name)+'</div>'+(s.brand?'<div class="hc-br">'+esc(s.brand)+'</div>':'')+
+        '<div>'+(ferme?'<span class="hc-ttc">'+Math.round(s.price_ttc)+' € TTC</span>':'<span class="hc-dv">Sur devis</span>')+'</div>'+
+        (ferme?'<button type="button" class="hc-add" data-add="'+esc(s.id)+'">Ajouter au panier</button>'
+              :'<a class="hc-dvbtn" href="/contact.html?prestation='+esc(s.slug)+'">Demander un devis</a>')+'</div>';
+    }).join('');
+    $('#hc-cat-families').hidden=true; $('#hc-cat-products').hidden=false;
+  }
+  function load(){
+    if(loaded) return; loaded=true;
+    fetch(SUPA+'/rest/v1/v_services_public?select=*&active=eq.true&order=position.asc',{headers:{apikey:KEY,Authorization:'Bearer '+KEY}})
+      .then(function(r){return r.json();}).then(function(rows){
+        ALL=Array.isArray(rows)?rows:[]; byFam={};
+        ALL.forEach(function(s){var k=s.category_slug||s.category_name||'autre';(byFam[k]=byFam[k]||[]).push(s);});
+        if($('#hc-cat-msg')) $('#hc-cat-msg').hidden=true; renderFamilies(); refreshCart();
+      }).catch(function(){ if($('#hc-cat-msg')) $('#hc-cat-msg').textContent='Catalogue momentanément indisponible.'; loaded=false; });
+  }
+  // charger dès que le bloc résultat "simple" devient visible
+  var simple=document.querySelector('[data-result="simple"]');
+  if(simple){ new MutationObserver(function(){ if(!simple.hidden) load(); }).observe(simple,{attributes:true,attributeFilter:['hidden']}); if(!simple.hidden) load(); }
+  document.addEventListener('DOMContentLoaded', function(){ if(simple && !simple.hidden) load(); });
+  // interactions
+  document.addEventListener('click', function(e){ var t=e.target; if(!t.closest) return;
+    var f=t.closest('[data-fam]'); if(f){ renderProducts(f.getAttribute('data-fam')); return; }
+    if(t.id==='hc-cat-back'){ renderFamilies(); return; }
+    if(t.dataset&&t.dataset.add){ var s=ALL.find(function(x){return x.id===t.dataset.add;}); if(s&&cart){ cart.add({id:s.id,slug:s.slug,name:s.name,brand:s.brand,ttc:s.price_ttc,requires_quote:s.requires_quote,active:s.active}); refreshCart(); } }
+    if(t.dataset&&t.dataset.cinc){ var l=cart.lines().find(function(x){return x.id===t.dataset.cinc;}); cart.setQty(t.dataset.cinc,(l?l.qty:1)+1); refreshCart(); }
+    if(t.dataset&&t.dataset.cdec){ var l2=cart.lines().find(function(x){return x.id===t.dataset.cdec;}); cart.setQty(t.dataset.cdec,(l2?l2.qty:1)-1); refreshCart(); }
+    if(t.dataset&&t.dataset.crm){ cart.remove(t.dataset.crm); refreshCart(); }
+  });
+  var sb=document.getElementById('hc-cat-search');
+  if(sb) sb.addEventListener('input', function(){ var q=this.value.toLowerCase().trim(); if(!q){ renderFamilies(); return; }
+    byFam.__s=ALL.filter(function(s){return (s.name+' '+(s.brand||'')+' '+(s.category_name||'')).toLowerCase().indexOf(q)>=0;});
+    if($('#hc-cat-famtitle')) $('#hc-cat-famtitle').textContent='Résultats « '+q+' »'; renderProducts('__s'); });
+})();
+</script>
 </body>
 </html>
