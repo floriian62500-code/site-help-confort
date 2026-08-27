@@ -34,26 +34,28 @@ async function run() {
   // 4. Anti-régression : pas de promesse « payer en ligne » client (Stripe gelé)
   const nosprest = await (await fetch(BASE + '/nos-prestations.html?z=' + Date.now())).text();
   /r[ée]servation en ligne|acompte 40/i.test(nosprest) ? ko('Honnêteté paiement', 'promesse en ligne résiduelle') : ok('Pas de promesse paiement en ligne résiduelle');
-  // 5. Funnel présent : le wizard de réservation + son CTA « sans paiement en ligne » (T1)
-  (home.includes('id="hc-reservation"') && /sans paiement en ligne/i.test(home)) ? ok('Funnel réservation présent (CTA sans paiement en ligne)') : ko('Funnel réservation', 'wizard/CTA introuvable');
+  // 5. Home = point d'entrée vers le moteur unifié + formulaire de rappel secondaire (UX-COMMERCE-1)
+  (home.includes('id="hc-reservation"') && /paiement en ligne à ce stade/i.test(home) && home.includes('hrrForm')) ? ok('Home = redirect moteur + rappel (bloc unifié)') : ko('Home redirect', 'bloc redirect/rappel introuvable');
   // 6. Anti-régression sécurité (T8) : pages admin PAT/promote-to-prod NON servies publiquement
   const s1 = await status('/admin-pro/valider-staging.html');
   const s2 = await status('/admin-pro/photos.html');
   (s1 === 404 && s2 === 404) ? ok('Pages admin PAT/promote bloquées (404/404)') : ko('Sécurité admin', `valider-staging=${s1} photos=${s2} (attendu 404)`);
-  // 7. Anti-régression : validateurs wizard hoistés présents (fix erreurs inline T2)
-  home.includes('Validateurs partagés (hoistés)') ? ok('Wizard : validateurs hoistés présents (erreurs inline)') : ko('Wizard validateurs', 'hoist absent (régression T2)');
+  // 7. Legacy retiré : plus d'ancien sélecteur unique ni écran 3 voies dans le home (UX-COMMERCE-1 / commit E)
+  (!/proposePrestations|detectDetailedPresta|renderPrestaProposals|Autre prestation|mq-card-urgent|Prise en charge TTC/.test(home)) ? ok('Legacy retiré (0 sélecteur/3-voies dans le home)') : ko('Legacy', 'ancien tunnel encore présent');
 
-  // 8. Catalogue multi-panier présent (sous-lot 2)
+  // 8. Moteur unifié : launcher 2 modes + panier + checkout + submit (catalogue.html)
   const cat = await status('/catalogue.html');
   const catHtml = cat===200 ? await (await fetch(BASE+'/catalogue.html?z='+Date.now())).text() : '';
-  (cat===200 && catHtml.includes('id="families"') && catHtml.includes('hc-cart.js')) ? ok('Catalogue multi-panier présent (familles + hc-cart)') : ko('Catalogue', 'catalogue.html/hc-cart absent (HTTP '+cat+')');
-  // 9. Wizard = catalogue multi-panier (plus le sélecteur unique)
-  (home.includes('hc-cat-families') && home.includes('hc-cart.js') && !home.includes('Prise en charge TTC')) ? ok('Wizard = catalogue multi-panier (ancien sélecteur retiré)') : ko('Wizard catalogue', 'sélecteur unique encore présent');
+  const engineOk = cat===200 && catHtml.includes('id="mode-know"') && catHtml.includes('id="mode-help"') &&
+    catHtml.includes('hc-cart.js') && catHtml.includes('id="s-cart"') && catHtml.includes('id="s-confirm"') && catHtml.includes('submit-lead-v6');
+  engineOk ? ok('Moteur unifié complet (launcher 2 modes + panier + checkout + submit)') : ko('Moteur unifié', 'launcher/checkout/submit incomplet (HTTP '+cat+')');
+  // 9. Moteur : catalogue familles + diagnostic guidé + fiche prestation
+  (catHtml.includes('id="families"') && catHtml.includes('id="s-diagnosis"') && catHtml.includes('id="s-sheet"')) ? ok('Moteur : catalogue + diagnostic + fiche prestation') : ko('Moteur modes', 'catalogue/diagnostic/fiche absent');
   // 10. Non-régression modale tarifs : input adresse marqué data-autocomplete-skip (évite le wipe CP/ville)
   const nosp = await (await fetch(BASE+'/nos-prestations.html?z='+Date.now())).text();
   (nosp.includes('id="nvLgAdresse"') && /nvLgAdresse[^>]*data-autocomplete-skip|data-autocomplete-skip[^>]*id="nvLgAdresse"/.test(nosp)) ? ok('Modale tarifs : adresse skip (CP/ville non wipes)') : ko('Modale tarifs adresse', 'skip absent');
-  // 11. Entrée transactionnelle principale = catalogue (plus le 3-voies)
-  (home.includes('Commander en ligne') && home.includes('/catalogue') && !home.includes('Décrire mon besoin')) ? ok('Entrée principale = catalogue (CTA Commander en ligne)') : ko('Entrée catalogue', 'CTA principal ne pointe pas /catalogue');
+  // 11. Entrée transactionnelle principale = « Commander une intervention » → moteur (plus le 3-voies)
+  (home.includes('Commander une intervention') && home.includes('/catalogue') && !home.includes('Décrire mon besoin')) ? ok('Entrée principale = moteur (Commander une intervention)') : ko('Entrée moteur', 'CTA principal ne pointe pas le moteur');
   console.log(`\nRÉSULTAT : ${pass} PASS / ${fail} FAIL`);
   process.exit(fail > 0 ? 1 : 0);
 }
