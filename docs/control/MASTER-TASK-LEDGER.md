@@ -14,6 +14,7 @@
 | CMD-4 | 5439065455 | P0 | Checkout panier→coordonnées→confirmation récap | **READY_FOR_QA** | `6cedb087` | E2E 2 familles→confirmation PASS | confirmation récap complet (prouvé) | étapes dédiées Panier/Créneau |
 | CMD-5 | 5438316639 | P1 | Retrait complet ancien sélecteur unique (proposePrestations/detectDetailedPresta) après preuve 0-réf | **BACKLOG** | — | — | — | vérif 0-réf puis suppression |
 | CMD-6 | 5438316639 | P1 | Pricing serveur panier + Stripe TEST (paiement réel) | **BLOCKED_HUMAN** | proposition PROPOSED_index.ts | — | — | **clé sk_test_ + GO deploy edge** |
+| UX-COMMERCE-1 | 5441880835 | P0/P1 | Benchmark parcours de vente + refonte architecture (1 seul moteur : catalogue + diagnostic guidé → même panier → checkout). Rattachée à CMD-2/3/4/5 + TUN-1/2. **Aucun 4e moteur.** | **IN_PROGRESS** (docs livrés) | ce cycle | benchmark 4 acteurs vérifiés + 1 marqué non-vérifié | `docs/ux/benchmark-booking-commerce.md` + `docs/ux/help-confort-commerce-flow.md` | implémentation incrémentale UX-C-a→f + E2E (voir flow §8/§9) |
 
 ## Zone TUNNEL / FORMULAIRES (P0/P1)
 | ID | source | prio | demande | statut | SHA | reste |
