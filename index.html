@@ -941,16 +941,36 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
 <section id="hc-reservation" class="hc-reservation" aria-label="Commander une intervention">
  <div class="hrr">
   <div class="hrr-head">
-   <span class="hrr-eyebrow">Commande en ligne</span>
-   <h2 class="hrr-title">Commandez votre intervention en quelques clics</h2>
-   <p class="hrr-lead">Catalogue de prestations à prix ferme, panier multi-prestations, réservation avec rappel humain. Techniciens <strong>salariés</strong> · agences locales Saint-Omer &amp; Dunkerque.</p>
+   <span class="hrr-eyebrow">Par où commencer ?</span>
+   <h2 class="hrr-title">Comment pouvons-nous vous aider ?</h2>
+   <p class="hrr-lead">Choisissez votre besoin — chaque parcours est adapté. Techniciens <strong>salariés</strong> · agences locales Saint-Omer &amp; Dunkerque.</p>
   </div>
-  <div class="hrr-cta">
-   <a class="hrr-primary" href="/catalogue.html">🧰 Commander une intervention</a>
-   <a class="hrr-tel" href="tel:+33366100134">🚨 Urgence — 03 66 10 01 34</a>
+  <div class="hrr-cards">
+   <a class="hrr-card hrr-card--cmd" href="/catalogue.html" aria-label="Commander une intervention au catalogue">
+    <span class="hrr-card-ico">🧰</span>
+    <strong class="hrr-card-t">Commander une intervention</strong>
+    <span class="hrr-card-desc">Prestation au catalogue, à <strong>prix ferme</strong>. Panier multi-prestations, réservation en ligne.</span>
+    <span class="hrr-card-cta">Voir le catalogue →</span>
+   </a>
+   <a class="hrr-card hrr-card--devis" href="/devis-express.html" aria-label="Demander un devis pour des travaux">
+    <span class="hrr-card-ico">✏️</span>
+    <strong class="hrr-card-t">Demander un devis</strong>
+    <span class="hrr-card-desc">Travaux &amp; projets sur mesure : salle de bain, rénovation, menuiserie… Photos + qualification.</span>
+    <span class="hrr-card-cta">Décrire mon projet →</span>
+   </a>
+   <a class="hrr-card hrr-card--entretien" href="/contrats-entretien.html" aria-label="Entretien et contrats chaudière">
+    <span class="hrr-card-ico">🛡️</span>
+    <strong class="hrr-card-t">Entretien &amp; contrats</strong>
+    <span class="hrr-card-desc">Chaudière <strong>gaz/fioul</strong> : entretien ponctuel ou contrat annuel. Attestation légale incluse.</span>
+    <span class="hrr-card-cta">Voir les formules →</span>
+   </a>
+  </div>
+  <div class="hrr-urgence">
+   <span class="hrr-urg-txt">🚨 <strong>Urgence ?</strong> Fuite, panne, porte claquée, vitre cassée…</span>
+   <a class="hrr-tel" href="tel:+33366100134">Appeler le 03 66 10 01 34</a>
   </div>
   <div class="hrr-callback">
-   <h3 class="hrr-cbk-title">Vous préférez être rappelé ?</h3>
+   <h3 class="hrr-cbk-title">Vous préférez être rappelé ? <span class="hrr-cbk-sec">(canal secondaire)</span></h3>
    <form id="hrrForm" novalidate>
     <div class="hrr-row">
      <input id="hrr-prenom" type="text" placeholder="Prénom" autocomplete="given-name" aria-label="Prénom">
@@ -971,6 +991,20 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
  .hrr-title{font-size:clamp(1.6rem,3.2vw,2.3rem);font-weight:800;color:#0A1428;letter-spacing:-.02em;margin:0 0 10px;line-height:1.12}
  .hrr-lead{font-size:clamp(.96rem,1.1vw,1.06rem);color:#475569;line-height:1.55;margin:0}
  .hrr-cta{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:0 0 26px}
+ .hrr-cards{display:grid;gap:16px;grid-template-columns:1fr;max-width:1080px;margin:0 auto 18px}
+ @media(min-width:760px){.hrr-cards{grid-template-columns:repeat(3,1fr)}}
+ .hrr-card{position:relative;display:flex;flex-direction:column;gap:8px;text-align:left;text-decoration:none;background:#fff;border:1.5px solid #E5EDF3;border-radius:18px;padding:22px 20px;color:inherit;box-shadow:0 4px 16px rgba(10,20,40,.04);transition:transform .25s,border-color .25s,box-shadow .25s}
+ .hrr-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:18px 18px 0 0;background:var(--hc,#0DA0CF);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+ .hrr-card:hover,.hrr-card:focus-visible{transform:translateY(-5px);border-color:var(--hc,#0DA0CF);box-shadow:0 20px 40px -14px rgba(10,20,40,.16);outline:none}
+ .hrr-card:hover::before,.hrr-card:focus-visible::before{transform:scaleX(1)}
+ .hrr-card--cmd{--hc:#0DA0CF}.hrr-card--devis{--hc:#7C3AED}.hrr-card--entretien{--hc:#FF6B1A}
+ .hrr-card-ico{font-size:1.9rem}
+ .hrr-card-t{font-size:1.12rem;font-weight:800;color:#0A1428;line-height:1.2}
+ .hrr-card-desc{font-size:.9rem;color:#475569;line-height:1.45;flex:1}
+ .hrr-card-cta{font-weight:800;color:var(--hc,#0DA0CF);font-size:.92rem}
+ .hrr-urgence{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;max-width:1080px;margin:0 auto 26px;padding:14px 20px;background:linear-gradient(135deg,rgba(225,29,72,.06),rgba(225,29,72,.02));border:1.5px solid rgba(225,29,72,.2);border-radius:14px}
+ .hrr-urg-txt{color:#0A1428;font-size:.96rem}.hrr-urg-txt strong{color:#BE1238}
+ .hrr-cbk-sec{font-weight:500;color:#94a3b8;font-size:.82rem}
  .hrr-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 26px;background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;text-decoration:none;border:0;border-radius:14px;font-weight:800;font-size:1.04rem;cursor:pointer;box-shadow:0 10px 26px rgba(13,160,207,.28);transition:transform .2s,box-shadow .2s}
  .hrr-primary:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(13,160,207,.36)}
  .hrr-tel{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 24px;background:#fff;color:#BE1238;text-decoration:none;border:1.5px solid rgba(225,29,72,.35);border-radius:14px;font-weight:800;font-size:1.02rem}
