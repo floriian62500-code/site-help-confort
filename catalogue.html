@@ -234,6 +234,58 @@ button.assist-item{font-family:inherit;cursor:pointer}
 .dv-after ol{margin:0;padding-left:18px;color:#475569;font-size:.85rem;line-height:1.55}
 .dv-disc{font-size:.78rem;color:var(--gris);margin:6px 0 0}
 .dv-cta-note{text-align:center;margin:10px 0 0;font-size:.78rem;color:var(--gris)}
+/* ---- Wizard devis premium centré ---- */
+.dvw{max-width:720px;margin:0 auto}
+.dvw-head{text-align:center;margin:0 0 20px}
+.dvw-head h1{margin:.1em 0 .2em}
+.dvw-head .sub{margin:0}
+.dvw-steps{list-style:none;display:flex;justify-content:center;gap:0;margin:0 0 22px;padding:0}
+.dvw-steps li{flex:1;max-width:130px;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;color:var(--gris)}
+.dvw-steps li::before{content:'';position:absolute;top:15px;right:50%;width:100%;height:2px;background:var(--bord);z-index:0}
+.dvw-steps li:first-child::before{display:none}
+.dvw-sn{width:32px;height:32px;border-radius:50%;background:#fff;border:2px solid var(--bord);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;color:var(--gris);position:relative;z-index:1;transition:all .25s}
+.dvw-sl{font-size:.72rem;font-weight:700}
+.dvw-steps li.active .dvw-sn{border-color:var(--bleu);color:#fff;background:linear-gradient(135deg,var(--bleu),#1FC4F0);box-shadow:0 6px 16px -4px rgba(13,160,207,.5)}
+.dvw-steps li.active{color:var(--nuit)}
+.dvw-steps li.done .dvw-sn{border-color:var(--bleu);background:var(--bleu);color:#fff}
+.dvw-steps li.done::before,.dvw-steps li.active::before{background:var(--bleu)}
+@media(max-width:520px){.dvw-sl{display:none}.dvw-steps li{max-width:none}}
+.dvw-card{background:#fff;border:1px solid var(--bord);border-radius:20px;padding:28px 26px;box-shadow:0 18px 44px -22px rgba(10,20,40,.28)}
+@media(max-width:520px){.dvw-card{padding:22px 18px;border-radius:16px}}
+.dvw-q{font-size:1.35rem;font-weight:800;letter-spacing:-.02em;margin:0 0 4px;color:var(--nuit)}
+.dvw-hint{color:var(--gris);font-size:.92rem;margin:0 0 18px}
+.dvw-panel{animation:fade .2s ease}
+.dvw-metiers{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:560px){.dvw-metiers{grid-template-columns:repeat(3,1fr)}}
+.dvw-metier{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:16px 10px;background:#F7FBFD;border:1.5px solid var(--bord);border-radius:14px;cursor:pointer;transition:all .2s ease;user-select:none}
+.dvw-metier input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.dvw-mic{width:48px;height:48px;border-radius:13px;background:#fff;border:1px solid var(--bord);display:flex;align-items:center;justify-content:center;color:var(--bleu);transition:all .2s}
+.dvw-mic img{width:32px;height:32px;object-fit:contain}
+.dvw-ml{font-size:.84rem;font-weight:700;color:var(--nuit);line-height:1.2}
+.dvw-metier:hover{border-color:var(--bleu);background:#fff;transform:translateY(-2px)}
+.dvw-metier:has(input:checked){border-color:var(--bleu);background:linear-gradient(135deg,rgba(13,160,207,.10),rgba(31,196,240,.05));box-shadow:0 8px 20px -8px rgba(13,160,207,.35)}
+.dvw-metier:has(input:checked) .dvw-mic{background:linear-gradient(135deg,var(--bleu),#1FC4F0);color:#fff;border-color:var(--bleu)}
+.dvw-metier:has(input:checked) .dvw-mic img{filter:brightness(0) invert(1)}
+.dvw-metier:has(input:checked)::after{content:'✓';position:absolute;top:6px;right:9px;color:var(--bleu);font-weight:900;font-size:.9rem}
+.dvw-metier:focus-within{outline:2px solid var(--bleu);outline-offset:2px}
+.field.invalid .dvw-metiers,.dvw-metiers{border-radius:14px}
+.dvw-photo{display:flex;gap:12px;align-items:flex-start;margin-top:14px;padding:13px 15px;background:#F7FBFD;border:1px solid var(--bord);border-radius:12px;font-size:.86rem;color:#475569;line-height:1.5}
+.dvw-photo-ic{flex-shrink:0;color:var(--bleu);margin-top:1px}
+.dvw-photo strong{color:var(--nuit)}
+.dvw-agence{display:flex;align-items:center;gap:8px;margin-top:8px;padding:11px 14px;background:linear-gradient(135deg,rgba(13,160,207,.08),rgba(31,196,240,.04));border:1px solid rgba(13,160,207,.2);border-radius:11px;font-size:.9rem;color:var(--nuit)}
+.dvw-agence-ic{color:var(--bleu);flex-shrink:0}
+.dvw-recap .rr{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid var(--bord);font-size:.92rem}
+.dvw-recap .rr:last-child{border-bottom:0}
+.dvw-recap .rr .k{color:var(--gris);font-weight:600;flex-shrink:0}
+.dvw-recap .rr .v{color:var(--nuit);font-weight:700;text-align:right}
+.dvw-reassure{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;margin:18px 0 0;padding:14px 0 0;border-top:1px dashed var(--bord)}
+.dvw-reassure li{font-size:.8rem;font-weight:700;color:#475569;display:inline-flex;align-items:center;gap:6px}
+.dvw-reassure li::before{content:'';width:15px;height:15px;flex-shrink:0;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230DA0CF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E")}
+.dvw-nav{display:flex;gap:12px;margin-top:18px}
+.dvw-cta{flex:1;font-size:1.02rem;padding:14px 20px}
+.dvw-urg{text-align:center;color:var(--gris);font-size:.85rem;margin:16px 0 0}
+.dvw-urg a{color:var(--nuit);font-weight:800;text-decoration:none}
+@media(max-width:520px){.dvw-nav{position:sticky;bottom:0;background:linear-gradient(180deg,transparent,var(--bg) 30%);padding:10px 0 0;z-index:5}}
 </style>
 </head>
 <body>
@@ -311,61 +363,80 @@ button.assist-item{font-family:inherit;cursor:pointer}
   <!-- 1b. DEVIS (projet sur mesure) — in-tunnel -->
   <section class="screen" id="s-devis" data-step="devis">
     <div class="tnav"><button class="back" data-step-go="launcher">← Retour</button><button class="back back-hub" data-step-go="launcher">Accueil commande</button></div>
-    <div id="devisForm" style="max-width:680px">
-      <h1>Demander un devis</h1>
-      <p class="sub">Décrivez votre projet — un technicien étudie votre dossier et vous transmet un chiffrage <strong>gratuit, sans engagement</strong>.</p>
-      <div class="dv-journey" aria-label="Voici comment ça se passe">
-        <div class="dvj-title">Voici comment ça se passe</div>
-        <ol>
-          <li><span class="dvj-num">1</span><span class="dvj-lbl">Décrivez votre besoin</span></li>
-          <li><span class="dvj-num">2</span><span class="dvj-lbl">Nous étudions votre dossier</span></li>
-          <li><span class="dvj-num">3</span><span class="dvj-lbl">Un conseiller vous rappelle</span></li>
-          <li><span class="dvj-num">4</span><span class="dvj-lbl">Vous recevez votre devis</span></li>
-          <li><span class="dvj-num">5</span><span class="dvj-lbl">Nos techniciens interviennent</span></li>
-        </ol>
+    <div id="devisForm" class="dvw">
+      <div class="dvw-head">
+        <h1>Demander un devis</h1>
+        <p class="sub">Un parcours simple — chiffrage <strong>gratuit, sans engagement</strong>, étudié par un technicien.</p>
       </div>
-      <div class="dv-trust">
-        <div><b>⭐ 4,7/5 · 343 avis</b>Google vérifiés</div>
-        <div><b>📄 Devis sous 24h ouvrées</b>Gratuit, sans engagement</div>
-        <div><b>👨‍🔧 Techniciens salariés</b>Diplômés · réseau HELP Confort</div>
-        <div><b>🏆 Entreprise labellisée</b>Saint-Omer &amp; Dunkerque</div>
-      </div>
-      <div class="dv-grid">
-        <div class="field"><label for="dv-prenom">Prénom *</label><input id="dv-prenom" type="text" autocomplete="given-name" placeholder="Marie"><div class="err">Indiquez votre prénom.</div></div>
-        <div class="field"><label for="dv-nom">Nom *</label><input id="dv-nom" type="text" autocomplete="family-name" placeholder="Dupont"><div class="err">Indiquez votre nom.</div></div>
-        <div class="field"><label for="dv-tel">Téléphone *</label><input id="dv-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 12 34 56 78"><div class="err">Numéro français valide requis.</div></div>
-        <div class="field"><label for="dv-email">Email *</label><input id="dv-email" type="email" inputmode="email" autocomplete="email" placeholder="marie.dupont@exemple.fr"><div class="err">Email valide requis.</div></div>
-        <div class="field"><label for="dv-adresse">Adresse (n° + rue) *</label><input id="dv-adresse" type="text" autocomplete="address-line1" placeholder="12 rue de la Gare"><div class="err">Indiquez l'adresse d'intervention.</div></div>
-        <div class="field"><label for="dv-cp">Code postal *</label><input id="dv-cp" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="62500"><div class="err">Code postal à 5 chiffres.</div></div>
-      </div>
-      <div class="field"><label for="dv-ville">Ville de l'intervention *</label><input id="dv-ville" type="text" autocomplete="address-level2" list="dv-villes" placeholder="Saint-Omer, Dunkerque, Calais…"><datalist id="dv-villes"><option value="Saint-Omer"></option><option value="Longuenesse"></option><option value="Arques"></option><option value="Aire-sur-la-Lys"></option><option value="Hazebrouck"></option><option value="Dunkerque"></option><option value="Saint-Pol-sur-Mer"></option><option value="Calais"></option><option value="Boulogne-sur-Mer"></option></datalist><div class="err">Indiquez la ville.</div></div>
-      <div class="field" id="dvSvcField"><label>Service(s) concerné(s) * <span class="muted">— plusieurs choix possibles</span></label>
-        <div class="dv-svc" id="dvServices" role="group" aria-label="Services concernés">
-          <label class="dv-chip"><input type="checkbox" value="Plomberie"><span>Plomberie</span></label>
-          <label class="dv-chip"><input type="checkbox" value="Chauffage"><span>Chauffage</span></label>
-          <label class="dv-chip"><input type="checkbox" value="Électricité"><span>Électricité</span></label>
-          <label class="dv-chip"><input type="checkbox" value="Serrurerie"><span>Serrurerie</span></label>
-          <label class="dv-chip"><input type="checkbox" value="Vitrerie"><span>Vitrerie</span></label>
-          <label class="dv-chip"><input type="checkbox" value="Menuiserie"><span>Menuiserie</span></label>
-          <label class="dv-chip"><input type="checkbox" value="Rénovation"><span>Rénovation</span></label>
-          <label class="dv-chip"><input type="checkbox" value="Volets"><span>Volets</span></label>
-          <label class="dv-chip"><input type="checkbox" value="Adaptation PMR"><span>Adaptation PMR</span></label>
-          <label class="dv-chip"><input type="checkbox" value="Sinistre assurance"><span>Sinistre assurance</span></label>
-          <label class="dv-chip"><input type="checkbox" value="Contrat entretien"><span>Contrat entretien</span></label>
-          <label class="dv-chip"><input type="checkbox" value="Autre"><span>Autre</span></label>
+      <ol class="dvw-steps" id="dvwSteps" aria-label="Étapes de la demande">
+        <li data-s="1"><span class="dvw-sn">1</span><span class="dvw-sl">Besoin</span></li>
+        <li data-s="2"><span class="dvw-sn">2</span><span class="dvw-sl">Demande</span></li>
+        <li data-s="3"><span class="dvw-sn">3</span><span class="dvw-sl">Lieu</span></li>
+        <li data-s="4"><span class="dvw-sn">4</span><span class="dvw-sl">Coordonnées</span></li>
+        <li data-s="5"><span class="dvw-sn">5</span><span class="dvw-sl">Envoi</span></li>
+      </ol>
+      <div class="dvw-card">
+        <section class="dvw-panel" data-dvstep="1">
+          <h2 class="dvw-q">Quel est votre besoin&nbsp;?</h2>
+          <p class="dvw-hint">Sélectionnez un ou plusieurs services concernés.</p>
+          <div class="dvw-metiers" id="dvServices" role="group" aria-label="Services concernés">
+            <label class="dvw-metier"><input type="checkbox" value="Plomberie"><span class="dvw-mic"><img src="/images/picto-plomberie.png" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Plomberie</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Chauffage"><span class="dvw-mic"><img src="/images/picto-chauffage.svg" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Chauffage</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Électricité"><span class="dvw-mic"><img src="/images/picto-electricite.png" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Électricité</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Serrurerie"><span class="dvw-mic"><img src="/images/picto-serrurerie.png" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Serrurerie</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Vitrerie"><span class="dvw-mic"><img src="/images/picto-vitrerie.png" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Vitrerie</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Menuiserie"><span class="dvw-mic"><img src="/images/picto-menuiserie.png" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Menuiserie</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Rénovation"><span class="dvw-mic"><img src="/images/picto-renovation.png" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Rénovation</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Volets"><span class="dvw-mic"><img src="/images/picto-volets.png" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Volets</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Adaptation PMR"><span class="dvw-mic"><img src="/images/picto-pmr.png" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Adaptation PMR</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Sinistre assurance"><span class="dvw-mic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="dvw-ml">Sinistre assurance</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Contrat entretien"><span class="dvw-mic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15l2 2 4-4"/></svg></span><span class="dvw-ml">Contrat entretien</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Autre"><span class="dvw-mic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 .3c0 1.7-2.5 2-2.5 3.7"/><path d="M12 17h.01"/></svg></span><span class="dvw-ml">Autre</span></label>
+          </div>
+          <div class="dv-svc-err" id="dvSvcErr">Sélectionnez au moins un service.</div>
+        </section>
+        <section class="dvw-panel" data-dvstep="2" hidden>
+          <h2 class="dvw-q">Décrivez votre demande</h2>
+          <p class="dvw-hint">Nature du problème ou du projet, urgence éventuelle, disponibilités…</p>
+          <div class="field"><textarea id="dv-desc" rows="6" placeholder="Ex. remplacement d'un chauffe-eau 200 L, fuite sous évier, rénovation complète d'une salle de bain…"></textarea><div class="err">Ajoutez quelques mots (min. 10 caractères).</div></div>
+          <div class="dvw-photo"><span class="dvw-photo-ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span><div><strong>Des photos ?</strong> Elles aident le technicien à chiffrer plus vite et plus juste. Vous pourrez les transmettre au conseiller lors du rappel — l'envoi en ligne arrive bientôt.</div></div>
+        </section>
+        <section class="dvw-panel" data-dvstep="3" hidden>
+          <h2 class="dvw-q">Où devons-nous intervenir&nbsp;?</h2>
+          <p class="dvw-hint">Nous déterminons automatiquement votre agence locale.</p>
+          <div class="field"><label for="dv-adresse">Adresse (n° + rue)</label><input id="dv-adresse" type="text" autocomplete="address-line1" placeholder="12 rue de la Gare"><div class="err">Indiquez l'adresse d'intervention.</div></div>
+          <div class="dv-grid">
+            <div class="field"><label for="dv-cp">Code postal</label><input id="dv-cp" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="62500"><div class="err">Code postal à 5 chiffres.</div></div>
+            <div class="field"><label for="dv-ville">Ville</label><input id="dv-ville" type="text" autocomplete="address-level2" list="dv-villes" placeholder="Saint-Omer, Dunkerque…"><datalist id="dv-villes"><option value="Saint-Omer"></option><option value="Longuenesse"></option><option value="Arques"></option><option value="Aire-sur-la-Lys"></option><option value="Hazebrouck"></option><option value="Dunkerque"></option><option value="Saint-Pol-sur-Mer"></option><option value="Calais"></option><option value="Boulogne-sur-Mer"></option></datalist><div class="err">Indiquez la ville.</div></div>
+          </div>
+          <div class="dvw-agence" id="dvwAgence" hidden><span class="dvw-agence-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span>Agence <strong id="dvwAgenceName"></strong></span></div>
+        </section>
+        <section class="dvw-panel" data-dvstep="4" hidden>
+          <h2 class="dvw-q">Vos coordonnées</h2>
+          <p class="dvw-hint">Pour vous transmettre votre devis et vous rappeler.</p>
+          <div class="dv-grid">
+            <div class="field"><label for="dv-prenom">Prénom</label><input id="dv-prenom" type="text" autocomplete="given-name" placeholder="Marie"><div class="err">Indiquez votre prénom.</div></div>
+            <div class="field"><label for="dv-nom">Nom</label><input id="dv-nom" type="text" autocomplete="family-name" placeholder="Dupont"><div class="err">Indiquez votre nom.</div></div>
+            <div class="field"><label for="dv-tel">Téléphone</label><input id="dv-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 12 34 56 78"><div class="err">Numéro français valide requis.</div></div>
+            <div class="field"><label for="dv-email">Email</label><input id="dv-email" type="email" inputmode="email" autocomplete="email" placeholder="marie.dupont@exemple.fr"><div class="err">Email valide requis.</div></div>
+          </div>
+        </section>
+        <section class="dvw-panel" data-dvstep="5" hidden>
+          <h2 class="dvw-q">Vérification &amp; envoi</h2>
+          <p class="dvw-hint">Vérifiez votre demande avant l'envoi.</p>
+          <div id="dvwRecap" class="dvw-recap"></div>
+          <p class="dv-disc">Les données collectées servent uniquement à traiter votre demande. Voir nos <a href="/mentions-legales.html">mentions légales</a>.</p>
+        </section>
+        <ul class="dvw-reassure" aria-hidden="true">
+          <li>Devis gratuit</li><li>Sans engagement</li><li>Techniciens salariés</li><li>Agences locales</li>
+        </ul>
+        <div class="note warn" id="devisErr" hidden></div>
+        <div class="dvw-nav">
+          <button class="btn btn-ghost" id="dvwBack" type="button" hidden>← Retour</button>
+          <button class="btn btn-primary dvw-cta" id="dvwNext" type="button">Continuer →</button>
         </div>
-        <div class="dv-svc-err">Sélectionnez au moins un service.</div>
       </div>
-      <div class="field"><label for="dv-desc">Décrivez votre demande *</label><textarea id="dv-desc" rows="4" placeholder="Nature du problème ou du projet, urgence éventuelle, disponibilités…"></textarea><div class="err">Ajoutez quelques mots (min. 10 caractères).</div></div>
-      <div class="note">📷 Photos utiles ? Vous pourrez les transmettre au conseiller lors du rappel — l'envoi de pièces jointes en ligne n'est pas encore disponible.</div>
-      <div class="dv-after">
-        <strong>📋 Ce qui se passe après votre envoi :</strong>
-        <ol><li>Votre demande est reçue par l'agence (Saint-Omer / Dunkerque).</li><li>Un <strong>technicien spécialisé</strong> étudie votre dossier.</li><li>Nous vous adressons un <strong>devis gratuit et détaillé</strong> (sous 24-48 h ouvrées pour les demandes simples).</li><li>Vous décidez librement — <strong>aucun engagement</strong>.</li></ol>
-      </div>
-      <p class="dv-disc">Les données collectées servent uniquement à traiter votre demande. Voir nos <a href="/mentions-legales.html">mentions légales</a>.</p>
-      <div class="note warn" id="devisErr" hidden></div>
-      <button class="btn btn-primary btn-lg" id="devisSubmit">Recevoir mon devis gratuit</button>
-      <p class="dv-cta-note">✓ Gratuit · ✓ Sans engagement · ✓ Étudié par un technicien spécialisé</p>
+      <p class="dvw-urg">Besoin urgent&nbsp;? <a href="tel:+33366100134">03 66 10 01 34</a></p>
     </div>
     <div id="devisDone" hidden></div>
   </section>
@@ -602,7 +673,7 @@ button.assist-item{font-family:inherit;cursor:pointer}
     // Coquille de marque persistante : panneau latéral desktop sur toutes les étapes sauf le launcher.
     // Le récap panier n'apparaît que s'il y a des lignes ; la réassurance marque est toujours présente.
     var hasCartLines = state._mode==='cart' && cart && cart.count()>0;
-    var showSide = step!=='launcher';
+    var showSide = step!=='launcher' && step!=='devis';
     $('#layout').classList.toggle('with-summary', showSide);
     $('#desktopSummary').hidden = !showSide;
     var sbx=$('#summaryBox'); if(sbx) sbx.hidden = !hasCartLines;
@@ -1028,11 +1099,11 @@ button.assist-item{font-family:inherit;cursor:pointer}
   $('#urg-desc').addEventListener('input', function(){ state.urgDesc=this.value; saveState(); });
   $('#urgNext').addEventListener('click', function(){ if(state.urg) go('address'); });
 
-  // devis (projet sur mesure) in-tunnel — formulaire dédié auto-soumis (DEMANDE DE DEVIS)
+  // ===== Wizard devis premium centré (backend INCHANGÉ : form_type=devis_express, colonnes standards, services[]) =====
   ['dv-prenom','dv-nom','dv-tel','dv-email','dv-adresse','dv-cp','dv-ville','dv-desc'].forEach(function(id){
     var el=$('#'+id); if(!el) return;
     el.addEventListener('input', function(){
-      if(id==='dv-cp') this.value=this.value.replace(/\D/g,'').slice(0,5);
+      if(id==='dv-cp'){ this.value=this.value.replace(/\D/g,'').slice(0,5); dvUpdateAgence(); }
       var k={'dv-prenom':'prenom','dv-nom':'nom','dv-tel':'tel','dv-email':'email','dv-adresse':'adresse','dv-cp':'cp','dv-ville':'ville','dv-desc':'_devisDesc'}[id];
       state[k]=this.value; saveState();
       var f=el.closest('.field'); if(f) f.classList.remove('invalid');
@@ -1041,31 +1112,61 @@ button.assist-item{font-family:inherit;cursor:pointer}
   (function(){ var chips=$$('#dvServices input[type=checkbox]');
     chips.forEach(function(c){ c.addEventListener('change', function(){
       state._devisServices=chips.filter(function(x){return x.checked;}).map(function(x){return x.value;});
-      saveState(); if(state._devisServices.length){ var f=$('#dvSvcField'); if(f) f.classList.remove('invalid'); }
+      saveState(); var er=$('#dvSvcErr'); if(er && state._devisServices.length) er.style.display='none';
     }); });
   })();
+  function dvUpdateAgence(){
+    var box=$('#dvwAgence'); if(!box) return;
+    var cp=($('#dv-cp')||{}).value||'';
+    if(cpOk(cp)){ $('#dvwAgenceName').textContent=detectAgence(cp); box.hidden=false; } else box.hidden=true;
+  }
+  var DV_STEPS=5;
+  function dvSetStep(n){
+    state._dvStep=n; saveState();
+    $$('#s-devis .dvw-panel').forEach(function(p){ p.hidden=(parseInt(p.getAttribute('data-dvstep'),10)!==n); });
+    $$('#dvwSteps li').forEach(function(li){ var s=parseInt(li.getAttribute('data-s'),10); li.classList.toggle('active',s===n); li.classList.toggle('done',s<n); });
+    var back=$('#dvwBack'); if(back) back.hidden=(n===1);
+    var next=$('#dvwNext'); if(next) next.textContent = (n===DV_STEPS ? 'Recevoir mon devis gratuit' : 'Continuer →');
+    var er=$('#devisErr'); if(er) er.hidden=true;
+    if(n===3) dvUpdateAgence();
+    if(n===DV_STEPS) dvRenderRecap();
+    var pct=Math.round(30+(n-1)/(DV_STEPS-1)*70);
+    var pb=$('#progressBar'),pr=$('#progress'); if(pb)pb.style.width=pct+'%'; if(pr)pr.setAttribute('aria-valuenow',String(pct));
+    window.scrollTo(0,0);
+  }
+  function dvValidateStep(n){
+    if(n===1){ var ok=(state._devisServices||[]).length>0; var er=$('#dvSvcErr'); if(er) er.style.display=ok?'none':'block'; if(!ok) $('#dvServices').scrollIntoView({block:'center',behavior:'smooth'}); return ok; }
+    if(n===2){ var bad=(($('#dv-desc').value||'').trim().length<10); setInvalid(fieldOf('dv-desc'),bad); if(bad) $('#dv-desc').focus(); return !bad; }
+    if(n===3){ var bA=!nameOk($('#dv-adresse').value),bC=!cpOk($('#dv-cp').value),bV=!nameOk($('#dv-ville').value);
+      setInvalid(fieldOf('dv-adresse'),bA); setInvalid(fieldOf('dv-cp'),bC); setInvalid(fieldOf('dv-ville'),bV);
+      var fb=bA?$('#dv-adresse'):bC?$('#dv-cp'):bV?$('#dv-ville'):null; if(fb){ fb.focus(); return false; } return true; }
+    if(n===4){ var bP=!nameOk($('#dv-prenom').value),bN=!nameOk($('#dv-nom').value),bT=!phoneFrOk($('#dv-tel').value),bE=!emailOk($('#dv-email').value);
+      setInvalid(fieldOf('dv-prenom'),bP); setInvalid(fieldOf('dv-nom'),bN); setInvalid(fieldOf('dv-tel'),bT); setInvalid(fieldOf('dv-email'),bE);
+      var f2=bP?$('#dv-prenom'):bN?$('#dv-nom'):bT?$('#dv-tel'):bE?$('#dv-email'):null; if(f2){ f2.focus(); return false; } return true; }
+    return true;
+  }
+  function dvRenderRecap(){
+    var rows=[
+      ['Service(s)', (state._devisServices||[]).join(', ')||'—'],
+      ['Demande', state._devisDesc||'—'],
+      ['Intervention', [state.adresse,state.cp,state.ville].filter(Boolean).join(' ')||'—'],
+      ['Agence', detectAgence(state.cp)],
+      ['Contact', ([state.prenom,state.nom].filter(Boolean).join(' ')+' · '+(state.tel||'')+' · '+(state.email||''))]
+    ];
+    var box=$('#dvwRecap'); if(box) box.innerHTML=rows.map(function(r){ return '<div class="rr"><span class="k">'+r[0]+'</span><span class="v">'+esc(r[1])+'</span></div>'; }).join('');
+  }
   function resetDevis(){
     var df=$('#devisForm'); if(df) df.hidden=false;
     var dd=$('#devisDone'); if(dd){ dd.hidden=true; dd.innerHTML=''; }
-    var sb=$('#devisSubmit'); if(sb){ sb.disabled=false; sb.dataset.sending='0'; sb.textContent='Recevoir mon devis gratuit'; }
+    var nx=$('#dvwNext'); if(nx){ nx.disabled=false; nx.dataset.sending='0'; }
     var de=$('#devisErr'); if(de){ de.hidden=true; de.textContent=''; }
+    dvSetStep((state._dvStep>=1 && state._dvStep<=DV_STEPS) ? state._dvStep : 1);
   }
-  function submitDevis(){
-    var btn=$('#devisSubmit'); if(btn.dataset.sending==='1') return;
-    var v={prenom:$('#dv-prenom'),nom:$('#dv-nom'),tel:$('#dv-tel'),email:$('#dv-email'),adresse:$('#dv-adresse'),cp:$('#dv-cp'),ville:$('#dv-ville'),desc:$('#dv-desc')};
-    var bad={prenom:!nameOk(v.prenom.value),nom:!nameOk(v.nom.value),tel:!phoneFrOk(v.tel.value),email:!emailOk(v.email.value),adresse:!nameOk(v.adresse.value),cp:!cpOk(v.cp.value),ville:!nameOk(v.ville.value),desc:(v.desc.value||'').trim().length<10};
-    setInvalid(fieldOf('dv-prenom'),bad.prenom); setInvalid(fieldOf('dv-nom'),bad.nom); setInvalid(fieldOf('dv-tel'),bad.tel); setInvalid(fieldOf('dv-email'),bad.email); setInvalid(fieldOf('dv-adresse'),bad.adresse); setInvalid(fieldOf('dv-cp'),bad.cp); setInvalid(fieldOf('dv-ville'),bad.ville); setInvalid(fieldOf('dv-desc'),bad.desc);
-    var services=(state._devisServices||[]); var badS=services.length===0;
-    $('#dvSvcField').classList.toggle('invalid',badS);
-    var order=[['prenom',v.prenom],['nom',v.nom],['tel',v.tel],['email',v.email],['adresse',v.adresse],['cp',v.cp],['ville',v.ville]];
-    var firstBad=null; for(var i=0;i<order.length;i++){ if(bad[order[i][0]]){ firstBad=order[i][1]; break; } }
-    if(!firstBad && badS) firstBad=$('#dvServices');
-    if(!firstBad && bad.desc) firstBad=v.desc;
-    if(firstBad){ try{firstBad.focus({preventScroll:true});}catch(e){} firstBad.scrollIntoView({block:'center',behavior:'smooth'}); return; }
-    state.prenom=v.prenom.value.trim(); state.nom=v.nom.value.trim(); state.tel=v.tel.value.trim(); state.email=v.email.value.trim();
-    state.adresse=v.adresse.value.trim(); state.cp=v.cp.value.trim(); state.ville=v.ville.value.trim(); state._devisDesc=v.desc.value.trim(); saveState();
-    var err=$('#devisErr'); err.hidden=true;
+  function dvSubmit(){
+    var btn=$('#dvwNext'); if(btn.dataset.sending==='1') return;
+    var services=(state._devisServices||[]);
     btn.dataset.sending='1'; var o=btn.textContent; btn.disabled=true; btn.textContent='Envoi en cours…';
+    var er=$('#devisErr'); if(er) er.hidden=true;
     fetch(SUPA+'/functions/v1/submit-lead-v6',{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify(buildLeadPayload())})
       .then(function(r){ return r.ok? r.json().catch(function(){return{};}) : Promise.reject(r.status); })
       .then(function(data){
@@ -1073,16 +1174,17 @@ button.assist-item{font-family:inherit;cursor:pointer}
         var ref='HC-'+(new Date()).getFullYear().toString().slice(-2)+String((new Date()).getMonth()+1).padStart(2,'0')+'-'+Math.floor(Math.random()*9000+1000);
         $('#devisForm').hidden=true;
         var d=$('#devisDone'); d.hidden=false;
-        d.innerHTML='<div class="note ok" style="max-width:680px">'+
-          '<h2 style="margin:.1em 0">Demande de devis envoyée ✓</h2>'+
-          '<p>Référence <strong>'+ref+'</strong>'+(data&&data.id?' · dossier '+esc(String(data.id)):'')+'</p>'+
-          '<div class="summary" style="position:static;margin:12px 0">'+
-          '<div class="sum-line"><span>Service(s)</span><span>'+esc(services.join(', ')||'—')+'</span></div>'+
-          '<div class="sum-line"><span>Intervention</span><span>'+esc([state.adresse,state.cp,state.ville].filter(Boolean).join(' '))+'</span></div>'+
-          '<div class="sum-line"><span>Agence</span><span>'+esc(detectAgence(state.cp))+'</span></div>'+
-          '<div class="sum-line"><span>Contact</span><span>'+esc([state.prenom,state.nom].filter(Boolean).join(' '))+' · '+esc(state.tel)+'</span></div></div>'+
-          '<p><strong>Prochaines étapes :</strong> un technicien spécialisé étudie votre dossier et vous transmet un <strong>devis gratuit</strong> sous 24-48 h ouvrées (demandes simples). Besoin urgent ? <a href="tel:+33366100134">03 66 10 01 34</a>.</p>'+
-          '<a class="btn btn-ghost" href="/">Revenir à l\'accueil</a> <button class="btn btn-primary" data-step-go="launcher">Nouvelle demande</button></div>';
+        d.innerHTML='<div class="note ok dvw" style="margin:0 auto">'+
+          '<div style="text-align:center"><span style="display:inline-flex;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;align-items:center;justify-content:center;margin-bottom:8px"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>'+
+          '<h2 style="margin:.1em 0">Demande de devis envoyée</h2>'+
+          '<p>Référence <strong>'+ref+'</strong>'+(data&&data.id?' · dossier '+esc(String(data.id)):'')+'</p></div>'+
+          '<div class="dvw-recap" style="margin:14px 0">'+
+          '<div class="rr"><span class="k">Service(s)</span><span class="v">'+esc(services.join(', ')||'—')+'</span></div>'+
+          '<div class="rr"><span class="k">Intervention</span><span class="v">'+esc([state.adresse,state.cp,state.ville].filter(Boolean).join(' '))+'</span></div>'+
+          '<div class="rr"><span class="k">Agence</span><span class="v">'+esc(detectAgence(state.cp))+'</span></div>'+
+          '<div class="rr"><span class="k">Contact</span><span class="v">'+esc([state.prenom,state.nom].filter(Boolean).join(' '))+' · '+esc(state.tel)+'</span></div></div>'+
+          '<p><strong>Prochaine étape :</strong> un technicien spécialisé étudie votre dossier et vous transmet un <strong>devis gratuit</strong> sous 24-48 h ouvrées. Besoin urgent ? <a href="tel:+33366100134">03 66 10 01 34</a>.</p>'+
+          '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px"><a class="btn btn-ghost" href="/">Revenir à l\'accueil</a> <button class="btn btn-primary" data-step-go="launcher">Nouvelle demande</button></div></div>';
         window.scrollTo(0,0);
         var pb=$('#progressBar'),pr=$('#progress'); if(pb)pb.style.width='100%'; if(pr)pr.setAttribute('aria-valuenow','100');
       })
@@ -1092,7 +1194,13 @@ button.assist-item{font-family:inherit;cursor:pointer}
         e2.scrollIntoView({block:'center'});
       });
   }
-  $('#devisSubmit').addEventListener('click', submitDevis);
+  $('#dvwNext').addEventListener('click', function(){
+    var n=state._dvStep||1;
+    if(!dvValidateStep(n)) return;
+    if(n>=DV_STEPS){ dvSubmit(); return; }
+    dvSetStep(n+1);
+  });
+  $('#dvwBack').addEventListener('click', function(){ var n=state._dvStep||1; if(n>1) dvSetStep(n-1); });
   // entretien in-tunnel
   $('#ent-model').addEventListener('input', function(){ state._entModel=this.value; saveState(); });
   $('#entNext').addEventListener('click', function(){
