@@ -22,6 +22,8 @@
 
 | CBK-1 | 5450259719 | P0 | Formulaire 'Être rappelé' home en échec réel (message rouge) | **READY_FOR_QA** | `d099417b` | POST→HTTP 200 success:true (lead créé) ; UX succès/échec/double-clic testés | CAUSE : form_type='home_callback' inconnu → contrat edge défaut 'demande_metier' exige cp+ville → 400 ; FIX front : form_type='rappel' | validation Florian |
 
+| UX-COMMERCE-2 | 5450207118 | P0 | Unifier 5 parcours (Devis/Entretien = impasses hors tunnel) dans le hub /catalogue | **READY_FOR_QA** | `14fd9bf4` | navigateur 1440+390 : devis/entretien/rappel in-tunnel atteignent confirmation ; cart flow intact ; 0 overflow ; 0 erreur console | flow map `docs/ux/commerce-flow-map.md` (`b62f58b5`) ; steps devis/entretien/rappel + chrome tunnel + state._mode | QA visuelle Florian (5 parcours) |
+
 ## Zone TUNNEL / FORMULAIRES (P0/P1)
 | ID | source | prio | demande | statut | SHA | reste |
 |---|---|---|---|---|---|---|
