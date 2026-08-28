@@ -978,8 +978,14 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
     <summary class="hrr-cbk-summary"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5a2 2 0 0 1 2-2h2l1.5 4-2 1.5a12 12 0 0 0 5.5 5.5L15 11l4 1.5V15a2 2 0 0 1-2 2A14 14 0 0 1 3 5z"/></svg> Vous préférez être rappelé ?<span class="hrr-chev" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></summary>
     <form id="hrrForm" novalidate>
      <div class="hrr-row">
-      <input id="hrr-prenom" type="text" placeholder="Prénom" autocomplete="given-name" aria-label="Prénom">
-      <input id="hrr-tel" type="tel" inputmode="tel" placeholder="Téléphone" autocomplete="tel" aria-label="Téléphone">
+      <input id="hrr-prenom" type="text" placeholder="Prénom *" autocomplete="given-name" aria-label="Prénom">
+      <input id="hrr-nom" type="text" placeholder="Nom *" autocomplete="family-name" aria-label="Nom">
+     </div>
+     <input id="hrr-tel" type="tel" inputmode="tel" placeholder="Téléphone *" autocomplete="tel" aria-label="Téléphone" style="width:100%">
+     <input id="hrr-adresse" type="text" placeholder="Adresse (n° et rue) *" autocomplete="street-address" aria-label="Adresse" data-autocomplete-skip style="width:100%">
+     <div class="hrr-row">
+      <input id="hrr-cp" type="text" inputmode="numeric" maxlength="5" placeholder="Code postal *" autocomplete="postal-code" aria-label="Code postal">
+      <input id="hrr-ville" type="text" placeholder="Ville *" autocomplete="address-level2" aria-label="Ville">
      </div>
      <textarea id="hrr-desc" rows="2" placeholder="Votre besoin en quelques mots (facultatif)" aria-label="Votre besoin"></textarea>
      <button type="submit" id="hrr-submit" class="hrr-primary" style="width:100%">Être rappelé</button>
@@ -1053,13 +1059,16 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
   f.addEventListener('submit', function(e){
    e.preventDefault();
    var btn=document.getElementById('hrr-submit'); if(btn.dataset.sending==='1') return;
-   var pr=document.getElementById('hrr-prenom'), tel=document.getElementById('hrr-tel'), desc=document.getElementById('hrr-desc'), msg=document.getElementById('hrr-msg');
-   var bP=!nameOk(pr.value), bT=!phoneOk(tel.value);
-   pr.classList.toggle('bad',bP); tel.classList.toggle('bad',bT);
-   if(bP){ pr.focus(); return; } if(bT){ tel.focus(); return; }
+   var pr=document.getElementById('hrr-prenom'), no=document.getElementById('hrr-nom'), tel=document.getElementById('hrr-tel'), adr=document.getElementById('hrr-adresse'), cp=document.getElementById('hrr-cp'), vi=document.getElementById('hrr-ville'), desc=document.getElementById('hrr-desc'), msg=document.getElementById('hrr-msg');
+   var bP=!nameOk(pr.value), bN=!nameOk(no.value), bT=!phoneOk(tel.value), bA=!nameOk(adr.value), bC=!/^\d{5}$/.test((cp.value||'').trim()), bV=!nameOk(vi.value);
+   pr.classList.toggle('bad',bP); no.classList.toggle('bad',bN); tel.classList.toggle('bad',bT); adr.classList.toggle('bad',bA); cp.classList.toggle('bad',bC); vi.classList.toggle('bad',bV);
+   var firstBad=bP?pr:bN?no:bT?tel:bA?adr:bC?cp:bV?vi:null;
+   if(firstBad){ firstBad.focus(); return; }
    btn.dataset.sending='1'; var orig=btn.textContent; btn.disabled=true; btn.textContent='Envoi…'; msg.className='hrr-msg';
    fetch(SUPA+'/functions/v1/submit-lead-v6',{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({
-    prenom:pr.value.trim(), telephone:tel.value.trim(), message:(desc.value||'').trim()||'Demande de rappel (home)',
+    prenom:pr.value.trim(), nom:no.value.trim(), telephone:tel.value.trim(),
+    adresse:adr.value.trim(), code_postal:cp.value.trim(), ville:vi.value.trim(),
+    message:(desc.value||'').trim()||'Demande de rappel (home)',
     type_demande:'rappel', form_type:'rappel', source:'home_callback', source_page:location.href
    })}).then(function(r){ return r.ok? r.json().catch(function(){return{};}) : Promise.reject(r.status); })
     .then(function(){ f.reset(); msg.className='hrr-msg ok'; msg.textContent='Merci ✓ Un conseiller de votre agence locale vous rappelle rapidement.'; btn.textContent=orig; btn.disabled=false; btn.dataset.sending='0'; })
