@@ -24,6 +24,8 @@
 
 | UX-COMMERCE-2 | 5450207118 | P0 | Unifier 5 parcours (Devis/Entretien = impasses hors tunnel) dans le hub /catalogue | **READY_FOR_QA** | `14fd9bf4` | navigateur 1440+390 : devis/entretien/rappel in-tunnel atteignent confirmation ; cart flow intact ; 0 overflow ; 0 erreur console | flow map `docs/ux/commerce-flow-map.md` (`b62f58b5`) ; steps devis/entretien/rappel + chrome tunnel + state._mode | QA visuelle Florian (5 parcours) |
 
+| E2E-1 | 5450550987 | P0 | Matrice E2E des 6 parcours sur deploy-preview (entrée→endpoint→backend→confirmation→retour) | **READY_FOR_QA** | `dd6bac25` | 6/6 PASS navigateur 1440+390 + backend HTTP 200 (leads archivés NE PAS TRAITER) ; bug reset confirmation corrigé | 6 parcours sans impasse, confirmation réelle | validation Florian |
+
 ## Zone TUNNEL / FORMULAIRES (P0/P1)
 | ID | source | prio | demande | statut | SHA | reste |
 |---|---|---|---|---|---|---|
