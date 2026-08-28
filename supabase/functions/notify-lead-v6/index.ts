@@ -246,8 +246,9 @@ function buildText(l: any, tokens: Record<string,string>): string {
   const origin = cleanOrigin(l.source_page || '');
   const utmStr = labelUtm(l.utm).replace(/<[^>]+>/g, '');
   const ref = labelReferer(l.source_referer || '');
+  const isRappel = ((l.metadata?.form_type || l.type_demande || '') + '').toLowerCase() === 'rappel';
   const lines = [
-    'NOUVEAU LEAD', '', prenomNom,
+    isRappel ? 'DEMANDE DE RAPPEL' : 'NOUVEAU LEAD', '', prenomNom,
     `${labelMetierPlain(l.metier)}${l.ville ? ' — ' + l.ville : ''}`,
     new Date(l.created_at).toLocaleString('fr-FR'), '',
     'ORIGINE',
@@ -259,13 +260,14 @@ function buildText(l: any, tokens: Record<string,string>): string {
     '', 'COORDONNÉES',
     `Téléphone : ${l.telephone || '—'}`,
     `Email : ${l.email || '—'}`,
-    `Adresse : ${adresse || '—'}`, '',
+    '', 'ADRESSE D’INTERVENTION',
+    `${adresse || '—'}`, '',
     l.message ? 'MESSAGE\n' + l.message + '\n' : '',
-    'ACTIONS RAPIDES (1 clic) :',
-    `Client appelé : ${ACTION_BASE}?t=${tokens.called}`,
-    `Devis envoyé : ${ACTION_BASE}?t=${tokens.devis_sent}`,
-    `À rappeler : ${ACTION_BASE}?t=${tokens.reschedule}`,
-    `Pas intéressé : ${ACTION_BASE}?t=${tokens.lost}`, '',
+    isRappel ? 'ACTIONS RAPIDES (1 clic) :' : 'ACTIONS RAPIDES (1 clic) :',
+    `${isRappel ? 'Client rappelé' : 'Client appelé'} : ${ACTION_BASE}?t=${tokens.called}`,
+    isRappel ? '' : `Devis envoyé : ${ACTION_BASE}?t=${tokens.devis_sent}`,
+    `${isRappel ? 'À rappeler plus tard' : 'À rappeler'} : ${ACTION_BASE}?t=${tokens.reschedule}`,
+    `${isRappel ? 'Non joignable / pas intéressé' : 'Pas intéressé'} : ${ACTION_BASE}?t=${tokens.lost}`, '',
     `Fiche du lead : ${BO_LEAD(l.id)}`,
     `Réf : ${l.id}`,
   ].filter(x => x !== '');
