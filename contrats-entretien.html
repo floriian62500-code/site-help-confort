@@ -930,7 +930,7 @@ if (document.fonts && document.fonts.ready) {
  </div>
 
  <!-- Form -->
- <form id="sousForm" onsubmit="return submitSouscription(event)" style="padding:24px 28px 28px" data-hc-lead="souscription" novalidate>
+ <form id="sousForm" onsubmit="return submitSouscription(event)" style="padding:24px 28px 28px" novalidate>
 <input type="hidden" name="form_type" value="demande_metier">
  <!-- Anti-bot honeypot — laisser vide -->
  <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" value="">
@@ -1024,7 +1024,7 @@ if (document.fonts && document.fonts.ready) {
  <div class="sous-step" data-step="4" id="f-equipement-block">
  <div class="sw-intro">
  <h4 class="sw-step-title">Votre équipement</h4>
- <p class="sw-step-hint">Ces infos nous aident à préparer votre intervention. <strong>Tous les champs sont obligatoires</strong>. La photo de votre chaudière nous fait gagner un temps précieux.</p>
+ <p class="sw-step-hint">Ces infos nous aident à préparer votre intervention. Les champs marqués <strong>*</strong> sont obligatoires. <strong>Les photos sont facultatives</strong> — elles nous font gagner du temps si vous les avez.</p>
  </div>
 
  <!-- Aide visuelle : où trouver les infos -->
@@ -1161,10 +1161,10 @@ if (document.fonts && document.fonts.ready) {
  <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
  </div>
  <div class="sw-photo-text">
- <strong>📸 Photo de votre chaudière (1 à 3 photos)</strong>
- <span>Étiquette signalétique + vue d'ensemble — JPG/PNG, 5 Mo max par photo</span>
+ <strong>Photos de votre chaudière (facultatif)</strong>
+ <span>Si vous les avez, ajoutez 1 à 3 photos (plaque signalétique + vue d'ensemble). Cela nous aide à préparer votre dossier plus vite — JPG/PNG/WebP, 5 Mo max par photo.</span>
  </div>
- <input type="file" id="eqPhotos" name="photos" accept="image/jpeg,image/png,image/webp" multiple required data-validate="files" hidden>
+ <input type="file" id="eqPhotos" name="photos" accept="image/jpeg,image/png,image/webp" multiple hidden>
  </label>
  <div class="sw-photo-preview" id="eqPhotosPreview"></div>
  </div>
@@ -1525,21 +1525,8 @@ if (document.fonts && document.fonts.ready) {
  var btnOriginalHTML = btn ? btn.innerHTML : '';
  if (btn) { btn.disabled = true; btn.innerHTML = 'Envoi en cours…'; btn.style.opacity = '.7'; }
 
- // ── 1. INSERT en DB Supabase (table contracts, status='prospect') ───
+ // ── 1. Soumission de la demande de contrat (voie serveur sûre submit-lead-v6) ───
  try {
- if (!window.supabase) {
- // Charge dynamiquement si la lib n'est pas déjà là
- await new Promise((res, rej) => {
- var s = document.createElement('script');
- s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
- s.onload = res; s.onerror = rej;
- document.head.appendChild(s);
- });
- }
- var sb = window.supabase.createClient(
- 'https://btcbjwqiivhpwoszomhg.supabase.co',
- 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2'
- );
 
  // Mapping formule → tier DB
  var tier = formule.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z]/g,'');
@@ -1605,19 +1592,32 @@ if (document.fonts && document.fonts.ready) {
  }
  };
 
- var ins = await sb.from('contracts').insert(payload).select('id').single();
- if (ins.error) throw new Error('insert: ' + ins.error.message);
+ // Voie serveur sûre : soumission via l'edge submit-lead-v6 (service_role côté serveur,
+ // anon-callable). AUCUN INSERT anon direct sur `contracts` (bloqué par RLS, à juste titre).
+ // La création de la row dédiée `contracts` = GATE serveur documentée (docs/control : CONTRACT_RLS_FIX).
+ var photosCount = (payload.metadata && payload.metadata.photos_count) || 0;
+ var leadPayload = {
+   prenom: data.get('prenom') || null, nom: data.get('nom') || 'Sans nom',
+   telephone: data.get('telephone') || '', email: data.get('email') || null,
+   adresse: data.get('adresse') || null, code_postal: cp || null, ville: data.get('ville') || null,
+   metier: 'chauffage', type_demande: 'contrat_entretien', form_type: 'demande_metier',
+   message: [ 'DEMANDE DE CONTRAT ENTRETIEN',
+     '- Énergie : ' + energie, '- Formule : ' + formule + (prix ? (' (' + prix + ')') : ''),
+     '- Agence : ' + agence, '- Logement : ' + (data.get('type_logement')||'—') + ' / ' + (data.get('statut')||'—'),
+     '- Équipement : ' + (data.get('marque')||'—') + ' ' + (data.get('modele')||'') + ' (' + (data.get('annee')||'—') + ')',
+     '- Dernier entretien : ' + (data.get('dernier_entretien_annee')||data.get('dernier_entretien')||'—'),
+     '- Début souhaité : ' + (data.get('date_debut')||'—'), '- Photos jointes : ' + photosCount + ' (facultatif)',
+     '- RIB fourni : ' + ((payload.metadata && payload.metadata.rib_uploaded) ? 'oui' : 'non'),
+     '- Accord principe SEPA : ' + (data.get('sepa_principe') ? 'oui' : 'non') ]
+     .concat(data.get('commentaire') ? ['- Commentaire : ' + data.get('commentaire')] : []).join('\n'),
+   source: 'contrat_souscription', source_page: location.href,
+   utm: { energie: energie, formule: formule, prix: prix, tier: tier, photos_count: photosCount, wizard_tags: ['contrat-entretien', energie, tier] }
+ };
+ var resp = await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/submit-lead-v6', { method:'POST', headers:{'Content-Type':'application/json'}, keepalive:true, body: JSON.stringify(leadPayload) });
+ if (!resp.ok) { throw new Error('Envoi impossible' + (resp.status ? (' (code ' + resp.status + ')') : '')); }
+ var respData = await resp.json().catch(function(){ return {}; });
 
- // ── 2. Déclenche l'envoi d'email via le SDK Supabase (gère la nouvelle
- // auth publishable_key et bypass les soucis UNAUTHORIZED_LEGACY_JWT) ──
- try {
- await sb.functions.invoke('notify-subscription', {
- body: { contract_id: ins.data.id, agence: payload.agence }
- });
- } catch (mailErr) {
- console.warn('[souscription] notify-subscription failed:', mailErr);
- // Pas grave : la souscription est en DB, Florian la voit dans l'admin
- }
+ // ── 2. Notification : submit-lead-v6 déclenche déjà notify-lead-v6 côté serveur. ──
 
  // ── 3. Confirmation visuelle ───────────────────────────────────────
  var card = document.querySelector('.sous-card');
@@ -1718,9 +1718,8 @@ if (document.fonts && document.fonts.ready) {
  else if (rule === 'cp' && (!val || !/^[0-9]{5}$/.test(val))) { bad = true; msg = msg || 'Code postal invalide (5 chiffres).'; }
  else if (rule === 'checked' && !val) { bad = true; msg = msg || 'Merci d\'accepter la déclaration pour valider.'; }
  else if (rule === 'files') {
- var json = document.getElementById('eqPhotosJson');
- var photos = json ? (function(){ try { return JSON.parse(json.value || '[]'); } catch(_){ return []; } })() : [];
- if (photos.length === 0) { bad = true; msg = msg || 'Merci d\'ajouter au moins une photo de votre chaudière.'; }
+ // Photos FACULTATIVES (retour Florian 5453180213) : 0 photo n'empêche jamais de continuer/soumettre.
+ // Si des photos sont fournies, leur validation format/poids se fait à la sélection (voir handler eqPhotos).
  }
  else if (rule === 'files-rib') {
  var ribInput = document.getElementById('docRib');
