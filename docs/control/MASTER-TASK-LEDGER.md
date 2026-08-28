@@ -54,7 +54,7 @@
 |---|---|---|---|---|---|---|
 | MET-1 | #9 T3 | P0 | Pages métiers : carte zone/fournisseurs/6 engagements | **READY_FOR_QA** | `38e6077d` | validation Florian |
 | QUA-1 | #9 T12 | P1 | Qualité front (console/liens/alt/H1) | **READY_FOR_QA** | `dbe68255` | — |
-| RSP-1 | 5438239688 T8 | P1 | Responsive 320→1920 + a11y | **READY_FOR_QA** (QA visuelle Florian requise) | — | QA visuelle (pane non fiable) ; **ANOMALIE pré-existante repérée** : scroll horizontal page à ≤1024 causé par le marquee « réseau de confiance » `.hc-logo-card` (translateX non clippé) — hors lot commerce (#hc-reservation/launcher = 0 overflow) ; à corriger dans le lot responsive |
+| RSP-1 | 5438239688 T8 / 5450159091 | P1 | Responsive 320→1920 + a11y ; overflow horizontal ≤1100 (header actions) | **READY_FOR_QA** | `8c3a65ae` | PAGE_HORIZONTAL_OVERFLOW=0 à 1440/1024/768/390/375 (home+catalogue) | fix : masque n° tél header ≤1100 (icône seule) + marquee-wrap overflow-x:clip ; animation desktop intacte | QA visuelle Florian |
 | SEO-1 | 5438239688 L1 | P1 | Audit SEO technique (baseline saine) | **READY_FOR_QA** | `711a3204` | — |
 | SEO-2 | 5438239688 L2/3/9 | P1 | Architecture locale + contenu + tests garde-fous SEO | **BACKLOG** | — | séquencer |
 | SEO-3 | 5438239688 L4-8 | P2 | GBP/backlinks/tracking/Ads | **BLOCKED_HUMAN** | plans | accès comptes Google |
