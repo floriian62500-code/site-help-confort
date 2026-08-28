@@ -748,7 +748,15 @@ h2{font-size:1.2rem;margin:.2em 0}
     var dec=t.closest('[data-dec]'); if(dec){ var ld=cart.lines().find(function(l){return l.id===dec.getAttribute('data-dec');}); cart.setQty(dec.getAttribute('data-dec'),(ld?ld.qty:1)-1); refreshCartUI(); return; }
     var rm=t.closest('[data-rm]'); if(rm){ cart.remove(rm.getAttribute('data-rm')); refreshCartUI(); return; }
     var ac=t.closest('[data-ac]'); if(ac){ pickAc(parseInt(ac.getAttribute('data-ac'),10)); return; }
+    var dm=t.closest('[data-devismetier]'); if(dm){ selectChip('#devisMetiers',dm,'devismetier','_devisMetier'); return; }
+    var ee=t.closest('[data-entenergie]'); if(ee){ selectChip('#entEnergie',ee,'entenergie','_entEnergie'); return; }
+    var et2=t.closest('[data-enttype]'); if(et2){ selectChip('#entType',et2,'enttype','_entType'); return; }
   });
+  function selectChip(groupSel, el, attr, stateKey){
+    $$(groupSel+' .chip').forEach(function(c){ c.classList.remove('sel'); });
+    el.classList.add('sel'); state[stateKey]=el.getAttribute('data-'+attr); saveState();
+    var fld=el.closest('.field'); if(fld) fld.classList.remove('invalid');
+  }
   $('#backFam').addEventListener('click', backToFamilies);
   $('#sheetBack').addEventListener('click', function(){ go(state._sheetFrom||'catalogue'); });
   $('#diagBack').addEventListener('click', function(){ $('#diag-2').hidden=true; $('#diag-1').hidden=false; });
@@ -778,6 +786,43 @@ h2{font-size:1.2rem;margin:.2em 0}
   }); });
   $('#urg-desc').addEventListener('input', function(){ state.urgDesc=this.value; saveState(); });
   $('#urgNext').addEventListener('click', function(){ if(state.urg) go('address'); });
+
+  // devis (projet sur mesure) in-tunnel
+  $('#devis-desc').addEventListener('input', function(){ state._devisDesc=this.value; saveState(); });
+  $('#devisNext').addEventListener('click', function(){
+    var mf=$('#devisMetiers').closest('.field');
+    var badM=!state._devisMetier, badD=($('#devis-desc').value||'').trim().length<10;
+    mf.classList.toggle('invalid',badM); fieldOf('devis-desc').classList.toggle('invalid',badD);
+    if(badM){ $('#devisMetiers').scrollIntoView({block:'center'}); return; }
+    if(badD){ $('#devis-desc').focus(); return; }
+    state._devisDesc=$('#devis-desc').value.trim(); saveState(); go('address');
+  });
+  // entretien in-tunnel
+  $('#ent-model').addEventListener('input', function(){ state._entModel=this.value; saveState(); });
+  $('#entNext').addEventListener('click', function(){
+    var ef=$('#entEnergie').closest('.field'), tf=$('#entType').closest('.field');
+    var badE=!state._entEnergie, badT=!state._entType;
+    ef.classList.toggle('invalid',badE); tf.classList.toggle('invalid',badT);
+    if(badE){ $('#entEnergie').scrollIntoView({block:'center'}); return; } if(badT) return;
+    state._entModel=$('#ent-model').value.trim(); saveState(); go('address');
+  });
+  // rappel (repli urgence) — soumission directe
+  $('#rap-prenom').addEventListener('input',function(){ state._rapPrenom=this.value; saveState(); });
+  $('#rap-tel').addEventListener('input',function(){ state._rapTel=this.value; saveState(); });
+  $('#rapNext').addEventListener('click', function(){
+    var btn=$('#rapNext'); if(btn.dataset.sending==='1') return;
+    var pr=$('#rap-prenom'), tel=$('#rap-tel');
+    var bP=!nameOk(pr.value), bT=!phoneFrOk(tel.value);
+    setInvalid(fieldOf('rap-prenom'),bP); setInvalid(fieldOf('rap-tel'),bT);
+    if(bP){ pr.focus(); return; } if(bT){ tel.focus(); return; }
+    btn.dataset.sending='1'; var o=btn.textContent; btn.disabled=true; btn.textContent='Envoi…';
+    fetch(SUPA+'/functions/v1/submit-lead-v6',{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({
+      prenom:pr.value.trim(), telephone:tel.value.trim(), message:($('#rap-desc').value||'').trim()||'Demande de rappel (moteur commande)',
+      type_demande:'rappel', form_type:'rappel', source:'commerce_engine_rappel', source_page:location.href
+    })}).then(function(r){ return r.ok? r.json().catch(function(){return{};}) : Promise.reject(r.status); })
+      .then(function(){ var m=$('#rapMsg'); m.hidden=false; m.className='note ok'; m.textContent='Merci ✓ Un conseiller de votre agence locale vous rappelle rapidement.'; btn.textContent=o; btn.disabled=false; btn.dataset.sending='0'; })
+      .catch(function(){ var m=$('#rapMsg'); m.hidden=false; m.className='note warn'; m.textContent='Envoi impossible pour le moment. Réessayez, ou appelez le 03 66 10 01 34.'; btn.textContent='Réessayer'; btn.disabled=false; btn.dataset.sending='0'; });
+  });
 
   // address
   var adr=$('#f-adresse');
