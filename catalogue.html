@@ -165,6 +165,14 @@ h2{font-size:1.2rem;margin:.2em 0}
 .lchr-tag{font-size:.74rem;font-weight:800;padding:4px 11px;border-radius:999px;letter-spacing:.01em}
 .lchr-tag--devis{background:rgba(124,58,237,.10);color:#7C3AED}
 .lchr-tag--ent{background:rgba(255,107,26,.12);color:#E8580F}
+.lchr-modes2{display:grid;grid-template-columns:1fr;gap:16px;margin:0 0 16px}
+@media(min-width:760px){.lchr-modes2{grid-template-columns:1fr 1fr}}
+.lchr-cic--diag{background:linear-gradient(135deg,#7C3AED,#9F67FF);box-shadow:0 8px 18px -6px rgba(124,58,237,.5)}
+.lchr-tag--cat{background:rgba(13,160,207,.10);color:var(--bleu-d)}
+.lchr-tag--diag{background:rgba(124,58,237,.10);color:#7C3AED}
+.lchr-modecard:hover .lchr-carrow,.lchr-modecard:focus-visible .lchr-carrow{background:var(--bleu);color:#fff;transform:translateX(3px)}
+.lchr-modecard--diag:hover .lchr-carrow,.lchr-modecard--diag:focus-visible .lchr-carrow{background:#7C3AED;color:#fff}
+.lchr-modecard--diag:hover,.lchr-modecard--diag:focus-visible{border-color:rgba(124,58,237,.4)}
 .lchr-carrow{width:34px;height:34px;border-radius:50%;background:#F1F5F9;display:inline-flex;align-items:center;justify-content:center;color:var(--nuit);transition:background .2s,color .2s,transform .2s;flex-shrink:0}
 .lchr-card--devis:hover .lchr-carrow{background:#7C3AED;color:#fff;transform:translateX(3px)}
 .lchr-card--ent:hover .lchr-carrow{background:#FF6B1A;color:#fff;transform:translateX(3px)}
@@ -347,41 +355,27 @@ button.assist-item{font-family:inherit;cursor:pointer}
   <section class="screen active" id="s-launcher" data-step="launcher">
     <div class="lchr">
      <div class="lchr-head">
-      <span class="lchr-eyebrow"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Commande &amp; devis en ligne</span>
-      <h1>Comment pouvons-nous vous aider&nbsp;?</h1>
-      <p class="sub">Prestations à prix affichés, <strong>techniciens salariés</strong>, agences locales Saint-Omer &amp; Dunkerque — un interlocuteur humain à chaque étape.</p>
+      <span class="lchr-eyebrow"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> Commander une intervention</span>
+      <h1>Commander une intervention</h1>
+      <p class="sub">Prestations à <strong>prix affichés</strong>, techniciens salariés, agences Saint-Omer &amp; Dunkerque. Deux façons de commencer&nbsp;:</p>
      </div>
-     <div class="lchr-intents">
-      <!-- 1. COMMANDER (2 modes du même parcours) -->
-      <div class="lchr-card lchr-card--cmd">
+     <div class="lchr-modes2">
+      <!-- Mode A : catalogue -->
+      <button class="lchr-card lchr-modecard" type="button" data-step-go="catalogue">
        <span class="lchr-cic lchr-cic--cmd"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg></span>
-       <strong class="lchr-ct">Commander une intervention</strong>
-       <span class="lchr-cd">Prestations à <strong>prix affiché</strong> — ajoutez-en plusieurs au panier.</span>
-       <div class="lchr-modes">
-        <button class="lchr-mode" type="button" data-step-go="catalogue">
-         <span class="lchr-mode-b"><strong>Je connais mon besoin</strong><span>Catalogue par famille &amp; prix</span></span>
-         <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </button>
-        <button class="lchr-mode lchr-mode--diag" type="button" data-step-go="diagnosis">
-         <span class="lchr-mode-b"><strong>Aidez-moi à identifier</strong><span>Diagnostic guidé en 3 questions</span></span>
-         <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </button>
-       </div>
-      </div>
-      <!-- 2. DEVIS -->
-      <button class="lchr-card lchr-card--devis" type="button" data-step-go="devis">
-       <span class="lchr-cic lchr-cic--devis"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span>
-       <strong class="lchr-ct">Demander un devis</strong>
-       <span class="lchr-cd">Travaux &amp; projets sur mesure : salle de bain, rénovation, menuiserie…</span>
-       <span class="lchr-cfoot"><span class="lchr-tag lchr-tag--devis">Étude gratuite</span><span class="lchr-carrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
+       <strong class="lchr-ct">Je connais mon besoin</strong>
+       <span class="lchr-cd">Parcourez le catalogue par famille et ajoutez une ou plusieurs prestations à <strong>prix affiché</strong>.</span>
+       <span class="lchr-fams" aria-hidden="true"><span class="lchr-fam">Plomberie</span><span class="lchr-fam">Chauffage</span><span class="lchr-fam">Électricité</span><span class="lchr-fam">Serrurerie</span><span class="lchr-fam">Vitrerie</span><span class="lchr-fam">Rénovation</span></span>
+       <span class="lchr-cfoot"><span class="lchr-tag lchr-tag--cat">Catalogue &amp; prix</span><span class="lchr-carrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
       </button>
-      <!-- 3. ENTRETIEN -->
-      <a class="lchr-card lchr-card--ent" href="/contrats-entretien.html" aria-label="Entretien & contrats — découvrir les formules">
-       <span class="lchr-cic lchr-cic--ent"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3v6c0 5-3.4 8.5-8 11-4.6-2.5-8-6-8-11V5z"/></svg></span>
-       <strong class="lchr-ct">Entretien &amp; contrats</strong>
-       <span class="lchr-cd">Chaudière gaz/fioul : entretien ponctuel ou contrat annuel, attestation légale.</span>
-       <span class="lchr-cfoot"><span class="lchr-tag lchr-tag--ent">Dès 9 €/mois</span><span class="lchr-carrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
-      </a>
+      <!-- Mode B : diagnostic -->
+      <button class="lchr-card lchr-modecard lchr-modecard--diag" type="button" data-step-go="diagnosis">
+       <span class="lchr-cic lchr-cic--diag"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v.01M11 11v3"/></svg></span>
+       <strong class="lchr-ct">Aidez-moi à identifier mon problème</strong>
+       <span class="lchr-cd">Répondez à quelques questions, on trouve la prestation adaptée pour vous.</span>
+       <span class="lchr-steps"><span class="lchr-step"><b>1</b> Métier</span><span class="lchr-sep">→</span><span class="lchr-step"><b>2</b> Équipement</span><span class="lchr-sep">→</span><span class="lchr-step"><b>3</b> Symptôme</span></span>
+       <span class="lchr-cfoot"><span class="lchr-tag lchr-tag--diag">Diagnostic guidé</span><span class="lchr-carrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
+      </button>
      </div>
      <!-- Urgence compacte (secondaire) -->
      <div class="lchr-urg2">
