@@ -176,13 +176,15 @@ function buildHtml(l: any, tokens: Record<string,string>): string {
   const ft = (l.metadata?.form_type || l.type_demande || '').toLowerCase();
   const btn = (color: string, label: string, action: string) =>
     `<a href="${ACTION_BASE}?t=${tokens[action]}" style="display:inline-block;padding:11px 18px;background:${color};color:#fff;text-decoration:none;border-radius:8px;font-weight:700;font-size:14px;margin:4px 4px 4px 0;font-family:Arial,sans-serif">${label}</a>`;
-  const CALLED = btn('#22C55E', '✅ Client appelé', 'called');
+  const isRappel = ft === 'rappel';
+  const CALLED = btn('#22C55E', isRappel ? '✅ Client rappelé' : '✅ Client appelé', 'called');
   const DEVIS  = btn('#3B82F6', '✉️ Devis envoyé', 'devis_sent');
-  const RESCH  = btn('#F59E0B', '⏰ À rappeler demain', 'reschedule');
-  const LOST   = btn('#94A3B8', '❌ Pas intéressé', 'lost');
+  const RESCH  = btn('#F59E0B', isRappel ? '⏰ À rappeler plus tard' : '⏰ À rappeler demain', 'reschedule');
+  const LOST   = btn('#94A3B8', isRappel ? '❌ Non joignable / pas intéressé' : '❌ Pas intéressé', 'lost');
   // Actions rapides adaptées au form_type : on met l'action la plus probable en 1er.
+  // Demande de rappel : pas de « Devis envoyé » par défaut (ce n'est pas encore un devis).
   const isDevis = /devis/.test(ft);
-  const actionsHtml = isDevis ? (DEVIS + CALLED + RESCH + LOST) : (CALLED + DEVIS + RESCH + LOST);
+  const actionsHtml = isRappel ? (CALLED + RESCH + LOST) : (isDevis ? (DEVIS + CALLED + RESCH + LOST) : (CALLED + DEVIS + RESCH + LOST));
 
   const origin = cleanOrigin(l.source_page || '');
   const utmStr = labelUtm(l.utm);
@@ -204,7 +206,7 @@ function buildHtml(l: any, tokens: Record<string,string>): string {
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#F4F7FB;padding:24px 16px"><tr><td align="center">
 <table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;box-shadow:0 4px 18px rgba(10,20,40,.08);overflow:hidden;max-width:600px;width:100%">
 <tr><td style="background:linear-gradient(135deg,#0A1428,#172240);padding:24px 28px;color:#fff">
-<div style="font-size:12px;font-weight:700;opacity:.85;letter-spacing:.06em;text-transform:uppercase">Nouveau lead</div>
+<div style="font-size:12px;font-weight:700;opacity:.85;letter-spacing:.06em;text-transform:uppercase">${isRappel ? '📞 Demande de rappel' : 'Nouveau lead'}</div>
 <div style="font-size:20px;font-weight:800;margin-top:6px">${esc(prenomNom)}</div>
 <div style="font-size:14px;opacity:.85;margin-top:4px">${esc(labelMetierPlain(l.metier))}${l.ville ? ' — ' + esc(l.ville) : ''} · ${new Date(l.created_at).toLocaleString('fr-FR')}</div>
 </td></tr>
@@ -213,10 +215,13 @@ function buildHtml(l: any, tokens: Record<string,string>): string {
   <div style="font-size:13px;font-weight:700;color:#0DA0CF;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Coordonnées</div>
   <div style="font-size:15px;color:#0A1428;line-height:1.8">
     ${l.telephone ? `📞 <a href="tel:${esc(l.telephone)}" style="color:#0DA0CF;text-decoration:none;font-weight:800;font-size:17px">${esc(l.telephone)}</a><br>` : ''}
-    ${l.email ? `✉️ <a href="mailto:${esc(l.email)}" style="color:#0DA0CF;text-decoration:none;font-weight:600">${esc(l.email)}</a><br>` : ''}
-    ${adresse ? `📍 ${esc(adresse)}` : ''}
+    ${l.email ? `✉️ <a href="mailto:${esc(l.email)}" style="color:#0DA0CF;text-decoration:none;font-weight:600">${esc(l.email)}</a>` : ''}
   </div>
 </div>
+${adresse ? `<div style="background:#F0FDF4;border-left:4px solid #16A34A;padding:14px 18px;border-radius:0 8px 8px 0;margin-bottom:18px">
+  <div style="font-size:13px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">📍 Adresse d’intervention</div>
+  <div style="font-size:15px;color:#0A1428;line-height:1.6">${esc(adresse)}</div>
+</div>` : ''}
 ${origineHtml}
 ${l.message ? `<div style="background:#FFFBEB;border-left:4px solid #FFB400;padding:14px 18px;border-radius:0 8px 8px 0;margin-bottom:18px">
 <div style="font-size:13px;font-weight:700;color:#92400E;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Message du client</div>
