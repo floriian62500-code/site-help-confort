@@ -278,6 +278,8 @@ button.assist-item{font-family:inherit;cursor:pointer}
 .dvw-recap .rr:last-child{border-bottom:0}
 .dvw-recap .rr .k{color:var(--gris);font-weight:600;flex-shrink:0}
 .dvw-recap .rr .v{color:var(--nuit);font-weight:700;text-align:right}
+.dvw-edit{background:none;border:0;color:var(--bleu);font-weight:700;font-size:.8rem;cursor:pointer;padding:2px 4px;margin-left:8px;text-decoration:underline;border-radius:6px}
+.dvw-edit:hover{color:var(--bleu-d);background:rgba(13,160,207,.08)}
 .dvw-reassure{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;margin:18px 0 0;padding:14px 0 0;border-top:1px dashed var(--bord)}
 .dvw-reassure li{font-size:.8rem;font-weight:700;color:#475569;display:inline-flex;align-items:center;gap:6px}
 .dvw-reassure li::before{content:'';width:15px;height:15px;flex-shrink:0;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230DA0CF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E")}
@@ -404,7 +406,7 @@ button.assist-item{font-family:inherit;cursor:pointer}
         <section class="dvw-panel" data-dvstep="3" hidden>
           <h2 class="dvw-q">Où devons-nous intervenir&nbsp;?</h2>
           <p class="dvw-hint">Nous déterminons automatiquement votre agence locale.</p>
-          <div class="field"><label for="dv-adresse">Adresse (n° + rue)</label><input id="dv-adresse" type="text" autocomplete="address-line1" placeholder="12 rue de la Gare"><div class="err">Indiquez l'adresse d'intervention.</div></div>
+          <div class="field ac-wrap"><label for="dv-adresse">Adresse (n° + rue)</label><input id="dv-adresse" type="text" autocomplete="off" placeholder="Commencez à taper votre adresse…"><div id="dvAcList" class="ac-list" hidden></div><div class="err">Indiquez l'adresse d'intervention.</div></div>
           <div class="dv-grid">
             <div class="field"><label for="dv-cp">Code postal</label><input id="dv-cp" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="62500"><div class="err">Code postal à 5 chiffres.</div></div>
             <div class="field"><label for="dv-ville">Ville</label><input id="dv-ville" type="text" autocomplete="address-level2" list="dv-villes" placeholder="Saint-Omer, Dunkerque…"><datalist id="dv-villes"><option value="Saint-Omer"></option><option value="Longuenesse"></option><option value="Arques"></option><option value="Aire-sur-la-Lys"></option><option value="Hazebrouck"></option><option value="Dunkerque"></option><option value="Saint-Pol-sur-Mer"></option><option value="Calais"></option><option value="Boulogne-sur-Mer"></option></datalist><div class="err">Indiquez la ville.</div></div>
@@ -1115,6 +1117,31 @@ button.assist-item{font-family:inherit;cursor:pointer}
       saveState(); var er=$('#dvSvcErr'); if(er && state._devisServices.length) er.style.display='none';
     }); });
   })();
+  // autocomplete adresse (BAN) pour le wizard devis — self-contained (fiable : dégrade en saisie manuelle si API KO)
+  (function(){
+    var input=$('#dv-adresse'), list=$('#dvAcList'); if(!input||!list) return;
+    var t=null, items=[];
+    function hide(){ list.hidden=true; list.innerHTML=''; items=[]; }
+    function search(q){
+      if(!q||q.length<4){ hide(); return; }
+      fetch('https://api-adresse.data.gouv.fr/search/?limit=5&q='+encodeURIComponent(q))
+        .then(function(r){return r.json();})
+        .then(function(d){ items=(d&&d.features)||[]; if(!items.length){ hide(); return; }
+          list.innerHTML=items.map(function(f,i){ return '<button type="button" data-dvac="'+i+'">'+esc(f.properties.label)+'</button>'; }).join(''); list.hidden=false;
+        }).catch(hide);
+    }
+    input.addEventListener('input', function(){ clearTimeout(t); var v=this.value; t=setTimeout(function(){search(v);},220); });
+    input.addEventListener('blur', function(){ setTimeout(hide,180); });
+    list.addEventListener('mousedown', function(e){ var b=e.target.closest('[data-dvac]'); if(!b) return; e.preventDefault();
+      var f=items[parseInt(b.getAttribute('data-dvac'),10)]; if(!f) return; var p=f.properties;
+      $('#dv-adresse').value=[p.housenumber,p.street||p.name].filter(Boolean).join(' ')||p.label;
+      if(p.postcode){ $('#dv-cp').value=p.postcode; state.cp=p.postcode; }
+      if(p.city){ $('#dv-ville').value=p.city; state.ville=p.city; }
+      state.adresse=$('#dv-adresse').value; saveState(); dvUpdateAgence();
+      setInvalid(fieldOf('dv-adresse'),false); setInvalid(fieldOf('dv-cp'),false); setInvalid(fieldOf('dv-ville'),false);
+      hide();
+    });
+  })();
   function dvUpdateAgence(){
     var box=$('#dvwAgence'); if(!box) return;
     var cp=($('#dv-cp')||{}).value||'';
@@ -1147,14 +1174,18 @@ button.assist-item{font-family:inherit;cursor:pointer}
   }
   function dvRenderRecap(){
     var rows=[
-      ['Service(s)', (state._devisServices||[]).join(', ')||'—'],
-      ['Demande', state._devisDesc||'—'],
-      ['Intervention', [state.adresse,state.cp,state.ville].filter(Boolean).join(' ')||'—'],
-      ['Agence', detectAgence(state.cp)],
-      ['Contact', ([state.prenom,state.nom].filter(Boolean).join(' ')+' · '+(state.tel||'')+' · '+(state.email||''))]
+      ['Service(s)', (state._devisServices||[]).join(', ')||'—', 1],
+      ['Demande', state._devisDesc||'—', 2],
+      ['Intervention', [state.adresse,state.cp,state.ville].filter(Boolean).join(' ')||'—', 3],
+      ['Agence', detectAgence(state.cp), 0],
+      ['Contact', ([state.prenom,state.nom].filter(Boolean).join(' ')+' · '+(state.tel||'')+' · '+(state.email||'')), 4]
     ];
-    var box=$('#dvwRecap'); if(box) box.innerHTML=rows.map(function(r){ return '<div class="rr"><span class="k">'+r[0]+'</span><span class="v">'+esc(r[1])+'</span></div>'; }).join('');
+    var box=$('#dvwRecap'); if(box) box.innerHTML=rows.map(function(r){
+      var edit=r[2]?' <button class="dvw-edit" type="button" data-dvedit="'+r[2]+'">Modifier</button>':'';
+      return '<div class="rr"><span class="k">'+r[0]+'</span><span class="v">'+esc(r[1])+edit+'</span></div>';
+    }).join('');
   }
+  $('#dvwRecap').addEventListener('click', function(e){ var b=e.target.closest('[data-dvedit]'); if(b) dvSetStep(parseInt(b.getAttribute('data-dvedit'),10)); });
   function resetDevis(){
     var df=$('#devisForm'); if(df) df.hidden=false;
     var dd=$('#devisDone'); if(dd){ dd.hidden=true; dd.innerHTML=''; }
