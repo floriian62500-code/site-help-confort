@@ -1154,7 +1154,9 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
   var SUPA='https://btcbjwqiivhpwoszomhg.supabase.co';
   function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
   // nettoie les données importées (Facebook) : retire markdown ** et emoji pour un rendu pro sans emoji
-  function clean(t){return String(t==null?'':t).replace(/\*\*/g,'').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{2190}-\u{21FF}\u{FE0F}\u{1F1E6}-\u{1F1FF}]/gu,'').replace(/\s+/g,' ').trim();}
+  function decodeEnt(s){return String(s==null?'':s).replace(/&#x([0-9a-f]+);/gi,function(_,h){return String.fromCharCode(parseInt(h,16));}).replace(/&#(\d+);/g,function(_,d){return String.fromCharCode(parseInt(d,10));}).replace(/&amp;/g,'&').replace(/&(?:quot|ldquo|rdquo);/g,'"').replace(/&(?:apos|rsquo|lsquo);/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ').replace(/&hellip;/g,'…');}
+  // decode entités (données importées Facebook : &#x27; etc.) PUIS nettoyage ; esc() ré-échappe ensuite en sécurité.
+  function clean(t){return decodeEnt(String(t==null?'':t)).replace(/\*\*/g,'').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{2190}-\u{21FF}\u{FE0F}\u{1F1E6}-\u{1F1FF}]/gu,'').replace(/\s+/g,' ').trim();}
   var CH_TITLE=/remplacement|installation|d[ée]pose|r[ée]paration|intervention|chantier|panneau pvc|bris de glace|votre soupape|votre manom[èe]tre|votre mitigeur|votre tablier|votre cumulus|votre chaudi[èe]re|vitre d['']insert/i;
   var CH_RESUME=/help confort intervient pour|nos prestations\s*:|nous sommes (?:r[ée]cemment )?intervenus?|notre [ée]quipe est intervenue|nous intervenons rapidement|intervention r[ée]alis[ée]e/i;
   function load(url, isActu, grid, block, build){
