@@ -346,6 +346,20 @@ body.dv-modal-open{overflow:hidden}
 .dvw-close:hover{background:#E2E9F0}
 #s-devis .dvw-head{padding:0 34px}
 @media(max-width:560px){#s-devis.active{padding:0;align-items:stretch}#s-devis .dvw,#s-devis #devisDone:not([hidden]){border-radius:0;min-height:100vh;max-width:none}#s-devis .dvw{padding:18px 16px 26px}.dvw-close{top:10px;right:10px}}
+/* ---- Devis : photos facultatives (pipeline lead-photos existant) ---- */
+.dvw-photos{margin-top:14px}
+.dvw-photos-drop{position:relative;display:flex;align-items:center;gap:12px;padding:14px 16px;background:#F7FBFD;border:1.5px dashed var(--bord);border-radius:12px;cursor:pointer;transition:border-color .2s,background .2s}
+.dvw-photos-drop:hover{border-color:var(--bleu);background:#fff}
+.dvw-photos-drop:focus-within{outline:2px solid var(--bleu);outline-offset:2px}
+.dvw-photos-ic{flex-shrink:0;color:var(--bleu)}
+.dvw-photos-txt{font-size:.86rem;color:#475569;line-height:1.45}.dvw-photos-txt strong{color:var(--nuit)}
+.dvw-photos-drop input[type=file]{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)}
+.dvw-photos-list{list-style:none;display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 0;padding:0}
+.dvw-photos-list li{position:relative;width:74px;height:74px;border-radius:10px;overflow:hidden;border:1px solid var(--bord);background:#fff}
+.dvw-photos-list img{width:100%;height:100%;object-fit:cover;display:block}
+.dvw-ph-rm{position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%;background:rgba(10,20,40,.6);border:0;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.82rem;line-height:1;padding:0}
+.dvw-ph-rm:hover{background:#dc2626}
+.dvw-photos-err{color:#dc2626;font-size:.82rem;font-weight:600;margin:8px 0 0}
 </style>
 </head>
 <body>
@@ -447,7 +461,15 @@ body.dv-modal-open{overflow:hidden}
           <h2 class="dvw-q">Décrivez votre demande</h2>
           <p class="dvw-hint">Nature du problème ou du projet, urgence éventuelle, disponibilités…</p>
           <div class="field"><textarea id="dv-desc" rows="6" placeholder="Ex. remplacement d'un chauffe-eau 200 L, fuite sous évier, rénovation complète d'une salle de bain…"></textarea><div class="err">Ajoutez quelques mots (min. 10 caractères).</div></div>
-          <div class="dvw-photo"><span class="dvw-photo-ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span><div><strong>Des photos ?</strong> Elles aident le technicien à chiffrer plus vite et plus juste. Vous pourrez les transmettre à votre conseiller lors de son appel (l'ajout de photos en ligne n'est pas encore disponible).</div></div>
+          <div class="dvw-photos">
+            <label class="dvw-photos-drop" for="dv-photos">
+              <span class="dvw-photos-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>
+              <span class="dvw-photos-txt"><strong>Ajouter des photos</strong> (facultatif) — jusqu'à 3. Elles aident le technicien à chiffrer plus vite et plus juste.</span>
+              <input id="dv-photos" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple>
+            </label>
+            <ul class="dvw-photos-list" id="dvPhotosList" aria-live="polite"></ul>
+            <p class="dvw-photos-err" id="dvPhotosErr" hidden role="alert"></p>
+          </div>
         </section>
         <section class="dvw-panel" data-dvstep="3" hidden>
           <h2 class="dvw-q">Où devons-nous intervenir&nbsp;?</h2>
@@ -1251,6 +1273,7 @@ body.dv-modal-open{overflow:hidden}
       state._devisServices=[]; state._devisDesc=''; state._dvStep=1; saveState();
       $$('#dvServices input[type=checkbox]').forEach(function(c){ c.checked=false; });
       var dsc=$('#dv-desc'); if(dsc) dsc.value='';
+      if(typeof dvSelectedFiles!=='undefined'){ dvSelectedFiles.length=0; if(typeof dvPhotoRender==='function') dvPhotoRender(); }
       var er=$('#dvSvcErr'); if(er) er.style.display='none';
       $$('#s-devis .field.invalid').forEach(function(f){ f.classList.remove('invalid'); });
       dvSetStep(1);
@@ -1264,8 +1287,28 @@ body.dv-modal-open{overflow:hidden}
     fetch(SUPA+'/functions/v1/submit-lead-v6',{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify(buildLeadPayload())})
       .then(function(r){ return r.ok? r.json().catch(function(){return{};}) : Promise.reject(r.status); })
       .then(function(data){
-        track('devis_submit'); track('confirmation');
+        track('devis_submit');
+        var files=dvSelectedFiles.slice();
+        if(files.length && data && data.id && data.upload_token){
+          return dvUploadPhotos(data.id, data.upload_token, files).then(function(pr){ return {data:data, photo:pr, sent:files.length}; });
+        }
+        return {data:data, photo:null, sent:0};
+      })
+      .then(function(res){
+        track('confirmation');
+        var data=res.data;
         var ref='HC-'+(new Date()).getFullYear().toString().slice(-2)+String((new Date()).getMonth()+1).padStart(2,'0')+'-'+Math.floor(Math.random()*9000+1000);
+        var photoRow='';
+        if(res.sent>0){
+          var pv;
+          if(res.photo && typeof res.photo.stored==='number' && res.photo.stored>0){
+            pv=res.photo.stored+' photo(s) jointe(s)'+((res.photo.rejected&&res.photo.rejected.length)?' · '+res.photo.rejected.length+' refusée(s)':'');
+          } else {
+            pv='à transmettre lors de l\'appel (envoi en ligne momentanément indisponible)';
+          }
+          photoRow='<div class="rr"><span class="k">Photos</span><span class="v">'+esc(pv)+'</span></div>';
+        }
+        dvSelectedFiles.length=0; dvPhotoRender();
         $('#devisForm').hidden=true;
         var d=$('#devisDone'); d.hidden=false;
         d.innerHTML='<div class="note ok dvw" style="margin:0 auto">'+
@@ -1276,7 +1319,7 @@ body.dv-modal-open{overflow:hidden}
           '<div class="rr"><span class="k">Service(s)</span><span class="v">'+esc(services.join(', ')||'—')+'</span></div>'+
           '<div class="rr"><span class="k">Intervention</span><span class="v">'+esc([state.adresse,state.cp,state.ville].filter(Boolean).join(' '))+'</span></div>'+
           '<div class="rr"><span class="k">Agence</span><span class="v">'+esc(detectAgence(state.cp))+'</span></div>'+
-          '<div class="rr"><span class="k">Contact</span><span class="v">'+esc([state.prenom,state.nom].filter(Boolean).join(' '))+' · '+esc(state.tel)+'</span></div></div>'+
+          '<div class="rr"><span class="k">Contact</span><span class="v">'+esc([state.prenom,state.nom].filter(Boolean).join(' '))+' · '+esc(state.tel)+'</span></div>'+photoRow+'</div>'+
           '<p><strong>Prochaine étape :</strong> notre équipe étudie votre demande et vous recontacte pour compléter le dossier si nécessaire, puis vous transmet un <strong>chiffrage gratuit</strong> (généralement sous 24-48 h ouvrées). Besoin urgent ? <a href="tel:+33366100134">03 66 10 01 34</a>.</p>'+
           '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px"><a class="btn btn-ghost" href="/">Revenir à l\'accueil</a> <button class="btn btn-primary" data-step-go="launcher">Nouvelle demande</button></div></div>';
         window.scrollTo(0,0);
@@ -1325,6 +1368,44 @@ body.dv-modal-open{overflow:hidden}
     } else if(!on){ dvScreen.__dvFocused=false; }
   });
   dvMO.observe(dvScreen,{attributes:true,attributeFilter:['class']});
+  // --- Devis : photos facultatives (sélection + preview + upload via pipeline lead-photos existant) ---
+  var DV_MAX_PHOTOS=3, DV_MAX_SIZE=8*1024*1024;
+  var dvSelectedFiles=[];
+  var dvPhotoInput=$('#dv-photos'), dvPhotoList=$('#dvPhotosList'), dvPhotoErr=$('#dvPhotosErr');
+  function dvPhotoRender(){
+    if(!dvPhotoList) return;
+    dvPhotoList.innerHTML='';
+    dvSelectedFiles.forEach(function(f,i){
+      var li=document.createElement('li');
+      var img=document.createElement('img'); img.alt=''; img.src=URL.createObjectURL(f);
+      img.onload=function(){ try{URL.revokeObjectURL(img.src);}catch(e){} };
+      var b=document.createElement('button'); b.type='button'; b.className='dvw-ph-rm'; b.setAttribute('aria-label','Retirer la photo'); b.textContent='✕';
+      b.addEventListener('click', function(){ dvSelectedFiles.splice(i,1); dvPhotoRender(); });
+      li.appendChild(img); li.appendChild(b); dvPhotoList.appendChild(li);
+    });
+  }
+  function dvPhotoAdd(fileList){
+    if(dvPhotoErr){ dvPhotoErr.hidden=true; dvPhotoErr.textContent=''; }
+    var errs=[];
+    Array.prototype.forEach.call(fileList, function(f){
+      if(dvSelectedFiles.length>=DV_MAX_PHOTOS){ errs.push('Maximum '+DV_MAX_PHOTOS+' photos.'); return; }
+      var okType=/^image\/(jpeg|png|webp|heic|heif)$/.test(f.type) || /\.(jpe?g|png|webp|heic|heif)$/i.test(f.name);
+      if(!okType){ errs.push(f.name+' : format non pris en charge (JPEG/PNG/WebP/HEIC).'); return; }
+      if(f.size>DV_MAX_SIZE){ errs.push(f.name+' : trop lourd (max 8 Mo).'); return; }
+      dvSelectedFiles.push(f);
+    });
+    if(errs.length && dvPhotoErr){ dvPhotoErr.hidden=false; dvPhotoErr.textContent=errs[0]; }
+    dvPhotoRender();
+  }
+  if(dvPhotoInput){ dvPhotoInput.addEventListener('change', function(){ dvPhotoAdd(this.files); this.value=''; }); }
+  function dvUploadPhotos(id, token, files){
+    var fd=new FormData();
+    fd.append('lead_id', id); fd.append('upload_token', token);
+    files.slice(0,DV_MAX_PHOTOS).forEach(function(f){ fd.append('files', f); });
+    return fetch(SUPA+'/functions/v1/upload-lead-photos',{method:'POST',body:fd})
+      .then(function(r){ return r.ok? r.json().catch(function(){return null;}) : null; })
+      .catch(function(){ return null; });
+  }
   // entretien in-tunnel
   $('#ent-model').addEventListener('input', function(){ state._entModel=this.value; saveState(); });
   $('#entNext').addEventListener('click', function(){
