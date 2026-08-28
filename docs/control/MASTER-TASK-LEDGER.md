@@ -18,6 +18,8 @@
 | CMD-8 | 5444294942/5444326310/5449114555 | P0 | Refonte visuelle 2026 (rendu refusé : daté/vide/emoji) — cartes d'intention modernes SVG, réassurance, urgence intégrée, callback expandable, vides réduits | **READY_FOR_FLORIAN_VISUAL_QA** | `24425d85`,`209fcafb` | **QA preview PUBLIQUE** : smoke 16/16 ; SHA servi (redesign live, ancien absent) ; responsive home 1440/1024/768/390/375 (section 0 overflow) ; launcher 1024/375 (0 overflow) ; 4 intents→routes OK ; panier + back-nav OK ; console 0 blocage app | preview `deploy-preview-2` sert le redesign (captures Florian = cache navigateur) ; +indicateur de progression discret + icône panier SVG (0 emoji) + wording client (209fcafb) | **GO visuel Florian** (pas DONE) |
 | UX-COMMERCE-1 | 5441880835 / 5443822193 | P0/P1 | Moteur unifié plein écran (catalogue + diagnostic guidé → même panier → checkout) — **COMMERCE_FLOW=READY_FOR_QA** | **READY_FOR_QA** | `859aea37`(A-D),`95b50cf3`(E),`e5f919bb`(F) | smoke 15/16 (FAIL=admin-404 artefact local) + 12 scénarios E2E navigateur | `catalogue.html` moteur ; docs `benchmark-booking-commerce.md`+`help-confort-commerce-flow.md`+`E2E-COMMERCE.md` ; legacy supprimé ; 2 E2E principaux PASS | validation Florian ; gate paiement = CMD-6 |
 
+| HOME-1 | 5450178886 | P0 | Régression : blocs Réalisations + Actualités disparus de la home (étaient sidebars du wizard retiré commit E) | **READY_FOR_QA** | `09428cb3` | navigateur : 6 chantiers + 3 actus, 0 emoji/markdown, 0 overflow 375, 0 erreur console | section moderne restaurée (edge realisations-json + content/actualites) ; routes realisations/actualites intactes | validation visuelle Florian |
+
 ## Zone TUNNEL / FORMULAIRES (P0/P1)
 | ID | source | prio | demande | statut | SHA | reste |
 |---|---|---|---|---|---|---|
