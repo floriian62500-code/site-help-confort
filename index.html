@@ -1144,6 +1144,8 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
  <script>(function(){
   var SUPA='https://btcbjwqiivhpwoszomhg.supabase.co';
   function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  // nettoie les données importées (Facebook) : retire markdown ** et emoji pour un rendu pro sans emoji
+  function clean(t){return String(t==null?'':t).replace(/\*\*/g,'').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{2190}-\u{21FF}\u{FE0F}\u{1F1E6}-\u{1F1FF}]/gu,'').replace(/\s+/g,' ').trim();}
   var CH_TITLE=/remplacement|installation|d[ée]pose|r[ée]paration|intervention|chantier|panneau pvc|bris de glace|votre soupape|votre manom[èe]tre|votre mitigeur|votre tablier|votre cumulus|votre chaudi[èe]re|vitre d['']insert/i;
   var CH_RESUME=/help confort intervient pour|nos prestations\s*:|nous sommes (?:r[ée]cemment )?intervenus?|notre [ée]quipe est intervenue|nous intervenons rapidement|intervention r[ée]alis[ée]e/i;
   function load(url, isActu, grid, block, build){
@@ -1168,9 +1170,9 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
    var img=r.image_after||r.image||r.photo_apres||'';
    var lieu=r.ville||r.commune||r.city||'';
    return '<a class="hcs-card" href="'+url+'">'+
-    (img?'<div class="hcs-photo"><img loading="lazy" decoding="async" alt="'+esc(r.title||'Réalisation HELP Confort')+'" src="'+esc(img)+'" onerror="this.closest(\'.hcs-photo\').style.display=\'none\'">'+(r.metier?'<span class="hcs-tag">'+esc(r.metier)+'</span>':'')+'</div>':'')+
-    '<div class="hcs-body"><div class="hcs-ct">'+esc(r.title||'Chantier réalisé')+'</div>'+
-    (r.description?'<p class="hcs-ce">'+esc(String(r.description).slice(0,90))+'</p>':'')+
+    (img?'<div class="hcs-photo"><img loading="lazy" decoding="async" alt="'+esc(clean(r.title)||'Réalisation HELP Confort')+'" src="'+esc(img)+'" onerror="this.closest(\'.hcs-photo\').style.display=\'none\'">'+(r.metier?'<span class="hcs-tag">'+esc(clean(r.metier))+'</span>':'')+'</div>':'')+
+    '<div class="hcs-body"><div class="hcs-ct">'+esc(clean(r.title)||'Chantier réalisé')+'</div>'+
+    (r.description?'<p class="hcs-ce">'+esc(clean(r.description).slice(0,90))+'</p>':'')+
     (lieu?'<div class="hcs-cm"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>'+esc(lieu)+'</div>':'')+
     '</div></a>';
   });
@@ -1180,9 +1182,9 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
    var img=a.image||'';
    var d=a.date?new Date(a.date):null; var ds=d&&!isNaN(d)?d.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'}):'';
    return '<a class="hcs-card" href="'+esc(url)+'">'+
-    (img?'<div class="hcs-photo"><img loading="lazy" decoding="async" alt="'+esc(a.title||'Actualité HELP Confort')+'" src="'+esc(img)+'" onerror="this.closest(\'.hcs-photo\').style.display=\'none\'"><span class="hcs-tag hcs-tag--news">'+esc(a.categorie||'Article')+'</span></div>':'')+
-    '<div class="hcs-body"><div class="hcs-ct">'+esc(a.title||'')+'</div>'+
-    (a.resume?'<p class="hcs-ce">'+esc(String(a.resume).slice(0,90))+'</p>':'')+
+    (img?'<div class="hcs-photo"><img loading="lazy" decoding="async" alt="'+esc(clean(a.title)||'Actualité HELP Confort')+'" src="'+esc(img)+'" onerror="this.closest(\'.hcs-photo\').style.display=\'none\'"><span class="hcs-tag hcs-tag--news">'+esc(clean(a.categorie)||'Article')+'</span></div>':'')+
+    '<div class="hcs-body"><div class="hcs-ct">'+esc(clean(a.title))+'</div>'+
+    (a.resume?'<p class="hcs-ce">'+esc(clean(a.resume).slice(0,90))+'</p>':'')+
     (ds?'<div class="hcs-cm">'+esc(ds)+'</div>':'')+
     '</div></a>';
   });
