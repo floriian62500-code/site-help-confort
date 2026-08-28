@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,follow"><!-- SEO: tunnel transactionnel non indexé (pages métier = portes SEO) -->
 <title>Commander une intervention — HELP Confort</title>
-<meta name="description" content="Commandez une intervention HELP Confort : catalogue de prestations à prix ferme, panier multi-prestations, réservation avec rappel humain. Saint-Omer & Dunkerque.">
+<meta name="description" content="Commandez une intervention HELP Confort : prestations à prix affichés, ajoutez-en plusieurs si besoin, réservation avec rappel humain. Saint-Omer & Dunkerque.">
 <link rel="preconnect" href="https://btcbjwqiivhpwoszomhg.supabase.co" crossorigin>
 <style>
 :root{--bleu:#0DA0CF;--bleu-d:#0A86ad;--nuit:#0A1428;--ok:#16a34a;--gris:#64748b;--bord:#E5EDF3;--bg:#F7FAFC;--orange:#E55510;--devis:#d97706}
@@ -13,6 +13,12 @@
 html,body{margin:0}
 body{font-family:system-ui,Segoe UI,Roboto,sans-serif;color:var(--nuit);background:var(--bg);line-height:1.4}
 .topbar{position:sticky;top:0;z-index:40;background:var(--nuit);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 16px}
+.topbar-title{font-size:.95rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:520px){.topbar-title{display:none}}
+.topbar a.exit,.cartbtn{display:inline-flex;align-items:center;gap:7px}
+.progress{position:sticky;top:44px;z-index:39;height:3px;background:rgba(13,160,207,.14)}
+.progress-bar{display:block;height:100%;width:5%;background:linear-gradient(90deg,var(--bleu),#1FC4F0);border-radius:0 3px 3px 0;transition:width .4s cubic-bezier(.16,1,.3,1)}
+@media(prefers-reduced-motion:reduce){.progress-bar{transition:none}}
 .topbar a.exit{color:#cfe6f0;text-decoration:none;font-weight:600;font-size:.9rem}
 .topbar a.exit:hover{color:#fff}
 .cartbtn{border:0;border-radius:10px;padding:8px 12px;font-weight:800;cursor:pointer;background:var(--bleu);color:#fff;font-size:.9rem}
@@ -128,10 +134,11 @@ h2{font-size:1.2rem;margin:.2em 0}
 </head>
 <body>
 <div class="topbar">
-  <a class="exit" href="/" aria-label="Quitter et revenir à l'accueil">← Quitter</a>
-  <strong style="font-size:.95rem">Commander une intervention</strong>
-  <button class="cartbtn" id="cartBtn" aria-label="Voir mon panier">🛒 Mon panier (<span id="cartCount">0</span>)</button>
+  <a class="exit" href="/" aria-label="Quitter et revenir à l'accueil"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Quitter</a>
+  <strong class="topbar-title">Commander une intervention</strong>
+  <button class="cartbtn" id="cartBtn" aria-label="Voir mon panier"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> Mon panier (<span id="cartCount">0</span>)</button>
 </div>
+<div class="progress" role="progressbar" aria-label="Progression de la commande" aria-valuemin="0" aria-valuemax="100" aria-valuenow="5" id="progress"><span class="progress-bar" id="progressBar"></span></div>
 
 <div class="layout" id="layout">
  <div class="main">
@@ -335,6 +342,10 @@ h2{font-size:1.2rem;margin:.2em 0}
     state._step=step; saveState();
     if(!opts.noHash){ var h='#step='+step+(state._fam?('&cat='+state._fam):''); if(location.hash!==h){ history.pushState({step:step},'',h); } }
     window.scrollTo(0,0);
+    // indicateur de progression discret (funnel → %)
+    var PROG={launcher:5,catalogue:28,diagnosis:28,sheet:38,cart:52,urgence:64,address:76,coords:88,confirm:100};
+    var pct=PROG[step]||5; var pb=$('#progressBar'), pr=$('#progress');
+    if(pb) pb.style.width=pct+'%'; if(pr) pr.setAttribute('aria-valuenow',String(pct));
     track('step_'+step);
     if(step==='cart') renderCartFull();
     if(step==='confirm') renderConfirm();
