@@ -20,7 +20,7 @@
 
 | HOME-1 | 5450178886 | P0 | Régression : blocs Réalisations + Actualités disparus de la home (étaient sidebars du wizard retiré commit E) | **READY_FOR_QA** | `09428cb3` | navigateur : 6 chantiers + 3 actus, 0 emoji/markdown, 0 overflow 375, 0 erreur console | section moderne restaurée (edge realisations-json + content/actualites) ; routes realisations/actualites intactes | validation visuelle Florian |
 
-| CBK-1 | 5450259719 | P0 | Formulaire 'Être rappelé' home en échec réel (message rouge) | **READY_FOR_QA** | `d099417b` | POST→HTTP 200 success:true (lead créé) ; UX succès/échec/double-clic testés | CAUSE : form_type='home_callback' inconnu → contrat edge défaut 'demande_metier' exige cp+ville → 400 ; FIX front : form_type='rappel' | validation Florian |
+| CBK-1 | 5450259719 / 5450890741 | P0 | Rappel : classer comme DEMANDE DE RAPPEL + capturer prénom/nom + adresse | **READY_FOR_QA** (front+backend) ; **email = GATE deploy edge** | `d099417b`,`a9a73c53` | payload home+tunnel = prénom/nom distincts + adresse/cp/ville ; insert colonnes standards ; deno check PASS | 2 formulaires rappel + notify-lead-v6 conditionnel rappel (badge/objet/adresse/actions) | GO Florian : **déployer notify-lead-v6** + QA email |
 
 | UX-COMMERCE-2 | 5450207118 | P0 | Unifier 5 parcours (Devis/Entretien = impasses hors tunnel) dans le hub /catalogue | **READY_FOR_QA** | `14fd9bf4` | navigateur 1440+390 : devis/entretien/rappel in-tunnel atteignent confirmation ; cart flow intact ; 0 overflow ; 0 erreur console | flow map `docs/ux/commerce-flow-map.md` (`b62f58b5`) ; steps devis/entretien/rappel + chrome tunnel + state._mode | QA visuelle Florian (5 parcours) |
 

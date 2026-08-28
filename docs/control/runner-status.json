@@ -1,11 +1,11 @@
 {
   "state": "SITE_WORK_ACTIVE",
   "current_task": "GO visuel Florian ; puis gate paiement CMD-6 ; TUN-2/SEO-2/SEC-5/RSP-1",
-  "last_completed_task": "Audit GEO/AEO + SEO local livré (docs/seo/AI-VISIBILITY... 9bcf3569)",
-  "last_report": "docs/control/outbox/claude/RUN-2026-08-28-1025.md",
+  "last_completed_task": "Callback classé rappel + adresse (front+backend recette ; email edge=GATE) a9a73c53",
+  "last_report": "docs/control/outbox/claude/RUN-2026-08-28-1050.md",
   "last_commit_sha": "80902297",
-  "last_poll_at": "2026-08-28T10:25:00Z",
-  "heartbeat": "2026-08-28T10:25:00Z",
+  "last_poll_at": "2026-08-28T10:50:00Z",
+  "heartbeat": "2026-08-28T10:50:00Z",
   "branch": "recette",
   "remaining_tasks": [
     "SEC-5 second pass C→J",
@@ -30,7 +30,7 @@
   "needs_florian": true,
   "note": "Chantier #9 EN COURS (state ACTIVE/INCOMPLETE). Restent : sections C→J du second pass, catalogue/panier sous-lots 2-3, gates (Stripe P1 / migrations / pricing serveur). Discipline persistance : run_id par cycle (outbox==status), verif origin/recette avant tout etat terminal. Ne jamais marquer le chantier clos tant que ces items ne sont pas prouves.",
   "runner_autonomous_activation": "PREP_COMPLETE=YES — PR #10 tip RÉEL cdcafcac (MERGEABLE, diff 3 fichiers, 0 dérive app), 20/20 gardes PASS. Docs: RUNNER-ACTIVATION-CHECKLIST.md + RUNNER-E2E-WITNESS.md. Ordre gestes Florian: secret CLAUDE_CODE_OAUTH_TOKEN -> branch protection main SANS bypass Actions -> merge PR #10 -> E2E témoin. RUN-1 reste BLOCKED_HUMAN tant que E2E témoin réel non PASS.",
-  "run_id": "run-20260828-1025-geoaudit",
+  "run_id": "run-20260828-1050-callback2",
   "ledger": "docs/control/MASTER-TASK-LEDGER.md",
   "open_p0": [
     "CMD-1 modale (READY_FOR_QA)",
