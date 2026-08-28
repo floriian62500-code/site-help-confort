@@ -42,7 +42,10 @@ serve(async (req) => {
     const replyTo = lead.email || cfg.reply_to || 'florian.dhaillecourt@helpconfort.com';
     const metierLabel = labelMetierPlain(lead.metier);
     const prenomNom = [lead.prenom, lead.nom].filter(Boolean).join(' ').trim() || lead.email || 'Client';
-    const subject = `Nouvelle demande ${metierLabel}${lead.ville ? ' à ' + lead.ville : ''} — ${prenomNom}`;
+    const isRappel = ((lead.metadata?.form_type || lead.type_demande || '') + '').toLowerCase() === 'rappel';
+    const subject = isRappel
+      ? `Demande de rappel — ${prenomNom}${lead.telephone ? ' — ' + lead.telephone : ''}`
+      : `Nouvelle demande ${metierLabel}${lead.ville ? ' à ' + lead.ville : ''} — ${prenomNom}`;
     const html = buildHtml(lead, tokens);
     const text = buildText(lead, tokens);
     const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');

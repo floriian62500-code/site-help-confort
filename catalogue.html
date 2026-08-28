@@ -238,7 +238,13 @@ button.assist-item{font-family:inherit;cursor:pointer}
     <div style="max-width:560px">
       <div class="two">
         <div class="field"><label for="rap-prenom">Prénom</label><input id="rap-prenom" type="text" autocomplete="given-name"><div class="err">Prénom requis.</div></div>
-        <div class="field"><label for="rap-tel">Téléphone</label><input id="rap-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 12 34 56 78"><div class="err">Numéro français valide requis.</div></div>
+        <div class="field"><label for="rap-nom">Nom</label><input id="rap-nom" type="text" autocomplete="family-name"><div class="err">Nom requis.</div></div>
+      </div>
+      <div class="field"><label for="rap-tel">Téléphone</label><input id="rap-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 12 34 56 78"><div class="err">Numéro français valide requis.</div></div>
+      <div class="field"><label for="rap-adresse">Adresse</label><input id="rap-adresse" type="text" autocomplete="street-address" data-autocomplete-skip placeholder="12 rue de la Paix"><div class="err">Adresse requise.</div></div>
+      <div class="two">
+        <div class="field"><label for="rap-cp">Code postal</label><input id="rap-cp" inputmode="numeric" maxlength="5" placeholder="62500"><div class="err">Code postal à 5 chiffres.</div></div>
+        <div class="field"><label for="rap-ville">Ville</label><input id="rap-ville" type="text" placeholder="Saint-Omer"><div class="err">Ville requise.</div></div>
       </div>
       <div class="field"><label for="rap-desc">Votre besoin (facultatif)</label><textarea id="rap-desc" rows="2" placeholder="En quelques mots…"></textarea></div>
       <a class="assist-item assist-urg" href="tel:+33366100134" style="margin-bottom:12px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg> Urgence ? Appelez le 03 66 10 01 34</a>
@@ -820,18 +826,20 @@ button.assist-item{font-family:inherit;cursor:pointer}
     if(badE){ $('#entEnergie').scrollIntoView({block:'center'}); return; } if(badT) return;
     state._entModel=$('#ent-model').value.trim(); saveState(); go('address');
   });
-  // rappel (repli urgence) — soumission directe
-  $('#rap-prenom').addEventListener('input',function(){ state._rapPrenom=this.value; saveState(); });
-  $('#rap-tel').addEventListener('input',function(){ state._rapTel=this.value; saveState(); });
+  // rappel (repli urgence) — soumission directe (prénom+nom+tél+adresse)
+  ['rap-prenom','rap-nom','rap-tel','rap-adresse','rap-cp','rap-ville'].forEach(function(id){ var el=$('#'+id); if(el) el.addEventListener('input',function(){ if(id==='rap-cp') this.value=this.value.replace(/\D/g,'').slice(0,5); }); });
   $('#rapNext').addEventListener('click', function(){
     var btn=$('#rapNext'); if(btn.dataset.sending==='1') return;
-    var pr=$('#rap-prenom'), tel=$('#rap-tel');
-    var bP=!nameOk(pr.value), bT=!phoneFrOk(tel.value);
-    setInvalid(fieldOf('rap-prenom'),bP); setInvalid(fieldOf('rap-tel'),bT);
-    if(bP){ pr.focus(); return; } if(bT){ tel.focus(); return; }
+    var pr=$('#rap-prenom'), no=$('#rap-nom'), tel=$('#rap-tel'), adr=$('#rap-adresse'), cp=$('#rap-cp'), vi=$('#rap-ville');
+    var bP=!nameOk(pr.value), bN=!nameOk(no.value), bT=!phoneFrOk(tel.value), bA=!nameOk(adr.value), bC=!cpOk(cp.value), bV=!nameOk(vi.value);
+    setInvalid(fieldOf('rap-prenom'),bP); setInvalid(fieldOf('rap-nom'),bN); setInvalid(fieldOf('rap-tel'),bT); setInvalid(fieldOf('rap-adresse'),bA); setInvalid(fieldOf('rap-cp'),bC); setInvalid(fieldOf('rap-ville'),bV);
+    var fb=bP?pr:bN?no:bT?tel:bA?adr:bC?cp:bV?vi:null;
+    if(fb){ fb.focus(); return; }
     btn.dataset.sending='1'; var o=btn.textContent; btn.disabled=true; btn.textContent='Envoi…';
     fetch(SUPA+'/functions/v1/submit-lead-v6',{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({
-      prenom:pr.value.trim(), telephone:tel.value.trim(), message:($('#rap-desc').value||'').trim()||'Demande de rappel (moteur commande)',
+      prenom:pr.value.trim(), nom:no.value.trim(), telephone:tel.value.trim(),
+      adresse:adr.value.trim(), code_postal:cp.value.trim(), ville:vi.value.trim(),
+      message:($('#rap-desc').value||'').trim()||'Demande de rappel (moteur commande)',
       type_demande:'rappel', form_type:'rappel', source:'commerce_engine_rappel', source_page:location.href
     })}).then(function(r){ return r.ok? r.json().catch(function(){return{};}) : Promise.reject(r.status); })
       .then(function(){ var m=$('#rapMsg'); m.hidden=false; m.className='note ok'; m.textContent='Merci ✓ Un conseiller de votre agence locale vous rappelle rapidement.'; btn.textContent=o; btn.disabled=false; btn.dataset.sending='0'; })
