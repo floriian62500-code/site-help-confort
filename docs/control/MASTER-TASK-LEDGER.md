@@ -63,7 +63,7 @@
 | SEO-2 | 5438239688 L2/3/9 | P1 | Architecture locale + contenu + tests garde-fous SEO | **BACKLOG** | — | séquencer |
 | SEO-3 | 5438239688 L4-8 | P2 | GBP/backlinks/tracking/Ads | **BLOCKED_HUMAN** | plans | accès comptes Google |
 
-| SEO-4 | 5450850610 | P1 | Audit visibilité IA (GEO/AEO) + SEO local + backlog | **AUDIT LIVRÉ** (implémentation après P0) | `9bcf3569` | audit réel (robots/sitemap/canonicals/schema/NAP/crawlers documentés) | `docs/seo/AI-VISIBILITY-GEO-AEO-AUDIT.md` | GO Florian pour P1 (hôte canonique, validation schema) |
+| SEO-4 | 5450850610 / 5450879322 | P1 | Audit + BASELINE factuelle visibilité IA (GEO/AEO) + SEO local | **BASELINE LIVRÉE** (implémentation P1 après GO) | `9bcf3569`,`aab39c08` | inventaire URL réel + crawlers datés + panel 64 requêtes | `AI-VISIBILITY-GEO-AEO-AUDIT.md` + `GEO-BENCHMARK.md` | GO Florian P1 (hôte canonique, validation schema, doorway) + actions humaines |
 
 ## Zone GATES DB / RELEASE
 | ID | source | prio | demande | statut | reste |
