@@ -662,7 +662,15 @@ button.assist-item{font-family:inherit;cursor:pointer}
     if(mode==='entretien') return !!(state._entEnergie && state._entType);
     return cart&&cart.count()>0;
   }
-  function renderConfirm(){ if(confirmReady()) $('#confRecap').innerHTML=confRecapHtml(); else $('#confRecap').innerHTML='<div class="note warn">Votre demande est incomplète. <button class="back" data-step-go="launcher">Recommencer</button></div>'; }
+  function renderConfirm(){
+    // réinitialise l'écran (évite d'afficher une confirmation précédente après « Nouvelle demande »)
+    var done=$('#confDone'); if(done){ done.hidden=true; done.innerHTML=''; }
+    var act=$('#confActions'); if(act) act.hidden=false;
+    var cb=$('#confBack'); if(cb) cb.hidden=false;
+    var se=$('#submitErr'); if(se) se.remove();
+    var sb=$('#submitBtn'); if(sb){ sb.disabled=false; sb.dataset.sending='0'; sb.innerHTML='Envoyer ma demande'; }
+    if(confirmReady()) $('#confRecap').innerHTML=confRecapHtml(); else $('#confRecap').innerHTML='<div class="note warn">Votre demande est incomplète. <button class="back" data-step-go="launcher">Recommencer</button></div>';
+  }
 
   function buildLeadPayload(){
     var mode=state._mode||'cart';
