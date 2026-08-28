@@ -610,12 +610,31 @@ h2{font-size:1.2rem;margin:.2em 0}
   function fieldOf(inputId){ return $('#'+inputId).closest('.field'); }
 
   // ---------- CONFIRMATION / SUBMIT ----------
+  function contactBlock(){
+    return '<p><strong>Intervention :</strong> '+esc([state.adresse,state.cp,state.ville].filter(Boolean).join(' '))+'<br>'+
+      '<strong>Agence :</strong> '+esc(detectAgence(state.cp))+'<br>'+
+      '<strong>Contact :</strong> '+esc([state.prenom,state.nom].filter(Boolean).join(' '))+' · '+esc(state.tel||'')+' · '+esc(state.email||'')+'</p>';
+  }
   function confRecapHtml(){
+    var mode=state._mode||'cart';
+    if(mode==='devis'){
+      return '<div style="max-width:640px"><div class="summary" style="position:static"><h3>Demande de devis</h3>'+
+        '<div class="sum-line"><span>Domaine</span><span>'+esc(state._devisMetier||'—')+'</span></div>'+
+        (state._devisDesc?'<p class="muted" style="margin:8px 0 0">'+esc(state._devisDesc)+'</p>':'')+'</div>'+
+        '<div class="note">Sans engagement — l\'agence étudie votre projet et vous transmet un chiffrage (généralement sous 24-48 h ouvrées).</div>'+contactBlock()+'</div>';
+    }
+    if(mode==='entretien'){
+      return '<div style="max-width:640px"><div class="summary" style="position:static"><h3>Entretien &amp; contrats</h3>'+
+        '<div class="sum-line"><span>Énergie</span><span>'+esc(state._entEnergie||'—')+'</span></div>'+
+        '<div class="sum-line"><span>Besoin</span><span>'+esc(state._entType||'—')+'</span></div>'+
+        (state._entModel?'<div class="sum-line"><span>Équipement</span><span>'+esc(state._entModel)+'</span></div>':'')+'</div>'+
+        '<div class="note">L\'agence vous rappelle pour convenir de l\'intervention d\'entretien ou du contrat (attestation légale incluse).</div>'+contactBlock()+'</div>';
+    }
     var lines = cart&&cart.count() ? cart.lines() : [];
-    var tot=cart?Math.round(cart.totalTtcDisplay()):0, mode=cart?cart.mode():'vide';
-    var statut = mode==='paiement'
+    var tot=cart?Math.round(cart.totalTtcDisplay()):0, cmode=cart?cart.mode():'vide';
+    var statut = cmode==='paiement'
       ? 'Prestations à prix ferme (total indicatif '+tot+' € TTC, confirmé par l\'agence). Aucun paiement en ligne à ce stade.'
-      : (mode==='mixte'
+      : (cmode==='mixte'
           ? 'Panier mixte (prix ferme + sur devis) : demande globale, sans encaissement. L\'agence transmet un chiffrage complet.'
           : 'Demande de devis / diagnostic : sans paiement, l\'agence répond avec un chiffrage.');
     return '<div style="max-width:640px">'+
@@ -631,29 +650,52 @@ h2{font-size:1.2rem;margin:.2em 0}
       '<strong>Contact :</strong> '+esc([state.prenom,state.nom].filter(Boolean).join(' '))+' · '+esc(state.tel||'')+' · '+esc(state.email||'')+'</p>'+
       '</div>';
   }
-  function renderConfirm(){ if(cart&&cart.count()) $('#confRecap').innerHTML=confRecapHtml(); else $('#confRecap').innerHTML='<div class="note warn">Votre panier est vide. <button class="back" data-step-go="launcher">Recommencer</button></div>'; }
+  function confirmReady(){
+    var mode=state._mode||'cart';
+    if(mode==='devis') return !!(state._devisMetier && (state._devisDesc||'').trim().length>=10);
+    if(mode==='entretien') return !!(state._entEnergie && state._entType);
+    return cart&&cart.count()>0;
+  }
+  function renderConfirm(){ if(confirmReady()) $('#confRecap').innerHTML=confRecapHtml(); else $('#confRecap').innerHTML='<div class="note warn">Votre demande est incomplète. <button class="back" data-step-go="launcher">Recommencer</button></div>'; }
 
   function buildLeadPayload(){
+    var mode=state._mode||'cart';
+    if(mode==='devis'){
+      return { prenom:state.prenom||null, nom:state.nom||null, email:state.email||null, telephone:state.tel||null,
+        ville:state.ville||null, code_postal:state.cp||null, adresse:state.adresse||null, metier:state._devisMetier||null,
+        type_demande:'devis', form_type:'devis_express',
+        message:'Demande de devis ('+esc(state._devisMetier||'—')+') via moteur unifié :\n'+(state._devisDesc||''),
+        source:'commerce_engine_devis', source_page:location.href, utm:{ mode:'devis', metier:state._devisMetier||null, wizard_tags:['commerce-engine','devis'] } };
+    }
+    if(mode==='entretien'){
+      return { prenom:state.prenom||null, nom:state.nom||null, email:state.email||null, telephone:state.tel||null,
+        ville:state.ville||null, code_postal:state.cp||null, adresse:state.adresse||null, metier:'Entretien chaudière',
+        type_demande:'entretien', form_type:'demande_metier',
+        message:'Entretien & contrats via moteur unifié :\n- Énergie : '+(state._entEnergie||'—')+'\n- Besoin : '+(state._entType||'—')+(state._entModel?('\n- Équipement : '+state._entModel):''),
+        source:'commerce_engine_entretien', source_page:location.href, utm:{ mode:'entretien', energie:state._entEnergie||null, type:state._entType||null, wizard_tags:['commerce-engine','entretien'] } };
+    }
     var lines = cart&&cart.count() ? cart.lines() : [];
-    var mode = cart?cart.mode():'devis';
+    var cmode = cart?cart.mode():'devis';
     var famList = lines.map(function(l){return l.slug;});
     var recapMsg = lines.map(function(l){ return '• '+l.name+' ×'+l.qty+(l.requires_quote?' — sur devis':' — '+(Math.round(l.ttc)*l.qty)+' € TTC'); }).join('\n');
     return {
       prenom: state.prenom||null, nom: state.nom||null, email: state.email||null, telephone: state.tel||null,
-      ville: state.ville||null, code_postal: state.cp||null, adresse: state.adresse||null,
-      metier: (lines[0]&&(byFam[state._diagFam]||[]).length? null : null),
-      type_demande: (mode==='paiement'?'reservation':(mode==='mixte'?'mixte':'devis')),
-      form_type: 'commerce_engine',
+      ville: state.ville||null, code_postal: state.cp||null, adresse: state.adresse||null, metier: null,
+      type_demande: (cmode==='paiement'?'reservation':(cmode==='mixte'?'mixte':'devis')),
+      form_type: 'demande_metier',
       message: 'Commande via moteur unifié ('+ (cart?cart.count():0) +' prestation(s)) :\n'+recapMsg+(state.urgDesc?('\n\nPrécision client : '+state.urgDesc):''),
       source: 'commerce_engine', source_page: location.href,
-      utm: { cart: (cart?cart.serverPayload():[]), cart_mode: mode, urgence: (state.urg||null), slugs: famList, wizard_tags:['commerce-engine'] }
+      utm: { cart: (cart?cart.serverPayload():[]), cart_mode: cmode, urgence: (state.urg||null), slugs: famList, wizard_tags:['commerce-engine'] }
     };
   }
   function submit(){
     var btn=$('#submitBtn');
-    if(btn.dataset.sending==='1') return; btn.dataset.sending='1';
-    if(!cart||!cart.count()){ go('cart'); btn.dataset.sending='0'; return; }
+    if(btn.dataset.sending==='1') return;
+    if(!confirmReady()){ go(state._mode==='devis'?'devis':(state._mode==='entretien'?'entretien':'cart')); return; }
+    btn.dataset.sending='1';
+    var mode=state._mode||'cart';
     var orig=btn.innerHTML; btn.disabled=true; btn.innerHTML='Envoi en cours…';
+    var se=$('#submitErr'); if(se) se.remove();
     fetch(SUPA+'/functions/v1/submit-lead-v6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(buildLeadPayload()),keepalive:true})
       .then(function(r){ return r.ok? r.json().catch(function(){return {};}) : Promise.reject(r.status); })
       .then(function(data){
@@ -661,19 +703,25 @@ h2{font-size:1.2rem;margin:.2em 0}
         track('confirmation');
         $('#confActions').hidden=true; $('#confBack').hidden=true;
         $('#confDone').hidden=false;
+        var head = mode==='devis' ? 'Demande de devis envoyée ✓' : (mode==='entretien'?'Demande d\'entretien envoyée ✓':'Demande enregistrée ✓');
+        var subline = mode==='devis' ? 'Devis '+esc(state._devisMetier||'')+' · Agence '+esc(detectAgence(state.cp))
+          : (mode==='entretien' ? 'Entretien '+esc(state._entEnergie||'')+' · Agence '+esc(detectAgence(state.cp))
+          : cart.count()+' prestation(s) · Agence '+esc(detectAgence(state.cp)));
+        var next = mode==='devis' ? 'L\'agence étudie votre projet et vous transmet un chiffrage sous 24-48 h ouvrées.'
+          : (mode==='entretien' ? 'L\'agence vous rappelle pour convenir de l\'entretien ou du contrat.'
+          : 'Notre équipe vous rappelle sous 2 h ouvrées pour confirmer le créneau et finaliser.');
         $('#confDone').innerHTML='<div class="note ok" style="max-width:640px">'+
-          '<h2 style="margin:.1em 0">Demande enregistrée ✓</h2>'+
+          '<h2 style="margin:.1em 0">'+head+'</h2>'+
           '<p>Référence <strong>'+ref+'</strong>'+(data&&data.id?' · dossier '+esc(String(data.id)):'')+'</p>'+
-          '<p>'+cart.count()+' prestation(s) · Agence '+esc(detectAgence(state.cp))+'</p>'+
-          '<p><strong>Prochaines étapes :</strong> notre équipe vous rappelle sous 2 h ouvrées pour confirmer le créneau et finaliser. Contact direct : <a href="tel:+33366100134">03 66 10 01 34</a>.</p>'+
-          '<p class="muted">Aucun paiement en ligne : le règlement se fait à l\'intervention, montant confirmé par l\'agence.</p>'+
-          '<a class="btn btn-ghost" href="/">Revenir à l\'accueil</a></div>';
-        try{ cart.clear(); }catch(e){} refreshCartUI();
+          '<p>'+subline+'</p>'+
+          '<p><strong>Prochaines étapes :</strong> '+next+' Contact direct : <a href="tel:+33366100134">03 66 10 01 34</a>.</p>'+
+          '<a class="btn btn-ghost" href="/">Revenir à l\'accueil</a> <button class="btn btn-primary" data-step-go="launcher">Nouvelle demande</button></div>';
+        if(mode==='cart'){ try{ cart.clear(); }catch(e){} refreshCartUI(); }
         state.urg=null; state.urgDesc=null; saveState();
       })
       .catch(function(){
         btn.disabled=false; btn.innerHTML=orig; btn.dataset.sending='0';
-        $('#confActions').insertAdjacentHTML('afterbegin','<div class="note warn" id="submitErr">L\'envoi a échoué. Réessayez, ou appelez le 03 66 10 01 34.</div>');
+        $('#confActions').insertAdjacentHTML('afterbegin','<div class="note warn" id="submitErr">L\'envoi a échoué. Vos informations sont conservées — réessayez, ou appelez le 03 66 10 01 34.</div>');
       });
   }
 
