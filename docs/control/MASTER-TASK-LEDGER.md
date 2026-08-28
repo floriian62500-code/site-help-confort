@@ -74,6 +74,7 @@
 |---|---|---|---|---|---|
 | REL-1 | #9 T11 | P1 | Release flow /recette.html 4 états | **BLOCKED_HUMAN** | migration 4 tables (GO DB) |
 | MIG-1 | #9 | P1 | Migrations durcissement (leads/storage/app_settings) | **BLOCKED_HUMAN** | GO apply |
+| RC-1 | 5451349606 | P0 | Doc unique Release Candidate `docs/release/GO-LIVE-CHECKLIST.md` (A validations humaines / B auto-cert Claude / C bloquants prod / D RC / E post-GO) — GO/NO-GO en 10-15 min | **READY_FOR_QA** (RC_STATUS=NOT_READY) | tenu à jour ; `RC_STATUS=NOT_READY PROD_BLOCKERS=2 HUMAN_CHECKS=5 TECH_CHECKS_PASS=11/18 GATED_ACTIONS=6 RC_SHA=none` ; figer RC1 après SEC-3+SEC-2 |
 
 ## Synthèse
 - **OPEN_P0** : CMD-1..4 (READY_FOR_QA), SEC-1/3, MET-1, RUN-3(en cours), CMD-6/SEC-3 (BLOCKED gate Stripe).
