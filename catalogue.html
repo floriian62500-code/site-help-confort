@@ -166,14 +166,80 @@ h2{font-size:1.2rem;margin:.2em 0}
     <div class="assist">
       <span class="assist-label">Autre besoin&nbsp;?</span>
       <a class="assist-item assist-urg" href="tel:+33366100134"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg> Urgence — 03 66 10 01 34</a>
-      <a class="assist-item" href="/devis-express.html"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg> Projet sur mesure — devis</a>
-      <a class="assist-item" href="/contrats-entretien.html"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3v6c0 5-3.4 8.5-8 11-4.6-2.5-8-6-8-11V5z"/></svg> Entretien &amp; contrats</a>
+      <button class="assist-item" type="button" data-step-go="devis"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg> Projet sur mesure — devis</button>
+      <button class="assist-item" type="button" data-step-go="entretien"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3v6c0 5-3.4 8.5-8 11-4.6-2.5-8-6-8-11V5z"/></svg> Entretien &amp; contrats</button>
     </div>
     <ul class="lchr-reassure">
       <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M16 11l2 2 4-4"/></svg> Techniciens salariés</li>
       <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Saint-Omer &amp; Dunkerque</li>
       <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4L12 22l-9-9V3h10z"/></svg> Prix &amp; devis clairs</li>
     </ul>
+  </section>
+
+  <!-- 1b. DEVIS (projet sur mesure) — in-tunnel -->
+  <section class="screen" id="s-devis" data-step="devis">
+    <div class="tnav"><button class="back" data-step-go="launcher">← Retour</button><button class="back back-hub" data-step-go="launcher">Accueil commande</button></div>
+    <h1>Demander un devis</h1>
+    <p class="sub">Travaux &amp; projets sur mesure. Quelques infos et l'agence vous transmet un chiffrage — sans engagement.</p>
+    <div style="max-width:620px">
+      <div class="field"><label>Quel domaine ?</label>
+        <div class="chips" id="devisMetiers" role="group" aria-label="Domaine">
+          <button type="button" class="chip" data-devismetier="Plomberie">Plomberie</button>
+          <button type="button" class="chip" data-devismetier="Chauffage">Chauffage</button>
+          <button type="button" class="chip" data-devismetier="Électricité">Électricité</button>
+          <button type="button" class="chip" data-devismetier="Serrurerie">Serrurerie</button>
+          <button type="button" class="chip" data-devismetier="Vitrerie">Vitrerie</button>
+          <button type="button" class="chip" data-devismetier="Travaux / rénovation">Travaux / rénovation</button>
+        </div>
+        <div class="err">Choisissez un domaine.</div>
+      </div>
+      <div class="field"><label for="devis-desc">Décrivez votre projet</label><textarea id="devis-desc" rows="4" placeholder="Ex. rénovation salle de bain complète, remplacement tableau électrique…"></textarea><div class="err">Ajoutez quelques mots (min. 10 caractères).</div></div>
+      <div class="note">📷 Des photos ? Vous pourrez les envoyer à l'agence lors du rappel — pas besoin de les joindre ici.</div>
+      <button class="btn btn-primary btn-lg" id="devisNext">Continuer →</button>
+    </div>
+  </section>
+
+  <!-- 1c. ENTRETIEN & contrats — in-tunnel -->
+  <section class="screen" id="s-entretien" data-step="entretien">
+    <div class="tnav"><button class="back" data-step-go="launcher">← Retour</button><button class="back back-hub" data-step-go="launcher">Accueil commande</button></div>
+    <h1>Entretien &amp; contrats</h1>
+    <p class="sub">Chaudière gaz ou fioul : entretien ponctuel ou contrat annuel avec attestation légale.</p>
+    <div style="max-width:620px">
+      <div class="field"><label>Énergie</label>
+        <div class="chips" id="entEnergie" role="group" aria-label="Énergie">
+          <button type="button" class="chip" data-entenergie="Gaz">Gaz</button>
+          <button type="button" class="chip" data-entenergie="Fioul">Fioul</button>
+          <button type="button" class="chip" data-entenergie="Autre / je ne sais pas">Je ne sais pas</button>
+        </div>
+        <div class="err">Choisissez l'énergie.</div>
+      </div>
+      <div class="field"><label>Votre besoin</label>
+        <div class="chips" id="entType" role="group" aria-label="Type de besoin">
+          <button type="button" class="chip" data-enttype="Entretien ponctuel">Entretien ponctuel</button>
+          <button type="button" class="chip" data-enttype="Contrat annuel">Contrat annuel</button>
+        </div>
+        <div class="err">Choisissez un type.</div>
+      </div>
+      <div class="field"><label for="ent-model">Marque / modèle / âge (facultatif)</label><input id="ent-model" type="text" placeholder="Ex. Saunier Duval, ~8 ans"></div>
+      <button class="btn btn-primary btn-lg" id="entNext">Continuer →</button>
+    </div>
+  </section>
+
+  <!-- 1d. RAPPEL (repli urgence / callback) — in-tunnel -->
+  <section class="screen" id="s-rappel" data-step="rappel">
+    <div class="tnav"><button class="back" data-step-go="launcher">← Retour</button></div>
+    <h1>Être rappelé</h1>
+    <p class="sub">Laissez vos coordonnées, un conseiller de votre agence locale vous rappelle rapidement.</p>
+    <div style="max-width:560px">
+      <div class="two">
+        <div class="field"><label for="rap-prenom">Prénom</label><input id="rap-prenom" type="text" autocomplete="given-name"><div class="err">Prénom requis.</div></div>
+        <div class="field"><label for="rap-tel">Téléphone</label><input id="rap-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 12 34 56 78"><div class="err">Numéro français valide requis.</div></div>
+      </div>
+      <div class="field"><label for="rap-desc">Votre besoin (facultatif)</label><textarea id="rap-desc" rows="2" placeholder="En quelques mots…"></textarea></div>
+      <a class="assist-item assist-urg" href="tel:+33366100134" style="margin-bottom:12px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg> Urgence ? Appelez le 03 66 10 01 34</a>
+      <button class="btn btn-primary btn-lg" id="rapNext">Être rappelé</button>
+      <p id="rapMsg" class="note" role="status" aria-live="polite" hidden></p>
+    </div>
   </section>
 
   <!-- 1. CATALOGUE (mode "je sais") -->
@@ -330,20 +396,26 @@ h2{font-size:1.2rem;margin:.2em 0}
   function track(ev){ try{ (window.__hcFunnel=window.__hcFunnel||[]).push({ev:ev,t:(new Date()).getTime()}); if(window.dataLayer) window.dataLayer.push({event:'hc_'+ev}); }catch(e){} }
 
   // ---------- navigation entre écrans ----------
-  var STEPS=['launcher','catalogue','diagnosis','sheet','cart','urgence','address','coords','confirm'];
+  var STEPS=['launcher','catalogue','diagnosis','sheet','cart','urgence','address','coords','confirm','devis','entretien','rappel'];
   function go(step, opts){
     opts=opts||{};
     if(STEPS.indexOf(step)<0) step='launcher';
+    // mode du tunnel selon le point d'entrée (persiste jusqu'au retour launcher)
+    if(step==='launcher'){ state._mode='cart'; }
+    else if(step==='devis'){ state._mode='devis'; }
+    else if(step==='entretien'){ state._mode='entretien'; }
+    else if(step==='rappel'){ state._mode='rappel'; }
+    else if(step==='catalogue'||step==='diagnosis'){ state._mode='cart'; }
     $$('.screen').forEach(function(s){ s.classList.toggle('active', s.getAttribute('data-step')===step); });
-    // résumé visible dès qu'il y a un panier et hors launcher
-    var showSummary = step!=='launcher' && cart && cart.count()>0;
+    // résumé visible seulement en mode panier avec des lignes
+    var showSummary = state._mode==='cart' && step!=='launcher' && cart && cart.count()>0;
     $('#layout').classList.toggle('with-summary', showSummary);
     $('#desktopSummary').hidden = !showSummary;
     state._step=step; saveState();
     if(!opts.noHash){ var h='#step='+step+(state._fam?('&cat='+state._fam):''); if(location.hash!==h){ history.pushState({step:step},'',h); } }
     window.scrollTo(0,0);
     // indicateur de progression discret (funnel → %)
-    var PROG={launcher:5,catalogue:28,diagnosis:28,sheet:38,cart:52,urgence:64,address:76,coords:88,confirm:100};
+    var PROG={launcher:5,catalogue:28,diagnosis:28,sheet:38,cart:52,urgence:64,address:76,coords:88,confirm:100,devis:30,entretien:30,rappel:45};
     var pct=PROG[step]||5; var pb=$('#progressBar'), pr=$('#progress');
     if(pb) pb.style.width=pct+'%'; if(pr) pr.setAttribute('aria-valuenow',String(pct));
     track('step_'+step);
