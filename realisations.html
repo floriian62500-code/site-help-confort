@@ -52,11 +52,14 @@
  text-decoration:none; color:inherit;
  box-shadow:0 4px 14px rgba(10,20,40,.05);
  transition:transform.35s cubic-bezier(.16,1,.3,1), box-shadow.35s ease, border-color.25s ease;
- }.real-card:hover{
+ cursor:pointer;
+ }.real-card:hover,.real-card:focus-visible{
  transform:translateY(-6px);
  box-shadow:0 22px 44px rgba(255,107,26,.18);
  border-color:rgba(255,107,26,.5);
+ outline:none;
  }
+ .real-card:focus-visible{outline:2px solid #0DA0CF;outline-offset:3px}
 
  /* Photo&nbsp;: iframe FB OU image locale OU comparateur avant/après */.real-card .photo{
  position:relative; width:100%; aspect-ratio:4/3;
@@ -854,6 +857,15 @@ if (document.fonts && document.fonts.ready) {
  return;
  }
  }
+
+ // Normalise l'URL de chaque carte vers sa page détail réelle (realisations/<slug>.html),
+ // pour les DEUX sources (Supabase + fallback edge). Évite tout href="#" non cliquable.
+ allRealisations = (allRealisations || []).map(function(r){
+   var slug = r.slug || '';
+   if (!slug && r.url) { var m = String(r.url).match(/realisations\/([^\/?#.]+)/); if (m) slug = m[1]; }
+   r.url = slug ? ('realisations/' + slug + '.html') : 'realisations.html';
+   return r;
+ });
 
  function render(){
  var realisations = allRealisations.filter(r => r.published !== false);
