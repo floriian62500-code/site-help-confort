@@ -20,6 +20,8 @@
 
 | HOME-1 | 5450178886 | P0 | Régression : blocs Réalisations + Actualités disparus de la home (étaient sidebars du wizard retiré commit E) | **READY_FOR_QA** | `09428cb3` | navigateur : 6 chantiers + 3 actus, 0 emoji/markdown, 0 overflow 375, 0 erreur console | section moderne restaurée (edge realisations-json + content/actualites) ; routes realisations/actualites intactes | validation visuelle Florian |
 
+| CBK-1 | 5450259719 | P0 | Formulaire 'Être rappelé' home en échec réel (message rouge) | **READY_FOR_QA** | `d099417b` | POST→HTTP 200 success:true (lead créé) ; UX succès/échec/double-clic testés | CAUSE : form_type='home_callback' inconnu → contrat edge défaut 'demande_metier' exige cp+ville → 400 ; FIX front : form_type='rappel' | validation Florian |
+
 ## Zone TUNNEL / FORMULAIRES (P0/P1)
 | ID | source | prio | demande | statut | SHA | reste |
 |---|---|---|---|---|---|---|
