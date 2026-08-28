@@ -1060,10 +1060,10 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
    btn.dataset.sending='1'; var orig=btn.textContent; btn.disabled=true; btn.textContent='Envoi…'; msg.className='hrr-msg';
    fetch(SUPA+'/functions/v1/submit-lead-v6',{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({
     prenom:pr.value.trim(), telephone:tel.value.trim(), message:(desc.value||'').trim()||'Demande de rappel (home)',
-    type_demande:'rappel', form_type:'home_callback', source:'home_callback', source_page:location.href
+    type_demande:'rappel', form_type:'rappel', source:'home_callback', source_page:location.href
    })}).then(function(r){ return r.ok? r.json().catch(function(){return{};}) : Promise.reject(r.status); })
-    .then(function(){ f.reset(); msg.className='hrr-msg ok'; msg.textContent='Merci ✓ Nous vous rappelons rapidement.'; btn.textContent=orig; btn.disabled=false; btn.dataset.sending='0'; })
-    .catch(function(){ msg.className='hrr-msg err'; msg.textContent='Échec de l’envoi. Appelez le 03 66 10 01 34.'; btn.textContent=orig; btn.disabled=false; btn.dataset.sending='0'; });
+    .then(function(){ f.reset(); msg.className='hrr-msg ok'; msg.textContent='Merci ✓ Un conseiller de votre agence locale vous rappelle rapidement.'; btn.textContent=orig; btn.disabled=false; btn.dataset.sending='0'; })
+    .catch(function(){ msg.className='hrr-msg err'; msg.textContent='Envoi impossible pour le moment. Vos informations sont conservées — réessayez, ou appelez le 03 66 10 01 34.'; btn.textContent='Réessayer'; btn.disabled=false; btn.dataset.sending='0'; });
   });
  })();</script>
 </section>
