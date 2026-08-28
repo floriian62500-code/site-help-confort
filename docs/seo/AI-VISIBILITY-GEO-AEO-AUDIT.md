@@ -181,3 +181,69 @@ réalisations) → backlog d'amélioration HELP CONFORT **sans copier**. Livrabl
 - OpenAI crawlers (GPTBot / OAI-SearchBot / ChatGPT-User) : [ppc.land](https://ppc.land/openai-revises-chatgpt-crawler-documentation-with-significant-policy-changes/), [CrawlerCheck OAI-SearchBot](https://crawlercheck.com/directory/ai-bots/oai-searchbot)
 - Panorama AI crawlers (ClaudeBot/PerplexityBot/Google-Extended/Bingbot ; Cloudflare Perplexity 08/2025) : [Momentic](https://momenticmarketing.com/blog/ai-search-crawlers-bots), [Anagram](https://www.anagram.ai/blog/ai-crawlers-explained-gptbot-claudebot-perplexitybot-and-how-to-let-them-in-2026)
 - (Google FAQ rich-result restriction 2023 : à re-sourcer sur Google Search Central avant implémentation.)
+
+---
+
+# BASELINE FACTUELLE (2026-08-28) — ajout demandé (5450879322)
+
+## B1. Inventaire URL réel (mesuré)
+| Type | Volume | Indexable | Sitemap | Note |
+|---|---|---|---|---|
+| Pages racine `.html` | 120 | oui sauf tunnel/utilitaires (catalogue/recette/realisation-no-slug/reset/404/espace-client) + `/admin-pro/*` | oui | — |
+| Métier×ville | **22** | oui | oui | ⚠️ **audit doorway** (unicité contenu local) |
+| `prestations/*.html` | 35 | oui | partiel | vérifier canonicals + distinct |
+| `realisations/*.html` | 25 | oui | oui | preuve locale |
+| `actualites/*.html` | 21 | oui | oui | contenu conseils |
+| **Sitemap live (`<loc>`)** | **139** | — | — | hôte **www** (⚠️ vs canonicals non-www) |
+| Réalisations (edge `realisations-json`) | **28** | — | — | source unique réutilisable |
+
+Colonnes à compléter par page lors de l'implémentation P1 (status HTTP, canonical exact, title/H1,
+schema présent, maillage entrant, contenu distinct O/N) — matrice §Matrice + tests §Tests.
+
+## B2. Entity graph (source canonique proposée)
+- **Marque** : HELP CONFORT (réseau, groupe La Poste) — Saint-Omer & Dunkerque.
+- **Entités juridiques exploitées** : `SARL Dépan'Audo` (Saint-Omer, 62) · `SARL Dépan'DK` (Dunkerque, 59).
+- **NAP** : tél `03 66 10 01 34` (cohérent, 1078 occ.) ; placeholders (0321…, 0987…) **confinés à `/admin` noindex** = pas de fuite publique.
+- **URL canonique** : à figer **non-www** (`https://depan59-62.fr`) et aligner sitemap/robots/redirects.
+- **Métiers** : plomberie, chauffage, électricité, serrurerie, vitrerie, menuiserie, rénovation, entretien chaudière, urgence.
+- **Zones** : Audomarois (62) + Dunkerquois (59) + communes réellement desservies (à lister depuis zones-intervention, pas d'invention).
+- **sameAs** : profils réels GBP/FB/annuaires (à renseigner uniquement si vérifiés — §8).
+- **Contradiction à surveiller** : hôte www vs non-www (schema/sitemap/canonical/footer). Aucune autre contradiction NAP publique détectée.
+
+## B3. Crawlers — tableau daté (vérifié 2026-08-28)
+| Crawler | Fonction | Autorisé actuellement ? | Règle robots actuelle | Recommandation | Source |
+|---|---|---|---|---|---|
+| Googlebot | Search | ✅ | `User-agent: *` Allow | garder | Google Search Central `[à re-sourcer officiel]` |
+| Bingbot | Search + Copilot | ✅ | idem | garder | Bing Webmaster `[à re-sourcer]` |
+| OAI-SearchBot | ChatGPT Search (citation) | ✅ | idem | **garder** (visibilité IA) | ppc.land / CrawlerCheck |
+| ChatGPT-User | fetch déclenché user | ✅ | idem | garder | idem |
+| GPTBot | entraînement OpenAI | ✅ | idem | **décision business** | idem |
+| Claude-SearchBot | recherche Anthropic | ✅ | idem | garder | Momentic/Anagram |
+| ClaudeBot / anthropic-ai | entraînement | ✅ | idem | décision business | idem |
+| PerplexityBot | index Perplexity | ✅ | idem | garder (⚠️ contournements observés Cloudflare 08/2025) | Momentic |
+| Google-Extended | opt-out entraînement Gemini | ✅ (non bloqué) | idem | décision business | Google `[à re-sourcer]` |
+
+`CRAWLER_BLOCKS = 0` (aucun crawler de recherche bloqué). Les `[à re-sourcer]` doivent être confirmés
+sur la doc officielle éditeur avant tout changement robots.
+
+## B4. Schema — test réel (à exécuter en P1)
+Extraction + validation par type via Schema Markup Validator + Google Rich Results Test.
+`SCHEMA_ERRORS = à mesurer` (non encore exécuté — ne pas prétendre 0 sans test). Priorité : valider les
+2 styles JSON-LD coexistants, `FAQPage` (valide, pas de rich result Google post-2023), `LocalBusiness`.
+
+## B5. Métrique baseline
+`BASELINE_DONE=YES | URLS≈201 (racine 120 + sous-dossiers 81) | INDEXABLE≈sitemap 139 | SCHEMA_ERRORS=TBD(test P1) | NAP_CONFLICTS=0 public (hôte www/non-www à aligner) | CRAWLER_BLOCKS=0 | REALISATIONS_MAPPED=28 | QUERY_PANEL=64 (≥60) | QUICK_WINS=5 | HUMAN_ACTIONS=5`
+
+## 5 QUICK WINS (classés par impact estimé)
+1. **Aligner l'hôte canonique** (non-www) sitemap+robots+redirects — *impact fort / effort faible / risque faible* — consolide l'autorité et l'entité. PASS : sitemap et canonicals même hôte, 301 www→non-www.
+2. **Valider tous les JSON-LD** et corriger les templates invalides — *impact moyen-fort / effort moyen / risque faible* — éligibilité rich results + compréhension entité. PASS : 0 erreur Rich Results Test par type.
+3. **Audit doorway des 22 pages métier×ville** (unicité contenu) — *impact moyen / effort moyen / risque nul (lecture)* — évite la dilution/pénalité. PASS : chaque page a un contenu local distinct prouvé.
+4. **Enrichir réalisations** (Article/ImageObject : métier+problème+solution+commune+date) réutilisées home/métier/zone — *impact moyen / effort moyen / risque faible* — preuve locale citable. PASS : réalisations balisées + réutilisées sans duplication.
+5. **Lighthouse mobile baseline + quick wins perf** (LCP/CLS/INP) — *impact moyen / effort faible-moyen / risque faible*. PASS : Core Web Vitals « good » home + 1 page métier.
+
+## 5 ACTIONS HUMAINES (hors code)
+1. Google Business Profile (Saint-Omer + Dunkerque) : NAP + catégories + zones + photos + lien (hôte canonique).
+2. Bing Places + Apple Business Connect : même NAP.
+3. Collecte d'avis authentiques post-intervention + réponses.
+4. Vérifier labels/certifications réellement détenus (aucune fabrication).
+5. Renseigner les `sameAs` (profils réels) pour le schema Organization.
