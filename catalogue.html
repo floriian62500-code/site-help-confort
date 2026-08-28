@@ -332,6 +332,20 @@ button.assist-item{font-family:inherit;cursor:pointer}
 .dvw-urg{text-align:center;color:var(--gris);font-size:.85rem;margin:16px 0 0}
 .dvw-urg a{color:var(--nuit);font-weight:800;text-decoration:none}
 @media(max-width:520px){.dvw-nav{position:sticky;bottom:0;background:linear-gradient(180deg,transparent,var(--bg) 30%);padding:10px 0 0;z-index:5}}
+/* ---- Devis en modal overlay premium (continuité, 5454859042) ---- */
+body.dv-modal-open{overflow:hidden}
+#s-devis.active{position:fixed;inset:0;z-index:9500;display:flex;align-items:flex-start;justify-content:center;padding:clamp(14px,3vh,44px) 16px;overflow-y:auto;background:rgba(10,20,40,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:dvOvFade .22s ease}
+@keyframes dvOvFade{from{opacity:0}to{opacity:1}}
+#s-devis .tnav{display:none}
+#s-devis .dvw,#s-devis #devisDone:not([hidden]){position:relative;background:#fff;border-radius:22px;max-width:600px;width:100%;margin:auto;box-shadow:0 40px 90px -20px rgba(10,20,40,.42);animation:dvwPop .34s cubic-bezier(.16,1,.3,1)}
+#s-devis .dvw{padding:clamp(24px,3vw,34px) clamp(20px,2.6vw,30px) clamp(18px,2.4vw,24px)}
+#s-devis #devisDone:not([hidden]){padding:clamp(26px,3vw,36px) clamp(22px,2.6vw,30px)}
+@keyframes dvwPop{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+#s-devis .dvw-card{border:0;box-shadow:none;padding:0;border-radius:0;background:transparent}
+.dvw-close{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;background:#F1F6FA;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#41506a;transition:background .2s;z-index:3}
+.dvw-close:hover{background:#E2E9F0}
+#s-devis .dvw-head{padding:0 34px}
+@media(max-width:560px){#s-devis.active{padding:0;align-items:stretch}#s-devis .dvw,#s-devis #devisDone:not([hidden]){border-radius:0;min-height:100vh;max-width:none}#s-devis .dvw{padding:18px 16px 26px}.dvw-close{top:10px;right:10px}}
 </style>
 </head>
 <body>
@@ -396,9 +410,10 @@ button.assist-item{font-family:inherit;cursor:pointer}
   <!-- 1b. DEVIS (projet sur mesure) — in-tunnel -->
   <section class="screen" id="s-devis" data-step="devis">
     <div class="tnav"><button class="back" data-step-go="launcher">← Retour</button><button class="back back-hub" data-step-go="launcher">Accueil commande</button></div>
-    <div id="devisForm" class="dvw">
+    <div id="devisForm" class="dvw" role="dialog" aria-modal="true" aria-labelledby="dvwTitle">
+      <button class="dvw-close" id="dvwClose" type="button" aria-label="Fermer la demande de devis"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
       <div class="dvw-head">
-        <h1>Demander un devis</h1>
+        <h1 id="dvwTitle">Demander un devis</h1>
         <p class="sub">Un parcours simple — chiffrage <strong>gratuit, sans engagement</strong>, étudié par un technicien.</p>
       </div>
       <ol class="dvw-steps" id="dvwSteps" aria-label="Étapes de la demande">
@@ -702,6 +717,7 @@ button.assist-item{font-family:inherit;cursor:pointer}
     else if(step==='rappel'){ state._mode='rappel'; }
     else if(step==='catalogue'||step==='diagnosis'){ state._mode='cart'; }
     $$('.screen').forEach(function(s){ s.classList.toggle('active', s.getAttribute('data-step')===step); });
+    document.body.classList.toggle('dv-modal-open', step==='devis');
     // résumé visible seulement en mode panier avec des lignes
     // Coquille de marque persistante : panneau latéral desktop sur toutes les étapes sauf le launcher.
     // Le récap panier n'apparaît que s'il y a des lignes ; la réassurance marque est toujours présente.
@@ -1279,6 +1295,36 @@ button.assist-item{font-family:inherit;cursor:pointer}
     dvSetStep(n+1);
   });
   $('#dvwBack').addEventListener('click', function(){ var n=state._dvStep||1; if(n>1) dvSetStep(n-1); });
+  // --- Devis en modal : fermeture / backdrop / Escape / focus-trap / focus initial (5454859042) ---
+  var dvScreen=$('#s-devis');
+  function closeDevis(){
+    document.body.classList.remove('dv-modal-open');
+    if(history.length>1){ history.back(); } else { go('launcher'); }
+  }
+  function dvFocusables(){
+    return Array.prototype.filter.call(
+      dvScreen.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])'),
+      function(el){ return el.offsetParent!==null; });
+  }
+  var dvCloseBtn=$('#dvwClose'); if(dvCloseBtn) dvCloseBtn.addEventListener('click', closeDevis);
+  dvScreen.addEventListener('click', function(e){ if(e.target===dvScreen) closeDevis(); });
+  dvScreen.addEventListener('keydown', function(e){
+    if(!dvScreen.classList.contains('active')) return;
+    if(e.key==='Escape'){ e.preventDefault(); closeDevis(); return; }
+    if(e.key!=='Tab') return;
+    var f=dvFocusables(); if(!f.length) return;
+    var first=f[0], last=f[f.length-1];
+    if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+  });
+  var dvMO=new MutationObserver(function(){
+    var on=dvScreen.classList.contains('active');
+    if(on && !dvScreen.__dvFocused){
+      dvScreen.__dvFocused=true;
+      setTimeout(function(){ var f=dvFocusables(); var t=f.filter(function(el){return el.id!=='dvwClose';})[0]||f[0]; if(t) t.focus(); },90);
+    } else if(!on){ dvScreen.__dvFocused=false; }
+  });
+  dvMO.observe(dvScreen,{attributes:true,attributeFilter:['class']});
   // entretien in-tunnel
   $('#ent-model').addEventListener('input', function(){ state._entModel=this.value; saveState(); });
   $('#entNext').addEventListener('click', function(){
