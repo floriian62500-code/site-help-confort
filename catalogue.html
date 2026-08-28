@@ -438,7 +438,7 @@ button.assist-item{font-family:inherit;cursor:pointer}
           <h2 class="dvw-q">Décrivez votre demande</h2>
           <p class="dvw-hint">Nature du problème ou du projet, urgence éventuelle, disponibilités…</p>
           <div class="field"><textarea id="dv-desc" rows="6" placeholder="Ex. remplacement d'un chauffe-eau 200 L, fuite sous évier, rénovation complète d'une salle de bain…"></textarea><div class="err">Ajoutez quelques mots (min. 10 caractères).</div></div>
-          <div class="dvw-photo"><span class="dvw-photo-ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span><div><strong>Des photos ?</strong> Elles aident le technicien à chiffrer plus vite et plus juste. Vous pourrez les transmettre au conseiller lors du rappel — l'envoi en ligne arrive bientôt.</div></div>
+          <div class="dvw-photo"><span class="dvw-photo-ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span><div><strong>Des photos ?</strong> Elles aident le technicien à chiffrer plus vite et plus juste. Vous pourrez les transmettre à votre conseiller lors de son appel (l'ajout de photos en ligne n'est pas encore disponible).</div></div>
         </section>
         <section class="dvw-panel" data-dvstep="3" hidden>
           <h2 class="dvw-q">Où devons-nous intervenir&nbsp;?</h2>
@@ -461,8 +461,8 @@ button.assist-item{font-family:inherit;cursor:pointer}
           </div>
         </section>
         <section class="dvw-panel" data-dvstep="5" hidden>
-          <h2 class="dvw-q">Vérification &amp; envoi</h2>
-          <p class="dvw-hint">Vérifiez votre demande avant l'envoi.</p>
+          <h2 class="dvw-q">Vérifiez votre demande</h2>
+          <p class="dvw-hint">Nous transmettrons ces informations à notre équipe pour étude — vous ne recevez pas encore de devis à ce stade.</p>
           <div id="dvwRecap" class="dvw-recap"></div>
           <p class="dv-disc">Les données collectées servent uniquement à traiter votre demande. Voir nos <a href="/mentions-legales.html">mentions légales</a>.</p>
         </section>
@@ -1192,7 +1192,7 @@ button.assist-item{font-family:inherit;cursor:pointer}
     $$('#s-devis .dvw-panel').forEach(function(p){ p.hidden=(parseInt(p.getAttribute('data-dvstep'),10)!==n); });
     $$('#dvwSteps li').forEach(function(li){ var s=parseInt(li.getAttribute('data-s'),10); li.classList.toggle('active',s===n); li.classList.toggle('done',s<n); });
     var back=$('#dvwBack'); if(back) back.hidden=(n===1);
-    var next=$('#dvwNext'); if(next) next.textContent = (n===DV_STEPS ? 'Recevoir mon devis gratuit' : 'Continuer →');
+    var next=$('#dvwNext'); if(next) next.textContent = (n===DV_STEPS ? 'Envoyer ma demande de devis' : 'Continuer →');
     var er=$('#devisErr'); if(er) er.hidden=true;
     if(n===3) dvUpdateAgence();
     if(n===DV_STEPS) dvRenderRecap();
@@ -1260,14 +1260,14 @@ button.assist-item{font-family:inherit;cursor:pointer}
         var d=$('#devisDone'); d.hidden=false;
         d.innerHTML='<div class="note ok dvw" style="margin:0 auto">'+
           '<div style="text-align:center"><span style="display:inline-flex;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;align-items:center;justify-content:center;margin-bottom:8px"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>'+
-          '<h2 style="margin:.1em 0">Demande de devis envoyée</h2>'+
+          '<h2 style="margin:.1em 0">Demande de devis transmise</h2>'+
           '<p>Référence <strong>'+ref+'</strong>'+(data&&data.id?' · dossier '+esc(String(data.id)):'')+'</p></div>'+
           '<div class="dvw-recap" style="margin:14px 0">'+
           '<div class="rr"><span class="k">Service(s)</span><span class="v">'+esc(services.join(', ')||'—')+'</span></div>'+
           '<div class="rr"><span class="k">Intervention</span><span class="v">'+esc([state.adresse,state.cp,state.ville].filter(Boolean).join(' '))+'</span></div>'+
           '<div class="rr"><span class="k">Agence</span><span class="v">'+esc(detectAgence(state.cp))+'</span></div>'+
           '<div class="rr"><span class="k">Contact</span><span class="v">'+esc([state.prenom,state.nom].filter(Boolean).join(' '))+' · '+esc(state.tel)+'</span></div></div>'+
-          '<p><strong>Prochaine étape :</strong> un technicien spécialisé étudie votre dossier et vous transmet un <strong>devis gratuit</strong> sous 24-48 h ouvrées. Besoin urgent ? <a href="tel:+33366100134">03 66 10 01 34</a>.</p>'+
+          '<p><strong>Prochaine étape :</strong> notre équipe étudie votre demande et vous recontacte pour compléter le dossier si nécessaire, puis vous transmet un <strong>chiffrage gratuit</strong> (généralement sous 24-48 h ouvrées). Besoin urgent ? <a href="tel:+33366100134">03 66 10 01 34</a>.</p>'+
           '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px"><a class="btn btn-ghost" href="/">Revenir à l\'accueil</a> <button class="btn btn-primary" data-step-go="launcher">Nouvelle demande</button></div></div>';
         window.scrollTo(0,0);
         var pb=$('#progressBar'),pr=$('#progress'); if(pb)pb.style.width='100%'; if(pr)pr.setAttribute('aria-valuenow','100');
