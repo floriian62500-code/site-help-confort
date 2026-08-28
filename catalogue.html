@@ -150,35 +150,57 @@ button.assist-item{font-family:inherit;cursor:pointer}
 
   <!-- 0. LAUNCHER -->
   <section class="screen active" id="s-launcher" data-step="launcher">
-    <div class="lchr-head">
-      <h1>Comment pouvons-nous vous aider ?</h1>
-      <p class="sub">Deux façons de commander votre intervention — chacune vous mène au même panier et à une prise en charge par un interlocuteur humain.</p>
-    </div>
-    <div class="launch-grid">
-      <button class="launch launch--know" id="mode-know" data-step-go="catalogue">
-        <span class="launch-ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg></span>
-        <span class="launch-t">Je sais ce qu'il me faut</span>
-        <span class="launch-d">Parcourez le catalogue par famille et ajoutez une ou plusieurs prestations à prix affiché.</span>
-        <span class="launch-foot"><span class="launch-hint">Catalogue &amp; prix</span><span class="launch-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
+    <div class="lchr">
+     <div class="lchr-head">
+      <span class="lchr-eyebrow"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Commande &amp; devis en ligne</span>
+      <h1>Comment pouvons-nous vous aider&nbsp;?</h1>
+      <p class="sub">Prestations à prix affichés, <strong>techniciens salariés</strong>, agences locales Saint-Omer &amp; Dunkerque — un interlocuteur humain à chaque étape.</p>
+     </div>
+     <div class="lchr-grid">
+      <!-- PRIMAIRE dominant -->
+      <button class="lchr-primary" id="mode-know" data-step-go="catalogue">
+       <span class="lchr-ic lchr-ic--cmd"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg></span>
+       <span class="lchr-p-body">
+        <strong class="lchr-p-t">Je sais ce qu'il me faut</strong>
+        <span class="lchr-p-d">Parcourez le catalogue par famille et ajoutez une ou plusieurs prestations à <strong>prix affiché</strong>.</span>
+        <span class="lchr-fams" aria-hidden="true"><span class="lchr-fam">Plomberie</span><span class="lchr-fam">Chauffage</span><span class="lchr-fam">Électricité</span><span class="lchr-fam">Serrurerie</span><span class="lchr-fam">Vitrerie</span><span class="lchr-fam">Rénovation</span></span>
+       </span>
+       <span class="lchr-p-foot"><span class="lchr-hint">Catalogue &amp; prix</span><span class="lchr-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
       </button>
-      <button class="launch launch--help" id="mode-help" data-step-go="diagnosis">
-        <span class="launch-ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v.01M11 11v3"/></svg></span>
-        <span class="launch-t">Aidez-moi à identifier mon problème</span>
-        <span class="launch-d">Quelques questions simples — métier, équipement, symptôme — pour trouver la bonne prestation.</span>
-        <span class="launch-foot"><span class="launch-hint">Diagnostic guidé</span><span class="launch-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
-      </button>
+      <!-- COLONNE droite -->
+      <div class="lchr-right">
+       <button class="lchr-diag" id="mode-help" data-step-go="diagnosis">
+        <span class="lchr-diag-head"><span class="lchr-ic lchr-ic--diag"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v.01M11 11v3"/></svg></span><strong class="lchr-diag-t">Aidez-moi à identifier mon problème</strong></span>
+        <span class="lchr-diag-d">Répondez à quelques questions, on trouve la prestation adaptée.</span>
+        <span class="lchr-steps"><span class="lchr-step"><b>1</b> Métier</span><span class="lchr-sep">→</span><span class="lchr-step"><b>2</b> Équipement</span><span class="lchr-sep">→</span><span class="lchr-step"><b>3</b> Symptôme</span></span>
+        <span class="lchr-diag-cta">Diagnostic guidé <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+       </button>
+       <div class="lchr-tiles">
+        <button class="lchr-tile lchr-tile--devis" type="button" data-step-go="devis">
+         <span class="lchr-tile-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span>
+         <span class="lchr-tile-body"><strong>Demander un devis</strong><span>Travaux &amp; projets sur mesure</span></span>
+         <span class="lchr-tarrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </button>
+        <button class="lchr-tile lchr-tile--ent" type="button" data-step-go="entretien">
+         <span class="lchr-tile-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3v6c0 5-3.4 8.5-8 11-4.6-2.5-8-6-8-11V5z"/></svg></span>
+         <span class="lchr-tile-body"><strong>Entretien &amp; contrats</strong><span>Chaudière gaz / fioul</span></span>
+         <span class="lchr-tarrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </button>
+       </div>
+       <div class="lchr-urg">
+        <span class="lchr-urg-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg></span>
+        <span class="lchr-urg-txt"><strong>Une urgence&nbsp;?</strong> <a href="tel:+33366100134">03 66 10 01 34</a></span>
+        <span class="lchr-urg-hours"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Lun-Ven 9h-17h · Sam 9h-16h</span>
+       </div>
+      </div>
+     </div>
+     <ul class="lchr-reassure">
+      <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M16 11l2 2 4-4"/></svg> Techniciens <strong>salariés</strong></li>
+      <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Interlocuteur humain local</li>
+      <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Saint-Omer &amp; Dunkerque</li>
+      <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4L12 22l-9-9V3h10z"/></svg> Prix &amp; devis clairs</li>
+     </ul>
     </div>
-    <div class="assist">
-      <span class="assist-label">Autre besoin&nbsp;?</span>
-      <a class="assist-item assist-urg" href="tel:+33366100134"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg> Urgence — 03 66 10 01 34</a>
-      <button class="assist-item" type="button" data-step-go="devis"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg> Projet sur mesure — devis</button>
-      <button class="assist-item" type="button" data-step-go="entretien"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3v6c0 5-3.4 8.5-8 11-4.6-2.5-8-6-8-11V5z"/></svg> Entretien &amp; contrats</button>
-    </div>
-    <ul class="lchr-reassure">
-      <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M16 11l2 2 4-4"/></svg> Techniciens salariés</li>
-      <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Saint-Omer &amp; Dunkerque</li>
-      <li><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4L12 22l-9-9V3h10z"/></svg> Prix &amp; devis clairs</li>
-    </ul>
   </section>
 
   <!-- 1b. DEVIS (projet sur mesure) — in-tunnel -->
