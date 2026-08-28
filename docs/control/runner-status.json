@@ -1,11 +1,11 @@
 {
   "state": "SITE_WORK_ACTIVE",
   "current_task": "GO visuel Florian ; puis gate paiement CMD-6 ; TUN-2/SEO-2/SEC-5/RSP-1",
-  "last_completed_task": "TRD-1 bloc 6 engagements compacte (62f9920b) + TRD-2 RSP-1 residuel header metiers (11431255) — QA 1440/1024/390",
-  "last_report": "docs/control/outbox/claude/RUN-2026-08-28-1315.md",
-  "last_commit_sha": "11431255",
-  "last_poll_at": "2026-08-28T13:15:00Z",
-  "heartbeat": "2026-08-28T13:15:00Z",
+  "last_completed_task": "DEVIS-1 formulaire devis dedie haute conversion (e84f7bf8) — soumission test reelle dossier backend cree, QA 1440/390",
+  "last_report": "docs/control/outbox/claude/RUN-2026-08-28-1330.md",
+  "last_commit_sha": "e84f7bf8",
+  "last_poll_at": "2026-08-28T13:30:00Z",
+  "heartbeat": "2026-08-28T13:30:00Z",
   "branch": "recette",
   "remaining_tasks": [
     "SEC-5 second pass C→J",
@@ -30,7 +30,7 @@
   "needs_florian": true,
   "note": "Chantier #9 EN COURS (state ACTIVE/INCOMPLETE). Restent : sections C→J du second pass, catalogue/panier sous-lots 2-3, gates (Stripe P1 / migrations / pricing serveur). Discipline persistance : run_id par cycle (outbox==status), verif origin/recette avant tout etat terminal. Ne jamais marquer le chantier clos tant que ces items ne sont pas prouves.",
   "runner_autonomous_activation": "PREP_COMPLETE=YES — PR #10 tip RÉEL cdcafcac (MERGEABLE, diff 3 fichiers, 0 dérive app), 20/20 gardes PASS. Docs: RUNNER-ACTIVATION-CHECKLIST.md + RUNNER-E2E-WITNESS.md. Ordre gestes Florian: secret CLAUDE_CODE_OAUTH_TOKEN -> branch protection main SANS bypass Actions -> merge PR #10 -> E2E témoin. RUN-1 reste BLOCKED_HUMAN tant que E2E témoin réel non PASS.",
-  "run_id": "run-20260828-1315-trades-compact",
+  "run_id": "run-20260828-1330-quote-form",
   "ledger": "docs/control/MASTER-TASK-LEDGER.md",
   "open_p0": [
     "CMD-1 modale (READY_FOR_QA)",
