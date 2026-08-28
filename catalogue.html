@@ -35,6 +35,7 @@ body{font-family:system-ui,Segoe UI,Roboto,sans-serif;color:var(--nuit);backgrou
 @media(max-width:600px){.tb-exit-txt{display:none}.tb-logo img{height:34px}.progress{top:53px}.topbar{padding:8px 12px;gap:8px}.cartbtn-txt{display:none}}
 /* ---- Panneau latéral marque (desktop) : réassurance + contact persistants ---- */
 .side-panel{display:flex;flex-direction:column;gap:16px;position:sticky;top:76px}
+.side-panel[hidden]{display:none}
 .side-panel .summary{position:static;top:auto}
 .brand-reassure{background:#fff;border:1px solid var(--bord);border-radius:16px;padding:20px;box-shadow:0 4px 16px rgba(10,20,40,.05)}
 .brand-reassure h3{margin:0 0 3px;font-size:1rem;color:var(--nuit)}
@@ -139,6 +140,41 @@ h2{font-size:1.2rem;margin:.2em 0}
 .lchr-urg-txt a{color:#C2510A;font-weight:800;text-decoration:none;white-space:nowrap}
 .lchr-urg-hours{display:inline-flex;align-items:center;gap:5px;font-size:.76rem;font-weight:600;color:#8a5a3a}
 .lchr-urg-hours svg{color:#C2510A}
+/* ---- Launcher réconcilié : 3 intentions hiérarchisées ---- */
+.lchr-intents{display:grid;grid-template-columns:1fr;gap:16px;margin:0 0 16px}
+@media(min-width:820px){.lchr-intents{grid-template-columns:1.35fr 1fr 1fr;align-items:stretch}}
+.lchr-card{position:relative;display:flex;flex-direction:column;gap:8px;text-align:left;font:inherit;color:inherit;text-decoration:none;cursor:pointer;background:#fff;border:1px solid #E9EFF4;border-radius:18px;padding:22px 20px;box-shadow:0 6px 20px -8px rgba(10,20,40,.10);transition:transform .24s cubic-bezier(.16,1,.3,1),box-shadow .24s,border-color .24s}
+.lchr-card:hover,.lchr-card:focus-visible{transform:translateY(-4px);box-shadow:0 22px 44px -18px rgba(10,20,40,.22);border-color:#cfe0ea;outline:none}
+.lchr-card:focus-visible{outline:2px solid var(--bleu);outline-offset:2px}
+.lchr-cic{width:46px;height:46px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.lchr-cic--cmd{background:linear-gradient(135deg,var(--bleu),#1FC4F0);box-shadow:0 8px 18px -6px rgba(13,160,207,.55)}
+.lchr-cic--devis{background:linear-gradient(135deg,#7C3AED,#9F67FF);box-shadow:0 8px 18px -6px rgba(124,58,237,.5)}
+.lchr-cic--ent{background:linear-gradient(135deg,#FF6B1A,#FF8F4D);box-shadow:0 8px 18px -6px rgba(255,107,26,.5)}
+.lchr-ct{font-size:1.12rem;font-weight:800;letter-spacing:-.015em;color:var(--nuit);line-height:1.2;margin-top:2px}
+.lchr-cd{font-size:.9rem;color:#5b6676;line-height:1.5;flex:1}
+.lchr-modes{display:flex;flex-direction:column;gap:9px;margin-top:6px}
+.lchr-mode{display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;font:inherit;cursor:pointer;background:#F7FBFD;border:1.5px solid var(--bord);border-radius:12px;padding:11px 13px;color:var(--nuit);transition:border-color .2s,background .2s,transform .2s}
+.lchr-mode:hover,.lchr-mode:focus-visible{border-color:var(--bleu);background:#fff;transform:translateX(2px);outline:none}
+.lchr-mode--diag:hover,.lchr-mode--diag:focus-visible{border-color:#7C3AED}
+.lchr-mode-b{display:flex;flex-direction:column;gap:1px;min-width:0}
+.lchr-mode-b strong{font-size:.94rem;font-weight:800}
+.lchr-mode-b span{font-size:.78rem;color:#6b7688}
+.lchr-mode svg{color:var(--bleu);flex-shrink:0}
+.lchr-mode--diag svg{color:#7C3AED}
+.lchr-cfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
+.lchr-tag{font-size:.74rem;font-weight:800;padding:4px 11px;border-radius:999px;letter-spacing:.01em}
+.lchr-tag--devis{background:rgba(124,58,237,.10);color:#7C3AED}
+.lchr-tag--ent{background:rgba(255,107,26,.12);color:#E8580F}
+.lchr-carrow{width:34px;height:34px;border-radius:50%;background:#F1F5F9;display:inline-flex;align-items:center;justify-content:center;color:var(--nuit);transition:background .2s,color .2s,transform .2s;flex-shrink:0}
+.lchr-card--devis:hover .lchr-carrow{background:#7C3AED;color:#fff;transform:translateX(3px)}
+.lchr-card--ent:hover .lchr-carrow{background:#FF6B1A;color:#fff;transform:translateX(3px)}
+.lchr-urg2{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 16px;background:linear-gradient(135deg,rgba(255,107,26,.08),rgba(255,180,0,.04));border:1px solid rgba(255,107,26,.20);border-radius:14px;margin:0 0 16px}
+.lchr-urg2-ic{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#FF6B1A,#FF8F4D);color:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.lchr-urg2-txt{flex:1;min-width:180px;font-size:.88rem;color:var(--nuit)}
+.lchr-urg2-tel{display:inline-flex;align-items:center;gap:7px;background:var(--nuit);color:#fff;text-decoration:none;font-weight:800;font-size:.9rem;padding:9px 14px;border-radius:10px;transition:background .2s}
+.lchr-urg2-tel:hover{background:var(--bleu)}
+.lchr-urg2-hours{font-size:.76rem;color:var(--gris)}
+@media(max-width:520px){.lchr-urg2-hours{width:100%}}
 .lchr-reassure{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 14px;margin:0;padding:16px;background:linear-gradient(180deg,#F6FAFD,#fff);border:1px solid #E9EFF4;border-radius:16px}
 .lchr-reassure li{display:inline-flex;align-items:center;gap:9px;font-size:.86rem;font-weight:600;color:#3D4759;padding:4px 6px}
 .lchr-reassure li strong{font-weight:800;color:var(--nuit)}
@@ -315,43 +351,44 @@ button.assist-item{font-family:inherit;cursor:pointer}
       <h1>Comment pouvons-nous vous aider&nbsp;?</h1>
       <p class="sub">Prestations à prix affichés, <strong>techniciens salariés</strong>, agences locales Saint-Omer &amp; Dunkerque — un interlocuteur humain à chaque étape.</p>
      </div>
-     <div class="lchr-grid">
-      <!-- PRIMAIRE dominant -->
-      <button class="lchr-primary" id="mode-know" data-step-go="catalogue">
-       <span class="lchr-ic lchr-ic--cmd"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg></span>
-       <span class="lchr-p-body">
-        <strong class="lchr-p-t">Je sais ce qu'il me faut</strong>
-        <span class="lchr-p-d">Parcourez le catalogue par famille et ajoutez une ou plusieurs prestations à <strong>prix affiché</strong>.</span>
-        <span class="lchr-fams" aria-hidden="true"><span class="lchr-fam">Plomberie</span><span class="lchr-fam">Chauffage</span><span class="lchr-fam">Électricité</span><span class="lchr-fam">Serrurerie</span><span class="lchr-fam">Vitrerie</span><span class="lchr-fam">Rénovation</span></span>
-       </span>
-       <span class="lchr-p-foot"><span class="lchr-hint">Catalogue &amp; prix</span><span class="lchr-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
-      </button>
-      <!-- COLONNE droite -->
-      <div class="lchr-right">
-       <button class="lchr-diag" id="mode-help" data-step-go="diagnosis">
-        <span class="lchr-diag-head"><span class="lchr-ic lchr-ic--diag"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v.01M11 11v3"/></svg></span><strong class="lchr-diag-t">Aidez-moi à identifier mon problème</strong></span>
-        <span class="lchr-diag-d">Répondez à quelques questions, on trouve la prestation adaptée.</span>
-        <span class="lchr-steps"><span class="lchr-step"><b>1</b> Métier</span><span class="lchr-sep">→</span><span class="lchr-step"><b>2</b> Équipement</span><span class="lchr-sep">→</span><span class="lchr-step"><b>3</b> Symptôme</span></span>
-        <span class="lchr-diag-cta">Diagnostic guidé <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-       </button>
-       <div class="lchr-tiles">
-        <button class="lchr-tile lchr-tile--devis" type="button" data-step-go="devis">
-         <span class="lchr-tile-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span>
-         <span class="lchr-tile-body"><strong>Demander un devis</strong><span>Travaux &amp; projets sur mesure</span></span>
-         <span class="lchr-tarrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+     <div class="lchr-intents">
+      <!-- 1. COMMANDER (2 modes du même parcours) -->
+      <div class="lchr-card lchr-card--cmd">
+       <span class="lchr-cic lchr-cic--cmd"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg></span>
+       <strong class="lchr-ct">Commander une intervention</strong>
+       <span class="lchr-cd">Prestations à <strong>prix affiché</strong> — ajoutez-en plusieurs au panier.</span>
+       <div class="lchr-modes">
+        <button class="lchr-mode" type="button" data-step-go="catalogue">
+         <span class="lchr-mode-b"><strong>Je connais mon besoin</strong><span>Catalogue par famille &amp; prix</span></span>
+         <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
-        <a class="lchr-tile lchr-tile--ent" href="/contrats-entretien.html" aria-label="Entretien & contrats — découvrir les formules">
-         <span class="lchr-tile-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3v6c0 5-3.4 8.5-8 11-4.6-2.5-8-6-8-11V5z"/></svg></span>
-         <span class="lchr-tile-body"><strong>Entretien &amp; contrats</strong><span>Chaudière gaz / fioul</span></span>
-         <span class="lchr-tarrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        </a>
-       </div>
-       <div class="lchr-urg">
-        <span class="lchr-urg-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg></span>
-        <span class="lchr-urg-txt"><strong>Une urgence&nbsp;?</strong> <a href="tel:+33366100134">03 66 10 01 34</a></span>
-        <span class="lchr-urg-hours"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Lun-Ven 9h-17h · Sam 9h-16h</span>
+        <button class="lchr-mode lchr-mode--diag" type="button" data-step-go="diagnosis">
+         <span class="lchr-mode-b"><strong>Aidez-moi à identifier</strong><span>Diagnostic guidé en 3 questions</span></span>
+         <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
        </div>
       </div>
+      <!-- 2. DEVIS -->
+      <button class="lchr-card lchr-card--devis" type="button" data-step-go="devis">
+       <span class="lchr-cic lchr-cic--devis"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span>
+       <strong class="lchr-ct">Demander un devis</strong>
+       <span class="lchr-cd">Travaux &amp; projets sur mesure : salle de bain, rénovation, menuiserie…</span>
+       <span class="lchr-cfoot"><span class="lchr-tag lchr-tag--devis">Étude gratuite</span><span class="lchr-carrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
+      </button>
+      <!-- 3. ENTRETIEN -->
+      <a class="lchr-card lchr-card--ent" href="/contrats-entretien.html" aria-label="Entretien & contrats — découvrir les formules">
+       <span class="lchr-cic lchr-cic--ent"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3v6c0 5-3.4 8.5-8 11-4.6-2.5-8-6-8-11V5z"/></svg></span>
+       <strong class="lchr-ct">Entretien &amp; contrats</strong>
+       <span class="lchr-cd">Chaudière gaz/fioul : entretien ponctuel ou contrat annuel, attestation légale.</span>
+       <span class="lchr-cfoot"><span class="lchr-tag lchr-tag--ent">Dès 9 €/mois</span><span class="lchr-carrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
+      </a>
+     </div>
+     <!-- Urgence compacte (secondaire) -->
+     <div class="lchr-urg2">
+      <span class="lchr-urg2-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg></span>
+      <span class="lchr-urg2-txt"><strong>Une urgence&nbsp;?</strong> Fuite, panne, porte claquée — intervention prioritaire.</span>
+      <a class="lchr-urg2-tel" href="tel:+33366100134"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg> 03 66 10 01 34</a>
+      <span class="lchr-urg2-hours">Lun-Ven 9h-17h · Sam 9h-16h</span>
      </div>
      <ul class="lchr-reassure">
       <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M16 11l2 2 4-4"/></svg> Techniciens <strong>salariés</strong></li>
