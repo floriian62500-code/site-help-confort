@@ -1043,6 +1043,8 @@ button.assist-item{font-family:inherit;cursor:pointer}
   function restoreFromHash(opts){
     var h=location.hash||'';
     var stepM=h.match(/step=([a-z]+)/); var catM=h.match(/cat=([^&]+)/);
+    // Sous-étape devis dans le hash (&s=N) : présente = reprise (refresh/back) ; absente = nouvelle demande propre → étape 1.
+    var sM=h.match(/[?&]s=(\d)/); window.__dvResumeStep = (stepM && stepM[1]==='devis' && sM) ? parseInt(sM[1],10) : null;
     if(catM){ var fam=decodeURIComponent(catM[1]); state._fam=fam; if(loaded && byFam[fam]) renderProducts(fam); }
     if(stepM){ go(stepM[1], opts||{noHash:true}); }
     else if(state._step){ go(state._step, {noHash:true}); }
@@ -1159,6 +1161,8 @@ button.assist-item{font-family:inherit;cursor:pointer}
     if(n===DV_STEPS) dvRenderRecap();
     var pct=Math.round(30+(n-1)/(DV_STEPS-1)*70);
     var pb=$('#progressBar'),pr=$('#progress'); if(pb)pb.style.width=pct+'%'; if(pr)pr.setAttribute('aria-valuenow',String(pct));
+    // Refléter la sous-étape dans le hash pour que refresh/back conservent la progression.
+    try{ var nh='#step=devis'+(state._fam?('&cat='+state._fam):'')+'&s='+n; if(location.hash!==nh) history.replaceState({step:'devis',s:n},'',nh); }catch(e){}
     window.scrollTo(0,0);
   }
   function dvValidateStep(n){
@@ -1191,7 +1195,19 @@ button.assist-item{font-family:inherit;cursor:pointer}
     var dd=$('#devisDone'); if(dd){ dd.hidden=true; dd.innerHTML=''; }
     var nx=$('#dvwNext'); if(nx){ nx.disabled=false; nx.dataset.sending='0'; }
     var de=$('#devisErr'); if(de){ de.hidden=true; de.textContent=''; }
-    dvSetStep((state._dvStep>=1 && state._dvStep<=DV_STEPS) ? state._dvStep : 1);
+    var resume=window.__dvResumeStep; window.__dvResumeStep=undefined;
+    if(resume && resume>=1 && resume<=DV_STEPS){
+      // Reprise explicite (refresh/back avec &s=N dans le hash) : conserver la progression.
+      dvSetStep(resume);
+    } else {
+      // Entrée marketing (HOME/launcher « Demander un devis ») = NOUVELLE demande propre → étape 1.
+      state._devisServices=[]; state._devisDesc=''; state._dvStep=1; saveState();
+      $$('#dvServices input[type=checkbox]').forEach(function(c){ c.checked=false; });
+      var dsc=$('#dv-desc'); if(dsc) dsc.value='';
+      var er=$('#dvSvcErr'); if(er) er.style.display='none';
+      $$('#s-devis .field.invalid').forEach(function(f){ f.classList.remove('invalid'); });
+      dvSetStep(1);
+    }
   }
   function dvSubmit(){
     var btn=$('#dvwNext'); if(btn.dataset.sending==='1') return;
