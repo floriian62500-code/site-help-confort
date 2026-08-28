@@ -1,11 +1,14 @@
 {
   "state": "SITE_WORK_ACTIVE",
-  "current_task": "QA publique nettoyage bandeaux home ; puis gate paiement CMD-6 ; TUN-2/SEO-2/SEC-5/RSP-1 ; sweep bande garanties sombre pages interieures (GO perimetre)",
-  "last_completed_task": "HOME nettoyage : bande garanties hero retiree (redondante) + certifs conservees + identite agence hero 'Depan'Audo · HELP Confort Saint-Omer' ; bande sombre D deja absente de la home recette (subsiste ~15 pages interieures = sweep propose)",
+  "worker": "ACTIVE",
+  "worker_mode": "interactive_claude_session (Claude fait le travail dans la session en direct ; commits reels frais qui atterrissent sur origin/recette)",
+  "autonomous_runner": "RUN-1 = BLOCKED_HUMAN (le runner autonome LaunchAgent/Action n'est PAS actif ; activation temoin = geste humain). Ne pas confondre avec le worker session ci-dessus.",
+  "current_task": "DEVIS modal stage 2 : etape photos reelle (input+preview, derriere flag) + backend Storage PREPARE non-deploye (bucket prive + RLS + edge signed-url). Puis lots surs TUN-2/SEO-2/SEC-5/CLN-3.",
+  "last_completed_task": "DEVIS modal stage 1 (e361cb4d) : ecran devis ouvert en modal overlay premium (a11y focus-trap/escape/backdrop, mobile plein ecran, deep-links intacts, moteur inchange) — QA publique PROVEN.",
   "last_report": "docs/control/outbox/claude/RUN-2026-08-28-1905.md",
-  "last_commit_sha": "e361cb4d",
-  "last_poll_at": "2026-08-28T18:30:00Z",
-  "heartbeat": "2026-08-28T18:30:00Z",
+  "last_commit_sha": "5a80967e",
+  "last_poll_at": "2026-08-28T17:08:38Z",
+  "heartbeat": "2026-08-28T17:08:38Z",
   "branch": "recette",
   "remaining_tasks": [
     "SEC-5 second pass C→J",
@@ -27,10 +30,10 @@
     "no force-push",
     "Stripe LIVE gelé"
   ],
-  "needs_florian": true,
+  "needs_florian": false,
   "note": "Chantier #9 EN COURS (state ACTIVE/INCOMPLETE). Restent : sections C→J du second pass, catalogue/panier sous-lots 2-3, gates (Stripe P1 / migrations / pricing serveur). Discipline persistance : run_id par cycle (outbox==status), verif origin/recette avant tout etat terminal. Ne jamais marquer le chantier clos tant que ces items ne sont pas prouves.",
   "runner_autonomous_activation": "PREP_COMPLETE=YES — PR #10 tip RÉEL cdcafcac (MERGEABLE, diff 3 fichiers, 0 dérive app), 20/20 gardes PASS. Docs: RUNNER-ACTIVATION-CHECKLIST.md + RUNNER-E2E-WITNESS.md. Ordre gestes Florian: secret CLAUDE_CODE_OAUTH_TOKEN -> branch protection main SANS bypass Actions -> merge PR #10 -> E2E témoin. RUN-1 reste BLOCKED_HUMAN tant que E2E témoin réel non PASS.",
-  "run_id": "run-20260828-1905-devis-modal-stage1",
+  "run_id": "run-20260828-1708-devis-modal-stage2",
   "ledger": "docs/control/MASTER-TASK-LEDGER.md",
   "open_p0": [
     "CMD-1 modale (READY_FOR_QA)",
