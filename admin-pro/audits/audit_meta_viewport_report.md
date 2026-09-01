@@ -1,6 +1,6 @@
 # Audit meta viewport — Rapport
 
-_Généré le 2026-08-31 09:27_
+_Généré le 2026-09-01 08:24_
 
 ## Synthèse
 
