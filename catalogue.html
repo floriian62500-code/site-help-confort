@@ -360,6 +360,15 @@ body.dv-modal-open{overflow:hidden}
 .dvw-ph-rm{position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%;background:rgba(10,20,40,.6);border:0;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.82rem;line-height:1;padding:0}
 .dvw-ph-rm:hover{background:#dc2626}
 .dvw-photos-err{color:#dc2626;font-size:.82rem;font-weight:600;margin:8px 0 0}
+/* ---- Launcher : reprise de brouillon discrète (pas de modal auto) ---- */
+.lchr-resume{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#fff;border:1px solid var(--bord);border-left:3px solid var(--bleu);border-radius:12px;padding:12px 16px;margin:0 0 18px;cursor:pointer;font-family:inherit;transition:box-shadow .2s,border-color .2s}
+.lchr-resume:hover{border-color:var(--bleu);box-shadow:0 8px 20px -10px rgba(13,160,207,.4)}
+.lchr-resume-ic{flex-shrink:0;width:36px;height:36px;border-radius:10px;background:rgba(13,160,207,.10);color:var(--bleu);display:flex;align-items:center;justify-content:center}
+.lchr-resume-txt{flex:1;display:flex;flex-direction:column;line-height:1.25}
+.lchr-resume-txt strong{font-size:.95rem;color:var(--nuit);font-weight:800}
+.lchr-resume-txt span{font-size:.8rem;color:var(--gris)}
+.lchr-resume-arrow{flex-shrink:0;color:var(--bleu);transition:transform .2s}
+.lchr-resume:hover .lchr-resume-arrow{transform:translateX(3px)}
 </style>
 </head>
 <body>
@@ -387,6 +396,11 @@ body.dv-modal-open{overflow:hidden}
       <h1>Commander une intervention</h1>
       <p class="sub">Prestations à <strong>prix affichés</strong>, techniciens salariés, agences Saint-Omer &amp; Dunkerque. Deux façons de commencer&nbsp;:</p>
      </div>
+     <button type="button" id="lchrResume" class="lchr-resume" hidden>
+       <span class="lchr-resume-ic"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></span>
+       <span class="lchr-resume-txt"><strong>Reprendre ma demande</strong><span>Vous avez une demande en cours.</span></span>
+       <span class="lchr-resume-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+     </button>
      <div class="lchr-modes2">
       <!-- Mode A : catalogue -->
       <button class="lchr-card lchr-modecard" type="button" data-step-go="catalogue">
@@ -740,6 +754,7 @@ body.dv-modal-open{overflow:hidden}
     else if(step==='catalogue'||step==='diagnosis'){ state._mode='cart'; }
     $$('.screen').forEach(function(s){ s.classList.toggle('active', s.getAttribute('data-step')===step); });
     document.body.classList.toggle('dv-modal-open', step==='devis');
+    if(step==='launcher'){ var _rb=document.getElementById('lchrResume'); if(_rb) _rb.hidden=true; }
     // résumé visible seulement en mode panier avec des lignes
     // Coquille de marque persistante : panneau latéral desktop sur toutes les étapes sauf le launcher.
     // Le récap panier n'apparaît que s'il y a des lignes ; la réassurance marque est toujours présente.
@@ -1116,9 +1131,28 @@ body.dv-modal-open{overflow:hidden}
     var sM=h.match(/[?&]s=(\d)/); window.__dvResumeStep = (stepM && stepM[1]==='devis' && sM) ? parseInt(sM[1],10) : null;
     if(catM){ var fam=decodeURIComponent(catM[1]); state._fam=fam; if(loaded && byFam[fam]) renderProducts(fam); }
     if(stepM){ go(stepM[1], opts||{noHash:true}); }
-    else if(state._step){ go(state._step, {noHash:true}); }
-    else go('launcher',{noHash:true});
+    else {
+      // Chargement nu (pas de hash) : hub propre, JAMAIS de modal/overlay auto-ouverte.
+      // Le brouillon reste en localStorage ; on propose une reprise explicite et discrète.
+      var savedStep = state._step;
+      go('launcher',{noHash:true});
+      showResumeIfDraft(savedStep);
+    }
   }
+  function draftResumeTarget(saved){
+    try{ if(cart && cart.count && cart.count()>0) return {step:'cart', label:'Reprendre mon panier'}; }catch(e){}
+    if((state._devisServices && state._devisServices.length) || (state._dvStep && state._dvStep>1)) return {step:'devis', label:'Reprendre ma demande de devis'};
+    if(state._entEnergie || state._entType || state._entModel) return {step:'entretien', label:'Reprendre mon entretien'};
+    if(saved && ['cart','devis','entretien','coords','address','urgence'].indexOf(saved)>=0) return {step:saved, label:'Reprendre ma demande'};
+    return null;
+  }
+  function showResumeIfDraft(saved){
+    var el=$('#lchrResume'); if(!el) return;
+    var t=draftResumeTarget(saved);
+    if(t){ el.__target=t.step; var s=el.querySelector('strong'); if(s) s.textContent=t.label; el.hidden=false; }
+    else { el.hidden=true; el.__target=null; }
+  }
+  (function(){ var rb=$('#lchrResume'); if(rb) rb.addEventListener('click', function(){ var t=this.__target||state._step; if(t==='devis'){ window.__dvResumeStep = state._dvStep||1; } if(t) go(t); }); })();
 
   // ---------- EVENTS ----------
   document.addEventListener('click', function(e){
