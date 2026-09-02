@@ -847,6 +847,64 @@ body.dv-modal-open{overflow:hidden}
   }
   window.addEventListener('popstate', function(){ restoreFromHash({noHash:true}); });
 
+  // ---------- PRICE GATE (P0 5512405541) : identification avant tarifs ----------
+  function priceGatePassed(){
+    return state._priceGateOk===true ||
+      !!(state.prenom && state.nom && state.tel && state.email && state.cp);
+  }
+  var pgModal=$('#priceGate');
+  function openPriceGate(){
+    if(!pgModal) return;
+    pgModal.hidden=false; document.body.style.overflow='hidden'; track('price_gate_open');
+    [['pg-prenom','prenom'],['pg-nom','nom'],['pg-tel','tel'],['pg-email','email'],['pg-adresse','adresse'],['pg-cp','cp'],['pg-ville','ville']]
+      .forEach(function(p){ var e=$('#'+p[0]); if(e && !e.value && state[p[1]]) e.value=state[p[1]]; });
+    setTimeout(function(){ var f=$('#pg-prenom'); if(f) f.focus(); },70);
+  }
+  function closePriceGate(voluntary){
+    if(!pgModal) return;
+    pgModal.hidden=true; document.body.style.overflow='';
+    if(voluntary){ state._pgPending=null; saveState(); go('launcher'); } // fermeture = aucun tarif révélé
+  }
+  if(pgModal){
+    pgModal.addEventListener('click', function(e){ if(e.target.hasAttribute('data-pg-close')) closePriceGate(true); });
+    pgModal.addEventListener('keydown', function(e){ if(e.key==='Escape'){ e.preventDefault(); closePriceGate(true); } });
+    var pgf=$('#pgForm');
+    if(pgf) pgf.addEventListener('submit', function(e){
+      e.preventDefault();
+      var btn=$('#pgSubmit'); if(btn.dataset.sending==='1') return;
+      var pr=$('#pg-prenom'),no=$('#pg-nom'),tel=$('#pg-tel'),em=$('#pg-email'),ad=$('#pg-adresse'),cp=$('#pg-cp'),vi=$('#pg-ville'),err=$('#pgErr');
+      function nameOk(v){ return String(v||'').trim().length>=2; }
+      function phoneOk(v){ return /^(?:\+33|0)[1-9](?:[\s.\-]?\d{2}){4}$/.test(String(v||'').trim()); }
+      function emailOk(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v||'').trim()); }
+      var checks=[[pr,!nameOk(pr.value)],[no,!nameOk(no.value)],[tel,!phoneOk(tel.value)],[em,!emailOk(em.value)],[ad,!nameOk(ad.value)],[cp,!/^\d{5}$/.test((cp.value||'').trim())],[vi,!nameOk(vi.value)]];
+      checks.forEach(function(x){ x[0].classList.toggle('bad',x[1]); });
+      var first=checks.filter(function(x){return x[1];})[0];
+      if(first){ if(err){ err.hidden=false; err.textContent='Merci de compléter les champs en rouge (téléphone et email valides).'; } first[0].focus(); return; }
+      if(err) err.hidden=true;
+      btn.dataset.sending='1'; var orig=btn.textContent; btn.disabled=true; btn.textContent='…';
+      state.prenom=pr.value.trim(); state.nom=no.value.trim(); state.tel=tel.value.trim(); state.email=em.value.trim();
+      state.adresse=ad.value.trim(); state.cp=cp.value.trim(); state.ville=vi.value.trim();
+      var pending=state._pgPending||{step:'catalogue',cat:null};
+      fetch(SUPA+'/functions/v1/submit-lead-v6',{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({
+        prenom:state.prenom, nom:state.nom, telephone:state.tel, email:state.email,
+        adresse:state.adresse, code_postal:state.cp, ville:state.ville,
+        type_demande:'consultation_tarifs', form_type:'consultation_tarifs',
+        source:'price_gate', source_page:location.href,
+        message:'Consultation des tarifs'+(pending.cat?(' — famille '+pending.cat):''),
+        utm:{ mode:'price_gate', cat:pending.cat||null }
+      })}).then(function(r){ return r.ok? r.json().catch(function(){return{};}) : Promise.reject(r.status); })
+        .then(function(){ track('price_gate_lead'); }, function(){ track('price_gate_lead_fail'); })
+        .then(function(){
+          state._priceGateOk=true; state._pgPending=null; saveState();
+          btn.disabled=false; btn.textContent=orig; btn.dataset.sending='0';
+          pgModal.hidden=true; document.body.style.overflow='';
+          if(pending.cat) state._fam=pending.cat;
+          go(pending.step||'catalogue');
+          if(pending.cat && loaded && byFam[pending.cat]) renderProducts(pending.cat);
+        });
+    });
+  }
+
   // ---------- data ----------
   function famKey(s){ return s.category_slug||s.category_name||'autre'; }
   function priced(s){ return !s.requires_quote && Number(s.price_ttc)>0 && s.active!==false; }
