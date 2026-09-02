@@ -1143,7 +1143,7 @@ body.dv-modal-open{overflow:hidden}
     try{ if(cart && cart.count && cart.count()>0) return {step:'cart', label:'Reprendre mon panier'}; }catch(e){}
     if((state._devisServices && state._devisServices.length) || (state._dvStep && state._dvStep>1)) return {step:'devis', label:'Reprendre ma demande de devis'};
     if(state._entEnergie || state._entType || state._entModel) return {step:'entretien', label:'Reprendre mon entretien'};
-    if(saved && ['cart','devis','entretien','coords','address','urgence'].indexOf(saved)>=0) return {step:saved, label:'Reprendre ma demande'};
+    // Pas de fallback sur le nom d'étape seul : évite une bannière fantôme quand le brouillon a été purgé.
     return null;
   }
   function showResumeIfDraft(saved){
