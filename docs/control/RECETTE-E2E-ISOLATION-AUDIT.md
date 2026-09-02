@@ -45,6 +45,6 @@ Aucun système inutile : **réutiliser** ce qui existe. Deux voies, par ordre de
 
 ## 4. Retour
 
-`PREVIEW_BACKEND_AUDIT=DONE | SUPABASE_PREVIEW=PROD | EMAIL_PREVIEW=PROD(Resend→agence+auto-reply client) | CRM_PREVIEW=NONE | STRIPE_PREVIEW=LIVE_endpoint_exists_NOT_invoked_by_tunnel | PROD_WRITE_GUARD=DELIVERED(guard fail-closed) mais E2E=BLOCKED | TEST_BACKEND_ISOLATED=BLOCKED(aucune instance test) | HUMAN_GATE=lancer stack local Docker (voie A, sans coût) OU créer projet Supabase TEST (voie B, GATE Florian) | SAFE_NEXT=preparer config stack local + fixtures + front override borne (non actif) puis SEO-2 | SHA_DOC=<à stamper>`
+`PREVIEW_BACKEND_AUDIT=DONE | SUPABASE_PREVIEW=PROD | EMAIL_PREVIEW=PROD(Resend→agence+auto-reply client) | CRM_PREVIEW=NONE | STRIPE_PREVIEW=LIVE_endpoint_exists_NOT_invoked_by_tunnel | PROD_WRITE_GUARD=DELIVERED(guard fail-closed) mais E2E=BLOCKED | TEST_BACKEND_ISOLATED=BLOCKED(aucune instance test) | HUMAN_GATE=lancer stack local Docker (voie A, sans coût) OU créer projet Supabase TEST (voie B, GATE Florian) | SAFE_NEXT=preparer config stack local + fixtures + front override borne (non actif) puis SEO-2 | SHA_DOC=43e3c591`
 
 **Aucun E2E écrivant lancé.** `FULL_E2E` ne sera JAMAIS déclaré sur des mocks. Le lead PROD `7e52628a` reste intouché.
