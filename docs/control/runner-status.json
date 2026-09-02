@@ -3,12 +3,12 @@
   "worker": "ACTIVE",
   "worker_mode": "interactive_claude_session (Claude fait le travail dans la session en direct ; commits reels frais qui atterrissent sur origin/recette)",
   "autonomous_runner": "RUN-1 = BLOCKED_HUMAN (le runner autonome LaunchAgent/Action n'est PAS actif ; activation temoin = geste humain). Ne pas confondre avec le worker session ci-dessus.",
-  "current_task": "SEO-2 en cours : audit archi locale FAIT (56 pages) + fix #1 NAP falsifie 6 pages depannage corrige. Reste SEO-2: orphelines(18)/hub zones-intervention/name LocalBusiness/Cote d'Opale/schema. Gate=matrice creuse (generation masse)",
+  "current_task": "SEO-2 : #1 NAP corrige + #2 de-orphelinage (plan-du-site 56/56). Reste: hub zones-intervention, name LocalBusiness, Cote d'Opale(43), geo+FAQ(18). E2E local = blocked_human_nonblocking (Docker).",
   "last_completed_task": "DEVIS modal + photos + 4 verifs ChatGPT (5455622607) PASS ; control-plane realigne (ligne nightly locale isolee/reflog, non poussee sur recette) ; devis = READY_FOR_FLORIAN_VISUAL_QA",
-  "last_report": "docs/control/outbox/claude/RUN-2026-09-02-1520.md",
-  "last_commit_sha": "70d05c94",
-  "last_poll_at": "2026-09-02T15:29:30Z",
-  "heartbeat": "2026-09-02T15:29:30Z",
+  "last_report": "docs/control/outbox/claude/RUN-2026-09-02-1535.md",
+  "last_commit_sha": "b7e327ce",
+  "last_poll_at": "2026-09-02T15:39:48Z",
+  "heartbeat": "2026-09-02T15:39:48Z",
   "branch": "recette",
   "remaining_tasks": [
     "SEO-2 archi locale (courant)",
@@ -16,6 +16,7 @@
     "CLN-3 mutualisation CSS/JS"
   ],
   "blocked_tasks": [
+    "E2E local isolé (voie A) = READY, blocked_human_nonblocking : open -a Docker && bash scripts/test/start-e2e-local.sh",
     "T1 sous-point achat en ligne — gate Stripe TEST",
     "T9 durcissement leads/storage — gate DB (GO Florian)",
     "T10 edge stripe P1 CRITIQUE — gate (durcir+déployer OU couper endpoint)",
