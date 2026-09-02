@@ -369,6 +369,28 @@ body.dv-modal-open{overflow:hidden}
 .lchr-resume-txt span{font-size:.8rem;color:var(--gris)}
 .lchr-resume-arrow{flex-shrink:0;color:var(--bleu);transition:transform .2s}
 .lchr-resume:hover .lchr-resume-arrow{transform:translateX(3px)}
+/* ---- Price gate (P0) : modal identification avant tarifs ---- */
+.pg-modal{position:fixed;inset:0;z-index:9600;display:flex;align-items:flex-start;justify-content:center;padding:clamp(14px,3vh,44px) 16px;overflow-y:auto}
+.pg-modal[hidden]{display:none}
+.pg-overlay{position:absolute;inset:0;background:rgba(10,20,40,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:dvOvFade .22s ease}
+.pg-card{position:relative;background:#fff;border-radius:22px;max-width:460px;width:100%;margin:auto;padding:34px 28px 24px;box-shadow:0 40px 80px rgba(10,20,40,.3);animation:dvwPop .34s cubic-bezier(.16,1,.3,1)}
+.pg-close{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;background:#F1F6FA;border:0;cursor:pointer;color:#41506a;font-size:1rem;line-height:1;font-family:inherit;transition:background .2s}
+.pg-close:hover{background:#E2E9F0}
+.pg-icon{width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,var(--bleu),#1FC4F0);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 12px 24px rgba(13,160,207,.3)}
+.pg-title{margin:0 0 8px;font-size:1.4rem;font-weight:800;color:var(--nuit);letter-spacing:-.01em;text-align:center;line-height:1.2}
+.pg-lead{margin:0 0 18px;font-size:.92rem;color:#475569;line-height:1.5;text-align:center}.pg-lead strong{color:#16A34A}
+.pg-form{display:flex;flex-direction:column;gap:10px}
+.pg-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:520px){.pg-row{grid-template-columns:1fr}}
+.pg-inp{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5EDF3;border-radius:10px;background:#F7FBFD;color:var(--nuit);font-size:.95rem;font-family:inherit;outline:none;transition:border-color .2s,background .2s}
+.pg-inp:focus{border-color:#1FC4F0;background:#fff}
+.pg-inp.bad{border-color:#E11D48;background:rgba(225,29,72,.04)}
+.pg-submit{margin-top:6px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;background:linear-gradient(135deg,#FF6B1A,#E55510);color:#fff;border:0;border-radius:12px;font-weight:800;font-size:1rem;cursor:pointer;font-family:inherit;box-shadow:0 12px 24px rgba(255,107,26,.32);transition:transform .2s,box-shadow .2s}
+.pg-submit:hover{transform:translateY(-2px)}
+.pg-submit:disabled{opacity:.6;cursor:wait;transform:none}
+.pg-err{color:#E11D48;font-size:.84rem;font-weight:600;margin:4px 0 0;text-align:center}
+.pg-trust{margin:14px 0 0;font-size:.76rem;color:#64748b;text-align:center;line-height:1.4}.pg-trust a{color:var(--bleu)}
+@media(max-width:560px){.pg-card{border-radius:16px;padding:26px 18px 20px}}
 </style>
 </head>
 <body>
@@ -434,6 +456,35 @@ body.dv-modal-open{overflow:hidden}
      </ul>
     </div>
   </section>
+
+  <!-- PRICE GATE (P0 5512405541) : identification avant affichage des tarifs -->
+  <div class="pg-modal" id="priceGate" role="dialog" aria-modal="true" aria-labelledby="pgTitle" hidden>
+    <div class="pg-overlay" data-pg-close></div>
+    <div class="pg-card">
+      <button type="button" class="pg-close" id="pgClose" data-pg-close aria-label="Fermer">✕</button>
+      <div class="pg-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <h3 id="pgTitle" class="pg-title">Voyez nos tarifs en 10 secondes</h3>
+      <p class="pg-lead">Pour afficher les prix exacts adaptés à votre secteur, quelques infos suffisent. <strong>Aucun engagement</strong>, aucune carte demandée.</p>
+      <form id="pgForm" class="pg-form" novalidate autocomplete="on">
+        <div class="pg-row">
+          <input id="pg-prenom" class="pg-inp" type="text" placeholder="Prénom *" autocomplete="given-name" aria-label="Prénom">
+          <input id="pg-nom" class="pg-inp" type="text" placeholder="Nom *" autocomplete="family-name" aria-label="Nom">
+        </div>
+        <div class="pg-row">
+          <input id="pg-tel" class="pg-inp" type="tel" inputmode="tel" placeholder="Téléphone *" autocomplete="tel" aria-label="Téléphone">
+          <input id="pg-email" class="pg-inp" type="email" inputmode="email" placeholder="Email *" autocomplete="email" aria-label="Email">
+        </div>
+        <input id="pg-adresse" class="pg-inp" type="text" placeholder="Adresse (n° et rue) *" autocomplete="street-address" data-autocomplete-skip aria-label="Adresse">
+        <div class="pg-row">
+          <input id="pg-cp" class="pg-inp" type="text" inputmode="numeric" maxlength="5" placeholder="Code postal *" autocomplete="postal-code" aria-label="Code postal">
+          <input id="pg-ville" class="pg-inp" type="text" placeholder="Ville *" autocomplete="address-level2" aria-label="Ville">
+        </div>
+        <button type="submit" id="pgSubmit" class="pg-submit">Voir les tarifs →</button>
+        <p id="pgErr" class="pg-err" role="alert" hidden></p>
+      </form>
+      <p class="pg-trust">🛡️ Vos coordonnées servent à afficher le tarif de votre secteur et, si besoin, à vous recontacter. Confidentielles — <a href="/mentions-legales.html" target="_blank" rel="noopener">mentions légales</a>.</p>
+    </div>
+  </div>
 
   <!-- 1b. DEVIS (projet sur mesure) — in-tunnel -->
   <section class="screen" id="s-devis" data-step="devis">
