@@ -1,6 +1,6 @@
 # 🖼️ Audit `<img alt="">` strict — sonde #55
 
-_Généré le 2026-09-01 08:24_
+_Généré le 2026-09-02 07:43_
 
 - Pages scannées : **116**
 - Pages avec findings : **0**
