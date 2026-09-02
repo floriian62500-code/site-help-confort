@@ -731,6 +731,16 @@ body.dv-modal-open{overflow:hidden}
   'use strict';
   var SUPA='https://btcbjwqiivhpwoszomhg.supabase.co';
   var KEY='sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
+  // --- Override backend LOCAL TEST (voie A E2E isolé) : ACTIF UNIQUEMENT sur localhost/127.0.0.1
+  //     ET avec ?backend=local. Jamais sur le domaine preview/prod (fail-safe borné). Zéro prod. ---
+  try{
+    var _hn=location.hostname;
+    if((_hn==='localhost'||_hn==='127.0.0.1') && new URLSearchParams(location.search).get('backend')==='local'){
+      SUPA='http://localhost:54321';
+      KEY=(window.__LOCAL_ANON||''); // clé anon locale (fournie par window.__LOCAL_ANON ; cf supabase/local-test/README)
+      console.warn('[HC][E2E-LOCAL] backend local actif → '+SUPA+' (isolé, zéro prod). ?backend=local sur localhost seulement.');
+    }
+  }catch(_e){}
   var cart=(window.HcCart||{create:function(){return null;}}).create();
   var ALL=[], byFam={}, loaded=false;
   var state=(function(){ try{return JSON.parse(localStorage.getItem('hc_book_v1'))||{};}catch(e){return {};} })();
