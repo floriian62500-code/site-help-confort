@@ -756,6 +756,12 @@ body.dv-modal-open{overflow:hidden}
   function go(step, opts){
     opts=opts||{};
     if(STEPS.indexOf(step)<0) step='launcher';
+    // --- PRICE GATE P0 (5512405541) : jamais de tarifs affichés sans identification.
+    //     Contrôle dans la logique de navigation/state (pas de simple masquage CSS). ---
+    if((step==='catalogue'||step==='sheet') && !priceGatePassed()){
+      state._pgPending={step:step, cat:state._fam||null}; saveState();
+      openPriceGate(); return;
+    }
     // mode du tunnel selon le point d'entrée (persiste jusqu'au retour launcher)
     if(step==='launcher'){ state._mode='cart'; }
     else if(step==='devis'){ state._mode='devis'; }
@@ -1139,7 +1145,7 @@ body.dv-modal-open{overflow:hidden}
     var stepM=h.match(/step=([a-z]+)/); var catM=h.match(/cat=([^&]+)/);
     // Sous-étape devis dans le hash (&s=N) : présente = reprise (refresh/back) ; absente = nouvelle demande propre → étape 1.
     var sM=h.match(/[?&]s=(\d)/); window.__dvResumeStep = (stepM && stepM[1]==='devis' && sM) ? parseInt(sM[1],10) : null;
-    if(catM){ var fam=decodeURIComponent(catM[1]); state._fam=fam; if(loaded && byFam[fam]) renderProducts(fam); }
+    if(catM){ var fam=decodeURIComponent(catM[1]); state._fam=fam; if(loaded && byFam[fam] && priceGatePassed()) renderProducts(fam); }
     if(stepM){ go(stepM[1], opts||{noHash:true}); }
     else {
       // Chargement nu (pas de hash) : hub propre, JAMAIS de modal/overlay auto-ouverte.
