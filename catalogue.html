@@ -1089,7 +1089,7 @@ body.dv-modal-open{overflow:hidden}
   }
 
   // ---------- AGENCE / ZONE ----------
-  function detectAgence(cp){ if(!cp) return 'Saint-Omer'; var d=String(cp).substring(0,2); if(d==='59') return 'Dunkerque · SARL Dépan’DK'; return 'Saint-Omer · SARL Dépan’Audo'; }
+  function detectAgence(cp){ if(!cp) return 'Saint-Omer'; var d=String(cp).substring(0,2); if(d==='59') return 'Zone Dunkerquois · Dépan’Audo (Saint-Omer)'; return 'Saint-Omer · SARL Dépan’Audo'; }
   function inZone(cp){ return /^(62|59)\d{3}$/.test(String(cp||'')); }
 
   // ---------- ADRESSE autocomplete (BAN, dégradation manuelle) ----------
