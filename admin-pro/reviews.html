@@ -304,7 +304,7 @@ let _currentReply = null;
       const when = timeAgo(rv.posted_at);
       const priority = rv.priority !== 'normale' ? `<span class="rv-priority ${rv.priority}">${rv.priority === 'urgente' ? '🔥 Urgent' : '⚠ À traiter'}</span>` : '';
       const srcIcon = rv.source === 'google' ? '<svg width="10" height="10" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/></svg>' : '<svg width="10" height="10" viewBox="0 0 24 24" fill="#1877F2"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>';
-      const agenceLabel = rv.agence === 'depan-dk' ? "Dépan'DK" : "Dépan'Audo";
+      const agenceLabel = rv.agence === 'depan-dk' ? "Zone Dunkerquois" : "Dépan'Audo";
 
       return `
         <div class="rv-card" data-id="${rv.id}">
