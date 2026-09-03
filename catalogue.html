@@ -416,7 +416,7 @@ body.dv-modal-open{overflow:hidden}
      <div class="lchr-head">
       <span class="lchr-eyebrow"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> Commander une intervention</span>
       <h1>Commander une intervention</h1>
-      <p class="sub">Prestations à <strong>prix affichés</strong>, techniciens salariés, agences Saint-Omer &amp; Dunkerque. Deux façons de commencer&nbsp;:</p>
+      <p class="sub">Prestations à <strong>prix affichés</strong>, techniciens salariés, agence Saint-Omer — intervention Dunkerque &amp; toute la Côte d'Opale. Deux façons de commencer&nbsp;:</p>
      </div>
      <button type="button" id="lchrResume" class="lchr-resume" hidden>
        <span class="lchr-resume-ic"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></span>
@@ -451,7 +451,7 @@ body.dv-modal-open{overflow:hidden}
      <ul class="lchr-reassure">
       <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M16 11l2 2 4-4"/></svg> Techniciens <strong>salariés</strong></li>
       <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Interlocuteur humain local</li>
-      <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Saint-Omer &amp; Dunkerque</li>
+      <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Saint-Omer → Dunkerque &amp; Côte d'Opale</li>
       <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4L12 22l-9-9V3h10z"/></svg> Prix &amp; devis clairs</li>
      </ul>
     </div>
@@ -627,10 +627,19 @@ body.dv-modal-open{overflow:hidden}
 
   <!-- 1. CATALOGUE (mode "je sais") -->
   <section class="screen" id="s-catalogue" data-step="catalogue">
-    <button class="back" data-step-go="launcher">← Retour</button>
+    <a class="back" href="/index.html">← Accueil</a>
     <div class="step-head"><h1 style="margin:0">Catalogue des prestations</h1></div>
     <p class="sub">Choisissez une famille puis ajoutez une ou plusieurs prestations. Prix fermes affichés ; devis clair pour le sur-mesure.</p>
+    <button type="button" id="catResume" class="lchr-resume" hidden>
+      <span class="lchr-resume-ic"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></span>
+      <span class="lchr-resume-txt"><strong>Reprendre ma demande</strong><span>Vous avez une demande en cours.</span></span>
+      <span class="lchr-resume-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </button>
     <input id="search" class="search" type="search" placeholder="Rechercher (chauffe-eau, fuite, serrure…)" aria-label="Rechercher une prestation">
+    <button type="button" class="cat-diaglink" data-step-go="diagnosis" style="display:inline-flex;align-items:center;gap:8px;margin:2px 0 14px;padding:9px 14px;background:#fff;border:1px solid var(--line,#E5EDF3);border-radius:999px;color:var(--help-dark,#0A1428);font:inherit;font-size:.9rem;cursor:pointer">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#0DA0CF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v.01M11 11v3"/></svg>
+      Vous hésitez&nbsp;? <strong>Aidez-moi à identifier mon problème</strong>
+    </button>
     <div id="families" class="grid" aria-live="polite"></div>
     <div id="products" hidden>
       <button class="back" id="backFam">← Toutes les familles</button>
@@ -642,7 +651,7 @@ body.dv-modal-open{overflow:hidden}
 
   <!-- 2. DIAGNOSIS (mode "j'hésite") -->
   <section class="screen" id="s-diagnosis" data-step="diagnosis">
-    <button class="back" data-step-go="launcher">← Retour</button>
+    <button class="back" data-step-go="catalogue">← Retour au catalogue</button>
     <div id="diag-1">
       <h1>Quel domaine concerne votre besoin ?</h1>
       <p class="sub">Une décision à la fois. Choisissez le métier le plus proche de votre problème.</p>
@@ -863,7 +872,7 @@ body.dv-modal-open{overflow:hidden}
   function closePriceGate(voluntary){
     if(!pgModal) return;
     pgModal.hidden=true; document.body.style.overflow='';
-    if(voluntary){ state._pgPending=null; saveState(); go('launcher'); } // fermeture = aucun tarif révélé
+    if(voluntary){ state._pgPending=null; saveState(); location.href='/index.html'; } // décline l'identification = retour accueil (hub retiré), aucun tarif révélé
   }
   if(pgModal){
     pgModal.addEventListener('click', function(e){ if(e.target.hasAttribute('data-pg-close')) closePriceGate(true); });
@@ -1255,12 +1264,16 @@ body.dv-modal-open{overflow:hidden}
     // Sous-étape devis dans le hash (&s=N) : présente = reprise (refresh/back) ; absente = nouvelle demande propre → étape 1.
     var sM=h.match(/[?&]s=(\d)/); window.__dvResumeStep = (stepM && stepM[1]==='devis' && sM) ? parseInt(sM[1],10) : null;
     if(catM){ var fam=decodeURIComponent(catM[1]); state._fam=fam; if(loaded && byFam[fam] && priceGatePassed()) renderProducts(fam); }
-    if(stepM){ go(stepM[1], opts||{noHash:true}); }
+    if(stepM){
+      var _s=stepM[1]; if(_s==='launcher') _s='catalogue'; // hub retiré (5523099683) : ancien lien launcher -> catalogue direct
+      go(_s, opts||{noHash:true});
+    }
     else {
-      // Chargement nu (pas de hash) : hub propre, JAMAIS de modal/overlay auto-ouverte.
-      // Le brouillon reste en localStorage ; on propose une reprise explicite et discrète.
+      // Chargement nu (depuis la Home) : accès direct au parcours, SANS hub intermédiaire à 2 cartes.
+      // Non identifié -> le price gate s'ouvre automatiquement dans go('catalogue') ; identifié -> catalogue direct.
+      // Le brouillon reste en localStorage ; reprise proposée dans le catalogue (bannière discrète).
       var savedStep = state._step;
-      go('launcher',{noHash:true});
+      go('catalogue',{noHash:true});
       showResumeIfDraft(savedStep);
     }
   }
@@ -1272,12 +1285,14 @@ body.dv-modal-open{overflow:hidden}
     return null;
   }
   function showResumeIfDraft(saved){
-    var el=$('#lchrResume'); if(!el) return;
     var t=draftResumeTarget(saved);
-    if(t){ el.__target=t.step; var s=el.querySelector('strong'); if(s) s.textContent=t.label; el.hidden=false; }
-    else { el.hidden=true; el.__target=null; }
+    ['lchrResume','catResume'].forEach(function(id){
+      var el=document.getElementById(id); if(!el) return;
+      if(t){ el.__target=t.step; var s=el.querySelector('strong'); if(s) s.textContent=t.label; el.hidden=false; }
+      else { el.hidden=true; el.__target=null; }
+    });
   }
-  (function(){ var rb=$('#lchrResume'); if(rb) rb.addEventListener('click', function(){ var t=this.__target||state._step; if(t==='devis'){ window.__dvResumeStep = state._dvStep||1; } if(t) go(t); }); })();
+  (function(){ ['lchrResume','catResume'].forEach(function(id){ var rb=document.getElementById(id); if(rb) rb.addEventListener('click', function(){ var t=this.__target||state._step; if(t==='devis'){ window.__dvResumeStep = state._dvStep||1; } if(t) go(t); }); }); })();
 
   // ---------- EVENTS ----------
   document.addEventListener('click', function(e){
