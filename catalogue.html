@@ -816,10 +816,12 @@ body.dv-modal-open{overflow:hidden}
   function go(step, opts){
     opts=opts||{};
     if(STEPS.indexOf(step)<0) step='launcher';
+    if(step==='launcher') step='catalogue'; // HUB RETIRÉ (5523099683) : plus aucun écran hub à 2 cartes ; on entre direct dans le catalogue (gate auto si non identifié). Tous les anciens "Retour" -> catalogue.
     // --- PRICE GATE P0 (5512405541) : jamais de tarifs affichés sans identification.
     //     Contrôle dans la logique de navigation/state (pas de simple masquage CSS). ---
     if((step==='catalogue'||step==='sheet') && !priceGatePassed()){
       state._pgPending={step:step, cat:state._fam||null}; saveState();
+      $$('.screen').forEach(function(s){ s.classList.remove('active'); }); // ne jamais laisser un écran (ex-hub) sous la modale de gate
       openPriceGate(); return;
     }
     // mode du tunnel selon le point d'entrée (persiste jusqu'au retour launcher)
