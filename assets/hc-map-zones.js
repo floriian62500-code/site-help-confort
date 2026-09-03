@@ -6,7 +6,7 @@
 (function () {
   'use strict';
 
-  // 4 villes principales — 2 agences + 2 zones intervention élargies
+  // 4 villes principales — 1 agence (Saint-Omer) + zones d'intervention (Côte d'Opale & Dunkerquois)
   var VILLES = [
     {
       name: 'Saint-Omer', cp: '62500', zone: 'Audomarois',
@@ -18,9 +18,9 @@
     {
       name: 'Dunkerque', cp: '59140', zone: 'Dunkerquois',
       lat: 51.0344, lng: 2.3768, color: '#0DA0CF',
-      role: 'agence',
+      role: 'zone',
       url: 'depannage-dunkerque.html',
-      desc: "Agence Dépan'DK · littoral"
+      desc: "Zone Dunkerquois · littoral (intervention depuis Saint-Omer)"
     },
     {
       name: 'Calais', cp: '62100', zone: 'Calaisis',
