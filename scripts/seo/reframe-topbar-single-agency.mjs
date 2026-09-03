@@ -4,8 +4,18 @@
 // GARDE le libellé "Dunkerque" (zone), et remplace le séparateur "+" (2 entités) par "·".
 // Ne touche PAS "Dépan'Audo" (la vraie agence Saint-Omer). --dry pour tester.
 import fs from 'node:fs';
+import path from 'node:path';
 const dry = process.argv.includes('--dry');
-const files = fs.readdirSync('.').filter(f => f.endsWith('.html'));
+const SKIP = new Set(['node_modules', '.git', '.netlify', 'dist']);
+function walk(dir) {
+  let out = [];
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (e.isDirectory()) { if (!SKIP.has(e.name)) out = out.concat(walk(path.join(dir, e.name))); }
+    else if (e.name.endsWith('.html')) out.push(path.join(dir, e.name));
+  }
+  return out;
+}
+const files = walk('.');
 
 // Badge agence Dunkerque à retirer (apostrophe droite ou typographique, avec espace éventuel avant).
 const reBadge = /\s*<em class="hctb-agence"[^>]*>\s*D[eé]pan['’]DK\s*<\/em>/g;
