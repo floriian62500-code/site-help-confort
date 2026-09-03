@@ -499,7 +499,10 @@ if (document.fonts && document.fonts.ready) {
   var { data: { session } } = await supa.auth.getSession();
   if (session) {
     var redir = new URLSearchParams(location.search).get('redirect') || 'espace-client-dashboard.html';
-    location.href = redir.startsWith('/') || !redir.includes('://') ? redir : 'espace-client-dashboard.html';
+    // Anti open-redirect : n'autoriser QUE des cibles same-origin (chemins relatifs / absolus simple slash).
+    // Rejeter tout schéma (http:, javascript:…), le protocole-relatif //evil.com et l'antislash.
+    var unsafeRedir = /^\s*(?:[a-z][a-z0-9+.\-]*:|\/\/|\\)/i.test(redir);
+    location.href = unsafeRedir ? 'espace-client-dashboard.html' : redir;
     return;
   }
 
