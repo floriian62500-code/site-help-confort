@@ -33,7 +33,7 @@ const body = `// ═════════════════════
 // @ts-ignore Deno
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const SITE_URL = "https://www.depan59-62.fr";
+const SITE_URL = "https://depan59-62.fr";
 
 const STATIC_PAGES = ${JSON.stringify(staticPages)};
 

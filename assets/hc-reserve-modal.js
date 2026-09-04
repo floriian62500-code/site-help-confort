@@ -85,7 +85,7 @@
     // === STRIPE DIRECT : créer un Checkout Session à la volée ===
     async function createStripePayment(presta, amount_eur) {
       var SUPA_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
-      var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0Y2Jqd3FpaXZocG93c3pvbWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMzMjY1NjUsImV4cCI6MjA3ODkwMjU2NX0.fJC6_VxoSxr2hf-NUS7Of4kbJ4f0Lv3PFG6JsLrqLng';
+      var SUPA_KEY = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
       var r = await fetch(SUPA_URL + '/functions/v1/stripe-create-payment-link', {
         method: 'POST',
         headers: {
@@ -139,24 +139,18 @@
 
         e.preventDefault();
 
-        // Si on a un prix valable → paiement Stripe direct
-        if (amount > 0) {
-          showLoader('Création du paiement sécurisé…');
-          try {
-            var url = await createStripePayment(presta, amount);
-            window.location.href = url;
-            return;
-          } catch (err) {
-            hideLoader();
-            console.error('[hc-reserve-modal] Stripe failed', err);
-            // Fallback : on continue vers contact (au lieu de bloquer)
-          }
-        }
-
-        // Fallback : prix non détecté ou erreur Stripe → contact.html
+        // ═══════════════════════════════════════════════════════════════
+        // HC-FIX SÉCURITÉ 2026-08-08 (AUDIT-MASTER A08) : PAIEMENT PUBLIC GELÉ.
+        // Le montant venait du DOM (.m-tarif-price) et était envoyé tel quel à
+        // stripe-create-payment-link (aucune relecture serveur) → un client pouvait
+        // éditer le prix et payer 1€. Règle Florian : paiement client GELÉ tant que
+        // la chaîne Stripe n'est pas prouvée (prix serveur + webhook signé + idempotence).
+        // On route donc vers une DEMANDE DE DEVIS (lead exploitable), sans perte de lead.
+        // L'agence enverra un lien de paiement à montant fixé via le dashboard admin.
         var slugMatch = href.match(/[?&]presta=([^&#]+)/);
-        var slug = slugMatch ? slugMatch[1] : '';
-        window.location.href = 'contact.html?presta=' + encodeURIComponent(slug) + '&action=paiement#form';
+        var slug = slugMatch ? slugMatch[1] : (presta || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        window.location.href = 'contact.html?presta=' + encodeURIComponent(slug) + '&action=devis#form';
+        return;
       });
     });
   });

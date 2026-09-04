@@ -1,0 +1,139 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# INACTIF — modèle de workflow runner autonome (Option A, OAuth, coût nul), DURCI.
+# Fichier hors .github/workflows/ (extension .inactive) → ne s'exécute PAS.
+# Activation = (1) secret CLAUDE_CODE_OAUTH_TOKEN, (2) merge de la PR technique qui place
+# ce fichier en .github/workflows/claude-runner-oauth.yml sur main, (3) branch protection main.
+# Voir docs/control/outbox/claude/RUNNER-ACTIVATION-DECISION.md.
+# ─────────────────────────────────────────────────────────────────────────────
+name: Claude Runner (OAuth, hardened)
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '*/20 * * * *'   # toutes les 20 min ; ~72 runs courts/j (préflight seul si aucun CP). Dans le quota gratuit Actions.
+
+concurrency:
+  group: claude-runner        # lock : un seul run à la fois
+  cancel-in-progress: false
+
+permissions:
+  contents: write             # push recette uniquement (main protégé). PAS de issues:write (least privilege ;
+                              # les commentaires #9 restent manuels / hors runner autonome).
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    outputs:
+      decision: ${{ steps.pf.outputs.decision }}
+      cp_path: ${{ steps.pf.outputs.cp_path }}
+    steps:
+      # (7) IDENTITÉ FORTE au déclenchement manuel : github.actor (login GitHub authentifié, NON falsifiable
+      #     contrairement au nom Git du commit). Pour un dispatch, seul un acteur allowlisté est autorisé.
+      #     Pour un cron (schedule), github.actor = dernier auteur du workflow sur main (déjà protégé par PR).
+      - name: Garde acteur (dispatch)
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          ACTOR: ${{ github.actor }}
+        run: |
+          set -euo pipefail
+          case "$ACTOR" in
+            floriian62500-code) echo "acteur autorisé: $ACTOR" ;;
+            *) echo "::error::acteur non autorisé pour le dispatch: $ACTOR"; exit 1 ;;
+          esac
+      # SHA pinné (supply chain) — actions/checkout v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: { ref: recette, fetch-depth: 0 }
+      - id: pf
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$(bash scripts/control/runner-preflight.sh | tail -1)"
+          echo "preflight: $out"
+          if echo "$out" | grep -q '^PROCESS '; then
+            echo "decision=process" >> "$GITHUB_OUTPUT"
+            echo "cp_path=$(echo "$out" | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+          else
+            # aucun CP à traiter / skip sûr → Claude n'est JAMAIS appelé (préflight seul)
+            echo "decision=skip" >> "$GITHUB_OUTPUT"
+          fi
+
+  execute:
+    needs: preflight
+    if: needs.preflight.outputs.decision == 'process'   # Claude appelé UNIQUEMENT si PROCESS
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      # SHA pinné — actions/checkout v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: { ref: recette, fetch-depth: 0 }
+
+      # (3) garde branche AVANT Claude
+      - name: Garde branche (avant)
+        shell: bash
+        run: |
+          set -euo pipefail
+          BR="$(git rev-parse --abbrev-ref HEAD)"
+          [ "$BR" = "recette" ] || { echo "::error::branche != recette ($BR)"; exit 1; }
+
+      - name: Run Claude (OAuth — coût nul)
+        # SHA pinné (supply chain) — anthropics/claude-code-action v1
+        uses: anthropics/claude-code-action@c81e3bc69d1b18badbb63ba39581218f02421678 # v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Tu es l'exécuteur technique du site HELP CONFORT. Traite UNIQUEMENT le fichier de pilotage :
+            ${{ needs.preflight.outputs.cp_path }}
+            Lis d'abord docs/control/README.md et docs/control/PROJECT_STATE.json.
+            Exécute du travail réel + tests + preuves. Ne t'arrête pas à l'analyse.
+            INTERDIT ABSOLU : pousser main, déployer PROD, activer/muter Stripe LIVE, muter des données
+            prod sensibles, contourner la sécurité, committer un secret, force-push, opération destructive,
+            modifier .github/workflows/**, scripts/control/runner-* ou tout garde-fou du runner.
+            Toute modification visible reste sur recette et passe par /recette.html.
+            AVANT de finir : écris docs/control/outbox/claude/RUN-<horodatage>.md (statut, fichiers, tests,
+            SHA, preuves, anomalies, gates, needs_florian, next) ET mets à jour docs/control/runner-status.json
+            (heartbeat/state/last_report/last_commit_sha). Si aucune tâche : audit/nettoyage/sécurité sûr.
+          claude_args: '--max-turns 60'
+
+      # (3) garde branche APRÈS Claude (détecte un changement de branche pendant l'exécution)
+      # (4)(5) postflight : refuse fichiers sensibles + exige outbox + runner-status JSON valide
+      - name: Postflight (gardes dures avant push)
+        id: post
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$(bash scripts/control/runner-postflight.sh)"; echo "$out"
+          echo "$out" | grep -q '^OK postflight' || { echo "::error::postflight: $out"; exit 1; }
+
+      - name: Persist (recette only — garde anti-main)
+        shell: bash
+        run: |
+          set -euo pipefail
+          TARGET="recette"
+          if [ "$TARGET" = "main" ] || [ "$TARGET" = "master" ]; then echo "::error::push branche protégée"; exit 1; fi
+          if git diff --quiet && git diff --cached --quiet; then echo "no changes"; exit 0; fi
+          git config user.name "helpconfort-runner[bot]"
+          git config user.email "helpconfort-runner[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore(runner): sortie Claude autonome [skip ci]"
+          git push origin "HEAD:refs/heads/${TARGET}"      # jamais main
+
+      # (6) trace d'échec persistante distincte (claude-fail / postflight-fail / push-fail)
+      - name: Trace d'échec (sûre)
+        if: failure()
+        shell: bash
+        run: |
+          set +e
+          ts="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+          f="docs/control/outbox/claude/RUN-FAIL-$(date -u '+%Y%m%d-%H%M%S').md"
+          {
+            echo "# RUN FAIL — $ts"; echo "- job: execute ; branche: recette";
+            echo "- cause probable: Claude/postflight/push en échec (voir logs Actions).";
+            echo "- aucune écriture appliquée si postflight/push a échoué. Kill-switch: docs/control/RUNNER_STOP.";
+          } > "$f"
+          git config user.name "helpconfort-runner[bot]"
+          git config user.email "helpconfort-runner[bot]@users.noreply.github.com"
+          git add "$f" 2>/dev/null
+          # commit/push de la trace uniquement (pas les changements Claude non validés)
+          git stash --keep-index >/dev/null 2>&1 || true
+          git commit -m "chore(runner): trace échec [skip ci]" >/dev/null 2>&1 && \
+            git push origin "HEAD:refs/heads/recette" || echo "::warning::trace d'échec non poussée"

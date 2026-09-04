@@ -89,9 +89,9 @@
       <h3>🚀 Setup en 4 étapes (1-2 semaines)</h3>
       <ol>
         <li><strong>Créer compte Google Ads</strong> : <a href="https://ads.google.com" target="_blank" rel="noopener">ads.google.com</a> — CB + adresse fiscale.</li>
-        <li><strong>Demander Developer Token API</strong> : formulaire support Google (validation ~2 semaines, gratuit). <a href="https://developers.google.com/google-ads/api/docs/get-started/dev-token" target="_blank">Doc Google</a></li>
+        <li><strong>Demander Developer Token API</strong> : formulaire support Google (validation ~2 semaines, gratuit). <a href="https://developers.google.com/google-ads/api/docs/get-started/dev-token" target="_blank" rel="noopener noreferrer">Doc Google</a></li>
         <li><strong>OAuth Google Ads</strong> : une fois token reçu, OAuth depuis <a href="settings.html#google-ads">Paramètres → Google Ads</a></li>
-        <li><strong>Local Services Ads</strong> : profil sur <a href="https://ads.google.com/local-services-ads/" target="_blank">Google Local Services</a> (Kbis, assurance, background check)</li>
+        <li><strong>Local Services Ads</strong> : profil sur <a href="https://ads.google.com/local-services-ads/" target="_blank" rel="noopener noreferrer">Google Local Services</a> (Kbis, assurance, background check)</li>
       </ol>
     </div>
 
@@ -241,7 +241,7 @@
   function renderCampaigns(campaigns, metrics) {
     const tbody = document.getElementById('campaignsTable');
     if (!campaigns.length) {
-      tbody.innerHTML = '<tr><td colspan="8" class="gads-empty">Aucune campagne. Crée la première depuis <a href="https://ads.google.com" target="_blank">Google Ads</a> ou via le bouton "Nouvelle campagne".</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="gads-empty">Aucune campagne. Crée la première depuis <a href="https://ads.google.com" target="_blank" rel="noopener noreferrer">Google Ads</a> ou via le bouton "Nouvelle campagne".</td></tr>';
       return;
     }
     tbody.innerHTML = campaigns.map(c => {

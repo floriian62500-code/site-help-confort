@@ -1,0 +1,1677 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,follow"><!-- SEO: tunnel transactionnel non indexé (pages métier = portes SEO) -->
+<title>Commander une intervention — HELP Confort</title>
+<meta name="description" content="Commandez une intervention HELP Confort : prestations à prix affichés, ajoutez-en plusieurs si besoin, réservation avec rappel humain. Saint-Omer, Dunkerque & Côte d'Opale.">
+<link rel="preconnect" href="https://btcbjwqiivhpwoszomhg.supabase.co" crossorigin>
+<style>
+:root{--bleu:#0DA0CF;--bleu-d:#0A86ad;--nuit:#0A1428;--ok:#16a34a;--gris:#64748b;--bord:#E5EDF3;--bg:#F7FAFC;--orange:#E55510;--devis:#d97706}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:system-ui,Segoe UI,Roboto,sans-serif;color:var(--nuit);background:var(--bg);line-height:1.4}
+/* ---- Header tunnel premium (marque persistante, focus transactionnel) ---- */
+.topbar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);-webkit-backdrop-filter:saturate(180%) blur(16px);backdrop-filter:saturate(180%) blur(16px);border-bottom:1px solid rgba(229,237,243,.7);color:var(--nuit);display:flex;justify-content:space-between;align-items:center;gap:14px;padding:9px clamp(14px,3vw,28px);box-shadow:0 1px 12px rgba(10,20,40,.04)}
+.tb-l{display:flex;align-items:center;gap:14px;min-width:0}
+.tb-logo{display:flex;align-items:center;flex-shrink:0}
+.tb-logo img{height:40px;width:auto;display:block}
+.tb-context{display:flex;align-items:center;gap:8px;padding-left:14px;border-left:1px solid var(--bord);font-size:.9rem;font-weight:800;color:var(--nuit);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-context svg{color:var(--bleu);flex-shrink:0}
+.tb-r{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.tb-phone{display:inline-flex;align-items:center;gap:7px;text-decoration:none;color:var(--nuit);font-weight:800;font-size:.9rem;padding:8px 12px;border:1px solid var(--bord);border-radius:10px;background:#fff;transition:border-color .2s,color .2s}
+.tb-phone:hover{border-color:var(--bleu);color:var(--bleu)}
+.tb-phone .tb-urg{width:7px;height:7px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 3px rgba(229,85,16,.15);flex-shrink:0}
+.tb-exit{display:inline-flex;align-items:center;gap:6px;color:var(--gris);text-decoration:none;font-weight:700;font-size:.86rem;padding:8px 6px}
+.tb-exit:hover{color:var(--nuit)}
+.progress{position:sticky;top:59px;z-index:39;height:3px;background:rgba(13,160,207,.14)}
+.progress-bar{display:block;height:100%;width:5%;background:linear-gradient(90deg,var(--bleu),#1FC4F0);border-radius:0 3px 3px 0;transition:width .4s cubic-bezier(.16,1,.3,1)}
+@media(prefers-reduced-motion:reduce){.progress-bar{transition:none}}
+.cartbtn{border:0;border-radius:10px;padding:9px 13px;font-weight:800;cursor:pointer;background:var(--bleu);color:#fff;font-size:.88rem;display:inline-flex;align-items:center;gap:7px;transition:background .2s}
+.cartbtn:hover{background:var(--bleu-d)}
+.cartbtn[disabled]{opacity:.55;cursor:not-allowed}
+@media(max-width:860px){.tb-context{display:none}.tb-phone-txt{display:none}.tb-phone{padding:8px 10px}}
+@media(max-width:600px){.tb-exit-txt{display:none}.tb-logo img{height:34px}.progress{top:53px}.topbar{padding:8px 12px;gap:8px}.cartbtn-txt{display:none}}
+/* ---- Panneau latéral marque (desktop) : réassurance + contact persistants ---- */
+.side-panel{display:flex;flex-direction:column;gap:16px;position:sticky;top:76px}
+.side-panel[hidden]{display:none}
+.side-panel .summary{position:static;top:auto}
+.brand-reassure{background:#fff;border:1px solid var(--bord);border-radius:16px;padding:20px;box-shadow:0 4px 16px rgba(10,20,40,.05)}
+.brand-reassure h3{margin:0 0 3px;font-size:1rem;color:var(--nuit)}
+.brand-reassure .br-sub{color:var(--gris);font-size:.82rem;margin:0 0 14px}
+.br-list{list-style:none;margin:0 0 15px;padding:0;display:flex;flex-direction:column;gap:11px}
+.br-list li{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--nuit);line-height:1.35}
+.br-list svg{color:var(--bleu);flex-shrink:0;margin-top:1px}
+.br-contact{border-top:1px dashed var(--bord);padding-top:14px;display:flex;flex-direction:column;gap:6px}
+.br-tel{display:inline-flex;align-items:center;gap:8px;font-weight:800;color:var(--nuit);text-decoration:none;font-size:1.05rem}
+.br-tel:hover{color:var(--bleu)}
+.br-tel svg{color:var(--orange)}
+.br-hours{color:var(--gris);font-size:.77rem}
+@media(max-width:1023px){.side-panel{display:none}}
+.layout{max-width:1180px;margin:0 auto;padding:16px;display:grid;grid-template-columns:1fr;gap:20px}
+@media(min-width:1024px){.layout.with-summary{grid-template-columns:1fr 340px}}
+.main{min-width:0}
+h1{font-size:1.5rem;margin:.1em 0 .3em}
+h2{font-size:1.2rem;margin:.2em 0}
+.sub{color:var(--gris);margin:0 0 16px}
+.muted{color:var(--gris);font-size:.85rem}
+.screen{display:none}
+.screen.active{display:block;animation:fade .18s ease}
+@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+.search{width:100%;max-width:520px;padding:11px 14px;border:1px solid var(--bord);border-radius:10px;font-size:1rem}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));margin:16px 0}
+.card{background:#fff;border:1px solid var(--bord);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.card.click{cursor:pointer;text-align:left;font:inherit;color:inherit}
+.card.click:hover,.card.click:focus-visible{border-color:var(--bleu);outline:none;box-shadow:0 2px 10px rgba(13,160,207,.12)}
+.ico{font-size:1.7rem}
+.fam-card{flex-direction:row !important;align-items:center;gap:14px !important;padding:16px !important;text-align:left}
+.fam-ico{flex-shrink:0;width:46px;height:46px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(135deg,var(--bleu),#1FC4F0);box-shadow:0 8px 18px -6px rgba(13,160,207,.5);transition:transform .2s}
+.fam-meta{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}
+.fam-meta .name{font-size:1.05rem;font-weight:800;color:var(--nuit);line-height:1.2}
+.fam-card .fam-arrow{flex-shrink:0;color:#b8c4d0;transition:transform .2s,color .2s}
+.fam-card:hover .fam-arrow{color:var(--bleu);transform:translateX(3px)}
+.fam-card:hover .fam-ico{transform:scale(1.06)}
+.name{font-weight:700;line-height:1.25}
+.brand{color:var(--gris);font-size:.82rem}
+.ttc{font-weight:800;color:var(--bleu)}
+.range{font-weight:700;color:var(--nuit)}
+.dvis{font-weight:700;color:var(--devis)}
+.prod-img{width:100%;height:120px;object-fit:cover;border-radius:10px;background:#eef4f8}
+.btn{border:0;border-radius:10px;padding:11px 14px;font-weight:700;cursor:pointer;font-size:.95rem;text-align:center;text-decoration:none;display:inline-block}
+.btn-primary{background:var(--bleu);color:#fff}.btn-primary:hover{background:var(--bleu-d)}
+.btn-ghost{background:#fff;border:1px solid var(--bord);color:var(--nuit)}
+.btn-devis{background:#fff;border:1px solid var(--devis);color:var(--devis)}
+.btn-lg{padding:14px 18px;font-size:1.02rem;width:100%}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.back{background:none;border:0;color:var(--bleu);cursor:pointer;font-weight:600;padding:8px 0;font-size:.95rem}
+.lchr{max-width:1180px}
+.lchr-head{max-width:680px;margin:6px 0 22px}
+.lchr-eyebrow{display:inline-flex;align-items:center;gap:6px;padding:6px 13px;background:#fff;border:1px solid rgba(13,160,207,.22);color:#0A7FA3;border-radius:999px;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;box-shadow:0 2px 8px rgba(13,160,207,.06)}
+.lchr-eyebrow svg{color:var(--bleu)}
+.lchr-head h1{font-size:clamp(1.55rem,3vw,2.15rem);letter-spacing:-.022em;margin:.05em 0 .35em;line-height:1.1;color:var(--nuit)}
+.lchr-grid{display:grid;grid-template-columns:1fr;gap:16px;margin:0 0 18px}
+@media(min-width:900px){.lchr-grid{grid-template-columns:1.25fr 1fr;align-items:stretch}}
+.lchr-primary{position:relative;display:flex;flex-direction:column;gap:14px;text-align:left;font:inherit;cursor:pointer;border:0;border-radius:22px;padding:30px 28px 24px;overflow:hidden;color:#fff;background:linear-gradient(150deg,#0A1428 0%,#0E2A46 55%,#0A7FA3 130%);box-shadow:0 20px 44px -18px rgba(10,20,40,.5);transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s}
+.lchr-primary::after{content:'';position:absolute;inset:0;background:radial-gradient(120% 90% at 110% -10%,rgba(31,196,240,.35),transparent 55%);pointer-events:none}
+.lchr-primary:hover,.lchr-primary:focus-visible{transform:translateY(-4px);box-shadow:0 30px 60px -20px rgba(13,160,207,.55)}
+.lchr-primary:focus-visible{outline:3px solid #1FC4F0;outline-offset:3px}
+.lchr-ic{position:relative;z-index:1;flex-shrink:0;width:56px;height:56px;border-radius:16px;display:inline-flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(135deg,#0DA0CF,#1FC4F0);box-shadow:0 10px 22px -6px rgba(13,160,207,.6)}
+.lchr-ic--diag{width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,#7C3AED,#9F67FF);box-shadow:0 10px 22px -6px rgba(124,58,237,.5)}
+.lchr-p-body{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:8px}
+.lchr-p-t{font-size:1.45rem;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.lchr-p-d{font-size:.96rem;color:rgba(255,255,255,.82);line-height:1.5;max-width:460px}
+.lchr-p-d strong{color:#fff}
+.lchr-fams{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
+.lchr-fam{font-size:.76rem;font-weight:700;color:#eaf7fc;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);padding:5px 11px;border-radius:999px}
+.lchr-p-foot{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
+.lchr-hint{font-size:.74rem;font-weight:800;letter-spacing:.02em;color:#0A1428;background:#fff;padding:6px 13px;border-radius:999px}
+.lchr-arrow{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#0A1428;background:#fff;transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.lchr-primary:hover .lchr-arrow,.lchr-primary:focus-visible .lchr-arrow{transform:translateX(4px)}
+.lchr-right{display:flex;flex-direction:column;gap:12px}
+.lchr-diag{position:relative;display:flex;flex-direction:column;gap:9px;text-align:left;font:inherit;color:inherit;cursor:pointer;background:#fff;border:1.5px solid #ebe7f7;border-radius:18px;padding:20px 20px 18px;box-shadow:0 6px 20px rgba(10,20,40,.05);overflow:hidden;transition:transform .28s cubic-bezier(.16,1,.3,1),border-color .28s,box-shadow .28s}
+.lchr-diag::before{content:'';position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,#7C3AED,#9F67FF);transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.lchr-diag:hover,.lchr-diag:focus-visible{transform:translateY(-3px);border-color:#7C3AED;box-shadow:0 20px 40px -16px rgba(124,58,237,.3);outline:none}
+.lchr-diag:hover::before,.lchr-diag:focus-visible::before{transform:scaleX(1)}
+.lchr-diag-head{display:flex;align-items:center;gap:12px}
+.lchr-diag-t{font-size:1.05rem;font-weight:800;color:var(--nuit);line-height:1.2;letter-spacing:-.01em}
+.lchr-diag-d{font-size:.86rem;color:#546074;line-height:1.45}
+.lchr-steps{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px}
+.lchr-step{font-size:.74rem;font-weight:700;color:#5B3EA6;background:rgba(124,58,237,.08);border-radius:8px;padding:5px 9px;display:inline-flex;align-items:center;gap:5px}
+.lchr-step b{background:#7C3AED;color:#fff;width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.66rem}
+.lchr-sep{color:#b9a7e0;font-weight:800}
+.lchr-diag-cta{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:.85rem;color:#7C3AED;margin-top:2px}
+.lchr-tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:460px){.lchr-tiles{grid-template-columns:1fr}}
+.lchr-tile{position:relative;display:flex;align-items:center;gap:11px;text-align:left;font:inherit;color:inherit;text-decoration:none;cursor:pointer;background:#fff;border:1px solid #E9EFF4;border-radius:14px;padding:13px 14px;box-shadow:0 4px 14px rgba(10,20,40,.04);transition:transform .22s,border-color .22s,box-shadow .22s}
+.lchr-tile:hover,.lchr-tile:focus-visible{transform:translateY(-2px);border-color:var(--tc);box-shadow:0 14px 28px -14px var(--tcSh);outline:none}
+.lchr-tile--devis{--tc:#7C3AED;--tcSh:rgba(124,58,237,.3);--tcSoft:rgba(124,58,237,.10)}
+.lchr-tile--ent{--tc:#FF6B1A;--tcSh:rgba(255,107,26,.3);--tcSoft:rgba(255,107,26,.10)}
+.lchr-tile-ic{flex-shrink:0;width:38px;height:38px;border-radius:11px;display:inline-flex;align-items:center;justify-content:center;color:var(--tc);background:var(--tcSoft)}
+.lchr-tile-body{flex:1;display:flex;flex-direction:column;gap:1px;min-width:0}
+.lchr-tile-body strong{font-size:.9rem;font-weight:800;color:var(--nuit);line-height:1.2}
+.lchr-tile-body span{font-size:.78rem;color:#6b7688}
+.lchr-tarrow{color:var(--tc);flex-shrink:0;transition:transform .22s}
+.lchr-tile:hover .lchr-tarrow,.lchr-tile:focus-visible .lchr-tarrow{transform:translateX(3px)}
+.lchr-urg{display:flex;align-items:center;gap:11px;flex-wrap:wrap;padding:12px 15px;background:linear-gradient(135deg,rgba(255,107,26,.09),rgba(255,180,0,.05));border:1px solid rgba(255,107,26,.22);border-radius:14px}
+.lchr-urg-ic{flex-shrink:0;width:34px;height:34px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(135deg,#FF6B1A,#E55510)}
+.lchr-urg-txt{flex:1;min-width:120px;font-size:.9rem;color:var(--nuit)}
+.lchr-urg-txt strong{font-weight:800}
+.lchr-urg-txt a{color:#C2510A;font-weight:800;text-decoration:none;white-space:nowrap}
+.lchr-urg-hours{display:inline-flex;align-items:center;gap:5px;font-size:.76rem;font-weight:600;color:#8a5a3a}
+.lchr-urg-hours svg{color:#C2510A}
+/* ---- Launcher réconcilié : 3 intentions hiérarchisées ---- */
+.lchr-intents{display:grid;grid-template-columns:1fr;gap:16px;margin:0 0 16px}
+@media(min-width:820px){.lchr-intents{grid-template-columns:1.35fr 1fr 1fr;align-items:stretch}}
+.lchr-card{position:relative;display:flex;flex-direction:column;gap:8px;text-align:left;font:inherit;color:inherit;text-decoration:none;cursor:pointer;background:#fff;border:1px solid #E9EFF4;border-radius:18px;padding:22px 20px;box-shadow:0 6px 20px -8px rgba(10,20,40,.10);transition:transform .24s cubic-bezier(.16,1,.3,1),box-shadow .24s,border-color .24s}
+.lchr-card:hover,.lchr-card:focus-visible{transform:translateY(-4px);box-shadow:0 22px 44px -18px rgba(10,20,40,.22);border-color:#cfe0ea;outline:none}
+.lchr-card:focus-visible{outline:2px solid var(--bleu);outline-offset:2px}
+.lchr-cic{width:46px;height:46px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.lchr-cic--cmd{background:linear-gradient(135deg,var(--bleu),#1FC4F0);box-shadow:0 8px 18px -6px rgba(13,160,207,.55)}
+.lchr-cic--devis{background:linear-gradient(135deg,#7C3AED,#9F67FF);box-shadow:0 8px 18px -6px rgba(124,58,237,.5)}
+.lchr-cic--ent{background:linear-gradient(135deg,#FF6B1A,#FF8F4D);box-shadow:0 8px 18px -6px rgba(255,107,26,.5)}
+.lchr-ct{font-size:1.12rem;font-weight:800;letter-spacing:-.015em;color:var(--nuit);line-height:1.2;margin-top:2px}
+.lchr-cd{font-size:.9rem;color:#5b6676;line-height:1.5;flex:1}
+.lchr-modes{display:flex;flex-direction:column;gap:9px;margin-top:6px}
+.lchr-mode{display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;font:inherit;cursor:pointer;background:#F7FBFD;border:1.5px solid var(--bord);border-radius:12px;padding:11px 13px;color:var(--nuit);transition:border-color .2s,background .2s,transform .2s}
+.lchr-mode:hover,.lchr-mode:focus-visible{border-color:var(--bleu);background:#fff;transform:translateX(2px);outline:none}
+.lchr-mode--diag:hover,.lchr-mode--diag:focus-visible{border-color:#7C3AED}
+.lchr-mode-b{display:flex;flex-direction:column;gap:1px;min-width:0}
+.lchr-mode-b strong{font-size:.94rem;font-weight:800}
+.lchr-mode-b span{font-size:.78rem;color:#6b7688}
+.lchr-mode svg{color:var(--bleu);flex-shrink:0}
+.lchr-mode--diag svg{color:#7C3AED}
+.lchr-cfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
+.lchr-tag{font-size:.74rem;font-weight:800;padding:4px 11px;border-radius:999px;letter-spacing:.01em}
+.lchr-tag--devis{background:rgba(124,58,237,.10);color:#7C3AED}
+.lchr-tag--ent{background:rgba(255,107,26,.12);color:#E8580F}
+.lchr-modes2{display:grid;grid-template-columns:1fr;gap:16px;margin:0 0 16px}
+@media(min-width:760px){.lchr-modes2{grid-template-columns:1fr 1fr}}
+.lchr-cic--diag{background:linear-gradient(135deg,#7C3AED,#9F67FF);box-shadow:0 8px 18px -6px rgba(124,58,237,.5)}
+.lchr-tag--cat{background:rgba(13,160,207,.10);color:var(--bleu-d)}
+.lchr-tag--diag{background:rgba(124,58,237,.10);color:#7C3AED}
+.lchr-modecard:hover .lchr-carrow,.lchr-modecard:focus-visible .lchr-carrow{background:var(--bleu);color:#fff;transform:translateX(3px)}
+.lchr-modecard--diag:hover .lchr-carrow,.lchr-modecard--diag:focus-visible .lchr-carrow{background:#7C3AED;color:#fff}
+.lchr-modecard--diag:hover,.lchr-modecard--diag:focus-visible{border-color:rgba(124,58,237,.4)}
+.lchr-carrow{width:34px;height:34px;border-radius:50%;background:#F1F5F9;display:inline-flex;align-items:center;justify-content:center;color:var(--nuit);transition:background .2s,color .2s,transform .2s;flex-shrink:0}
+.lchr-card--devis:hover .lchr-carrow{background:#7C3AED;color:#fff;transform:translateX(3px)}
+.lchr-card--ent:hover .lchr-carrow{background:#FF6B1A;color:#fff;transform:translateX(3px)}
+.lchr-urg2{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 16px;background:linear-gradient(135deg,rgba(255,107,26,.08),rgba(255,180,0,.04));border:1px solid rgba(255,107,26,.20);border-radius:14px;margin:0 0 16px}
+.lchr-urg2-ic{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#FF6B1A,#FF8F4D);color:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.lchr-urg2-txt{flex:1;min-width:180px;font-size:.88rem;color:var(--nuit)}
+.lchr-urg2-tel{display:inline-flex;align-items:center;gap:7px;background:var(--nuit);color:#fff;text-decoration:none;font-weight:800;font-size:.9rem;padding:9px 14px;border-radius:10px;transition:background .2s}
+.lchr-urg2-tel:hover{background:var(--bleu)}
+.lchr-urg2-hours{font-size:.76rem;color:var(--gris)}
+@media(max-width:520px){.lchr-urg2-hours{width:100%}}
+.lchr-reassure{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 14px;margin:0;padding:16px;background:linear-gradient(180deg,#F6FAFD,#fff);border:1px solid #E9EFF4;border-radius:16px}
+.lchr-reassure li{display:inline-flex;align-items:center;gap:9px;font-size:.86rem;font-weight:600;color:#3D4759;padding:4px 6px}
+.lchr-reassure li strong{font-weight:800;color:var(--nuit)}
+.lchr-reassure svg{color:var(--bleu);flex-shrink:0}
+.assist-item{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.88rem;color:var(--nuit);background:#F4F8FB;border:1px solid transparent;transition:background .2s,border-color .2s,transform .2s}
+.assist-item svg{color:var(--bleu)}
+.assist-item:hover{background:#EAF6FB;border-color:rgba(13,160,207,.25);transform:translateY(-1px)}
+.assist-urg{background:linear-gradient(135deg,rgba(255,107,26,.10),rgba(255,180,0,.06));color:#C2510A}
+.assist-urg svg{color:#E55510}
+.assist-urg:hover{background:linear-gradient(135deg,rgba(255,107,26,.16),rgba(255,180,0,.10));border-color:rgba(255,107,26,.3)}
+@media(prefers-reduced-motion:reduce){.lchr-primary,.lchr-diag,.lchr-tile,.lchr-arrow,.lchr-tarrow,.assist-item{transition:none !important}.lchr-primary:hover,.lchr-diag:hover,.lchr-tile:hover{transform:none}}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.chip{border:1px solid var(--bord);background:#fff;border-radius:999px;padding:9px 14px;cursor:pointer;font-weight:600;font-size:.92rem;font-family:inherit;color:var(--nuit);transition:border-color .2s,background .2s,color .2s}
+.chip:hover,.chip:focus-visible{border-color:var(--bleu);outline:none}
+.chip.sel{background:var(--bleu);border-color:var(--bleu);color:#fff}
+button.assist-item{font-family:inherit;cursor:pointer}
+.tnav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
+.back-hub{color:var(--gris);font-size:.85rem}
+.back-hub:hover{color:var(--bleu)}
+.field{margin:0 0 14px}
+.field label{display:block;font-weight:600;margin:0 0 5px;font-size:.92rem}
+.field input,.field textarea,.field select{width:100%;padding:11px 13px;border:1px solid var(--bord);border-radius:10px;font-size:1rem;font-family:inherit}
+.field input:focus,.field textarea:focus{outline:2px solid var(--bleu);border-color:var(--bleu)}
+.field .err{color:#dc2626;font-size:.82rem;margin:5px 0 0;display:none}
+.field.invalid input,.field.invalid textarea{border-color:#dc2626}
+.field.invalid .err{display:block}
+.two{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:520px){.two{grid-template-columns:1fr 1fr}}
+.ac-wrap{position:relative}
+.ac-list{position:absolute;left:0;right:0;top:100%;z-index:5;background:#fff;border:1px solid var(--bord);border-top:0;border-radius:0 0 10px 10px;max-height:230px;overflow:auto;box-shadow:0 8px 22px rgba(10,20,40,.12)}
+.ac-list button{display:block;width:100%;text-align:left;border:0;background:#fff;padding:10px 13px;cursor:pointer;font:inherit;border-bottom:1px solid var(--bg)}
+.ac-list button:hover,.ac-list button.hl{background:#eef7fb}
+.note{background:#eff8fc;border:1px solid #cfe9f4;border-radius:12px;padding:12px 14px;margin:12px 0;font-size:.92rem}
+.note.warn{background:#fff7ed;border-color:#fed7aa}
+.note.ok{background:#f0fdf4;border-color:#bbf7d0}
+.yn{display:grid;gap:12px;grid-template-columns:1fr 1fr;max-width:420px;margin:10px 0}
+.yn button{padding:18px;border:2px solid var(--bord);border-radius:14px;background:#fff;cursor:pointer;font-weight:800;font-size:1.05rem}
+.yn button.sel{border-color:var(--bleu);background:#eef7fb}
+/* résumé sticky / bottom-sheet */
+.summary{background:#fff;border:1px solid var(--bord);border-radius:14px;padding:14px}
+@media(min-width:1024px){.summary{position:sticky;top:70px}}
+.summary h3{margin:.1em 0 .5em;font-size:1.02rem}
+.sum-line{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--bg);font-size:.9rem}
+.sum-line .qty-c{display:flex;align-items:center;gap:6px}
+.sum-line button.q{width:26px;height:26px;border:1px solid var(--bord);background:#fff;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:var(--nuit);font-size:1rem;line-height:1;transition:border-color .15s,color .15s}
+.q:hover{border-color:var(--bleu);color:var(--bleu)}
+.q-rm{color:#dc2626}
+.q-rm:hover{border-color:#dc2626;color:#dc2626;background:#fef2f2}
+.sum-ctx{font-size:.85rem;color:var(--gris);margin:8px 0 0;display:flex;align-items:center;gap:5px}
+.sum-ctx svg{flex-shrink:0;color:var(--bleu)}
+.sum-total{display:flex;justify-content:space-between;font-weight:800;margin-top:10px;padding-top:10px;border-top:1px solid var(--bord)}
+/* barre panier mobile + bottom-sheet : masqués par défaut (desktop) */
+.mobile-cartbar{display:none}
+.sheet-backdrop{display:none}
+.bottom-sheet{display:none}
+@media(max-width:1023px){
+  .mobile-cartbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:35;background:#fff;border-top:1px solid var(--bord);padding:10px 14px;justify-content:space-between;align-items:center;box-shadow:0 -4px 16px rgba(10,20,40,.08)}
+  .sheet-backdrop{position:fixed;inset:0;background:rgba(10,20,40,.4);z-index:44}
+  .sheet-backdrop.open{display:block}
+  .bottom-sheet{display:block;position:fixed;left:0;right:0;bottom:0;z-index:45;background:#fff;border-radius:16px 16px 0 0;max-height:82vh;overflow:auto;transform:translateY(100%);transition:transform .22s;padding:16px 16px 90px}
+  .bottom-sheet.open{transform:none}
+  .desktop-summary{display:none}
+}
+.pill{display:inline-block;background:#eef7fb;color:var(--bleu-d);border-radius:999px;padding:2px 10px;font-size:.78rem;font-weight:700}
+.incl li{margin:2px 0}
+.step-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 6px}
+.step-head .pill{background:#f1f5f9;color:var(--gris)}
+/* ---- Formulaire devis dédié (haute conversion) ---- */
+.dv-journey{margin:0 0 18px;padding:14px 16px;background:linear-gradient(135deg,#F7FBFD,#fff);border:1px solid var(--bord);border-radius:14px}
+.dv-journey .dvj-title{font-size:.72rem;font-weight:800;color:var(--bleu);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;text-align:center}
+.dv-journey ol{list-style:none;margin:0;padding:0;display:flex;justify-content:space-between;gap:4px;position:relative}
+.dv-journey ol::before{content:'';position:absolute;top:13px;left:14px;right:14px;height:2px;background:repeating-linear-gradient(90deg,#CBD5E1 0 6px,transparent 6px 12px)}
+.dv-journey li{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;position:relative;z-index:1}
+.dv-journey .dvj-num{width:26px;height:26px;border-radius:50%;background:#fff;border:1.5px solid var(--bleu);color:var(--bleu);font-weight:800;font-size:.78rem;display:flex;align-items:center;justify-content:center}
+.dv-journey .dvj-lbl{font-size:.7rem;font-weight:600;color:var(--nuit);line-height:1.3;max-width:100px}
+@media(max-width:520px){.dv-journey ol{flex-direction:column;gap:10px}.dv-journey ol::before{display:none}.dv-journey li{flex-direction:row;text-align:left;gap:12px}.dv-journey .dvj-lbl{max-width:none;font-size:.86rem}}
+.dv-trust{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 18px;padding:12px 14px;background:linear-gradient(135deg,rgba(13,160,207,.06),rgba(34,197,94,.04));border:1px solid rgba(13,160,207,.16);border-radius:12px}
+.dv-trust div{font-size:.8rem;color:var(--nuit);line-height:1.3}
+.dv-trust b{display:block;font-weight:800}
+@media(min-width:1024px){.dv-trust{display:none}}
+.dv-grid{display:grid;grid-template-columns:1fr;gap:0 14px}
+@media(min-width:560px){.dv-grid{grid-template-columns:1fr 1fr}}
+.dv-svc{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 0}
+.dv-chip{position:relative;display:inline-flex;align-items:center;cursor:pointer;font-size:.86rem;font-weight:600;color:var(--nuit);background:#F7FBFD;border:1.5px solid var(--bord);border-radius:999px;padding:8px 14px;transition:all .2s ease;user-select:none}
+.dv-chip input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.dv-chip:hover{border-color:var(--bleu);color:var(--bleu)}
+.dv-chip:has(input:checked){background:linear-gradient(135deg,var(--bleu),#1FC4F0);color:#fff;border-color:var(--bleu);box-shadow:0 4px 12px rgba(13,160,207,.28)}
+.dv-chip:focus-within{outline:2px solid var(--bleu);outline-offset:2px}
+.field.invalid .dv-svc-err,.dv-svc-err{color:#dc2626;font-size:.82rem;margin:5px 0 0;display:none}
+.field.invalid .dv-svc-err{display:block}
+.dv-after{background:#FAFCFD;border:1px solid var(--bord);border-radius:12px;padding:14px 18px;margin:16px 0 12px}
+.dv-after strong{display:block;color:var(--nuit);font-size:.88rem;margin-bottom:8px}
+.dv-after ol{margin:0;padding-left:18px;color:#475569;font-size:.85rem;line-height:1.55}
+.dv-disc{font-size:.78rem;color:var(--gris);margin:6px 0 0}
+.dv-cta-note{text-align:center;margin:10px 0 0;font-size:.78rem;color:var(--gris)}
+/* ---- Wizard devis premium centré ---- */
+.dvw{max-width:720px;margin:0 auto}
+.dvw-head{text-align:center;margin:0 0 20px}
+.dvw-head h1{margin:.1em 0 .2em}
+.dvw-head .sub{margin:0}
+.dvw-steps{list-style:none;display:flex;justify-content:center;gap:0;margin:0 0 22px;padding:0}
+.dvw-steps li{flex:1;max-width:130px;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;color:var(--gris)}
+.dvw-steps li::before{content:'';position:absolute;top:15px;right:50%;width:100%;height:2px;background:var(--bord);z-index:0}
+.dvw-steps li:first-child::before{display:none}
+.dvw-sn{width:32px;height:32px;border-radius:50%;background:#fff;border:2px solid var(--bord);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;color:var(--gris);position:relative;z-index:1;transition:all .25s}
+.dvw-sl{font-size:.72rem;font-weight:700}
+.dvw-steps li.active .dvw-sn{border-color:var(--bleu);color:#fff;background:linear-gradient(135deg,var(--bleu),#1FC4F0);box-shadow:0 6px 16px -4px rgba(13,160,207,.5)}
+.dvw-steps li.active{color:var(--nuit)}
+.dvw-steps li.done .dvw-sn{border-color:var(--bleu);background:var(--bleu);color:#fff}
+.dvw-steps li.done::before,.dvw-steps li.active::before{background:var(--bleu)}
+@media(max-width:520px){.dvw-sl{display:none}.dvw-steps li{max-width:none}}
+.dvw-card{background:#fff;border:1px solid var(--bord);border-radius:20px;padding:28px 26px;box-shadow:0 18px 44px -22px rgba(10,20,40,.28)}
+@media(max-width:520px){.dvw-card{padding:22px 18px;border-radius:16px}}
+.dvw-q{font-size:1.35rem;font-weight:800;letter-spacing:-.02em;margin:0 0 4px;color:var(--nuit)}
+.dvw-hint{color:var(--gris);font-size:.92rem;margin:0 0 18px}
+.dvw-panel{animation:fade .2s ease}
+.dvw-metiers{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:560px){.dvw-metiers{grid-template-columns:repeat(3,1fr)}}
+.dvw-metier{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:16px 10px;background:#F7FBFD;border:1.5px solid var(--bord);border-radius:14px;cursor:pointer;transition:all .2s ease;user-select:none}
+.dvw-metier input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.dvw-mic{width:48px;height:48px;border-radius:13px;background:#fff;border:1px solid var(--bord);display:flex;align-items:center;justify-content:center;color:var(--bleu);transition:all .2s}
+.dvw-mic img{width:32px;height:32px;object-fit:contain}
+.dvw-ml{font-size:.84rem;font-weight:700;color:var(--nuit);line-height:1.2}
+.dvw-metier:hover{border-color:var(--bleu);background:#fff;transform:translateY(-2px)}
+.dvw-metier:has(input:checked){border-color:var(--bleu);background:linear-gradient(135deg,rgba(13,160,207,.10),rgba(31,196,240,.05));box-shadow:0 8px 20px -8px rgba(13,160,207,.35)}
+.dvw-metier:has(input:checked) .dvw-mic{background:linear-gradient(135deg,var(--bleu),#1FC4F0);color:#fff;border-color:var(--bleu)}
+.dvw-metier:has(input:checked) .dvw-mic img{filter:brightness(0) invert(1)}
+.dvw-metier:has(input:checked)::after{content:'✓';position:absolute;top:6px;right:9px;color:var(--bleu);font-weight:900;font-size:.9rem}
+.dvw-metier:focus-within{outline:2px solid var(--bleu);outline-offset:2px}
+.field.invalid .dvw-metiers,.dvw-metiers{border-radius:14px}
+.dvw-photo{display:flex;gap:12px;align-items:flex-start;margin-top:14px;padding:13px 15px;background:#F7FBFD;border:1px solid var(--bord);border-radius:12px;font-size:.86rem;color:#475569;line-height:1.5}
+.dvw-photo-ic{flex-shrink:0;color:var(--bleu);margin-top:1px}
+.dvw-photo strong{color:var(--nuit)}
+.dvw-agence{display:flex;align-items:center;gap:8px;margin-top:8px;padding:11px 14px;background:linear-gradient(135deg,rgba(13,160,207,.08),rgba(31,196,240,.04));border:1px solid rgba(13,160,207,.2);border-radius:11px;font-size:.9rem;color:var(--nuit)}
+.dvw-agence-ic{color:var(--bleu);flex-shrink:0}
+.dvw-recap .rr{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid var(--bord);font-size:.92rem}
+.dvw-recap .rr:last-child{border-bottom:0}
+.dvw-recap .rr .k{color:var(--gris);font-weight:600;flex-shrink:0}
+.dvw-recap .rr .v{color:var(--nuit);font-weight:700;text-align:right}
+.dvw-edit{background:none;border:0;color:var(--bleu);font-weight:700;font-size:.8rem;cursor:pointer;padding:2px 4px;margin-left:8px;text-decoration:underline;border-radius:6px}
+.dvw-edit:hover{color:var(--bleu-d);background:rgba(13,160,207,.08)}
+.dvw-reassure{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;margin:18px 0 0;padding:14px 0 0;border-top:1px dashed var(--bord)}
+.dvw-reassure li{font-size:.8rem;font-weight:700;color:#475569;display:inline-flex;align-items:center;gap:6px}
+.dvw-reassure li::before{content:'';width:15px;height:15px;flex-shrink:0;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230DA0CF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E")}
+.dvw-nav{display:flex;gap:12px;margin-top:18px}
+.dvw-cta{flex:1;font-size:1.02rem;padding:14px 20px}
+.dvw-urg{text-align:center;color:var(--gris);font-size:.85rem;margin:16px 0 0}
+.dvw-urg a{color:var(--nuit);font-weight:800;text-decoration:none}
+@media(max-width:520px){.dvw-nav{position:sticky;bottom:0;background:linear-gradient(180deg,transparent,var(--bg) 30%);padding:10px 0 0;z-index:5}}
+/* ---- Devis en modal overlay premium (continuité, 5454859042) ---- */
+body.dv-modal-open{overflow:hidden}
+#s-devis.active{position:fixed;inset:0;z-index:9500;display:flex;align-items:flex-start;justify-content:center;padding:clamp(14px,3vh,44px) 16px;overflow-y:auto;background:rgba(10,20,40,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:dvOvFade .22s ease}
+@keyframes dvOvFade{from{opacity:0}to{opacity:1}}
+#s-devis .tnav{display:none}
+#s-devis .dvw,#s-devis #devisDone:not([hidden]){position:relative;background:#fff;border-radius:22px;max-width:600px;width:100%;margin:auto;box-shadow:0 40px 90px -20px rgba(10,20,40,.42);animation:dvwPop .34s cubic-bezier(.16,1,.3,1)}
+#s-devis .dvw{padding:clamp(24px,3vw,34px) clamp(20px,2.6vw,30px) clamp(18px,2.4vw,24px)}
+#s-devis #devisDone:not([hidden]){padding:clamp(26px,3vw,36px) clamp(22px,2.6vw,30px)}
+@keyframes dvwPop{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+#s-devis .dvw-card{border:0;box-shadow:none;padding:0;border-radius:0;background:transparent}
+.dvw-close{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;background:#F1F6FA;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#41506a;transition:background .2s;z-index:3}
+.dvw-close:hover{background:#E2E9F0}
+#s-devis .dvw-head{padding:0 34px}
+@media(max-width:560px){#s-devis.active{padding:0;align-items:stretch}#s-devis .dvw,#s-devis #devisDone:not([hidden]){border-radius:0;min-height:100vh;max-width:none}#s-devis .dvw{padding:18px 16px 26px}.dvw-close{top:10px;right:10px}}
+/* ---- Devis : photos facultatives (pipeline lead-photos existant) ---- */
+.dvw-photos{margin-top:14px}
+.dvw-photos-drop{position:relative;display:flex;align-items:center;gap:12px;padding:14px 16px;background:#F7FBFD;border:1.5px dashed var(--bord);border-radius:12px;cursor:pointer;transition:border-color .2s,background .2s}
+.dvw-photos-drop:hover{border-color:var(--bleu);background:#fff}
+.dvw-photos-drop:focus-within{outline:2px solid var(--bleu);outline-offset:2px}
+.dvw-photos-ic{flex-shrink:0;color:var(--bleu)}
+.dvw-photos-txt{font-size:.86rem;color:#475569;line-height:1.45}.dvw-photos-txt strong{color:var(--nuit)}
+.dvw-photos-drop input[type=file]{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)}
+.dvw-photos-list{list-style:none;display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 0;padding:0}
+.dvw-photos-list li{position:relative;width:74px;height:74px;border-radius:10px;overflow:hidden;border:1px solid var(--bord);background:#fff}
+.dvw-photos-list img{width:100%;height:100%;object-fit:cover;display:block}
+.dvw-ph-rm{position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%;background:rgba(10,20,40,.6);border:0;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.82rem;line-height:1;padding:0}
+.dvw-ph-rm:hover{background:#dc2626}
+.dvw-photos-err{color:#dc2626;font-size:.82rem;font-weight:600;margin:8px 0 0}
+/* ---- Launcher : reprise de brouillon discrète (pas de modal auto) ---- */
+.lchr-resume{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#fff;border:1px solid var(--bord);border-left:3px solid var(--bleu);border-radius:12px;padding:12px 16px;margin:0 0 18px;cursor:pointer;font-family:inherit;transition:box-shadow .2s,border-color .2s}
+.lchr-resume:hover{border-color:var(--bleu);box-shadow:0 8px 20px -10px rgba(13,160,207,.4)}
+.lchr-resume-ic{flex-shrink:0;width:36px;height:36px;border-radius:10px;background:rgba(13,160,207,.10);color:var(--bleu);display:flex;align-items:center;justify-content:center}
+.lchr-resume-txt{flex:1;display:flex;flex-direction:column;line-height:1.25}
+.lchr-resume-txt strong{font-size:.95rem;color:var(--nuit);font-weight:800}
+.lchr-resume-txt span{font-size:.8rem;color:var(--gris)}
+.lchr-resume-arrow{flex-shrink:0;color:var(--bleu);transition:transform .2s}
+.lchr-resume:hover .lchr-resume-arrow{transform:translateX(3px)}
+/* ---- Price gate (P0) : modal identification avant tarifs ---- */
+.pg-modal{position:fixed;inset:0;z-index:9600;display:flex;align-items:flex-start;justify-content:center;padding:clamp(14px,3vh,44px) 16px;overflow-y:auto}
+.pg-modal[hidden]{display:none}
+.pg-overlay{position:absolute;inset:0;background:rgba(10,20,40,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:dvOvFade .22s ease}
+.pg-card{position:relative;background:#fff;border-radius:22px;max-width:460px;width:100%;margin:auto;padding:34px 28px 24px;box-shadow:0 40px 80px rgba(10,20,40,.3);animation:dvwPop .34s cubic-bezier(.16,1,.3,1)}
+.pg-close{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;background:#F1F6FA;border:0;cursor:pointer;color:#41506a;font-size:1rem;line-height:1;font-family:inherit;transition:background .2s}
+.pg-close:hover{background:#E2E9F0}
+.pg-icon{width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,var(--bleu),#1FC4F0);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 12px 24px rgba(13,160,207,.3)}
+.pg-title{margin:0 0 8px;font-size:1.4rem;font-weight:800;color:var(--nuit);letter-spacing:-.01em;text-align:center;line-height:1.2}
+.pg-lead{margin:0 0 18px;font-size:.92rem;color:#475569;line-height:1.5;text-align:center}.pg-lead strong{color:#16A34A}
+.pg-form{display:flex;flex-direction:column;gap:10px}
+.pg-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:520px){.pg-row{grid-template-columns:1fr}}
+.pg-inp{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #E5EDF3;border-radius:10px;background:#F7FBFD;color:var(--nuit);font-size:.95rem;font-family:inherit;outline:none;transition:border-color .2s,background .2s}
+.pg-inp:focus{border-color:#1FC4F0;background:#fff}
+.pg-inp.bad{border-color:#E11D48;background:rgba(225,29,72,.04)}
+.pg-submit{margin-top:6px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;background:linear-gradient(135deg,#FF6B1A,#E55510);color:#fff;border:0;border-radius:12px;font-weight:800;font-size:1rem;cursor:pointer;font-family:inherit;box-shadow:0 12px 24px rgba(255,107,26,.32);transition:transform .2s,box-shadow .2s}
+.pg-submit:hover{transform:translateY(-2px)}
+.pg-submit:disabled{opacity:.6;cursor:wait;transform:none}
+.pg-err{color:#E11D48;font-size:.84rem;font-weight:600;margin:4px 0 0;text-align:center}
+.pg-trust{margin:14px 0 0;font-size:.76rem;color:#64748b;text-align:center;line-height:1.4}.pg-trust a{color:var(--bleu)}
+@media(max-width:560px){.pg-card{border-radius:16px;padding:26px 18px 20px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="tb-l">
+    <a class="tb-logo" href="/" aria-label="HELP Confort — Accueil"><img src="logo-officiel.jpg" alt="HELP Confort" width="200" height="60" decoding="async"></a>
+    <span class="tb-context"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> Commander une intervention</span>
+  </div>
+  <div class="tb-r">
+    <a class="tb-phone" href="tel:+33366100134" aria-label="Appeler HELP Confort — urgence"><span class="tb-urg" aria-hidden="true"></span><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="tb-phone-txt">03 66 10 01 34</span></a>
+    <button class="cartbtn" id="cartBtn" aria-label="Voir mon panier"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> <span class="cartbtn-txt">Mon panier (<span id="cartCount">0</span>)</span></button>
+    <a class="tb-exit" href="/" aria-label="Quitter et revenir à l'accueil"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> <span class="tb-exit-txt">Quitter</span></a>
+  </div>
+</header>
+<div class="progress" role="progressbar" aria-label="Progression de la commande" aria-valuemin="0" aria-valuemax="100" aria-valuenow="5" id="progress"><span class="progress-bar" id="progressBar"></span></div>
+
+<div class="layout" id="layout">
+ <div class="main">
+
+  <!-- 0. LAUNCHER -->
+  <section class="screen" id="s-launcher" data-step="launcher">
+    <div class="lchr">
+     <div class="lchr-head">
+      <span class="lchr-eyebrow"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> Commander une intervention</span>
+      <h1>Commander une intervention</h1>
+      <p class="sub">Prestations à <strong>prix affichés</strong>, techniciens salariés, agence Saint-Omer — intervention Dunkerque &amp; toute la Côte d'Opale. Deux façons de commencer&nbsp;:</p>
+     </div>
+     <button type="button" id="lchrResume" class="lchr-resume" hidden>
+       <span class="lchr-resume-ic"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></span>
+       <span class="lchr-resume-txt"><strong>Reprendre ma demande</strong><span>Vous avez une demande en cours.</span></span>
+       <span class="lchr-resume-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+     </button>
+     <div class="lchr-modes2">
+      <!-- Mode A : catalogue -->
+      <button class="lchr-card lchr-modecard" type="button" data-step-go="catalogue">
+       <span class="lchr-cic lchr-cic--cmd"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg></span>
+       <strong class="lchr-ct">Je connais mon besoin</strong>
+       <span class="lchr-cd">Parcourez le catalogue par famille et ajoutez une ou plusieurs prestations à <strong>prix affiché</strong>.</span>
+       <span class="lchr-fams" aria-hidden="true"><span class="lchr-fam">Plomberie</span><span class="lchr-fam">Chauffage</span><span class="lchr-fam">Électricité</span><span class="lchr-fam">Serrurerie</span><span class="lchr-fam">Vitrerie</span><span class="lchr-fam">Rénovation</span></span>
+       <span class="lchr-cfoot"><span class="lchr-tag lchr-tag--cat">Catalogue &amp; prix</span><span class="lchr-carrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
+      </button>
+      <!-- Mode B : diagnostic -->
+      <button class="lchr-card lchr-modecard lchr-modecard--diag" type="button" data-step-go="diagnosis">
+       <span class="lchr-cic lchr-cic--diag"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v.01M11 11v3"/></svg></span>
+       <strong class="lchr-ct">Aidez-moi à identifier mon problème</strong>
+       <span class="lchr-cd">Répondez à quelques questions, on trouve la prestation adaptée pour vous.</span>
+       <span class="lchr-steps"><span class="lchr-step"><b>1</b> Métier</span><span class="lchr-sep">→</span><span class="lchr-step"><b>2</b> Équipement</span><span class="lchr-sep">→</span><span class="lchr-step"><b>3</b> Symptôme</span></span>
+       <span class="lchr-cfoot"><span class="lchr-tag lchr-tag--diag">Diagnostic guidé</span><span class="lchr-carrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
+      </button>
+     </div>
+     <!-- Urgence compacte (secondaire) -->
+     <div class="lchr-urg2">
+      <span class="lchr-urg2-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg></span>
+      <span class="lchr-urg2-txt"><strong>Une urgence&nbsp;?</strong> Fuite, panne, porte claquée — intervention prioritaire.</span>
+      <a class="lchr-urg2-tel" href="tel:+33366100134"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg> 03 66 10 01 34</a>
+      <span class="lchr-urg2-hours">Lun-Ven 9h-17h · Sam 9h-16h</span>
+     </div>
+     <ul class="lchr-reassure">
+      <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M16 11l2 2 4-4"/></svg> Techniciens <strong>salariés</strong></li>
+      <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Interlocuteur humain local</li>
+      <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Saint-Omer → Dunkerque &amp; Côte d'Opale</li>
+      <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4L12 22l-9-9V3h10z"/></svg> Prix &amp; devis clairs</li>
+     </ul>
+    </div>
+  </section>
+
+  <!-- PRICE GATE (P0 5512405541) : identification avant affichage des tarifs -->
+  <div class="pg-modal" id="priceGate" role="dialog" aria-modal="true" aria-labelledby="pgTitle" hidden>
+    <div class="pg-overlay" data-pg-close></div>
+    <div class="pg-card">
+      <button type="button" class="pg-close" id="pgClose" data-pg-close aria-label="Fermer">✕</button>
+      <div class="pg-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <h3 id="pgTitle" class="pg-title">Voyez nos tarifs en 10 secondes</h3>
+      <p class="pg-lead">Pour afficher les prix exacts adaptés à votre secteur, quelques infos suffisent. <strong>Aucun engagement</strong>, aucune carte demandée.</p>
+      <form id="pgForm" class="pg-form" novalidate autocomplete="on">
+        <div class="pg-row">
+          <input id="pg-prenom" class="pg-inp" type="text" placeholder="Prénom *" autocomplete="given-name" aria-label="Prénom">
+          <input id="pg-nom" class="pg-inp" type="text" placeholder="Nom *" autocomplete="family-name" aria-label="Nom">
+        </div>
+        <div class="pg-row">
+          <input id="pg-tel" class="pg-inp" type="tel" inputmode="tel" placeholder="Téléphone *" autocomplete="tel" aria-label="Téléphone">
+          <input id="pg-email" class="pg-inp" type="email" inputmode="email" placeholder="Email *" autocomplete="email" aria-label="Email">
+        </div>
+        <input id="pg-adresse" class="pg-inp" type="text" placeholder="Adresse (n° et rue) *" autocomplete="street-address" data-autocomplete-skip aria-label="Adresse">
+        <div class="pg-row">
+          <input id="pg-cp" class="pg-inp" type="text" inputmode="numeric" maxlength="5" placeholder="Code postal *" autocomplete="postal-code" aria-label="Code postal">
+          <input id="pg-ville" class="pg-inp" type="text" placeholder="Ville *" autocomplete="address-level2" aria-label="Ville">
+        </div>
+        <button type="submit" id="pgSubmit" class="pg-submit">Voir les tarifs →</button>
+        <p id="pgErr" class="pg-err" role="alert" hidden></p>
+      </form>
+      <p class="pg-trust">🛡️ Vos coordonnées servent à afficher le tarif de votre secteur et, si besoin, à vous recontacter. Confidentielles — <a href="/mentions-legales.html" target="_blank" rel="noopener">mentions légales</a>.</p>
+    </div>
+  </div>
+
+  <!-- 1b. DEVIS (projet sur mesure) — in-tunnel -->
+  <section class="screen" id="s-devis" data-step="devis">
+    <div class="tnav"><button class="back" data-step-go="launcher">← Retour</button><button class="back back-hub" data-step-go="launcher">Accueil commande</button></div>
+    <div id="devisForm" class="dvw" role="dialog" aria-modal="true" aria-labelledby="dvwTitle">
+      <button class="dvw-close" id="dvwClose" type="button" aria-label="Fermer la demande de devis"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      <div class="dvw-head">
+        <h1 id="dvwTitle">Demander un devis</h1>
+        <p class="sub">Un parcours simple — chiffrage <strong>gratuit, sans engagement</strong>, étudié par un technicien.</p>
+      </div>
+      <ol class="dvw-steps" id="dvwSteps" aria-label="Étapes de la demande">
+        <li data-s="1"><span class="dvw-sn">1</span><span class="dvw-sl">Besoin</span></li>
+        <li data-s="2"><span class="dvw-sn">2</span><span class="dvw-sl">Demande</span></li>
+        <li data-s="3"><span class="dvw-sn">3</span><span class="dvw-sl">Lieu</span></li>
+        <li data-s="4"><span class="dvw-sn">4</span><span class="dvw-sl">Coordonnées</span></li>
+        <li data-s="5"><span class="dvw-sn">5</span><span class="dvw-sl">Envoi</span></li>
+      </ol>
+      <div class="dvw-card">
+        <section class="dvw-panel" data-dvstep="1">
+          <h2 class="dvw-q">Quel est votre besoin&nbsp;?</h2>
+          <p class="dvw-hint">Sélectionnez un ou plusieurs services concernés.</p>
+          <div class="dvw-metiers" id="dvServices" role="group" aria-label="Services concernés">
+            <label class="dvw-metier"><input type="checkbox" value="Plomberie"><span class="dvw-mic"><img src="/images/picto-plomberie.png" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Plomberie</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Chauffage"><span class="dvw-mic"><img src="/images/picto-chauffage.svg" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Chauffage</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Électricité"><span class="dvw-mic"><img src="/images/picto-electricite.png" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Électricité</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Serrurerie"><span class="dvw-mic"><img src="/images/picto-serrurerie.png" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Serrurerie</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Vitrerie"><span class="dvw-mic"><img src="/images/picto-vitrerie.png" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Vitrerie</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Menuiserie"><span class="dvw-mic"><img src="/images/picto-menuiserie.png" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Menuiserie</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Rénovation"><span class="dvw-mic"><img src="/images/picto-renovation.png" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Rénovation</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Volets"><span class="dvw-mic"><img src="/images/picto-volets.png" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Volets</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Adaptation PMR"><span class="dvw-mic"><img src="/images/picto-pmr.png" alt="" width="32" height="32" loading="lazy"></span><span class="dvw-ml">Adaptation PMR</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Sinistre assurance"><span class="dvw-mic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="dvw-ml">Sinistre assurance</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Contrat entretien"><span class="dvw-mic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15l2 2 4-4"/></svg></span><span class="dvw-ml">Contrat entretien</span></label>
+            <label class="dvw-metier"><input type="checkbox" value="Autre"><span class="dvw-mic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 .3c0 1.7-2.5 2-2.5 3.7"/><path d="M12 17h.01"/></svg></span><span class="dvw-ml">Autre</span></label>
+          </div>
+          <div class="dv-svc-err" id="dvSvcErr">Sélectionnez au moins un service.</div>
+        </section>
+        <section class="dvw-panel" data-dvstep="2" hidden>
+          <h2 class="dvw-q">Décrivez votre demande</h2>
+          <p class="dvw-hint">Nature du problème ou du projet, urgence éventuelle, disponibilités…</p>
+          <div class="field"><textarea id="dv-desc" rows="6" placeholder="Ex. remplacement d'un chauffe-eau 200 L, fuite sous évier, rénovation complète d'une salle de bain…"></textarea><div class="err">Ajoutez quelques mots (min. 10 caractères).</div></div>
+          <div class="dvw-photos">
+            <label class="dvw-photos-drop" for="dv-photos">
+              <span class="dvw-photos-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>
+              <span class="dvw-photos-txt"><strong>Ajouter des photos</strong> (facultatif) — jusqu'à 3. Elles aident le technicien à chiffrer plus vite et plus juste.</span>
+              <input id="dv-photos" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple>
+            </label>
+            <ul class="dvw-photos-list" id="dvPhotosList" aria-live="polite"></ul>
+            <p class="dvw-photos-err" id="dvPhotosErr" hidden role="alert"></p>
+          </div>
+        </section>
+        <section class="dvw-panel" data-dvstep="3" hidden>
+          <h2 class="dvw-q">Où devons-nous intervenir&nbsp;?</h2>
+          <p class="dvw-hint">Nous déterminons automatiquement votre agence locale.</p>
+          <div class="field ac-wrap"><label for="dv-adresse">Adresse (n° + rue)</label><input id="dv-adresse" type="text" autocomplete="off" placeholder="Commencez à taper votre adresse…"><div id="dvAcList" class="ac-list" hidden></div><div class="err">Indiquez l'adresse d'intervention.</div></div>
+          <div class="dv-grid">
+            <div class="field"><label for="dv-cp">Code postal</label><input id="dv-cp" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="62500"><div class="err">Code postal à 5 chiffres.</div></div>
+            <div class="field"><label for="dv-ville">Ville</label><input id="dv-ville" type="text" autocomplete="address-level2" list="dv-villes" placeholder="Saint-Omer, Dunkerque…"><datalist id="dv-villes"><option value="Saint-Omer"></option><option value="Longuenesse"></option><option value="Arques"></option><option value="Aire-sur-la-Lys"></option><option value="Hazebrouck"></option><option value="Dunkerque"></option><option value="Saint-Pol-sur-Mer"></option><option value="Calais"></option><option value="Boulogne-sur-Mer"></option></datalist><div class="err">Indiquez la ville.</div></div>
+          </div>
+          <div class="dvw-agence" id="dvwAgence" hidden><span class="dvw-agence-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span>Agence <strong id="dvwAgenceName"></strong></span></div>
+        </section>
+        <section class="dvw-panel" data-dvstep="4" hidden>
+          <h2 class="dvw-q">Vos coordonnées</h2>
+          <p class="dvw-hint">Pour vous transmettre votre devis et vous rappeler.</p>
+          <div class="dv-grid">
+            <div class="field"><label for="dv-prenom">Prénom</label><input id="dv-prenom" type="text" autocomplete="given-name" placeholder="Marie"><div class="err">Indiquez votre prénom.</div></div>
+            <div class="field"><label for="dv-nom">Nom</label><input id="dv-nom" type="text" autocomplete="family-name" placeholder="Dupont"><div class="err">Indiquez votre nom.</div></div>
+            <div class="field"><label for="dv-tel">Téléphone</label><input id="dv-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 12 34 56 78"><div class="err">Numéro français valide requis.</div></div>
+            <div class="field"><label for="dv-email">Email</label><input id="dv-email" type="email" inputmode="email" autocomplete="email" placeholder="marie.dupont@exemple.fr"><div class="err">Email valide requis.</div></div>
+          </div>
+        </section>
+        <section class="dvw-panel" data-dvstep="5" hidden>
+          <h2 class="dvw-q">Vérifiez votre demande</h2>
+          <p class="dvw-hint">Nous transmettrons ces informations à notre équipe pour étude — vous ne recevez pas encore de devis à ce stade.</p>
+          <div id="dvwRecap" class="dvw-recap"></div>
+          <p class="dv-disc">Les données collectées servent uniquement à traiter votre demande. Voir nos <a href="/mentions-legales.html">mentions légales</a>.</p>
+        </section>
+        <ul class="dvw-reassure" aria-hidden="true">
+          <li>Devis gratuit</li><li>Sans engagement</li><li>Techniciens salariés</li><li>Agence locale Saint-Omer</li>
+        </ul>
+        <div class="note warn" id="devisErr" hidden></div>
+        <div class="dvw-nav">
+          <button class="btn btn-ghost" id="dvwBack" type="button" hidden>← Retour</button>
+          <button class="btn btn-primary dvw-cta" id="dvwNext" type="button">Continuer →</button>
+        </div>
+      </div>
+      <p class="dvw-urg">Besoin urgent&nbsp;? <a href="tel:+33366100134">03 66 10 01 34</a></p>
+    </div>
+    <div id="devisDone" hidden></div>
+  </section>
+
+  <!-- 1c. ENTRETIEN & contrats — in-tunnel -->
+  <section class="screen" id="s-entretien" data-step="entretien">
+    <div class="tnav"><button class="back" data-step-go="launcher">← Retour</button><button class="back back-hub" data-step-go="launcher">Accueil commande</button></div>
+    <h1>Entretien &amp; contrats</h1>
+    <p class="sub">Chaudière gaz ou fioul : entretien ponctuel ou contrat annuel avec attestation légale.</p>
+    <div style="max-width:620px">
+      <div class="field"><label>Énergie</label>
+        <div class="chips" id="entEnergie" role="group" aria-label="Énergie">
+          <button type="button" class="chip" data-entenergie="Gaz">Gaz</button>
+          <button type="button" class="chip" data-entenergie="Fioul">Fioul</button>
+          <button type="button" class="chip" data-entenergie="Autre / je ne sais pas">Je ne sais pas</button>
+        </div>
+        <div class="err">Choisissez l'énergie.</div>
+      </div>
+      <div class="field"><label>Votre besoin</label>
+        <div class="chips" id="entType" role="group" aria-label="Type de besoin">
+          <button type="button" class="chip" data-enttype="Entretien ponctuel">Entretien ponctuel</button>
+          <button type="button" class="chip" data-enttype="Contrat annuel">Contrat annuel</button>
+        </div>
+        <div class="err">Choisissez un type.</div>
+      </div>
+      <div class="field"><label for="ent-model">Marque / modèle / âge (facultatif)</label><input id="ent-model" type="text" placeholder="Ex. Saunier Duval, ~8 ans"></div>
+      <button class="btn btn-primary btn-lg" id="entNext">Continuer →</button>
+    </div>
+  </section>
+
+  <!-- 1d. RAPPEL (repli urgence / callback) — in-tunnel -->
+  <section class="screen" id="s-rappel" data-step="rappel">
+    <div class="tnav"><button class="back" data-step-go="launcher">← Retour</button></div>
+    <h1>Être rappelé</h1>
+    <p class="sub">Laissez vos coordonnées, un conseiller de votre agence locale vous rappelle rapidement.</p>
+    <div style="max-width:560px">
+      <div class="two">
+        <div class="field"><label for="rap-prenom">Prénom</label><input id="rap-prenom" type="text" autocomplete="given-name"><div class="err">Prénom requis.</div></div>
+        <div class="field"><label for="rap-nom">Nom</label><input id="rap-nom" type="text" autocomplete="family-name"><div class="err">Nom requis.</div></div>
+      </div>
+      <div class="field"><label for="rap-tel">Téléphone</label><input id="rap-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 12 34 56 78"><div class="err">Numéro français valide requis.</div></div>
+      <div class="field"><label for="rap-adresse">Adresse</label><input id="rap-adresse" type="text" autocomplete="street-address" data-autocomplete-skip placeholder="12 rue de la Paix"><div class="err">Adresse requise.</div></div>
+      <div class="two">
+        <div class="field"><label for="rap-cp">Code postal</label><input id="rap-cp" inputmode="numeric" maxlength="5" placeholder="62500"><div class="err">Code postal à 5 chiffres.</div></div>
+        <div class="field"><label for="rap-ville">Ville</label><input id="rap-ville" type="text" placeholder="Saint-Omer"><div class="err">Ville requise.</div></div>
+      </div>
+      <div class="field"><label for="rap-desc">Votre besoin (facultatif)</label><textarea id="rap-desc" rows="2" placeholder="En quelques mots…"></textarea></div>
+      <a class="assist-item assist-urg" href="tel:+33366100134" style="margin-bottom:12px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg> Urgence ? Appelez le 03 66 10 01 34</a>
+      <button class="btn btn-primary btn-lg" id="rapNext">Être rappelé</button>
+      <p id="rapMsg" class="note" role="status" aria-live="polite" hidden></p>
+    </div>
+  </section>
+
+  <!-- 1. CATALOGUE (mode "je sais") -->
+  <section class="screen active" id="s-catalogue" data-step="catalogue">
+    <a class="back" href="/index.html">← Accueil</a>
+    <div class="step-head"><h1 style="margin:0">Catalogue des prestations</h1></div>
+    <p class="sub">Choisissez une famille puis ajoutez une ou plusieurs prestations. Prix fermes affichés ; devis clair pour le sur-mesure.</p>
+    <button type="button" id="catResume" class="lchr-resume" hidden>
+      <span class="lchr-resume-ic"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></span>
+      <span class="lchr-resume-txt"><strong>Reprendre ma demande</strong><span>Vous avez une demande en cours.</span></span>
+      <span class="lchr-resume-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </button>
+    <input id="search" class="search" type="search" placeholder="Rechercher (chauffe-eau, fuite, serrure…)" aria-label="Rechercher une prestation">
+    <button type="button" class="cat-diaglink" data-step-go="diagnosis" style="display:inline-flex;align-items:center;gap:8px;margin:2px 0 14px;padding:9px 14px;background:#fff;border:1px solid var(--line,#E5EDF3);border-radius:999px;color:var(--help-dark,#0A1428);font:inherit;font-size:.9rem;cursor:pointer">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#0DA0CF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v.01M11 11v3"/></svg>
+      Vous hésitez&nbsp;? <strong>Aidez-moi à identifier mon problème</strong>
+    </button>
+    <div id="families" class="grid" aria-live="polite"></div>
+    <div id="products" hidden>
+      <button class="back" id="backFam">← Toutes les familles</button>
+      <h2 id="famTitle"></h2>
+      <div id="prodGrid" class="grid"></div>
+    </div>
+    <p id="loadMsg" class="muted">Chargement du catalogue…</p>
+  </section>
+
+  <!-- 2. DIAGNOSIS (mode "j'hésite") -->
+  <section class="screen" id="s-diagnosis" data-step="diagnosis">
+    <button class="back" data-step-go="catalogue">← Retour au catalogue</button>
+    <div id="diag-1">
+      <h1>Quel domaine concerne votre besoin ?</h1>
+      <p class="sub">Une décision à la fois. Choisissez le métier le plus proche de votre problème.</p>
+      <div id="diagFamilies" class="grid" aria-live="polite"></div>
+    </div>
+    <div id="diag-2" hidden>
+      <button class="back" id="diagBack">← Changer de domaine</button>
+      <h1 id="diagTitle">Quel est le problème ?</h1>
+      <p class="sub">Sélectionnez ce qui ressemble le plus à votre situation, ou recherchez par mot-clé.</p>
+      <input id="diagSearch" class="search" type="search" placeholder="Décrire en un mot (fuite, panne, serrure…)" aria-label="Décrire le problème">
+      <div id="diagResults" class="grid" aria-live="polite"></div>
+      <div class="note">Vous ne trouvez pas ? <a href="/contact.html">Demandez un diagnostic sur mesure</a> — un technicien évalue et chiffre sans engagement.</div>
+    </div>
+  </section>
+
+  <!-- 3. SHEET (fiche prestation) -->
+  <section class="screen" id="s-sheet" data-step="sheet">
+    <button class="back" id="sheetBack">← Retour</button>
+    <div id="sheetBody"></div>
+  </section>
+
+  <!-- 4. CART -->
+  <section class="screen" id="s-cart" data-step="cart">
+    <button class="back" data-step-go="catalogue">← Continuer mes achats</button>
+    <h1>Mon panier</h1>
+    <div id="cartFull"></div>
+    <div id="cartEmpty" class="note" hidden>Votre panier est vide. <button class="back" data-step-go="launcher">Commencer une commande</button></div>
+    <div id="cartActions" style="margin-top:16px">
+      <button class="btn btn-primary btn-lg" id="toCheckout">Continuer ma demande →</button>
+    </div>
+  </section>
+
+  <!-- 5. URGENCE -->
+  <section class="screen" id="s-urgence" data-step="urgence">
+    <button class="back" data-step-go="cart">← Retour au panier</button>
+    <h1>Votre demande est-elle urgente ?</h1>
+    <p class="sub">Cela nous aide à prioriser. Sans engagement.</p>
+    <div class="yn">
+      <button id="urg-yes" data-urg="oui">Oui, c'est urgent</button>
+      <button id="urg-no" data-urg="non">Non, à planifier</button>
+    </div>
+    <div class="field" style="max-width:560px">
+      <label for="urg-desc">Décrire brièvement (facultatif)</label>
+      <textarea id="urg-desc" rows="3" placeholder="Ex. fuite sous l'évier depuis ce matin…"></textarea>
+    </div>
+    <button class="btn btn-primary btn-lg" id="urgNext" style="max-width:560px" disabled>Continuer →</button>
+  </section>
+
+  <!-- 6. ADDRESS -->
+  <section class="screen" id="s-address" data-step="address">
+    <button class="back" id="adrBack" data-step-go="urgence">← Retour</button>
+    <h1>Où doit avoir lieu l'intervention ?</h1>
+    <p class="sub">Adresse de l'intervention. Vous pouvez saisir manuellement.</p>
+    <div style="max-width:560px">
+      <div class="field ac-wrap" id="adrWrap">
+        <label for="f-adresse">Adresse</label>
+        <input id="f-adresse" type="text" autocomplete="off" data-autocomplete-skip placeholder="12 rue de la Paix">
+        <div class="err">Adresse requise.</div>
+        <div id="acList" class="ac-list" hidden></div>
+      </div>
+      <div class="two">
+        <div class="field"><label for="f-cp">Code postal</label><input id="f-cp" inputmode="numeric" maxlength="5" placeholder="62500"><div class="err">Code postal à 5 chiffres.</div></div>
+        <div class="field"><label for="f-ville">Ville</label><input id="f-ville" type="text" placeholder="Saint-Omer"><div class="err">Ville requise.</div></div>
+      </div>
+      <div id="zoneNote" class="note" hidden></div>
+      <button class="btn btn-primary btn-lg" id="adrNext">Continuer →</button>
+    </div>
+  </section>
+
+  <!-- 7. COORDS -->
+  <section class="screen" id="s-coords" data-step="coords">
+    <button class="back" data-step-go="address">← Retour</button>
+    <h1>Vos coordonnées</h1>
+    <p class="sub">Pour vous rappeler et confirmer l'intervention.</p>
+    <div style="max-width:560px">
+      <div class="two">
+        <div class="field"><label for="f-prenom">Prénom</label><input id="f-prenom" type="text" autocomplete="given-name"><div class="err">Prénom requis.</div></div>
+        <div class="field"><label for="f-nom">Nom</label><input id="f-nom" type="text" autocomplete="family-name"><div class="err">Nom requis.</div></div>
+      </div>
+      <div class="field"><label for="f-tel">Téléphone</label><input id="f-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 12 34 56 78"><div class="err">Numéro français valide requis.</div></div>
+      <div class="field"><label for="f-email">Email</label><input id="f-email" type="email" inputmode="email" autocomplete="email" placeholder="vous@exemple.fr"><div class="err">Email valide requis.</div></div>
+      <div class="note">📅 Créneau : nous ne bloquons pas de créneau en ligne. <strong>Nous vous rappelons pour confirmer le créneau</strong> selon les disponibilités réelles de l'agence.</div>
+      <button class="btn btn-primary btn-lg" id="coordsNext">Voir le récapitulatif →</button>
+    </div>
+  </section>
+
+  <!-- 8. CONFIRM / FINALIZE -->
+  <section class="screen" id="s-confirm" data-step="confirm">
+    <button class="back" data-step-go="coords" id="confBack">← Retour</button>
+    <h1>Récapitulatif de votre demande</h1>
+    <div id="confRecap"></div>
+    <div id="confActions" style="max-width:560px;margin-top:16px">
+      <div class="note">Aucun paiement en ligne à ce stade. Le montant final et l'éligibilité sont confirmés par l'agence (paiement à l'intervention). Réservation non bloquée par le paiement.</div>
+      <button class="btn btn-primary btn-lg" id="submitBtn">Envoyer ma demande</button>
+    </div>
+    <div id="confDone" hidden></div>
+  </section>
+
+ </div>
+
+ <!-- résumé sticky desktop -->
+ <aside class="desktop-summary side-panel" id="desktopSummary" hidden>
+   <div class="summary" id="summaryBox"></div>
+   <div class="brand-reassure" id="brandReassure">
+     <h3>Pourquoi HELP Confort</h3>
+     <p class="br-sub">Un interlocuteur humain, du diagnostic à l'intervention.</p>
+     <ul class="br-list">
+       <li><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Techniciens salariés</b> — pas de sous-traitance</span></li>
+       <li><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span><b>Agence locale</b> — Saint-Omer, intervention Dunkerque &amp; Côte d'Opale</span></li>
+       <li><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Prix &amp; devis clairs</b> — tarifs affichés</span></li>
+       <li><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span><b>Garantie décennale</b> — assurance pro</span></li>
+     </ul>
+     <div class="br-contact">
+       <a class="br-tel" href="tel:+33366100134"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg> 03 66 10 01 34</a>
+       <span class="br-hours">Lun-Ven 9h-17h · Sam 9h-16h · Urgence prioritaire</span>
+     </div>
+   </div>
+ </aside>
+</div>
+
+<!-- barre panier mobile + bottom-sheet -->
+<div class="mobile-cartbar">
+  <div><strong id="mCount">0</strong> prestation(s) · <span id="mTotal">0</span> € TTC</div>
+  <button class="cartbtn" id="mCartBtn">Voir le panier</button>
+</div>
+<div class="sheet-backdrop" id="sheetBackdrop"></div>
+<div class="bottom-sheet" id="bottomSheet">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <strong>Mon panier</strong><button class="back" id="sheetClose">Fermer ✕</button>
+  </div>
+  <div id="sheetSummary"></div>
+</div>
+
+<script src="/assets/hc-cart.js"></script>
+<script>
+(function(){
+  'use strict';
+  var SUPA='https://btcbjwqiivhpwoszomhg.supabase.co';
+  var KEY='sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
+  // --- Override backend LOCAL TEST (voie A E2E isolé) : ACTIF UNIQUEMENT sur localhost/127.0.0.1
+  //     ET avec ?backend=local. Jamais sur le domaine preview/prod (fail-safe borné). Zéro prod. ---
+  try{
+    var _hn=location.hostname;
+    if((_hn==='localhost'||_hn==='127.0.0.1') && new URLSearchParams(location.search).get('backend')==='local'){
+      SUPA='http://localhost:54321';
+      KEY=(window.__LOCAL_ANON||''); // clé anon locale (fournie par window.__LOCAL_ANON ; cf supabase/local-test/README)
+      console.warn('[HC][E2E-LOCAL] backend local actif → '+SUPA+' (isolé, zéro prod). ?backend=local sur localhost seulement.');
+    }
+  }catch(_e){}
+  var cart=(window.HcCart||{create:function(){return null;}}).create();
+  var ALL=[], byFam={}, loaded=false;
+  var state=(function(){ try{return JSON.parse(localStorage.getItem('hc_book_v1'))||{};}catch(e){return {};} })();
+  var $=function(s,r){return (r||document).querySelector(s);};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
+  var esc=function(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
+  function saveState(){ try{localStorage.setItem('hc_book_v1',JSON.stringify(state));}catch(e){} }
+  // instrumentation funnel — SANS PII
+  function track(ev){ try{ (window.__hcFunnel=window.__hcFunnel||[]).push({ev:ev,t:(new Date()).getTime()}); if(window.dataLayer) window.dataLayer.push({event:'hc_'+ev}); }catch(e){} }
+
+  // ---------- navigation entre écrans ----------
+  var STEPS=['launcher','catalogue','diagnosis','sheet','cart','urgence','address','coords','confirm','devis','entretien','rappel'];
+  function go(step, opts){
+    opts=opts||{};
+    if(STEPS.indexOf(step)<0) step='launcher';
+    if(step==='launcher') step='catalogue'; // HUB RETIRÉ (5523099683) : plus aucun écran hub à 2 cartes ; on entre direct dans le catalogue (gate auto si non identifié). Tous les anciens "Retour" -> catalogue.
+    // --- PRICE GATE P0 (5512405541) : jamais de tarifs affichés sans identification.
+    //     Contrôle dans la logique de navigation/state (pas de simple masquage CSS). ---
+    if((step==='catalogue'||step==='sheet') && !priceGatePassed()){
+      state._pgPending={step:step, cat:state._fam||null}; saveState();
+      $$('.screen').forEach(function(s){ s.classList.remove('active'); }); // ne jamais laisser un écran (ex-hub) sous la modale de gate
+      openPriceGate(); return;
+    }
+    // mode du tunnel selon le point d'entrée (persiste jusqu'au retour launcher)
+    if(step==='launcher'){ state._mode='cart'; }
+    else if(step==='devis'){ state._mode='devis'; }
+    else if(step==='entretien'){ state._mode='entretien'; }
+    else if(step==='rappel'){ state._mode='rappel'; }
+    else if(step==='catalogue'||step==='diagnosis'){ state._mode='cart'; }
+    $$('.screen').forEach(function(s){ s.classList.toggle('active', s.getAttribute('data-step')===step); });
+    document.body.classList.toggle('dv-modal-open', step==='devis');
+    if(step==='launcher'){ var _rb=document.getElementById('lchrResume'); if(_rb) _rb.hidden=true; }
+    // résumé visible seulement en mode panier avec des lignes
+    // Coquille de marque persistante : panneau latéral desktop sur toutes les étapes sauf le launcher.
+    // Le récap panier n'apparaît que s'il y a des lignes ; la réassurance marque est toujours présente.
+    var hasCartLines = state._mode==='cart' && cart && cart.count()>0;
+    var showSide = step!=='launcher' && step!=='devis';
+    $('#layout').classList.toggle('with-summary', showSide);
+    $('#desktopSummary').hidden = !showSide;
+    var sbx=$('#summaryBox'); if(sbx) sbx.hidden = !hasCartLines;
+    state._step=step; saveState();
+    if(!opts.noHash){ var h='#step='+step+(state._fam?('&cat='+state._fam):''); if(location.hash!==h){ history.pushState({step:step},'',h); } }
+    window.scrollTo(0,0);
+    // indicateur de progression discret (funnel → %)
+    var PROG={launcher:5,catalogue:28,diagnosis:28,sheet:38,cart:52,urgence:64,address:76,coords:88,confirm:100,devis:30,entretien:30,rappel:45};
+    var pct=PROG[step]||5; var pb=$('#progressBar'), pr=$('#progress');
+    if(pb) pb.style.width=pct+'%'; if(pr) pr.setAttribute('aria-valuenow',String(pct));
+    track('step_'+step);
+    if(step==='address'){ var ab=$('#adrBack'); if(ab) ab.setAttribute('data-step-go', state._mode==='devis'?'devis':(state._mode==='entretien'?'entretien':'urgence')); }
+    if(step==='cart') renderCartFull();
+    if(step==='confirm') renderConfirm();
+    if(step==='devis') resetDevis();
+    if(step==='diagnosis') renderDiagFamilies();
+    refreshSummary();
+  }
+  window.addEventListener('popstate', function(){ restoreFromHash({noHash:true}); });
+
+  // ---------- PRICE GATE (P0 5512405541) : identification avant tarifs ----------
+  function priceGatePassed(){
+    return state._priceGateOk===true ||
+      !!(state.prenom && state.nom && state.tel && state.email && state.cp);
+  }
+  var pgModal=$('#priceGate');
+  function openPriceGate(){
+    if(!pgModal) return;
+    pgModal.hidden=false; document.body.style.overflow='hidden'; track('price_gate_open');
+    [['pg-prenom','prenom'],['pg-nom','nom'],['pg-tel','tel'],['pg-email','email'],['pg-adresse','adresse'],['pg-cp','cp'],['pg-ville','ville']]
+      .forEach(function(p){ var e=$('#'+p[0]); if(e && !e.value && state[p[1]]) e.value=state[p[1]]; });
+    setTimeout(function(){ var f=$('#pg-prenom'); if(f) f.focus(); },70);
+  }
+  function closePriceGate(voluntary){
+    if(!pgModal) return;
+    pgModal.hidden=true; document.body.style.overflow='';
+    if(voluntary){ state._pgPending=null; saveState(); location.href='/index.html'; } // décline l'identification = retour accueil (hub retiré), aucun tarif révélé
+  }
+  if(pgModal){
+    pgModal.addEventListener('click', function(e){ if(e.target.hasAttribute('data-pg-close')) closePriceGate(true); });
+    pgModal.addEventListener('keydown', function(e){ if(e.key==='Escape'){ e.preventDefault(); closePriceGate(true); } });
+    var pgf=$('#pgForm');
+    if(pgf) pgf.addEventListener('submit', function(e){
+      e.preventDefault();
+      var btn=$('#pgSubmit'); if(btn.dataset.sending==='1') return;
+      var pr=$('#pg-prenom'),no=$('#pg-nom'),tel=$('#pg-tel'),em=$('#pg-email'),ad=$('#pg-adresse'),cp=$('#pg-cp'),vi=$('#pg-ville'),err=$('#pgErr');
+      function nameOk(v){ return String(v||'').trim().length>=2; }
+      function phoneOk(v){ return /^(?:\+33|0)[1-9](?:[\s.\-]?\d{2}){4}$/.test(String(v||'').trim()); }
+      function emailOk(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v||'').trim()); }
+      var checks=[[pr,!nameOk(pr.value)],[no,!nameOk(no.value)],[tel,!phoneOk(tel.value)],[em,!emailOk(em.value)],[ad,!nameOk(ad.value)],[cp,!/^\d{5}$/.test((cp.value||'').trim())],[vi,!nameOk(vi.value)]];
+      checks.forEach(function(x){ x[0].classList.toggle('bad',x[1]); });
+      var first=checks.filter(function(x){return x[1];})[0];
+      if(first){ if(err){ err.hidden=false; err.textContent='Merci de compléter les champs en rouge (téléphone et email valides).'; } first[0].focus(); return; }
+      if(err) err.hidden=true;
+      btn.dataset.sending='1'; var orig=btn.textContent; btn.disabled=true; btn.textContent='…';
+      state.prenom=pr.value.trim(); state.nom=no.value.trim(); state.tel=tel.value.trim(); state.email=em.value.trim();
+      state.adresse=ad.value.trim(); state.cp=cp.value.trim(); state.ville=vi.value.trim();
+      var pending=state._pgPending||{step:'catalogue',cat:null};
+      fetch(SUPA+'/functions/v1/submit-lead-v6',{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({
+        prenom:state.prenom, nom:state.nom, telephone:state.tel, email:state.email,
+        adresse:state.adresse, code_postal:state.cp, ville:state.ville,
+        type_demande:'consultation_tarifs', form_type:'consultation_tarifs',
+        source:'price_gate', source_page:location.href,
+        message:'Consultation des tarifs'+(pending.cat?(' — famille '+pending.cat):''),
+        utm:{ mode:'price_gate', cat:pending.cat||null }
+      })}).then(function(r){ return r.ok? r.json().catch(function(){return{};}) : Promise.reject(r.status); })
+        .then(function(){ track('price_gate_lead'); }, function(){ track('price_gate_lead_fail'); })
+        .then(function(){
+          state._priceGateOk=true; state._pgPending=null; saveState();
+          btn.disabled=false; btn.textContent=orig; btn.dataset.sending='0';
+          pgModal.hidden=true; document.body.style.overflow='';
+          if(pending.cat) state._fam=pending.cat;
+          go(pending.step||'catalogue');
+          if(pending.cat && loaded && byFam[pending.cat]) renderProducts(pending.cat);
+        });
+    });
+  }
+
+  // ---------- data ----------
+  function famKey(s){ return s.category_slug||s.category_name||'autre'; }
+  function priced(s){ return !s.requires_quote && Number(s.price_ttc)>0 && s.active!==false; }
+  function loadCatalogue(){
+    return fetch(SUPA+'/rest/v1/v_services_public?select=*&active=eq.true&order=position.asc',{headers:{apikey:KEY,Authorization:'Bearer '+KEY}})
+      .then(function(r){return r.json();})
+      .then(function(rows){
+        ALL=Array.isArray(rows)?rows:[]; byFam={};
+        ALL.forEach(function(s){ var k=famKey(s); (byFam[k]=byFam[k]||[]).push(s); });
+        loaded=true;
+        var lm=$('#loadMsg'); if(lm) lm.hidden=true;
+        renderFamilies();
+      })
+      .catch(function(){ var lm=$('#loadMsg'); if(lm) lm.textContent='Catalogue momentanément indisponible. Vous pouvez nous appeler au 03 66 10 01 34.'; });
+  }
+
+  // ---------- CATALOGUE ----------
+  // Icônes familles : la donnée `category_icon` contient des NOMS d'icônes (Wrench, Thermometer…)
+  // ou est vide → on mappe vers de vrais SVG (jamais de nom d'icône affiché en texte brut).
+  var FAM_ICONS={
+    wrench:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+    thermometer:'<path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/>',
+    zap:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+    lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+    window:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h18M12 3v18"/>',
+    hammer:'<path d="M15 12l-8.5 8.5a2.1 2.1 0 1 1-3-3L12 9"/><path d="M17.6 15 22 10.6"/><path d="M20.9 11.7 19.7 10.5a2.4 2.4 0 0 1-.7-1.7V7.9L16 4.6A5.6 5.6 0 0 0 12 3H9l.9.8A6.2 6.2 0 0 1 12 8.4V10l2 2h1.5l1.2 1.2"/>',
+    door:'<path d="M13 4h3a2 2 0 0 1 2 2v14M2 20h20M13 20V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16"/>',
+    shutter:'<rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 8h18M3 13h18"/>'
+  };
+  function famIcon(s){
+    var name=String((s&&s.category_icon)||'').toLowerCase().replace(/[^a-z]/g,'');
+    var key=({wrench:'wrench',droplet:'wrench',thermometer:'thermometer',flame:'thermometer',zap:'zap',lock:'lock',key:'lock',square:'window',frame:'window',hammer:'hammer',home:'hammer',door:'door',shutter:'shutter',blinds:'shutter'})[name];
+    if(!key){
+      var f=String((s&&(s.category_name||s.category_slug))||'').toLowerCase();
+      if(/plomb|sanit|eau/.test(f)) key='wrench';
+      else if(/chauff|clim|thermi/.test(f)) key='thermometer';
+      else if(/electr|élec|elec/.test(f)) key='zap';
+      else if(/serrur|clé|cle/.test(f)) key='lock';
+      else if(/vitr|verre/.test(f)) key='window';
+      else if(/rénov|renov|travaux/.test(f)) key='hammer';
+      else if(/menuis|porte/.test(f)) key='door';
+      else if(/volet/.test(f)) key='shutter';
+      else key='wrench';
+    }
+    return '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+FAM_ICONS[key]+'</svg>';
+  }
+  function renderFamilies(){
+    var seen={}, out=[];
+    ALL.forEach(function(s){ var k=famKey(s); if(!seen[k]){seen[k]=1; out.push(s);} });
+    $('#families').innerHTML=out.map(function(s){
+      var slug=famKey(s), n=(byFam[slug]||[]).length;
+      return '<button class="card click fam-card" data-fam="'+esc(slug)+'">'+
+        '<span class="fam-ico">'+famIcon(s)+'</span>'+
+        '<span class="fam-meta"><span class="name">'+esc(s.category_name||slug)+'</span>'+
+        '<span class="muted">'+n+' prestation'+(n>1?'s':'')+'</span></span>'+
+        '<span class="fam-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></button>';
+    }).join('');
+  }
+  function renderProducts(slug){
+    var list=byFam[slug]||[];
+    $('#famTitle').textContent=(list[0]&&list[0].category_name)||slug;
+    $('#prodGrid').innerHTML=list.map(function(s){
+      var img=s.image_url||(SUPA+'/storage/v1/object/public/prestations/'+s.slug+'.jpg');
+      return '<div class="card">'+
+        '<img class="prod-img" loading="lazy" alt="'+esc(s.name)+'" src="'+esc(img)+'" onerror="this.style.visibility=\'hidden\'">'+
+        '<div class="name">'+esc(s.name)+'</div>'+
+        (s.brand?'<div class="brand">'+esc(s.brand)+'</div>':'')+
+        (s.short_desc?'<div class="muted">'+esc(s.short_desc)+'</div>':'')+
+        '<div style="margin-top:auto">'+(priced(s)?'<span class="ttc">'+Math.round(s.price_ttc)+' € TTC</span>':'<span class="dvis">Sur devis</span>')+'</div>'+
+        '<button class="btn btn-ghost" data-sheet="'+esc(s.id)+'">Voir la prestation</button>'+
+        (priced(s)?'<button class="btn btn-primary" data-add="'+esc(s.id)+'">Ajouter au panier</button>':'')+
+        '</div>';
+    }).join('');
+    $('#families').hidden=true; $('#products').hidden=false;
+    state._fam=slug; saveState();
+  }
+  function backToFamilies(){ $('#products').hidden=true; $('#families').hidden=false; state._fam=null; saveState(); }
+
+  // ---------- DIAGNOSIS ----------
+  function renderDiagFamilies(){
+    if(!loaded) return;
+    var seen={}, out=[];
+    ALL.forEach(function(s){ var k=famKey(s); if(!seen[k]){seen[k]=1; out.push(s);} });
+    $('#diagFamilies').innerHTML=out.map(function(s){
+      var slug=famKey(s);
+      return '<button class="card click fam-card" data-diagfam="'+esc(slug)+'">'+
+        '<span class="fam-ico">'+famIcon(s)+'</span>'+
+        '<span class="fam-meta"><span class="name">'+esc(s.category_name||slug)+'</span></span>'+
+        '<span class="fam-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></button>';
+    }).join('');
+  }
+  function diagShowProblems(slug, q){
+    var list=(byFam[slug]||[]);
+    if(q){ q=q.toLowerCase(); list=list.filter(function(s){return (s.name+' '+(s.short_desc||'')).toLowerCase().indexOf(q)>=0;}); }
+    $('#diagTitle').textContent='Quel est le problème ? ('+((byFam[slug][0]&&byFam[slug][0].category_name)||slug)+')';
+    $('#diagResults').innerHTML=list.map(function(s){
+      return '<button class="card click" data-sheet="'+esc(s.id)+'">'+
+        '<span class="name">'+esc(s.name)+'</span>'+
+        (s.short_desc?'<span class="muted">'+esc(s.short_desc)+'</span>':'')+
+        '<span style="margin-top:auto">'+(priced(s)?'<span class="ttc">'+Math.round(s.price_ttc)+' € TTC</span>':'<span class="dvis">Sur devis</span>')+'</span></button>';
+    }).join('') || '<p class="muted">Aucune prestation ne correspond. <a href="/contact.html">Demander un diagnostic sur mesure</a>.</p>';
+    $('#diag-1').hidden=true; $('#diag-2').hidden=false;
+    state._diagFam=slug; saveState();
+  }
+
+  // ---------- SHEET ----------
+  function openSheet(id, from){
+    var s=ALL.find(function(x){return x.id===id;}); if(!s) return;
+    state._sheetFrom=from||state._step||'catalogue'; saveState();
+    var img=s.image_url||(SUPA+'/storage/v1/object/public/prestations/'+s.slug+'.jpg');
+    var priceHtml = priced(s)
+      ? '<span class="ttc" style="font-size:1.3rem">'+Math.round(s.price_ttc)+' € TTC</span> <span class="pill">prix ferme</span>'
+      : '<span class="dvis" style="font-size:1.2rem">Sur devis</span> <span class="pill">après diagnostic</span>';
+    var incl = s.included ? String(s.included).split(/\s*[;|\n]\s*/).filter(Boolean) : [];
+    var excl = s.excluded ? String(s.excluded).split(/\s*[;|\n]\s*/).filter(Boolean) : [];
+    var html='<div class="step-head"><h1 style="margin:0">'+esc(s.name)+'</h1>'+(s.brand?'<span class="pill">'+esc(s.brand)+'</span>':'')+'</div>'+
+      '<div style="display:grid;gap:16px;grid-template-columns:1fr;max-width:720px">'+
+      '<img class="prod-img" style="height:200px" alt="'+esc(s.name)+'" src="'+esc(img)+'" onerror="this.style.display=\'none\'">'+
+      '<div>'+priceHtml+'</div>'+
+      (s.short_desc?'<p>'+esc(s.short_desc)+'</p>':'')+
+      (incl.length?'<div><strong>Inclus</strong><ul class="incl">'+incl.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div>':'')+
+      (excl.length?'<div><strong>Non inclus</strong><ul class="incl">'+excl.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div>':'')+
+      (priced(s)?'<p class="muted">Déplacement et main-d\'œuvre inclus dans le tarif catalogue sauf mention contraire. Fournitures spécifiques éventuelles confirmées par l\'agence avant intervention.</p>'
+                :'<p class="muted">Le prix dépend du diagnostic : un technicien évalue puis chiffre sans engagement.</p>')+
+      '<div>'+(priced(s)
+        ? '<button class="btn btn-primary btn-lg" data-add="'+esc(s.id)+'">Ajouter au panier</button>'
+        : '<button class="btn btn-devis btn-lg" data-addquote="'+esc(s.id)+'">Ajouter à ma demande de devis</button>')+'</div>'+
+      '</div>';
+    $('#sheetBody').innerHTML=html;
+    go('sheet');
+  }
+
+  // ---------- PANIER ----------
+  function addToCart(id){
+    var s=ALL.find(function(x){return x.id===id;}); if(!s||!cart) return;
+    cart.add({id:s.id,slug:s.slug,name:s.name,brand:s.brand,ttc:s.price_ttc,requires_quote:s.requires_quote,active:s.active});
+    refreshCartUI(); track('add_to_cart');
+  }
+  function refreshCartUI(){
+    var n=cart?cart.count():0, tot=cart?Math.round(cart.totalTtcDisplay()):0;
+    $('#cartCount').textContent=n; $('#mCount').textContent=n; $('#mTotal').textContent=tot;
+    $('#cartBtn').disabled=(n===0);
+    refreshSummary();
+    if(state._step==='cart') renderCartFull();
+  }
+  function cartLineHtml(l, compact){
+    return '<div class="sum-line"><div><div class="name" style="font-size:.9rem">'+esc(l.name)+'</div>'+
+      (l.requires_quote?'<span class="dvis">sur devis</span>':'<span class="ttc">'+Math.round(l.ttc)+' € TTC</span>')+'</div>'+
+      '<div class="qty-c">'+
+      (l.requires_quote?'':'<button class="q" data-dec="'+esc(l.id)+'" aria-label="Moins">−</button><span>'+l.qty+'</span><button class="q" data-inc="'+esc(l.id)+'" aria-label="Plus">+</button>')+
+      '<button class="q q-rm" data-rm="'+esc(l.id)+'" aria-label="Retirer"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M10 11v6M14 11v6"/></svg></button></div></div>';
+  }
+  function summaryHtml(){
+    if(!cart||!cart.count()) return '<p class="muted">Panier vide.</p>';
+    var mode=cart.mode(), tot=Math.round(cart.totalTtcDisplay());
+    var modeTxt={paiement:'Prestations à prix ferme.',devis:'Demande de devis — sans paiement.',mixte:'Panier mixte (ferme + devis) — sans paiement immédiat.'}[mode]||'';
+    var ctx='';
+    var svgClock='<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> ';
+    var svgPin='<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ';
+    var svgAg='<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M6 21V7l6-4 6 4v14"/><path d="M9 9h.01M9 13h.01M9 17h.01M15 9h.01M15 13h.01M15 17h.01"/></svg> ';
+    if(state.urg) ctx+='<div class="sum-ctx">'+svgClock+(state.urg==='oui'?'Urgent':'À planifier')+'</div>';
+    if(state.cp||state.ville) ctx+='<div class="sum-ctx">'+svgPin+esc([state.adresse,state.cp,state.ville].filter(Boolean).join(' '))+'</div>';
+    if(state.cp) ctx+='<div class="sum-ctx">'+svgAg+'Agence '+esc(detectAgence(state.cp))+'</div>';
+    return '<h3>Mon panier ('+cart.count()+')</h3>'+
+      cart.lines().map(function(l){return cartLineHtml(l);}).join('')+
+      '<div class="sum-total"><span>Total (indicatif)</span><span>'+tot+' € TTC</span></div>'+
+      '<p class="muted" style="margin:6px 0 0">'+modeTxt+'</p>'+ctx;
+  }
+  function refreshSummary(){
+    var html=summaryHtml();
+    $('#summaryBox').innerHTML=html;
+    $('#sheetSummary').innerHTML=html;
+  }
+  function renderCartFull(){
+    var empty=!cart||!cart.count();
+    $('#cartEmpty').hidden=!empty;
+    $('#cartActions').hidden=empty;
+    $('#cartFull').innerHTML = empty ? '' :
+      cart.lines().map(function(l){return cartLineHtml(l);}).join('')+
+      '<div class="sum-total"><span>Total (indicatif)</span><span>'+Math.round(cart.totalTtcDisplay())+' € TTC</span></div>'+
+      '<p class="muted">'+({paiement:'Prestations à prix ferme.',devis:'Demande de devis — sans paiement.',mixte:'Panier mixte (ferme + devis) — demande globale sans paiement immédiat.'}[cart.mode()]||'')+'</p>';
+  }
+
+  // ---------- AGENCE / ZONE ----------
+  function detectAgence(cp){ if(!cp) return 'Saint-Omer'; var d=String(cp).substring(0,2); if(d==='59') return 'Zone Dunkerquois · Dépan’Audo (Saint-Omer)'; return 'Saint-Omer · SARL Dépan’Audo'; }
+  function inZone(cp){ return /^(62|59)\d{3}$/.test(String(cp||'')); }
+
+  // ---------- ADRESSE autocomplete (BAN, dégradation manuelle) ----------
+  var acTimer=null, acItems=[], acHl=-1;
+  function acSearch(q){
+    if(!q||q.length<4){ hideAc(); return; }
+    fetch('https://api-adresse.data.gouv.fr/search/?limit=5&q='+encodeURIComponent(q))
+      .then(function(r){return r.json();})
+      .then(function(d){
+        acItems=(d&&d.features)||[]; acHl=-1;
+        if(!acItems.length){ hideAc(); return; }
+        $('#acList').innerHTML=acItems.map(function(f,i){ return '<button type="button" data-ac="'+i+'">'+esc(f.properties.label)+'</button>'; }).join('');
+        $('#acList').hidden=false;
+      }).catch(function(){ hideAc(); });   // API bloquée → saisie manuelle, aucun blocage
+  }
+  function hideAc(){ var l=$('#acList'); if(l){ l.hidden=true; l.innerHTML=''; } acItems=[]; acHl=-1; }
+  function pickAc(i){
+    var f=acItems[i]; if(!f) return; var p=f.properties;
+    $('#f-adresse').value=[p.housenumber,p.street||p.name].filter(Boolean).join(' ')||p.label;
+    if(p.postcode) $('#f-cp').value=p.postcode;
+    if(p.city) $('#f-ville').value=p.city;
+    hideAc();
+  }
+
+  // ---------- VALIDATION ----------
+  function nameOk(v){ return String(v||'').trim().length>=2; }
+  function phoneFrOk(v){ return /^(?:\+33|0)[1-9](?:[\s.\-]?\d{2}){4}$/.test(String(v||'').trim()); }
+  function emailOk(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v||'').trim()); }
+  function cpOk(v){ return /^\d{5}$/.test(String(v||'').trim()); }
+  function setInvalid(fieldEl, bad){ fieldEl.classList.toggle('invalid', !!bad); }
+  function fieldOf(inputId){ return $('#'+inputId).closest('.field'); }
+
+  // ---------- CONFIRMATION / SUBMIT ----------
+  function contactBlock(){
+    return '<p><strong>Intervention :</strong> '+esc([state.adresse,state.cp,state.ville].filter(Boolean).join(' '))+'<br>'+
+      '<strong>Agence :</strong> '+esc(detectAgence(state.cp))+'<br>'+
+      '<strong>Contact :</strong> '+esc([state.prenom,state.nom].filter(Boolean).join(' '))+' · '+esc(state.tel||'')+' · '+esc(state.email||'')+'</p>';
+  }
+  function confRecapHtml(){
+    var mode=state._mode||'cart';
+    if(mode==='devis'){
+      return '<div style="max-width:640px"><div class="summary" style="position:static"><h3>Demande de devis</h3>'+
+        '<div class="sum-line"><span>Domaine</span><span>'+esc(state._devisMetier||'—')+'</span></div>'+
+        (state._devisDesc?'<p class="muted" style="margin:8px 0 0">'+esc(state._devisDesc)+'</p>':'')+'</div>'+
+        '<div class="note">Sans engagement — l\'agence étudie votre projet et vous transmet un chiffrage (généralement sous 24-48 h ouvrées).</div>'+contactBlock()+'</div>';
+    }
+    if(mode==='entretien'){
+      return '<div style="max-width:640px"><div class="summary" style="position:static"><h3>Entretien &amp; contrats</h3>'+
+        '<div class="sum-line"><span>Énergie</span><span>'+esc(state._entEnergie||'—')+'</span></div>'+
+        '<div class="sum-line"><span>Besoin</span><span>'+esc(state._entType||'—')+'</span></div>'+
+        (state._entModel?'<div class="sum-line"><span>Équipement</span><span>'+esc(state._entModel)+'</span></div>':'')+'</div>'+
+        '<div class="note">L\'agence vous rappelle pour convenir de l\'intervention d\'entretien ou du contrat (attestation légale incluse).</div>'+contactBlock()+'</div>';
+    }
+    var lines = cart&&cart.count() ? cart.lines() : [];
+    var tot=cart?Math.round(cart.totalTtcDisplay()):0, cmode=cart?cart.mode():'vide';
+    var statut = cmode==='paiement'
+      ? 'Prestations à prix ferme (total indicatif '+tot+' € TTC, confirmé par l\'agence). Aucun paiement en ligne à ce stade.'
+      : (cmode==='mixte'
+          ? 'Panier mixte (prix ferme + sur devis) : demande globale, sans encaissement. L\'agence transmet un chiffrage complet.'
+          : 'Demande de devis / diagnostic : sans paiement, l\'agence répond avec un chiffrage.');
+    return '<div style="max-width:640px">'+
+      '<div class="summary" style="position:static">'+
+      '<h3>'+cart.count()+' prestation(s)</h3>'+
+      lines.map(function(l){return '<div class="sum-line"><span>'+esc(l.name)+' ×'+l.qty+'</span><span>'+(l.requires_quote?'sur devis':(Math.round(l.ttc)*l.qty)+' € TTC')+'</span></div>';}).join('')+
+      '<div class="sum-total"><span>Total (indicatif)</span><span>'+tot+' € TTC</span></div>'+
+      '</div>'+
+      '<div class="note">'+statut+'</div>'+
+      '<p><strong>Intervention :</strong> '+esc([state.adresse,state.cp,state.ville].filter(Boolean).join(' '))+'<br>'+
+      '<strong>Agence :</strong> '+esc(detectAgence(state.cp))+'<br>'+
+      '<strong>Urgence :</strong> '+(state.urg==='oui'?'Oui':'À planifier')+'<br>'+
+      '<strong>Contact :</strong> '+esc([state.prenom,state.nom].filter(Boolean).join(' '))+' · '+esc(state.tel||'')+' · '+esc(state.email||'')+'</p>'+
+      '</div>';
+  }
+  function confirmReady(){
+    var mode=state._mode||'cart';
+    if(mode==='devis') return !!(state._devisMetier && (state._devisDesc||'').trim().length>=10);
+    if(mode==='entretien') return !!(state._entEnergie && state._entType);
+    return cart&&cart.count()>0;
+  }
+  function renderConfirm(){
+    // réinitialise l'écran (évite d'afficher une confirmation précédente après « Nouvelle demande »)
+    var done=$('#confDone'); if(done){ done.hidden=true; done.innerHTML=''; }
+    var act=$('#confActions'); if(act) act.hidden=false;
+    var cb=$('#confBack'); if(cb) cb.hidden=false;
+    var se=$('#submitErr'); if(se) se.remove();
+    var sb=$('#submitBtn'); if(sb){ sb.disabled=false; sb.dataset.sending='0'; sb.innerHTML='Envoyer ma demande'; }
+    if(confirmReady()) $('#confRecap').innerHTML=confRecapHtml(); else $('#confRecap').innerHTML='<div class="note warn">Votre demande est incomplète. <button class="back" data-step-go="launcher">Recommencer</button></div>';
+  }
+
+  function buildLeadPayload(){
+    var mode=state._mode||'cart';
+    if(mode==='devis'){
+      var svc=(state._devisServices||[]);
+      return { prenom:state.prenom||null, nom:state.nom||null, email:state.email||null, telephone:state.tel||null,
+        ville:state.ville||null, code_postal:state.cp||null, adresse:state.adresse||null,
+        metier:(svc[0]||null), services:svc,
+        type_demande:'devis', form_type:'devis_express',
+        message:'DEMANDE DE DEVIS via moteur unifié\n- Service(s) : '+(svc.join(', ')||'—')+'\n- Projet : '+(state._devisDesc||''),
+        source:'commerce_engine_devis', source_page:location.href, utm:{ mode:'devis', services:svc, wizard_tags:['commerce-engine','devis','demande-devis'] } };
+    }
+    if(mode==='entretien'){
+      return { prenom:state.prenom||null, nom:state.nom||null, email:state.email||null, telephone:state.tel||null,
+        ville:state.ville||null, code_postal:state.cp||null, adresse:state.adresse||null, metier:'Entretien chaudière',
+        type_demande:'entretien', form_type:'demande_metier',
+        message:'Entretien & contrats via moteur unifié :\n- Énergie : '+(state._entEnergie||'—')+'\n- Besoin : '+(state._entType||'—')+(state._entModel?('\n- Équipement : '+state._entModel):''),
+        source:'commerce_engine_entretien', source_page:location.href, utm:{ mode:'entretien', energie:state._entEnergie||null, type:state._entType||null, wizard_tags:['commerce-engine','entretien'] } };
+    }
+    var lines = cart&&cart.count() ? cart.lines() : [];
+    var cmode = cart?cart.mode():'devis';
+    var famList = lines.map(function(l){return l.slug;});
+    var recapMsg = lines.map(function(l){ return '• '+l.name+' ×'+l.qty+(l.requires_quote?' — sur devis':' — '+(Math.round(l.ttc)*l.qty)+' € TTC'); }).join('\n');
+    return {
+      prenom: state.prenom||null, nom: state.nom||null, email: state.email||null, telephone: state.tel||null,
+      ville: state.ville||null, code_postal: state.cp||null, adresse: state.adresse||null, metier: null,
+      type_demande: (cmode==='paiement'?'reservation':(cmode==='mixte'?'mixte':'devis')),
+      form_type: 'demande_metier',
+      message: 'Commande via moteur unifié ('+ (cart?cart.count():0) +' prestation(s)) :\n'+recapMsg+(state.urgDesc?('\n\nPrécision client : '+state.urgDesc):''),
+      source: 'commerce_engine', source_page: location.href,
+      utm: { cart: (cart?cart.serverPayload():[]), cart_mode: cmode, urgence: (state.urg||null), slugs: famList, wizard_tags:['commerce-engine'] }
+    };
+  }
+  function submit(){
+    var btn=$('#submitBtn');
+    if(btn.dataset.sending==='1') return;
+    if(!confirmReady()){ go(state._mode==='devis'?'devis':(state._mode==='entretien'?'entretien':'cart')); return; }
+    btn.dataset.sending='1';
+    var mode=state._mode||'cart';
+    var orig=btn.innerHTML; btn.disabled=true; btn.innerHTML='Envoi en cours…';
+    var se=$('#submitErr'); if(se) se.remove();
+    fetch(SUPA+'/functions/v1/submit-lead-v6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(buildLeadPayload()),keepalive:true})
+      .then(function(r){ return r.ok? r.json().catch(function(){return {};}) : Promise.reject(r.status); })
+      .then(function(data){
+        var ref='HC-'+(new Date()).getFullYear().toString().slice(-2)+String((new Date()).getMonth()+1).padStart(2,'0')+'-'+Math.floor(Math.random()*9000+1000);
+        track('confirmation');
+        $('#confActions').hidden=true; $('#confBack').hidden=true;
+        $('#confDone').hidden=false;
+        var head = mode==='devis' ? 'Demande de devis envoyée ✓' : (mode==='entretien'?'Demande d\'entretien envoyée ✓':'Demande enregistrée ✓');
+        var subline = mode==='devis' ? 'Devis '+esc(state._devisMetier||'')+' · Agence '+esc(detectAgence(state.cp))
+          : (mode==='entretien' ? 'Entretien '+esc(state._entEnergie||'')+' · Agence '+esc(detectAgence(state.cp))
+          : cart.count()+' prestation(s) · Agence '+esc(detectAgence(state.cp)));
+        var next = mode==='devis' ? 'L\'agence étudie votre projet et vous transmet un chiffrage sous 24-48 h ouvrées.'
+          : (mode==='entretien' ? 'L\'agence vous rappelle pour convenir de l\'entretien ou du contrat.'
+          : 'Notre équipe vous rappelle sous 2 h ouvrées pour confirmer le créneau et finaliser.');
+        $('#confDone').innerHTML='<div class="note ok" style="max-width:640px">'+
+          '<h2 style="margin:.1em 0">'+head+'</h2>'+
+          '<p>Référence <strong>'+ref+'</strong>'+(data&&data.id?' · dossier '+esc(String(data.id)):'')+'</p>'+
+          '<p>'+subline+'</p>'+
+          '<p><strong>Prochaines étapes :</strong> '+next+' Contact direct : <a href="tel:+33366100134">03 66 10 01 34</a>.</p>'+
+          '<a class="btn btn-ghost" href="/">Revenir à l\'accueil</a> <button class="btn btn-primary" data-step-go="launcher">Nouvelle demande</button></div>';
+        if(mode==='cart'){ try{ cart.clear(); }catch(e){} refreshCartUI(); }
+        state.urg=null; state.urgDesc=null; saveState();
+      })
+      .catch(function(){
+        btn.disabled=false; btn.innerHTML=orig; btn.dataset.sending='0';
+        $('#confActions').insertAdjacentHTML('afterbegin','<div class="note warn" id="submitErr">L\'envoi a échoué. Vos informations sont conservées — réessayez, ou appelez le 03 66 10 01 34.</div>');
+      });
+  }
+
+  // ---------- restore depuis hash / draft ----------
+  function restoreFromHash(opts){
+    var h=location.hash||'';
+    var stepM=h.match(/step=([a-z]+)/); var catM=h.match(/cat=([^&]+)/);
+    // Sous-étape devis dans le hash (&s=N) : présente = reprise (refresh/back) ; absente = nouvelle demande propre → étape 1.
+    var sM=h.match(/[?&]s=(\d)/); window.__dvResumeStep = (stepM && stepM[1]==='devis' && sM) ? parseInt(sM[1],10) : null;
+    if(catM){ var fam=decodeURIComponent(catM[1]); state._fam=fam; if(loaded && byFam[fam] && priceGatePassed()) renderProducts(fam); }
+    if(stepM){
+      var _s=stepM[1]; if(_s==='launcher') _s='catalogue'; // hub retiré (5523099683) : ancien lien launcher -> catalogue direct
+      go(_s, opts||{noHash:true});
+    }
+    else {
+      // Chargement nu (depuis la Home) : accès direct au parcours, SANS hub intermédiaire à 2 cartes.
+      // Non identifié -> le price gate s'ouvre automatiquement dans go('catalogue') ; identifié -> catalogue direct.
+      // Le brouillon reste en localStorage ; reprise proposée dans le catalogue (bannière discrète).
+      var savedStep = state._step;
+      go('catalogue',{noHash:true});
+      showResumeIfDraft(savedStep);
+    }
+  }
+  function draftResumeTarget(saved){
+    try{ if(cart && cart.count && cart.count()>0) return {step:'cart', label:'Reprendre mon panier'}; }catch(e){}
+    if((state._devisServices && state._devisServices.length) || (state._dvStep && state._dvStep>1)) return {step:'devis', label:'Reprendre ma demande de devis'};
+    if(state._entEnergie || state._entType || state._entModel) return {step:'entretien', label:'Reprendre mon entretien'};
+    // Pas de fallback sur le nom d'étape seul : évite une bannière fantôme quand le brouillon a été purgé.
+    return null;
+  }
+  function showResumeIfDraft(saved){
+    var t=draftResumeTarget(saved);
+    ['lchrResume','catResume'].forEach(function(id){
+      var el=document.getElementById(id); if(!el) return;
+      if(t){ el.__target=t.step; var s=el.querySelector('strong'); if(s) s.textContent=t.label; el.hidden=false; }
+      else { el.hidden=true; el.__target=null; }
+    });
+  }
+  (function(){ ['lchrResume','catResume'].forEach(function(id){ var rb=document.getElementById(id); if(rb) rb.addEventListener('click', function(){ var t=this.__target||state._step; if(t==='devis'){ window.__dvResumeStep = state._dvStep||1; } if(t) go(t); }); }); })();
+
+  // ---------- EVENTS ----------
+  document.addEventListener('click', function(e){
+    var t=e.target; if(!t.closest) return;
+    var go2=t.closest('[data-step-go]'); if(go2){ e.preventDefault(); go(go2.getAttribute('data-step-go')); return; }
+    var fam=t.closest('[data-fam]'); if(fam){ renderProducts(fam.getAttribute('data-fam')); return; }
+    var dfam=t.closest('[data-diagfam]'); if(dfam){ $('#diagSearch').value=''; diagShowProblems(dfam.getAttribute('data-diagfam'),''); return; }
+    var sh=t.closest('[data-sheet]'); if(sh){ openSheet(sh.getAttribute('data-sheet')); return; }
+    var ad=t.closest('[data-add]'); if(ad){ addToCart(ad.getAttribute('data-add')); if(state._step==='sheet'){ go('cart'); } return; }
+    var aq=t.closest('[data-addquote]'); if(aq){ addToCart(aq.getAttribute('data-addquote')); go('cart'); return; }
+    var inc=t.closest('[data-inc]'); if(inc){ var li=cart.lines().find(function(l){return l.id===inc.getAttribute('data-inc');}); cart.setQty(inc.getAttribute('data-inc'),(li?li.qty:1)+1); refreshCartUI(); return; }
+    var dec=t.closest('[data-dec]'); if(dec){ var ld=cart.lines().find(function(l){return l.id===dec.getAttribute('data-dec');}); cart.setQty(dec.getAttribute('data-dec'),(ld?ld.qty:1)-1); refreshCartUI(); return; }
+    var rm=t.closest('[data-rm]'); if(rm){ cart.remove(rm.getAttribute('data-rm')); refreshCartUI(); return; }
+    var ac=t.closest('[data-ac]'); if(ac){ pickAc(parseInt(ac.getAttribute('data-ac'),10)); return; }
+    var dm=t.closest('[data-devismetier]'); if(dm){ selectChip('#devisMetiers',dm,'devismetier','_devisMetier'); return; }
+    var ee=t.closest('[data-entenergie]'); if(ee){ selectChip('#entEnergie',ee,'entenergie','_entEnergie'); return; }
+    var et2=t.closest('[data-enttype]'); if(et2){ selectChip('#entType',et2,'enttype','_entType'); return; }
+  });
+  function selectChip(groupSel, el, attr, stateKey){
+    $$(groupSel+' .chip').forEach(function(c){ c.classList.remove('sel'); });
+    el.classList.add('sel'); state[stateKey]=el.getAttribute('data-'+attr); saveState();
+    var fld=el.closest('.field'); if(fld) fld.classList.remove('invalid');
+  }
+  $('#backFam').addEventListener('click', backToFamilies);
+  $('#sheetBack').addEventListener('click', function(){ go(state._sheetFrom||'catalogue'); });
+  $('#diagBack').addEventListener('click', function(){ $('#diag-2').hidden=true; $('#diag-1').hidden=false; });
+  $('#cartBtn').addEventListener('click', function(){ if(window.matchMedia('(max-width:1023px)').matches){ openMobileSheet(); } else { go('cart'); } });
+  $('#mCartBtn').addEventListener('click', openMobileSheet);
+  function openMobileSheet(){ $('#sheetBackdrop').classList.add('open'); $('#bottomSheet').classList.add('open'); refreshSummary(); }
+  function closeMobileSheet(){ $('#sheetBackdrop').classList.remove('open'); $('#bottomSheet').classList.remove('open'); }
+  $('#sheetClose').addEventListener('click', closeMobileSheet);
+  $('#sheetBackdrop').addEventListener('click', closeMobileSheet);
+  $('#toCheckout').addEventListener('click', function(){ if(cart&&cart.count()) go('urgence'); });
+
+  // search catalogue
+  $('#search').addEventListener('input', function(){
+    var q=this.value.toLowerCase().trim();
+    if(!q){ $('#products').hidden=true; $('#families').hidden=false; return; }
+    var res=ALL.filter(function(s){return (s.name+' '+(s.brand||'')+' '+(s.category_name||'')+' '+(s.short_desc||'')).toLowerCase().indexOf(q)>=0;});
+    $('#famTitle').textContent='Résultats « '+q+' »'; byFam.__search=res; renderProducts('__search');
+  });
+  // search diagnosis
+  $('#diagSearch').addEventListener('input', function(){ if(state._diagFam) diagShowProblems(state._diagFam,this.value.trim()); });
+
+  // urgence
+  $$('#s-urgence [data-urg]').forEach(function(b){ b.addEventListener('click', function(){
+    state.urg=b.getAttribute('data-urg'); saveState();
+    $$('#s-urgence [data-urg]').forEach(function(x){x.classList.toggle('sel',x===b);});
+    $('#urgNext').disabled=false;
+  }); });
+  $('#urg-desc').addEventListener('input', function(){ state.urgDesc=this.value; saveState(); });
+  $('#urgNext').addEventListener('click', function(){ if(state.urg) go('address'); });
+
+  // ===== Wizard devis premium centré (backend INCHANGÉ : form_type=devis_express, colonnes standards, services[]) =====
+  ['dv-prenom','dv-nom','dv-tel','dv-email','dv-adresse','dv-cp','dv-ville','dv-desc'].forEach(function(id){
+    var el=$('#'+id); if(!el) return;
+    el.addEventListener('input', function(){
+      if(id==='dv-cp'){ this.value=this.value.replace(/\D/g,'').slice(0,5); dvUpdateAgence(); }
+      var k={'dv-prenom':'prenom','dv-nom':'nom','dv-tel':'tel','dv-email':'email','dv-adresse':'adresse','dv-cp':'cp','dv-ville':'ville','dv-desc':'_devisDesc'}[id];
+      state[k]=this.value; saveState();
+      var f=el.closest('.field'); if(f) f.classList.remove('invalid');
+    });
+  });
+  (function(){ var chips=$$('#dvServices input[type=checkbox]');
+    chips.forEach(function(c){ c.addEventListener('change', function(){
+      state._devisServices=chips.filter(function(x){return x.checked;}).map(function(x){return x.value;});
+      saveState(); var er=$('#dvSvcErr'); if(er && state._devisServices.length) er.style.display='none';
+    }); });
+  })();
+  // autocomplete adresse (BAN) pour le wizard devis — self-contained (fiable : dégrade en saisie manuelle si API KO)
+  (function(){
+    var input=$('#dv-adresse'), list=$('#dvAcList'); if(!input||!list) return;
+    var t=null, items=[];
+    function hide(){ list.hidden=true; list.innerHTML=''; items=[]; }
+    function search(q){
+      if(!q||q.length<4){ hide(); return; }
+      fetch('https://api-adresse.data.gouv.fr/search/?limit=5&q='+encodeURIComponent(q))
+        .then(function(r){return r.json();})
+        .then(function(d){ items=(d&&d.features)||[]; if(!items.length){ hide(); return; }
+          list.innerHTML=items.map(function(f,i){ return '<button type="button" data-dvac="'+i+'">'+esc(f.properties.label)+'</button>'; }).join(''); list.hidden=false;
+        }).catch(hide);
+    }
+    input.addEventListener('input', function(){ clearTimeout(t); var v=this.value; t=setTimeout(function(){search(v);},220); });
+    input.addEventListener('blur', function(){ setTimeout(hide,180); });
+    list.addEventListener('mousedown', function(e){ var b=e.target.closest('[data-dvac]'); if(!b) return; e.preventDefault();
+      var f=items[parseInt(b.getAttribute('data-dvac'),10)]; if(!f) return; var p=f.properties;
+      $('#dv-adresse').value=[p.housenumber,p.street||p.name].filter(Boolean).join(' ')||p.label;
+      if(p.postcode){ $('#dv-cp').value=p.postcode; state.cp=p.postcode; }
+      if(p.city){ $('#dv-ville').value=p.city; state.ville=p.city; }
+      state.adresse=$('#dv-adresse').value; saveState(); dvUpdateAgence();
+      setInvalid(fieldOf('dv-adresse'),false); setInvalid(fieldOf('dv-cp'),false); setInvalid(fieldOf('dv-ville'),false);
+      hide();
+    });
+  })();
+  function dvUpdateAgence(){
+    var box=$('#dvwAgence'); if(!box) return;
+    var cp=($('#dv-cp')||{}).value||'';
+    if(cpOk(cp)){ $('#dvwAgenceName').textContent=detectAgence(cp); box.hidden=false; } else box.hidden=true;
+  }
+  var DV_STEPS=5;
+  function dvSetStep(n){
+    state._dvStep=n; saveState();
+    $$('#s-devis .dvw-panel').forEach(function(p){ p.hidden=(parseInt(p.getAttribute('data-dvstep'),10)!==n); });
+    $$('#dvwSteps li').forEach(function(li){ var s=parseInt(li.getAttribute('data-s'),10); li.classList.toggle('active',s===n); li.classList.toggle('done',s<n); });
+    var back=$('#dvwBack'); if(back) back.hidden=(n===1);
+    var next=$('#dvwNext'); if(next) next.textContent = (n===DV_STEPS ? 'Envoyer ma demande de devis' : 'Continuer →');
+    var er=$('#devisErr'); if(er) er.hidden=true;
+    if(n===3) dvUpdateAgence();
+    if(n===DV_STEPS) dvRenderRecap();
+    var pct=Math.round(30+(n-1)/(DV_STEPS-1)*70);
+    var pb=$('#progressBar'),pr=$('#progress'); if(pb)pb.style.width=pct+'%'; if(pr)pr.setAttribute('aria-valuenow',String(pct));
+    // Refléter la sous-étape dans le hash pour que refresh/back conservent la progression.
+    try{ var nh='#step=devis'+(state._fam?('&cat='+state._fam):'')+'&s='+n; if(location.hash!==nh) history.replaceState({step:'devis',s:n},'',nh); }catch(e){}
+    window.scrollTo(0,0);
+  }
+  function dvValidateStep(n){
+    if(n===1){ var ok=(state._devisServices||[]).length>0; var er=$('#dvSvcErr'); if(er) er.style.display=ok?'none':'block'; if(!ok) $('#dvServices').scrollIntoView({block:'center',behavior:'smooth'}); return ok; }
+    if(n===2){ var bad=(($('#dv-desc').value||'').trim().length<10); setInvalid(fieldOf('dv-desc'),bad); if(bad) $('#dv-desc').focus(); return !bad; }
+    if(n===3){ var bA=!nameOk($('#dv-adresse').value),bC=!cpOk($('#dv-cp').value),bV=!nameOk($('#dv-ville').value);
+      setInvalid(fieldOf('dv-adresse'),bA); setInvalid(fieldOf('dv-cp'),bC); setInvalid(fieldOf('dv-ville'),bV);
+      var fb=bA?$('#dv-adresse'):bC?$('#dv-cp'):bV?$('#dv-ville'):null; if(fb){ fb.focus(); return false; } return true; }
+    if(n===4){ var bP=!nameOk($('#dv-prenom').value),bN=!nameOk($('#dv-nom').value),bT=!phoneFrOk($('#dv-tel').value),bE=!emailOk($('#dv-email').value);
+      setInvalid(fieldOf('dv-prenom'),bP); setInvalid(fieldOf('dv-nom'),bN); setInvalid(fieldOf('dv-tel'),bT); setInvalid(fieldOf('dv-email'),bE);
+      var f2=bP?$('#dv-prenom'):bN?$('#dv-nom'):bT?$('#dv-tel'):bE?$('#dv-email'):null; if(f2){ f2.focus(); return false; } return true; }
+    return true;
+  }
+  function dvRenderRecap(){
+    var rows=[
+      ['Service(s)', (state._devisServices||[]).join(', ')||'—', 1],
+      ['Demande', state._devisDesc||'—', 2],
+      ['Intervention', [state.adresse,state.cp,state.ville].filter(Boolean).join(' ')||'—', 3],
+      ['Agence', detectAgence(state.cp), 0],
+      ['Contact', ([state.prenom,state.nom].filter(Boolean).join(' ')+' · '+(state.tel||'')+' · '+(state.email||'')), 4]
+    ];
+    var box=$('#dvwRecap'); if(box) box.innerHTML=rows.map(function(r){
+      var edit=r[2]?' <button class="dvw-edit" type="button" data-dvedit="'+r[2]+'">Modifier</button>':'';
+      return '<div class="rr"><span class="k">'+r[0]+'</span><span class="v">'+esc(r[1])+edit+'</span></div>';
+    }).join('');
+  }
+  $('#dvwRecap').addEventListener('click', function(e){ var b=e.target.closest('[data-dvedit]'); if(b) dvSetStep(parseInt(b.getAttribute('data-dvedit'),10)); });
+  function resetDevis(){
+    var df=$('#devisForm'); if(df) df.hidden=false;
+    var dd=$('#devisDone'); if(dd){ dd.hidden=true; dd.innerHTML=''; }
+    var nx=$('#dvwNext'); if(nx){ nx.disabled=false; nx.dataset.sending='0'; }
+    var de=$('#devisErr'); if(de){ de.hidden=true; de.textContent=''; }
+    var resume=window.__dvResumeStep; window.__dvResumeStep=undefined;
+    if(resume && resume>=1 && resume<=DV_STEPS){
+      // Reprise explicite (refresh/back avec &s=N dans le hash) : conserver la progression.
+      dvSetStep(resume);
+    } else {
+      // Entrée marketing (HOME/launcher « Demander un devis ») = NOUVELLE demande propre → étape 1.
+      state._devisServices=[]; state._devisDesc=''; state._dvStep=1; saveState();
+      $$('#dvServices input[type=checkbox]').forEach(function(c){ c.checked=false; });
+      var dsc=$('#dv-desc'); if(dsc) dsc.value='';
+      if(typeof dvSelectedFiles!=='undefined'){ dvSelectedFiles.length=0; if(typeof dvPhotoRender==='function') dvPhotoRender(); }
+      var er=$('#dvSvcErr'); if(er) er.style.display='none';
+      $$('#s-devis .field.invalid').forEach(function(f){ f.classList.remove('invalid'); });
+      dvSetStep(1);
+    }
+  }
+  function dvSubmit(){
+    var btn=$('#dvwNext'); if(btn.dataset.sending==='1') return;
+    var services=(state._devisServices||[]);
+    btn.dataset.sending='1'; var o=btn.textContent; btn.disabled=true; btn.textContent='Envoi en cours…';
+    var er=$('#devisErr'); if(er) er.hidden=true;
+    fetch(SUPA+'/functions/v1/submit-lead-v6',{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify(buildLeadPayload())})
+      .then(function(r){ return r.ok? r.json().catch(function(){return{};}) : Promise.reject(r.status); })
+      .then(function(data){
+        track('devis_submit'); if(data&&data.id) track('lead_submit_success');
+        var files=dvSelectedFiles.slice();
+        if(files.length && data && data.id && data.upload_token){
+          return dvUploadPhotos(data.id, data.upload_token, files).then(function(pr){ return {data:data, photo:pr, sent:files.length}; });
+        }
+        return {data:data, photo:null, sent:0};
+      })
+      .then(function(res){
+        track('confirmation');
+        var data=res.data;
+        var ref='HC-'+(new Date()).getFullYear().toString().slice(-2)+String((new Date()).getMonth()+1).padStart(2,'0')+'-'+Math.floor(Math.random()*9000+1000);
+        var photoRow='', photoNote='';
+        if(res.sent>0){
+          if(res.photo && typeof res.photo.stored==='number' && res.photo.stored>0){
+            var pv=res.photo.stored+' photo(s) jointe(s)'+((res.photo.rejected&&res.photo.rejected.length)?' · '+res.photo.rejected.length+' refusée(s)':'');
+            photoRow='<div class="rr"><span class="k">Photos</span><span class="v">'+esc(pv)+'</span></div>';
+          } else {
+            track('photo_upload_failed');
+            photoNote='<p style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:11px 14px;font-size:.88rem;color:#9A3412;margin:0 0 12px">Votre demande est bien transmise. Une ou plusieurs photos n\'ont pas pu être envoyées ; vous pourrez les transmettre lors du rappel.</p>';
+          }
+        }
+        dvSelectedFiles.length=0; dvPhotoRender();
+        $('#devisForm').hidden=true;
+        var d=$('#devisDone'); d.hidden=false;
+        d.innerHTML='<div class="note ok dvw" style="margin:0 auto">'+
+          '<div style="text-align:center"><span style="display:inline-flex;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;align-items:center;justify-content:center;margin-bottom:8px"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>'+
+          '<h2 style="margin:.1em 0">Demande de devis transmise</h2>'+
+          '<p>Référence <strong>'+ref+'</strong>'+(data&&data.id?' · dossier '+esc(String(data.id)):'')+'</p></div>'+
+          '<div class="dvw-recap" style="margin:14px 0">'+
+          '<div class="rr"><span class="k">Service(s)</span><span class="v">'+esc(services.join(', ')||'—')+'</span></div>'+
+          '<div class="rr"><span class="k">Intervention</span><span class="v">'+esc([state.adresse,state.cp,state.ville].filter(Boolean).join(' '))+'</span></div>'+
+          '<div class="rr"><span class="k">Agence</span><span class="v">'+esc(detectAgence(state.cp))+'</span></div>'+
+          '<div class="rr"><span class="k">Contact</span><span class="v">'+esc([state.prenom,state.nom].filter(Boolean).join(' '))+' · '+esc(state.tel)+'</span></div>'+photoRow+'</div>'+photoNote+
+          '<p><strong>Prochaine étape :</strong> notre équipe étudie votre demande et vous recontacte pour compléter le dossier si nécessaire, puis vous transmet un <strong>chiffrage gratuit</strong> (généralement sous 24-48 h ouvrées). Besoin urgent ? <a href="tel:+33366100134">03 66 10 01 34</a>.</p>'+
+          '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px"><a class="btn btn-ghost" href="/">Revenir à l\'accueil</a> <button class="btn btn-primary" data-step-go="launcher">Nouvelle demande</button></div></div>';
+        window.scrollTo(0,0);
+        var pb=$('#progressBar'),pr=$('#progress'); if(pb)pb.style.width='100%'; if(pr)pr.setAttribute('aria-valuenow','100');
+      })
+      .catch(function(){
+        btn.disabled=false; btn.textContent=o; btn.dataset.sending='0';
+        var e2=$('#devisErr'); e2.hidden=false; e2.textContent='L\'envoi a échoué. Vos informations sont conservées — réessayez, ou appelez le 03 66 10 01 34.';
+        e2.scrollIntoView({block:'center'});
+      });
+  }
+  $('#dvwNext').addEventListener('click', function(){
+    var n=state._dvStep||1;
+    if(!dvValidateStep(n)) return;
+    if(n>=DV_STEPS){ dvSubmit(); return; }
+    dvSetStep(n+1);
+  });
+  $('#dvwBack').addEventListener('click', function(){ var n=state._dvStep||1; if(n>1) dvSetStep(n-1); });
+  // --- Devis en modal : fermeture / backdrop / Escape / focus-trap / focus initial (5454859042) ---
+  var dvScreen=$('#s-devis');
+  function closeDevis(){
+    document.body.classList.remove('dv-modal-open');
+    if(history.length>1){ history.back(); } else { go('launcher'); }
+  }
+  function dvFocusables(){
+    return Array.prototype.filter.call(
+      dvScreen.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])'),
+      function(el){ return el.offsetParent!==null; });
+  }
+  var dvCloseBtn=$('#dvwClose'); if(dvCloseBtn) dvCloseBtn.addEventListener('click', closeDevis);
+  dvScreen.addEventListener('click', function(e){ if(e.target===dvScreen) closeDevis(); });
+  dvScreen.addEventListener('keydown', function(e){
+    if(!dvScreen.classList.contains('active')) return;
+    if(e.key==='Escape'){ e.preventDefault(); closeDevis(); return; }
+    if(e.key!=='Tab') return;
+    var f=dvFocusables(); if(!f.length) return;
+    var first=f[0], last=f[f.length-1];
+    if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+  });
+  var dvMO=new MutationObserver(function(){
+    var on=dvScreen.classList.contains('active');
+    if(on && !dvScreen.__dvFocused){
+      dvScreen.__dvFocused=true;
+      setTimeout(function(){ var f=dvFocusables(); var t=f.filter(function(el){return el.id!=='dvwClose';})[0]||f[0]; if(t) t.focus(); },90);
+    } else if(!on){ dvScreen.__dvFocused=false; }
+  });
+  dvMO.observe(dvScreen,{attributes:true,attributeFilter:['class']});
+  // --- Devis : photos facultatives (sélection + preview + upload via pipeline lead-photos existant) ---
+  var DV_MAX_PHOTOS=3, DV_MAX_SIZE=8*1024*1024;
+  var dvSelectedFiles=[];
+  var dvPhotoInput=$('#dv-photos'), dvPhotoList=$('#dvPhotosList'), dvPhotoErr=$('#dvPhotosErr');
+  function dvPhotoRender(){
+    if(!dvPhotoList) return;
+    dvPhotoList.innerHTML='';
+    dvSelectedFiles.forEach(function(f,i){
+      var li=document.createElement('li');
+      var img=document.createElement('img'); img.alt=''; img.src=URL.createObjectURL(f);
+      img.onload=function(){ try{URL.revokeObjectURL(img.src);}catch(e){} };
+      var b=document.createElement('button'); b.type='button'; b.className='dvw-ph-rm'; b.setAttribute('aria-label','Retirer la photo'); b.textContent='✕';
+      b.addEventListener('click', function(){ dvSelectedFiles.splice(i,1); dvPhotoRender(); });
+      li.appendChild(img); li.appendChild(b); dvPhotoList.appendChild(li);
+    });
+  }
+  function dvPhotoAdd(fileList){
+    if(dvPhotoErr){ dvPhotoErr.hidden=true; dvPhotoErr.textContent=''; }
+    var errs=[];
+    Array.prototype.forEach.call(fileList, function(f){
+      if(dvSelectedFiles.length>=DV_MAX_PHOTOS){ errs.push('Maximum '+DV_MAX_PHOTOS+' photos.'); return; }
+      var okType=/^image\/(jpeg|png|webp|heic|heif)$/.test(f.type) || /\.(jpe?g|png|webp|heic|heif)$/i.test(f.name);
+      if(!okType){ errs.push(f.name+' : format non pris en charge (JPEG/PNG/WebP/HEIC).'); return; }
+      if(f.size>DV_MAX_SIZE){ errs.push(f.name+' : trop lourd (max 8 Mo).'); return; }
+      dvSelectedFiles.push(f);
+    });
+    if(errs.length && dvPhotoErr){ dvPhotoErr.hidden=false; dvPhotoErr.textContent=errs[0]; }
+    dvPhotoRender();
+  }
+  if(dvPhotoInput){ dvPhotoInput.addEventListener('change', function(){ dvPhotoAdd(this.files); this.value=''; }); }
+  function dvUploadPhotos(id, token, files){
+    var fd=new FormData();
+    fd.append('lead_id', id); fd.append('upload_token', token);
+    files.slice(0,DV_MAX_PHOTOS).forEach(function(f){ fd.append('files', f); });
+    return fetch(SUPA+'/functions/v1/upload-lead-photos',{method:'POST',body:fd})
+      .then(function(r){ return r.ok? r.json().catch(function(){return null;}) : null; })
+      .catch(function(){ return null; });
+  }
+  // entretien in-tunnel
+  $('#ent-model').addEventListener('input', function(){ state._entModel=this.value; saveState(); });
+  $('#entNext').addEventListener('click', function(){
+    var ef=$('#entEnergie').closest('.field'), tf=$('#entType').closest('.field');
+    var badE=!state._entEnergie, badT=!state._entType;
+    ef.classList.toggle('invalid',badE); tf.classList.toggle('invalid',badT);
+    if(badE){ $('#entEnergie').scrollIntoView({block:'center'}); return; } if(badT) return;
+    state._entModel=$('#ent-model').value.trim(); saveState(); go('address');
+  });
+  // rappel (repli urgence) — soumission directe (prénom+nom+tél+adresse)
+  ['rap-prenom','rap-nom','rap-tel','rap-adresse','rap-cp','rap-ville'].forEach(function(id){ var el=$('#'+id); if(el) el.addEventListener('input',function(){ if(id==='rap-cp') this.value=this.value.replace(/\D/g,'').slice(0,5); }); });
+  $('#rapNext').addEventListener('click', function(){
+    var btn=$('#rapNext'); if(btn.dataset.sending==='1') return;
+    var pr=$('#rap-prenom'), no=$('#rap-nom'), tel=$('#rap-tel'), adr=$('#rap-adresse'), cp=$('#rap-cp'), vi=$('#rap-ville');
+    var bP=!nameOk(pr.value), bN=!nameOk(no.value), bT=!phoneFrOk(tel.value), bA=!nameOk(adr.value), bC=!cpOk(cp.value), bV=!nameOk(vi.value);
+    setInvalid(fieldOf('rap-prenom'),bP); setInvalid(fieldOf('rap-nom'),bN); setInvalid(fieldOf('rap-tel'),bT); setInvalid(fieldOf('rap-adresse'),bA); setInvalid(fieldOf('rap-cp'),bC); setInvalid(fieldOf('rap-ville'),bV);
+    var fb=bP?pr:bN?no:bT?tel:bA?adr:bC?cp:bV?vi:null;
+    if(fb){ fb.focus(); return; }
+    btn.dataset.sending='1'; var o=btn.textContent; btn.disabled=true; btn.textContent='Envoi…';
+    fetch(SUPA+'/functions/v1/submit-lead-v6',{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({
+      prenom:pr.value.trim(), nom:no.value.trim(), telephone:tel.value.trim(),
+      adresse:adr.value.trim(), code_postal:cp.value.trim(), ville:vi.value.trim(),
+      message:($('#rap-desc').value||'').trim()||'Demande de rappel (moteur commande)',
+      type_demande:'rappel', form_type:'rappel', source:'commerce_engine_rappel', source_page:location.href
+    })}).then(function(r){ return r.ok? r.json().catch(function(){return{};}) : Promise.reject(r.status); })
+      .then(function(){ var m=$('#rapMsg'); m.hidden=false; m.className='note ok'; m.textContent='Merci ✓ Un conseiller de votre agence locale vous rappelle rapidement.'; btn.textContent=o; btn.disabled=false; btn.dataset.sending='0'; })
+      .catch(function(){ var m=$('#rapMsg'); m.hidden=false; m.className='note warn'; m.textContent='Envoi impossible pour le moment. Réessayez, ou appelez le 03 66 10 01 34.'; btn.textContent='Réessayer'; btn.disabled=false; btn.dataset.sending='0'; });
+  });
+
+  // address
+  var adr=$('#f-adresse');
+  adr.addEventListener('input', function(){ state.adresse=this.value; saveState(); clearTimeout(acTimer); var v=this.value; acTimer=setTimeout(function(){acSearch(v);},220); });
+  adr.addEventListener('blur', function(){ setTimeout(hideAc,180); });
+  adr.addEventListener('keydown', function(e){
+    if($('#acList').hidden) return;
+    if(e.key==='ArrowDown'){ e.preventDefault(); acHl=Math.min(acItems.length-1,acHl+1); }
+    else if(e.key==='ArrowUp'){ e.preventDefault(); acHl=Math.max(0,acHl-1); }
+    else if(e.key==='Enter'){ if(acHl>=0){ e.preventDefault(); pickAc(acHl); } return; }
+    else return;
+    $$('#acList button').forEach(function(b,i){ b.classList.toggle('hl',i===acHl); });
+  });
+  $('#f-cp').addEventListener('input', function(){ this.value=this.value.replace(/\D/g,'').slice(0,5); state.cp=this.value; state._zoneAck=false; saveState(); $('#adrNext').textContent='Continuer →'; $('#zoneNote').hidden=true; });
+  $('#f-ville').addEventListener('input', function(){ state.ville=this.value; saveState(); });
+  $('#adrNext').addEventListener('click', function(){
+    var badA=!nameOk($('#f-adresse').value), badC=!cpOk($('#f-cp').value), badV=!nameOk($('#f-ville').value);
+    setInvalid(fieldOf('f-adresse'),badA); setInvalid(fieldOf('f-cp'),badC); setInvalid(fieldOf('f-ville'),badV);
+    var el=badA?'f-adresse':badC?'f-cp':badV?'f-ville':null;
+    if(el){ $('#'+el).focus(); return; }
+    // hors zone : on AVERTIT sans bloquer (l'utilisateur voit le message puis confirme). Jamais de blocage silencieux.
+    var zn=$('#zoneNote');
+    if(!inZone($('#f-cp').value) && !state._zoneAck){
+      zn.hidden=false; zn.className='note warn';
+      zn.innerHTML='Votre code postal semble hors de notre zone principale (Saint-Omer 62 / Dunkerque 59). Nous pouvons tout de même étudier votre demande et vous rappeler. Cliquez à nouveau pour continuer.';
+      state._zoneAck=true; saveState();
+      $('#adrNext').textContent='Continuer quand même →';
+      return;
+    }
+    zn.hidden=true;
+    state.adresse=$('#f-adresse').value; state.cp=$('#f-cp').value; state.ville=$('#f-ville').value; saveState();
+    go('coords');
+  });
+
+  // coords
+  ['f-prenom','f-nom','f-tel','f-email'].forEach(function(id){ $('#'+id).addEventListener('input', function(){ var k={ 'f-prenom':'prenom','f-nom':'nom','f-tel':'tel','f-email':'email'}[id]; state[k]=this.value; saveState(); }); });
+  $('#coordsNext').addEventListener('click', function(){
+    var bP=!nameOk($('#f-prenom').value), bN=!nameOk($('#f-nom').value), bT=!phoneFrOk($('#f-tel').value), bE=!emailOk($('#f-email').value);
+    setInvalid(fieldOf('f-prenom'),bP); setInvalid(fieldOf('f-nom'),bN); setInvalid(fieldOf('f-tel'),bT); setInvalid(fieldOf('f-email'),bE);
+    var el=bP?'f-prenom':bN?'f-nom':bT?'f-tel':bE?'f-email':null;
+    if(el){ $('#'+el).focus(); return; }
+    go('confirm');
+  });
+  $('#submitBtn').addEventListener('click', submit);
+
+  // ---------- rehydrate inputs from draft ----------
+  function rehydrate(){
+    [['f-adresse','adresse'],['f-cp','cp'],['f-ville','ville'],['f-prenom','prenom'],['f-nom','nom'],['f-tel','tel'],['f-email','email'],['urg-desc','urgDesc'],['ent-model','_entModel'],['rap-prenom','_rapPrenom'],['rap-tel','_rapTel'],['dv-prenom','prenom'],['dv-nom','nom'],['dv-tel','tel'],['dv-email','email'],['dv-adresse','adresse'],['dv-cp','cp'],['dv-ville','ville'],['dv-desc','_devisDesc']].forEach(function(p){ if(state[p[1]]) { var el=$('#'+p[0]); if(el) el.value=state[p[1]]; } });
+    if(state.urg){ var b=$('#s-urgence [data-urg="'+state.urg+'"]'); if(b){ b.classList.add('sel'); $('#urgNext').disabled=false; } }
+    if(state._devisServices && state._devisServices.length){ $$('#dvServices input[type=checkbox]').forEach(function(c){ if(state._devisServices.indexOf(c.value)>-1) c.checked=true; }); }
+    if(state._entEnergie){ var ee=$('#entEnergie [data-entenergie="'+state._entEnergie+'"]'); if(ee) ee.classList.add('sel'); }
+    if(state._entType){ var et=$('#entType [data-enttype="'+state._entType+'"]'); if(et) et.classList.add('sel'); }
+  }
+
+  // ---------- INIT ----------
+  refreshCartUI(); rehydrate();
+  loadCatalogue().then(function(){
+    if(state._fam && byFam[state._fam]) renderProducts(state._fam);
+    if(state._diagFam) { /* diag re-render handled on entering step */ }
+    restoreFromHash({noHash:true});
+  });
+})();
+</script>
+</body>
+</html>
