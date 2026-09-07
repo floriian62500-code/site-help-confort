@@ -6,7 +6,7 @@ import path from 'node:path';
 
 const SKIP_DIRS = new Set(['node_modules', '.git', '.netlify', 'dist']);
 // Pages hors périmètre "page publique SEO" : back-office, CMS, fragments, centre de recette.
-const SKIP_FILE = /(^|\/)(admin-pro|admin)\//;
+const SKIP_FILE = /(^|\/)(admin-pro|admin|docs)\//;
 const SKIP_NAME = /^(recette|404|google[0-9a-f]+)\.html$/i;
 
 function walk(dir){ let o=[]; for(const e of fs.readdirSync(dir,{withFileTypes:true})){ if(e.isDirectory()){ if(!SKIP_DIRS.has(e.name)) o=o.concat(walk(path.join(dir,e.name))); } else if(e.name.endsWith('.html')) o.push(path.join(dir,e.name)); } return o; }
