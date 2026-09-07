@@ -76,7 +76,8 @@ GEO/AEO, SEO fin, cosmétique, perfection visuelle non critique, docs secondaire
 
 - **Condition de figeage** : SEC-3 traité (coupé ou durci-déployé) **ET** SEC-2 certifié/durci **ET** T12/T14/T15 clôturés (ou classés non-bloquants explicitement par Florian).
 - Quand vert : figer un SHA **`RC1`** sur `recette` + publier **UNE** URL preview → validation Florian. **Gel des changements** hors bug bloquant pendant sa revue.
-- **RC1 = none** (pas encore figée).
+- **RC1 (prod) = none** — pas figée : conditionnée aux gates humains (SEC-3 Stripe, SEC-2 RLS, T12/T14/T15).
+- **RC-VISUELLE gelée pour validation Florian** : SHA `2201903d` (recette HEAD ; dernier changement de contenu front = `d3a54e82` « coupe le son »). URL preview unique : `https://deploy-preview-2--remarkable-dragon-364e2b.netlify.app`. **Gel des modifs front/SEO/cosmétiques** pendant la revue Florian, sauf P0/P1 certain. `READY_FOR_PROD=NO · MERGE_MAIN=NO · PROD=NO · BACKEND_E2E=WAITING_DOCKER`. QA visuelle business bout-en-bout = PASS (6 parcours, 1440+390, outbox RUN-2026-09-07-1642).
 
 ## E. APRÈS GO FLORIAN (préparation, aucun deploy sans GO)
 
@@ -90,6 +91,6 @@ GEO/AEO, SEO fin, cosmétique, perfection visuelle non critique, docs secondaire
 ---
 
 ## Retour compact
-`RC_STATUS=NOT_READY | PROD_BLOCKERS=2 | HUMAN_CHECKS=5 | TECH_CHECKS_PASS=11/18 | GATED_ACTIONS=6 | RC_SHA=none | PREVIEW=https://deploy-preview-2--remarkable-dragon-364e2b.netlify.app`
+`RC_STATUS=NOT_READY (prod) | RC_VISUAL_FROZEN=YES | RC_SHA=2201903d | PROD_BLOCKERS=2 | HUMAN_CHECKS=5 | TECH_CHECKS_PASS=11/18 | GATED_ACTIONS=6 | READY_FOR_FLORIAN_VISUAL_QA=YES | READY_FOR_PROD=NO | MERGE_MAIN=NO | PROD=NO | BACKEND_E2E=WAITING_DOCKER | PREVIEW=https://deploy-preview-2--remarkable-dragon-364e2b.netlify.app`
 
 **GATED_ACTIONS (6)** : (1) SEC-3 couper/durcir Stripe LIVE ; (2) SEC-2 migration RLS ; (3) deploy `notify-lead-v6` ; (4) CMD-6 clé `sk_test_` + deploy ; (5) désactiver tiroir Netlify ; (6) activation runner RUN-1 (secret OAuth + protection main + merge PR #10).
