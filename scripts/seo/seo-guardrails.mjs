@@ -50,6 +50,10 @@ for (const f of files){
   // "Dépan'DK" visible = interdit ; la CLÉ data value="depan-dk" est tolérée (tri interne).
   const dkText = h.replace(/value=["']depan-dk["']/g, '').replace(/'depan-dk'|"depan-dk"/g, '');
   if (/D[eé]pan['’]DK/.test(dkText)) err(f, 'DEPANDK_VISIBLE', 'libellé « Dépan\'DK » visible');
+  // nom de marque juxtaposant deux villes (laisse croire à deux implantations) — directive 5572216104
+  if (/HELP Confort Saint-Omer (?:&amp;|&) Dunkerque/.test(h)) err(f, 'BRAND_TWO_CITIES', 'nom « HELP Confort Saint-Omer & Dunkerque » (deux implantations)');
+  const titleForJuxta = (h.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '';
+  if (/Saint-Omer (?:&amp;|&) Dunkerque/.test(titleForJuxta)) err(f, 'TITLE_TWO_CITIES', '<title> juxtapose « Saint-Omer & Dunkerque »');
 }
 
 // Rapport
