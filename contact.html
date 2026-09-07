@@ -414,6 +414,23 @@ if (document.fonts && document.fonts.ready) {
  <span id="prestaLabel" style="font-weight:700;color:#0A1428"></span>
  </div>
 
+ <!-- TUN-2 « allègement Contact » : parcours guidé moderne = chemin PRINCIPAL (3 étapes, contexte conservé) -->
+ <a id="dxCta" href="devis-express.html" class="dx-cta-card" style="display:flex;align-items:center;gap:14px;margin:0 0 16px;padding:16px 18px;border-radius:14px;background:linear-gradient(135deg,#0DA0CF,#0A86ad);color:#fff;text-decoration:none;box-shadow:0 10px 24px rgba(13,160,207,.28)">
+  <span aria-hidden="true" style="flex-shrink:0;width:40px;height:40px;border-radius:11px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg></span>
+  <span style="flex:1;line-height:1.3"><strong style="display:block;font-size:1.02rem">Faire ma demande guidée en 2 min</strong><span style="font-size:.86rem;opacity:.92">3 étapes simples · sans double saisie · réponse sous 24h ouvrées</span></span>
+  <span aria-hidden="true" style="flex-shrink:0"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+ </a>
+ <div style="text-align:center;color:#94a3b8;font-size:.82rem;margin:0 0 18px">— ou remplissez le formulaire classique ci-dessous —</div>
+ <script>
+ /* TUN-2 : le CTA guidé transmet le contexte (metier/presta/service/objet) au wizard, sans PII */
+ (function(){ try{
+   var cta=document.getElementById('dxCta'); if(!cta) return;
+   var src=new URLSearchParams(location.search), out=new URLSearchParams();
+   ['metier','presta','service','objet'].forEach(function(k){ var v=src.get(k); if(v) out.set(k,v); });
+   var qs=out.toString(); if(qs) cta.href='devis-express.html?'+qs;
+ }catch(_){}})();
+ </script>
+
  <!-- Parcours narratif : ce qui se passe après le formulaire (rassurance visiteur — ajouté 2026-07-25) -->
  <div class="hc-contact-journey" aria-label="Voici comment ça se passe">
  <div class="hcj-title">Voici comment ça se passe</div>

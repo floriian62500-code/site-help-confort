@@ -450,5 +450,28 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
   <script defer src="assets/hc-chat-widget.js"></script>
   <script defer src="assets/hc-a11y-fixes.js"></script>
 <script src="assets/hc-rate-limit.js?v=20260603" defer></script>
+<!-- TUN-2 : préremplissage contexte depuis ?metier/presta/service/objet (allègement Contact -> wizard sans re-saisie) -->
+<script>
+(function(){
+  try{
+    var P = new URLSearchParams(location.search);
+    var raw = (P.get('metier')||P.get('presta')||P.get('service')||'').trim();
+    if(!raw) return;
+    var MAP = {'plombier':'Plomberie','plomberie':'Plomberie','chauffagiste':'Chauffage','chauffage':'Chauffage',
+      'electricien':'Électricité','électricien':'Électricité','electricite':'Électricité','électricité':'Électricité',
+      'serrurier':'Serrurerie','serrurerie':'Serrurerie','vitrier':'Vitrerie','vitrerie':'Vitrerie',
+      'menuisier':'Travaux','menuiserie':'Travaux','travaux':'Travaux','renovation':'Travaux','rénovation':'Travaux'};
+    var metier = MAP[raw.toLowerCase()] || null;
+    var objet = (P.get('objet')||'').trim();
+    function apply(){
+      var form = document.querySelector('form,[data-step="1"]') ? document : null; if(!form) return;
+      if(objet){ var d=document.getElementById('dxDesc'); if(d && !d.value){ d.value=objet; d.dispatchEvent(new Event('input',{bubbles:true})); } }
+      if(metier){ var b=document.querySelector('[data-metier="'+metier+'"]'); if(b) b.click(); }
+    }
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', function(){ setTimeout(apply,300); });
+    else setTimeout(apply,300);
+  }catch(_){}
+})();
+</script>
 </body>
 </html>
