@@ -7,7 +7,7 @@ import path from 'node:path';
 const SKIP_DIRS = new Set(['node_modules', '.git', '.netlify', 'dist']);
 // Pages hors périmètre "page publique SEO" : back-office, CMS, fragments, centre de recette.
 const SKIP_FILE = /(^|\/)(admin-pro|admin|docs)\//;
-const SKIP_NAME = /^(recette|404|google[0-9a-f]+)\.html$/i;
+const SKIP_NAME = /^(recette|404|google[0-9a-f]+|espace-client|espace-client-dashboard)\.html$/i;
 
 function walk(dir){ let o=[]; for(const e of fs.readdirSync(dir,{withFileTypes:true})){ if(e.isDirectory()){ if(!SKIP_DIRS.has(e.name)) o=o.concat(walk(path.join(dir,e.name))); } else if(e.name.endsWith('.html')) o.push(path.join(dir,e.name)); } return o; }
 
@@ -26,13 +26,14 @@ for (const f of files){
   if (h1 === 0) warn(f, 'H1_MISSING', 'aucun <h1>');
   else if (h1 > 1) warn(f, 'H1_MULTIPLE', `${h1} <h1>`);
 
-  // 2. <title> présent non vide
-  const title = (h.match(/<title>([\s\S]*?)<\/title>/i) || [])[1];
+  // 2. <title> présent non vide (attributs éventuels tolérés, ex. id="pageTitle")
+  const title = (h.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i) || [])[1];
   if (!title || !title.trim()) err(f, 'TITLE_MISSING', '<title> absent/vide');
   else if (title.length > 70) warn(f, 'TITLE_LONG', `titre ${title.length} car.`);
 
-  // 3. meta description présente
-  if (!/<meta\s+name=["']description["']\s+content=["'][^"']+["']/i.test(h)) err(f, 'DESC_MISSING', 'meta description absente/vide');
+  // 3. meta description présente non vide (attributs dans un ordre quelconque)
+  const desc = (h.match(/<meta\b(?=[^>]*\bname=["']description["'])[^>]*\bcontent=["']([^"']*)["'][^>]*>/i) || [])[1];
+  if (!desc || !desc.trim()) err(f, 'DESC_MISSING', 'meta description absente/vide');
 
   // 4. canonical présent
   if (!/<link\s+rel=["']canonical["']/i.test(h)) err(f, 'CANONICAL_MISSING', 'link canonical absent');
