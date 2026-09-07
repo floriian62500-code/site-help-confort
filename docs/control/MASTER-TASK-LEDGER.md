@@ -73,7 +73,7 @@
 | QUA-1 | #9 T12 | P1 | Qualité front (console/liens/alt/H1) | **READY_FOR_QA** | `dbe68255` | — |
 | RSP-1 | 5438239688 T8 / 5450159091 | P1 | Responsive 320→1920 + a11y ; overflow horizontal ≤1100 (header actions) | **READY_FOR_QA** | `8c3a65ae` | PAGE_HORIZONTAL_OVERFLOW=0 à 1440/1024/768/390/375 (home+catalogue) | fix : masque n° tél header ≤1100 (icône seule) + marquee-wrap overflow-x:clip ; animation desktop intacte | QA visuelle Florian |
 | SEO-1 | 5438239688 L1 | P1 | Audit SEO technique (baseline saine) | **READY_FOR_QA** | `711a3204` | — |
-| SEO-2 | 5438239688 L2/3/9 | P1 | Architecture locale + contenu + tests garde-fous SEO | **BACKLOG** | — | séquencer |
+| SEO-2 | 5438239688 L2/3/9 | P1 | Architecture locale + contenu + **tests garde-fous SEO** | **PARTIAL** (garde-fous LIVRÉS) | `951b7295` | garde-fou CI `scripts/seo/seo-guardrails.mjs` (1 h1/title/desc/canonical/JSON-LD + invariants single-agency) ERRORS=0/199 pages ; a corrigé 8 pages deux-agences + JSON-LD debouchage + canonical catalogue | reste = matrice creuse (GATE) + contenu local avancé |
 | SEO-3 | 5438239688 L4-8 | P2 | GBP/backlinks/tracking/Ads | **BLOCKED_HUMAN** | plans | accès comptes Google |
 
 | SEO-4 | 5450850610 / 5450879322 | P1 | Audit + BASELINE factuelle visibilité IA (GEO/AEO) + SEO local | **BASELINE LIVRÉE** (implémentation P1 après GO) | `9bcf3569`,`aab39c08` | inventaire URL réel + crawlers datés + panel 64 requêtes | `AI-VISIBILITY-GEO-AEO-AUDIT.md` + `GEO-BENCHMARK.md` | GO Florian P1 (hôte canonique, validation schema, doorway) + actions humaines |
