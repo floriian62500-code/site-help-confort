@@ -43,6 +43,11 @@ for (const f of files){
   let m, n=0;
   while ((m = re.exec(h))){ n++; try { JSON.parse(m[1]); } catch(e){ err(f, 'JSONLD_INVALID', `bloc JSON-LD #${n} invalide: ${e.message}`); } }
 
+  // 5b. scripts inline exécutables valides (apostrophe non échappée, etc. — ex. bug « l'intervention »)
+  const reJs = /<script(?![^>]*\bsrc=)(?![^>]*type=["']application\/ld\+json["'])[^>]*>([\s\S]*?)<\/script>/gi;
+  let mj, nj=0;
+  while ((mj = reJs.exec(h))){ nj++; const code = mj[1]; if (!code.trim()) continue; try { new Function(code); } catch(e){ err(f, 'INLINE_JS_INVALID', `script inline #${nj} invalide: ${e.message}`); } }
+
   // 6. vérité métier UNE agence Saint-Omer (single-agency) — invariants durs
   if (/"addressLocality":\s*"Dunkerque"/.test(h)) err(f, 'FALSE_AGENCY_ADDRESS', 'addressLocality "Dunkerque" (établissement inventé)');
   if (/deux agences|2 agences locales|deux SARL|société sœur/i.test(h)) err(f, 'TWO_AGENCIES', 'formulation « deux agences »');
