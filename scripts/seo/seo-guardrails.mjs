@@ -21,8 +21,10 @@ function warn(f, code, msg){ warns.push({f, code, msg}); }
 for (const f of files){
   const h = fs.readFileSync(f, 'utf8');
 
-  // 1. exactement un <h1>
-  const h1 = (h.match(/<h1[\s>]/gi) || []).length;
+  // 1. exactement un <h1> — on ignore les <h1> à l'intérieur des <script> (templates JS injectés,
+  //    ex. realisation.html : un seul est réellement rendu par innerHTML).
+  const hNoScript = h.replace(/<script[\s\S]*?<\/script>/gi, '');
+  const h1 = (hNoScript.match(/<h1[\s>]/gi) || []).length;
   if (h1 === 0) warn(f, 'H1_MISSING', 'aucun <h1>');
   else if (h1 > 1) warn(f, 'H1_MULTIPLE', `${h1} <h1>`);
 
