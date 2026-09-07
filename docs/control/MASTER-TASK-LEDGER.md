@@ -41,7 +41,7 @@
 | ID | source | prio | demande | statut | SHA | reste |
 |---|---|---|---|---|---|---|
 | TUN-1 | 5438265921 | P1 | Tunnel unique — S1 inventaire+architecture+source unique | **READY_FOR_QA** | `450d3344` | — |
-| TUN-2 | 5438265921 | P1 | Tunnel S2-S7 (route plein écran, brouillon/reprise, prefill, allègement Contact) | **BACKLOG** | — | QA visuelle |
+| TUN-2 | 5438265921 | P1 | Tunnel S2-S7 — **allègement Contact (S5)** | **READY_FOR_QA** (allègement livré) | `9f64cff6` | contact.html CTA guidé -> wizard devis-express (prefill metier/objet, sans double saisie) ; form classique conservé en repli ; +2 bugs JS inline corrigés (contact l'intervention, aides rel=noopener) ; garde-fou INLINE_JS_INVALID | reste = retrait form embarqué après QA lead humaine ; S6/S7 |
 | FRM-1 | #9 T2 | P0 | Wizard erreurs inline (bug scope corrigé) | **READY_FOR_QA** | `c6f2d349` | validation Florian |
 
 ## Zone RUNNER / CONTROL-PLANE (non-prod, critère = READY_FOR_HUMAN_ACTIVATION)
