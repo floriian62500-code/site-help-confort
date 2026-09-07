@@ -641,15 +641,9 @@ if (iconOn) iconOn.style.display = 'none';
 }
 }
 btn.addEventListener('click', function(e) { e.stopPropagation(); setSoundState(v.muted); });
-var soundActivated = false;
-function tryEnableSound() {
-if (soundActivated) return;
-soundActivated = true;
-setSoundState(true);
-}
-['click', 'touchstart', 'keydown', 'scroll', 'wheel', 'mousemove'].forEach(function(ev) {
-window.addEventListener(ev, tryEnableSound, { passive: true, once: true });
-});
+// SON COUPÉ par défaut (demande Florian) : plus d'activation automatique du son sur scroll/mousemove/etc.
+// La vidéo reste muette ; le son ne s'active QUE si l'utilisateur clique explicitement le bouton.
+setSoundState(false);
 }
 if (play) {
 play.addEventListener('click', function(e) {
