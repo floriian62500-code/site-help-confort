@@ -1,6 +1,6 @@
 # 🔎 Audit `required` / `pattern` hors `<form>` — sonde #25
 
-_Généré le 2026-09-07 08:02_
+_Généré le 2026-09-08 07:54_
 
 - Pages scannées : **116**
 - Pages avec orphelins : **1**
