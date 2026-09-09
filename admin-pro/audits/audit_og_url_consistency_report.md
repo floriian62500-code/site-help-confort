@@ -1,6 +1,6 @@
 # Audit og:url vs canonical — Rapport
 
-_Généré le 2026-09-08 07:54_
+_Généré le 2026-09-09 07:57_
 
 ## Synthèse
 
