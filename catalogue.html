@@ -860,9 +860,16 @@ body.dv-modal-open{overflow:hidden}
   window.addEventListener('popstate', function(){ restoreFromHash({noHash:true}); });
 
   // ---------- PRICE GATE (P0 5512405541) : identification avant tarifs ----------
+  // P0 (5605156304) : le gate tarifs vaut UNIQUEMENT pour la session/parcours courant, jamais
+  // « des jours plus tard » via un vieux localStorage durable. Persistance = flag de session
+  // (sessionStorage, vidé à la fermeture de l'onglet) + brève grâce de 2h (refresh/retour court).
+  // Un ancien état sans horodatage (identité seule, ancien _priceGateOk) NE déverrouille plus les prix.
+  var PG_TTL_MS = 2*60*60*1000;
+  function pgSessionOk(){ try{ return sessionStorage.getItem('hc_pg')==='1'; }catch(e){ return false; } }
   function priceGatePassed(){
-    return state._priceGateOk===true ||
-      !!(state.prenom && state.nom && state.tel && state.email && state.cp);
+    if(pgSessionOk()) return true;
+    var t = state._priceGateAt;
+    return state._priceGateOk===true && typeof t==='number' && (Date.now()-t) < PG_TTL_MS;
   }
   var pgModal=$('#priceGate');
   function openPriceGate(){
@@ -907,7 +914,7 @@ body.dv-modal-open{overflow:hidden}
       })}).then(function(r){ return r.ok? r.json().catch(function(){return{};}) : Promise.reject(r.status); })
         .then(function(){ track('price_gate_lead'); }, function(){ track('price_gate_lead_fail'); })
         .then(function(){
-          state._priceGateOk=true; state._pgPending=null; saveState();
+          state._priceGateOk=true; state._priceGateAt=Date.now(); try{sessionStorage.setItem('hc_pg','1');}catch(e){} state._pgPending=null; saveState();
           btn.disabled=false; btn.textContent=orig; btn.dataset.sending='0';
           pgModal.hidden=true; document.body.style.overflow='';
           if(pending.cat) state._fam=pending.cat;
