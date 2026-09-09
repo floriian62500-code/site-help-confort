@@ -1675,7 +1675,7 @@ body.dv-modal-open{overflow:hidden}
   // ---------- INIT ----------
   refreshCartUI(); rehydrate();
   loadCatalogue().then(function(){
-    if(state._fam && byFam[state._fam]) renderProducts(state._fam);
+    if(state._fam && byFam[state._fam] && priceGatePassed()) renderProducts(state._fam); // P0 : pas de prix rendus dans le DOM sans gate passé (session courante)
     if(state._diagFam) { /* diag re-render handled on entering step */ }
     restoreFromHash({noHash:true});
   });
