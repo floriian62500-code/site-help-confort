@@ -402,7 +402,7 @@ body.dv-modal-open{overflow:hidden}
   </div>
   <div class="tb-r">
     <a class="tb-phone" href="tel:+33366100134" aria-label="Appeler HELP Confort — urgence"><span class="tb-urg" aria-hidden="true"></span><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="tb-phone-txt">03 66 10 01 34</span></a>
-    <button class="cartbtn" id="cartBtn" aria-label="Voir mon panier"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> <span class="cartbtn-txt">Mon panier (<span id="cartCount">0</span>)</span></button>
+    <button class="cartbtn" id="cartBtn" aria-label="Voir mon panier"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> <span class="cartbtn-txt">Ma demande (<span id="cartCount">0</span>)</span></button>
     <a class="tb-exit" href="/" aria-label="Quitter et revenir à l'accueil"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> <span class="tb-exit-txt">Quitter</span></a>
   </div>
 </header>
@@ -676,10 +676,10 @@ body.dv-modal-open{overflow:hidden}
 
   <!-- 4. CART -->
   <section class="screen" id="s-cart" data-step="cart">
-    <button class="back" data-step-go="catalogue">← Continuer mes achats</button>
-    <h1>Mon panier</h1>
+    <button class="back" data-step-go="catalogue">← Ajouter une autre prestation</button>
+    <h1>Ma demande</h1>
     <div id="cartFull"></div>
-    <div id="cartEmpty" class="note" hidden>Votre panier est vide. <button class="back" data-step-go="launcher">Commencer une commande</button></div>
+    <div id="cartEmpty" class="note" hidden>Votre demande est vide. <button class="back" data-step-go="launcher">Commencer une commande</button></div>
     <div id="cartActions" style="margin-top:16px">
       <button class="btn btn-primary btn-lg" id="toCheckout">Continuer ma demande →</button>
     </div>
@@ -687,7 +687,7 @@ body.dv-modal-open{overflow:hidden}
 
   <!-- 5. URGENCE -->
   <section class="screen" id="s-urgence" data-step="urgence">
-    <button class="back" data-step-go="cart">← Retour au panier</button>
+    <button class="back" data-step-go="cart">← Retour à ma demande</button>
     <h1>Votre demande est-elle urgente ?</h1>
     <p class="sub">Cela nous aide à prioriser. Sans engagement.</p>
     <div class="yn">
@@ -776,12 +776,12 @@ body.dv-modal-open{overflow:hidden}
 <!-- barre panier mobile + bottom-sheet -->
 <div class="mobile-cartbar">
   <div><strong id="mCount">0</strong> prestation(s) · <span id="mTotal">0</span> € TTC</div>
-  <button class="cartbtn" id="mCartBtn">Voir le panier</button>
+  <button class="cartbtn" id="mCartBtn">Voir ma demande</button>
 </div>
 <div class="sheet-backdrop" id="sheetBackdrop"></div>
 <div class="bottom-sheet" id="bottomSheet">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-    <strong>Mon panier</strong><button class="back" id="sheetClose">Fermer ✕</button>
+    <strong>Ma demande</strong><button class="back" id="sheetClose">Fermer ✕</button>
   </div>
   <div id="sheetSummary"></div>
 </div>
@@ -994,7 +994,7 @@ body.dv-modal-open{overflow:hidden}
         (s.short_desc?'<div class="muted">'+esc(s.short_desc)+'</div>':'')+
         '<div style="margin-top:auto">'+(priced(s)?'<span class="ttc">'+Math.round(s.price_ttc)+' € TTC</span>':'<span class="dvis">Sur devis</span>')+'</div>'+
         '<button class="btn btn-ghost" data-sheet="'+esc(s.id)+'">Voir la prestation</button>'+
-        (priced(s)?'<button class="btn btn-primary" data-add="'+esc(s.id)+'">Ajouter au panier</button>':'')+
+        (priced(s)?'<button class="btn btn-primary" data-add="'+esc(s.id)+'">Ajouter à ma demande</button>':'')+
         '</div>';
     }).join('');
     $('#families').hidden=true; $('#products').hidden=false;
@@ -1049,7 +1049,7 @@ body.dv-modal-open{overflow:hidden}
       (priced(s)?'<p class="muted">Déplacement et main-d\'œuvre inclus dans le tarif catalogue sauf mention contraire. Fournitures spécifiques éventuelles confirmées par l\'agence avant intervention.</p>'
                 :'<p class="muted">Le prix dépend du diagnostic : un technicien évalue puis chiffre sans engagement.</p>')+
       '<div>'+(priced(s)
-        ? '<button class="btn btn-primary btn-lg" data-add="'+esc(s.id)+'">Ajouter au panier</button>'
+        ? '<button class="btn btn-primary btn-lg" data-add="'+esc(s.id)+'">Ajouter à ma demande</button>'
         : '<button class="btn btn-devis btn-lg" data-addquote="'+esc(s.id)+'">Ajouter à ma demande de devis</button>')+'</div>'+
       '</div>';
     $('#sheetBody').innerHTML=html;
@@ -1087,7 +1087,7 @@ body.dv-modal-open{overflow:hidden}
     if(state.urg) ctx+='<div class="sum-ctx">'+svgClock+(state.urg==='oui'?'Urgent':'À planifier')+'</div>';
     if(state.cp||state.ville) ctx+='<div class="sum-ctx">'+svgPin+esc([state.adresse,state.cp,state.ville].filter(Boolean).join(' '))+'</div>';
     if(state.cp) ctx+='<div class="sum-ctx">'+svgAg+'Agence '+esc(detectAgence(state.cp))+'</div>';
-    return '<h3>Mon panier ('+cart.count()+')</h3>'+
+    return '<h3>Ma demande ('+cart.count()+')</h3>'+
       cart.lines().map(function(l){return cartLineHtml(l);}).join('')+
       '<div class="sum-total"><span>Total (indicatif)</span><span>'+tot+' € TTC</span></div>'+
       '<p class="muted" style="margin:6px 0 0">'+modeTxt+'</p>'+ctx;
