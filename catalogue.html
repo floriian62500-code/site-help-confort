@@ -1151,6 +1151,7 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     $('#sheetSummary').innerHTML=html;
   }
   function renderCartFull(){
+    if(!priceGatePassed()){ $('#cartFull').innerHTML=''; $('#cartActions').hidden=true; $('#cartEmpty').hidden=true; return; } // P0 (5605156304) : aucun prix rendu dans le DOM hors gate validé
     var empty=!cart||!cart.count();
     $('#cartEmpty').hidden=!empty;
     $('#cartActions').hidden=empty;
