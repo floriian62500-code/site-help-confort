@@ -1,4 +1,4 @@
-# Audit Leaflet map init — 2026-09-09 07:57
+# Audit Leaflet map init — 2026-09-10 07:56
 
 - **Pages scannées** : 117
 - **Pages avec init Leaflet (`L.map(` / `new L.Map(`)** : 1
