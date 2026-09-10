@@ -1482,48 +1482,5 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
 <script src="assets/hc-modal-prefill.js?v=20260604-clean" defer></script>
 <script src="assets/hc-rate-limit.js?v=20260603" defer></script>
 <script defer src="assets/hc-review.js?v=2"></script>
-
-<!-- P1 (5605156304/5605475397) : parcours « Commander / Devis » en OVERLAY MODAL intégré au site
-     (réutilise le moteur catalogue via iframe embed ; le site reste en fond ; pas de page « boutique »).
-     Les <a href="/catalogue…"> restent des liens réels = fallback sans JS (deep-links préservés). -->
-<div id="hcCmdOverlay" class="hc-cmd-overlay" hidden>
-  <div class="hc-cmd-backdrop" data-hccmd-close></div>
-  <div class="hc-cmd-panel" role="dialog" aria-modal="true" aria-label="Demande d'intervention">
-    <button type="button" class="hc-cmd-x" data-hccmd-close aria-label="Fermer">✕</button>
-    <iframe id="hcCmdFrame" title="Demande d'intervention" src="about:blank"></iframe>
-  </div>
-</div>
-<style>
-.hc-cmd-overlay{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center}
-.hc-cmd-overlay[hidden]{display:none}
-.hc-cmd-backdrop{position:absolute;inset:0;background:rgba(10,20,40,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
-.hc-cmd-panel{position:relative;width:min(960px,96vw);height:min(92vh,900px);background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 30px 80px rgba(10,20,40,.35);display:flex;animation:hcCmdIn .22s ease}
-@keyframes hcCmdIn{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:none}}
-.hc-cmd-panel iframe{border:0;width:100%;height:100%;display:block}
-.hc-cmd-x{position:absolute;top:10px;right:12px;z-index:2;width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.92);box-shadow:0 2px 8px rgba(10,20,40,.2);font-size:16px;line-height:1;cursor:pointer;color:#0A1428}
-@media(max-width:640px){.hc-cmd-panel{width:100vw;height:100dvh;border-radius:0}}
-body.hc-cmd-lock{overflow:hidden}
-</style>
-<script>
-(function(){
-  var ov=document.getElementById('hcCmdOverlay'), fr=document.getElementById('hcCmdFrame');
-  if(!ov||!fr) return;
-  function openTunnel(hash){
-    var src='/catalogue.html?embed=1'+(hash||'');
-    if(fr.getAttribute('src')!==src) fr.setAttribute('src',src);
-    ov.hidden=false; document.body.classList.add('hc-cmd-lock');
-  }
-  function closeTunnel(){ ov.hidden=true; document.body.classList.remove('hc-cmd-lock'); }
-  document.addEventListener('click', function(e){
-    var a=e.target.closest ? e.target.closest('a[href*="catalogue"]') : null; if(!a) return;
-    var href=a.getAttribute('href')||''; if(!/(^|\/)catalogue(\.html)?($|[#?])/.test(href)) return;
-    e.preventDefault();
-    openTunnel(href.indexOf('#')>=0 ? href.slice(href.indexOf('#')) : '');
-  });
-  ov.addEventListener('click', function(e){ if(e.target.hasAttribute('data-hccmd-close')) closeTunnel(); });
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !ov.hidden) closeTunnel(); });
-  window.addEventListener('message', function(e){ if(e.data && e.data.hcCmd==='close') closeTunnel(); });
-})();
-</script>
 </body>
 </html>
