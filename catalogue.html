@@ -868,7 +868,7 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     if(step==='launcher') step='catalogue'; // HUB RETIRÉ (5523099683) : plus aucun écran hub à 2 cartes ; on entre direct dans le catalogue (gate auto si non identifié). Tous les anciens "Retour" -> catalogue.
     // --- PRICE GATE P0 (5512405541) : jamais de tarifs affichés sans identification.
     //     Contrôle dans la logique de navigation/state (pas de simple masquage CSS). ---
-    if((step==='catalogue'||step==='sheet') && !priceGatePassed()){
+    if((step==='catalogue'||step==='sheet'||step==='cart'||step==='address'||step==='coords'||step==='confirm') && !priceGatePassed()){
       state._pgPending={step:step, cat:state._fam||null}; saveState();
       $$('.screen').forEach(function(s){ s.classList.remove('active'); }); // ne jamais laisser un écran (ex-hub) sous la modale de gate
       openPriceGate(); return;
@@ -1115,7 +1115,8 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   }
   function refreshCartUI(){
     var n=cart?cart.count():0, tot=cart?Math.round(cart.totalTtcDisplay()):0;
-    $('#cartCount').textContent=n; $('#mCount').textContent=n; $('#mTotal').textContent=tot;
+    var showTot=priceGatePassed(); // P0 (5605156304) : jamais de total tarifé hors gate validé (barre panier mobile fixe incluse)
+    $('#cartCount').textContent=n; $('#mCount').textContent=n; $('#mTotal').textContent=showTot?tot:'—';
     $('#cartBtn').disabled=(n===0);
     refreshSummary();
     if(state._step==='cart') renderCartFull();
@@ -1128,7 +1129,8 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
       '<button class="q q-rm" data-rm="'+esc(l.id)+'" aria-label="Retirer"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M10 11v6M14 11v6"/></svg></button></div></div>';
   }
   function summaryHtml(){
-    if(!cart||!cart.count()) return '<p class="muted">Panier vide.</p>';
+    if(!cart||!cart.count()) return '<p class="muted">Votre demande est vide.</p>';
+    if(!priceGatePassed()) return '<p class="muted">Renseignez le formulaire pour afficher vos tarifs.</p>'; // P0 (5605156304) : aucun tarif hors gate validé
     var mode=cart.mode(), tot=Math.round(cart.totalTtcDisplay());
     var modeTxt={paiement:'Prestations à prix ferme.',devis:'Demande de devis — sans paiement.',mixte:'Panier mixte (ferme + devis) — sans paiement immédiat.'}[mode]||'';
     var ctx='';
