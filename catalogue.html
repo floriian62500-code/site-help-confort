@@ -395,6 +395,29 @@ body.dv-modal-open{overflow:hidden}
 </style>
 </head>
 <body>
+<style id="p1-tunnel-recompose">
+/* === P1 RECOMPOSE — parcours en modal/tunnel compact intégré, fin de la boutique plein écran (directives 5605156304 / 5605475397) === */
+html{background:#0A1428}
+body{background:transparent;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(120% 85% at 100% -10%,rgba(31,196,240,.20),transparent 55%),
+    radial-gradient(100% 80% at -10% 110%,rgba(13,160,207,.16),transparent 55%),
+    linear-gradient(160deg,#0A1428 0%,#0E2A46 58%,#0A1E38 100%)}
+.tunnel{position:relative;z-index:1;max-width:660px;margin:clamp(12px,4vh,46px) auto;
+  background:#fff;border-radius:26px;overflow:hidden;
+  box-shadow:0 50px 100px -32px rgba(0,0,0,.62),0 0 0 1px rgba(255,255,255,.05)}
+@media(max-width:700px){.tunnel{margin:0;min-height:100vh;border-radius:0}}
+/* topbar -> en-tête léger de modale (plus de header applicatif plein écran) */
+.tunnel .topbar{position:static;background:#fff;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;border-radius:0;border-bottom:1px solid var(--bord);padding:13px 20px}
+.tunnel .tb-context{border-left:1px solid var(--bord);font-weight:700;color:var(--gris);text-transform:none}
+.tunnel .tb-context svg{display:none}
+.tunnel .progress{position:static;top:auto}
+/* corps : une seule colonne compacte, plus de grille boutique large ni panneau latéral */
+.tunnel .layout{max-width:none;margin:0;padding:18px clamp(16px,3vw,26px) 26px}
+.tunnel .layout.with-summary{grid-template-columns:1fr!important}
+.tunnel .side-panel,.tunnel .desktop-summary{display:none!important}
+</style>
 <script>
 /* P1 (5605156304/5605475397) : mode EMBED — le tunnel vit dans une modal/overlay intégrée au site
    (iframe) au lieu d'une page plein écran « boutique ». Moteur inchangé ; on ne fait qu'adapter la
@@ -418,15 +441,16 @@ body.dv-modal-open{overflow:hidden}
 .hc-embed .topbar{position:sticky;top:0}
 .hc-embed .layout{max-width:960px}
 </style>
+<div class="tunnel" id="tunnel">
 <header class="topbar">
   <div class="tb-l">
     <a class="tb-logo" href="/" aria-label="HELP Confort — Accueil"><img src="logo-officiel.jpg" alt="HELP Confort" width="200" height="60" decoding="async"></a>
-    <span class="tb-context"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> Commander une intervention</span>
+    <span class="tb-context"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> Demande d'intervention</span>
   </div>
   <div class="tb-r">
     <a class="tb-phone" href="tel:+33366100134" aria-label="Appeler HELP Confort — urgence"><span class="tb-urg" aria-hidden="true"></span><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="tb-phone-txt">03 66 10 01 34</span></a>
     <button class="cartbtn" id="cartBtn" aria-label="Voir mon panier"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> <span class="cartbtn-txt">Ma demande (<span id="cartCount">0</span>)</span></button>
-    <a class="tb-exit" href="/" aria-label="Quitter et revenir à l'accueil"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> <span class="tb-exit-txt">Quitter</span></a>
+    <a class="tb-exit" href="/" aria-label="Quitter et revenir à l'accueil"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> <span class="tb-exit-txt">Fermer</span></a>
   </div>
 </header>
 <div class="progress" role="progressbar" aria-label="Progression de la commande" aria-valuemin="0" aria-valuemax="100" aria-valuenow="5" id="progress"><span class="progress-bar" id="progressBar"></span></div>
@@ -652,8 +676,8 @@ body.dv-modal-open{overflow:hidden}
   <!-- 1. CATALOGUE (mode "je sais") -->
   <section class="screen active" id="s-catalogue" data-step="catalogue">
     <a class="back" href="/index.html">← Accueil</a>
-    <div class="step-head"><h1 style="margin:0">Catalogue des prestations</h1></div>
-    <p class="sub">Choisissez une famille puis ajoutez une ou plusieurs prestations. Prix fermes affichés ; devis clair pour le sur-mesure.</p>
+    <div class="step-head"><h1 style="margin:0">Choisissez votre prestation</h1></div>
+    <p class="sub">Sélectionnez une famille puis ajoutez une ou plusieurs prestations à votre demande. Prix clairs ; devis pour le sur-mesure.</p>
     <button type="button" id="catResume" class="lchr-resume" hidden>
       <span class="lchr-resume-ic"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></span>
       <span class="lchr-resume-txt"><strong>Reprendre ma demande</strong><span>Vous avez une demande en cours.</span></span>
@@ -795,6 +819,7 @@ body.dv-modal-open{overflow:hidden}
    </div>
  </aside>
 </div>
+</div><!-- /tunnel -->
 
 <!-- barre panier mobile + bottom-sheet -->
 <div class="mobile-cartbar">
