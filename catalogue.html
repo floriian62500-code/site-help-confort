@@ -1382,8 +1382,8 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   $('#backFam').addEventListener('click', backToFamilies);
   $('#sheetBack').addEventListener('click', function(){ go(state._sheetFrom||'catalogue'); });
   $('#diagBack').addEventListener('click', function(){ $('#diag-2').hidden=true; $('#diag-1').hidden=false; });
-  $('#cartBtn').addEventListener('click', function(){ if(window.matchMedia('(max-width:1023px)').matches){ openMobileSheet(); } else { go('cart'); } });
-  $('#mCartBtn').addEventListener('click', openMobileSheet);
+  $('#cartBtn').addEventListener('click', function(){ if(!priceGatePassed()){ go('cart'); return; } if(window.matchMedia('(max-width:1023px)').matches){ openMobileSheet(); } else { go('cart'); } }); // P0 : non identifié -> ouvre le gate, jamais le panier tarifé
+  $('#mCartBtn').addEventListener('click', function(){ if(!priceGatePassed()){ go('cart'); return; } openMobileSheet(); });
   function openMobileSheet(){ $('#sheetBackdrop').classList.add('open'); $('#bottomSheet').classList.add('open'); refreshSummary(); }
   function closeMobileSheet(){ $('#sheetBackdrop').classList.remove('open'); $('#bottomSheet').classList.remove('open'); }
   $('#sheetClose').addEventListener('click', closeMobileSheet);
