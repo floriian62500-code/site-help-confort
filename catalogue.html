@@ -395,6 +395,29 @@ body.dv-modal-open{overflow:hidden}
 </style>
 </head>
 <body>
+<script>
+/* P1 (5605156304/5605475397) : mode EMBED — le tunnel vit dans une modal/overlay intégrée au site
+   (iframe) au lieu d'une page plein écran « boutique ». Moteur inchangé ; on ne fait qu'adapter la
+   présentation et transformer « Quitter » en fermeture de la modale parente. Fallback : page normale. */
+(function(){
+  var EMBED; try{ EMBED = (window.self!==window.top) || /[?&]embed=1/.test(location.search); }catch(e){ EMBED=true; }
+  if(!EMBED) return;
+  document.documentElement.classList.add('hc-embed');
+  function wire(){
+    document.body.classList.add('embed');
+    var exit=document.querySelector('.tb-exit');
+    if(exit){ exit.setAttribute('aria-label','Fermer'); var t=exit.querySelector('.tb-exit-txt'); if(t) t.textContent='Fermer';
+      exit.addEventListener('click', function(e){ e.preventDefault(); try{ (window.parent||window.top).postMessage({hcCmd:'close'},'*'); }catch(_){ location.href='/'; } }); }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', wire); else wire();
+})();
+</script>
+<style>
+/* EMBED : présentation compacte pour la modale (pas de shell « boutique » plein écran) */
+.hc-embed body{background:#fff}
+.hc-embed .topbar{position:sticky;top:0}
+.hc-embed .layout{max-width:960px}
+</style>
 <header class="topbar">
   <div class="tb-l">
     <a class="tb-logo" href="/" aria-label="HELP Confort — Accueil"><img src="logo-officiel.jpg" alt="HELP Confort" width="200" height="60" decoding="async"></a>
