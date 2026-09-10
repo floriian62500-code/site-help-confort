@@ -905,7 +905,10 @@ body.dv-modal-open{overflow:hidden}
   function closePriceGate(voluntary){
     if(!pgModal) return;
     pgModal.hidden=true; document.body.style.overflow='';
-    if(voluntary){ state._pgPending=null; saveState(); location.href='/index.html'; } // décline l'identification = retour accueil (hub retiré), aucun tarif révélé
+    if(voluntary){ state._pgPending=null; saveState(); // décline l'identification : aucun tarif révélé
+      if(document.documentElement.classList.contains('hc-embed')){ try{ (window.parent||window.top).postMessage({hcCmd:'close'},'*'); }catch(_){ location.href='/index.html'; } }
+      else { location.href='/index.html'; }
+    }
   }
   if(pgModal){
     pgModal.addEventListener('click', function(e){ if(e.target.hasAttribute('data-pg-close')) closePriceGate(true); });
