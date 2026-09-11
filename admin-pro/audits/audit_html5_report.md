@@ -1,4 +1,4 @@
-# Audit HTML5 — 2026-09-10 07:55
+# Audit HTML5 — 2026-09-11 07:51
 
 > Audit local rapide HTML5 + a11y de base. Lancement : `python3 admin-pro/audits/audit_html5.py`
 > ⚠️ Ce n'est pas un substitut au validateur W3C officiel, mais il pré-filtre les erreurs évidentes.
