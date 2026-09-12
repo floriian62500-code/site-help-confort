@@ -61,6 +61,9 @@ for (const f of files){
   if (/HELP Confort Saint-Omer (?:&amp; |& )?Dunkerque/.test(h)) err(f, 'BRAND_TWO_CITIES', 'nom « HELP Confort Saint-Omer … Dunkerque » (deux implantations)');
   const titleForJuxta = (h.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '';
   if (/Saint-Omer (?:&amp; |& )?Dunkerque/.test(titleForJuxta)) err(f, 'TITLE_TWO_CITIES', '<title> juxtapose « Saint-Omer … Dunkerque »');
+  // Libellé de zone présentant Dunkerque comme une AGENCE physique (contradiction single-agency).
+  // WARNING car le correctif est un changement de texte visible (arbitrage Florian requis) — cf. #9 5645034544 LOT I.
+  if (/agence:\s*['"]Agence Dunkerque['"]/.test(h)) warn(f, 'AGENCE_DUNKERQUE_LABEL', 'libellé « Agence Dunkerque » (zone Dunkerquois présentée comme agence physique — vérité : agence unique Saint-Omer, Dunkerque = zone desservie)');
 }
 
 // Rapport
