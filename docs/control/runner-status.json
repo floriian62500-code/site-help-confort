@@ -1,0 +1,76 @@
+{
+  "state": "SAFE_BACKLOG_ADVANCED_HOLD_FRONT",
+  "worker": "ACTIVE",
+  "worker_mode": "interactive_claude_session (Claude fait le travail dans la session en direct ; commits reels frais qui atterrissent sur origin/recette)",
+  "autonomous_runner": "RUN-1 = BLOCKED_HUMAN (le runner autonome LaunchAgent/Action n'est PAS actif ; activation temoin = geste humain). Ne pas confondre avec le worker session ci-dessus.",
+  "current_task": "Backlog SAFE A-L avancé (5645034544) front a7299202 GELÉ, VISUAL_RC_CHANGED=NO. Livré: test price-gate 18/18, garde single-agency AGENCE_DUNKERQUE_LABEL (7 pages), purge ~21Mo orphelins 0-ref, runbook E2E (Docker down=BLOCKED_HUMAN_DOCKER), audit consolidé sécu/backend/perf/a11y/cohérence + inventaire BLOCKED_HUMAN. P1 connu Stripe LIVE endpoint = mitigation GO. REMAINING_EXECUTABLE=0 (tout gated: Docker/gel visuel/migrations/arbitrage). Attente retest Florian + GO gates.",
+  "last_completed_task": "QA visuelle business bout-en-bout (6 parcours 1440+390) = BUSINESS_VISUAL_QA=PASS, 0 nouveau défaut ; front propre -> propose gel RC. BACKEND_E2E=WAITING_DOCKER. READY_FOR_FLORIAN_VISUAL_QA=YES.",
+  "last_report": "docs/control/outbox/claude/RUN-2026-09-12-SAFE-BACKLOG-A-L.md",
+  "run_id": "RUN-2026-09-12-safe-backlog-a-l",
+  "last_commit_sha": "a7299202",
+  "branch": "recette",
+  "remaining_tasks": [
+    "SEO-2 archi locale (courant)",
+    "SEC-5 second pass C→J",
+    "CLN-3 mutualisation CSS/JS"
+  ],
+  "blocked_tasks": [
+    "E2E local isolé (voie A) = READY, blocked_human_nonblocking : open -a Docker && bash scripts/test/start-e2e-local.sh",
+    "T1 sous-point achat en ligne — gate Stripe TEST",
+    "T9 durcissement leads/storage — gate DB (GO Florian)",
+    "T10 edge stripe P1 CRITIQUE — gate (durcir+déployer OU couper endpoint)",
+    "T11 UI /recette.html 4 états — gate DB",
+    "T14 E2E Stripe TEST — gate clé sk_test_"
+  ],
+  "hard_gates": [
+    "push recette + integration uniquement, jamais main",
+    "no deploy/apply prod sans GO",
+    "no secret",
+    "no force-push",
+    "Stripe LIVE gelé"
+  ],
+  "needs_florian": true,
+  "note": "Chantier #9 EN COURS (state ACTIVE/INCOMPLETE). Restent : sections C→J du second pass, catalogue/panier sous-lots 2-3, gates (Stripe P1 / migrations / pricing serveur). Discipline persistance : run_id par cycle (outbox==status), verif origin/recette avant tout etat terminal. Ne jamais marquer le chantier clos tant que ces items ne sont pas prouves.",
+  "runner_autonomous_activation": "PREP_COMPLETE=YES — PR #10 tip RÉEL cdcafcac (MERGEABLE, diff 3 fichiers, 0 dérive app), 20/20 gardes PASS. Docs: RUNNER-ACTIVATION-CHECKLIST.md + RUNNER-E2E-WITNESS.md. Ordre gestes Florian: secret CLAUDE_CODE_OAUTH_TOKEN -> branch protection main SANS bypass Actions -> merge PR #10 -> E2E témoin. RUN-1 reste BLOCKED_HUMAN tant que E2E témoin réel non PASS.",
+  "run_id": "RUN-2026-09-12-p0p1-accepte-hold",
+  "ledger": "docs/control/MASTER-TASK-LEDGER.md",
+  "open_p0": [
+    "CMD-1 modale (READY_FOR_QA)",
+    "CMD-2 entrée moteur (READY_FOR_QA)",
+    "CMD-3 catalogue multi-panier (READY_FOR_QA)",
+    "CMD-4 checkout (READY_FOR_QA)",
+    "CMD-5 legacy retiré (READY_FOR_QA)",
+    "UX-COMMERCE-1 moteur A→F (READY_FOR_QA)",
+    "SEC-3 Stripe P1 (BLOCKED_HUMAN)",
+    "MET-1 pages métiers (READY_FOR_QA)"
+  ],
+  "ready_for_qa": [
+    "CMD-1",
+    "CMD-2",
+    "CMD-3",
+    "CMD-4",
+    "FRM-1",
+    "SEC-1",
+    "SEC-4",
+    "CLN-1",
+    "MET-1",
+    "QUA-1",
+    "SEO-1",
+    "TUN-1"
+  ],
+  "blocked_human": [
+    "CMD-6/SEC-3 Stripe (sk_test_)",
+    "SEC-2/MIG-1 migrations DB",
+    "RUN-1 runner (secret+merge)",
+    "REL-1 release UI",
+    "SEO-3 GBP/Ads",
+    "SEC-6 RLS P2"
+  ],
+  "next_tasks": [
+    "QA Florian moteur",
+    "gate paiement CMD-6",
+    "TUN-2",
+    "SEO-2",
+    "SEC-5"
+  ]
+}

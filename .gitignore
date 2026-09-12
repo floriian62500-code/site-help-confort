@@ -53,6 +53,8 @@ supabase/.temp/
 supabase/.branches/
 .env
 .env.local
+# E2E local isolé (voie A) : env runtime avec service_role LOCAL éphémère — jamais commité
+supabase/local-test/functions.env
 
 # Autopush local config (contient SUPABASE_DB_PASSWORD)
 .autopush/.env
@@ -71,3 +73,9 @@ tools/.netlify-access-token
 *.netlify-access-token
 *.html.bak
 *.bak
+# junk/temp (LOT L cleanup)
+~$*
+*.tmp.png
+.agent1-lock
+.helpconfort/agent1-lock
+*.bak.before-minify

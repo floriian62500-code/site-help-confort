@@ -47,3 +47,14 @@ d06443cc sécurité · 28987d87 sitemap · b891fd16 devis schema · 47d5f50b gar
 - [ ] home / téléphone / contact / devis-express / wizard / photos / notification
 - [ ] pages métiers / réalisation / sitemap / mobile / console / réseau
 - [ ] DB : 1 lead recette, bon form_type/source, notif, 0 doublon → puis nettoyage
+
+---
+## ✅ CUTOVER EFFECTUÉ — PROD VÉRIFIÉ (2026-08-08 15:43 UTC)
+- PROD SHA = `65fd1802` (merge PR #1) · déployé 15:43:46 UTC · build ready 11s · 100 fichiers · **rollback dispo** (deploy `6a316ff620a80c000874c720` = f8a9cf18)
+- Contrôles prod : **12/12 pages 200** · sitemap 190 URLs · robots/canonical/form_type/JSON-LD/no-cache OK · mobile 320–430px **0 débordement** · **CLS métier×ville 0.000** · console métier propre.
+- **Funnel E2E prod PASS** : 1 lead (`contact_complet`, archivé, source formulaire_site), **0 doublon**, données de recette nettoyées (0 lead / 0 photo).
+- B1..B11 → **PROD VÉRIFIÉ**. Backend (B4,B5,B8,B9) déjà PROD VÉRIFIÉ.
+
+### Nouvelles anomalies découvertes en recette prod (P2, backlog)
+- P2-a : `401 stats_publiques?select=*` sur home (script live-stats utilise probablement la clé anon désactivée) — feature stats dégradée, page/funnel OK.
+- P2-b : ville + autocomplétion adresse : saisir ville puis éditer l'adresse en free-text réinitialise ville → "Ville requise" (message clair, lead non perdu).

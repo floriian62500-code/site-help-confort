@@ -9,9 +9,14 @@
   publish = "."
   command = ""
   # Ignore les commits qui ne touchent QUE des fichiers non-publiés en prod.
-  # Retourne 0 (skip build) si le diff HEAD^..HEAD est entièrement contenu dans les paths exclus.
+  # Retourne 0 (skip build) si le diff DEPUIS LE DERNIER COMMIT DÉPLOYÉ est entièrement
+  # contenu dans les paths exclus.
+  # IMPORTANT : on compare $CACHED_COMMIT_REF..$COMMIT_REF (dernier build déployé → HEAD)
+  # et NON HEAD^..HEAD. Sinon un push dont le commit de tête est docs-only (ex. MAJ outbox
+  # après un commit HTML) annulait le build et les modifs HTML ne partaient jamais.
+  # Si $CACHED_COMMIT_REF est vide (1er build), le git diff échoue (non-zéro) → build lancé (sûr).
   # → admin-pro/audits/ (rapports IA), .md (docs), .autopush/, scripts/, content/, supabase/, logs, _backup
-  ignore = "git diff --quiet HEAD^ HEAD -- . ':!admin-pro/audits/' ':!admin-pro/AGENT_TODO.md' ':!admin-pro/MEMOIRE_IA_MAINTENANCE.md' ':!admin-pro/TARIFS_REFERENCE.md' ':!admin-pro/URGENT.md' ':!admin-pro/DEPLOY.md' ':!.autopush/' ':!scripts/' ':!docs/' ':!logs/' ':!images/_backup_png/' ':!**/*.md' ':!**/*.log'"
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':!admin-pro/audits/' ':!admin-pro/AGENT_TODO.md' ':!admin-pro/MEMOIRE_IA_MAINTENANCE.md' ':!admin-pro/TARIFS_REFERENCE.md' ':!admin-pro/URGENT.md' ':!admin-pro/DEPLOY.md' ':!.autopush/' ':!scripts/' ':!docs/' ':!logs/' ':!images/_backup_png/' ':!**/*.md' ':!**/*.log'"
 
 # ═══════════════════════════════════════════════════════════════════
 # Pretty URLs : /plombier-saint-omer → /plombier-saint-omer.html
@@ -34,7 +39,7 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=(self)"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
     # Content Security Policy — Adaptée au site (Supabase, BAN, Fonts, iframes FB/Maps)
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https: https://scontent.xx.fbcdn.net https://scontent-cdg2-1.xx.fbcdn.net; connect-src 'self' https://*.supabase.co https://api-adresse.data.gouv.fr https://api.anthropic.com https://www.google-analytics.com https://*.tile.openstreetmap.org https://graph.facebook.com https://*.fbcdn.net https://googleapis.com https://*.googleapis.com; frame-src https://www.facebook.com https://www.google.com https://www.google.com/maps/ https://www.youtube.com; frame-ancestors 'self'; form-action 'self' mailto:; base-uri 'self'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https: https://scontent.xx.fbcdn.net https://scontent-cdg2-1.xx.fbcdn.net; connect-src 'self' https://*.supabase.co https://api-adresse.data.gouv.fr https://api.anthropic.com https://*.google-analytics.com https://*.analytics.google.com https://*.tile.openstreetmap.org https://graph.facebook.com https://*.fbcdn.net https://googleapis.com https://*.googleapis.com; frame-src https://www.facebook.com https://www.google.com https://www.google.com/maps/ https://www.youtube.com; frame-ancestors 'self'; form-action 'self' mailto:; base-uri 'self'; upgrade-insecure-requests"
     # COOP/COEP relax pour permettre les iframes Facebook
     Cross-Origin-Opener-Policy = "same-origin-allow-popups"
 
