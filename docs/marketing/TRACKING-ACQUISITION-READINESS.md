@@ -3,9 +3,11 @@
 > **Documentation seule.** Aucune dépense, aucun envoi, aucune clé, aucune modification de la RC visuelle.
 > Directive 5645034544 (LOT J). Branche `recette`. À activer seulement après validation Florian.
 
-## 0. Bloqueur d'activation (HUMAN_GATED)
-- **GA/GTM non configuré** : l'ID de mesure est le **placeholder `G-XXXXXXXXXX`** dans les pages. Le pont d'événements existe (`track()` → `dataLayer.push({event:'hc_'+ev})`) mais **aucune donnée n'est collectée**.
-  - Action exacte Florian : fournir l'**ID GA4 réel** (`G-…`) + décider GTM vs gtag direct + **Consent Mode v2** (bandeau consentement déjà présent — à câbler). Puis remplacer le placeholder (changement config, à faire hors gel visuel).
+## 0. État réel de la mesure (corrigé après vérification)
+- **GA4 est configuré et actif** : ID de mesure **réel `G-YH9GXW6H70`** dans `assets/tracking.js` (gtag), chargé sur **60 pages**, **consent-gated RGPD** (ne se déclenche qu'après `hc-consent = granted`, banner `hc-consent.js`). Le pont d'événements `track()` → `dataLayer.push({event:'hc_'+ev})` alimente la mesure.
+- **UTM déjà capturés** : `tracking.js` stocke les UTM en `sessionStorage['hc_utm']` et les injecte en hidden fields dans les formulaires (attribution lead prête).
+- **Placeholders restants (mineurs, pas des bloqueurs)** : conteneur **GTM = `GTM-XXXXXXX`** (`tracking.js:47`, inutilisé tant qu'on reste en gtag-direct) ; `G-XXXXXXXXXX` uniquement dans `admin-pro/wizard-ga4.html` (gabarit de l'assistant de config, normal).
+  - Action Florian (optionnelle) : renseigner le vrai conteneur GTM **si** on veut passer par GTM ; sinon retirer le snippet GTM placeholder (non-visuel). **Aucun blocage pour collecter dès aujourd'hui** (gtag direct actif).
 
 ## 1. Taxonomie d'événements — EXISTANT (déjà émis par `track()`)
 Pont : `catalogue.html:861` → `window.__hcFunnel` + `dataLayer.push({event:'hc_<ev>'})`.
@@ -68,11 +70,12 @@ Objectif de pilotage : CPL → lead qualifié → réservation → **contrat** (
 - **Séquences** (spéc) : relance échéance J-30 / J-7, réactivation lead J+3, cross-sell contrat après intervention.
 - **Retargeting** : audiences à partir des événements funnel (respect consentement) — configuration ultérieure.
 
-## 7. Récap blockers (actions exactes Florian)
+## 7. Récap actions (exactes)
 | Item | Action exacte | Gate |
 |---|---|---|
-| GA4 réel | fournir `G-…` + Consent Mode v2, remplacer placeholder | config (hors gel visuel) |
-| Événements entretien | implémenter §2 dans le JS | post-arbitrage visuel |
+| GA4 | ✅ déjà actif (`G-YH9GXW6H70`, consent-gated). Rien à faire pour collecter. | — |
+| GTM (optionnel) | renseigner le vrai conteneur `GTM-…` si passage GTM, sinon retirer le snippet placeholder | config (hors gel visuel) |
+| Événements entretien | implémenter §2 dans le JS (touche des pages) | post-arbitrage visuel |
 | Comptes Ads | créer/associer, définir budget | humain + budget |
 | Base SMS/email | valider base légale + outil d'envoi | humain + juridique |
 | Offre/prix/créa | valider message final | humain |
