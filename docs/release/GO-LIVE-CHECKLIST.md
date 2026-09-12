@@ -5,7 +5,9 @@
 >
 > **État courant : `RC_STATUS = NOT_READY`** (bloquants prod ouverts + validations humaines en attente).
 > Preview publique unique : **https://deploy-preview-2--remarkable-dragon-364e2b.netlify.app**
-> Tip `recette` de référence : `f7eeef1b` (2026-08-28). RC figée : **non encore figée**.
+> Tip `recette` de référence : `a7299202` (2026-09-10, front). RC figée : **non encore figée** (aucun nouveau tag RC — HOLD retest Florian).
+>
+> **P0/P1 (2026-09-12, directive 5644980757)** : `P0_PRICE_GATE=ACCEPTE_RECETTE` + `P1_MODAL_TUNNEL=ACCEPTE_POUR_RETEST_FLORIAN` @ `a7299202` (ChatGPT). `PRICE_GATE=QA_READY | MODAL_TUNNEL=QA_READY | FLORIAN_RETEST=PENDING | NEW_RC_TAG=NO`. **HOLD** : stop toute modif front/SEO/cosmétique, attendre le jugement Florian (dont : le tunnel mobile plein écran doit ressembler à une modal mobile native).
 
 ---
 
