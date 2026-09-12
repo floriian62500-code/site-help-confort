@@ -1,11 +1,11 @@
 {
-  "state": "SITE_WORK_ACTIVE",
+  "state": "HOLD_FLORIAN_RETEST",
   "worker": "ACTIVE",
   "worker_mode": "interactive_claude_session (Claude fait le travail dans la session en direct ; commits reels frais qui atterrissent sur origin/recette)",
   "autonomous_runner": "RUN-1 = BLOCKED_HUMAN (le runner autonome LaunchAgent/Action n'est PAS actif ; activation temoin = geste humain). Ne pas confondre avec le worker session ci-dessus.",
-  "current_task": "P0 fuite prix FERMÉE (gate étendu cart/address/coords/confirm ; total mobile+résumé masqués ; renderCartFull sans prix hors gate ; provenance unique catalogue.html:968 -> NON_GATE_FORMS_UNLOCK_PRICE=NO). P1 recompose modal/tunnel TERMINÉ voie B (carte compacte 660px desktop / plein écran mobile sur fond sombre, en-tête léger, colonne unique, wording service). QA réelle A/B/C 1440+390 = PASS. SHA a7299202. Retest Florian attendu, pas de nouveau tag RC.",
+  "current_task": "HOLD — ChatGPT (5644980757) accepte P0_PRICE_GATE=ACCEPTE_RECETTE + P1_MODAL_TUNNEL=ACCEPTE_POUR_RETEST_FLORIAN @ a7299202. STOP modification (aucun lot front/SEO/cosmétique), aucun nouveau tag RC. Attente retest Florian sur Deploy Preview. Vigilance: tunnel mobile doit ressembler a une modal native (ne pas anticiper, attendre Florian).",
   "last_completed_task": "QA visuelle business bout-en-bout (6 parcours 1440+390) = BUSINESS_VISUAL_QA=PASS, 0 nouveau défaut ; front propre -> propose gel RC. BACKEND_E2E=WAITING_DOCKER. READY_FOR_FLORIAN_VISUAL_QA=YES.",
-  "last_report": "docs/control/outbox/claude/RUN-2026-09-10-P0P1-DONE.md",
+  "last_report": "docs/control/outbox/claude/RUN-2026-09-12-P0P1-ACCEPTE-HOLD.md",
   "last_commit_sha": "a7299202",
   "branch": "recette",
   "remaining_tasks": [
@@ -31,7 +31,7 @@
   "needs_florian": true,
   "note": "Chantier #9 EN COURS (state ACTIVE/INCOMPLETE). Restent : sections C→J du second pass, catalogue/panier sous-lots 2-3, gates (Stripe P1 / migrations / pricing serveur). Discipline persistance : run_id par cycle (outbox==status), verif origin/recette avant tout etat terminal. Ne jamais marquer le chantier clos tant que ces items ne sont pas prouves.",
   "runner_autonomous_activation": "PREP_COMPLETE=YES — PR #10 tip RÉEL cdcafcac (MERGEABLE, diff 3 fichiers, 0 dérive app), 20/20 gardes PASS. Docs: RUNNER-ACTIVATION-CHECKLIST.md + RUNNER-E2E-WITNESS.md. Ordre gestes Florian: secret CLAUDE_CODE_OAUTH_TOKEN -> branch protection main SANS bypass Actions -> merge PR #10 -> E2E témoin. RUN-1 reste BLOCKED_HUMAN tant que E2E témoin réel non PASS.",
-  "run_id": "RUN-2026-09-10-p0p1-done",
+  "run_id": "RUN-2026-09-12-p0p1-accepte-hold",
   "ledger": "docs/control/MASTER-TASK-LEDGER.md",
   "open_p0": [
     "CMD-1 modale (READY_FOR_QA)",
