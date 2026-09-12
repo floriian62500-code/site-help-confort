@@ -1,11 +1,12 @@
 {
-  "state": "HOLD_FLORIAN_RETEST",
+  "state": "SAFE_BACKLOG_ADVANCED_HOLD_FRONT",
   "worker": "ACTIVE",
   "worker_mode": "interactive_claude_session (Claude fait le travail dans la session en direct ; commits reels frais qui atterrissent sur origin/recette)",
   "autonomous_runner": "RUN-1 = BLOCKED_HUMAN (le runner autonome LaunchAgent/Action n'est PAS actif ; activation temoin = geste humain). Ne pas confondre avec le worker session ci-dessus.",
-  "current_task": "HOLD — ChatGPT (5644980757) accepte P0_PRICE_GATE=ACCEPTE_RECETTE + P1_MODAL_TUNNEL=ACCEPTE_POUR_RETEST_FLORIAN @ a7299202. STOP modification (aucun lot front/SEO/cosmétique), aucun nouveau tag RC. Attente retest Florian sur Deploy Preview. Vigilance: tunnel mobile doit ressembler a une modal native (ne pas anticiper, attendre Florian).",
+  "current_task": "Backlog SAFE A-L avancé (5645034544) front a7299202 GELÉ, VISUAL_RC_CHANGED=NO. Livré: test price-gate 18/18, garde single-agency AGENCE_DUNKERQUE_LABEL (7 pages), purge ~21Mo orphelins 0-ref, runbook E2E (Docker down=BLOCKED_HUMAN_DOCKER), audit consolidé sécu/backend/perf/a11y/cohérence + inventaire BLOCKED_HUMAN. P1 connu Stripe LIVE endpoint = mitigation GO. REMAINING_EXECUTABLE=0 (tout gated: Docker/gel visuel/migrations/arbitrage). Attente retest Florian + GO gates.",
   "last_completed_task": "QA visuelle business bout-en-bout (6 parcours 1440+390) = BUSINESS_VISUAL_QA=PASS, 0 nouveau défaut ; front propre -> propose gel RC. BACKEND_E2E=WAITING_DOCKER. READY_FOR_FLORIAN_VISUAL_QA=YES.",
-  "last_report": "docs/control/outbox/claude/RUN-2026-09-12-P0P1-ACCEPTE-HOLD.md",
+  "last_report": "docs/control/outbox/claude/RUN-2026-09-12-SAFE-BACKLOG-A-L.md",
+  "run_id": "RUN-2026-09-12-safe-backlog-a-l",
   "last_commit_sha": "a7299202",
   "branch": "recette",
   "remaining_tasks": [
