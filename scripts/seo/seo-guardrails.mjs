@@ -62,8 +62,10 @@ for (const f of files){
   const titleForJuxta = (h.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '';
   if (/Saint-Omer (?:&amp; |& )?Dunkerque/.test(titleForJuxta)) err(f, 'TITLE_TWO_CITIES', '<title> juxtapose « Saint-Omer … Dunkerque »');
   // Libellé de zone présentant Dunkerque comme une AGENCE physique (contradiction single-agency).
-  // WARNING car le correctif est un changement de texte visible (arbitrage Florian requis) — cf. #9 5645034544 LOT I.
-  if (/agence:\s*['"]Agence Dunkerque['"]/.test(h)) warn(f, 'AGENCE_DUNKERQUE_LABEL', 'libellé « Agence Dunkerque » (zone Dunkerquois présentée comme agence physique — vérité : agence unique Saint-Omer, Dunkerque = zone desservie)');
+  // ERROR : arbitrage Florian CLOS (#9 5645328308) — une seule agence physique = Saint-Omer ;
+  // Dunkerque/Calais/Boulogne = zones desservies. Ne jamais réintroduire « Agence Dunkerque ».
+  if (/agence:\s*['"]Agence Dunkerque['"]/.test(h)) err(f, 'AGENCE_DUNKERQUE_LABEL', 'libellé « Agence Dunkerque » (zone Dunkerquois présentée comme agence physique — vérité : agence unique Saint-Omer, Dunkerque = zone desservie)');
+  if (/nos deux agences|nos 2 agences/i.test(h)) err(f, 'TWO_AGENCIES_NOS', 'formulation « nos deux agences » (une seule agence physique = Saint-Omer)');
 }
 
 // Rapport
