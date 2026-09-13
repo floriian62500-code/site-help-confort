@@ -1132,7 +1132,7 @@ if (document.fonts && document.fonts.ready) {
  </style>
  <script>(function(){
   var container=document.getElementById('hmz-zones');if(!container)return;
-  var ZLABELS={audomarois:{name:'Audomarois',agence:'Agence Saint-Omer'},calaisis:{name:'Calaisis',agence:'Agence Saint-Omer'},boulonnais:{name:'Boulonnais',agence:'Agence Saint-Omer'},dunkerque:{name:'Dunkerquois & Flandre',agence:'Agence Dunkerque'}};
+  var ZLABELS={audomarois:{name:'Audomarois',agence:'Agence Saint-Omer'},calaisis:{name:'Calaisis',agence:'Agence Saint-Omer'},boulonnais:{name:'Boulonnais',agence:'Agence Saint-Omer'},dunkerque:{name:'Dunkerquois & Flandre',agence:'Agence Saint-Omer'}};
   function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]});}
   fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/communes-list').then(function(r){return r.ok?r.json():Promise.reject(r.status);}).then(function(data){
     var zones=data.zones||{};var order=['audomarois','calaisis','boulonnais','dunkerque'];
