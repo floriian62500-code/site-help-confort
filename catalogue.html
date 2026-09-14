@@ -437,6 +437,8 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 .tunnel .prod-img{display:none!important}
 .tunnel .card{border:1px solid var(--line)!important;border-radius:14px;box-shadow:none!important;background:#fff}
 .tunnel .fam-ico{box-shadow:none}
+/* pendant le price gate : masquer la barre panier mobile fixe (elle passait sous la modale) */
+body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-sheet{display:none!important}
 </style>
 <script>
 /* P1 (5605156304/5605475397) : mode EMBED — le tunnel vit dans une modal/overlay intégrée au site
