@@ -7,8 +7,8 @@
   "rc_front_sha": "e0ccd63e (bandeau retiré) — remplace a7299202 comme front RC, sur ordre direct Florian",
   "last_completed_task": "QA visuelle business bout-en-bout (6 parcours 1440+390) = BUSINESS_VISUAL_QA=PASS, 0 nouveau défaut ; front propre -> propose gel RC. BACKEND_E2E=WAITING_DOCKER. READY_FOR_FLORIAN_VISUAL_QA=YES.",
   "last_report": "docs/control/outbox/claude/RUN-2026-09-14c-UI-REDESIGN.md",
-  "run_id": "RUN-2026-09-14c-ui-redesign",
-  "visual_rc_current": "701f64d3 (redesign tunnel premium clair, sur refus visuel Florian 5665428561 ; remplace e0ccd63e/a7299202) ; FLORIAN_RETEST=PENDING ; HARDENING_MERGED=NO ; edge gate submit-lead-v6@2a3bd414 PREPARED_NOT_DEPLOYED",
+  "run_id": "RUN-2026-09-12-p0p1-accepte-hold",
+  "visual_rc_current": "a66b95e7 (redesign tunnel 701f64d3 + pictos métiers footer site-wide, demandes directes Florian) ; a7299202/e0ccd63e = points historiques ; FLORIAN_RETEST=PENDING ; HARDENING_MERGED=NO",
   "ui_redesign_5665428561": "FAIT : shell sombre dashboard retiré -> overlay clair ivoire ~880px ; gate premium 3 champs+labels+bandeau confiance ; prestations en services (0 vignette) ; mobile sheet + barre panier masquée pendant gate. Non-régression price gate strict/multi/deeplink/diagnostic = PASS. Console/réseau app CLEAN. Edge/backend inchangé (form_type gate=rappel côté front). READY_FOR_FLORIAN_RETEST=YES.",
   "notify_lead_p1": "Garde NE PAS TRAITER ordre-dépendante corrigée (prep edge hardening 2a3bd414, NON déployé) + tests notify-lead 22/22 ; LEAD_PERSISTENCE_ON_NOTIFY_FAIL=PASS ; réservation nos-prestations notify cassé = P1 spéc. Docker witness=start-e2e-local.sh (YES). Stripe TEST_ONLY. RLS/rollback runbook préparé. REMAINING_SAFE=0.",
   "hardening_branch": "hardening/safe-2026-09 (origin 76b56ef9) — SAFE_NOW + SAFE_AFTER_QA préparés, NON mergée à recette",
@@ -37,7 +37,6 @@
   "needs_florian": true,
   "note": "Chantier #9 EN COURS (state ACTIVE/INCOMPLETE). Restent : sections C→J du second pass, catalogue/panier sous-lots 2-3, gates (Stripe P1 / migrations / pricing serveur). Discipline persistance : run_id par cycle (outbox==status), verif origin/recette avant tout etat terminal. Ne jamais marquer le chantier clos tant que ces items ne sont pas prouves.",
   "runner_autonomous_activation": "PREP_COMPLETE=YES — PR #10 tip RÉEL cdcafcac (MERGEABLE, diff 3 fichiers, 0 dérive app), 20/20 gardes PASS. Docs: RUNNER-ACTIVATION-CHECKLIST.md + RUNNER-E2E-WITNESS.md. Ordre gestes Florian: secret CLAUDE_CODE_OAUTH_TOKEN -> branch protection main SANS bypass Actions -> merge PR #10 -> E2E témoin. RUN-1 reste BLOCKED_HUMAN tant que E2E témoin réel non PASS.",
-  "run_id": "RUN-2026-09-12-p0p1-accepte-hold",
   "ledger": "docs/control/MASTER-TASK-LEDGER.md",
   "open_p0": [
     "CMD-1 modale (READY_FOR_QA)",
@@ -77,5 +76,6 @@
     "TUN-2",
     "SEO-2",
     "SEC-5"
-  ]
+  ],
+  "heartbeat": "2026-09-14T17:03:56Z"
 }
