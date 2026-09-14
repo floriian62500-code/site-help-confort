@@ -34,7 +34,7 @@ function extractFn(s, name) {
 // ── 1. Persistance du lead INDÉPENDANTE de la notification (lecture de la source) ──
 const insertIdx = src.indexOf(".from('leads').insert");
 const notifyIdx = src.indexOf('notify-lead-v6');
-const successIdx = src.search(/return json\(200,\s*\{\s*success:\s*true/);
+const successIdx = src.search(/return json\(200,\s*\{\s*success:\s*true,\s*id:/); // le succès FINAL (avec id), pas le honeypot
 ok('insert lead AVANT notify (persistance d’abord)', insertIdx > 0 && notifyIdx > insertIdx);
 ok('notify-lead-v6 est non bloquant (.catch)', /notify-lead-v6[\s\S]{0,160}\.catch\(/.test(src));
 ok('lead-auto-reply non bloquant (.catch)', /lead-auto-reply[\s\S]{0,160}\.catch\(/.test(src));
@@ -63,7 +63,9 @@ ok('contact_complet exige adresse', CONTRACTS.contact_complet.adresse === true);
 ok('wizard_urgence exige métier', CONTRACTS.wizard_urgence.metier === true);
 
 // ── 4. Validateurs purs (format téléphone/email/CP) extraits de la source ──
-const fnSrc = ['normalizePhone', 'isValidFrenchPhone', 'isValidEmail', 'isValidCP'].map(n => extractFn(src, n)).join('\n');
+// strip des annotations TS (: string / : boolean …) pour évaluer en JS pur
+const stripTs = (s) => s.replace(/:\s*(string|boolean|number)\b/g, '');
+const fnSrc = ['normalizePhone', 'isValidFrenchPhone', 'isValidEmail', 'isValidCP'].map(n => stripTs(extractFn(src, n))).join('\n');
 const V = new Function(fnSrc + '\nreturn {normalizePhone,isValidFrenchPhone,isValidEmail,isValidCP};')();
 ok('tel FR valide (0612345678)', V.isValidFrenchPhone('0612345678') === true);
 ok('tel FR valide espacé (+33 6 12 34 56 78)', V.isValidFrenchPhone('+33 6 12 34 56 78') === true);
