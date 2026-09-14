@@ -396,27 +396,41 @@ body.dv-modal-open{overflow:hidden}
 </head>
 <body>
 <style id="p1-tunnel-recompose">
-/* === P1 RECOMPOSE — parcours en modal/tunnel compact intégré, fin de la boutique plein écran (directives 5605156304 / 5605475397) === */
-html{background:#0A1428}
+/* === REDESIGN overlay premium CLAIR (directive 5665428561) : fin du shell sombre "dashboard" ; surface ivoire unique intégrée === */
+:root{--ivory:#FFFDFA;--line:#EFE9E1;--ink:#0A1428}
+html{background:#EDF1F5}
 body{background:transparent;min-height:100vh}
+/* backdrop LÉGER : le site est suggéré derrière (blur discret), AUCUN grand fond marine plein écran */
 body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
-    radial-gradient(120% 85% at 100% -10%,rgba(31,196,240,.20),transparent 55%),
-    radial-gradient(100% 80% at -10% 110%,rgba(13,160,207,.16),transparent 55%),
-    linear-gradient(160deg,#0A1428 0%,#0E2A46 58%,#0A1E38 100%)}
-.tunnel{position:relative;z-index:1;max-width:660px;margin:clamp(12px,4vh,46px) auto;
-  background:#fff;border-radius:26px;overflow:hidden;
-  box-shadow:0 50px 100px -32px rgba(0,0,0,.62),0 0 0 1px rgba(255,255,255,.05)}
-@media(max-width:700px){.tunnel{margin:0;min-height:100vh;border-radius:0}}
-/* topbar -> en-tête léger de modale (plus de header applicatif plein écran) */
-.tunnel .topbar{position:static;background:#fff;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;border-radius:0;border-bottom:1px solid var(--bord);padding:13px 20px}
-.tunnel .tb-context{border-left:1px solid var(--bord);font-weight:700;color:var(--gris);text-transform:none}
+    radial-gradient(85% 55% at 50% -10%,rgba(13,160,207,.07),transparent 60%),
+    radial-gradient(60% 45% at 108% 112%,rgba(255,107,26,.05),transparent 60%),
+    linear-gradient(180deg,#F4F7FA 0%,#E9EEF3 100%)}
+/* surface principale UNIQUE : ivoire, large (~880), arrondie, ombre douce, peu de bordures */
+.tunnel{position:relative;z-index:1;max-width:880px;margin:clamp(16px,5vh,60px) auto;
+  background:var(--ivory);border-radius:24px;overflow:hidden;
+  box-shadow:0 30px 70px -30px rgba(10,20,40,.26),0 2px 10px rgba(10,20,40,.05)}
+@media(max-width:760px){.tunnel{margin:0;min-height:100vh;border-radius:0}}
+/* en-tête modale simple : petit logo + repère besoin + fermer ; pas de bandeau institutionnel */
+.tunnel .topbar{position:static;background:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;border:0;border-bottom:1px solid var(--line);padding:14px clamp(18px,3vw,30px)}
+.tunnel .tb-logo img{height:34px!important;width:auto}
+.tunnel .tb-context{border-left:1px solid var(--line);padding-left:12px;font-weight:700;font-size:.9rem;color:var(--ink);text-transform:none;letter-spacing:0}
 .tunnel .tb-context svg{display:none}
-.tunnel .progress{position:static;top:auto}
-/* corps : une seule colonne compacte, plus de grille boutique large ni panneau latéral */
-.tunnel .layout{max-width:none;margin:0;padding:18px clamp(16px,3vw,26px) 26px}
+.tunnel .tb-phone{border-color:var(--line);color:var(--ink);font-size:.85rem;padding:7px 11px}
+.tunnel .tb-exit{color:var(--gris);font-weight:700}
+/* progression discrète (pas un stepper SaaS dominant) */
+.tunnel .progress{position:static;top:auto;height:2px;background:rgba(13,160,207,.10)}
+.tunnel .progress-bar{background:linear-gradient(90deg,var(--bleu),#FF6B1A)}
+/* corps : une colonne aérée, sans panneau latéral marchand */
+.tunnel .layout{max-width:none;margin:0;padding:24px clamp(18px,3.4vw,36px) 32px;background:var(--ivory)}
 .tunnel .layout.with-summary{grid-template-columns:1fr!important}
 .tunnel .side-panel,.tunnel .desktop-summary{display:none!important}
+.tunnel h1{font-size:1.55rem;letter-spacing:-.02em;color:var(--ink)}
+.tunnel .sub{color:#6B7A8D}
+/* prestations = choix de SERVICE (pas produits e-commerce) : cartes sobres, sans vignette marchande */
+.tunnel .prod-img{display:none!important}
+.tunnel .card{border:1px solid var(--line)!important;border-radius:14px;box-shadow:none!important;background:#fff}
+.tunnel .fam-ico{box-shadow:none}
 </style>
 <script>
 /* P1 (5605156304/5605475397) : mode EMBED — le tunnel vit dans une modal/overlay intégrée au site
