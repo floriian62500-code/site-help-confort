@@ -530,27 +530,27 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     <div class="pg-overlay" data-pg-close></div>
     <div class="pg-card">
       <button type="button" class="pg-close" id="pgClose" data-pg-close aria-label="Fermer">✕</button>
-      <div class="pg-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-      <h3 id="pgTitle" class="pg-title">Voyez nos tarifs en 10 secondes</h3>
-      <p class="pg-lead">Pour afficher les prix exacts adaptés à votre secteur, quelques infos suffisent. <strong>Aucun engagement</strong>, aucune carte demandée.</p>
+      <div class="pg-brand"><img src="logo-officiel.jpg" alt="HELP Confort" width="90" height="26" decoding="async"> · Saint-Omer</div>
+      <h3 id="pgTitle" class="pg-title">Consultez nos tarifs</h3>
+      <p class="pg-lead">Laissez vos coordonnées : un conseiller local vous communique les tarifs adaptés à votre besoin — sans engagement.</p>
       <form id="pgForm" class="pg-form" novalidate autocomplete="on">
-        <div class="pg-row">
-          <input id="pg-prenom" class="pg-inp" type="text" placeholder="Prénom *" autocomplete="given-name" aria-label="Prénom">
-          <input id="pg-nom" class="pg-inp" type="text" placeholder="Nom *" autocomplete="family-name" aria-label="Nom">
-        </div>
-        <div class="pg-row">
-          <input id="pg-tel" class="pg-inp" type="tel" inputmode="tel" placeholder="Téléphone *" autocomplete="tel" aria-label="Téléphone">
-          <input id="pg-email" class="pg-inp" type="email" inputmode="email" placeholder="Email *" autocomplete="email" aria-label="Email">
-        </div>
-        <input id="pg-adresse" class="pg-inp" type="text" placeholder="Adresse (n° et rue) *" autocomplete="street-address" data-autocomplete-skip aria-label="Adresse">
-        <div class="pg-row">
-          <input id="pg-cp" class="pg-inp" type="text" inputmode="numeric" maxlength="5" placeholder="Code postal *" autocomplete="postal-code" aria-label="Code postal">
-          <input id="pg-ville" class="pg-inp" type="text" placeholder="Ville *" autocomplete="address-level2" aria-label="Ville">
-        </div>
-        <button type="submit" id="pgSubmit" class="pg-submit">Voir les tarifs →</button>
+        <div class="pg-field"><label for="pg-prenom">Prénom</label><input id="pg-prenom" class="pg-inp" type="text" autocomplete="given-name"></div>
+        <div class="pg-field"><label for="pg-tel">Téléphone</label><input id="pg-tel" class="pg-inp" type="tel" inputmode="tel" autocomplete="tel"></div>
+        <div class="pg-field"><label for="pg-email">Email</label><input id="pg-email" class="pg-inp" type="email" inputmode="email" autocomplete="email"></div>
+        <!-- champs conservés pour le tunnel (adresse collectée à l'étape "Lieu") — masqués pour un gate rapide 3 champs -->
+        <input id="pg-nom" class="pg-inp pg-hidden-field" type="text" autocomplete="family-name" tabindex="-1" aria-hidden="true">
+        <input id="pg-adresse" class="pg-inp pg-hidden-field" type="text" data-autocomplete-skip tabindex="-1" aria-hidden="true">
+        <input id="pg-cp" class="pg-inp pg-hidden-field" type="text" inputmode="numeric" maxlength="5" tabindex="-1" aria-hidden="true">
+        <input id="pg-ville" class="pg-inp pg-hidden-field" type="text" tabindex="-1" aria-hidden="true">
+        <button type="submit" id="pgSubmit" class="pg-submit">Voir mes tarifs →</button>
         <p id="pgErr" class="pg-err" role="alert" hidden></p>
       </form>
-      <p class="pg-trust">🛡️ Vos coordonnées servent à afficher le tarif de votre secteur et, si besoin, à vous recontacter. Confidentielles — <a href="/mentions-legales.html" target="_blank" rel="noopener">mentions légales</a>.</p>
+      <div class="pg-trust">
+        <span><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Réponse locale</span>
+        <span><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Données confidentielles</span>
+        <span><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Sans engagement</span>
+      </div>
+      <p class="pg-legal">Coordonnées utilisées pour communiquer les tarifs et, si besoin, vous recontacter — <a href="/mentions-legales.html" target="_blank" rel="noopener">mentions légales</a>.</p>
     </div>
   </div>
 
@@ -966,7 +966,8 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
       function nameOk(v){ return String(v||'').trim().length>=2; }
       function phoneOk(v){ return /^(?:\+33|0)[1-9](?:[\s.\-]?\d{2}){4}$/.test(String(v||'').trim()); }
       function emailOk(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v||'').trim()); }
-      var checks=[[pr,!nameOk(pr.value)],[no,!nameOk(no.value)],[tel,!phoneOk(tel.value)],[em,!emailOk(em.value)],[ad,!nameOk(ad.value)],[cp,!/^\d{5}$/.test((cp.value||'').trim())],[vi,!nameOk(vi.value)]];
+      // Gate rapide 3 champs (5665428561) : on ne valide que prénom + téléphone + email (adresse collectée à l'étape Lieu du tunnel).
+      var checks=[[pr,!nameOk(pr.value)],[tel,!phoneOk(tel.value)],[em,!emailOk(em.value)]];
       checks.forEach(function(x){ x[0].classList.toggle('bad',x[1]); });
       var first=checks.filter(function(x){return x[1];})[0];
       if(first){ if(err){ err.hidden=false; err.textContent='Merci de compléter les champs en rouge (téléphone et email valides).'; } first[0].focus(); return; }
@@ -978,7 +979,7 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
       fetch(SUPA+'/functions/v1/submit-lead-v6',{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({
         prenom:state.prenom, nom:state.nom, telephone:state.tel, email:state.email,
         adresse:state.adresse, code_postal:state.cp, ville:state.ville,
-        type_demande:'consultation_tarifs', form_type:'consultation_tarifs',
+        type_demande:'consultation_tarifs', form_type:'rappel',
         source:'price_gate', source_page:location.href,
         message:'Consultation des tarifs'+(pending.cat?(' — famille '+pending.cat):''),
         utm:{ mode:'price_gate', cat:pending.cat||null }
