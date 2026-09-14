@@ -160,7 +160,10 @@ Deno.serve(async (req: Request) => {
   const uploadToken = crypto.randomUUID() + crypto.randomUUID().replace(/-/g, '');
   const uploadExpires = Date.now() + 15 * 60 * 1000;
   // Auto-archivage des leads de test (nom contenant TEST RECETTE / NE PAS TRAITER)
-  const isTestLead = /TEST\s*RECETTE|NE\s*PAS\s*TRAITER/i.test(`${nom || ''} ${prenom || ''}`);
+  // Garde test-lead INDÉPENDANTE DE L'ORDRE prénom/nom et du champ : on teste les deux ordres
+  // de nom+prénom ET le message (le marqueur peut être n'importe où). Fix 2026-09-14 (#9 5664439054) :
+  // l'ancienne garde `${nom} ${prenom}` ratait « prénom=TEST / nom=RECETTE » → notifiait l'agence à tort.
+  const isTestLead = /TEST\s*RECETTE|NE\s*PAS\s*TRAITER/i.test(`${prenom || ''} ${nom || ''} ${nom || ''} ${prenom || ''} ${message || ''}`);
   try {
     const upd: Record<string, unknown> = {
       metadata: { form_type: formType || 'demande_metier', upload_token: uploadToken, upload_expires: uploadExpires },
