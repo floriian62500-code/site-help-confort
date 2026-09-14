@@ -36,6 +36,11 @@
 
 ---
 
+## Classes de statut (directive 5664807266 §6.4)
+- **`PREPARED_NOT_MERGED`** — codé + testé sur `hardening/safe-2026-09` (`2a3bd414`), **hors recette** : SAFE_NOW (tests price-gate 18/18+8/8, notify 22/22, dead-code Stripe, robots) + SAFE_AFTER_QA codés (Dunkerque 7 pages + garde ERROR ; garde `NE PAS TRAITER` edge).
+- **`WAITING_FLORIAN_QA`** — dépend du retest de `e0ccd63e` : merge du paquet hardening→recette (puis re-vérif visuelle), intégration des SAFE_AFTER_QA spéc.
+- **`BLOCKED_HUMAN`** — action externe/humaine requise (voir matrice gates) : couper Stripe LIVE, `open -a Docker`+E2E, deploy `submit-lead-v6`, RLS/Storage, supabase-js pin+SRI.
+
 ## MISE À JOUR 2026-09-14 (directive 5664439054)
 
 ### notify-lead / lead — analyse P1 + correctifs préparés
