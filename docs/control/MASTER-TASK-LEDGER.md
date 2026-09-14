@@ -5,6 +5,15 @@
 > **Aucune tâche prod n'est PROD_DEPLOYED** : tout est sur `recette` (aucune promotion sans GO Florian). Rien n'est QA_APPROVED tant que Florian n'a pas validé via `/recette.html` ou commentaire.
 > Preuve = SHA `recette` réel + outbox. « FAIT » interne = READY_FOR_QA (prouvé recette), pas CLOSED.
 
+## Référence visuelle & état RC — MAJ 2026-09-14 (directives 5664807266 / 5664439054)
+- **`VISUAL_RC_CURRENT = e0ccd63e`** (recette) — bandeau orange `hc-topbar` retiré sur 140 pages **sur ordre direct Florian** (vérifié 1440+390). `a7299202` = **point historique de comparaison uniquement**.
+- **`FLORIAN_RETEST = PENDING`** sur `e0ccd63e`. **Aucun nouveau tag RC** tant que le retest n'est pas fait.
+- **Hardening : `hardening/safe-2026-09` (tip `2a3bd414`) NON mergé** à recette (`HARDENING_MERGED=NO`). À intégrer plus tard en **un paquet contrôlé** post-retest, puis re-vérif visuelle avant tout nouveau gel.
+- **Gate edge notif** : correctif garde `NE PAS TRAITER` (ordre/champ-indépendant) = **`submit-lead-v6` @ `2a3bd414` — `PREPARED_NOT_DEPLOYED`** (tests `notify-lead.test.mjs` 22/22 ; `LEAD_PERSISTENCE=PASS`). Deploy = GATE GO Florian (runbook : `docs/release/EDGE-DEPLOY-submit-lead-v6.md`).
+- `BACKEND_E2E = BLOCKED_HUMAN_DOCKER` (témoin `start-e2e-local.sh` prêt). `STRIPE = TEST_ONLY` (aucun LIVE). `READY_FOR_PROD=NO`.
+- **Ne pas** micro-nettoyer `.hc-topbar` (CSS mort) pendant le jalon QA — reste au backlog avec preuve 0-référence.
+- **Classes de statut backlog** : `PREPARED_NOT_MERGED` (hardening) · `BLOCKED_HUMAN` (gates externes) · `WAITING_FLORIAN_QA` (retest e0ccd63e). Détail + matrice gates : `docs/release/POST-RC-BACKLOG.md`.
+
 ## Zone COMMANDE / CATALOGUE (P0)
 | ID | source | prio | demande | statut | SHA recette | tests | preview | validation Florian | reste |
 |---|---|---|---|---|---|---|---|---|---|
