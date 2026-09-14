@@ -33,3 +33,32 @@
 1. `hardening/safe-2026-09` → `recette` (SAFE_NOW + Agence Dunkerque déjà prouvés, ERRORS=0).
 2. Appliquer les SAFE_AFTER_QA spéc restants (href/SRI/defer/focus-trap/mascotte/console) en commits isolés + re-tests.
 3. Traiter les HUMAN_GATE un par un (Stripe P1 d'abord).
+
+---
+
+## MISE À JOUR 2026-09-14 (directive 5664439054)
+
+### notify-lead / lead — analyse P1 + correctifs préparés
+| ITEM | SEVERITY | CLASS | IMPACT | PROOF | BRANCH/SHA | TEST | ACTION_FLORIAN |
+|---|---|---|---|---|---|---|---|
+| Garde `NE PAS TRAITER` **ordre-dépendante** (submit-lead-v6) | P1 hygiène | PREP fait (edge, **non déployé**) | Un lead test « prénom=TEST / nom=RECETTE » (ou marqueur en message) N'était PAS auto-archivé → **notifiait la vraie agence**. Corrigé : test des 2 ordres nom+prénom + message. | `submit-lead-v6/index.ts` l.163 avant/après | hardening **2a3bd414** | `notify-lead.test.mjs` 22/22 (dont ordre inversé) | GO deploy : `supabase functions deploy submit-lead-v6 --project-ref btcbjwqiivhpwoszomhg` |
+| Réservation `nos-prestations` → **ancien** `notify-lead` (400) | P1_ACTIVE | SPEC (front + E2E) | Order **enregistrée** dans `service_orders` (0 perte) mais **email agence échoue** → réservation potentiellement non vue. | `nos-prestations.html:1842` (type:reservation sans lead_id) | spéc | E2E local (Docker) | GO : router la notif via `submit-lead-v6` (form_type dédié) + tester E2E, PUIS retirer l'appel cassé |
+
+### NOTIFY_FLOW (résumé prouvé par lecture source)
+`submit-lead-v6` : validation par `form_type` → **INSERT `leads` (l.152) d'abord** → `notify-lead-v6` (email agence) + `lead-auto-reply` (accusé client) en **fetch `.catch(()=>{})` non bloquants (l.180-182)** → `return 200 {id}` (l.185) **quel que soit** le résultat notif. Donc `LEAD_PERSISTENCE_ON_NOTIFY_FAIL=PASS` (panne email ≠ perte lead ≠ double-submit). Échec **insert** → `500` explicite (pas de faux succès). Leads test (marqueur) → `status=archive` + **pas de notif** (l.176-183).
+
+### DOCKER_WITNESS_READY = YES (script existant, non réécrit)
+`scripts/test/start-e2e-local.sh` couvre déjà la séquence témoin : 1/9 Docker → 2/9 CLI → 3/9 garde anti-PROD → 4/9 start LOCAL → 5/9 garde cible=localhost → 6/9 bootstrap données test → 7/9 functions serve (RESEND vide=0 email) → 8/9 parcours E2E (guard fail-closed) → 9/9 purge fixtures. Rapport `FULL_E2E_LOCAL=PASS`. **Aucune écriture PROD.** Déclencheur : `open -a Docker` puis `bash scripts/test/start-e2e-local.sh`.
+
+### STRIPE — TEST ONLY (aucun GO LIVE, aucun déploiement)
+Reformulation : il n'y a **aucun GO Stripe LIVE**. Endpoint `stripe-create-payment-link` déployé = fait confiance au montant client + clé `sk_live_` (P1). `ACTION_FLORIAN` = **couper l'endpoint** (`supabase functions delete stripe-create-payment-link` ou `app_settings.stripe.configured=false`) OU, plus tard, déployer `PROPOSED_index.ts` **avec clé TEST** (`sk_test_`). **Risque** si on ne fait rien : paiement LIVE à montant arbitraire par toute personne ayant la clé publishable. **Rollback** : re-déployer l'ancien / re-`configured=true`. **Preuve attendue** : après coupure, un POST à l'endpoint échoue fermé (aucun payment_url). `STRIPE_MODE=TEST_ONLY | STRIPE_LIVE=NO`.
+
+### Matrice des gates (une action Florian par ligne)
+| GATE | ACTION_FLORIAN exacte | RISQUE | ROLLBACK |
+|---|---|---|---|
+| Stripe LIVE endpoint | couper (`functions delete` ou `configured=false`) | paiement LIVE arbitraire | re-déployer / `configured=true` |
+| E2E témoin | `open -a Docker` puis `bash scripts/test/start-e2e-local.sh` | aucun (LOCAL, fail-closed) | `supabase stop` |
+| deploy garde NE PAS TRAITER | `supabase functions deploy submit-lead-v6` | aucun (garde plus stricte) | redeploy version n-1 |
+| RLS leads/storage (SEC-2) | appliquer migration durcissement OU certifier 0 lecture publique | fuite lecture si non traité | `supabase db reset`/revert migration |
+| supabase-js pin+SRI | pinner version exacte + `integrity` (préparable, revue rendu) | compromission CDN | retirer integrity |
+| merge hardening→recette | après retest : merger `hardening/safe-2026-09` | change visuel (Dunkerque) à revalider | revert merge |
