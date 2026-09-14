@@ -1,12 +1,13 @@
 {
-  "state": "SAFE_BACKLOG_ADVANCED_HOLD_FRONT",
+  "state": "HARDENING_BRANCH_ISOLATED_HOLD_FRONT",
   "worker": "ACTIVE",
   "worker_mode": "interactive_claude_session (Claude fait le travail dans la session en direct ; commits reels frais qui atterrissent sur origin/recette)",
   "autonomous_runner": "RUN-1 = BLOCKED_HUMAN (le runner autonome LaunchAgent/Action n'est PAS actif ; activation temoin = geste humain). Ne pas confondre avec le worker session ci-dessus.",
-  "current_task": "Backlog SAFE A-L avancé (5645034544) front a7299202 GELÉ, VISUAL_RC_CHANGED=NO. Livré: test price-gate 18/18, garde single-agency AGENCE_DUNKERQUE_LABEL (7 pages), purge ~21Mo orphelins 0-ref, runbook E2E (Docker down=BLOCKED_HUMAN_DOCKER), audit consolidé sécu/backend/perf/a11y/cohérence + inventaire BLOCKED_HUMAN. P1 connu Stripe LIVE endpoint = mitigation GO. REMAINING_EXECUTABLE=0 (tout gated: Docker/gel visuel/migrations/arbitrage). Attente retest Florian + GO gates.",
+  "current_task": "Hardening isolé (5645328308) sur branche hardening/safe-2026-09 (origin 76b56ef9) NON mergée -> preview recette/a7299202 INCHANGÉE (VISUAL_RC_CHANGED=NO). SINGLE_AGENCY_GATE=REMOVED (arbitrage clos): 'Agence Dunkerque'->'Agence Saint-Omer' 7 pages + garde ERROR. SAFE_NOW faits: tests comportementaux price gate 8/8, dead-code createStripePayment retiré, robots Disallow /recette.html. NOTIFY_LEAD=P1_ACTIVE (service_orders OK mais email agence 400, correctif spéc via submit-lead-v6). PRICE_GATE_TESTS=PASS. DOCKER_BLOCKER=démon arrêté. Reste SAFE_AFTER_QA spéc + HUMAN_GATE (Stripe P1 first). Attente retest Florian.",
   "last_completed_task": "QA visuelle business bout-en-bout (6 parcours 1440+390) = BUSINESS_VISUAL_QA=PASS, 0 nouveau défaut ; front propre -> propose gel RC. BACKEND_E2E=WAITING_DOCKER. READY_FOR_FLORIAN_VISUAL_QA=YES.",
-  "last_report": "docs/control/outbox/claude/RUN-2026-09-12-SAFE-BACKLOG-A-L.md",
-  "run_id": "RUN-2026-09-12-safe-backlog-a-l",
+  "last_report": "docs/control/outbox/claude/RUN-2026-09-13-SAFE-NOW-HARDENING.md",
+  "run_id": "RUN-2026-09-13-safe-now-hardening",
+  "hardening_branch": "hardening/safe-2026-09 (origin 76b56ef9) — SAFE_NOW + SAFE_AFTER_QA préparés, NON mergée à recette",
   "last_commit_sha": "a7299202",
   "branch": "recette",
   "remaining_tasks": [
