@@ -944,14 +944,14 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
   var pgModal=$('#priceGate');
   function openPriceGate(){
     if(!pgModal) return;
-    pgModal.hidden=false; document.body.style.overflow='hidden'; track('price_gate_open');
+    pgModal.hidden=false; document.body.style.overflow='hidden'; document.body.classList.add('hc-gate'); track('price_gate_open');
     [['pg-prenom','prenom'],['pg-nom','nom'],['pg-tel','tel'],['pg-email','email'],['pg-adresse','adresse'],['pg-cp','cp'],['pg-ville','ville']]
       .forEach(function(p){ var e=$('#'+p[0]); if(e && !e.value && state[p[1]]) e.value=state[p[1]]; });
     setTimeout(function(){ var f=$('#pg-prenom'); if(f) f.focus(); },70);
   }
   function closePriceGate(voluntary){
     if(!pgModal) return;
-    pgModal.hidden=true; document.body.style.overflow='';
+    pgModal.hidden=true; document.body.style.overflow=''; document.body.classList.remove('hc-gate');
     if(voluntary){ state._pgPending=null; saveState(); // décline l'identification : aucun tarif révélé
       if(document.documentElement.classList.contains('hc-embed')){ try{ (window.parent||window.top).postMessage({hcCmd:'close'},'*'); }catch(_){ location.href='/index.html'; } }
       else { location.href='/index.html'; }
@@ -990,7 +990,7 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
         .then(function(){
           state._priceGateOk=true; state._priceGateAt=Date.now(); try{sessionStorage.setItem('hc_pg','1');}catch(e){} state._pgPending=null; saveState();
           btn.disabled=false; btn.textContent=orig; btn.dataset.sending='0';
-          pgModal.hidden=true; document.body.style.overflow='';
+          pgModal.hidden=true; document.body.style.overflow=''; document.body.classList.remove('hc-gate');
           if(pending.cat) state._fam=pending.cat;
           go(pending.step||'catalogue');
           if(pending.cat && loaded && byFam[pending.cat]) renderProducts(pending.cat);
