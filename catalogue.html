@@ -937,7 +937,7 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
     $('#layout').classList.toggle('with-summary', showSide);
     $('#desktopSummary').hidden = !showSide;
     var sbx=$('#summaryBox'); if(sbx) sbx.hidden = !hasCartLines;
-    state._step=step; saveState();
+    state._step=step; saveState(); document.body.setAttribute('data-step',step);
     if(!opts.noHash){ var h='#step='+step+(state._fam?('&cat='+state._fam):''); if(location.hash!==h){ history.pushState({step:step},'',h); } }
     window.scrollTo(0,0);
     // indicateur de progression discret (funnel → %)
@@ -981,8 +981,10 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
     if(!pgModal) return;
     pgModal.hidden=true; document.body.style.overflow=''; document.body.classList.remove('hc-gate');
     if(voluntary){ state._pgPending=null; saveState(); // décline l'identification : aucun tarif révélé
-      if(document.documentElement.classList.contains('hc-embed')){ try{ (window.parent||window.top).postMessage({hcCmd:'close'},'*'); }catch(_){ location.href='/index.html'; } }
-      else { location.href='/index.html'; }
+      // On reste sur le catalogue (familles SANS prix) au lieu d'éjecter vers l'accueil (QA : « un tap raté = éjection »).
+      // Toute action tarifée (famille, recherche, panier…) ré-ouvre le gate : aucun prix sans identification.
+      if(document.documentElement.classList.contains('hc-embed')){ try{ (window.parent||window.top).postMessage({hcCmd:'close'},'*'); }catch(_){ } }
+      else { $$('.screen').forEach(function(s){ s.classList.toggle('active', s.id==='s-catalogue'); }); var _f=$('#families'), _p=$('#products'); if(_f) _f.hidden=false; if(_p) _p.hidden=true; }
     }
   }
   if(pgModal){
@@ -1434,8 +1436,9 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
   $('#backFam').addEventListener('click', backToFamilies);
   $('#sheetBack').addEventListener('click', function(){ go(state._sheetFrom||'catalogue'); });
   $('#diagBack').addEventListener('click', function(){ $('#diag-2').hidden=true; $('#diag-1').hidden=false; });
-  $('#cartBtn').addEventListener('click', function(){ if(!priceGatePassed()){ go('cart'); return; } if(window.matchMedia('(max-width:1023px)').matches){ openMobileSheet(); } else { go('cart'); } }); // P0 : non identifié -> ouvre le gate, jamais le panier tarifé
-  $('#mCartBtn').addEventListener('click', function(){ if(!priceGatePassed()){ go('cart'); return; } openMobileSheet(); });
+  // Un seul panier partout (desktop ET mobile) = l'écran « Ma demande » avec son bouton « Continuer » ; le bottom-sheet mobile était un cul-de-sac sans sortie (QA mobile P0).
+  $('#cartBtn').addEventListener('click', function(){ go('cart'); }); // non identifié -> go('cart') ouvre le gate, jamais le panier tarifé
+  $('#mCartBtn').addEventListener('click', function(){ go('cart'); });
   function openMobileSheet(){ $('#sheetBackdrop').classList.add('open'); $('#bottomSheet').classList.add('open'); refreshSummary(); }
   function closeMobileSheet(){ $('#sheetBackdrop').classList.remove('open'); $('#bottomSheet').classList.remove('open'); }
   $('#sheetClose').addEventListener('click', closeMobileSheet);
