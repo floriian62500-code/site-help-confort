@@ -391,7 +391,7 @@ body.dv-modal-open{overflow:hidden}
 .pg-brand{display:flex;align-items:center;gap:9px;margin:0 0 15px;font-weight:800;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#8493A6}
 .pg-brand img{height:26px;width:auto}
 .pg-title{margin:0 0 6px;font-size:1.42rem;font-weight:800;color:#0A1428;letter-spacing:-.02em;text-align:left;line-height:1.15}
-.pg-lead{margin:0 0 16px;font-size:.9rem;color:#6B7A8D;line-height:1.5;text-align:left}
+.pg-lead{margin:0 0 16px;font-size:.92rem;color:#5A6678;line-height:1.5;text-align:left}
 .pg-form{display:flex;flex-direction:column;gap:12px}
 .pg-field{display:flex;flex-direction:column;gap:5px}
 .pg-field label{font-size:.76rem;font-weight:700;color:#0A1428;letter-spacing:.01em}
@@ -403,10 +403,10 @@ body.dv-modal-open{overflow:hidden}
 .pg-submit:hover{transform:translateY(-1px);box-shadow:0 14px 26px -6px rgba(255,107,26,.5)}
 .pg-submit:disabled{opacity:.6;cursor:wait;transform:none}
 .pg-err{color:#E11D48;font-size:.84rem;font-weight:600;margin:2px 0 0;text-align:left}
-.pg-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:7px 14px;margin:15px 0 2px;font-size:.72rem;color:#8493A6}
+.pg-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:7px 14px;margin:15px 0 2px;font-size:.76rem;color:#6B7A8D}
 .pg-trust span{display:inline-flex;align-items:center;gap:5px}
 .pg-trust svg{color:#16A34A;flex-shrink:0}
-.pg-legal{margin:9px 0 0;font-size:.68rem;color:#A3AEBC;text-align:center;line-height:1.4}.pg-legal a{color:#8493A6}
+.pg-legal{margin:9px 0 0;font-size:.72rem;color:#8493A6;text-align:center;line-height:1.4}.pg-legal a{color:#8493A6}
 @media(max-width:560px){.pg-card{border-radius:16px;padding:24px 18px 18px}}
 </style>
 </head>
@@ -424,11 +424,12 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     linear-gradient(180deg,#F4F7FA 0%,#E9EEF3 100%)}
 /* surface principale UNIQUE : ivoire, large (~880), arrondie, ombre douce, peu de bordures */
 .tunnel{position:relative;z-index:1;max-width:880px;margin:clamp(16px,5vh,60px) auto;
-  background:var(--ivory);border-radius:24px;overflow:hidden;
+  background:var(--ivory);border-radius:24px;overflow:visible; /* visible : permet la barre haute sticky (compteur « Ma demande » toujours visible) */
   box-shadow:0 30px 70px -30px rgba(10,20,40,.26),0 2px 10px rgba(10,20,40,.05)}
 @media(max-width:760px){.tunnel{margin:0;min-height:100vh;border-radius:0}}
 /* en-tête modale simple : petit logo + repère besoin + fermer ; pas de bandeau institutionnel */
-.tunnel .topbar{position:static;background:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;border:0;border-bottom:1px solid var(--line);padding:14px clamp(18px,3vw,30px)}
+.tunnel .topbar{position:sticky;top:0;z-index:6;background:var(--ivory);border-radius:24px 24px 0 0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;border:0;border-bottom:1px solid var(--line);padding:14px clamp(18px,3vw,30px)}
+@media(max-width:760px){.tunnel .topbar{border-radius:0}}
 .tunnel .tb-logo img{height:34px!important;width:auto}
 .tunnel .tb-context{border-left:1px solid var(--line);padding-left:12px;font-weight:700;font-size:.9rem;color:var(--ink);text-transform:none;letter-spacing:0}
 .tunnel .tb-context svg{display:none}
@@ -456,6 +457,10 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
 .tsteps li.is-on{color:var(--ink)}.tsteps li.is-on::before{background:var(--nuit);color:#fff}
 .tsteps li.is-done{color:#6B7A8D}.tsteps li.is-done::before{content:"✓";background:#16A34A;color:#fff}
 @media(max-width:560px){.tsteps{font-size:.68rem;gap:4px 10px}}
+/* coins bas arrondis conservés sans overflow:hidden ; formulaires courts centrés dans la surface (plus de bloc aligné à gauche dans le vide) */
+.tunnel .layout{border-radius:0 0 24px 24px}
+.tunnel #s-cart{max-width:700px;margin:0 auto}
+.tunnel #s-urgence,.tunnel #s-address,.tunnel #s-coords,.tunnel #s-confirm{max-width:620px;margin:0 auto}
 </style>
 <script>
 /* P1 (5605156304/5605475397) : mode EMBED — le tunnel vit dans une modal/overlay intégrée au site
@@ -910,7 +915,9 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
     //     Contrôle dans la logique de navigation/state (pas de simple masquage CSS). ---
     if((step==='catalogue'||step==='sheet'||step==='cart'||step==='address'||step==='coords'||step==='confirm') && !priceGatePassed()){
       state._pgPending={step:step, cat:state._fam||null}; saveState();
-      $$('.screen').forEach(function(s){ s.classList.remove('active'); }); // ne jamais laisser un écran (ex-hub) sous la modale de gate
+      // Derrière le gate : uniquement la grille des FAMILLES (aucun prix), floutée par l'overlay → modale intégrée, pas « boîte sur le vide ». Jamais de prestations tarifées.
+      $$('.screen').forEach(function(s){ s.classList.toggle('active', s.id==='s-catalogue'); });
+      var _gf=$('#families'), _gp=$('#products'); if(_gf) _gf.hidden=false; if(_gp) _gp.hidden=true;
       openPriceGate(); return;
     }
     // mode du tunnel selon le point d'entrée (persiste jusqu'au retour launcher)
