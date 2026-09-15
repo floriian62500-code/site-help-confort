@@ -386,7 +386,7 @@ body.dv-modal-open{overflow:hidden}
 /* backdrop léger : on sent le site derrière, pas un mur sombre */
 .pg-overlay{position:absolute;inset:0;background:rgba(24,34,54,.38);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);animation:dvOvFade .22s ease}
 .pg-card{position:relative;background:#FFFDFA;border:1px solid #F0ECE6;border-radius:20px;max-width:470px;width:100%;margin:auto;padding:26px 28px 22px;box-shadow:0 30px 70px -22px rgba(10,20,40,.34);animation:dvwPop .34s cubic-bezier(.16,1,.3,1)}
-.pg-close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:9px;background:#F4F1EC;border:0;cursor:pointer;color:#8493A6;font-size:1rem;line-height:1;font-family:inherit;transition:background .2s}
+.pg-close{position:absolute;top:12px;right:12px;width:44px;height:44px;border-radius:9px;background:#F4F1EC;border:0;cursor:pointer;color:#8493A6;font-size:1rem;line-height:1;font-family:inherit;transition:background .2s}
 .pg-close:hover{background:#EAE5DD}
 .pg-brand{display:flex;align-items:center;gap:9px;margin:0 0 15px;font-weight:800;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#8493A6}
 .pg-brand img{height:26px;width:auto}
@@ -396,7 +396,7 @@ body.dv-modal-open{overflow:hidden}
 .pg-field{display:flex;flex-direction:column;gap:5px}
 .pg-field label{font-size:.76rem;font-weight:700;color:#0A1428;letter-spacing:.01em}
 .pg-hidden-field{display:none!important}
-.pg-inp{width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid #E3DED6;border-radius:12px;background:#fff;color:#0A1428;font-size:.96rem;font-family:inherit;outline:none;transition:border-color .18s,box-shadow .18s}
+.pg-inp{width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid #E3DED6;border-radius:12px;background:#fff;color:#0A1428;font-size:1rem;/* ≥16px : pas d'auto-zoom iOS */font-family:inherit;outline:none;transition:border-color .18s,box-shadow .18s}
 .pg-inp:focus{border-color:var(--bleu);box-shadow:0 0 0 3px rgba(13,160,207,.12)}
 .pg-inp.bad{border-color:#E11D48;box-shadow:0 0 0 3px rgba(225,29,72,.10)}
 .pg-submit{margin-top:4px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;background:linear-gradient(135deg,#FF7A2E,#E55510);color:#fff;border:0;border-radius:12px;font-weight:800;font-size:1rem;cursor:pointer;font-family:inherit;box-shadow:0 10px 22px -6px rgba(255,107,26,.45);transition:transform .18s,box-shadow .18s}
@@ -407,7 +407,8 @@ body.dv-modal-open{overflow:hidden}
 .pg-trust span{display:inline-flex;align-items:center;gap:5px}
 .pg-trust svg{color:#16A34A;flex-shrink:0}
 .pg-legal{margin:9px 0 0;font-size:.72rem;color:#8493A6;text-align:center;line-height:1.4}.pg-legal a{color:#8493A6}
-@media(max-width:560px){.pg-card{border-radius:16px;padding:24px 18px 18px}}
+/* mobile : sheet natif ancré en bas (plus un dialog desktop centré dans le vide) */
+@media(max-width:560px){.pg-modal{align-items:flex-end;padding:0}.pg-card{border-radius:22px 22px 0 0;padding:22px 18px calc(18px + env(safe-area-inset-bottom));margin:0;max-width:none;box-shadow:0 -12px 40px rgba(10,20,40,.18)}}
 </style>
 </head>
 <body>
@@ -461,6 +462,9 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
 .tunnel .layout{border-radius:0 0 24px 24px}
 .tunnel #s-cart{max-width:700px;margin:0 auto}
 .tunnel #s-urgence,.tunnel #s-address,.tunnel #s-coords,.tunnel #s-confirm{max-width:620px;margin:0 auto}
+/* zones tactiles ≥ 44px (QA mobile) ; barre panier mobile masquée sur l'écran panier lui-même */
+.tunnel .card .btn{min-height:44px}.tunnel .q{min-width:40px;min-height:40px}.tunnel .tb-phone,.tunnel .cartbtn,.tunnel .tb-exit{min-height:40px}
+body[data-step="cart"] .mobile-cartbar{display:none!important}
 </style>
 <script>
 /* P1 (5605156304/5605475397) : mode EMBED — le tunnel vit dans une modal/overlay intégrée au site
@@ -806,8 +810,8 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
         <div id="acList" class="ac-list" hidden></div>
       </div>
       <div class="two">
-        <div class="field"><label for="f-cp">Code postal</label><input id="f-cp" inputmode="numeric" maxlength="5" placeholder="62500"><div class="err">Code postal à 5 chiffres.</div></div>
-        <div class="field"><label for="f-ville">Ville</label><input id="f-ville" type="text" placeholder="Saint-Omer"><div class="err">Ville requise.</div></div>
+        <div class="field"><label for="f-cp">Code postal</label><input id="f-cp" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="62500"><div class="err">Code postal à 5 chiffres.</div></div>
+        <div class="field"><label for="f-ville">Ville</label><input id="f-ville" type="text" autocomplete="address-level2" placeholder="Saint-Omer"><div class="err">Ville requise.</div></div>
       </div>
       <div id="zoneNote" class="note" hidden></div>
       <button class="btn btn-primary btn-lg" id="adrNext">Continuer →</button>
@@ -1415,7 +1419,9 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
   document.addEventListener('click', function(e){
     var t=e.target; if(!t.closest) return;
     var go2=t.closest('[data-step-go]'); if(go2){ e.preventDefault(); go(go2.getAttribute('data-step-go')); return; }
-    var fam=t.closest('[data-fam]'); if(fam){ renderProducts(fam.getAttribute('data-fam')); try{ var _p=$('#products'); if(_p) window.scrollTo({top:Math.max(0,_p.getBoundingClientRect().top+window.scrollY-90),behavior:'smooth'}); }catch(e){} return; }
+    var fam=t.closest('[data-fam]'); if(fam){
+      if(!priceGatePassed()){ state._pgPending={step:'catalogue',cat:fam.getAttribute('data-fam')}; saveState(); openPriceGate(); return; } // aucune prestation tarifée sans gate
+      renderProducts(fam.getAttribute('data-fam')); try{ var _p=$('#products'); if(_p) window.scrollTo({top:Math.max(0,_p.getBoundingClientRect().top+window.scrollY-90),behavior:'smooth'}); }catch(e){} return; }
     var dfam=t.closest('[data-diagfam]'); if(dfam){ $('#diagSearch').value=''; diagShowProblems(dfam.getAttribute('data-diagfam'),''); return; }
     var sh=t.closest('[data-sheet]'); if(sh){ openSheet(sh.getAttribute('data-sheet')); return; }
     var ad=t.closest('[data-add]'); if(ad){ addToCart(ad.getAttribute('data-add')); if(state._step==='sheet'){ go('cart'); } else { var _o=ad.textContent; ad.textContent='Ajouté ✓'; ad.classList.add('is-added'); setTimeout(function(){ ad.textContent=_o; ad.classList.remove('is-added'); },1600); } return; }
@@ -1450,6 +1456,7 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
     var q=this.value.toLowerCase().trim();
     if(!q){ $('#products').hidden=true; $('#families').hidden=false; return; }
     var res=ALL.filter(function(s){return (s.name+' '+(s.brand||'')+' '+(s.category_name||'')+' '+(s.short_desc||'')).toLowerCase().indexOf(q)>=0;});
+    if(!priceGatePassed()){ state._pgPending={step:'catalogue',cat:null}; saveState(); openPriceGate(); return; } // la recherche affiche des prix : gate d'abord
     $('#famTitle').textContent='Résultats « '+q+' »'; byFam.__search=res; renderProducts('__search');
   });
   // search diagnosis
