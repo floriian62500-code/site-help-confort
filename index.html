@@ -800,7 +800,7 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
    <a class="hrr-card hrr-card--cmd" href="/catalogue.html" aria-label="Commander une intervention au catalogue">
     <span class="hrr-ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>
     <span class="hrr-card-t">J'ai besoin d'être dépanné</span>
-    <span class="hrr-card-desc">Prestations à prix affiché, commande en ligne.</span>
+    <span class="hrr-card-desc">Tarifs clairs affichés en 30 s, sans engagement.</span>
     <span class="hrr-go" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
    </a>
    <a class="hrr-card hrr-card--devis" href="/catalogue.html#step=devis" aria-label="Demander un devis pour des travaux">
@@ -912,9 +912,10 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
    e.preventDefault();
    var btn=document.getElementById('hrr-submit'); if(btn.dataset.sending==='1') return;
    var pr=document.getElementById('hrr-prenom'), no=document.getElementById('hrr-nom'), tel=document.getElementById('hrr-tel'), adr=document.getElementById('hrr-adresse'), cp=document.getElementById('hrr-cp'), vi=document.getElementById('hrr-ville'), desc=document.getElementById('hrr-desc'), msg=document.getElementById('hrr-msg');
-   var bP=!nameOk(pr.value), bN=!nameOk(no.value), bT=!phoneOk(tel.value), bA=!nameOk(adr.value), bC=!/^\d{5}$/.test((cp.value||'').trim()), bV=!nameOk(vi.value);
-   pr.classList.toggle('bad',bP); no.classList.toggle('bad',bN); tel.classList.toggle('bad',bT); adr.classList.toggle('bad',bA); cp.classList.toggle('bad',bC); vi.classList.toggle('bad',bV);
-   var firstBad=bP?pr:bN?no:bT?tel:bA?adr:bC?cp:bV?vi:null;
+   // Rappel = prénom + téléphone suffisent (contrat edge form_type=rappel : nom + contact). Nom/adresse/CP/ville facultatifs ; CP validé seulement s'il est saisi.
+   var bP=!nameOk(pr.value), bT=!phoneOk(tel.value), bC=!!(cp.value||'').trim() && !/^\d{5}$/.test((cp.value||'').trim());
+   pr.classList.toggle('bad',bP); tel.classList.toggle('bad',bT); cp.classList.toggle('bad',bC); no.classList.remove('bad'); adr.classList.remove('bad'); vi.classList.remove('bad');
+   var firstBad=bP?pr:bT?tel:bC?cp:null;
    if(firstBad){ firstBad.focus(); return; }
    btn.dataset.sending='1'; var orig=btn.textContent; btn.disabled=true; btn.textContent='Envoi…'; msg.className='hrr-msg';
    fetch(SUPA+'/functions/v1/submit-lead-v6',{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({

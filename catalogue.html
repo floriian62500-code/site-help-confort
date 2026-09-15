@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,follow"><!-- SEO: tunnel transactionnel non indexé (pages métier = portes SEO) -->
-<title>Commander une intervention — HELP Confort</title>
+<title>Demande d'intervention — HELP Confort</title>
 <meta name="description" content="Commandez une intervention HELP Confort : prestations à prix affichés, ajoutez-en plusieurs si besoin, réservation avec rappel humain. Saint-Omer, Dunkerque & Côte d'Opale.">
 <link rel="canonical" href="https://depan59-62.fr/catalogue.html">
 <link rel="preconnect" href="https://btcbjwqiivhpwoszomhg.supabase.co" crossorigin>
@@ -449,6 +449,13 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 .tunnel .fam-ico{box-shadow:none}
 /* pendant le price gate : masquer la barre panier mobile fixe (elle passait sous la modale) */
 body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-sheet{display:none!important}
+/* indicateur d'étapes discret (pas un stepper SaaS) */
+.tsteps{list-style:none;margin:0;padding:10px clamp(18px,3.4vw,36px) 0;display:flex;gap:6px 16px;flex-wrap:wrap;font-size:.74rem;font-weight:700;letter-spacing:.02em;color:#A3AEBC;counter-reset:ts}
+.tsteps li{counter-increment:ts;display:inline-flex;align-items:center;gap:6px}
+.tsteps li::before{content:counter(ts);width:18px;height:18px;border-radius:50%;background:#EDE8E1;color:#8493A6;font-size:.68rem;display:inline-flex;align-items:center;justify-content:center}
+.tsteps li.is-on{color:var(--ink)}.tsteps li.is-on::before{background:var(--nuit);color:#fff}
+.tsteps li.is-done{color:#6B7A8D}.tsteps li.is-done::before{content:"✓";background:#16A34A;color:#fff}
+@media(max-width:560px){.tsteps{font-size:.68rem;gap:4px 10px}}
 </style>
 <script>
 /* P1 (5605156304/5605475397) : mode EMBED — le tunnel vit dans une modal/overlay intégrée au site
@@ -485,7 +492,8 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
     <a class="tb-exit" href="/" aria-label="Quitter et revenir à l'accueil"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> <span class="tb-exit-txt">Fermer</span></a>
   </div>
 </header>
-<div class="progress" role="progressbar" aria-label="Progression de la commande" aria-valuemin="0" aria-valuemax="100" aria-valuenow="5" id="progress"><span class="progress-bar" id="progressBar"></span></div>
+<div class="progress" role="progressbar" aria-label="Progression de la demande" aria-valuemin="0" aria-valuemax="100" aria-valuenow="5" id="progress"><span class="progress-bar" id="progressBar"></span></div>
+<ol class="tsteps" id="tsteps" aria-label="Étapes de la demande"><li data-ts="1">Prestation</li><li data-ts="2">Urgence &amp; lieu</li><li data-ts="3">Coordonnées</li><li data-ts="4">Confirmation</li></ol>
 
 <div class="layout" id="layout">
  <div class="main">
@@ -824,7 +832,7 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
     <h1>Récapitulatif de votre demande</h1>
     <div id="confRecap"></div>
     <div id="confActions" style="max-width:560px;margin-top:16px">
-      <div class="note">Aucun paiement en ligne à ce stade. Le montant final et l'éligibilité sont confirmés par l'agence (paiement à l'intervention). Réservation non bloquée par le paiement.</div>
+      <div class="note">Aucun paiement en ligne — règlement après l'intervention. Le montant final est confirmé par un technicien lors du rappel.</div>
       <button class="btn btn-primary btn-lg" id="submitBtn">Envoyer ma demande</button>
     </div>
     <div id="confDone" hidden></div>
@@ -929,6 +937,9 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
     var PROG={launcher:5,catalogue:28,diagnosis:28,sheet:38,cart:52,urgence:64,address:76,coords:88,confirm:100,devis:30,entretien:30,rappel:45};
     var pct=PROG[step]||5; var pb=$('#progressBar'), pr=$('#progress');
     if(pb) pb.style.width=pct+'%'; if(pr) pr.setAttribute('aria-valuenow',String(pct));
+    // indicateur d'étapes discret (1 Prestation · 2 Urgence & lieu · 3 Coordonnées · 4 Confirmation)
+    var TS={catalogue:1,diagnosis:1,sheet:1,cart:1,urgence:2,address:2,coords:3,confirm:4}; var cur=TS[step]||0; var tsEl=$('#tsteps');
+    if(tsEl){ tsEl.hidden=(cur===0); $$('#tsteps li').forEach(function(li){ var n=parseInt(li.getAttribute('data-ts'),10); li.classList.toggle('is-on',n===cur); li.classList.toggle('is-done',n<cur); }); }
     track('step_'+step);
     if(step==='address'){ var ab=$('#adrBack'); if(ab) ab.setAttribute('data-step-go', state._mode==='devis'?'devis':(state._mode==='entretien'?'entretien':'urgence')); }
     if(step==='cart') renderCartFull();
@@ -1191,7 +1202,7 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
     $('#cartFull').innerHTML = empty ? '' :
       cart.lines().map(function(l){return cartLineHtml(l);}).join('')+
       '<div class="sum-total"><span>Total</span><span>'+Math.round(cart.totalTtcDisplay())+' € TTC</span></div>'+
-      '<p class="muted">'+({paiement:'Prix fermes — aucun paiement en ligne, règlement après intervention.',devis:'Demande de devis — sans paiement.',mixte:'Prestations fermes + devis — aucun paiement en ligne.'}[cart.mode()]||'')+'</p>';
+      '<p class="muted">'+({paiement:'Prix fermes — aucun paiement en ligne, règlement après intervention. Prochaine étape : lieu et coordonnées, puis un technicien vous rappelle pour confirmer.',devis:'Demande de devis — sans paiement. Prochaine étape : lieu et coordonnées.',mixte:'Prestations fermes + devis — aucun paiement en ligne. Prochaine étape : lieu et coordonnées.'}[cart.mode()]||'')+'</p>';
   }
 
   // ---------- AGENCE / ZONE ----------
@@ -1252,7 +1263,7 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
     var lines = cart&&cart.count() ? cart.lines() : [];
     var tot=cart?Math.round(cart.totalTtcDisplay()):0, cmode=cart?cart.mode():'vide';
     var statut = cmode==='paiement'
-      ? 'Prestations à prix ferme (total indicatif '+tot+' € TTC, confirmé par l\'agence). Aucun paiement en ligne à ce stade.'
+      ? 'Prestations à prix ferme ('+tot+' € TTC, confirmé par l\'agence). Aucun paiement en ligne — règlement après intervention.'
       : (cmode==='mixte'
           ? 'Panier mixte (prix ferme + sur devis) : demande globale, sans encaissement. L\'agence transmet un chiffrage complet.'
           : 'Demande de devis / diagnostic : sans paiement, l\'agence répond avec un chiffrage.');
@@ -1395,7 +1406,7 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
   document.addEventListener('click', function(e){
     var t=e.target; if(!t.closest) return;
     var go2=t.closest('[data-step-go]'); if(go2){ e.preventDefault(); go(go2.getAttribute('data-step-go')); return; }
-    var fam=t.closest('[data-fam]'); if(fam){ renderProducts(fam.getAttribute('data-fam')); return; }
+    var fam=t.closest('[data-fam]'); if(fam){ renderProducts(fam.getAttribute('data-fam')); try{ var _p=$('#products'); if(_p) window.scrollTo({top:Math.max(0,_p.getBoundingClientRect().top+window.scrollY-90),behavior:'smooth'}); }catch(e){} return; }
     var dfam=t.closest('[data-diagfam]'); if(dfam){ $('#diagSearch').value=''; diagShowProblems(dfam.getAttribute('data-diagfam'),''); return; }
     var sh=t.closest('[data-sheet]'); if(sh){ openSheet(sh.getAttribute('data-sheet')); return; }
     var ad=t.closest('[data-add]'); if(ad){ addToCart(ad.getAttribute('data-add')); if(state._step==='sheet'){ go('cart'); } else { var _o=ad.textContent; ad.textContent='Ajouté ✓'; ad.classList.add('is-added'); setTimeout(function(){ ad.textContent=_o; ad.classList.remove('is-added'); },1600); } return; }
