@@ -416,8 +416,8 @@ window.addEventListener('scroll', function() {
  </style>
  <div class="hero4-primary-cta">
  <a href="/catalogue.html" class="h4pc h4pc--call" aria-label="Commander une intervention en ligne">
- <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
- <span class="h4pc-txt"><strong>Commander une intervention</strong><span>catalogue &amp; devis en ligne</span></span>
+ <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2.1-2.1z"/></svg>
+ <span class="h4pc-txt"><strong>Commander une intervention</strong><span>tarifs clairs en 30 s · sans engagement</span></span>
  </a>
  <a href="/nos-prestations.html" class="h4pc h4pc--describe" aria-label="Voir nos prestations et tarifs">
  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
@@ -644,6 +644,7 @@ v.addEventListener('pause', function(){ play.style.opacity = 1; });
  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
  </span>
 </button>
+<script>/* la pastille « Découvrir » ne sert que sur le hero : masquée dès qu'on a scrollé (elle recouvrait labels/avis) */(function(){var c=document.querySelector('.hc-scroll-cue');if(!c)return;function u(){c.style.display=(window.scrollY>200)?'none':'';}window.addEventListener('scroll',u,{passive:true});u();})();</script>
 <style>
  /* HC-FIX 2026-05-22 : passage en layout row (label gauche, arrow droite) — évite rendu pill cropé */
  .hc-scroll-cue{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);display:inline-flex;flex-direction:row;align-items:center;justify-content:center;gap:10px;padding:10px 14px 10px 18px;width:auto;max-width:240px;background:rgba(50,60,75,.92);border:2px solid rgba(255,255,255,.55);border-radius:999px;text-decoration:none;color:#fff;font-size:.78rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;white-space:nowrap;box-shadow:0 12px 32px rgba(10,20,40,.40);z-index:90;transition:transform.25s ease,box-shadow.25s ease,opacity.4s ease,background.2s ease;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-sizing:border-box;overflow:visible}
