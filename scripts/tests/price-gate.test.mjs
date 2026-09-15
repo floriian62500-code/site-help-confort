@@ -51,9 +51,11 @@ ok('summaryHtml: retour verrouillé si !priceGatePassed()',
 ok('renderCartFull: garde !priceGatePassed() en tête',
   /function renderCartFull\(\)\s*\{\s*if\(!priceGatePassed\(\)\)/.test(catNoComments));
 
-// 9. Boutons panier : ouvrent le gate si non identifié (desktop + mobile)
-ok('boutons panier: go(cart) si !priceGatePassed()',
-  count(catNoComments, /!priceGatePassed\(\)\)\s*\{\s*go\(\s*['"]cart['"]\s*\)/g) >= 2);
+// 9. Boutons panier (desktop + mobile) : passent TOUS par go('cart'), et go() garde l'étape cart
+//    (invariant plus fort qu'une garde locale : un seul point de contrôle).
+ok('boutons panier: go(cart) desktop+mobile, gate appliqué dans go()',
+  count(catNoComments, /addEventListener\(\s*['"]click['"]\s*,\s*function\(\)\s*\{\s*go\(\s*['"]cart['"]\s*\);?\s*\}\s*\)/g) >= 2
+  && /step===['"]cart['"]/.test(goGate));
 
 // 10. AUCUN autre fichier ne pose l'état déverrouillé (provenance unique repo-wide)
 function walk(dir, acc = []) {
