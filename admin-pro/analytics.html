@@ -990,6 +990,8 @@
     if (typeof Chart === 'undefined') {
       const sc = document.createElement('script');
       sc.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
+      sc.integrity = 'sha384-e6nUZLBkQ86NJ6TVVKAeSaK8jWa3NhkYWZFomE39AvDbQWeie9PlQqM3pmYW5d1g';
+      sc.crossOrigin = 'anonymous';
       sc.onload = loadChart;
       document.head.appendChild(sc);
     } else loadChart();

@@ -905,9 +905,12 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
   font-weight:600 !important;
 }
 
-/* — Container plus respirant — */
-.container,.ct{padding:0 32px !important;max-width:1200px !important}
+/* — Container : grille desktop cohérente qui exploite les grands écrans (2026-08-08) —
+   avant : plafond 1200px !important qui écrasait --mw:1320 → "petit site centré". */
+.container,.ct{padding:0 32px !important;max-width:1320px !important}
 @media(min-width:1280px){.container,.ct{padding:0 48px !important}}
+@media(min-width:1600px){.container,.ct{max-width:1440px !important}}
+@media(min-width:1900px){.container,.ct{max-width:1520px !important}}
 
 /* — Urgency bar : plus discrète, plus elegante — */
 .urgency-bar{

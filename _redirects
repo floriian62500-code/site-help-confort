@@ -1,29 +1,48 @@
+# SÉCURITÉ : ne jamais servir les fichiers internes (suivi control-plane, docs/audits, scripts, sources edge/SQL)
+/docs/*      /404.html 404!
+/scripts/*   /404.html 404!
+/supabase/*  /404.html 404!
+# SÉCURITÉ (#9 T8) : pages admin manipulant un PAT GitHub / la promotion prod côté client
+# étaient publiquement accessibles (HTTP 200) → bloquées. Si besoin d'y accéder : passer par une
+# authentification (Netlify Identity / mot de passe), pas par une URL publique.
+/admin-pro/valider-staging.html  /404.html 404!
+/admin-pro/photos.html           /404.html 404!
+
 # Sitemap dynamique servi par Edge Function Supabase
-/sitemap.xml https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sitemap 200
+/sitemap.xml https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sitemap 200!
+
+# Nettoyage : ancienne page dynamique de réalisation (orpheline, noindex) → listing (convention unique /realisations/<slug>)
+/realisation.html /realisations.html 301!
+/realisation /realisations.html 301!
+
+
 
 # Réalisations pré-rendues statiques (contenu indexable dans le HTML initial) — auto-généré
+/realisations/remplacement-de-la-serrurerie-sur-porte-dentree /realisations/remplacement-de-la-serrurerie-sur-porte-dentree.html 200
+/realisations/nouvelle-realisation-signee-help-confort-saint-omer /realisations/nouvelle-realisation-signee-help-confort-saint-omer.html 200
+/realisations/nouvelle-renovation-realisee-par-help-confort-saint-omer /realisations/nouvelle-renovation-realisee-par-help-confort-saint-omer.html 200
 /realisations/nouvelle-intervention-realisee-par-help-confort-saint-omer /realisations/nouvelle-intervention-realisee-par-help-confort-saint-omer.html 200
 /realisations/remplacement-complet-dun-ensemble-de-boites-aux-lettres /realisations/remplacement-complet-dun-ensemble-de-boites-aux-lettres.html 200
 /realisations/intervention-realisee-par-help-confort-remplacement-dun-coulissant-de-facade /realisations/intervention-realisee-par-help-confort-remplacement-dun-coulissant-de-facade.html 200
-/realisations/renovation-dune-salle-de-bain-a-letage /realisations/renovation-dune-salle-de-bain-a-letage.html 200
+/realisations/nouvelle-renovation-de-salle-de-bain-realisee-par-help-confort /realisations/nouvelle-renovation-de-salle-de-bain-realisee-par-help-confort.html 200
 /realisations/remplacement-de-porte-de-garage-a-arques /realisations/remplacement-de-porte-de-garage-a-arques.html 200
 /realisations/fourniture-dune-corniche-et-dun-caisson-blanc-renovation-de-murs-chez-notre-clie /realisations/fourniture-dune-corniche-et-dun-caisson-blanc-renovation-de-murs-chez-notre-clie.html 200
 /realisations/remplacement-de-menuiserie-renovation-de-piece-chez-notre-cliente /realisations/remplacement-de-menuiserie-renovation-de-piece-chez-notre-cliente.html 200
+/realisations/renovation-dune-salle-de-bain-a-letage /realisations/renovation-dune-salle-de-bain-a-letage.html 200
 /realisations/remplacement-dun-panneau-pvc-chez-notre-cliente-a-hazebrouck /realisations/remplacement-dun-panneau-pvc-chez-notre-cliente-a-hazebrouck.html 200
-/realisations/nouvelle-renovation-de-salle-de-bain-realisee-par-help-confort /realisations/nouvelle-renovation-de-salle-de-bain-realisee-par-help-confort.html 200
 /realisations/remplacement-dun-bloc-porte-en-cave-help-confort-saint-omer /realisations/remplacement-dun-bloc-porte-en-cave-help-confort-saint-omer.html 200
 /realisations/refection-complete-pour-une-nouvelle-ambiance-moderne-et-accueillante /realisations/refection-complete-pour-une-nouvelle-ambiance-moderne-et-accueillante.html 200
 /realisations/remplacement-dune-porte-dentree-bois-par-une-porte-dentree-pvc /realisations/remplacement-dune-porte-dentree-bois-par-une-porte-dentree-pvc.html 200
 /realisations/remplacement-dune-porte-de-garage-basculante-manuelle /realisations/remplacement-dune-porte-de-garage-basculante-manuelle.html 200
-/realisations/votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite-a-un-bris-de-glace /realisations/votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite-a-un-bris-de-glace.html 200
 /realisations/remplacement-de-double-vitrage-avec-croisillon-intervention-help-confort-saint-o /realisations/remplacement-de-double-vitrage-avec-croisillon-intervention-help-confort-saint-o.html 200
-/realisations/vitre-dinsert-cassee /realisations/vitre-dinsert-cassee.html 200
-/realisations/remplacement-de-panneau-pvc-modele-surinam-3 /realisations/remplacement-de-panneau-pvc-modele-surinam-3.html 200
 /realisations/cellier-travaux-de-plafond-reparation-peinture-de-finition /realisations/cellier-travaux-de-plafond-reparation-peinture-de-finition.html 200
-/realisations/votre-insert-gaz-presente-un-vitrage-fissure-terni-ou-endommage /realisations/votre-insert-gaz-presente-un-vitrage-fissure-terni-ou-endommage.html 200
-/realisations/votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le-temps /realisations/votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le-temps.html 200
+/realisations/votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite-a-un-bris-de-glace /realisations/votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite-a-un-bris-de-glace.html 200
+/realisations/vitre-dinsert-cassee /realisations/vitre-dinsert-cassee.html 200
 /realisations/remplacement-de-mitigeur-evier-bec-long-douchette /realisations/remplacement-de-mitigeur-evier-bec-long-douchette.html 200
+/realisations/remplacement-de-panneau-pvc-modele-surinam-3 /realisations/remplacement-de-panneau-pvc-modele-surinam-3.html 200
+/realisations/votre-insert-gaz-presente-un-vitrage-fissure-terni-ou-endommage /realisations/votre-insert-gaz-presente-un-vitrage-fissure-terni-ou-endommage.html 200
 /realisations/votre-double-vitrage-dans-la-salle-a-manger-est-fissure-embue-ou-moins-isolant /realisations/votre-double-vitrage-dans-la-salle-a-manger-est-fissure-embue-ou-moins-isolant.html 200
+/realisations/votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le-temps /realisations/votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le-temps.html 200
 /realisations/votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-correctement /realisations/votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-correctement.html 200
 /realisations/remplacement-de-double-vitrage-apres-bris-de-glace /realisations/remplacement-de-double-vitrage-apres-bris-de-glace.html 200
 /realisations/votre-soupape-de-securite-ou-votre-manometre-est-defectueux-use-ou-ne-fonctionne /realisations/votre-soupape-de-securite-ou-votre-manometre-est-defectueux-use-ou-ne-fonctionne.html 200
