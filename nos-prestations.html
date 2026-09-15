@@ -1333,7 +1333,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  const btn = document.createElement('button');
  btn.className = 'nv-filter';
  btn.dataset.filter = g.slug;
- btn.innerHTML = `${pictoTag(g.slug, 18)} ${escapeHtml(g.name)} <span class="nv-count">${g.items.length}</span>`;
+ btn.innerHTML = `${pictoTag(g.slug, 18)} ${escapeHtml((g.name && g.name !== '_default') ? g.name : 'Autres prestations')} <span class="nv-count">${g.items.length}</span>`;
  btn.onclick = () => {
  document.querySelectorAll('.nv-filter').forEach(b => b.classList.remove('is-active'));
  btn.classList.add('is-active');

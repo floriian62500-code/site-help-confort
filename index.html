@@ -831,13 +831,13 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
    <form id="hrrForm" novalidate>
     <div class="hrr-row">
      <input id="hrr-prenom" type="text" placeholder="Prénom *" autocomplete="given-name" aria-label="Prénom">
-     <input id="hrr-nom" type="text" placeholder="Nom *" autocomplete="family-name" aria-label="Nom">
+     <input id="hrr-nom" type="text" placeholder="Nom (facultatif)" autocomplete="family-name" aria-label="Nom">
     </div>
     <input id="hrr-tel" type="tel" inputmode="tel" placeholder="Téléphone *" autocomplete="tel" aria-label="Téléphone" style="width:100%">
-    <input id="hrr-adresse" type="text" placeholder="Adresse (n° et rue) *" autocomplete="street-address" aria-label="Adresse" data-autocomplete-skip style="width:100%">
+    <input id="hrr-adresse" type="text" placeholder="Adresse (facultatif)" autocomplete="street-address" aria-label="Adresse" data-autocomplete-skip style="width:100%">
     <div class="hrr-row">
-     <input id="hrr-cp" type="text" inputmode="numeric" maxlength="5" placeholder="Code postal *" autocomplete="postal-code" aria-label="Code postal">
-     <input id="hrr-ville" type="text" placeholder="Ville *" autocomplete="address-level2" aria-label="Ville">
+     <input id="hrr-cp" type="text" inputmode="numeric" maxlength="5" placeholder="Code postal (facultatif)" autocomplete="postal-code" aria-label="Code postal">
+     <input id="hrr-ville" type="text" placeholder="Ville (facultatif)" autocomplete="address-level2" aria-label="Ville">
     </div>
     <textarea id="hrr-desc" rows="2" placeholder="Votre besoin en quelques mots (facultatif)" aria-label="Votre besoin"></textarea>
     <button type="submit" id="hrr-submit" class="hrr-primary" style="width:100%">Être rappelé</button>
