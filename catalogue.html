@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,follow"><!-- SEO: tunnel transactionnel non indexé (pages métier = portes SEO) -->
 <title>Demande d'intervention — HELP Confort</title>
-<meta name="description" content="Commandez une intervention HELP Confort : prestations à prix affichés, ajoutez-en plusieurs si besoin, réservation avec rappel humain. Saint-Omer, Dunkerque & Côte d'Opale.">
+<meta name="description" content="Demandez une intervention HELP Confort : prestations à prix ferme (tarifs affichés après identification), ajoutez-en plusieurs si besoin, confirmation par rappel humain. Saint-Omer, Dunkerque & Côte d'Opale.">
 <link rel="canonical" href="https://depan59-62.fr/catalogue.html">
 <link rel="preconnect" href="https://btcbjwqiivhpwoszomhg.supabase.co" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -90,6 +90,7 @@ h2{font-size:1.2rem;margin:.2em 0}
 .btn-primary.btn-lg{background:linear-gradient(135deg,#FF7A2E,#E55510);box-shadow:0 10px 22px -6px rgba(255,107,26,.45)}.btn-primary.btn-lg:hover{background:linear-gradient(135deg,#FF8A45,#E55510)}
 .btn-primary.is-added{background:#16A34A!important}
 .btn.is-added .rm-hint{font-weight:500;opacity:.9}
+.tunnel .card .btn.is-added{white-space:nowrap;font-size:.86rem;padding-left:10px;padding-right:10px}
 .card-incl{display:block;font-size:.78rem;margin-top:3px}
 .cat-gate-hint{display:block;margin-top:6px;font-weight:600;color:var(--nuit,#0A1428)}
 .lnk-details{background:none;border:0;color:var(--bleu);font-weight:600;font-size:.85rem;cursor:pointer;font-family:inherit;padding:6px 0 0;text-align:left}.lnk-details:hover{text-decoration:underline}
@@ -460,7 +461,7 @@ body.hc-gate .mobile-cartbar,body.hc-gate .sheet-backdrop,body.hc-gate .bottom-s
 .tsteps li::before{content:counter(ts);width:18px;height:18px;border-radius:50%;background:#EDE8E1;color:#8493A6;font-size:.68rem;display:inline-flex;align-items:center;justify-content:center}
 .tsteps li.is-on{color:var(--ink)}.tsteps li.is-on::before{background:var(--nuit);color:#fff}
 .tsteps li.is-done{color:#6B7A8D}.tsteps li.is-done::before{content:"✓";background:#16A34A;color:#fff}
-@media(max-width:560px){.tsteps{font-size:.68rem;gap:4px 10px}}
+@media(max-width:560px){.tsteps{font-size:.68rem;gap:4px 8px;flex-wrap:nowrap}.tsteps li:not(.is-on){font-size:0;gap:0}.tsteps li::before{font-size:.68rem;flex-shrink:0}.mobile-cartbar .cartbtn{min-height:44px}}
 /* coins bas arrondis conservés sans overflow:hidden ; formulaires courts centrés dans la surface (plus de bloc aligné à gauche dans le vide) */
 .tunnel .layout{border-radius:0 0 24px 24px}
 .tunnel #s-cart{max-width:700px;margin:0 auto}
@@ -588,7 +589,7 @@ body[data-step="cart"] .mobile-cartbar{display:none!important}
 
   <!-- 1b. DEVIS (projet sur mesure) — in-tunnel -->
   <section class="screen" id="s-devis" data-step="devis">
-    <div class="tnav"><button class="back" data-step-go="launcher">← Retour</button><button class="back back-hub" data-step-go="launcher">Accueil commande</button></div>
+    <div class="tnav"><button class="back" data-step-go="launcher">← Retour</button><button class="back back-hub" data-step-go="launcher">Accueil de la demande</button></div>
     <div id="devisForm" class="dvw" role="dialog" aria-modal="true" aria-labelledby="dvwTitle">
       <button class="dvw-close" id="dvwClose" type="button" aria-label="Fermer la demande de devis"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
       <div class="dvw-head">
@@ -678,7 +679,7 @@ body[data-step="cart"] .mobile-cartbar{display:none!important}
 
   <!-- 1c. ENTRETIEN & contrats — in-tunnel -->
   <section class="screen" id="s-entretien" data-step="entretien">
-    <div class="tnav"><button class="back" data-step-go="launcher">← Retour</button><button class="back back-hub" data-step-go="launcher">Accueil commande</button></div>
+    <div class="tnav"><button class="back" data-step-go="launcher">← Retour</button><button class="back back-hub" data-step-go="launcher">Accueil de la demande</button></div>
     <h1>Entretien &amp; contrats</h1>
     <p class="sub">Chaudière gaz ou fioul : entretien ponctuel ou contrat annuel avec attestation légale.</p>
     <div style="max-width:620px">
@@ -778,7 +779,7 @@ body[data-step="cart"] .mobile-cartbar{display:none!important}
     <button class="back" data-step-go="catalogue">← Ajouter une autre prestation</button>
     <h1>Ma demande</h1>
     <div id="cartFull"></div>
-    <div id="cartEmpty" class="note" hidden>Votre demande est vide. <button class="back" data-step-go="launcher">Commencer une commande</button></div>
+    <div id="cartEmpty" class="note" hidden>Votre demande est vide. <button class="back" data-step-go="launcher">Choisir une prestation</button></div>
     <div id="cartActions" style="margin-top:16px">
       <button class="btn btn-primary btn-lg" id="toCheckout">Continuer ma demande →</button>
     </div>
@@ -1180,6 +1181,7 @@ body[data-step="cart"] .mobile-cartbar{display:none!important}
     var n=cart?cart.count():0, tot=cart?Math.round(cart.totalTtcDisplay()):0;
     var showTot=priceGatePassed(); // P0 (5605156304) : jamais de total tarifé hors gate validé (barre panier mobile fixe incluse)
     $('#cartCount').textContent=n; $('#mCount').textContent=n; $('#mTotal').textContent=showTot?tot:'—';
+    var _mbar=document.querySelector('.mobile-cartbar'); if(_mbar) _mbar.hidden=(n===0); // barre mobile inutile tant que la demande est vide
     $('#cartBtn').disabled=(n===0);
     refreshSummary();
     if(state._step==='cart') renderCartFull();
