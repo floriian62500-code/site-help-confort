@@ -1234,7 +1234,7 @@ body[data-step="cart"] .mobile-cartbar{display:none!important}
   var acTimer=null, acItems=[], acHl=-1;
   function acSearch(q){
     if(!q||q.length<4){ hideAc(); return; }
-    fetch('https://api-adresse.data.gouv.fr/search/?limit=5&q='+encodeURIComponent(q))
+    fetch('https://api-adresse.data.gouv.fr/search/?limit=5&lat=50.7503&lon=2.2526&q='+encodeURIComponent(q))
       .then(function(r){return r.json();})
       .then(function(d){
         acItems=(d&&d.features)||[]; acHl=-1;
@@ -1503,7 +1503,7 @@ body[data-step="cart"] .mobile-cartbar{display:none!important}
     function hide(){ list.hidden=true; list.innerHTML=''; items=[]; }
     function search(q){
       if(!q||q.length<4){ hide(); return; }
-      fetch('https://api-adresse.data.gouv.fr/search/?limit=5&q='+encodeURIComponent(q))
+      fetch('https://api-adresse.data.gouv.fr/search/?limit=5&lat=50.7503&lon=2.2526&q='+encodeURIComponent(q))
         .then(function(r){return r.json();})
         .then(function(d){ items=(d&&d.features)||[]; if(!items.length){ hide(); return; }
           list.innerHTML=items.map(function(f,i){ return '<button type="button" data-dvac="'+i+'">'+esc(f.properties.label)+'</button>'; }).join(''); list.hidden=false;
