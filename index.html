@@ -415,9 +415,9 @@ window.addEventListener('scroll', function() {
  }
  </style>
  <div class="hero4-primary-cta">
- <a href="/catalogue.html" class="h4pc h4pc--call" aria-label="Commander une intervention en ligne">
+ <a href="/catalogue.html" class="h4pc h4pc--call" aria-label="Demander une intervention en ligne">
  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2.1-2.1z"/></svg>
- <span class="h4pc-txt"><strong>Commander une intervention</strong><span>tarifs clairs en 30 s · sans engagement</span></span>
+ <span class="h4pc-txt"><strong>Demander une intervention</strong><span>tarifs clairs en 30 s · sans engagement</span></span>
  </a>
  <a href="/nos-prestations.html" class="h4pc h4pc--describe" aria-label="Voir nos prestations et tarifs">
  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
@@ -790,14 +790,14 @@ body.hc-locked-wizard #hc-locked-exit:hover{background:#0A1428;color:#fff;border
 body.hc-locked-wizard .hc-resa-head{text-align:center}
 body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !important}
 </style>
-<section id="hc-reservation" class="hc-reservation" aria-label="Commander une intervention">
+<section id="hc-reservation" class="hc-reservation" aria-label="Demander une intervention">
  <div class="hrr">
   <div class="hrr-head">
    <h2 class="hrr-title">Que souhaitez-vous faire ?</h2>
    <p class="hrr-lead">Trois parcours clairs — un interlocuteur humain à chaque étape.</p>
   </div>
   <div class="hrr-cards">
-   <a class="hrr-card hrr-card--cmd" href="/catalogue.html" aria-label="Commander une intervention au catalogue">
+   <a class="hrr-card hrr-card--cmd" href="/catalogue.html" aria-label="Demander une intervention — prestations et tarifs">
     <span class="hrr-ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>
     <span class="hrr-card-t">J'ai besoin d'être dépanné</span>
     <span class="hrr-card-desc">Tarifs clairs affichés en 30 s, sans engagement.</span>
@@ -827,7 +827,7 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
   <div class="hrr-modal-panel" role="dialog" aria-modal="true" aria-labelledby="hrrModalTitle">
    <button class="hrr-modal-x" type="button" data-close aria-label="Fermer la fenêtre"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
    <h3 id="hrrModalTitle" class="hrr-modal-title">Être rappelé</h3>
-   <p class="hrr-modal-sub">Laissez vos coordonnées — une agence locale vous rappelle rapidement.</p>
+   <p class="hrr-modal-sub">Laissez vos coordonnées — l'agence HELP Confort de Saint-Omer vous rappelle rapidement.</p>
    <form id="hrrForm" novalidate>
     <div class="hrr-row">
      <input id="hrr-prenom" type="text" placeholder="Prénom *" autocomplete="given-name" aria-label="Prénom">
@@ -924,7 +924,7 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
     message:(desc.value||'').trim()||'Demande de rappel (home)',
     type_demande:'rappel', form_type:'rappel', source:'home_callback', source_page:location.href
    })}).then(function(r){ return r.ok? r.json().catch(function(){return{};}) : Promise.reject(r.status); })
-    .then(function(){ f.reset(); msg.className='hrr-msg ok'; msg.textContent='Merci ✓ Un conseiller de votre agence locale vous rappelle rapidement.'; btn.textContent=orig; btn.disabled=false; btn.dataset.sending='0'; })
+    .then(function(){ f.reset(); msg.className='hrr-msg ok'; msg.textContent='Merci ✓ Un conseiller de l'agence de Saint-Omer vous rappelle rapidement.'; btn.textContent=orig; btn.disabled=false; btn.dataset.sending='0'; })
     .catch(function(){ msg.className='hrr-msg err'; msg.textContent='Envoi impossible pour le moment. Vos informations sont conservées — réessayez, ou appelez le 03 66 10 01 34.'; btn.textContent='Réessayer'; btn.disabled=false; btn.dataset.sending='0'; });
   });
  })();</script>
