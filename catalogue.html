@@ -62,6 +62,9 @@ svg{flex:none}
 .recap{min-height:calc(100vh - var(--top-h) - 64px)}
 .trust{margin-top:auto;padding:4px 24px}
 .rc-empty{margin:4px 0 8px;color:var(--muted);font-size:.92rem}
+#precHint{font-size:.88rem;color:var(--muted);margin-right:auto}
+@media (max-width:760px){#precHint{order:3;width:100%;text-align:center;margin:0}}
+#precClosed{margin:-6px 0 14px}
 .top-close:hover{background:rgba(15,23,42,.06);color:var(--ink)}
 
 /* ---------- Composition ---------- */
@@ -217,7 +220,7 @@ svg{flex:none}
 .offer.is-in{background:#fff;box-shadow:inset 0 0 0 2px var(--ink),var(--sh-1)}
 .offer-pick{width:100%;display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:4px 16px;align-items:start;padding:18px 20px;border:0;border-radius:20px;background:none;text-align:left;cursor:pointer;color:inherit}
 .offer-pick:hover .tick{box-shadow:inset 0 0 0 2px var(--ink)}
-.tick{width:26px;height:26px;margin-top:1px;border-radius:99px;display:grid;place-items:center;background:#fff;box-shadow:inset 0 0 0 1.5px rgba(15,23,42,.3);color:transparent;transition:background .2s,box-shadow .2s,color .2s,transform .25s var(--ease)}
+.tick{width:26px;height:26px;margin-top:1px;border-radius:8px;display:grid;place-items:center;background:#fff;box-shadow:inset 0 0 0 1.5px rgba(15,23,42,.3);color:transparent;transition:background .2s,box-shadow .2s,color .2s,transform .25s var(--ease)}
 .offer-pick[aria-pressed="true"] .tick{background:var(--ink);box-shadow:none;color:#fff;transform:scale(1.06)}
 .offer-txt{display:flex;flex-direction:column;min-width:0}
 .offer .more{margin:-8px 20px 0 64px;padding:0 0 16px}
@@ -524,6 +527,7 @@ svg{flex:none}
       <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg>Aucun paiement en ligne</li>
      </ul>
      <p class="urgent-line">Une urgence&nbsp;? Appelez le <a href="tel:+33366100134">03 66 10 01 34</a> · lun–ven 9h–17h, sam 9h–16h</p>
+     <p class="urgent-line" id="closedLine" hidden></p>
     </div>
    </section>
 
@@ -578,7 +582,7 @@ svg{flex:none}
       <div class="field" id="fld-pg-prenom"><label for="pg-prenom">Prénom</label><input id="pg-prenom" type="text" autocomplete="given-name"><p class="err">Indiquez votre prénom.</p></div>
       <div class="row2">
        <div class="field" id="fld-pg-tel"><label for="pg-tel">Téléphone</label><input id="pg-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="ex. 06 12 34 56 78"><p class="err">Numéro de téléphone français attendu, par exemple 06 12 34 56 78.</p></div>
-       <div class="field" id="fld-pg-email"><label for="pg-email">Email <span class="opt">· facultatif</span></label><input id="pg-email" type="email" inputmode="email" autocomplete="email" placeholder="ex. vous@exemple.fr"><p class="err">Adresse email valide requise.</p></div>
+       <div class="field" id="fld-pg-email"><label for="pg-email">Email <span class="opt">· facultatif</span></label><input id="pg-email" type="email" inputmode="email" autocomplete="email" placeholder="ex. vous@exemple.fr"><p class="err">Adresse email invalide (vous pouvez aussi laisser ce champ vide).</p></div>
       </div>
       <button type="submit" class="sr-only" tabindex="-1" aria-hidden="true">Afficher les tarifs</button>
      </form>
@@ -604,10 +608,11 @@ svg{flex:none}
       <div class="chips" id="probChips" role="group" aria-label="Situation"></div>
      </div>
      <div class="search" id="precSearchWrap"><svg width="19" height="19" aria-hidden="true"><use href="#i-search"/></svg><input id="precSearch" type="search" placeholder="Rechercher une intervention" aria-label="Rechercher une intervention"></div>
+     <p class="hint" id="precClosed" hidden></p>
      <p class="list-h" id="offersHead" aria-live="polite"></p>
      <div class="offers" id="offers"></div>
     </div>
-    <footer class="q-actions"><button class="sum-handle" type="button" data-open-sheet hidden></button><button class="btn-primary" type="button" data-next="precision" id="precNext" disabled>Continuer <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow"/></svg></button></footer>
+    <footer class="q-actions"><button class="sum-handle" type="button" data-open-sheet hidden></button><span class="hint grow" id="precHint">Cochez au moins une intervention pour continuer</span><button class="btn-primary" type="button" data-next="precision" id="precNext" disabled>Continuer <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow"/></svg></button></footer>
    </section>
 
    <!-- INTERVENTION 4-5 · MA DEMANDE (multi-interventions + récapitulatif) -->
@@ -640,7 +645,7 @@ svg{flex:none}
      </div>
      <div class="row2">
       <div class="field" id="fld-tel"><label for="f-tel">Téléphone</label><input id="f-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="ex. 06 12 34 56 78"><p class="err">Numéro de téléphone français attendu, par exemple 06 12 34 56 78.</p></div>
-      <div class="field" id="fld-email"><label for="f-email">Email</label><input id="f-email" type="email" inputmode="email" autocomplete="email" placeholder="ex. vous@exemple.fr"><p class="err">Adresse email valide requise.</p></div>
+      <div class="field" id="fld-email"><label for="f-email">Email <span class="opt">· facultatif</span></label><input id="f-email" type="email" inputmode="email" autocomplete="email" placeholder="ex. vous@exemple.fr"><p class="err">Adresse email invalide (vous pouvez aussi laisser ce champ vide).</p></div>
      </div>
     </div>
     <footer class="q-actions"><button class="sum-handle" type="button" data-open-sheet hidden></button><button class="btn-primary" type="button" data-next="coordonnees">Continuer <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow"/></svg></button></footer>
@@ -803,7 +808,9 @@ svg{flex:none}
   function esc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function nameOk(v) { return String(v || '').trim().length >= 2; }
   // Même règle que submit-lead-v6 (normalizePhone + isValidFrenchPhone) : +33 / 0033 / 0, espaces, points, tirets, parenthèses tolérés.
-  function phoneOk(v) { var n = String(v || '').replace(/[\s\-\.\(\)]/g, ''); return /^(\+33|0033)[1-9][0-9]{8}$/.test(n) || /^0[1-9][0-9]{8}$/.test(n); }
+  function normPhone(v) { return String(v || '').trim().replace(/^((?:\+|00)33)\s*\(0\)\s*/, '$1 '); }
+  function phoneOk(v) { var n = normPhone(v).replace(/[\s\-\.\(\)]/g, ''); return /^(\+33|0033)[1-9][0-9]{8}$/.test(n) || /^0[1-9][0-9]{8}$/.test(n); }
+  function phoneDisplay(v) { var n = normPhone(v).replace(/[\s\-\.\(\)]/g, '').replace(/^(\+33|0033)/, '0'); return /^0\d{9}$/.test(n) ? n.replace(/(\d{2})(?=\d)/g, '$1 ') : String(v || ''); }
   function emailOk(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v || '').trim()); }
   function cpOk(v) { return /^\d{5}$/.test(String(v || '').trim()); }
   function descOk(v) { return String(v || '').trim().length >= 10; }
@@ -813,7 +820,7 @@ svg{flex:none}
     return !isNaN(d) && d >= t;
   }
   function lieuValid(l) { return !!l && nameOk(l.adresse) && cpOk(l.cp) && nameOk(l.ville); }
-  function contactValid(c) { return !!c && nameOk(c.prenom) && nameOk(c.nom) && phoneOk(c.tel) && emailOk(c.email); }
+  function contactValid(c) { return !!c && nameOk(c.prenom) && nameOk(c.nom) && phoneOk(c.tel) && (!String(c.email || '').trim() || emailOk(c.email)); }
 
   function emptyState() {
     return { v: 2, mode: null, step: 'choix', fam: null, precMode: 'liste', prob: null,
@@ -890,6 +897,7 @@ svg{flex:none}
     var f = FLOWS.devis, i = f.indexOf(step);
     return i > 0 ? f[i - 1] : 'choix';
   }
+  function flowIndex(mode, step) { var f = FLOWS[mode]; if (!f) return -1; return f.indexOf(step === 'acces' ? 'precision' : step); }
   function progress(mode, step) {
     var f = FLOWS[mode]; if (!f) return null;
     var s = step === 'acces' ? 'precision' : step, i = f.indexOf(s);
@@ -953,9 +961,10 @@ svg{flex:none}
   var DIAG = {
     plomberie: [
       { id: 'fuite', label: 'Une fuite d\u2019eau', best: /recherche de fuite/, re: /fuite/ },
-      { id: 'bouche', label: 'Évier, douche ou WC bouché', best: /desengorgement/, re: /desengorgement|canalisation/ },
-      { id: 'eauchaude', label: 'Plus d\u2019eau chaude', best: /chauffe-eau depannage/, re: /chauffe.eau|intervention urgente/ },
-      { id: 'robinet', label: 'Robinet ou chasse d\u2019eau', best: /mecanisme|mitigeur/, re: /mitigeur|mecanisme/ },
+      { id: 'bouche', label: 'Évier, douche ou WC bouché', best: /desengorgement/, re: /desengorgement/ },
+      { id: 'eauchaude', label: 'Plus d\u2019eau chaude', best: /intervention urgente/, re: /chauffe.eau|intervention urgente/, ex: /contrat/ },
+      { id: 'robinet', label: 'Robinet qui fuit ou à changer', best: /intervention urgente/, re: /mitigeur|intervention urgente/ },
+      { id: 'chasse', label: 'Chasse d\u2019eau qui coule', best: /mecanisme/, re: /mecanisme/ },
       { id: 'entretien', label: 'Entretien ou calcaire', best: /contrat entretien/, re: /entretien|detartrage/ }
     ],
     chauffage: [
@@ -968,9 +977,9 @@ svg{flex:none}
       { id: 'vmc', label: 'Ventilation (VMC)', best: /vmc/, re: /vmc/ }
     ],
     serrurerie: [
-      { id: 'claquee', label: 'Porte claquée, non verrouillée', best: /porte claquee/, re: /porte claquee|porte simple/ },
+      { id: 'claquee', label: 'Porte claquée (porte simple)', best: /porte simple/, re: /porte simple|porte claquee/ },
       { id: 'cle', label: 'Porte fermée à clé', best: /fermee a cle/, re: /fermee a cle/ },
-      { id: 'blindee', label: 'Porte blindée ou multipoints', best: /securite/, re: /securite|multipoints/ },
+      { id: 'blindee', label: 'Porte claquée blindée ou multipoints', best: /securite/, re: /securite/ },
       { id: 'serrure', label: 'Serrure bloquée ou clé cassée', best: /intervention urgente/, re: /intervention urgente/ }
     ],
     vitrerie: [
@@ -987,7 +996,7 @@ svg{flex:none}
     if (pid === 'inconnu') return { best: diagnosticOffer(list), others: [] };
     var p = (DIAG[slug] || PROBLEMS).filter(function (x) { return x.id === pid; })[0];
     if (!p) return { best: null, others: [] };
-    var matches = list.filter(function (s) { return p.re.test(searchText(s)); });
+    var matches = list.filter(function (s) { return p.re.test(searchText(s)) && !(p.ex && p.ex.test(searchText(s))); });
     var best = p.best ? (list.filter(function (s) { return p.best.test(norm(s.name)); })[0] || null) : null;
     if (!best) best = matches[0] || null;
     return { best: best, others: matches.filter(function (s) { return !best || s.id !== best.id; }) };
@@ -1013,12 +1022,15 @@ svg{flex:none}
   // Recherche tolérante à la saisie mobile : apostrophes typographiques, œ, tirets, mots dans le désordre.
   function searchNorm(v) { return norm(v).replace(/\u0153/g, 'oe').replace(/\u00e6/g, 'ae').replace(/[\u2019'`\u00b4\-_\/.,;:()]+/g, ' ').replace(/\s+/g, ' ').trim(); }
   function searchText(s) { return searchNorm([s.name, s.short_desc, s.category_name].join(' ')); }
+  var STOP = ['de', 'du', 'des', 'la', 'le', 'les', 'un', 'une', 'et', 'au', 'aux', 'en', 'pour', 'qui', 'que', 'mon', 'ma', 'mes', 'sur', 'par', 'ne', 'pas', 'plus', 'est', 'il', 'elle', 'ca', 'cela', 'chez', 'moi'];
+  var SYN = { debouchage: 'desengorgement', deboucher: 'desengorgement', debouche: 'desengorgement', bouche: 'desengorgement', bouchee: 'desengorgement', bouches: 'desengorgement', bouchon: 'desengorgement', toilettes: 'chasse', toilette: 'chasse', wc: 'chasse', robinet: 'mitigeur', robinets: 'mitigeur', ballon: 'chauffe', cumulus: 'chauffe', verrou: 'serrure', cle: 'porte', carreau: 'vitre', fenetre: 'vitre' };
+  function wordHit(words, tok) { var alts = SYN[tok] ? [tok, SYN[tok]] : [tok]; return alts.some(function (a) { return words.some(function (w) { return w.indexOf(a) === 0; }); }); }
   function searchOffers(all, q) {
-    var toks = searchNorm(q).split(' ').filter(function (t) { return t.length >= 2; });
+    var toks = searchNorm(q).split(' ').filter(function (t) { return t.length >= 2 && STOP.indexOf(t) < 0; });
     if (!toks.length) return { items: [], approx: false };
-    var and = (all || []).filter(function (s) { var t = searchText(s); return toks.every(function (k) { return t.indexOf(k) >= 0; }); });
+    var and = (all || []).filter(function (s) { var w = searchText(s).split(' '); return toks.every(function (k) { return wordHit(w, k); }); });
     if (and.length) return { items: and, approx: false };
-    var or = (all || []).map(function (s) { var t = searchText(s); return { s: s, n: toks.filter(function (k) { return t.indexOf(k) >= 0; }).length }; })
+    var or = (all || []).map(function (s) { var w = searchText(s).split(' '); return { s: s, n: toks.reduce(function (n, k) { return n + (wordHit(w, k) ? (SYN[k] ? 2 : 1) : 0); }, 0) }; })
       .filter(function (x) { return x.n > 0; }).sort(function (a, b) { return b.n - a.n; }).map(function (x) { return x.s; });
     return { items: or, approx: or.length > 0 };
   }
@@ -1054,7 +1066,7 @@ svg{flex:none}
       .concat(p.precisions ? ['', 'Précisions client : ' + p.precisions] : [])
       .join('\n');
     return {
-      prenom: c.prenom || null, nom: c.nom || null, telephone: c.tel || null, email: c.email || null,
+      prenom: c.prenom || null, nom: c.nom || null, telephone: c.tel ? normPhone(c.tel) : null, email: c.email || null,
       adresse: l.adresse || null, code_postal: l.cp || null, ville: l.ville || null,
       metier: fams.join(', ') || null,
       type_demande: d.cartMode === 'paiement' ? 'reservation' : (d.cartMode === 'mixte' ? 'mixte' : 'devis'),
@@ -1065,23 +1077,24 @@ svg{flex:none}
     };
   }
   function devisPayload(d) {
-    var c = d.contact || {}, l = d.lieu || {}, dv = d.devis || {}, svc = (dv.metiers || []).slice(0, 3);
+    var c = d.contact || {}, l = d.lieu || {}, dv = d.devis || {}, svc = (dv.metiers || []).slice(0, 3), lines = d.lines || [], byId = d.byId || {};
     var msg = ['DEMANDE DE DEVIS — module Ma demande v2', '- Travaux : ' + (svc.join(', ') || '—')]
       .concat(dv.nature ? ['- Nature du projet : ' + dv.nature] : [])
       .concat(['- Projet : ' + (dv.desc || ''), '- Photos : ' + (d.photos || 0) + (d.photos ? ' (transmises après création du dossier)' : ''), '- Zone : ' + zoneLine(l)])
+      .concat(lines.length ? ['', 'Interventions également demandées :'].concat(lines.map(function (x) { return '• ' + lineLabel(x, byId[x.id]); })) : [])
       .join('\n');
     return {
-      prenom: c.prenom || null, nom: c.nom || null, telephone: c.tel || null, email: c.email || null,
+      prenom: c.prenom || null, nom: c.nom || null, telephone: c.tel ? normPhone(c.tel) : null, email: c.email || null,
       adresse: l.adresse || null, code_postal: l.cp || null, ville: l.ville || null,
       metier: svc[0] || null, services: svc, type_demande: 'devis', form_type: 'devis_express',
       message: msg, source: 'commerce_engine_devis', source_page: d.page || null,
-      utm: { module: 'demande_v2', mode: 'devis', services: svc, nature: dv.nature || null, photos: d.photos || 0, zone: l.zone || null, wizard_tags: ['commerce-engine', 'demande-v2', 'devis'] }
+      utm: { module: 'demande_v2', mode: 'devis', services: svc, nature: dv.nature || null, photos: d.photos || 0, zone: l.zone || null, cart: lines.map(function (x) { return { id: x.id, slug: x.slug, qty: x.qty || 1 }; }), wizard_tags: ['commerce-engine', 'demande-v2', 'devis'] }
     };
   }
   function gatePayload(d) {
     var c = d.contact || {}, l = d.lieu || {};
     return {
-      prenom: c.prenom || null, nom: '', telephone: c.tel || null, email: c.email || null,
+      prenom: c.prenom || null, nom: '', telephone: c.tel ? normPhone(c.tel) : null, email: c.email || null,
       adresse: l.adresse || null, code_postal: cpOk(l.cp) ? l.cp : null, ville: l.ville || null,
       type_demande: 'consultation_tarifs', form_type: 'rappel', source: 'price_gate', source_page: d.page || null,
       message: 'Consultation des tarifs' + (d.famLabel ? ' — ' + d.famLabel : '') + (l.ville ? ' — ' + l.ville : ''),
@@ -1094,7 +1107,7 @@ svg{flex:none}
   function simulationAllowed(host) { return /^deploy-preview-\d+--remarkable-dragon-364e2b\.netlify\.app$/.test(String(host || '')) || host === 'localhost' || host === '127.0.0.1'; }
 
   return { AGENCE: AGENCE, PG_TTL_MS: PG_TTL_MS, FLOWS: FLOWS, ALL_STEPS: ALL_STEPS, PRICED_STEPS: PRICED_STEPS, LABELS: LABELS, FAM_HINTS: FAM_HINTS, QUAND: QUAND, RAPPEL: RAPPEL,
-    norm: norm, esc: esc, nameOk: nameOk, phoneOk: phoneOk, emailOk: emailOk, cpOk: cpOk, descOk: descOk, dateOk: dateOk, lieuValid: lieuValid, contactValid: contactValid,
+    norm: norm, esc: esc, nameOk: nameOk, normPhone: normPhone, phoneOk: phoneOk, phoneDisplay: phoneDisplay, flowIndex: flowIndex, emailOk: emailOk, cpOk: cpOk, descOk: descOk, dateOk: dateOk, lieuValid: lieuValid, contactValid: contactValid,
     emptyState: emptyState, priceGatePassed: priceGatePassed, isPricedStep: isPricedStep, modeForStep: modeForStep, guardStep: guardStep, nextStep: nextStep, prevStep: prevStep,
     progress: progress, legacyStep: legacyStep, haversineKm: haversineKm, zoneFor: zoneFor, zoneText: zoneText, priced: priced, perUnit: perUnit, priceKind: priceKind, eur: eur,
     firmTotal: firmTotal, searchText: searchText, problemsFor: problemsFor, matchProblem: matchProblem, diagFor: diagFor, suggest: suggest, searchNorm: searchNorm, searchOffers: searchOffers, famHasPrices: famHasPrices, agencyStatus: agencyStatus, diagnosticOffer: diagnosticOffer, frDate: frDate, priseText: priseText,
@@ -1158,7 +1171,6 @@ svg{flex:none}
     app.setAttribute('data-step', target); app.setAttribute('data-mode', state.mode || '');
     $$('.step').forEach(function (s) { var on = s.getAttribute('data-step') === target; s.classList.toggle('is-active', on); s.classList.toggle('is-back', on && !!o.back); });
     renderKickers(target);
-    $('#toast').hidden = true;
     if (ENTER[target]) ENTER[target](o);
     renderProgress(target); renderRecap();
     $('#topBack').hidden = !C.prevStep(state.mode, target);
@@ -1174,7 +1186,7 @@ svg{flex:none}
   }
   function next(from) {
     var back = state._returnTo; state._returnTo = null;
-    if (back && back !== from && C.guardStep(back, ctx()) === back) return go(back);
+    if (back && C.flowIndex(state.mode, back) > C.flowIndex(state.mode, from) && C.guardStep(back, ctx()) === back) return go(back);
     go(C.nextStep(state.mode, from, { fam: state.fam }));
   }
   function renderProgress(step) {
@@ -1185,7 +1197,7 @@ svg{flex:none}
 
   // ---------- Récapitulatif contextuel (colonne desktop + feuille mobile) ----------
   function lieuTxt() { var l = state.lieu; return C.lieuValid(l) ? [l.adresse, [l.cp, l.ville].filter(Boolean).join(' ')].filter(Boolean).join(', ') : ''; }
-  function contactTxt() { var c = state.contact; if (C.contactValid(c)) return c.prenom + ' ' + c.nom + ' · ' + c.tel; if (c.prenom || c.tel) return [c.prenom, c.tel].filter(Boolean).join(' · ') + ' (nom à compléter)'; return ''; }
+  function contactTxt() { var c = state.contact; if (C.contactValid(c)) return c.prenom + ' ' + c.nom + ' · ' + C.phoneDisplay(c.tel); if (c.prenom || c.tel) return [c.prenom, C.phoneDisplay(c.tel)].filter(Boolean).join(' · '); return ''; }
   function sec(k, v, step, extra) {
     if (!v) return '';
     var canEdit = step && C.guardStep(step, ctx()) === step;
@@ -1231,10 +1243,12 @@ svg{flex:none}
   function closeSheet() { if ($('#sheet').hidden) return; $('#sheet').hidden = true; document.body.style.overflow = ''; if (sheetOpener) try { sheetOpener.focus(); } catch (e) {} }
 
   // ---------- Entrée ----------
+  function renderClosed() { var a = C.agencyStatus(new Date()); app.classList.toggle('is-closed', !a.open); var t = a.open ? '' : 'L\u2019agence est fermée en ce moment : premier rappel possible ' + a.next + '. Vous pouvez envoyer votre demande dès maintenant.'; var cl = $('#closedLine'); if (cl) { cl.textContent = t; cl.hidden = !t; } var pc = $('#precClosed'); if (pc) { pc.textContent = t; pc.hidden = !t; } }
   ENTER.choix = function () {
+    renderClosed();
     var box = $('#resume'), n = cart ? cart.count() : 0, label = '';
     if (n > 0) label = n + ' intervention' + (n > 1 ? 's' : '') + (state.lieu.ville ? ' · ' + state.lieu.ville : '');
-    else if ((state.devis.metiers || []).length) label = 'Devis ' + state.devis.metiers.join(', ');
+    else if ((state.devis.metiers || []).length) label = 'Devis ' + state.devis.metiers.join(', ') + ((state.devis.photos || 0) > 0 && !dvFiles.length ? ' · photos à rajouter' : '');
     else if (!state.sent && state.mode && C.lieuValid(state.lieu)) label = (state.mode === 'devis' ? 'Demande de devis' : "Demande d'intervention") + ' · ' + state.lieu.ville;
     box.hidden = !label;
     if (label) box.innerHTML = '<span class="resume-txt"><strong>Reprendre votre demande</strong><span>' + esc(label) + '</span></span><button type="button" class="link" data-reset>Recommencer</button><button type="button" class="btn-soft" data-resume>Reprendre ' + ic('i-arrow', 16) + '</button>';
@@ -1305,7 +1319,7 @@ svg{flex:none}
     mark('fld-adresse', bA); mark('fld-cp', bC); mark('fld-ville', bV); save();
     if (bA) return adr.focus(); if (bC) return cpI.focus(); if (bV) return viI.focus();
     if (!l.zone) { l.zone = C.zoneFor(l.lat, l.lon, l.cp); save(); }
-    if (state.mode === 'intervention' && state.fam && loaded && byFam[state.fam] && !C.famHasPrices(byFam[state.fam])) return switchToDevis(state.fam, true);
+    if (state.mode === 'intervention' && state.fam && loaded && byFam[state.fam] && !C.famHasPrices(byFam[state.fam]) && !(cart && cart.count())) return switchToDevis(state.fam, true);
     next('lieu');
   }
 
@@ -1326,7 +1340,7 @@ svg{flex:none}
     $$('#famTiles .tile').forEach(function (t) { t.setAttribute('aria-pressed', String(t === el)); });
     if (state.fam !== slug) { state.fam = slug; state.prob = null; $('#precSearch').value = ''; }
     save();
-    if (loaded && !C.famHasPrices(byFam[slug])) return setTimeout(function () { switchToDevis(slug, true); }, 240); // métier entièrement sur devis : pas d'écran « tarifs »
+    if (loaded && !C.famHasPrices(byFam[slug]) && !(cart && cart.count())) return setTimeout(function () { switchToDevis(slug, true); }, 240); // métier entièrement sur devis : pas d'écran « tarifs »
     setTimeout(function () { go('precision'); }, 240);
   }
 
@@ -1338,10 +1352,10 @@ svg{flex:none}
   function switchToDevis(slug, fromQuoteOnly) {
     var m = slug ? devisMetierFor(slug) : null;
     state.mode = 'devis';
-    if (m && (state.devis.metiers || []).indexOf(m) < 0) state.devis.metiers = (state.devis.metiers || []).concat([m]).slice(0, 3);
+    if (m && (state.devis.metiers || []).indexOf(m) < 0) state.devis.metiers = [m].concat(state.devis.metiers || []).slice(0, 3);
     save();
     if (fromQuoteOnly) toast('Ces travaux sont chiffrés sur devis, gratuitement');
-    else if (cart && cart.count()) toast('Vos interventions choisies restent enregistrées de côté');
+    else if (cart && cart.count()) toast('Vos interventions choisies seront jointes à votre demande de devis');
     go(m ? 'dv-projet' : 'dv-metier');
   }
 
@@ -1391,7 +1405,7 @@ svg{flex:none}
     return '<details class="more"><summary>' + ic('i-down', 16) + 'Ce qui est inclus</summary>' +
       (inc.length ? '<ul>' + inc.map(function (x) { return '<li>' + ic('i-check', 15) + '<span>' + esc(x) + '</span></li>'; }).join('') + '</ul>' : '') +
       (meta.length ? '<p class="meta">' + meta.join(' · ') + '</p>' : '') +
-      (opts.length ? '<p class="meta">Option possible : ' + esc(opts.map(function (v) { return v.label; }).join(', ')) + ' — précisée avec vous au rappel.</p>' : '') + '</details>';
+      (opts.length ? '<p class="meta">Option possible : ' + esc(opts.map(function (v) { var m = String(v.info || '').match(/\+\s?[\d\s]+,\d{2}\s?€\s?HT/); return v.label + (m ? ' (' + m[0].replace(/\s?€/, ' €') + ')' : ''); }).join(', ')) + ' — précisée avec vous au rappel ; le prix affiché est celui de la version de base.</p>' : '') + '</details>';
   }
   function offerHtml(s, reco, showFam) {
     var on = inCart(s.id), hasVar = Array.isArray(s.variants) && s.variants.some(function (v) { return v && v.label; });
@@ -1402,11 +1416,11 @@ svg{flex:none}
       '<span class="offer-txt"><span class="offer-t">' + esc(s.name) + '</span>' +
       (showFam && s.category_name ? '<span class="offer-d">' + esc(s.category_name) + '</span>' : '') +
       (s.short_desc ? '<span class="offer-d">' + esc(s.short_desc) + '</span>' : '') +
-      (hasVar ? '<span class="offer-d">Plusieurs gammes possibles, précisées avec vous au rappel.</span>' : '') + '</span>' +
+      (hasVar ? '<span class="offer-d">Prix de la version de base ; option de gamme possible (voir le détail).</span>' : '') + '</span>' +
       priceBlock(s) + '<span class="sr-only">' + (on ? ', dans votre demande' : ', ajouter à votre demande') + '</span></button>' +
       detailsBlock(s) + '</article>';
   }
-  ENTER.precision = function () { renderOffers(); };
+  ENTER.precision = function () { renderClosed(); renderOffers(); };
   function renderOffers() {
     var off = $('#offers'), head = $('#offersHead');
     if (!priceGatePassed()) { off.innerHTML = ''; head.textContent = ''; return; } // P0 : aucun prix rendu sans identification
@@ -1437,11 +1451,11 @@ svg{flex:none}
       var all = state.showAll === state.fam, shown = all ? list : list.filter(function (x, i) { return i < 6 || inCart(x.id); });
       html = shown.map(function (x) { return offerHtml(x); }).join('') + (shown.length < list.length ? '<button type="button" class="more-btn" data-showall>Voir les ' + (list.length - shown.length) + ' autres interventions</button>' : '');
     }
-    if (loaded) html += '<p class="alt-line">Vous ne trouvez pas votre besoin&nbsp;? <button class="link" type="button" data-switch-devis>Décrivez-le, nous vous conseillons</button></p>';
+    if (loaded) html += '<p class="alt-line">Vous ne trouvez pas votre besoin&nbsp;? <button class="link" type="button" data-switch-devis>Décrivez votre besoin (devis gratuit)</button></p>';
     off.innerHTML = html;
     updatePrecCta();
   }
-  function updatePrecCta() { var n = cart ? cart.count() : 0; $('#precNext').disabled = n < 1; }
+  function updatePrecCta() { var n = cart ? cart.count() : 0; $('#precNext').disabled = n < 1; $('#precHint').hidden = n > 0; }
   function toggleLine(id) {
     var s = byId[id]; if (!s || !cart) return;
     if (inCart(id)) { cart.remove(id); track('remove_line'); }
@@ -1454,7 +1468,7 @@ svg{flex:none}
   }
 
   // ---------- Ma demande ----------
-  ENTER.demande = function () { renderDemande(); };
+  ENTER.demande = function () { renderNext(); renderDemande(); };
   function zoneNoteHtml() { var z = state.lieu.zone; return z && (z.status === 'edge' || z.status === 'out') ? '<div class="note note--warm">' + ic('i-info', 20) + '<span>Votre adresse est à plus de 50 km de l\u2019agence : les prix affichés incluent le déplacement dans la limite de 55 km. L\u2019agence vous confirme le déplacement lors du rappel.</span></div>' : ''; }
   function renderDemande() {
     var box = $('#demandeList');
@@ -1482,7 +1496,7 @@ svg{flex:none}
   CF.forEach(function (x) { document.getElementById(x[0]).addEventListener('input', function () { state.contact[x[1]] = this.value; mark(x[2], false); save(); }); });
   function submitContact() {
     var c = state.contact; CF.forEach(function (x) { c[x[1]] = document.getElementById(x[0]).value.trim(); }); save();
-    var bad = [!C.nameOk(c.prenom), !C.nameOk(c.nom), !C.phoneOk(c.tel), !C.emailOk(c.email)];
+    var bad = [!C.nameOk(c.prenom), !C.nameOk(c.nom), !C.phoneOk(c.tel), !!String(c.email || '').trim() && !C.emailOk(c.email)];
     CF.forEach(function (x, i) { mark(x[2], bad[i]); });
     var first = bad.indexOf(true); if (first >= 0) return document.getElementById(CF[first][0]).focus();
     next('coordonnees');
@@ -1515,7 +1529,9 @@ svg{flex:none}
     if (i >= 0) sel.splice(i, 1); else { if (sel.length >= 3) { toast('Trois domaines maximum'); return; } sel.push(m); }
     el.setAttribute('aria-pressed', String(i < 0)); $('#dvMetierNext').disabled = !sel.length; save(); renderRecap();
   }
+  var DV_EX = { 'Rénovation': 'Ex. repeindre un salon de 25 m², murs et plafond, maison des années 1990…', 'Salle de bain': 'Ex. remplacer la baignoire par une douche à l\u2019italienne, pièce de 6 m²…', 'Plomberie': 'Ex. déplacer l\u2019évier de la cuisine, créer une arrivée d\u2019eau au garage…', 'Chauffage': 'Ex. remplacer une chaudière fioul de 20 ans, maison de 110 m²…', 'Électricité': 'Ex. mise aux normes du tableau électrique, maison ancienne…', 'Menuiserie': 'Ex. remplacer une porte d\u2019entrée et deux fenêtres…', 'Volets': 'Ex. motoriser trois volets roulants…', 'Adaptation PMR': 'Ex. installer une douche de plain-pied et des barres d\u2019appui…' };
   ENTER['dv-projet'] = function () {
+    $('#dv-desc').placeholder = DV_EX[(state.devis.metiers || [])[0]] || 'Ex. décrivez les travaux, la pièce concernée, les dimensions approximatives…';
     $('#natureOpts').innerHTML = NATURES.map(function (n) { return '<button type="button" class="chip" role="radio" data-nature="' + esc(n) + '" aria-checked="' + (state.devis.nature === n) + '">' + esc(n) + '</button>'; }).join('');
     $('#dv-desc').value = state.devis.desc || ''; mark('fld-desc', false); descHint();
   };
@@ -1553,10 +1569,14 @@ svg{flex:none}
   var drop = $('#drop');
   ['dragenter', 'dragover'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('is-over'); }); });
   ['dragleave', 'drop'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove('is-over'); if (ev === 'drop' && e.dataTransfer) addPhotos(e.dataTransfer.files); }); });
+  function renderNext() { var dv = state.mode === 'devis'; var steps = dv ? [['Vous envoyez votre demande', 'Gratuit et sans engagement.'], ['L\u2019agence vous recontacte', 'Sous 24 h ouvrées, pour préciser votre projet.'], ['Vous recevez votre devis', 'Vous décidez ensuite, sans engagement.']] : [['Vous envoyez votre demande', 'Aucun paiement en ligne.'], ['L\u2019agence vous recontacte', 'Sous 24 h ouvrées, aux heures d\u2019ouverture.'], ['Rendez-vous fixé ensemble', 'Avec un technicien salarié de l\u2019agence.']]; $('#recapNext ol').innerHTML = steps.map(function (x, i) { return '<li><b>' + (i + 1) + '</b><span><strong>' + esc(x[0]) + '</strong>' + esc(x[1]) + '</span></li>'; }).join(''); }
   ENTER['dv-recap'] = function () {
+    renderNext();
     state.devis.photosSeen = true; save();
     $('#errDevis').hidden = true;
     var d = state.devis, rows = [['Travaux', (d.metiers || []).join(', '), 'dv-metier'], ['Type de projet', d.nature || 'Non précisé', 'dv-projet'], ['Projet', d.desc, 'dv-projet'], ['Photos', dvFiles.length ? dvFiles.length + ' photo' + (dvFiles.length > 1 ? 's' : '') : 'Aucune', 'dv-photos'], ['Lieu', lieuTxt(), 'lieu'], ['Contact', [state.contact.prenom + ' ' + state.contact.nom, state.contact.tel, state.contact.email].join(' · '), 'coordonnees']];
+    if (!dvFiles.length && (state.devis.photos || 0) > 0) rows[3][1] = 'À rajouter : non conservées après fermeture de la page';
+    (cart ? cart.lines() : []).forEach(function (l) { rows.push(['Intervention jointe', l.name + ' · ' + linePrice(l), 'demande']); });
     $('#dvRows').innerHTML = rows.map(function (r) { return '<div class="rw"><span class="rw-k">' + esc(r[0]) + '</span><span class="rw-v">' + esc(r[1]) + '</span><button type="button" class="link" data-go="' + r[2] + '">Modifier</button></div>'; }).join('');
   };
 
@@ -1577,15 +1597,16 @@ svg{flex:none}
     busy(btn, true, 'Envoi en cours…');
     postLead(payload).then(function (data) {
       state.sent = { mode: 'intervention', ref: C.refFromId(data && data.id), simulated: !!(data && data.simulated), at: Date.now(), prenom: state.contact.prenom,
-        lines: lines.map(function (l) { return { name: l.name + ((l.qty || 1) > 1 ? ' ×' + l.qty : ''), price: linePrice(l) }; }), total: C.firmTotal(lines, byId), lieu: lieuTxt(), prise: C.priseText(p), contact: [state.contact.tel, state.contact.email].filter(Boolean).join(' · ') };
-      cart.clear(); state.prise = C.emptyState().prise; state.fam = null; state.prob = null; save();
+        lines: lines.map(function (l) { return { name: l.name + ((l.qty || 1) > 1 ? ' ×' + l.qty : ''), price: linePrice(l) }; }), total: C.firmTotal(lines, byId), lieu: lieuTxt(), prise: C.priseText(p), tel: C.phoneDisplay(state.contact.tel), email: state.contact.email || '' };
+      cart.clear(); state.prise = C.emptyState().prise; state.fam = null; state.prob = null; state.devis = C.emptyState().devis; save();
       busy(btn, false); track('confirmation'); go('envoye', { replace: true });
     }).catch(function () { busy(btn, false); err.textContent = "L'envoi n'a pas abouti. Vos informations sont conservées : réessayez, ou appelez le 03 66 10 01 34."; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
   }
   function sendDevis() {
     var btn = $('#sendDevis'), err = $('#errDevis'); if (btn.classList.contains('is-busy')) return; err.hidden = true;
     var files = dvFiles.slice();
-    var payload = C.devisPayload({ contact: state.contact, lieu: state.lieu, devis: state.devis, photos: files.length, page: location.href });
+    var joined = cart ? cart.lines() : [];
+    var payload = C.devisPayload({ contact: state.contact, lieu: state.lieu, devis: state.devis, photos: files.length, lines: joined, byId: byId, page: location.href });
     busy(btn, true, 'Envoi en cours…');
     postLead(payload).then(function (data) {
       var up = (!SIM && files.length && data && data.id && data.upload_token) ? uploadPhotos(data.id, data.upload_token, files) : Promise.resolve(null);
@@ -1593,8 +1614,8 @@ svg{flex:none}
     }).then(function (r) {
       var stored = r.photos && typeof r.photos.stored === 'number' ? r.photos.stored : (Array.isArray(r.photos && r.photos.stored) ? r.photos.stored.length : null);
       state.sent = { mode: 'devis', ref: C.refFromId(r.data && r.data.id), simulated: !!(r.data && r.data.simulated), at: Date.now(), prenom: state.contact.prenom,
-        metiers: (state.devis.metiers || []).slice(), lieu: lieuTxt(), photosSent: files.length, photosStored: stored, contact: [state.contact.tel, state.contact.email].filter(Boolean).join(' · ') };
-      state.devis = C.emptyState().devis; dvFiles = []; save();
+        metiers: (state.devis.metiers || []).slice(), lieu: lieuTxt(), photosSent: files.length, photosStored: stored, tel: C.phoneDisplay(state.contact.tel), email: state.contact.email || '', lines: joined.map(function (l) { return { name: l.name, price: linePrice(l) }; }) };
+      state.devis = C.emptyState().devis; dvFiles = []; if (cart) cart.clear(); state.prise = C.emptyState().prise; state.fam = null; save();
       busy(btn, false); track('confirmation'); go('envoye', { replace: true });
     }).catch(function () { busy(btn, false); err.textContent = "L'envoi n'a pas abouti. Vos informations sont conservées : réessayez, ou appelez le 03 66 10 01 34."; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
   }
@@ -1615,7 +1636,7 @@ svg{flex:none}
     if (dv) h += '<div class="rw"><span class="rw-k">Travaux</span><span class="rw-v">' + esc((s.metiers || []).join(', ')) + '</span><span></span></div>' + (s.photosSent ? '<div class="rw"><span class="rw-k">Photos</span><span class="rw-v">' + (s.simulated ? s.photosSent + ' (non transmises en simulation)' : (s.photosStored ? s.photosStored + ' transmise' + (s.photosStored > 1 ? 's' : '') : 'non transmises : vous pourrez les envoyer lors du rappel')) + '</span><span></span></div>' : '');
     else h += (s.lines || []).map(function (l) { return '<div class="rw"><span class="rw-k">Intervention</span><span class="rw-v">' + esc(l.name) + '</span><span class="rw-v">' + esc(l.price) + '</span></div>'; }).join('') + (s.prise ? '<div class="rw"><span class="rw-k">Préférence</span><span class="rw-v">' + esc(s.prise) + '</span><span></span></div>' : '');
     if (!dv && s.total > 0) h += '<div class="rw"><span class="rw-k">Total prix fermes</span><span class="rw-v">' + C.eur(s.total) + ' TTC</span><span></span></div>';
-    h += '<div class="rw"><span class="rw-k">Lieu</span><span class="rw-v">' + esc(s.lieu) + '</span><span></span></div>' + (s.contact ? '<div class="rw"><span class="rw-k">Rappel au</span><span class="rw-v">' + esc(s.contact) + '</span><span></span></div>' : '') + '</div></div>';
+    h += '<div class="rw"><span class="rw-k">Lieu</span><span class="rw-v">' + esc(s.lieu) + '</span><span></span></div>' + (s.tel ? '<div class="rw"><span class="rw-k">Téléphone</span><span class="rw-v">' + esc(s.tel) + '</span><span></span></div>' : '') + (s.email ? '<div class="rw"><span class="rw-k">Email</span><span class="rw-v">' + esc(s.email) + '</span><span></span></div>' : '') + (dv && s.lines && s.lines.length ? s.lines.map(function (l) { return '<div class="rw"><span class="rw-k">Intervention jointe</span><span class="rw-v">' + esc(l.name) + '</span><span class="rw-v">' + esc(l.price) + '</span></div>'; }).join('') : '') + '</div></div>';
     var steps = dv
       ? [['Un technicien étudie votre projet', s.photosSent ? 'À partir de votre description et de vos photos.' : 'À partir de votre description.'], ['L\u2019agence vous recontacte sous 24 h ouvrées', 'Pour préciser votre projet ; une visite sur place peut vous être proposée si nécessaire.' + hoursLine()], ['Vous recevez votre devis gratuit', 'Vous décidez ensuite, sans engagement.']]
       : [['L\u2019agence de Saint-Omer vous rappelle', 'Sous 24 h ouvrées au plus tard, aux heures d\u2019ouverture (lun–ven 9h–17h, sam 9h–16h).' + hoursLine()], ['Le créneau est fixé avec vous', 'Les prix fermes restent ceux affichés ; les prestations sur devis sont chiffrées après diagnostic.'], ['Le technicien intervient', 'Vous réglez après l\u2019intervention. Aucun paiement en ligne.']];
@@ -1627,18 +1648,18 @@ svg{flex:none}
   // ---------- Événements (délégation) ----------
   document.addEventListener('click', function (e) {
     var t = e.target; if (!t.closest) return; var el;
-    if ((el = t.closest('[data-choose]'))) { var md = el.getAttribute('data-choose'); if (state.mode !== md) { state.mode = md; save(); } return go(md === 'devis' ? 'dv-metier' : 'lieu'); }
+    if ((el = t.closest('[data-choose]'))) { var md = el.getAttribute('data-choose'); state.mode = md; state.sent = null; state._returnTo = null; if (md === 'intervention') { state.fam = null; state.prob = null; state.precMode = 'liste'; } save(); return go(md === 'devis' ? 'dv-metier' : 'lieu'); }
     if ((el = t.closest('[data-next]'))) { var from = el.getAttribute('data-next'); if (from === 'dv-photos') { state.devis.photosSeen = true; save(); } if (from === 'lieu') return submitLieu(); if (from === 'coordonnees') return submitContact();
       if (from === 'dv-projet') { state.devis.desc = $('#dv-desc').value.trim(); save(); if (!C.descOk(state.devis.desc)) { mark('fld-desc', true); return $('#dv-desc').focus(); } }
       return next(from); }
-    if ((el = t.closest('[data-go]'))) { e.preventDefault(); if (el.closest('#recap, #sheet, #dvRows')) state._returnTo = state.step; else state._returnTo = null; return go(el.getAttribute('data-go')); }
+    if ((el = t.closest('[data-go]'))) { e.preventDefault(); var tg = el.getAttribute('data-go'), ti = C.flowIndex(state.mode, tg), ci = C.flowIndex(state.mode, state.step); state._returnTo = (ti >= 0 && ci > ti) ? state.step : null; return go(tg); }
     if ((el = t.closest('[data-fam]'))) return pickFamily(el);
     if ((el = t.closest('[data-toggle]'))) return toggleLine(el.getAttribute('data-toggle'));
     if ((el = t.closest('[data-remove]'))) { var rid = el.getAttribute('data-remove'); if (cart) { cart.remove(rid); toast('Retiré de votre demande'); } save(); renderDemande(); renderRecap(); if (!cart.count()) go('besoin'); return; }
     if ((el = t.closest('[data-showall]'))) { state.showAll = state.fam; save(); return renderOffers(); }
     if ((el = t.closest('[data-prec]'))) { state.precMode = el.getAttribute('data-prec'); $('#precSearch').value = ''; save(); return renderOffers(); }
     if ((el = t.closest('[data-prob]'))) { state.prob = el.getAttribute('data-prob'); save(); return renderOffers(); }
-    if ((el = t.closest('[data-quand]'))) { state.prise.quand = el.getAttribute('data-quand'); save(); $('#errCreneau').hidden = true; ENTER.creneau(); renderRecap(); if (state.prise.quand === 'date') $('#f-date').focus(); return; }
+    if ((el = t.closest('[data-quand]'))) { state.prise.quand = el.getAttribute('data-quand'); save(); $('#errCreneau').hidden = true; mark('fld-date', false); ENTER.creneau(); renderRecap(); if (state.prise.quand === 'date') $('#f-date').focus(); return; }
     if ((el = t.closest('[data-rappel]'))) { state.prise.rappel = el.getAttribute('data-rappel'); save(); ENTER.creneau(); return renderRecap(); }
     if ((el = t.closest('[data-dvm]'))) return toggleMetier(el);
     if ((el = t.closest('[data-nature]'))) { var nv = el.getAttribute('data-nature'); state.devis.nature = state.devis.nature === nv ? null : nv; save(); return $$('#natureOpts [data-nature]').forEach(function (b) { b.setAttribute('aria-checked', String(b.getAttribute('data-nature') === state.devis.nature)); }); }
@@ -1679,7 +1700,7 @@ svg{flex:none}
   // ---------- Démarrage ----------
   var resumeStep = state.step;
   $('#simBadge').hidden = !SIM; app.classList.toggle('is-sim', SIM);
-  app.classList.toggle('is-closed', !C.agencyStatus(new Date()).open);
+  renderClosed();
   (function () { var panel = $('.sheet-panel'), y0 = null; panel.addEventListener('touchstart', function (e) { y0 = panel.scrollTop <= 0 ? e.touches[0].clientY : null; }, { passive: true }); panel.addEventListener('touchmove', function (e) { if (y0 !== null && e.touches[0].clientY - y0 > 70) { y0 = null; closeSheet(); } }, { passive: true }); })();
   var hp = parseHash();
   if (hp.mode) state.mode = hp.mode;

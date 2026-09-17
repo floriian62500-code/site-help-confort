@@ -116,7 +116,7 @@ ok('recherche : mots dans le désordre + résultats approchants', C.searchOffers
 // ---- Aide au choix par métier : une offre conseillée
 const serr = [{ id: 'u', name: 'Intervention urgente serrurerie — 1h + déplacement', short_desc: 'Porte claquée, serrure bloquée', price_ttc: 138.88 }, { id: 's', name: 'Ouverture porte simple (non blindée)', price_ttc: 98.01 }, { id: 'c', name: 'Ouverture porte claquée', price_ttc: 176 }, { id: 'k', name: 'Ouverture porte fermée à clé', price_ttc: 228 }];
 ok('aide serrurerie : pas de « panne ou fuite »', !C.diagFor('serrurerie', serr).some(p => /fuite/i.test(p.label)));
-ok('aide serrurerie : porte claquée → « Ouverture porte claquée » conseillée', C.suggest('serrurerie', serr, 'claquee').best.id === 'c');
+ok('aide serrurerie : porte claquée (porte simple) → offre la moins chère équivalente conseillée', C.suggest('serrurerie', serr, 'claquee').best.id === 's' && C.suggest('serrurerie', serr, 'claquee').others.every(o => o.price_ttc >= 98.01));
 ok('aide serrurerie : porte fermée à clé → offre dédiée', C.suggest('serrurerie', serr, 'cle').best.id === 'k');
 ok('aide : « je ne sais pas » → intervention de diagnostic', C.suggest('serrurerie', serr, 'inconnu').best.id === 'u');
 ok('métier sans aucun prix → orienté devis', C.famHasPrices([{ name: 'Peinture', price_ttc: 0, requires_quote: true }]) === false && C.famHasPrices(serr) === true);
@@ -126,6 +126,20 @@ const at = (iso) => C.agencyStatus(new Date(iso));
 ok('horaires : jeudi 10h ouvert', at('2026-09-17T08:00:00Z').open === true);
 ok('horaires : jeudi 7h09 fermé → rappel aujourd’hui à 9 h', at('2026-09-17T05:09:00Z').open === false && /aujourd/.test(at('2026-09-17T05:09:00Z').next));
 ok('horaires : samedi 17h fermé → lundi à 9 h', at('2026-09-19T15:00:00Z').next === 'lundi à 9 h');
+
+
+// ---- Round 2 : recherche (mots vides, synonymes, début de mot), email facultatif, retour « Modifier », téléphone « (0) »
+const cat2 = [{ id: 'd', name: 'Désengorgement canalisation', category_name: 'Plomberie' }, { id: 'm', name: "Mécanisme de chasse d'eau", category_name: 'Plomberie' }, { id: 'mi', name: "Remplacement mitigeur d'évier", category_name: 'Plomberie' }, { id: 'ce', name: 'Chauffe-eau 200L mural', category_name: 'Plomberie' }, { id: 'iso', name: 'Isolation thermique', short_desc: 'Pose de panneaux isolants', category_name: 'Rénovation' }, { id: 'el', name: 'Intervention urgente électricité', short_desc: 'Disjoncteur qui saute', category_name: 'Électricité' }];
+ok('recherche : « débouchage » → désengorgement', C.searchOffers(cat2, 'débouchage').items[0].id === 'd');
+ok('recherche : « toilettes » → mécanisme de chasse d’eau', C.searchOffers(cat2, 'toilettes').items[0].id === 'm');
+ok('recherche : « évier bouché » → désengorgement en premier', C.searchOffers(cat2, 'évier bouché').items[0].id === 'd');
+ok('recherche : « ballon d’eau chaude » → chauffe-eau, pas l’isolation (panneaux)', C.searchOffers(cat2, "ballon d'eau chaude").items[0].id === 'ce' && !C.searchOffers(cat2, "ballon d'eau chaude").items.some(x => x.id === 'iso'));
+ok('recherche : « robinet qui fuit » sans l’électricité (« qui » ignoré)', !C.searchOffers(cat2, 'robinet qui fuit').items.some(x => x.id === 'el'));
+ok('coordonnées : email facultatif (vide accepté, invalide refusé)', C.contactValid({ prenom: 'Te', nom: 'Re', tel: '0612345678', email: '' }) === true && C.contactValid({ prenom: 'Te', nom: 'Re', tel: '0612345678', email: 'x@' }) === false);
+ok('téléphone : « +33 (0)6 12 34 56 78 » accepté et normalisé pour le serveur', C.phoneOk('+33 (0)6 12 34 56 78') && /^\+33 6/.test(C.normPhone('+33 (0)6 12 34 56 78')));
+ok('retour « Modifier » : seulement vers une étape postérieure', C.flowIndex('intervention', 'creneau') > C.flowIndex('intervention', 'lieu') && C.flowIndex('intervention', 'acces') === C.flowIndex('intervention', 'precision'));
+const pJ = C.devisPayload({ contact, lieu, devis: { metiers: ['Rénovation'], desc: 'Peinture salon 25 m2' }, photos: 0, lines, byId, page: 'x' });
+ok('devis : interventions déjà choisies jointes (message + utm), jamais perdues', /Interventions également demandées/.test(pJ.message) && pJ.utm.cart.length === 2 && violations(pJ).length === 0);
 
 console.log(`\nRÉSULTAT MODULE DEMANDE V2 : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);
