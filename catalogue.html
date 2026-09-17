@@ -304,7 +304,7 @@ svg{flex:none}
 .thumbs{list-style:none;display:flex;flex-wrap:wrap;gap:12px;margin:16px 0 0;padding:0}
 .thumbs li{position:relative;width:96px;height:96px;border-radius:16px;overflow:hidden;background:var(--surface2);box-shadow:inset 0 0 0 1px var(--line);display:grid;place-items:center;color:var(--faint);animation:pop .35s var(--ease)}
 .thumbs img{width:100%;height:100%;object-fit:cover;display:block}
-.thumbs button{position:absolute;top:4px;right:4px;width:36px;height:36px;border-radius:99px;border:0;background:rgba(11,21,38,.7);color:#fff;display:grid;place-items:center;cursor:pointer}
+.thumbs button{position:absolute;top:2px;right:2px;width:44px;height:44px;border-radius:99px;border:0;background:rgba(11,21,38,.7);color:#fff;display:grid;place-items:center;cursor:pointer}
 
 /* ---------- Récapitulatifs ---------- */
 .rows{border-radius:20px;background:var(--surface2);padding:4px 20px}
@@ -394,6 +394,8 @@ svg{flex:none}
   .top-close{width:44px;height:44px}
   .eyebrow{display:none}
   .q-kicker .link{display:inline-flex;align-items:center;min-height:44px;margin:-12px 0}
+  .ctx-line .link,.resume .link,.alt-line .link,.done .link,.legal .link{display:inline-flex;align-items:center;min-height:44px}
+  .rc-k button{min-height:44px}
   .more summary{min-height:44px}
   #probChips{display:grid;grid-template-columns:1fr 1fr}
   #probChips .chip{justify-content:center;text-align:center;padding:8px 10px;line-height:1.25}
@@ -1169,6 +1171,7 @@ svg{flex:none}
   var toastT = null;
   function toast(msg) { var t = $('#toast'); t.innerHTML = ic('i-check', 17) + '<span>' + esc(msg) + '</span>'; t.hidden = false; t.style.animation = 'none'; void t.offsetWidth; t.style.animation = ''; clearTimeout(toastT); toastT = setTimeout(function () { t.hidden = true; }, 4000); }
   function busy(btn, on, label) { if (!btn) return; if (on) { btn.dataset.html = btn.innerHTML; btn.classList.add('is-busy'); btn.disabled = true; btn.textContent = label || '…'; } else { btn.classList.remove('is-busy'); btn.disabled = false; if (btn.dataset.html) btn.innerHTML = btn.dataset.html; } }
+  function focusBad(el) { if (!el) return; try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); } try { el.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) { el.scrollIntoView(); } }
   function mark(fieldId, bad) { var f = document.getElementById(fieldId); if (!f) return; f.classList.toggle('is-bad', !!bad); var i = f.querySelector('input,textarea'), er = f.querySelector('.err'); if (er && !er.id) { er.id = fieldId + '-err'; er.setAttribute('aria-live', 'polite'); } if (i) { if (bad) { i.setAttribute('aria-invalid', 'true'); if (er) i.setAttribute('aria-describedby', er.id); } else { i.removeAttribute('aria-invalid'); if (er && i.getAttribute('aria-describedby') === er.id) i.removeAttribute('aria-describedby'); } } }
 
   // ---------- Routage ----------
@@ -1331,7 +1334,7 @@ svg{flex:none}
     var l = state.lieu; l.adresse = adr.value.trim(); l.cp = cpI.value.trim(); l.ville = viI.value.trim();
     var bA = !C.nameOk(l.adresse), bC = !C.cpOk(l.cp), bV = !C.nameOk(l.ville);
     mark('fld-adresse', bA); mark('fld-cp', bC); mark('fld-ville', bV); save();
-    if (bA) return adr.focus(); if (bC) return cpI.focus(); if (bV) return viI.focus();
+    if (bA) return focusBad(adr); if (bC) return focusBad(cpI); if (bV) return focusBad(viI);
     if (!l.zone) { l.zone = C.zoneFor(l.lat, l.lon, l.cp); save(); }
     if (state.mode === 'intervention' && state.fam && loaded && byFam[state.fam] && !C.famHasPrices(byFam[state.fam]) && !(cart && cart.count())) return switchToDevis(state.fam, true);
     next('lieu');
@@ -1365,7 +1368,7 @@ svg{flex:none}
   }
   function switchToDevis(slug, fromQuoteOnly) {
     var m = slug ? devisMetierFor(slug) : null;
-    state.mode = 'devis';
+    state.mode = 'devis'; state._fromIntervention = !!fromQuoteOnly;
     if (m && (state.devis.metiers || []).indexOf(m) < 0) state.devis.metiers = [m].concat(state.devis.metiers || []).slice(0, 3);
     save();
     if (fromQuoteOnly) toast('Ces travaux sont chiffrés sur devis, gratuitement');
@@ -1387,7 +1390,7 @@ svg{flex:none}
     var pr = $('#pg-prenom'), tel = $('#pg-tel'), em = $('#pg-email');
     var bP = !C.nameOk(pr.value), bT = !C.phoneOk(tel.value), bE = !!em.value.trim() && !C.emailOk(em.value);
     mark('fld-pg-prenom', bP); mark('fld-pg-tel', bT); mark('fld-pg-email', bE);
-    if (bP) return pr.focus(); if (bT) return tel.focus(); if (bE) return em.focus();
+    if (bP) return focusBad(pr); if (bT) return focusBad(tel); if (bE) return focusBad(em);
     state.contact.prenom = pr.value.trim(); state.contact.tel = tel.value.trim(); state.contact.email = em.value.trim(); save();
     busy(btn, true, 'Affichage des tarifs…');
     var pending = state._pgPending && state._pgPending !== 'acces' ? state._pgPending : 'precision';
@@ -1512,7 +1515,7 @@ svg{flex:none}
     var c = state.contact; CF.forEach(function (x) { c[x[1]] = document.getElementById(x[0]).value.trim(); }); save();
     var bad = [!C.nameOk(c.prenom), !C.nameOk(c.nom), !C.phoneOk(c.tel), !!String(c.email || '').trim() && !C.emailOk(c.email)];
     CF.forEach(function (x, i) { mark(x[2], bad[i]); });
-    var first = bad.indexOf(true); if (first >= 0) return document.getElementById(CF[first][0]).focus();
+    var first = bad.indexOf(true); if (first >= 0) return focusBad(document.getElementById(CF[first][0]));
     next('coordonnees');
   }
 
@@ -1564,7 +1567,7 @@ svg{flex:none}
       var li = document.createElement('li'); var img = document.createElement('img'); img.alt = 'Photo ' + (i + 1);
       img.onerror = function () { li.innerHTML = ic('i-image', 30); li.appendChild(rm); }; img.src = URL.createObjectURL(f);
       var rm = document.createElement('button'); rm.type = 'button'; rm.setAttribute('aria-label', 'Retirer la photo ' + (i + 1)); rm.innerHTML = ic('i-x', 15);
-      rm.addEventListener('click', function () { dvFiles.splice(i, 1); state.devis.photos = dvFiles.length; save(); renderThumbs(); renderRecap(); });
+      rm.addEventListener('click', function () { dvFiles.splice(i, 1); state.devis.photos = dvFiles.length; save(); renderThumbs(); renderRecap(); var nb = $$('#thumbs button')[Math.max(0, i - 1)] || $('#dvPhotosNext'); if (nb) nb.focus(); });
       li.appendChild(img); li.appendChild(rm); ul.appendChild(li);
     });
     var b = $('#dvPhotosNext'); b.innerHTML = dvFiles.length ? 'Continuer avec ' + dvFiles.length + ' photo' + (dvFiles.length > 1 ? 's' : '') + ' ' + ic('i-arrow', 18) : ic('i-camera', 18) + ' Ajouter des photos';
@@ -1609,7 +1612,7 @@ svg{flex:none}
     var btn = $('#sendIntervention'), err = $('#errCreneau'), p = state.prise; if (btn.classList.contains('is-busy')) return;
     err.hidden = true;
     if (!p.quand) { err.textContent = 'Choisissez un délai souhaité.'; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); var q = $('#quandOpts [data-quand]'); if (q) q.focus({ preventScroll: true }); return; }
-    if (p.quand === 'date' && !C.dateOk(p.date)) { mark('fld-date', true); $('#f-date').focus(); return; }
+    if (p.quand === 'date' && !C.dateOk(p.date)) { mark('fld-date', true); focusBad($('#f-date')); return; }
     var lines = cart.lines();
     var payload = C.interventionPayload({ lines: lines, byId: byId, contact: state.contact, lieu: state.lieu, prise: p, cartMode: cart.mode(), page: location.href });
     busy(btn, true, 'Envoi en cours…');
@@ -1667,7 +1670,7 @@ svg{flex:none}
     var t = e.target; if (!t.closest) return; var el;
     if ((el = t.closest('[data-choose]'))) { var md = el.getAttribute('data-choose'); state.mode = md; state.sent = null; state._returnTo = null; if (md === 'intervention') { state.fam = null; state.prob = null; state.precMode = 'liste'; } save(); return go(md === 'devis' ? 'dv-metier' : 'lieu'); }
     if ((el = t.closest('[data-next]'))) { var from = el.getAttribute('data-next'); if (from === 'dv-photos') { state.devis.photosSeen = true; save(); } if (from === 'lieu') return submitLieu(); if (from === 'coordonnees') return submitContact();
-      if (from === 'dv-projet') { state.devis.desc = $('#dv-desc').value.trim(); save(); if (!C.descOk(state.devis.desc)) { mark('fld-desc', true); return $('#dv-desc').focus(); } }
+      if (from === 'dv-projet') { state.devis.desc = $('#dv-desc').value.trim(); save(); if (!C.descOk(state.devis.desc)) { mark('fld-desc', true); return focusBad($('#dv-desc')); } }
       return next(from); }
     if ((el = t.closest('[data-go]'))) { e.preventDefault(); var tg = el.getAttribute('data-go'), ti = C.flowIndex(state.mode, tg), ci = C.flowIndex(state.mode, state.step); state._returnTo = (ti >= 0 && ci > ti) ? state.step : null; return go(tg); }
     if ((el = t.closest('[data-fam]'))) return pickFamily(el);
@@ -1685,10 +1688,12 @@ svg{flex:none}
     if ((el = t.closest('[data-forget]'))) { if (cart) cart.clear(); dvFiles = []; state = C.emptyState(); save(); try { localStorage.removeItem(STORE); sessionStorage.removeItem('hc_pg'); } catch (e2) {} toast('Informations effacées de cet appareil'); return go('choix'); }
     if ((el = t.closest('[data-open-sheet]'))) return openSheet(el);
     if ((el = t.closest('[data-close-sheet]'))) return closeSheet();
-    if ((el = t.closest('[data-resume]'))) { var r = resumeStep && resumeStep !== 'choix' && resumeStep !== 'envoye' ? resumeStep : (state.mode === 'devis' ? 'dv-metier' : 'lieu'); return go(r); }
+    if ((el = t.closest('[data-resume]'))) { var r; if (cart && cart.count()) { state.mode = 'intervention'; r = (resumeStep && C.flowIndex('intervention', resumeStep) >= 3) ? resumeStep : 'demande'; } else if ((state.devis.metiers || []).length) { state.mode = 'devis'; r = (resumeStep && C.flowIndex('devis', resumeStep) >= 0) ? resumeStep : 'dv-projet'; } else { r = resumeStep && resumeStep !== 'choix' && resumeStep !== 'envoye' ? resumeStep : (state.mode === 'devis' ? 'dv-metier' : 'lieu'); } save(); return go(r); }
     if ((el = t.closest('[data-reset]')) || (el = t.closest('[data-restart]'))) { var keep = { contact: state.contact, lieu: state.lieu, _priceGateOk: state._priceGateOk, _priceGateAt: state._priceGateAt }; if (cart) cart.clear(); dvFiles = []; state = C.emptyState(); if (el.hasAttribute('data-restart')) { state.contact = keep.contact; state.lieu = keep.lieu; state._priceGateOk = keep._priceGateOk; state._priceGateAt = keep._priceGateAt; } save(); return go('choix'); }
   });
-  $('#topBack').addEventListener('click', function () { var p = C.prevStep(state.mode, state.step); if (!p) return; if (history.state && history.state.from === p) return history.back(); go(p, { back: true, replace: true }); });
+  $('#topBack').addEventListener('click', function () {
+    if (state.mode === 'devis' && state._fromIntervention && (state.step === 'dv-projet' || state.step === 'dv-metier')) { state.mode = 'intervention'; state._fromIntervention = false; state.fam = null; save(); return go('besoin', { back: true, replace: true }); }
+    var p = C.prevStep(state.mode, state.step); if (!p) return; if (history.state && history.state.from === p) return history.back(); go(p, { back: true, replace: true }); });
   $('#sendIntervention').addEventListener('click', sendIntervention);
   $('#dvPhotosNext').addEventListener('click', function () { if (!dvFiles.length) return $('#dv-photos').click(); state.devis.photosSeen = true; save(); next('dv-photos'); });
   $('#sendDevis').addEventListener('click', sendDevis);
@@ -1702,7 +1707,7 @@ svg{flex:none}
     e.preventDefault(); var n = items[(i + (e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? items.length - 1 : 1)) % items.length];
     n.click(); var again = grp.id ? $('#' + grp.id + ' [' + ['data-quand', 'data-rappel', 'data-nature', 'data-prec'].filter(function (a) { return n.hasAttribute(a); }).map(function (a) { return a + '="' + n.getAttribute(a) + '"'; })[0] + ']') : null; (again || n).focus();
   });
-  window.addEventListener('popstate', function () { if (state.step === 'envoye') return go('choix', { replace: true }); var h = parseHash(); go(h.step || 'choix', { noHash: true, back: true }); });
+  window.addEventListener('popstate', function () { if (state.sent) return go('choix', { replace: true }); var h = parseHash(); go(h.step || 'choix', { noHash: true, back: true }); });
 
   // ---------- Liens entrants ----------
   function parseHash() {
