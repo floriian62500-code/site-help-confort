@@ -1138,9 +1138,10 @@ svg{flex:none}
   var KEY = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
   // Backend LOCAL (E2E isolé) : uniquement localhost + ?backend=local. Jamais sur preview/prod.
   try { var hn = location.hostname; if ((hn === 'localhost' || hn === '127.0.0.1') && new URLSearchParams(location.search).get('backend') === 'local') { SUPA = 'http://localhost:54321'; KEY = window.__LOCAL_ANON || ''; console.warn('[HC][E2E-LOCAL] backend local actif'); } } catch (e) {}
-  // SIMULATED_FOR_UI : ?simulate=1 sur Deploy Preview/poste local uniquement → aucun appel d'écriture, badge visible.
+  // SIMULATED_FOR_UI : sur Deploy Preview / poste local, l'envoi est SIMULÉ PAR DÉFAUT (incident 2026-09-17 : un lead réel créé depuis un onglet de recette sans ?simulate=1).
+  // Envoi réel volontaire (E2E maîtrisé) : ?live=1 dans l'onglet (badge rouge). Domaine de production : toujours réel, jamais simulé.
   var SIM = false;
-  try { if (C.simulationAllowed(location.hostname)) { var sp = new URLSearchParams(location.search); if (sp.get('simulate') === '1') sessionStorage.setItem('hc_sim', '1'); if (sp.get('simulate') === '0') sessionStorage.removeItem('hc_sim'); SIM = sessionStorage.getItem('hc_sim') === '1'; } } catch (e) {}
+  try { if (C.simulationAllowed(location.hostname)) { var sp = new URLSearchParams(location.search); if (sp.get('live') === '1') sessionStorage.setItem('hc_live', '1'); if (sp.get('live') === '0' || sp.get('simulate') === '1') sessionStorage.removeItem('hc_live'); SIM = sessionStorage.getItem('hc_live') !== '1'; } } catch (e) {}
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -1730,7 +1731,9 @@ svg{flex:none}
 
   // ---------- Démarrage ----------
   var resumeStep = state.step;
-  $('#simBadge').hidden = !SIM; app.classList.toggle('is-sim', SIM);
+  var LIVE_PREVIEW = !SIM && C.simulationAllowed(location.hostname);
+  $('#simBadge').hidden = !(SIM || LIVE_PREVIEW); if (LIVE_PREVIEW) { $('#simBadge').textContent = 'Recette · ENVOI RÉEL'; $('#simBadge').style.background = '#FEE2E2'; $('#simBadge').style.color = '#991B1B'; }
+  app.classList.toggle('is-sim', SIM || LIVE_PREVIEW);
   renderClosed();
   (function () { var panel = $('.sheet-panel'), y0 = null; panel.addEventListener('touchstart', function (e) { y0 = panel.scrollTop <= 0 ? e.touches[0].clientY : null; }, { passive: true }); panel.addEventListener('touchmove', function (e) { if (y0 !== null && e.touches[0].clientY - y0 > 70) { y0 = null; closeSheet(); } }, { passive: true }); })();
   var hp = parseHash();

@@ -141,5 +141,11 @@ ok('retour « Modifier » : seulement vers une étape postérieure', C.flowIndex
 const pJ = C.devisPayload({ contact, lieu, devis: { metiers: ['Rénovation'], desc: 'Peinture salon 25 m2' }, photos: 0, lines, byId, page: 'x' });
 ok('devis : interventions déjà choisies jointes (message + utm), jamais perdues', /Interventions également demandées/.test(pJ.message) && pJ.utm.cart.length === 2 && violations(pJ).length === 0);
 
+
+// ---- Sécurité recette : envoi simulé PAR DÉFAUT hors production (incident lead réel 2026-09-17)
+const uiSrc = (cat.match(/<script id="hc-demande-ui">([\s\S]*?)<\/script>/) || [, ''])[1];
+ok('recette : simulation par défaut sur preview/localhost (réel seulement avec ?live=1)', /SIM = sessionStorage\.getItem\('hc_live'\) !== '1'/.test(uiSrc) && /C\.simulationAllowed\(location\.hostname\)/.test(uiSrc));
+ok('recette : production jamais simulée (hôte de prod refusé)', !C.simulationAllowed('depan59-62.fr') && !C.simulationAllowed('www.depan59-62.fr'));
+
 console.log(`\nRÉSULTAT MODULE DEMANDE V2 : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);
