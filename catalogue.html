@@ -1775,7 +1775,7 @@ svg{flex:none}
   // ---------- Liens entrants ----------
   function parseHash() {
     var h = location.hash || '', sm = h.match(/step=([a-z-]+)/), cm = h.match(/cat=([^&]+)/), sub = h.match(/[&?]s=(\d)/);
-    var raw = sm ? sm[1] : (h === '#intervention' ? 'intervention' : (h === '#devis' ? 'devis' : null));
+    var raw = sm ? sm[1] : (h === '#intervention' ? 'intervention' : (h === '#devis' ? 'devis' : (h === '#entretien' ? 'entretien' : null)));
     var r = { step: C.legacyStep(raw, sub ? parseInt(sub[1], 10) : null), cat: cm ? decodeURIComponent(cm[1]) : null, entretien: raw === 'entretien' };
     if (raw === 'intervention') r.mode = 'intervention'; if (raw === 'devis' || raw === 'entretien') r.mode = 'devis';
     return r;

@@ -179,5 +179,6 @@ ok('attribution : transmise par les 3 envois (utm.attribution + source_referer)'
 ok('attribution : absente → null (aucune donnée inventée)', [C.gatePayload({ contact, lieu }), C.devisPayload({ contact, lieu, devis: { metiers: ['Plomberie'], desc: 'x' } })].every((p) => p.utm.attribution === null && p.source_referer === null));
 ok('attribution : lue uniquement depuis la mémoire consentie (hc_utm / hc_referrer)', /C\.attributionFrom\(sessionStorage\.getItem\('hc_utm'\), sessionStorage\.getItem\('hc_referrer'\)\)/.test(uiSrc) && (uiSrc.match(/attribution: attribution\(\)/g) || []).length === 3);
 
+ok('liens entrants : #intervention, #devis et #entretien (devis « Contrat entretien » présélectionné)', /h === '#entretien' \? 'entretien'/.test(uiSrc) && C.legacyStep('entretien') === 'dv-metier' && /hp\.entretien && \(state\.devis\.metiers \|\| \[\]\)\.indexOf\('Contrat entretien'\) < 0/.test(uiSrc));
 console.log(`\nRÉSULTAT MODULE DEMANDE V2 : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);
