@@ -1464,7 +1464,7 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
 <script>
 /* Mesure CTA accueil → tunnel « Ma demande » (P0.4) : production uniquement ; window.hcGtag n'existe qu'après consentement. Aucune donnée personnelle. */
 document.addEventListener('click', function (e) {
-  var a = e.target && e.target.closest && e.target.closest('a[href*="catalogue.html"]'); if (!a) return;
+  var a = e.target && e.target.closest && e.target.closest('a[href*="/catalogue"]'); if (!a) return; // Netlify sert les liens sans .html
   if (!/^(www\.)?depan59-62\.fr$/.test(location.hostname) || typeof window.hcGtag !== 'function') return;
   var dest = (a.getAttribute('href').split('#')[1] || 'catalogue').replace(/[^a-z-]/g, '').slice(0, 30);
   try { window.hcGtag('event', 'hc_cta_click', { cta: a.getAttribute('data-hc-cta') || 'autre', target: dest }); } catch (err) {}
