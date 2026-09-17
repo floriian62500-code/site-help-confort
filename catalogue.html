@@ -59,6 +59,8 @@ svg{flex:none}
 .app.is-closed .top-phone .dot,.app.is-closed .eyebrow i{background:#94A3B8;box-shadow:none}
 .rc-k button{min-height:36px;padding:0 8px;margin:-8px 0 -8px -8px;color:var(--ink2)!important;font-weight:500!important}
 .rc-k button:hover,.rw .link:hover{text-decoration:underline}
+.rc-mod{color:var(--ink2)!important;font-weight:500!important;text-decoration:none!important;margin-left:auto}
+.rc-mod:hover{text-decoration:underline!important}
 .rw .link{color:var(--ink2);font-weight:500;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
 .app[data-step="demande"] .sum-handle{display:none!important}
 @media (min-width:1101px){.app:not([data-step="choix"]):not([data-step="envoye"]) .top-prog{left:calc(50% - 190px)}}
@@ -98,7 +100,7 @@ svg{flex:none}
 .q h1:focus{outline:none}
 .q-sub{margin:12px 0 0;color:var(--muted);font-size:1.03rem;max-width:580px;text-wrap:pretty}
 .q-actions{position:sticky;bottom:0;z-index:5;margin:36px -52px 0;padding:18px 52px 26px;display:flex;align-items:center;justify-content:flex-end;gap:12px;
-  background:linear-gradient(180deg,rgba(255,255,255,0),#fff 34%);border-radius:0 0 var(--r-xl) var(--r-xl)}
+  background:#fff;box-shadow:0 -1px 0 var(--line);border-radius:0 0 var(--r-xl) var(--r-xl)}
 .q-actions .grow{margin-right:auto}
 .q-actions .skip{min-height:44px;color:var(--ink2);font-weight:500;text-decoration:none}
 .q-actions .skip:hover{text-decoration:underline}
@@ -654,7 +656,7 @@ svg{flex:none}
      <p class="q-sub" id="coordSub">Pour vous rappeler et confirmer votre demande.</p>
     </header>
     <div class="q-body">
-     <div class="ctx-line"><svg width="18" height="18" aria-hidden="true"><use href="#i-pin"/></svg><span id="coordLieu"></span><button class="link" type="button" data-go="lieu" aria-label="Modifier l'adresse">Modifier</button></div>
+     <div class="ctx-line"><svg width="18" height="18" aria-hidden="true"><use href="#i-pin"/></svg><span id="coordLieu"></span><button class="link rc-mod" type="button" data-go="lieu" aria-label="Modifier l'adresse">Modifier</button></div>
      <div class="row2">
       <div class="field" id="fld-prenom"><label for="f-prenom">Prénom</label><input id="f-prenom" type="text" autocomplete="given-name"><p class="err">Indiquez votre prénom.</p></div>
       <div class="field" id="fld-nom"><label for="f-nom">Nom</label><input id="f-nom" type="text" autocomplete="family-name"><p class="err">Indiquez votre nom.</p></div>
@@ -818,7 +820,7 @@ svg{flex:none}
   var ALL_STEPS = ['choix', 'lieu', 'besoin', 'acces', 'precision', 'demande', 'coordonnees', 'creneau', 'dv-metier', 'dv-projet', 'dv-photos', 'dv-recap', 'envoye'];
   // Étapes qui affichent des montants (écran ou récapitulatif) : jamais sans identification.
   var PRICED_STEPS = ['precision', 'demande', 'coordonnees', 'creneau'];
-  var LABELS = { lieu: 'Lieu', besoin: 'Besoin', acces: 'Précision', precision: 'Précision', demande: 'Ma demande', coordonnees: 'Coordonnées', creneau: 'Prise en charge', 'dv-metier': 'Travaux', 'dv-projet': 'Projet', 'dv-photos': 'Photos', 'dv-recap': 'Vérification' };
+  var LABELS = { lieu: 'Lieu', besoin: 'Besoin', acces: 'Tarifs', precision: 'Précision', demande: 'Ma demande', coordonnees: 'Coordonnées', creneau: 'Prise en charge', 'dv-metier': 'Travaux', 'dv-projet': 'Projet', 'dv-photos': 'Photos', 'dv-recap': 'Vérification' };
 
   function norm(v) { return String(v == null ? '' : v).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim(); }
   function esc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
