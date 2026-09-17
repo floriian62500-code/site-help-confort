@@ -98,5 +98,34 @@ ok('intervention : message lisible (prix ferme + sur devis + délai + zone)', /p
 ok('intervention : urgence transmise', pI.utm.urgence === 'oui' && pI.type_demande === 'mixte');
 ok('aucun montant total envoyé comme montant payable', !('amount' in pI) && !('total' in pI));
 
+
+// ---- Téléphone : même règle que la fonction edge (lue dans la source)
+const phoneRules = [...edge.matchAll(/\/\^\(\\\+33\|0033\)\[1-9\]\[0-9\]\{8\}\$\/|\/\^0\[1-9\]\[0-9\]\{8\}\$\//g)].length;
+ok('téléphone : règle edge présente (+33 / 0033 / 0)', phoneRules >= 2);
+for (const [v, exp] of [['06 12 34 56 78', true], ['+33 6 12 34 56 78', true], ['0033612345678', true], ['06.12.34.56.78', true], ['(06) 12-34-56-78', true], ['6 12 34 56 78', false], ['+33 0 12 34 56 78', false], ['01 23 45', false]]) {
+  ok(`téléphone « ${v} » → ${exp ? 'accepté' : 'refusé'}`, C.phoneOk(v) === exp);
+}
+
+// ---- Recherche tolérante (saisie mobile)
+const sample = [{ id: '1', name: 'Mécanisme de chasse d’eau', short_desc: '', category_name: 'Plomberie' }, { id: '2', name: 'Chauffe-eau 200L mural', short_desc: 'Pose et main d’œuvre', category_name: 'Plomberie' }, { id: '3', name: 'Désembouage radiateur', short_desc: '', category_name: 'Chauffage' }];
+ok('recherche : apostrophe typographique', C.searchOffers(sample, "chasse d'eau").items.length === 1);
+ok('recherche : « chauffe eau » sans tiret', C.searchOffers(sample, 'chauffe eau').items[0].id === '2');
+ok('recherche : « main d\'oeuvre » (œ)', C.searchOffers(sample, "main d'oeuvre").items.length === 1);
+ok('recherche : mots dans le désordre + résultats approchants', C.searchOffers(sample, 'radiateur fuite').approx === true && C.searchOffers(sample, 'radiateur fuite').items[0].id === '3');
+
+// ---- Aide au choix par métier : une offre conseillée
+const serr = [{ id: 'u', name: 'Intervention urgente serrurerie — 1h + déplacement', short_desc: 'Porte claquée, serrure bloquée', price_ttc: 138.88 }, { id: 's', name: 'Ouverture porte simple (non blindée)', price_ttc: 98.01 }, { id: 'c', name: 'Ouverture porte claquée', price_ttc: 176 }, { id: 'k', name: 'Ouverture porte fermée à clé', price_ttc: 228 }];
+ok('aide serrurerie : pas de « panne ou fuite »', !C.diagFor('serrurerie', serr).some(p => /fuite/i.test(p.label)));
+ok('aide serrurerie : porte claquée → « Ouverture porte claquée » conseillée', C.suggest('serrurerie', serr, 'claquee').best.id === 'c');
+ok('aide serrurerie : porte fermée à clé → offre dédiée', C.suggest('serrurerie', serr, 'cle').best.id === 'k');
+ok('aide : « je ne sais pas » → intervention de diagnostic', C.suggest('serrurerie', serr, 'inconnu').best.id === 'u');
+ok('métier sans aucun prix → orienté devis', C.famHasPrices([{ name: 'Peinture', price_ttc: 0, requires_quote: true }]) === false && C.famHasPrices(serr) === true);
+
+// ---- Horaires de l'agence (heure de Paris)
+const at = (iso) => C.agencyStatus(new Date(iso));
+ok('horaires : jeudi 10h ouvert', at('2026-09-17T08:00:00Z').open === true);
+ok('horaires : jeudi 7h09 fermé → rappel aujourd’hui à 9 h', at('2026-09-17T05:09:00Z').open === false && /aujourd/.test(at('2026-09-17T05:09:00Z').next));
+ok('horaires : samedi 17h fermé → lundi à 9 h', at('2026-09-19T15:00:00Z').next === 'lundi à 9 h');
+
 console.log(`\nRÉSULTAT MODULE DEMANDE V2 : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);

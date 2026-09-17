@@ -1406,11 +1406,6 @@ svg{flex:none}
       priceBlock(s) + '<span class="sr-only">' + (on ? ', dans votre demande' : ', ajouter à votre demande') + '</span></button>' +
       detailsBlock(s) + '</article>';
   }
-  function addBtn(id, on) {
-    var n = esc((byId[id] || {}).name || '');
-    return '<button type="button" class="add" data-toggle="' + esc(id) + '" aria-pressed="' + on + '" aria-label="' + (on ? 'Retirer « ' + n + ' » de ma demande' : 'Ajouter « ' + n + ' » à ma demande') + '">' +
-      (on ? ic('i-check', 17) + '<span class="l-in">Ajouté</span><span class="l-rm">Retirer</span>' : ic('i-plus', 17) + '<span>Ajouter</span>') + '</button>';
-  }
   ENTER.precision = function () { renderOffers(); };
   function renderOffers() {
     var off = $('#offers'), head = $('#offersHead');
