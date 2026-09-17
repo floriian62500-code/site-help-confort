@@ -152,6 +152,7 @@ svg{flex:none}
 .field.is-bad input,.field.is-bad textarea{border-color:var(--danger);background:#FFF8F8}
 .err{display:none;margin:7px 0 0;font-size:.86rem;color:var(--danger);font-weight:500}
 .field.is-bad .err{display:block}
+.field.is-bad .hint{display:none}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
 .row-cp{display:grid;grid-template-columns:160px 1fr;gap:0 16px}
 .inp-wrap{position:relative}
@@ -576,10 +577,10 @@ svg{flex:none}
      <form id="pgForm" novalidate autocomplete="on">
       <div class="field" id="fld-pg-prenom"><label for="pg-prenom">Prénom</label><input id="pg-prenom" type="text" autocomplete="given-name"><p class="err">Indiquez votre prénom.</p></div>
       <div class="row2">
-       <div class="field" id="fld-pg-tel"><label for="pg-tel">Téléphone</label><input id="pg-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 12 34 56 78"><p class="err">Numéro français à 10 chiffres.</p></div>
-       <div class="field" id="fld-pg-email"><label for="pg-email">Email</label><input id="pg-email" type="email" inputmode="email" autocomplete="email" placeholder="vous@exemple.fr"><p class="err">Adresse email valide requise.</p></div>
+       <div class="field" id="fld-pg-tel"><label for="pg-tel">Téléphone</label><input id="pg-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="ex. 06 12 34 56 78"><p class="err">Numéro de téléphone français attendu, par exemple 06 12 34 56 78.</p></div>
+       <div class="field" id="fld-pg-email"><label for="pg-email">Email <span class="opt">· facultatif</span></label><input id="pg-email" type="email" inputmode="email" autocomplete="email" placeholder="ex. vous@exemple.fr"><p class="err">Adresse email valide requise.</p></div>
       </div>
-      <button type="submit" class="sr-only" tabindex="-1">Afficher les tarifs</button>
+      <button type="submit" class="sr-only" tabindex="-1" aria-hidden="true">Afficher les tarifs</button>
      </form>
      <div class="note"><svg width="20" height="20" aria-hidden="true"><use href="#i-info"/></svg><span><strong>Pourquoi&nbsp;?</strong> Nos tarifs sont établis pour la zone de l'agence de Saint-Omer. En les affichant, vos coordonnées sont transmises à l'agence, qui peut vous rappeler à ce sujet. Jamais revendues ni cédées à des tiers (<a href="/mentions-legales.html" target="_blank" rel="noopener">mentions légales</a>).</span></div>
 
@@ -638,8 +639,8 @@ svg{flex:none}
       <div class="field" id="fld-nom"><label for="f-nom">Nom</label><input id="f-nom" type="text" autocomplete="family-name"><p class="err">Indiquez votre nom.</p></div>
      </div>
      <div class="row2">
-      <div class="field" id="fld-tel"><label for="f-tel">Téléphone</label><input id="f-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 12 34 56 78"><p class="err">Numéro français à 10 chiffres.</p></div>
-      <div class="field" id="fld-email"><label for="f-email">Email</label><input id="f-email" type="email" inputmode="email" autocomplete="email" placeholder="vous@exemple.fr"><p class="err">Adresse email valide requise.</p></div>
+      <div class="field" id="fld-tel"><label for="f-tel">Téléphone</label><input id="f-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="ex. 06 12 34 56 78"><p class="err">Numéro de téléphone français attendu, par exemple 06 12 34 56 78.</p></div>
+      <div class="field" id="fld-email"><label for="f-email">Email</label><input id="f-email" type="email" inputmode="email" autocomplete="email" placeholder="ex. vous@exemple.fr"><p class="err">Adresse email valide requise.</p></div>
      </div>
     </div>
     <footer class="q-actions"><button class="sum-handle" type="button" data-open-sheet hidden></button><button class="btn-primary" type="button" data-next="coordonnees">Continuer <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow"/></svg></button></footer>
@@ -801,7 +802,8 @@ svg{flex:none}
   function norm(v) { return String(v == null ? '' : v).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim(); }
   function esc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function nameOk(v) { return String(v || '').trim().length >= 2; }
-  function phoneOk(v) { return /^(?:\+33|0)[1-9](?:[\s.\-]?\d{2}){4}$/.test(String(v || '').trim()); }
+  // Même règle que submit-lead-v6 (normalizePhone + isValidFrenchPhone) : +33 / 0033 / 0, espaces, points, tirets, parenthèses tolérés.
+  function phoneOk(v) { var n = String(v || '').replace(/[\s\-\.\(\)]/g, ''); return /^(\+33|0033)[1-9][0-9]{8}$/.test(n) || /^0[1-9][0-9]{8}$/.test(n); }
   function emailOk(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v || '').trim()); }
   function cpOk(v) { return /^\d{5}$/.test(String(v || '').trim()); }
   function descOk(v) { return String(v || '').trim().length >= 10; }
@@ -921,7 +923,7 @@ svg{flex:none}
   function zoneText(z, ville) {
     var v = nameOk(ville) ? ville : 'Votre adresse';
     if (!z) return null;
-    if (z.status === 'in') return { title: "Dans notre zone d'intervention", text: z.km < 5 ? v + " : l'agence de Saint-Omer est à moins de 5 km." : v + ' est à environ ' + z.km + " km de l'agence de Saint-Omer." };
+    if (z.status === 'in') return { title: "Dans notre zone d'intervention", text: z.km < 5 ? "Vous êtes à moins de 5 km de l'agence de Saint-Omer." : v + ' est à environ ' + z.km + " km de l'agence de Saint-Omer." };
     if (z.status === 'edge') return { title: 'En limite de zone', text: v + ' est à environ ' + z.km + " km de l'agence : le déplacement vous est confirmé au rappel." };
     if (z.status === 'out') return { title: 'Hors de notre zone habituelle', text: "Vous pouvez envoyer votre demande : l'agence vous dira si un technicien peut se déplacer." };
     return { title: 'Adresse à confirmer', text: "La distance n'a pas pu être vérifiée : l'agence la confirmera lors du rappel." };
@@ -942,7 +944,7 @@ svg{flex:none}
   var PROBLEMS = [
     { id: 'panne', label: 'Une panne ou une fuite', re: /urgente|fuite|panne|depannage|desengorgement/ },
     { id: 'porte', label: 'Une porte bloquée', re: /ouverture|porte|serrur/ },
-    { id: 'remplacer', label: 'Remplacer un équipement', re: /remplacement|chauffe-eau|mitigeur|mecanisme|vmc/ },
+    { id: 'remplacer', label: 'Remplacer un équipement', re: /remplacement|chauffe.eau|mitigeur|mecanisme|vmc/ },
     { id: 'entretien', label: 'Un entretien', re: /entretien|detartrage|desembouage|contrat/ },
     { id: 'vitre', label: 'Une vitre cassée', re: /vitre|insert|vitrage/ },
     { id: 'travaux', label: 'Des travaux de finition', re: /enduit|isolation|peinture|revetement/ }
@@ -952,7 +954,7 @@ svg{flex:none}
     plomberie: [
       { id: 'fuite', label: 'Une fuite d\u2019eau', best: /recherche de fuite/, re: /fuite/ },
       { id: 'bouche', label: 'Évier, douche ou WC bouché', best: /desengorgement/, re: /desengorgement|canalisation/ },
-      { id: 'eauchaude', label: 'Plus d\u2019eau chaude', best: /chauffe-eau depannage/, re: /chauffe-eau|intervention urgente/ },
+      { id: 'eauchaude', label: 'Plus d\u2019eau chaude', best: /chauffe-eau depannage/, re: /chauffe.eau|intervention urgente/ },
       { id: 'robinet', label: 'Robinet ou chasse d\u2019eau', best: /mecanisme|mitigeur/, re: /mitigeur|mecanisme/ },
       { id: 'entretien', label: 'Entretien ou calcaire', best: /contrat entretien/, re: /entretien|detartrage/ }
     ],
@@ -1008,7 +1010,18 @@ svg{flex:none}
     }
     return { open: false, next: null };
   }
-  function searchText(s) { return norm([s.name, s.short_desc, s.category_name].join(' ')); }
+  // Recherche tolérante à la saisie mobile : apostrophes typographiques, œ, tirets, mots dans le désordre.
+  function searchNorm(v) { return norm(v).replace(/\u0153/g, 'oe').replace(/\u00e6/g, 'ae').replace(/[\u2019'`\u00b4\-_\/.,;:()]+/g, ' ').replace(/\s+/g, ' ').trim(); }
+  function searchText(s) { return searchNorm([s.name, s.short_desc, s.category_name].join(' ')); }
+  function searchOffers(all, q) {
+    var toks = searchNorm(q).split(' ').filter(function (t) { return t.length >= 2; });
+    if (!toks.length) return { items: [], approx: false };
+    var and = (all || []).filter(function (s) { var t = searchText(s); return toks.every(function (k) { return t.indexOf(k) >= 0; }); });
+    if (and.length) return { items: and, approx: false };
+    var or = (all || []).map(function (s) { var t = searchText(s); return { s: s, n: toks.filter(function (k) { return t.indexOf(k) >= 0; }).length }; })
+      .filter(function (x) { return x.n > 0; }).sort(function (a, b) { return b.n - a.n; }).map(function (x) { return x.s; });
+    return { items: or, approx: or.length > 0 };
+  }
   function problemsFor(list) { return PROBLEMS.filter(function (p) { return (list || []).some(function (s) { return p.re.test(searchText(s)); }); }); }
   function matchProblem(list, pid) { var p = PROBLEMS.filter(function (x) { return x.id === pid; })[0]; return p ? (list || []).filter(function (s) { return p.re.test(searchText(s)); }) : []; }
   function diagnosticOffer(list) { return (list || []).filter(function (s) { return priced(s) && /intervention urgente|recherche de panne/.test(norm(s.name)); })[0] || null; }
@@ -1084,7 +1097,7 @@ svg{flex:none}
     norm: norm, esc: esc, nameOk: nameOk, phoneOk: phoneOk, emailOk: emailOk, cpOk: cpOk, descOk: descOk, dateOk: dateOk, lieuValid: lieuValid, contactValid: contactValid,
     emptyState: emptyState, priceGatePassed: priceGatePassed, isPricedStep: isPricedStep, modeForStep: modeForStep, guardStep: guardStep, nextStep: nextStep, prevStep: prevStep,
     progress: progress, legacyStep: legacyStep, haversineKm: haversineKm, zoneFor: zoneFor, zoneText: zoneText, priced: priced, perUnit: perUnit, priceKind: priceKind, eur: eur,
-    firmTotal: firmTotal, searchText: searchText, problemsFor: problemsFor, matchProblem: matchProblem, diagFor: diagFor, suggest: suggest, famHasPrices: famHasPrices, agencyStatus: agencyStatus, diagnosticOffer: diagnosticOffer, frDate: frDate, priseText: priseText,
+    firmTotal: firmTotal, searchText: searchText, problemsFor: problemsFor, matchProblem: matchProblem, diagFor: diagFor, suggest: suggest, searchNorm: searchNorm, searchOffers: searchOffers, famHasPrices: famHasPrices, agencyStatus: agencyStatus, diagnosticOffer: diagnosticOffer, frDate: frDate, priseText: priseText,
     lineLabel: lineLabel, interventionPayload: interventionPayload, devisPayload: devisPayload, gatePayload: gatePayload, refFromId: refFromId, simulationAllowed: simulationAllowed };
 });
 </script>
@@ -1174,9 +1187,10 @@ svg{flex:none}
   function lieuTxt() { var l = state.lieu; return C.lieuValid(l) ? [l.adresse, [l.cp, l.ville].filter(Boolean).join(' ')].filter(Boolean).join(', ') : ''; }
   function contactTxt() { var c = state.contact; if (C.contactValid(c)) return c.prenom + ' ' + c.nom + ' · ' + c.tel; if (c.prenom || c.tel) return [c.prenom, c.tel].filter(Boolean).join(' · ') + ' (nom à compléter)'; return ''; }
   function sec(k, v, step, extra) {
-    var canEdit = v && step && C.guardStep(step, ctx()) === step;
-    return '<div class="rc"><p class="rc-k"><span>' + esc(k) + '</span>' + (canEdit ? '<button type="button" data-go="' + step + '">Modifier</button>' : '') + '</p>' +
-      '<div class="rc-v' + (v ? '' : ' is-empty') + '">' + (v || 'À compléter') + '</div>' + (extra || '') + '</div>';
+    if (!v) return '';
+    var canEdit = step && C.guardStep(step, ctx()) === step;
+    return '<div class="rc"><p class="rc-k"><span>' + esc(k) + '</span>' + (canEdit ? '<button type="button" data-go="' + step + '" aria-label="Modifier : ' + esc(k) + '">Modifier</button>' : '') + '</p>' +
+      '<div class="rc-v">' + v + '</div>' + (extra || '') + '</div>';
   }
   function zoneBadge() { var z = state.lieu.zone; if (!z || !C.lieuValid(state.lieu)) return ''; var t = ({ in: 'Dans notre zone', edge: 'Limite de zone', out: 'Hors zone habituelle', unknown: 'Zone à confirmer' })[z.status]; return '<span class="rc-z rc-z--' + z.status + '">' + ic(z.status === 'in' ? 'i-check' : 'i-info', 13) + esc(t) + (z.km != null && z.km >= 5 ? ' · ' + z.km + ' km' : '') + '</span>'; }
   function linePrice(l) { var s = byId[l.id]; var k = s ? C.priceKind(s) : (l.requires_quote ? 'devis' : 'ferme'); if (k === 'devis') return 'Sur devis'; if (k === 'confirmer') return C.eur(l.ttc) + ' / ' + C.perUnit(s); return C.eur((Number(l.ttc) || 0) * (l.qty || 1)); }
@@ -1204,7 +1218,7 @@ svg{flex:none}
     return h;
   }
   function renderRecap() {
-    var html = recapHtml();
+    var html = recapHtml() || '<p class="rc-empty">Votre demande se construit ici, étape par étape.</p>';
     $('#recapBody').innerHTML = html;
     if (!$('#sheet').hidden) $('#sheetBody').innerHTML = html;
     var n = cart ? cart.count() : 0, gate = priceGatePassed(), txt = '';
@@ -1327,6 +1341,7 @@ svg{flex:none}
     if (m && (state.devis.metiers || []).indexOf(m) < 0) state.devis.metiers = (state.devis.metiers || []).concat([m]).slice(0, 3);
     save();
     if (fromQuoteOnly) toast('Ces travaux sont chiffrés sur devis, gratuitement');
+    else if (cart && cart.count()) toast('Vos interventions choisies restent enregistrées de côté');
     go(m ? 'dv-projet' : 'dv-metier');
   }
 
@@ -1342,7 +1357,7 @@ svg{flex:none}
     if (e) e.preventDefault();
     var btn = $('#pgSubmit'); if (btn.classList.contains('is-busy')) return;
     var pr = $('#pg-prenom'), tel = $('#pg-tel'), em = $('#pg-email');
-    var bP = !C.nameOk(pr.value), bT = !C.phoneOk(tel.value), bE = !C.emailOk(em.value);
+    var bP = !C.nameOk(pr.value), bT = !C.phoneOk(tel.value), bE = !!em.value.trim() && !C.emailOk(em.value);
     mark('fld-pg-prenom', bP); mark('fld-pg-tel', bT); mark('fld-pg-email', bE);
     if (bP) return pr.focus(); if (bT) return tel.focus(); if (bE) return em.focus();
     state.contact.prenom = pr.value.trim(); state.contact.tel = tel.value.trim(); state.contact.email = em.value.trim(); save();
@@ -1363,9 +1378,9 @@ svg{flex:none}
   function inCart(id) { try { return !!(cart && cart.lines().some(function (l) { return l.id === id; })); } catch (e) { return false; } }
   function priceBlock(s) {
     var k = C.priceKind(s);
-    if (k === 'devis') return '<p class="price price--devis"><span class="price-n">Sur devis</span><span class="price-l">chiffré après diagnostic</span></p>';
-    if (k === 'confirmer') return '<p class="price price--confirmer"><span class="price-n">' + C.eur(s.price_ttc) + '</span><span class="price-l">TTC / ' + esc(C.perUnit(s)) + ' · montant à confirmer</span></p>';
-    return '<p class="price"><span class="price-n">' + C.eur(s.price_ttc) + '</span><span class="price-l">TTC · prix ferme</span></p>';
+    if (k === 'devis') return '<span class="price price--devis"><span class="price-n">Sur devis</span><span class="price-l">chiffré après diagnostic</span></span>';
+    if (k === 'confirmer') return '<span class="price price--confirmer"><span class="price-n">' + C.eur(s.price_ttc) + '</span><span class="price-l">TTC / ' + esc(C.perUnit(s)) + ' · à confirmer</span></span>';
+    return '<span class="price"><span class="price-n">' + C.eur(s.price_ttc) + '</span><span class="price-l">TTC</span></span>';
   }
   function detailsBlock(s) {
     var inc = Array.isArray(s.includes) ? s.includes : [], meta = [];
@@ -1378,12 +1393,18 @@ svg{flex:none}
       (meta.length ? '<p class="meta">' + meta.join(' · ') + '</p>' : '') +
       (opts.length ? '<p class="meta">Option possible : ' + esc(opts.map(function (v) { return v.label; }).join(', ')) + ' — précisée avec vous au rappel.</p>' : '') + '</details>';
   }
-  function offerHtml(s, reco) {
-    var on = inCart(s.id);
+  function offerHtml(s, reco, showFam) {
+    var on = inCart(s.id), hasVar = Array.isArray(s.variants) && s.variants.some(function (v) { return v && v.label; });
     return '<article class="offer' + (on ? ' is-in' : '') + '" data-offer="' + esc(s.id) + '">' +
       (reco ? '<p class="offer-badge">' + ic('i-spark', 14) + 'Conseillé</p>' : '') +
-      '<div class="offer-main"><h3 class="offer-t">' + esc(s.name) + '</h3>' + (s.short_desc ? '<p class="offer-d">' + esc(s.short_desc) + '</p>' : '') + detailsBlock(s) + '</div>' +
-      '<div class="offer-side">' + priceBlock(s) + addBtn(s.id, on) + '</div></article>';
+      '<button type="button" class="offer-pick" data-toggle="' + esc(s.id) + '" aria-pressed="' + on + '">' +
+      '<span class="tick" aria-hidden="true">' + ic('i-check', 15) + '</span>' +
+      '<span class="offer-txt"><span class="offer-t">' + esc(s.name) + '</span>' +
+      (showFam && s.category_name ? '<span class="offer-d">' + esc(s.category_name) + '</span>' : '') +
+      (s.short_desc ? '<span class="offer-d">' + esc(s.short_desc) + '</span>' : '') +
+      (hasVar ? '<span class="offer-d">Plusieurs gammes possibles, précisées avec vous au rappel.</span>' : '') + '</span>' +
+      priceBlock(s) + '<span class="sr-only">' + (on ? ', dans votre demande' : ', ajouter à votre demande') + '</span></button>' +
+      detailsBlock(s) + '</article>';
   }
   function addBtn(id, on) {
     var n = esc((byId[id] || {}).name || '');
@@ -1401,9 +1422,10 @@ svg{flex:none}
     $('#precAide').hidden = !aide; $('#precSearchWrap').hidden = aide;
     var list = byFam[state.fam] || [], q = C.norm($('#precSearch').value), items = [], reco = null, html = '';
     if (q.length >= 2) {
-      items = ALL.filter(function (s) { return C.searchText(s).indexOf(q) >= 0; });
-      head.textContent = items.length ? items.length + ' résultat' + (items.length > 1 ? 's' : '') + ' pour « ' + $('#precSearch').value.trim() + ' »' : '';
-      html = items.map(function (s) { return offerHtml(s); }).join('') || '<div class="empty">Aucune intervention ne correspond. <button class="link" type="button" data-switch-devis>Décrivez votre besoin pour un devis</button>.</div>';
+      var sr = C.searchOffers(ALL, $('#precSearch').value); items = sr.items;
+      head.textContent = items.length ? (sr.approx ? 'Résultats approchants pour « ' : items.length + ' résultat' + (items.length > 1 ? 's' : '') + ' pour « ') + $('#precSearch').value.trim() + ' »' : '';
+      var multi = items.some(function (s) { return s.category_slug !== state.fam; });
+      html = items.map(function (s) { return offerHtml(s, false, multi); }).join('') || '<div class="empty">Aucune intervention ne correspond. <button class="link" type="button" data-switch-devis>Décrivez votre besoin pour un devis</button>.</div>';
     } else if (aide) {
       var probs = C.diagFor(state.fam, list);
       $('#probChips').innerHTML = probs.map(function (p) { return '<button type="button" class="chip" data-prob="' + p.id + '" aria-pressed="' + (state.prob === p.id) + '">' + esc(p.label) + '</button>'; }).join('') +
@@ -1416,26 +1438,29 @@ svg{flex:none}
         if (!reco) html = '<div class="empty">Un technicien doit voir la situation. <button class="link" type="button" data-switch-devis>Demander un devis gratuit</button>.</div>';
       }
     } else {
-      head.textContent = list.length + ' intervention' + (list.length > 1 ? 's' : '');
-      html = list.map(function (s) { return offerHtml(s); }).join('');
+      head.textContent = list.length + ' intervention' + (list.length > 1 ? 's' : '') + ' · prix TTC, fermes sauf mention';
+      var all = state.showAll === state.fam, shown = all ? list : list.filter(function (x, i) { return i < 6 || inCart(x.id); });
+      html = shown.map(function (x) { return offerHtml(x); }).join('') + (shown.length < list.length ? '<button type="button" class="more-btn" data-showall>Voir les ' + (list.length - shown.length) + ' autres interventions</button>' : '');
     }
+    if (loaded) html += '<p class="alt-line">Vous ne trouvez pas votre besoin&nbsp;? <button class="link" type="button" data-switch-devis>Décrivez-le, nous vous conseillons</button></p>';
     off.innerHTML = html;
     updatePrecCta();
   }
   function updatePrecCta() { var n = cart ? cart.count() : 0; $('#precNext').disabled = n < 1; }
   function toggleLine(id) {
     var s = byId[id]; if (!s || !cart) return;
-    if (inCart(id)) { cart.remove(id); toast('Retiré de votre demande'); track('remove_line'); }
-    else { cart.add({ id: s.id, slug: s.slug, name: s.name, brand: s.brand, ttc: s.price_ttc, requires_quote: !C.priced(s), active: s.active }); toast('Ajouté à votre demande'); track('add_to_cart'); }
+    if (inCart(id)) { cart.remove(id); track('remove_line'); }
+    else { cart.add({ id: s.id, slug: s.slug, name: s.name, brand: s.brand, ttc: s.price_ttc, requires_quote: !C.priced(s), active: s.active }); track('add_to_cart'); }
     save();
-    var hadFocus = document.activeElement && document.activeElement.getAttribute('data-toggle') === id;
-    $$('[data-offer="' + id + '"]').forEach(function (card) { var on = inCart(id); card.classList.toggle('is-in', on); var b = card.querySelector('[data-toggle]'); if (b) { b.outerHTML = addBtn(id, on); var nb = card.querySelector('[data-toggle]'); if (on) { nb.classList.add('just'); nb.addEventListener('mouseleave', function () { nb.classList.remove('just'); }, { once: true }); } if (hadFocus) nb.focus(); } });
+    var on = inCart(id);
+    $$('[data-offer="' + id + '"]').forEach(function (card) { card.classList.toggle('is-in', on); var b = card.querySelector('[data-toggle]'); if (b) { b.setAttribute('aria-pressed', String(on)); var sr = b.querySelector('.sr-only'); if (sr) sr.textContent = on ? ', dans votre demande' : ', ajouter à votre demande'; } });
     updatePrecCta(); renderRecap();
     if (state.step === 'demande') renderDemande();
   }
 
   // ---------- Ma demande ----------
   ENTER.demande = function () { renderDemande(); };
+  function zoneNoteHtml() { var z = state.lieu.zone; return z && (z.status === 'edge' || z.status === 'out') ? '<div class="note note--warm">' + ic('i-info', 20) + '<span>Votre adresse est à plus de 50 km de l\u2019agence : les prix affichés incluent le déplacement dans la limite de 55 km. L\u2019agence vous confirme le déplacement lors du rappel.</span></div>' : ''; }
   function renderDemande() {
     var box = $('#demandeList');
     if (!priceGatePassed()) { box.innerHTML = ''; return; } // P0
@@ -1447,6 +1472,7 @@ svg{flex:none}
     var h = '';
     if (g.ferme.length) { var tot = C.firmTotal(g.ferme, byId); h += '<section class="grp"><header class="grp-h"><h2>Prix ferme</h2><p>Montant connu à l’avance, tel que décrit</p></header>' + g.ferme.map(row).join('') + '<div class="grp-total"><span>Total des prix fermes</span><strong>' + C.eur(tot) + ' TTC</strong></div></section>'; }
     if (g.confirmer.length) h += '<section class="grp"><header class="grp-h"><h2>Prix à confirmer</h2><p>Tarif unitaire : le montant dépend des mesures prises sur place</p></header>' + g.confirmer.map(row).join('') + '</section>';
+    h += zoneNoteHtml();
     if (g.devis.length) h += '<section class="grp"><header class="grp-h"><h2>Sur devis</h2><p>Chiffré gratuitement par le technicien après diagnostic</p></header>' + g.devis.map(row).join('') + '</section>';
     box.innerHTML = h;
   }
@@ -1512,7 +1538,9 @@ svg{flex:none}
       rm.addEventListener('click', function () { dvFiles.splice(i, 1); state.devis.photos = dvFiles.length; save(); renderThumbs(); renderRecap(); });
       li.appendChild(img); li.appendChild(rm); ul.appendChild(li);
     });
-    var b = $('#dvPhotosNext'); b.innerHTML = (dvFiles.length ? 'Continuer avec ' + dvFiles.length + ' photo' + (dvFiles.length > 1 ? 's' : '') : 'Continuer sans photo') + ' ' + ic('i-arrow', 18);
+    var b = $('#dvPhotosNext'); b.innerHTML = dvFiles.length ? 'Continuer avec ' + dvFiles.length + ' photo' + (dvFiles.length > 1 ? 's' : '') + ' ' + ic('i-arrow', 18) : ic('i-camera', 18) + ' Ajouter des photos';
+    $('#dvPhotosSkip').hidden = dvFiles.length > 0;
+    if (dvFiles.length < MAX_PH && /maximum/.test($('#errPhotos').textContent)) $('#errPhotos').hidden = true;
   }
   function addPhotos(list) {
     var err = $('#errPhotos'); err.hidden = true; var msg = '';
@@ -1554,7 +1582,7 @@ svg{flex:none}
     busy(btn, true, 'Envoi en cours…');
     postLead(payload).then(function (data) {
       state.sent = { mode: 'intervention', ref: C.refFromId(data && data.id), simulated: !!(data && data.simulated), at: Date.now(), prenom: state.contact.prenom,
-        lines: lines.map(function (l) { return { name: l.name + ((l.qty || 1) > 1 ? ' ×' + l.qty : ''), price: linePrice(l) }; }), total: C.firmTotal(lines, byId), lieu: lieuTxt(), prise: C.priseText(p) };
+        lines: lines.map(function (l) { return { name: l.name + ((l.qty || 1) > 1 ? ' ×' + l.qty : ''), price: linePrice(l) }; }), total: C.firmTotal(lines, byId), lieu: lieuTxt(), prise: C.priseText(p), contact: [state.contact.tel, state.contact.email].filter(Boolean).join(' · ') };
       cart.clear(); state.prise = C.emptyState().prise; state.fam = null; state.prob = null; save();
       busy(btn, false); track('confirmation'); go('envoye', { replace: true });
     }).catch(function () { busy(btn, false); err.textContent = "L'envoi n'a pas abouti. Vos informations sont conservées : réessayez, ou appelez le 03 66 10 01 34."; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
@@ -1570,7 +1598,7 @@ svg{flex:none}
     }).then(function (r) {
       var stored = r.photos && typeof r.photos.stored === 'number' ? r.photos.stored : (Array.isArray(r.photos && r.photos.stored) ? r.photos.stored.length : null);
       state.sent = { mode: 'devis', ref: C.refFromId(r.data && r.data.id), simulated: !!(r.data && r.data.simulated), at: Date.now(), prenom: state.contact.prenom,
-        metiers: (state.devis.metiers || []).slice(), lieu: lieuTxt(), photosSent: files.length, photosStored: stored };
+        metiers: (state.devis.metiers || []).slice(), lieu: lieuTxt(), photosSent: files.length, photosStored: stored, contact: [state.contact.tel, state.contact.email].filter(Boolean).join(' · ') };
       state.devis = C.emptyState().devis; dvFiles = []; save();
       busy(btn, false); track('confirmation'); go('envoye', { replace: true });
     }).catch(function () { busy(btn, false); err.textContent = "L'envoi n'a pas abouti. Vos informations sont conservées : réessayez, ou appelez le 03 66 10 01 34."; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
@@ -1591,7 +1619,8 @@ svg{flex:none}
     h += '<div class="done-card"><h2>' + (dv ? 'Votre projet' : 'Votre demande') + '</h2><div class="rows" style="padding:4px 18px">';
     if (dv) h += '<div class="rw"><span class="rw-k">Travaux</span><span class="rw-v">' + esc((s.metiers || []).join(', ')) + '</span><span></span></div>' + (s.photosSent ? '<div class="rw"><span class="rw-k">Photos</span><span class="rw-v">' + (s.simulated ? s.photosSent + ' (non transmises en simulation)' : (s.photosStored ? s.photosStored + ' transmise' + (s.photosStored > 1 ? 's' : '') : 'non transmises : vous pourrez les envoyer lors du rappel')) + '</span><span></span></div>' : '');
     else h += (s.lines || []).map(function (l) { return '<div class="rw"><span class="rw-k">Intervention</span><span class="rw-v">' + esc(l.name) + '</span><span class="rw-v">' + esc(l.price) + '</span></div>'; }).join('') + (s.prise ? '<div class="rw"><span class="rw-k">Préférence</span><span class="rw-v">' + esc(s.prise) + '</span><span></span></div>' : '');
-    h += '<div class="rw"><span class="rw-k">Lieu</span><span class="rw-v">' + esc(s.lieu) + '</span><span></span></div></div></div>';
+    if (!dv && s.total > 0) h += '<div class="rw"><span class="rw-k">Total prix fermes</span><span class="rw-v">' + C.eur(s.total) + ' TTC</span><span></span></div>';
+    h += '<div class="rw"><span class="rw-k">Lieu</span><span class="rw-v">' + esc(s.lieu) + '</span><span></span></div>' + (s.contact ? '<div class="rw"><span class="rw-k">Rappel au</span><span class="rw-v">' + esc(s.contact) + '</span><span></span></div>' : '') + '</div></div>';
     var steps = dv
       ? [['Un technicien étudie votre projet', s.photosSent ? 'À partir de votre description et de vos photos.' : 'À partir de votre description.'], ['L\u2019agence vous recontacte sous 24 h ouvrées', 'Pour préciser votre projet ; une visite sur place peut vous être proposée si nécessaire.' + hoursLine()], ['Vous recevez votre devis gratuit', 'Vous décidez ensuite, sans engagement.']]
       : [['L\u2019agence de Saint-Omer vous rappelle', 'Sous 24 h ouvrées au plus tard, aux heures d\u2019ouverture (lun–ven 9h–17h, sam 9h–16h).' + hoursLine()], ['Le créneau est fixé avec vous', 'Les prix fermes restent ceux affichés ; les prestations sur devis sont chiffrées après diagnostic.'], ['Le technicien intervient', 'Vous réglez après l\u2019intervention. Aucun paiement en ligne.']];
@@ -1611,6 +1640,7 @@ svg{flex:none}
     if ((el = t.closest('[data-fam]'))) return pickFamily(el);
     if ((el = t.closest('[data-toggle]'))) return toggleLine(el.getAttribute('data-toggle'));
     if ((el = t.closest('[data-remove]'))) { var rid = el.getAttribute('data-remove'); if (cart) { cart.remove(rid); toast('Retiré de votre demande'); } save(); renderDemande(); renderRecap(); if (!cart.count()) go('besoin'); return; }
+    if ((el = t.closest('[data-showall]'))) { state.showAll = state.fam; save(); return renderOffers(); }
     if ((el = t.closest('[data-prec]'))) { state.precMode = el.getAttribute('data-prec'); $('#precSearch').value = ''; save(); return renderOffers(); }
     if ((el = t.closest('[data-prob]'))) { state.prob = el.getAttribute('data-prob'); save(); return renderOffers(); }
     if ((el = t.closest('[data-quand]'))) { state.prise.quand = el.getAttribute('data-quand'); save(); $('#errCreneau').hidden = true; ENTER.creneau(); renderRecap(); if (state.prise.quand === 'date') $('#f-date').focus(); return; }
@@ -1626,6 +1656,7 @@ svg{flex:none}
   });
   $('#topBack').addEventListener('click', function () { var p = C.prevStep(state.mode, state.step); if (!p) return; if (history.state && history.state.from === p) return history.back(); go(p, { back: true, replace: true }); });
   $('#sendIntervention').addEventListener('click', sendIntervention);
+  $('#dvPhotosNext').addEventListener('click', function () { if (!dvFiles.length) return $('#dv-photos').click(); state.devis.photosSeen = true; save(); next('dv-photos'); });
   $('#sendDevis').addEventListener('click', sendDevis);
   $('#precSearch').addEventListener('input', function () { clearTimeout(this._t); this._t = setTimeout(renderOffers, 160); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('#sheet').hidden) closeSheet(); });
@@ -1653,6 +1684,8 @@ svg{flex:none}
   // ---------- Démarrage ----------
   var resumeStep = state.step;
   $('#simBadge').hidden = !SIM; app.classList.toggle('is-sim', SIM);
+  app.classList.toggle('is-closed', !C.agencyStatus(new Date()).open);
+  (function () { var panel = $('.sheet-panel'), y0 = null; panel.addEventListener('touchstart', function (e) { y0 = panel.scrollTop <= 0 ? e.touches[0].clientY : null; }, { passive: true }); panel.addEventListener('touchmove', function (e) { if (y0 !== null && e.touches[0].clientY - y0 > 70) { y0 = null; closeSheet(); } }, { passive: true }); })();
   var hp = parseHash();
   if (hp.mode) state.mode = hp.mode;
   if (hp.cat) { state.mode = 'intervention'; state.fam = hp.cat; }
