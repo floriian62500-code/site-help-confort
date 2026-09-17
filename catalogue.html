@@ -522,7 +522,7 @@ svg{flex:none}
     <div class="choix">
      <p class="eyebrow"><i aria-hidden="true"></i>HELP Confort · agence de Saint-Omer</p>
      <h1 id="h-choix" tabindex="-1">Comment <span class="nw">pouvons-nous</span> vous aider&nbsp;?</h1>
-     <p class="lede">Des techniciens salariés, un interlocuteur humain et des prix clairs, partout sur la Côte d'Opale.</p>
+     <p class="lede">Des techniciens salariés, un interlocuteur humain et des prix clairs, autour de Saint-Omer.</p>
      <div class="resume" id="resume" hidden></div>
      <div class="choix-grid">
       <button class="choice" type="button" data-choose="intervention">
@@ -569,7 +569,7 @@ svg{flex:none}
       <p class="err">Indiquez le numéro et la rue.</p>
      </div>
      <div class="row-cp">
-      <div class="field" id="fld-cp"><label for="f-cp">Code postal</label><input id="f-cp" inputmode="numeric" autocomplete="postal-code" placeholder="ex. 62500"><p class="err">5 chiffres.</p></div>
+      <div class="field" id="fld-cp"><label for="f-cp">Code postal</label><input id="f-cp" inputmode="numeric" autocomplete="postal-code" placeholder="ex. 62500"><p class="err">Code postal à 5 chiffres, ex. 62500.</p></div>
       <div class="field" id="fld-ville"><label for="f-ville">Ville</label><input id="f-ville" type="text" autocomplete="address-level2" placeholder="ex. Saint-Omer"><p class="err">Indiquez la ville.</p></div>
      </div>
      <div class="zone" id="zoneBox" role="status" aria-live="polite" hidden></div>
@@ -780,7 +780,7 @@ svg{flex:none}
     <p>Agence HELP Confort de Saint-Omer</p>
     <ul>
      <li><svg width="17" height="17" aria-hidden="true"><use href="#i-check"/></svg>Techniciens salariés, pas de sous-traitance</li>
-     <li><svg width="17" height="17" aria-hidden="true"><use href="#i-check"/></svg>Intervention sur toute la Côte d'Opale</li>
+     <li><svg width="17" height="17" aria-hidden="true"><use href="#i-check"/></svg>Intervention autour de Saint-Omer</li>
      <li><svg width="17" height="17" aria-hidden="true"><use href="#i-check"/></svg>Un interlocuteur humain du début à la fin</li>
     </ul>
     <a href="tel:+33366100134"><svg width="17" height="17" aria-hidden="true"><use href="#i-phone"/></svg>03 66 10 01 34</a>
@@ -929,7 +929,7 @@ svg{flex:none}
   function legacyStep(step, sub) {
     if (!step) return null;
     if (ALL_STEPS.indexOf(step) >= 0) return step;
-    var map = { launcher: 'choix', rappel: 'choix', catalogue: 'besoin', diagnosis: 'precision', sheet: 'precision', cart: 'demande', urgence: 'creneau', address: 'lieu', coords: 'coordonnees', confirm: 'creneau', entretien: 'dv-metier', intervention: 'lieu' };
+    var map = { launcher: 'choix', rappel: 'choix', catalogue: 'besoin', diagnosis: 'precision', sheet: 'precision', cart: 'demande', urgence: 'creneau', address: 'lieu', coords: 'coordonnees', confirm: 'creneau', entretien: 'dv-projet', intervention: 'lieu' };
     if (step === 'devis') return ({ 1: 'dv-metier', 2: 'dv-projet', 3: 'lieu', 4: 'coordonnees', 5: 'dv-recap' })[sub] || 'dv-metier';
     return map[step] || 'choix';
   }
@@ -1123,6 +1123,36 @@ svg{flex:none}
   }
   // Référence affichée = dérivée de l'identifiant RÉEL du dossier (jamais inventée côté client).
   function refFromId(id) { var h = String(id || '').replace(/[^0-9a-f]/gi, ''); return h.length >= 8 ? 'HC-' + h.slice(0, 8).toUpperCase() : null; }
+  // ---- Confidentialité (appareil partagé) : aucune donnée personnelle en stockage durable.
+  // Brouillon NON personnel (localStorage, 7 j) ≠ données personnelles (sessionStorage : onglet courant uniquement).
+  // Données personnelles = identité, adresse, textes libres (description du projet, précisions).
+  function splitState(st) {
+    var draft = JSON.parse(JSON.stringify(st || emptyState())), e = emptyState();
+    var pii = { contact: draft.contact || e.contact, lieu: draft.lieu || e.lieu, desc: (draft.devis && draft.devis.desc) || '', precisions: (draft.prise && draft.prise.precisions) || '' };
+    draft.contact = e.contact; draft.lieu = e.lieu; draft.sent = null;
+    if (draft.devis) draft.devis.desc = ''; if (draft.prise) draft.prise.precisions = '';
+    return { draft: draft, pii: pii };
+  }
+  function mergeState(draft, pii) {
+    var e = emptyState(), st = draft && draft.v === 2 ? draft : emptyState();
+    Object.keys(e).forEach(function (k) { if (st[k] === undefined) st[k] = e[k]; });
+    ['lieu', 'contact', 'prise', 'devis'].forEach(function (k) { if (!st[k] || typeof st[k] !== 'object') st[k] = e[k]; });
+    // Jamais de donnée personnelle reprise du stockage durable (y compris anciens brouillons d'avant ce correctif)
+    st.contact = e.contact; st.lieu = e.lieu; st.sent = null; st.devis.desc = ''; st.prise.precisions = '';
+    if (pii && typeof pii === 'object') {
+      if (pii.contact && typeof pii.contact === 'object') Object.keys(e.contact).forEach(function (k) { if (typeof pii.contact[k] === 'string') st.contact[k] = pii.contact[k]; });
+      if (pii.lieu && typeof pii.lieu === 'object') st.lieu = { adresse: String(pii.lieu.adresse || ''), cp: String(pii.lieu.cp || ''), ville: String(pii.lieu.ville || ''), lat: typeof pii.lieu.lat === 'number' ? pii.lieu.lat : null, lon: typeof pii.lieu.lon === 'number' ? pii.lieu.lon : null, zone: pii.lieu.zone || null };
+      if (typeof pii.desc === 'string') st.devis.desc = pii.desc;
+      if (typeof pii.precisions === 'string') st.prise.precisions = pii.precisions;
+    }
+    return st;
+  }
+  function hasPii(st) {
+    var c = (st && st.contact) || {}, l = (st && st.lieu) || {};
+    return !!(c.prenom || c.nom || c.tel || c.email || l.adresse || l.cp || l.ville || (st && st.devis && st.devis.desc) || (st && st.prise && st.prise.precisions));
+  }
+  // Demande en cours non envoyée (prestations, métiers de devis ou saisie personnelle) → reprise EXPLICITE uniquement
+  function hasDraft(st, cartCount) { return !!st && !st.sent && ((cartCount || 0) > 0 || ((st.devis && st.devis.metiers) || []).length > 0 || hasPii(st)); }
   // Mesure du tunnel (P0.4) : envoi GA4 UNIQUEMENT sur le domaine de production, avec consentement, hors simulation.
   var PROD_HOST_RE = /^(www\.)?depan59-62\.fr$/;
   function trackDecision(o) {
@@ -1160,7 +1190,8 @@ svg{flex:none}
     progress: progress, legacyStep: legacyStep, haversineKm: haversineKm, zoneFor: zoneFor, zoneText: zoneText, priced: priced, perUnit: perUnit, priceKind: priceKind, eur: eur,
     firmTotal: firmTotal, searchText: searchText, problemsFor: problemsFor, matchProblem: matchProblem, diagFor: diagFor, suggest: suggest, searchNorm: searchNorm, searchOffers: searchOffers, famHasPrices: famHasPrices, agencyStatus: agencyStatus, diagnosticOffer: diagnosticOffer, frDate: frDate, priseText: priseText,
     lineLabel: lineLabel, interventionPayload: interventionPayload, devisPayload: devisPayload, gatePayload: gatePayload, refFromId: refFromId, simulationAllowed: simulationAllowed,
-    trackDecision: trackDecision, trackParams: trackParams, attributionFrom: attributionFrom };
+    trackDecision: trackDecision, trackParams: trackParams, attributionFrom: attributionFrom,
+    splitState: splitState, mergeState: mergeState, hasPii: hasPii, hasDraft: hasDraft };
 });
 </script>
 <script id="hc-demande-ui">
@@ -1180,21 +1211,39 @@ svg{flex:none}
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var esc = C.esc, app = $('#app');
   var cart = window.HcCart ? window.HcCart.create() : null;
-  var STORE = 'hc_demande_v2';
+  var STORE = 'hc_demande_v2', STORE_PII = 'hc_demande_v2_pii';
   var ALL = [], byId = {}, byFam = {}, FAMS = [], loaded = false, loadFailed = false;
   var dvFiles = [];
   function ic(id, s) { s = s || 18; return '<svg width="' + s + '" height="' + s + '" aria-hidden="true"><use href="#' + id + '"/></svg>'; }
 
   var state = (function () {
-    var s = null; try { s = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch (e) {}
+    var s = null, pii = null;
+    try { s = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch (e) {}
+    try { pii = JSON.parse(sessionStorage.getItem(STORE_PII) || 'null'); } catch (e) {}
     if (!s || s.v !== 2 || (s.updatedAt && Date.now() - s.updatedAt > 7 * 864e5)) {
       if (s && s.v === 2 && cart) { try { cart.clear(); } catch (e) {} } // brouillon expiré (> 7 j) : on repart proprement
-      s = C.emptyState();
+      s = null; pii = null;
     }
-    var d = C.emptyState(); Object.keys(d).forEach(function (k) { if (s[k] === undefined) s[k] = d[k]; });
-    return s;
+    return C.mergeState(s, pii);
   })();
-  function save() { state.updatedAt = Date.now(); try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {} }
+  // Brouillon non personnel → localStorage ; identité, adresse et textes libres → sessionStorage (onglet courant)
+  function save() {
+    state.updatedAt = Date.now(); var parts = C.splitState(state);
+    try { localStorage.setItem(STORE, JSON.stringify(parts.draft)); } catch (e) {}
+    try { sessionStorage.setItem(STORE_PII, JSON.stringify(parts.pii)); } catch (e) {}
+  }
+  var lastIdentity = null, carryIdentity = null, pendingEntry = null;
+  var PII_FIELDS = ['f-adresse', 'f-cp', 'f-ville', 'pg-prenom', 'pg-tel', 'pg-email', 'f-prenom', 'f-nom', 'f-tel', 'f-email', 'f-date', 'f-precisions', 'dv-desc', 'dv-photos'];
+  function clearFields() { PII_FIELDS.forEach(function (id) { var el = document.getElementById(id); if (el) try { el.value = ''; } catch (e) {} }); }
+  // Nouvelle demande : état vierge (le statut d'accès aux tarifs, non personnel, est conservé)
+  function startClean() {
+    var pg = { ok: state._priceGateOk, at: state._priceGateAt };
+    if (cart) cart.clear(); dvFiles = []; state = C.emptyState(); state._priceGateOk = pg.ok; state._priceGateAt = pg.at;
+    try { sessionStorage.removeItem(STORE_PII); } catch (e) {}
+    clearFields();
+  }
+  // Après envoi : plus aucune donnée personnelle stockée ; l'identité reste en mémoire pour « Faire une autre demande » (action explicite)
+  function forgetIdentityAfterSend() { lastIdentity = { contact: state.contact, lieu: state.lieu }; var e = C.emptyState(); state.contact = e.contact; state.lieu = e.lieu; clearFields(); }
   // ---------- Mesure du tunnel (P0.4) ----------
   // Toujours consigné en mémoire (window.__hcFunnel, contrôle recette : rien ne sort du navigateur).
   // Envoi GA4 via window.hcGtag (créé par assets/tracking.js APRÈS consentement) : production uniquement, hors simulation.
@@ -1324,8 +1373,9 @@ svg{flex:none}
     if (n > 0) label = n + ' intervention' + (n > 1 ? 's' : '') + (state.lieu.ville ? ' · ' + state.lieu.ville : '');
     else if ((state.devis.metiers || []).length) label = 'Devis ' + state.devis.metiers.join(', ') + ((state.devis.photos || 0) > 0 && !dvFiles.length ? ' · photos à rajouter' : '');
     else if (!state.sent && state.mode && C.lieuValid(state.lieu)) label = (state.mode === 'devis' ? 'Demande de devis' : "Demande d'intervention") + ' · ' + state.lieu.ville;
+    if (!label && C.hasDraft(state, n)) label = state.mode === 'devis' ? 'Demande de devis commencée' : 'Demande commencée';
     box.hidden = !label;
-    if (label) box.innerHTML = '<span class="resume-txt"><strong>Reprendre votre demande</strong><span>' + esc(label) + '</span></span><button type="button" class="link" data-reset>Recommencer</button><button type="button" class="btn-soft" data-resume>Reprendre ' + ic('i-arrow', 16) + '</button>';
+    if (label) box.innerHTML = '<span class="resume-txt"><strong>Vous avez une demande en cours</strong><span>' + esc(label) + '</span></span><button type="button" class="link" data-reset>Nouvelle demande</button><button type="button" class="btn-soft" data-resume>Reprendre ' + ic('i-arrow', 16) + '</button>';
   };
 
   // ---------- Lieu + zone ----------
@@ -1425,7 +1475,8 @@ svg{flex:none}
   }
   function switchToDevis(slug, fromQuoteOnly) {
     var m = slug ? devisMetierFor(slug) : null;
-    state.mode = 'devis'; state._fromIntervention = !!fromQuoteOnly;
+    var from = state.mode === 'intervention' && state.step !== 'choix' ? state.step : null;
+    state.mode = 'devis'; state._fromIntervention = !!fromQuoteOnly; state._devisFrom = fromQuoteOnly ? null : from;
     if (m && (state.devis.metiers || []).indexOf(m) < 0) state.devis.metiers = [m].concat(state.devis.metiers || []).slice(0, 3);
     save();
     if (fromQuoteOnly) toast('Ces travaux sont chiffrés sur devis, gratuitement');
@@ -1678,7 +1729,7 @@ svg{flex:none}
     postLead(payload).then(function (data) {
       state.sent = { mode: 'intervention', ref: C.refFromId(data && data.id), simulated: !!(data && data.simulated), at: Date.now(), prenom: state.contact.prenom,
         lines: lines.map(function (l) { return { name: l.name + ((l.qty || 1) > 1 ? ' ×' + l.qty : ''), price: linePrice(l) }; }), total: C.firmTotal(lines, byId), lieu: lieuTxt(), prise: C.priseText(p), tel: C.phoneDisplay(state.contact.tel), email: state.contact.email || '' };
-      cart.clear(); state.prise = C.emptyState().prise; state.fam = null; state.prob = null; state.devis = C.emptyState().devis; save();
+      cart.clear(); state.prise = C.emptyState().prise; state.fam = null; state.prob = null; state.devis = C.emptyState().devis; forgetIdentityAfterSend(); save();
       busy(btn, false); leadTracked('intervention', { lines: lines.length }, data); go('envoye', { replace: true });
     }).catch(function () { busy(btn, false); track('hc_demande_error'); err.textContent = "L'envoi n'a pas abouti. Vos informations sont conservées : réessayez, ou appelez le 03 66 10 01 34."; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
   }
@@ -1697,7 +1748,7 @@ svg{flex:none}
       var stored = r.photos && typeof r.photos.stored === 'number' ? r.photos.stored : (Array.isArray(r.photos && r.photos.stored) ? r.photos.stored.length : null);
       state.sent = { mode: 'devis', ref: C.refFromId(r.data && r.data.id), simulated: !!(r.data && r.data.simulated), at: Date.now(), prenom: state.contact.prenom,
         metiers: (state.devis.metiers || []).slice(), desc: state.devis.desc || '', lieu: lieuTxt(), photosSent: files.length, photosStored: stored, tel: C.phoneDisplay(state.contact.tel), email: state.contact.email || '', lines: joined.map(function (l) { return { name: l.name, price: linePrice(l) }; }) };
-      state.devis = C.emptyState().devis; dvFiles = []; if (cart) cart.clear(); state.prise = C.emptyState().prise; state.fam = null; save();
+      state.devis = C.emptyState().devis; dvFiles = []; if (cart) cart.clear(); state.prise = C.emptyState().prise; state.fam = null; forgetIdentityAfterSend(); save();
       busy(btn, false); leadTracked(leadType, { lines: joined.length, photos: files.length }, r.data); go('envoye', { replace: true });
     }).catch(function () { busy(btn, false); track('hc_demande_error'); err.textContent = "L'envoi n'a pas abouti. Vos informations sont conservées : réessayez, ou appelez le 03 66 10 01 34."; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
   }
@@ -1730,7 +1781,7 @@ svg{flex:none}
   document.addEventListener('click', function (e) {
     var t = e.target; if (!t.closest) return; var el;
     if (t.closest('a[href^="tel:"]')) track('hc_call_click', { step: state.step });
-    if ((el = t.closest('[data-choose]'))) { var md = el.getAttribute('data-choose'); state.mode = md; state.sent = null; state._returnTo = null; if (md === 'intervention') { state.fam = null; state.prob = null; state.precMode = 'liste'; } save(); return go(md === 'devis' ? 'dv-metier' : 'lieu'); }
+    if ((el = t.closest('[data-choose]'))) { var md = el.getAttribute('data-choose'), carry = carryIdentity; carryIdentity = null; pendingEntry = null; if (state.sent || C.hasDraft(state, cart ? cart.count() : 0)) startClean(); if (carry) { state.contact = carry.contact; state.lieu = carry.lieu; } state.mode = md; state.sent = null; state._returnTo = null; if (md === 'intervention') { state.fam = null; state.prob = null; state.precMode = 'liste'; } save(); return go(md === 'devis' ? 'dv-metier' : 'lieu'); }
     if ((el = t.closest('[data-next]'))) { var from = el.getAttribute('data-next'); if (from === 'dv-photos') { state.devis.photosSeen = true; save(); } if (from === 'lieu') return submitLieu(); if (from === 'coordonnees') return submitContact();
       if (from === 'dv-projet') { state.devis.desc = $('#dv-desc').value.trim(); save(); if (!C.descOk(state.devis.desc)) { mark('fld-desc', true); return focusBad($('#dv-desc')); } }
       return next(from); }
@@ -1748,14 +1799,15 @@ svg{flex:none}
     if ((el = t.closest('[data-dvm]'))) return toggleMetier(el);
     if ((el = t.closest('[data-nature]'))) { var nv = el.getAttribute('data-nature'); state.devis.nature = state.devis.nature === nv ? null : nv; save(); return $$('#natureOpts [data-nature]').forEach(function (b) { b.setAttribute('aria-checked', String(b.getAttribute('data-nature') === state.devis.nature)); }); }
     if ((el = t.closest('[data-switch-devis]'))) return switchToDevis(state.fam, false);
-    if ((el = t.closest('[data-forget]'))) { if (cart) cart.clear(); dvFiles = []; state = C.emptyState(); save(); try { localStorage.removeItem(STORE); sessionStorage.removeItem('hc_pg'); } catch (e2) {} toast('Informations effacées de cet appareil'); return go('choix'); }
+    if ((el = t.closest('[data-forget]'))) { if (cart) cart.clear(); dvFiles = []; state = C.emptyState(); lastIdentity = carryIdentity = pendingEntry = null; clearFields(); try { [STORE, 'hc_cart_v1'].forEach(function (k) { localStorage.removeItem(k); }); [STORE_PII, 'hc_pg', 'hc_fs_intervention', 'hc_fs_devis', 'hc_utm', 'hc_referrer'].forEach(function (k) { sessionStorage.removeItem(k); }); } catch (e2) {} toast('Informations effacées de cet appareil'); return go('choix'); }
     if ((el = t.closest('[data-open-sheet]'))) return openSheet(el);
     if ((el = t.closest('[data-close-sheet]'))) return closeSheet();
-    if ((el = t.closest('[data-resume]'))) { var r; if (cart && cart.count()) { state.mode = 'intervention'; r = (resumeStep && C.flowIndex('intervention', resumeStep) >= 3) ? resumeStep : 'demande'; } else if ((state.devis.metiers || []).length) { state.mode = 'devis'; r = (resumeStep && C.flowIndex('devis', resumeStep) >= 0) ? resumeStep : 'dv-projet'; } else { r = resumeStep && resumeStep !== 'choix' && resumeStep !== 'envoye' ? resumeStep : (state.mode === 'devis' ? 'dv-metier' : 'lieu'); } save(); return go(r); }
-    if ((el = t.closest('[data-reset]')) || (el = t.closest('[data-restart]'))) { var keep = { contact: state.contact, lieu: state.lieu, _priceGateOk: state._priceGateOk, _priceGateAt: state._priceGateAt }; if (cart) cart.clear(); dvFiles = []; state = C.emptyState(); if (el.hasAttribute('data-restart')) { state.contact = keep.contact; state.lieu = keep.lieu; state._priceGateOk = keep._priceGateOk; state._priceGateAt = keep._priceGateAt; } save(); return go('choix'); }
+    if ((el = t.closest('[data-resume]'))) { pendingEntry = null; var r; if (cart && cart.count()) { state.mode = 'intervention'; r = (resumeStep && C.flowIndex('intervention', resumeStep) >= 3) ? resumeStep : 'demande'; } else if ((state.devis.metiers || []).length) { state.mode = 'devis'; r = (resumeStep && C.flowIndex('devis', resumeStep) >= 0) ? resumeStep : 'dv-projet'; } else { r = resumeStep && resumeStep !== 'choix' && resumeStep !== 'envoye' ? resumeStep : (state.mode === 'devis' ? 'dv-metier' : 'lieu'); } save(); return go(r); }
+    if ((el = t.closest('[data-reset]')) || (el = t.closest('[data-restart]'))) { var restart = el.hasAttribute('data-restart'), entry = pendingEntry; pendingEntry = null; startClean(); carryIdentity = restart ? lastIdentity : null; if (!restart) lastIdentity = null; var to = entry ? applyEntry(entry) : 'choix'; save(); return go(to); }
   });
   $('#topBack').addEventListener('click', function () {
     if (state.mode === 'devis' && state._fromIntervention && (state.step === 'dv-projet' || state.step === 'dv-metier')) { state.mode = 'intervention'; state._fromIntervention = false; state.fam = null; if (!String(state.devis.desc || '').trim() && !dvFiles.length) state.devis = C.emptyState().devis; save(); return go('besoin', { back: true, replace: true }); }
+    if (state.mode === 'devis' && state._devisFrom && (state.step === 'dv-projet' || state.step === 'dv-metier')) { var bk = state._devisFrom; state._devisFrom = null; state.mode = 'intervention'; if (!String(state.devis.desc || '').trim() && !dvFiles.length) state.devis = C.emptyState().devis; save(); return go(bk, { back: true, replace: true }); }
     var p = C.prevStep(state.mode, state.step); if (!p) return; if (history.state && history.state.from === p) return history.back(); go(p, { back: true, replace: true }); });
   $('#sendIntervention').addEventListener('click', sendIntervention);
   $('#dvPhotosNext').addEventListener('click', function () { if (!dvFiles.length) return $('#dv-photos').click(); state.devis.photosSeen = true; save(); next('dv-photos'); });
@@ -1778,6 +1830,7 @@ svg{flex:none}
     var raw = sm ? sm[1] : (h === '#intervention' ? 'intervention' : (h === '#devis' ? 'devis' : (h === '#entretien' ? 'entretien' : null)));
     var r = { step: C.legacyStep(raw, sub ? parseInt(sub[1], 10) : null), cat: cm ? decodeURIComponent(cm[1]) : null, entretien: raw === 'entretien' };
     if (raw === 'intervention') r.mode = 'intervention'; if (raw === 'devis' || raw === 'entretien') r.mode = 'devis';
+    r.entry = (!sm && !!(raw || cm)) || raw === 'entretien'; // lien d'entrée (accueil, pages métiers) ≠ navigation interne #step=…
     return r;
   }
   function loadCatalogue() {
@@ -1799,11 +1852,17 @@ svg{flex:none}
   renderClosed();
   (function () { var panel = $('.sheet-panel'), y0 = null; panel.addEventListener('touchstart', function (e) { y0 = panel.scrollTop <= 0 ? e.touches[0].clientY : null; }, { passive: true }); panel.addEventListener('touchmove', function (e) { if (y0 !== null && e.touches[0].clientY - y0 > 70) { y0 = null; closeSheet(); } }, { passive: true }); })();
   var hp = parseHash();
-  if (hp.mode) state.mode = hp.mode;
-  if (hp.cat) { state.mode = 'intervention'; state.fam = hp.cat; }
-  if (hp.entretien && (state.devis.metiers || []).indexOf('Contrat entretien') < 0) state.devis.metiers = (state.devis.metiers || []).concat(['Contrat entretien']).slice(0, 3);
+  function applyEntry(h) {
+    if (h.mode) state.mode = h.mode;
+    if (h.cat) { state.mode = 'intervention'; state.fam = h.cat; }
+    if (h.entretien && (state.devis.metiers || []).indexOf('Contrat entretien') < 0) state.devis.metiers = (state.devis.metiers || []).concat(['Contrat entretien']).slice(0, 3);
+    return h.step || (h.cat ? 'lieu' : 'choix');
+  }
+  var start;
+  // Lien d'entrée avec une demande en cours : jamais de pré-remplissage silencieux → choix explicite Reprendre / Nouvelle demande
+  if (hp.entry && C.hasDraft(state, cart ? cart.count() : 0)) { pendingEntry = hp; start = 'choix'; }
+  else start = applyEntry(hp);
   save();
-  var start = hp.step || (hp.cat ? 'lieu' : 'choix');
   go(start, { replace: true, initial: true });
   loadCatalogue().then(function () {
     if (hp.cat && !byFam[hp.cat]) { state.fam = null; save(); }
