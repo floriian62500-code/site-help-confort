@@ -1536,12 +1536,15 @@ svg{flex:none}
     var sel = state.devis.metiers || [];
     var autreOn = sel.indexOf('Autre') >= 0;
     $('#dvTiles').innerHTML = DV_METIERS.map(function (m) { var on = sel.indexOf(m[0]) >= 0; return '<button type="button" class="tile" data-dvm="' + esc(m[0]) + '" aria-pressed="' + on + '"><span class="tile-ck">' + ic('i-check', 14) + '</span><span class="tile-ic">' + ic(m[1], 22) + '</span><span class="tile-t">' + esc(m[0]) + '</span></button>'; }).join('');
+    syncAutre(autreOn);
     $('#dvMetierNext').disabled = !sel.length;
   };
+  function syncAutre(on) { var a = $('#dvAutre'); if (!a) return; a.setAttribute('aria-pressed', String(on)); a.textContent = on ? 'Autre besoin ajouté · retirer' : 'Autre besoin, je le décris ensuite'; }
   function toggleMetier(el) {
     var m = el.getAttribute('data-dvm'), sel = state.devis.metiers = state.devis.metiers || [], i = sel.indexOf(m);
     if (i >= 0) sel.splice(i, 1); else { if (sel.length >= 3) { toast('Trois domaines maximum'); return; } sel.push(m); }
-    el.setAttribute('aria-pressed', String(i < 0)); $('#dvMetierNext').disabled = !sel.length; save(); renderRecap();
+    if (el.id === 'dvAutre') syncAutre(i < 0); else el.setAttribute('aria-pressed', String(i < 0));
+    $('#dvMetierNext').disabled = !sel.length; save(); renderRecap();
   }
   var DV_EX = { 'Rénovation': 'Ex. repeindre un salon de 25 m², murs et plafond, maison des années 1990…', 'Salle de bain': 'Ex. remplacer la baignoire par une douche à l\u2019italienne, pièce de 6 m²…', 'Plomberie': 'Ex. déplacer l\u2019évier de la cuisine, créer une arrivée d\u2019eau au garage…', 'Chauffage': 'Ex. remplacer une chaudière fioul de 20 ans, maison de 110 m²…', 'Électricité': 'Ex. mise aux normes du tableau électrique, maison ancienne…', 'Menuiserie': 'Ex. remplacer une porte d\u2019entrée et deux fenêtres…', 'Volets': 'Ex. motoriser trois volets roulants…', 'Adaptation PMR': 'Ex. installer une douche de plain-pied et des barres d\u2019appui…' };
   ENTER['dv-projet'] = function () {
