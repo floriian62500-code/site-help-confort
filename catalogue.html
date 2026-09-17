@@ -1370,9 +1370,9 @@ svg{flex:none}
   ENTER.choix = function () {
     renderClosed();
     var box = $('#resume'), n = cart ? cart.count() : 0, label = '';
-    if (n > 0) label = n + ' intervention' + (n > 1 ? 's' : '') + (state.lieu.ville ? ' · ' + state.lieu.ville : '');
+    if (n > 0) label = n + ' intervention' + (n > 1 ? 's' : ''); // aucune donnée personnelle (ville, nom…) sur la carte de reprise
     else if ((state.devis.metiers || []).length) label = 'Devis ' + state.devis.metiers.join(', ') + ((state.devis.photos || 0) > 0 && !dvFiles.length ? ' · photos à rajouter' : '');
-    else if (!state.sent && state.mode && C.lieuValid(state.lieu)) label = (state.mode === 'devis' ? 'Demande de devis' : "Demande d'intervention") + ' · ' + state.lieu.ville;
+    else if (!state.sent && state.mode && C.lieuValid(state.lieu)) label = state.mode === 'devis' ? 'Demande de devis' : "Demande d'intervention";
     if (!label && C.hasDraft(state, n)) label = state.mode === 'devis' ? 'Demande de devis commencée' : 'Demande commencée';
     box.hidden = !label;
     if (label) box.innerHTML = '<span class="resume-txt"><strong>Vous avez une demande en cours</strong><span>' + esc(label) + '</span></span><button type="button" class="link" data-reset>Nouvelle demande</button><button type="button" class="btn-soft" data-resume>Reprendre ' + ic('i-arrow', 16) + '</button>';

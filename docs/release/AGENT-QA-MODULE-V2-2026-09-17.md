@@ -55,5 +55,24 @@ Corrections `7f657897` : « Retirer » sur place dans la vérification du devis 
 ### Backend (REAL_BACKEND, stack Supabase LOCAL isolé — pas la PROD)
 `scripts/test/start-e2e-local.sh` : parcours v2 construits par le cœur réel du front — accès tarifs, INTERVENTION (2 prestations, prix ferme + sur devis), DEVIS (photo stockée, rejeu du jeton refusé, intervention jointe), ENTRETIEN (« Contrat entretien ») : création du lead, notification invoquée (0 email), relecture de la ligne en base (message identique au front, téléphone normalisé, lead test archivé, attribution). **21/21 PASS** (`1626b7bd`, relancé avec attribution sur `f884d9ce`).
 
-## Round 4 (UX seul, sur `700111d5`)
-_(en cours)_
+## Round 4 (UX seul, sur `700111d5`) — **PASS**
+- P1 du round 3 **corrigé** (390 et 1440) : « Retirer » reste sur le récap du devis, ligne retirée, message, focus sur « Envoyer », confirmation avec Travaux + Projet.
+- Vérifiés OK : parcours intervention et devis complets, erreurs (message, marquage, focus), suggestions d'adresse, vocabulaire (ni panier/commande, ni emoji, agence unique Saint-Omer), mise en page 390/1440 sans défilement horizontal, badge « envoi simulé » présent à chaque envoi.
+- P2 relevés → corrigés dans `0b01b834` sauf le n° 1 : (1) bouton retour du navigateur après plusieurs allers-retours « Modifier » (rien n'est perdu) — **ouvert** ; (2) retour ← depuis le devis ouvert depuis la liste des prestations ; (3) entrée entretien : étape générique en trop ; (4) « toute la Côte d'Opale » promet plus que la zone ; (5) message du code postal trop sec.
+
+## Confidentialité (`0b01b834` + carte de reprise sans ville) — vérifié sur la preview, 390
+Défaut constaté dans le code : identité, adresse et description étaient conservées 7 jours dans le navigateur et recopiées dans une nouvelle demande.
+
+| Scénario | Résultat |
+|---|---|
+| Demande envoyée → accueil → nouvelle demande | champs vides, aucune donnée affichée ni stockée |
+| Stockage durable (localStorage) pendant tout le parcours | aucune donnée personnelle (après accès tarifs, avant et après envoi) |
+| Session après envoi | identité et adresse vidées |
+| Demande abandonnée → accueil → nouvelle demande | écran « Vous avez une demande en cours » (Nouvelle demande / Reprendre), rien de prérempli |
+| « Nouvelle demande » | étape Lieu vide, demande vidée |
+| « Reprendre » (même onglet) | demande et coordonnées restaurées |
+| Rechargement en cours de demande | coordonnées conservées |
+| Second utilisateur (nouvel onglet) | aucune donnée personnelle, même après « Reprendre » (seule la prestation choisie est reprise) |
+| « Effacer mes informations de cet appareil » | demande, brouillon, accès tarifs et marqueurs de mesure purgés |
+| URL | étape et catégorie uniquement |
+
