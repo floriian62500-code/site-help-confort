@@ -495,8 +495,8 @@ svg{flex:none}
       <p class="err">Indiquez le numéro et la rue.</p>
      </div>
      <div class="row-cp">
-      <div class="field" id="fld-cp"><label for="f-cp">Code postal</label><input id="f-cp" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="62500"><p class="err">5 chiffres.</p></div>
-      <div class="field" id="fld-ville"><label for="f-ville">Ville</label><input id="f-ville" type="text" autocomplete="address-level2" placeholder="Saint-Omer"><p class="err">Indiquez la ville.</p></div>
+      <div class="field" id="fld-cp"><label for="f-cp">Code postal</label><input id="f-cp" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="ex. 62500"><p class="err">5 chiffres.</p></div>
+      <div class="field" id="fld-ville"><label for="f-ville">Ville</label><input id="f-ville" type="text" autocomplete="address-level2" placeholder="ex. Saint-Omer"><p class="err">Indiquez la ville.</p></div>
      </div>
      <div class="zone" id="zoneBox" role="status" aria-live="polite" hidden></div>
     </div>
@@ -520,20 +520,20 @@ svg{flex:none}
    <section class="step card" data-step="acces" aria-labelledby="h-acces">
     <header class="q">
      <p class="q-kicker" data-kicker></p>
-     <h1 id="h-acces" tabindex="-1">Vos tarifs sont prêts</h1>
+     <h1 id="h-acces" tabindex="-1">Affichez les tarifs</h1>
      <p class="q-sub" id="accesSub">Indiquez comment vous joindre pour les afficher.</p>
     </header>
     <div class="q-body">
      <form id="pgForm" novalidate autocomplete="on">
-      <div class="field" id="fld-pg-prenom"><label for="pg-prenom">Prénom</label><input id="pg-prenom" type="text" autocomplete="given-name" placeholder="Marie"><p class="err">Indiquez votre prénom.</p></div>
+      <div class="field" id="fld-pg-prenom"><label for="pg-prenom">Prénom</label><input id="pg-prenom" type="text" autocomplete="given-name"><p class="err">Indiquez votre prénom.</p></div>
       <div class="row2">
        <div class="field" id="fld-pg-tel"><label for="pg-tel">Téléphone</label><input id="pg-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 12 34 56 78"><p class="err">Numéro français à 10 chiffres.</p></div>
        <div class="field" id="fld-pg-email"><label for="pg-email">Email</label><input id="pg-email" type="email" inputmode="email" autocomplete="email" placeholder="vous@exemple.fr"><p class="err">Adresse email valide requise.</p></div>
       </div>
       <button type="submit" class="sr-only" tabindex="-1">Afficher les tarifs</button>
      </form>
-     <div class="note"><svg width="20" height="20" aria-hidden="true"><use href="#i-info"/></svg><span><strong>Pourquoi ces informations&nbsp;?</strong> Nos prix fermes sont établis pour la zone de l'agence de Saint-Omer. Vos coordonnées nous permettent de vous rappeler si vous avez une question ; elles servent uniquement à traiter votre demande, sans engagement.</span></div>
-     <p class="legal">En continuant, vous acceptez d'être recontacté au sujet de cette demande. <a href="/mentions-legales.html" target="_blank" rel="noopener">Mentions légales</a>.</p>
+     <div class="note"><svg width="20" height="20" aria-hidden="true"><use href="#i-info"/></svg><span><strong>Pourquoi ces informations&nbsp;?</strong> Nos tarifs sont établis pour la zone de l'agence de Saint-Omer. En les affichant, vos coordonnées sont transmises à l'agence, qui peut vous rappeler au sujet de cette demande. Elles ne sont ni revendues, ni transmises à des tiers à des fins commerciales.</span></div>
+     <p class="legal"><a href="/mentions-legales.html" target="_blank" rel="noopener">Mentions légales et protection des données</a></p>
     </div>
     <footer class="q-actions"><button class="btn-primary" type="submit" form="pgForm" id="pgSubmit">Afficher les tarifs <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow"/></svg></button></footer>
    </section>
@@ -570,7 +570,7 @@ svg{flex:none}
     <div class="q-body">
      <div id="demandeList"></div>
      <button class="add-more" type="button" data-go="besoin"><svg width="18" height="18" aria-hidden="true"><use href="#i-plus"/></svg>Ajouter une autre intervention</button>
-     <div class="note"><svg width="20" height="20" aria-hidden="true"><use href="#i-shield"/></svg><span><strong>Aucun paiement en ligne.</strong> Vous réglez après l'intervention. L'agence confirme avec vous le prix et le créneau lors du rappel.</span></div>
+     <div class="note"><svg width="20" height="20" aria-hidden="true"><use href="#i-shield"/></svg><span><strong>Aucun paiement en ligne :</strong> vous réglez après l'intervention. Un prix ferme couvre la prestation telle que décrite ; si un supplément s'avérait nécessaire, il vous est proposé avant d'intervenir. Lors du rappel, l'agence fixe le créneau avec vous.</span></div>
     </div>
     <footer class="q-actions"><button class="sum-handle" type="button" data-open-sheet hidden></button><button class="btn-primary" type="button" data-next="demande">Continuer <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow"/></svg></button></footer>
    </section>
@@ -622,7 +622,7 @@ svg{flex:none}
       </div>
      </div>
      <div class="field"><label for="f-precisions">Précisions pour le technicien <span class="opt">· facultatif</span></label><textarea id="f-precisions" rows="3" maxlength="1200" placeholder="Étage, digicode, accès, description du problème…"></textarea></div>
-     <div class="note note--warm"><svg width="20" height="20" aria-hidden="true"><use href="#i-info"/></svg><span>Ce n'est pas encore un rendez-vous ferme : aucun créneau n'est réservé en ligne. L'agence vous rappelle aux heures d'ouverture (lun–ven 9h–17h, sam 9h–16h) pour le confirmer. En cas d'urgence, appelez le <a href="tel:+33366100134">03 66 10 01 34</a>.</span></div>
+     <div class="note note--warm"><svg width="20" height="20" aria-hidden="true"><use href="#i-info"/></svg><span id="creneauNote">Ce n'est pas encore un rendez-vous ferme : aucun créneau n'est réservé en ligne. L'agence vous rappelle sous 24&nbsp;h ouvrées au plus tard, aux heures d'ouverture (lun–ven 9h–17h, sam 9h–16h), pour le fixer avec vous.</span></div>
      <p class="form-err" id="errCreneau" role="alert" hidden></p>
     </div>
     <footer class="q-actions"><button class="sum-handle" type="button" data-open-sheet hidden></button><button class="btn-primary" type="button" id="sendIntervention">Envoyer ma demande <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow"/></svg></button></footer>
@@ -681,7 +681,7 @@ svg{flex:none}
     <header class="q">
      <p class="q-kicker" data-kicker></p>
      <h1 id="h-dvr" tabindex="-1">Vérifiez votre demande de devis</h1>
-     <p class="q-sub">Un technicien étudie votre projet avant de vous transmettre un devis gratuit.</p>
+     <p class="q-sub">Un technicien étudie votre projet. L'agence vous recontacte sous 24&nbsp;h ouvrées, puis vous transmet un devis gratuit et sans engagement.</p>
     </header>
     <div class="q-body">
      <div class="rows" id="dvRows"></div>
@@ -888,7 +888,7 @@ svg{flex:none}
   function firmTotal(lines, byId) {
     return (lines || []).reduce(function (t, l) { var s = byId && byId[l.id]; var k = s ? priceKind(s) : (l.requires_quote ? 'devis' : 'ferme'); return k === 'ferme' ? t + (Number(l.ttc) || 0) * (l.qty || 1) : t; }, 0);
   }
-  var FAM_HINTS = { plomberie: 'Fuite, chauffe-eau, robinetterie, WC', chauffage: 'Panne, entretien chaudière, radiateurs', electricite: 'Panne, disjoncteur, VMC', serrurerie: 'Porte claquée ou bloquée, serrure', vitrerie: 'Vitre cassée, mise en sécurité', renovation: 'Peinture, isolation, enduits' };
+  var FAM_HINTS = { plomberie: 'Fuite, chauffe-eau, robinetterie, WC', chauffage: 'Panne, entretien chaudière, radiateurs', electricite: 'Panne, disjoncteur, VMC', serrurerie: 'Porte claquée ou bloquée, serrure', vitrerie: 'Vitre cassée, mise en sécurité', renovation: 'Peinture, isolation, enduits · sur devis' };
   var PROBLEMS = [
     { id: 'panne', label: 'Une panne ou une fuite', re: /urgente|fuite|panne|depannage|desengorgement/ },
     { id: 'porte', label: 'Une porte bloquée', re: /ouverture|porte|serrur/ },
@@ -897,6 +897,67 @@ svg{flex:none}
     { id: 'vitre', label: 'Une vitre cassée', re: /vitre|insert|vitrage/ },
     { id: 'travaux', label: 'Des travaux de finition', re: /enduit|isolation|peinture|revetement/ }
   ];
+  // Aide au choix PAR MÉTIER : situations concrètes → une offre conseillée (nom) + alternatives.
+  var DIAG = {
+    plomberie: [
+      { id: 'fuite', label: 'Une fuite d\u2019eau', best: /recherche de fuite/, re: /fuite/ },
+      { id: 'bouche', label: 'Évier, douche ou WC bouché', best: /desengorgement/, re: /desengorgement|canalisation/ },
+      { id: 'eauchaude', label: 'Plus d\u2019eau chaude', best: /chauffe-eau depannage/, re: /chauffe-eau|intervention urgente/ },
+      { id: 'robinet', label: 'Robinet ou chasse d\u2019eau', best: /mecanisme|mitigeur/, re: /mitigeur|mecanisme/ },
+      { id: 'entretien', label: 'Entretien ou calcaire', best: /contrat entretien/, re: /entretien|detartrage/ }
+    ],
+    chauffage: [
+      { id: 'panne', label: 'Plus de chauffage', best: /depannage/, re: /depannage|panne/ },
+      { id: 'entretien', label: 'Entretien de la chaudière', best: /entretien chaudiere gaz/, re: /entretien/ },
+      { id: 'radiateurs', label: 'Radiateurs froids ou bruyants', best: /desembouage/, re: /desembouage|detartrage circuit/ }
+    ],
+    electricite: [
+      { id: 'panne', label: 'Panne ou disjoncteur qui saute', best: /intervention urgente/, re: /intervention urgente/ },
+      { id: 'vmc', label: 'Ventilation (VMC)', best: /vmc/, re: /vmc/ }
+    ],
+    serrurerie: [
+      { id: 'claquee', label: 'Porte claquée, non verrouillée', best: /porte claquee/, re: /porte claquee|porte simple/ },
+      { id: 'cle', label: 'Porte fermée à clé', best: /fermee a cle/, re: /fermee a cle/ },
+      { id: 'blindee', label: 'Porte blindée ou multipoints', best: /securite/, re: /securite|multipoints/ },
+      { id: 'serrure', label: 'Serrure bloquée ou clé cassée', best: /intervention urgente/, re: /intervention urgente/ }
+    ],
+    vitrerie: [
+      { id: 'cassee', label: 'Vitre cassée', best: /mise en securite/, re: /mise en securite/ },
+      { id: 'insert', label: 'Vitre d\u2019insert ou de poêle', best: /insert/, re: /insert/ }
+    ]
+  };
+  function diagFor(slug, list) {
+    var d = DIAG[slug] || PROBLEMS;
+    return d.filter(function (p) { return (list || []).some(function (s) { return p.re.test(searchText(s)); }); });
+  }
+  function suggest(slug, list, pid) {
+    list = list || [];
+    if (pid === 'inconnu') return { best: diagnosticOffer(list), others: [] };
+    var p = (DIAG[slug] || PROBLEMS).filter(function (x) { return x.id === pid; })[0];
+    if (!p) return { best: null, others: [] };
+    var matches = list.filter(function (s) { return p.re.test(searchText(s)); });
+    var best = p.best ? (list.filter(function (s) { return p.best.test(norm(s.name)); })[0] || null) : null;
+    if (!best) best = matches[0] || null;
+    return { best: best, others: matches.filter(function (s) { return !best || s.id !== best.id; }) };
+  }
+  function famHasPrices(list) { return (list || []).some(priced); }
+  // Horaires d'ouverture de l'agence (heure de Paris) : lun–ven 9h–17h, sam 9h–16h, dim fermé.
+  var HOURS = { 1: [9, 17], 2: [9, 17], 3: [9, 17], 4: [9, 17], 5: [9, 17], 6: [9, 16] };
+  var JOURS = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+  function agencyStatus(date) {
+    var p = {};
+    try { new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Paris', weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(date || new Date()).forEach(function (x) { p[x.type] = x.value; }); }
+    catch (e) { return { open: true, next: null }; }
+    var wd = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(p.weekday), t = (parseInt(p.hour, 10) % 24) + parseInt(p.minute, 10) / 60;
+    var today = HOURS[wd];
+    if (today && t >= today[0] && t < today[1]) return { open: true, next: null };
+    for (var i = 0; i < 8; i++) {
+      var d = (wd + i) % 7, h = HOURS[d]; if (!h) continue;
+      if (i === 0 && t >= h[0]) continue;
+      return { open: false, next: (i === 0 ? 'aujourd\u2019hui' : (i === 1 ? 'demain' : JOURS[d])) + ' à ' + h[0] + ' h' };
+    }
+    return { open: false, next: null };
+  }
   function searchText(s) { return norm([s.name, s.short_desc, s.category_name].join(' ')); }
   function problemsFor(list) { return PROBLEMS.filter(function (p) { return (list || []).some(function (s) { return p.re.test(searchText(s)); }); }); }
   function matchProblem(list, pid) { var p = PROBLEMS.filter(function (x) { return x.id === pid; })[0]; return p ? (list || []).filter(function (s) { return p.re.test(searchText(s)); }) : []; }
@@ -973,7 +1034,7 @@ svg{flex:none}
     norm: norm, esc: esc, nameOk: nameOk, phoneOk: phoneOk, emailOk: emailOk, cpOk: cpOk, descOk: descOk, dateOk: dateOk, lieuValid: lieuValid, contactValid: contactValid,
     emptyState: emptyState, priceGatePassed: priceGatePassed, isPricedStep: isPricedStep, modeForStep: modeForStep, guardStep: guardStep, nextStep: nextStep, prevStep: prevStep,
     progress: progress, legacyStep: legacyStep, haversineKm: haversineKm, zoneFor: zoneFor, zoneText: zoneText, priced: priced, perUnit: perUnit, priceKind: priceKind, eur: eur,
-    firmTotal: firmTotal, searchText: searchText, problemsFor: problemsFor, matchProblem: matchProblem, diagnosticOffer: diagnosticOffer, frDate: frDate, priseText: priseText,
+    firmTotal: firmTotal, searchText: searchText, problemsFor: problemsFor, matchProblem: matchProblem, diagFor: diagFor, suggest: suggest, famHasPrices: famHasPrices, agencyStatus: agencyStatus, diagnosticOffer: diagnosticOffer, frDate: frDate, priseText: priseText,
     lineLabel: lineLabel, interventionPayload: interventionPayload, devisPayload: devisPayload, gatePayload: gatePayload, refFromId: refFromId, simulationAllowed: simulationAllowed };
 });
 </script>
@@ -1047,7 +1108,11 @@ svg{flex:none}
     var kick = state.mode === 'devis' ? 'Demande de devis' : "Demande d'intervention", fn = famName(state.fam);
     $$('[data-kicker]').forEach(function (k) { k.textContent = (state.mode === 'intervention' && fn && (step === 'lieu' || step === 'acces')) ? kick + ' · ' + fn : kick; });
   }
-  function next(from) { go(C.nextStep(state.mode, from, { fam: state.fam })); }
+  function next(from) {
+    var back = state._returnTo; state._returnTo = null;
+    if (back && back !== from && C.guardStep(back, ctx()) === back) return go(back);
+    go(C.nextStep(state.mode, from, { fam: state.fam }));
+  }
   function renderProgress(step) {
     var p = C.progress(state.mode, step), box = $('#topProg');
     box.hidden = !p;
@@ -1056,7 +1121,7 @@ svg{flex:none}
 
   // ---------- Récapitulatif contextuel (colonne desktop + feuille mobile) ----------
   function lieuTxt() { var l = state.lieu; return C.lieuValid(l) ? [l.adresse, [l.cp, l.ville].filter(Boolean).join(' ')].filter(Boolean).join(', ') : ''; }
-  function contactTxt() { var c = state.contact; return C.contactValid(c) ? c.prenom + ' ' + c.nom + ' · ' + c.tel : ''; }
+  function contactTxt() { var c = state.contact; if (C.contactValid(c)) return c.prenom + ' ' + c.nom + ' · ' + c.tel; if (c.prenom || c.tel) return [c.prenom, c.tel].filter(Boolean).join(' · ') + ' (nom à compléter)'; return ''; }
   function sec(k, v, step, extra) {
     var canEdit = v && step && C.guardStep(step, ctx()) === step;
     return '<div class="rc"><p class="rc-k"><span>' + esc(k) + '</span>' + (canEdit ? '<button type="button" data-go="' + step + '">Modifier</button>' : '') + '</p>' +
@@ -1174,6 +1239,7 @@ svg{flex:none}
     mark('fld-adresse', bA); mark('fld-cp', bC); mark('fld-ville', bV); save();
     if (bA) return adr.focus(); if (bC) return cpI.focus(); if (bV) return viI.focus();
     if (!l.zone) { l.zone = C.zoneFor(l.lat, l.lon, l.cp); save(); }
+    if (state.mode === 'intervention' && state.fam && loaded && byFam[state.fam] && !C.famHasPrices(byFam[state.fam])) return switchToDevis(state.fam, true);
     next('lieu');
   }
 
@@ -1193,16 +1259,33 @@ svg{flex:none}
     var slug = el.getAttribute('data-fam');
     $$('#famTiles .tile').forEach(function (t) { t.setAttribute('aria-pressed', String(t === el)); });
     if (state.fam !== slug) { state.fam = slug; state.prob = null; $('#precSearch').value = ''; }
-    save(); setTimeout(function () { go('precision'); }, 240);
+    save();
+    if (loaded && !C.famHasPrices(byFam[slug])) return setTimeout(function () { switchToDevis(slug, true); }, 240); // métier entièrement sur devis : pas d'écran « tarifs »
+    setTimeout(function () { go('precision'); }, 240);
+  }
+
+  function devisMetierFor(slug) {
+    var fn = C.norm(famName(slug).split(' ')[0]);
+    var hit = DV_METIERS.filter(function (m) { return C.norm(m[0]) === fn; })[0];
+    return hit ? hit[0] : null;
+  }
+  function switchToDevis(slug, fromQuoteOnly) {
+    var m = slug ? devisMetierFor(slug) : null;
+    state.mode = 'devis';
+    if (m && (state.devis.metiers || []).indexOf(m) < 0) state.devis.metiers = (state.devis.metiers || []).concat([m]).slice(0, 3);
+    save();
+    if (fromQuoteOnly) toast('Ces travaux sont chiffrés sur devis, gratuitement');
+    go(m ? 'dv-projet' : 'dv-metier');
   }
 
   // ---------- Accès aux tarifs (identification avant affichage des prix) ----------
   ENTER.acces = function () {
     var f = famName(state.fam), v = state.lieu.ville;
-    $('#accesSub').textContent = (f ? f + ' à ' + v : 'Votre intervention à ' + v) + ' : indiquez comment vous joindre et les prix s’affichent immédiatement.';
+    $('#accesSub').textContent = (f ? f + ' à ' + v : 'Votre intervention à ' + v) + ' : indiquez comment vous joindre, les tarifs s\u2019affichent aussitôt.';
     [['pg-prenom', 'prenom'], ['pg-tel', 'tel'], ['pg-email', 'email']].forEach(function (p) { var e = document.getElementById(p[0]); if (e && !e.value) e.value = state.contact[p[1]] || ''; });
     ['fld-pg-prenom', 'fld-pg-tel', 'fld-pg-email'].forEach(function (x) { mark(x, false); });
   };
+  [['pg-prenom', 'fld-pg-prenom'], ['pg-tel', 'fld-pg-tel'], ['pg-email', 'fld-pg-email']].forEach(function (x) { document.getElementById(x[0]).addEventListener('input', function () { mark(x[1], false); }); });
   function submitGate(e) {
     if (e) e.preventDefault();
     var btn = $('#pgSubmit'); if (btn.classList.contains('is-busy')) return;
@@ -1246,7 +1329,7 @@ svg{flex:none}
   function offerHtml(s, reco) {
     var on = inCart(s.id);
     return '<article class="offer' + (on ? ' is-in' : '') + '" data-offer="' + esc(s.id) + '">' +
-      (reco ? '<p class="offer-badge">' + ic('i-spark', 14) + 'Conseillé pour commencer</p>' : '') +
+      (reco ? '<p class="offer-badge">' + ic('i-spark', 14) + 'Conseillé</p>' : '') +
       '<div class="offer-main"><h3 class="offer-t">' + esc(s.name) + '</h3>' + (s.short_desc ? '<p class="offer-d">' + esc(s.short_desc) + '</p>' : '') + detailsBlock(s) + '</div>' +
       '<div class="offer-side">' + priceBlock(s) + addBtn(s.id, on) + '</div></article>';
   }
@@ -1270,17 +1353,15 @@ svg{flex:none}
       head.textContent = items.length ? items.length + ' résultat' + (items.length > 1 ? 's' : '') + ' pour « ' + $('#precSearch').value.trim() + ' »' : '';
       html = items.map(function (s) { return offerHtml(s); }).join('') || '<div class="empty">Aucune intervention ne correspond. <button class="link" type="button" data-switch-devis>Décrivez votre besoin pour un devis</button>.</div>';
     } else if (aide) {
-      var probs = C.problemsFor(list);
+      var probs = C.diagFor(state.fam, list);
       $('#probChips').innerHTML = probs.map(function (p) { return '<button type="button" class="chip" data-prob="' + p.id + '" aria-pressed="' + (state.prob === p.id) + '">' + esc(p.label) + '</button>'; }).join('') +
         '<button type="button" class="chip" data-prob="inconnu" aria-pressed="' + (state.prob === 'inconnu') + '">Je ne sais pas</button>';
       if (!state.prob) { head.textContent = ''; html = '<div class="empty">Choisissez la situation qui ressemble le plus à la vôtre.</div>'; }
       else {
-        reco = C.diagnosticOffer(list);
-        items = state.prob === 'inconnu' ? [] : C.matchProblem(list, state.prob).filter(function (s) { return !reco || s.id !== reco.id; });
-        head.textContent = 'Nos suggestions';
-        html = (reco ? offerHtml(reco, true) : '') + items.map(function (s) { return offerHtml(s); }).join('');
-        if (!reco && !items.length) html = '<div class="empty">Un technicien doit voir la situation. <button class="link" type="button" data-switch-devis>Demander un devis gratuit</button>.</div>';
-        else if (state.prob === 'inconnu' && !reco) html += '<div class="empty">Vous hésitez encore&nbsp;? <button class="link" type="button" data-switch-devis>Décrivez votre besoin</button>.</div>';
+        var sg = C.suggest(state.fam, list, state.prob); reco = sg.best;
+        head.textContent = reco ? (state.prob === 'inconnu' ? 'Un technicien identifie la panne sur place' : 'Notre conseil pour cette situation') : '';
+        html = (reco ? offerHtml(reco, true) : '') + (sg.others.length ? '<p class="list-h" style="margin-top:18px">Autres possibilités</p>' + sg.others.map(function (s) { return offerHtml(s); }).join('') : '');
+        if (!reco) html = '<div class="empty">Un technicien doit voir la situation. <button class="link" type="button" data-switch-devis>Demander un devis gratuit</button>.</div>';
       }
     } else {
       head.textContent = list.length + ' intervention' + (list.length > 1 ? 's' : '');
@@ -1334,8 +1415,10 @@ svg{flex:none}
   }
 
   // ---------- Prise en charge ----------
+  function hoursLine() { var a = C.agencyStatus(new Date()); return a.open ? '' : ' L\u2019agence est fermée en ce moment : premier rappel possible ' + a.next + '.'; }
   ENTER.creneau = function () {
     var p = state.prise; $('#errCreneau').hidden = true;
+    $('#creneauNote').textContent = 'Ce n\u2019est pas encore un rendez-vous ferme : aucun créneau n\u2019est réservé en ligne. L\u2019agence vous rappelle sous 24 h ouvrées au plus tard, aux heures d\u2019ouverture (lun–ven 9h–17h, sam 9h–16h), pour le fixer avec vous.' + hoursLine();
     $$('#quandOpts [data-quand]').forEach(function (b) { b.setAttribute('aria-checked', String(b.getAttribute('data-quand') === p.quand)); });
     $$('#rappelOpts [data-rappel]').forEach(function (b) { b.setAttribute('aria-checked', String(b.getAttribute('data-rappel') === (p.rappel || 'asap'))); });
     $('#fld-date').hidden = p.quand !== 'date';
@@ -1346,7 +1429,7 @@ svg{flex:none}
   $('#f-precisions').addEventListener('input', function () { state.prise.precisions = this.value; save(); });
 
   // ---------- Devis ----------
-  var DV_METIERS = [['Plomberie', 'f-plomberie'], ['Chauffage', 'f-chauffage'], ['Électricité', 'f-electricite'], ['Serrurerie', 'f-serrurerie'], ['Vitrerie', 'f-vitrerie'], ['Menuiserie', 'f-menuiserie'], ['Rénovation', 'f-renovation'], ['Volets', 'f-volets'], ['Adaptation PMR', 'f-pmr'], ['Sinistre assurance', 'f-sinistre'], ['Contrat entretien', 'f-entretien'], ['Autre', 'f-autre']];
+  var DV_METIERS = [['Plomberie', 'f-plomberie'], ['Chauffage', 'f-chauffage'], ['Électricité', 'f-electricite'], ['Serrurerie', 'f-serrurerie'], ['Vitrerie', 'f-vitrerie'], ['Menuiserie', 'f-menuiserie'], ['Rénovation', 'f-renovation'], ['Salle de bain', 'f-plomberie'], ['Volets', 'f-volets'], ['Adaptation PMR', 'f-pmr'], ['Sinistre assurance', 'f-sinistre'], ['Contrat entretien', 'f-entretien'], ['Autre', 'f-autre']];
   var NATURES = ['Réparation', 'Remplacement', 'Installation neuve', 'Rénovation', 'Mise aux normes', 'Entretien'];
   ENTER['dv-metier'] = function () {
     var sel = state.devis.metiers || [];
@@ -1362,17 +1445,18 @@ svg{flex:none}
     $('#natureOpts').innerHTML = NATURES.map(function (n) { return '<button type="button" class="chip" role="radio" data-nature="' + esc(n) + '" aria-checked="' + (state.devis.nature === n) + '">' + esc(n) + '</button>'; }).join('');
     $('#dv-desc').value = state.devis.desc || ''; mark('fld-desc', false); descHint();
   };
-  function descHint() { var n = ($('#dv-desc').value || '').trim().length; $('#descHint').textContent = n >= 10 ? n + ' caractères' : (10 - n) + ' caractère' + (10 - n > 1 ? 's' : '') + ' minimum encore'; }
+  function descHint() { var n = ($('#dv-desc').value || '').trim().length; $('#descHint').textContent = n >= 10 ? n + ' caractères' : 'Encore ' + (10 - n) + ' caractère' + (10 - n > 1 ? 's' : ''); }
   $('#dv-desc').addEventListener('input', function () { state.devis.desc = this.value; mark('fld-desc', false); descHint(); save(); });
   var MAX_PH = 3, MAX_SZ = 8 * 1024 * 1024;
-  ENTER['dv-photos'] = function () { renderThumbs(); };
+  function photosLostNote() { var lost = (state.devis.photos || 0) > 0 && !dvFiles.length; var e = $('#errPhotos'); if (lost) { e.textContent = 'Vos photos n\u2019ont pas pu être conservées après la fermeture de la page : ajoutez-les à nouveau si vous le souhaitez.'; e.hidden = false; } return lost; }
+  ENTER['dv-photos'] = function () { $('#errPhotos').hidden = true; photosLostNote(); renderThumbs(); };
   function renderThumbs() {
     var ul = $('#thumbs'); ul.innerHTML = '';
     dvFiles.forEach(function (f, i) {
       var li = document.createElement('li'); var img = document.createElement('img'); img.alt = 'Photo ' + (i + 1);
       img.onerror = function () { li.innerHTML = ic('i-image', 30); li.appendChild(rm); }; img.src = URL.createObjectURL(f);
       var rm = document.createElement('button'); rm.type = 'button'; rm.setAttribute('aria-label', 'Retirer la photo ' + (i + 1)); rm.innerHTML = ic('i-x', 15);
-      rm.addEventListener('click', function () { dvFiles.splice(i, 1); renderThumbs(); renderRecap(); });
+      rm.addEventListener('click', function () { dvFiles.splice(i, 1); state.devis.photos = dvFiles.length; save(); renderThumbs(); renderRecap(); });
       li.appendChild(img); li.appendChild(rm); ul.appendChild(li);
     });
     var b = $('#dvPhotosNext'); b.innerHTML = (dvFiles.length ? 'Continuer avec ' + dvFiles.length + ' photo' + (dvFiles.length > 1 ? 's' : '') : 'Continuer sans photo') + ' ' + ic('i-arrow', 18);
@@ -1386,6 +1470,7 @@ svg{flex:none}
       dvFiles.push(f);
     });
     if (msg) { err.textContent = msg; err.hidden = false; }
+    state.devis.photos = dvFiles.length; save();
     renderThumbs(); renderRecap();
   }
   $('#dv-photos').addEventListener('change', function () { addPhotos(this.files); this.value = ''; });
@@ -1454,10 +1539,10 @@ svg{flex:none}
     else h += (s.lines || []).map(function (l) { return '<div class="rw"><span class="rw-k">Intervention</span><span class="rw-v">' + esc(l.name) + '</span><span class="rw-v">' + esc(l.price) + '</span></div>'; }).join('') + (s.prise ? '<div class="rw"><span class="rw-k">Préférence</span><span class="rw-v">' + esc(s.prise) + '</span><span></span></div>' : '');
     h += '<div class="rw"><span class="rw-k">Lieu</span><span class="rw-v">' + esc(s.lieu) + '</span><span></span></div></div></div>';
     var steps = dv
-      ? [['Un technicien étudie votre projet', s.photosSent ? 'À partir de votre description et de vos photos.' : 'À partir de votre description.'], ['L’agence vous recontacte', 'Pour préciser un détail si besoin, puis vous transmettre un devis gratuit.'], ['Vous décidez', 'Sans engagement de votre part.']]
-      : [['L’agence de Saint-Omer vous rappelle', 'Aux heures d’ouverture : lun–ven 9h–17h, sam 9h–16h.'], ['Prix et créneau confirmés ensemble', 'Le conseiller fixe le rendez-vous avec un technicien disponible.'], ['Le technicien intervient', 'Vous réglez après l’intervention. Aucun paiement en ligne.']];
+      ? [['Un technicien étudie votre projet', s.photosSent ? 'À partir de votre description et de vos photos.' : 'À partir de votre description.'], ['L\u2019agence vous recontacte sous 24 h ouvrées', 'Pour préciser votre projet ; une visite sur place peut vous être proposée si nécessaire.' + hoursLine()], ['Vous recevez votre devis gratuit', 'Vous décidez ensuite, sans engagement.']]
+      : [['L\u2019agence de Saint-Omer vous rappelle', 'Sous 24 h ouvrées au plus tard, aux heures d\u2019ouverture (lun–ven 9h–17h, sam 9h–16h).' + hoursLine()], ['Le créneau est fixé avec vous', 'Les prix fermes restent ceux affichés ; les prestations sur devis sont chiffrées après diagnostic.'], ['Le technicien intervient', 'Vous réglez après l\u2019intervention. Aucun paiement en ligne.']];
     h += '<div class="done-card"><h2>Et maintenant&nbsp;?</h2><ol class="timeline">' + steps.map(function (x, i) { return '<li><b>' + (i + 1) + '</b><strong>' + esc(x[0]) + '</strong><span>' + esc(x[1]) + '</span></li>'; }).join('') + '</ol></div>';
-    h += '<div class="done-actions"><a class="btn-soft" href="tel:+33366100134">' + ic('i-phone', 17) + '03 66 10 01 34</a><a class="btn-ghost" href="/">Retour à l’accueil</a><button type="button" class="btn-ghost" data-restart>Faire une autre demande</button></div>';
+    h += '<div class="done-actions"><a class="btn-soft" href="tel:+33366100134">' + ic('i-phone', 17) + '03 66 10 01 34</a><a class="btn-ghost" href="/">Retour à l’accueil</a><button type="button" class="btn-ghost" data-restart>Faire une autre demande</button></div><p class="legal" style="text-align:center"><button type="button" class="link" data-forget>Effacer mes informations de cet appareil</button></p>';
     box.innerHTML = h;
   };
 
@@ -1468,7 +1553,7 @@ svg{flex:none}
     if ((el = t.closest('[data-next]'))) { var from = el.getAttribute('data-next'); if (from === 'lieu') return submitLieu(); if (from === 'coordonnees') return submitContact();
       if (from === 'dv-projet') { state.devis.desc = $('#dv-desc').value.trim(); save(); if (!C.descOk(state.devis.desc)) { mark('fld-desc', true); return $('#dv-desc').focus(); } }
       return next(from); }
-    if ((el = t.closest('[data-go]'))) { e.preventDefault(); return go(el.getAttribute('data-go')); }
+    if ((el = t.closest('[data-go]'))) { e.preventDefault(); if (el.closest('#recap, #sheet, #dvRows')) state._returnTo = state.step; else state._returnTo = null; return go(el.getAttribute('data-go')); }
     if ((el = t.closest('[data-fam]'))) return pickFamily(el);
     if ((el = t.closest('[data-toggle]'))) return toggleLine(el.getAttribute('data-toggle'));
     if ((el = t.closest('[data-remove]'))) { var rid = el.getAttribute('data-remove'); if (cart) { cart.remove(rid); toast('Retiré de votre demande'); } save(); renderDemande(); renderRecap(); if (!cart.count()) go('besoin'); return; }
@@ -1478,7 +1563,8 @@ svg{flex:none}
     if ((el = t.closest('[data-rappel]'))) { state.prise.rappel = el.getAttribute('data-rappel'); save(); ENTER.creneau(); return renderRecap(); }
     if ((el = t.closest('[data-dvm]'))) return toggleMetier(el);
     if ((el = t.closest('[data-nature]'))) { var nv = el.getAttribute('data-nature'); state.devis.nature = state.devis.nature === nv ? null : nv; save(); return $$('#natureOpts [data-nature]').forEach(function (b) { b.setAttribute('aria-checked', String(b.getAttribute('data-nature') === state.devis.nature)); }); }
-    if ((el = t.closest('[data-switch-devis]'))) { state.mode = 'devis'; var fn = famName(state.fam).split(' ')[0]; var hit = DV_METIERS.filter(function (m) { return C.norm(m[0]) === C.norm(fn); })[0]; if (hit && (state.devis.metiers || []).indexOf(hit[0]) < 0) state.devis.metiers = (state.devis.metiers || []).concat([hit[0]]).slice(0, 3); save(); return go('dv-metier'); }
+    if ((el = t.closest('[data-switch-devis]'))) return switchToDevis(state.fam, false);
+    if ((el = t.closest('[data-forget]'))) { if (cart) cart.clear(); dvFiles = []; state = C.emptyState(); save(); try { localStorage.removeItem(STORE); sessionStorage.removeItem('hc_pg'); } catch (e2) {} toast('Informations effacées de cet appareil'); return go('choix'); }
     if ((el = t.closest('[data-open-sheet]'))) return openSheet(el);
     if ((el = t.closest('[data-close-sheet]'))) return closeSheet();
     if ((el = t.closest('[data-resume]'))) { var r = resumeStep && resumeStep !== 'choix' && resumeStep !== 'envoye' ? resumeStep : (state.mode === 'devis' ? 'dv-metier' : 'lieu'); return go(r); }
