@@ -165,9 +165,11 @@ ok('tracking : aucun appel ne passe contact, adresse ou identifiant de dossier',
 ok('tracking : un seul point d’envoi GA4 (window.hcGtag), jamais dataLayer brut', (uiSrc.match(/window\.hcGtag\('event'/g) || []).length === 2 && !/dataLayer\.push\(\{/.test(uiSrc));
 const trk = readFileSync(join(ROOT, 'assets', 'tracking.js'), 'utf8');
 ok('tracking.js : hcGtag exposé seulement APRÈS la garde de consentement', trk.indexOf('window.hcGtag = gtag') > trk.indexOf("if (consent !== 'granted')") && trk.indexOf("if (consent !== 'granted')") > 0);
-ok('tunnel : tracking.js chargé (version cache-bust), pas de bannière dans le tunnel', /<script src="\/assets\/tracking\.js\?v=\d{8}" defer><\/script>/.test(cat) && !/hc-consent\.js/.test(cat));
+const hostGuard = trk.indexOf("if (!/^(www\\.)?depan59-62\\.fr$/.test(location.hostname)) return;");
+ok('tracking.js : inerte hors production (recette/preview n’alimentent ni GA4 ni click_events), garde avant tout le reste', hostGuard > 0 && hostGuard < trk.indexOf('hc-consent') && hostGuard < trk.indexOf('googletagmanager') && hostGuard < trk.indexOf('rest/v1/click_events'));
+ok('tunnel : tracking.js chargé (version cache-bust), pas de bannière dans le tunnel', /<script src="\/assets\/tracking\.js\?v=\d{8}[a-z]?" defer><\/script>/.test(cat) && !/hc-consent\.js/.test(cat));
 const home = readFileSync(join(ROOT, 'index.html'), 'utf8');
-ok('accueil : 3 CTA du tunnel identifiés + mesure production/consentement uniquement', (home.match(/data-hc-cta="(hero_intervention|carte_intervention|carte_devis)"/g) || []).length === 3 && /typeof window\.hcGtag !== 'function'\) return;/.test(home) && /assets\/tracking\.js\?v=\d{8}/.test(home));
+ok('accueil : 3 CTA du tunnel identifiés + mesure production/consentement uniquement', (home.match(/data-hc-cta="(hero_intervention|carte_intervention|carte_devis)"/g) || []).length === 3 && /typeof window\.hcGtag !== 'function'\) return;/.test(home) && /assets\/tracking\.js\?v=\d{8}[a-z]?"/.test(home));
 // Attribution du dossier (source de visite mémorisée avec consentement)
 const attr = C.attributionFrom(JSON.stringify({ utm_source: 'google', utm_medium: 'cpc', gclid: 'Cj0', _first_landing: '/', _captured_at: 'x' }), 'https://www.google.com/');
 ok('attribution : utm + gclid + page d’entrée + référent ; rien si non mémorisé', attr.utm_source === 'google' && attr.gclid === 'Cj0' && attr.first_landing === '/' && attr.referrer === 'https://www.google.com/' && !('captured_at' in attr) && C.attributionFrom(null, '') === null && C.attributionFrom('{corrompu', '') === null);
