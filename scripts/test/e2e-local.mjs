@@ -119,7 +119,7 @@ async function journey(name, payload, opts = {}) {
   if (opts.notify) await notifyCheck(name, id);
   if (opts.photo && res.body.upload_token) await photoCheck(name, id, res.body.upload_token);
   else if (opts.photo) { results.push({ journey: name + '_photo', status: 0, id: 'upload_token absent', ok: false }); }
-  if (opts.expect) await dbCheck(name, id, (row) => ({ ...v2Common(row, payload), ...opts.expect(row) }));
+  if (opts.expect) await dbCheck(name, id, (row) => ({ ...(opts.common === false ? {} : v2Common(row, payload)), ...opts.expect(row) }));
 }
 
 // 2) Parcours historiques (contrat submit-lead-v6)
@@ -128,6 +128,20 @@ await journey('J2_diagnostic',         { ...base, metier: 'Électricité', type_
 await journey('J3_devis',              { ...base, metier: 'Plomberie', type_demande: 'devis', form_type: 'devis_express', message: tag('J3 devis') }, { photo: true });
 await journey('J4_entretien',          { ...base, metier: 'Chauffage', type_demande: 'entretien', form_type: 'demande_metier', message: tag('J4 entretien') });
 await journey('J5_rappel',             { ...base, type_demande: 'rappel', form_type: 'rappel', message: tag('J5 rappel') });
+// J6 : souscription contrat d'entretien — MIROIR du payload envoyé par contrats-entretien.html (recette, voie submit-lead-v6)
+const pSous = { prenom: 'TEST', nom: 'NE PAS TRAITER', telephone: '06 12 34 56 78', email: null, adresse: '1 rue Test', code_postal: '62500', ville: 'Saint-Omer',
+  metier: 'chauffage', type_demande: 'contrat_entretien', form_type: 'demande_metier',
+  message: ['DEMANDE DE CONTRAT ENTRETIEN', '- Énergie : Gaz', '- Formule : CONFORT (149 €/an)', '- Agence : Saint-Omer', '- Logement : Maison / Propriétaire',
+    '- Équipement : Saunier Duval ThemaPlus (2015)', '- Dernier entretien : 2025', '- Début souhaité : —', '- Photos jointes : 0 (facultatif)', '- RIB fourni : non', '- Accord principe SEPA : oui', '- Commentaire : ' + tag('J6 souscription')].join('\n'),
+  source: 'e2e_local_contrat_souscription', source_page: 'http://localhost/contrats-entretien.html (E2E LOCAL)',
+  utm: { energie: 'Gaz', formule: 'CONFORT', prix: '149 €/an', tier: 'confort', photos_count: 0, wizard_tags: ['contrat-entretien', 'Gaz', 'confort'] } };
+await journey('J6_souscription_entretien', pSous, { notify: true, common: false, expect: (row) => ({
+  'type_demande=contrat_entretien': row.type_demande === 'contrat_entretien',
+  'message complet (formule, SEPA)': /DEMANDE DE CONTRAT ENTRETIEN/.test(row.message || '') && /Formule : CONFORT/.test(row.message || '') && /Accord principe SEPA : oui/.test(row.message || ''),
+  'utm énergie/formule': (row.utm || {}).energie === 'Gaz' && (row.utm || {}).formule === 'CONFORT',
+  'téléphone normalisé': row.telephone === '0612345678',
+  'lead test auto-archivé': row.status === 'archive',
+}) });
 
 // 3) Module « Ma demande » v2 : payloads construits par le cœur RÉEL du front (catalogue.html)
 const catPath = [join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'catalogue.html')].find(existsSync);
@@ -180,7 +194,8 @@ const pass = results.every(r => r.ok);
 console.log('\n=== RÉSULTAT E2E LOCAL ===');
 console.table(results);
 const flow = (prefix) => { const rs = results.filter((r) => r.journey.startsWith(prefix)); return rs.length && rs.every((r) => r.ok) ? 'PASS' : 'FAIL'; };
-console.log(`INTERVENTION_BACKEND_E2E=${flow('V2_INTERVENTION')} | QUOTE_BACKEND_E2E=${flow('V2_DEVIS')} | MAINTENANCE_BACKEND_E2E=${flow('V2_ENTRETIEN')} | PRICE_GATE_BACKEND_E2E=${flow('V2_acces_tarifs')} (local isolé)`);
+const both = (a, b) => (flow(a) === 'PASS' && flow(b) === 'PASS' ? 'PASS' : 'FAIL');
+console.log(`INTERVENTION_BACKEND_E2E=${flow('V2_INTERVENTION')} | QUOTE_BACKEND_E2E=${flow('V2_DEVIS')} | MAINTENANCE_BACKEND_E2E=${both('V2_ENTRETIEN', 'J6_souscription_entretien')} (devis module + souscription page) | PRICE_GATE_BACKEND_E2E=${flow('V2_acces_tarifs')} (local isolé)`);
 console.log(pass ? 'FULL_E2E_TEST=PASS (local isolé)' : 'FULL_E2E_TEST=PARTIAL/FAIL');
 console.log('Purge : delete from public.leads where source ilike \'%e2e%\';');
 process.exit(pass ? 0 : 1);

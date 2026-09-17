@@ -34,5 +34,26 @@ Données catalogue (300 L < 200 L, doublons mitigeur, marques dans les noms, uni
 
 Corrections `41729afd` → `ec0596d9` (traçabilité `331028f8`) : contexte neuf au choix « intervention » + « changer » ; interventions conservées (lignes « sur devis » ou jointes au devis) ; toasts non effacés ; email facultatif partout ; horaires dès l'entrée ; photos perdues signalées partout ; retour « Modifier » fiable ; aide au choix (diagnostic d'abord, porte simple/blindée, chasse d'eau) ; recherche (mots vides, synonymes, début de mot) ; colonne sans vide ; offres compactes ; champ en erreur centré ; aria-describedby ; focus opaque ; flèches clavier ; cibles 44 px. Tests : demande-v2 66/66, price-gate 29/29.
 
-## Round 3 (sur `ec0596d9`)
-_(à compléter)_
+## Round 3 (sur `ec0596d9`) — 4 PASS, UX FAIL (1 P1)
+| Profil | Verdict |
+|---|---|
+| UX / conversion | FAIL — P1 : depuis la vérification du devis, gérer une intervention jointe renvoyait vers le parcours intervention (travaux et description du devis perdus) |
+| Design | **PASS** |
+| Client | **PASS** |
+| Desktop 1440 | **PASS** |
+| Mobile 390 | **PASS** |
+
+P2 relevés, tous profils confondus : alternative serrurerie équivalente plus chère, supplément de gamme affiché HT, toasts plus larges que l'écran à 390 px, champ en erreur centré avant l'affichage du message, focus peu visible sur les champs en erreur, barre d'action desktop translucide.
+
+Corrections `7f657897` : « Retirer » sur place dans la vérification du devis (P1) + P2/P3 (détail dans le message de commit).
+
+### Vérification manuelle après round 3 (Claude, preview, envoi simulé)
+- 390 et 1440 : intervention ajoutée → bascule devis → récap « Intervention jointe » + « Retirer » (cible 44 px) → retrait sans quitter le récap, message « … retirée de la demande », focus sur « Envoyer », demande vidée ; confirmation devis avec Travaux + Projet ; aucune requête réseau d'envoi (simulation). **P1 corrigé.**
+- Défaut trouvé pendant cette QA et corrigé (`f884d9ce`) : la liste de suggestions d'adresse se rouvrait après la sortie du champ (réponse BAN tardive) et restait ouverte au retour sur l'étape Lieu. Vérifié ensuite : ouverture normale quand le champ a le focus (5 suggestions), plus de réouverture hors focus.
+- Mesure du tunnel (`f884d9ce` → `700111d5`) vérifiée sur la preview : séquence complète intervention (start → étapes → accès tarifs → ajout/retrait → coordonnées → soumission → `generate_lead`) et entretien (`lead_type=entretien`), 0 donnée personnelle dans les paramètres, 0 script GA chargé et 0 envoi depuis la preview ; CTA accueil vérifiés sur le HTML servi par Netlify (liens réécrits sans `.html`).
+
+### Backend (REAL_BACKEND, stack Supabase LOCAL isolé — pas la PROD)
+`scripts/test/start-e2e-local.sh` : parcours v2 construits par le cœur réel du front — accès tarifs, INTERVENTION (2 prestations, prix ferme + sur devis), DEVIS (photo stockée, rejeu du jeton refusé, intervention jointe), ENTRETIEN (« Contrat entretien ») : création du lead, notification invoquée (0 email), relecture de la ligne en base (message identique au front, téléphone normalisé, lead test archivé, attribution). **21/21 PASS** (`1626b7bd`, relancé avec attribution sur `f884d9ce`).
+
+## Round 4 (UX seul, sur `700111d5`)
+_(en cours)_
