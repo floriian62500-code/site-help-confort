@@ -23,7 +23,7 @@ if [ -f supabase/.temp/project-ref ]; then
 fi
 
 echo "== 4/9 supabase start (local seulement) =="
-supabase start   # jamais --linked
+supabase start -x studio,logflare,vector,realtime,postgres-meta,mailpit,imgproxy,supavisor   # jamais --linked ; services inutiles au test exclus
 
 echo "== 5/9 Garde : cible API doit être localhost =="
 ENV_OUT="$(supabase status -o env 2>/dev/null || true)"
@@ -49,7 +49,7 @@ sleep 7
 
 echo "== 8/9 E2E (harnais + guard fail-closed) =="
 set +e
-LOCAL_SUPA="$API_URL" LOCAL_ANON="$ANON" node scripts/test/e2e-local.mjs
+LOCAL_SUPA="$API_URL" LOCAL_ANON="$ANON" LOCAL_SRK="$SRK" node scripts/test/e2e-local.mjs
 RC=$?
 set -e
 

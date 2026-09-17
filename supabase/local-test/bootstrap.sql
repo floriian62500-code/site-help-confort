@@ -27,6 +27,13 @@ create table if not exists public.leads (
   metadata      jsonb not null default '{}'::jsonb
 );
 
+-- 1b) Colonnes ajoutées depuis (contrat actuel de submit-lead-v6 : budget, source_referer, utm, status, priority)
+alter table public.leads add column if not exists budget text;
+alter table public.leads add column if not exists source_referer text;
+alter table public.leads add column if not exists utm jsonb not null default '{}'::jsonb;
+alter table public.leads add column if not exists status text default 'nouveau';
+alter table public.leads add column if not exists priority text;
+
 -- 2) Catalogue : table prestations + vue publique v_services_public (lecture anon)
 create table if not exists public.prestations (
   id          uuid primary key default gen_random_uuid(),
