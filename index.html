@@ -123,7 +123,7 @@
 
 <!-- HC-TRACKING-V2 (centralisé dans assets/tracking.js) -->
 <script src="assets/hc-consent.js" defer></script>
-<script src="assets/tracking.js" defer></script>
+<script src="assets/tracking.js?v=20260917" defer></script>
 
 <!-- HC-OG-IMG-V1 -->
 <meta property="og:image" content="https://depan59-62.fr/og/index.png">
@@ -415,7 +415,7 @@ window.addEventListener('scroll', function() {
  }
  </style>
  <div class="hero4-primary-cta">
- <a href="/catalogue.html#intervention" class="h4pc h4pc--call" aria-label="Demander une intervention en ligne">
+ <a href="/catalogue.html#intervention" class="h4pc h4pc--call" data-hc-cta="hero_intervention" aria-label="Demander une intervention en ligne">
  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2.1-2.1z"/></svg>
  <span class="h4pc-txt"><strong>Demander une intervention</strong><span>tarifs clairs en 30 s · sans engagement</span></span>
  </a>
@@ -797,13 +797,13 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
    <p class="hrr-lead">Trois parcours clairs — un interlocuteur humain à chaque étape.</p>
   </div>
   <div class="hrr-cards">
-   <a class="hrr-card hrr-card--cmd" href="/catalogue.html#intervention" aria-label="Demander une intervention — prestations et tarifs">
+   <a class="hrr-card hrr-card--cmd" href="/catalogue.html#intervention" data-hc-cta="carte_intervention" aria-label="Demander une intervention — prestations et tarifs">
     <span class="hrr-ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>
     <span class="hrr-card-t">J'ai besoin d'être dépanné</span>
     <span class="hrr-card-desc">Tarifs clairs affichés en 30 s, sans engagement.</span>
     <span class="hrr-go" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
    </a>
-   <a class="hrr-card hrr-card--devis" href="/catalogue.html#devis" aria-label="Demander un devis pour des travaux">
+   <a class="hrr-card hrr-card--devis" href="/catalogue.html#devis" data-hc-cta="carte_devis" aria-label="Demander un devis pour des travaux">
     <span class="hrr-ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg></span>
     <span class="hrr-card-t">J'ai un projet ou des travaux</span>
     <span class="hrr-card-desc">Devis gratuit, étudié par un technicien.</span>
@@ -1461,5 +1461,14 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
 <script src="assets/hc-modal-prefill.js?v=20260604-clean" defer></script>
 <script src="assets/hc-rate-limit.js?v=20260603" defer></script>
 <script defer src="assets/hc-review.js?v=2"></script>
+<script>
+/* Mesure CTA accueil → tunnel « Ma demande » (P0.4) : production uniquement ; window.hcGtag n'existe qu'après consentement. Aucune donnée personnelle. */
+document.addEventListener('click', function (e) {
+  var a = e.target && e.target.closest && e.target.closest('a[href*="catalogue.html"]'); if (!a) return;
+  if (!/^(www\.)?depan59-62\.fr$/.test(location.hostname) || typeof window.hcGtag !== 'function') return;
+  var dest = (a.getAttribute('href').split('#')[1] || 'catalogue').replace(/[^a-z-]/g, '').slice(0, 30);
+  try { window.hcGtag('event', 'hc_cta_click', { cta: a.getAttribute('data-hc-cta') || 'autre', target: dest }); } catch (err) {}
+}, { passive: true });
+</script>
 </body>
 </html>

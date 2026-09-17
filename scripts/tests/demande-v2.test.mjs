@@ -144,8 +144,38 @@ ok('devis : interventions déjà choisies jointes (message + utm), jamais perdue
 
 // ---- Sécurité recette : envoi simulé PAR DÉFAUT hors production (incident lead réel 2026-09-17)
 const uiSrc = (cat.match(/<script id="hc-demande-ui">([\s\S]*?)<\/script>/) || [, ''])[1];
+ok('adresse : suggestions jamais rouvertes hors focus (réponse BAN tardive) ni au retour sur l’étape', /if \(seq !== acSeq \|\| document\.activeElement !== adr\) return;/.test(uiSrc) && /ENTER\.lieu = function \(\) \{ clearTimeout\(acT\); acSeq\+\+; acHide\(\);/.test(uiSrc) && /adr\.addEventListener\('blur', function \(\) \{ clearTimeout\(acT\); acSeq\+\+;/.test(uiSrc));
 ok('recette : simulation par défaut sur preview/localhost (réel seulement avec ?live=1)', /SIM = sessionStorage\.getItem\('hc_live'\) !== '1'/.test(uiSrc) && /C\.simulationAllowed\(location\.hostname\)/.test(uiSrc));
 ok('recette : production jamais simulée (hôte de prod refusé)', !C.simulationAllowed('depan59-62.fr') && !C.simulationAllowed('www.depan59-62.fr'));
+
+// ---- Mesure du tunnel (P0.4) : GA4 uniquement en production + consentement + hors simulation ; jamais de donnée personnelle
+const PREVIEW = 'deploy-preview-2--remarkable-dragon-364e2b.netlify.app';
+ok('tracking : production + consentement + gtag prêt → envoi', C.trackDecision({ host: 'depan59-62.fr', consent: 'granted', gtagReady: true }) === 'send' && C.trackDecision({ host: 'www.depan59-62.fr', consent: 'granted', gtagReady: true }) === 'send');
+ok('tracking : gtag pas encore chargé → mise en file (vidée au chargement)', C.trackDecision({ host: 'depan59-62.fr', consent: 'granted', gtagReady: false }) === 'queue' && /window\.addEventListener\('load', flushTrack\)/.test(uiSrc));
+ok('tracking : sans consentement → rien ne part', ['', 'denied', null, 'GRANTED'].every((c) => C.trackDecision({ host: 'depan59-62.fr', consent: c, gtagReady: true }) === 'skip'));
+ok('tracking : recette, domaine Netlify, localhost ou simulation → rien ne part', [PREVIEW, 'remarkable-dragon-364e2b.netlify.app', 'localhost', '127.0.0.1', 'depan59-62.fr.evil.com'].every((h) => C.trackDecision({ host: h, consent: 'granted', gtagReady: true }) === 'skip') && C.trackDecision({ host: 'depan59-62.fr', consent: 'granted', gtagReady: true, sim: true }) === 'skip');
+const tp = C.trackParams({ module: 'demande_v2', mode: 'devis', prenom: 'Jean', nom: 'Dupont', tel: '0612345678', email: 'a@b.fr', adresse: '1 rue X', item: '06 12 34 56 78', cat: 'x@y.fr', from: '+33 (0)6 12 34 56 78', lines: 2, simulated: false, step: 'x'.repeat(150) });
+ok('tracking : liste blanche (nom, téléphone, email, adresse jamais transmis)', !('prenom' in tp) && !('nom' in tp) && !('tel' in tp) && !('email' in tp) && !('adresse' in tp));
+ok('tracking : valeurs ressemblant à un email ou un numéro rejetées, valeurs tronquées à 100', !('item' in tp) && !('cat' in tp) && !('from' in tp) && tp.lines === 2 && tp.simulated === false && tp.step.length === 100);
+const trackCalls = [...uiSrc.matchAll(/track\('([a-z_]+)'(?:, \{([^}]*)\})?\)/g)];
+const evNames = new Set([...uiSrc.matchAll(/\btrack\('([a-z_]+)'/g)].map((m) => m[1]));
+const leadCalls = [...uiSrc.matchAll(/(?<!function )leadTracked\(([^;]*)\);/g)];
+ok('tracking : entonnoir complet câblé (démarrage, étapes, accès tarifs, ajout, retrait, coordonnées, soumission, lead, erreur, appel)', ['hc_demande_start', 'hc_step_view', 'hc_tarifs_access', 'hc_demande_add', 'hc_demande_remove', 'hc_coordonnees_ok', 'hc_demande_submit', 'generate_lead', 'hc_demande_error', 'hc_call_click'].every((e) => evNames.has(e)));
+ok('tracking : aucun appel ne passe contact, adresse ou identifiant de dossier', trackCalls.length >= 10 && leadCalls.length === 2 && trackCalls.every((m) => !/contact|adresse|\.tel\b|email|prenom|\bnom\b|data\.id|\bref\b/.test(m[2] || '')) && leadCalls.every((m) => !/contact|adresse|\.tel\b|email|prenom|\bnom\b|\.id\b|\bref\b/.test(m[1].replace(/, (data|r\.data)$/, ''))));
+ok('tracking : un seul point d’envoi GA4 (window.hcGtag), jamais dataLayer brut', (uiSrc.match(/window\.hcGtag\('event'/g) || []).length === 2 && !/dataLayer\.push\(\{/.test(uiSrc));
+const trk = readFileSync(join(ROOT, 'assets', 'tracking.js'), 'utf8');
+ok('tracking.js : hcGtag exposé seulement APRÈS la garde de consentement', trk.indexOf('window.hcGtag = gtag') > trk.indexOf("if (consent !== 'granted')") && trk.indexOf("if (consent !== 'granted')") > 0);
+ok('tunnel : tracking.js chargé (version cache-bust), pas de bannière dans le tunnel', /<script src="\/assets\/tracking\.js\?v=\d{8}" defer><\/script>/.test(cat) && !/hc-consent\.js/.test(cat));
+const home = readFileSync(join(ROOT, 'index.html'), 'utf8');
+ok('accueil : 3 CTA du tunnel identifiés + mesure production/consentement uniquement', (home.match(/data-hc-cta="(hero_intervention|carte_intervention|carte_devis)"/g) || []).length === 3 && /typeof window\.hcGtag !== 'function'\) return;/.test(home) && /assets\/tracking\.js\?v=\d{8}/.test(home));
+// Attribution du dossier (source de visite mémorisée avec consentement)
+const attr = C.attributionFrom(JSON.stringify({ utm_source: 'google', utm_medium: 'cpc', gclid: 'Cj0', _first_landing: '/', _captured_at: 'x' }), 'https://www.google.com/');
+ok('attribution : utm + gclid + page d’entrée + référent ; rien si non mémorisé', attr.utm_source === 'google' && attr.gclid === 'Cj0' && attr.first_landing === '/' && attr.referrer === 'https://www.google.com/' && !('captured_at' in attr) && C.attributionFrom(null, '') === null && C.attributionFrom('{corrompu', '') === null);
+const att = { utm_source: 'google', referrer: 'https://www.google.com/' };
+const pa = [C.gatePayload({ contact, lieu, fam: 'plomberie', attribution: att }), C.interventionPayload({ lines, byId, contact, lieu, prise: { quand: 'asap' }, attribution: att }), C.devisPayload({ contact, lieu, devis: { metiers: ['Plomberie'], desc: 'x' }, attribution: att })];
+ok('attribution : transmise par les 3 envois (utm.attribution + source_referer)', pa.every((p) => p.utm.attribution && p.utm.attribution.utm_source === 'google' && p.source_referer === 'https://www.google.com/'));
+ok('attribution : absente → null (aucune donnée inventée)', [C.gatePayload({ contact, lieu }), C.devisPayload({ contact, lieu, devis: { metiers: ['Plomberie'], desc: 'x' } })].every((p) => p.utm.attribution === null && p.source_referer === null));
+ok('attribution : lue uniquement depuis la mémoire consentie (hc_utm / hc_referrer)', /C\.attributionFrom\(sessionStorage\.getItem\('hc_utm'\), sessionStorage\.getItem\('hc_referrer'\)\)/.test(uiSrc) && (uiSrc.match(/attribution: attribution\(\)/g) || []).length === 3);
 
 console.log(`\nRÉSULTAT MODULE DEMANDE V2 : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);

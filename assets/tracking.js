@@ -56,6 +56,7 @@
     document.head.appendChild(s);
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
+    window.hcGtag = gtag; // émetteur GA4 explicite (tunnel « Ma demande », CTA accueil) : n'existe qu'après consentement
     gtag('js', new Date());
     gtag('config', id);
   })();

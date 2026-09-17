@@ -12,6 +12,8 @@
 <link rel="preconnect" href="https://api-adresse.data.gouv.fr" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&display=swap">
+<!-- Mesure d'audience : inerte sans consentement (hc-consent=granted) ; aucune bannière dans le tunnel -->
+<script src="/assets/tracking.js?v=20260917" defer></script>
 <style>
 :root{
   --ink:#0B1526;--ink2:#334155;--muted:#556272;--faint:#667384;
@@ -1088,10 +1090,10 @@ svg{flex:none}
       adresse: l.adresse || null, code_postal: l.cp || null, ville: l.ville || null,
       metier: fams.join(', ') || null,
       type_demande: d.cartMode === 'paiement' ? 'reservation' : (d.cartMode === 'mixte' ? 'mixte' : 'devis'),
-      form_type: 'demande_metier', message: msg, source: 'commerce_engine', source_page: d.page || null,
+      form_type: 'demande_metier', message: msg, source: 'commerce_engine', source_page: d.page || null, source_referer: referrerOf(d),
       utm: { module: 'demande_v2', cart: lines.map(function (x) { return { id: x.id, slug: x.slug, qty: x.qty || 1 }; }), cart_mode: d.cartMode || null,
         urgence: p.quand === 'asap' ? 'oui' : 'non', quand: p.quand || null, date_souhaitee: p.date || null, rappel: p.rappel || 'asap',
-        zone: l.zone || null, wizard_tags: ['commerce-engine', 'demande-v2', 'intervention'] }
+        zone: l.zone || null, attribution: d.attribution || null, wizard_tags: ['commerce-engine', 'demande-v2', 'intervention'] }
     };
   }
   function devisPayload(d) {
@@ -1105,8 +1107,8 @@ svg{flex:none}
       prenom: c.prenom || null, nom: c.nom || null, telephone: c.tel ? normPhone(c.tel) : null, email: c.email || null,
       adresse: l.adresse || null, code_postal: l.cp || null, ville: l.ville || null,
       metier: svc[0] || null, services: svc, type_demande: 'devis', form_type: 'devis_express',
-      message: msg, source: 'commerce_engine_devis', source_page: d.page || null,
-      utm: { module: 'demande_v2', mode: 'devis', services: svc, nature: dv.nature || null, photos: d.photos || 0, zone: l.zone || null, cart: lines.map(function (x) { return { id: x.id, slug: x.slug, qty: x.qty || 1 }; }), wizard_tags: ['commerce-engine', 'demande-v2', 'devis'] }
+      message: msg, source: 'commerce_engine_devis', source_page: d.page || null, source_referer: referrerOf(d),
+      utm: { module: 'demande_v2', mode: 'devis', attribution: d.attribution || null, services: svc, nature: dv.nature || null, photos: d.photos || 0, zone: l.zone || null, cart: lines.map(function (x) { return { id: x.id, slug: x.slug, qty: x.qty || 1 }; }), wizard_tags: ['commerce-engine', 'demande-v2', 'devis'] }
     };
   }
   function gatePayload(d) {
@@ -1114,13 +1116,41 @@ svg{flex:none}
     return {
       prenom: c.prenom || null, nom: '', telephone: c.tel ? normPhone(c.tel) : null, email: c.email || null,
       adresse: l.adresse || null, code_postal: cpOk(l.cp) ? l.cp : null, ville: l.ville || null,
-      type_demande: 'consultation_tarifs', form_type: 'rappel', source: 'price_gate', source_page: d.page || null,
+      type_demande: 'consultation_tarifs', form_type: 'rappel', source: 'price_gate', source_page: d.page || null, source_referer: referrerOf(d),
       message: 'Consultation des tarifs' + (d.famLabel ? ' — ' + d.famLabel : '') + (l.ville ? ' — ' + l.ville : ''),
-      utm: { mode: 'price_gate', module: 'demande_v2', cat: d.fam || null }
+      utm: { mode: 'price_gate', module: 'demande_v2', cat: d.fam || null, attribution: d.attribution || null }
     };
   }
   // Référence affichée = dérivée de l'identifiant RÉEL du dossier (jamais inventée côté client).
   function refFromId(id) { var h = String(id || '').replace(/[^0-9a-f]/gi, ''); return h.length >= 8 ? 'HC-' + h.slice(0, 8).toUpperCase() : null; }
+  // Mesure du tunnel (P0.4) : envoi GA4 UNIQUEMENT sur le domaine de production, avec consentement, hors simulation.
+  var PROD_HOST_RE = /^(www\.)?depan59-62\.fr$/;
+  function trackDecision(o) {
+    o = o || {};
+    if (o.sim || !PROD_HOST_RE.test(String(o.host || '')) || o.consent !== 'granted') return 'skip';
+    return o.gtagReady ? 'send' : 'queue';
+  }
+  // Paramètres d'événement : liste blanche, valeurs courtes, jamais de donnée personnelle (ni email, ni numéro).
+  var TRACK_KEYS = ['module', 'mode', 'step', 'step_index', 'entry', 'cat', 'item', 'price_kind', 'lines', 'quote_lines', 'photos', 'zone', 'lead_type', 'lead', 'from', 'simulated'];
+  function trackParams(p) {
+    var out = {};
+    Object.keys(p || {}).forEach(function (k) {
+      var v = p[k]; if (TRACK_KEYS.indexOf(k) < 0 || v == null || v === '') return;
+      if (typeof v === 'number') { if (isFinite(v)) out[k] = v; return; }
+      if (typeof v === 'boolean') { out[k] = v; return; }
+      v = String(v); if (/@/.test(v) || /\d{8,}/.test(v.replace(/[\s.\-()+]/g, ''))) return;
+      out[k] = v.slice(0, 100);
+    });
+    return out;
+  }
+  // Attribution d'un dossier : uniquement ce que le site a mémorisé AVEC consentement (assets/tracking.js).
+  function attributionFrom(utmJson, referrer) {
+    var u = {}, out = {}; try { u = JSON.parse(utmJson || '{}') || {}; } catch (e) { u = {}; }
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid', '_first_landing'].forEach(function (k) { if (u[k]) out[k.replace(/^_/, '')] = String(u[k]).slice(0, 200); });
+    if (referrer) out.referrer = String(referrer).slice(0, 300);
+    return Object.keys(out).length ? out : null;
+  }
+  function referrerOf(d) { return (d && d.attribution && d.attribution.referrer) || null; }
   // Mode simulation (recette) : uniquement Deploy Preview Netlify ou poste local, jamais le domaine de production.
   function simulationAllowed(host) { return /^deploy-preview-\d+--remarkable-dragon-364e2b\.netlify\.app$/.test(String(host || '')) || host === 'localhost' || host === '127.0.0.1'; }
 
@@ -1129,7 +1159,8 @@ svg{flex:none}
     emptyState: emptyState, priceGatePassed: priceGatePassed, isPricedStep: isPricedStep, modeForStep: modeForStep, guardStep: guardStep, nextStep: nextStep, prevStep: prevStep,
     progress: progress, legacyStep: legacyStep, haversineKm: haversineKm, zoneFor: zoneFor, zoneText: zoneText, priced: priced, perUnit: perUnit, priceKind: priceKind, eur: eur,
     firmTotal: firmTotal, searchText: searchText, problemsFor: problemsFor, matchProblem: matchProblem, diagFor: diagFor, suggest: suggest, searchNorm: searchNorm, searchOffers: searchOffers, famHasPrices: famHasPrices, agencyStatus: agencyStatus, diagnosticOffer: diagnosticOffer, frDate: frDate, priseText: priseText,
-    lineLabel: lineLabel, interventionPayload: interventionPayload, devisPayload: devisPayload, gatePayload: gatePayload, refFromId: refFromId, simulationAllowed: simulationAllowed };
+    lineLabel: lineLabel, interventionPayload: interventionPayload, devisPayload: devisPayload, gatePayload: gatePayload, refFromId: refFromId, simulationAllowed: simulationAllowed,
+    trackDecision: trackDecision, trackParams: trackParams, attributionFrom: attributionFrom };
 });
 </script>
 <script id="hc-demande-ui">
@@ -1164,7 +1195,26 @@ svg{flex:none}
     return s;
   })();
   function save() { state.updatedAt = Date.now(); try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {} }
-  function track(ev) { try { (window.__hcFunnel = window.__hcFunnel || []).push({ ev: ev, t: Date.now() }); if (window.dataLayer) window.dataLayer.push({ event: 'hc_' + ev }); } catch (e) {} }
+  // ---------- Mesure du tunnel (P0.4) ----------
+  // Toujours consigné en mémoire (window.__hcFunnel, contrôle recette : rien ne sort du navigateur).
+  // Envoi GA4 via window.hcGtag (créé par assets/tracking.js APRÈS consentement) : production uniquement, hors simulation.
+  var trackQ = [];
+  function consentValue() { try { return localStorage.getItem('hc-consent') || ''; } catch (e) { return ''; } }
+  function track(ev, p) {
+    var params = C.trackParams(Object.assign({ module: 'demande_v2', mode: state.mode || null }, p || {}));
+    try { var log = (window.__hcFunnel = window.__hcFunnel || []); log.push({ ev: ev, p: params, t: Date.now() }); if (log.length > 200) log.shift(); } catch (e) {}
+    var d = C.trackDecision({ host: location.hostname, sim: SIM, consent: consentValue(), gtagReady: typeof window.hcGtag === 'function' });
+    if (d === 'send') { try { window.hcGtag('event', ev, params); } catch (e) {} }
+    else if (d === 'queue' && trackQ.length < 50) trackQ.push([ev, params]);
+  }
+  function flushTrack() { if (typeof window.hcGtag !== 'function') return; while (trackQ.length) { var x = trackQ.shift(); try { window.hcGtag('event', x[0], x[1]); } catch (e) {} } }
+  window.addEventListener('load', flushTrack);
+  function markStart(entry) { var k = 'hc_fs_' + state.mode; try { if (sessionStorage.getItem(k)) return; sessionStorage.setItem(k, '1'); } catch (e) {} track('hc_demande_start', { entry: entry }); }
+  function leadTracked(type, p, data) {
+    track('generate_lead', Object.assign({ lead_type: type, simulated: !!(data && data.simulated) }, p || {}));
+    try { sessionStorage.removeItem('hc_fs_intervention'); sessionStorage.removeItem('hc_fs_devis'); } catch (e) {}
+  }
+  function attribution() { try { return C.attributionFrom(sessionStorage.getItem('hc_utm'), sessionStorage.getItem('hc_referrer')); } catch (e) { return null; } }
 
   // ---------- Règle tarifs (P0) ----------
   function pgSessionOk() { try { return sessionStorage.getItem('hc_pg') === '1'; } catch (e) { return false; } }
@@ -1198,7 +1248,9 @@ svg{flex:none}
     if (!o.noHash) { var h = '#step=' + target + (state.mode === 'intervention' && state.fam ? '&cat=' + encodeURIComponent(state.fam) : ''); if (location.hash !== h) { try { history[o.replace ? 'replaceState' : 'pushState']({ step: target, from: o.replace ? (history.state && history.state.from) : prevShown }, '', h); } catch (e) {} } }
     if (!o.keepScroll) window.scrollTo(0, 0);
     if (!o.initial) { var h1 = $('.step.is-active h1'); if (h1) try { h1.focus({ preventScroll: true }); } catch (e) {} }
-    track('v2_' + target);
+    var pgx = C.progress(state.mode, target);
+    if (state.mode && target !== 'choix' && target !== 'envoye') markStart(target);
+    track('hc_step_view', { step: target, step_index: pgx ? pgx.index : 0 });
   }
   function renderKickers(step) {
     var kick = state.mode === 'devis' ? 'Demande de devis' : "Demande d'intervention", fn = famName(state.fam);
@@ -1279,7 +1331,7 @@ svg{flex:none}
   // ---------- Lieu + zone ----------
   var adr = $('#f-adresse'), cpI = $('#f-cp'), viI = $('#f-ville'), acL = $('#acList'), zoneBox = $('#zoneBox');
   var acItems = [], acHl = -1, acT = null, acSeq = 0, geoT = null, geoSeq = 0;
-  ENTER.lieu = function () { adr.value = state.lieu.adresse || ''; cpI.value = state.lieu.cp || ''; viI.value = state.lieu.ville || ''; ['fld-adresse', 'fld-cp', 'fld-ville'].forEach(function (f) { mark(f, false); }); if (state.lieu.zone && (state.lieu.cp || '').length === 5) showZone(state.lieu.zone); else zoneBox.hidden = true; };
+  ENTER.lieu = function () { clearTimeout(acT); acSeq++; acHide(); adr.value = state.lieu.adresse || ''; cpI.value = state.lieu.cp || ''; viI.value = state.lieu.ville || ''; ['fld-adresse', 'fld-cp', 'fld-ville'].forEach(function (f) { mark(f, false); }); if (state.lieu.zone && (state.lieu.cp || '').length === 5) showZone(state.lieu.zone); else zoneBox.hidden = true; };
   function acHide() { acL.hidden = true; acL.innerHTML = ''; acItems = []; acHl = -1; adr.setAttribute('aria-expanded', 'false'); adr.removeAttribute('aria-activedescendant'); }
   function acSearch(q) {
     if (q.length < 3) { acHide(); return; }
@@ -1287,7 +1339,7 @@ svg{flex:none}
     fetch('https://api-adresse.data.gouv.fr/search/?limit=5&autocomplete=1&lat=' + C.AGENCE.lat + '&lon=' + C.AGENCE.lon + '&q=' + encodeURIComponent(q))
       .then(function (r) { return r.json(); })
       .then(function (d) {
-        if (seq !== acSeq) return;
+        if (seq !== acSeq || document.activeElement !== adr) return; // réponse tardive : ne jamais rouvrir la liste hors focus
         acItems = ((d && d.features) || []).filter(function (f) { return f.properties && /housenumber|street|locality|municipality/.test(f.properties.type); });
         if (!acItems.length) { acHide(); return; }
         acL.innerHTML = acItems.map(function (f, i) { var p = f.properties; return '<li role="option" id="ac-' + i + '"><button type="button" data-ac="' + i + '" tabindex="-1"><span class="ac-ic">' + ic('i-pin', 17) + '</span><span><span class="ac-main">' + esc(p.type === 'municipality' ? p.city : p.name) + '</span><span class="ac-sub">' + esc([p.postcode, p.city].filter(Boolean).join(' ')) + '</span></span></button></li>'; }).join('');
@@ -1331,7 +1383,7 @@ svg{flex:none}
     else if (e.key === 'Enter' && acHl >= 0) { e.preventDefault(); acPick(acHl); }
     else if (e.key === 'Escape') acHide();
   });
-  adr.addEventListener('blur', function () { setTimeout(acHide, 180); });
+  adr.addEventListener('blur', function () { clearTimeout(acT); acSeq++; setTimeout(acHide, 180); });
   acL.addEventListener('mousedown', function (e) { var b = e.target.closest('[data-ac]'); if (b) { e.preventDefault(); acPick(parseInt(b.getAttribute('data-ac'), 10)); } });
   cpI.addEventListener('input', function () { this.value = this.value.replace(/\D/g, '').slice(0, 5); state.lieu.cp = this.value; state.lieu.lat = state.lieu.lon = null; mark('fld-cp', false); save(); geocodeCommune(); });
   viI.addEventListener('input', function () { state.lieu.ville = this.value; state.lieu.lat = state.lieu.lon = null; mark('fld-ville', false); save(); geocodeCommune(); });
@@ -1399,10 +1451,10 @@ svg{flex:none}
     state.contact.prenom = pr.value.trim(); state.contact.tel = tel.value.trim(); state.contact.email = em.value.trim(); save();
     busy(btn, true, 'Affichage des tarifs…');
     var pending = state._pgPending && state._pgPending !== 'acces' ? state._pgPending : 'precision';
-    var body = C.gatePayload({ contact: state.contact, lieu: state.lieu, famLabel: famName(state.fam), fam: state.fam, page: location.href });
+    var body = C.gatePayload({ contact: state.contact, lieu: state.lieu, famLabel: famName(state.fam), fam: state.fam, page: location.href, attribution: attribution() });
     var p = SIM ? simulate('price_gate') : fetch(SUPA + '/functions/v1/submit-lead-v6', { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true, body: JSON.stringify(body) })
       .then(function (r) { return r.ok ? r.json().catch(function () { return {}; }) : Promise.reject(r.status); });
-    p.then(function () { track('price_gate_lead'); }, function () { track('price_gate_lead_fail'); }).then(function () {
+    p.then(function () { track('hc_tarifs_access', { cat: state.fam, lead: 'ok' }); }, function () { track('hc_tarifs_access', { cat: state.fam, lead: 'echec' }); }).then(function () {
       state._priceGateOk = true; state._priceGateAt = Date.now(); try { sessionStorage.setItem('hc_pg', '1'); } catch (e2) {} state._pgPending = null; save();
       busy(btn, false);
       go(pending, { replace: true });
@@ -1480,8 +1532,8 @@ svg{flex:none}
   function updatePrecCta() { var n = cart ? cart.count() : 0; $('#precNext').disabled = n < 1; $('#precHint').hidden = n > 0; }
   function toggleLine(id) {
     var s = byId[id]; if (!s || !cart) return;
-    if (inCart(id)) { cart.remove(id); track('remove_line'); }
-    else { cart.add({ id: s.id, slug: s.slug, name: s.name, brand: s.brand, ttc: s.price_ttc, requires_quote: !C.priced(s), active: s.active }); track('add_to_cart'); }
+    if (inCart(id)) { cart.remove(id); track('hc_demande_remove', { item: s.slug, cat: state.fam, from: state.step }); }
+    else { cart.add({ id: s.id, slug: s.slug, name: s.name, brand: s.brand, ttc: s.price_ttc, requires_quote: !C.priced(s), active: s.active }); track('hc_demande_add', { item: s.slug, cat: state.fam, price_kind: C.priceKind(s), lines: cart.count() }); }
     save();
     var on = inCart(id);
     $$('[data-offer="' + id + '"]').forEach(function (card) { card.classList.toggle('is-in', on); var b = card.querySelector('[data-toggle]'); if (b) { b.setAttribute('aria-pressed', String(on)); var sr = b.querySelector('.sr-only'); if (sr) sr.textContent = on ? ', dans votre demande' : ', ajouter à votre demande'; } });
@@ -1521,6 +1573,7 @@ svg{flex:none}
     var bad = [!C.nameOk(c.prenom), !C.nameOk(c.nom), !C.phoneOk(c.tel), !!String(c.email || '').trim() && !C.emailOk(c.email)];
     CF.forEach(function (x, i) { mark(x[2], bad[i]); });
     var first = bad.indexOf(true); if (first >= 0) return focusBad(document.getElementById(CF[first][0]));
+    track('hc_coordonnees_ok');
     next('coordonnees');
   }
 
@@ -1619,20 +1672,23 @@ svg{flex:none}
     if (!p.quand) { err.textContent = 'Choisissez un délai souhaité.'; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); var q = $('#quandOpts [data-quand]'); if (q) q.focus({ preventScroll: true }); return; }
     if (p.quand === 'date' && !C.dateOk(p.date)) { mark('fld-date', true); focusBad($('#f-date')); return; }
     var lines = cart.lines();
-    var payload = C.interventionPayload({ lines: lines, byId: byId, contact: state.contact, lieu: state.lieu, prise: p, cartMode: cart.mode(), page: location.href });
+    var payload = C.interventionPayload({ lines: lines, byId: byId, contact: state.contact, lieu: state.lieu, prise: p, cartMode: cart.mode(), page: location.href, attribution: attribution() });
+    track('hc_demande_submit', { lines: lines.length, quote_lines: lines.filter(function (l) { return l.requires_quote; }).length, zone: state.lieu.zone && state.lieu.zone.status });
     busy(btn, true, 'Envoi en cours…');
     postLead(payload).then(function (data) {
       state.sent = { mode: 'intervention', ref: C.refFromId(data && data.id), simulated: !!(data && data.simulated), at: Date.now(), prenom: state.contact.prenom,
         lines: lines.map(function (l) { return { name: l.name + ((l.qty || 1) > 1 ? ' ×' + l.qty : ''), price: linePrice(l) }; }), total: C.firmTotal(lines, byId), lieu: lieuTxt(), prise: C.priseText(p), tel: C.phoneDisplay(state.contact.tel), email: state.contact.email || '' };
       cart.clear(); state.prise = C.emptyState().prise; state.fam = null; state.prob = null; state.devis = C.emptyState().devis; save();
-      busy(btn, false); track('confirmation'); go('envoye', { replace: true });
-    }).catch(function () { busy(btn, false); err.textContent = "L'envoi n'a pas abouti. Vos informations sont conservées : réessayez, ou appelez le 03 66 10 01 34."; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
+      busy(btn, false); leadTracked('intervention', { lines: lines.length }, data); go('envoye', { replace: true });
+    }).catch(function () { busy(btn, false); track('hc_demande_error'); err.textContent = "L'envoi n'a pas abouti. Vos informations sont conservées : réessayez, ou appelez le 03 66 10 01 34."; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
   }
   function sendDevis() {
     var btn = $('#sendDevis'), err = $('#errDevis'); if (btn.classList.contains('is-busy')) return; err.hidden = true;
     var files = dvFiles.slice();
     var joined = cart ? cart.lines() : [];
-    var payload = C.devisPayload({ contact: state.contact, lieu: state.lieu, devis: state.devis, photos: files.length, lines: joined, byId: byId, page: location.href });
+    var payload = C.devisPayload({ contact: state.contact, lieu: state.lieu, devis: state.devis, photos: files.length, lines: joined, byId: byId, page: location.href, attribution: attribution() });
+    var leadType = (state.devis.metiers || []).indexOf('Contrat entretien') >= 0 ? 'entretien' : 'devis';
+    track('hc_demande_submit', { lead_type: leadType, lines: joined.length, photos: files.length, zone: state.lieu.zone && state.lieu.zone.status });
     busy(btn, true, 'Envoi en cours…');
     postLead(payload).then(function (data) {
       var up = (!SIM && files.length && data && data.id && data.upload_token) ? uploadPhotos(data.id, data.upload_token, files) : Promise.resolve(null);
@@ -1642,8 +1698,8 @@ svg{flex:none}
       state.sent = { mode: 'devis', ref: C.refFromId(r.data && r.data.id), simulated: !!(r.data && r.data.simulated), at: Date.now(), prenom: state.contact.prenom,
         metiers: (state.devis.metiers || []).slice(), desc: state.devis.desc || '', lieu: lieuTxt(), photosSent: files.length, photosStored: stored, tel: C.phoneDisplay(state.contact.tel), email: state.contact.email || '', lines: joined.map(function (l) { return { name: l.name, price: linePrice(l) }; }) };
       state.devis = C.emptyState().devis; dvFiles = []; if (cart) cart.clear(); state.prise = C.emptyState().prise; state.fam = null; save();
-      busy(btn, false); track('confirmation'); go('envoye', { replace: true });
-    }).catch(function () { busy(btn, false); err.textContent = "L'envoi n'a pas abouti. Vos informations sont conservées : réessayez, ou appelez le 03 66 10 01 34."; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
+      busy(btn, false); leadTracked(leadType, { lines: joined.length, photos: files.length }, r.data); go('envoye', { replace: true });
+    }).catch(function () { busy(btn, false); track('hc_demande_error'); err.textContent = "L'envoi n'a pas abouti. Vos informations sont conservées : réessayez, ou appelez le 03 66 10 01 34."; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
   }
   function uploadPhotos(id, token, files) {
     var fd = new FormData(); fd.append('lead_id', id); fd.append('upload_token', token);
@@ -1673,6 +1729,7 @@ svg{flex:none}
   // ---------- Événements (délégation) ----------
   document.addEventListener('click', function (e) {
     var t = e.target; if (!t.closest) return; var el;
+    if (t.closest('a[href^="tel:"]')) track('hc_call_click', { step: state.step });
     if ((el = t.closest('[data-choose]'))) { var md = el.getAttribute('data-choose'); state.mode = md; state.sent = null; state._returnTo = null; if (md === 'intervention') { state.fam = null; state.prob = null; state.precMode = 'liste'; } save(); return go(md === 'devis' ? 'dv-metier' : 'lieu'); }
     if ((el = t.closest('[data-next]'))) { var from = el.getAttribute('data-next'); if (from === 'dv-photos') { state.devis.photosSeen = true; save(); } if (from === 'lieu') return submitLieu(); if (from === 'coordonnees') return submitContact();
       if (from === 'dv-projet') { state.devis.desc = $('#dv-desc').value.trim(); save(); if (!C.descOk(state.devis.desc)) { mark('fld-desc', true); return focusBad($('#dv-desc')); } }
@@ -1680,8 +1737,8 @@ svg{flex:none}
     if ((el = t.closest('[data-go]'))) { e.preventDefault(); var tg = el.getAttribute('data-go'), ti = C.flowIndex(state.mode, tg), ci = C.flowIndex(state.mode, state.step); state._returnTo = (ti >= 0 && ci > ti) ? state.step : null; return go(tg); }
     if ((el = t.closest('[data-fam]'))) return pickFamily(el);
     if ((el = t.closest('[data-toggle]'))) return toggleLine(el.getAttribute('data-toggle'));
-    if ((el = t.closest('[data-unjoin]'))) { var uid = el.getAttribute('data-unjoin'), ul = cart && cart.lines().filter(function (x) { return x.id === uid; })[0]; if (cart) cart.remove(uid); save(); ENTER['dv-recap'](); renderRecap(); toast('« ' + (ul ? ul.name : 'Intervention') + ' » retirée de la demande'); var nx = $('#dvRows [data-unjoin]') || $('#sendDevis'); if (nx) nx.focus(); return; }
-    if ((el = t.closest('[data-remove]'))) { var rid = el.getAttribute('data-remove'); if (cart) { var rl = cart.lines().filter(function (x) { return x.id === rid; })[0]; cart.remove(rid); toast('« ' + (rl ? rl.name : 'Intervention') + ' » retirée de votre demande'); } save(); renderDemande(); renderRecap(); if (!cart.count()) go('besoin'); return; }
+    if ((el = t.closest('[data-unjoin]'))) { var uid = el.getAttribute('data-unjoin'), ul = cart && cart.lines().filter(function (x) { return x.id === uid; })[0]; if (cart) cart.remove(uid); save(); track('hc_demande_remove', { item: ul && ul.slug, from: 'dv-recap' }); ENTER['dv-recap'](); renderRecap(); toast('« ' + (ul ? ul.name : 'Intervention') + ' » retirée de la demande'); var nx = $('#dvRows [data-unjoin]') || $('#sendDevis'); if (nx) nx.focus(); return; }
+    if ((el = t.closest('[data-remove]'))) { var rid = el.getAttribute('data-remove'); if (cart) { var rl = cart.lines().filter(function (x) { return x.id === rid; })[0]; cart.remove(rid); track('hc_demande_remove', { item: rl && rl.slug, from: 'demande' }); toast('« ' + (rl ? rl.name : 'Intervention') + ' » retirée de votre demande'); } save(); renderDemande(); renderRecap(); if (!cart.count()) go('besoin'); return; }
     if ((el = t.closest('[data-clearfam]'))) { state.fam = null; state.prob = null; save(); renderKickers(state.step); renderRecap(); return; }
     if ((el = t.closest('[data-showall]'))) { var nShown = $$('#offers .offer').length; state.showAll = state.fam; save(); renderOffers(); var nxt = $$('#offers .offer-pick')[nShown]; if (nxt) nxt.focus(); return; }
     if ((el = t.closest('[data-prec]'))) { state.precMode = el.getAttribute('data-prec'); $('#precSearch').value = ''; save(); return renderOffers(); }

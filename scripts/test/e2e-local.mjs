@@ -141,29 +141,35 @@ if (catPath) {
   const lines = [{ id: 'a', slug: 'intervention-urgente-plomberie', name: byId.a.name, ttc: 114.43, qty: 1 }, { id: 'b', slug: 'peinture-interieure', name: byId.b.name, ttc: 0, requires_quote: true, qty: 1 }];
   const page = 'http://localhost/catalogue.html (E2E LOCAL)';
   const withSrc = (p) => ({ ...p, source: 'e2e_local_v2_' + p.source });
-  const pGate = withSrc(C.gatePayload({ contact, lieu, famLabel: 'Plomberie & Sanitaires', fam: 'plomberie', page }));
-  await journey('V2_acces_tarifs', pGate, { notify: true, expect: (row) => ({ 'utm.cat=plomberie': (row.utm || {}).cat === 'plomberie' }) });
-  const pInter = withSrc(C.interventionPayload({ lines, byId, contact, lieu, prise: { quand: 'asap', rappel: 'matin', precisions: tag('V2 intervention') }, cartMode: 'mixte', page }));
+  // Attribution telle que mémorisée avec consentement par tracking.js (sessionStorage hc_utm / hc_referrer)
+  const attribution = C.attributionFrom(JSON.stringify({ utm_source: 'e2e_local', utm_medium: 'test', utm_campaign: 'demande_v2', _first_landing: '/' }), 'https://www.google.com/');
+  const attrOk = (row) => ({ 'attribution stockée (utm.attribution)': !!(row.utm && row.utm.attribution && row.utm.attribution.utm_source === 'e2e_local' && row.utm.attribution.first_landing === '/'), 'source_referer': row.source_referer === 'https://www.google.com/' });
+  const pGate = withSrc(C.gatePayload({ contact, lieu, famLabel: 'Plomberie & Sanitaires', fam: 'plomberie', page, attribution }));
+  await journey('V2_acces_tarifs', pGate, { notify: true, expect: (row) => ({ 'utm.cat=plomberie': (row.utm || {}).cat === 'plomberie', ...attrOk(row) }) });
+  const pInter = withSrc(C.interventionPayload({ lines, byId, contact, lieu, prise: { quand: 'asap', rappel: 'matin', precisions: tag('V2 intervention') }, cartMode: 'mixte', page, attribution }));
   await journey('V2_INTERVENTION', pInter, { notify: true, expect: (row) => ({
     '2 prestations (utm.cart)': Array.isArray((row.utm || {}).cart) && row.utm.cart.length === 2,
     'métiers regroupés': row.metier === pInter.metier,
     'prix ferme + sur devis': /prix ferme/.test(row.message) && /sur devis/.test(row.message),
     'adresse non redemandée (reprise du lieu)': row.code_postal === '62500' && row.ville === 'Saint-Omer',
     'lead test auto-archivé': row.status === 'archive',
+    ...attrOk(row),
   }) });
-  const pDevis = withSrc(C.devisPayload({ contact, lieu, devis: { metiers: ['Salle de bain', 'Plomberie'], nature: 'Rénovation', desc: tag('V2 devis salle de bain') }, photos: 1, lines: [lines[0]], byId, page }));
+  const pDevis = withSrc(C.devisPayload({ contact, lieu, devis: { metiers: ['Salle de bain', 'Plomberie'], nature: 'Rénovation', desc: tag('V2 devis salle de bain') }, photos: 1, lines: [lines[0]], byId, page, attribution }));
   await journey('V2_DEVIS', pDevis, { notify: true, photo: true, expect: (row) => ({
     'métier principal': row.metier === 'Salle de bain',
     'intervention jointe dans le dossier': /Interventions également demandées/.test(row.message),
     'photo associée au lead': Array.isArray((row.metadata || {}).photos) && row.metadata.photos.length >= 1,
     'jeton photo invalidé': !(row.metadata || {}).upload_token,
     'lead test auto-archivé': row.status === 'archive',
+    ...attrOk(row),
   }) });
-  const pEntretien = withSrc(C.devisPayload({ contact, lieu, devis: { metiers: ['Contrat entretien'], nature: 'Entretien', desc: tag('V2 entretien chaudière gaz annuel') }, photos: 0, page }));
+  const pEntretien = withSrc(C.devisPayload({ contact, lieu, devis: { metiers: ['Contrat entretien'], nature: 'Entretien', desc: tag('V2 entretien chaudière gaz annuel') }, photos: 0, page, attribution }));
   await journey('V2_ENTRETIEN', pEntretien, { notify: true, expect: (row) => ({
     'métier=Contrat entretien': row.metier === 'Contrat entretien',
     'nature Entretien': /Nature du projet : Entretien/.test(row.message),
     'lead test auto-archivé': row.status === 'archive',
+    ...attrOk(row),
   }) });
 } else {
   console.log('[V2] catalogue.html introuvable : parcours module v2 non exécutés');
