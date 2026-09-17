@@ -993,7 +993,7 @@ svg{flex:none}
       { id: 'vmc', label: 'Ventilation (VMC)', best: /vmc/, re: /vmc/ }
     ],
     serrurerie: [
-      { id: 'claquee', label: 'Porte claquée (porte simple)', best: /porte simple/, re: /porte simple|porte claquee/ },
+      { id: 'claquee', label: 'Porte claquée (porte simple)', best: /porte simple/, re: /porte simple/ },
       { id: 'cle', label: 'Porte fermée à clé', best: /fermee a cle/, re: /fermee a cle/ },
       { id: 'blindee', label: 'Porte claquée blindée ou multipoints', best: /securite/, re: /securite/ },
       { id: 'serrure', label: 'Serrure bloquée ou clé cassée', best: /intervention urgente/, re: /intervention urgente/ }
@@ -1232,6 +1232,8 @@ svg{flex:none}
       h += sec('Photos', dvFiles.length ? dvFiles.length + ' photo' + (dvFiles.length > 1 ? 's' : '') : (state.devis.photosSeen ? 'Aucune (facultatif)' : ''), 'dv-photos');
       h += sec('Lieu', esc(lieuTxt()), 'lieu', zoneBadge());
       h += sec('Coordonnées', esc(contactTxt()), 'coordonnees');
+      var jl = cart ? cart.lines() : [];
+      if (jl.length) h += sec('Interventions jointes', jl.map(function (l) { return '<div class="rc-line"><span>' + esc(l.name) + '</span>' + (priceGatePassed() ? '<span>' + esc(linePrice(l)) + '</span>' : '') + '</div>'; }).join(''), 'dv-recap');
       return h;
     }
     h += sec('Lieu', esc(lieuTxt()), 'lieu', zoneBadge());
@@ -1423,7 +1425,7 @@ svg{flex:none}
     return '<details class="more"><summary>' + ic('i-down', 16) + 'Ce qui est inclus</summary>' +
       (inc.length ? '<ul>' + inc.map(function (x) { return '<li>' + ic('i-check', 15) + '<span>' + esc(x) + '</span></li>'; }).join('') + '</ul>' : '') +
       (meta.length ? '<p class="meta">' + meta.join(' · ') + '</p>' : '') +
-      (opts.length ? '<p class="meta">Option possible : ' + esc(opts.map(function (v) { var m = String(v.info || '').match(/\+\s?[\d\s]+,\d{2}\s?€\s?HT/); return v.label + (m ? ' (' + m[0].replace(/\s?€/, ' €') + ')' : ''); }).join(', ')) + ' — précisée avec vous au rappel ; le prix affiché est celui de la version de base.</p>' : '') + '</details>';
+      (opts.length ? '<p class="meta">Option possible : ' + esc(opts.map(function (v) { var m = String(v.info || '').match(/\+\s?([\d\s]+,\d{2})\s?€\s?HT/), vat = Number(s.vat_rate); var ttc = (m && vat >= 0 && vat < 1) ? parseFloat(m[1].replace(/\s/g, '').replace(',', '.')) * (1 + vat) : null; return v.label + (ttc ? ' (+' + C.eur(ttc) + ' TTC)' : ''); }).join(', ')) + ' — précisée avec vous au rappel ; le prix affiché est celui de la version de base.</p>' : '') + '</details>';
   }
   function offerHtml(s, reco, showFam) {
     var on = inCart(s.id), hasVar = Array.isArray(s.variants) && s.variants.some(function (v) { return v && v.label; });
@@ -1598,8 +1600,8 @@ svg{flex:none}
     $('#errDevis').hidden = true;
     var d = state.devis, rows = [['Travaux', (d.metiers || []).join(', '), 'dv-metier'], ['Type de projet', d.nature || 'Non précisé', 'dv-projet'], ['Projet', d.desc, 'dv-projet'], ['Photos', dvFiles.length ? dvFiles.length + ' photo' + (dvFiles.length > 1 ? 's' : '') : 'Aucune', 'dv-photos'], ['Lieu', lieuTxt(), 'lieu'], ['Contact', [state.contact.prenom + ' ' + state.contact.nom, C.phoneDisplay(state.contact.tel), state.contact.email].filter(function (x) { return String(x || '').trim(); }).join(' · '), 'coordonnees']];
     if (!dvFiles.length && (state.devis.photos || 0) > 0) rows[3][1] = 'À rajouter : non conservées après fermeture de la page';
-    (cart ? cart.lines() : []).forEach(function (l) { rows.push(['Intervention jointe', l.name + ' · ' + linePrice(l), 'demande']); });
-    $('#dvRows').innerHTML = rows.map(function (r) { return '<div class="rw"><span class="rw-k">' + esc(r[0]) + '</span><span class="rw-v">' + esc(r[1]) + '</span><button type="button" class="link" data-go="' + r[2] + '" aria-label="Modifier : ' + esc(r[0]) + '">Modifier</button></div>'; }).join('');
+    $('#dvRows').innerHTML = rows.map(function (r) { return '<div class="rw"><span class="rw-k">' + esc(r[0]) + '</span><span class="rw-v">' + esc(r[1]) + '</span><button type="button" class="link" data-go="' + r[2] + '" aria-label="Modifier : ' + esc(r[0]) + '">Modifier</button></div>'; }).join('') +
+      (cart ? cart.lines() : []).map(function (l) { return '<div class="rw"><span class="rw-k">Intervention jointe</span><span class="rw-v">' + esc(l.name + ' · ' + linePrice(l)) + '</span><button type="button" class="link" data-unjoin="' + esc(l.id) + '" aria-label="Retirer « ' + esc(l.name) + ' » de la demande">Retirer</button></div>'; }).join('');
   };
 
   // ---------- Envoi réel (REAL_BACKEND) ou simulé (SIMULATED_FOR_UI, recette uniquement) ----------
@@ -1636,7 +1638,7 @@ svg{flex:none}
     }).then(function (r) {
       var stored = r.photos && typeof r.photos.stored === 'number' ? r.photos.stored : (Array.isArray(r.photos && r.photos.stored) ? r.photos.stored.length : null);
       state.sent = { mode: 'devis', ref: C.refFromId(r.data && r.data.id), simulated: !!(r.data && r.data.simulated), at: Date.now(), prenom: state.contact.prenom,
-        metiers: (state.devis.metiers || []).slice(), lieu: lieuTxt(), photosSent: files.length, photosStored: stored, tel: C.phoneDisplay(state.contact.tel), email: state.contact.email || '', lines: joined.map(function (l) { return { name: l.name, price: linePrice(l) }; }) };
+        metiers: (state.devis.metiers || []).slice(), desc: state.devis.desc || '', lieu: lieuTxt(), photosSent: files.length, photosStored: stored, tel: C.phoneDisplay(state.contact.tel), email: state.contact.email || '', lines: joined.map(function (l) { return { name: l.name, price: linePrice(l) }; }) };
       state.devis = C.emptyState().devis; dvFiles = []; if (cart) cart.clear(); state.prise = C.emptyState().prise; state.fam = null; save();
       busy(btn, false); track('confirmation'); go('envoye', { replace: true });
     }).catch(function () { busy(btn, false); err.textContent = "L'envoi n'a pas abouti. Vos informations sont conservées : réessayez, ou appelez le 03 66 10 01 34."; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
@@ -1655,7 +1657,7 @@ svg{flex:none}
     if (s.ref) h += '<p class="done-ref">Référence de votre dossier · ' + esc(s.ref) + '</p>';
     if (s.simulated) h += '<p class="done-sim">Simulation de recette : aucune donnée n’a été transmise et aucun dossier n’a été créé.</p>';
     h += '<div class="done-card"><h2>' + (dv ? 'Votre projet' : 'Votre demande') + '</h2><div class="rows" style="padding:4px 18px">';
-    if (dv) h += '<div class="rw"><span class="rw-k">Travaux</span><span class="rw-v">' + esc((s.metiers || []).join(', ')) + '</span><span></span></div>' + (s.photosSent ? '<div class="rw"><span class="rw-k">Photos</span><span class="rw-v">' + (s.simulated ? s.photosSent + ' (non transmises en simulation)' : (s.photosStored ? s.photosStored + ' transmise' + (s.photosStored > 1 ? 's' : '') : 'non transmises : vous pourrez les envoyer lors du rappel')) + '</span><span></span></div>' : '');
+    if (dv) h += '<div class="rw"><span class="rw-k">Travaux</span><span class="rw-v">' + esc((s.metiers || []).join(', ')) + '</span><span></span></div>' + (s.desc ? '<div class="rw"><span class="rw-k">Projet</span><span class="rw-v">' + esc(s.desc.length > 160 ? s.desc.slice(0, 157) + '…' : s.desc) + '</span><span></span></div>' : '') + (s.photosSent ? '<div class="rw"><span class="rw-k">Photos</span><span class="rw-v">' + (s.simulated ? s.photosSent + ' (non transmises en simulation)' : (s.photosStored ? s.photosStored + ' transmise' + (s.photosStored > 1 ? 's' : '') : 'non transmises : vous pourrez les envoyer lors du rappel')) + '</span><span></span></div>' : '');
     else h += (s.lines || []).map(function (l) { return '<div class="rw"><span class="rw-k">Intervention</span><span class="rw-v">' + esc(l.name) + '</span><span class="rw-v">' + esc(l.price) + '</span></div>'; }).join('') + (s.total > 0 ? '<div class="rw"><span class="rw-k">Total prix fermes</span><span></span><span class="rw-v">' + C.eur(s.total) + ' TTC</span></div>' : '') + (s.prise ? '<div class="rw"><span class="rw-k">Préférence</span><span class="rw-v">' + esc(s.prise) + '</span><span></span></div>' : '');
     h += '<div class="rw"><span class="rw-k">Lieu</span><span class="rw-v">' + esc(s.lieu) + '</span><span></span></div>' + (s.tel ? '<div class="rw"><span class="rw-k">Téléphone</span><span class="rw-v">' + esc(s.tel) + '</span><span></span></div>' : '') + (s.email ? '<div class="rw"><span class="rw-k">Email</span><span class="rw-v">' + esc(s.email) + '</span><span></span></div>' : '') + (dv && s.lines && s.lines.length ? s.lines.map(function (l) { return '<div class="rw"><span class="rw-k">Intervention jointe</span><span class="rw-v">' + esc(l.name) + '</span><span class="rw-v">' + esc(l.price) + '</span></div>'; }).join('') : '') + '</div></div>';
     var steps = dv
@@ -1676,7 +1678,8 @@ svg{flex:none}
     if ((el = t.closest('[data-go]'))) { e.preventDefault(); var tg = el.getAttribute('data-go'), ti = C.flowIndex(state.mode, tg), ci = C.flowIndex(state.mode, state.step); state._returnTo = (ti >= 0 && ci > ti) ? state.step : null; return go(tg); }
     if ((el = t.closest('[data-fam]'))) return pickFamily(el);
     if ((el = t.closest('[data-toggle]'))) return toggleLine(el.getAttribute('data-toggle'));
-    if ((el = t.closest('[data-remove]'))) { var rid = el.getAttribute('data-remove'); if (cart) { cart.remove(rid); toast('Retiré de votre demande'); } save(); renderDemande(); renderRecap(); if (!cart.count()) go('besoin'); return; }
+    if ((el = t.closest('[data-unjoin]'))) { var uid = el.getAttribute('data-unjoin'), ul = cart && cart.lines().filter(function (x) { return x.id === uid; })[0]; if (cart) cart.remove(uid); save(); ENTER['dv-recap'](); renderRecap(); toast('« ' + (ul ? ul.name : 'Intervention') + ' » retirée de la demande'); var nx = $('#dvRows [data-unjoin]') || $('#sendDevis'); if (nx) nx.focus(); return; }
+    if ((el = t.closest('[data-remove]'))) { var rid = el.getAttribute('data-remove'); if (cart) { var rl = cart.lines().filter(function (x) { return x.id === rid; })[0]; cart.remove(rid); toast('« ' + (rl ? rl.name : 'Intervention') + ' » retirée de votre demande'); } save(); renderDemande(); renderRecap(); if (!cart.count()) go('besoin'); return; }
     if ((el = t.closest('[data-clearfam]'))) { state.fam = null; state.prob = null; save(); renderKickers(state.step); renderRecap(); return; }
     if ((el = t.closest('[data-showall]'))) { var nShown = $$('#offers .offer').length; state.showAll = state.fam; save(); renderOffers(); var nxt = $$('#offers .offer-pick')[nShown]; if (nxt) nxt.focus(); return; }
     if ((el = t.closest('[data-prec]'))) { state.precMode = el.getAttribute('data-prec'); $('#precSearch').value = ''; save(); return renderOffers(); }
