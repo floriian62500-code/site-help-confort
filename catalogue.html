@@ -365,7 +365,7 @@ svg{flex:none}
 .sheet-head button{width:44px;height:44px;border:0;border-radius:99px;background:var(--surface2);display:grid;place-items:center;cursor:pointer}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
-.toast{position:fixed;left:50%;top:calc(var(--top-h) + 10px);z-index:90;pointer-events:none;transform:translateX(-50%);display:flex;align-items:center;gap:9px;padding:12px 18px 12px 14px;border-radius:99px;background:var(--ink);color:#fff;font-weight:600;font-size:.93rem;box-shadow:var(--sh-3);animation:toastIn .4s var(--ease) both;white-space:nowrap}
+.toast{position:fixed;left:50%;top:calc(var(--top-h) + 10px);z-index:90;pointer-events:none;transform:translateX(-50%);display:flex;align-items:center;gap:9px;padding:12px 18px 12px 14px;border-radius:99px;background:var(--ink);color:#fff;font-weight:600;font-size:.93rem;box-shadow:var(--sh-3);animation:toastIn .4s var(--ease) both;white-space:normal;max-width:calc(100vw - 32px);width:max-content;text-align:left}
 .toast svg{color:#4ADE80}
 @keyframes toastIn{from{opacity:0;transform:translate(-50%,-10px)}to{opacity:1;transform:translate(-50%,0)}}
 
@@ -411,7 +411,7 @@ svg{flex:none}
   .sim-badge{position:absolute;top:calc(var(--top-h) + 6px);right:10px;font-size:.66rem;padding:4px 8px}
   .body{padding:0 0 0;gap:0}
   .card{border-radius:0;box-shadow:none;padding:24px 20px 0;min-height:calc(100vh - var(--top-h))}
-  .card .q-body{flex:1 0 auto}
+  .card .q-body{flex:1 0 auto;padding-bottom:18vh}
   .app.is-sim .card{padding-top:40px}
   .q{margin-bottom:22px}
   .q h1{font-size:1.72rem}
@@ -1172,7 +1172,7 @@ svg{flex:none}
   var toastT = null;
   function toast(msg) { var t = $('#toast'); t.innerHTML = ic('i-check', 17) + '<span>' + esc(msg) + '</span>'; t.hidden = false; t.style.animation = 'none'; void t.offsetWidth; t.style.animation = ''; clearTimeout(toastT); toastT = setTimeout(function () { t.hidden = true; }, 4000); }
   function busy(btn, on, label) { if (!btn) return; if (on) { btn.dataset.html = btn.innerHTML; btn.classList.add('is-busy'); btn.disabled = true; btn.textContent = label || '…'; } else { btn.classList.remove('is-busy'); btn.disabled = false; if (btn.dataset.html) btn.innerHTML = btn.dataset.html; } }
-  function focusBad(el) { if (!el) return; try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); } try { el.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) { el.scrollIntoView(); } }
+  function focusBad(el) { if (!el) return; try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); } var go2 = function () { var f = el.closest('.field') || el; try { f.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) { f.scrollIntoView(); } }; if (window.requestAnimationFrame) requestAnimationFrame(function () { requestAnimationFrame(go2); }); else go2(); }
   function mark(fieldId, bad) { var f = document.getElementById(fieldId); if (!f) return; f.classList.toggle('is-bad', !!bad); var i = f.querySelector('input,textarea'), er = f.querySelector('.err'); if (er && !er.id) { er.id = fieldId + '-err'; er.setAttribute('aria-live', 'polite'); } if (i) { if (bad) { i.setAttribute('aria-invalid', 'true'); if (er) i.setAttribute('aria-describedby', er.id); } else { i.removeAttribute('aria-invalid'); if (er && i.getAttribute('aria-describedby') === er.id) i.removeAttribute('aria-describedby'); } } }
 
   // ---------- Routage ----------
@@ -1533,7 +1533,7 @@ svg{flex:none}
     var today = new Date(); var iso = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
     $('#f-date').min = iso; $('#f-date').value = p.date || ''; $('#f-precisions').value = p.precisions || '';
   };
-  $('#f-date').addEventListener('change', function () { state.prise.date = this.value; mark('fld-date', false); save(); renderRecap(); });
+  $('#f-date').addEventListener('change', function () { var ok = C.dateOk(this.value); state.prise.date = ok ? this.value : ''; mark('fld-date', !ok && !!this.value); save(); renderRecap(); });
   $('#f-precisions').addEventListener('input', function () { state.prise.precisions = this.value; save(); });
 
   // ---------- Devis ----------
@@ -1696,7 +1696,7 @@ svg{flex:none}
     if ((el = t.closest('[data-reset]')) || (el = t.closest('[data-restart]'))) { var keep = { contact: state.contact, lieu: state.lieu, _priceGateOk: state._priceGateOk, _priceGateAt: state._priceGateAt }; if (cart) cart.clear(); dvFiles = []; state = C.emptyState(); if (el.hasAttribute('data-restart')) { state.contact = keep.contact; state.lieu = keep.lieu; state._priceGateOk = keep._priceGateOk; state._priceGateAt = keep._priceGateAt; } save(); return go('choix'); }
   });
   $('#topBack').addEventListener('click', function () {
-    if (state.mode === 'devis' && state._fromIntervention && (state.step === 'dv-projet' || state.step === 'dv-metier')) { state.mode = 'intervention'; state._fromIntervention = false; state.fam = null; save(); return go('besoin', { back: true, replace: true }); }
+    if (state.mode === 'devis' && state._fromIntervention && (state.step === 'dv-projet' || state.step === 'dv-metier')) { state.mode = 'intervention'; state._fromIntervention = false; state.fam = null; if (!String(state.devis.desc || '').trim() && !dvFiles.length) state.devis = C.emptyState().devis; save(); return go('besoin', { back: true, replace: true }); }
     var p = C.prevStep(state.mode, state.step); if (!p) return; if (history.state && history.state.from === p) return history.back(); go(p, { back: true, replace: true }); });
   $('#sendIntervention').addEventListener('click', sendIntervention);
   $('#dvPhotosNext').addEventListener('click', function () { if (!dvFiles.length) return $('#dv-photos').click(); state.devis.photosSeen = true; save(); next('dv-photos'); });
