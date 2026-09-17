@@ -23,5 +23,16 @@ Corrections `717d0891` : métiers sans prix → devis ; accès tarifs honnête (
 ## Hors module (escaladé à Florian, non corrigé ici)
 Données catalogue (300 L < 200 L, doublons mitigeur, marques dans les noms, unités « par radiateur » non structurées, contrat entretien parmi les dépannages), /nos-prestations (prix publics + acompte 40 %), périmètre de zone exact (seuils 50/70 km à vol d'oiseau vs « 55 km » des fiches), délai de rappel pour les urgences.
 
-## Round 2 (sur `717d0891`)
-_(à compléter avec les verdicts)_
+## Round 2 (sur `717d0891`) — design PASS, 4 FAIL
+| Profil | Verdict | Corrections round 1 vérifiées | Restant principal |
+|---|---|---|---|
+| UX | FAIL | 9/9 | P1 : interventions perdues en silence lors d'une bascule vers le devis |
+| Design | **PASS** | 10/10 | P2 : vide colonne droite / cartes courtes ; lignes d'offres trop hautes |
+| Client | FAIL (3 P2) | 6/8 corrigés | email facultatif puis exigé ; agence fermée signalée tard ; photo perdue signalée tard |
+| Desktop | FAIL | 9/10 | P1 : boucle Rénovation ; P2 : toasts effacés, focus sous la barre, erreurs non reliées aux champs |
+| Mobile | FAIL | 9/10 | P1 : même boucle ; P2 : erreurs cachées sous la barre d'action |
+
+Corrections `41729afd` → `ec0596d9` (traçabilité `331028f8`) : contexte neuf au choix « intervention » + « changer » ; interventions conservées (lignes « sur devis » ou jointes au devis) ; toasts non effacés ; email facultatif partout ; horaires dès l'entrée ; photos perdues signalées partout ; retour « Modifier » fiable ; aide au choix (diagnostic d'abord, porte simple/blindée, chasse d'eau) ; recherche (mots vides, synonymes, début de mot) ; colonne sans vide ; offres compactes ; champ en erreur centré ; aria-describedby ; focus opaque ; flèches clavier ; cibles 44 px. Tests : demande-v2 66/66, price-gate 29/29.
+
+## Round 3 (sur `ec0596d9`)
+_(à compléter)_
