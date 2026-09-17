@@ -1595,7 +1595,7 @@ svg{flex:none}
     renderNext();
     state.devis.photosSeen = true; save();
     $('#errDevis').hidden = true;
-    var d = state.devis, rows = [['Travaux', (d.metiers || []).join(', '), 'dv-metier'], ['Type de projet', d.nature || 'Non précisé', 'dv-projet'], ['Projet', d.desc, 'dv-projet'], ['Photos', dvFiles.length ? dvFiles.length + ' photo' + (dvFiles.length > 1 ? 's' : '') : 'Aucune', 'dv-photos'], ['Lieu', lieuTxt(), 'lieu'], ['Contact', [state.contact.prenom + ' ' + state.contact.nom, state.contact.tel, state.contact.email].join(' · '), 'coordonnees']];
+    var d = state.devis, rows = [['Travaux', (d.metiers || []).join(', '), 'dv-metier'], ['Type de projet', d.nature || 'Non précisé', 'dv-projet'], ['Projet', d.desc, 'dv-projet'], ['Photos', dvFiles.length ? dvFiles.length + ' photo' + (dvFiles.length > 1 ? 's' : '') : 'Aucune', 'dv-photos'], ['Lieu', lieuTxt(), 'lieu'], ['Contact', [state.contact.prenom + ' ' + state.contact.nom, C.phoneDisplay(state.contact.tel), state.contact.email].filter(function (x) { return String(x || '').trim(); }).join(' · '), 'coordonnees']];
     if (!dvFiles.length && (state.devis.photos || 0) > 0) rows[3][1] = 'À rajouter : non conservées après fermeture de la page';
     (cart ? cart.lines() : []).forEach(function (l) { rows.push(['Intervention jointe', l.name + ' · ' + linePrice(l), 'demande']); });
     $('#dvRows').innerHTML = rows.map(function (r) { return '<div class="rw"><span class="rw-k">' + esc(r[0]) + '</span><span class="rw-v">' + esc(r[1]) + '</span><button type="button" class="link" data-go="' + r[2] + '" aria-label="Modifier : ' + esc(r[0]) + '">Modifier</button></div>'; }).join('');
