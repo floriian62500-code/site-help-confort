@@ -43,19 +43,19 @@ async function run() {
   // 7. Legacy retiré : plus d'ancien sélecteur unique ni écran 3 voies dans le home (UX-COMMERCE-1 / commit E)
   (!/proposePrestations|detectDetailedPresta|renderPrestaProposals|Autre prestation|mq-card-urgent|Prise en charge TTC/.test(home)) ? ok('Legacy retiré (0 sélecteur/3-voies dans le home)') : ko('Legacy', 'ancien tunnel encore présent');
 
-  // 8. Moteur unifié : launcher 2 modes + panier + checkout + submit (catalogue.html)
+  // 8. Module « Ma demande » v2 : entrée 2 intentions + intervention + devis + envoi réel (catalogue.html)
   const cat = await status('/catalogue.html');
   const catHtml = cat===200 ? await (await fetch(BASE+'/catalogue.html?z='+Date.now())).text() : '';
-  const engineOk = cat===200 && catHtml.includes('id="mode-know"') && catHtml.includes('id="mode-help"') &&
-    catHtml.includes('hc-cart.js') && catHtml.includes('id="s-cart"') && catHtml.includes('id="s-confirm"') && catHtml.includes('submit-lead-v6');
-  engineOk ? ok('Moteur unifié complet (launcher 2 modes + panier + checkout + submit)') : ko('Moteur unifié', 'launcher/checkout/submit incomplet (HTTP '+cat+')');
-  // 9. Moteur : catalogue familles + diagnostic guidé + fiche prestation
-  (catHtml.includes('id="families"') && catHtml.includes('id="s-diagnosis"') && catHtml.includes('id="s-sheet"')) ? ok('Moteur : catalogue + diagnostic + fiche prestation') : ko('Moteur modes', 'catalogue/diagnostic/fiche absent');
+  const engineOk = cat===200 && catHtml.includes('data-choose="intervention"') && catHtml.includes('data-choose="devis"') &&
+    catHtml.includes('hc-cart.js') && catHtml.includes('data-step="demande"') && catHtml.includes('data-step="creneau"') && catHtml.includes('submit-lead-v6');
+  engineOk ? ok('Module demande v2 complet (entrée 2 intentions + intervention + envoi)') : ko('Module demande v2', 'entrée/intervention/envoi incomplet (HTTP '+cat+')');
+  // 9. Module : lieu + zone, aide au choix, parcours devis avec photos
+  (catHtml.includes('id="zoneBox"') && catHtml.includes('data-prec="aide"') && catHtml.includes('data-step="dv-photos"') && catHtml.includes('upload-lead-photos')) ? ok('Module : zone + aide au choix + devis photos') : ko('Module parcours', 'zone/aide/devis photos absent');
   // 10. Non-régression modale tarifs : input adresse marqué data-autocomplete-skip (évite le wipe CP/ville)
   const nosp = await (await fetch(BASE+'/nos-prestations.html?z='+Date.now())).text();
   (nosp.includes('id="nvLgAdresse"') && /nvLgAdresse[^>]*data-autocomplete-skip|data-autocomplete-skip[^>]*id="nvLgAdresse"/.test(nosp)) ? ok('Modale tarifs : adresse skip (CP/ville non wipes)') : ko('Modale tarifs adresse', 'skip absent');
-  // 11. Entrée transactionnelle principale = « Commander une intervention » → moteur (plus le 3-voies)
-  (home.includes('Commander une intervention') && home.includes('/catalogue') && !home.includes('Décrire mon besoin')) ? ok('Entrée principale = moteur (Commander une intervention)') : ko('Entrée moteur', 'CTA principal ne pointe pas le moteur');
+  // 11. Entrée transactionnelle principale = « Demander une intervention » → module (vocabulaire demande, pas commande)
+  (home.includes('Demander une intervention') && home.includes('/catalogue') && !home.includes('Décrire mon besoin')) ? ok('Entrée principale = module (Demander une intervention)') : ko('Entrée module', 'CTA principal ne pointe pas le module');
   console.log(`\nRÉSULTAT : ${pass} PASS / ${fail} FAIL`);
   process.exit(fail > 0 ? 1 : 0);
 }
