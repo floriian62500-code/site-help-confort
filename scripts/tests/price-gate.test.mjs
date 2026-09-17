@@ -1,81 +1,76 @@
 #!/usr/bin/env node
-// Tests de non-régression PRICE GATE (P0 5605156304 / 5605475397).
-// Statique : on vérifie les invariants directement dans la source (le moteur est du JS inline
-// dans catalogue.html, non importable). Aucune modification de rendu, exécutable en CI.
+// Tests de non-régression PRICE GATE (P0 5605156304 / 5605475397) — module « Ma demande » v2.
+// Règle métier : aucun montant affiché sans identification (session courante ou < 2 h).
+// Double preuve : invariants statiques dans catalogue.html + comportement du cœur pur (garde d'étapes).
 //   node scripts/tests/price-gate.test.mjs
 import { readFileSync, readdirSync, statSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import vm from 'vm';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const cat = readFileSync(join(ROOT, 'catalogue.html'), 'utf8');
-// on ne teste que le JS (hors commentaires HTML) pour éviter les faux positifs
-const catNoComments = cat.replace(/<!--[\s\S]*?-->/g, '');
-
+const js = cat.replace(/<!--[\s\S]*?-->/g, '');
 let pass = 0, fail = 0;
 const ok = (n, c) => { c ? (pass++, console.log('  ✅', n)) : (fail++, console.log('  ❌', n)); };
 const count = (s, re) => (s.match(re) || []).length;
+const block = (re) => (js.match(re) || [''])[0];
 
-// 1. Source UNIQUE de déverrouillage : une seule écriture de _priceGateOk=true
-ok('write unique _priceGateOk=true (1 occurrence)', count(catNoComments, /_priceGateOk\s*=\s*true/g) === 1);
+// Cœur pur chargé dans un bac à sable Node (même code que le navigateur)
+const coreSrc = (cat.match(/<script id="hc-demande-core">([\s\S]*?)<\/script>/) || [, ''])[1];
+const box = { module: { exports: {} }, self: undefined };
+vm.runInNewContext(coreSrc, box);
+const C = box.module.exports;
+ok('cœur pur chargé (HcDemandeCore)', typeof C.guardStep === 'function');
 
-// 2. La pose de hc_pg (session) ne se fait qu'une fois, dans le handler du gate
-ok('setItem(hc_pg) unique (1 occurrence)', count(catNoComments, /setItem\(\s*['"]hc_pg['"]/g) === 1);
+// 1-3. Déverrouillage : source UNIQUE, horodatée
+ok('write unique _priceGateOk = true (1 occurrence)', count(js, /_priceGateOk\s*=\s*true/g) === 1);
+ok("setItem('hc_pg') unique (1 occurrence)", count(js, /setItem\(\s*['"]hc_pg['"]/g) === 1);
+ok('_priceGateAt = Date.now() présent', /_priceGateAt\s*=\s*Date\.now\(\)/.test(js));
 
-// 3. _priceGateAt horodaté au même endroit que _priceGateOk (grâce TTL, pas identité seule)
-ok('_priceGateAt=Date.now() présent', /_priceGateAt\s*=\s*Date\.now\(\)/.test(catNoComments));
+// 4. Prédicat : session OU (flag + horodatage numérique + TTL). Jamais l'identité seule.
+const pgCore = block(/function priceGatePassed\(state, sessionOk, now\)\s*\{[\s\S]*?\n\s*\}/);
+ok('prédicat : exige _priceGateOk === true', /_priceGateOk\s*===\s*true/.test(pgCore));
+ok('prédicat : exige horodatage numérique', /typeof\s+t\s*===\s*['"]number['"]/.test(pgCore));
+ok('prédicat : applique PG_TTL_MS', /PG_TTL_MS/.test(pgCore));
+ok('UI : prédicat alimenté par la session courante', /function priceGatePassed\(\)\s*\{\s*return C\.priceGatePassed\(state, pgSessionOk\(\), Date\.now\(\)\)/.test(js));
+const now = Date.now();
+ok('comportement : identité seule (sans horodatage) = verrouillé', C.priceGatePassed({ _priceGateOk: true }, false, now) === false);
+ok('comportement : identification > 2 h = verrouillé', C.priceGatePassed({ _priceGateOk: true, _priceGateAt: now - 3 * 3600e3 }, false, now) === false);
+ok('comportement : session courante = déverrouillé', C.priceGatePassed({}, true, now) === true);
 
-// 4. priceGatePassed() : session OU (flag + horodatage numérique + TTL). Jamais identité seule.
-const pgFn = (catNoComments.match(/function priceGatePassed\(\)\s*\{[\s\S]*?\n\s*\}/) || [''])[0];
-ok('priceGatePassed: check session (pgSessionOk)', /pgSessionOk\(\)/.test(pgFn));
-ok('priceGatePassed: exige _priceGateOk===true', /_priceGateOk\s*===\s*true/.test(pgFn));
-ok('priceGatePassed: exige horodatage numérique', /typeof\s+t\s*===\s*['"]number['"]/.test(pgFn));
-ok('priceGatePassed: applique un TTL (PG_TTL_MS)', /PG_TTL_MS/.test(pgFn));
-
-// 5. go() garde TOUTES les étapes tarifées (pas seulement catalogue/sheet)
-const goGate = (catNoComments.match(/if\(\(step===[\s\S]{0,220}?priceGatePassed\(\)\)\{/) || [''])[0];
-for (const step of ['catalogue', 'sheet', 'cart', 'address', 'coords', 'confirm']) {
-  ok(`go() garde l'étape « ${step} »`, new RegExp(`step===['"]${step}['"]`).test(goGate));
+// 5. Toutes les étapes tarifées sont gardées (écrans + récapitulatif)
+for (const step of ['precision', 'demande', 'coordonnees', 'creneau']) {
+  ok(`PRICED_STEPS contient « ${step} »`, C.PRICED_STEPS.includes(step));
+  const full = { mode: 'intervention', lieuOk: true, fam: 'plomberie', lines: 2, contactOk: true, gateOk: false };
+  const got = C.guardStep(step, full);
+  ok(`garde : « ${step} » sans identification → ${got} (jamais l'écran tarifé)`, !C.PRICED_STEPS.includes(got));
+  ok(`garde : « ${step} » identifié → accessible`, C.guardStep(step, { ...full, gateOk: true }) === step);
 }
 
-// 6. Barre panier mobile : total masqué hors gate (jamais un € sans identification)
-ok('barre mobile: total masqué hors gate (showTot ? tot : —)',
-  /showTot\s*=\s*priceGatePassed\(\)/.test(catNoComments) &&
-  /#mTotal['"]\)\.textContent\s*=\s*showTot\s*\?/.test(catNoComments));
+// 6-8. Aucun montant rendu hors identification (défense en profondeur côté rendu)
+ok('renderOffers : garde !priceGatePassed() en tête', /function renderOffers\(\)\s*\{[^}]*?if \(!priceGatePassed\(\)\)/.test(js));
+ok('renderDemande : garde !priceGatePassed() en tête', /function renderDemande\(\)\s*\{[^}]*?if \(!priceGatePassed\(\)\)/.test(js));
+const recap = block(/function recapHtml\(\)\s*\{[\s\S]*?\n  \}/);
+ok('récapitulatif : prix de ligne seulement si identifié', /\(gate \? '<span>'/.test(recap));
+ok('récapitulatif : total seulement si identifié', /if \(gate && tot > 0\)/.test(recap));
+ok('poignée mobile : total seulement si identifié', /gate && tot > 0 \? ' · ' \+ C\.eur\(tot\)/.test(js));
 
-// 7. Résumé latéral/bottom-sheet : verrouillé hors gate
-ok('summaryHtml: retour verrouillé si !priceGatePassed()',
-  /function summaryHtml\(\)[\s\S]{0,200}?!priceGatePassed\(\)\)\s*return/.test(catNoComments));
-
-// 8. renderCartFull : aucun prix rendu dans le DOM hors gate (défense stricte)
-ok('renderCartFull: garde !priceGatePassed() en tête',
-  /function renderCartFull\(\)\s*\{\s*if\(!priceGatePassed\(\)\)/.test(catNoComments));
-
-// 9. Boutons panier (desktop + mobile) : passent TOUS par go('cart'), et go() garde l'étape cart
-//    (invariant plus fort qu'une garde locale : un seul point de contrôle).
-ok('boutons panier: go(cart) desktop+mobile, gate appliqué dans go()',
-  count(catNoComments, /addEventListener\(\s*['"]click['"]\s*,\s*function\(\)\s*\{\s*go\(\s*['"]cart['"]\s*\);?\s*\}\s*\)/g) >= 2
-  && /step===['"]cart['"]/.test(goGate));
-
-// 10. AUCUN autre fichier ne pose l'état déverrouillé (provenance unique repo-wide)
+// 9. Provenance unique repo-wide : aucun autre fichier ne pose l'état déverrouillé
 function walk(dir, acc = []) {
   for (const e of readdirSync(dir)) {
-    if (e === '.git' || e === 'node_modules' || e === '__pycache__' || e === 'logs') continue;
-    const p = join(dir, e);
-    let st;
-    try { st = statSync(p); } catch { continue; } // ignore les liens cassés / fichiers volatils
-    if (st.isDirectory()) walk(p, acc);
-    else if (/\.(html|js|mjs)$/.test(e)) acc.push(p);
+    if (['.git', 'node_modules', '__pycache__', 'logs'].includes(e)) continue;
+    const p = join(dir, e); let st; try { st = statSync(p); } catch { continue; }
+    if (st.isDirectory()) walk(p, acc); else if (/\.(html|js|mjs)$/.test(e)) acc.push(p);
   }
   return acc;
 }
 const offenders = walk(ROOT).filter(p => {
-  if (p.endsWith('catalogue.html')) return false;                 // la source légitime
-  if (p.includes(`${join('scripts', 'tests')}`)) return false;    // ce test lui-même
+  if (p.endsWith('catalogue.html') || p.includes(join('scripts', 'tests'))) return false;
   const src = readFileSync(p, 'utf8').replace(/<!--[\s\S]*?-->/g, '');
   return /_priceGateOk\s*=\s*true/.test(src) || /setItem\(\s*['"]hc_pg['"]/.test(src);
 }).map(p => p.replace(ROOT + '/', ''));
-ok('provenance unique: aucun autre fichier ne déverrouille les tarifs', offenders.length === 0);
+ok('provenance unique : aucun autre fichier ne déverrouille les tarifs', offenders.length === 0);
 if (offenders.length) console.log('     ↳ fichiers fautifs :', offenders.join(', '));
 
 console.log(`\nRÉSULTAT PRICE GATE : ${pass} PASS / ${fail} FAIL`);
