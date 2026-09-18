@@ -158,7 +158,8 @@ Deno.serve(async (req: Request) => {
   );
 
   // Dossier existant pour cette référence de corrélation ? (intention créée à l'accès aux tarifs)
-  let existing: { id: string; status: string | null; metadata: Record<string, unknown> | null } | null = null;
+  type LeadRow = { id: string; status: string | null; metadata: Record<string, unknown> | null };
+  let existing: LeadRow | null = null;
   if (correlationId) {
     const { data: found } = await supabase
       .from('leads')
@@ -172,7 +173,13 @@ Deno.serve(async (req: Request) => {
     const meta0 = (row && (row.metadata as Record<string, unknown>)) || {};
     const reusable = row && (['intent', 'needs_followup'].includes(String(row.status || ''))
       || (String(row.status || '') === 'archive' && meta0.intent === true && !meta0.finalized_at));
-    if (reusable) existing = row as typeof existing;
+    if (reusable) existing = row as LeadRow;
+    // Déjà finalisé avec cette référence (double clic, rafraîchissement, nouvel essai réseau) :
+    // on renvoie le MÊME dossier, sans nouvel enregistrement ni nouvelle notification.
+    if (!reusable && row && meta0.finalized_at) {
+      return json(200, { success: true, id: row.id, duplicate: true, intent: false, reused: true,
+        pay_token: (meta0.pay_token as string) || null, contract_v6: true });
+    }
   }
 
   let data: { id: string } | null = null;
