@@ -498,3 +498,6 @@
 }
 /* Mentions légales : cible tactile confortable */
 .hcd .legal button,.hcd .legal a{min-height:44px;display:inline-flex;align-items:center}
+
+/* P0 : l'attribut hidden doit vraiment masquer la coque (sinon la page hôte reste couverte et morte) */
+.hcd-overlay[hidden]{display:none}

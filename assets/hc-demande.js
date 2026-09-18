@@ -544,11 +544,12 @@
   // Avancement du parcours dans la colonne « Votre demande » : le client voit toujours où il en est.
   function flowStepsHtml() {
     var f = C.FLOWS[state.mode]; if (!f) return '';
-    var cur = C.flowIndex(state.mode, state.step);
+    var cur = C.flowIndex(state.mode, state.step), p = C.progress(state.mode, state.step);
     return '<ol class="rc-steps">' + f.map(function (st, i) {
       var cls = cur >= 0 && i < cur ? 'is-done' : (i === cur ? 'is-now' : '');
       var dot = cur >= 0 && i < cur ? '<svg width="12" height="12" aria-hidden="true"><use href="#i-check"/></svg>' : (i + 1);
-      return '<li class="' + cls + '">' + '<span class="rc-dot">' + dot + '</span>' + esc(C.LABELS[st] || st) + (i === cur ? '<span class="sr-only"> (étape en cours)</span>' : '') + '</li>';
+      var label = (i === cur && p && p.label) ? p.label : (C.LABELS[st] || st); // même nom que l'en-tête (ex. « Tarifs »)
+      return '<li class="' + cls + '">' + '<span class="rc-dot">' + dot + '</span>' + esc(label) + (i === cur ? '<span class="sr-only"> (étape en cours)</span>' : '') + '</li>';
     }).join('') + '</ol>';
   }
   function renderRecap() {
@@ -979,7 +980,7 @@
   // ---------- Événements (délégation) ----------
   document.addEventListener('click', function (e) {
     var t = e.target; if (!t.closest) return; var el;
-    if (OVERLAY && (el = t.closest('.top-close'))) { e.preventDefault(); close(); return; } // overlay : on reste sur la page hôte
+    if (OVERLAY && (el = t.closest('.top-close') || t.closest('a[href="/"]'))) { e.preventDefault(); close(); return; } // overlay : on reste sur la page hôte
     if (t.closest('a[href^="tel:"]')) track('hc_call_click', { step: state.step });
     if ((el = t.closest('[data-choose]'))) { var md = el.getAttribute('data-choose'), carry = carryIdentity; carryIdentity = null; pendingEntry = null; if (state.sent || C.hasDraft(state, cart ? cart.count() : 0)) startClean(); if (carry) { state.contact = carry.contact; state.lieu = carry.lieu; } state.mode = md; state.sent = null; state._returnTo = null; if (md === 'intervention') { state.fam = null; state.prob = null; state.precMode = 'liste'; } save(); return go(md === 'devis' ? 'dv-metier' : 'lieu'); }
     if ((el = t.closest('[data-next]'))) { var from = el.getAttribute('data-next'); if (from === 'dv-photos') { state.devis.photosSeen = true; save(); } if (from === 'lieu') return submitLieu(); if (from === 'coordonnees') return submitContact();
@@ -1057,6 +1058,8 @@
   (function () { var panel = $('.sheet-panel'), y0 = null; panel.addEventListener('touchstart', function (e) { y0 = panel.scrollTop <= 0 ? e.touches[0].clientY : null; }, { passive: true }); panel.addEventListener('touchmove', function (e) { if (y0 !== null && e.touches[0].clientY - y0 > 70) { y0 = null; closeSheet(); } }, { passive: true }); })();
   function applyEntry(h) {
     if (h.mode) state.mode = h.mode;
+    // Entrée « intervention » sans métier : on repart du choix du besoin (pas de métier hérité d'une visite précédente)
+    if (h.entry && h.mode === 'intervention' && !h.cat) { state.fam = null; state.prob = null; state.precMode = 'liste'; }
     if (h.cat) { state.mode = 'intervention'; state.fam = h.cat; }
     if (h.entretien && (state.devis.metiers || []).indexOf('Contrat entretien') < 0) state.devis.metiers = (state.devis.metiers || []).concat(['Contrat entretien']).slice(0, 3);
     return h.step || (h.cat ? 'lieu' : 'choix');
@@ -1118,6 +1121,7 @@
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
     o.hidden = false;
+    setInert(true);
     var body = o.querySelector('.hcd-modal-body');
     if (!mounted) mount(body, { mode: 'overlay' });
     else { syncHeight(); if (api && api.goEntry) api.goEntry(); }
@@ -1127,8 +1131,16 @@
     setTimeout(function () { var h = o.querySelector('.step.is-active h1'); if (h) try { h.focus({ preventScroll: true }); } catch (e) {} }, 60);
     return api;
   }
+  function setInert(on) {
+    Array.prototype.forEach.call(document.body.children, function (el) {
+      if (el === overlay) return;
+      if (on) { el.setAttribute('aria-hidden', 'true'); el.inert = true; }
+      else { el.removeAttribute('aria-hidden'); el.inert = false; }
+    });
+  }
   function close(fromHistory) {
     if (!overlay || overlay.hidden) return;
+    setInert(false);
     overlay.classList.remove('is-open');
     document.documentElement.style.overflow = '';
     document.body.style.overflow = '';

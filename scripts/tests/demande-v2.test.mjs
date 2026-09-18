@@ -213,5 +213,12 @@ const vHome = (home.match(/hc-demande\.js\?v=(\d{8}[a-z]?)|var V = '(\d{8}[a-z]?
 const vPage = (cat.match(/hc-demande\.js\?v=(\d{8}[a-z]?)/) || [])[1];
 ok('assets du module : accueil et /catalogue.html sur la même version (cache immuable)', !!vHome && vHome === vPage);
 
+// ---- Fenêtre premium (ouverte depuis le site) : la page hôte doit redevenir utilisable à la fermeture
+ok('fenêtre : l’attribut hidden masque réellement la coque (page hôte jamais couverte après fermeture)', /\.hcd-overlay\[hidden\]\{display:none\}/.test(cssFile));
+ok('fenêtre : reste de la page neutralisé pendant l’ouverture, restauré à la fermeture', /function setInert\(on\)/.test(uiFile) && /setInert\(true\);/.test(uiFile) && /setInert\(false\);/.test(uiFile));
+ok('fenêtre : « Quitter » et « Retour à l’accueil » referment sans quitter la page hôte', /t\.closest\('\.top-close'\) \|\| t\.closest\('a\[href="\/"\]'\)/.test(uiFile));
+ok('parcours : entrée « intervention » sans métier → étape Besoin (aucun métier hérité)', /if \(h\.entry && h\.mode === 'intervention' && !h\.cat\) \{ state\.fam = null;/.test(uiFile));
+ok('avancement : le rail nomme l’étape en cours comme l’en-tête', /var label = \(i === cur && p && p\.label\) \? p\.label :/.test(uiFile));
+
 console.log(`\nRÉSULTAT MODULE DEMANDE V2 : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);
