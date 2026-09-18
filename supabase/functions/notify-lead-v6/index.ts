@@ -17,7 +17,9 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: CORS });
   if (req.method !== 'POST')    return new Response('Method not allowed', { status: 405, headers: CORS });
   try {
-    const { lead_id } = await req.json();
+    const { lead_id, kind } = await req.json();
+    // kind = 'abandon' : relance interne d'une demande non finalisée (aucun email au client).
+    const isAbandon = String(kind || '') === 'abandon';
     if (!lead_id) return json({ error: 'lead_id required' }, 400);
     const sb = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
     const { data: lead } = await sb.from('leads').select('*').eq('id', lead_id).single();
@@ -43,11 +45,13 @@ serve(async (req) => {
     const metierLabel = labelMetierPlain(lead.metier);
     const prenomNom = [lead.prenom, lead.nom].filter(Boolean).join(' ').trim() || lead.email || 'Client';
     const isRappel = ((lead.metadata?.form_type || lead.type_demande || '') + '').toLowerCase() === 'rappel';
-    const subject = isRappel
-      ? `Demande de rappel — ${prenomNom}${lead.telephone ? ' — ' + lead.telephone : ''}`
-      : `Nouvelle demande ${metierLabel}${lead.ville ? ' à ' + lead.ville : ''} — ${prenomNom}`;
-    const html = buildHtml(lead, tokens);
-    const text = buildText(lead, tokens);
+    const subject = isAbandon
+      ? `Demande non finalisée — ${prenomNom}${lead.telephone ? ' — ' + lead.telephone : ''}`
+      : isRappel
+        ? `Demande de rappel — ${prenomNom}${lead.telephone ? ' — ' + lead.telephone : ''}`
+        : `Nouvelle demande ${metierLabel}${lead.ville ? ' à ' + lead.ville : ''} — ${prenomNom}`;
+    const html = buildHtml(lead, tokens, isAbandon);
+    const text = buildText(lead, tokens, isAbandon);
     const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
     if (!RESEND_API_KEY) return json({ ok: true, email_sent: false, reason: 'no_api_key' });
     const resendBody: Record<string, unknown> = {
@@ -104,6 +108,8 @@ function labelTypeDemande(t: string): string {
   const MAP: Record<string,string> = {
     contact: 'Contact / devis', urgence: 'Urgence — dépannage', devis: 'Devis',
     rappel: 'Demande de rappel', rendez_vous: 'Rendez-vous', chat: 'Chat en ligne', whatsapp: 'WhatsApp',
+    consultation_tarifs: 'Consultation des tarifs (demande non finalisée)', mixte: 'Intervention (prix fermes + sur devis)',
+    reservation: 'Intervention à prix ferme', entretien: 'Entretien', contrat_entretien: 'Contrat d’entretien', commande: 'Intervention',
   };
   return MAP[(t||'').toLowerCase()] || (t ? t : 'Demande');
 }
@@ -170,7 +176,7 @@ function labelUtm(utm: any): string {
 function esc(s: any): string {
   return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
 }
-function buildHtml(l: any, tokens: Record<string,string>): string {
+function buildHtml(l: any, tokens: Record<string,string>, isAbandon = false): string {
   const prenomNom = [l.prenom, l.nom].filter(Boolean).join(' ').trim() || '—';
   const adresse = [l.adresse, l.code_postal, l.ville].filter(Boolean).join(' ');
   const ft = (l.metadata?.form_type || l.type_demande || '').toLowerCase();
@@ -206,11 +212,12 @@ function buildHtml(l: any, tokens: Record<string,string>): string {
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#F4F7FB;padding:24px 16px"><tr><td align="center">
 <table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;box-shadow:0 4px 18px rgba(10,20,40,.08);overflow:hidden;max-width:600px;width:100%">
 <tr><td style="background:linear-gradient(135deg,#0A1428,#172240);padding:24px 28px;color:#fff">
-<div style="font-size:12px;font-weight:700;opacity:.85;letter-spacing:.06em;text-transform:uppercase">${isRappel ? '📞 Demande de rappel' : 'Nouveau lead'}</div>
+<div style="font-size:12px;font-weight:700;opacity:.85;letter-spacing:.06em;text-transform:uppercase">${isAbandon ? 'Demande non finalisée' : (isRappel ? '📞 Demande de rappel' : 'Nouveau lead')}</div>
 <div style="font-size:20px;font-weight:800;margin-top:6px">${esc(prenomNom)}</div>
 <div style="font-size:14px;opacity:.85;margin-top:4px">${esc(labelMetierPlain(l.metier))}${l.ville ? ' — ' + esc(l.ville) : ''} · ${new Date(l.created_at).toLocaleString('fr-FR')}</div>
 </td></tr>
 <tr><td style="padding:24px 28px">
+${isAbandon ? `<div style="background:#FFF7ED;border-left:4px solid #FF8A1E;padding:14px 18px;border-radius:0 8px 8px 0;margin-bottom:18px;color:#7C2D12;font-size:14px;line-height:1.55"><strong>Ce client a consulté les tarifs mais n'est pas allé au bout de sa demande.</strong><br>Dernière étape atteinte : ${esc(String(l.metadata?.last_step || 'accès aux tarifs'))}. À recontacter pour savoir s'il a besoin d'aide. Aucun email ne lui a été envoyé.</div>` : ''}
 <div style="background:#F8FCFE;border-left:4px solid #0DA0CF;padding:14px 18px;border-radius:0 8px 8px 0;margin-bottom:18px">
   <div style="font-size:13px;font-weight:700;color:#0DA0CF;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Coordonnées</div>
   <div style="font-size:15px;color:#0A1428;line-height:1.8">
@@ -240,7 +247,7 @@ Réf. : ${esc(l.id)}<br>HELP Confort · 03 66 10 01 34
 </td></tr>
 </table></td></tr></table></body></html>`;
 }
-function buildText(l: any, tokens: Record<string,string>): string {
+function buildText(l: any, tokens: Record<string,string>, isAbandon = false): string {
   const prenomNom = [l.prenom, l.nom].filter(Boolean).join(' ').trim() || '—';
   const adresse = [l.adresse, l.code_postal, l.ville].filter(Boolean).join(' ');
   const origin = cleanOrigin(l.source_page || '');
@@ -248,7 +255,7 @@ function buildText(l: any, tokens: Record<string,string>): string {
   const ref = labelReferer(l.source_referer || '');
   const isRappel = ((l.metadata?.form_type || l.type_demande || '') + '').toLowerCase() === 'rappel';
   const lines = [
-    isRappel ? 'DEMANDE DE RAPPEL' : 'NOUVEAU LEAD', '', prenomNom,
+    isAbandon ? 'DEMANDE NON FINALISÉE — à recontacter' : (isRappel ? 'DEMANDE DE RAPPEL' : 'NOUVEAU LEAD'), '', prenomNom,
     `${labelMetierPlain(l.metier)}${l.ville ? ' — ' + l.ville : ''}`,
     new Date(l.created_at).toLocaleString('fr-FR'), '',
     'ORIGINE',
