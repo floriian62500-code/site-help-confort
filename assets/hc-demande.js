@@ -527,9 +527,19 @@
     h += sec('Coordonnées', esc(contactTxt()), 'coordonnees');
     return h;
   }
+  // Avancement du parcours dans la colonne « Votre demande » : le client voit toujours où il en est.
+  function flowStepsHtml() {
+    var f = C.FLOWS[state.mode]; if (!f) return '';
+    var cur = C.flowIndex(state.mode, state.step);
+    return '<ol class="rc-steps">' + f.map(function (st, i) {
+      var cls = cur >= 0 && i < cur ? 'is-done' : (i === cur ? 'is-now' : '');
+      var dot = cur >= 0 && i < cur ? '<svg width="12" height="12" aria-hidden="true"><use href="#i-check"/></svg>' : (i + 1);
+      return '<li class="' + cls + '">' + '<span class="rc-dot">' + dot + '</span>' + esc(C.LABELS[st] || st) + (i === cur ? '<span class="sr-only"> (étape en cours)</span>' : '') + '</li>';
+    }).join('') + '</ol>';
+  }
   function renderRecap() {
     var html = recapHtml() || '<p class="rc-empty">Votre demande se construit ici, étape par étape.</p>';
-    $('#recapBody').innerHTML = html;
+    $('#recapBody').innerHTML = flowStepsHtml() + html;
     if (!$('#sheet').hidden) $('#sheetBody').innerHTML = html;
     var n = cart ? cart.count() : 0, gate = priceGatePassed(), txt = '';
     if (state.mode === 'intervention' && n > 0) { var tot = C.firmTotal(cart.lines(), byId); txt = '<span><strong>Ma demande</strong> · ' + n + ' intervention' + (n > 1 ? 's' : '') + (gate && tot > 0 ? ' · ' + C.eur(tot) : '') + '</span>' + ic('i-up', 18); }

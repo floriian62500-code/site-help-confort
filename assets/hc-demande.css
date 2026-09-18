@@ -382,3 +382,79 @@
   .hcd-modal{width:100%;height:100%;border-radius:0;transform:translateY(16px)}
 }
 @media (prefers-reduced-motion:reduce){.hcd-overlay,.hcd-modal{transition:none}}
+
+/* ============================================================================
+   COUCHE PREMIUM 2026 (directive 5713069274) — plus incarné, plus chaleureux,
+   plus de relief, identité HELP Confort assumée. Surcharge volontairement placée
+   en fin de fichier : la structure au-dessus reste lisible et inchangée.
+   ============================================================================ */
+.hcd{
+  --brand2:#1FC4F0;--warm:#FF8A1E;--warm2:#F2600C;--warm-ink:#9A3B06;
+  --sh-card:0 30px 60px -34px rgba(12,32,56,.38),0 2px 6px rgba(12,32,56,.05);
+  background:
+    radial-gradient(68% 52% at 10% -6%,rgba(13,160,207,.16),transparent 62%),
+    radial-gradient(56% 46% at 102% -2%,rgba(255,138,26,.14),transparent 58%),
+    linear-gradient(180deg,#F8FAFD 0%,#EDF2F7 100%);
+}
+/* ---- En-tête du tunnel : plus de présence ---- */
+.hcd .top{background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(255,255,255,.9));border-bottom:1px solid rgba(15,23,42,.07);box-shadow:0 10px 28px -26px rgba(12,32,56,.7)}
+.hcd .top-logo img{height:38px}
+.hcd .tp-label{font-size:.82rem;color:#4A5B70}
+.hcd .tp-label b{color:#0A6C8F;font-weight:700}
+.hcd .tp-bar{height:6px;background:rgba(15,23,42,.07)}
+.hcd .tp-fill{background:linear-gradient(90deg,#0DA0CF,#38BDF8 58%,#7DD3FC);box-shadow:0 0 10px rgba(13,160,207,.45)}
+.hcd .top-phone{background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;box-shadow:0 14px 26px -16px rgba(13,160,207,.95);font-weight:700}
+.hcd .top-phone:hover{filter:brightness(1.04);box-shadow:0 16px 30px -14px rgba(13,160,207,.95)}
+.hcd .top-phone .dot{background:#BBF7D0;box-shadow:0 0 0 3px rgba(255,255,255,.28)}
+.hcd .app.is-closed .top-phone{background:linear-gradient(135deg,#475569,#64748B);box-shadow:0 14px 26px -18px rgba(15,23,42,.8)}
+.hcd .top-back{background:#fff;box-shadow:0 1px 2px rgba(15,23,42,.06),inset 0 0 0 1px rgba(15,23,42,.06)}
+/* ---- Carte centrale : moins de vide, plus de relief, liseré de marque ---- */
+.hcd .card{min-height:0;border-radius:28px;padding:38px 48px 0;position:relative;overflow:hidden;box-shadow:var(--sh-card);border:1px solid rgba(255,255,255,.9)}
+.hcd .card::before{content:"";position:absolute;inset:0 0 auto;height:4px;background:linear-gradient(90deg,#0DA0CF,#38BDF8 46%,#FF8A1E)}
+.hcd .body{padding-top:18px}
+.hcd .q{margin:0 0 24px}
+.hcd .q h1{font-weight:700;letter-spacing:-.025em}
+.hcd .q p{color:#42556E}
+.hcd .eyebrow{background:linear-gradient(135deg,#E8F5FA,#F4FBFE);box-shadow:inset 0 0 0 1px rgba(13,160,207,.22);color:#0A6C8F;font-weight:700}
+/* ---- Champs : présence et focus nets ---- */
+.hcd .field label,.hcd .mini-q{font-size:.86rem;font-weight:650;color:#31445C;letter-spacing:.004em}
+.hcd .field input,.hcd .field textarea{height:54px;border-radius:14px;background:#fff;box-shadow:inset 0 0 0 1px rgba(15,23,42,.15),0 1px 2px rgba(15,23,42,.04)}
+.hcd .field textarea{height:auto}
+.hcd .field input:focus,.hcd .field textarea:focus{border-color:transparent;box-shadow:inset 0 0 0 1.6px #0DA0CF,0 0 0 4px rgba(13,160,207,.16)}
+.hcd .field.is-bad input,.hcd .field.is-bad textarea{box-shadow:inset 0 0 0 1.6px var(--danger)}
+.hcd .field.is-bad input:focus,.hcd .field.is-bad textarea:focus{box-shadow:inset 0 0 0 1.6px var(--danger),0 0 0 4px rgba(200,30,30,.14)}
+/* ---- Bouton principal : plus désirable ---- */
+.hcd .btn-primary{background:linear-gradient(135deg,#FF8A1E,#F2600C);box-shadow:0 16px 30px -16px rgba(242,96,12,.85);font-weight:700}
+.hcd .btn-primary:hover{background:linear-gradient(135deg,#FF9433,#FF6B12);box-shadow:0 20px 34px -16px rgba(242,96,12,.9)}
+.hcd .btn-primary:disabled{background:#E6EAF0;box-shadow:none}
+.hcd .btn-soft{background:linear-gradient(135deg,#12253C,#0B1526);box-shadow:0 14px 26px -18px rgba(11,21,38,.9)}
+/* ---- Colonne « Votre demande » : utile et vivante ---- */
+.hcd .recap{display:grid;gap:16px}
+.hcd .recap-card,.hcd .recap-next{border-radius:24px;border:1px solid rgba(255,255,255,.9);box-shadow:var(--sh-card)}
+.hcd .recap-card{padding:20px 22px 14px}
+.hcd .recap-t{display:flex;align-items:center;gap:8px;font-size:.78rem;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:#0A6C8F;margin:0 0 12px}
+.hcd .recap-t::before{content:"";width:22px;height:3px;border-radius:99px;background:linear-gradient(90deg,#0DA0CF,#FF8A1E)}
+.hcd .rc-empty{color:#4A5B70}
+.hcd .rc-steps{list-style:none;margin:0 0 14px;padding:0 0 14px;display:grid;gap:9px;border-bottom:1px solid rgba(15,23,42,.08)}
+.hcd .rc-steps li{display:flex;align-items:center;gap:10px;font-size:.9rem;color:#6B7A8D}
+.hcd .rc-dot{flex:none;width:22px;height:22px;border-radius:99px;display:grid;place-items:center;font-size:.74rem;font-weight:700;background:#EEF2F6;color:#64748B;box-shadow:inset 0 0 0 1px rgba(15,23,42,.06)}
+.hcd .rc-steps li.is-done{color:#31445C}
+.hcd .rc-steps li.is-done .rc-dot{background:#E9F6EE;color:#157A3C;box-shadow:inset 0 0 0 1px rgba(21,122,60,.2)}
+.hcd .rc-steps li.is-now{color:#0B1526;font-weight:650}
+.hcd .rc-steps li.is-now .rc-dot{background:linear-gradient(135deg,#0DA0CF,#1FC4F0);color:#fff;box-shadow:0 0 0 4px rgba(13,160,207,.14)}
+/* ---- Réassurance locale : chaleur et signature agence ---- */
+.hcd .trust{padding:18px 20px;border-radius:24px;background:linear-gradient(180deg,#FFF6EC,#FFFFFF 70%);border:1px solid rgba(255,138,26,.2);box-shadow:0 20px 44px -34px rgba(154,59,6,.45)}
+.hcd .trust p{margin:0 0 10px;font-weight:700;color:#0B1526}
+.hcd .trust ul{margin:0 0 12px;padding:0;list-style:none;display:grid;gap:8px}
+.hcd .trust li{display:flex;gap:9px;align-items:flex-start;font-size:.9rem;color:#42556E}
+.hcd .trust li svg{color:#157A3C;margin-top:2px}
+.hcd .trust a{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:46px;border-radius:99px;background:#fff;color:#0B1526;font-weight:700;text-decoration:none;box-shadow:inset 0 0 0 1px rgba(15,23,42,.12),0 8px 18px -14px rgba(15,23,42,.5)}
+.hcd .trust a:hover{box-shadow:inset 0 0 0 1px rgba(13,160,207,.45),0 10px 20px -12px rgba(13,160,207,.55);color:#0A6C8F}
+.hcd .trust small{display:block;margin-top:8px;text-align:center;color:#6B7A8D}
+/* ---- Mobile : la carte occupe l'écran, sans vide artificiel ---- */
+@media (max-width:760px){
+  .hcd .card{min-height:0;border-radius:0;border:0;box-shadow:none;padding:22px 20px 0}
+  .hcd .card::before{height:3px}
+  .hcd .body{padding-top:0}
+  .hcd .top{background:rgba(255,255,255,.96)}
+}
