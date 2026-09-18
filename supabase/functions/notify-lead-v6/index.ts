@@ -217,6 +217,7 @@ function buildHtml(l: any, tokens: Record<string,string>, isAbandon = false): st
 <div style="font-size:14px;opacity:.85;margin-top:4px">${esc(labelMetierPlain(l.metier))}${l.ville ? ' — ' + esc(l.ville) : ''} · ${new Date(l.created_at).toLocaleString('fr-FR')}</div>
 </td></tr>
 <tr><td style="padding:24px 28px">
+${/prix ferme|Total prix fermes|€/i.test(String(l.message || '')) ? `<div style="background:#FFF7EC;border-left:4px solid #FF8A1E;padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:16px;color:#7C4A12;font-size:13px;line-height:1.55">Réserve tarifaire : les montants correspondent aux forfaits sélectionnés par le client, sous réserve de vérification sur place. Si la situation constatée ne correspond pas au forfait, proposer un ajustement ou un devis complémentaire AVANT d'intervenir.</div>` : ''}
 ${isAbandon ? `<div style="background:#FFF7ED;border-left:4px solid #FF8A1E;padding:14px 18px;border-radius:0 8px 8px 0;margin-bottom:18px;color:#7C2D12;font-size:14px;line-height:1.55"><strong>Ce client a consulté les tarifs mais n'est pas allé au bout de sa demande.</strong><br>Dernière étape atteinte : ${esc(String(l.metadata?.last_step || 'accès aux tarifs'))}. À recontacter pour savoir s'il a besoin d'aide. Aucun email ne lui a été envoyé.</div>` : ''}
 <div style="background:#F8FCFE;border-left:4px solid #0DA0CF;padding:14px 18px;border-radius:0 8px 8px 0;margin-bottom:18px">
   <div style="font-size:13px;font-weight:700;color:#0DA0CF;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Coordonnées</div>

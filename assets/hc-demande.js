@@ -157,6 +157,7 @@
       <button type="submit" class="sr-only" tabindex="-1" aria-hidden="true">Afficher les tarifs</button>
      </form>
      <div class="note"><svg width="20" height="20" aria-hidden="true"><use href="#i-info"/></svg><span><strong>Pourquoi&nbsp;?</strong> Nos tarifs sont établis pour la zone de l'agence de Saint-Omer. En les affichant, vos coordonnées sont transmises à l'agence, qui peut vous rappeler à ce sujet. Jamais revendues ni cédées à des tiers (<a href="/mentions-legales.html" target="_blank" rel="noopener">mentions légales</a>).</span></div>
+     <p class="reserve-line">Les tarifs affichés correspondent à des forfaits, sous réserve de vérification sur place : si le besoin constaté diffère, un ajustement ou un devis complémentaire vous est proposé avant intervention.</p>
 
     </div>
     <footer class="q-actions"><button class="btn-primary" type="submit" form="pgForm" id="pgSubmit">Afficher les tarifs <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow"/></svg></button></footer>
@@ -554,7 +555,7 @@
     if (lines.length) {
       lh = lines.map(function (l) { return '<div class="rc-line"><span>' + esc(l.name) + ((l.qty || 1) > 1 ? ' ×' + l.qty : '') + '</span>' + (gate ? '<span>' + esc(linePrice(l)) + '</span>' : '') + '</div>'; }).join('');
       var tot = C.firmTotal(lines, byId);
-      if (gate && tot > 0) lh += '<div class="rc-total"><span>Prix fermes</span><span>' + C.eur(tot) + ' TTC</span></div>'; // P0 : aucun montant sans identification
+      if (gate && tot > 0) lh += '<div class="rc-total"><span>Prix fermes</span><span>' + C.eur(tot) + ' TTC</span></div><p class="rc-reserve">Sous réserve de vérification sur place.</p>'; // P0 : aucun montant sans identification
     }
     if (!lh && state.fam && famName(state.fam)) lh = esc(famName(state.fam)) + ' · à préciser';
     h += sec('Interventions', lh, lines.length ? 'demande' : 'besoin');
@@ -996,6 +997,7 @@
     var steps = dv
       ? [['Un technicien étudie votre projet', s.photosSent ? 'À partir de votre description et de vos photos.' : 'À partir de votre description.'], ['L\u2019agence vous recontacte sous 24 h ouvrées', 'Pour préciser votre projet ; une visite sur place peut vous être proposée si nécessaire.' + hoursLine()], ['Vous recevez votre devis gratuit', 'Vous décidez ensuite, sans engagement.']]
       : [['L\u2019agence de Saint-Omer vous rappelle', 'Sous 24 h ouvrées au plus tard, aux heures d\u2019ouverture (lun–ven 9h–17h, sam 9h–16h).' + hoursLine()], ['Le créneau est fixé avec vous', 'Les prix fermes restent ceux affichés ; les prestations sur devis sont chiffrées après diagnostic.'], ['Le technicien intervient', 'Vous réglez après l\u2019intervention. Aucun paiement en ligne.']];
+    if (!dv && (s.total > 0 || (s.lines || []).length)) h += '<p class="reserve-line">' + esc('Les tarifs affichés correspondent à des forfaits, sous réserve de vérification sur place : si le besoin constaté diffère, un ajustement ou un devis complémentaire vous est proposé avant intervention.') + '</p>';
     h += '<div class="done-card"><h2>Et maintenant&nbsp;?</h2><ol class="timeline">' + steps.map(function (x, i) { return '<li><b>' + (i + 1) + '</b><strong>' + esc(x[0]) + '</strong><span>' + esc(x[1]) + '</span></li>'; }).join('') + '</ol></div>';
     h += '<div class="done-actions"><a class="btn-soft" href="tel:+33366100134">' + ic('i-phone', 17) + '03 66 10 01 34</a><a class="btn-ghost" href="/">Retour à l’accueil</a><button type="button" class="btn-ghost" data-restart>Faire une autre demande</button></div><p class="legal" style="text-align:center"><button type="button" class="link" data-forget>Effacer mes informations de cet appareil</button></p>';
     box.innerHTML = h;

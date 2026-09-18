@@ -278,6 +278,7 @@
     var msg = ["DEMANDE D'INTERVENTION — module Ma demande v2", '', 'Interventions :']
       .concat(lines.map(function (x) { return '• ' + lineLabel(x, byId[x.id]); }))
       .concat(tot > 0 ? ['Total prix fermes : ' + eur(tot) + ' TTC'] : [])
+      .concat(tot > 0 ? ['Réserve tarifaire : les montants correspondent aux forfaits sélectionnés par le client, sous réserve de vérification sur place. Si la situation constatée ne correspond pas au forfait, un ajustement ou un devis complémentaire doit être proposé au client AVANT toute intervention.'] : [])
       .concat(['', 'Délai souhaité : ' + (p.quand === 'date' && p.date ? 'à partir du ' + frDate(p.date) : (QUAND[p.quand] || '—')), 'Rappel souhaité : ' + (RAPPEL[p.rappel] || RAPPEL.asap), 'Zone : ' + zoneLine(l)])
       .concat(p.precisions ? ['', 'Précisions client : ' + p.precisions] : [])
       .join('\n');

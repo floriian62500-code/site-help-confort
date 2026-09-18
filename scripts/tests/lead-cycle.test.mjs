@@ -64,5 +64,18 @@ ok('CRM : chaque dossier entre en file d’attente dès la collecte des coordonn
 ok('CRM : sans accès Apogée, la fonction ne fait rien et le dit', /blocked: 'missing_credentials'/.test(crm) && /needed: \['APOGEE_API_URL', 'APOGEE_API_KEY'\]/.test(crm));
 ok('CRM : aucun endpoint ni secret inventé', !/https:\/\/[a-z0-9.-]*apogee/i.test(crm));
 
+// ---- Réserve tarifaire (le forfait affiché est validé après constat sur place)
+const ui = read('assets/hc-demande.js');
+const css = read('assets/hc-demande.css');
+ok('réserve : bloc visible sur l’écran « Votre demande »', /note note--warm reserve/.test(ui) && /Important — prix sous réserve de vérification sur place/.test(ui));
+ok('réserve : mention sur l’étape d’affichage des tarifs', /Les tarifs affichés correspondent à des forfaits, sous réserve de vérification sur place/.test(ui));
+ok('réserve : rappelée sur la confirmation dès qu’un montant est affiché', /if \(!dv && \(s\.total > 0 \|\| \(s\.lines \|\| \[\]\)\.length\)\) h \+= '<p class="reserve-line">/.test(ui));
+ok('réserve : rappelée sous le total du récapitulatif latéral', /rc-reserve">Sous réserve de vérification sur place/.test(ui));
+ok('réserve : styles dédiés (lisible, non anxiogène)', /\.hcd \.reserve-line\{/.test(css) && /\.hcd \.rc-reserve\{/.test(css));
+ok('réserve : transmise à l’agence dans le message du dossier', /Réserve tarifaire : les montants correspondent aux forfaits sélectionnés/.test(core));
+ok('réserve : rappelée dans l’email agence quand un montant figure', /Réserve tarifaire/.test(notify) && /prix ferme\|Total prix fermes/.test(notify));
+ok('réserve : rappelée dans l’email client d’une intervention', /Prix sous réserve de vérification sur place/.test(reply) && /aucun supplément n'est engagé sans votre accord/.test(reply));
+ok('réserve : engagement d’information AVANT tout supplément (front + emails)', /avant<\/strong> toute intervention/.test(ui) && /AVANT d'intervenir/.test(notify));
+
 console.log(`\nRÉSULTAT CYCLE LEAD : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);

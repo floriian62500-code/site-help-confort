@@ -502,3 +502,9 @@
 
 /* P0 : l'attribut hidden doit vraiment masquer la coque (sinon la page hôte reste couverte et morte) */
 .hcd-overlay[hidden]{display:none}
+
+/* ---- Réserve tarifaire (directive Florian) : le forfait affiché est vérifié sur place ---- */
+.hcd .reserve-line{margin:14px 0 0;padding:12px 14px;border-radius:14px;font-size:.87rem;line-height:1.5;color:#7C4A12;background:linear-gradient(180deg,#FFF7EC,#FFFDF9);border:1px solid rgba(255,138,26,.24)}
+.hcd .note--warm.reserve{border-color:rgba(255,138,26,.3)}
+.hcd .note--warm.reserve strong{color:#7C2D12}
+.hcd .rc-reserve{margin:6px 0 0;font-size:.8rem;line-height:1.45;color:#6B7A8D}

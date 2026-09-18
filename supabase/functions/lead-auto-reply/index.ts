@@ -145,6 +145,7 @@ function buildHtml(l: any, firstName: string, kind: Kind): string {
   <p style="margin:0 0 16px">Nous avons bien reçu votre ${escapeHtml(kind.noun)}${metierTxt}${ville}. Merci de votre confiance.</p>
   <p style="margin:0 0 16px"><strong>Que se passe-t-il maintenant ?</strong></p>
   <table cellpadding="0" cellspacing="0" style="margin:0 0 24px">${steps}</table>
+  ${kind.key === 'intervention' ? `<div style="background:#FFF7EC;border:1px solid rgba(255,138,26,.24);padding:14px 18px;border-radius:12px;margin:0 0 20px;color:#7C4A12;font-size:14px;line-height:1.55"><strong>Prix sous réserve de vérification sur place :</strong> le montant annoncé correspond au forfait choisi. Si le technicien constate un besoin différent ou complémentaire, un ajustement ou un devis complémentaire vous est proposé avant toute intervention — aucun supplément n'est engagé sans votre accord.</div>` : ''}
   <div style="background:#FFFBEB;border-left:4px solid #FFB400;padding:14px 18px;border-radius:0 8px 8px 0;margin:0 0 24px">
     <strong style="color:#92400E">Besoin urgent ?</strong> Appelez l’agence au <a href="tel:+33366100134" style="color:#FF6B1A;font-weight:800;text-decoration:none">${TEL}</a> — ${HORAIRES}.
   </div>
@@ -170,7 +171,7 @@ Nous avons bien reçu votre ${kind.noun}.
 
 ${kind.steps.map((s, i) => `${i + 1}. ${s}`).join('\n')}
 
-Besoin urgent ? Appelez l'agence au ${TEL} (${HORAIRES}).
+${kind.key === 'intervention' ? "Prix sous réserve de vérification sur place : le montant annoncé correspond au forfait choisi ; tout ajustement vous est proposé avant intervention.\n\n" : ''}Besoin urgent ? Appelez l'agence au ${TEL} (${HORAIRES}).
 
 Bonne journée,
 L'équipe ${AGENCE}
