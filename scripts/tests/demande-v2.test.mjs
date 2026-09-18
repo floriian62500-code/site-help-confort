@@ -227,7 +227,7 @@ ok('accès tarifs : marqué comme intention (enregistrement silencieux) avec l�
 ok('dossier unique : la référence de corrélation part avec l’intention et avec les 2 envois finaux', gp.correlation_id === 'cid-123' && gp.utm.correlation_id === 'cid-123'
   && C.interventionPayload({ lines, byId, contact, lieu, prise: { quand: 'asap' }, cid: 'cid-123' }).correlation_id === 'cid-123'
   && C.devisPayload({ contact, lieu, devis: { metiers: ['Plomberie'], desc: 'x' }, cid: 'cid-123' }).correlation_id === 'cid-123');
-ok('UI : champ Nom obligatoire à l’étape tarifs (validé avant affichage des prix)', /id="pg-nom"/.test(uiFile) && /var bN = !C\.nameOk\(no\.value\)/.test(uiFile) && /if \(bN\) return focusBad\(no\);/.test(uiFile) && /state\.contact\.nom = no\.value\.trim\(\)/.test(uiFile));
+ok('UI : champ Nom obligatoire à l’étape tarifs (validé avant affichage des prix)', /id="pg-nom"/.test(uiFile) && /bN = !C\.nameOk\(no\.value\)/.test(uiFile) && /if \(bN\) return focusBad\(no\);/.test(uiFile) && /state\.contact\.nom = no\.value\.trim\(\)/.test(uiFile));
 ok('UI : référence de dossier créée une seule fois puis réutilisée', /function cid\(\) \{/.test(uiFile) && /if \(state\._cid\) return state\._cid;/.test(uiFile) && /cid: state\._cid \|\| null/.test(uiFile));
 ok('UI : signal d’activité muet (aucun envoi en simulation, aucune notification demandée)', /function pingIntent\(step\)/.test(uiFile) && /if \(SIM \|\| !state\._cid \|\| !C\.contactValid\(state\.contact\)\) return;/.test(uiFile) && /pingIntent\('coordonnees'\)/.test(uiFile));
 
