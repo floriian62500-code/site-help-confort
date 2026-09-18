@@ -1106,7 +1106,9 @@
     var body = o.querySelector('.hcd-modal-body');
     if (!mounted) mount(body, { mode: 'overlay' });
     else { syncHeight(); if (api && api.goEntry) api.goEntry(); }
-    root.requestAnimationFrame(function () { o.classList.add('is-open'); syncHeight(); });
+    void o.offsetWidth; // force le calcul de style : l'ouverture marche aussi dans un onglet d'arrière-plan
+    o.classList.add('is-open');
+    root.requestAnimationFrame(function () { syncHeight(); });
     setTimeout(function () { var h = o.querySelector('.step.is-active h1'); if (h) try { h.focus({ preventScroll: true }); } catch (e) {} }, 60);
     return api;
   }
