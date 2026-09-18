@@ -1087,6 +1087,7 @@
     var dv = s.mode === 'devis', h = '<span class="done-ic">' + ic('i-check', 40) + '</span>';
     h += '<h1 id="h-envoye" tabindex="-1">' + (s.prenom ? esc(s.prenom) + ', votre ' : 'Votre ') + (dv ? 'demande de devis est envoyée' : 'demande est envoyée') + '</h1>';
     if (s.ref) h += '<p class="done-ref">Référence de votre dossier · ' + esc(s.ref) + '</p>';
+    else if (s.simulated) h += '<p class="done-ref">Référence de votre dossier · attribuée à l’enregistrement réel (HC-XXXXXXXX)</p>'; // simulation : emplacement visible, jamais de faux numéro
     if (s.simulated) h += '<p class="done-sim">Simulation de recette : aucune donnée n’a été transmise et aucun dossier n’a été créé.</p>';
     h += '<div class="done-card dossier"><h2>' + (dv ? 'Votre projet' : 'Votre dossier') + '</h2><div class="rows" style="padding:4px 18px">';
     h += row('Client', esc([s.prenom, s.nom].filter(Boolean).join(' ')));

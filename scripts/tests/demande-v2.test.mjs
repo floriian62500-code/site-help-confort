@@ -283,5 +283,6 @@ ok('« Nos prestations » : clé anti-doublon sans email ni téléphone en clair
 ok('« Nos prestations » : le bouton « Effacer mes données » atteint réellement sa fonction', /onclick="clearLeadData\(\)"/.test(presta) && /window\.clearLeadData = clearLeadData;/.test(presta));
 ok('code source public : aucune adresse personnelle réelle en exemple', !/Sarrail/.test(presta) && !/Sarrail/.test(uiFile));
 
+ok('récapitulatif : référence réelle affichée ; en simulation, emplacement indiqué sans numéro inventé', /Référence de votre dossier · ' \+ esc\(s\.ref\)/.test(uiFile) && /else if \(s\.simulated\) h \+= '<p class="done-ref">Référence de votre dossier · attribuée à l’enregistrement réel \(HC-XXXXXXXX\)/.test(uiFile));
 console.log(`\nRÉSULTAT MODULE DEMANDE V2 : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);
