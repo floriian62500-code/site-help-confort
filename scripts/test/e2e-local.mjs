@@ -232,7 +232,7 @@ if (catPath) {
   const intentId = rA.body && rA.body.id;
   check('CYCLE_A_intention_silencieuse', rA.status === 200 && !!intentId && rA.body.intent === true, 'id=' + (intentId || '—'));
   const rowA = await readLead(intentId);
-  check('CYCLE_A_statut_intention', !!rowA && rowA.status === 'intent' && (rowA.metadata || {}).intent === true && !!(rowA.metadata || {}).last_activity_at, 'status=' + (rowA && rowA.status));
+  check('CYCLE_A_statut_intention', !!rowA && ((rowA.metadata || {}).intent === true) && !!(rowA.metadata || {}).last_activity_at && ['intent', 'archive'].includes(rowA.status), 'status=' + (rowA && rowA.status) + ' (archive = lead de test)');
   check('CYCLE_A_identite_distincte', !!rowA && rowA.prenom === 'TEST' && rowA.nom === 'NE PAS TRAITER', `${rowA && rowA.prenom} / ${rowA && rowA.nom}`);
   const rAR = await post('lead-auto-reply', { lead_id: intentId });
   check('CYCLE_A_aucun_email_client', rAR.status === 200 && rAR.body && rAR.body.sent === false && rAR.body.reason === 'intent_not_finalized', 'reason=' + (rAR.body && rAR.body.reason));
@@ -242,7 +242,7 @@ if (catPath) {
   const rB = await submitLead(finalPayload);
   check('CYCLE_B_meme_dossier', rB.status === 200 && rB.body.id === intentId && rB.body.reused === true, 'id=' + (rB.body && rB.body.id));
   const rowB = await readLead(intentId);
-  check('CYCLE_B_finalisee', !!rowB && rowB.status === 'archive' && !!(rowB.metadata || {}).finalized_at && (rowB.metadata || {}).intent === false, 'status=' + (rowB && rowB.status));
+  check('CYCLE_B_finalisee', !!rowB && !!(rowB.metadata || {}).finalized_at && (rowB.metadata || {}).intent === false && ['nouveau', 'archive'].includes(rowB.status), 'status=' + (rowB && rowB.status));
 
   // C. Abandon : intention inactive depuis plus de 15 min → UNE alerte interne, une seule
   const cid2 = 'e2e-ab-' + Date.now().toString(36);

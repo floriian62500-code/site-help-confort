@@ -168,7 +168,11 @@ Deno.serve(async (req: Request) => {
       .limit(1);
     const row = Array.isArray(found) ? found[0] : null;
     // On ne réécrit jamais un dossier déjà finalisé : seules une intention ou une relance sont reprises.
-    if (row && ['intent', 'needs_followup'].includes(String(row.status || ''))) existing = row as typeof existing;
+    // (un lead de test est auto-archivé : il reste une intention tant qu'il n'est pas finalisé)
+    const meta0 = (row && (row.metadata as Record<string, unknown>)) || {};
+    const reusable = row && (['intent', 'needs_followup'].includes(String(row.status || ''))
+      || (String(row.status || '') === 'archive' && meta0.intent === true && !meta0.finalized_at));
+    if (reusable) existing = row as typeof existing;
   }
 
   let data: { id: string } | null = null;

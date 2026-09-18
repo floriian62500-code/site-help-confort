@@ -195,6 +195,7 @@
     <div class="q-body">
      <div id="demandeList"></div>
      <button class="add-more" type="button" data-go="besoin"><svg width="18" height="18" aria-hidden="true"><use href="#i-plus"/></svg>Ajouter une autre intervention</button>
+     <div class="note note--warm reserve"><svg width="20" height="20" aria-hidden="true"><use href="#i-info"/></svg><span><strong>Important — prix sous réserve de vérification sur place :</strong> le montant affiché correspond au forfait que vous avez sélectionné. Il est valable si la situation constatée sur place correspond à ce forfait. Si le technicien constate un besoin différent ou complémentaire, un ajustement tarifaire ou un devis complémentaire vous est proposé <strong>avant</strong> toute intervention : aucun supplément n’est engagé sans votre accord.</span></div>
      <div class="note"><svg width="20" height="20" aria-hidden="true"><use href="#i-shield"/></svg><span><strong>Aucun paiement en ligne :</strong> vous réglez après l'intervention. Un prix ferme couvre la prestation telle que décrite ; si un supplément s'avérait nécessaire, il vous est proposé avant d'intervenir. Lors du rappel, l'agence fixe le créneau avec vous.</span></div>
     </div>
     <footer class="q-actions"><button class="sum-handle" type="button" data-open-sheet hidden></button><button class="btn-primary" type="button" data-next="demande">Continuer <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow"/></svg></button></footer>
