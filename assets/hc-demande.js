@@ -499,9 +499,9 @@
       + '<a href="tel:+33366100134">' + ic('i-phone', 16) + '03 66 10 01 34</a>';
     $$('.step.card').forEach(function (s) {
       if (s.querySelector('.card-foot')) return;
-      var act = s.querySelector('.q-actions'); if (!act) return;
       var f = document.createElement('div'); f.className = 'card-foot'; f.innerHTML = html;
-      act.parentNode.insertBefore(f, act);
+      var act = s.querySelector('.q-actions');
+      if (act) act.parentNode.insertBefore(f, act); else s.appendChild(f); // étapes sans barre d'actions (ex. Besoin)
     });
   }
 
@@ -555,6 +555,8 @@
   function renderRecap() {
     var html = recapHtml() || '<p class="rc-empty">Votre demande se construit ici, étape par étape.</p>';
     $('#recapBody').innerHTML = flowStepsHtml() + html;
+    var nx = $('#recapNext'); if (nx && !nx.querySelector('.rc-steps')) nx.insertAdjacentHTML('afterbegin', flowStepsHtml());
+    else if (nx) nx.querySelector('.rc-steps').outerHTML = flowStepsHtml();
     if (!$('#sheet').hidden) $('#sheetBody').innerHTML = html;
     var n = cart ? cart.count() : 0, gate = priceGatePassed(), txt = '';
     if (state.mode === 'intervention' && n > 0) { var tot = C.firmTotal(cart.lines(), byId); txt = '<span><strong>Ma demande</strong> · ' + n + ' intervention' + (n > 1 ? 's' : '') + (gate && tot > 0 ? ' · ' + C.eur(tot) : '') + '</span>' + ic('i-up', 18); }

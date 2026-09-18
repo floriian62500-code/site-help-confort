@@ -399,7 +399,8 @@
 }
 /* ---- En-tête du tunnel : plus de présence ---- */
 .hcd .top{background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(255,255,255,.9));border-bottom:1px solid rgba(15,23,42,.07);box-shadow:0 10px 28px -26px rgba(12,32,56,.7)}
-.hcd .top-logo img{height:38px}
+.hcd .top-logo{flex:none}
+.hcd .top-logo img{height:38px;width:auto;object-fit:contain}
 .hcd .tp-label{font-size:.82rem;color:#4A5B70}
 .hcd .tp-label b{color:#0A6C8F;font-weight:700}
 .hcd .tp-bar{height:6px;background:rgba(15,23,42,.07)}
@@ -410,7 +411,7 @@
 .hcd .app.is-closed .top-phone{background:linear-gradient(135deg,#475569,#64748B);box-shadow:0 14px 26px -18px rgba(15,23,42,.8)}
 .hcd .top-back{background:#fff;box-shadow:0 1px 2px rgba(15,23,42,.06),inset 0 0 0 1px rgba(15,23,42,.06)}
 /* ---- Carte centrale : moins de vide, plus de relief, liseré de marque ---- */
-.hcd .card{min-height:0;border-radius:28px;padding:38px 48px 0;position:relative;overflow:hidden;box-shadow:var(--sh-card);border:1px solid rgba(255,255,255,.9)}
+.hcd .card{border-radius:28px;padding:38px 48px 0;position:relative;box-shadow:var(--sh-card);border:1px solid rgba(255,255,255,.9)}
 .hcd .card::before{content:"";position:absolute;inset:0 0 auto;height:4px;background:linear-gradient(90deg,#0DA0CF,#38BDF8 46%,#FF8A1E)}
 .hcd .body{padding-top:18px}
 .hcd .q{margin:0 0 24px}
@@ -488,7 +489,7 @@
 /* Lisibilité et identité en mobile */
 @media (max-width:760px){
   .hcd .app:not([data-step="choix"]):not([data-step="envoye"]) .top-logo{display:flex}
-  .hcd .top-logo img{height:26px}
+  .hcd .top-logo img{height:26px;width:auto;max-width:78px;object-fit:contain}
   .hcd .field label,.hcd .mini-q{font-size:.95rem}
   .hcd .sim-badge{font-size:.78rem}
   .hcd .card{padding-top:16px}
