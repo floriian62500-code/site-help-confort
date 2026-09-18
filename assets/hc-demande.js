@@ -487,8 +487,22 @@
   }
   function renderProgress(step) {
     var p = C.progress(state.mode, step), box = $('#topProg');
-    box.hidden = !p;
+    box.hidden = !p && step !== 'choix';
     if (p) { $('#tpLabel').innerHTML = 'Étape ' + p.index + ' sur ' + p.total + ' · <b>' + esc(p.label) + '</b>'; $('#tpFill').style.width = Math.round(p.index / p.total * 100) + '%'; }
+    else if (step === 'choix') { $('#tpLabel').innerHTML = '<b>Votre demande</b> · reprendre ou démarrer'; $('#tpFill').style.width = '0%'; } // l'en-tête garde son contexte
+  }
+  // Pied de carte : signature de l'agence et réassurance, sur toutes les étapes (seule identité visible en mobile)
+  function addCardFoot() {
+    var html = '<span><b>HELP Confort</b> · agence de Saint-Omer</span>'
+      + '<span>' + ic('i-check', 16) + 'Techniciens salariés</span>'
+      + '<span>' + ic('i-check', 16) + 'Aucun paiement en ligne</span>'
+      + '<a href="tel:+33366100134">' + ic('i-phone', 16) + '03 66 10 01 34</a>';
+    $$('.step.card').forEach(function (s) {
+      if (s.querySelector('.card-foot')) return;
+      var act = s.querySelector('.q-actions'); if (!act) return;
+      var f = document.createElement('div'); f.className = 'card-foot'; f.innerHTML = html;
+      act.parentNode.insertBefore(f, act);
+    });
   }
 
   // ---------- Récapitulatif contextuel (colonne desktop + feuille mobile) ----------
@@ -547,7 +561,7 @@
     $$('[data-open-sheet]').forEach(function (b) { b.innerHTML = txt; b.hidden = !txt; });
   }
   var sheetOpener = null;
-  function openSheet(btn) { sheetOpener = btn || null; if (btn) btn.setAttribute('aria-expanded', 'true'); $('#sheetBody').innerHTML = recapHtml(); $('#sheet').hidden = false; lockScroll(true); var c = $('.sheet-head button'); if (c) c.focus(); }
+  function openSheet(btn) { sheetOpener = btn || null; if (btn) btn.setAttribute('aria-expanded', 'true'); $('#sheetBody').innerHTML = recapHtml() + '<div class="card-foot"><span><b>HELP Confort</b> · agence de Saint-Omer</span><a href="tel:+33366100134">' + ic('i-phone', 16) + '03 66 10 01 34</a></div>'; $('#sheet').hidden = false; lockScroll(true); var c = $('.sheet-head button'); if (c) c.focus(); }
   function closeSheet() { if ($('#sheet').hidden) return; $$('[data-open-sheet]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); }); $('#sheet').hidden = true; lockScroll(false); if (sheetOpener) try { sheetOpener.focus(); } catch (e) {} }
 
   // ---------- Entrée ----------
@@ -1057,6 +1071,7 @@
     go(start, { replace: true, initial: true });
     return h;
   }
+  addCardFoot();
   var hp = goEntry();
   loadCatalogue().then(function () {
     if (hp.cat && !byFam[hp.cat]) { state.fam = null; save(); }

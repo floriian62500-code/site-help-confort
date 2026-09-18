@@ -459,3 +459,42 @@
   .hcd .body{padding-top:0}
   .hcd .top{background:rgba(255,255,255,.96)}
 }
+
+/* ---- Correctifs revue round 5 (design + mobile) ---- */
+/* P0 mobile : un ancêtre en overflow:hidden annule le sticky de la barre d'actions */
+.hcd .card{overflow:visible}
+.hcd .card::before{border-radius:28px 28px 0 0}
+/* Le vide sous la carte en desktop : la carte rejoint la base de la colonne droite */
+@media (min-width:1024px){
+  .hcd .card{min-height:calc(var(--hcd-vh,100vh) - var(--top-h) - 56px)}
+  .hcd .recap{max-height:calc(var(--hcd-vh,100vh) - var(--top-h) - 40px);overflow:auto;overscroll-behavior:contain;padding-right:2px}
+}
+/* Pied de carte : signature agence + réassurance locale, présentes sur toutes les étapes (dont mobile) */
+.hcd .card-foot{display:flex;flex-wrap:wrap;align-items:center;gap:2px 16px;margin:26px 0 0;padding:12px 0 0;border-top:1px solid rgba(15,23,42,.07);font-size:.88rem;color:#4A5B70}
+.hcd .card-foot span{display:inline-flex;align-items:center;gap:7px}
+.hcd .card-foot b{color:#0B1526;font-weight:700}
+.hcd .card-foot svg{color:#157A3C}
+.hcd .card-foot a{display:inline-flex;align-items:center;gap:7px;min-height:44px;color:#0A6C8F;font-weight:700;text-decoration:none}
+.hcd .card-foot a:hover{text-decoration:underline}
+/* États sélectionnés : la marque reste visible au moment du choix */
+.hcd .tile[aria-pressed="true"],.hcd .offer.is-in,.hcd .chip[aria-pressed="true"],.hcd .chip[aria-checked="true"]{box-shadow:inset 0 0 0 2px #0DA0CF,0 0 0 4px rgba(13,160,207,.12)}
+.hcd .tile[aria-pressed="true"] .tile-ic{background:rgba(13,160,207,.14);color:#0A6C8F}
+.hcd .chip[aria-pressed="true"],.hcd .chip[aria-checked="true"]{color:#0A6C8F}
+.hcd .tile-ic{background:rgba(13,160,207,.08)}
+.hcd .offer.is-in{background:linear-gradient(180deg,rgba(13,160,207,.06),#fff 60%)}
+/* La ligne de total doit se voir */
+.hcd .grp-total{margin-top:10px;padding:12px 20px;border-top:1px solid rgba(15,23,42,.08);background:linear-gradient(180deg,rgba(13,160,207,.08),rgba(13,160,207,.03))}
+.hcd .grp-total strong{font-size:1.28rem;font-weight:750}
+/* Lisibilité et identité en mobile */
+@media (max-width:760px){
+  .hcd .app:not([data-step="choix"]):not([data-step="envoye"]) .top-logo{display:flex}
+  .hcd .top-logo img{height:26px}
+  .hcd .field label,.hcd .mini-q{font-size:.95rem}
+  .hcd .sim-badge{font-size:.78rem}
+  .hcd .card{padding-top:16px}
+  .hcd .card::before{border-radius:0}
+  .hcd .card-foot{margin-top:20px;font-size:.86rem}
+  .hcd .card .q-body{padding-bottom:12px}
+}
+/* Mentions légales : cible tactile confortable */
+.hcd .legal button,.hcd .legal a{min-height:44px;display:inline-flex;align-items:center}
