@@ -118,6 +118,13 @@ main h3{font-size:1.15rem;margin:24px 0 8px;color:#0A1428}
 .ec-cross{background:#0A1428;color:#fff;padding:28px 22px;text-align:center;border-radius:16px;margin:40px 0}
 .ec-cross a{color:#1FC4F0;font-weight:700;text-decoration:none}
 .ec-back{display:inline-flex;align-items:center;gap:6px;color:#FFEAD9;font-weight:600;text-decoration:none;font-size:.92rem;margin-bottom:14px}
+.ec-offers{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05);margin:18px 0}
+.ec-offers th{background:#F5F8FB;padding:12px 14px;text-align:left;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+.ec-offers td{padding:12px 14px;vertical-align:top}
+.ec-offers tbody tr:nth-child(2){background:#FAFCFD}
+.ec-offers .f,.ec-offers .p{font-weight:700;white-space:nowrap}
+.ec-offers .i{font-size:.93rem}
+@media (max-width:640px){.ec-offers thead{display:none}.ec-offers,.ec-offers tbody,.ec-offers tr,.ec-offers td{display:block}.ec-offers tr{padding:14px 16px;border-top:1px solid #E5EDF3}.ec-offers tbody tr:first-child{border-top:0}.ec-offers td{padding:0}.ec-offers .i{margin:4px 0 8px;color:#475569}.ec-offers .p{display:inline-block;margin-right:16px}.ec-offers .p::before{content:attr(data-l) " ";font-weight:500;color:#475569}}
 </style>
 <style>
 /* HC-FIX 2026-05-19 : CSS footer-v3 manquant ajouté */
@@ -243,14 +250,14 @@ main h3{font-size:1.15rem;margin:24px 0 8px;color:#0A1428}
 <p><strong>Entretien ponctuel</strong> (visite + attestation) : <strong>121 € TTC</strong> pour une chaudière gaz, <strong>178,20 € TTC</strong> pour une chaudière fioul (218,90 € TTC gros volume) — tarifs fermes, affichés avant l’envoi de votre demande en ligne.</p>
 <p><strong>Contrat annuel</strong> : passage planifié et rappel automatique un mois avant l’échéance ; dès la formule CONFORT, 2 dépannages par an et intervention sous 48 h. Prélèvement mensuel, tarifs TTC (TVA 10 % pour un logement de plus de 2 ans).</p>
 
-<table style="width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05);margin:18px 0">
+<table class="ec-offers">
   <thead>
-    <tr style="background:#F5F8FB"><th style="padding:12px 14px;text-align:left;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em">Formule</th><th style="padding:12px 14px;text-align:left;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em">Inclus</th><th style="padding:12px 14px;text-align:left;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em">Gaz</th><th style="padding:12px 14px;text-align:left;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em">Fioul</th></tr>
+    <tr><th>Formule</th><th>Inclus</th><th>Gaz</th><th>Fioul</th></tr>
   </thead>
   <tbody>
-    <tr><td style="padding:12px 14px;font-weight:700;white-space:nowrap;vertical-align:top">BASIC</td><td style="padding:12px 14px;font-size:.93rem;vertical-align:top">Visite annuelle, attestation officielle, rappel automatique un mois avant (fioul : statut prioritaire)</td><td style="padding:12px 14px;font-weight:700;white-space:nowrap;vertical-align:top">9,90 €/mois</td><td style="padding:12px 14px;font-weight:700;white-space:nowrap;vertical-align:top">13,20 €/mois</td></tr>
-    <tr style="background:#FAFCFD"><td style="padding:12px 14px;font-weight:700;white-space:nowrap;vertical-align:top">CONFORT</td><td style="padding:12px 14px;font-size:.93rem;vertical-align:top">BASIC + 2 dépannages par an (main-d’œuvre et déplacement), intervention sous 48 h</td><td style="padding:12px 14px;font-weight:700;white-space:nowrap;vertical-align:top">14,30 €/mois</td><td style="padding:12px 14px;font-weight:700;white-space:nowrap;vertical-align:top">17,60 €/mois</td></tr>
-    <tr><td style="padding:12px 14px;font-weight:700;white-space:nowrap;vertical-align:top">SÉCURITÉ</td><td style="padding:12px 14px;font-size:.93rem;vertical-align:top">CONFORT + pièces incluses (fioul : jusqu’à 1 000 € HT), intervention sous 24 h. Réservée aux chaudières de moins de 5 ans, après contrôle technique.</td><td style="padding:12px 14px;font-weight:700;white-space:nowrap;vertical-align:top">25,30 €/mois</td><td style="padding:12px 14px;font-weight:700;white-space:nowrap;vertical-align:top">29,70 €/mois</td></tr>
+    <tr><td class="f">BASIC</td><td class="i">Visite annuelle, attestation officielle, rappel automatique un mois avant (fioul : statut prioritaire)</td><td class="p" data-l="Gaz">9,90 €/mois</td><td class="p" data-l="Fioul">13,20 €/mois</td></tr>
+    <tr><td class="f">CONFORT</td><td class="i">BASIC + 2 dépannages par an (main-d’œuvre et déplacement), intervention sous 48 h</td><td class="p" data-l="Gaz">14,30 €/mois</td><td class="p" data-l="Fioul">17,60 €/mois</td></tr>
+    <tr><td class="f">SÉCURITÉ</td><td class="i">CONFORT + pièces incluses (fioul : jusqu’à 1 000 € HT), intervention sous 24 h. Réservée aux chaudières de moins de 5 ans, après contrôle technique.</td><td class="p" data-l="Gaz">25,30 €/mois</td><td class="p" data-l="Fioul">29,70 €/mois</td></tr>
   </tbody>
 </table>
 
