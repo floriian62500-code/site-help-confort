@@ -513,3 +513,9 @@
 .hcd .note--warm.reserve{border-color:rgba(255,138,26,.3)}
 .hcd .note--warm.reserve strong{color:#7C2D12}
 .hcd .rc-reserve{margin:6px 0 0;font-size:.8rem;line-height:1.45;color:#6B7A8D}
+
+/* Récapitulatif compact des coordonnées : le lien « Modifier » reste sur la première ligne */
+.hcd #coordKnown{align-items:flex-start}
+.hcd #coordKnownTxt{flex:1 1 auto;min-width:0}
+.hcd #coordKnown .rc-mod{flex:none;margin-left:auto}
+@media (max-width:760px){.hcd #coordKnown{padding:10px 12px;gap:8px}}
