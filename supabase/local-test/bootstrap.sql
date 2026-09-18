@@ -56,7 +56,8 @@ insert into public.prestations (active,position,category,category_icon,name,pric
 values
   (true,1,'Plomberie & Sanitaires','Wrench','TEST — Intervention plomberie 1h',114,'Fixture E2E locale — ne pas facturer'),
   (true,2,'Chauffage & Climatisation','Thermometer','TEST — Entretien chaudière',129,'Fixture E2E locale'),
-  (true,3,'Électricité','Zap','TEST — Diagnostic électrique',89,'Fixture E2E locale')
+  (true,3,'Électricité','Zap','TEST — Diagnostic électrique',89,'Fixture E2E locale'),
+  (true,4,'Rénovation','Paintbrush','TEST — Rénovation sur devis',0,'Fixture E2E locale : prix 0 = sur devis')
 on conflict do nothing;
 
 -- 3) Storage : bucket privé lead-photos (comme prod), aucune lecture publique

@@ -320,6 +320,20 @@ if (catPath) {
     const chkX = await post('create-payment-session', { lead_id: rX.body.id, pay_token: rX.body.pay_token, mode: 'check' });
     check('PAY_F_non_eligible_si_prestation_non_ferme', chkX.status === 200 && chkX.body.eligible === false, 'raison=' + (chkX.body && chkX.body.reason));
 
+    // Panier mixte (prix ferme + sur devis) : aucun paiement proposé, garde serveur
+    const devisRow = await fetch(`${SUPA}/rest/v1/v_services_public?select=*&price_ttc=eq.0&limit=1`, { headers: { apikey: ANON, Authorization: 'Bearer ' + ANON } }).then((r) => r.json()).catch(() => []);
+    const dv = Array.isArray(devisRow) ? devisRow[0] : null;
+    if (dv) {
+      const mixLines = [linesP[0], { id: dv.id, slug: 'devis', name: dv.name, ttc: 0, qty: 1, requires_quote: true }];
+      const mixById = { ...byIdP, [dv.id]: { ...dv, requires_quote: true } };
+      const rM = await submitLead({ ...C3.interventionPayload({ lines: mixLines, byId: mixById, contact: contactP, lieu: lieuP, prise: { quand: 'asap' }, cartMode: 'mixte', page: 'http://localhost/ (E2E)' }), source: 'e2e_local_pay' });
+      const chkM = await post('create-payment-session', { lead_id: rM.body.id, pay_token: rM.body.pay_token, mode: 'check' });
+      const creM = await post('create-payment-session', { lead_id: rM.body.id, pay_token: rM.body.pay_token, mode: 'create', return_url: 'http://localhost/catalogue.html' });
+      check('PAY_M_panier_mixte_aucun_paiement', chkM.status === 200 && chkM.body.eligible === false && /devis/.test(chkM.body.reason || '') && creM.body.ok === false, 'raison=' + (chkM.body && chkM.body.reason));
+    } else {
+      check('PAY_M_panier_mixte_aucun_paiement', false, 'prestation sur devis absente du catalogue local');
+    }
+
     // Webhook signé (secret local fictif) : paiement confirmé sur le MÊME dossier, une seule fois
     const WH = process.env.LOCAL_WH_SECRET || '';
     const signed = async (evt, secret = WH, ts = Math.floor(Date.now() / 1000)) => {
