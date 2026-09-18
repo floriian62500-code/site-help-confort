@@ -1058,7 +1058,7 @@
   function payBlockHtml(s) {
     if (s.mode === 'devis') return '';
     var p = s.payment, amount = C.eur(s.total || 0);
-    if (p && p.status === 'paid') return '<div class="done-card pay pay--ok"><h2>' + ic('i-check', 20) + 'Paiement reçu</h2><p>' + esc(C.eur(p.amount || s.total)) + ' TTC le ' + esc(new Date(p.paid_at || Date.now()).toLocaleString('fr-FR')) + (p.simulated ? ' (simulation de recette, aucun débit)' : '') + ' — dossier ' + esc(s.ref || '') + '.</p><p class="pay-note">Rien de plus à régler sur place, sauf ajustement que vous auriez accepté après constat.</p></div>';
+    if (p && p.status === 'paid') return '<div class="done-card pay pay--ok"><h2>' + ic('i-check', 20) + 'Paiement reçu</h2><p>' + esc(C.eur(p.amount || s.total)) + ' TTC le ' + esc(new Date(p.paid_at || Date.now()).toLocaleString('fr-FR')) + (p.simulated ? ' (simulation de recette, aucun débit)' : '') + (s.ref ? ' — dossier ' + esc(s.ref) : '') + '.</p><p class="pay-note">Rien de plus à régler sur place, sauf ajustement que vous auriez accepté après constat.</p></div>';
     if (s.payState === 'checking') return '<div class="done-card pay"><h2>Paiement en ligne</h2><p>Vérification…</p></div>';
     if (s.payState === 'confirming') return '<div class="done-card pay"><h2>Paiement en cours de confirmation</h2><p>La banque confirme votre paiement ; cette page se met à jour dans quelques instants. Votre dossier est conservé.</p></div>';
     if (s.payState === 'unavailable' || (!s.simulated && (!s.leadId || !s.payToken))) return '';
