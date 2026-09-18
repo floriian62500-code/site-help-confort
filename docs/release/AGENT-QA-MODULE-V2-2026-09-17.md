@@ -142,3 +142,32 @@ Ajouté : données personnelles de l'onglet effacées après **2 h sans activit�
 
 Tests : demande-v2 **147/147** (19 nouveaux, en échec sur `2b013fe8`), lead-cycle 67/67, price-gate 29/29, panier 12/12, SEO ERRORS=0.
 Hors périmètre, constaté : en mobile, le bandeau cookies de première visite couvre le bas du tunnel ; sur la preview uniquement, le bouton « Centre de validation » masque « Refuser ».
+
+## Sobriété du tunnel — « une information importante = un emplacement » (18/09, `84889f40`)
+Passe visuelle uniquement : moteur v2, états, reprise, paiement, confidentialité et validations inchangés.
+
+**Mesures sur la Deploy Preview**, étapes Lieu → Besoin → Tarifs → Précision → Ma demande → Coordonnées → Récapitulatif final. Avant = `09fb6fee`, après = `84889f40`.
+
+| Critère | 1440 avant | 1440 après | 390 avant | 390 après |
+|---|---|---|---|---|
+| Téléphones visibles par étape | 3 | **1** (barre du haut) | 2 | **1** |
+| Téléphones sur le récapitulatif final | 3 | **2** (barre + coordonnées agence) | 3 | **2** |
+| Mentions de l'agence par étape | 2–3 | **1** | 1–2 | **1** |
+| « Techniciens salariés » | 2 | **1** | 1 | 1 |
+| « Aucun paiement demandé à l'envoi » | 1 partout (+1 sur Ma demande) | **1, seulement sur Ma demande** | 1–2 | **1, seulement sur Ma demande** |
+| Progression | barre haute + liste latérale | **liste latérale** + « Étape n sur 6 » | barre (seule) | barre (seule) |
+| Pied de carte répétitif | oui | **non** | oui | **non** (1 ligne légère) |
+| Badge recette | 11,5 px orange 145 × 29 | **10,5 px gris pointillé** | 12,5 px 149 × 27 | **9,5 px « Recette » 60 × 17** |
+| Cadres (étape Lieu) | 5 | **2** | 2 | 2 |
+| Écart titre → champs / hauteur de carte Lieu | champs centrés, carte 700 px | **24 px / 520 px** | 24 px | 24 px |
+| Débordement, blocs vides | aucun | aucun | aucun | aucun |
+
+Fonctionnel revérifié sur la preview, en 1440 et 390 :
+- coordonnées non redemandées (récapitulatif + « Modifier », 0 champ) ;
+- récapitulatif final complet (référence, client, téléphone, email, adresse, total, réserve, paiement, étapes, agence) ;
+- paiement simulé → « Paiement reçu » ;
+- après envoi, nouvelle demande vide.
+
+Tests : demande-v2 158/158 (10 nouveaux, en échec sur `09fb6fee`).
+
+Largeurs intermédiaires : en 1024, la liste latérale est visible et le haut affiche « Étape n sur 6 » seul ; en 768, le libellé et la barre fine restent, avec la ligne légère.
