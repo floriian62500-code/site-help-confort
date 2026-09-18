@@ -95,4 +95,17 @@ Le moteur v2 n'est pas retouché : seules la forme d'expérience et la couche vi
 
 **Contrôles faits avant revue** : page dédiée inchangée ; fenêtre ouverte/fermée par CTA, « Quitter », Échap, retour navigateur, focus rendu au CTA, URL nettoyée ; parcours intervention complet dans la fenêtre (envoi simulé) ; mobile 390 plein écran sans colonne latérale ; smoke déployé 17/17.
 
-**Round 5 (revues UX / design / mobile)** : _en cours_
+**Round 5 (revues UX / design / mobile, sur `5c05125a`)**
+
+| Profil | Verdict | Principal |
+|---|---|---|
+| Design | **VISUAL_LEVEL=UPGRADED**, AGENT_DESIGN=FAIL | P1 : aucune identité ni réassurance visibles en mobile (logo masqué, colonne de réassurance hors écran) ; P1 : 198 px (24 %) de vide sous la carte en 1440 |
+| UX | AGENT_UX=FAIL | **P0 : après fermeture, la coque invisible couvrait l'accueil et le rendait inerte** ; P1 : numérotation d'étape incohérente entre l'en-tête et le rail ; P1 : métier hérité d'une visite précédente qui court-circuitait l'étape Besoin |
+| Mobile 390 | MOBILE_390=FAIL | **P0 : barre d'actions collante annulée par un `overflow:hidden` (bouton principal jusqu'à 1 100 px sous la ligne de flottaison)** ; P1 : état sélectionné invisible ; P2 : libellés à 13 px, mentions légales 16 px de haut |
+
+Les deux P0 avaient été introduits par ma propre mise en scène (coque et liseré de marque) : c'est exactement ce que les revues devaient attraper.
+
+**Corrections `3fc7518a`** (14) : `.hcd-overlay[hidden]{display:none}` ; `overflow` rendu à la carte (liseré arrondi par `border-radius`) ; entrée intervention sans métier hérité ; rail nommé comme l'en-tête ; logo mobile rétabli + pied de carte « HELP Confort · agence de Saint-Omer · techniciens salariés · aucun paiement en ligne · 03 66 10 01 34 » sur toutes les étapes ; carte desktop rejoignant la base ; colonne récap qui défile ; états sélectionnés en bleu de marque ; total mis en valeur ; en-tête contextualisé sur l'écran de choix ; « Retour à l'accueil » qui referme ; page hôte neutralisée (`inert` + `aria-hidden`) pendant l'ouverture ; libellés mobiles 15 px ; mentions légales à 44 px.
+
+**Contre-vérification (Claude, preview)** : accueil de nouveau cliquable après fermeture par Échap, « Quitter », fond et retour navigateur ; barre d'actions collante rétablie (bouton à 686 px sur 844 en 390) ; feuille plein écran 390×844 (top 0 après `getAnimations().finish()`) ; vide sous la carte 1440 ramené de 198 px à 23 px ; en-tête et rail affichent tous deux « Tarifs » ; logo 26 px et pied de carte présents en mobile.
+
