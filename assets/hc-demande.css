@@ -548,3 +548,69 @@
   .hcd{background:#fff!important}
   .hcd .done-card{box-shadow:none!important;border:1px solid #ddd!important;break-inside:avoid}
 }
+
+/* =====================================================================================================
+   COUCHE SOBRIÉTÉ (18/09/2026) — « une information importante = un emplacement principal »
+   Téléphone : barre du haut uniquement. Agence : un bloc compact (colonne de droite), ou une ligne légère
+   quand la colonne est masquée. Progression : liste latérale sur ordinateur, barre fine seulement sans elle.
+   Une seule carte principale ; colonne de droite à plat ; formulaire directement sous le titre.
+   ===================================================================================================== */
+/* Titre focalisé par le script (annonce aux lecteurs d'écran) : aucun cadre visible */
+.hcd h1[tabindex="-1"]:focus,.hcd h1[tabindex="-1"]:focus-visible{outline:none}
+
+/* ---- Barre du haut : logo · étape · (badge recette) · téléphone · fermer ---- */
+.hcd .top{box-shadow:none}
+.hcd .top-phone{background:#fff;color:#0B1526;box-shadow:inset 0 0 0 1px rgba(15,23,42,.13);font-weight:650;font-size:.9rem;height:40px;padding:0 14px}
+.hcd .top-phone svg{color:#0A6C8F}
+.hcd .top-phone:hover{filter:none;color:#0A6C8F;box-shadow:inset 0 0 0 1px rgba(13,160,207,.55)}
+.hcd .top-phone .dot{background:#16A34A;box-shadow:0 0 0 3px rgba(22,163,74,.14)}
+.hcd .app.is-closed .top-phone{background:#fff;box-shadow:inset 0 0 0 1px rgba(15,23,42,.13)}
+.hcd .app.is-closed .top-phone .dot{background:#94A3B8;box-shadow:none}
+/* Badge de recette : lisible pour nous, sans concurrencer le titre ni le téléphone */
+.hcd .sim-badge{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;letter-spacing:.02em;line-height:1.4;color:#7A889B;background:transparent;border:1px dashed rgba(15,23,42,.2);border-radius:99px;padding:2px 8px}
+.hcd .sim-badge .sb-dot{width:5px;height:5px;border-radius:99px;background:#F59E0B;flex:none}
+@media (min-width:1024px){
+  /* la liste latérale est la progression principale : en haut, seulement « Étape n sur N » */
+  .hcd .top-prog{position:static;transform:none;left:auto;width:auto;flex-direction:row;align-items:center;gap:0;margin-left:2px;padding-left:14px;border-left:1px solid rgba(15,23,42,.1);height:22px}
+  .hcd .app:not([data-step="choix"]):not([data-step="envoye"]) .top-prog{left:auto}
+  .hcd .tp-bar,.hcd .tp-name{display:none}
+  .hcd .tp-label{font-size:.8rem;font-weight:600;color:#6B7A8D}
+}
+@media (max-width:760px){
+  .hcd .sim-badge{position:absolute;top:calc(var(--top-h) + 4px);right:8px;font-size:9.5px;padding:1px 6px;background:rgba(255,255,255,.88)}
+  .hcd .sim-badge .sb-more{display:none}
+  .hcd .top-phone{width:44px;height:44px;padding:0;justify-content:center;box-shadow:inset 0 0 0 1px rgba(15,23,42,.12);background:#fff}
+}
+
+/* ---- Cartes : une carte principale en relief, le reste à plat ---- */
+.hcd .card{border:0;box-shadow:0 1px 2px rgba(15,23,42,.04),0 16px 36px -22px rgba(15,23,42,.22)}
+.hcd .card::before{height:3px;opacity:.9}
+.hcd .recap-card,.hcd .recap-next{background:#fff;border:1px solid rgba(15,23,42,.07);box-shadow:none}
+.hcd .trust{background:none;border:0;box-shadow:none;border-radius:0;padding:2px 8px 0}
+.hcd .trust p{margin:0 0 8px;font-size:.86rem;font-weight:700;color:#31445C}
+.hcd .trust ul{margin:0 0 8px;gap:6px}
+.hcd .trust li{font-size:.85rem;color:#51637A}
+.hcd .trust li svg{margin-top:2px}
+.hcd .trust small{margin-top:0;text-align:left;font-size:.8rem;color:#7A889B}
+
+/* ---- Densité : formulaire directement sous le titre, carte à la hauteur de son contenu ---- */
+@media (min-width:761px){
+  .hcd .card{min-height:0}
+  .hcd .card .q-body{flex:0 0 auto}
+  .hcd .card[data-step] .q-body{justify-content:flex-start}
+  .hcd .card>.q-body:last-child{padding-bottom:40px}
+  /* bouton principal juste après le formulaire ; collant sur les longues listes, sans bandeau ni trait */
+  .hcd .q-actions{margin:28px -48px 0;padding:20px 48px 32px;box-shadow:none;background:linear-gradient(180deg,rgba(255,255,255,0),#fff 32%);border-radius:0 0 28px 28px}
+  /* fenêtre ancrée en haut, qui s'ajuste à son contenu (pas de saut vertical d'une étape à l'autre) */
+  .hcd-overlay{align-items:flex-start;padding-top:max(26px,5vh)}
+  .hcd-modal{height:auto;max-height:min(940px,calc(100vh - max(26px,5vh) - 26px))}
+  .hcd-modal-body{height:auto;max-height:inherit}
+}
+@media (min-width:1024px){.hcd .card{min-height:0}}
+
+/* ---- Réassurance légère : une ligne, seulement quand la colonne de droite est masquée ---- */
+.hcd .m-assure{display:none}
+@media (max-width:1023px){
+  .hcd .m-assure{display:flex;align-items:center;gap:6px;margin:18px 0 0;font-size:.8rem;color:#7A889B}
+  .hcd .m-assure svg{color:#157A3C;flex:none}
+}

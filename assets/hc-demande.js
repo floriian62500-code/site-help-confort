@@ -54,7 +54,7 @@
     <span class="tp-bar" aria-hidden="true"><span class="tp-fill" id="tpFill"></span></span>
    </div>
    <div class="top-right">
-    <span class="sim-badge" id="simBadge" hidden>Recette · envoi simulé</span>
+    <span class="sim-badge" id="simBadge" hidden title="Recette : l’envoi est simulé, aucune donnée n’est transmise"><span class="sb-dot" aria-hidden="true"></span>Recette<span class="sb-more"> · envoi simulé</span></span>
     <a class="top-phone" href="tel:+33366100134" aria-label="Appeler l'agence au 03 66 10 01 34"><span class="dot" aria-hidden="true"></span><svg width="17" height="17" aria-hidden="true"><use href="#i-phone"/></svg><span class="t">03 66 10 01 34</span></a>
     <a class="top-close" href="/" aria-label="Quitter (votre demande reste enregistrée sur cet appareil)"><svg width="20" height="20" aria-hidden="true"><use href="#i-x"/></svg></a>
    </div>
@@ -87,12 +87,6 @@
        <span class="choice-go">Commencer <i aria-hidden="true"><svg width="18" height="18"><use href="#i-arrow"/></svg></i></span>
       </button>
      </div>
-     <ul class="assure">
-      <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg>Techniciens salariés</li>
-      <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg>Agence locale à Saint-Omer</li>
-      <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg>Un interlocuteur humain</li>
-      <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg>Aucun paiement demandé à l’envoi</li>
-     </ul>
      <p class="urgent-line">Une urgence&nbsp;? Appelez le <a href="tel:+33366100134">03 66 10 01 34</a> · lun–ven 9h–17h, sam 9h–16h</p>
      <p class="urgent-line" id="closedLine" hidden></p>
     </div>
@@ -156,7 +150,7 @@
       </div>
       <button type="submit" class="sr-only" tabindex="-1" aria-hidden="true">Afficher les tarifs</button>
      </form>
-     <div class="note"><svg width="20" height="20" aria-hidden="true"><use href="#i-info"/></svg><span><strong>Pourquoi&nbsp;?</strong> Nos tarifs sont établis pour la zone de l'agence de Saint-Omer. En les affichant, vos coordonnées sont transmises à l'agence, qui peut vous rappeler à ce sujet. Jamais revendues ni cédées à des tiers (<a href="/mentions-legales.html" target="_blank" rel="noopener">mentions légales</a>).</span></div>
+     <div class="note"><svg width="20" height="20" aria-hidden="true"><use href="#i-info"/></svg><span><strong>Pourquoi&nbsp;?</strong> Nos tarifs sont établis pour notre zone d'intervention. En les affichant, vos coordonnées sont transmises à l'agence, qui peut vous rappeler à ce sujet. Jamais revendues ni cédées à des tiers (<a href="/mentions-legales.html" target="_blank" rel="noopener">mentions légales</a>).</span></div>
      <p class="reserve-line">Les tarifs affichés correspondent à des forfaits, sous réserve de vérification sur place : si le besoin constaté diffère, un ajustement ou un devis complémentaire vous est proposé avant intervention.</p>
 
     </div>
@@ -328,16 +322,14 @@
 
   <aside class="recap" id="recap" aria-label="Récapitulatif de votre demande">
    <div class="recap-card"><p class="recap-t">Votre demande</p><div id="recapBody"></div></div>
-   <div class="recap-next" id="recapNext"><p class="recap-t">Et ensuite&nbsp;?</p><ol><li><b>1</b><span><strong>Vous envoyez votre demande</strong>Aucun paiement demandé à l’envoi.</span></li><li><b>2</b><span><strong>L'agence vous recontacte</strong>Sous 24&nbsp;h ouvrées, aux heures d'ouverture.</span></li><li><b>3</b><span><strong>Rendez-vous fixé ensemble</strong>Avec un technicien salarié de l'agence.</span></li></ol></div>
+   <div class="recap-next" id="recapNext"><p class="recap-t">Et ensuite&nbsp;?</p><ol><li><b>1</b><span><strong>Vous envoyez votre demande</strong>Elle part directement à l’agence, sans engagement.</span></li><li><b>2</b><span><strong>L'agence vous recontacte</strong>Sous 24&nbsp;h ouvrées, aux heures d'ouverture.</span></li><li><b>3</b><span><strong>Rendez-vous fixé ensemble</strong>Avec un technicien salarié de l'agence.</span></li></ol></div>
    <div class="trust">
     <p>Agence HELP Confort de Saint-Omer</p>
     <ul>
-     <li><svg width="17" height="17" aria-hidden="true"><use href="#i-check"/></svg>Techniciens salariés, pas de sous-traitance</li>
-     <li><svg width="17" height="17" aria-hidden="true"><use href="#i-check"/></svg>Intervention autour de Saint-Omer</li>
-     <li><svg width="17" height="17" aria-hidden="true"><use href="#i-check"/></svg>Un interlocuteur humain du début à la fin</li>
+     <li><svg width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg>Techniciens salariés, pas de sous-traitance</li>
+     <li><svg width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg>Un interlocuteur humain du début à la fin</li>
     </ul>
-    <a href="tel:+33366100134"><svg width="17" height="17" aria-hidden="true"><use href="#i-phone"/></svg>03 66 10 01 34</a>
-    <small>lun–ven 9h–17h · sam 9h–16h</small>
+    <small>Joignable lun–ven 9h–17h · sam 9h–16h</small>
    </div>
   </aside>
  </main>
@@ -369,8 +361,11 @@
   }
   function syncHeight() {
     if (!mounted) return;
-    if (mounted.classList.contains('hcd--overlay')) mounted.style.setProperty('--hcd-vh', mounted.clientHeight + 'px');
-    else mounted.style.removeProperty('--hcd-vh');
+    if (!mounted.classList.contains('hcd--overlay')) { mounted.style.removeProperty('--hcd-vh'); return; }
+    // Bureau : la fenêtre s'ajuste à son contenu (ancrée en haut) → la hauteur de référence est la hauteur MAXIMALE
+    // disponible, jamais celle du contenu (sinon la colonne de droite serait bridée). Mobile : plein écran.
+    var desk = root.innerWidth > 760, pad = Math.max(26, Math.round(root.innerHeight * 0.05));
+    mounted.style.setProperty('--hcd-vh', (desk ? Math.min(940, root.innerHeight - pad - 26) : mounted.clientHeight) + 'px');
   }
   root.addEventListener('resize', syncHeight);
 
@@ -520,18 +515,16 @@
   function renderProgress(step) {
     var p = C.progress(state.mode, step), box = $('#topProg');
     box.hidden = !p && step !== 'choix';
-    if (p) { $('#tpLabel').innerHTML = 'Étape ' + p.index + ' sur ' + p.total + ' · <b>' + esc(p.label) + '</b>'; $('#tpFill').style.width = Math.round(p.index / p.total * 100) + '%'; }
+    if (p) { $('#tpLabel').innerHTML = '<span class="tp-n">Étape ' + p.index + ' sur ' + p.total + '</span><span class="tp-name"> · <b>' + esc(p.label) + '</b></span>'; $('#tpFill').style.width = Math.round(p.index / p.total * 100) + '%'; }
     else if (step === 'choix') { $('#tpLabel').innerHTML = '<b>Votre demande</b> · reprendre ou démarrer'; $('#tpFill').style.width = '0%'; } // l'en-tête garde son contexte
   }
-  // Pied de carte : signature de l'agence et réassurance, sur toutes les étapes (seule identité visible en mobile)
-  function addCardFoot() {
-    var html = '<span><b>HELP Confort</b> · agence de Saint-Omer</span>'
-      + '<span>' + ic('i-check', 16) + 'Techniciens salariés</span>'
-      + '<span>' + ic('i-check', 16) + 'Aucun paiement demandé à l’envoi</span>'
-      + '<a href="tel:+33366100134">' + ic('i-phone', 16) + '03 66 10 01 34</a>';
+  // Réassurance : UNE ligne légère sous le formulaire, affichée seulement quand la colonne de droite est masquée
+  // (mobile / tablette). Ni téléphone (barre du haut), ni mention de paiement (note de l'étape « Ma demande »).
+  function addLightAssure() {
+    var html = ic('i-check', 14) + 'Agence HELP Confort de Saint-Omer · techniciens salariés';
     $$('.step.card').forEach(function (s) {
-      if (s.querySelector('.card-foot')) return;
-      var f = document.createElement('div'); f.className = 'card-foot'; f.innerHTML = html;
+      if (s.querySelector('.m-assure')) return;
+      var f = document.createElement('p'); f.className = 'm-assure'; f.innerHTML = html;
       var act = s.querySelector('.q-actions');
       if (act) act.parentNode.insertBefore(f, act); else s.appendChild(f); // étapes sans barre d'actions (ex. Besoin)
     });
@@ -596,7 +589,7 @@
     $$('[data-open-sheet]').forEach(function (b) { b.innerHTML = txt; b.hidden = !txt; });
   }
   var sheetOpener = null;
-  function openSheet(btn) { sheetOpener = btn || null; if (btn) btn.setAttribute('aria-expanded', 'true'); $('#sheetBody').innerHTML = recapHtml() + '<div class="card-foot"><span><b>HELP Confort</b> · agence de Saint-Omer</span><a href="tel:+33366100134">' + ic('i-phone', 16) + '03 66 10 01 34</a></div>'; $('#sheet').hidden = false; lockScroll(true); var c = $('.sheet-head button'); if (c) c.focus(); }
+  function openSheet(btn) { sheetOpener = btn || null; if (btn) btn.setAttribute('aria-expanded', 'true'); $('#sheetBody').innerHTML = recapHtml(); $('#sheet').hidden = false; lockScroll(true); var c = $('.sheet-head button'); if (c) c.focus(); }
   function closeSheet() { if ($('#sheet').hidden) return; $$('[data-open-sheet]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); }); $('#sheet').hidden = true; lockScroll(false); if (sheetOpener) try { sheetOpener.focus(); } catch (e) {} }
 
   // ---------- Entrée ----------
@@ -973,7 +966,7 @@
   var drop = $('#drop');
   ['dragenter', 'dragover'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('is-over'); }); });
   ['dragleave', 'drop'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove('is-over'); if (ev === 'drop' && e.dataTransfer) addPhotos(e.dataTransfer.files); }); });
-  function renderNext() { var dv = state.mode === 'devis'; var steps = dv ? [['Vous envoyez votre demande', 'Gratuit et sans engagement.'], ['L\u2019agence vous recontacte', 'Sous 24 h ouvrées, pour préciser votre projet.'], ['Vous recevez votre devis', 'Vous décidez ensuite, sans engagement.']] : [['Vous envoyez votre demande', 'Aucun paiement demandé à l\u2019envoi.'], ['L\u2019agence vous recontacte', 'Sous 24 h ouvrées, aux heures d\u2019ouverture.'], ['Rendez-vous fixé ensemble', 'Avec un technicien salarié de l\u2019agence.']]; $('#recapNext ol').innerHTML = steps.map(function (x, i) { return '<li><b>' + (i + 1) + '</b><span><strong>' + esc(x[0]) + '</strong>' + esc(x[1]) + '</span></li>'; }).join(''); }
+  function renderNext() { var dv = state.mode === 'devis'; var steps = dv ? [['Vous envoyez votre demande', 'Gratuit et sans engagement.'], ['L\u2019agence vous recontacte', 'Sous 24 h ouvrées, pour préciser votre projet.'], ['Vous recevez votre devis', 'Vous décidez ensuite, sans engagement.']] : [['Vous envoyez votre demande', 'Elle part directement à l\u2019agence, sans engagement.'], ['L\u2019agence vous recontacte', 'Sous 24 h ouvrées, aux heures d\u2019ouverture.'], ['Rendez-vous fixé ensemble', 'Avec un technicien salarié de l\u2019agence.']]; $('#recapNext ol').innerHTML = steps.map(function (x, i) { return '<li><b>' + (i + 1) + '</b><span><strong>' + esc(x[0]) + '</strong>' + esc(x[1]) + '</span></li>'; }).join(''); }
   ENTER['dv-recap'] = function () {
     renderNext();
     state.devis.photosSeen = true; save();
@@ -1111,12 +1104,11 @@
     var paid = s.payment && s.payment.status === 'paid';
     var steps = dv
       ? [['Un technicien étudie votre projet', s.photosSent ? 'À partir de votre description et de vos photos.' : 'À partir de votre description.'], ['L’agence vous recontacte sous 24 h ouvrées', 'Pour préciser votre projet ; une visite sur place peut vous être proposée si nécessaire.' + hoursLine()], ['Vous recevez votre devis gratuit', 'Vous décidez ensuite, sans engagement.']]
-      : [['L’agence de Saint-Omer vous rappelle', 'Sous 24 h ouvrées au plus tard, aux heures d’ouverture (lun–ven 9h–17h, sam 9h–16h).' + hoursLine()], ['Le créneau est fixé avec vous', 'Les prix fermes restent ceux affichés si la situation correspond au forfait ; les prestations sur devis sont chiffrées après diagnostic.'], ['Le technicien intervient', paid ? 'Votre paiement est déjà reçu : rien à régler sur place, sauf ajustement accepté par vous.' : 'Vous réglez après l’intervention.']];
+      : [['L’agence vous rappelle', 'Sous 24 h ouvrées au plus tard, aux heures d’ouverture.' + hoursLine()], ['Le créneau est fixé avec vous', 'Les prix fermes restent ceux affichés si la situation correspond au forfait ; les prestations sur devis sont chiffrées après diagnostic.'], ['Le technicien intervient', paid ? 'Votre paiement est déjà reçu : rien à régler sur place, sauf ajustement accepté par vous.' : 'Vous réglez après l’intervention.']];
     h += '<div class="done-card"><h2>Et maintenant&nbsp;?</h2><ol class="timeline">' + steps.map(function (x, i) { return '<li><b>' + (i + 1) + '</b><strong>' + esc(x[0]) + '</strong><span>' + esc(x[1]) + '</span></li>'; }).join('') + '</ol>'
       + '<p class="done-agency"><strong>HELP Confort — agence de Saint-Omer</strong><br><a href="tel:+33366100134">03 66 10 01 34</a> · <a href="mailto:saint-omer@helpconfort.com">saint-omer@helpconfort.com</a><br>lun–ven 9h–17h · sam 9h–16h</p></div>';
     var modif = 'mailto:saint-omer@helpconfort.com?subject=' + encodeURIComponent('Modification de mon dossier ' + (s.ref || '')) + '&body=' + encodeURIComponent('Bonjour,\n\nJe souhaite modifier ma demande (dossier ' + (s.ref || '') + ') :\n\n');
-    h += '<div class="done-actions"><a class="btn-soft" href="tel:+33366100134">' + ic('i-phone', 17) + '03 66 10 01 34</a>'
-      + '<button type="button" class="btn-ghost" data-print>Imprimer ou enregistrer en PDF</button>'
+    h += '<div class="done-actions"><button type="button" class="btn-ghost" data-print>Imprimer ou enregistrer en PDF</button>'
       + '<a class="btn-ghost" href="' + modif + '">Demander une modification</a>'
       + '<a class="btn-ghost" href="/">Retour à l’accueil</a><button type="button" class="btn-ghost" data-restart>Faire une autre demande</button></div>'
       + '<p class="legal" style="text-align:center"><button type="button" class="link" data-forget>Effacer mes informations de cet appareil</button></p>';
@@ -1254,7 +1246,7 @@
     go(start, { replace: true, initial: true });
     return h;
   }
-  addCardFoot();
+  addLightAssure();
   var hp = goEntry();
   loadCatalogue().then(function () {
     if (hp.cat && !byFam[hp.cat]) { state.fam = null; save(); }

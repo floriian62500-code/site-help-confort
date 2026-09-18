@@ -703,7 +703,7 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
     <textarea id="hrr-desc" rows="2" placeholder="Votre besoin en quelques mots (facultatif)" aria-label="Votre besoin"></textarea>
     <button type="submit" id="hrr-submit" class="hrr-primary" style="width:100%">Être rappelé</button>
     <p id="hrr-msg" class="hrr-msg" role="status" aria-live="polite"></p>
-    <p class="hrr-fine">Réponse humaine d'une agence locale. Aucun paiement en ligne à ce stade.</p>
+    <p class="hrr-fine">Réponse humaine d'une agence locale. Aucun paiement demandé à ce stade.</p>
    </form>
   </div>
  </div>
@@ -1326,7 +1326,7 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
 /* Tunnel « Ma demande » : ouverture en fenêtre premium depuis l'accueil (modale desktop, feuille plein écran mobile).
    Chargement à la demande ; si le script ne charge pas, le lien reste une navigation normale vers /catalogue.html. */
 (function () {
-  var V = '20260918r', loading = null;
+  var V = '20260918s', loading = null;
   function load() {
     if (loading) return loading;
     loading = new Promise(function (resolve, reject) {

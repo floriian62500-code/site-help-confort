@@ -284,5 +284,19 @@ ok('« Nos prestations » : le bouton « Effacer mes données » atteint réelle
 ok('code source public : aucune adresse personnelle réelle en exemple', !/Sarrail/.test(presta) && !/Sarrail/.test(uiFile));
 
 ok('récapitulatif : référence réelle affichée ; en simulation, emplacement indiqué sans numéro inventé', /Référence de votre dossier · ' \+ esc\(s\.ref\)/.test(uiFile) && /else if \(s\.simulated\) h \+= '<p class="done-ref">Référence de votre dossier · attribuée à l’enregistrement réel \(HC-XXXXXXXX\)/.test(uiFile));
+
+// ---- Sobriété du tunnel (18/09) : une information importante = un emplacement principal
+const telLinks = (uiFile.match(/href="tel:\+33366100134"/g) || []).length;
+ok('téléphone : lien permanent uniquement dans la barre du haut (+ rappel sur l’écran de choix, coordonnées du dossier final, message d’indisponibilité)', telLinks === 4 && /class="top-phone" href="tel:/.test(uiFile));
+ok('téléphone : plus de bouton d’appel dans le bloc agence, le pied de carte, la feuille « Ma demande » ni les actions finales', !/class="btn-soft" href="tel:/.test(uiFile) && !/card-foot/.test(uiFile) && !/\$\('#sheetBody'\)\.innerHTML = recapHtml\(\) \+/.test(uiFile));
+const trustSrc = (uiFile.match(/<div class="trust">[\s\S]*?<\/div>/) || [''])[0];
+ok('agence : un seul bloc de réassurance, 2 preuves, sans téléphone', (trustSrc.match(/<li>/g) || []).length === 2 && !/tel:/.test(trustSrc));
+ok('bas de formulaire : une ligne légère, sans téléphone ni paiement, masquée quand la colonne de droite est visible', /function addLightAssure\(\)/.test(uiFile) && !/function addCardFoot/.test(uiFile) && /\.hcd \.m-assure\{display:none\}/.test(cssFile) && /@media \(max-width:1023px\)\{\s*\.hcd \.m-assure\{display:flex/.test(cssFile));
+ok('paiement : « Aucun paiement demandé à l’envoi » à un seul endroit (note de l’étape « Ma demande »), jamais « aucun paiement en ligne »', (uiFile.match(/Aucun paiement demandé/g) || []).length === 1 && !/Aucun paiement en ligne/.test(home));
+ok('progression : sur ordinateur, la liste latérale fait foi ; en haut « Étape n sur N » sans barre', /<span class="tp-n">Étape /.test(uiFile) && /\.hcd \.tp-bar,\.hcd \.tp-name\{display:none\}/.test(cssFile));
+ok('badge recette discret (petit, gris, pointillé) ; « Recette » seul sur mobile', /\.hcd \.sim-badge\{display:inline-flex;align-items:center;gap:5px;font-size:10\.5px/.test(cssFile) && /class="sb-more"> · envoi simulé/.test(uiFile) && /\.hcd \.sim-badge \.sb-more\{display:none\}/.test(cssFile));
+ok('écran de choix : plus de liste qui répète le chapeau (techniciens salariés, interlocuteur humain)', !/<ul class="assure">/.test(uiFile));
+ok('densité : formulaire sous le titre (plus de centrage vertical), carte à la hauteur de son contenu, titre sans cadre de focus', /\.hcd \.card\[data-step\] \.q-body\{justify-content:flex-start\}/.test(cssFile) && /@media \(min-width:761px\)\{\s*\.hcd \.card\{min-height:0\}/.test(cssFile) && /\.hcd h1\[tabindex="-1"\]:focus/.test(cssFile));
+ok('fenêtre : ancrée en haut et ajustée au contenu ; hauteur de référence = place disponible, pas le contenu', /\.hcd-overlay\{align-items:flex-start;padding-top:max\(26px,5vh\)\}/.test(cssFile) && /Math\.min\(940, root\.innerHeight - pad - 26\)/.test(uiFile));
 console.log(`\nRÉSULTAT MODULE DEMANDE V2 : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);
