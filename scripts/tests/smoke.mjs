@@ -34,8 +34,9 @@ async function run() {
   // 4. Anti-régression : pas de promesse « payer en ligne » client (Stripe gelé)
   const nosprest = await (await fetch(BASE + '/nos-prestations.html?z=' + Date.now())).text();
   /r[ée]servation en ligne|acompte 40/i.test(nosprest) ? ko('Honnêteté paiement', 'promesse en ligne résiduelle') : ok('Pas de promesse paiement en ligne résiduelle');
-  // 5. Home = point d'entrée vers le moteur unifié + formulaire de rappel secondaire (UX-COMMERCE-1)
-  (home.includes('id="hc-reservation"') && /paiement en ligne à ce stade/i.test(home) && home.includes('hrrForm')) ? ok('Home = redirect moteur + rappel (bloc unifié)') : ko('Home redirect', 'bloc redirect/rappel introuvable');
+  // 5. Home = point d'entrée vers le moteur unifié + formulaire de rappel secondaire (UX-COMMERCE-1).
+  //    Libellé depuis 84889f40 : « Aucun paiement demandé à ce stade » (le paiement en ligne est facultatif).
+  (home.includes('id="hc-reservation"') && /Aucun paiement demandé à ce stade/i.test(home) && !/Aucun paiement en ligne/i.test(home) && home.includes('hrrForm')) ? ok('Home = redirect moteur + rappel (bloc unifié)') : ko('Home redirect', 'bloc redirect/rappel introuvable');
   // 6. Anti-régression sécurité (T8) : pages admin PAT/promote-to-prod NON servies publiquement
   const s1 = await status('/admin-pro/valider-staging.html');
   const s2 = await status('/admin-pro/photos.html');
