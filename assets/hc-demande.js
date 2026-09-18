@@ -443,12 +443,28 @@
   }
   function flushTrack() { if (typeof window.hcGtag !== 'function') return; while (trackQ.length) { var x = trackQ.shift(); try { window.hcGtag('event', x[0], x[1]); } catch (e) {} } }
   window.addEventListener('load', flushTrack);
-  function markStart(entry) { var k = 'hc_fs_' + state.mode; try { if (sessionStorage.getItem(k)) return; sessionStorage.setItem(k, '1'); } catch (e) {} track('hc_demande_start', { entry: entry }); }
-  function leadTracked(type, p, data) {
-    track('generate_lead', Object.assign({ lead_type: type, simulated: !!(data && data.simulated) }, p || {}));
-    try { sessionStorage.removeItem('hc_fs_intervention'); sessionStorage.removeItem('hc_fs_devis'); } catch (e) {}
+  function markStart(entry) { maintStart(entry); var k = 'hc_fs_' + state.mode; try { if (sessionStorage.getItem(k)) return; sessionStorage.setItem(k, '1'); } catch (e) {} track('hc_demande_start', { entry: entry }); }
+  // Campagnes « entretien » (Google Ads / Meta) : événements dédiés, une fois par session et par famille, sans donnée personnelle.
+  function maintFamily() { return C.serviceFamily({ slugs: cart ? cart.lines().map(function (l) { return l.slug; }) : [], metiers: state.devis && state.devis.metiers, src: state.src }); }
+  function maintOnce(ev, key, p) {
+    var f = maintFamily(); if (!f) return;
+    var k = 'hc_mt_' + key + '_' + f; try { if (sessionStorage.getItem(k)) return; sessionStorage.setItem(k, '1'); } catch (e) {}
+    track(ev, Object.assign({ service_family: f, src: state.src || null }, p || {}));
   }
-  function attribution() { try { return C.attributionFrom(sessionStorage.getItem('hc_utm'), sessionStorage.getItem('hc_referrer')); } catch (e) { return null; } }
+  function maintStart(entry) { maintOnce('start_maintenance_funnel', 'start', { entry: entry || null }); }
+  function maintContact() { maintOnce('maintenance_contact_entered', 'contact'); }
+  function leadTracked(type, p, data) {
+    var sim = !!(data && data.simulated), fam = p && p.service_family;
+    if (fam) track('maintenance_submit', { service_family: fam, lead_type: type, src: state.src || null, simulated: sim });
+    track('generate_lead', Object.assign({ lead_type: type, simulated: sim }, p || {}));
+    try { ['hc_fs_intervention', 'hc_fs_devis', 'hc_mt_start_chaudiere', 'hc_mt_contact_chaudiere', 'hc_mt_start_ramonage', 'hc_mt_contact_ramonage'].forEach(function (k) { sessionStorage.removeItem(k); }); } catch (e) {}
+  }
+  // Attribution : UTM/gclid/fbclid mémorisés AVEC consentement (tracking.js) + page d'atterrissage d'origine (non personnelle)
+  function attribution() {
+    var a = null; try { a = C.attributionFrom(sessionStorage.getItem('hc_utm'), sessionStorage.getItem('hc_referrer')); } catch (e) { a = null; }
+    if (state.src) { a = a || {}; a.landing = state.src; }
+    return a;
+  }
   // Référence de dossier unique : l'accès aux tarifs et l'envoi final alimentent le MÊME dossier (aucun doublon).
   function cid() {
     if (state._cid) return state._cid;
@@ -734,7 +750,7 @@
       .then(function (r) { return r.ok ? r.json().catch(function () { return {}; }) : Promise.reject(r.status); });
     // Référence d'un dossier déjà finalisé (ancien brouillon) : abandonnée, l'envoi final en créera une nouvelle
     p.then(function (r) { if (r && r.duplicate) state._cid = null; track('hc_tarifs_access', { cat: state.fam, lead: 'ok' }); }, function () { track('hc_tarifs_access', { cat: state.fam, lead: 'echec' }); }).then(function () {
-      state._priceGateOk = true; state._priceGateAt = Date.now(); try { sessionStorage.setItem('hc_pg', '1'); } catch (e2) {} state._pgPending = null; save();
+      state._priceGateOk = true; state._priceGateAt = Date.now(); try { sessionStorage.setItem('hc_pg', '1'); } catch (e2) {} state._pgPending = null; save(); maintContact();
       busy(btn, false);
       go(pending, { replace: true });
     });
@@ -812,7 +828,7 @@
   function toggleLine(id) {
     var s = byId[id]; if (!s || !cart) return;
     if (inCart(id)) { cart.remove(id); track('hc_demande_remove', { item: s.slug, cat: state.fam, from: state.step }); }
-    else { cart.add({ id: s.id, slug: s.slug, name: s.name, brand: s.brand, ttc: s.price_ttc, requires_quote: !C.priced(s), active: s.active }); track('hc_demande_add', { item: s.slug, cat: state.fam, price_kind: C.priceKind(s), lines: cart.count() }); }
+    else { cart.add({ id: s.id, slug: s.slug, name: s.name, brand: s.brand, ttc: s.price_ttc, requires_quote: !C.priced(s), active: s.active }); track('hc_demande_add', { item: s.slug, cat: state.fam, price_kind: C.priceKind(s), lines: cart.count() }); maintStart('prestation'); }
     save();
     var on = inCart(id);
     $$('[data-offer="' + id + '"]').forEach(function (card) { card.classList.toggle('is-in', on); var b = card.querySelector('[data-toggle]'); if (b) { b.setAttribute('aria-pressed', String(on)); var sr = b.querySelector('.sr-only'); if (sr) sr.textContent = on ? ', dans votre demande' : ', ajouter à votre demande'; } });
@@ -891,7 +907,7 @@
       return focusBad(document.getElementById(CF[first][0]));
     }
     state._editContact = false; save();
-    track('hc_coordonnees_ok');
+    track('hc_coordonnees_ok'); maintContact();
     next('coordonnees');
   }
 
@@ -924,7 +940,7 @@
     var m = el.getAttribute('data-dvm'), sel = state.devis.metiers = state.devis.metiers || [], i = sel.indexOf(m);
     if (i >= 0) sel.splice(i, 1); else { if (sel.length >= 3) { toast('Trois domaines maximum'); return; } sel.push(m); }
     if (el.id === 'dvAutre') syncAutre(i < 0); else el.setAttribute('aria-pressed', String(i < 0));
-    $('#dvMetierNext').disabled = !sel.length; save(); renderRecap();
+    $('#dvMetierNext').disabled = !sel.length; save(); renderRecap(); if (i < 0) maintStart('devis');
   }
   var DV_EX = { 'Rénovation': 'Ex. repeindre un salon de 25 m², murs et plafond, maison des années 1990…', 'Salle de bain': 'Ex. remplacer la baignoire par une douche à l\u2019italienne, pièce de 6 m²…', 'Plomberie': 'Ex. déplacer l\u2019évier de la cuisine, créer une arrivée d\u2019eau au garage…', 'Chauffage': 'Ex. remplacer une chaudière fioul de 20 ans, maison de 110 m²…', 'Électricité': 'Ex. mise aux normes du tableau électrique, maison ancienne…', 'Menuiserie': 'Ex. remplacer une porte d\u2019entrée et deux fenêtres…', 'Volets': 'Ex. motoriser trois volets roulants…', 'Adaptation PMR': 'Ex. installer une douche de plain-pied et des barres d\u2019appui…' };
   ENTER['dv-projet'] = function () {
@@ -989,7 +1005,7 @@
     err.hidden = true;
     if (!p.quand) { err.textContent = 'Choisissez un délai souhaité.'; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); var q = $('#quandOpts [data-quand]'); if (q) q.focus({ preventScroll: true }); return; }
     if (p.quand === 'date' && !C.dateOk(p.date)) { mark('fld-date', true); focusBad($('#f-date')); return; }
-    var lines = cart.lines();
+    var lines = cart.lines(), fam = maintFamily();
     var payload = C.interventionPayload({ lines: lines, byId: byId, contact: state.contact, lieu: state.lieu, prise: p, cartMode: cart.mode(), page: location.href, attribution: attribution(), cid: cid() });
     track('hc_demande_submit', { lines: lines.length, quote_lines: lines.filter(function (l) { return l.requires_quote; }).length, zone: state.lieu.zone && state.lieu.zone.status });
     busy(btn, true, 'Envoi en cours…');
@@ -1000,13 +1016,13 @@
         lines: lines.map(function (l) { var sv = byId[l.id] || {}; return { name: l.name + ((l.qty || 1) > 1 ? ' ×' + l.qty : ''), price: linePrice(l), kind: sv.id ? C.priceKind(sv) : (l.requires_quote ? 'devis' : 'ferme'), includes: Array.isArray(sv.includes) ? sv.includes.slice(0, 8) : [] }; }),
         total: C.firmTotal(lines, byId), lieu: lieuTxt(), prise: C.priseText(p), tel: C.phoneDisplay(state.contact.tel), email: state.contact.email || '' };
       cart.clear(); state.prise = C.emptyState().prise; state.fam = null; state.prob = null; state.devis = C.emptyState().devis; forgetIdentityAfterSend(); save();
-      busy(btn, false); leadTracked('intervention', { lines: lines.length }, data); go('envoye', { replace: true });
+      busy(btn, false); leadTracked('intervention', { lines: lines.length, service_family: fam }, data); go('envoye', { replace: true });
     }).catch(function () { busy(btn, false); track('hc_demande_error'); err.textContent = "L'envoi n'a pas abouti. Vos informations sont conservées : réessayez, ou appelez le 03 66 10 01 34."; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
   }
   function sendDevis() {
     var btn = $('#sendDevis'), err = $('#errDevis'); if (btn.classList.contains('is-busy')) return; err.hidden = true;
     var files = dvFiles.slice();
-    var joined = cart ? cart.lines() : [];
+    var joined = cart ? cart.lines() : [], fam = maintFamily();
     var payload = C.devisPayload({ contact: state.contact, lieu: state.lieu, devis: state.devis, photos: files.length, lines: joined, byId: byId, page: location.href, attribution: attribution(), cid: cid() });
     var leadType = (state.devis.metiers || []).indexOf('Contrat entretien') >= 0 ? 'entretien' : 'devis';
     track('hc_demande_submit', { lead_type: leadType, lines: joined.length, photos: files.length, zone: state.lieu.zone && state.lieu.zone.status });
@@ -1020,7 +1036,7 @@
         nom: state.contact.nom, leadId: (r.data && r.data.id) || null,
         metiers: (state.devis.metiers || []).slice(), desc: state.devis.desc || '', lieu: lieuTxt(), photosSent: files.length, photosStored: stored, tel: C.phoneDisplay(state.contact.tel), email: state.contact.email || '', lines: joined.map(function (l) { return { name: l.name, price: linePrice(l) }; }) };
       state.devis = C.emptyState().devis; dvFiles = []; if (cart) cart.clear(); state.prise = C.emptyState().prise; state.fam = null; forgetIdentityAfterSend(); save();
-      busy(btn, false); leadTracked(leadType, { lines: joined.length, photos: files.length }, r.data); go('envoye', { replace: true });
+      busy(btn, false); leadTracked(leadType, { lines: joined.length, photos: files.length, service_family: fam }, r.data); go('envoye', { replace: true });
     }).catch(function () { busy(btn, false); track('hc_demande_error'); err.textContent = "L'envoi n'a pas abouti. Vos informations sont conservées : réessayez, ou appelez le 03 66 10 01 34."; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
   }
   function uploadPhotos(id, token, files) {
@@ -1190,6 +1206,7 @@
     var r = { step: C.legacyStep(raw, sub ? parseInt(sub[1], 10) : null), cat: cm ? decodeURIComponent(cm[1]) : null, entretien: raw === 'entretien' };
     if (raw === 'intervention') r.mode = 'intervention'; if (raw === 'devis' || raw === 'entretien') r.mode = 'devis';
     r.entry = (!sm && !!(raw || cm)) || raw === 'entretien'; // lien d'entrée (accueil, pages métiers) ≠ navigation interne #step=…
+    var srcm = h.match(/[#&]src=([a-z-]+)/); r.src = C.maintenanceSrc(srcm && srcm[1]); // page d'atterrissage « entretien » (campagnes)
     return r;
   }
   function loadCatalogue() {
@@ -1224,6 +1241,7 @@
   }
   function applyEntry(h) {
     if (h.mode) state.mode = h.mode;
+    if (h.src) state.src = h.src;
     // Entrée « intervention » sans métier : on repart du choix du besoin (pas de métier hérité d'une visite précédente)
     if (h.entry && h.mode === 'intervention' && !h.cat) { state.fam = null; state.prob = null; state.precMode = 'liste'; }
     if (h.cat) { state.mode = 'intervention'; state.fam = h.cat; }

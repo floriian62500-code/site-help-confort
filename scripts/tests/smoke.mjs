@@ -65,6 +65,17 @@ async function run() {
     ? ok('Accueil : tunnel en fenêtre premium (chargement à la demande)')
     : ko('Accueil fenêtre premium', 'ouverture depuis la home absente (CSS HTTP '+modCss+')');
 
+  // 13. Campagnes « entretien » : les prix de la page d'atterrissage chaudière = catalogue + contrats en base
+  try {
+    const H = { apikey: KEY, Authorization: 'Bearer ' + KEY };
+    const fmt = n => Number(n).toLocaleString('fr-FR', { minimumFractionDigits: Number.isInteger(Number(n)) ? 0 : 2, maximumFractionDigits: 2 });
+    const svc = await (await fetch(`${SUPA}/rest/v1/v_services_public?select=slug,price_ttc&slug=like.entretien-chaudiere*`, { headers: H })).json();
+    const off = await (await fetch(`${SUPA}/rest/v1/v_contract_offers?select=slug,price_ttc_month&energy=in.(gaz,fioul)`, { headers: H })).json();
+    const page = await (await fetch(BASE + '/entretien-chaudiere.html', { headers: { 'Cache-Control': 'no-store' } })).text();
+    const want = svc.map(x => fmt(x.price_ttc) + ' € TTC').concat(off.map(x => fmt(Number(x.price_ttc_month).toFixed(2)) + ' €/mois'));
+    const missing = want.filter(w => !page.includes(w));
+    want.length >= 9 && !missing.length ? ok('Landing entretien chaudière : ' + want.length + ' prix = base (catalogue + contrats)') : ko('Landing entretien chaudière : prix ≠ base', missing.join(', ') || 'base incomplète');
+  } catch (e) { ko('Landing entretien chaudière : prix', e.message); }
   console.log(`\nRÉSULTAT : ${pass} PASS / ${fail} FAIL`);
   process.exit(fail > 0 ? 1 : 0);
 }

@@ -388,6 +388,17 @@
   }
   function purgeDevice(ls, ss) { return purgeKeys(ls, ss, DEVICE_KEYS); }
   function purgeLegacy(ls) { return purgeKeys(ls, null, LEGACY_DURABLE); }
+  // Campagnes d'acquisition « entretien » : provenance d'une page d'atterrissage (liste blanche) et famille de la demande.
+  // Familles : chaudiere (entretien ponctuel gaz/fioul ou contrat), ramonage. Poêles/inserts : prestation non confirmée → aucune famille.
+  var MAINT_SRC = { 'entretien-chaudiere': 'chaudiere', 'ramonage': 'ramonage' };
+  function maintenanceSrc(v) { v = String(v || '').toLowerCase(); return Object.prototype.hasOwnProperty.call(MAINT_SRC, v) ? v : null; }
+  function serviceFamily(o) {
+    o = o || {};
+    var slugs = (o.slugs || []).join(' ');
+    if (/(^|\s)entretien-chaudiere/.test(slugs) || (o.metiers || []).indexOf('Contrat entretien') >= 0) return 'chaudiere';
+    var src = maintenanceSrc(o.src);
+    return src ? MAINT_SRC[src] : null;
+  }
   // Mesure du tunnel (P0.4) : envoi GA4 UNIQUEMENT sur le domaine de production, avec consentement, hors simulation.
   var PROD_HOST_RE = /^(www\.)?depan59-62\.fr$/;
   function trackDecision(o) {
@@ -396,7 +407,7 @@
     return o.gtagReady ? 'send' : 'queue';
   }
   // Paramètres d'événement : liste blanche, valeurs courtes, jamais de donnée personnelle (ni email, ni numéro).
-  var TRACK_KEYS = ['module', 'mode', 'step', 'step_index', 'entry', 'cat', 'item', 'price_kind', 'lines', 'quote_lines', 'photos', 'zone', 'lead_type', 'lead', 'from', 'simulated'];
+  var TRACK_KEYS = ['module', 'mode', 'step', 'step_index', 'entry', 'cat', 'item', 'price_kind', 'lines', 'quote_lines', 'photos', 'zone', 'lead_type', 'lead', 'from', 'simulated', 'service_family', 'src'];
   function trackParams(p) {
     var out = {};
     Object.keys(p || {}).forEach(function (k) {
@@ -427,5 +438,6 @@
     lineLabel: lineLabel, interventionPayload: interventionPayload, devisPayload: devisPayload, gatePayload: gatePayload, refFromId: refFromId, simulationAllowed: simulationAllowed,
     trackDecision: trackDecision, trackParams: trackParams, attributionFrom: attributionFrom,
     splitState: splitState, mergeState: mergeState, hasPii: hasPii, hasDraft: hasDraft,
-    PII_TTL_MS: PII_TTL_MS, piiExpired: piiExpired, stripPii: stripPii, DEVICE_KEYS: DEVICE_KEYS, purgeDevice: purgeDevice, purgeLegacy: purgeLegacy };
+    PII_TTL_MS: PII_TTL_MS, piiExpired: piiExpired, stripPii: stripPii, DEVICE_KEYS: DEVICE_KEYS, purgeDevice: purgeDevice, purgeLegacy: purgeLegacy,
+    maintenanceSrc: maintenanceSrc, serviceFamily: serviceFamily };
 });

@@ -135,6 +135,8 @@
             // Succès : afficher message + reset form
             showMessage(form, true, 'Demande envoyée avec succès ! Nous vous contacterons rapidement.');
             form.reset();
+            // Mesure (pages d'atterrissage, assets/hc-landing.js) : envoi confirmé par le serveur, sans aucune donnée personnelle
+            try { document.dispatchEvent(new CustomEvent('hc:lead-sent', { detail: { type: form.dataset.hcLead || '', form_type: payload.form_type || '' } })); } catch (_) {}
             // Si callback custom défini, on l'appelle
             if (typeof window.onHCLeadSubmit === 'function') window.onHCLeadSubmit(payload);
           }
