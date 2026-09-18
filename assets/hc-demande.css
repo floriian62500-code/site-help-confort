@@ -380,6 +380,7 @@
 @media (max-width:760px){
   .hcd-overlay{padding:0}
   .hcd-modal{width:100%;height:100%;border-radius:0;transform:translateY(16px)}
+  .hcd-overlay.is-open .hcd-modal{transform:none}
 }
 @media (prefers-reduced-motion:reduce){.hcd-overlay,.hcd-modal{transition:none}}
 
@@ -428,8 +429,8 @@
 .hcd .btn-primary:hover{background:linear-gradient(135deg,#FF9433,#FF6B12);box-shadow:0 20px 34px -16px rgba(242,96,12,.9)}
 .hcd .btn-primary:disabled{background:#E6EAF0;box-shadow:none}
 .hcd .btn-soft{background:linear-gradient(135deg,#12253C,#0B1526);box-shadow:0 14px 26px -18px rgba(11,21,38,.9)}
-/* ---- Colonne « Votre demande » : utile et vivante ---- */
-.hcd .recap{display:grid;gap:16px}
+/* ---- Colonne « Votre demande » : utile et vivante (desktop : la colonne reste masquée sous 1024px) ---- */
+@media (min-width:1024px){.hcd .recap{display:grid;gap:16px}}
 .hcd .recap-card,.hcd .recap-next{border-radius:24px;border:1px solid rgba(255,255,255,.9);box-shadow:var(--sh-card)}
 .hcd .recap-card{padding:20px 22px 14px}
 .hcd .recap-t{display:flex;align-items:center;gap:8px;font-size:.78rem;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:#0A6C8F;margin:0 0 12px}
