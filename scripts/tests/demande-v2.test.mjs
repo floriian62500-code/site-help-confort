@@ -208,5 +208,10 @@ ok('UI : « Effacer mes informations » purge brouillon, données personnelles, 
 ok('UI : aucune donnée personnelle dans l’URL (hash = étape + catégorie uniquement)', !/(history\.(push|replace)State\([^)]*(contact|lieu|tel|nom|adresse))/.test(uiSrc) && /'#step=' \+ target \+ \(state\.mode === 'intervention' && state\.fam \? '&cat=' \+ encodeURIComponent\(state\.fam\) : ''\)/.test(uiSrc));
 const choixSrc = (uiSrc.match(/ENTER\.choix = function \(\) \{[\s\S]*?\n  \};/) || [''])[0];
 ok('reprise : la carte « demande en cours » n’affiche aucune donnée personnelle (ni ville, ni nom, ni adresse)', choixSrc.length > 0 && !/state\.lieu\.(ville|adresse|cp)\b|state\.contact/.test(choixSrc.replace(/C\.lieuValid\(state\.lieu\)/g, '')));
+// ---- Cache immuable /assets/* : accueil et page dédiée doivent pointer la MÊME version d'assets
+const vHome = (home.match(/hc-demande\.js\?v=(\d{8}[a-z]?)|var V = '(\d{8}[a-z]?)'/) || [])[1] || (home.match(/var V = '(\d{8}[a-z]?)'/) || [])[1];
+const vPage = (cat.match(/hc-demande\.js\?v=(\d{8}[a-z]?)/) || [])[1];
+ok('assets du module : accueil et /catalogue.html sur la même version (cache immuable)', !!vHome && vHome === vPage);
+
 console.log(`\nRÉSULTAT MODULE DEMANDE V2 : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);
