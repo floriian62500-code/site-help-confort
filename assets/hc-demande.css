@@ -519,3 +519,32 @@
 .hcd #coordKnownTxt{flex:1 1 0;min-width:0}
 .hcd #coordKnown .rc-mod{flex:none;margin-left:auto}
 @media (max-width:760px){.hcd #coordKnown{padding:10px 12px;gap:8px}}
+
+/* ---- Espace récapitulatif final + paiement facultatif (directive 5713247831) ---- */
+.hcd .done-card.dossier .rw--line .rw-v strong{display:block;font-weight:650}
+.hcd .done-inc{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:4px}
+.hcd .done-inc li{display:flex;gap:7px;align-items:flex-start;font-size:.86rem;color:#4A5B70}
+.hcd .done-inc svg{color:#157A3C;margin-top:3px;flex:none}
+.hcd .rw--total .rw-v{font-weight:750;font-size:1.08rem}
+.hcd .done-card.pay{border:1px solid rgba(13,160,207,.22)}
+.hcd .done-card.pay h2 .opt{font-weight:600;color:#6B7A8D;font-size:.85em}
+.hcd .done-card.pay p{margin:0 18px 12px;color:#31445C;line-height:1.55}
+.hcd .done-card.pay .reserve-line{margin:0 18px 14px}
+.hcd .done-card.pay .btn-primary{margin:4px 18px 8px;width:calc(100% - 36px)}
+.hcd .pay-sub{font-size:.8rem!important;color:#6B7A8D!important;text-align:center}
+.hcd .pay-note{font-size:.88rem;color:#7C4A12!important}
+.hcd .pay-note--bad{color:#9F1239!important}
+.hcd .done-card.pay--ok{border-color:rgba(21,122,60,.3);background:linear-gradient(180deg,#F0FAF4,#fff 70%)}
+.hcd .done-card.pay--ok h2{display:flex;align-items:center;gap:8px;color:#157A3C}
+.hcd .done-agency{margin:14px 18px 16px;font-size:.88rem;line-height:1.6;color:#4A5B70}
+.hcd .done-agency a{color:#0A6C8F;font-weight:650;text-decoration:none}
+/* Impression / enregistrement PDF du dossier : seul le récapitulatif est imprimé */
+@media print{
+  body>*:not(#hcdOverlay):not(#hcd-root){display:none!important}
+  .hcd-overlay,.hcd-modal{position:static!important;inset:auto!important;width:auto!important;height:auto!important;transform:none!important;box-shadow:none!important;background:#fff!important;padding:0!important;opacity:1!important}
+  .hcd-backdrop{display:none!important}
+  .hcd-modal-body{overflow:visible!important;height:auto!important}
+  .hcd .top,.hcd .done-actions,.hcd .legal,.hcd .pay .btn-primary,.hcd .pay-sub,.hcd .toast,.hcd .sim-badge{display:none!important}
+  .hcd{background:#fff!important}
+  .hcd .done-card{box-shadow:none!important;border:1px solid #ddd!important;break-inside:avoid}
+}

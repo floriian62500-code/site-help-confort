@@ -1219,6 +1219,8 @@
   // en cours → jamais de pré-remplissage silencieux, choix explicite Reprendre / Nouvelle demande.
   function goEntry() {
     var h = parseHash(), start;
+    // Nouvelle demande depuis un lien d'entrée après un envoi : le récapitulatif précédent est purgé de l'onglet
+    if (h.entry && state.sent) startClean();
     if (h.entry && C.hasDraft(state, cart ? cart.count() : 0)) { pendingEntry = h; start = 'choix'; }
     else start = applyEntry(h);
     save();

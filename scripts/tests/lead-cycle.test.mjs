@@ -69,13 +69,32 @@ const ui = read('assets/hc-demande.js');
 const css = read('assets/hc-demande.css');
 ok('réserve : bloc visible sur l’écran « Votre demande »', /note note--warm reserve/.test(ui) && /Important — prix sous réserve de vérification sur place/.test(ui));
 ok('réserve : mention sur l’étape d’affichage des tarifs', /Les tarifs affichés correspondent à des forfaits, sous réserve de vérification sur place/.test(ui));
-ok('réserve : rappelée sur la confirmation dès qu’un montant est affiché', /if \(!dv && \(s\.total > 0 \|\| \(s\.lines \|\| \[\]\)\.length\)\) h \+= '<p class="reserve-line">/.test(ui));
+ok('réserve : rappelée sur la confirmation dès qu’un montant est affiché', /if \(!dv && \(s\.lines \|\| \[\]\)\.length\) h \+= '<p class="reserve-line">/.test(ui));
 ok('réserve : rappelée sous le total du récapitulatif latéral', /rc-reserve">Sous réserve de vérification sur place/.test(ui));
 ok('réserve : styles dédiés (lisible, non anxiogène)', /\.hcd \.reserve-line\{/.test(css) && /\.hcd \.rc-reserve\{/.test(css));
 ok('réserve : transmise à l’agence dans le message du dossier', /Réserve tarifaire : les montants correspondent aux forfaits sélectionnés/.test(core));
 ok('réserve : rappelée dans l’email agence quand un montant figure', /Réserve tarifaire/.test(notify) && /prix ferme\|Total prix fermes/.test(notify));
 ok('réserve : rappelée dans l’email client d’une intervention', /Prix sous réserve de vérification sur place/.test(reply) && /aucun supplément n'est engagé sans votre accord/.test(reply));
 ok('réserve : engagement d’information AVANT tout supplément (front + emails)', /avant<\/strong> toute intervention/.test(ui) && /AVANT d'intervenir/.test(notify));
+
+// ---- Paiement en ligne facultatif (directive 5713247831) — Stripe TEST uniquement
+const pay = read('supabase/functions/create-payment-session/index.ts');
+const hook = read('supabase/functions/stripe-webhook-test/index.ts');
+ok('paiement : ne lit jamais la configuration Stripe de production (clé live)', !/app_settings/.test(pay) && /STRIPE_TEST_SECRET_KEY/.test(pay));
+ok('paiement : toute clé qui n’est pas sk_test_ est refusée', /key\.startsWith\('sk_test_'\)/.test(pay) && /blocked: 'live_key_refused'/.test(pay));
+ok('paiement : sans clé TEST, aucun faux succès', /blocked: 'missing_stripe_test_key'/.test(pay));
+ok('paiement : montant recalculé côté serveur depuis le catalogue (jamais celui du navigateur)', /from\('v_services_public'\)/.test(pay) && !/body\.amount/.test(pay));
+ok('paiement : éligible seulement si toutes les prestations sont à prix ferme', /if \(k !== 'ferme'\) \{ eligible = false;/.test(pay));
+ok('paiement : réservé à l’auteur de la demande (jeton comparé en temps constant, expiration)', /sameToken\(String\(meta\.pay_token/.test(pay) && /pay_token_expires/.test(pay));
+ok('paiement : un dossier payé n’est jamais facturé deux fois', /already_paid: true/.test(pay) && /Idempotency-Key/.test(pay));
+ok('paiement : URL de retour limitée aux domaines du site', /RETURN_OK/.test(pay) && /url de retour non autorisée/.test(pay));
+ok('paiement : jeton remis uniquement à la finalisation (jamais à une intention)', /meta\.finalized_at = nowIso; meta\.intent = false;[\s\S]{0,300}meta\.pay_token = /.test(submit));
+ok('webhook : signature Stripe vérifiée (HMAC SHA-256, tolérance 5 min)', /crypto\.subtle\.importKey\('raw'/.test(hook) && /Math\.abs\(Date\.now\(\) \/ 1000 - t\) > 300/.test(hook));
+ok('webhook : événement live refusé', /event\.livemode === true\) return json\(\{ error: 'live_event_refused' \}/.test(hook));
+ok('webhook : idempotent (événement rejoué ou dossier déjà payé → rien de plus)', /seen\.includes\(event\.id\)/.test(hook) && /if \(pay\.status === 'paid'\) return json\(\{ ok: true, already_paid: true \}\)/.test(hook));
+ok('webhook : le paiement met à jour le MÊME dossier puis notifie une fois agence + client', /metadata: \{ \.\.\.meta, payment: next \}/.test(hook) && /kind: 'payment'/.test(hook));
+ok('email agence : « Paiement reçu » rattaché au dossier (jamais un nouveau lead)', /Paiement reçu — dossier \$\{ref\}/.test(notify) && /PAIEMENT REÇU — dossier existant/.test(notify));
+ok('email client : confirmation de paiement distincte, envoyée une seule fois', /buildPaymentHtml/.test(reply) && /payment_not_confirmed/.test(reply) && /client_notified_at/.test(reply));
 
 console.log(`\nRÉSULTAT CYCLE LEAD : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);

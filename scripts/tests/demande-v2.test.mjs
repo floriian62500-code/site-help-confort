@@ -192,14 +192,14 @@ full.devis.metiers = ['Plomberie']; full.devis.desc = 'Fuite sous évier chez M.
 const parts = C.splitState(full), draftJson = JSON.stringify(parts.draft);
 ok('confidentialité : le brouillon durable (localStorage) ne contient ni identité, ni adresse, ni texte libre, ni récap envoyé', !/Jean|Dupont|0612|06 12|exemple|3 rue|62500|Saint-Omer|portail|Fuite/.test(draftJson) && parts.draft.sent === null);
 ok('confidentialité : le brouillon durable garde les choix non personnels (parcours, métiers)', parts.draft.mode === 'devis' && parts.draft.devis.metiers[0] === 'Plomberie');
-ok('confidentialité : les données personnelles vont en session (onglet) sans le récap envoyé', parts.pii.contact.nom === 'Dupont' && parts.pii.lieu.cp === '62500' && /Fuite/.test(parts.pii.desc) && /portail/.test(parts.pii.precisions) && !('sent' in parts.pii));
+ok('confidentialité : les données personnelles et le récapitulatif envoyé restent dans la session de l’onglet (retour de paiement), jamais en stockage durable', parts.pii.contact.nom === 'Dupont' && parts.pii.lieu.cp === '62500' && /Fuite/.test(parts.pii.desc) && /portail/.test(parts.pii.precisions) && parts.pii.sent && parts.pii.sent.prenom === 'Jean');
 const back = C.mergeState(JSON.parse(draftJson), JSON.parse(JSON.stringify(parts.pii)));
-ok('confidentialité : rechargement dans le même onglet → demande en cours restaurée', back.contact.nom === 'Dupont' && back.lieu.ville === 'Saint-Omer' && /Fuite/.test(back.devis.desc) && back.sent === null);
+ok('confidentialité : rechargement dans le même onglet → demande (et récapitulatif envoyé) restaurés', back.contact.nom === 'Dupont' && back.lieu.ville === 'Saint-Omer' && /Fuite/.test(back.devis.desc) && back.sent && back.sent.prenom === 'Jean');
 const migrated = C.mergeState(JSON.parse(JSON.stringify(full)), null);
 ok('confidentialité : ancien brouillon avec données personnelles en localStorage → ignorées (migration), choix non personnels conservés', !C.hasPii(migrated) && migrated.devis.metiers[0] === 'Plomberie' && migrated.sent === null);
 ok('confidentialité : nouvel onglet / nouvel utilisateur (pas de session) → aucune donnée personnelle', !C.hasPii(C.mergeState(JSON.parse(draftJson), null)));
 ok('confidentialité : session corrompue ou hostile → valeurs typées uniquement', (() => { const m = C.mergeState(null, { contact: { prenom: { x: 1 }, nom: 'A' }, lieu: { adresse: 12, cp: '62500', lat: 'x' }, desc: 5 }); return m.contact.prenom === '' && m.contact.nom === 'A' && m.lieu.adresse === '12' && m.lieu.lat === null && m.devis.desc === ''; })());
-ok('demande en cours : prestations, métiers ou saisie personnelle ; jamais après envoi', !C.hasDraft(C.emptyState(), 0) && C.hasDraft(C.emptyState(), 1) && C.hasDraft(Object.assign(C.emptyState(), { devis: { metiers: ['Vitrerie'], desc: '' } }), 0) && C.hasDraft(back, 0) && !C.hasDraft(Object.assign(C.emptyState(), { sent: {} }), 3));
+ok('demande en cours : prestations, métiers ou saisie personnelle ; jamais après envoi', !C.hasDraft(C.emptyState(), 0) && C.hasDraft(C.emptyState(), 1) && C.hasDraft(Object.assign(C.emptyState(), { devis: { metiers: ['Vitrerie'], desc: '' } }), 0) && C.hasDraft(Object.assign({}, back, { sent: null }), 0) && !C.hasDraft(back, 0) && !C.hasDraft(Object.assign(C.emptyState(), { sent: {} }), 3));
 ok('UI : écriture séparée localStorage (brouillon) / sessionStorage (données personnelles), plus aucune écriture de l’état complet', /localStorage\.setItem\(STORE, JSON\.stringify\(parts\.draft\)\)/.test(uiSrc) && /sessionStorage\.setItem\(STORE_PII, JSON\.stringify\(parts\.pii\)\)/.test(uiSrc) && !/localStorage\.setItem\(STORE, JSON\.stringify\(state\)\)/.test(uiSrc));
 ok('UI : lien d’entrée avec demande en cours → écran de choix (Reprendre / Nouvelle demande), jamais de pré-remplissage silencieux', /if \(h\.entry && C\.hasDraft\(state, cart \? cart\.count\(\) : 0\)\) \{ pendingEntry = h; start = 'choix'; \}/.test(uiSrc) && /r\.entry = \(!sm && !!\(raw \|\| cm\)\) \|\| raw === 'entretien'/.test(uiSrc) && />Nouvelle demande<\/button>/.test(uiSrc));
 ok('UI : envoi réussi → identité et adresse retirées de l’état stocké (2 parcours)', (uiSrc.match(/forgetIdentityAfterSend\(\); save\(\);/g) || []).length === 2);
@@ -237,6 +237,17 @@ ok('coordonnées : seuls les champs manquants sont affichés', /var show = edit 
 ok('coordonnées : « Modifier » rouvre les champs préremplis', /data-edit-contact/.test(uiFile) && /state\._editContact = true; save\(\); ENTER\.coordonnees\(\)/.test(uiFile));
 ok('coordonnées : la validation ne lit que les champs affichés et rouvre un champ invalide caché', /if \(!document\.getElementById\(x\[2\]\)\.hidden\) c\[x\[1\]\] = document/.test(uiFile) && /if \(document\.getElementById\(CF\[first\]\[2\]\)\.hidden\) \{ state\._editContact = true;/.test(uiFile));
 ok('adresse : jamais redemandée à l’étape coordonnées (rappel + Modifier)', /id="coordLieu"/.test(uiFile) && /data-go="lieu" aria-label="Modifier l'adresse"/.test(uiFile));
+
+// ---- Espace récapitulatif final + paiement facultatif (directive 5713247831)
+ok('récapitulatif final : client (prénom + nom), téléphone, email, adresse, prestations et inclus, total, préférence', /row\('Client', esc\(\[s\.prenom, s\.nom\]/.test(uiFile) && /done-inc/.test(uiFile) && /Total des prix fermes/.test(uiFile) && /row\('Préférence'/.test(uiFile) && /row\('Adresse', esc\(s\.lieu\)\)/.test(uiFile));
+ok('récapitulatif final : réserve tarifaire, coordonnées de l’agence, impression, demande de modification', /reserve-line/.test(uiFile) && /done-agency/.test(uiFile) && /data-print/.test(uiFile) && /Demander une modification/.test(uiFile));
+ok('paiement : proposé seulement si toutes les prestations sont à prix ferme, sinon « après validation de l’agence »', /if \(!s\.allFirm \|\| !\(s\.total > 0\) \|\| s\.payState === 'ineligible'\)/.test(uiFile) && /Paiement disponible après validation de l’agence/.test(uiFile));
+ok('paiement : facultatif et accompagné de la réserve tarifaire', /Régler en ligne <span class="opt">· facultatif/.test(uiFile) && /aucun supplément sans votre accord/.test(uiFile));
+ok('paiement : en simulation, aucun appel réseau (état « paiement reçu » simulé)', /if \(s0\.simulated\) \{ s0\.payment = \{ status: 'paid'/.test(uiFile));
+ok('paiement : retour de la banque → vérification sur le même dossier (reçu / en confirmation / annulé)', /payReturn === 'ok' && attempt < 6/.test(uiFile) && /payReturn === 'annule' \? 'cancelled'/.test(uiFile));
+ok('paiement : jamais de promesse « aucun paiement en ligne » contradictoire', !/Aucun paiement en ligne/.test(uiFile));
+ok('nouvelle demande après envoi : le récapitulatif précédent est purgé de l’onglet', /if \(h\.entry && state\.sent\) startClean\(\);/.test(uiFile));
+ok('impression : seul le récapitulatif s’imprime', /@media print\{/.test(cssFile) && /\.hcd \.top,\.hcd \.done-actions/.test(cssFile));
 
 console.log(`\nRÉSULTAT MODULE DEMANDE V2 : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);
