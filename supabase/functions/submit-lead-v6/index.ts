@@ -73,6 +73,11 @@ Deno.serve(async (req: Request) => {
   const cp = sanitize(body.code_postal || body.cp, 20);
   const ville = sanitize(body.ville, 100);
   const message = sanitize(body.message, 4000);
+  // Intention (accès aux tarifs) : enregistrée SANS notification. La référence de corrélation
+  // relie l'intention et l'envoi final au MÊME dossier (aucun doublon, aucune seconde notification).
+  const isIntent = body.intent === true;
+  const correlationId = sanitize(body.correlation_id, 64);
+  const lastStep = sanitize(body.last_step, 40);
 
   const errors: Record<string, string> = {};
 
@@ -93,6 +98,7 @@ Deno.serve(async (req: Request) => {
     wizard_urgence:  { name: true, contact: true, cp: true,  ville: true,  adresse: false, message: true,  metier: true  }, // wizard in-page
     devis_express:   { name: true, contact: true, cp: true,  ville: false, adresse: false, message: true,  metier: true  }, // tel+nom+cp+métier+message synthétisé
     rappel:          { name: true, contact: true, cp: false, ville: false, adresse: false, message: false, metier: false }, // callback minimal
+    price_gate:      { name: true, contact: true, cp: false, ville: false, adresse: false, message: false, metier: false }, // accès aux tarifs : intention, enregistrée en silence
   };
   const contract: Contract = CONTRACTS[formType] || CONTRACTS['demande_metier']; // défaut sûr si non déclaré
 
@@ -122,8 +128,10 @@ Deno.serve(async (req: Request) => {
     return json(400, { error: 'Champs requis manquants ou invalides', errors });
   }
 
-  const payload = {
-    nom: nom || prenom || 'Prospect',
+  const nowIso = new Date().toISOString();
+  const payload: Record<string, unknown> = {
+    // Nom réel uniquement : ne jamais recopier le prénom dans le nom (produisait « Florian Florian »).
+    nom: nom || null,
     prenom,
     email,
     telephone: tel ? normalizePhone(tel) : null,
@@ -138,8 +146,8 @@ Deno.serve(async (req: Request) => {
     source_page: sanitize(body.source_page, 500),
     source_referer: sanitize(body.source_referer, 500),
     utm: Object.assign({}, (body.utm && typeof body.utm === 'object') ? body.utm : {}, { form_type: formType || 'demande_metier' }),
-    status: 'nouveau',
-    priority: 'normale',
+    status: isIntent ? 'intent' : 'nouveau',
+    priority: isIntent ? 'basse' : 'normale',
     realisation_id: typeof body.realisation_id === 'string' ? body.realisation_id : null,
   };
 
@@ -149,10 +157,35 @@ Deno.serve(async (req: Request) => {
     { auth: { persistSession: false } }
   );
 
-  const { data, error } = await supabase.from('leads').insert([payload]).select('id').single();
-  if (error) {
-    console.error('[submit-lead] insert error:', error);
-    return json(500, { error: 'Erreur d’enregistrement', detail: error.message });
+  // Dossier existant pour cette référence de corrélation ? (intention créée à l'accès aux tarifs)
+  let existing: { id: string; status: string | null; metadata: Record<string, unknown> | null } | null = null;
+  if (correlationId) {
+    const { data: found } = await supabase
+      .from('leads')
+      .select('id, status, metadata, created_at')
+      .eq('utm->>correlation_id', correlationId)
+      .order('created_at', { ascending: false })
+      .limit(1);
+    const row = Array.isArray(found) ? found[0] : null;
+    // On ne réécrit jamais un dossier déjà finalisé : seules une intention ou une relance sont reprises.
+    if (row && ['intent', 'needs_followup'].includes(String(row.status || ''))) existing = row as typeof existing;
+  }
+
+  let data: { id: string } | null = null;
+  if (existing) {
+    const { error: upErr } = await supabase.from('leads').update(payload).eq('id', existing.id);
+    if (upErr) {
+      console.error('[submit-lead] update error:', upErr);
+      return json(500, { error: 'Erreur d’enregistrement', detail: upErr.message });
+    }
+    data = { id: existing.id };
+  } else {
+    const ins = await supabase.from('leads').insert([payload]).select('id').single();
+    if (ins.error) {
+      console.error('[submit-lead] insert error:', ins.error);
+      return json(500, { error: 'Erreur d’enregistrement', detail: ins.error.message });
+    }
+    data = ins.data as { id: string };
   }
 
   // Jeton d'upload photo court (15 min, usage unique) — permet un upload SÉCURISÉ post-lead
@@ -162,9 +195,20 @@ Deno.serve(async (req: Request) => {
   // Auto-archivage des leads de test (nom contenant TEST RECETTE / NE PAS TRAITER)
   const isTestLead = /TEST\s*RECETTE|NE\s*PAS\s*TRAITER/i.test(`${nom || ''} ${prenom || ''}`);
   try {
-    const upd: Record<string, unknown> = {
-      metadata: { form_type: formType || 'demande_metier', upload_token: uploadToken, upload_expires: uploadExpires },
+    const prevMeta = (existing && existing.metadata) || {};
+    const meta: Record<string, unknown> = {
+      ...prevMeta,
+      form_type: formType || 'demande_metier',
+      upload_token: uploadToken,
+      upload_expires: uploadExpires,
+      last_activity_at: nowIso,
+      crm_status: 'pending', // file d'attente CRM (Apogée) — voir crm-apogee-push
     };
+    if (correlationId) meta.correlation_id = correlationId;
+    if (lastStep) meta.last_step = lastStep;
+    if (isIntent) { meta.intent = true; if (!meta.intent_created_at) meta.intent_created_at = nowIso; }
+    else { meta.finalized_at = nowIso; meta.intent = false; }
+    const upd: Record<string, unknown> = { metadata: meta };
     if (isTestLead) upd.status = 'archive';
     await supabase.from('leads').update(upd).eq('id', data.id);
   } catch (_) { /* non bloquant : le lead existe déjà */ }
@@ -175,12 +219,14 @@ Deno.serve(async (req: Request) => {
   const efBody = JSON.stringify({ lead_id: data.id });
   // Hygiène recette : les leads de test (TEST RECETTE / NE PAS TRAITER) ne notifient PAS l'agence
   // (ils sont déjà auto-archivés) — évite de polluer la vraie boîte saint-omer@helpconfort.com.
-  if (!isTestLead) {
-    // Notification interne (email agence) — cœur du rappel <30 min
+  // Une intention (accès aux tarifs) ne notifie PERSONNE : la demande n'est pas terminée.
+  // Les notifications partent une seule fois, à la validation finale.
+  if (!isTestLead && !isIntent) {
+    // Notification interne (email agence)
     try { fetch(`${supabaseUrl}/functions/v1/notify-lead-v6`, { method: 'POST', headers, body: efBody }).catch(() => {}); } catch (_) {}
     // Accusé de réception client — uniquement si email fourni (lead-auto-reply gère le cas no_client_email)
     try { fetch(`${supabaseUrl}/functions/v1/lead-auto-reply`, { method: 'POST', headers, body: efBody }).catch(() => {}); } catch (_) {}
   }
 
-  return json(200, { success: true, id: data.id, upload_token: uploadToken, contract_v6: true });
+  return json(200, { success: true, id: data.id, upload_token: uploadToken, contract_v6: true, intent: isIntent, reused: !!existing });
 });
