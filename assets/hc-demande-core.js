@@ -329,7 +329,7 @@
   // Données personnelles = identité, adresse, textes libres (description du projet, précisions).
   function splitState(st) {
     var draft = JSON.parse(JSON.stringify(st || emptyState())), e = emptyState();
-    var pii = { contact: draft.contact || e.contact, lieu: draft.lieu || e.lieu, desc: (draft.devis && draft.devis.desc) || '', precisions: (draft.prise && draft.prise.precisions) || '' };
+    var pii = { contact: draft.contact || e.contact, lieu: draft.lieu || e.lieu, desc: (draft.devis && draft.devis.desc) || '', precisions: (draft.prise && draft.prise.precisions) || '', sent: draft.sent || null };
     draft.contact = e.contact; draft.lieu = e.lieu; draft.sent = null;
     if (draft.devis) draft.devis.desc = ''; if (draft.prise) draft.prise.precisions = '';
     return { draft: draft, pii: pii };
@@ -345,6 +345,7 @@
       if (pii.lieu && typeof pii.lieu === 'object') st.lieu = { adresse: String(pii.lieu.adresse || ''), cp: String(pii.lieu.cp || ''), ville: String(pii.lieu.ville || ''), lat: typeof pii.lieu.lat === 'number' ? pii.lieu.lat : null, lon: typeof pii.lieu.lon === 'number' ? pii.lieu.lon : null, zone: pii.lieu.zone || null };
       if (typeof pii.desc === 'string') st.devis.desc = pii.desc;
       if (typeof pii.precisions === 'string') st.prise.precisions = pii.precisions;
+      if (pii.sent && typeof pii.sent === 'object') st.sent = pii.sent; // récapitulatif du dossier : onglet courant seulement
     }
     return st;
   }

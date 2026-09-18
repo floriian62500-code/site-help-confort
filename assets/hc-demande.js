@@ -91,7 +91,7 @@
       <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg>Techniciens salariés</li>
       <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg>Agence locale à Saint-Omer</li>
       <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg>Un interlocuteur humain</li>
-      <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg>Aucun paiement en ligne</li>
+      <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg>Aucun paiement demandé à l’envoi</li>
      </ul>
      <p class="urgent-line">Une urgence&nbsp;? Appelez le <a href="tel:+33366100134">03 66 10 01 34</a> · lun–ven 9h–17h, sam 9h–16h</p>
      <p class="urgent-line" id="closedLine" hidden></p>
@@ -197,7 +197,7 @@
      <div id="demandeList"></div>
      <button class="add-more" type="button" data-go="besoin"><svg width="18" height="18" aria-hidden="true"><use href="#i-plus"/></svg>Ajouter une autre intervention</button>
      <div class="note note--warm reserve"><svg width="20" height="20" aria-hidden="true"><use href="#i-info"/></svg><span><strong>Important — prix sous réserve de vérification sur place :</strong> le montant affiché correspond au forfait que vous avez sélectionné. Il est valable si la situation constatée sur place correspond à ce forfait. Si le technicien constate un besoin différent ou complémentaire, un ajustement tarifaire ou un devis complémentaire vous est proposé <strong>avant</strong> toute intervention : aucun supplément n’est engagé sans votre accord.</span></div>
-     <div class="note"><svg width="20" height="20" aria-hidden="true"><use href="#i-shield"/></svg><span><strong>Aucun paiement en ligne :</strong> vous réglez après l'intervention. Un prix ferme couvre la prestation telle que décrite ; si un supplément s'avérait nécessaire, il vous est proposé avant d'intervenir. Lors du rappel, l'agence fixe le créneau avec vous.</span></div>
+     <div class="note"><svg width="20" height="20" aria-hidden="true"><use href="#i-shield"/></svg><span><strong>Aucun paiement demandé à l’envoi :</strong> vous réglez après l'intervention (un paiement en ligne facultatif peut vous être proposé à la confirmation pour les forfaits à prix ferme). Un prix ferme couvre la prestation telle que décrite ; si un supplément s'avérait nécessaire, il vous est proposé avant d'intervenir. Lors du rappel, l'agence fixe le créneau avec vous.</span></div>
     </div>
     <footer class="q-actions"><button class="sum-handle" type="button" data-open-sheet hidden></button><button class="btn-primary" type="button" data-next="demande">Continuer <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow"/></svg></button></footer>
    </section>
@@ -328,7 +328,7 @@
 
   <aside class="recap" id="recap" aria-label="Récapitulatif de votre demande">
    <div class="recap-card"><p class="recap-t">Votre demande</p><div id="recapBody"></div></div>
-   <div class="recap-next" id="recapNext"><p class="recap-t">Et ensuite&nbsp;?</p><ol><li><b>1</b><span><strong>Vous envoyez votre demande</strong>Aucun paiement en ligne.</span></li><li><b>2</b><span><strong>L'agence vous recontacte</strong>Sous 24&nbsp;h ouvrées, aux heures d'ouverture.</span></li><li><b>3</b><span><strong>Rendez-vous fixé ensemble</strong>Avec un technicien salarié de l'agence.</span></li></ol></div>
+   <div class="recap-next" id="recapNext"><p class="recap-t">Et ensuite&nbsp;?</p><ol><li><b>1</b><span><strong>Vous envoyez votre demande</strong>Aucun paiement demandé à l’envoi.</span></li><li><b>2</b><span><strong>L'agence vous recontacte</strong>Sous 24&nbsp;h ouvrées, aux heures d'ouverture.</span></li><li><b>3</b><span><strong>Rendez-vous fixé ensemble</strong>Avec un technicien salarié de l'agence.</span></li></ol></div>
    <div class="trust">
     <p>Agence HELP Confort de Saint-Omer</p>
     <ul>
@@ -518,7 +518,7 @@
   function addCardFoot() {
     var html = '<span><b>HELP Confort</b> · agence de Saint-Omer</span>'
       + '<span>' + ic('i-check', 16) + 'Techniciens salariés</span>'
-      + '<span>' + ic('i-check', 16) + 'Aucun paiement en ligne</span>'
+      + '<span>' + ic('i-check', 16) + 'Aucun paiement demandé à l’envoi</span>'
       + '<a href="tel:+33366100134">' + ic('i-phone', 16) + '03 66 10 01 34</a>';
     $$('.step.card').forEach(function (s) {
       if (s.querySelector('.card-foot')) return;
@@ -963,7 +963,7 @@
   var drop = $('#drop');
   ['dragenter', 'dragover'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('is-over'); }); });
   ['dragleave', 'drop'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove('is-over'); if (ev === 'drop' && e.dataTransfer) addPhotos(e.dataTransfer.files); }); });
-  function renderNext() { var dv = state.mode === 'devis'; var steps = dv ? [['Vous envoyez votre demande', 'Gratuit et sans engagement.'], ['L\u2019agence vous recontacte', 'Sous 24 h ouvrées, pour préciser votre projet.'], ['Vous recevez votre devis', 'Vous décidez ensuite, sans engagement.']] : [['Vous envoyez votre demande', 'Aucun paiement en ligne.'], ['L\u2019agence vous recontacte', 'Sous 24 h ouvrées, aux heures d\u2019ouverture.'], ['Rendez-vous fixé ensemble', 'Avec un technicien salarié de l\u2019agence.']]; $('#recapNext ol').innerHTML = steps.map(function (x, i) { return '<li><b>' + (i + 1) + '</b><span><strong>' + esc(x[0]) + '</strong>' + esc(x[1]) + '</span></li>'; }).join(''); }
+  function renderNext() { var dv = state.mode === 'devis'; var steps = dv ? [['Vous envoyez votre demande', 'Gratuit et sans engagement.'], ['L\u2019agence vous recontacte', 'Sous 24 h ouvrées, pour préciser votre projet.'], ['Vous recevez votre devis', 'Vous décidez ensuite, sans engagement.']] : [['Vous envoyez votre demande', 'Aucun paiement demandé à l\u2019envoi.'], ['L\u2019agence vous recontacte', 'Sous 24 h ouvrées, aux heures d\u2019ouverture.'], ['Rendez-vous fixé ensemble', 'Avec un technicien salarié de l\u2019agence.']]; $('#recapNext ol').innerHTML = steps.map(function (x, i) { return '<li><b>' + (i + 1) + '</b><span><strong>' + esc(x[0]) + '</strong>' + esc(x[1]) + '</span></li>'; }).join(''); }
   ENTER['dv-recap'] = function () {
     renderNext();
     state.devis.photosSeen = true; save();
@@ -991,8 +991,11 @@
     track('hc_demande_submit', { lines: lines.length, quote_lines: lines.filter(function (l) { return l.requires_quote; }).length, zone: state.lieu.zone && state.lieu.zone.status });
     busy(btn, true, 'Envoi en cours…');
     postLead(payload).then(function (data) {
-      state.sent = { mode: 'intervention', ref: C.refFromId(data && data.id), simulated: !!(data && data.simulated), at: Date.now(), prenom: state.contact.prenom,
-        lines: lines.map(function (l) { return { name: l.name + ((l.qty || 1) > 1 ? ' ×' + l.qty : ''), price: linePrice(l) }; }), total: C.firmTotal(lines, byId), lieu: lieuTxt(), prise: C.priseText(p), tel: C.phoneDisplay(state.contact.tel), email: state.contact.email || '' };
+      state.sent = { mode: 'intervention', ref: C.refFromId(data && data.id), simulated: !!(data && data.simulated), at: Date.now(), prenom: state.contact.prenom, nom: state.contact.nom,
+        leadId: (data && data.id) || null, payToken: (data && data.pay_token) || null,
+        allFirm: lines.length > 0 && lines.every(function (l) { var sv = byId[l.id]; return sv ? C.priceKind(sv) === 'ferme' : !l.requires_quote; }),
+        lines: lines.map(function (l) { var sv = byId[l.id] || {}; return { name: l.name + ((l.qty || 1) > 1 ? ' ×' + l.qty : ''), price: linePrice(l), kind: sv.id ? C.priceKind(sv) : (l.requires_quote ? 'devis' : 'ferme'), includes: Array.isArray(sv.includes) ? sv.includes.slice(0, 8) : [] }; }),
+        total: C.firmTotal(lines, byId), lieu: lieuTxt(), prise: C.priseText(p), tel: C.phoneDisplay(state.contact.tel), email: state.contact.email || '' };
       cart.clear(); state.prise = C.emptyState().prise; state.fam = null; state.prob = null; state.devis = C.emptyState().devis; forgetIdentityAfterSend(); save();
       busy(btn, false); leadTracked('intervention', { lines: lines.length }, data); go('envoye', { replace: true });
     }).catch(function () { busy(btn, false); track('hc_demande_error'); err.textContent = "L'envoi n'a pas abouti. Vos informations sont conservées : réessayez, ou appelez le 03 66 10 01 34."; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
@@ -1011,6 +1014,7 @@
     }).then(function (r) {
       var stored = r.photos && typeof r.photos.stored === 'number' ? r.photos.stored : (Array.isArray(r.photos && r.photos.stored) ? r.photos.stored.length : null);
       state.sent = { mode: 'devis', ref: C.refFromId(r.data && r.data.id), simulated: !!(r.data && r.data.simulated), at: Date.now(), prenom: state.contact.prenom,
+        nom: state.contact.nom, leadId: (r.data && r.data.id) || null,
         metiers: (state.devis.metiers || []).slice(), desc: state.devis.desc || '', lieu: lieuTxt(), photosSent: files.length, photosStored: stored, tel: C.phoneDisplay(state.contact.tel), email: state.contact.email || '', lines: joined.map(function (l) { return { name: l.name, price: linePrice(l) }; }) };
       state.devis = C.emptyState().devis; dvFiles = []; if (cart) cart.clear(); state.prise = C.emptyState().prise; state.fam = null; forgetIdentityAfterSend(); save();
       busy(btn, false); leadTracked(leadType, { lines: joined.length, photos: files.length }, r.data); go('envoye', { replace: true });
@@ -1023,23 +1027,90 @@
   }
 
   // ---------- Confirmation ----------
+  // ---------- Confirmation : espace récapitulatif du dossier (directive 5713247831) ----------
+  // Le client relit TOUT son dossier ; s'il ne contient que des forfaits à prix ferme, il peut
+  // (facultativement) le régler en ligne. Montant recalculé côté serveur, Stripe TEST en recette.
+  var payReturn = null;
+  try { payReturn = new URLSearchParams(location.search).get('hc_pay'); } catch (e) { payReturn = null; }
+  if (payReturn) {
+    if (state.sent) { state.sent.payState = ''; }
+    try { history.replaceState(history.state, '', location.pathname + location.search.replace(/([?&])hc_pay=[^&]*&?/, '$1').replace(/[?&]$/, '') + location.hash); } catch (e) {}
+  }
+  function row(k, v) { return v ? '<div class="rw"><span class="rw-k">' + esc(k) + '</span><span class="rw-v">' + v + '</span><span></span></div>' : ''; }
+  function payApi(mode) {
+    var s = state.sent;
+    return fetch(SUPA + '/functions/v1/create-payment-session', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lead_id: s.leadId, pay_token: s.payToken, mode: mode, return_url: location.origin + location.pathname + location.search }) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return r.ok ? j : Promise.reject(j); }); });
+  }
+  function checkPayment(attempt) {
+    var s = state.sent; if (!s) return;
+    attempt = attempt || 0; s.payState = 'checking'; ENTER.envoye();
+    payApi('check').then(function (r) {
+      if (!r || !r.available) s.payState = 'unavailable';
+      else if (r.payment && r.payment.status === 'paid') { s.payment = r.payment; s.payState = 'paid'; }
+      else if (!r.eligible) s.payState = 'ineligible';
+      else if (payReturn === 'ok' && attempt < 6) { setTimeout(function () { checkPayment(attempt + 1); }, 2000); return; }
+      else s.payState = payReturn === 'annule' ? 'cancelled' : (payReturn === 'ok' ? 'confirming' : 'ready');
+      save(); ENTER.envoye();
+    }, function () { s.payState = 'unavailable'; save(); ENTER.envoye(); });
+  }
+  function payBlockHtml(s) {
+    if (s.mode === 'devis') return '';
+    var p = s.payment, amount = C.eur(s.total || 0);
+    if (p && p.status === 'paid') return '<div class="done-card pay pay--ok"><h2>' + ic('i-check', 20) + 'Paiement reçu</h2><p>' + esc(C.eur(p.amount || s.total)) + ' TTC le ' + esc(new Date(p.paid_at || Date.now()).toLocaleString('fr-FR')) + (p.simulated ? ' (simulation de recette, aucun débit)' : '') + ' — dossier ' + esc(s.ref || '') + '.</p><p class="pay-note">Rien de plus à régler sur place, sauf ajustement que vous auriez accepté après constat.</p></div>';
+    if (s.payState === 'checking') return '<div class="done-card pay"><h2>Paiement en ligne</h2><p>Vérification…</p></div>';
+    if (s.payState === 'confirming') return '<div class="done-card pay"><h2>Paiement en cours de confirmation</h2><p>La banque confirme votre paiement ; cette page se met à jour dans quelques instants. Votre dossier est conservé.</p></div>';
+    if (s.payState === 'unavailable' || (!s.simulated && (!s.leadId || !s.payToken))) return '';
+    if (!s.allFirm || !(s.total > 0) || s.payState === 'ineligible')
+      return '<div class="done-card pay"><h2>Paiement</h2><p>Paiement disponible après validation de l’agence : ' + (s.allFirm ? 'le montant sera confirmé lors du rappel. ' : 'votre demande comprend une prestation chiffrée sur place ou sur devis. ') + 'Vous réglez après l’intervention.</p></div>';
+    return '<div class="done-card pay"><h2>Régler en ligne <span class="opt">· facultatif</span></h2>'
+      + '<p>Vous pouvez régler dès maintenant les forfaits à prix ferme de votre demande — <strong>' + esc(amount) + ' TTC</strong> — ou après l’intervention, comme vous préférez.</p>'
+      + '<p class="reserve-line">' + esc('Le montant réglé correspond aux forfaits sélectionnés. Si le technicien constate un besoin différent ou complémentaire, un ajustement vous est proposé avant toute intervention : aucun supplément sans votre accord.') + '</p>'
+      + (s.payState === 'cancelled' ? '<p class="pay-note">Paiement annulé : votre dossier est conservé, vous pouvez réessayer quand vous voulez.</p>' : '')
+      + (s.payError ? '<p class="pay-note pay-note--bad" role="alert">' + esc(s.payError) + '</p>' : '')
+      + '<button type="button" class="btn-primary" data-pay>' + (s.simulated ? 'Régler ' + esc(amount) + ' (simulation)' : 'Régler ' + esc(amount) + ' en ligne') + ' ' + ic('i-arrow', 18) + '</button>'
+      + '<p class="pay-sub">Paiement sécurisé par carte · aucune donnée bancaire ne transite par ce site.</p></div>';
+  }
   ENTER.envoye = function () {
     var s = state.sent, box = $('#done'); if (!s) return;
     var dv = s.mode === 'devis', h = '<span class="done-ic">' + ic('i-check', 40) + '</span>';
     h += '<h1 id="h-envoye" tabindex="-1">' + (s.prenom ? esc(s.prenom) + ', votre ' : 'Votre ') + (dv ? 'demande de devis est envoyée' : 'demande est envoyée') + '</h1>';
     if (s.ref) h += '<p class="done-ref">Référence de votre dossier · ' + esc(s.ref) + '</p>';
     if (s.simulated) h += '<p class="done-sim">Simulation de recette : aucune donnée n’a été transmise et aucun dossier n’a été créé.</p>';
-    h += '<div class="done-card"><h2>' + (dv ? 'Votre projet' : 'Votre demande') + '</h2><div class="rows" style="padding:4px 18px">';
-    if (dv) h += '<div class="rw"><span class="rw-k">Travaux</span><span class="rw-v">' + esc((s.metiers || []).join(', ')) + '</span><span></span></div>' + (s.desc ? '<div class="rw"><span class="rw-k">Projet</span><span class="rw-v">' + esc(s.desc.length > 160 ? s.desc.slice(0, 157) + '…' : s.desc) + '</span><span></span></div>' : '') + (s.photosSent ? '<div class="rw"><span class="rw-k">Photos</span><span class="rw-v">' + (s.simulated ? s.photosSent + ' (non transmises en simulation)' : (s.photosStored ? s.photosStored + ' transmise' + (s.photosStored > 1 ? 's' : '') : 'non transmises : vous pourrez les envoyer lors du rappel')) + '</span><span></span></div>' : '');
-    else h += (s.lines || []).map(function (l) { return '<div class="rw"><span class="rw-k">Intervention</span><span class="rw-v">' + esc(l.name) + '</span><span class="rw-v">' + esc(l.price) + '</span></div>'; }).join('') + (s.total > 0 ? '<div class="rw"><span class="rw-k">Total prix fermes</span><span></span><span class="rw-v">' + C.eur(s.total) + ' TTC</span></div>' : '') + (s.prise ? '<div class="rw"><span class="rw-k">Préférence</span><span class="rw-v">' + esc(s.prise) + '</span><span></span></div>' : '');
-    h += '<div class="rw"><span class="rw-k">Lieu</span><span class="rw-v">' + esc(s.lieu) + '</span><span></span></div>' + (s.tel ? '<div class="rw"><span class="rw-k">Téléphone</span><span class="rw-v">' + esc(s.tel) + '</span><span></span></div>' : '') + (s.email ? '<div class="rw"><span class="rw-k">Email</span><span class="rw-v">' + esc(s.email) + '</span><span></span></div>' : '') + (dv && s.lines && s.lines.length ? s.lines.map(function (l) { return '<div class="rw"><span class="rw-k">Intervention jointe</span><span class="rw-v">' + esc(l.name) + '</span><span class="rw-v">' + esc(l.price) + '</span></div>'; }).join('') : '') + '</div></div>';
+    h += '<div class="done-card dossier"><h2>' + (dv ? 'Votre projet' : 'Votre dossier') + '</h2><div class="rows" style="padding:4px 18px">';
+    h += row('Client', esc([s.prenom, s.nom].filter(Boolean).join(' ')));
+    if (dv) {
+      h += row('Travaux', esc((s.metiers || []).join(', '))) + row('Projet', s.desc ? esc(s.desc.length > 220 ? s.desc.slice(0, 217) + '…' : s.desc) : '');
+      if (s.photosSent) h += row('Photos', esc(s.photosSent + ' envoyée' + (s.photosSent > 1 ? 's' : '') + (s.photosStored === 0 ? ' (non reçues — renvoyez-les en répondant à l’email de l’agence)' : '')));
+      h += (s.lines || []).map(function (l) { return row('Intervention jointe', esc(l.name + ' · ' + l.price)); }).join('');
+    } else {
+      h += (s.lines || []).map(function (l) {
+        var inc = (l.includes || []).length ? '<ul class="done-inc">' + l.includes.map(function (x) { return '<li>' + ic('i-check', 14) + esc(x) + '</li>'; }).join('') + '</ul>' : '';
+        return '<div class="rw rw--line"><span class="rw-k">' + (l.kind === 'devis' ? 'Sur devis' : (l.kind === 'confirmer' ? 'À confirmer' : 'Prix ferme')) + '</span><span class="rw-v"><strong>' + esc(l.name) + '</strong>' + inc + '</span><span class="rw-v">' + esc(l.price) + '</span></div>';
+      }).join('');
+      if (s.total > 0) h += '<div class="rw rw--total"><span class="rw-k">Total des prix fermes</span><span></span><span class="rw-v">' + esc(C.eur(s.total)) + ' TTC</span></div>';
+      h += row('Préférence', esc(s.prise || ''));
+    }
+    h += row('Adresse', esc(s.lieu)) + row('Téléphone', esc(s.tel || '')) + row('Email', esc(s.email || ''));
+    h += '</div>';
+    if (!dv && (s.lines || []).length) h += '<p class="reserve-line">' + esc('Les tarifs affichés correspondent à des forfaits, sous réserve de vérification sur place : si le besoin constaté diffère, un ajustement ou un devis complémentaire vous est proposé avant intervention.') + '</p>';
+    h += '</div>';
+    h += payBlockHtml(s);
+    var paid = s.payment && s.payment.status === 'paid';
     var steps = dv
-      ? [['Un technicien étudie votre projet', s.photosSent ? 'À partir de votre description et de vos photos.' : 'À partir de votre description.'], ['L\u2019agence vous recontacte sous 24 h ouvrées', 'Pour préciser votre projet ; une visite sur place peut vous être proposée si nécessaire.' + hoursLine()], ['Vous recevez votre devis gratuit', 'Vous décidez ensuite, sans engagement.']]
-      : [['L\u2019agence de Saint-Omer vous rappelle', 'Sous 24 h ouvrées au plus tard, aux heures d\u2019ouverture (lun–ven 9h–17h, sam 9h–16h).' + hoursLine()], ['Le créneau est fixé avec vous', 'Les prix fermes restent ceux affichés ; les prestations sur devis sont chiffrées après diagnostic.'], ['Le technicien intervient', 'Vous réglez après l\u2019intervention. Aucun paiement en ligne.']];
-    if (!dv && (s.total > 0 || (s.lines || []).length)) h += '<p class="reserve-line">' + esc('Les tarifs affichés correspondent à des forfaits, sous réserve de vérification sur place : si le besoin constaté diffère, un ajustement ou un devis complémentaire vous est proposé avant intervention.') + '</p>';
-    h += '<div class="done-card"><h2>Et maintenant&nbsp;?</h2><ol class="timeline">' + steps.map(function (x, i) { return '<li><b>' + (i + 1) + '</b><strong>' + esc(x[0]) + '</strong><span>' + esc(x[1]) + '</span></li>'; }).join('') + '</ol></div>';
-    h += '<div class="done-actions"><a class="btn-soft" href="tel:+33366100134">' + ic('i-phone', 17) + '03 66 10 01 34</a><a class="btn-ghost" href="/">Retour à l’accueil</a><button type="button" class="btn-ghost" data-restart>Faire une autre demande</button></div><p class="legal" style="text-align:center"><button type="button" class="link" data-forget>Effacer mes informations de cet appareil</button></p>';
+      ? [['Un technicien étudie votre projet', s.photosSent ? 'À partir de votre description et de vos photos.' : 'À partir de votre description.'], ['L’agence vous recontacte sous 24 h ouvrées', 'Pour préciser votre projet ; une visite sur place peut vous être proposée si nécessaire.' + hoursLine()], ['Vous recevez votre devis gratuit', 'Vous décidez ensuite, sans engagement.']]
+      : [['L’agence de Saint-Omer vous rappelle', 'Sous 24 h ouvrées au plus tard, aux heures d’ouverture (lun–ven 9h–17h, sam 9h–16h).' + hoursLine()], ['Le créneau est fixé avec vous', 'Les prix fermes restent ceux affichés si la situation correspond au forfait ; les prestations sur devis sont chiffrées après diagnostic.'], ['Le technicien intervient', paid ? 'Votre paiement est déjà reçu : rien à régler sur place, sauf ajustement accepté par vous.' : 'Vous réglez après l’intervention.']];
+    h += '<div class="done-card"><h2>Et maintenant&nbsp;?</h2><ol class="timeline">' + steps.map(function (x, i) { return '<li><b>' + (i + 1) + '</b><strong>' + esc(x[0]) + '</strong><span>' + esc(x[1]) + '</span></li>'; }).join('') + '</ol>'
+      + '<p class="done-agency"><strong>HELP Confort — agence de Saint-Omer</strong><br><a href="tel:+33366100134">03 66 10 01 34</a> · <a href="mailto:saint-omer@helpconfort.com">saint-omer@helpconfort.com</a><br>lun–ven 9h–17h · sam 9h–16h</p></div>';
+    var modif = 'mailto:saint-omer@helpconfort.com?subject=' + encodeURIComponent('Modification de mon dossier ' + (s.ref || '')) + '&body=' + encodeURIComponent('Bonjour,\n\nJe souhaite modifier ma demande (dossier ' + (s.ref || '') + ') :\n\n');
+    h += '<div class="done-actions"><a class="btn-soft" href="tel:+33366100134">' + ic('i-phone', 17) + '03 66 10 01 34</a>'
+      + '<button type="button" class="btn-ghost" data-print>Imprimer ou enregistrer en PDF</button>'
+      + '<a class="btn-ghost" href="' + modif + '">Demander une modification</a>'
+      + '<a class="btn-ghost" href="/">Retour à l’accueil</a><button type="button" class="btn-ghost" data-restart>Faire une autre demande</button></div>'
+      + '<p class="legal" style="text-align:center"><button type="button" class="link" data-forget>Effacer mes informations de cet appareil</button></p>';
     box.innerHTML = h;
+    if (!dv && !s.simulated && s.leadId && s.payToken && !s.payState && !paid) checkPayment(0);
   };
 
   // ---------- Événements (délégation) ----------
@@ -1052,6 +1123,20 @@
       if (from === 'dv-projet') { state.devis.desc = $('#dv-desc').value.trim(); save(); if (!C.descOk(state.devis.desc)) { mark('fld-desc', true); return focusBad($('#dv-desc')); } }
       return next(from); }
     if ((el = t.closest('[data-go]'))) { e.preventDefault(); var tg = el.getAttribute('data-go'), ti = C.flowIndex(state.mode, tg), ci = C.flowIndex(state.mode, state.step); state._returnTo = (ti >= 0 && ci > ti) ? state.step : null; if (tg === 'coordonnees') state._editContact = true; return go(tg); }
+    if ((el = t.closest('[data-print]'))) { try { window.print(); } catch (e2) {} return; }
+    if ((el = t.closest('[data-pay]'))) {
+      var s0 = state.sent; if (!s0) return;
+      if (s0.simulated) { s0.payment = { status: 'paid', amount: s0.total, paid_at: new Date().toISOString(), simulated: true }; s0.payState = 'paid'; save(); ENTER.envoye(); track('hc_payment', { lead_type: 'intervention', simulated: true }); return; }
+      busy(el, true, 'Ouverture du paiement sécurisé…'); s0.payError = '';
+      payApi('create').then(function (r) {
+        if (r && r.url) { track('hc_payment', { lead_type: 'intervention', simulated: false }); location.href = r.url; return; }
+        busy(el, false);
+        if (r && r.already_paid) { s0.payment = r.payment; s0.payState = 'paid'; }
+        else s0.payError = 'Le paiement en ligne n’est pas disponible pour le moment. Votre dossier est bien enregistré : vous réglerez après l’intervention.';
+        save(); ENTER.envoye();
+      }, function () { busy(el, false); s0.payError = 'Le paiement n’a pas pu s’ouvrir. Votre dossier est conservé : réessayez ou réglez après l’intervention.'; save(); ENTER.envoye(); });
+      return;
+    }
     if ((el = t.closest('[data-edit-contact]'))) { state._editContact = true; save(); ENTER.coordonnees(); var f1 = $$('.field', $('.step[data-step="coordonnees"]')).filter(function (x) { return !x.hidden; })[0]; var i1 = f1 && f1.querySelector('input'); if (i1) i1.focus(); return; }
     if ((el = t.closest('[data-fam]'))) return pickFamily(el);
     if ((el = t.closest('[data-toggle]'))) return toggleLine(el.getAttribute('data-toggle'));
