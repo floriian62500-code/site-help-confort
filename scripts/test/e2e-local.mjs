@@ -193,6 +193,82 @@ if (catPath) {
 const pass = results.every(r => r.ok);
 console.log('\n=== RÉSULTAT E2E LOCAL ===');
 console.table(results);
+// ---------------------------------------------------------------------------
+// 4) Cycle commercial : intention silencieuse → finalisation → relance d'abandon
+//    (directives 5713150094 / 5713186419). Tout est local : aucun email, aucune PROD.
+// ---------------------------------------------------------------------------
+async function readLead(id) {
+  if (!SRK) return null;
+  const r = await fetch(`${SUPA}/rest/v1/leads?id=eq.${encodeURIComponent(id)}&select=*`, { headers: { apikey: SRK, Authorization: 'Bearer ' + SRK } });
+  const rows = await r.json().catch(() => []);
+  return Array.isArray(rows) ? rows[0] || null : null;
+}
+async function patchLead(id, patch) {
+  await fetch(`${SUPA}/rest/v1/leads?id=eq.${encodeURIComponent(id)}`, {
+    method: 'PATCH', headers: { apikey: SRK, Authorization: 'Bearer ' + SRK, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+    body: JSON.stringify(patch),
+  });
+}
+function check(name, ok, detail) {
+  results.push({ journey: name, status: ok ? 200 : 0, id: detail || (ok ? 'conforme' : 'écart'), ok });
+  console.log(`[${name}] ${ok ? 'OK ' + (detail || '') : 'FAIL ' + (detail || '')}`);
+}
+
+if (catPath) {
+  const box2 = { module: { exports: {} } };
+  vm.runInNewContext(readFileSync(catPath, 'utf8'), box2);
+  const C2 = box2.module.exports;
+  const cid = 'e2e-' + Date.now().toString(36);
+  const contact2 = { prenom: 'TEST', nom: 'NE PAS TRAITER', tel: '+33 (0)6 12 34 56 78', email: '' };
+  const lieu2 = { adresse: '1 rue Test', cp: '62500', ville: 'Saint-Omer', zone: C2.zoneFor(50.7508, 2.2522, '62500') };
+
+  // A. Accès aux tarifs : intention enregistrée, AUCUNE notification
+  const gate = C2.gatePayload({ contact: contact2, lieu: lieu2, famLabel: 'Plomberie & Sanitaires', fam: 'plomberie', page: 'http://localhost/ (E2E)', cid, step: 'acces' });
+  gate.source = 'e2e_local_intent';
+  const rA = await submitLead(gate);
+  const intentId = rA.body && rA.body.id;
+  check('CYCLE_A_intention_silencieuse', rA.status === 200 && !!intentId && rA.body.intent === true, 'id=' + (intentId || '—'));
+  const rowA = await readLead(intentId);
+  check('CYCLE_A_statut_intention', !!rowA && rowA.status === 'intent' && (rowA.metadata || {}).intent === true && !!(rowA.metadata || {}).last_activity_at, 'status=' + (rowA && rowA.status));
+  check('CYCLE_A_identite_distincte', !!rowA && rowA.prenom === 'TEST' && rowA.nom === 'NE PAS TRAITER', `${rowA && rowA.prenom} / ${rowA && rowA.nom}`);
+  const rAR = await post('lead-auto-reply', { lead_id: intentId });
+  check('CYCLE_A_aucun_email_client', rAR.status === 200 && rAR.body && rAR.body.sent === false && rAR.body.reason === 'intent_not_finalized', 'reason=' + (rAR.body && rAR.body.reason));
+
+  // B. Le client finalise : MÊME dossier, statut demande, notifications autorisées
+  const finalPayload = withSrc(C2.interventionPayload({ lines, byId, contact: contact2, lieu: lieu2, prise: { quand: 'asap', rappel: 'matin' }, cartMode: 'mixte', page: 'http://localhost/ (E2E)', cid }));
+  const rB = await submitLead(finalPayload);
+  check('CYCLE_B_meme_dossier', rB.status === 200 && rB.body.id === intentId && rB.body.reused === true, 'id=' + (rB.body && rB.body.id));
+  const rowB = await readLead(intentId);
+  check('CYCLE_B_finalisee', !!rowB && rowB.status === 'archive' && !!(rowB.metadata || {}).finalized_at && (rowB.metadata || {}).intent === false, 'status=' + (rowB && rowB.status));
+
+  // C. Abandon : intention inactive depuis plus de 15 min → UNE alerte interne, une seule
+  const cid2 = 'e2e-ab-' + Date.now().toString(36);
+  const gate2 = C2.gatePayload({ contact: { prenom: 'TEST', nom: 'ABANDON', tel: '06 12 34 56 78', email: '' }, lieu: lieu2, famLabel: 'Chauffage', fam: 'chauffage', page: 'http://localhost/ (E2E)', cid: cid2, step: 'acces' });
+  gate2.source = 'e2e_local_abandon';
+  const rC = await submitLead(gate2);
+  const abId = rC.body && rC.body.id;
+  const rowC0 = await readLead(abId);
+  await patchLead(abId, { metadata: { ...(rowC0.metadata || {}), last_activity_at: new Date(Date.now() - 30 * 60000).toISOString() } });
+  const sweep1 = await post('leads-abandon-sweep', { minutes: 15 });
+  const rowC1 = await readLead(abId);
+  check('CYCLE_C_alerte_abandon', sweep1.status === 200 && sweep1.body.ok === true && (sweep1.body.ids || []).includes(abId) && rowC1.status === 'needs_followup' && !!(rowC1.metadata || {}).abandon_notified_at, 'notified=' + (sweep1.body && sweep1.body.notified));
+  const sweep2 = await post('leads-abandon-sweep', { minutes: 15 });
+  check('CYCLE_C_une_seule_alerte', sweep2.status === 200 && !(sweep2.body.ids || []).includes(abId), 'notified=' + (sweep2.body && sweep2.body.notified));
+
+  // D. Le client revient après l'abandon : même dossier, aucun doublon
+  const rD = await submitLead(withSrc(C2.devisPayload({ contact: { prenom: 'TEST', nom: 'ABANDON', tel: '06 12 34 56 78', email: '' }, lieu: lieu2, devis: { metiers: ['Chauffage'], nature: 'Réparation', desc: tag('D reprise après abandon') }, photos: 0, page: 'http://localhost/ (E2E)', cid: cid2 })));
+  const rowD = await readLead(abId);
+  check('CYCLE_D_reprise_meme_dossier', rD.status === 200 && rD.body.id === abId && rD.body.reused === true && !!(rowD.metadata || {}).finalized_at, 'id=' + (rD.body && rD.body.id));
+
+  // E. Relance d'abandon jamais envoyée à un dossier finalisé
+  const sweep3 = await post('leads-abandon-sweep', { minutes: 15 });
+  check('CYCLE_E_pas_de_relance_apres_finalisation', sweep3.status === 200 && !(sweep3.body.ids || []).includes(abId), 'notified=' + (sweep3.body && sweep3.body.notified));
+
+  // F. CRM Apogée : file d'attente alimentée, envoi bloqué faute d'accès (aucun faux succès)
+  const crm = await post('crm-apogee-push', { dry_run: true });
+  check('CYCLE_F_crm_en_attente_bloque', crm.status === 200 && crm.body.ok === false && crm.body.blocked === 'missing_credentials' && crm.body.pending >= 1, 'pending=' + (crm.body && crm.body.pending));
+}
+
 const flow = (prefix) => { const rs = results.filter((r) => r.journey.startsWith(prefix)); return rs.length && rs.every((r) => r.ok) ? 'PASS' : 'FAIL'; };
 const both = (a, b) => (flow(a) === 'PASS' && flow(b) === 'PASS' ? 'PASS' : 'FAIL');
 console.log(`INTERVENTION_BACKEND_E2E=${flow('V2_INTERVENTION')} | QUOTE_BACKEND_E2E=${flow('V2_DEVIS')} | MAINTENANCE_BACKEND_E2E=${both('V2_ENTRETIEN', 'J6_souscription_entretien')} (devis module + souscription page) | PRICE_GATE_BACKEND_E2E=${flow('V2_acces_tarifs')} (local isolé)`);
