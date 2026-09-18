@@ -195,6 +195,7 @@ Deno.serve(async (req: Request) => {
   // Jeton d'upload photo court (15 min, usage unique) — permet un upload SÉCURISÉ post-lead
   // via l'Edge Function upload-lead-photos (aucun upload anonyme direct dans Storage).
   const uploadToken = crypto.randomUUID() + crypto.randomUUID().replace(/-/g, '');
+  let payToken: string | null = null;
   const uploadExpires = Date.now() + 15 * 60 * 1000;
   // Auto-archivage des leads de test (nom contenant TEST RECETTE / NE PAS TRAITER)
   const isTestLead = /TEST\s*RECETTE|NE\s*PAS\s*TRAITER/i.test(`${nom || ''} ${prenom || ''}`);
@@ -211,7 +212,12 @@ Deno.serve(async (req: Request) => {
     if (correlationId) meta.correlation_id = correlationId;
     if (lastStep) meta.last_step = lastStep;
     if (isIntent) { meta.intent = true; if (!meta.intent_created_at) meta.intent_created_at = nowIso; }
-    else { meta.finalized_at = nowIso; meta.intent = false; }
+    else {
+      meta.finalized_at = nowIso; meta.intent = false;
+      // Jeton de paiement (7 jours) : seul l'auteur de la demande peut ouvrir le paiement en ligne facultatif.
+      if (!meta.pay_token) { meta.pay_token = crypto.randomUUID().replace(/-/g, '') + crypto.randomUUID().replace(/-/g, ''); meta.pay_token_expires = Date.now() + 7 * 24 * 3600 * 1000; }
+      payToken = String(meta.pay_token);
+    }
     const upd: Record<string, unknown> = { metadata: meta };
     if (isTestLead) upd.status = 'archive';
     await supabase.from('leads').update(upd).eq('id', data.id);
@@ -232,5 +238,5 @@ Deno.serve(async (req: Request) => {
     try { fetch(`${supabaseUrl}/functions/v1/lead-auto-reply`, { method: 'POST', headers, body: efBody }).catch(() => {}); } catch (_) {}
   }
 
-  return json(200, { success: true, id: data.id, upload_token: uploadToken, contract_v6: true, intent: isIntent, reused: !!existing });
+  return json(200, { success: true, id: data.id, upload_token: uploadToken, pay_token: payToken, contract_v6: true, intent: isIntent, reused: !!existing });
 });

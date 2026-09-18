@@ -31,7 +31,8 @@ serve(async (req) => {
   if (req.method !== 'POST') return new Response('Method not allowed', { status: 405, headers: CORS });
 
   try {
-    const { lead_id } = await req.json();
+    const { lead_id, kind: mailKind } = await req.json();
+    const isPayment = String(mailKind || '') === 'payment';
     if (!lead_id) return json({ error: 'lead_id required' }, 400);
 
     const supabase = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
@@ -44,7 +45,9 @@ serve(async (req) => {
     if (isIntent && !meta.finalized_at) return json({ ok: true, sent: false, reason: 'intent_not_finalized' });
 
     if (!lead.email) return json({ ok: true, sent: false, reason: 'no_client_email' });
-    if (meta.client_replied_at) return json({ ok: true, sent: false, reason: 'already_replied' });
+    if (isPayment && (!meta.payment || meta.payment.status !== 'paid')) return json({ ok: true, sent: false, reason: 'payment_not_confirmed' });
+    if (isPayment && meta.payment.client_notified_at) return json({ ok: true, sent: false, reason: 'already_replied' });
+    if (!isPayment && meta.client_replied_at) return json({ ok: true, sent: false, reason: 'already_replied' });
     if (/TEST\s*RECETTE|NE\s*PAS\s*TRAITER/i.test(`${lead.nom || ''} ${lead.prenom || ''}`)) {
       return json({ ok: true, sent: false, reason: 'lead_de_test' });
     }
@@ -54,9 +57,11 @@ serve(async (req) => {
 
     const firstName = (lead.prenom || '').trim();
     const kind = demandeKind(lead);
-    const subject = `Votre ${kind.noun} HELP Confort a bien été reçue${lead.metier ? ' (' + labelMetier(lead.metier) + ')' : ''}`;
-    const html = buildHtml(lead, firstName, kind);
-    const text = buildText(lead, firstName, kind);
+    const ref = 'HC-' + String(lead.id || '').replace(/[^0-9a-f]/gi, '').slice(0, 8).toUpperCase();
+    const subject = isPayment ? `Paiement reçu — dossier ${ref} — HELP Confort Saint-Omer`
+      : `Votre ${kind.noun} HELP Confort a bien été reçue${lead.metier ? ' (' + labelMetier(lead.metier) + ')' : ''}`;
+    const html = isPayment ? buildPaymentHtml(lead, firstName, ref) : buildHtml(lead, firstName, kind);
+    const text = isPayment ? buildPaymentText(lead, firstName, ref) : buildText(lead, firstName, kind);
 
     const resendRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -74,9 +79,11 @@ serve(async (req) => {
       return json({ ok: false, sent: false, error: err, status: resendRes.status }, 200);
     }
     const data = await resendRes.json();
-    await supabase.from('leads').update({
-      metadata: { ...meta, client_replied_at: new Date().toISOString(), client_reply_email_id: data.id },
-    }).eq('id', lead_id);
+    const stamp = new Date().toISOString();
+    const nextMeta = isPayment
+      ? { ...meta, payment: { ...meta.payment, client_notified_at: stamp, client_email_id: data.id } }
+      : { ...meta, client_replied_at: stamp, client_reply_email_id: data.id };
+    await supabase.from('leads').update({ metadata: nextMeta }).eq('id', lead_id);
 
     return json({ ok: true, sent: true, email_id: data.id, to: lead.email, kind: kind.key });
   } catch (e) {
@@ -177,6 +184,31 @@ Bonne journée,
 L'équipe ${AGENCE}
 
 ${TEL} · depan59-62.fr`;
+}
+
+function buildPaymentHtml(l: any, firstName: string, ref: string): string {
+  const p = l.metadata?.payment || {};
+  const amount = Number(p.amount || 0).toLocaleString('fr-FR', { minimumFractionDigits: 2 });
+  const when = new Date(p.paid_at || Date.now()).toLocaleString('fr-FR');
+  return `<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"></head>
+<body style="margin:0;padding:0;background:#f4f7fb;font-family:-apple-system,BlinkMacSystemFont,Inter,Segoe UI,Roboto,sans-serif">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f7fb;padding:32px 16px"><tr><td align="center">
+<table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:14px;box-shadow:0 6px 24px rgba(10,20,40,.08);overflow:hidden;max-width:600px">
+<tr><td style="background:linear-gradient(135deg,#0A1428,#172240);padding:28px;color:#fff;text-align:center">
+  <div style="font-size:22px;font-weight:800">Paiement reçu</div>
+  <div style="font-size:14px;opacity:.85;margin-top:6px">Dossier ${escapeHtml(ref)}</div>
+</td></tr>
+<tr><td style="padding:28px;color:#0A1428;font-size:15px;line-height:1.6">
+  <p style="margin:0 0 14px">${firstName ? 'Bonjour ' + escapeHtml(firstName) + ',' : 'Bonjour,'}</p>
+  <p style="margin:0 0 14px">Nous avons bien reçu votre paiement de <strong>${escapeHtml(amount)} € TTC</strong> le ${escapeHtml(when)} pour le dossier <strong>${escapeHtml(ref)}</strong>.</p>
+  <p style="margin:0 0 14px">L’agence de Saint-Omer vous rappelle sous 24 h ouvrées (${HORAIRES}) pour fixer le créneau de l’intervention.</p>
+  <div style="background:#FFF7EC;border:1px solid rgba(255,138,26,.24);padding:14px 18px;border-radius:12px;margin:0 0 18px;color:#7C4A12;font-size:14px;line-height:1.55"><strong>Prix sous réserve de vérification sur place :</strong> le montant réglé correspond au forfait choisi. Si le technicien constate un besoin différent ou complémentaire, un ajustement vous est proposé avant toute intervention — aucun supplément n’est engagé sans votre accord.</div>
+  <p style="margin:0;color:#475569;font-size:14px">L’équipe ${escapeHtml(AGENCE)} · ${TEL}</p>
+</td></tr></table></td></tr></table></body></html>`;
+}
+function buildPaymentText(l: any, firstName: string, ref: string): string {
+  const p = l.metadata?.payment || {};
+  return `Bonjour ${firstName || ''},\n\nNous avons bien reçu votre paiement de ${Number(p.amount || 0).toLocaleString('fr-FR', { minimumFractionDigits: 2 })} € TTC pour le dossier ${ref}.\nL'agence de Saint-Omer vous rappelle sous 24 h ouvrées (${HORAIRES}) pour fixer le créneau.\n\nPrix sous réserve de vérification sur place : tout ajustement vous est proposé avant intervention.\n\nL'équipe ${AGENCE} · ${TEL}`;
 }
 
 function escapeHtml(s: string): string {
