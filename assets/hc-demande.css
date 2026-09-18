@@ -489,7 +489,12 @@
 /* Lisibilité et identité en mobile */
 @media (max-width:760px){
   .hcd .app:not([data-step="choix"]):not([data-step="envoye"]) .top-logo{display:flex}
-  .hcd .top-logo img{height:26px;width:auto;max-width:78px;object-fit:contain}
+  .hcd .top-logo img{height:24px;width:auto;max-width:64px;object-fit:contain}
+  /* en-tête mobile : le libellé d'étape se tronque, le logo et les actions ne poussent jamais hors écran */
+  .hcd .top-in{min-width:0}
+  .hcd .top-prog{min-width:0;flex:1 1 auto;overflow:hidden}
+  .hcd .tp-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .hcd .top-right{flex:none}
   .hcd .field label,.hcd .mini-q{font-size:.95rem}
   .hcd .sim-badge{font-size:.78rem}
   .hcd .card{padding-top:16px}
