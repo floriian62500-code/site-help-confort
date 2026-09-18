@@ -219,6 +219,9 @@ if (catPath) {
   vm.runInNewContext(readFileSync(catPath, 'utf8'), box2);
   const C2 = box2.module.exports;
   const cid = 'e2e-' + Date.now().toString(36);
+  const byId2 = { a: { id: 'a', name: 'Intervention urgente plomberie — 1h + déplacement', price_ttc: 114.43, category_name: 'Plomberie & Sanitaires' } };
+  const lines2 = [{ id: 'a', slug: 'intervention-urgente-plomberie', name: byId2.a.name, ttc: 114.43, qty: 1 }];
+  const withSrc2 = (p) => ({ ...p, source: 'e2e_local_cycle_' + p.source });
   const contact2 = { prenom: 'TEST', nom: 'NE PAS TRAITER', tel: '+33 (0)6 12 34 56 78', email: '' };
   const lieu2 = { adresse: '1 rue Test', cp: '62500', ville: 'Saint-Omer', zone: C2.zoneFor(50.7508, 2.2522, '62500') };
 
@@ -235,7 +238,7 @@ if (catPath) {
   check('CYCLE_A_aucun_email_client', rAR.status === 200 && rAR.body && rAR.body.sent === false && rAR.body.reason === 'intent_not_finalized', 'reason=' + (rAR.body && rAR.body.reason));
 
   // B. Le client finalise : MÊME dossier, statut demande, notifications autorisées
-  const finalPayload = withSrc(C2.interventionPayload({ lines, byId, contact: contact2, lieu: lieu2, prise: { quand: 'asap', rappel: 'matin' }, cartMode: 'mixte', page: 'http://localhost/ (E2E)', cid }));
+  const finalPayload = withSrc2(C2.interventionPayload({ lines: lines2, byId: byId2, contact: contact2, lieu: lieu2, prise: { quand: 'asap', rappel: 'matin' }, cartMode: 'mixte', page: 'http://localhost/ (E2E)', cid }));
   const rB = await submitLead(finalPayload);
   check('CYCLE_B_meme_dossier', rB.status === 200 && rB.body.id === intentId && rB.body.reused === true, 'id=' + (rB.body && rB.body.id));
   const rowB = await readLead(intentId);
@@ -256,7 +259,7 @@ if (catPath) {
   check('CYCLE_C_une_seule_alerte', sweep2.status === 200 && !(sweep2.body.ids || []).includes(abId), 'notified=' + (sweep2.body && sweep2.body.notified));
 
   // D. Le client revient après l'abandon : même dossier, aucun doublon
-  const rD = await submitLead(withSrc(C2.devisPayload({ contact: { prenom: 'TEST', nom: 'ABANDON', tel: '06 12 34 56 78', email: '' }, lieu: lieu2, devis: { metiers: ['Chauffage'], nature: 'Réparation', desc: tag('D reprise après abandon') }, photos: 0, page: 'http://localhost/ (E2E)', cid: cid2 })));
+  const rD = await submitLead(withSrc2(C2.devisPayload({ contact: { prenom: 'TEST', nom: 'ABANDON', tel: '06 12 34 56 78', email: '' }, lieu: lieu2, devis: { metiers: ['Chauffage'], nature: 'Réparation', desc: tag('D reprise après abandon') }, photos: 0, page: 'http://localhost/ (E2E)', cid: cid2 })));
   const rowD = await readLead(abId);
   check('CYCLE_D_reprise_meme_dossier', rD.status === 200 && rD.body.id === abId && rD.body.reused === true && !!(rowD.metadata || {}).finalized_at, 'id=' + (rD.body && rD.body.id));
 
