@@ -174,7 +174,7 @@ function buildHtml(l: any, firstName: string, kind: Kind): string {
     const payTxt = r.payState === 'paid'
       ? `<div style="background:#ECFDF5;border-radius:10px;padding:12px 16px;margin:0 0 16px;color:#14532D"><strong>Paiement reçu</strong> — ${escapeHtml(Number(r.paid.amount || 0).toLocaleString('fr-FR', { minimumFractionDigits: 2 }))} € TTC.</div>`
       : r.payState === 'payable'
-        ? `<div style="background:#EFF6FF;border-radius:10px;padding:14px 16px;margin:0 0 16px;color:#1E3A8A;font-size:14px;line-height:1.55">Vous pouvez régler en ligne dès maintenant (facultatif), ou après l’intervention.<br><a href="${r.payLink}" style="display:inline-block;margin-top:10px;padding:11px 18px;background:#F2600C;color:#fff;text-decoration:none;border-radius:999px;font-weight:700">Régler en ligne</a></div>`
+        ? `<div style="background:#EFF6FF;border-radius:10px;padding:14px 16px;margin:0 0 16px;color:#1E3A8A;font-size:14px;line-height:1.55">Vous pouvez payer en ligne dès maintenant (facultatif), ou après l’intervention.<br><a href="${r.payLink}" style="display:inline-block;margin-top:10px;padding:11px 18px;background:#F2600C;color:#fff;text-decoration:none;border-radius:999px;font-weight:700">Payer en ligne</a></div>`
         : r.payState === 'after'
           ? `<p style="margin:0 0 16px;font-size:14px;color:#475569">Paiement : vous réglez après l’intervention.</p>`
           : `<p style="margin:0 0 16px;font-size:14px;color:#475569">Paiement : disponible après validation de l’agence (une prestation est à confirmer sur place ou sur devis).</p>`;
@@ -210,7 +210,7 @@ function buildText(l: any, firstName: string, kind: Kind): string {
   return `Bonjour ${firstName || ''},
 
 Nous avons bien reçu votre ${kind.noun} — dossier ${r.ref}.
-${r.bullets.length ? '\n' + r.bullets.map((b) => '• ' + b).join('\n') + '\n' : ''}${r.total ? 'Total des prix fermes : ' + r.total + '\n' : ''}${kind.key === 'intervention' ? (r.payState === 'paid' ? 'Paiement reçu.\n' : (r.payState === 'payable' ? 'Régler en ligne (facultatif) : ' + r.payLink + '\n' : (r.payState === 'after' ? 'Paiement : après l’intervention.\n' : 'Paiement : après validation de l’agence.\n'))) : ''}
+${r.bullets.length ? '\n' + r.bullets.map((b) => '• ' + b).join('\n') + '\n' : ''}${r.total ? 'Total des prix fermes : ' + r.total + '\n' : ''}${kind.key === 'intervention' ? (r.payState === 'paid' ? 'Paiement reçu.\n' : (r.payState === 'payable' ? 'Payer en ligne (facultatif) : ' + r.payLink + '\n' : (r.payState === 'after' ? 'Paiement : après l’intervention.\n' : 'Paiement : après validation de l’agence.\n'))) : ''}
 ${kind.steps.map((s, i) => `${i + 1}. ${s}`).join('\n')}
 
 ${kind.key === 'intervention' ? "Prix sous réserve de vérification sur place : le montant annoncé correspond au forfait choisi ; tout ajustement vous est proposé avant intervention.\n\n" : ''}Besoin urgent ? Appelez l'agence au ${TEL} (${HORAIRES}).

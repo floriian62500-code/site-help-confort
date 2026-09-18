@@ -1074,12 +1074,12 @@
     if (s.payState === 'unavailable' || (!s.simulated && (!s.leadId || !s.payToken))) return '';
     if (!s.allFirm || !(s.total > 0) || s.payState === 'ineligible')
       return '<div class="done-card pay"><h2>Paiement</h2><p>Paiement disponible après validation de l’agence : ' + (s.allFirm ? 'le montant sera confirmé lors du rappel. ' : 'votre demande comprend une prestation chiffrée sur place ou sur devis. ') + 'Vous réglez après l’intervention.</p></div>';
-    return '<div class="done-card pay"><h2>Régler en ligne <span class="opt">· facultatif</span></h2>'
+    return '<div class="done-card pay"><h2>Payer en ligne <span class="opt">· facultatif</span></h2>'
       + '<p>Vous pouvez régler dès maintenant les forfaits à prix ferme de votre demande — <strong>' + esc(amount) + ' TTC</strong> — ou après l’intervention, comme vous préférez.</p>'
       + '<p class="reserve-line">' + esc('Le montant réglé correspond aux forfaits sélectionnés. Si le technicien constate un besoin différent ou complémentaire, un ajustement vous est proposé avant toute intervention : aucun supplément sans votre accord.') + '</p>'
       + (s.payState === 'cancelled' ? '<p class="pay-note">Paiement annulé : votre dossier est conservé, vous pouvez réessayer quand vous voulez.</p>' : '')
       + (s.payError ? '<p class="pay-note pay-note--bad" role="alert">' + esc(s.payError) + '</p>' : '')
-      + '<button type="button" class="btn-primary" data-pay>' + (s.simulated ? 'Régler ' + esc(amount) + ' (simulation)' : 'Régler ' + esc(amount) + ' en ligne') + ' ' + ic('i-arrow', 18) + '</button>'
+      + '<button type="button" class="btn-primary" data-pay>' + (s.simulated ? 'Payer ' + esc(amount) + ' en ligne (simulation)' : 'Payer ' + esc(amount) + ' en ligne') + ' ' + ic('i-arrow', 18) + '</button>'
       + '<p class="pay-sub">Paiement sécurisé par carte · aucune donnée bancaire ne transite par ce site.</p></div>';
   }
   ENTER.envoye = function () {
@@ -1217,7 +1217,7 @@
   app.classList.toggle('is-sim', SIM || LIVE_PREVIEW);
   renderClosed();
   (function () { var panel = $('.sheet-panel'), y0 = null; panel.addEventListener('touchstart', function (e) { y0 = panel.scrollTop <= 0 ? e.touches[0].clientY : null; }, { passive: true }); panel.addEventListener('touchmove', function (e) { if (y0 !== null && e.touches[0].clientY - y0 > 70) { y0 = null; closeSheet(); } }, { passive: true }); })();
-  // Lien « Régler en ligne » de l'email client : on reconstitue un récapitulatif minimal du dossier
+  // Lien « Payer en ligne » de l'email client : on reconstitue un récapitulatif minimal du dossier
   // (renvoyé par le serveur au seul détenteur du jeton) puis on affiche l'écran final avec le paiement.
   function openPayLink(leadId, token) {
     payApi('check', leadId, token).then(function (r) {
