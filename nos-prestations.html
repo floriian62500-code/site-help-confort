@@ -667,7 +667,22 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  function unlock(){ try { localStorage.setItem(LG_KEY, '1'); } catch(_) {} document.body.classList.remove('is-locked'); }
  function lock(){ document.body.classList.add('is-locked'); }
  // 2026-06-01 — Coordonnées conservées localement pour relance mail/téléphone
+ // 2026-09-18 — Confidentialité (appareil partagé) : coordonnées gardées dans l'ONGLET uniquement (sessionStorage), 24 h max.
+ // Les anciennes copies durables (localStorage, sans expiration) sont purgées au chargement de la page.
  const LG_DATA_KEY = 'hc_lead_v1';
+ const LG_MAX_AGE = 24 * 3600 * 1000;
+ try { localStorage.removeItem(LG_DATA_KEY); Object.keys(localStorage).forEach(function(k){ if (k.indexOf('hc_tarif_lead_') === 0) localStorage.removeItem(k); }); } catch(_) {}
+ function readLeadData(){
+   try {
+     var d = JSON.parse(sessionStorage.getItem(LG_DATA_KEY) || 'null');
+     if (!d || typeof d !== 'object') return null;
+     if (!d.saved_at || (Date.now() - new Date(d.saved_at).getTime()) > LG_MAX_AGE) { sessionStorage.removeItem(LG_DATA_KEY); return null; }
+     return d;
+   } catch(_) { return null; }
+ }
+ function writeLeadData(d){ try { d.saved_at = new Date().toISOString(); sessionStorage.setItem(LG_DATA_KEY, JSON.stringify(d)); } catch(_) {} }
+ // Clé anti-doublon sans email ni téléphone en clair (empreinte courte), limitée à l'onglet
+ function contactHash(s){ var h = 5381; for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0; return h.toString(36); }
  function saveLeadData(fd){
    try {
      // 2026-06-04 — Ne sauvegarder QUE des coordonnées valides (sinon localStorage pollué par des tests)
@@ -688,26 +703,28 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
        ville: fd.get('ville') || '',
        saved_at: new Date().toISOString()
      };
-     localStorage.setItem(LG_DATA_KEY, JSON.stringify(data));
+     writeLeadData(data);
    } catch(_) {}
  }
  function clearLeadData(){
-   try { localStorage.removeItem(LG_DATA_KEY); } catch(_) {}
+   try { sessionStorage.removeItem(LG_DATA_KEY); localStorage.removeItem(LG_DATA_KEY); } catch(_) {}
    var f = document.getElementById('nvLgForm');
    if (f) f.querySelectorAll('input').forEach(function(i){ if (i.type !== 'hidden') i.value = ''; });
+   var clearBtn = document.getElementById('nvLgClearData'); if (clearBtn) clearBtn.style.display = 'none';
  }
+ // Le bouton « Effacer mes données » (onclick dans le HTML) doit atteindre la fonction : ce script est dans une fonction isolée
+ window.clearLeadData = clearLeadData;
  function restoreLeadData(){
    try {
-     var raw = localStorage.getItem(LG_DATA_KEY);
-     if (!raw) return;
-     var d = JSON.parse(raw);
+     var d = readLeadData();
+     if (!d) return;
      // Validation au chargement aussi : si les données stockées sont pourries, on les vire
      var telDigits = (d.telephone || '').replace(/[^0-9]/g, '');
      var ok = (d.prenom || '').length >= 2 && !/^[0-9]+$/.test(d.prenom)
            && (d.nom || '').length >= 2 && !/^[0-9]+$/.test(d.nom)
            && telDigits.length >= 10 && telDigits.length <= 13
            && /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(d.email || '');
-     if (!ok) { localStorage.removeItem(LG_DATA_KEY); return; }
+     if (!ok) { sessionStorage.removeItem(LG_DATA_KEY); return; }
      var f = document.getElementById('nvLgForm');
      if (!f) return;
      ['prenom','nom','telephone','email','adresse','code_postal','ville'].forEach(function(k){
@@ -915,9 +932,9 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  var ctx = window.__hcTarifCtx || {};
  var agence = /^59/.test(cp) ? 'depan-dk' : 'depan-audo';
  var contactKey = (email || tel || '').toLowerCase().replace(/[^a-z0-9@]/g,'');
- var dedupKey = 'hc_tarif_lead_' + contactKey;
+ var dedupKey = 'hc_tarif_lead_' + contactHash(contactKey);
  var already = false;
- try { var prev = localStorage.getItem(dedupKey); if (prev && (Date.now() - +prev) < 30*60*1000) already = true; } catch(_){}
+ try { var prev = sessionStorage.getItem(dedupKey); if (prev && (Date.now() - +prev) < 30*60*1000) already = true; } catch(_){}
  track('tariff_form_submit', { prestation: ctx.name || null, agence: agence });
  if (!already && contactKey) {
    try {
@@ -941,7 +958,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
      };
      var res = await sb.functions.invoke('submit-lead-v6', { body: lead });
      if (res && !res.error) {
-       try { localStorage.setItem(dedupKey, String(Date.now())); } catch(_){}
+       try { sessionStorage.setItem(dedupKey, String(Date.now())); } catch(_){}
        track('tariff_lead_created', { prestation: ctx.name || null, agence: agence });
      } else if (res && res.error) {
        console.warn('[tarif-lead] submit-lead-v6 error (non bloquant):', res.error);
@@ -1631,7 +1648,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  <div class="nv-form-field"><label>Nom *</label><input aria-label="Lastname" name="lastname" required></div>
  <div class="nv-form-field"><label>Email *</label><input aria-label="Email" name="email" type="email" required></div>
  <div class="nv-form-field"><label>Téléphone *</label><input aria-label="06 12 34 56 78" name="phone" type="tel" required placeholder="06 12 34 56 78"></div>
- <div class="nv-form-field nv-form-full"><label>Adresse d'intervention *</label><input aria-label="3 Rue du Général Sarrail" name="address" required placeholder="3 Rue du Général Sarrail"></div>
+ <div class="nv-form-field nv-form-full"><label>Adresse d'intervention *</label><input aria-label="Adresse d'intervention" name="address" required placeholder="N° et nom de rue" autocomplete="street-address"></div>
  <div class="nv-form-field"><label>Code postal *</label><input aria-label="62500" name="postal_code" required placeholder="62500"></div>
  <div class="nv-form-field"><label>Ville *</label><input aria-label="Saint-Omer" name="city" required placeholder="Saint-Omer"></div>
  <!-- 2026-06-01 — Florian : champ Date souhaitée retiré (promesse impossible à tenir + déception client). HC propose la date au rappel. -->
@@ -1665,13 +1682,12 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  modal.classList.add('is-open');
  document.body.style.overflow = 'hidden';
 
- // 2026-06-01 — Pré-remplissage des coordonnées depuis le leadgate (localStorage hc_lead_v1)
+ // 2026-06-01 — Pré-remplissage des coordonnées depuis le leadgate (2026-09-18 : onglet courant uniquement, 24 h max)
  try {
-   var raw = localStorage.getItem('hc_lead_v1');
-   if (raw) {
-     var d = JSON.parse(raw);
+   var d = readLeadData();
+   if (d) {
      // Si l'ancien leadgate avait tout fusionné dans `adresse` (avant la séparation CP/ville),
-     // on parse depuis le bloc texte. Format attendu : "3 Rue du Général Sarrail, 62500 Saint-Omer"
+     // on parse depuis le bloc texte. Format attendu : "12 rue de Dunkerque, 62500 Saint-Omer"
      if (d.adresse && (!d.code_postal || !d.ville)) {
        var m = d.adresse.match(/(.*?)[,\s]+(\d{5})\s+(.+?)$/);
        if (m) {
@@ -1760,14 +1776,11 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
    errBox.innerHTML = '<strong>Merci de corriger :</strong><br>• ' + errors.join('<br>• ');
    return;
  }
- // 2026-06-01 — Mémorise les coordonnées pour les prochaines réservations
- try {
-   localStorage.setItem('hc_lead_v1', JSON.stringify({
-     prenom: data.firstname, nom: data.lastname, telephone: data.phone, email: data.email,
-     adresse: data.address, code_postal: data.postal_code, ville: data.city,
-     saved_at: new Date().toISOString()
-   }));
- } catch(_){}
+ // 2026-06-01 — Mémorise les coordonnées pour les prochaines réservations (2026-09-18 : onglet courant uniquement, 24 h max)
+ writeLeadData({
+   prenom: data.firstname, nom: data.lastname, telephone: data.phone, email: data.email,
+   adresse: data.address, code_postal: data.postal_code, ville: data.city
+ });
 
  // Variant
  let variantKey = null, variantLabel = null, finalHt = svc.price_ht, finalTtc = svc.price_ttc;

@@ -203,8 +203,8 @@ ok('demande en cours : prestations, métiers ou saisie personnelle ; jamais apr�
 ok('UI : écriture séparée localStorage (brouillon) / sessionStorage (données personnelles), plus aucune écriture de l’état complet', /localStorage\.setItem\(STORE, JSON\.stringify\(parts\.draft\)\)/.test(uiSrc) && /sessionStorage\.setItem\(STORE_PII, JSON\.stringify\(parts\.pii\)\)/.test(uiSrc) && !/localStorage\.setItem\(STORE, JSON\.stringify\(state\)\)/.test(uiSrc));
 ok('UI : lien d’entrée avec demande en cours → écran de choix (Reprendre / Nouvelle demande), jamais de pré-remplissage silencieux', /if \(h\.entry && C\.hasDraft\(state, cart \? cart\.count\(\) : 0\)\) \{ pendingEntry = h; start = 'choix'; \}/.test(uiSrc) && /r\.entry = \(!sm && !!\(raw \|\| cm\)\) \|\| raw === 'entretien'/.test(uiSrc) && />Nouvelle demande<\/button>/.test(uiSrc));
 ok('UI : envoi réussi → identité et adresse retirées de l’état stocké (2 parcours)', (uiSrc.match(/forgetIdentityAfterSend\(\); save\(\);/g) || []).length === 2);
-ok('UI : nouveau choix de parcours avec demande en cours ou envoyée → état vierge ; identité reprise seulement via « Faire une autre demande »', /if \(state\.sent \|\| C\.hasDraft\(state, cart \? cart\.count\(\) : 0\)\) startClean\(\);/.test(uiSrc) && /carryIdentity = restart \? lastIdentity : null;/.test(uiSrc) && !/var keep = \{ contact: state\.contact/.test(uiSrc));
-ok('UI : « Effacer mes informations » purge brouillon, données personnelles, demande, accès tarifs, mesure et attribution + champs affichés', /\[STORE, 'hc_cart_v1'\]\.forEach/.test(uiSrc) && /\[STORE_PII, 'hc_pg', 'hc_fs_intervention', 'hc_fs_devis', 'hc_utm', 'hc_referrer'\]\.forEach/.test(uiSrc) && /lastIdentity = carryIdentity = pendingEntry = null; clearFields\(\);/.test(uiSrc));
+ok('UI : nouvelle demande (choix de parcours, « Nouvelle demande », « Faire une autre demande ») → état vierge, aucune identité ni adresse recopiée', /if \(state\.sent \|\| C\.hasDraft\(state, cart \? cart\.count\(\) : 0\)\) startClean\(\);/.test(uiSrc) && !/lastIdentity|carryIdentity/.test(uiSrc) && /var entry = pendingEntry; pendingEntry = null; startClean\(\); var to = entry \? applyEntry\(entry\) : 'choix';/.test(uiSrc) && !/var keep = \{ contact: state\.contact/.test(uiSrc));
+ok('UI : « Effacer mes informations » vide l’état, les champs affichés et toutes les clés personnelles de l’appareil', /state = C\.emptyState\(\); pendingEntry = null; clearFields\(\); try \{ C\.purgeDevice\(localStorage, sessionStorage\); \}/.test(uiSrc));
 ok('UI : aucune donnée personnelle dans l’URL (hash = étape + catégorie uniquement)', !/(history\.(push|replace)State\([^)]*(contact|lieu|tel|nom|adresse))/.test(uiSrc) && /'#step=' \+ target \+ \(state\.mode === 'intervention' && state\.fam \? '&cat=' \+ encodeURIComponent\(state\.fam\) : ''\)/.test(uiSrc));
 const choixSrc = (uiSrc.match(/ENTER\.choix = function \(\) \{[\s\S]*?\n  \};/) || [''])[0];
 ok('reprise : la carte « demande en cours » n’affiche aucune donnée personnelle (ni ville, ni nom, ni adresse)', choixSrc.length > 0 && !/state\.lieu\.(ville|adresse|cp)\b|state\.contact/.test(choixSrc.replace(/C\.lieuValid\(state\.lieu\)/g, '')));
@@ -228,7 +228,7 @@ ok('dossier unique : la référence de corrélation part avec l’intention et a
   && C.interventionPayload({ lines, byId, contact, lieu, prise: { quand: 'asap' }, cid: 'cid-123' }).correlation_id === 'cid-123'
   && C.devisPayload({ contact, lieu, devis: { metiers: ['Plomberie'], desc: 'x' }, cid: 'cid-123' }).correlation_id === 'cid-123');
 ok('UI : champ Nom obligatoire à l’étape tarifs (validé avant affichage des prix)', /id="pg-nom"/.test(uiFile) && /bN = !C\.nameOk\(no\.value\)/.test(uiFile) && /if \(bN\) return focusBad\(no\);/.test(uiFile) && /state\.contact\.nom = no\.value\.trim\(\)/.test(uiFile));
-ok('UI : référence de dossier créée une seule fois puis réutilisée', /function cid\(\) \{/.test(uiFile) && /if \(state\._cid\) return state\._cid;/.test(uiFile) && /cid: state\._cid \|\| null/.test(uiFile));
+ok('UI : référence de dossier créée une seule fois puis réutilisée ; présente sur les 2 envois finaux même sans passage par les tarifs (devis)', /function cid\(\) \{/.test(uiFile) && /if \(state\._cid\) return state\._cid;/.test(uiFile) && (uiFile.match(/cid: cid\(\)/g) || []).length === 3 && !/cid: state\._cid \|\| null/.test(uiFile));
 ok('UI : signal d’activité muet (aucun envoi en simulation, aucune notification demandée)', /function pingIntent\(step\)/.test(uiFile) && /if \(SIM \|\| !state\._cid \|\| !C\.contactValid\(state\.contact\)\) return;/.test(uiFile) && /pingIntent\('coordonnees'\)/.test(uiFile));
 
 // ---- Une information n'est demandée qu'une fois (directive 5713227171)
@@ -248,6 +248,40 @@ ok('paiement : retour de la banque → vérification sur le même dossier (reçu
 ok('paiement : jamais de promesse « aucun paiement en ligne » contradictoire', !/Aucun paiement en ligne/.test(uiFile));
 ok('nouvelle demande après envoi : le récapitulatif précédent est purgé de l’onglet', /if \(h\.entry && state\.sent\) startClean\(\);/.test(uiFile));
 ok('impression : seul le récapitulatif s’imprime', /@media print\{/.test(cssFile) && /\.hcd \.top,\.hcd \.done-actions/.test(cssFile));
+
+// ---- Nouvelle demande = état vierge (5717182264, re-vérifié après la fenêtre premium ouverte depuis l'accueil)
+const now0 = Date.now();
+const withPii = Object.assign(C.emptyState(), { contact: { prenom: 'Alice', nom: 'Premiere', tel: '0600000001', email: '' }, updatedAt: now0 });
+ok('expiration : données personnelles conservées pendant une demande active (< 2 h)', !C.piiExpired(withPii, now0 + C.PII_TTL_MS - 1000));
+ok('expiration : données personnelles effacées après 2 h sans activité (onglet resté ouvert)', C.piiExpired(withPii, now0 + C.PII_TTL_MS + 1000) && C.PII_TTL_MS === 2 * 3600 * 1000);
+ok('expiration : récapitulatif envoyé (nom, adresse, téléphone) soumis à la même limite', C.piiExpired(Object.assign(C.emptyState(), { sent: { prenom: 'A' }, updatedAt: now0 }), now0 + C.PII_TTL_MS + 1));
+ok('expiration : un brouillon sans donnée personnelle n’expire pas (7 j, prestations choisies)', !C.piiExpired(Object.assign(C.emptyState(), { updatedAt: now0 - 5 * 864e5 }), now0));
+const stripped = C.stripPii(Object.assign(C.emptyState(), { contact: { prenom: 'A', nom: 'B', tel: '0600000001', email: 'a@b.fr' }, lieu: { adresse: '1 rue', cp: '62500', ville: 'Saint-Omer', lat: 1, lon: 2, zone: {} }, devis: { metiers: ['Plomberie'], nature: null, desc: 'fuite' }, prise: { quand: 'asap', date: '', rappel: 'asap', precisions: 'digicode' }, sent: { prenom: 'A' }, fam: 'plomberie' }));
+ok('effacement : identité, adresse, textes libres et récapitulatif retirés ; choix non personnels gardés', !C.hasPii(stripped) && stripped.sent === null && stripped.devis.metiers[0] === 'Plomberie' && stripped.fam === 'plomberie' && stripped.prise.quand === 'asap');
+function fakeStorage(init) { const m = new Map(Object.entries(init || {})); return { getItem: k => (m.has(k) ? m.get(k) : null), setItem: (k, v) => m.set(k, String(v)), removeItem: k => m.delete(k), key: i => [...m.keys()][i] ?? null, get length() { return m.size; }, keys: () => [...m.keys()].sort() }; }
+const lsF = fakeStorage({ 'hc_demande_v2': '{}', 'hc_cart_v1': '[]', 'hc_lead_v1': '{"prenom":"Old"}', 'hc_tarif_lead_oldexampletest': '1', 'hc_tarif_lead_x': '1', 'hc_chat_history': '[]', 'hc_chat_session_id': 's', 'hc-consent': 'granted', 'hc_live': '1' });
+const ssF = fakeStorage({ 'hc_demande_v2_pii': '{}', 'hc_pg': '1', 'hc_fs_intervention': '1', 'hc_utm': '{}', 'hc_referrer': 'x', 'hc_sid': 's', 'hc_lead_v1': '{}', 'hc_wizard_prefill': '{}', '__hc_sw_reset': '1' });
+C.purgeDevice(lsF, ssF);
+ok('« Effacer mes informations » : module, anciens formulaires (hc_lead_v1, hc_tarif_lead_*), assistant et session purgés', JSON.stringify(lsF.keys()) === JSON.stringify(['hc-consent', 'hc_live']) && JSON.stringify(ssF.keys()) === JSON.stringify(['__hc_sw_reset']));
+ok('« Effacer mes informations » : le choix cookies est conservé (obligation de preuve du consentement)', lsF.getItem('hc-consent') === 'granted');
+const lsL = fakeStorage({ 'hc_lead_v1': '{"prenom":"Old"}', 'hc_tarif_lead_a': '1', 'hc_demande_v2': '{"v":2}', 'hc-consent': 'denied' });
+C.purgeLegacy(lsL);
+ok('anciennes coordonnées DURABLES (formulaires d’avant 09/2026) purgées au chargement, rien d’autre', JSON.stringify(lsL.keys()) === JSON.stringify(['hc-consent', 'hc_demande_v2']));
+const clearSrc = (uiFile.match(/function clearFields\(\) \{[\s\S]*?\n  \}/) || [''])[0];
+ok('champs : vidage de TOUS les champs de saisie du module (présents et futurs), pas d’une liste à tenir à jour', /\(mounted \|\| document\)\.querySelectorAll\('input, textarea'\)/.test(clearSrc) && !/PII_FIELDS/.test(uiFile));
+const tplInputs = [...uiFile.matchAll(/<input\b[^>]*>/g)].map(m => m[0]);
+const skipped = tplInputs.filter(t => /type="(checkbox|radio|hidden|button|submit|reset)"/.test(t));
+ok('champs : chaque champ texte du formulaire (dont Nom à l’étape tarifs) est couvert par le vidage', tplInputs.length >= 12 && skipped.length === 0 && tplInputs.some(t => /id="pg-nom"/.test(t)));
+ok('après envoi : la référence du dossier finalisé est abandonnée (la demande suivante n’est jamais prise pour un doublon)', /function forgetIdentityAfterSend\(\) \{ var e = C\.emptyState\(\); state\.contact = e\.contact; state\.lieu = e\.lieu; state\._cid = null; clearFields\(\); \}/.test(uiFile) && (uiFile.match(/forgetIdentityAfterSend\(\); save\(\);/g) || []).length === 2);
+ok('lien d’entrée sans demande en cours = nouvelle demande → nouvelle référence de dossier', /else \{ if \(h\.entry\) state\._cid = null; start = applyEntry\(h\); \}/.test(uiFile));
+ok('accès tarifs : une référence déjà finalisée (ancien brouillon) est abandonnée', /if \(r && r\.duplicate\) state\._cid = null;/.test(uiFile));
+ok('expiration appliquée au chargement ET à chaque réouverture de la fenêtre', /if \(C\.piiExpired\(st, Date\.now\(\)\)\) \{ C\.stripPii\(st\);/.test(uiFile) && /if \(C\.piiExpired\(state, Date\.now\(\)\)\) \{ C\.stripPii\(state\); clearFields\(\);/.test(uiFile) && /try \{ C\.purgeLegacy\(localStorage\); \} catch \(e\) \{\}/.test(uiFile));
+const presta = readFileSync(join(ROOT, 'nos-prestations.html'), 'utf8');
+ok('« Nos prestations » : plus aucune coordonnée écrite en stockage durable (localStorage)', !/localStorage\.setItem\((LG_DATA_KEY|'hc_lead_v1'|dedupKey)/.test(presta) && /sessionStorage\.setItem\(LG_DATA_KEY/.test(presta));
+ok('« Nos prestations » : coordonnées de l’onglet limitées à 24 h, anciennes copies durables purgées au chargement', /const LG_MAX_AGE = 24 \* 3600 \* 1000;/.test(presta) && /try \{ localStorage\.removeItem\(LG_DATA_KEY\); Object\.keys\(localStorage\)\.forEach/.test(presta));
+ok('« Nos prestations » : clé anti-doublon sans email ni téléphone en clair', /var dedupKey = 'hc_tarif_lead_' \+ contactHash\(contactKey\);/.test(presta));
+ok('« Nos prestations » : le bouton « Effacer mes données » atteint réellement sa fonction', /onclick="clearLeadData\(\)"/.test(presta) && /window\.clearLeadData = clearLeadData;/.test(presta));
+ok('code source public : aucune adresse personnelle réelle en exemple', !/Sarrail/.test(presta) && !/Sarrail/.test(uiFile));
 
 console.log(`\nRÉSULTAT MODULE DEMANDE V2 : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);

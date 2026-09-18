@@ -405,17 +405,25 @@
       if (s && s.v === 2 && cart) { try { cart.clear(); } catch (e) {} } // brouillon expiré (> 7 j) : on repart proprement
       s = null; pii = null;
     }
-    return C.mergeState(s, pii);
+    var st = C.mergeState(s, pii);
+    if (C.piiExpired(st, Date.now())) { C.stripPii(st); try { sessionStorage.removeItem(STORE_PII); } catch (e) {} }
+    return st;
   })();
+  try { C.purgeLegacy(localStorage); } catch (e) {}
   // Brouillon non personnel → localStorage ; identité, adresse et textes libres → sessionStorage (onglet courant)
   function save() {
     state.updatedAt = Date.now(); var parts = C.splitState(state);
     try { localStorage.setItem(STORE, JSON.stringify(parts.draft)); } catch (e) {}
     try { sessionStorage.setItem(STORE_PII, JSON.stringify(parts.pii)); } catch (e) {}
   }
-  var lastIdentity = null, carryIdentity = null, pendingEntry = null;
-  var PII_FIELDS = ['f-adresse', 'f-cp', 'f-ville', 'pg-prenom', 'pg-tel', 'pg-email', 'f-prenom', 'f-nom', 'f-tel', 'f-email', 'f-date', 'f-precisions', 'dv-desc', 'dv-photos'];
-  function clearFields() { PII_FIELDS.forEach(function (id) { var el = document.getElementById(id); if (el) try { el.value = ''; } catch (e) {} }); }
+  var pendingEntry = null;
+  // Tous les champs de saisie du module, présents et futurs : aucune valeur d'une demande précédente ne reste dans la page
+  function clearFields() {
+    Array.prototype.forEach.call((mounted || document).querySelectorAll('input, textarea'), function (el) {
+      if (/^(checkbox|radio|hidden|button|submit|reset)$/i.test(el.type || '')) return;
+      try { el.value = ''; } catch (e) {}
+    });
+  }
   // Nouvelle demande : état vierge (le statut d'accès aux tarifs, non personnel, est conservé)
   function startClean() {
     var pg = { ok: state._priceGateOk, at: state._priceGateAt };
@@ -423,8 +431,9 @@
     try { sessionStorage.removeItem(STORE_PII); } catch (e) {}
     clearFields();
   }
-  // Après envoi : plus aucune donnée personnelle stockée ; l'identité reste en mémoire pour « Faire une autre demande » (action explicite)
-  function forgetIdentityAfterSend() { lastIdentity = { contact: state.contact, lieu: state.lieu }; var e = C.emptyState(); state.contact = e.contact; state.lieu = e.lieu; clearFields(); }
+  // Après envoi : plus aucune donnée personnelle dans l'état (le récapitulatif reste dans l'onglet), dossier clos → la demande
+  // suivante aura sa propre référence (jamais celle d'un dossier finalisé, qui serait traitée comme un doublon)
+  function forgetIdentityAfterSend() { var e = C.emptyState(); state.contact = e.contact; state.lieu = e.lieu; state._cid = null; clearFields(); }
   // ---------- Mesure du tunnel (P0.4) ----------
   // Toujours consigné en mémoire (window.__hcFunnel, contrôle recette : rien ne sort du navigateur).
   // Envoi GA4 via window.hcGtag (créé par assets/tracking.js APRÈS consentement) : production uniquement, hors simulation.
@@ -730,7 +739,8 @@
     var body = C.gatePayload({ contact: state.contact, lieu: state.lieu, famLabel: famName(state.fam), fam: state.fam, page: location.href, attribution: attribution(), cid: cid(), step: 'acces' });
     var p = SIM ? simulate('price_gate') : fetch(SUPA + '/functions/v1/submit-lead-v6', { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true, body: JSON.stringify(body) })
       .then(function (r) { return r.ok ? r.json().catch(function () { return {}; }) : Promise.reject(r.status); });
-    p.then(function () { track('hc_tarifs_access', { cat: state.fam, lead: 'ok' }); }, function () { track('hc_tarifs_access', { cat: state.fam, lead: 'echec' }); }).then(function () {
+    // Référence d'un dossier déjà finalisé (ancien brouillon) : abandonnée, l'envoi final en créera une nouvelle
+    p.then(function (r) { if (r && r.duplicate) state._cid = null; track('hc_tarifs_access', { cat: state.fam, lead: 'ok' }); }, function () { track('hc_tarifs_access', { cat: state.fam, lead: 'echec' }); }).then(function () {
       state._priceGateOk = true; state._priceGateAt = Date.now(); try { sessionStorage.setItem('hc_pg', '1'); } catch (e2) {} state._pgPending = null; save();
       busy(btn, false);
       go(pending, { replace: true });
@@ -987,7 +997,7 @@
     if (!p.quand) { err.textContent = 'Choisissez un délai souhaité.'; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); var q = $('#quandOpts [data-quand]'); if (q) q.focus({ preventScroll: true }); return; }
     if (p.quand === 'date' && !C.dateOk(p.date)) { mark('fld-date', true); focusBad($('#f-date')); return; }
     var lines = cart.lines();
-    var payload = C.interventionPayload({ lines: lines, byId: byId, contact: state.contact, lieu: state.lieu, prise: p, cartMode: cart.mode(), page: location.href, attribution: attribution(), cid: state._cid || null });
+    var payload = C.interventionPayload({ lines: lines, byId: byId, contact: state.contact, lieu: state.lieu, prise: p, cartMode: cart.mode(), page: location.href, attribution: attribution(), cid: cid() });
     track('hc_demande_submit', { lines: lines.length, quote_lines: lines.filter(function (l) { return l.requires_quote; }).length, zone: state.lieu.zone && state.lieu.zone.status });
     busy(btn, true, 'Envoi en cours…');
     postLead(payload).then(function (data) {
@@ -1004,7 +1014,7 @@
     var btn = $('#sendDevis'), err = $('#errDevis'); if (btn.classList.contains('is-busy')) return; err.hidden = true;
     var files = dvFiles.slice();
     var joined = cart ? cart.lines() : [];
-    var payload = C.devisPayload({ contact: state.contact, lieu: state.lieu, devis: state.devis, photos: files.length, lines: joined, byId: byId, page: location.href, attribution: attribution(), cid: state._cid || null });
+    var payload = C.devisPayload({ contact: state.contact, lieu: state.lieu, devis: state.devis, photos: files.length, lines: joined, byId: byId, page: location.href, attribution: attribution(), cid: cid() });
     var leadType = (state.devis.metiers || []).indexOf('Contrat entretien') >= 0 ? 'entretien' : 'devis';
     track('hc_demande_submit', { lead_type: leadType, lines: joined.length, photos: files.length, zone: state.lieu.zone && state.lieu.zone.status });
     busy(btn, true, 'Envoi en cours…');
@@ -1118,7 +1128,7 @@
     var t = e.target; if (!t.closest) return; var el;
     if (OVERLAY && (el = t.closest('.top-close') || t.closest('a[href="/"]'))) { e.preventDefault(); close(); return; } // overlay : on reste sur la page hôte
     if (t.closest('a[href^="tel:"]')) track('hc_call_click', { step: state.step });
-    if ((el = t.closest('[data-choose]'))) { var md = el.getAttribute('data-choose'), carry = carryIdentity; carryIdentity = null; pendingEntry = null; if (state.sent || C.hasDraft(state, cart ? cart.count() : 0)) startClean(); if (carry) { state.contact = carry.contact; state.lieu = carry.lieu; } state.mode = md; state.sent = null; state._returnTo = null; if (md === 'intervention') { state.fam = null; state.prob = null; state.precMode = 'liste'; } save(); return go(md === 'devis' ? 'dv-metier' : 'lieu'); }
+    if ((el = t.closest('[data-choose]'))) { var md = el.getAttribute('data-choose'); pendingEntry = null; if (state.sent || C.hasDraft(state, cart ? cart.count() : 0)) startClean(); state.mode = md; state.sent = null; state._returnTo = null; if (md === 'intervention') { state.fam = null; state.prob = null; state.precMode = 'liste'; } save(); return go(md === 'devis' ? 'dv-metier' : 'lieu'); }
     if ((el = t.closest('[data-next]'))) { var from = el.getAttribute('data-next'); if (from === 'dv-photos') { state.devis.photosSeen = true; save(); } if (from === 'lieu') return submitLieu(); if (from === 'coordonnees') return submitContact();
       if (from === 'dv-projet') { state.devis.desc = $('#dv-desc').value.trim(); save(); if (!C.descOk(state.devis.desc)) { mark('fld-desc', true); return focusBad($('#dv-desc')); } }
       return next(from); }
@@ -1151,11 +1161,11 @@
     if ((el = t.closest('[data-dvm]'))) return toggleMetier(el);
     if ((el = t.closest('[data-nature]'))) { var nv = el.getAttribute('data-nature'); state.devis.nature = state.devis.nature === nv ? null : nv; save(); return $$('#natureOpts [data-nature]').forEach(function (b) { b.setAttribute('aria-checked', String(b.getAttribute('data-nature') === state.devis.nature)); }); }
     if ((el = t.closest('[data-switch-devis]'))) return switchToDevis(state.fam, false);
-    if ((el = t.closest('[data-forget]'))) { if (cart) cart.clear(); dvFiles = []; state = C.emptyState(); lastIdentity = carryIdentity = pendingEntry = null; clearFields(); try { [STORE, 'hc_cart_v1'].forEach(function (k) { localStorage.removeItem(k); }); [STORE_PII, 'hc_pg', 'hc_fs_intervention', 'hc_fs_devis', 'hc_utm', 'hc_referrer'].forEach(function (k) { sessionStorage.removeItem(k); }); } catch (e2) {} toast('Informations effacées de cet appareil'); return go('choix'); }
+    if ((el = t.closest('[data-forget]'))) { if (cart) cart.clear(); dvFiles = []; state = C.emptyState(); pendingEntry = null; clearFields(); try { C.purgeDevice(localStorage, sessionStorage); } catch (e2) {} toast('Informations effacées de cet appareil'); return go('choix'); }
     if ((el = t.closest('[data-open-sheet]'))) return openSheet(el);
     if ((el = t.closest('[data-close-sheet]'))) return closeSheet();
     if ((el = t.closest('[data-resume]'))) { pendingEntry = null; var r; if (cart && cart.count()) { state.mode = 'intervention'; r = (resumeStep && C.flowIndex('intervention', resumeStep) >= 3) ? resumeStep : 'demande'; } else if ((state.devis.metiers || []).length) { state.mode = 'devis'; r = (resumeStep && C.flowIndex('devis', resumeStep) >= 0) ? resumeStep : 'dv-projet'; } else { r = resumeStep && resumeStep !== 'choix' && resumeStep !== 'envoye' ? resumeStep : (state.mode === 'devis' ? 'dv-metier' : 'lieu'); } save(); return go(r); }
-    if ((el = t.closest('[data-reset]')) || (el = t.closest('[data-restart]'))) { var restart = el.hasAttribute('data-restart'), entry = pendingEntry; pendingEntry = null; startClean(); carryIdentity = restart ? lastIdentity : null; if (!restart) lastIdentity = null; var to = entry ? applyEntry(entry) : 'choix'; save(); return go(to); }
+    if ((el = t.closest('[data-reset]')) || (el = t.closest('[data-restart]'))) { var entry = pendingEntry; pendingEntry = null; startClean(); var to = entry ? applyEntry(entry) : 'choix'; save(); return go(to); }
   });
   $('#topBack').addEventListener('click', function () {
     if (state.mode === 'devis' && state._fromIntervention && (state.step === 'dv-projet' || state.step === 'dv-metier')) { state.mode = 'intervention'; state._fromIntervention = false; state.fam = null; if (!String(state.devis.desc || '').trim() && !dvFiles.length) state.devis = C.emptyState().devis; save(); return go('besoin', { back: true, replace: true }); }
@@ -1232,11 +1242,13 @@
   function goEntry() {
     var pl = (location.hash || '').match(/payer=([0-9a-f-]{36})\.([0-9a-f]{32,})/i);
     if (pl) { try { history.replaceState(null, '', location.pathname + location.search + '#step=envoye'); } catch (e) {} openPayLink(pl[1], pl[2]); return {}; }
+    // Données personnelles inactives depuis plus de 2 h (onglet resté ouvert, fenêtre rouverte) : effacées avant tout affichage
+    if (C.piiExpired(state, Date.now())) { C.stripPii(state); clearFields(); try { sessionStorage.removeItem(STORE_PII); } catch (e) {} }
     var h = parseHash(), start;
     // Nouvelle demande depuis un lien d'entrée après un envoi : le récapitulatif précédent est purgé de l'onglet
     if (h.entry && state.sent) startClean();
     if (h.entry && C.hasDraft(state, cart ? cart.count() : 0)) { pendingEntry = h; start = 'choix'; }
-    else start = applyEntry(h);
+    else { if (h.entry) state._cid = null; start = applyEntry(h); } // nouvelle demande → nouvelle référence de dossier
     save();
     go(start, { replace: true, initial: true });
     return h;

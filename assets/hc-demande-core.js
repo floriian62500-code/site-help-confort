@@ -355,6 +355,39 @@
   }
   // Demande en cours non envoyée (prestations, métiers de devis ou saisie personnelle) → reprise EXPLICITE uniquement
   function hasDraft(st, cartCount) { return !!st && !st.sent && ((cartCount || 0) > 0 || ((st.devis && st.devis.metiers) || []).length > 0 || hasPii(st)); }
+  // Durée de vie des données personnelles sur l'appareil : 2 h sans activité, même onglet ouvert
+  // (un navigateur peut restaurer la session d'un onglet après redémarrage). Au-delà : effacées, seul le brouillon non personnel reste.
+  var PII_TTL_MS = 2 * 60 * 60 * 1000;
+  function piiExpired(st, now) {
+    if (!st || !(hasPii(st) || st.sent)) return false;
+    return typeof st.updatedAt === 'number' && (now - st.updatedAt) > PII_TTL_MS;
+  }
+  function stripPii(st) {
+    var e = emptyState();
+    st.contact = e.contact; st.lieu = e.lieu; st.sent = null;
+    if (st.devis) st.devis.desc = ''; if (st.prise) st.prise.precisions = '';
+    return st;
+  }
+  // « Effacer mes informations de cet appareil » : toutes les clés du site pouvant contenir une donnée personnelle ou une demande
+  // (module actuel + anciens formulaires + historique de l'assistant). Le choix cookies (hc-consent) est conservé.
+  var DEVICE_KEYS = {
+    local: ['hc_demande_v2', 'hc_cart_v1', 'hc_lead_v1', 'hc_chat_history', 'hc_chat_session_id'],
+    localPrefixes: ['hc_tarif_lead_'],
+    session: ['hc_demande_v2_pii', 'hc_pg', 'hc_fs_intervention', 'hc_fs_devis', 'hc_utm', 'hc_referrer', 'hc_sid', 'hc_lead_v1', 'hc_wizard_prefill']
+  };
+  // Coordonnées DURABLES laissées par les anciens formulaires (localStorage, sans expiration) : purgées au chargement du module.
+  var LEGACY_DURABLE = { local: ['hc_lead_v1'], localPrefixes: ['hc_tarif_lead_'] };
+  function purgeKeys(ls, ss, spec) {
+    var n = 0;
+    function rm(s, k) { try { if (s && s.getItem(k) !== null) { s.removeItem(k); n++; } } catch (e) {} }
+    function keysOf(s) { var out = []; try { for (var i = 0; s && i < s.length; i++) out.push(s.key(i)); } catch (e) {} return out; }
+    (spec.local || []).forEach(function (k) { rm(ls, k); });
+    (spec.localPrefixes || []).forEach(function (p) { keysOf(ls).forEach(function (k) { if (k && k.indexOf(p) === 0) rm(ls, k); }); });
+    (spec.session || []).forEach(function (k) { rm(ss, k); });
+    return n;
+  }
+  function purgeDevice(ls, ss) { return purgeKeys(ls, ss, DEVICE_KEYS); }
+  function purgeLegacy(ls) { return purgeKeys(ls, null, LEGACY_DURABLE); }
   // Mesure du tunnel (P0.4) : envoi GA4 UNIQUEMENT sur le domaine de production, avec consentement, hors simulation.
   var PROD_HOST_RE = /^(www\.)?depan59-62\.fr$/;
   function trackDecision(o) {
@@ -393,5 +426,6 @@
     firmTotal: firmTotal, searchText: searchText, problemsFor: problemsFor, matchProblem: matchProblem, diagFor: diagFor, suggest: suggest, searchNorm: searchNorm, searchOffers: searchOffers, famHasPrices: famHasPrices, agencyStatus: agencyStatus, diagnosticOffer: diagnosticOffer, frDate: frDate, priseText: priseText,
     lineLabel: lineLabel, interventionPayload: interventionPayload, devisPayload: devisPayload, gatePayload: gatePayload, refFromId: refFromId, simulationAllowed: simulationAllowed,
     trackDecision: trackDecision, trackParams: trackParams, attributionFrom: attributionFrom,
-    splitState: splitState, mergeState: mergeState, hasPii: hasPii, hasDraft: hasDraft };
+    splitState: splitState, mergeState: mergeState, hasPii: hasPii, hasDraft: hasDraft,
+    PII_TTL_MS: PII_TTL_MS, piiExpired: piiExpired, stripPii: stripPii, DEVICE_KEYS: DEVICE_KEYS, purgeDevice: purgeDevice, purgeLegacy: purgeLegacy };
 });
