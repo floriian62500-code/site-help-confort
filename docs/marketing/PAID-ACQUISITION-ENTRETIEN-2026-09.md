@@ -367,6 +367,13 @@ Le dossier contient `utm.attribution` (utm_source, utm_medium, utm_campaign, utm
 | maintenance_submit / generate_lead (formulaire ramonage) | ✅ (événement de succès simulé, aucun envoi réel) | ⛔ | ⛔ | ⛔ |
 | Attribution gclid / fbclid dans le dossier | ✅ code et tests ; ⛔ réel (production requise) | — | ⛔ | ⛔ |
 
+Vérifié sur la Deploy Preview le 18/09/2026 (`f5090c4b`), en 1440 et en 390 :
+- page A : vue, bouton principal, appel (page et en-tête), lien vers les contrats ;
+- page C : vue, bouton principal, appel (page et en-tête), envoi confirmé (événement de succès déclenché à la main, formulaire jamais soumis) ;
+- tunnel entretien, entrée par le lien de la page A : entretien gaz en 1440, fioul en 390, puis envoi simulé.
+
+Aucune requête vers GA4, Google Ads, Meta ou le serveur de dossiers ; aucune donnée personnelle dans les événements.
+
 **Aucune ligne n'est PASS côté outils externes : les comptes ne sont pas connectés.**
 
 ---
@@ -380,7 +387,9 @@ Le dossier contient `utm.attribution` (utm_source, utm_medium, utm_campaign, utm
 | Prix | ✅ catalogue et contrats | ❌ volontairement absent : aucun prix au catalogue (§9) |
 | Bouton principal unique | ✅ « Demander mon entretien » → tunnel | ✅ « Demander un devis gratuit » → formulaire court |
 | Réassurance | contrôles détaillés, obligation légale, attestation | certificat, obligation annuelle, rappel sous 24 h ouvrées, avis |
-| Mobile 390 | bouton visible sans défiler (mesuré, voir le retour #9) | idem |
+| 1440 (écran 900 px) | bouton à 503–557 px, non masqué ; accroche centrée ; tableau en 4 colonnes ; 0 débordement | bouton en bas à 721 px, non masqué ; 0 débordement |
+| 390 (écran 844 px) | bouton à 597–650 px, non masqué ; formules en cartes (350 px) ; prix jamais coupés ; 0 débordement | bouton à 570–627 px, non masqué ; 0 débordement |
+| Corrigé pendant la vérification | en 390, le tableau élargissait la page à 502 px ; prix coupés en fin de ligne ; en 1440, prix et téléphone décalés à gauche | — |
 | Mesure | ✅ | ✅ |
 
 ---
@@ -391,7 +400,7 @@ Le dossier contient `utm.attribution` (utm_source, utm_medium, utm_campaign, utm
 3. Mobile 390 et ordinateur 1440 : bouton principal visible, aucun débordement, formulaire fonctionnel.
 4. GA4 DebugView : les 7 événements arrivent, sans donnée personnelle.
 5. Google Ads : conversion `generate_lead` au statut « Enregistrement des conversions » ; élément d'appel actif aux horaires.
-6. Annonces approuvées, avec les titres « à vérifier » validés ou retirés (avis, statut prioritaire).
+6. Annonces approuvées ; note des avis (« 4,7/5 », 343 avis) revérifiée le jour même, sinon titre retiré.
 7. Budget quotidien fixé par Florian ; plafond de dépense du compte défini.
 8. Capacité d'accueil confirmée par l'agence (nombre de visites d'entretien possibles par semaine en septembre–novembre).
 
