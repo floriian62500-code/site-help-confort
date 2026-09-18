@@ -110,5 +110,12 @@ ok('client : « Paiement reçu » affiché quand le dossier est payé', /r\.payS
 ok('front : le lien de l’email rouvre le récapitulatif du dossier avec le paiement (sans donnée personnelle dans l’URL)', /payer=\(\[0-9a-f-\]\{36\}\)/.test(ui) && /function openPayLink\(leadId, token\)/.test(ui));
 
 ok('dédup : la référence de corrélation est toujours conservée dans utm (clé de recherche stable)', /correlationId \? \{ correlation_id: correlationId \} : \{\}/.test(submit));
+// ---- Back-office : statut de paiement, nouveaux statuts, prénom + nom (directive 5717153299)
+const admin = read('admin-pro/leads.html');
+ok('back-office : statut PAYÉ EN LIGNE visible (liste + fiche) avec montant, date et transaction', /function onlinePayment\(l\)/.test(admin) && /label:'PAYÉ EN LIGNE'/.test(admin) && /Paiement en ligne — \$\{op\.label\}/.test(admin) && /Référence de transaction/.test(admin));
+ok('back-office : statuts « tarifs consultés » et « à relancer » nommés, colonne « À relancer »', /intent:'Tarifs consultés \(en cours\)'/.test(admin) && /needs_followup:'À relancer \(non finalisé\)'/.test(admin) && /key: 'needs_followup'/.test(admin));
+ok('back-office : une intention en cours ne tombe jamais dans « Nouveau »', /if \(l\.status === 'intent'\) return; \/\/ tarifs consultés/.test(admin) && /if \(l\.status === 'intent' && sFilter !== 'intent'\) return false;/.test(admin));
+ok('back-office : prénom et nom affichés ensemble (liste, fiche, impression, recherche)', /const fullName = l => \[l\.prenom, l\.nom\]/.test(admin) && (admin.match(/escapeHtml\(fullName\(l\)\)/g) || []).length >= 3 && /\[l\.prenom,l\.nom,l\.email/.test(admin));
+
 console.log(`\nRÉSULTAT CYCLE LEAD : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);
