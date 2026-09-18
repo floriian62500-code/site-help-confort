@@ -76,3 +76,23 @@ Défaut constaté dans le code : identité, adresse et description étaient cons
 | « Effacer mes informations de cet appareil » | demande, brouillon, accès tarifs et marqueurs de mesure purgés |
 | URL | étape et catégorie uniquement |
 
+## Round 5 — mise en scène premium ouverte depuis l'accueil (directive 5713069274)
+Le moteur v2 n'est pas retouché : seules la forme d'expérience et la couche visuelle changent.
+
+**Architecture** : module extrait en composant partagé (`assets/hc-demande-core.js`, `assets/hc-demande.css` isolé sous `.hcd`, `assets/hc-demande.js` avec `HcDemande.mount/open/close`). `catalogue.html` reste la page d'entrée directe ; l'accueil ouvre la fenêtre premium (modale desktop, feuille plein écran mobile), module chargé à la demande, repli en navigation normale.
+
+**Avant → après (mesuré sur la preview)**
+| Point | Avant | Après |
+|---|---|---|
+| Forme | page séparée `/catalogue.html` | fenêtre ouverte depuis l'accueil, site visible derrière, défilement de fond verrouillé |
+| Carte centrale (étape Lieu, 1440×900) | hauteur forcée `100vh − 136 px` ≈ 764 px pour ~300 px de contenu | hauteur ajustée au contenu : 596 px |
+| Fond | dégradé bleu très pâle sur gris | halos de marque bleu + orange sur base claire chaude |
+| Barre de progression | 4 px, une couleur | 6 px, dégradé bleu, libellé d'étape renforcé |
+| Bouton principal | aplat orange foncé | dégradé orange avec ombre colorée |
+| Champs | fond gris clair, focus fin | fond blanc, focus bleu marque avec halo (4 px) |
+| Colonne « Votre demande » | bloc passif (« se construit ici ») | avancement du parcours (fait / en cours / à venir) + récapitulatif + réassurance agence chaleureuse avec appel direct |
+| Téléphone en-tête | bouton blanc discret | bouton de marque (gris quand l'agence est fermée) |
+
+**Contrôles faits avant revue** : page dédiée inchangée ; fenêtre ouverte/fermée par CTA, « Quitter », Échap, retour navigateur, focus rendu au CTA, URL nettoyée ; parcours intervention complet dans la fenêtre (envoi simulé) ; mobile 390 plein écran sans colonne latérale ; smoke déployé 17/17.
+
+**Round 5 (revues UX / design / mobile)** : _en cours_
