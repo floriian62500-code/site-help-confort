@@ -7,6 +7,7 @@
   - 5699304300 (module v2), 5699674592 (admin), 5712974654 (pilotage global) → CLAUDE_ANSWERED
   - 5717182264 (données d'une ancienne demande préremplies) → CLAUDE_ANSWERED : défaut du module confirmé dans le code et corrigé
   - 5713247831, 5717005198, 5717112366, 5717153299, 5717166232 (récapitulatif final + paiement Stripe TEST, notifications agence/client) → CLAUDE_RECEIVED, **non exécutés** : ces directives n'ont pas été transmises dans la session ; la confirmation de Florian est demandée avant tout travail (paiement, edge functions, emails)
+  - **Mise à jour 18/09 : exécutés sur recette le 18/09** (retours #9 5727845691, 5728080972, 5728348793) — voir `RUN-2026-09-18-EXECUTION-LOTS-1-7.md`.
 
 ## RETURN
 ```
