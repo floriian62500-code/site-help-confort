@@ -455,7 +455,7 @@
 .hcd .trust small{display:block;margin-top:8px;text-align:center;color:#6B7A8D}
 /* ---- Mobile : la carte occupe l'écran, sans vide artificiel ---- */
 @media (max-width:760px){
-  .hcd .card{min-height:0;border-radius:0;border:0;box-shadow:none;padding:22px 20px 0}
+  .hcd .card{border-radius:0;border:0;box-shadow:none;padding:22px 20px 0}
   .hcd .card::before{height:3px}
   .hcd .body{padding-top:0}
   .hcd .top{background:rgba(255,255,255,.96)}
