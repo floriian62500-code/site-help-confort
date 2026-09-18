@@ -112,3 +112,33 @@ Les deux P0 avaient été introduits par ma propre mise en scène (coque et lise
 **Contre-revue indépendante (sur `3fc7518a`)** : 6 correctifs sur 7 confirmés mesures à l'appui (fermeture par les 4 chemins → accueil de nouveau cliquable, `inert` retiré sur 53 éléments ; bouton principal dans l'écran sur les 10 étapes en 390 ; entrée intervention sans métier hérité ; en-tête et rail alignés ; vide sous la carte 198 px → 36 px ; état sélectionné bleu de marque mesuré). Restaient : pied de carte absent sur l'étape « Besoin », carte mobile pas pleine hauteur sur les étapes courtes (barre d'actions à 724 px au lieu de 844), logo écrasé par l'en-tête, rail masqué sur « Et ensuite ? ».
 
 **Corrections finales `f18f9129` + `c74f8139`**, vérifiées : pied de carte sur toutes les étapes (dont Besoin), `min-height` mobile rétabli (barre d'actions à 844 px sur Lieu comme sur Tarifs), logo 69×26 stable, rail conservé sur « Et ensuite ? ». Smoke déployé 17/17, demande-v2 108/108.
+
+## Confidentialité — re-vérification après la fenêtre ouverte depuis l'accueil (directive 5717182264 relayée le 18/09, `143414d5`)
+Les captures relayées datent du 17/09 (build d'avant `0b01b834`). La re-vérification sur la version déployée (`2b013fe8`) a quand même trouvé 4 défauts, tous reproduits sur la preview avant correction :
+
+| # | Défaut (preview `2b013fe8`) | Preuve avant correction | Correction `143414d5` |
+|---|---|---|---|
+| 1 | « Faire une autre demande » recopiait identité et adresse dans la nouvelle demande (même symptôme que la capture : Lieu prérempli + « Coordonnées … » dans « Votre demande ») | Lieu = adresse précédente, colonne « Coordonnées Bob Second · 06 … » | nouvelle demande = état vierge, plus aucune identité gardée en mémoire |
+| 2 | Le champ **Nom** de l'étape tarifs (ajouté le 18/09) n'était jamais vidé | après « Nouvelle demande » puis après « Effacer mes informations » : Nom = nom de la personne précédente | vidage de **tous** les champs de saisie du module (plus de liste à tenir à jour) |
+| 3 | La référence d'un dossier **finalisé** restait sur l'appareil | nouvel onglet, autre personne : même référence que le dossier envoyé → le serveur l'aurait classée en doublon (demande perdue une fois les fonctions déployées) | référence abandonnée après envoi et à chaque nouvelle demande ; créée à l'envoi si besoin (les devis n'en avaient jamais) |
+| 4 | « Effacer mes informations » laissait les anciennes coordonnées (`hc_lead_v1` en stockage durable, `hc_tarif_lead_<email>`) ; « Nos prestations » les écrivait sans expiration et son bouton « Effacer mes données » ne fonctionnait pas | clés présentes après l'effacement ; bouton → fonction introuvable | purge de toutes les clés personnelles du site (choix cookies conservé) ; « Nos prestations » : onglet uniquement, 24 h, clé sans email en clair, bouton réparé |
+
+Ajouté : données personnelles de l'onglet effacées après **2 h sans activité** (au chargement et à chaque réouverture de la fenêtre), anciennes coordonnées durables purgées dès l'ouverture du module.
+
+**Preuves après correction — preview `143414d5` (envoi simulé, aucun appel réseau d'envoi), 1440 puis 390** :
+
+| Scénario | 1440 | 390 |
+|---|---|---|
+| Envoi → « Retour à l'accueil » → « J'ai besoin d'être dépanné » | Lieu vide, aucun champ rempli, « Votre demande » vide, nouvelle référence | idem (feuille plein écran) |
+| « Faire une autre demande » → Intervention (et Devis sur la page dédiée) | vide | vide |
+| Abandon (coordonnées saisies) → fermeture → réouverture | carte « Vous avez une demande en cours · 1 intervention », rien de personnel visible ; « Reprendre » restaure ; « Nouvelle demande » vide tout | idem |
+| Rechargement en cours de demande | même étape, mêmes coordonnées, même référence, panier conservé | — |
+| Nouvel onglet / second utilisateur | carte de reprise sans donnée personnelle ; après « Reprendre », aucune coordonnée | — |
+| Ancienne référence finalisée sur l'appareil | abandonnée à l'entrée (nouvelle référence) | — |
+| Données personnelles vieilles de 3 h (onglet resté ouvert / rechargé) | effacées avant affichage | — |
+| « Effacer mes informations » puis personne suivante | clés personnelles purgées (y compris anciennes), formulaire des tarifs vide | idem |
+| Navigation privée (stockage vierge) | vierge | vierge |
+| URL / mesure | URL = `#step=…&cat=…` ; 0 donnée personnelle dans 11 événements de mesure | — |
+
+Tests : demande-v2 **147/147** (19 nouveaux, en échec sur `2b013fe8`), lead-cycle 67/67, price-gate 29/29, panier 12/12, SEO ERRORS=0.
+Hors périmètre, constaté : en mobile, le bandeau cookies de première visite couvre le bas du tunnel ; sur la preview uniquement, le bouton « Centre de validation » masque « Refuser ».
