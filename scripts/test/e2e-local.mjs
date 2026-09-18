@@ -268,6 +268,20 @@ if (catPath) {
   const sweep3 = await post('leads-abandon-sweep', { minutes: 15 });
   check('CYCLE_E_pas_de_relance_apres_finalisation', sweep3.status === 200 && !(sweep3.body.ids || []).includes(abId), 'notified=' + (sweep3.body && sweep3.body.notified));
 
+  // G. Finalisation répétée (double clic / nouvel essai réseau) : même dossier, UNE seule notification interne
+  const cid3 = 'e2e-dup-' + Date.now().toString(36);
+  const dupPayload = withSrc2(C2.interventionPayload({ lines: lines2, byId: byId2, contact: { prenom: 'Camille', nom: 'DOUBLON', tel: '06 12 34 56 78', email: 'camille@exemple.test' }, lieu: lieu2, prise: { quand: 'asap' }, cartMode: 'paiement', page: 'http://localhost/ (E2E)', cid: cid3 }));
+  const g1 = await submitLead(dupPayload);
+  const g2 = await submitLead(dupPayload);
+  check('CYCLE_G_finalisation_repetee_meme_dossier', g1.status === 200 && g2.status === 200 && g2.body.id === g1.body.id && g2.body.duplicate === true, `ids=${g1.body && g1.body.id === (g2.body && g2.body.id) ? 'identiques' : 'différents'}`);
+  let journalNew = -1;
+  for (let i = 0; i < 10; i++) { await sleep(700); const r = await readLead(g1.body.id); const j = ((r && r.metadata) || {}).notifications || []; journalNew = j.filter((x) => x && x.kind === 'new').length; if (journalNew >= 1) break; }
+  await sleep(1500);
+  const rg = await readLead(g1.body.id); journalNew = ((((rg && rg.metadata) || {}).notifications) || []).filter((x) => x && x.kind === 'new').length;
+  check('CYCLE_G_une_seule_notification_interne', journalNew === 1, 'notifications internes=' + journalNew);
+  const again = await post('notify-lead-v6', { lead_id: g1.body.id });
+  check('CYCLE_G_rappel_du_notifieur_sans_effet', again.status === 200 && again.body.reason === 'already_notified', 'raison=' + (again.body && again.body.reason));
+
   // F. CRM Apogée : file d'attente alimentée, envoi bloqué faute d'accès (aucun faux succès)
   const crm = await post('crm-apogee-push', { dry_run: true });
   check('CYCLE_F_crm_en_attente_bloque', crm.status === 200 && crm.body.ok === false && crm.body.blocked === 'missing_credentials' && crm.body.pending >= 1, 'pending=' + (crm.body && crm.body.pending));

@@ -96,5 +96,18 @@ ok('webhook : le paiement met à jour le MÊME dossier puis notifie une fois age
 ok('email agence : « Paiement reçu » rattaché au dossier (jamais un nouveau lead)', /Paiement reçu — dossier \$\{ref\}/.test(notify) && /PAIEMENT REÇU — dossier existant/.test(notify));
 ok('email client : confirmation de paiement distincte, envoyée une seule fois', /buildPaymentHtml/.test(reply) && /payment_not_confirmed/.test(reply) && /client_notified_at/.test(reply));
 
+// ---- Notifications finales : 1 interne + 1 client, zéro doublon (directive 5717005198)
+ok('interne : le client n’est jamais destinataire de la notification interne (to/cc filtrés)', /const notClient = \(a: string\) => !!a && a\.trim\(\)\.toLowerCase\(\) !== clientEmail;/.test(notify) && /\.filter\(notClient\)/.test(notify));
+ok('interne : une seule notification par événement et par dossier (journal)', /journal\.some\(\(j: any\) => j && j\.kind === notifKind/.test(notify) && /reason: 'already_notified'/.test(notify));
+ok('interne : un échec d’envoi laisse un nouvel essai possible', /reason: 'resend_error'/.test(notify) && !/j\.reason === 'resend_error'/.test(notify));
+ok('interne : fiche opérationnelle (client, demande, tarification, origine, actions, dossier)', /sec\('Client'/.test(notify) && /sec\('Demande'/.test(notify) && /sec\('Tarification'/.test(notify) && /sec\('Origine'/.test(notify) && /Ouvrir le dossier \$\{esc\(dossierRef\)\} dans le back-office/.test(notify));
+ok('interne : statut de paiement très visible (payé / en attente / non payé / non éligible)', /PAIEMENT : PAYÉ EN LIGNE/.test(notify) && /PAIEMENT : EN ATTENTE/.test(notify) && /PAIEMENT : NON PAYÉ/.test(notify) && /PAIEMENT : NON ÉLIGIBLE \/ SUR DEVIS/.test(notify));
+ok('interne : prénom et nom sur des lignes distinctes, téléphone cliquable', /kv\('Prénom'/.test(notify) && /kv\('Nom'/.test(notify) && /href="tel:\$\{esc\(l\.telephone\)\}"/.test(notify));
+ok('finalisation : répétée (double clic, rafraîchissement, réseau) → même dossier, aucune nouvelle notification', /if \(!reusable && row && meta0\.finalized_at\) \{/.test(submit) && /duplicate: true/.test(submit));
+ok('client : email avec référence, prestations, total et statut de paiement', /function recapOf\(l: any\)/.test(reply) && /Votre dossier \$\{escapeHtml\(r\.ref\)\}/.test(reply) && /Total des prix fermes/.test(reply));
+ok('client : lien de paiement proposé seulement si éligible ET paiement disponible (clé TEST), domaines du site uniquement', /const payLink = allFirm && payAvailable && l\.metadata\?\.pay_token/.test(reply) && /PAY_ORIGINS/.test(reply));
+ok('client : « Paiement reçu » affiché quand le dossier est payé', /r\.payState === 'paid'/.test(reply) && /Paiement reçu/.test(reply));
+ok('front : le lien de l’email rouvre le récapitulatif du dossier avec le paiement (sans donnée personnelle dans l’URL)', /payer=\(\[0-9a-f-\]\{36\}\)/.test(ui) && /function openPayLink\(leadId, token\)/.test(ui));
+
 console.log(`\nRÉSULTAT CYCLE LEAD : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);

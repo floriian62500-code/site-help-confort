@@ -128,6 +128,24 @@ const METIER_LABELS: Record<string, string> = {
 };
 function labelMetier(m: string): string { return METIER_LABELS[(m || '').toLowerCase()] || (m || 'Demande'); }
 
+// Récapitulatif du dossier pour le client : référence, prestations, total, statut de paiement.
+const PAY_ORIGINS = [/^https:\/\/deploy-preview-\d+--remarkable-dragon-364e2b\.netlify\.app$/, /^https:\/\/(www\.)?depan59-62\.fr$/];
+function recapOf(l: any) {
+  const lines = String(l.message || '').split('\n');
+  const bullets = lines.filter((x) => /^\s*•\s+/.test(x)).map((x) => x.replace(/^\s*•\s+/, '').trim());
+  const totalLine = lines.find((x) => /^Total prix fermes\s:/.test(x.trim()));
+  const total = totalLine ? totalLine.split(':').slice(1).join(':').trim() : '';
+  const allFirm = bullets.length > 0 && bullets.every((b) => /prix ferme/i.test(b));
+  const ref = 'HC-' + String(l.id || '').replace(/[^0-9a-f]/gi, '').slice(0, 8).toUpperCase();
+  const p = l.metadata?.payment || null;
+  let origin = 'https://depan59-62.fr';
+  try { const o = new URL(String(l.source_page || '')).origin; if (PAY_ORIGINS.some((re) => re.test(o))) origin = o; } catch (_) { /* défaut */ }
+  const payAvailable = (Deno.env.get('STRIPE_TEST_SECRET_KEY') || '').startsWith('sk_test_');
+  const payLink = allFirm && payAvailable && l.metadata?.pay_token ? `${origin}/catalogue.html#payer=${l.id}.${l.metadata.pay_token}` : '';
+  const payState = p && p.status === 'paid' ? 'paid' : (payLink ? 'payable' : (allFirm ? 'after' : 'validation'));
+  return { bullets, total, ref, payState, payLink, paid: p };
+}
+
 function buildHtml(l: any, firstName: string, kind: Kind): string {
   const greeting = firstName ? `Bonjour ${escapeHtml(firstName)},` : 'Bonjour,';
   const metierTxt = l.metier ? ` concernant un besoin <strong>${escapeHtml(labelMetier(l.metier))}</strong>` : '';
@@ -150,6 +168,22 @@ function buildHtml(l: any, firstName: string, kind: Kind): string {
 <tr><td style="padding:32px 28px;color:#0A1428;font-size:15px;line-height:1.6">
   <p style="margin:0 0 16px">${greeting}</p>
   <p style="margin:0 0 16px">Nous avons bien reçu votre ${escapeHtml(kind.noun)}${metierTxt}${ville}. Merci de votre confiance.</p>
+  ${(() => {
+    const r = recapOf(l);
+    const items = r.bullets.map((b) => `<li style="margin:4px 0">${escapeHtml(b)}</li>`).join('');
+    const payTxt = r.payState === 'paid'
+      ? `<div style="background:#ECFDF5;border-radius:10px;padding:12px 16px;margin:0 0 16px;color:#14532D"><strong>Paiement reçu</strong> — ${escapeHtml(Number(r.paid.amount || 0).toLocaleString('fr-FR', { minimumFractionDigits: 2 }))} € TTC.</div>`
+      : r.payState === 'payable'
+        ? `<div style="background:#EFF6FF;border-radius:10px;padding:14px 16px;margin:0 0 16px;color:#1E3A8A;font-size:14px;line-height:1.55">Vous pouvez régler en ligne dès maintenant (facultatif), ou après l’intervention.<br><a href="${r.payLink}" style="display:inline-block;margin-top:10px;padding:11px 18px;background:#F2600C;color:#fff;text-decoration:none;border-radius:999px;font-weight:700">Régler en ligne</a></div>`
+        : r.payState === 'after'
+          ? `<p style="margin:0 0 16px;font-size:14px;color:#475569">Paiement : vous réglez après l’intervention.</p>`
+          : `<p style="margin:0 0 16px;font-size:14px;color:#475569">Paiement : disponible après validation de l’agence (une prestation est à confirmer sur place ou sur devis).</p>`;
+    return `<div style="border:1px solid #E5EDF3;border-radius:12px;padding:16px 18px;margin:0 0 18px">
+      <div style="font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#0A6C8F;margin-bottom:6px">Votre dossier ${escapeHtml(r.ref)}</div>
+      ${items ? `<ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.55">${items}</ul>` : ''}
+      ${r.total ? `<p style="margin:10px 0 0;font-size:15px"><strong>Total des prix fermes : ${escapeHtml(r.total)}</strong></p>` : ''}
+    </div>${kind.key === 'intervention' ? payTxt : ''}`;
+  })()}
   <p style="margin:0 0 16px"><strong>Que se passe-t-il maintenant ?</strong></p>
   <table cellpadding="0" cellspacing="0" style="margin:0 0 24px">${steps}</table>
   ${kind.key === 'intervention' ? `<div style="background:#FFF7EC;border:1px solid rgba(255,138,26,.24);padding:14px 18px;border-radius:12px;margin:0 0 20px;color:#7C4A12;font-size:14px;line-height:1.55"><strong>Prix sous réserve de vérification sur place :</strong> le montant annoncé correspond au forfait choisi. Si le technicien constate un besoin différent ou complémentaire, un ajustement ou un devis complémentaire vous est proposé avant toute intervention — aucun supplément n'est engagé sans votre accord.</div>` : ''}
@@ -172,10 +206,11 @@ function buildHtml(l: any, firstName: string, kind: Kind): string {
 }
 
 function buildText(l: any, firstName: string, kind: Kind): string {
+  const r = recapOf(l);
   return `Bonjour ${firstName || ''},
 
-Nous avons bien reçu votre ${kind.noun}.
-
+Nous avons bien reçu votre ${kind.noun} — dossier ${r.ref}.
+${r.bullets.length ? '\n' + r.bullets.map((b) => '• ' + b).join('\n') + '\n' : ''}${r.total ? 'Total des prix fermes : ' + r.total + '\n' : ''}${kind.key === 'intervention' ? (r.payState === 'paid' ? 'Paiement reçu.\n' : (r.payState === 'payable' ? 'Régler en ligne (facultatif) : ' + r.payLink + '\n' : (r.payState === 'after' ? 'Paiement : après l’intervention.\n' : 'Paiement : après validation de l’agence.\n'))) : ''}
 ${kind.steps.map((s, i) => `${i + 1}. ${s}`).join('\n')}
 
 ${kind.key === 'intervention' ? "Prix sous réserve de vérification sur place : le montant annoncé correspond au forfait choisi ; tout ajustement vous est proposé avant intervention.\n\n" : ''}Besoin urgent ? Appelez l'agence au ${TEL} (${HORAIRES}).

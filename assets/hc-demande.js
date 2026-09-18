@@ -1037,10 +1037,10 @@
     try { history.replaceState(history.state, '', location.pathname + location.search.replace(/([?&])hc_pay=[^&]*&?/, '$1').replace(/[?&]$/, '') + location.hash); } catch (e) {}
   }
   function row(k, v) { return v ? '<div class="rw"><span class="rw-k">' + esc(k) + '</span><span class="rw-v">' + v + '</span><span></span></div>' : ''; }
-  function payApi(mode) {
-    var s = state.sent;
+  function payApi(mode, leadId, token) {
+    var s = state.sent || {};
     return fetch(SUPA + '/functions/v1/create-payment-session', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ lead_id: s.leadId, pay_token: s.payToken, mode: mode, return_url: location.origin + location.pathname + location.search }) })
+      body: JSON.stringify({ lead_id: leadId || s.leadId, pay_token: token || s.payToken, mode: mode, return_url: location.origin + location.pathname + location.search }) })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return r.ok ? j : Promise.reject(j); }); });
   }
   function checkPayment(attempt) {
@@ -1207,6 +1207,18 @@
   app.classList.toggle('is-sim', SIM || LIVE_PREVIEW);
   renderClosed();
   (function () { var panel = $('.sheet-panel'), y0 = null; panel.addEventListener('touchstart', function (e) { y0 = panel.scrollTop <= 0 ? e.touches[0].clientY : null; }, { passive: true }); panel.addEventListener('touchmove', function (e) { if (y0 !== null && e.touches[0].clientY - y0 > 70) { y0 = null; closeSheet(); } }, { passive: true }); })();
+  // Lien « Régler en ligne » de l'email client : on reconstitue un récapitulatif minimal du dossier
+  // (renvoyé par le serveur au seul détenteur du jeton) puis on affiche l'écran final avec le paiement.
+  function openPayLink(leadId, token) {
+    payApi('check', leadId, token).then(function (r) {
+      if (!r || !r.ok || !r.summary) throw new Error('lien');
+      var sm = r.summary;
+      state.sent = { mode: 'intervention', ref: sm.reference, prenom: sm.prenom || '', leadId: leadId, payToken: token, allFirm: !!r.eligible, total: sm.total,
+        lines: (sm.lines || []).map(function (l) { return { name: l.name + (l.qty > 1 ? ' ×' + l.qty : ''), price: C.eur(l.amount) + ' TTC', kind: 'ferme', includes: [] }; }),
+        payment: r.payment || null, payState: '', fromLink: true };
+      save(); go('envoye', { replace: true });
+    }).catch(function () { toast('Ce lien de paiement n’est plus valable. Votre dossier est conservé : l’agence vous rappelle.'); go('choix', { replace: true }); });
+  }
   function applyEntry(h) {
     if (h.mode) state.mode = h.mode;
     // Entrée « intervention » sans métier : on repart du choix du besoin (pas de métier hérité d'une visite précédente)
@@ -1218,6 +1230,8 @@
   // Entrée (chargement de la page ou ouverture de l'overlay depuis un CTA) : lien d'entrée avec une demande
   // en cours → jamais de pré-remplissage silencieux, choix explicite Reprendre / Nouvelle demande.
   function goEntry() {
+    var pl = (location.hash || '').match(/payer=([0-9a-f-]{36})\.([0-9a-f]{32,})/i);
+    if (pl) { try { history.replaceState(null, '', location.pathname + location.search + '#step=envoye'); } catch (e) {} openPayLink(pl[1], pl[2]); return {}; }
     var h = parseHash(), start;
     // Nouvelle demande depuis un lien d'entrée après un envoi : le récapitulatif précédent est purgé de l'onglet
     if (h.entry && state.sent) startClean();

@@ -83,7 +83,14 @@ serve(async (req) => {
   const payment = meta.payment || null;
 
   if (mode === 'check') {
-    return json({ ok: true, available, eligible, reason: eligible ? null : reason, amount: amountCents / 100, currency: 'eur', payment });
+    // Résumé du dossier pour le lien de paiement reçu par email (réservé au détenteur du jeton)
+    const summary = {
+      reference: 'HC-' + leadId.replace(/[^0-9a-f]/gi, '').slice(0, 8).toUpperCase(),
+      prenom: lead.prenom || null,
+      lines: lines.map((l) => ({ name: l.name, qty: l.qty, amount: (l.unit * l.qty) / 100 })),
+      total: amountCents / 100,
+    };
+    return json({ ok: true, available, eligible, reason: eligible ? null : reason, amount: amountCents / 100, currency: 'eur', payment, summary });
   }
 
   // ---- création de la session de paiement
