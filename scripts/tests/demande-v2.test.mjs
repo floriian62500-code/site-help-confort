@@ -180,7 +180,7 @@ const att = { utm_source: 'google', referrer: 'https://www.google.com/' };
 const pa = [C.gatePayload({ contact, lieu, fam: 'plomberie', attribution: att }), C.interventionPayload({ lines, byId, contact, lieu, prise: { quand: 'asap' }, attribution: att }), C.devisPayload({ contact, lieu, devis: { metiers: ['Plomberie'], desc: 'x' }, attribution: att })];
 ok('attribution : transmise par les 3 envois (utm.attribution + source_referer)', pa.every((p) => p.utm.attribution && p.utm.attribution.utm_source === 'google' && p.source_referer === 'https://www.google.com/'));
 ok('attribution : absente → null (aucune donnée inventée)', [C.gatePayload({ contact, lieu }), C.devisPayload({ contact, lieu, devis: { metiers: ['Plomberie'], desc: 'x' } })].every((p) => p.utm.attribution === null && p.source_referer === null));
-ok('attribution : lue uniquement depuis la mémoire consentie (hc_utm / hc_referrer)', /C\.attributionFrom\(sessionStorage\.getItem\('hc_utm'\), sessionStorage\.getItem\('hc_referrer'\)\)/.test(uiSrc) && (uiSrc.match(/attribution: attribution\(\)/g) || []).length === 3);
+ok('attribution : lue uniquement depuis la mémoire consentie (hc_utm / hc_referrer)', /C\.attributionFrom\(sessionStorage\.getItem\('hc_utm'\), sessionStorage\.getItem\('hc_referrer'\)\)/.test(uiSrc) && (uiSrc.match(/attribution: attribution\(\)/g) || []).length === 4);
 
 ok('liens entrants : #intervention, #devis et #entretien (entretien → description directe, « Contrat entretien » présélectionné)', /h === '#entretien' \? 'entretien'/.test(uiSrc) && C.legacyStep('entretien') === 'dv-projet' && /h\.entretien && \(state\.devis\.metiers \|\| \[\]\)\.indexOf\('Contrat entretien'\) < 0/.test(uiSrc) && C.guardStep('dv-projet', { mode: 'devis', dv: { metiers: ['Contrat entretien'] } }) === 'dv-projet');
 
@@ -219,6 +219,17 @@ ok('fenêtre : reste de la page neutralisé pendant l’ouverture, restauré à 
 ok('fenêtre : « Quitter » et « Retour à l’accueil » referment sans quitter la page hôte', /t\.closest\('\.top-close'\) \|\| t\.closest\('a\[href="\/"\]'\)/.test(uiFile));
 ok('parcours : entrée « intervention » sans métier → étape Besoin (aucun métier hérité)', /if \(h\.entry && h\.mode === 'intervention' && !h\.cat\) \{ state\.fam = null;/.test(uiFile));
 ok('avancement : le rail nomme l’étape en cours comme l’en-tête', /var label = \(i === cur && p && p\.label\) \? p\.label :/.test(uiFile));
+
+// ---- Identité client et dossier unique (directives 5713150094 / 5713186419)
+const gp = C.gatePayload({ contact: { prenom: 'Florian', nom: 'Dhaillecourt', tel: '06 12 34 56 78', email: '' }, lieu: { adresse: '3 rue X', cp: '62500', ville: 'Saint-Omer' }, fam: 'plomberie', cid: 'cid-123', step: 'acces' });
+ok('identité : le nom du client est transmis tel quel (jamais reconstruit depuis le prénom)', gp.nom === 'Dhaillecourt' && gp.prenom === 'Florian');
+ok('accès tarifs : marqué comme intention (enregistrement silencieux) avec l’étape atteinte', gp.intent === true && gp.last_step === 'acces' && gp.type_demande === 'consultation_tarifs');
+ok('dossier unique : la référence de corrélation part avec l’intention et avec les 2 envois finaux', gp.correlation_id === 'cid-123' && gp.utm.correlation_id === 'cid-123'
+  && C.interventionPayload({ lines, byId, contact, lieu, prise: { quand: 'asap' }, cid: 'cid-123' }).correlation_id === 'cid-123'
+  && C.devisPayload({ contact, lieu, devis: { metiers: ['Plomberie'], desc: 'x' }, cid: 'cid-123' }).correlation_id === 'cid-123');
+ok('UI : champ Nom obligatoire à l’étape tarifs (validé avant affichage des prix)', /id="pg-nom"/.test(uiFile) && /var bN = !C\.nameOk\(no\.value\)/.test(uiFile) && /if \(bN\) return focusBad\(no\);/.test(uiFile) && /state\.contact\.nom = no\.value\.trim\(\)/.test(uiFile));
+ok('UI : référence de dossier créée une seule fois puis réutilisée', /function cid\(\) \{/.test(uiFile) && /if \(state\._cid\) return state\._cid;/.test(uiFile) && /cid: state\._cid \|\| null/.test(uiFile));
+ok('UI : signal d’activité muet (aucun envoi en simulation, aucune notification demandée)', /function pingIntent\(step\)/.test(uiFile) && /if \(SIM \|\| !state\._cid \|\| !C\.contactValid\(state\.contact\)\) return;/.test(uiFile) && /pingIntent\('coordonnees'\)/.test(uiFile));
 
 console.log(`\nRÉSULTAT MODULE DEMANDE V2 : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);

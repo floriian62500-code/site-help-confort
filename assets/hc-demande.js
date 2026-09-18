@@ -146,7 +146,10 @@
     </header>
     <div class="q-body">
      <form id="pgForm" novalidate autocomplete="on">
-      <div class="field" id="fld-pg-prenom"><label for="pg-prenom">Prénom</label><input id="pg-prenom" type="text" autocomplete="given-name"><p class="err">Indiquez votre prénom.</p></div>
+      <div class="row2">
+       <div class="field" id="fld-pg-prenom"><label for="pg-prenom">Prénom</label><input id="pg-prenom" type="text" autocomplete="given-name"><p class="err">Indiquez votre prénom.</p></div>
+       <div class="field" id="fld-pg-nom"><label for="pg-nom">Nom</label><input id="pg-nom" type="text" autocomplete="family-name"><p class="err">Indiquez votre nom.</p></div>
+      </div>
       <div class="row2">
        <div class="field" id="fld-pg-tel"><label for="pg-tel">Téléphone</label><input id="pg-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="ex. 06 12 34 56 78"><p class="err">Numéro de téléphone français attendu, par exemple 06 12 34 56 78.</p></div>
        <div class="field" id="fld-pg-email"><label for="pg-email">Email <span class="opt">· facultatif</span></label><input id="pg-email" type="email" inputmode="email" autocomplete="email" placeholder="ex. vous@exemple.fr"><p class="err">Adresse email invalide (vous pouvez aussi laisser ce champ vide).</p></div>
@@ -439,6 +442,23 @@
     try { sessionStorage.removeItem('hc_fs_intervention'); sessionStorage.removeItem('hc_fs_devis'); } catch (e) {}
   }
   function attribution() { try { return C.attributionFrom(sessionStorage.getItem('hc_utm'), sessionStorage.getItem('hc_referrer')); } catch (e) { return null; } }
+  // Référence de dossier unique : l'accès aux tarifs et l'envoi final alimentent le MÊME dossier (aucun doublon).
+  function cid() {
+    if (state._cid) return state._cid;
+    var v = '';
+    try { v = (crypto.randomUUID ? crypto.randomUUID() : ''); } catch (e) { v = ''; }
+    if (!v) v = 'hc-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+    state._cid = v; save();
+    return v;
+  }
+  // Signal d'activité (aucun email) : garde le dossier « en cours » à jour pour la relance d'abandon.
+  function pingIntent(step) {
+    if (SIM || !state._cid || !C.contactValid(state.contact)) return;
+    try {
+      var b = C.gatePayload({ contact: state.contact, lieu: state.lieu, famLabel: famName(state.fam), fam: state.fam, page: location.href, attribution: attribution(), cid: state._cid, step: step });
+      fetch(SUPA + '/functions/v1/submit-lead-v6', { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true, body: JSON.stringify(b) }).catch(function () {});
+    } catch (e) {}
+  }
 
   // ---------- Règle tarifs (P0) ----------
   function pgSessionOk() { try { return sessionStorage.getItem('hc_pg') === '1'; } catch (e) { return false; } }
@@ -690,21 +710,21 @@
   ENTER.acces = function () {
     var f = famName(state.fam), v = state.lieu.ville;
     $('#accesSub').textContent = (f ? f + ' à ' + v : 'Votre intervention à ' + v) + ' : indiquez comment vous joindre, les tarifs s\u2019affichent aussitôt.';
-    [['pg-prenom', 'prenom'], ['pg-tel', 'tel'], ['pg-email', 'email']].forEach(function (p) { var e = document.getElementById(p[0]); if (e && !e.value) e.value = state.contact[p[1]] || ''; });
-    ['fld-pg-prenom', 'fld-pg-tel', 'fld-pg-email'].forEach(function (x) { mark(x, false); });
+    [['pg-prenom', 'prenom'], ['pg-nom', 'nom'], ['pg-tel', 'tel'], ['pg-email', 'email']].forEach(function (p) { var e = document.getElementById(p[0]); if (e && !e.value) e.value = state.contact[p[1]] || ''; });
+    ['fld-pg-prenom', 'fld-pg-nom', 'fld-pg-tel', 'fld-pg-email'].forEach(function (x) { mark(x, false); });
   };
-  [['pg-prenom', 'fld-pg-prenom'], ['pg-tel', 'fld-pg-tel'], ['pg-email', 'fld-pg-email']].forEach(function (x) { document.getElementById(x[0]).addEventListener('input', function () { mark(x[1], false); }); });
+  [['pg-prenom', 'fld-pg-prenom'], ['pg-nom', 'fld-pg-nom'], ['pg-tel', 'fld-pg-tel'], ['pg-email', 'fld-pg-email']].forEach(function (x) { document.getElementById(x[0]).addEventListener('input', function () { mark(x[1], false); }); });
   function submitGate(e) {
     if (e) e.preventDefault();
     var btn = $('#pgSubmit'); if (btn.classList.contains('is-busy')) return;
-    var pr = $('#pg-prenom'), tel = $('#pg-tel'), em = $('#pg-email');
-    var bP = !C.nameOk(pr.value), bT = !C.phoneOk(tel.value), bE = !!em.value.trim() && !C.emailOk(em.value);
-    mark('fld-pg-prenom', bP); mark('fld-pg-tel', bT); mark('fld-pg-email', bE);
-    if (bP) return focusBad(pr); if (bT) return focusBad(tel); if (bE) return focusBad(em);
-    state.contact.prenom = pr.value.trim(); state.contact.tel = tel.value.trim(); state.contact.email = em.value.trim(); save();
+    var pr = $('#pg-prenom'), no = $('#pg-nom'), tel = $('#pg-tel'), em = $('#pg-email');
+    var bP = !C.nameOk(pr.value), bN = !C.nameOk(no.value), bT = !C.phoneOk(tel.value), bE = !!em.value.trim() && !C.emailOk(em.value);
+    mark('fld-pg-prenom', bP); mark('fld-pg-nom', bN); mark('fld-pg-tel', bT); mark('fld-pg-email', bE);
+    if (bP) return focusBad(pr); if (bN) return focusBad(no); if (bT) return focusBad(tel); if (bE) return focusBad(em);
+    state.contact.prenom = pr.value.trim(); state.contact.nom = no.value.trim(); state.contact.tel = tel.value.trim(); state.contact.email = em.value.trim(); save();
     busy(btn, true, 'Affichage des tarifs…');
     var pending = state._pgPending && state._pgPending !== 'acces' ? state._pgPending : 'precision';
-    var body = C.gatePayload({ contact: state.contact, lieu: state.lieu, famLabel: famName(state.fam), fam: state.fam, page: location.href, attribution: attribution() });
+    var body = C.gatePayload({ contact: state.contact, lieu: state.lieu, famLabel: famName(state.fam), fam: state.fam, page: location.href, attribution: attribution(), cid: cid(), step: 'acces' });
     var p = SIM ? simulate('price_gate') : fetch(SUPA + '/functions/v1/submit-lead-v6', { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true, body: JSON.stringify(body) })
       .then(function (r) { return r.ok ? r.json().catch(function () { return {}; }) : Promise.reject(r.status); });
     p.then(function () { track('hc_tarifs_access', { cat: state.fam, lead: 'ok' }); }, function () { track('hc_tarifs_access', { cat: state.fam, lead: 'echec' }); }).then(function () {
@@ -816,6 +836,7 @@
   // ---------- Coordonnées ----------
   var CF = [['f-prenom', 'prenom', 'fld-prenom'], ['f-nom', 'nom', 'fld-nom'], ['f-tel', 'tel', 'fld-tel'], ['f-email', 'email', 'fld-email']];
   ENTER.coordonnees = function () {
+    pingIntent('coordonnees');
     CF.forEach(function (x) { document.getElementById(x[0]).value = state.contact[x[1]] || ''; mark(x[2], false); });
     $('#coordLieu').textContent = lieuTxt() || 'Adresse à compléter';
     $('#coordSub').textContent = state.mode === 'devis' ? 'Pour vous transmettre votre devis et vous recontacter si besoin.' : 'Pour vous rappeler et confirmer votre intervention.';
@@ -925,7 +946,7 @@
     if (!p.quand) { err.textContent = 'Choisissez un délai souhaité.'; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); var q = $('#quandOpts [data-quand]'); if (q) q.focus({ preventScroll: true }); return; }
     if (p.quand === 'date' && !C.dateOk(p.date)) { mark('fld-date', true); focusBad($('#f-date')); return; }
     var lines = cart.lines();
-    var payload = C.interventionPayload({ lines: lines, byId: byId, contact: state.contact, lieu: state.lieu, prise: p, cartMode: cart.mode(), page: location.href, attribution: attribution() });
+    var payload = C.interventionPayload({ lines: lines, byId: byId, contact: state.contact, lieu: state.lieu, prise: p, cartMode: cart.mode(), page: location.href, attribution: attribution(), cid: state._cid || null });
     track('hc_demande_submit', { lines: lines.length, quote_lines: lines.filter(function (l) { return l.requires_quote; }).length, zone: state.lieu.zone && state.lieu.zone.status });
     busy(btn, true, 'Envoi en cours…');
     postLead(payload).then(function (data) {
@@ -939,7 +960,7 @@
     var btn = $('#sendDevis'), err = $('#errDevis'); if (btn.classList.contains('is-busy')) return; err.hidden = true;
     var files = dvFiles.slice();
     var joined = cart ? cart.lines() : [];
-    var payload = C.devisPayload({ contact: state.contact, lieu: state.lieu, devis: state.devis, photos: files.length, lines: joined, byId: byId, page: location.href, attribution: attribution() });
+    var payload = C.devisPayload({ contact: state.contact, lieu: state.lieu, devis: state.devis, photos: files.length, lines: joined, byId: byId, page: location.href, attribution: attribution(), cid: state._cid || null });
     var leadType = (state.devis.metiers || []).indexOf('Contrat entretien') >= 0 ? 'entretien' : 'devis';
     track('hc_demande_submit', { lead_type: leadType, lines: joined.length, photos: files.length, zone: state.lieu.zone && state.lieu.zone.status });
     busy(btn, true, 'Envoi en cours…');

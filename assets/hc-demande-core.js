@@ -287,6 +287,7 @@
       metier: fams.join(', ') || null,
       type_demande: d.cartMode === 'paiement' ? 'reservation' : (d.cartMode === 'mixte' ? 'mixte' : 'devis'),
       form_type: 'demande_metier', message: msg, source: 'commerce_engine', source_page: d.page || null, source_referer: referrerOf(d),
+      correlation_id: d.cid || null,
       utm: { module: 'demande_v2', cart: lines.map(function (x) { return { id: x.id, slug: x.slug, qty: x.qty || 1 }; }), cart_mode: d.cartMode || null,
         urgence: p.quand === 'asap' ? 'oui' : 'non', quand: p.quand || null, date_souhaitee: p.date || null, rappel: p.rappel || 'asap',
         zone: l.zone || null, attribution: d.attribution || null, wizard_tags: ['commerce-engine', 'demande-v2', 'intervention'] }
@@ -304,17 +305,20 @@
       adresse: l.adresse || null, code_postal: l.cp || null, ville: l.ville || null,
       metier: svc[0] || null, services: svc, type_demande: 'devis', form_type: 'devis_express',
       message: msg, source: 'commerce_engine_devis', source_page: d.page || null, source_referer: referrerOf(d),
+      correlation_id: d.cid || null,
       utm: { module: 'demande_v2', mode: 'devis', attribution: d.attribution || null, services: svc, nature: dv.nature || null, photos: d.photos || 0, zone: l.zone || null, cart: lines.map(function (x) { return { id: x.id, slug: x.slug, qty: x.qty || 1 }; }), wizard_tags: ['commerce-engine', 'demande-v2', 'devis'] }
     };
   }
   function gatePayload(d) {
     var c = d.contact || {}, l = d.lieu || {};
     return {
-      prenom: c.prenom || null, nom: '', telephone: c.tel ? normPhone(c.tel) : null, email: c.email || null,
+      // Nom réel du client : jamais reconstruit à partir du prénom (incident « Florian Florian »).
+      prenom: c.prenom || null, nom: c.nom || null, telephone: c.tel ? normPhone(c.tel) : null, email: c.email || null,
+      intent: true, correlation_id: d.cid || null, last_step: d.step || 'acces',
       adresse: l.adresse || null, code_postal: cpOk(l.cp) ? l.cp : null, ville: l.ville || null,
       type_demande: 'consultation_tarifs', form_type: 'rappel', source: 'price_gate', source_page: d.page || null, source_referer: referrerOf(d),
       message: 'Consultation des tarifs' + (d.famLabel ? ' — ' + d.famLabel : '') + (l.ville ? ' — ' + l.ville : ''),
-      utm: { mode: 'price_gate', module: 'demande_v2', cat: d.fam || null, attribution: d.attribution || null }
+      utm: { mode: 'price_gate', module: 'demande_v2', cat: d.fam || null, attribution: d.attribution || null, correlation_id: d.cid || null }
     };
   }
   // Référence affichée = dérivée de l'identifiant RÉEL du dossier (jamais inventée côté client).
