@@ -26,6 +26,20 @@ ok('chaudière : prix = catalogue et contrats réels (entretien ponctuel + 3 for
 ok('chaudière : plus d’anciennes formules ni de fourchettes non adossées au catalogue', !/Essentiel|Sérénité|Tranquillité|130€|175€|210€|110-180/.test(chTxt));
 const chFaq = faqLd(ch).find(t => /Entretien ponctuel/.test(t)) || '';
 ok('chaudière : la réponse « combien coûte » est identique dans la page et dans les données structurées', chFaq && chTxt.includes(chFaq), chFaq.slice(0, 60));
+// Promesses conditionnelles (catalogue v_contract_offers) : la priorité n'existe qu'en fioul et le délai d'intervention
+// garanti commence à CONFORT ; SÉCURITÉ est réservée aux chaudières de moins de 5 ans ; rappel 1 mois avant l'échéance.
+ok('chaudière : aucune priorité de dépannage promise à tous les contrats (gaz BASIC n’en a pas)', !/intervention prioritaire|priorité en cas de panne|priorité d'intervention/i.test(ch) && /dès la formule CONFORT, intervention sous 48 h/.test(chTxt));
+ok('chaudière : SÉCURITÉ affichée avec sa condition, rappel aligné sur le catalogue (un mois avant)', /Réservée aux chaudières de moins de 5 ans/.test(chTxt) && /un mois avant l’échéance/.test(chTxt) && !/2-3 semaines|bookons/.test(ch));
+ok('chaudière : ni prestation hors catalogue (granulés) ni aide chiffrée ni qualification non affichée, y compris balises et données structurées', !/(gaz, fioul, granulés)|granulés à|granulés Saint|MaPrimeRénov|50-70|Qualigaz|PGN|130 à 210/.test(ch.replace(/\(gaz, fioul, granulés\) est obligatoire/, '')));
+
+// FAQ : chaque question des données structurées est affichée, avec la même réponse (règle Google)
+for (const [nom, html] of [['chaudière', ch], ['ramonage', rm0()]]) {
+  const t = visible(html), qs = [];
+  for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) { try { (JSON.parse(m[1]).mainEntity || []).forEach(q => qs.push(q)); } catch (e) { qs.push({ name: 'JSON invalide', acceptedAnswer: { text: '' } }); } }
+  const ko = qs.filter(q => !(t.includes(q.name) && t.includes(q.acceptedAnswer.text)));
+  ok(nom + ' : FAQ des données structurées = FAQ affichée (' + qs.length + ' questions)', qs.length >= 3 && !ko.length, ko.map(q => q.name).join(' | '));
+}
+function rm0() { return rd('prestations/ramonage.html'); }
 
 // ---- C. Ramonage : prestations/ramonage.html
 const rm = rd('prestations/ramonage.html'), rmTxt = visible(rm);
