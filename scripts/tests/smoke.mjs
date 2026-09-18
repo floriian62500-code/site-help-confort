@@ -46,16 +46,25 @@ async function run() {
   // 8. Module « Ma demande » v2 : entrée 2 intentions + intervention + devis + envoi réel (catalogue.html)
   const cat = await status('/catalogue.html');
   const catHtml = cat===200 ? await (await fetch(BASE+'/catalogue.html?z='+Date.now())).text() : '';
-  const engineOk = cat===200 && catHtml.includes('data-choose="intervention"') && catHtml.includes('data-choose="devis"') &&
-    catHtml.includes('hc-cart.js') && catHtml.includes('data-step="demande"') && catHtml.includes('data-step="creneau"') && catHtml.includes('submit-lead-v6');
+  // Le module est servi en composant partagé (page + fenêtre premium de l'accueil) : la preuve porte sur l'asset.
+  const modJs = await (await fetch(BASE+'/assets/hc-demande.js?z='+Date.now())).text().catch(() => '');
+  const engineOk = cat===200 && catHtml.includes('hc-demande.js') && catHtml.includes('hc-cart.js') &&
+    modJs.includes('data-choose="intervention"') && modJs.includes('data-choose="devis"') &&
+    modJs.includes('data-step="demande"') && modJs.includes('data-step="creneau"') && modJs.includes('submit-lead-v6');
   engineOk ? ok('Module demande v2 complet (entrée 2 intentions + intervention + envoi)') : ko('Module demande v2', 'entrée/intervention/envoi incomplet (HTTP '+cat+')');
   // 9. Module : lieu + zone, aide au choix, parcours devis avec photos
-  (catHtml.includes('id="zoneBox"') && catHtml.includes('data-prec="aide"') && catHtml.includes('data-step="dv-photos"') && catHtml.includes('upload-lead-photos')) ? ok('Module : zone + aide au choix + devis photos') : ko('Module parcours', 'zone/aide/devis photos absent');
+  (modJs.includes('id="zoneBox"') && modJs.includes('data-prec="aide"') && modJs.includes('data-step="dv-photos"') && modJs.includes('upload-lead-photos')) ? ok('Module : zone + aide au choix + devis photos') : ko('Module parcours', 'zone/aide/devis photos absent');
   // 10. Non-régression modale tarifs : input adresse marqué data-autocomplete-skip (évite le wipe CP/ville)
   const nosp = await (await fetch(BASE+'/nos-prestations.html?z='+Date.now())).text();
   (nosp.includes('id="nvLgAdresse"') && /nvLgAdresse[^>]*data-autocomplete-skip|data-autocomplete-skip[^>]*id="nvLgAdresse"/.test(nosp)) ? ok('Modale tarifs : adresse skip (CP/ville non wipes)') : ko('Modale tarifs adresse', 'skip absent');
   // 11. Entrée transactionnelle principale = « Demander une intervention » → module (vocabulaire demande, pas commande)
   (home.includes('Demander une intervention') && home.includes('/catalogue') && !home.includes('Décrire mon besoin')) ? ok('Entrée principale = module (Demander une intervention)') : ko('Entrée module', 'CTA principal ne pointe pas le module');
+  // 12. Accueil : les CTA ouvrent la fenêtre premium (module chargé à la demande), avec repli navigation
+  const modCss = await status('/assets/hc-demande.css');
+  (home.includes('HcDemande.open(') && home.includes('/assets/hc-demande.js') && modCss===200)
+    ? ok('Accueil : tunnel en fenêtre premium (chargement à la demande)')
+    : ko('Accueil fenêtre premium', 'ouverture depuis la home absente (CSS HTTP '+modCss+')');
+
   console.log(`\nRÉSULTAT : ${pass} PASS / ${fail} FAIL`);
   process.exit(fail > 0 ? 1 : 0);
 }

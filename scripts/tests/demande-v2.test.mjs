@@ -9,8 +9,11 @@ import vm from 'vm';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const cat = readFileSync(join(ROOT, 'catalogue.html'), 'utf8');
+const coreFile = readFileSync(join(ROOT, 'assets', 'hc-demande-core.js'), 'utf8');
+const uiFile = readFileSync(join(ROOT, 'assets', 'hc-demande.js'), 'utf8');
+const cssFile = readFileSync(join(ROOT, 'assets', 'hc-demande.css'), 'utf8');
 const box = { module: { exports: {} } };
-vm.runInNewContext((cat.match(/<script id="hc-demande-core">([\s\S]*?)<\/script>/) || [, ''])[1], box);
+vm.runInNewContext(coreFile, box);
 const C = box.module.exports;
 let pass = 0, fail = 0;
 const ok = (n, c) => { c ? (pass++, console.log('  ✅', n)) : (fail++, console.log('  ❌', n)); };
@@ -143,7 +146,7 @@ ok('devis : interventions déjà choisies jointes (message + utm), jamais perdue
 
 
 // ---- Sécurité recette : envoi simulé PAR DÉFAUT hors production (incident lead réel 2026-09-17)
-const uiSrc = (cat.match(/<script id="hc-demande-ui">([\s\S]*?)<\/script>/) || [, ''])[1];
+const uiSrc = uiFile;
 ok('adresse : suggestions jamais rouvertes hors focus (réponse BAN tardive) ni au retour sur l’étape', /if \(seq !== acSeq \|\| document\.activeElement !== adr\) return;/.test(uiSrc) && /ENTER\.lieu = function \(\) \{ clearTimeout\(acT\); acSeq\+\+; acHide\(\);/.test(uiSrc) && /adr\.addEventListener\('blur', function \(\) \{ clearTimeout\(acT\); acSeq\+\+;/.test(uiSrc));
 ok('recette : simulation par défaut sur preview/localhost (réel seulement avec ?live=1)', /SIM = sessionStorage\.getItem\('hc_live'\) !== '1'/.test(uiSrc) && /C\.simulationAllowed\(location\.hostname\)/.test(uiSrc));
 ok('recette : production jamais simulée (hôte de prod refusé)', !C.simulationAllowed('depan59-62.fr') && !C.simulationAllowed('www.depan59-62.fr'));
@@ -167,7 +170,7 @@ const trk = readFileSync(join(ROOT, 'assets', 'tracking.js'), 'utf8');
 ok('tracking.js : hcGtag exposé seulement APRÈS la garde de consentement', trk.indexOf('window.hcGtag = gtag') > trk.indexOf("if (consent !== 'granted')") && trk.indexOf("if (consent !== 'granted')") > 0);
 const hostGuard = trk.indexOf("if (!/^(www\\.)?depan59-62\\.fr$/.test(location.hostname)) return;");
 ok('tracking.js : inerte hors production (recette/preview n’alimentent ni GA4 ni click_events), garde avant tout le reste', hostGuard > 0 && hostGuard < trk.indexOf('hc-consent') && hostGuard < trk.indexOf('googletagmanager') && hostGuard < trk.indexOf('rest/v1/click_events'));
-ok('tunnel : tracking.js chargé (version cache-bust), pas de bannière dans le tunnel', /<script src="\/assets\/tracking\.js\?v=\d{8}[a-z]?" defer><\/script>/.test(cat) && !/hc-consent\.js/.test(cat));
+ok('tunnel : tracking.js chargé (version cache-bust), pas de bannière dans le tunnel', /<script src="\/assets\/tracking\.js\?v=\d{8}[a-z]?" defer><\/script>/.test(cat) && !/hc-consent\.js/.test(cat) && /assets\/hc-demande\.js\?v=/.test(cat));
 const home = readFileSync(join(ROOT, 'index.html'), 'utf8');
 ok('accueil : 3 CTA du tunnel identifiés + mesure production/consentement uniquement', (home.match(/data-hc-cta="(hero_intervention|carte_intervention|carte_devis)"/g) || []).length === 3 && /typeof window\.hcGtag !== 'function'\) return;/.test(home) && /closest\('a\[href\*="\/catalogue"\]'\)/.test(home) && /assets\/tracking\.js\?v=\d{8}[a-z]?"/.test(home));
 // Attribution du dossier (source de visite mémorisée avec consentement)
@@ -198,7 +201,7 @@ ok('confidentialité : nouvel onglet / nouvel utilisateur (pas de session) → a
 ok('confidentialité : session corrompue ou hostile → valeurs typées uniquement', (() => { const m = C.mergeState(null, { contact: { prenom: { x: 1 }, nom: 'A' }, lieu: { adresse: 12, cp: '62500', lat: 'x' }, desc: 5 }); return m.contact.prenom === '' && m.contact.nom === 'A' && m.lieu.adresse === '12' && m.lieu.lat === null && m.devis.desc === ''; })());
 ok('demande en cours : prestations, métiers ou saisie personnelle ; jamais après envoi', !C.hasDraft(C.emptyState(), 0) && C.hasDraft(C.emptyState(), 1) && C.hasDraft(Object.assign(C.emptyState(), { devis: { metiers: ['Vitrerie'], desc: '' } }), 0) && C.hasDraft(back, 0) && !C.hasDraft(Object.assign(C.emptyState(), { sent: {} }), 3));
 ok('UI : écriture séparée localStorage (brouillon) / sessionStorage (données personnelles), plus aucune écriture de l’état complet', /localStorage\.setItem\(STORE, JSON\.stringify\(parts\.draft\)\)/.test(uiSrc) && /sessionStorage\.setItem\(STORE_PII, JSON\.stringify\(parts\.pii\)\)/.test(uiSrc) && !/localStorage\.setItem\(STORE, JSON\.stringify\(state\)\)/.test(uiSrc));
-ok('UI : lien d’entrée avec demande en cours → écran de choix (Reprendre / Nouvelle demande), jamais de pré-remplissage silencieux', /if \(hp\.entry && C\.hasDraft\(state, cart \? cart\.count\(\) : 0\)\) \{ pendingEntry = hp; start = 'choix'; \}/.test(uiSrc) && /r\.entry = \(!sm && !!\(raw \|\| cm\)\) \|\| raw === 'entretien'/.test(uiSrc) && />Nouvelle demande<\/button>/.test(uiSrc));
+ok('UI : lien d’entrée avec demande en cours → écran de choix (Reprendre / Nouvelle demande), jamais de pré-remplissage silencieux', /if \(h\.entry && C\.hasDraft\(state, cart \? cart\.count\(\) : 0\)\) \{ pendingEntry = h; start = 'choix'; \}/.test(uiSrc) && /r\.entry = \(!sm && !!\(raw \|\| cm\)\) \|\| raw === 'entretien'/.test(uiSrc) && />Nouvelle demande<\/button>/.test(uiSrc));
 ok('UI : envoi réussi → identité et adresse retirées de l’état stocké (2 parcours)', (uiSrc.match(/forgetIdentityAfterSend\(\); save\(\);/g) || []).length === 2);
 ok('UI : nouveau choix de parcours avec demande en cours ou envoyée → état vierge ; identité reprise seulement via « Faire une autre demande »', /if \(state\.sent \|\| C\.hasDraft\(state, cart \? cart\.count\(\) : 0\)\) startClean\(\);/.test(uiSrc) && /carryIdentity = restart \? lastIdentity : null;/.test(uiSrc) && !/var keep = \{ contact: state\.contact/.test(uiSrc));
 ok('UI : « Effacer mes informations » purge brouillon, données personnelles, demande, accès tarifs, mesure et attribution + champs affichés', /\[STORE, 'hc_cart_v1'\]\.forEach/.test(uiSrc) && /\[STORE_PII, 'hc_pg', 'hc_fs_intervention', 'hc_fs_devis', 'hc_utm', 'hc_referrer'\]\.forEach/.test(uiSrc) && /lastIdentity = carryIdentity = pendingEntry = null; clearFields\(\);/.test(uiSrc));

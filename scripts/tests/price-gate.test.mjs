@@ -10,14 +10,15 @@ import vm from 'vm';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const cat = readFileSync(join(ROOT, 'catalogue.html'), 'utf8');
-const js = cat.replace(/<!--[\s\S]*?-->/g, '');
+// Le module vit dans assets/ (page /catalogue.html ET fenêtre premium de l'accueil) : la preuve porte sur ces fichiers.
+const js = [readFileSync(join(ROOT, 'assets', 'hc-demande.js'), 'utf8'), readFileSync(join(ROOT, 'assets', 'hc-demande-core.js'), 'utf8'), cat].join('\n').replace(/<!--[\s\S]*?-->/g, '');
 let pass = 0, fail = 0;
 const ok = (n, c) => { c ? (pass++, console.log('  ✅', n)) : (fail++, console.log('  ❌', n)); };
 const count = (s, re) => (s.match(re) || []).length;
 const block = (re) => (js.match(re) || [''])[0];
 
 // Cœur pur chargé dans un bac à sable Node (même code que le navigateur)
-const coreSrc = (cat.match(/<script id="hc-demande-core">([\s\S]*?)<\/script>/) || [, ''])[1];
+const coreSrc = readFileSync(join(ROOT, 'assets', 'hc-demande-core.js'), 'utf8');
 const box = { module: { exports: {} }, self: undefined };
 vm.runInNewContext(coreSrc, box);
 const C = box.module.exports;
@@ -66,7 +67,7 @@ function walk(dir, acc = []) {
   return acc;
 }
 const offenders = walk(ROOT).filter(p => {
-  if (p.endsWith('catalogue.html') || p.includes(join('scripts', 'tests'))) return false;
+  if (p.endsWith(join('assets', 'hc-demande.js')) || p.endsWith('catalogue.html') || p.includes(join('scripts', 'tests'))) return false;
   const src = readFileSync(p, 'utf8').replace(/<!--[\s\S]*?-->/g, '');
   return /_priceGateOk\s*=\s*true/.test(src) || /setItem\(\s*['"]hc_pg['"]/.test(src);
 }).map(p => p.replace(ROOT + '/', ''));

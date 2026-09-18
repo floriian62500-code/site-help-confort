@@ -1462,6 +1462,42 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
 <script src="assets/hc-rate-limit.js?v=20260603" defer></script>
 <script defer src="assets/hc-review.js?v=2"></script>
 <script>
+/* Tunnel « Ma demande » : ouverture en fenêtre premium depuis l'accueil (modale desktop, feuille plein écran mobile).
+   Chargement à la demande ; si le script ne charge pas, le lien reste une navigation normale vers /catalogue.html. */
+(function () {
+  var V = '20260917c', loading = null;
+  function load() {
+    if (loading) return loading;
+    loading = new Promise(function (resolve, reject) {
+      var css = document.createElement('link'); css.rel = 'stylesheet'; css.href = '/assets/hc-demande.css?v=' + V; document.head.appendChild(css);
+      var srcs = ['/assets/hc-cart.js?v=' + V, '/assets/hc-demande-core.js?v=' + V, '/assets/hc-demande.js?v=' + V];
+      (function next(i) {
+        if (i >= srcs.length) return resolve();
+        var sc = document.createElement('script'); sc.src = srcs[i]; sc.async = false;
+        sc.onload = function () { next(i + 1); }; sc.onerror = reject;
+        document.head.appendChild(sc);
+      })(0);
+    });
+    return loading;
+  }
+  function hashOf(a) { var h = (a.getAttribute('href') || '').split('#')[1] || ''; return h ? '#' + h : '#intervention'; }
+  function isCta(el) { return el && el.closest ? el.closest('a[href*="/catalogue"]') : null; }
+  ['pointerover', 'touchstart'].forEach(function (ev) {
+    document.addEventListener(ev, function (e) { if (isCta(e.target)) load(); }, { passive: true, once: false });
+  });
+  document.addEventListener('click', function (e) {
+    var a = isCta(e.target);
+    if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || (e.button && e.button > 0)) return;
+    e.preventDefault();
+    var hash = hashOf(a);
+    load().then(function () { window.HcDemande.open(hash, a); }, function () { location.href = a.getAttribute('href'); });
+  });
+  if (/^#(step=|cat=|intervention$|devis$|entretien$)/.test(location.hash)) load().then(function () { window.HcDemande.open(location.hash); });
+  var idle = window.requestIdleCallback || function (f) { return setTimeout(f, 6000); };
+  idle(function () { load(); }, { timeout: 8000 });
+})();
+</script>
+<script>
 /* Mesure CTA accueil → tunnel « Ma demande » (P0.4) : production uniquement ; window.hcGtag n'existe qu'après consentement. Aucune donnée personnelle. */
 document.addEventListener('click', function (e) {
   var a = e.target && e.target.closest && e.target.closest('a[href*="/catalogue"]'); if (!a) return; // Netlify sert les liens sans .html

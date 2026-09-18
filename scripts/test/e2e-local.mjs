@@ -144,10 +144,10 @@ await journey('J6_souscription_entretien', pSous, { notify: true, common: false,
 }) });
 
 // 3) Module « Ma demande » v2 : payloads construits par le cœur RÉEL du front (catalogue.html)
-const catPath = [join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'catalogue.html')].find(existsSync);
+const catPath = [join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'assets', 'hc-demande-core.js')].find(existsSync);
 if (catPath) {
   const box = { module: { exports: {} } };
-  vm.runInNewContext((readFileSync(catPath, 'utf8').match(/<script id="hc-demande-core">([\s\S]*?)<\/script>/) || [, ''])[1], box);
+  vm.runInNewContext(readFileSync(catPath, 'utf8'), box);
   const C = box.module.exports;
   const contact = { prenom: 'TEST', nom: 'NE PAS TRAITER', tel: '+33 (0)6 12 34 56 78', email: '' };
   const lieu = { adresse: '1 rue Test', cp: '62500', ville: 'Saint-Omer', zone: C.zoneFor(50.7508, 2.2522, '62500') };
@@ -186,8 +186,8 @@ if (catPath) {
     ...attrOk(row),
   }) });
 } else {
-  console.log('[V2] catalogue.html introuvable : parcours module v2 non exécutés');
-  results.push({ journey: 'V2_module', status: 0, id: 'catalogue.html absent', ok: false });
+  console.log('[V2] assets/hc-demande-core.js introuvable : parcours module v2 non exécutés');
+  results.push({ journey: 'V2_module', status: 0, id: 'hc-demande-core.js absent', ok: false });
 }
 
 const pass = results.every(r => r.ok);
