@@ -191,9 +191,6 @@ if (catPath) {
   results.push({ journey: 'V2_module', status: 0, id: 'hc-demande-core.js absent', ok: false });
 }
 
-const pass = results.every(r => r.ok);
-console.log('\n=== RÉSULTAT E2E LOCAL ===');
-console.table(results);
 // ---------------------------------------------------------------------------
 // 4) Cycle commercial : intention silencieuse → finalisation → relance d'abandon
 //    (directives 5713150094 / 5713186419). Tout est local : aucun email, aucune PROD.
@@ -348,6 +345,10 @@ if (catPath) {
   }
 }
 
+// Verdict calculé APRÈS tous les blocs (historiques, cycle commercial, paiement)
+const pass = results.every(r => r.ok);
+console.log('\n=== RÉSULTAT E2E LOCAL ===');
+console.table(results);
 const flow = (prefix) => { const rs = results.filter((r) => r.journey.startsWith(prefix)); return rs.length && rs.every((r) => r.ok) ? 'PASS' : 'FAIL'; };
 const both = (a, b) => (flow(a) === 'PASS' && flow(b) === 'PASS' ? 'PASS' : 'FAIL');
 console.log(`INTERVENTION_BACKEND_E2E=${flow('V2_INTERVENTION')} | QUOTE_BACKEND_E2E=${flow('V2_DEVIS')} | MAINTENANCE_BACKEND_E2E=${both('V2_ENTRETIEN', 'J6_souscription_entretien')} (devis module + souscription page) | PRICE_GATE_BACKEND_E2E=${flow('V2_acces_tarifs')} (local isolé)`);

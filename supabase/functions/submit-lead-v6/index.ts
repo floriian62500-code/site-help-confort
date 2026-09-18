@@ -145,7 +145,9 @@ Deno.serve(async (req: Request) => {
     source: sanitize(body.source, 100) || 'formulaire_site',
     source_page: sanitize(body.source_page, 500),
     source_referer: sanitize(body.source_referer, 500),
-    utm: Object.assign({}, (body.utm && typeof body.utm === 'object') ? body.utm : {}, { form_type: formType || 'demande_metier' }),
+    // La référence de corrélation est TOUJOURS conservée dans utm : c'est la clé de déduplication,
+    // y compris pour une demande finalisée sans passage préalable par l'accès aux tarifs.
+    utm: Object.assign({}, (body.utm && typeof body.utm === 'object') ? body.utm : {}, { form_type: formType || 'demande_metier' }, correlationId ? { correlation_id: correlationId } : {}),
     status: isIntent ? 'intent' : 'nouveau',
     priority: isIntent ? 'basse' : 'normale',
     realisation_id: typeof body.realisation_id === 'string' ? body.realisation_id : null,

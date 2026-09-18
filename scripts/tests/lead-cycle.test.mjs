@@ -109,5 +109,6 @@ ok('client : lien de paiement proposé seulement si éligible ET paiement dispon
 ok('client : « Paiement reçu » affiché quand le dossier est payé', /r\.payState === 'paid'/.test(reply) && /Paiement reçu/.test(reply));
 ok('front : le lien de l’email rouvre le récapitulatif du dossier avec le paiement (sans donnée personnelle dans l’URL)', /payer=\(\[0-9a-f-\]\{36\}\)/.test(ui) && /function openPayLink\(leadId, token\)/.test(ui));
 
+ok('dédup : la référence de corrélation est toujours conservée dans utm (clé de recherche stable)', /correlationId \? \{ correlation_id: correlationId \} : \{\}/.test(submit));
 console.log(`\nRÉSULTAT CYCLE LEAD : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);
