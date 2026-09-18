@@ -211,11 +211,12 @@
     </header>
     <div class="q-body">
      <div class="ctx-line"><svg width="18" height="18" aria-hidden="true"><use href="#i-pin"/></svg><span id="coordLieu"></span><button class="link rc-mod" type="button" data-go="lieu" aria-label="Modifier l'adresse">Modifier</button></div>
-     <div class="row2">
+     <div class="ctx-line" id="coordKnown" hidden><svg width="18" height="18" aria-hidden="true"><use href="#i-user"/></svg><span id="coordKnownTxt"></span><button class="link rc-mod" type="button" data-edit-contact aria-label="Modifier vos coordonnées">Modifier</button></div>
+     <div class="row2" id="coordRow1">
       <div class="field" id="fld-prenom"><label for="f-prenom">Prénom</label><input id="f-prenom" type="text" autocomplete="given-name"><p class="err">Indiquez votre prénom.</p></div>
       <div class="field" id="fld-nom"><label for="f-nom">Nom</label><input id="f-nom" type="text" autocomplete="family-name"><p class="err">Indiquez votre nom.</p></div>
      </div>
-     <div class="row2">
+     <div class="row2" id="coordRow2">
       <div class="field" id="fld-tel"><label for="f-tel">Téléphone</label><input id="f-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="ex. 06 12 34 56 78"><p class="err">Numéro de téléphone français attendu, par exemple 06 12 34 56 78.</p></div>
       <div class="field" id="fld-email"><label for="f-email">Email <span class="opt">· facultatif</span></label><input id="f-email" type="email" inputmode="email" autocomplete="email" placeholder="ex. vous@exemple.fr"><p class="err">Adresse email invalide (vous pouvez aussi laisser ce champ vide).</p></div>
      </div>
@@ -837,18 +838,56 @@
 
   // ---------- Coordonnées ----------
   var CF = [['f-prenom', 'prenom', 'fld-prenom'], ['f-nom', 'nom', 'fld-nom'], ['f-tel', 'tel', 'fld-tel'], ['f-email', 'email', 'fld-email']];
+  // Une information n'est demandée qu'une fois : ce qui a été saisi à l'accès aux tarifs
+  // n'est jamais redemandé. On n'affiche que les champs manquants, ou un récapitulatif modifiable.
+  function missingContact() {
+    var c = state.contact, m = [];
+    if (!C.nameOk(c.prenom)) m.push('prenom');
+    if (!C.nameOk(c.nom)) m.push('nom');
+    if (!C.phoneOk(c.tel)) m.push('tel');
+    if (String(c.email || '').trim() && !C.emailOk(c.email)) m.push('email');
+    return m;
+  }
+  function contactSummary() {
+    var c = state.contact, who = [c.prenom, c.nom].filter(Boolean).join(' ').trim();
+    return [who, c.tel ? C.phoneDisplay(c.tel) : '', String(c.email || '').trim()].filter(Boolean).join(' · ');
+  }
   ENTER.coordonnees = function () {
     pingIntent('coordonnees');
     CF.forEach(function (x) { document.getElementById(x[0]).value = state.contact[x[1]] || ''; mark(x[2], false); });
     $('#coordLieu').textContent = lieuTxt() || 'Adresse à compléter';
-    $('#coordSub').textContent = state.mode === 'devis' ? 'Pour vous transmettre votre devis et vous recontacter si besoin.' : 'Pour vous rappeler et confirmer votre intervention.';
+    var miss = missingContact(), edit = !!state._editContact;
+    var known = $('#coordKnown');
+    // Récapitulatif compact quand tout est déjà connu et que le client n'a pas demandé à modifier
+    known.hidden = edit || !!miss.length || !contactSummary();
+    if (!known.hidden) $('#coordKnownTxt').textContent = contactSummary();
+    CF.forEach(function (x) {
+      var show = edit || miss.indexOf(x[1]) >= 0;
+      document.getElementById(x[2]).hidden = !show;
+    });
+    // Les rangées vides ne laissent pas de trou dans la mise en page
+    ['coordRow1', 'coordRow2'].forEach(function (id) {
+      var row = document.getElementById(id);
+      row.hidden = !$$('.field', row).some(function (f) { return !f.hidden; });
+    });
+    var base = state.mode === 'devis' ? 'Pour vous transmettre votre devis et vous recontacter si besoin.' : 'Pour vous rappeler et confirmer votre intervention.';
+    $('#coordSub').textContent = !known.hidden ? 'Nous avons déjà ce qu’il faut pour vous rappeler — vérifiez et continuez.'
+      : (miss.length && !edit ? 'Il ne manque plus que ' + (miss.length > 1 ? 'quelques informations' : { prenom: 'votre prénom', nom: 'votre nom', tel: 'votre téléphone', email: 'un email valide' }[miss[0]]) + '.' : base);
   };
   CF.forEach(function (x) { document.getElementById(x[0]).addEventListener('input', function () { state.contact[x[1]] = this.value; mark(x[2], false); save(); renderRecap(); }); });
   function submitContact() {
-    var c = state.contact; CF.forEach(function (x) { c[x[1]] = document.getElementById(x[0]).value.trim(); }); save();
+    var c = state.contact;
+    CF.forEach(function (x) { if (!document.getElementById(x[2]).hidden) c[x[1]] = document.getElementById(x[0]).value.trim(); });
+    save();
     var bad = [!C.nameOk(c.prenom), !C.nameOk(c.nom), !C.phoneOk(c.tel), !!String(c.email || '').trim() && !C.emailOk(c.email)];
     CF.forEach(function (x, i) { mark(x[2], bad[i]); });
-    var first = bad.indexOf(true); if (first >= 0) return focusBad(document.getElementById(CF[first][0]));
+    var first = bad.indexOf(true);
+    if (first >= 0) {
+      // Un champ invalide caché (issu de l'accès aux tarifs) est rouvert pour correction
+      if (document.getElementById(CF[first][2]).hidden) { state._editContact = true; save(); ENTER.coordonnees(); }
+      return focusBad(document.getElementById(CF[first][0]));
+    }
+    state._editContact = false; save();
     track('hc_coordonnees_ok');
     next('coordonnees');
   }
@@ -1012,7 +1051,8 @@
     if ((el = t.closest('[data-next]'))) { var from = el.getAttribute('data-next'); if (from === 'dv-photos') { state.devis.photosSeen = true; save(); } if (from === 'lieu') return submitLieu(); if (from === 'coordonnees') return submitContact();
       if (from === 'dv-projet') { state.devis.desc = $('#dv-desc').value.trim(); save(); if (!C.descOk(state.devis.desc)) { mark('fld-desc', true); return focusBad($('#dv-desc')); } }
       return next(from); }
-    if ((el = t.closest('[data-go]'))) { e.preventDefault(); var tg = el.getAttribute('data-go'), ti = C.flowIndex(state.mode, tg), ci = C.flowIndex(state.mode, state.step); state._returnTo = (ti >= 0 && ci > ti) ? state.step : null; return go(tg); }
+    if ((el = t.closest('[data-go]'))) { e.preventDefault(); var tg = el.getAttribute('data-go'), ti = C.flowIndex(state.mode, tg), ci = C.flowIndex(state.mode, state.step); state._returnTo = (ti >= 0 && ci > ti) ? state.step : null; if (tg === 'coordonnees') state._editContact = true; return go(tg); }
+    if ((el = t.closest('[data-edit-contact]'))) { state._editContact = true; save(); ENTER.coordonnees(); var f1 = $$('.field', $('.step[data-step="coordonnees"]')).filter(function (x) { return !x.hidden; })[0]; var i1 = f1 && f1.querySelector('input'); if (i1) i1.focus(); return; }
     if ((el = t.closest('[data-fam]'))) return pickFamily(el);
     if ((el = t.closest('[data-toggle]'))) return toggleLine(el.getAttribute('data-toggle'));
     if ((el = t.closest('[data-unjoin]'))) { var uid = el.getAttribute('data-unjoin'), ul = cart && cart.lines().filter(function (x) { return x.id === uid; })[0]; if (cart) cart.remove(uid); save(); track('hc_demande_remove', { item: ul && ul.slug, from: 'dv-recap' }); ENTER['dv-recap'](); renderRecap(); toast('« ' + (ul ? ul.name : 'Intervention') + ' » retirée de la demande'); var nx = $('#dvRows [data-unjoin]') || $('#sendDevis'); if (nx) nx.focus(); return; }

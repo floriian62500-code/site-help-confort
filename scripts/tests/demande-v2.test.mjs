@@ -231,5 +231,12 @@ ok('UI : champ Nom obligatoire à l’étape tarifs (validé avant affichage des
 ok('UI : référence de dossier créée une seule fois puis réutilisée', /function cid\(\) \{/.test(uiFile) && /if \(state\._cid\) return state\._cid;/.test(uiFile) && /cid: state\._cid \|\| null/.test(uiFile));
 ok('UI : signal d’activité muet (aucun envoi en simulation, aucune notification demandée)', /function pingIntent\(step\)/.test(uiFile) && /if \(SIM \|\| !state\._cid \|\| !C\.contactValid\(state\.contact\)\) return;/.test(uiFile) && /pingIntent\('coordonnees'\)/.test(uiFile));
 
+// ---- Une information n'est demandée qu'une fois (directive 5713227171)
+ok('coordonnées : récapitulatif compact quand tout est déjà connu', /known\.hidden = edit \|\| !!miss\.length \|\| !contactSummary\(\)/.test(uiFile) && /id="coordKnown"/.test(uiFile));
+ok('coordonnées : seuls les champs manquants sont affichés', /var show = edit \|\| miss\.indexOf\(x\[1\]\) >= 0;/.test(uiFile) && /function missingContact\(\)/.test(uiFile));
+ok('coordonnées : « Modifier » rouvre les champs préremplis', /data-edit-contact/.test(uiFile) && /state\._editContact = true; save\(\); ENTER\.coordonnees\(\)/.test(uiFile));
+ok('coordonnées : la validation ne lit que les champs affichés et rouvre un champ invalide caché', /if \(!document\.getElementById\(x\[2\]\)\.hidden\) c\[x\[1\]\] = document/.test(uiFile) && /if \(document\.getElementById\(CF\[first\]\[2\]\)\.hidden\) \{ state\._editContact = true;/.test(uiFile));
+ok('adresse : jamais redemandée à l’étape coordonnées (rappel + Modifier)', /id="coordLieu"/.test(uiFile) && /data-go="lieu" aria-label="Modifier l'adresse"/.test(uiFile));
+
 console.log(`\nRÉSULTAT MODULE DEMANDE V2 : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);
