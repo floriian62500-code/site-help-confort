@@ -516,6 +516,6 @@
 
 /* Récapitulatif compact des coordonnées : le lien « Modifier » reste sur la première ligne */
 .hcd #coordKnown{align-items:flex-start}
-.hcd #coordKnownTxt{flex:1 1 auto;min-width:0}
+.hcd #coordKnownTxt{flex:1 1 0;min-width:0}
 .hcd #coordKnown .rc-mod{flex:none;margin-left:auto}
 @media (max-width:760px){.hcd #coordKnown{padding:10px 12px;gap:8px}}
