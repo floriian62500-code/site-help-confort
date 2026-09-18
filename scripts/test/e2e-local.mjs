@@ -11,6 +11,7 @@ import { readFileSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import vm from 'vm';
+import { createHmac } from 'crypto';
 
 const SUPA = process.env.LOCAL_SUPA || 'http://localhost:54321';
 const ANON = process.env.LOCAL_ANON || '';
@@ -270,6 +271,67 @@ if (catPath) {
   // F. CRM Apogée : file d'attente alimentée, envoi bloqué faute d'accès (aucun faux succès)
   const crm = await post('crm-apogee-push', { dry_run: true });
   check('CYCLE_F_crm_en_attente_bloque', crm.status === 200 && crm.body.ok === false && crm.body.blocked === 'missing_credentials' && crm.body.pending >= 1, 'pending=' + (crm.body && crm.body.pending));
+}
+
+// ---------------------------------------------------------------------------
+// 5) Paiement en ligne facultatif (directive 5713247831) — Stripe TEST, prouvé sans Stripe :
+//    montant serveur, blocage sans clé TEST, jeton, webhook signé, idempotence, live refusé.
+// ---------------------------------------------------------------------------
+if (catPath) {
+  const box3 = { module: { exports: {} } };
+  vm.runInNewContext(readFileSync(catPath, 'utf8'), box3);
+  const C3 = box3.module.exports;
+  // une prestation réelle du catalogue local (prix ferme)
+  const cat = await fetch(`${SUPA}/rest/v1/v_services_public?select=*&order=position.asc&limit=1`, { headers: { apikey: ANON, Authorization: 'Bearer ' + ANON } }).then((r) => r.json()).catch(() => []);
+  const svc = Array.isArray(cat) ? cat[0] : null;
+  if (!svc) { check('PAY_catalogue_local', false, 'catalogue local vide'); }
+  else {
+    const byIdP = { [svc.id]: { ...svc, requires_quote: false } };
+    const linesP = [{ id: svc.id, slug: 'e2e', name: svc.name, ttc: Number(svc.price_ttc), qty: 1 }];
+    const cidP = 'e2e-pay-' + Date.now().toString(36);
+    const contactP = { prenom: 'TEST', nom: 'PAIEMENT', tel: '06 12 34 56 78', email: 'paiement@exemple.test' };
+    const lieuP = { adresse: '1 rue Test', cp: '62500', ville: 'Saint-Omer', zone: C3.zoneFor(50.7508, 2.2522, '62500') };
+    // montant falsifié côté client : le serveur doit l'ignorer
+    const finalP = { ...C3.interventionPayload({ lines: linesP, byId: byIdP, contact: contactP, lieu: lieuP, prise: { quand: 'asap' }, cartMode: 'paiement', page: 'http://localhost/ (E2E)', cid: cidP }), source: 'e2e_local_pay', amount: 1 };
+    const rF = await submitLead(finalP);
+    const leadP = rF.body && rF.body.id, tok = rF.body && rF.body.pay_token;
+    check('PAY_A_jeton_remis_a_la_finalisation', rF.status === 200 && !!leadP && typeof tok === 'string' && tok.length >= 32, 'jeton=' + (tok ? 'oui' : 'non'));
+    const chk = await post('create-payment-session', { lead_id: leadP, pay_token: tok, mode: 'check' });
+    check('PAY_B_montant_serveur_et_eligibilite', chk.status === 200 && chk.body.eligible === true && Math.abs(chk.body.amount - Number(svc.price_ttc)) < 0.001, `montant=${chk.body && chk.body.amount} (client envoyait 1)`);
+    check('PAY_C_indisponible_sans_cle_test', chk.body.available === false, 'available=' + (chk.body && chk.body.available));
+    const cre = await post('create-payment-session', { lead_id: leadP, pay_token: tok, mode: 'create', return_url: 'http://localhost/catalogue.html' });
+    check('PAY_D_creation_bloquee_sans_cle_test', cre.status === 200 && cre.body.ok === false && cre.body.blocked === 'missing_stripe_test_key', 'blocked=' + (cre.body && cre.body.blocked));
+    const bad = await post('create-payment-session', { lead_id: leadP, pay_token: 'x'.repeat(tok.length), mode: 'check' });
+    check('PAY_E_jeton_falsifie_refuse', bad.status === 403, 'HTTP ' + bad.status);
+    // prestation inconnue → pas de paiement proposé
+    const finalX = { ...C3.interventionPayload({ lines: [{ id: '00000000-0000-0000-0000-000000000000', slug: 'x', name: 'Inconnue', ttc: 50, qty: 1 }], byId: {}, contact: contactP, lieu: lieuP, prise: { quand: 'asap' }, cartMode: 'paiement', page: 'http://localhost/ (E2E)' }), source: 'e2e_local_pay' };
+    const rX = await submitLead(finalX);
+    const chkX = await post('create-payment-session', { lead_id: rX.body.id, pay_token: rX.body.pay_token, mode: 'check' });
+    check('PAY_F_non_eligible_si_prestation_non_ferme', chkX.status === 200 && chkX.body.eligible === false, 'raison=' + (chkX.body && chkX.body.reason));
+
+    // Webhook signé (secret local fictif) : paiement confirmé sur le MÊME dossier, une seule fois
+    const WH = process.env.LOCAL_WH_SECRET || '';
+    const signed = async (evt, secret = WH, ts = Math.floor(Date.now() / 1000)) => {
+      const raw = JSON.stringify(evt);
+      const sig = createHmac('sha256', secret).update(`${ts}.${raw}`).digest('hex');
+      const r = await fetch(`${SUPA}/functions/v1/stripe-webhook-test`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'stripe-signature': `t=${ts},v1=${sig}`, apikey: ANON, Authorization: 'Bearer ' + ANON }, body: raw });
+      return { status: r.status, body: await r.json().catch(() => ({})) };
+    };
+    const evt = { id: 'evt_e2e_' + Date.now(), type: 'checkout.session.completed', livemode: false, data: { object: { id: 'cs_test_e2e', payment_status: 'paid', amount_total: Math.round(Number(svc.price_ttc) * 100), currency: 'eur', client_reference_id: leadP, metadata: { lead_id: leadP }, payment_intent: 'pi_test_e2e' } } };
+    const w1 = await signed(evt);
+    const rowW = await readLead(leadP);
+    check('PAY_G_webhook_paiement_meme_dossier', w1.status === 200 && w1.body.status === 'paid' && rowW && rowW.metadata && rowW.metadata.payment && rowW.metadata.payment.status === 'paid', 'statut=' + (rowW && rowW.metadata && rowW.metadata.payment && rowW.metadata.payment.status));
+    const w2 = await signed(evt);
+    check('PAY_H_webhook_rejoue_sans_effet', w2.status === 200 && w2.body.duplicate === true, JSON.stringify(w2.body));
+    const w3 = await signed({ ...evt, id: evt.id + '_bis' });
+    check('PAY_I_dossier_deja_paye_jamais_refacture', w3.status === 200 && w3.body.already_paid === true, JSON.stringify(w3.body));
+    const w4 = await signed(evt, 'whsec_faux');
+    check('PAY_J_signature_invalide_refusee', w4.status === 400, 'HTTP ' + w4.status);
+    const w5 = await signed({ ...evt, id: evt.id + '_live', livemode: true });
+    check('PAY_K_evenement_live_refuse', w5.status === 400 && w5.body.error === 'live_event_refused', JSON.stringify(w5.body));
+    const cre2 = await post('create-payment-session', { lead_id: leadP, pay_token: tok, mode: 'check' });
+    check('PAY_L_statut_paye_relu_par_le_recapitulatif', cre2.status === 200 && cre2.body.payment && cre2.body.payment.status === 'paid', 'payment=' + (cre2.body && cre2.body.payment && cre2.body.payment.status));
+  }
 }
 
 const flow = (prefix) => { const rs = results.filter((r) => r.journey.startsWith(prefix)); return rs.length && rs.every((r) => r.ok) ? 'PASS' : 'FAIL'; };

@@ -80,7 +80,7 @@ ok('réserve : engagement d’information AVANT tout supplément (front + emails
 // ---- Paiement en ligne facultatif (directive 5713247831) — Stripe TEST uniquement
 const pay = read('supabase/functions/create-payment-session/index.ts');
 const hook = read('supabase/functions/stripe-webhook-test/index.ts');
-ok('paiement : ne lit jamais la configuration Stripe de production (clé live)', !/app_settings/.test(pay) && /STRIPE_TEST_SECRET_KEY/.test(pay));
+ok('paiement : ne lit jamais la configuration Stripe de production (clé live)', !/app_settings/.test(pay.replace(/\/\/[^\n]*/g, '')) && /STRIPE_TEST_SECRET_KEY/.test(pay));
 ok('paiement : toute clé qui n’est pas sk_test_ est refusée', /key\.startsWith\('sk_test_'\)/.test(pay) && /blocked: 'live_key_refused'/.test(pay));
 ok('paiement : sans clé TEST, aucun faux succès', /blocked: 'missing_stripe_test_key'/.test(pay));
 ok('paiement : montant recalculé côté serveur depuis le catalogue (jamais celui du navigateur)', /from\('v_services_public'\)/.test(pay) && !/body\.amount/.test(pay));

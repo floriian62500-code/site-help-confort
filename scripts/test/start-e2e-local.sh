@@ -41,7 +41,10 @@ echo "== 6/9 bootstrap.sql (LOCAL uniquement) =="
 psql "$DB_URL" -v ON_ERROR_STOP=1 -f supabase/local-test/bootstrap.sql
 
 echo "== 7/9 functions serve (env TEST, RESEND vide → 0 email) =="
-printf 'SUPABASE_URL=%s\nSUPABASE_SERVICE_ROLE_KEY=%s\nRESEND_API_KEY=\n' "$API_URL" "$SRK" > supabase/local-test/functions.env
+# Secret de webhook LOCAL fictif (signature des événements de test du harnais) ; AUCUNE clé Stripe :
+# la création de paiement doit répondre « missing_stripe_test_key » (aucun faux succès).
+WH_SECRET="whsec_local_e2e_$(date +%s)"
+printf 'SUPABASE_URL=%s\nSUPABASE_SERVICE_ROLE_KEY=%s\nRESEND_API_KEY=\nSTRIPE_TEST_WEBHOOK_SECRET=%s\n' "$API_URL" "$SRK" "$WH_SECRET" > supabase/local-test/functions.env
 supabase functions serve --env-file supabase/local-test/functions.env >/tmp/hc-e2e-fns.log 2>&1 &
 FN_PID=$!
 trap 'kill "$FN_PID" 2>/dev/null || true' EXIT
@@ -49,7 +52,7 @@ sleep 7
 
 echo "== 8/9 E2E (harnais + guard fail-closed) =="
 set +e
-LOCAL_SUPA="$API_URL" LOCAL_ANON="$ANON" LOCAL_SRK="$SRK" node scripts/test/e2e-local.mjs
+LOCAL_SUPA="$API_URL" LOCAL_ANON="$ANON" LOCAL_SRK="$SRK" LOCAL_WH_SECRET="$WH_SECRET" node scripts/test/e2e-local.mjs
 RC=$?
 set -e
 
