@@ -1,13 +1,14 @@
 /*! HELP Confort — mesure des pages d'atterrissage « entretien » (campagnes Google Ads / Meta).
- *  Page : <body data-hc-landing="chaudiere|ramonage">. Événements (aucune donnée personnelle) :
- *  view_maintenance_landing · click_maintenance_cta · click_to_call · maintenance_submit · generate_lead.
+ *  Page : <body data-hc-landing="chaudiere|ramonage|contrat">. Événements (aucune donnée personnelle) :
+ *  view_maintenance_landing · click_maintenance_cta · click_to_call · start_maintenance_funnel (souscription ouverte,
+ *  événement « hc:funnel-start ») · maintenance_submit + generate_lead (envoi confirmé, événement « hc:lead-sent »).
  *  Toujours consignés dans window.__hcFunnel (contrôle recette). Envoyés à GA4 via window.hcGtag, qui n'existe
  *  qu'en production ET après consentement (assets/tracking.js) ; avant consentement, rien ne sort du navigateur. */
 (function () {
   'use strict';
   var body = document.body; if (!body) return;
   var fam = String(body.getAttribute('data-hc-landing') || '');
-  if (!/^(chaudiere|ramonage)$/.test(fam)) return;
+  if (!/^(chaudiere|ramonage|contrat)$/.test(fam)) return;
   if (window.__hcLandingInit) return; window.__hcLandingInit = true;
   var PROD = /^(www\.)?depan59-62\.fr$/.test(location.hostname);
   var queue = [];
@@ -37,10 +38,15 @@
     if (el.hasAttribute('data-hc-cta')) send('click_maintenance_cta', { cta: el.getAttribute('data-hc-cta') });
     else if (/^tel:/.test(href)) send('click_to_call', { position: el.closest('#hcHeader') ? 'entete' : 'page' });
   }, true);
-  // Formulaire de rappel de la page (assets/hc-leads-capture.js) : envoi confirmé par le serveur
-  document.addEventListener('hc:lead-sent', function (e) {
+  // Souscription ouverte (page contrats : fenêtre de souscription)
+  document.addEventListener('hc:funnel-start', function (e) {
     var d = (e && e.detail) || {};
-    send('maintenance_submit', { lead_type: d.type || fam });
-    send('generate_lead', { lead_type: d.type || fam });
+    send('start_maintenance_funnel', { entry: d.entry || fam, energie: d.energie || null, formule: d.formule || null });
+  });
+  // Envoi confirmé par le serveur : formulaire de rappel (assets/hc-leads-capture.js) ou souscription (page contrats)
+  document.addEventListener('hc:lead-sent', function (e) {
+    var d = (e && e.detail) || {}, p = { lead_type: d.type || fam, energie: d.energie || null, formule: d.formule || null };
+    send('maintenance_submit', p);
+    send('generate_lead', p);
   });
 })();
