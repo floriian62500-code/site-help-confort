@@ -16,8 +16,8 @@ Aucune annonce ne cite une prestation, une zone ou un prix absents de ces source
 | Famille | Ce que l'entreprise propose réellement (preuve) | Page d'atterrissage | Statut |
 |---|---|---|---|
 | **A. Chaudières** (gaz, fioul) | Entretien ponctuel au catalogue (gaz 121 €, fioul 178,20 € / 218,90 € TTC) ; contrats BASIC / CONFORT / SÉCURITÉ ; page `entretien-chaudiere.html` | `entretien-chaudiere.html` → tunnel sur les prestations chauffage à prix ferme | **READY** (préparé) |
-| **B. Poêles / inserts** (entretien de l'appareil) | **Aucune preuve** : pas de prestation au catalogue, pas de page, pas de prix, pas de qualification bois affichée. Le poêle à granulés n'apparaît nulle part comme service. Le seul service lié aux poêles et inserts est le **ramonage** (famille C). | — | **BLOCKED** |
-| **C. Ramonage** (cheminée, insert, poêle à bois, conduit de chaudière) | Page `prestations/ramonage.html` : ramonage mécanique, vérification du tirage, contrôle du conduit, certificat. **Pas de prix au catalogue.** | `prestations/ramonage.html` → formulaire court « Demande de rappel » | **READY** (préparé, prix non affiché) |
+| **B. Poêles / inserts** (bois, granulés) | Barème agence transmis par Florian le 18/09/2026 (directive 5733225819) : **EPB** entretien annuel poêle / insert à bois, ramonage compris, **115 € HT** ; **EPG** poêle / insert à granulés, ramonage compris, **136 € HT**. TTC : 126,50 / 149,60 € (TVA 10 %, logement de plus de 2 ans), 138 / 163,20 € (TVA 20 %). Référence interne : `admin-pro/TARIFS_REFERENCE.md`. Pas encore au catalogue en ligne (ajout préparé, écriture PROD = gate) : la demande passe par le formulaire de rappel de la page. | `entretien-poele-insert.html` → formulaire de rappel | **READY** (préparé) |
+| **C. Ramonage** (cheminée, conduit de chaudière ; poêle et insert : voir B) | Page `prestations/ramonage.html` : ramonage mécanique, vérification du tirage, contrôle du conduit, certificat. **Pas de prix au catalogue.** | `prestations/ramonage.html` → formulaire court « Demande de rappel » | **READY** (préparé, prix non affiché) |
 
 **Activation : `CAMPAIGN_GO_LIVE=NO_GO`**. Les pages corrigées et la mesure ne sont qu'en recette, et les gates de production sont ouverts (§9).
 
@@ -49,9 +49,11 @@ Aucune annonce ne cite une prestation, une zone ou un prix absents de ces source
 | Campagne (nom technique) | Réseau | Groupes d'annonces | Page de destination |
 |---|---|---|---|
 | `SRCH_ENTRETIEN-CHAUDIERE_SO50` | Google Search uniquement (sans Display ni partenaires au lancement) | A1 Entretien gaz · A2 Entretien fioul · A3 Contrat d'entretien · A4 Entretien + ville | `https://depan59-62.fr/entretien-chaudiere.html` |
-| `SRCH_RAMONAGE_SO50` | Google Search uniquement | C1 Ramonage cheminée · C2 Ramonage poêle à bois / insert · C3 Ramonage conduit de chaudière · C4 Certificat de ramonage | `https://depan59-62.fr/prestations/ramonage.html` |
-| `META_ENTRETIEN_SO50` | Facebook + Instagram | 3 angles : chaudière · poêle & insert (ramonage) · ramonage cheminée / conduit | selon l'angle (§5) |
-| ~~`SRCH_ENTRETIEN-POELE-INSERT`~~ | — | **Bloquée** (§0, famille B) | — |
+| `SRCH_ENTRETIEN-POELE-INSERT_SO50` | Google Search uniquement | B1 Poêle à granulés · B2 Poêle ou insert à bois · B3 Ramonage poêle / insert | `https://depan59-62.fr/entretien-poele-insert.html` |
+| `SRCH_RAMONAGE_SO50` | Google Search uniquement | C1 Ramonage cheminée · C3 Ramonage conduit de chaudière · C4 Certificat de ramonage (C2 déplacé en B3) | `https://depan59-62.fr/prestations/ramonage.html` |
+| `META_ENTRETIEN_SO50` | Facebook + Instagram | 3 angles : chaudière · poêle & insert (entretien, ramonage compris) · ramonage cheminée / conduit | selon l'angle (§5) |
+
+**Relais sur le site (sans budget)** : l'accueil porte depuis le 19/09 une relance saisonnière « Entretien et ramonage : préparez votre chauffage » juste après « Que souhaitez-vous faire ? » : bouton « Entretien chaudière », liens « Poêle ou insert » et « Ramonage », sans prix (directive 5733153347). Elle mène aux mêmes pages que les annonces.
 
 **Réglages communs Google :**
 - **Zone** : rayon de **50 km autour de l'agence** (50.7508, 2.2522). C'est la même règle que le tunnel, qui classe « dans notre zone » jusqu'à 50 km et « limite de zone » entre 50 et 70 km. Option « Présence : personnes qui se trouvent ou se rendent régulièrement dans la zone » ; la Belgique est exclue.
@@ -102,8 +104,7 @@ Types de correspondance : `"expression"` et `[exacte]`. Pas de requête large au
 - `"ramonage cheminée"`, `[ramonage cheminée]`, `"ramonage conduit cheminée"`
 - `"ramoneur"`, `"ramoneur saint omer"`, `"ramonage saint omer"`, `[ramonage saint omer]`
 
-**C2 — Poêle à bois / insert**
-- `"ramonage poêle à bois"`, `"ramonage poêle bois"`, `"ramonage insert"`, `"ramonage insert cheminée"`, `"ramonage conduit poêle"`
+**C2** : déplacé en **B3** (entretien poêle / insert, ramonage compris).
 
 **C3 — Conduit de chaudière**
 - `"ramonage conduit chaudière"`, `"ramonage chaudière fioul"`, `"ramonage chaudière"`
@@ -116,12 +117,26 @@ Types de correspondance : `"expression"` et `[exacte]`. Pas de requête large au
 **Négatifs de campagne C :**
 - Emploi, bricolage et achat : mêmes listes que la campagne A.
 - Matériel de ramonage vendu aux particuliers : kit ramonage, hérisson, bûche ramonage, brosse, tubage (sauf si la prestation est confirmée).
-- Hors prestation confirmée : granulés, pellets.
+- Renvoyés vers la campagne B : poêle, insert, granulés, pellets.
 - Autres campagnes : entretien chaudière (évite le chevauchement avec A).
 - Villes hors zone : même liste que la campagne A.
 
-### B. Poêles / inserts — bloquée
-Thèmes à préparer seulement **après** confirmation de la prestation, du prix et de la qualification : `"entretien poêle à granulés"`, `"entretien poêle à bois"`, `"entretien insert"`, `"révision poêle à granulés"`. Tant que ce n'est pas confirmé, ces requêtes restent en **négatif** dans A et C.
+### B. Poêles / inserts (barème EPB / EPG, ramonage compris)
+**B1 — Poêle à granulés**
+- `"entretien poêle à granulés"`, `[entretien poêle à granulés]`, `"entretien poêle granulés"`, `"révision poêle à granulés"`, `"entretien poêle pellet"`, `"entretien poêle à granulés saint omer"`
+
+**B2 — Poêle ou insert à bois**
+- `"entretien poêle à bois"`, `[entretien poêle à bois]`, `"entretien insert"`, `"entretien insert cheminée"`, `"entretien insert bois"`
+
+**B3 — Ramonage poêle / insert** (l'offre comprend l'entretien : les annonces ne parlent jamais de « ramonage seul »)
+- `"ramonage poêle à bois"`, `"ramonage poêle à granulés"`, `"ramonage insert"`, `"ramonage conduit poêle"`, `"ramonage poêle saint omer"`
+
+**Négatifs de campagne B :**
+- Emploi, bricolage et achat : mêmes listes que la campagne A.
+- Achat et installation : achat poêle, poêle neuf, installation poêle, prix poêle, tubage.
+- Combustible : sac granulés, livraison granulés, granulés pas cher, vente pellets.
+- Autres prestations : vitre (remplacement de vitre d'insert : autre prestation), chaudière (→ A), cheminée seule (→ C).
+- Villes hors zone : même liste que la campagne A.
 
 ---
 
@@ -232,6 +247,34 @@ Descriptions :
 
 Spécialisation : C2 met en tête « Poêle à bois, insert, conduit » ; C3 « Conduit de chaudière aussi » ; C4 « Certificat de ramonage remis ».
 
+### B — Entretien poêle & insert (B1 à B3)
+Pas de prix dans ces annonces : le TTC dépend du logement (TVA 10 % ou 20 %), la page affiche le HT et les deux TTC.
+
+Titres :
+- H: Entretien poêle et insert
+- H: Ramonage compris
+- H: Poêle à bois ou à granulés
+- H: Entretien poêle à granulés
+- H: Entretien insert à bois
+- H: Certificat de ramonage remis
+- H: Agence HELP Confort Saint-Omer
+- H: Techniciens salariés
+- H: Rappel sous 24 h ouvrées
+- H: Tarifs affichés HT et TTC
+- H: Saint-Omer et Côte d'Opale
+- H: Avant l'hiver, pensez-y
+- H: Demande en ligne 24 h/24
+- H: Un rendez-vous, deux besoins
+- H: Un certificat pour l'assureur
+
+Descriptions :
+- D: Entretien annuel de votre poêle ou insert, bois ou granulés, avec le ramonage du conduit.
+- D: Tarifs affichés en HT et en TTC. L'agence vous rappelle sous 24 h ouvrées.
+- D: Certificat de ramonage remis, à conserver : votre assureur peut vous le demander.
+- D: Agence HELP Confort de Saint-Omer : techniciens salariés, Saint-Omer et Côte d'Opale.
+
+Spécialisation : B1 met en tête « Entretien poêle à granulés » ; B2 « Entretien insert à bois » ; B3 « Ramonage compris ».
+
 ### Éléments (extensions)
 | Type | Contenu |
 |---|---|
@@ -272,25 +315,25 @@ Visuels :
 - (b) carrousel en 3 cartes : « Contrôle du brûleur » → « Mesure CO/CO₂ » → « Attestation remise » ;
 - (c) automne ou premiers froids, « Avant l'hiver ».
 
-### Angle 2 — Poêle à bois & insert (ramonage et vérification du tirage)
-Périmètre : **ramonage** et vérification du tirage uniquement. L'entretien de l'appareil et les poêles à granulés sont exclus (non proposés, §0).
+### Angle 2 — Poêle & insert (bois, granulés) : entretien annuel, ramonage compris
+Offre : barème EPB / EPG (§0). Pas de prix dans les visuels : la page les donne en HT et en TTC.
 
 Accroches :
-1. « Poêle à bois ou insert : le ramonage, c'est 1 à 2 fois par an. »
-2. « Certificat de ramonage : votre assureur peut vous le demander. »
-3. « Avant la première flambée, faites ramoner votre insert. »
-4. « Tirage vérifié, conduit nettoyé, certificat remis. »
+1. « Poêle à bois ou à granulés : l'entretien annuel, ramonage compris. »
+2. « Un seul rendez-vous pour l'entretien et le ramonage de votre insert. »
+3. « Certificat de ramonage : votre assureur peut vous le demander. »
+4. « Avant la première flambée, faites entretenir votre poêle. »
 
-Texte court : « Ramonage de votre poêle à bois ou insert, vérification du tirage, certificat remis. Agence HELP Confort de Saint-Omer. »
+Texte court : « Entretien annuel de votre poêle ou insert, bois ou granulés, ramonage compris. Certificat remis. Agence HELP Confort de Saint-Omer. »
 
-Texte moyen : « Le ramonage de votre poêle à bois ou de votre insert est obligatoire une à deux fois par an selon le combustible. Nos techniciens nettoient le conduit, vérifient le tirage et vous remettent le certificat à conserver pour votre assurance. Le tarif vous est confirmé avant l'intervention, sans engagement. »
+Texte moyen : « L'entretien annuel de votre poêle ou de votre insert, à bois ou à granulés, avec le ramonage du conduit : un seul rendez-vous, et le certificat de ramonage vous est remis. Les tarifs sont affichés sur notre page, en HT et en TTC selon votre logement. L'agence de Saint-Omer vous rappelle sous 24 h ouvrées. »
 
-Titres : « Ramonage poêle à bois et insert » · « Certificat de ramonage remis ». Bouton : **Obtenir un devis**. Destination : page C.
+Titres : « Entretien poêle & insert » · « Ramonage compris ». Bouton : **En savoir plus**. Destination : page B.
 
 Visuels :
-- (a) insert ou poêle à bois en fonctionnement, ambiance salon ;
-- (b) technicien avec hérisson de ramonage ;
-- (c) gros plan sur le certificat, sans donnée client.
+- (a) poêle à granulés ou insert à bois en fonctionnement, ambiance salon ;
+- (b) technicien au travail sur un poêle ;
+- (c) gros plan sur le certificat de ramonage, sans donnée client.
 
 ### Angle 3 — Ramonage cheminée et conduit de chaudière
 Accroches :
@@ -330,6 +373,11 @@ Fausse urgence (« dernières places »), « gratuit » sauf pour le devis de ra
 | `maintenance_contact_entered` | Coordonnées saisies (étape tarifs ou coordonnées) ; une fois | `hc-demande.js` | `service_family`, `src` |
 | `maintenance_submit` | Demande envoyée : tunnel (A) ou formulaire de rappel confirmé par le serveur (C) | `hc-demande.js`, `hc-landing.js` + `hc-leads-capture.js` | `service_family`, `lead_type`, `src`, `simulated` |
 | `generate_lead` | Même moment que `maintenance_submit` (événement GA4 recommandé) | idem | `lead_type`, `service_family`, `simulated` |
+| `view_home_maintenance_promo` · `click_home_maintenance_promo` | Relance d'accueil vue à 50 % (une fois) · clic | `index.html` | `service_family` (chaudiere / poele / ramonage), `target` |
+
+Familles mesurées : `chaudiere`, `ramonage`, `poele` (page B), `contrat` (page contrats : ouverture de la souscription = `start_maintenance_funnel`, envoi = `maintenance_submit` + `generate_lead`).
+
+**Correctif du 19/09** : les pages chaudière et ramonage chargeaient `tracking.js` sans le bandeau de consentement. Un visiteur venu d'une annonce n'était donc jamais mesurable. Le bandeau y est ajouté, ainsi que sur la page B. La page du tunnel (`catalogue.html`) reste sans bandeau, par décision du 17/09 : le consentement est recueilli sur la page d'atterrissage.
 
 Règles :
 - envoi à GA4 via `window.hcGtag`, qui n'existe **qu'en production et après consentement** ;
@@ -392,6 +440,12 @@ Aucune requête vers GA4, Google Ads, Meta ou le serveur de dossiers ; aucune do
 | Corrigé pendant la vérification | en 390, le tableau élargissait la page à 502 px ; prix coupés en fin de ligne ; en 1440, prix et téléphone décalés à gauche | — |
 | Mesure | ✅ | ✅ |
 
+**Page B (`entretien-poele-insert.html`)**, vérifiée sur la preview le 19/09 :
+- 1440 : bouton à 503–557 px, accroche centrée, tarifs en 4 colonnes ;
+- 390 : bouton à 556–609 px, au-dessus du bandeau cookies ; tarifs en cartes (350 px), 0 débordement ;
+- mesure : vue, bouton, appel, envoi confirmé (`service_family=poele`) ;
+- formulaire de rappel : jamais soumis en test.
+
 ---
 
 ## 8. Checklist de lancement (J0), après GO Florian
@@ -423,6 +477,6 @@ Aucune requête vers GA4, Google Ads, Meta ou le serveur de dossiers ; aucune do
 | 5 | Compte Google Ads, liaison GA4, import de conversion, Consent Mode v2 dans la bannière | Florian + développement | ⛔ |
 | 6 | Meta : Business Manager, domaine vérifié, pixel soumis au consentement | Florian + développement | ⛔ |
 | 7 | Tarif du ramonage confirmé et ajouté au catalogue, pour pouvoir l'afficher | Florian | ⛔ (la campagne C peut partir **sans** prix) |
-| 8 | Famille B : l'entreprise entretient-elle les poêles à bois / à granulés et les inserts ? Prix, qualification, capacité | Florian | ⛔ |
+| 8 | Famille B : prestation et prix confirmés (EPB / EPG, 18/09). Reste : ajout au catalogue en ligne (`supabase/_pending_migrations/…poele_insert.sql`) si l'on veut la demande à prix ferme dans le tunnel ; capacité de l'agence | Florian | ✅ prix · ⏳ catalogue |
 | 9 | Test réel en PROD par famille (§8, point 2) | Claude après GO | ⛔ |
 | 10 | Budget | Florian | ⛔ |
