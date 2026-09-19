@@ -165,4 +165,7 @@ const block = `\n# Réalisations pré-rendues statiques (contenu indexable dans 
   slugs.map(s => `/realisations/${s} /realisations/${s}.html 200`).join('\n') + '\n';
 rc = rc.replace(/(# Anciennes URLs)/, block.trimStart() + '\n$1');
 writeFileSync(RP, rc);
-console.log(`OK ${n} pages générées dans realisations/ · _redirects mis à jour (${slugs.length} règles).`);
+// Manifeste des fiches réellement générées : les cartes du site ne pointent QUE vers ces fiches (sinon le fallback
+// /realisations/:slug → /realisation.html → /realisations.html recharge la liste : « le clic ne fait rien »).
+writeFileSync(join(OUT, 'index.json'), JSON.stringify({ generated: new Date().toISOString(), slugs: slugs.slice().sort() }, null, 1) + '\n');
+console.log(`OK ${n} pages générées dans realisations/ · _redirects mis à jour (${slugs.length} règles) · manifeste realisations/index.json.`);

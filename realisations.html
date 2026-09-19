@@ -20,7 +20,7 @@
 <link rel="dns-prefetch" href="https://www.facebook.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=20260808">
-<style>.real-hero{background:linear-gradient(180deg,#FFF7ED,#fff);padding:60px 0 40px;position:relative;overflow:hidden}.real-hero h1{font-size:clamp(1.8rem,3.4vw,2.6rem);color:#0A1428;line-height:1.15;font-weight:800;margin:0 0 12px}.real-hero h1.accent{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:600;color:#FF6B1A}.real-hero p{color:#475569;font-size:1.05rem;line-height:1.55;max-width:640px;margin:0}.real-filters{display:flex;flex-wrap:wrap;gap:8px;padding:20px 0;border-bottom:1px solid #E5EDF3;margin-bottom:32px}.real-filter{padding:8px 16px;border:1.5px solid #E5EDF3;border-radius:999px;background:#fff;color:#475569;font-weight:600;font-size:.86rem;cursor:pointer;transition:all.2s ease;font-family:inherit}.real-filter:hover{border-color:#FF6B1A;color:#FF6B1A}.real-filter.active{background:#FF6B1A;color:#fff;border-color:#FF6B1A}
+<style>.real-hero{background:linear-gradient(180deg,#FFF7ED,#fff);padding:60px 0 40px;position:relative;overflow:hidden}.real-hero h1{font-size:clamp(1.8rem,3.4vw,2.6rem);color:#0A1428;line-height:1.15;font-weight:800;margin:0 0 12px}.real-hero h1.accent{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:600;color:#FF6B1A}.real-hero p{color:#475569;font-size:1.05rem;line-height:1.55;max-width:640px;margin:0}.real-filters{display:flex;flex-wrap:wrap;gap:8px;padding:20px 0;border-bottom:1px solid #E5EDF3;margin-bottom:32px}.real-filter{padding:8px 16px;border:1.5px solid #E5EDF3;border-radius:999px;background:#fff;color:#475569;font-weight:600;font-size:.86rem;cursor:pointer;transition:all .2s ease;font-family:inherit}.real-filter:hover{border-color:#FF6B1A;color:#FF6B1A}.real-filter.active{background:#FF6B1A;color:#fff;border-color:#FF6B1A}
 
  /* ─── CAROUSEL DÉFILANT (chantiers + actus) ─── */
  .ra-carousel{position:relative;margin:0 -8px 60px;padding:0 8px}
@@ -44,7 +44,7 @@
  overflow:hidden; display:flex; flex-direction:column;
  text-decoration:none; color:inherit;
  box-shadow:0 4px 14px rgba(10,20,40,.05);
- transition:transform.35s cubic-bezier(.16,1,.3,1), box-shadow.35s ease, border-color.25s ease;
+ transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease, border-color .25s ease;
  cursor:pointer;
  }.real-card:hover,.real-card:focus-visible{
  transform:translateY(-6px);
@@ -52,7 +52,9 @@
  border-color:rgba(255,107,26,.5);
  outline:none;
  }
- .real-card:focus-visible{outline:2px solid #0DA0CF;outline-offset:3px}
+ .real-card:focus-visible{outline:3px solid #0DA0CF;outline-offset:3px}
+ .real-card--nolink{cursor:default}
+ .real-card--nolink:hover{transform:none;box-shadow:none}
 
  /* Photo&nbsp;: iframe FB OU image locale OU comparateur avant/après */.real-card .photo{
  position:relative; width:100%; aspect-ratio:4/3;
@@ -69,57 +71,57 @@
  padding:5px 10px; border-radius:6px;
  display:inline-flex; align-items:center; gap:5px;
  box-shadow:0 2px 8px rgba(24,119,242,.35);
- }.real-card .photo.ph-fallback{
+ }.real-card .photo .ph-fallback{
  position:absolute; inset:0;
  display:flex; flex-direction:column; align-items:center; justify-content:center;
  color:#fff; gap:10px;
  background:linear-gradient(135deg,#0A1428 0%,#0DA0CF 100%);
  }
- .real-card .photo.ph-fallback[data-cat="plomberie"]{background:linear-gradient(135deg,#0DA0CF,#0884AE)}
- .real-card .photo.ph-fallback[data-cat="chauffage"]{background:linear-gradient(135deg,#FF6B1A,#C2410C)}
- .real-card .photo.ph-fallback[data-cat="electricite"]{background:linear-gradient(135deg,#FFB400,#B45309)}
- .real-card .photo.ph-fallback[data-cat="serrurerie"]{background:linear-gradient(135deg,#EC4899,#BE185D)}
- .real-card .photo.ph-fallback[data-cat="vitrerie"]{background:linear-gradient(135deg,#0EA5E9,#0369A1)}
- .real-card .photo.ph-fallback[data-cat="menuiserie"]{background:linear-gradient(135deg,#92400E,#78350F)}
- .real-card .photo.ph-fallback[data-cat="renovation"]{background:linear-gradient(135deg,#22A06B,#15803D)}
- .real-card .photo.ph-fallback[data-cat="volets"]{background:linear-gradient(135deg,#6366F1,#4338CA)}
- .real-card .photo.ph-fallback[data-cat="pmr"]{background:linear-gradient(135deg,#0891B2,#155E75)}
- .real-card .photo.ph-fallback[data-cat="multi"]{background:linear-gradient(135deg,#0A1428,#1FC4F0)}
- .real-card .photo.ph-fallback::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.20));pointer-events:none}
- .real-card .photo.ph-fallback .ic{
+ .real-card .photo .ph-fallback[data-cat="plomberie"]{background:linear-gradient(135deg,#0DA0CF,#0884AE)}
+ .real-card .photo .ph-fallback[data-cat="chauffage"]{background:linear-gradient(135deg,#FF6B1A,#C2410C)}
+ .real-card .photo .ph-fallback[data-cat="electricite"]{background:linear-gradient(135deg,#FFB400,#B45309)}
+ .real-card .photo .ph-fallback[data-cat="serrurerie"]{background:linear-gradient(135deg,#EC4899,#BE185D)}
+ .real-card .photo .ph-fallback[data-cat="vitrerie"]{background:linear-gradient(135deg,#0EA5E9,#0369A1)}
+ .real-card .photo .ph-fallback[data-cat="menuiserie"]{background:linear-gradient(135deg,#92400E,#78350F)}
+ .real-card .photo .ph-fallback[data-cat="renovation"]{background:linear-gradient(135deg,#22A06B,#15803D)}
+ .real-card .photo .ph-fallback[data-cat="volets"]{background:linear-gradient(135deg,#6366F1,#4338CA)}
+ .real-card .photo .ph-fallback[data-cat="pmr"]{background:linear-gradient(135deg,#0891B2,#155E75)}
+ .real-card .photo .ph-fallback[data-cat="multi"]{background:linear-gradient(135deg,#0A1428,#1FC4F0)}
+ .real-card .photo .ph-fallback::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.20));pointer-events:none}
+ .real-card .photo .ph-fallback .ic{
  width:74px; height:74px; border-radius:18px;
  background:rgba(255,255,255,.18); display:flex; align-items:center; justify-content:center;
  backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); z-index:1;
  }
- .real-card .photo.ph-fallback .ic svg{width:38px;height:38px;color:#fff;opacity:.95}
- .real-card .photo.ph-fallback span{font-weight:700;font-size:.78rem;letter-spacing:.10em;text-transform:uppercase;color:rgba(255,255,255,.92);z-index:1}
+ .real-card .photo .ph-fallback .ic svg{width:38px;height:38px;color:#fff;opacity:.95}
+ .real-card .photo .ph-fallback span{font-weight:700;font-size:.78rem;letter-spacing:.10em;text-transform:uppercase;color:rgba(255,255,255,.92);z-index:1}
 
- /* Comparateur avant/après (legacy, si photos uploadées) */.real-card.ba-wrap{position:relative;aspect-ratio:4/3;overflow:hidden;background:#f4f7fb}.real-card.ba-wrap img{width:100%;height:100%;object-fit:cover;display:block}.real-card.ba-tag{
+ /* Comparateur avant/après (legacy, si photos uploadées) */.real-card .ba-wrap{position:relative;aspect-ratio:4/3;overflow:hidden;background:#f4f7fb}.real-card .ba-wrap img{width:100%;height:100%;object-fit:cover;display:block}.real-card .ba-tag{
  position:absolute;top:12px;background:rgba(10,20,40,.85);color:#fff;
  font-size:.7rem;font-weight:800;letter-spacing:1.5px;padding:5px 11px;
  border-radius:6px;text-transform:uppercase;
  -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px);
- }.real-card.ba-half{position:absolute;top:0;bottom:0;width:50%;overflow:hidden}.real-card.ba-half img{width:200%;max-width:200%}.real-card.ba-half.right{right:0}.real-card.ba-half.right img{transform:translateX(-50%)}.real-card.ba-divider{position:absolute;top:0;bottom:0;left:50%;width:2px;background:#fff;box-shadow:0 0 10px rgba(0,0,0,.3);transform:translateX(-50%)}
+ }.real-card .ba-half{position:absolute;top:0;bottom:0;width:50%;overflow:hidden}.real-card .ba-half img{width:200%;max-width:200%}.real-card .ba-half.right{right:0}.real-card .ba-half.right img{transform:translateX(-50%)}.real-card .ba-divider{position:absolute;top:0;bottom:0;left:50%;width:2px;background:#fff;box-shadow:0 0 10px rgba(0,0,0,.3);transform:translateX(-50%)}
 
- /* CORPS de la carte */.real-card.body{padding:20px 22px 22px;flex:1;display:flex;flex-direction:column}.real-card.meta{
+ /* CORPS de la carte */.real-card .body{padding:20px 22px 22px;flex:1;display:flex;flex-direction:column}.real-card .meta{
  display:flex; align-items:center; gap:8px; margin-bottom:10px;
  font-size:.72rem; color:#64748b; font-weight:600;
  letter-spacing:.04em; flex-wrap:wrap;
- }.real-card.meta.metier{
+ }.real-card .meta .metier{
  background:rgba(255,107,26,.10); color:#FF6B1A;
  padding:4px 10px; border-radius:6px; font-weight:800;
  text-transform:uppercase; font-size:.66rem; letter-spacing:.12em;
- }.real-card.meta.ville{display:inline-flex;align-items:center;gap:3px}.real-card h3{
+ }.real-card .meta .ville{display:inline-flex;align-items:center;gap:3px}.real-card h3{
  margin:0 0 8px; color:#0A1428; font-size:1.08rem; font-weight:800; line-height:1.3;
  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
  }.real-card p{
  margin:0; color:#475569; font-size:.9rem; line-height:1.5; flex:1;
  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
- }.real-card.duree{margin-top:12px;font-size:.78rem;color:#64748b;font-weight:600}.real-card.read-more{
+ }.real-card .duree{margin-top:12px;font-size:.78rem;color:#64748b;font-weight:600}.real-card .read-more{
  margin-top:14px; color:#FF6B1A; font-weight:700; font-size:.86rem;
  display:inline-flex; align-items:center; gap:5px;
- transition:gap.2s ease;
- }.real-card:hover.read-more{gap:10px}.real-empty{text-align:center;padding:60px 20px;color:#64748b;background:#FFF7ED;border-radius:16px;border:2px dashed #E5EDF3}.real-empty h3{color:#0A1428;margin:0 0 8px;font-size:1.1rem}
+ transition:gap .2s ease;
+ }.real-card:hover .read-more{gap:10px}.real-empty{text-align:center;padding:60px 20px;color:#64748b;background:#FFF7ED;border-radius:16px;border:2px dashed #E5EDF3}.real-empty h3{color:#0A1428;margin:0 0 8px;font-size:1.1rem}
 
  /* Modal lightbox */.real-lightbox{
  position:fixed; inset:0; z-index:9999;
@@ -354,12 +356,6 @@
 
 <!-- 2026-06-04 — Section MODULE ACTUALITÉS supprimée sur /realisations (doublon avec /actualites — demande Florian) -->
 
-<!-- Lightbox -->
-<div class="real-lightbox" id="realLightbox" onclick="document.getElementById('realLightbox').classList.remove('open')">
- <button type="button" class="close" aria-label="Fermer">×</button>
- <img id="lightboxImg" src="" alt="" loading="lazy" decoding="async">
-</div>
-
 
 <!-- (Retiré 2026-05-29 sur demande Florian : stats live + newsletter ne s'affichent plus sur la page Réalisations — elles restent sur les autres pages où elles sont pertinentes) -->
 <footer class="footer footer-v3">
@@ -532,7 +528,7 @@
  background: #fff;
  border-radius: 12px;
  box-shadow: 0 6px 18px rgba(0,0,0,.20), 0 0 0 1px rgba(255,255,255,.06) inset;
- transition: transform.2s ease;
+ transition: transform .2s ease;
  }.fv3-logo:hover { transform: translateY(-2px) }.fv3-logo img {
  display:block;
  width: 180px; height: auto;
@@ -562,7 +558,7 @@
  display:flex; align-items:flex-start; gap:11px;
  color: rgba(255,255,255,.82);
  text-decoration:none;
- transition: color.15s ease, transform.15s ease;
+ transition: color .15s ease, transform .15s ease;
  }.fv3-contact li a:hover { color:#1FC4F0; transform:translateX(2px) }.fv3-contact svg { color:#1FC4F0; flex-shrink:0; margin-top:3px; opacity:.9 }.fv3-contact span { display:flex; flex-direction:column; line-height:1.35 }.fv3-contact strong { font-weight:600; font-size:.88rem; color:#fff }.fv3-contact em { font-style:normal; font-size:.74rem; color:rgba(255,255,255,.5); margin-top:2px }
 
  /* Colonnes nav */.fv3-col h3,.fv3-col h4,.fv3-brand h3,.fv3-brand h4{
@@ -581,7 +577,7 @@
  }.fv3-col li a {
  color: rgba(255,255,255,.74);
  text-decoration:none;
- transition: color.15s ease;
+ transition: color .15s ease;
  }.fv3-col li a:hover { color:#1FC4F0 }.fv3-col li.fv3-more {
  color: rgba(255,255,255,.45);
  font-size:.78rem;
@@ -615,7 +611,7 @@
  color:#fff;
  background: rgba(255,255,255,.06);
  border: 1px solid rgba(255,255,255,.12);
- transition: transform.2s ease, background.2s ease, border-color.2s ease;
+ transition: transform .2s ease, background .2s ease, border-color .2s ease;
  }.fv3-soc:hover {
  transform: translateY(-2px);
  background: rgba(255,255,255,.10);
@@ -638,7 +634,7 @@
  text-decoration:none;
  font-size:.78rem;
  font-weight:500;
- transition: color.15s ease;
+ transition: color .15s ease;
  position:relative;
  }.fv3-legal-links a:not(:last-child)::after {
  content:'·';
@@ -661,6 +657,8 @@
  var grid = document.getElementById('realGrid');
  var filters = document.querySelectorAll('.real-filter');
  var allRealisations = [];
+ // Fiches réellement générées (scripts/gen-realisations.mjs) : une carte ne pointe que vers l'une d'elles
+ var pagesP = fetch('realisations/index.json?v=' + Date.now()).then(function (r) { return r.ok ? r.json() : null; }).then(function (m) { return window.HcRealisations ? HcRealisations.pagesFrom(m) : {}; }).catch(function () { return {}; });
  var currentMetier = 'all';
  var currentZone = null;
 
@@ -754,12 +752,13 @@
    s = s.replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2190}-\u{21FF}\u{2B00}-\u{2BFF}️]/gu, '');
    return s.replace(/\s{2,}/g, ' ').trim();
  }
- // Normalise l'URL de chaque carte vers sa page détail réelle (realisations/<slug>.html),
- // pour les DEUX sources (Supabase + fallback edge). Évite tout href="#" non cliquable.
+ // URL de chaque carte = sa fiche réelle (realisations/<slug>.html) si elle existe, sinon aucun lien (pour les DEUX sources).
+ // Sans fiche, /realisations/<slug> retombait sur cette liste : le clic semblait ne rien faire.
+ var pages = await pagesP;
  allRealisations = (allRealisations || []).map(function(r){
    var slug = r.slug || '';
    if (!slug && r.url) { var m = String(r.url).match(/realisations\/([^\/?#.]+)/); if (m) slug = m[1]; }
-   r.url = slug ? ('realisations/' + slug + '.html') : 'realisations.html';
+   r.url = window.HcRealisations ? HcRealisations.detailUrl(slug, pages) : null;
    r.title = cleanTxt(r.title);
    if (r.description) r.description = cleanTxt(r.description);
    return r;
@@ -789,7 +788,7 @@
  if (hasUsableAvant && hasUsableApres){
  // 1. Comparateur avant/après (legacy, photos uploadées CMS)
  photoHtml =
- '<div class="ba-wrap" onclick="event.preventDefault();openLightbox(\''+r.photo_apres+'\')">' +
+ '<div class="ba-wrap">' +
  '<img src="'+r.photo_apres+'" alt="Après '+r.title+'" loading="lazy" decoding="async">' +
  '<div class="ba-half"><img src="'+r.photo_avant+'" alt="Avant" loading="lazy" decoding="async"></div>' +
  '<div class="ba-divider"></div>' +
@@ -799,7 +798,7 @@
  } else if (hasUsableApres) {
  // 2. Photo unique uploadée
  photoHtml =
- '<div class="photo" onclick="event.preventDefault();openLightbox(\''+r.photo_apres+'\')">' +
+ '<div class="photo">' +
  '<img src="'+r.photo_apres+'" alt="'+r.title+'" loading="lazy" decoding="async">' +
  '</div>';
  // HC-FIX 2026-05-20 : iframe Facebook désactivée (ne s'affiche pas, blocages CSP/3rd-party)
@@ -836,8 +835,9 @@
  '</div>';
  }
 
- var url = r.url || '#';
- return '<a href="'+url+'" class="real-card">' +
+ var titleAttr = String(r.title || 'Chantier').replace(/"/g, '&quot;');
+ var open = r.url ? '<a href="'+r.url+'" class="real-card" aria-label="'+titleAttr+' — voir le chantier">' : '<article class="real-card real-card--nolink">';
+ return open +
  photoHtml +
  '<div class="body">' +
  '<div class="meta">' +
@@ -848,9 +848,9 @@
  '<h3>'+r.title+'</h3>' +
  '<p>'+(r.description||'')+'</p>' +
  (r.duree ? '<div class="duree">⏱ '+r.duree+'</div>' : '') +
- '<span class="read-more">Voir le chantier →</span>' +
+ (r.url ? '<span class="read-more" aria-hidden="true">Voir le chantier →</span>' : '') +
  '</div>' +
- '</a>';
+ (r.url ? '</a>' : '</article>');
  }).join('');
  }
 
@@ -873,14 +873,7 @@
  render();
 })();
 
-function openLightbox(src){
- var lb = document.getElementById('realLightbox');
- document.getElementById('lightboxImg').src = src;
- lb.classList.add('open');
-}
-document.addEventListener('keydown', function(e){
- if(e.key === 'Escape') document.getElementById('realLightbox').classList.remove('open');
-});
+
 </script>
 
 

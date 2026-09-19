@@ -26,10 +26,24 @@ ok('tag du back-office prioritaire (post_type recrutement / realisation)', R.isR
 // ---- Branchements
 const home = rd('index.html'), real = rd('realisations.html'), gen = rd('scripts/gen-realisations.mjs');
 const iMod = home.indexOf('/assets/hc-realisations.js?v='), iShow = home.indexOf("load(SUPA+'/functions/v1/realisations-json'");
-ok('accueil « Nos derniers chantiers » : classement chargé avant la vitrine et appliqué aux chantiers', iMod > 0 && iShow > iMod && /if\(!isActu\)\{ if\(x\.est_chantier===false\) return false; if\(window\.HcRealisations&&HcRealisations\.isRecruitment\(x\)\) return false;/.test(home));
+ok('accueil « Nos derniers chantiers » : classement chargé avant la vitrine et appliqué aux chantiers', iMod > 0 && iShow > iMod && /if\(!isActu\)\{ if\(x\.est_chantier===false\) return false;[^\n]*if\(window\.HcRealisations&&HcRealisations\.isRecruitment\(x\)\) return false;/.test(home));
 ok('page Réalisations : recrutement exclu des deux sources (base et secours)', /\/assets\/hc-realisations\.js\?v=/.test(real) && /if \(window\.HcRealisations && HcRealisations\.isRecruitment\(r\)\) return false;/.test(real) && /\}\)\.filter\(function\(r\)\{ return !\(window\.HcRealisations && HcRealisations\.isRecruitment\(r\)\); \}\);/.test(real));
 ok('générateur de fiches : aucune fiche chantier pour une annonce de recrutement', /const \{ isRecruitment \} = createRequire\(import\.meta\.url\)\('\.\.\/assets\/hc-realisations\.js'\)/.test(gen) && /&& !isRecruitment\(r\)\);/.test(gen));
 ok('aucune fiche chantier existante pour l’annonce de recrutement', !fs.existsSync(path.join(ROOT, 'realisations/help-confort-saint-omer-recrute.html')));
+
+// ---- Liens des cartes (5744361478) : uniquement vers une fiche réellement générée
+const manifest = JSON.parse(rd('realisations/index.json'));
+const files = fs.readdirSync(path.join(ROOT, 'realisations')).filter(f => f.endsWith('.html')).map(f => f.replace(/\.html$/, '')).sort();
+ok('manifeste realisations/index.json = fiches présentes (' + files.length + '), sans l’annonce de recrutement', JSON.stringify(manifest.slugs) === JSON.stringify(files) && !manifest.slugs.includes('help-confort-saint-omer-recrute'), files.filter(f => !manifest.slugs.includes(f)).concat(manifest.slugs.filter(s => !files.includes(s))).join(', '));
+ok('les deux chantiers sans fiche (clic « sans effet ») en ont une : plomberie du 17/09, parquet massif', files.includes('nouvelle-intervention-plomberie-help-confort-saint-omer') && files.includes('remplacement-de-parquet-massif'));
+const redirects = rd('_redirects');
+ok('chaque fiche a sa règle d’URL propre (/realisations/<slug> → fiche, avant le repli vers la liste)', manifest.slugs.every(s => redirects.includes('/realisations/' + s + ' /realisations/' + s + '.html 200')) && redirects.indexOf('/realisations/:slug ') > redirects.indexOf('/realisations/' + manifest.slugs[0] + ' '));
+const pages = R.pagesFrom(manifest);
+ok('lien de carte : fiche du manifeste, sinon aucun lien (jamais de destination fictive)', R.detailUrl('remplacement-de-parquet-massif', pages) === 'realisations/remplacement-de-parquet-massif.html' && R.detailUrl('fiche-inexistante', pages) === null && R.detailUrl('', pages) === null && Object.keys(R.pagesFrom({ slugs: ['ok-1', '../x', 'A B'] })).join() === 'ok-1');
+ok('page Réalisations : l’image fait partie du lien (plus de visionneuse qui annulait le clic)', !/openLightbox|realLightbox|event\.preventDefault\(\)/.test(real));
+ok('page Réalisations : carte = lien vers la fiche réelle (nom accessible), sinon carte sans lien ni « Voir le chantier »', /r\.url = window\.HcRealisations \? HcRealisations\.detailUrl\(slug, pages\) : null;/.test(real) && /'<a href="'\+r\.url\+'" class="real-card" aria-label="'\+titleAttr\+' — voir le chantier">' : '<article class="real-card real-card--nolink">'/.test(real) && /\(r\.url \? '<span class="read-more" aria-hidden="true">Voir le chantier →<\/span>' : ''\)/.test(real));
+ok('page Réalisations : styles de carte rétablis (sélecteurs enfants, transitions valides), focus visible', !/\.real-card\.(body|meta|duree|read-more|ba-)|\.meta\.(metier|ville)|\.photo\.ph-fallback|\.real-card:hover\.read-more/.test(real) && !/(?:transition|animation)\s*:[^;}"]*[a-z]\.\d/.test(real) && /\.real-card:focus-visible\{outline:3px solid #0DA0CF/.test(real));
+ok('accueil « Nos derniers chantiers » : seules les réalisations avec fiche sont affichées, lien garanti', /if\(!pages\|\|!pages\[x\.slug\]\) return false;/.test(home) && /var url='realisations\/'\+esc\(r\.slug\)\+'\.html'; \/\/ fiche garantie par le manifeste/.test(home));
 
 console.log(`\nRÉSULTAT RÉALISATIONS : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail ? 1 : 0);

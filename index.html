@@ -1031,12 +1031,14 @@ track1.innerHTML = '<div class="hc-logo-card"><span class="cat">Réseau</span><s
   function clean(t){return decodeEnt(String(t==null?'':t)).replace(/\*\*/g,'').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{2190}-\u{21FF}\u{FE0F}\u{1F1E6}-\u{1F1FF}]/gu,'').replace(/\s+/g,' ').trim();}
   var CH_TITLE=/remplacement|installation|d[ée]pose|r[ée]paration|intervention|chantier|panneau pvc|bris de glace|votre soupape|votre manom[èe]tre|votre mitigeur|votre tablier|votre cumulus|votre chaudi[èe]re|vitre d['']insert/i;
   var CH_RESUME=/help confort intervient pour|nos prestations\s*:|nous sommes (?:r[ée]cemment )?intervenus?|notre [ée]quipe est intervenue|nous intervenons rapidement|intervention r[ée]alis[ée]e/i;
+  // Fiches chantier réellement générées : une carte « chantier » ne pointe que vers l'une d'elles (sinon la liste se rechargeait)
+  var pagesP=fetch('realisations/index.json?v='+Date.now()).then(function(r){return r.ok?r.json():null;}).then(function(m){return window.HcRealisations?HcRealisations.pagesFrom(m):null;}).catch(function(){return null;});
   function load(url, isActu, grid, block, build){
-   fetch(url+(url.indexOf('?')<0?'?':'&')+'v='+Date.now()).then(function(r){return r.ok?r.json():Promise.reject();}).then(function(list){
+   Promise.all([fetch(url+(url.indexOf('?')<0?'?':'&')+'v='+Date.now()).then(function(r){return r.ok?r.json():Promise.reject();}), isActu?null:pagesP]).then(function(res){ var list=res[0], pages=res[1];
     if(!Array.isArray(list)) list=(list&&list.data)||[];
     var items=list.filter(function(x){
      if(x.published===false) return false;
-     if(!isActu){ if(x.est_chantier===false) return false; if(window.HcRealisations&&HcRealisations.isRecruitment(x)) return false; /* annonce de recrutement : jamais un chantier */ if(!x.image_after&&!x.image_before&&!x.image&&!x.photo_apres) return false;
+     if(!isActu){ if(x.est_chantier===false) return false; if(!pages||!pages[x.slug]) return false; /* sans fiche : pas de carte (jamais de lien mort) */ if(window.HcRealisations&&HcRealisations.isRecruitment(x)) return false; /* annonce de recrutement : jamais un chantier */ if(!x.image_after&&!x.image_before&&!x.image&&!x.photo_apres) return false;
       if(/v[œoe]ux|meilleurs voeux|belles f[êe]tes|spot tv|sur vos [ée]crans|saviez-vous|conseil|n.oubliez pas|gaspill/i.test(x.title||'')) return false; return true; }
      if(/chantier|realisation/i.test(x.type||'')) return false;
      if(x.est_chantier===true&&x.image_before&&x.image_after) return false;
@@ -1049,7 +1051,7 @@ track1.innerHTML = '<div class="hc-logo-card"><span class="cat">Réseau</span><s
   }
   // Réalisations
   load(SUPA+'/functions/v1/realisations-json', false, 'hcsRealGrid', 'hcsRealBlock', function(r){
-   var url=r.slug?('realisations/'+esc(r.slug)+'.html'):'realisations.html';
+   var url='realisations/'+esc(r.slug)+'.html'; // fiche garantie par le manifeste (filtre ci-dessus)
    var img=r.image_after||r.image||r.photo_apres||'';
    var lieu=r.ville||r.commune||r.city||'';
    return '<a class="hcs-card" href="'+url+'">'+
