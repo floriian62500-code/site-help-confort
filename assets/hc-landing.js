@@ -1,5 +1,5 @@
 /*! HELP Confort — mesure des pages d'atterrissage « entretien » (campagnes Google Ads / Meta).
- *  Page : <body data-hc-landing="chaudiere|ramonage|contrat">. Événements (aucune donnée personnelle) :
+ *  Page : <body data-hc-landing="chaudiere|ramonage|contrat|poele">. Événements (aucune donnée personnelle) :
  *  view_maintenance_landing · click_maintenance_cta · click_to_call · start_maintenance_funnel (souscription ouverte,
  *  événement « hc:funnel-start ») · maintenance_submit + generate_lead (envoi confirmé, événement « hc:lead-sent »).
  *  Toujours consignés dans window.__hcFunnel (contrôle recette). Envoyés à GA4 via window.hcGtag, qui n'existe
@@ -8,7 +8,7 @@
   'use strict';
   var body = document.body; if (!body) return;
   var fam = String(body.getAttribute('data-hc-landing') || '');
-  if (!/^(chaudiere|ramonage|contrat)$/.test(fam)) return;
+  if (!/^(chaudiere|ramonage|contrat|poele)$/.test(fam)) return;
   if (window.__hcLandingInit) return; window.__hcLandingInit = true;
   var PROD = /^(www\.)?depan59-62\.fr$/.test(location.hostname);
   var queue = [];

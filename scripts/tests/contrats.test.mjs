@@ -62,7 +62,7 @@ ok('scripts en ligne de la page syntaxiquement valides', syntaxErr === 0, syntax
 ok('souscription : une seule agence, Saint-Omer (plus d’« agence Dunkerque » selon le code postal)', /function detectAgency\(cp\)\{\n return \{name:'Saint-Omer'/.test(h) && !/dunkerque@helpconfort\.com|name:'Dunkerque'/.test(h));
 
 // ---- 6. Mesure et attribution (sans donnée personnelle)
-ok('mesure : page marquée « contrat », scripts de mesure chargés', /<body data-hc-landing="contrat">/.test(h) && /\/assets\/tracking\.js\?v=/.test(h) && /\/assets\/hc-landing\.js\?v=20260918b/.test(h));
+ok('mesure : page marquée « contrat », scripts de mesure chargés', /<body data-hc-landing="contrat">/.test(h) && /\/assets\/tracking\.js\?v=/.test(h) && /\/assets\/hc-landing\.js\?v=\d{8}[a-z]/.test(h));
 ok('mesure : chaque bouton « Souscrire » est identifié (formule)', /class="formula-cta" data-hc-cta="contrats_souscrire_\$\{escapeHtml\(o\.slug \|\| ''\)\}"/.test(h));
 const open = h.slice(h.indexOf('function openSouscriptionModal'), h.indexOf('function closeSouscriptionModal'));
 ok('mesure : ouverture de la souscription = démarrage du parcours (sans donnée personnelle)', /new CustomEvent\('hc:funnel-start', \{ detail: \{ entry: 'contrat', energie: energie, formule: formule \} \}\)/.test(open));
@@ -71,7 +71,7 @@ const iOk = sub.indexOf("if (!resp.ok) { throw"), iEv = sub.indexOf("new CustomE
 ok('mesure : envoi confirmé seulement après réponse positive du serveur (jamais dans le cas d’erreur)', iOk > 0 && iEv > iOk && iEv < iCatch && (sub.match(/hc:lead-sent/g) || []).length === 1);
 ok('attribution : UTM, gclid, fbclid (après consentement) et page d’atterrissage jointes au dossier, liste blanche', /attribution: \(function \(\) \{/.test(sub) && /out = \{ landing: 'contrats-entretien' \}/.test(sub) && /\['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid', '_first_landing'\]/.test(sub));
 const lj = rd('assets/hc-landing.js');
-ok('hc-landing.js : famille « contrat » acceptée, démarrage et envoi mesurés', /\^\(chaudiere\|ramonage\|contrat\)\$/.test(lj) && /'hc:funnel-start'/.test(lj) && /send\('start_maintenance_funnel'/.test(lj));
+ok('hc-landing.js : famille « contrat » acceptée, démarrage et envoi mesurés', /\^\([a-z|]*\bcontrat\b[a-z|]*\)\$/.test(lj) && /'hc:funnel-start'/.test(lj) && /send\('start_maintenance_funnel'/.test(lj));
 
 console.log(`\nRÉSULTAT PAGE CONTRATS : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail ? 1 : 0);

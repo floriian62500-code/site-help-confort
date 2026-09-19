@@ -2,7 +2,7 @@
 
 > **Source** : `Base_produits_2026-05-14_11-11.xlsx` onglet **BAREME AGENCE** uniquement
 > **Validé par** : Florian (florian.dhaillecourt@helpconfort.com)
-> **Dernière mise à jour** : 15 mai 2026
+> **Dernière mise à jour** : 19 septembre 2026 (poêles et inserts EPB / EPG)
 
 Tous les tarifs affichés sur le site doivent être croisés avec ce document. Tout montant absent → "sur devis".
 
@@ -72,6 +72,18 @@ Accessoires inclus dans chaque pose : trépied · groupe de sécurité SFR 3/4 �
 | **Basic** | 9 €/mois (108 €/an) | 12 €/mois (140 €/an) |
 | **Confort** | 13 €/mois (156 €/an) | 16 €/mois (190 €/an) |
 | **Sécurité** | 23 €/mois (276 €/an) | 27 €/mois (320 €/an) |
+
+### Poêles et inserts — montants **HT** (barème agence)
+> Source : barème agence, `BAREME AGENCE > PLOMBERIE > FORFAIT & MAIN D'OEUVRE > CHAUFFAGE`, transmis par Florian le 18/09/2026 (directive 5733225819). Montants **HT** : ne pas les afficher comme des TTC.
+
+| Code | Prestation | Tarif HT | TTC particulier, logement de plus de 2 ans (TVA 10 %) | TTC autres cas (TVA 20 %) |
+|------|------------|----------|-------------------------------------------------------|---------------------------|
+| **EPB** | Entretien annuel poêle / insert **à bois** — **ramonage compris** | **115 € HT** | 126,50 € | 138,00 € |
+| **EPG** | Entretien annuel poêle / insert **à granulés** — **ramonage compris** | **136 € HT** | 149,60 € | 163,20 € |
+
+Règle TVA (CGI art. 279-0 bis) : 10 % pour des travaux d'entretien dans un logement achevé depuis plus de 2 ans, 20 % sinon (logement récent, local professionnel). Affichage public : le HT et les deux TTC, jamais un TTC unique présenté comme valable pour tous.
+Ces deux tarifs ne s'appliquent **qu'aux poêles et inserts** (bois / granulés). Ramonage de cheminée seul ou de conduit seul : **pas de tarif confirmé** (« sur devis »).
+Catalogue en ligne (table `services`) : ajout préparé dans `supabase/_pending_migrations/20260919100000_catalogue_entretien_poele_insert.sql`, **non appliqué** (écriture en base PROD = GO Florian).
 
 ## ⚡ Électricité (2 forfaits)
 

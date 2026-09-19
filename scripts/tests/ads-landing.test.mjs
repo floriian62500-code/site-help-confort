@@ -36,7 +36,7 @@ ok('chaudière : SÉCURITÉ affichée avec sa condition, rappel aligné sur le c
 ok('chaudière : ni prestation hors catalogue (granulés) ni aide chiffrée ni qualification non affichée, y compris balises et données structurées', !/(gaz, fioul, granulés)|granulés à|granulés Saint|MaPrimeRénov|50-70|Qualigaz|PGN|130 à 210/.test(ch.replace(/\(gaz, fioul, granulés\) est obligatoire/, '')));
 
 // FAQ : chaque question des données structurées est affichée, avec la même réponse (règle Google)
-for (const [nom, html] of [['chaudière', ch], ['ramonage', rm0()]]) {
+for (const [nom, html] of [['chaudière', ch], ['ramonage', rm0()], ['poêle / insert', rd('entretien-poele-insert.html')]]) {
   const t = visible(html), qs = [];
   for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) { try { (JSON.parse(m[1]).mainEntity || []).forEach(q => qs.push(q)); } catch (e) { qs.push({ name: 'JSON invalide', acceptedAnswer: { text: '' } }); } }
   const ko = qs.filter(q => !(t.includes(q.name) && t.includes(q.acceptedAnswer.text)));
@@ -52,8 +52,20 @@ ok('ramonage : aucune promesse non garantie (délai en 1 h, « garantie complèt
 ok('ramonage : engagements vrais (rappel sous 24 h ouvrées, certificat remis), coquille corrigée', /Rappel sous 24 h ouvrées/.test(rmTxt) && /Certificat de ramonage remis/.test(rmTxt) && !/ouvrées ouvrées/.test(rm));
 ok('ramonage : formulaire à jour (événement d’envoi confirmé)', /hc-leads-capture\.js\?v=20260918a/.test(rm));
 
+// ---- B. Poêles / inserts : entretien-poele-insert.html (barème agence EPB 115 € HT, EPG 136 € HT, ramonage compris)
+const pe = rd('entretien-poele-insert.html'), peTxt = visible(pe);
+ok('poêle : page marquée pour la mesure, bandeau de consentement, mesure et formulaire chargés', /<body data-hc-landing="poele">/.test(pe) && /\/assets\/hc-consent\.js\?v=/.test(pe) && /\/assets\/tracking\.js\?v=/.test(pe) && /\/assets\/hc-landing\.js\?v=20260919a/.test(pe) && /hc-leads-capture\.js\?v=20260918a/.test(pe));
+ok('poêle : bouton principal unique vers le formulaire de rappel de la page (prestation indiquée)', (pe.match(/data-hc-cta="landing_poele_hero"/g) || []).length === 1 && /href="#demande"[^>]*data-hc-cta="landing_poele_hero"/.test(pe) && /id="demande"/.test(pe) && /data-hc-lead="prestation"/.test(pe) && /name="presta" value="Entretien poêle \/ insert \(ramonage compris\)"/.test(pe));
+const PE = ['115 € HT', '136 € HT', '126,50 € TTC', '149,60 € TTC', '138 € TTC', '163,20 € TTC'];
+ok('poêle : tarifs du barème en HT et les deux TTC (10 % logement de plus de 2 ans, 20 % sinon), ramonage compris', PE.every(p => peTxt.includes(p)) && /ramonage compris/i.test(peTxt) && /TVA à 10 % pour un particulier dans un logement achevé depuis plus de 2 ans ; 20 %/.test(peTxt), PE.filter(p => !peTxt.includes(p)).join(', '));
+ok('poêle : jamais un montant HT présenté comme TTC (115 € TTC, 136 € TTC)', !/115 € TTC|136 € TTC|115,00 € TTC|136,00 € TTC/.test(pe + rm + ch));
+ok('tarifs poêle non généralisés : absents de la page chaudière, cités sur la page ramonage seulement pour un poêle ou un insert', !/115 € HT|136 € HT/.test(ch) && /Pour un poêle ou un insert, nous proposons l'entretien annuel avec le ramonage compris : 115 € HT pour le bois, 136 € HT pour les granulés/.test(rmTxt) && /Pour une cheminée ou un conduit de chaudière, le tarif vous est confirmé avant l'intervention/.test(rmTxt));
+const tarifs = rd('admin-pro/TARIFS_REFERENCE.md'), mig = rd('supabase/_pending_migrations/20260919100000_catalogue_entretien_poele_insert.sql');
+ok('source tarifaire : EPB / EPG en HT dans la référence interne, ajout catalogue préparé (HT + TVA 10 %) mais non appliqué', /\*\*EPB\*\* \| Entretien annuel poêle \/ insert \*\*à bois\*\* — \*\*ramonage compris\*\* \| \*\*115 € HT\*\*/.test(tarifs) && /\*\*EPG\*\* \| Entretien annuel poêle \/ insert \*\*à granulés\*\* — \*\*ramonage compris\*\* \| \*\*136 € HT\*\*/.test(tarifs) && /115\.00, 0\.100/.test(mig) && /136\.00, 0\.100/.test(mig) && !fs.existsSync(path.join(ROOT, 'supabase/migrations/20260919100000_catalogue_entretien_poele_insert.sql')));
+
 // ---- Mesure : assets/hc-landing.js et assets/hc-leads-capture.js
 const lj = rd('assets/hc-landing.js');
+ok('mesure : famille « poele » acceptée', /\^\(chaudiere\|ramonage\|contrat\|poele\)\$/.test(rd('assets/hc-landing.js')));
 ok('mesure : événements prévus (vue, bouton principal, appel, envoi confirmé)', ['view_maintenance_landing', 'click_maintenance_cta', 'click_to_call', 'maintenance_submit', 'generate_lead'].every(e => lj.includes("'" + e + "'")));
 ok('mesure : envoi à GA4 seulement en production et via hcGtag (qui n’existe qu’après consentement)', /var PROD = \/\^\(www\\\.\)\?depan59-62\\\.fr\$\/\.test\(location\.hostname\)/.test(lj) && /if \(!PROD\) return;/.test(lj) && /typeof window\.hcGtag !== 'function'/.test(lj) && !/gtag\(/.test(lj.replace(/hcGtag\(/g, '')));
 // Comportement réel du nettoyage : aucun email, aucun numéro, familles en liste blanche

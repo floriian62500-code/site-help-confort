@@ -21,5 +21,13 @@ const pages = htmlFiles().filter(f => /hc-consent\.js/.test(fs.readFileSync(f, '
 const unversioned = pages.filter(f => /assets\/hc-consent\.js["']/.test(fs.readFileSync(f, 'utf8'))).map(f => path.relative(ROOT, f));
 ok('les ' + pages.length + ' pages chargent une version datée (sinon le cache immuable d’un an garde l’ancien bandeau)', pages.length > 0 && !unversioned.length, unversioned.slice(0, 5).join(', '));
 
+// catalogue.html (tunnel) : pas de bandeau, décision documentée le 17/09 (docs/release/TRACKING-FUNNEL-2026-09-17.md § 4) —
+// les campagnes atterrissent sur les pages ci-dessous, qui recueillent le consentement avant le tunnel.
+const parcours = ['index.html', 'entretien-chaudiere.html', 'prestations/ramonage.html', 'entretien-poele-insert.html', 'contrats-entretien.html'];
+const sansBandeau = parcours.filter(f => !/hc-consent\.js\?v=/.test(rd(f)));
+ok('pages d’arrivée des campagnes (accueil, 3 pages d’atterrissage, contrats) : bandeau chargé, sinon aucune mesure possible (tracking.js attend le consentement)', !sansBandeau.length, sansBandeau.join(', '));
+const trackSansBandeau = htmlFiles().filter(f => { const s = fs.readFileSync(f, 'utf8'); return /assets\/tracking\.js/.test(s) && !/hc-consent\.js/.test(s); }).map(f => path.relative(ROOT, f)).filter(f => f !== 'catalogue.html');
+ok('aucune page (hors tunnel, par décision) ne charge tracking.js sans le bandeau', !trackSansBandeau.length, trackSansBandeau.join(', '));
+
 console.log(`\nRÉSULTAT BANDEAU COOKIES : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail ? 1 : 0);
