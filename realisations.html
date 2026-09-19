@@ -655,6 +655,7 @@
 
 <!-- Supabase JS pour lecture live des réalisations -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/assets/hc-realisations.js?v=20260919-r1"></script>
 <script>
 (async function(){
  var grid = document.getElementById('realGrid');
@@ -686,6 +687,8 @@
  // On exclut seulement les actualités saisonnières et les communications pures.
  if (sbRes.data) {
  sbRes.data = sbRes.data.filter(function(r){
+ // 0) Annonce de recrutement : jamais un chantier (assets/hc-realisations.js ; tag back-office prioritaire)
+ if (window.HcRealisations && HcRealisations.isRecruitment(r)) return false;
  // 1) Tag manuel (priorité absolue depuis le back-office)
  var pt = r.ai_generated && r.ai_generated.post_type;
  if (pt === 'actualite') return false; // forcé actu → exclu de la grille chantiers
@@ -760,7 +763,7 @@
    r.title = cleanTxt(r.title);
    if (r.description) r.description = cleanTxt(r.description);
    return r;
- });
+ }).filter(function(r){ return !(window.HcRealisations && HcRealisations.isRecruitment(r)); }); // les 2 sources (Supabase, secours)
 
  function render(){
  var realisations = allRealisations.filter(r => r.published !== false);

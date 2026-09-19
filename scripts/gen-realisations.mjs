@@ -7,6 +7,8 @@
 import { writeFileSync, readFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
+const { isRecruitment } = createRequire(import.meta.url)('../assets/hc-realisations.js'); // annonce de recrutement : pas de fiche chantier
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'realisations');
@@ -150,7 +152,7 @@ ${FOOTER}
 const res = await fetch(`${SUPA}/functions/v1/realisations-json`, { headers: { apikey: 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2' } });
 let data = await res.json();
 let list = Array.isArray(data) ? data : (data.realisations || data.data || data.items || []);
-list = list.filter(r => r && r.slug && (r.status ? r.status === 'publie' : true));
+list = list.filter(r => r && r.slug && (r.status ? r.status === 'publie' : true) && !isRecruitment(r));
 if (!existsSync(OUT)) mkdirSync(OUT, { recursive: true });
 let n = 0; const slugs = [];
 for (const r of list) { writeFileSync(join(OUT, `${r.slug}.html`), page(r, list)); slugs.push(r.slug); n++; }
