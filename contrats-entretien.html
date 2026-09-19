@@ -56,7 +56,9 @@
 .formula-card.securite .formula-eyebrow{color:#FF6B1A}
 .formula-name{margin:0 0 12px;font-size:1.4rem;font-weight:800;letter-spacing:-.02em;color:#0A1428}
 .formula-price-block{padding:14px 0;border-top:1px solid rgba(10,20,40,.08);border-bottom:1px solid rgba(10,20,40,.08);margin-bottom:16px}
-.formula-price{font-size:2.1rem;font-weight:900;color:#0A1428;line-height:1.05;letter-spacing:-.035em;white-space:nowrap}
+.formula-price{font-size:2.1rem;font-weight:900;color:#0A1428;line-height:1.1;letter-spacing:-.035em}
+.formula-amount{white-space:nowrap}
+@media(min-width:768px) and (max-width:1023px){.formula-price{font-size:1.75rem}}
 .formula-price small{font-size:.85rem;font-weight:600;color:#6b7384;letter-spacing:0}
 .formula-price-ht{font-size:.84rem;color:#6b7384;margin-top:4px}
 .formula-baseline{font-size:.98rem;color:#475569;margin:0 0 12px;font-weight:500}
@@ -1213,7 +1215,8 @@
  ).join('');
  const fmt = n => Number(n).toLocaleString('fr-FR', { minimumFractionDigits: Number.isInteger(Number(n)) ? 0 : 2, maximumFractionDigits: 2 });
  const fromPrice = !!o.price_label && /partir/i.test(o.price_label);
- const priceStr = (o.price_label && !fromPrice) ? escapeHtml(o.price_label) : `${fromPrice ? '<small>à partir de </small>' : ''}${fmt(o.price_ttc_month)}&nbsp;€&nbsp;TTC`;
+ // Montant insécable en grand, « TTC / mois » en petit (peut passer à la ligne sur carte étroite)
+ const priceStr = (o.price_label && !fromPrice) ? escapeHtml(o.price_label) : `${fromPrice ? '<small>à partir de </small>' : ''}<span class="formula-amount">${fmt(o.price_ttc_month)}&nbsp;€</span>`;
  const yearStr = `<div class="formula-price-ht">soit ${fmt(o.price_ht_month)} € HT par mois${o.price_label ? ' · tarif selon modèle et volume' : ''}</div>`;
  // Tier → classe CSS pour styler la card
  const tierClass = { basic:'basic', confort:'confort', securite:'securite', custom:'confort' }[o.tier] || 'basic';
@@ -1225,7 +1228,7 @@
  <div class="formula-eyebrow">Formule ${escapeHtml(o.energy_label)}</div>
  <h2 class="formula-name">${escapeHtml(o.tier_label)}</h2>
  <div class="formula-price-block">
- <div class="formula-price">${priceStr}<small> /mois</small></div>
+ <div class="formula-price">${priceStr}<small> TTC / mois</small></div>
  ${yearStr}
  </div>
  <p class="formula-baseline">${escapeHtml(o.baseline || '')}</p>
