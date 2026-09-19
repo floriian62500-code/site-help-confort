@@ -614,3 +614,7 @@
   .hcd .m-assure{display:flex;align-items:center;gap:6px;margin:18px 0 0;font-size:.8rem;color:#7A889B}
   .hcd .m-assure svg{color:#157A3C;flex:none}
 }
+
+/* ===== COUCHE CONSENTEMENT (19/09/2026) : tant que le bandeau cookies est affiché (assets/hc-consent.js publie sa hauteur
+   dans --hc-consent-h), la barre d’action collée en bas reste visible au-dessus de lui au lieu d’être recouverte. ===== */
+.hcd .q-actions{bottom:var(--hc-consent-h,0px)}
