@@ -618,3 +618,7 @@
 /* ===== COUCHE CONSENTEMENT (19/09/2026) : tant que le bandeau cookies est affiché (assets/hc-consent.js publie sa hauteur
    dans --hc-consent-h), la barre d’action collée en bas reste visible au-dessus de lui au lieu d’être recouverte. ===== */
 .hcd .q-actions{bottom:var(--hc-consent-h,0px)}
+
+/* ===== REPRISE SUR LIEN D'ENTRÉE (19/09/2026) : avec une demande en cours, un lien explicite (accueil, page d'atterrissage)
+   n'affiche que « Reprendre / Nouvelle demande », jamais la grille générique « Intervention / Devis ». ===== */
+.hcd .step[data-step="choix"].is-resume .choix-grid,.hcd .step[data-step="choix"].is-resume .lede{display:none}

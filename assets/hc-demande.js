@@ -412,6 +412,14 @@
     try { sessionStorage.setItem(STORE_PII, JSON.stringify(parts.pii)); } catch (e) {}
   }
   var pendingEntry = null;
+  // Étape d'entrée d'un lien explicite (accueil, page d'atterrissage) : « retour » y ramène à la page d'origine, pas à l'écran générique.
+  function atEntryStep(step) { return !!state._entryStep && step === state._entryStep; }
+  function exitTunnel() {
+    if (OVERLAY) { if (root.HcDemande) root.HcDemande.close(); return; } // fenêtre : fermée, l'accueil retrouve sa place et son URL
+    var st = history.state || {}, fromSite = !!document.referrer && document.referrer.indexOf(location.origin + '/') === 0;
+    if (fromSite && typeof st.idx === 'number') { try { history.go(-(st.idx + 1)); return; } catch (e) {} } // page : retour à la page du site d'où l'on vient
+    location.assign('/');
+  }
   // Tous les champs de saisie du module, présents et futurs : aucune valeur d'une demande précédente ne reste dans la page
   function clearFields() {
     Array.prototype.forEach.call((mounted || document).querySelectorAll('input, textarea'), function (el) {
@@ -504,15 +512,16 @@
     var target = C.guardStep(step, ctx());
     if (target === 'acces' && step !== 'acces') state._pgPending = step;
     var prevShown = state.step; state.step = target; save();
-    if (o.noHash && target !== step) { try { history.replaceState({ step: target }, '', '#step=' + target + (state.mode === 'intervention' && state.fam ? '&cat=' + encodeURIComponent(state.fam) : '')); } catch (e) {} }
+    if (o.noHash && target !== step) { try { var cs0 = history.state || {}; history.replaceState({ step: target, from: cs0.from, idx: cs0.idx, base: cs0.base }, '', '#step=' + target + (state.mode === 'intervention' && state.fam ? '&cat=' + encodeURIComponent(state.fam) : '')); } catch (e) {} }
     app.setAttribute('data-step', target); app.setAttribute('data-mode', state.mode || '');
     $$('.step').forEach(function (s) { var on = s.getAttribute('data-step') === target; s.classList.toggle('is-active', on); s.classList.toggle('is-back', on && !!o.back); });
     renderKickers(target);
     if (ENTER[target]) ENTER[target](o);
     renderProgress(target); renderRecap();
     $('#topBack').hidden = !C.prevStep(state.mode, target);
+    $('#topBack').setAttribute('aria-label', atEntryStep(target) ? 'Quitter et revenir à la page précédente' : 'Revenir à l’étape précédente');
     closeSheet();
-    if (!o.noHash) { var h = '#step=' + target + (state.mode === 'intervention' && state.fam ? '&cat=' + encodeURIComponent(state.fam) : ''); if (location.hash !== h) { try { history[o.replace ? 'replaceState' : 'pushState']({ step: target, from: o.replace ? (history.state && history.state.from) : prevShown }, '', h); } catch (e) {} } }
+    if (!o.noHash) { var h = '#step=' + target + (state.mode === 'intervention' && state.fam ? '&cat=' + encodeURIComponent(state.fam) : ''); if (location.hash !== h) { try { var cs = history.state || {}, ix = typeof cs.idx === 'number' ? cs.idx : 0; history[o.replace ? 'replaceState' : 'pushState']({ step: target, from: o.replace ? cs.from : prevShown, idx: o.replace ? ix : ix + 1, base: !!cs.base }, '', h); } catch (e) {} } }
     if (!o.keepScroll) scrollToTop();
     if (!o.initial) { var h1 = $('.step.is-active h1'); if (h1) try { h1.focus({ preventScroll: true }); } catch (e) {} }
     var pgx = C.progress(state.mode, target);
@@ -618,6 +627,9 @@
     else if (!state.sent && state.mode && C.lieuValid(state.lieu)) label = state.mode === 'devis' ? 'Demande de devis' : "Demande d'intervention";
     if (!label && C.hasDraft(state, n)) label = state.mode === 'devis' ? 'Demande de devis commencée' : 'Demande commencée';
     box.hidden = !label;
+    var resumeOnly = !!pendingEntry && !!label, sc = $('.step[data-step="choix"]');
+    if (sc) sc.classList.toggle('is-resume', resumeOnly);
+    $('#h-choix').innerHTML = resumeOnly ? 'Reprendre votre demande&nbsp;?' : 'Comment <span class="nw">pouvons-nous</span> vous aider&nbsp;?';
     if (label) box.innerHTML = '<span class="resume-txt"><strong>Vous avez une demande en cours</strong><span>' + esc(label) + '</span></span><button type="button" class="link" data-reset>Nouvelle demande</button><button type="button" class="btn-soft" data-resume>Reprendre ' + ic('i-arrow', 16) + '</button>';
   };
 
@@ -1137,7 +1149,7 @@
     var t = e.target; if (!t.closest) return; var el;
     if (OVERLAY && (el = t.closest('.top-close') || t.closest('a[href="/"]'))) { e.preventDefault(); close(); return; } // overlay : on reste sur la page hôte
     if (t.closest('a[href^="tel:"]')) track('hc_call_click', { step: state.step });
-    if ((el = t.closest('[data-choose]'))) { var md = el.getAttribute('data-choose'); pendingEntry = null; if (state.sent || C.hasDraft(state, cart ? cart.count() : 0)) startClean(); state.mode = md; state.sent = null; state._returnTo = null; if (md === 'intervention') { state.fam = null; state.prob = null; state.precMode = 'liste'; } save(); return go(md === 'devis' ? 'dv-metier' : 'lieu'); }
+    if ((el = t.closest('[data-choose]'))) { var md = el.getAttribute('data-choose'); pendingEntry = null; state._entryStep = null; if (state.sent || C.hasDraft(state, cart ? cart.count() : 0)) startClean(); state.mode = md; state.sent = null; state._returnTo = null; if (md === 'intervention') { state.fam = null; state.prob = null; state.precMode = 'liste'; } save(); return go(md === 'devis' ? 'dv-metier' : 'lieu'); }
     if ((el = t.closest('[data-next]'))) { var from = el.getAttribute('data-next'); if (from === 'dv-photos') { state.devis.photosSeen = true; save(); } if (from === 'lieu') return submitLieu(); if (from === 'coordonnees') return submitContact();
       if (from === 'dv-projet') { state.devis.desc = $('#dv-desc').value.trim(); save(); if (!C.descOk(state.devis.desc)) { mark('fld-desc', true); return focusBad($('#dv-desc')); } }
       return next(from); }
@@ -1173,12 +1185,13 @@
     if ((el = t.closest('[data-forget]'))) { if (cart) cart.clear(); dvFiles = []; state = C.emptyState(); pendingEntry = null; clearFields(); try { C.purgeDevice(localStorage, sessionStorage); } catch (e2) {} toast('Informations effacées de cet appareil'); return go('choix'); }
     if ((el = t.closest('[data-open-sheet]'))) return openSheet(el);
     if ((el = t.closest('[data-close-sheet]'))) return closeSheet();
-    if ((el = t.closest('[data-resume]'))) { pendingEntry = null; var r; if (cart && cart.count()) { state.mode = 'intervention'; r = (resumeStep && C.flowIndex('intervention', resumeStep) >= 3) ? resumeStep : 'demande'; } else if ((state.devis.metiers || []).length) { state.mode = 'devis'; r = (resumeStep && C.flowIndex('devis', resumeStep) >= 0) ? resumeStep : 'dv-projet'; } else { r = resumeStep && resumeStep !== 'choix' && resumeStep !== 'envoye' ? resumeStep : (state.mode === 'devis' ? 'dv-metier' : 'lieu'); } save(); return go(r); }
-    if ((el = t.closest('[data-reset]')) || (el = t.closest('[data-restart]'))) { var entry = pendingEntry; pendingEntry = null; startClean(); var to = entry ? applyEntry(entry) : 'choix'; save(); return go(to); }
+    if ((el = t.closest('[data-resume]'))) { var viaEntry = !!pendingEntry; pendingEntry = null; var r; if (cart && cart.count()) { state.mode = 'intervention'; r = (resumeStep && C.flowIndex('intervention', resumeStep) >= 3) ? resumeStep : 'demande'; } else if ((state.devis.metiers || []).length) { state.mode = 'devis'; r = (resumeStep && C.flowIndex('devis', resumeStep) >= 0) ? resumeStep : 'dv-projet'; } else { r = resumeStep && resumeStep !== 'choix' && resumeStep !== 'envoye' ? resumeStep : (state.mode === 'devis' ? 'dv-metier' : 'lieu'); } if (viaEntry) state._entryStep = (C.FLOWS[state.mode] || [])[0] || r; save(); return go(r); }
+    if ((el = t.closest('[data-reset]')) || (el = t.closest('[data-restart]'))) { var entry = pendingEntry; pendingEntry = null; startClean(); var to = entry ? applyEntry(entry) : 'choix'; state._entryStep = entry ? to : null; save(); return go(to); }
   });
   $('#topBack').addEventListener('click', function () {
     if (state.mode === 'devis' && state._fromIntervention && (state.step === 'dv-projet' || state.step === 'dv-metier')) { state.mode = 'intervention'; state._fromIntervention = false; state.fam = null; if (!String(state.devis.desc || '').trim() && !dvFiles.length) state.devis = C.emptyState().devis; save(); return go('besoin', { back: true, replace: true }); }
     if (state.mode === 'devis' && state._devisFrom && (state.step === 'dv-projet' || state.step === 'dv-metier')) { var bk = state._devisFrom; state._devisFrom = null; state.mode = 'intervention'; if (!String(state.devis.desc || '').trim() && !dvFiles.length) state.devis = C.emptyState().devis; save(); return go(bk, { back: true, replace: true }); }
+    if (atEntryStep(state.step)) return exitTunnel();
     var p = C.prevStep(state.mode, state.step); if (!p) return; if (history.state && history.state.from === p) return history.back(); go(p, { back: true, replace: true }); });
   $('#sendIntervention').addEventListener('click', sendIntervention);
   $('#dvPhotosNext').addEventListener('click', function () { if (!dvFiles.length) return $('#dv-photos').click(); state.devis.photosSeen = true; save(); next('dv-photos'); });
@@ -1258,8 +1271,11 @@
     var h = parseHash(), start;
     // Nouvelle demande depuis un lien d'entrée après un envoi : le récapitulatif précédent est purgé de l'onglet
     if (h.entry && state.sent) startClean();
+    pendingEntry = null; // jamais d'entrée périmée d'une ouverture précédente
     if (h.entry && C.hasDraft(state, cart ? cart.count() : 0)) { pendingEntry = h; start = 'choix'; }
     else { if (h.entry) state._cid = null; start = applyEntry(h); } // nouvelle demande → nouvelle référence de dossier
+    if (h.entry && !pendingEntry) state._entryStep = start; // lien explicite : « retour » depuis cette étape = page d'origine
+    else if (!location.hash) state._entryStep = null; // entrée générique volontaire : l'écran de choix est l'étape précédente
     save();
     go(start, { replace: true, initial: true });
     return h;
@@ -1300,13 +1316,17 @@
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     });
-    root.addEventListener('popstate', function () { if (!overlay.hidden && !ENTRY_HASH.test(location.hash)) close(true); });
+    root.addEventListener('popstate', function () {
+      if (isOpen()) { if (!ENTRY_HASH.test(location.hash)) close(true); return; }
+      // « suivant » du navigateur après une fermeture : la demande rouvre à l'étape quittée (brouillon intact)
+      if (overlay.hidden && ENTRY_HASH.test(location.hash) && history.state && history.state.base) open(location.hash);
+    });
     return overlay;
   }
   function open(hash, trigger) {
     var o = shell();
     opener = trigger || document.activeElement;
-    if (hash && location.hash !== hash) { try { history.pushState({ hcd: 1 }, '', hash); } catch (e) { location.hash = hash; } }
+    if (hash && location.hash !== hash) { try { history.pushState({ hcd: 1, idx: 0, base: true }, '', hash); } catch (e) { location.hash = hash; } } // base : la page hôte est l'entrée précédente
     lastY = root.scrollY || 0;
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
@@ -1329,18 +1349,20 @@
     });
   }
   function close(fromHistory) {
-    if (!overlay || overlay.hidden) return;
+    if (!overlay || overlay.hidden || !overlay.classList.contains('is-open')) return;
     setInert(false);
     overlay.classList.remove('is-open');
     document.documentElement.style.overflow = '';
     document.body.style.overflow = '';
     setTimeout(function () { overlay.hidden = true; if (opener && opener.focus) try { opener.focus(); } catch (e) {} }, 240);
     try {
-      if (!fromHistory && ENTRY_HASH.test(location.hash)) history.pushState({}, '', location.pathname + location.search);
+      // Fermeture (croix, Échap, fond, retour depuis l'étape d'entrée) : on dépile les étapes de la demande au lieu d'ajouter une entrée
+      // (sinon « précédent » rouvrait une URL de demande fenêtre fermée) ; entrée directe par lien : URL nettoyée sur place.
+      if (!fromHistory && ENTRY_HASH.test(location.hash)) { var st = history.state || {}; if (st.base && typeof st.idx === 'number') history.go(-(st.idx + 1)); else history.replaceState(null, '', location.pathname + location.search); }
       else if (fromHistory) setTimeout(function () { if (ENTRY_HASH.test(location.hash)) history.replaceState({}, '', location.pathname + location.search); }, 30);
     } catch (e) {}
   }
-  function isOpen() { return !!overlay && !overlay.hidden; }
+  function isOpen() { return !!overlay && !overlay.hidden && overlay.classList.contains('is-open'); } // en cours de fermeture = fermée
 
   root.HcDemande = { mount: mount, open: open, close: close, isOpen: isOpen, api: function () { return api; } };
 })(window);
