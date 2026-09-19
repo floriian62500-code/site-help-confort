@@ -1211,7 +1211,7 @@
  grid.innerHTML = list.map(o => {
  const featuresArr = Array.isArray(o.features) ? o.features : [];
  const featuresHtml = featuresArr.map(f =>
- `<li class="${f.included === false ? 'no' : 'yes'}">${safeFeature(f.text)}</li>`
+ `<li class="${f.included === false ? 'no' : 'yes'}"><span>${safeFeature(f.text)}</span></li>`
  ).join('');
  const fmt = n => Number(n).toLocaleString('fr-FR', { minimumFractionDigits: Number.isInteger(Number(n)) ? 0 : 2, maximumFractionDigits: 2 });
  const fromPrice = !!o.price_label && /partir/i.test(o.price_label);
