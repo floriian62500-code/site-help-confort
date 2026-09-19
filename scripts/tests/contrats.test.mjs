@@ -50,6 +50,14 @@ const faqLd = []; for (const m of h.matchAll(/<script type="application\/ld\+jso
 const koFaq = faqLd.filter(q => !(txt.includes(q.name.replace(/\s+/g, ' ')) && txt.includes(q.acceptedAnswer.text.replace(/\s+/g, ' '))));
 ok('FAQ des données structurées = FAQ affichée (' + faqLd.length + ' questions)', faqLd.length === 4 && !koFaq.length, koFaq.map(q => q.name).join(' | '));
 
+// ---- 4 bis. Souscription : on ne demande que ce qui est réellement transmis (RIB, facture et photos ne partaient jamais)
+const form = h.slice(h.indexOf('id="sousForm"'), h.indexOf('</form>', h.indexOf('id="sousForm"')));
+ok('souscription : aucun téléversement (RIB, facture, photos n’étaient jamais envoyés : seul « RIB fourni : oui » partait)', !/type="file"/.test(form) && !/files-rib|eqPhotos|docRib|docFacture|bindFile/.test(h));
+ok('souscription : RIB annoncé avec le mandat SEPA après la visite technique (page et message à l’agence)', /Votre RIB : rien à envoyer maintenant/.test(form) && /'- RIB : à fournir avec le mandat SEPA, après la visite technique'/.test(h) && !/RIB fourni|Photos jointes/.test(h) && /<span class="sw-pstep-lbl">Prélèvement<\/span>/.test(h));
+ok('souscription : plus d’objet « payload » construit mais jamais envoyé', !/var payload = \{/.test(h) && !/monthlyMatch/.test(h));
+let syntaxErr = 0; for (const m of h.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*application\/ld\+json)[^>]*>([\s\S]*?)<\/script>/g)) { try { new Function(m[1]); } catch (e) { syntaxErr++; } }
+ok('scripts en ligne de la page syntaxiquement valides', syntaxErr === 0, syntaxErr + ' erreur(s)');
+
 // ---- 5. Une seule agence (Saint-Omer)
 ok('souscription : une seule agence, Saint-Omer (plus d’« agence Dunkerque » selon le code postal)', /function detectAgency\(cp\)\{\n return \{name:'Saint-Omer'/.test(h) && !/dunkerque@helpconfort\.com|name:'Dunkerque'/.test(h));
 
