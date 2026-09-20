@@ -40,6 +40,15 @@ for (const f of files){
   // 4. canonical présent
   if (!/<link\s+rel=["']canonical["']/i.test(h)) err(f, 'CANONICAL_MISSING', 'link canonical absent');
 
+  // 1bis. En-tête bien formée : une balise mal refermée (« ...">> ») fait basculer tout le reste du
+  //       <head> dans le <body> — le canonical et les données structurées ne sont alors plus pris en
+  //       compte. Vu le 20/09 sur carrieres.html (remplacement d'une meta sans son chevron fermant).
+  const head = h.slice(0, h.search(/<\/head>/i) + 7);
+  const malFermee = head.match(/<(?:meta|link)\b[^>]*>>/i);
+  if (malFermee) err(f, 'HEAD_MALFORMED', `balise mal refermée dans le <head> : ${malFermee[0].slice(-60)}`);
+  const iCanon = h.search(/<link\s+rel=["']canonical["']/i), iHead = h.search(/<\/head>/i);
+  if (iCanon > -1 && iHead > -1 && iCanon > iHead) err(f, 'CANONICAL_OUT_OF_HEAD', 'link canonical hors du <head>');
+
   // 5. JSON-LD valide
   const re = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
   let m, n=0;
