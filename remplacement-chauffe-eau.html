@@ -86,6 +86,7 @@ main h3{font-size:1.15rem;margin:24px 0 8px;color:#0A1428}
 .rh-table th,.rh-table td{padding:12px 14px;text-align:left;border-bottom:1px solid #E5EDF3}
 .rh-table th{background:#F5F8FB;font-weight:700;color:#0A1428;font-size:.88rem;text-transform:uppercase;letter-spacing:.04em}
 .rh-table tr:last-child td{border-bottom:0}
+@media(max-width:640px){.rh-table,.rh-table tbody,.rh-table tr,.rh-table td{display:block;width:100%}.rh-table{background:none;box-shadow:none;border-radius:0}.rh-table thead{display:none}.rh-table tr{background:#fff;border:1px solid #E5EDF3;border-radius:12px;margin:0 0 12px;padding:6px 14px;box-shadow:0 1px 3px rgba(0,0,0,.05)}.rh-table td{display:flex;justify-content:space-between;gap:12px;padding:8px 0;text-align:right}.rh-table td::before{content:attr(data-label);font-weight:700;color:#0A1428;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;text-align:left}.rh-table td:first-child{justify-content:flex-start;text-align:left;font-size:1.02rem}.rh-table td:first-child::before{content:none}.rh-table tr td:last-child{border-bottom:0}}
 </style>
 
 <script type="application/ld+json">
@@ -318,10 +319,10 @@ main h3{font-size:1.15rem;margin:24px 0 8px;color:#0A1428}
     <tr><th>Type</th><th>Prix posé TTC</th><th>Conso annuelle</th><th>Aides 2026</th></tr>
   </thead>
   <tbody>
-    <tr><td><strong>Électrique 200L</strong></td><td>750 - 1 100€</td><td>~2 500 kWh</td><td>—</td></tr>
-    <tr><td><strong>Électrique blindé</strong></td><td>900 - 1 300€</td><td>~2 400 kWh</td><td>—</td></tr>
-    <tr><td><strong>Thermodynamique 200L</strong></td><td>2 800 - 4 500€</td><td>~700 kWh</td><td>MaPrimeRénov + CEE</td></tr>
-    <tr><td><strong>Gaz à condensation</strong></td><td>1 800 - 3 200€</td><td>variable</td><td>CEE possible</td></tr>
+    <tr><td data-label="Type"><strong>Électrique 200L</strong></td><td data-label="Prix posé TTC">750 - 1 100€</td><td data-label="Conso annuelle">~2 500 kWh</td><td data-label="Aides 2026">—</td></tr>
+    <tr><td data-label="Type"><strong>Électrique blindé</strong></td><td data-label="Prix posé TTC">900 - 1 300€</td><td data-label="Conso annuelle">~2 400 kWh</td><td data-label="Aides 2026">—</td></tr>
+    <tr><td data-label="Type"><strong>Thermodynamique 200L</strong></td><td data-label="Prix posé TTC">2 800 - 4 500€</td><td data-label="Conso annuelle">~700 kWh</td><td data-label="Aides 2026">MaPrimeRénov + CEE</td></tr>
+    <tr><td data-label="Type"><strong>Gaz à condensation</strong></td><td data-label="Prix posé TTC">1 800 - 3 200€</td><td data-label="Conso annuelle">variable</td><td data-label="Aides 2026">CEE possible</td></tr>
   </tbody>
 </table>
 

@@ -13,7 +13,7 @@ const iRes = h.indexOf('<section id="hc-reservation"'), iEndRes = h.indexOf('</s
 const mod = iMod > 0 ? h.slice(iMod, h.indexOf('</section>', iMod)) : '';
 ok('placé juste après « Que souhaitez-vous faire ? », sans le remplacer', iRes > 0 && iMod > iEndRes && h.slice(iEndRes, iMod).replace(/<!--[\s\S]*?-->/g, '').trim() === '</section>' && /Que souhaitez-vous faire \?/.test(h));
 ok('un seul module (pas de carrousel, pas de fenêtre)', (h.match(/id="entretien-saison"/g) || []).length === 1 && !/carousel|setInterval|popup|modal/i.test(mod));
-ok('1 message, 1 bouton principal (chaudière → page d’atterrissage), 2 entrées secondaires (poêle / insert, ramonage)', (mod.match(/<h2\b/g) || []).length === 1 && (mod.match(/class="hcs-cta"/g) || []).length === 1 && /<a class="hcs-cta" href="\/entretien-chaudiere\.html" data-hc-promo-fam="chaudiere">/.test(mod) && (mod.match(/class="hcs-link"/g) || []).length === 2 && /href="\/entretien-poele-insert\.html" data-hc-promo-fam="poele"/.test(mod) && /href="\/prestations\/ramonage\.html" data-hc-promo-fam="ramonage"/.test(mod));
+ok('1 message, 1 bouton principal (chaudière → page d’atterrissage), 2 entrées secondaires (poêle / insert, ramonage)', (mod.match(/<h2\b/g) || []).length === 1 && (mod.match(/class="hcs-cta"/g) || []).length === 1 && /<a class="hcs-cta" href="\/entretien-chaudiere\.html" data-hc-promo-fam="chaudiere">/.test(mod) && (mod.match(/class="hcs-link"/g) || []).length === 2 && /href="\/prestations\/ramonage\.html#poele-insert" data-hc-promo-fam="poele"/.test(mod) && /href="\/prestations\/ramonage\.html" data-hc-promo-fam="ramonage"/.test(mod));
 ok('aucun prix ni téléphone dans le module (source tarifaire : pages dédiées)', !/€|\d+\s?%|tel:|03 66/.test(mod.replace(/<style>[\s\S]*?<\/style>/, '')));
 ok('aucune promesse de délai ni de sécurité inventée', !/sous \d+ ?h|garanti|sécurité|obligatoire|urgent/i.test(mod.replace(/<style>[\s\S]*?<\/style>/, '')));
 ok('mesure : vue (moitié visible, une fois) et clic par famille, GA4 seulement en production et après consentement', /send\('view_home_maintenance_promo'/.test(h) && /send\('click_home_maintenance_promo', \{ module: 'entretien_saison', service_family: a\.getAttribute\('data-hc-promo-fam'\)/.test(h) && /if \(PROD && typeof window\.hcGtag === 'function'\)/.test(h) && /intersectionRatio >= 0\.5/.test(h));
@@ -33,7 +33,7 @@ sandbox.window.IntersectionObserver = sandbox.IntersectionObserver;
 vm.runInNewContext(code.replace('if (\'IntersectionObserver\' in window)', 'if (typeof IntersectionObserver === \'function\')'), sandbox);
 const entree = [{ isIntersecting: true, intersectionRatio: 0.6 }];
 if (cb) { cb([{ isIntersecting: true, intersectionRatio: 0.2 }]); cb(entree); cb(entree); }
-if (clickHandler) clickHandler({ target: { closest: () => ({ getAttribute: k => (k === 'data-hc-promo-fam' ? 'poele' : '/entretien-poele-insert.html') }) } });
+if (clickHandler) clickHandler({ target: { closest: () => ({ getAttribute: k => (k === 'data-hc-promo-fam' ? 'poele' : '/prestations/ramonage.html#poele-insert') }) } });
 const log = win.__hcFunnel || [];
 ok('mesure (exécution) : 1 seule vue à 50 % visible (pas à 20 %, pas deux fois), clic avec sa famille, rien envoyé hors production', !!code && log.filter(x => x.ev === 'view_home_maintenance_promo').length === 1 && log.some(x => x.ev === 'click_home_maintenance_promo' && x.p.service_family === 'poele') && gtagCalls === 0, JSON.stringify(log.map(x => x.ev)));
 

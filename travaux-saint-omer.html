@@ -1095,12 +1095,12 @@
  </script>
 
  <style>.m-proof-section { background: linear-gradient(180deg, #fff 0%, #F8FCFE 100%); }.m-proof-2cols {
- display: grid; grid-template-columns: 1fr;
+ display: grid; grid-template-columns: minmax(0, 1fr);
  gap: 36px;
  max-width: 1280px; margin: 0 auto;
  }
- @media (min-width: 980px) {.m-proof-2cols { grid-template-columns: 1fr 1fr; gap: 40px; }
- }.m-proof-col { display: flex; flex-direction: column; }.m-proof-head { text-align: left; margin-bottom: 18px; }.m-proof-head.eyebrow {
+ @media (min-width: 980px) {.m-proof-2cols { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
+ }.m-proof-col { display: flex; flex-direction: column; min-width: 0; }.m-proof-head { text-align: left; margin-bottom: 18px; }.m-proof-head.eyebrow {
  display: inline-flex; align-items: center; gap: 6px;
  padding: 4px 10px;
  background: var(--m-soft); color: var(--m-color-dark);

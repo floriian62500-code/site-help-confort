@@ -52,6 +52,19 @@ Si aucun critère coché → **hors scope**, retour au CRM Apogée OU au backlog
 - Charte : bleus `#0DA0CF` / `#1FC4F0`, orange urgence `#FF6B1A`, typo Inter + Playfair Display italique pour emphase.
 - Home = vitrine minimaliste (5 sections max) — tout composant nouveau demander où, par défaut PAS la home.
 
+**Pages — réutiliser avant de créer (règle du 2026-09-20, directive 5744476570)** :
+- Avant TOUTE nouvelle page marketing, métier, locale, Ads ou recrutement :
+  **`SEARCH_EXISTING → IDENTIFY_CANONICAL → REUSE_OR_EXTEND → CREATE_ONLY_IF_NONE`**.
+- Contrôle obligatoire : `node scripts/seo/duplicate-intent.mjs --intent "<l'intention en clair>"`
+  (et `node scripts/seo/duplicate-intent.mjs` avant commit — sortie 1 = doublon non justifié).
+- Une nouvelle URL n'est autorisée QUE si : aucune page existante ne couvre le besoin, l'intention
+  SEO/commerciale est distincte, pas de cannibalisation, pas de duplication de contenu, et l'URL
+  canonique + les liens internes sont définis. Sinon : **modifier l'existant**.
+- Toute création ou fusion se déclare dans `docs/seo/pages-canoniques.json` (intention → page canonique,
+  pages liées justifiées, doublons redirigés). Procédure : `docs/process/REGLE-PAGE-CANONIQUE.md`.
+- Une page canonique garde le **niveau visuel du site premium** (gabarit `seo-*` des pages `prestations/`) :
+  jamais de landing parallèle au design inférieur.
+
 **Contenu** :
 - **AUCUN hardcode** de prestations, tarifs, aides, promesses commerciales (délais chiffrés interdits). Source unique = Supabase.
 - **Liste blanche fournisseurs** : Delpha, Atlantic autorisés. Concurrents (TRYBA, LAPEYRE, etc.) **JAMAIS** affichés.
@@ -115,6 +128,7 @@ Lis ces fichiers dans cet ordre au démarrage :
 - ❌ Modifier le code d'un lot en attente de validation ("gelé")
 - ❌ Proposer 4-5 idées par échange (max 1 proposition à la fois, seulement si blocage ou gain démontré)
 - ❌ Ouvrir un nouveau module majeur en parallèle d'un lot ouvert
+- ❌ Créer une page alors qu'une page existante couvre l'intention (cf. §4 « Pages — réutiliser avant de créer »)
 
 ## 9. Format attendu de tes communications
 

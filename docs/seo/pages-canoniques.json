@@ -1,0 +1,177 @@
+{
+  "regle": "SEARCH_EXISTING → IDENTIFY_CANONICAL → REUSE_OR_EXTEND → CREATE_ONLY_IF_NONE",
+  "doc": "docs/process/REGLE-PAGE-CANONIQUE.md",
+  "controle": "node scripts/seo/duplicate-intent.mjs",
+  "maj": "2026-09-20 (directive 5744476570)",
+  "intentions": [
+    {
+      "intention": "Entretien chaudière (commercial, gaz et fioul)",
+      "canonique": "/entretien-chaudiere.html",
+      "depuis": "2026-05-17 (fee4f59b)",
+      "pages_liees": [
+        {
+          "url": "/guide-entretien-chaudiere.html",
+          "role": "guide informationnel (loi, déroulé, fréquence)",
+          "justification": "Intention informationnelle, pas de prix ni de tunnel ; renvoie vers la page canonique."
+        },
+        {
+          "url": "/blog-entretien-chaudiere-annuel-obligatoire.html",
+          "role": "article de blog (obligation légale)",
+          "justification": "Contenu éditorial daté, intention informationnelle."
+        },
+        {
+          "url": "/contrats-entretien.html",
+          "role": "souscription des contrats annuels",
+          "justification": "Intention distincte : abonnement mensuel, catalogue des formules depuis la base."
+        },
+        {
+          "url": "/prestations/depannage-chaudiere.html",
+          "role": "dépannage / panne",
+          "justification": "Intention d'urgence, pas d'entretien planifié."
+        },
+        {
+          "url": "/prestations/remplacement-chaudiere.html",
+          "role": "remplacement d'appareil",
+          "justification": "Intention travaux / investissement."
+        },
+        {
+          "url": "/panne-chaudiere.html",
+          "role": "diagnostic de panne",
+          "justification": "Intention d'urgence."
+        }
+      ]
+    },
+    {
+      "intention": "Ramonage et entretien poêle / insert (ramonage compris)",
+      "canonique": "/prestations/ramonage.html",
+      "depuis": "2026-09-20 (fusion de /entretien-poele-insert.html)",
+      "doublons_rediriges": [
+        "/entretien-poele-insert.html",
+        "/entretien-poele-insert"
+      ],
+      "pages_liees": [
+        {
+          "url": "/prestations/vitrage-insert-poele.html",
+          "role": "remplacement de la vitre d'insert ou de poêle",
+          "justification": "Intention vitrerie, pas d'entretien de l'appareil."
+        }
+      ]
+    },
+    {
+      "intention": "Contrats d'entretien (abonnement annuel)",
+      "canonique": "/contrats-entretien.html",
+      "pages_liees": []
+    },
+    {
+      "intention": "Recrutement / candidatures",
+      "canonique": "/carrieres.html",
+      "pages_liees": []
+    }
+  ],
+  "familles_locales": [
+    {
+      "prefixe": "depannage-",
+      "role": "page locale de dépannage par ville"
+    },
+    {
+      "prefixe": "chauffagiste-",
+      "role": "page métier chauffage par ville"
+    },
+    {
+      "prefixe": "plombier-",
+      "role": "page métier plomberie par ville"
+    },
+    {
+      "prefixe": "electricien-",
+      "role": "page métier électricité par ville"
+    },
+    {
+      "prefixe": "serrurier-",
+      "role": "page métier serrurerie par ville"
+    },
+    {
+      "prefixe": "vitrier-",
+      "role": "page métier vitrerie par ville"
+    },
+    {
+      "prefixe": "menuisier-",
+      "role": "page métier menuiserie par ville"
+    },
+    {
+      "prefixe": "travaux-",
+      "role": "page métier rénovation par ville"
+    },
+    {
+      "prefixe": "volets-",
+      "role": "page métier volets par ville"
+    },
+    {
+      "prefixe": "pmr-",
+      "role": "page métier adaptation PMR par ville"
+    },
+    {
+      "prefixe": "agence-",
+      "role": "page d'agence"
+    },
+    {
+      "prefixe": "realisations/",
+      "role": "fiches chantier générées (scripts/gen-realisations.mjs)"
+    },
+    {
+      "prefixe": "actualites/",
+      "role": "articles d'actualité générés"
+    }
+  ],
+  "paires_autorisees": [
+    [
+      "/prestations/porte-claquee.html",
+      "/prestations/porte-fermee-cle.html",
+      "Deux situations d'ouverture de porte distinctes (claquée sans dégât / fermée à clé), demandées différemment par les clients."
+    ],
+    [
+      "/prestations/fenetres-completes.html",
+      "/prestations/fenetres-bois-alu-pvc.html",
+      "Pose neuve complète vs choix du matériau : intentions commerciales séparées héritées du catalogue."
+    ],
+    [
+      "/prestations/vitrage-simple-double-triple.html",
+      "/prestations/vitrerie-panneau-porte.html",
+      "Vitrage de fenêtre vs panneau de porte."
+    ],
+    [
+      "/nos-prestations.html",
+      "/prestations/index.html",
+      "Sommaire éditorial vs index technique du dossier prestations (à fusionner lors de l'assainissement)."
+    ],
+    [
+      "/prestations/ouverture-porte.html",
+      "/prestations/porte-claquee.html",
+      "Ouverture de porte (générique, serrure bloquée) vs porte claquée sans clé à l'intérieur : deux demandes distinctes au standard."
+    ],
+    [
+      "/fournisseur.html",
+      "/partenaire.html",
+      "Gabarits de fiche détail rendus côté client (fournisseur / partenaire), pas des pages de contenu."
+    ]
+  ],
+  "doublons_connus": [
+    {
+      "paire": [
+        "/actualites/<date>-<slug>.html",
+        "/realisations/<slug>.html"
+      ],
+      "constat": "Les mêmes publications Facebook sont rendues deux fois (21 actualités / 30 fiches chantier), chacune avec son propre canonical auto-référent.",
+      "decision": "Page canonique = la fiche chantier /realisations/<slug>. À traiter dans le lot assainissement : canonical croisé depuis /actualites/ (ou noindex) + correction des deux générateurs.",
+      "statut": "AVERTISSEMENT (non bloquant) — signalé à Florian le 2026-09-20"
+    },
+    {
+      "paire": [
+        "/fournisseur.html",
+        "/partenaire.html"
+      ],
+      "constat": "Gabarits de fiche détail listés tels quels dans le sitemap : H1 = placeholder ${name}, contenu vide sans paramètre.",
+      "decision": "À retirer du sitemap dans le lot assainissement (ou passer en noindex).",
+      "statut": "AVERTISSEMENT (non bloquant)"
+    }
+  ]
+}

@@ -16,8 +16,8 @@ Aucune annonce ne cite une prestation, une zone ou un prix absents de ces source
 | Famille | Ce que l'entreprise propose réellement (preuve) | Page d'atterrissage | Statut |
 |---|---|---|---|
 | **A. Chaudières** (gaz, fioul) | Entretien ponctuel au catalogue (gaz 121 €, fioul 178,20 € / 218,90 € TTC) ; contrats BASIC / CONFORT / SÉCURITÉ ; page `entretien-chaudiere.html` | `entretien-chaudiere.html` → tunnel sur les prestations chauffage à prix ferme | **READY** (préparé) |
-| **B. Poêles / inserts** (bois, granulés) | Barème agence transmis par Florian le 18/09/2026 (directive 5733225819) : **EPB** entretien annuel poêle / insert à bois, ramonage compris, **115 € HT** ; **EPG** poêle / insert à granulés, ramonage compris, **136 € HT**. TTC : 126,50 / 149,60 € (TVA 10 %, logement de plus de 2 ans), 138 / 163,20 € (TVA 20 %). Référence interne : `admin-pro/TARIFS_REFERENCE.md`. Pas encore au catalogue en ligne (ajout préparé, écriture PROD = gate) : la demande passe par le formulaire de rappel de la page. | `entretien-poele-insert.html` → formulaire de rappel | **READY** (préparé) |
-| **C. Ramonage** (cheminée, conduit de chaudière ; poêle et insert : voir B) | Page `prestations/ramonage.html` : ramonage mécanique, vérification du tirage, contrôle du conduit, certificat. **Pas de prix au catalogue.** | `prestations/ramonage.html` → formulaire court « Demande de rappel » | **READY** (préparé, prix non affiché) |
+| **B. Poêles / inserts** (bois, granulés) | Barème agence transmis par Florian le 18/09/2026 (directive 5733225819) : **EPB** entretien annuel poêle / insert à bois, ramonage compris, **115 € HT** ; **EPG** poêle / insert à granulés, ramonage compris, **136 € HT**. TTC : 126,50 / 149,60 € (TVA 10 %, logement de plus de 2 ans), 138 / 163,20 € (TVA 20 %). Référence interne : `admin-pro/TARIFS_REFERENCE.md`. Pas encore au catalogue en ligne (ajout préparé, écriture PROD = gate) : la demande passe par le formulaire de rappel de la page. | `prestations/ramonage.html#poele-insert` → formulaire de rappel | **READY** (préparé) |
+| **C. Ramonage** (cheminée, conduit de chaudière ; poêle et insert : voir B, **même page canonique**, ancre `#poele-insert`) | Page `prestations/ramonage.html` : ramonage mécanique, vérification du tirage, contrôle du conduit, certificat. **Pas de prix au catalogue.** | `prestations/ramonage.html` → formulaire court « Demande de rappel » | **READY** (préparé, prix non affiché) |
 
 **Activation : `CAMPAIGN_GO_LIVE=NO_GO`**. Les pages corrigées et la mesure ne sont qu'en recette, et les gates de production sont ouverts (§9).
 
@@ -49,7 +49,7 @@ Aucune annonce ne cite une prestation, une zone ou un prix absents de ces source
 | Campagne (nom technique) | Réseau | Groupes d'annonces | Page de destination |
 |---|---|---|---|
 | `SRCH_ENTRETIEN-CHAUDIERE_SO50` | Google Search uniquement (sans Display ni partenaires au lancement) | A1 Entretien gaz · A2 Entretien fioul · A3 Contrat d'entretien · A4 Entretien + ville | `https://depan59-62.fr/entretien-chaudiere.html` |
-| `SRCH_ENTRETIEN-POELE-INSERT_SO50` | Google Search uniquement | B1 Poêle à granulés · B2 Poêle ou insert à bois · B3 Ramonage poêle / insert | `https://depan59-62.fr/entretien-poele-insert.html` |
+| `SRCH_ENTRETIEN-POELE-INSERT_SO50` | Google Search uniquement | B1 Poêle à granulés · B2 Poêle ou insert à bois · B3 Ramonage poêle / insert | `https://depan59-62.fr/prestations/ramonage.html#poele-insert` |
 | `SRCH_RAMONAGE_SO50` | Google Search uniquement | C1 Ramonage cheminée · C3 Ramonage conduit de chaudière · C4 Certificat de ramonage (C2 déplacé en B3) | `https://depan59-62.fr/prestations/ramonage.html` |
 | `META_ENTRETIEN_SO50` | Facebook + Instagram | 3 angles : chaudière · poêle & insert (entretien, ramonage compris) · ramonage cheminée / conduit | selon l'angle (§5) |
 
@@ -440,11 +440,16 @@ Aucune requête vers GA4, Google Ads, Meta ou le serveur de dossiers ; aucune do
 | Corrigé pendant la vérification | en 390, le tableau élargissait la page à 502 px ; prix coupés en fin de ligne ; en 1440, prix et téléphone décalés à gauche | — |
 | Mesure | ✅ | ✅ |
 
-**Page B (`entretien-poele-insert.html`)**, vérifiée sur la preview le 19/09 :
-- 1440 : bouton à 503–557 px, accroche centrée, tarifs en 4 colonnes ;
-- 390 : bouton à 556–609 px, au-dessus du bandeau cookies ; tarifs en cartes (350 px), 0 débordement ;
-- mesure : vue, bouton, appel, envoi confirmé (`service_family=poele`) ;
-- formulaire de rappel : jamais soumis en test.
+**Famille B (poêles / inserts) — plus de page dédiée (20/09, directive 5744476570).**
+La page `entretien-poele-insert.html` créée le 19/09 faisait doublon avec la page ramonage : elle est
+**fusionnée** dans la page canonique `prestations/ramonage.html`, section `#poele-insert` (barème EPB / EPG
+en HT et les deux TTC, ce qui est compris, règle de TVA, bouton `landing_poele_cta` vers le formulaire de
+la page). L'ancienne URL est redirigée en **301** vers l'ancre. Les annonces B pointent donc la même page
+que les annonces C, sur une ancre différente — un seul historique de qualité, un seul canonical.
+
+> Règle projet (`docs/process/REGLE-PAGE-CANONIQUE.md`) : avant toute page Ads,
+> `SEARCH_EXISTING → IDENTIFY_CANONICAL → REUSE_OR_EXTEND → CREATE_ONLY_IF_NONE`, contrôlé par
+> `node scripts/seo/duplicate-intent.mjs`.
 
 ---
 

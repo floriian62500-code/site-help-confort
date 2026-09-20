@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Pages d'atterrissage des campagnes « entretien » (directive 5728009113) : promesses vraies, prix du catalogue,
+// Pages d'atterrissage des campagnes « entretien » (directives 5728009113 et 5744476570) : promesses vraies, prix du catalogue,
 // un bouton principal mesuré, mesure sans donnée personnelle. Hors ligne. Contrôle des prix contre la base :
 // scripts/tests/smoke.mjs (en ligne).
 import fs from 'node:fs';
@@ -30,13 +30,15 @@ ok('chaudière : la réponse « combien coûte » est identique dans la page et 
 // garanti commence à CONFORT ; SÉCURITÉ est réservée aux chaudières de moins de 5 ans ; rappel 1 mois avant l'échéance.
 ok('chaudière : aucune priorité de dépannage promise à tous les contrats (gaz BASIC n’en a pas)', !/intervention prioritaire|priorité en cas de panne|priorité d'intervention/i.test(ch) && /dès la formule CONFORT, intervention sous 48 h/.test(chTxt));
 ok('chaudière : tableau des formules lisible en 390 (cartes empilées sous 640 px ; en 4 colonnes insécables, la page s’élargissait à 502 px)', /<table class="ec-offers">/.test(ch) && /@media \(max-width:640px\)\{\.ec-offers thead\{display:none\}\.ec-offers,\.ec-offers tbody,\.ec-offers tr,\.ec-offers td\{display:block\}/.test(ch) && !/<table style=/.test(ch));
-ok('chaudière : prix jamais coupés en fin de ligne (« 178,20 » / « € TTC », « 1 » / « 000 € HT » vus en 390)', /\.nw,\.ec-price strong\{white-space:nowrap\}/.test(ch) && /dès <span class="nw">9,90 € TTC\/mois<\/span>/.test(ch) && /jusqu’à <span class="nw">1 000 € HT<\/span>/.test(ch));
-ok('chaudière : prix et téléphone de l’accroche centrés comme le reste (marges auto ; en marge 0 ils se calaient à gauche en 1440)', /<p class="ec-price">/.test(ch) && /<p class="ec-alt">/.test(ch) && /\.ec-hero \.ec-price\{margin:0 auto 16px;/.test(ch) && /\.ec-hero \.ec-alt\{margin:12px auto 0;/.test(ch));
+ok('chaudière : prix jamais coupés en fin de ligne (« 1 » / « 000 € HT » vu en 390)', /\.nw\{white-space:nowrap\}/.test(ch) && /jusqu’à <span class="nw">1 000 € HT<\/span>/.test(ch));
+// Design (5744476570) : la page canonique reprend le gabarit premium des pages prestations, pas une landing parallèle
+ok('chaudière : gabarit premium du site (héros, bandeau de preuves, encart de prix collant, FAQ dépliante)', /<section class="seo-hero">/.test(ch) && /<section class="seo-stats">/.test(ch) && /<aside class="seo-form-side" id="demande">/.test(ch) && (ch.match(/<details class="seo-faq-item">/g) || []).length === 5 && !/class="ec-hero"/.test(ch));
+ok('chaudière : prix fermes rappelés dans l’encart, second bouton mesuré séparément', /<ul class="ec-prices">/.test(ch) && /<b>121 € TTC<\/b>/.test(ch) && /<b>dès 178,20 € TTC<\/b>/.test(ch) && /<b>dès 9,90 € TTC\/mois<\/b>/.test(ch) && (ch.match(/data-hc-cta="landing_chaudiere_side"/g) || []).length === 1);
 ok('chaudière : SÉCURITÉ affichée avec sa condition, rappel aligné sur le catalogue (un mois avant)', /Réservée aux chaudières de moins de 5 ans/.test(chTxt) && /un mois avant l’échéance/.test(chTxt) && !/2-3 semaines|bookons/.test(ch));
 ok('chaudière : ni prestation hors catalogue (granulés) ni aide chiffrée ni qualification non affichée, y compris balises et données structurées', !/(gaz, fioul, granulés)|granulés à|granulés Saint|MaPrimeRénov|50-70|Qualigaz|PGN|130 à 210/.test(ch.replace(/\(gaz, fioul, granulés\) est obligatoire/, '')));
 
 // FAQ : chaque question des données structurées est affichée, avec la même réponse (règle Google)
-for (const [nom, html] of [['chaudière', ch], ['ramonage', rm0()], ['poêle / insert', rd('entretien-poele-insert.html')]]) {
+for (const [nom, html] of [['chaudière', ch], ['ramonage + poêle / insert', rm0()]]) {
   const t = visible(html), qs = [];
   for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) { try { (JSON.parse(m[1]).mainEntity || []).forEach(q => qs.push(q)); } catch (e) { qs.push({ name: 'JSON invalide', acceptedAnswer: { text: '' } }); } }
   const ko = qs.filter(q => !(t.includes(q.name) && t.includes(q.acceptedAnswer.text)));
@@ -52,14 +54,13 @@ ok('ramonage : aucune promesse non garantie (délai en 1 h, « garantie complèt
 ok('ramonage : engagements vrais (rappel sous 24 h ouvrées, certificat remis), coquille corrigée', /Rappel sous 24 h ouvrées/.test(rmTxt) && /Certificat de ramonage remis/.test(rmTxt) && !/ouvrées ouvrées/.test(rm));
 ok('ramonage : formulaire à jour (événement d’envoi confirmé)', /hc-leads-capture\.js\?v=20260918a/.test(rm));
 
-// ---- B. Poêles / inserts : entretien-poele-insert.html (barème agence EPB 115 € HT, EPG 136 € HT, ramonage compris)
-const pe = rd('entretien-poele-insert.html'), peTxt = visible(pe);
-ok('poêle : page marquée pour la mesure, bandeau de consentement, mesure et formulaire chargés', /<body data-hc-landing="poele">/.test(pe) && /\/assets\/hc-consent\.js\?v=/.test(pe) && /\/assets\/tracking\.js\?v=/.test(pe) && /\/assets\/hc-landing\.js\?v=20260919a/.test(pe) && /hc-leads-capture\.js\?v=20260918a/.test(pe));
-ok('poêle : bouton principal unique vers le formulaire de rappel de la page (prestation indiquée)', (pe.match(/data-hc-cta="landing_poele_hero"/g) || []).length === 1 && /href="#demande"[^>]*data-hc-cta="landing_poele_hero"/.test(pe) && /id="demande"/.test(pe) && /data-hc-lead="prestation"/.test(pe) && /name="presta" value="Entretien poêle \/ insert \(ramonage compris\)"/.test(pe));
+// ---- B. Poêles / inserts (5744476570) : plus de page dédiée, la section vit dans la page canonique ramonage
 const PE = ['115 € HT', '136 € HT', '126,50 € TTC', '149,60 € TTC', '138 € TTC', '163,20 € TTC'];
-ok('poêle : tarifs du barème en HT et les deux TTC (10 % logement de plus de 2 ans, 20 % sinon), ramonage compris', PE.every(p => peTxt.includes(p)) && /ramonage compris/i.test(peTxt) && /TVA à 10 % pour un particulier dans un logement achevé depuis plus de 2 ans ; 20 %/.test(peTxt), PE.filter(p => !peTxt.includes(p)).join(', '));
-ok('poêle : jamais un montant HT présenté comme TTC (115 € TTC, 136 € TTC)', !/115 € TTC|136 € TTC|115,00 € TTC|136,00 € TTC/.test(pe + rm + ch));
-ok('tarifs poêle non généralisés : absents de la page chaudière, cités sur la page ramonage seulement pour un poêle ou un insert', !/115 € HT|136 € HT/.test(ch) && /Pour un poêle ou un insert, nous proposons l'entretien annuel avec le ramonage compris : 115 € HT pour le bois, 136 € HT pour les granulés/.test(rmTxt) && /Pour une cheminée ou un conduit de chaudière, le tarif vous est confirmé avant l'intervention/.test(rmTxt));
+ok('poêle : section dédiée dans la page canonique ramonage (ancre stable pour les annonces)', /<section class="seo-section" id="poele-insert">/.test(rm) && /<h2>Entretien poêle &amp; insert, ramonage compris<\/h2>/.test(rm) && !fs.existsSync(path.join(ROOT, 'entretien-poele-insert.html')));
+ok('poêle : bouton mesuré vers le formulaire de la page, prestation indiquée sur le lead', (rm.match(/data-hc-cta="landing_poele_cta"/g) || []).length === 1 && /href="#devis" class="pi-cta" data-hc-cta="landing_poele_cta"/.test(rm) && /name="presta" value="Ramonage \/ entretien poêle, insert, cheminée"/.test(rm));
+ok('poêle : tarifs du barème en HT et les deux TTC (10 % logement de plus de 2 ans, 20 % sinon), ramonage compris', PE.every(p => rmTxt.includes(p)) && /ramonage compris/i.test(rmTxt) && /TVA à 10 % pour un particulier dans un logement achevé depuis plus de 2 ans ; 20 %/.test(rmTxt), PE.filter(p => !rmTxt.includes(p)).join(', '));
+ok('poêle : jamais un montant HT présenté comme TTC (115 € TTC, 136 € TTC)', !/115 € TTC|136 € TTC|115,00 € TTC|136,00 € TTC/.test(rm + ch));
+ok('tarifs poêle non généralisés : absents de la page chaudière, réservés au poêle / insert sur la page ramonage', !/115 € HT|136 € HT/.test(ch) && /Pour un poêle ou un insert, nous proposons l'entretien annuel avec le ramonage compris : 115 € HT pour le bois, 136 € HT pour les granulés/.test(rmTxt) && /Pour une cheminée ou un conduit de chaudière, le tarif vous est confirmé avant l'intervention/.test(rmTxt));
 const tarifs = rd('admin-pro/TARIFS_REFERENCE.md'), mig = rd('supabase/_pending_migrations/20260919100000_catalogue_entretien_poele_insert.sql');
 ok('source tarifaire : EPB / EPG en HT dans la référence interne, ajout catalogue préparé (HT + TVA 10 %) mais non appliqué', /\*\*EPB\*\* \| Entretien annuel poêle \/ insert \*\*à bois\*\* — \*\*ramonage compris\*\* \| \*\*115 € HT\*\*/.test(tarifs) && /\*\*EPG\*\* \| Entretien annuel poêle \/ insert \*\*à granulés\*\* — \*\*ramonage compris\*\* \| \*\*136 € HT\*\*/.test(tarifs) && /115\.00, 0\.100/.test(mig) && /136\.00, 0\.100/.test(mig) && !fs.existsSync(path.join(ROOT, 'supabase/migrations/20260919100000_catalogue_entretien_poele_insert.sql')));
 
