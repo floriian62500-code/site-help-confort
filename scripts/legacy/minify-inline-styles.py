@@ -23,7 +23,14 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def minify_css(css: str) -> str:
-    """Minifie une chaîne CSS de façon conservative."""
+    """Minifie une chaîne CSS de façon conservative.
+
+    ⚠️ ARCHIVÉ — NE PAS RELANCER SANS CONTRÔLE (2026-09-20).
+    Une minification des styles inline, le 2026-05-15 (commit 3e50ad42), a perdu les espaces des
+    sélecteurs descendants : « .a .b » est devenu « .a.b » et 1 901 règles ne s'appliquaient plus,
+    sur 155 pages. Cette version-ci ne reproduit pas le défaut (vérifié), mais après TOUTE
+    minification il faut lancer :  node scripts/seo/fix-compound-selectors.mjs --check
+    """
     # Garder les commentaires de licence /*! */
     # Supprimer les autres
     css = re.sub(r"/\*(?!!)[\s\S]*?\*/", "", css)
