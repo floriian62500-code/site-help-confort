@@ -79,6 +79,14 @@ Si aucun critère coché → **hors scope**, retour au CRM Apogée OU au backlog
 - **Staging obligatoire** avant prod. Jamais d'edit direct sur `main`. Branche `staging` → preview Netlify → GO explicite Florian → merge.
 - Push monitoring : si divergence ahead/behind, alerter AVANT toute modif.
 
+## 4bis. Documentation mainteneur
+
+`docs/maintainer/` — sommaire dans [README.md](docs/maintainer/README.md) :
+architecture, **où modifier quoi**, installation locale, tests, déploiement, variables, base de
+données, paiement, demandes et notifications, mesure d'audience, pièges connus.
+À tenir à jour **avec** le code : une modification structurelle sans mise à jour de ces fichiers est
+une modification incomplète.
+
 ## 5. Où trouver le contexte complet
 
 Lis ces fichiers dans cet ordre au démarrage :

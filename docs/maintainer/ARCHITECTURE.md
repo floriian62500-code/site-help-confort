@@ -1,14 +1,21 @@
 # ARCHITECTURE & GUIDE MAINTENEUR — Site Help Confort
 
 > Document de reprise pour un développeur humain. Décrit l'architecture réelle, les
-> branches, les flux métier, le release flow et où intervenir. Mis à jour 2026-08-21.
+> branches, les flux métier, le release flow et où intervenir. Mis à jour **2026-09-20**.
+>
+> **Les autres guides mainteneur sont à côté** : [README.md](README.md) (sommaire),
+> [OU-MODIFIER-QUOI.md](OU-MODIFIER-QUOI.md), [LOCAL-SETUP.md](LOCAL-SETUP.md),
+> [TESTING.md](TESTING.md), [DEPLOYMENT.md](DEPLOYMENT.md), [ENVIRONMENT.md](ENVIRONMENT.md),
+> [DATABASE.md](DATABASE.md), [PAYMENTS.md](PAYMENTS.md),
+> [LEADS-AND-NOTIFICATIONS.md](LEADS-AND-NOTIFICATIONS.md), [TRACKING.md](TRACKING.md),
+> [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
 
 ## 1. Vue d'ensemble
-- **Nature** : site **statique HTML/CSS/JS** (pas de framework, pas de build). ~119 pages HTML à la racine + `prestations/` (pages dédiées) + `realisations/` (pré-rendus).
+- **Nature** : site **statique HTML/CSS/JS** (pas de framework, pas de build). **210 pages** publiques au 20/09/2026 : racine + `prestations/` (35 fiches) + `realisations/` (30 fiches pré-rendues) + `actualites/` (21) + `emploi/` (2 offres générées).
 - **Hébergement** : **Netlify** (projet `remarkable-dragon-364e2b`, plan Pro). Publie depuis la racine (`publish = "."`, `command = ""`).
 - **Domaines** : prod = apex `depan59-62.fr` (branche `main`). Recette = Deploy Preview PR #2 (`deploy-preview-2--remarkable-dragon-364e2b.netlify.app`, branche `recette`).
 - **Backend** : **Supabase** (`btcbjwqiivhpwoszomhg`) — Postgres + RLS + Edge Functions + Storage. Clé front = **publishable** `sb_publishable_...` (rôle `anon`). ⚠️ l'ancien anon JWT est **désactivé** (ne plus l'utiliser).
-- **Paiement** : **Stripe** — clé configurée **LIVE**, aucune clé TEST → **paiement client GELÉ** (voir §7).
+- **Paiement** : deux chemins distincts — le paiement client du tunnel est en **Stripe TEST uniquement** (`create-payment-session`, montant recalculé serveur), et le lien de paiement du back-office (`stripe-create-payment-link`) reste **public et en clé de production** : point de sécurité ouvert, détaillé dans [PAYMENTS.md](PAYMENTS.md).
 
 ## 2. Branches (audit 2026-08-21)
 | Branche | Tip | Rôle | Commits uniques | Décision |
@@ -39,7 +46,11 @@
 | `hc-chat-widget.js` | Widget chat (Supabase `chat-assistant`) | 111 pages |
 | `hc-reserve-modal.js` | Modale réservation — **paiement client gelé** (route vers devis) | 26 pages |
 | `hc-leads-capture.js`, `hc-newsletter.js`, `hc-live-stats.js` | Capture lead / newsletter / stats | variable |
-| **Orphelins** (0 référence) | `hc-avis.js`, `hc-avis-carousel.js`, `hc-edit-mode.js` (WYSIWYG, vit sur `staging`) | à confirmer/supprimer |
+| `hc-demande*.js` + `hc-demande.css` | **tunnel « Ma demande »** (fenêtre premium depuis l'accueil et page `catalogue.html`) | accueil, catalogue, pages d'atterrissage |
+| `hc-consent.js`, `tracking.js`, `hc-landing.js`, `hc-recrutement.js` | consentement et mesure ([TRACKING.md](TRACKING.md)) | pages mesurées |
+| `hc-header.js` + `hc-header.css` | en-tête unique (généré par `scripts/header/sync-header.mjs`) | 202 pages |
+| `hc-realisations.js` | classement des publications (chantier / actualité / recrutement) | accueil, réalisations, générateur |
+| **Orphelins confirmés le 20/09** | `hc-demande-launch.js` (0 référence), `hc-edit-mode.js` (chargé par aucune page) | inventaire : `node scripts/audit/inventaire.mjs` |
 
 ## 5. Netlify (`netlify.toml`, `_redirects`, `_headers`)
 - **Ignore rule** (build) : compare `$CACHED_COMMIT_REF..$COMMIT_REF` (dernier déployé → HEAD), skip si tout est dans les paths exclus (docs, scripts, .md, logs…). ⚠️ piège historique : un tip docs-only annulait le build → fix appliqué.
@@ -80,6 +91,7 @@
 - **Ne pas toucher** : `main`, PROD, Stripe LIVE, secrets, données métier.
 
 ## 13. Où intervenir (repère rapide)
+> Version complète et à jour : [OU-MODIFIER-QUOI.md](OU-MODIFIER-QUOI.md).
 - **Page métier** : le `.html` correspondant (ex. `plombier-saint-omer.html`) ; composants partagés = `assets/hc-*.js`.
 - **Logique métier funnel** : `index.html` (wizard) + edge `submit-lead`.
 - **Données** : Supabase (`services`, `leads`, `recette_validation`).
@@ -102,6 +114,8 @@
 - **Gates DB (GO Florian)** : migrations durcissement `leads` + Storage `site-photos` + release flow 4 tables ; réécriture `/recette.html` (4 états).
 - **Gate Stripe** : clé `sk_test_` pour l'achat en ligne réel + durcissement `stripe-create-payment-link` (**P1 : montant client, endpoint LIVE public** — voir SECURITY-AUDIT + `PROPOSED_index.ts`).
 - Branche `staging` : 62 commits WYSIWYG à trier (merge sélectif ou archive+tag).
-- 18 `images/prestations/*.jpg` candidats orphelins — à confirmer (sources Supabase ?) avant retrait.
+- **57 images sans aucune référence** (dont `images/prestations/*.jpg` et `images/marques/*.svg`) — confirmées par `node scripts/audit/inventaire.mjs`, retrait à valider (certaines marques peuvent revenir dans le carrousel fournisseurs).
+- **79 scripts jamais cités ailleurs** : scripts « one-shot » historiques (`scripts/*.py`) — à archiver plutôt qu'à supprimer.
+- **Doublon hérité** : les mêmes publications Facebook existent en `/actualites/<date>-<slug>` **et** en `/realisations/<slug>`, chacune avec son propre canonical (cf. `docs/seo/pages-canoniques.json`).
 - SEO bi-ville (Saint-Omer+Dunkerque simultané) — décision stratégique.
 - *(Résolu ce run : `.m-suppliers` CSS, `hc-mini-zone.js`, `images/_backup_png/`, `images/metiers/`, erreurs inline wizard, carte zone partout, blocage pages admin PAT.)*
