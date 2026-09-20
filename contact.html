@@ -28,7 +28,7 @@
  opacity:0;visibility:hidden;
  transition:all.25s cubic-bezier(.16,1,.3,1);
  z-index:200;margin-top:4px;
- }.nav-item-drop:hover.nav-dropdown,.nav-item-drop:focus-within.nav-dropdown{
+ }.nav-item-drop:hover .nav-dropdown,.nav-item-drop:focus-within .nav-dropdown{
  opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)
  }.nav-dropdown::before{
  content:"";position:absolute;top:-6px;left:50%;transform:translateX(-50%) rotate(45deg);
@@ -44,12 +44,12 @@
  width:28px;height:28px;border-radius:7px;
  background:#f4f7fb;display:flex;align-items:center;justify-content:center;
  flex-shrink:0;font-size:1rem
- }.nav-dropdown a:hover.ic{background:#1FC4F0;color:#fff}.nav-dropdown.nav-foot{
+ }.nav-dropdown a:hover .ic{background:#1FC4F0;color:#fff}.nav-dropdown .nav-foot{
  display:flex;align-items:center;justify-content:space-between;
  margin-top:6px;padding:10px 14px 8px;
  border-top:1px solid rgba(10,20,40,.06);
  font-size:.78rem;color:#0DA0CF;font-weight:700
- }.nav-dropdown.nav-foot::after{content:"→"}
+ }.nav-dropdown .nav-foot::after{content:"→"}
 
 </style>
 
@@ -1008,7 +1008,7 @@
  }.fv3-soc:hover {
  transform: translateY(-2px);
  background: rgba(255,255,255,.10);
- }.fv3-soc-fb { color:#5996F2 }.fv3-soc-fb:hover { border-color: rgba(89,150,242,.45); background: rgba(24,119,242,.18) }.fv3-soc-li { color:#5B9BDD }.fv3-soc-li:hover { border-color: rgba(91,155,221,.45); background: rgba(10,102,194,.18) }.fv3-soc-go strong { color:#FFC107; font-weight:700 }.fv3-soc-go.fv3-soc-meta { color: rgba(255,255,255,.55); font-weight:500; font-size:.78rem; margin-left:2px }.fv3-soc-go:hover { border-color: rgba(255,193,7,.40); background: rgba(255,193,7,.08) }
+ }.fv3-soc-fb { color:#5996F2 }.fv3-soc-fb:hover { border-color: rgba(89,150,242,.45); background: rgba(24,119,242,.18) }.fv3-soc-li { color:#5B9BDD }.fv3-soc-li:hover { border-color: rgba(91,155,221,.45); background: rgba(10,102,194,.18) }.fv3-soc-go strong { color:#FFC107; font-weight:700 }.fv3-soc-go .fv3-soc-meta { color: rgba(255,255,255,.55); font-weight:500; font-size:.78rem; margin-left:2px }.fv3-soc-go:hover { border-color: rgba(255,193,7,.40); background: rgba(255,193,7,.08) }
 
  /* ═══ SECTION 3 — Bandeau légal ═══ */.fv3-legal {
  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;

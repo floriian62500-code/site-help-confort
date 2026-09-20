@@ -88,13 +88,13 @@
   .find{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
     margin-bottom:14px;overflow:hidden;display:grid;grid-template-columns:6px 1fr}
   .find .stripe{background:var(--p2)}
-  .find.p0 .stripe{background:var(--p0)} .find.p1 .stripe{background:var(--p1)}
+  .find .p0 .stripe{background:var(--p0)} .find.p1 .stripe{background:var(--p1)}
   .find.p2 .stripe{background:var(--p2)} .find.p3 .stripe{background:var(--p3)}
   .find .body{padding:16px 20px 18px}
   .find .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
   .find .id{font-family:var(--mono);font-size:.82rem;font-weight:700}
   .chip{font-size:.68rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:999px;white-space:nowrap}
-  .chip.p0{background:var(--p0-bg);color:var(--p0)} .chip.p1{background:var(--p1-bg);color:var(--p1)}
+  .chip .p0{background:var(--p0-bg);color:var(--p0)} .chip.p1{background:var(--p1-bg);color:var(--p1)}
   .chip.p2{background:var(--p2-bg);color:var(--p2)} .chip.p3{background:var(--p3-bg);color:var(--p3)}
   .chip.type{background:var(--line-soft);color:var(--ink-soft);font-family:var(--mono);text-transform:none;letter-spacing:0}
   .chip.st-fixed{background:var(--ok-bg);color:var(--ok)}
@@ -123,8 +123,8 @@
   .ba{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
   @media(max-width:640px){.ba{grid-template-columns:1fr}}
   .ba .col{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--panel)}
-  .ba .col.old{border-left:4px solid var(--p1)}
-  .ba .col.new{border-left:4px solid var(--ok)}
+  .ba .col .old{border-left:4px solid var(--p1)}
+  .ba .col .new{border-left:4px solid var(--ok)}
   .ba .lab{font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
   .ba .old .lab{color:var(--p1)} .ba .new .lab{color:var(--ok)}
   .ba .txt{font-size:.9rem;color:var(--ink);line-height:1.5}
