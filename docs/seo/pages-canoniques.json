@@ -63,9 +63,21 @@
       "pages_liees": []
     },
     {
-      "intention": "Recrutement / candidatures",
+      "intention": "Recrutement / candidatures (page pivot)",
       "canonique": "/carrieres.html",
-      "pages_liees": []
+      "pages_liees": [
+        {
+          "url": "/emploi/plombier-sanitaire-saint-omer.html",
+          "role": "offre d'emploi publiée",
+          "justification": "Intention candidat distincte (« emploi plombier Saint-Omer ») et Google exige un JobPosting par URL. Générée depuis data/offres-emploi.json ; retirée quand l'offre se ferme."
+        },
+        {
+          "url": "/emploi/plombier-chauffagiste-saint-omer.html",
+          "role": "offre d'emploi publiée",
+          "justification": "Intention candidat distincte (« emploi chauffagiste Saint-Omer ») et un JobPosting par URL. Générée depuis data/offres-emploi.json."
+        }
+      ],
+      "depuis": "2026-09-20 (chantier RECRUTEMENT 5732826379)"
     }
   ],
   "familles_locales": [
@@ -120,6 +132,10 @@
     {
       "prefixe": "actualites/",
       "role": "articles d'actualité générés"
+    },
+    {
+      "prefixe": "emploi/",
+      "role": "offres d'emploi générées (scripts/gen-offres-emploi.mjs)"
     }
   ],
   "paires_autorisees": [
