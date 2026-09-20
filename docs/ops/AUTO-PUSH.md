@@ -53,6 +53,21 @@ cp autopush.sh.bak-20260920 autopush.sh
 ⚠️ **L'ancienne version poussait sur `main` et lançait `supabase db push` sur la base de
 production.** Ne la restaurer que pour inspection, jamais pour la laisser tourner.
 
+## Où est la source
+
+| Rôle | Chemin |
+|---|---|
+| Script qui tourne | `~/Library/Application Support/HelpConfort/autopush.sh` |
+| Copie versionnée (référence, revue, réinstallation) | `scripts/ops/autopush.sh` |
+| Garde-fous rejouables en bac à sable | `bash scripts/tests/autopush.test.sh` (14 contrôles, dépôt temporaire, ne touche ni le vrai dépôt ni GitHub) |
+
+Réinstaller la version du dépôt :
+
+```bash
+cp scripts/ops/autopush.sh "$HOME/Library/Application Support/HelpConfort/autopush.sh"
+chmod +x "$HOME/Library/Application Support/HelpConfort/autopush.sh"
+```
+
 ## Journal et diagnostic
 
 ```bash
