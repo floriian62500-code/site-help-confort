@@ -72,17 +72,19 @@
         .hcal-grid > .hcal-card{flex:0 0 250px;scroll-snap-align:start;min-height:0}\
         /* DESKTOP >=980px : GRID 5 COLONNES forcé, plus de scroll, cards compactes */\
         @media(min-width:980px){\
-          .hcal-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;overflow:visible;scroll-snap-type:none;padding:0}\
+          .hcal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;overflow:visible;scroll-snap-type:none;padding:0}\
           .hcal-grid > .hcal-card{flex:none;min-width:0;width:auto}\
         }\
+        @media(min-width:1200px){.hcal-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}\
+        @media(min-width:1440px){.hcal-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}\
         .hcal-card{background:#fff;border:1px solid #E5EDF3;border-radius:12px;padding:14px 14px 16px;box-shadow:0 1px 2px rgba(11,18,32,.04);transition:.2s;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden;color:inherit;text-decoration:none;cursor:pointer;font-size:.86rem}\
         .hcal-card::before{content:"\\201C";position:absolute;top:-10px;right:14px;font-size:4rem;color:rgba(13,160,207,.10);font-family:Georgia,serif;line-height:1}\
         .hcal-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(11,18,32,.08);border-color:rgba(13,160,207,.30)}\
         .hcal-open-hint{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:.74rem;font-weight:700;color:#0DA0CF;letter-spacing:.01em;opacity:.85;align-self:flex-start}\
         .hcal-card:hover .hcal-open-hint{opacity:1;text-decoration:underline}\
-        .hcal-author-row{display:flex;align-items:center;gap:10px}\
+        .hcal-author-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}\
         .hcal-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#0DA0CF,#5fc7e5);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.92rem;flex-shrink:0}\
-        .hcal-author-info{flex:1;min-width:0}\
+        .hcal-author-info{flex:1 1 90px;min-width:0}\
         .hcal-author{display:block;font-weight:700;color:#0A1428;font-size:.92rem;line-height:1.2}\
         .hcal-meta{font-size:.72rem;color:#64748b;display:flex;align-items:center;gap:8px;margin-top:2px}\
         .hcal-rating{display:flex;gap:1px;align-items:center}\
