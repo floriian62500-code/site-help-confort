@@ -427,18 +427,18 @@ Aucune requête vers GA4, Google Ads, Meta ou le serveur de dossiers ; aucune do
 ---
 
 ## 7. Pages d'atterrissage (état recette)
-| Critère | Page A (`entretien-chaudiere.html`) | Page C (`prestations/ramonage.html`) |
+| Critère | Page A (`entretien-chaudiere.html`) | Pages B + C (`prestations/ramonage.html`, ancre `#poele-insert`) |
 |---|---|---|
-| Message immédiat | « Entretien chaudière à Saint-Omer… » + prix gaz / fioul / contrat | « Ramonage cheminée & chaudière » : cheminée, conduit, insert, poêle à bois |
+| Message immédiat | « Entretien chaudière gaz & fioul à Saint-Omer & Dunkerque » + encart de prix ferme (gaz / fioul / contrat) | « Ramonage & entretien poêle, insert, cheminée » + section barème poêle / insert |
 | Prestation nommée | ✅ | ✅ |
 | Zone | Saint-Omer et Côte d'Opale (agence unique) | idem |
 | Prix | ✅ catalogue et contrats | ❌ volontairement absent : aucun prix au catalogue (§9) |
 | Bouton principal unique | ✅ « Demander mon entretien » → tunnel | ✅ « Demander un devis gratuit » → formulaire court |
 | Réassurance | contrôles détaillés, obligation légale, attestation | certificat, obligation annuelle, rappel sous 24 h ouvrées, avis |
-| 1440 (écran 900 px) | bouton à 503–557 px, non masqué ; accroche centrée ; tableau en 4 colonnes ; 0 débordement | bouton en bas à 721 px, non masqué ; 0 débordement |
-| 390 (écran 844 px) | bouton à 597–650 px, non masqué ; formules en cartes (350 px) ; prix jamais coupés ; 0 débordement | bouton à 570–627 px, non masqué ; 0 débordement |
-| Corrigé pendant la vérification | en 390, le tableau élargissait la page à 502 px ; prix coupés en fin de ligne ; en 1440, prix et téléphone décalés à gauche | — |
-| Mesure | ✅ | ✅ |
+| 1440 (écran 900 px) | bouton à 665–724 px, non masqué (bandeau à 787–884) ; contenu en deux colonnes 636 / 424 px, encart de prix collant ; 0 débordement | section `#poele-insert` à 1505–2097 px, tableau du barème en 4 colonnes ; ancre à 110 px sous l'en-tête collant ; 0 débordement |
+| 390 (écran 844 px) | bouton à 486–543 px, au-dessus du bandeau de consentement (660–834), cliquable au centre ; formules en cartes ; prix jamais coupés ; 0 débordement | bouton à 506–563 px, au-dessus du bandeau (665–834) ; redirection 301 depuis l'ancienne URL → ancre atteinte ; barème en cartes ; 0 débordement |
+| Corrigé pendant la vérification | 19/09 : tableau élargissant la page à 502 px, prix coupés, accroche décalée. 20/09 : page passée au gabarit premium du site ; héros compacté sous 480 px (le bandeau de consentement recouvrait le bouton principal au premier passage) | 20/09 : section poêle / insert fusionnée depuis la page doublon ; héros compacté ; ancre décalée sous l'en-tête |
+| Mesure | ✅ `view_maintenance_landing` (`service_family=chaudiere`) vu sur la preview | ✅ `view_maintenance_landing` (`service_family=ramonage`) ; bouton poêle `landing_poele_cta` |
 
 **Famille B (poêles / inserts) — plus de page dédiée (20/09, directive 5744476570).**
 La page `entretien-poele-insert.html` créée le 19/09 faisait doublon avec la page ramonage : elle est
