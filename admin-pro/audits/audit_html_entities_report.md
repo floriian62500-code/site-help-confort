@@ -1,6 +1,6 @@
 # Audit HTML double-encoding — Rapport
 
-_Généré le 2026-09-20 08:23_
+_Généré le 2026-09-21 08:41_
 
 ## Synthèse
 
