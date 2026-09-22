@@ -46,14 +46,23 @@ if [ -d "$PROJECT_DIR/.git" ]; then
   fi
 fi
 
-# === 3. Check santé autopush (heartbeat dans la dernière heure) ===
-if [ -f "$AUTOPUSH_LOG" ]; then
-  # Heartbeat = log modifié dans les 65 dernières minutes
-  if ! find "$AUTOPUSH_LOG" -mmin -65 2>/dev/null | grep -q .; then
-    # Vérifie s'il y a des fichiers modifiés en attente (sinon autopush a juste rien à faire)
-    if [ -n "$(cd "$PROJECT_DIR" 2>/dev/null && git status --porcelain 2>/dev/null)" ]; then
-      ALERTS+=("Autopush ne tourne plus (heartbeat > 65 min) ET fichiers en attente")
+# === 3. Check santé autopush ===
+# v3.1 (2026-09-22) : le démon rafraîchit « autopush.heartbeat » à chaque passage actif. On distingue
+# une PAUSE volontaire (kill-switch) d'un démon ARRÊTÉ, et on n'alerte que s'il reste du travail en attente.
+AUTOPUSH_DIR="$(dirname "$AUTOPUSH_LOG")"
+HEARTBEAT="$AUTOPUSH_DIR/autopush.heartbeat"
+if [ -n "$(cd "$PROJECT_DIR" 2>/dev/null && git status --porcelain 2>/dev/null | grep -v 'docs/ALERT-MONITORING.md')" ]; then
+  if [ -f "$AUTOPUSH_DIR/autopush.off" ] || [ -f "$PROJECT_DIR/.autopush-off" ]; then
+    OFF_FILE="$AUTOPUSH_DIR/autopush.off"; [ -f "$OFF_FILE" ] || OFF_FILE="$PROJECT_DIR/.autopush-off"
+    if find "$OFF_FILE" -mmin +65 2>/dev/null | grep -q .; then
+      ALERTS+=("Auto-push EN PAUSE depuis plus d'une heure (kill-switch $(basename "$OFF_FILE")) et fichiers en attente — pour reprendre : rm \"$OFF_FILE\"")
     fi
+  elif [ -f "$HEARTBEAT" ]; then
+    if ! find "$HEARTBEAT" -mmin -65 2>/dev/null | grep -q .; then
+      ALERTS+=("Auto-push ne tourne plus (dernier passage > 65 min) et fichiers en attente — vérifier : launchctl list | grep autopush")
+    fi
+  elif [ -f "$AUTOPUSH_LOG" ] && ! find "$AUTOPUSH_LOG" -mmin -65 2>/dev/null | grep -q .; then
+    ALERTS+=("Autopush ne tourne plus (heartbeat > 65 min) ET fichiers en attente")
   fi
 fi
 

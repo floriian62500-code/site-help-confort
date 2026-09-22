@@ -8,6 +8,7 @@
 set -u
 SRC="${1:-$HOME/Library/Application Support/HelpConfort/autopush.sh}"
 [ -f "$SRC" ] || { echo "❌ script introuvable : $SRC"; exit 1; }
+SRC="$(cd "$(dirname "$SRC")" && pwd)/$(basename "$SRC")"   # chemin absolu : le test change de dossier ensuite
 
 BAC=$(mktemp -d "${TMPDIR:-/tmp}/autopush-test.XXXXXX")
 trap 'rm -rf "$BAC"' EXIT
@@ -33,6 +34,7 @@ sed -e "s#^REPO=.*#REPO=\"$BAC/repo\"#" \
     -e "s#git -c credential.helper= -c 'credential.helper=!gh auth git-credential' \"\$@\"#git \"\$@\"#" \
     "$SRC" > "$BAC/autopush.sh"
 chmod +x "$BAC/autopush.sh"
+grep -q "REMOTE_URL=\"$BAC/remote.git\"" "$BAC/autopush.sh" || { echo "❌ recâblage du script impossible (copie vide ou format inattendu)"; exit 1; }
 LOG="$BAC/support/autopush.log"
 run() { bash "$BAC/autopush.sh" "$@" >/dev/null 2>&1; }
 distant() { git -C "$BAC/remote.git" rev-parse "$1" 2>/dev/null; }
@@ -40,9 +42,10 @@ distant() { git -C "$BAC/remote.git" rev-parse "$1" 2>/dev/null; }
 echo "Garde-fous auto-push (bac à sable : $BAC)"
 
 # 1. Cycle nominal : modification → commit → push sur recette
+INIT=$(git rev-parse HEAD)
 echo v2 > fichier.txt
 run
-[ "$(distant recette)" = "$(git rev-parse HEAD)" ] && ok "cycle réel : modification committée puis poussée sur recette" \
+[ "$(git rev-parse HEAD)" != "$INIT" ] && [ "$(distant recette)" = "$(git rev-parse HEAD)" ] && ok "cycle réel : modification committée puis poussée sur recette" \
   || ko "cycle réel" "distant=$(distant recette) local=$(git rev-parse HEAD)"
 git log -1 --pretty=%s | grep -q '^chore(auto): sauvegarde automatique' \
   && ok "message de commit explicite (repérable dans l'historique)" || ko "message de commit" "$(git log -1 --pretty=%s)"
@@ -78,6 +81,11 @@ grep -vE '^\s*#' "$SRC" | grep -q 'supabase db push' && ko "aucun déploiement S
 grep -vE '^\s*#' "$SRC" | grep -qE 'gh(p|o|u|s|r)_[A-Za-z0-9]{20,}|password|token=' && ko "aucun secret en clair" "motif trouvé" || ok "aucun secret en clair dans le script"
 grep -q 'gh auth git-credential' "$SRC" && ok "authentification déléguée à gh (trousseau macOS)" || ko "authentification gh" "absente"
 
+# 5bis. Preuve de vie : rafraîchie à chaque passage actif (surveillance : scripts/automation/monitoring-uptime.sh)
+rm -f "$BAC/support/autopush.heartbeat"
+run
+[ -f "$BAC/support/autopush.heartbeat" ] && ok "preuve de vie écrite à chaque passage actif (la surveillance distingue « arrêté » de « rien à faire »)" || ko "preuve de vie" "absente après un passage"
+
 # 6. Kill-switch
 git push -q "$BAC/remote.git" HEAD:recette 2>/dev/null || true
 touch "$BAC/support/autopush.off"
@@ -85,6 +93,8 @@ echo v4 > fichier.txt
 AVANT=$(git rev-parse HEAD)
 run
 [ "$(git rev-parse HEAD)" = "$AVANT" ] && ok "kill-switch : plus aucun commit ni push tant que le fichier existe" || ko "kill-switch" "a quand même committé"
+rm -f "$BAC/support/autopush.heartbeat"; run
+[ ! -f "$BAC/support/autopush.heartbeat" ] && ok "en pause, la preuve de vie n'est pas rafraîchie (la surveillance signale la pause au bout d'une heure)" || ko "pause" "preuve de vie rafraîchie malgré le kill-switch"
 rm "$BAC/support/autopush.off"
 
 # 7. Verrou : deux exécutions simultanées, une seule agit

@@ -68,6 +68,23 @@ cp scripts/ops/autopush.sh "$HOME/Library/Application Support/HelpConfort/autopu
 chmod +x "$HOME/Library/Application Support/HelpConfort/autopush.sh"
 ```
 
+## Surveillance
+
+`scripts/automation/monitoring-uptime.sh` (LaunchAgent `com.helpconfort.monitoring-uptime`) vérifie
+le démon **uniquement quand du travail attend** (fichiers modifiés non poussés) :
+
+| Situation | Alerte (fichier local `docs/ALERT-MONITORING.md` + Slack) |
+|---|---|
+| kill-switch posé depuis plus d'une heure | « Auto-push EN PAUSE … pour reprendre : rm …/autopush.off » |
+| aucune preuve de vie depuis 65 min (`autopush.heartbeat`) | « Auto-push ne tourne plus … » |
+
+Le démon rafraîchit `autopush.heartbeat` à **chaque passage actif**, même sans rien à pousser ; en
+pause, il ne le rafraîchit pas. Le fichier d'alerte est un artefact local, ignoré par git.
+
+> Vu le 22/09 : l'auto-push, mis en pause pendant l'assainissement du 20/09, n'avait pas été relancé.
+> La surveillance l'a signalé (« heartbeat > 65 min ET fichiers en attente »). Depuis, le message dit
+> explicitement qu'il s'agit d'une pause et comment la lever.
+
 ## Journal et diagnostic
 
 ```bash

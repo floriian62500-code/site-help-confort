@@ -1,6 +1,6 @@
 #!/bin/bash
 # ─────────────────────────────────────────────────────────────────────────────
-# AUTO-PUSH HELP Confort — v3 (2026-09-20, directive 5732805778)
+# AUTO-PUSH HELP Confort — v3.1 (2026-09-22 : preuve de vie ; v3 du 2026-09-20, directive 5732805778)
 #
 # Ce que fait ce script, toutes les 60 s :
 #   1. si la copie de travail est stable depuis DEBOUNCE secondes, il committe ;
@@ -45,6 +45,10 @@ git_auth() { git -c credential.helper= -c 'credential.helper=!gh auth git-creden
 # ── Arrêt d'urgence
 [ -f "$OFF" ] && exit 0
 [ -f "$REPO/.autopush-off" ] && exit 0
+
+# ── Preuve de vie pour la surveillance (scripts/automation/monitoring-uptime.sh) : un passage actif
+#    la rafraîchit même quand il n'y a rien à pousser. En pause, elle vieillit : c'est voulu.
+touch "$SUPPORT/autopush.heartbeat" 2>/dev/null
 
 # ── Rotation du journal
 if [ -f "$LOG" ] && [ "$(stat -f%z "$LOG" 2>/dev/null || echo 0)" -gt 1048576 ]; then
