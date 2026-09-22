@@ -1,4 +1,4 @@
-# Audit liens internes vs sitemap.xml — 2026-09-21 08:40
+# Audit liens internes vs sitemap.xml — 2026-09-22 08:18
 
 Sonde #61 : croise les `href` locaux `.html` avec `sitemap.xml` et le disque.
 
