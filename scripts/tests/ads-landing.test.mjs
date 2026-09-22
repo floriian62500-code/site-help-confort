@@ -64,6 +64,25 @@ ok('tarifs poêle non généralisés : absents de la page chaudière, réservés
 const tarifs = rd('admin-pro/TARIFS_REFERENCE.md'), mig = rd('supabase/_pending_migrations/20260919100000_catalogue_entretien_poele_insert.sql');
 ok('source tarifaire : EPB / EPG en HT dans la référence interne, ajout catalogue préparé (HT + TVA 10 %) mais non appliqué', /\*\*EPB\*\* \| Entretien annuel poêle \/ insert \*\*à bois\*\* — \*\*ramonage compris\*\* \| \*\*115 € HT\*\*/.test(tarifs) && /\*\*EPG\*\* \| Entretien annuel poêle \/ insert \*\*à granulés\*\* — \*\*ramonage compris\*\* \| \*\*136 € HT\*\*/.test(tarifs) && /115\.00, 0\.100/.test(mig) && /136\.00, 0\.100/.test(mig) && !fs.existsSync(path.join(ROOT, 'supabase/migrations/20260919100000_catalogue_entretien_poele_insert.sql')));
 
+// Catalogue (nos-prestations) : les deux lignes prêtes dans _pending_migrations se rangeront avec les autres
+// entretiens de la catégorie Chauffage, avec l'icône 🔥 — sans déplacer le service vitrerie « vitre d'insert ».
+{
+  const np = rd('nos-prestations.html');
+  const i0 = np.indexOf('function deriveEmoji(s){'), i1 = np.indexOf(' services = services.map(', i0);
+  const box2 = {};
+  vm.runInNewContext(np.slice(i0, i1) + '\nthis.E = deriveEmoji; this.S = deriveSubcat;', box2);
+  const bois = { slug: 'entretien-poele-insert-bois', name: 'Entretien poêle / insert à bois' };
+  const gran = { slug: 'entretien-poele-insert-granules', name: 'Entretien poêle / insert à granulés' };
+  const vitre = { slug: 'devis-vitre-insert-poele', name: 'Remplacement vitre insert / poêle' };
+  ok('catalogue : entretien poêle / insert rangé dans « Entretien & dépannage » avec l’icône 🔥 (le service vitre d’insert n’est pas déplacé)',
+    i0 > 0 && i1 > i0 && box2.S(bois)?.slug === 'chaudiere' && box2.S(gran)?.slug === 'chaudiere' && box2.E(bois) === '🔥' && box2.E(gran) === '🔥' && box2.S(vitre)?.slug !== 'chaudiere' && box2.E(vitre) !== '🔥');
+  const sql = rd('supabase/_pending_migrations/20260919100000_catalogue_entretien_poele_insert.sql');
+  ok('catalogue : les deux lignes sont prêtes (ramonage compris, certificat, prix ferme, acompte 40 % comme les autres entretiens) et marquées NON APPLIQUÉES',
+    /'entretien-poele-insert-bois', 'Entretien poêle \/ insert à bois'/.test(sql) && /'entretien-poele-insert-granules', 'Entretien poêle \/ insert à granulés'/.test(sql) &&
+    /Ramonage du conduit compris/.test(sql) && /Certificat de ramonage remis/.test(sql) && /115\.00, 0\.100, false, 40/.test(sql) && /136\.00, 0\.100, false, 40/.test(sql) &&
+    /NON APPLIQUÉE — décision de Florian le 2026-09-22/.test(sql) && /Retour arrière/.test(sql));
+}
+
 // ---- Mesure : assets/hc-landing.js et assets/hc-leads-capture.js
 const lj = rd('assets/hc-landing.js');
 ok('mesure : famille « poele » acceptée', /\^\(chaudiere\|ramonage\|contrat\|poele\)\$/.test(rd('assets/hc-landing.js')));

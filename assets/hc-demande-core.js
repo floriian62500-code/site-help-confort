@@ -389,13 +389,15 @@
   function purgeDevice(ls, ss) { return purgeKeys(ls, ss, DEVICE_KEYS); }
   function purgeLegacy(ls) { return purgeKeys(ls, null, LEGACY_DURABLE); }
   // Campagnes d'acquisition « entretien » : provenance d'une page d'atterrissage (liste blanche) et famille de la demande.
-  // Familles : chaudiere (entretien ponctuel gaz/fioul ou contrat), ramonage. Poêles/inserts : prestation non confirmée → aucune famille.
+  // Familles : chaudiere (entretien ponctuel gaz/fioul ou contrat), poele (entretien poêle / insert, barème agence
+  // EPB / EPG confirmé le 18/09 — prestations prêtes au catalogue, cf. supabase/_pending_migrations/), ramonage.
   var MAINT_SRC = { 'entretien-chaudiere': 'chaudiere', 'ramonage': 'ramonage' };
   function maintenanceSrc(v) { v = String(v || '').toLowerCase(); return Object.prototype.hasOwnProperty.call(MAINT_SRC, v) ? v : null; }
   function serviceFamily(o) {
     o = o || {};
     var slugs = (o.slugs || []).join(' ');
     if (/(^|\s)entretien-chaudiere/.test(slugs) || (o.metiers || []).indexOf('Contrat entretien') >= 0) return 'chaudiere';
+    if (/(^|\s)entretien-poele-insert/.test(slugs)) return 'poele';
     var src = maintenanceSrc(o.src);
     return src ? MAINT_SRC[src] : null;
   }

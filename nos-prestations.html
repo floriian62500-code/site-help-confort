@@ -1131,7 +1131,7 @@
    if (/chasse|wc|sanitaire/.test(hay)) return '🚽';
    if (/détartrage|calcaire|tartre/.test(hay)) return '💎';
    if (/contrat.+entretien|entretien.+annuel/.test(hay)) return '🛡️';
-   if (/chaudière|chauffage|radiateur/.test(hay)) return '🔥';
+   if (/chaudière|chauffage|radiateur|entretien.+(poêle|poele|insert)/.test(hay)) return '🔥';
    if (/désembou/.test(hay)) return '🌡️';
    if (/panne|électric|disjonct/.test(hay)) return '⚡';
    if (/tableau/.test(hay)) return '🔲';
@@ -1153,7 +1153,7 @@
    if (/chauffe.?eau|cumulus|ballon|contrat.+chauffe/.test(hay)) return { slug:'chauffe-eau', name:'♨️ Chauffe-eau & ECS' };
    if (/chasse|wc|sanitaire|détartrage|robinet|mitigeur/.test(hay)) return { slug:'sanitaire', name:'🚽 Sanitaire & WC' };
    if (/contrat.+chauffage|contrat.+gaz|contrat.+fioul/.test(hay)) return { slug:'contrats', name:'🛡️ Contrats annuels' };
-   if (/chaudière|désembou|entretien.+gaz|entretien.+fioul|dépannage.+chauffage/.test(hay)) return { slug:'chaudiere', name:'🔧 Entretien & dépannage' };
+   if (/chaudière|désembou|entretien.+gaz|entretien.+fioul|dépannage.+chauffage|entretien.+(poêle|poele|insert)/.test(hay)) return { slug:'chaudiere', name:'🔧 Entretien & dépannage' };
    if (/ouverture/.test(hay)) return { slug:'ouverture', name:'🔓 Ouverture de porte' };
    return null;
  }
