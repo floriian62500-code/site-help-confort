@@ -550,6 +550,7 @@
  </footer>
 
 
+<script src="/assets/hc-realisations.js?v=20260922a"></script>
 <script>
 // ════════════════════════════════════════════════════════════════════
 // Chargement dynamique des articles depuis /content/actualites/
@@ -595,7 +596,8 @@
  actus.forEach(function(r){
  allArticles.push({
  title: r.title,
- url: r.slug ? '/realisations/' + r.slug : '#',
+ // Une annonce de recrutement renvoie vers la page Recrutement (elle n'a pas de fiche chantier)
+ url: (window.HcRealisations && HcRealisations.isRecruitment(r)) ? '/carrieres.html' : (r.slug ? '/realisations/' + r.slug : '#'),
  date: r.published_at || r.date_intervention || r.created_at,
  image: r.image_after || r.image_before || null,
  resume: (r.description || '').slice(0,180),

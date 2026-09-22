@@ -186,6 +186,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/assets/hc-realisations.js?v=20260922a"></script>
 <script>
 (async function(){
  var SUPABASE_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
@@ -202,6 +203,9 @@
  });
  if (resp.ok) allChantiers = await resp.json();
  } catch(e) { console.warn('Fetch réalisations échoué', e); }
+ // Classement partagé (assets/hc-realisations.js) : ni annonce de recrutement ni actualité dans la galerie
+ function garder(list){ return (list || []).filter(function(c){ return !window.HcRealisations || HcRealisations.estChantier(c); }); }
+ allChantiers = garder(allChantiers);
 
  // SLIDER BEFORE/AFTER — afficher chantiers vedettes avec avant ET après
  try {
@@ -235,7 +239,7 @@
  if (!allChantiers.length) {
  try {
  var r = await fetch('https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/realisations-json?v=' + Date.now());
- if (r.ok) allChantiers = await r.json();
+ if (r.ok) allChantiers = garder(await r.json());
  } catch(_) {}
  }
 
