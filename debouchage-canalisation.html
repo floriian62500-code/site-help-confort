@@ -29,7 +29,7 @@
  "provider": {
   "@id": "https://depan59-62.fr/#business",
   "@type": "Plumber",
-  "name": "HELP Confort",
+  "name": "HELP Confort Saint-Omer",
   "telephone": "+33366100134",
   "address": {
    "@type": "PostalAddress",
@@ -37,6 +37,13 @@
    "addressLocality": "Saint-Martin-lez-Tatinghem",
    "postalCode": "62500",
    "addressCountry": "FR"
+  },
+  "aggregateRating": {
+   "@type": "AggregateRating",
+   "ratingValue": "4.7",
+   "reviewCount": "343",
+   "bestRating": "5",
+   "worstRating": "1"
   }
  },
  "areaServed": [
@@ -59,31 +66,77 @@
  }
 }</script>
 
-<script type="application/ld+json">
-{
+<script type="application/ld+json">{
  "@context": "https://schema.org",
  "@type": "BreadcrumbList",
  "itemListElement": [
-  {"@type":"ListItem","position":1,"name":"Accueil","item":"https://depan59-62.fr/"},
-  {"@type":"ListItem","position":2,"name":"Plomberie","item":"https://depan59-62.fr/plombier-saint-omer.html"},
-  {"@type":"ListItem","position":3,"name":"Débouchage canalisation","item":"https://depan59-62.fr/debouchage-canalisation.html"}
+  {
+   "@type": "ListItem",
+   "position": 1,
+   "name": "Accueil",
+   "item": "https://depan59-62.fr/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 2,
+   "name": "Plomberie",
+   "item": "https://depan59-62.fr/plombier-saint-omer.html"
+  },
+  {
+   "@type": "ListItem",
+   "position": 3,
+   "name": "Débouchage canalisation",
+   "item": "https://depan59-62.fr/debouchage-canalisation.html"
+  }
  ]
-}
-</script>
+}</script>
 
-<script type="application/ld+json">
-{
+<script type="application/ld+json">{
  "@context": "https://schema.org",
  "@type": "FAQPage",
  "mainEntity": [
-  {"@type":"Question","name":"Combien coûte un débouchage de canalisation ?","acceptedAnswer":{"@type":"Answer","text":"Le tarif dépend de l'accessibilité et de la nature du bouchon. Sur Saint-Omer / Dunkerque, comptez 90 à 180€ TTC pour un débouchage simple au furet (WC, évier), et 180 à 400€ TTC pour un débouchage à la pompe haute pression (hydrocurage). Nous annonçons toujours le tarif avant intervention."}},
-  {"@type":"Question","name":"Quelle est la différence entre furet et hydrocurage ?","acceptedAnswer":{"@type":"Answer","text":"Le furet (manuel ou électrique) sert pour les bouchons localisés et accessibles (WC, évier, douche). L'hydrocurage utilise un jet d'eau haute pression pour nettoyer toute la canalisation et casser les bouchons profonds (graisse, racines, calcaire). On bascule en hydrocurage quand le furet ne passe pas ou quand le bouchon est en aval (regard, collecteur)."}},
-  {"@type":"Question","name":"Mes WC refoulent dans la douche, est-ce grave ?","acceptedAnswer":{"@type":"Answer","text":"Oui, c'est un signe que le bouchon est sur la canalisation principale (ou le collecteur), pas juste sur l'évacuation des WC. Il faut intervenir rapidement : ne plus utiliser l'évacuation, et appeler un plombier qui pourra hydrocurer ou inspecter par caméra le réseau."}},
-  {"@type":"Question","name":"Puis-je utiliser un déboucheur chimique ?","acceptedAnswer":{"@type":"Answer","text":"Nous le déconseillons. Les déboucheurs chimiques (soude, acide) attaquent les joints et les canalisations PVC, et ne fonctionnent que sur de petits bouchons proches. Pour un bouchon résistant, ils sont inefficaces et créent un risque de brûlures lors de l'intervention du plombier."}},
-  {"@type":"Question","name":"Intervenez-vous le week-end ?","acceptedAnswer":{"@type":"Answer","text":"Nos horaires standard sont du lundi au vendredi 9h-17h et samedi 9h-16h. Pour les urgences (refoulement majeur, dégât en cours), contactez-nous au 03 66 10 01 34 — nous indiquons les disponibilités du jour. En dehors de nos heures, vous pouvez sécuriser temporairement en coupant l'eau et en limitant l'utilisation des évacuations."}}
+  {
+   "@type": "Question",
+   "name": "Combien coûte un débouchage de canalisation ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Le tarif dépend de l'accessibilité et de la nature du bouchon. Sur Saint-Omer / Dunkerque, comptez 90 à 180€ TTC pour un débouchage simple au furet (WC, évier), et 180 à 400€ TTC pour un débouchage à la pompe haute pression (hydrocurage). Nous annonçons toujours le tarif avant intervention."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Quelle est la différence entre furet et hydrocurage ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Le furet (manuel ou électrique) sert pour les bouchons localisés et accessibles (WC, évier, douche). L'hydrocurage utilise un jet d'eau haute pression pour nettoyer toute la canalisation et casser les bouchons profonds (graisse, racines, calcaire). On bascule en hydrocurage quand le furet ne passe pas ou quand le bouchon est en aval (regard, collecteur)."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Mes WC refoulent dans la douche, est-ce grave ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Oui, c'est un signe que le bouchon est sur la canalisation principale (ou le collecteur), pas juste sur l'évacuation des WC. Il faut intervenir rapidement : ne plus utiliser l'évacuation, et appeler un plombier qui pourra hydrocurer ou inspecter par caméra le réseau."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Puis-je utiliser un déboucheur chimique ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nous le déconseillons. Les déboucheurs chimiques (soude, acide) attaquent les joints et les canalisations PVC, et ne fonctionnent que sur de petits bouchons proches. Pour un bouchon résistant, ils sont inefficaces et créent un risque de brûlures lors de l'intervention du plombier."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Intervenez-vous le week-end ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nos horaires standard sont du lundi au vendredi 9h-17h et samedi 9h-16h. Pour les urgences (refoulement majeur, dégât en cours), contactez-nous au 03 66 10 01 34 — nous indiquons les disponibilités du jour. En dehors de nos heures, vous pouvez sécuriser temporairement en coupant l'eau et en limitant l'utilisation des évacuations."
+   }
+  }
  ]
-}
-</script>
+}</script>
 
 <style>
 body{font-family:'Inter',sans-serif;color:#0A1428;line-height:1.6;margin:0}
@@ -108,8 +161,7 @@ main p{margin:0 0 14px}
 .dc-back{display:inline-flex;align-items:center;gap:6px;color:#0DA0CF;font-weight:600;text-decoration:none;font-size:.92rem;margin-bottom:14px}
 </style>
 
-<script type="application/ld+json">
-{
+<script type="application/ld+json">{
  "@context": "https://schema.org",
  "@type": "HowTo",
  "name": "Comment déboucher une canalisation à Saint-Omer / Dunkerque",
@@ -147,11 +199,9 @@ main p{margin:0 0 14px}
    "text": "Furet manuel/électrique pour bouchon localisé (WC, lavabo). Hydrocurage haute pression pour canalisation principale (180-400€). Inspection caméra si récidive."
   }
  ]
-}
-</script>
+}</script>
 
-<script type="application/ld+json">
-{
+<script type="application/ld+json">{
  "@context": "https://schema.org",
  "@type": "LocalBusiness",
  "@id": "https://depan59-62.fr/#business",
@@ -162,12 +212,18 @@ main p{margin:0 0 14px}
   "reviewCount": "343",
   "bestRating": "5",
   "worstRating": "1"
+ },
+ "telephone": "+33366100134",
+ "address": {
+  "@type": "PostalAddress",
+  "streetAddress": "242 route de Boulogne",
+  "addressLocality": "Saint-Martin-lez-Tatinghem",
+  "postalCode": "62500",
+  "addressCountry": "FR"
  }
-}
-</script>
+}</script>
 
-<script type="application/ld+json">
-{
+<script type="application/ld+json">{
  "@context": "https://schema.org",
  "@type": "Article",
  "headline": "Débouchage canalisation à Saint-Omer & Dunkerque — guide complet",
@@ -193,8 +249,7 @@ main p{margin:0 0 14px}
   "@type": "WebPage",
   "@id": "https://depan59-62.fr/debouchage-canalisation.html"
  }
-}
-</script>
+}</script>
 <style>
 /* HC-FIX 2026-05-19 : CSS footer-v3 manquant ajouté */
 .footer-v3{position:relative;background:radial-gradient(ellipse 80% 60% at 80% 0%,rgba(31,196,240,.06),transparent 65%),radial-gradient(ellipse 60% 50% at 10% 100%,rgba(255,107,26,.035),transparent 65%),linear-gradient(180deg,#0A1428 0%,#060E1D 100%);color:rgba(255,255,255,.82);padding:56px 0 0;overflow:hidden}.footer-v3-wrap{width:100%;max-width:1280px;margin:0 auto;padding:0 clamp(24px,4vw,56px);box-sizing:border-box}.fv3-grid{display:grid;grid-template-columns:1fr;gap:40px;padding-bottom:40px}@media (min-width:720px){.fv3-grid{grid-template-columns:1fr 1fr;gap:36px 40px}}@media (min-width:1080px){.fv3-grid{grid-template-columns:1.5fr 1fr 1fr 1fr;gap:56px}}.fv3-logo{display:inline-block;margin-bottom:14px;padding:10px 14px;background:#fff;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.20),0 0 0 1px rgba(255,255,255,.06) inset;transition:transform.2s ease}.fv3-logo:hover{transform:translateY(-2px)}.fv3-logo img{display:block;width:180px;height:auto;max-height:56px;object-fit:contain}.fv3-zones{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;background:rgba(31,196,240,.08);border:1px solid rgba(31,196,240,.22);border-radius:999px;color:rgba(255,255,255,.78);font-size:.82rem;margin-bottom:16px}.fv3-zones svg{color:#1FC4F0;flex-shrink:0}.fv3-zones strong{color:#fff;font-weight:700}.fv3-tagline{font-size:.95rem;line-height:1.55;color:rgba(255,255,255,.74);margin:0 0 22px;max-width:320px}.fv3-tagline em{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:500;color:#1FC4F0}.fv3-contact{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}.fv3-contact li a{display:flex;align-items:flex-start;gap:11px;color:rgba(255,255,255,.82);text-decoration:none;transition:color.15s ease,transform.15s ease}.fv3-contact li a:hover{color:#1FC4F0;transform:translateX(2px)}.fv3-contact svg{color:#1FC4F0;flex-shrink:0;margin-top:3px;opacity:.9}.fv3-contact span{display:flex;flex-direction:column;line-height:1.35}.fv3-contact strong{font-weight:600;font-size:.88rem;color:#fff}.fv3-contact em{font-style:normal;font-size:.74rem;color:rgba(255,255,255,.5);margin-top:2px}.fv3-col h3,.fv3-col h4,.fv3-brand h3,.fv3-brand h4{color:#fff;font-size:.74rem;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;margin:0 0 18px}.fv3-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}.fv3-col li{color:rgba(255,255,255,.6);font-size:.87rem}.fv3-col li a{color:rgba(255,255,255,.74);text-decoration:none;transition:color.15s ease}.fv3-col li a:hover{color:#1FC4F0}.fv3-metiers li a{display:inline-flex;align-items:center;gap:9px}.fv3-metiers li a svg{width:15px;height:15px;flex-shrink:0;color:#1FC4F0;opacity:.9}.fv3-col li.fv3-more{color:rgba(255,255,255,.45);font-size:.78rem;line-height:1.5;padding-top:6px;border-top:1px dashed rgba(255,255,255,.10);margin-top:4px}.fv3-social{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px 18px;padding:22px 0;border-top:1px solid rgba(255,255,255,.09);border-bottom:1px solid rgba(255,255,255,.09)}.fv3-social-label{display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.62);font-size:.82rem;font-weight:600;letter-spacing:.01em}.fv3-social-label svg{color:#1FC4F0;opacity:.85}.fv3-social-links{display:flex;flex-wrap:wrap;gap:10px}.fv3-soc{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:10px;text-decoration:none;font-size:.86rem;font-weight:600;color:#fff;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);transition:transform.2s ease,background.2s ease,border-color.2s ease}.fv3-soc:hover{transform:translateY(-2px);background:rgba(255,255,255,.10)}.fv3-soc-fb{color:#5996F2}.fv3-soc-fb:hover{border-color:rgba(89,150,242,.45);background:rgba(24,119,242,.18)}.fv3-soc-li{color:#5B9BDD}.fv3-soc-li:hover{border-color:rgba(91,155,221,.45);background:rgba(10,102,194,.18)}.fv3-soc-go strong{color:#FFC107;font-weight:700}.fv3-soc-go .fv3-soc-meta{color:rgba(255,255,255,.55);font-weight:500;font-size:.78rem;margin-left:2px}.fv3-soc-go:hover{border-color:rgba(255,193,7,.40);background:rgba(255,193,7,.08)}.fv3-legal{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:22px 0 26px;font-size:.78rem}.fv3-legal-line{margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;color:rgba(255,255,255,.54);line-height:1.5}.fv3-legal-line strong{color:rgba(255,255,255,.78);font-weight:600}.fv3-sep{color:rgba(255,255,255,.22)}.fv3-legal-links{display:inline-flex;align-items:center;gap:18px}.fv3-legal-links a{color:rgba(255,255,255,.62);text-decoration:none;font-size:.78rem;font-weight:500;transition:color.15s ease;position:relative}.fv3-legal-links a:not(:last-child)::after{content:'·';color:rgba(255,255,255,.22);position:absolute;right:-12px;top:50%;transform:translateY(-50%);pointer-events:none}.fv3-legal-links a:hover{color:#1FC4F0}@media (max-width:720px){.footer-v3{padding:40px 0 0}.fv3-grid{padding-bottom:28px}.fv3-social{justify-content:flex-start;gap:14px}.fv3-legal{flex-direction:column;align-items:flex-start;gap:12px}.fv3-legal-line{font-size:.74rem}}</style>

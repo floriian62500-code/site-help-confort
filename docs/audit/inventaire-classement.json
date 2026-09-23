@@ -3,7 +3,7 @@
   "Classement des éléments que l'inventaire signale sans appelant dans le dépôt.",
   "Un élément classé n'est pas forcément à garder : il est EXPLIQUÉ. Le but est qu'aucun",
   "élément ne reste « non classé », pour qu'une suppression soit toujours une décision, jamais un oubli.",
-  "Classes : vivant-planificateur | vivant-sans-appelant | outil-manuel | archive | a-decider | a-verifier | a-supprimer"
+  "Classes : vivant-planificateur | vivant-sans-appelant | outil-manuel | archive | a-decider | a-verifier | a-supprimer | KNOWN_DEAD_SAFE_TO_KEEP"
  ],
  "_verifie_le": "2026-09-23",
  "fonctions": {
@@ -194,24 +194,24 @@
  },
  "selecteurs": {
   "chauffagiste-saint-omer.html": [
-   "a-supprimer",
-   "styles de la grille de vente supprimée le 23/09 (.ce-card / .npce-card…) : code mort avéré. Retrait DIFFÉRÉ : mon nettoyage par expression régulière a cassé les @media (accolades imbriquées) et fait déborder la page de 388 px en 390 — prouvé en local, annulé. À refaire avec un vrai analyseur CSS, dans un lot dédié."
+   "KNOWN_DEAD_SAFE_TO_KEEP",
+   "KNOWN_DEAD_SAFE_TO_KEEP (5800544498 §2) — styles de la grille de vente retirée le 23/09 (.ce-card / .npce-card…). Code mort avéré, sans effet visuel. À NE PAS supprimer avec un découpage par expression régulière : le mien a cassé les @media et fait déborder la page de 388 px en 390 (prouvé en local, annulé). Retrait possible uniquement avec un vrai analyseur CSS."
   ],
   "chauffagiste-dunkerque.html": [
-   "a-supprimer",
-   "styles de la grille de vente supprimée le 23/09 (.ce-card / .npce-card…) : code mort avéré. Retrait DIFFÉRÉ : mon nettoyage par expression régulière a cassé les @media (accolades imbriquées) et fait déborder la page de 388 px en 390 — prouvé en local, annulé. À refaire avec un vrai analyseur CSS, dans un lot dédié."
+   "KNOWN_DEAD_SAFE_TO_KEEP",
+   "KNOWN_DEAD_SAFE_TO_KEEP (5800544498 §2) — styles de la grille de vente retirée le 23/09 (.ce-card / .npce-card…). Code mort avéré, sans effet visuel. À NE PAS supprimer avec un découpage par expression régulière : le mien a cassé les @media et fait déborder la page de 388 px en 390 (prouvé en local, annulé). Retrait possible uniquement avec un vrai analyseur CSS."
   ],
   "chauffagiste-calais.html": [
-   "a-supprimer",
-   "styles de la grille de vente supprimée le 23/09 (.ce-card / .npce-card…) : code mort avéré. Retrait DIFFÉRÉ : mon nettoyage par expression régulière a cassé les @media (accolades imbriquées) et fait déborder la page de 388 px en 390 — prouvé en local, annulé. À refaire avec un vrai analyseur CSS, dans un lot dédié."
+   "KNOWN_DEAD_SAFE_TO_KEEP",
+   "KNOWN_DEAD_SAFE_TO_KEEP (5800544498 §2) — styles de la grille de vente retirée le 23/09 (.ce-card / .npce-card…). Code mort avéré, sans effet visuel. À NE PAS supprimer avec un découpage par expression régulière : le mien a cassé les @media et fait déborder la page de 388 px en 390 (prouvé en local, annulé). Retrait possible uniquement avec un vrai analyseur CSS."
   ],
   "chauffagiste-boulogne-sur-mer.html": [
-   "a-supprimer",
-   "styles de la grille de vente supprimée le 23/09 (.ce-card / .npce-card…) : code mort avéré. Retrait DIFFÉRÉ : mon nettoyage par expression régulière a cassé les @media (accolades imbriquées) et fait déborder la page de 388 px en 390 — prouvé en local, annulé. À refaire avec un vrai analyseur CSS, dans un lot dédié."
+   "KNOWN_DEAD_SAFE_TO_KEEP",
+   "KNOWN_DEAD_SAFE_TO_KEEP (5800544498 §2) — styles de la grille de vente retirée le 23/09 (.ce-card / .npce-card…). Code mort avéré, sans effet visuel. À NE PAS supprimer avec un découpage par expression régulière : le mien a cassé les @media et fait déborder la page de 388 px en 390 (prouvé en local, annulé). Retrait possible uniquement avec un vrai analyseur CSS."
   ],
   "nos-prestations.html": [
-   "a-supprimer",
-   "styles de la grille de vente supprimée le 23/09 (.ce-card / .npce-card…) : code mort avéré. Retrait DIFFÉRÉ : mon nettoyage par expression régulière a cassé les @media (accolades imbriquées) et fait déborder la page de 388 px en 390 — prouvé en local, annulé. À refaire avec un vrai analyseur CSS, dans un lot dédié."
+   "KNOWN_DEAD_SAFE_TO_KEEP",
+   "KNOWN_DEAD_SAFE_TO_KEEP (5800544498 §2) — styles de la grille de vente retirée le 23/09 (.ce-card / .npce-card…). Code mort avéré, sans effet visuel. À NE PAS supprimer avec un découpage par expression régulière : le mien a cassé les @media et fait déborder la page de 388 px en 390 (prouvé en local, annulé). Retrait possible uniquement avec un vrai analyseur CSS."
   ]
  },
  "scripts": {

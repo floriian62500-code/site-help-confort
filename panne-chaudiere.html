@@ -32,7 +32,7 @@
  "provider": {
   "@id": "https://depan59-62.fr/#business",
   "@type": "HVACBusiness",
-  "name": "HELP Confort",
+  "name": "HELP Confort Saint-Omer",
   "telephone": "+33366100134",
   "address": {
    "@type": "PostalAddress",
@@ -40,6 +40,13 @@
    "addressLocality": "Saint-Martin-lez-Tatinghem",
    "postalCode": "62500",
    "addressCountry": "FR"
+  },
+  "aggregateRating": {
+   "@type": "AggregateRating",
+   "ratingValue": "4.7",
+   "reviewCount": "343",
+   "bestRating": "5",
+   "worstRating": "1"
   }
  },
  "areaServed": [
@@ -62,42 +69,99 @@
  }
 }</script>
 
-<script type="application/ld+json">
-{
+<script type="application/ld+json">{
  "@context": "https://schema.org",
  "@type": "BreadcrumbList",
  "itemListElement": [
-  {"@type":"ListItem","position":1,"name":"Accueil","item":"https://depan59-62.fr/"},
-  {"@type":"ListItem","position":2,"name":"Chauffage","item":"https://depan59-62.fr/chauffagiste-saint-omer.html"},
-  {"@type":"ListItem","position":3,"name":"Panne chaudière","item":"https://depan59-62.fr/panne-chaudiere.html"}
+  {
+   "@type": "ListItem",
+   "position": 1,
+   "name": "Accueil",
+   "item": "https://depan59-62.fr/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 2,
+   "name": "Chauffage",
+   "item": "https://depan59-62.fr/chauffagiste-saint-omer.html"
+  },
+  {
+   "@type": "ListItem",
+   "position": 3,
+   "name": "Panne chaudière",
+   "item": "https://depan59-62.fr/panne-chaudiere.html"
+  }
  ]
-}
-</script>
+}</script>
 
-<script type="application/ld+json">
-{
+<script type="application/ld+json">{
  "@context": "https://schema.org",
  "@type": "FAQPage",
  "mainEntity": [
-  {"@type":"Question","name":"Ma chaudière affiche un code erreur, que faire ?","acceptedAnswer":{"@type":"Answer","text":"Notez le code exact (ex: E10, F22, EA). Consultez le manuel constructeur ou notez-le et appelez-nous au 03 66 10 01 34. Les codes les plus fréquents : E04/E10 = défaut allumage, F22/F75 = manque pression, EA/E1 = surchauffe, F37 = défaut combustion. Un diagnostic précis permet d'apporter la bonne pièce dès la première intervention."}},
-  {"@type":"Question","name":"Ma chaudière perd de la pression rapidement, est-ce grave ?","acceptedAnswer":{"@type":"Answer","text":"C'est un signe à ne pas ignorer. Une perte de pression progressive (1.5 bar → 0.5 bar en quelques jours) indique une fuite dans le circuit chauffage : radiateur, raccord, échangeur. Une fuite externe est généralement visible (auréole au sol). Une fuite interne (échangeur percé) est invisible mais coûteuse à long terme. Diagnostic recommandé sous 1 semaine."}},
-  {"@type":"Question","name":"Mes radiateurs sont froids en haut, chauds en bas, que faire ?","acceptedAnswer":{"@type":"Answer","text":"C'est typiquement un radiateur à purger (air emprisonné en haut). Avec une clé de purge, ouvrir doucement la vis jusqu'à ce que l'eau coule sans bulles. Si plusieurs radiateurs sont concernés ou que ça revient régulièrement : envisager un désembouage du circuit (boue et oxydes qui freinent la circulation)."}},
-  {"@type":"Question","name":"Combien coûte un dépannage chaudière sur Saint-Omer ?","acceptedAnswer":{"@type":"Answer","text":"Diagnostic + petit dépannage : 110-180€ TTC sur Saint-Omer / Dunkerque. Remplacement pièce (circulateur, vanne 3 voies, sonde) : 250-650€ TTC selon pièce. Désembouage circuit complet : 450-750€ TTC. Tarif TTC annoncé au téléphone avant déplacement."}},
-  {"@type":"Question","name":"Ma chaudière a 15 ans, dois-je la changer ?","acceptedAnswer":{"@type":"Answer","text":"Une chaudière standard dure 15-20 ans, parfois plus. Si la vôtre fonctionne bien et que l'entretien annuel est OK : continuez. Si elle multiplie les pannes ou que les factures gaz/fioul augmentent (rendement qui chute), envisagez un remplacement par condensation moderne (-25-30% conso). MaPrimeRénov + CEE peuvent couvrir 50-70% selon revenus."}}
+  {
+   "@type": "Question",
+   "name": "Ma chaudière affiche un code erreur, que faire ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Notez le code exact (ex: E10, F22, EA). Consultez le manuel constructeur ou notez-le et appelez-nous au 03 66 10 01 34. Les codes les plus fréquents : E04/E10 = défaut allumage, F22/F75 = manque pression, EA/E1 = surchauffe, F37 = défaut combustion. Un diagnostic précis permet d'apporter la bonne pièce dès la première intervention."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Ma chaudière perd de la pression rapidement, est-ce grave ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "C'est un signe à ne pas ignorer. Une perte de pression progressive (1.5 bar → 0.5 bar en quelques jours) indique une fuite dans le circuit chauffage : radiateur, raccord, échangeur. Une fuite externe est généralement visible (auréole au sol). Une fuite interne (échangeur percé) est invisible mais coûteuse à long terme. Diagnostic recommandé sous 1 semaine."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Mes radiateurs sont froids en haut, chauds en bas, que faire ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "C'est typiquement un radiateur à purger (air emprisonné en haut). Avec une clé de purge, ouvrir doucement la vis jusqu'à ce que l'eau coule sans bulles. Si plusieurs radiateurs sont concernés ou que ça revient régulièrement : envisager un désembouage du circuit (boue et oxydes qui freinent la circulation)."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Combien coûte un dépannage chaudière sur Saint-Omer ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Diagnostic + petit dépannage : 110-180€ TTC sur Saint-Omer / Dunkerque. Remplacement pièce (circulateur, vanne 3 voies, sonde) : 250-650€ TTC selon pièce. Désembouage circuit complet : 450-750€ TTC. Tarif TTC annoncé au téléphone avant déplacement."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Ma chaudière a 15 ans, dois-je la changer ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Une chaudière standard dure 15-20 ans, parfois plus. Si la vôtre fonctionne bien et que l'entretien annuel est OK : continuez. Si elle multiplie les pannes ou que les factures gaz/fioul augmentent (rendement qui chute), envisagez un remplacement par condensation moderne (-25-30% conso). MaPrimeRénov + CEE peuvent couvrir 50-70% selon revenus."
+   }
+  }
  ]
-}
-</script>
+}</script>
 
-<script type="application/ld+json">
-{
+<script type="application/ld+json">{
  "@context": "https://schema.org",
  "@type": "LocalBusiness",
  "@id": "https://depan59-62.fr/#business",
  "name": "HELP Confort Saint-Omer",
  "telephone": "+33366100134",
- "aggregateRating": {"@type":"AggregateRating","ratingValue":"4.7","reviewCount":"343","bestRating":"5","worstRating":"1"}
-}
-</script>
+ "aggregateRating": {
+  "@type": "AggregateRating",
+  "ratingValue": "4.7",
+  "reviewCount": "343",
+  "bestRating": "5",
+  "worstRating": "1"
+ },
+ "address": {
+  "@type": "PostalAddress",
+  "streetAddress": "242 route de Boulogne",
+  "addressLocality": "Saint-Martin-lez-Tatinghem",
+  "postalCode": "62500",
+  "addressCountry": "FR"
+ }
+}</script>
 
 <style>
 body{font-family:'Inter',sans-serif;color:#0A1428;line-height:1.6;margin:0;background:#F7FBFD}

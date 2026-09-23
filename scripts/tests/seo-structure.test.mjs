@@ -37,6 +37,38 @@ for (const p of pages) {
 ok(`${blocs} blocs JSON-LD sur ${pages.length} pages, aucun invalide`, invalides.length === 0, invalides.slice(0, 5).join('\n     '));
 ok('le corpus reste couvert (plus de 400 blocs)', blocs > 400);
 
+// ── 1bis. Entité « établissement » : un identifiant par page, et des valeurs qui s'accordent
+const ETABL = new Set(['LocalBusiness','HomeAndConstructionBusiness','Plumber','HVACBusiness','Electrician','Locksmith','GeneralContractor','RoofingContractor']);
+const parcourir = (o, fn) => { if (Array.isArray(o)) o.forEach((x) => parcourir(x, fn)); else if (o && typeof o === 'object') { fn(o); Object.values(o).forEach((v) => parcourir(v, fn)); } };
+const eclatees = [], contradictoires = [];
+for (const p of pages) {
+  const parId = new Map(); let anonymes = 0;
+  for (const m of lire(p).matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/g)) {
+    let d; try { d = JSON.parse(m[1]); } catch { continue; }
+    parcourir(d, (o) => {
+      if (!ETABL.has(String(o['@type']))) return;
+      if (!o['@id']) { anonymes++; return; }
+      if (!parId.has(o['@id'])) parId.set(o['@id'], []);
+      parId.get(o['@id']).push(o);
+    });
+  }
+  if (anonymes && parId.size) eclatees.push(p);                 // un nœud hors de l'identité de la page
+  for (const noeuds of parId.values()) {
+    if (noeuds.length < 2) continue;
+    const champs = new Map();
+    for (const n of noeuds) for (const [k, v] of Object.entries(n)) {
+      if (k.startsWith('@')) continue;
+      const j = JSON.stringify(v);
+      if (!champs.has(k)) champs.set(k, new Set());
+      champs.get(k).add(j);
+    }
+    if ([...champs.values()].some((v) => v.size > 1)) { contradictoires.push(p); break; }
+  }
+}
+ok('aucune page ne laisse un nœud « établissement » hors de l’identité de la page', eclatees.length === 0, eclatees.slice(0, 5).join(', '));
+ok('aucun nœud ne partage un identifiant en affirmant des valeurs différentes', contradictoires.length === 0, contradictoires.slice(0, 5).join(', '));
+ok('la règle a une source unique et rejouable (scripts/seo/entite-jsonld.mjs)', existsSync(join(ROOT, 'scripts/seo/entite-jsonld.mjs')));
+
 // ── 2. Hôte canonique : une seule vérité
 const canoniques = pages.map((p) => (lire(p).match(/<link rel="canonical" href="(https?:\/\/[^/"]+)/) || [])[1]).filter(Boolean);
 const hotes = [...new Set(canoniques)];

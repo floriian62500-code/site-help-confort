@@ -53,6 +53,9 @@ jobs:
           node scripts/seo/seo-guardrails.mjs | grep -q '^ERRORS=0' || { echo "::error::Garde-fous SEO en erreur"; exit 1; }
           node scripts/seo/fix-compound-selectors.mjs --check
 
+      - name: Entité JSON-LD alignée (la source doit rester la source)
+        run: node scripts/seo/entite-jsonld.mjs --check
+
       - name: En-tête unique (la source doit rester la source)
         run: node scripts/header/sync-header.mjs --check
 
