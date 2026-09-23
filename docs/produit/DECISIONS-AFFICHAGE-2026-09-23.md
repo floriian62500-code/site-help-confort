@@ -69,8 +69,13 @@ page portait alors « Intervention en 1 h », formulation qui n'existe plus null
 Les adoucir : on perd un argument de réactivité, et « Intervention rapide » ne dit plus rien de
 concret au client.
 
-**Ce que je ne peux pas décider** : si « Sous 48 h » et « Sous 2 h en journée ouvrée » sont tenus.
-Toi seul le sais.
+**`NEEDS_FLORIAN_CONFIRMATION` — la mention « Sous 2 h en journée ouvrée ».**
+C'est l'engagement le plus fort du site, et il est public. Tant qu'il n'est pas **explicitement
+confirmé** par Florian, il reste signalé comme tel : ni supprimé de ma part, ni considéré comme
+validé. Les autres engagements chiffrés (« Sous 48 h », « sous 24 h ouvrées ») appellent la même
+confirmation, avec moins d'urgence.
+
+**Ce que je ne peux pas décider** : si ces délais sont tenus. Toi seul le sais.
 
 **Coût technique** : faible, une reformulation ciblée sur 7 pages au plus.
 
@@ -111,7 +116,7 @@ ce qu'il servait.
 |---|---|---|---|---|
 | 1 | Bandeau de confiance | visible sur 26 pages | le masquer par une classe | oui |
 | 2 | Newsletter + « Nos outils » | sur À propos | retirer les blocs | oui |
-| 3 | Délais annoncés | 7 pages avec engagement chiffré | reformuler celles que tu désignes | oui |
+| 3 | Délais annoncés | 7 pages avec engagement chiffré, dont « Sous 2 h en journée ouvrée » → `NEEDS_FLORIAN_CONFIRMATION` | reformuler celles que tu désignes | oui |
 | 4 | CMS WYSIWYG | présent, non branché | le câbler avec le patch, **ou** le retirer | oui |
 
 Rien ne bouge avant ta réponse.

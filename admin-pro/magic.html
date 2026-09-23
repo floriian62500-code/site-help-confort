@@ -396,7 +396,9 @@ let _files = []; // [{file, dataUrl, role}]
     wrap.querySelectorAll('select').forEach(s => s.onchange = () => {
       _files[parseInt(s.dataset.i)].role = s.value;
     });
-    document.getElementById('btnMagic').disabled = _files.length === 0;
+    // Le dépôt de photos réactive le bouton — sauf si la fonction serveur n'est pas déployée
+    // (garde posée en bas de page, 5796732231 §4) : sinon on promettrait une action qui échoue.
+    document.getElementById('btnMagic').disabled = _files.length === 0 || document.getElementById('btnMagic').dataset.hcIndisponible === '1';
   }
 
   // ─── Magic Generate ─────────────────────────────
@@ -507,6 +509,19 @@ let _files = []; // [{file, dataUrl, role}]
 
   function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 })();
+</script>
+<script src="../assets/hc-fn-dispo.js?v=20260923a"></script>
+<script>
+/* 5796732231 §4 : « auto-publish-from-photos » n'est pas déployée en production.
+   Le bouton reste désactivé et l'écran l'explique, plutôt qu'un 404 après l'envoi des photos. */
+HcFn.garder('auto-publish-from-photos', {
+  boutons: [document.getElementById('btnMagic')],
+  zone: document.getElementById('steps') || document.getElementById('dropzone'),
+  quoi: 'La publication automatique depuis les photos'
+}).then(function (dispo) {
+  var b = document.getElementById('btnMagic');
+  if (!dispo && b) b.dataset.hcIndisponible = '1'; // empêche la réactivation par le flux de dépôt
+});
 </script>
 </body>
 </html>
