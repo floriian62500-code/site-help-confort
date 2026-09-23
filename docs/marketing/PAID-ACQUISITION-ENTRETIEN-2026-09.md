@@ -447,6 +447,13 @@ en HT et les deux TTC, ce qui est compris, règle de TVA, bouton `landing_poele_
 la page). L'ancienne URL est redirigée en **301** vers l'ancre. Les annonces B pointent donc la même page
 que les annonces C, sur une ancre différente — un seul historique de qualité, un seul canonical.
 
+**Relance d'accueil** : le bandeau `#entretien-saison` d'`index.html` est **la seule surface de campagne
+de l'accueil** — on l'étend, on n'en crée pas un second (règle canonique). Il pointe uniquement les trois
+URL canoniques (chaudière, poêle/insert, ramonage), porte la mesure `view_home_maintenance_promo` /
+`click_home_maintenance_promo` par famille, et n'affiche ni prix ni promesse de délai : les prix vivent sur
+les pages dédiées, adossées au catalogue. Renforcé le 23/09 (bandeau de campagne, un seul message, un
+bouton principal, deux entrées secondaires).
+
 > Règle projet (`docs/process/REGLE-PAGE-CANONIQUE.md`) : avant toute page Ads,
 > `SEARCH_EXISTING → IDENTIFY_CANONICAL → REUSE_OR_EXTEND → CREATE_ONLY_IF_NONE`, contrôlé par
 > `node scripts/seo/duplicate-intent.mjs`.

@@ -794,29 +794,43 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
 <!-- RELANCE SAISONNIÈRE ENTRETIEN & RAMONAGE (5733153347) : sans prix (tarifs sur les pages dédiées), sans téléphone. -->
 <section class="hc-season" id="entretien-saison" aria-labelledby="hcSeasonTitle">
 <style>
-.hc-season{padding:0 0 clamp(24px,3.4vw,40px);background:#F6FAFD}
+.hc-season{padding:0 0 clamp(28px,3.6vw,44px);background:#F6FAFD}
 .hcs{max-width:1120px;margin:0 auto;padding:0 clamp(16px,4vw,28px)}
-.hcs-in{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:16px 24px;background:linear-gradient(135deg,#0A1428 0%,#123055 100%);color:#fff;border-radius:22px;padding:clamp(18px,2.6vw,26px) clamp(18px,3vw,32px);box-shadow:0 14px 34px rgba(10,20,40,.14)}
-.hcs-ic{width:52px;height:52px;border-radius:14px;background:rgba(255,107,26,.16);color:#FF8F4D;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.hcs-kicker{margin:0 0 2px;font-size:.74rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#FF9F66}
-.hcs-in h2{margin:0;font-size:clamp(1.15rem,2vw,1.45rem);line-height:1.25;color:#fff;letter-spacing:-.01em}
-.hcs-sub{margin:6px 0 0;font-size:.95rem;color:rgba(255,255,255,.8);line-height:1.45}
-.hcs-actions{display:flex;flex-direction:column;align-items:stretch;gap:10px;min-width:230px}
-.hcs-cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 20px;background:linear-gradient(135deg,#E55A0C,#FF6B1A);color:#fff;font-weight:800;border-radius:12px;text-decoration:none;box-shadow:0 8px 20px rgba(255,107,26,.28)}
-.hcs-cta:hover{filter:brightness(1.06)}
-.hcs-links{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 18px}
-.hcs-link{display:inline-flex;align-items:center;min-height:32px;color:#A8E4F7;font-weight:700;font-size:.92rem;text-decoration:underline;text-underline-offset:3px}
+.hcs-in{position:relative;overflow:hidden;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:start;gap:18px 30px;background:linear-gradient(135deg,#0A1428 0%,#123055 55%,#1B2B4D 100%);color:#fff;border-radius:24px;padding:clamp(24px,3.2vw,34px) clamp(20px,3.2vw,36px);box-shadow:0 18px 44px rgba(10,20,40,.20)}
+.hcs-in::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,#FF6B1A,#FFB061 45%,#1FC4F0)}
+.hcs-in::after{content:"";position:absolute;right:-90px;top:-70px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,26,.22),transparent 68%);pointer-events:none}
+.hcs-ic{position:relative;margin-top:4px;width:64px;height:64px;border-radius:18px;background:rgba(255,107,26,.18);color:#FF9F66;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:inset 0 0 0 1px rgba(255,159,102,.28)}
+.hcs-txt{position:relative;min-width:0}
+.hcs-kicker{display:inline-flex;align-items:center;gap:8px;margin:0 0 6px;padding:4px 12px;border-radius:999px;background:rgba(255,107,26,.16);border:1px solid rgba(255,159,102,.34);font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#FFB88C}
+.hcs-kicker i{width:7px;height:7px;border-radius:50%;background:#FF8F4D;box-shadow:0 0 0 4px rgba(255,143,77,.22)}
+.hcs-in h2{margin:0;font-size:clamp(1.35rem,2.5vw,1.95rem);line-height:1.18;color:#fff;letter-spacing:-.02em;font-weight:800}
+.hcs-sub{margin:8px 0 0;font-size:clamp(.95rem,1.1vw,1.02rem);color:rgba(255,255,255,.84);line-height:1.5;max-width:56ch}
+.hcs-pts{display:flex;flex-wrap:wrap;gap:8px 18px;margin:14px 0 0;padding:0;list-style:none}
+.hcs-pts li{display:inline-flex;align-items:center;gap:7px;font-size:.88rem;font-weight:600;color:rgba(255,255,255,.9)}
+.hcs-pts svg{flex-shrink:0;color:#5FE3B0}
+.hcs-actions{position:relative;align-self:center;display:flex;flex-direction:column;align-items:stretch;gap:12px;min-width:300px}
+.hcs-cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:14px 26px;background:linear-gradient(135deg,#E55A0C,#FF7A2B);color:#fff;font-weight:800;font-size:1.02rem;border-radius:14px;text-decoration:none;box-shadow:0 12px 26px rgba(255,107,26,.34);transition:transform .18s ease,filter .18s ease}
+.hcs-cta:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.hcs-links{display:flex;justify-content:stretch;flex-wrap:wrap;gap:10px}
+.hcs-link{flex:1 1 0;display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:10px 14px;border-radius:12px;border:1.5px solid rgba(168,228,247,.45);background:rgba(255,255,255,.06);color:#C9EEFB;font-weight:700;font-size:.92rem;white-space:nowrap;text-decoration:none;transition:background .18s ease,border-color .18s ease}
+.hcs-link:hover{background:rgba(255,255,255,.12);border-color:#1FC4F0;color:#fff}
 .hcs-cta:focus-visible,.hcs-link:focus-visible{outline:3px solid #1FC4F0;outline-offset:3px}
-@media (max-width:860px){.hcs-in{grid-template-columns:auto minmax(0,1fr)}.hcs-actions{grid-column:1/-1;min-width:0}}
-@media (max-width:480px){.hcs-in{grid-template-columns:minmax(0,1fr)}.hcs-ic{display:none}}
+@media (prefers-reduced-motion:reduce){.hcs-cta{transition:none}.hcs-cta:hover{transform:none}}
+@media (max-width:980px){.hcs-in{grid-template-columns:auto minmax(0,1fr);gap:16px 20px}.hcs-actions{grid-column:1/-1;min-width:0;flex-direction:row;align-items:center}.hcs-cta{flex:1 1 auto}.hcs-links{flex:1 1 auto}}
+@media (max-width:640px){.hcs-in{grid-template-columns:minmax(0,1fr);padding:22px 20px}.hcs-ic{width:52px;height:52px}.hcs-actions{flex-direction:column;align-items:stretch}.hcs-in::after{right:-120px;top:-110px}}
 </style>
  <div class="hcs">
   <div class="hcs-in">
-   <span class="hcs-ic" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></span>
-   <div>
-    <p class="hcs-kicker">Avant l’hiver</p>
+   <span class="hcs-ic" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></span>
+   <div class="hcs-txt">
+    <p class="hcs-kicker"><i aria-hidden="true"></i>Avant l’hiver</p>
     <h2 id="hcSeasonTitle">Entretien et ramonage : préparez votre chauffage</h2>
     <p class="hcs-sub">Chaudière, poêle ou insert : l’entretien annuel par nos techniciens, attestation ou certificat de ramonage remis.</p>
+    <ul class="hcs-pts">
+     <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Chaudière gaz ou fioul</li>
+     <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Poêle et insert, ramonage compris</li>
+     <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Techniciens de l’agence</li>
+    </ul>
    </div>
    <div class="hcs-actions">
     <a class="hcs-cta" href="/entretien-chaudiere.html" data-hc-promo-fam="chaudiere">Entretien chaudière <span aria-hidden="true">→</span></a>
