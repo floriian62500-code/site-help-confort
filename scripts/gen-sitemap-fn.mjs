@@ -33,6 +33,9 @@ const body = `// ═════════════════════
 // @ts-ignore Deno
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+// Doublon SEO actualités ↔ réalisations (5778526407 §3) : une publication de chantier n'a qu'UNE url,
+// la fiche /realisations/<slug>. Le sitemap ne publie donc aucune url /actualites/<slug> :
+// la branche qui les listait (table actualites, inexistante en base) a été retirée.
 const SITE_URL = "https://depan59-62.fr";
 
 const STATIC_PAGES = ${JSON.stringify(staticPages)};
@@ -45,11 +48,6 @@ Deno.serve(async (_req: Request) => {
     const { data: reals } = await sb.from("realisations")
       .select("slug,published_at,updated_at").eq("status", "publie")
       .order("published_at", { ascending: false });
-    let actus: any[] = [];
-    try {
-        .eq("status", "publie").order("published_at", { ascending: false });
-      actus = r.data || [];
-    } catch (_) { /* table optionnelle */ }
 
     const urls: string[] = [];
     STATIC_PAGES.forEach((p: any) => {
@@ -64,14 +62,6 @@ Deno.serve(async (_req: Request) => {
       const lastmod = (r.updated_at || r.published_at || "").slice(0, 10);
       urls.push(\`  <url>
     <loc>\${SITE_URL}/realisations/\${encodeURIComponent(r.slug)}</loc>
-    \${lastmod ? \`<lastmod>\${lastmod}</lastmod>\` : ""}
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>\`);
-    });
-    actus.forEach((a: any) => {
-      const lastmod = (a.updated_at || a.published_at || "").slice(0, 10);
-      urls.push(\`  <url>
     \${lastmod ? \`<lastmod>\${lastmod}</lastmod>\` : ""}
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
