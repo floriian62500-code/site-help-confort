@@ -209,9 +209,17 @@ ok('UI : aucune donnée personnelle dans l’URL (hash = étape + catégorie uni
 const choixSrc = (uiSrc.match(/ENTER\.choix = function \(\) \{[\s\S]*?\n  \};/) || [''])[0];
 ok('reprise : la carte « demande en cours » n’affiche aucune donnée personnelle (ni ville, ni nom, ni adresse)', choixSrc.length > 0 && !/state\.lieu\.(ville|adresse|cp)\b|state\.contact/.test(choixSrc.replace(/C\.lieuValid\(state\.lieu\)/g, '')));
 // ---- Cache immuable /assets/* : accueil et page dédiée doivent pointer la MÊME version d'assets
-const vHome = (home.match(/hc-demande\.js\?v=(\d{8}[a-z]?)|var V = '(\d{8}[a-z]?)'/) || [])[1] || (home.match(/var V = '(\d{8}[a-z]?)'/) || [])[1];
+const vHome = (home.match(/hc-demande(?:-launch)?\.js\?v=(\d{8}[a-z]?)/) || [])[1];
 const vPage = (cat.match(/hc-demande\.js\?v=(\d{8}[a-z]?)/) || [])[1];
 ok('assets du module : accueil et /catalogue.html sur la même version (cache immuable)', !!vHome && vHome === vPage);
+
+// ---- Lanceur du tunnel : une seule source (assets/hc-demande-launch.js), jamais recopiée dans une page
+const launch = readFileSync(join(ROOT, 'assets/hc-demande-launch.js'), 'utf8');
+ok('lanceur : l’accueil charge le lanceur partagé (version cache-bust), sans copie locale de sa logique', /<script src="assets\/hc-demande-launch\.js\?v=\d{8}[a-z]?" defer><\/script>/.test(home) && !/window\.HcDemande\.open\(/.test(home));
+ok('lanceur : la source partagée tient le contrat (liens /catalogue, précharge, repli navigation, hash d’entrée)', /closest\('a\[href\*="\/catalogue"\]'\)/.test(launch) && /location\.href = a\.getAttribute\('href'\)/.test(launch) && /pointerover/.test(launch) && /\^#\(step=\|cat=\|intervention\$\|devis\$\|entretien\$\)/.test(launch));
+ok('lanceur : n’injecte jamais deux fois la feuille de style ni un script déjà présent (page /catalogue.html incluse)', /if \(!document\.querySelector\('link\[href\*="hc-demande\.css"\]'\)\)/.test(launch) && /if \(document\.querySelector\('script\[src\^="' \+ srcs\[i\] \+ '"\]'\)\) return next\(i \+ 1\);/.test(launch));
+const copies = ['index.html', 'catalogue.html'].filter((f) => /HcDemande\.open\(/.test(readFileSync(join(ROOT, f), 'utf8')));
+ok('lanceur : aucune page ne réimplémente l’ouverture de la fenêtre', copies.length === 0);
 
 // ---- Fenêtre premium (ouverte depuis le site) : la page hôte doit redevenir utilisable à la fermeture
 ok('fenêtre : l’attribut hidden masque réellement la coque (page hôte jamais couverte après fermeture)', /\.hcd-overlay\[hidden\]\{display:none\}/.test(cssFile));

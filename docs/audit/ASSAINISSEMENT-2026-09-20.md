@@ -83,7 +83,7 @@ pour les pages). Onze documents, dont un guide **« Où modifier quoi »** et un
 | `/fournisseur.html`, `/partenaire.html` | gabarits de fiche détail listés tels quels au sitemap (H1 = variable non remplie) | à retirer du sitemap = déploiement de la fonction `sitemap` |
 | `plan-du-site.html` | aucune page n'y renvoie | décision : le relier depuis le pied de page, ou le retirer |
 | Branche `staging` | 62 commits WYSIWYG jamais fusionnés | tri à faire avec Florian, avec tag de sauvegarde |
-| `assets/hc-demande-launch.js` | capacité existante **non câblée** : les liens `/catalogue…` ouvriraient la fenêtre premium au lieu de quitter la page | c'est un changement de comportement visible : à décider, pas à glisser dans un nettoyage |
+| ~~`assets/hc-demande-launch.js`~~ | **tranché le 23/09** : ce n'était pas une capacité dormante mais la **source partagée d'une logique recopiée dans `index.html`**. L'accueil charge désormais le fichier, sa copie inline (35 lignes) est supprimée. Comportement inchangé sur le site, une seule source. | fait |
 | `partner-logo` | 4ᵉ fonction edge sans source dans le dépôt | à récupérer comme les trois autres |
 
 ## Contrôles passés après chaque étape

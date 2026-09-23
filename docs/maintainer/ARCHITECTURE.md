@@ -50,7 +50,8 @@
 | `hc-consent.js`, `tracking.js`, `hc-landing.js`, `hc-recrutement.js` | consentement et mesure ([TRACKING.md](TRACKING.md)) | pages mesurées |
 | `hc-header.js` + `hc-header.css` | en-tête unique (généré par `scripts/header/sync-header.mjs`) | 202 pages |
 | `hc-realisations.js` | classement des publications (chantier / actualité / recrutement) | accueil, réalisations, générateur |
-| **Orphelins confirmés le 20/09** | `hc-demande-launch.js` (0 référence), `hc-edit-mode.js` (chargé par aucune page) | inventaire : `node scripts/audit/inventaire.mjs` |
+| `hc-demande-launch.js` | **lanceur du tunnel** : ouvre la fenêtre premium sur les liens `/catalogue…`, retombe sur la navigation si un fichier ne charge pas. Version déduite de son propre `?v=`. | accueil (source unique — ne pas recopier dans une page) |
+| **Orphelin confirmé le 20/09** | `hc-edit-mode.js` (chargé par aucune page) | inventaire : `node scripts/audit/inventaire.mjs` |
 
 ## 5. Netlify (`netlify.toml`, `_redirects`, `_headers`)
 - **Ignore rule** (build) : compare `$CACHED_COMMIT_REF..$COMMIT_REF` (dernier déployé → HEAD), skip si tout est dans les paths exclus (docs, scripts, .md, logs…). ⚠️ piège historique : un tip docs-only annulait le build → fix appliqué.
