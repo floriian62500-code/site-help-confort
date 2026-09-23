@@ -1,6 +1,6 @@
 // ⚠️ SOURCE RÉCUPÉRÉE DEPUIS LA PRODUCTION le 2026-09-20 (assainissement, directive 5732805778).
 // Cette fonction tournait en production SANS source dans le dépôt (déployée à la main le 2026-05-29).
-// Copie exacte de la version déployée : version 1, verify_jwt = false.
+// Code identique à la version déployée (seul cet en-tête a été ajouté) : version 1, verify_jwt = false.
 // Elle alimente la vitrine « Nos derniers chantiers » et la page Réalisations (29 appels dans le site).
 // Toute modification doit être déployée explicitement — un déploiement de fonction edge est une
 // décision humaine (cf. docs/dev/DEPLOYMENT.md).

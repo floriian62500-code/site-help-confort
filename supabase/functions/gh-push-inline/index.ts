@@ -1,6 +1,6 @@
 // ⚠️ SOURCE RÉCUPÉRÉE DEPUIS LA PRODUCTION le 2026-09-20 (assainissement, directive 5732805778).
 // Cette fonction tournait en production SANS source dans le dépôt (déployée à la main le 2026-06-06).
-// Copie exacte de la version déployée : version 1, verify_jwt = false.
+// Code identique à la version déployée (seul cet en-tête a été ajouté) : version 1, verify_jwt = false.
 //
 // 🔴 POINT DE SÉCURITÉ À ARBITRER (docs/dev/TROUBLESHOOTING.md § sécurité) :
 //    la fonction est PUBLIQUE (verify_jwt = false) et pousse sur N'IMPORTE QUEL dépôt GitHub avec

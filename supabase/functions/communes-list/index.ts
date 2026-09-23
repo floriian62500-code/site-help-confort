@@ -1,6 +1,6 @@
 // ⚠️ SOURCE RÉCUPÉRÉE DEPUIS LA PRODUCTION le 2026-09-20 (assainissement, directive 5732805778).
 // Cette fonction tournait en production SANS source dans le dépôt (déployée à la main le 2026-07-25).
-// Copie exacte de la version déployée : version 1, verify_jwt = false.
+// Code identique à la version déployée (seul cet en-tête a été ajouté) : version 1, verify_jwt = false.
 // Elle alimente le composant « Zone d'intervention » des pages métier (7 appels dans le site).
 // Toute modification doit être déployée explicitement (cf. docs/dev/DEPLOYMENT.md).
 // communes-list v1 (2026-07-25) — Lot 2 §2

@@ -82,26 +82,8 @@
       document.addEventListener('keydown', function(e){ if (e.key === 'Escape') modal.classList.remove('is-open'); });
     }
 
-    // === STRIPE DIRECT : créer un Checkout Session à la volée ===
-    async function createStripePayment(presta, amount_eur) {
-      var SUPA_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
-      var SUPA_KEY = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
-      var r = await fetch(SUPA_URL + '/functions/v1/stripe-create-payment-link', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + SUPA_KEY,
-          'apikey': SUPA_KEY
-        },
-        body: JSON.stringify({
-          amount_eur: amount_eur,
-          description: presta + ' — Prise en charge HELP Confort'
-        })
-      });
-      var j = await r.json();
-      if (!r.ok || !j.payment_url) throw new Error(j.error || 'Erreur Stripe');
-      return j.payment_url;
-    }
+    // Paiement direct public supprimé le 2026-09-22 (fonction jamais appelée depuis le gel du 2026-08-08 :
+    // le montant venait du DOM et partait sans relecture serveur). L'encaissement passe par le back-office.
 
     function parsePrice(str) {
       if (!str) return 0;
