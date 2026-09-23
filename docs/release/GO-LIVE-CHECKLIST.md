@@ -48,15 +48,15 @@ Auto-certification avec preuve (SHA `recette` + test). `PASS` = prouvé ce cycle
 | T09 | Hygiène branches (recette/integration only, jamais main) | **PASS** | push `HEAD:recette` + `HEAD:integration/lot1-lot2-vs-prod` uniquement |
 | T10 | Aucun secret dans la **source déployée** | **PASS** | source site = 0 secret (SEC-1 `2ab95305` pages PAT/promote 404) |
 | T11 | Canonical / host canonique | **PASS (baseline)** | canonical home = `https://depan59-62.fr/` (**non-www apex**). Cohérence redirects/sitemap complète = T15 |
-| T12 | Double-clic / idempotence submit | **PENDING** | à certifier : garde anti double-submit sur `submit()` moteur + formulaires rappel |
+| T12 | Double-clic / idempotence submit | **PASS** | `scripts/tests/anti-double-envoi.test.mjs` (12 contrôles) : tunnel, rappel d'accueil (verrou `dataset.sending`), formulaires de page. **Limite connue** : deux envois séparés dans le temps créent toujours deux demandes — il faudrait une clé d'idempotence côté serveur, donc un déploiement |
 | T13 | Back / refresh / reprise brouillon | **PASS (partiel)** | `hc_book_v1` + `hc_cart_v1` localStorage (UX-COMMERCE-2) ; reset confirmation corrigé `dd6bac25`. Reprise inter-session à re-certifier (T13b) |
-| T14 | Validation **JSON-LD / schema** (échantillon représentatif) | **PENDING** | 5451295186 pt2 : home, 6 métiers, St-Omer/Dunkerque, prestation, réalisation, actu, entretien/devis → `SCHEMA_TESTED`/`SCHEMA_ERRORS` (cycle GEO) |
-| T15 | **Sitemap** : classification des URLs hors sitemap (~201 vs 139) | **PENDING** | 5451295186 pt2 : `OUT_OF_SITEMAP_TOTAL/EXPECTED/ANOMALOUS` + liste anomalies (cycle GEO) |
+| T14 | Validation **JSON-LD / schema** | **PASS** | 208 pages, **550 blocs, 0 invalide** (`scripts/tests/seo-structure.test.mjs`). Amélioration non bloquante relevée : 91 pages portent deux entités `LocalBusiness` sans `@id` commun — `docs/audit/SEO-T14-T15-2026-09-23.md` |
+| T15 | **Sitemap** | **AUDITÉ — correctif prêt, déploiement requis** | 47 URLs hors sitemap dont **40 anormales (35 pages `/prestations/`)** ; et surtout **142/142 URLs en `www`, qui redirige en 301 et contredit tous les canonicals**. La source du dépôt porte déjà le bon hôte et les pages manquantes sont ajoutées ; **la fonction déployée date du 08/08** — `docs/audit/SEO-T14-T15-2026-09-23.md` |
 | T16 | Accès aux données (lecture/écriture) | **CORRECTIF PRÊT — voir C (SEC-1)** | dossier complet remis à Florian **hors dépôt** (le dépôt est public) : constat, migration, retour arrière, 22 contrôles en base jetable |
 | T17 | Isolation Stripe TEST / LIVE | **BLOQUANT — voir C (SEC-3)** | version durcie prête et testée (14 tests Deno), **non déployée** ; la fonction est en `quarantine` donc aucun redéploiement automatique ne peut remettre l'ancienne |
 | T18 | Plan rollback + snapshot | **ÉCRIT** | section E ci-dessous + `docs/deploy/EDGE-FUNCTIONS.md` §5 (déploiement et retour arrière d'une fonction) + retour arrière fourni pour chaque migration en attente. Reste à exécuter le jour du GO (tag de `main` avant tout) |
 
-**Compte : PASS/PARTIAL = 13 · PENDING = 3 (T12 double-clic, T14 JSON-LD, T15 sitemap) · BLOQUANTS = 2 (T16 accès aux données, T17 Stripe) — les deux avec correctif prêt et testé, en attente d'une décision.**
+**Compte : PASS/PARTIAL = 15 · PENDING = 1 (T15 sitemap : audité, correctif prêt, attend un déploiement) · BLOQUANTS = 2 (T16 accès aux données, T17 Stripe) — les deux avec correctif prêt et testé, en attente d'une décision.**
 
 **Nouveau depuis le 23/09** : la suite de non-régression (17 fichiers, 550+ contrôles) tourne à chaque poussée sur `recette` et sur chaque pull request. Avant, elle ne tournait nulle part automatiquement.
 
