@@ -116,6 +116,53 @@ echo v5 > fichier.txt
 bash "$BAC/autopush-deb.sh" >/dev/null 2>&1
 [ "$(git rev-parse HEAD)" = "$AVANT" ] && ok "anti-rebond : une modification fraîche attend la stabilité (180 s)" || ko "anti-rebond" "a committé immédiatement"
 
+# 10. Verrou de session de travail (directive 5796732231 §5)
+#     Le vrai sujet : pendant un lot, le démon ne doit RIEN capturer. À la fin, il repart seul.
+#     Et un verrou oublié ne doit jamais geler les sauvegardes pour toujours.
+git checkout -q -- . 2>/dev/null; rm -f "$BAC/support/autopush.state"
+# La section 3 a volontairement fait diverger la branche : on la resynchronise, sinon la garde
+# « avance rapide seulement » bloquerait tout et ces tests mesureraient la mauvaise chose.
+git fetch -q "$BAC/remote.git" recette && git merge -q --no-edit FETCH_HEAD >/dev/null 2>&1
+git push -q "$BAC/remote.git" HEAD:recette 2>/dev/null || true
+AVANT=$(git rev-parse HEAD)
+[ "$(distant recette)" = "$AVANT" ] || ko "préparation section 10" "le bac à sable n'est pas resynchronisé"
+
+# 10a. Lot actif → aucun commit, aucun push
+printf 'lot de test — depuis maintenant\n' > "$BAC/support/autopush.worksession"
+echo "travail en cours" > fichier.txt
+run
+[ "$(git rev-parse HEAD)" = "$AVANT" ] && ok "lot actif : aucun commit automatique (l'état intermédiaire n'est plus publié)" \
+  || ko "lot actif" "a committé pendant la session de travail"
+[ "$(distant recette)" = "$AVANT" ] && ok "lot actif : aucun push automatique" || ko "lot actif (push)" "le distant a bougé"
+grep -q 'session de travail en cours' "$LOG" && ok "lot actif : la pause est journalisée avec son libellé" || ko "journal du lot" "absent"
+
+# 10b. En lot, la preuve de vie reste fraîche : le démon attend, il n'est pas en panne
+rm -f "$BAC/support/autopush.heartbeat"; run
+[ -f "$BAC/support/autopush.heartbeat" ] && ok "lot actif : preuve de vie maintenue (la surveillance ne crie pas à la panne)" \
+  || ko "preuve de vie en lot" "absente — la surveillance signalerait une panne à tort"
+
+# 10c. Fin du lot → reprise automatique, sans rien relancer
+rm -f "$BAC/support/autopush.worksession"
+run
+[ "$(git rev-parse HEAD)" != "$AVANT" ] && [ "$(distant recette)" = "$(git rev-parse HEAD)" ] \
+  && ok "fin du lot : la sauvegarde reprend d'elle-même" || ko "reprise" "rien n'a été committé/poussé après la levée"
+
+# 10d. Verrou abandonné → récupération sûre : levé, signalé, sauvegardes reprises
+APRES=$(git rev-parse HEAD)
+printf 'lot oublié\n' > "$BAC/support/autopush.worksession"
+touch -t 202001010000 "$BAC/support/autopush.worksession"   # bien au-delà du TTL
+echo "encore du travail" > fichier.txt
+rm -f "$BAC/support/autopush.state"
+run
+[ ! -f "$BAC/support/autopush.worksession" ] && ok "verrou abandonné : levé automatiquement (pas de gel définitif)" \
+  || ko "verrou abandonné" "toujours présent"
+grep -q 'verrou de session expiré' "$LOG" && ok "verrou abandonné : l'expiration est signalée, pas silencieuse" || ko "expiration signalée" "absente du journal"
+[ "$(git rev-parse HEAD)" != "$APRES" ] && ok "verrou abandonné : les sauvegardes ont repris" || ko "reprise après expiration" "rien n'a été committé"
+
+# 10e. Le verrou de session et l'arrêt d'urgence restent deux choses distinctes
+grep -q 'autopush.off' "$SRC" && grep -q 'autopush.worksession' "$SRC" \
+  && ok "arrêt d'urgence et verrou de session coexistent (mécanismes séparés)" || ko "mécanismes séparés" "l'un des deux manque"
+
 echo
 echo "RÉSULTAT GARDE-FOUS AUTO-PUSH : $PASS PASS / $FAIL FAIL"
 [ "$FAIL" = "0" ] || exit 1

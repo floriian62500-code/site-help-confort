@@ -20,6 +20,45 @@
 | Stocker un jeton | authentification par `gh auth git-credential` (trousseau macOS) ; **aucun PAT dans le dépôt ni dans le script** |
 | Committer pendant une édition | anti-rebond de 180 s, plus refus si `index.lock`, rebase, merge, cherry-pick ou bisect en cours |
 | Tourner deux fois en parallèle | verrou atomique `autopush.lock` (répertoire), repris automatiquement s'il est figé depuis plus de 10 min |
+| Capturer un état intermédiaire pendant un lot | verrou de session `autopush.worksession` : ni commit ni push tant qu'il est posé, expiration de sécurité à 90 min (voir plus bas) |
+
+## Verrou de session de travail (pendant un lot)
+
+**Le problème qu'il résout.** Le 2026-09-23, le démon a publié deux fois un travail en cours sous un
+message générique — dont une fois une fonction sitemap momentanément cassée, poussée sur `recette`.
+L'anti-rebond de 180 s ne suffit pas : un lot dure des heures, avec des pauses de plus de trois
+minutes entre deux éditions.
+
+**La règle.** Pendant un lot, on pose un verrou ; le démon ne committe ni ne pousse. À la fin du lot,
+on le retire et la sauvegarde repart d'elle-même.
+
+```bash
+# au début d'un lot
+scripts/ops/worksession.sh start "libellé du lot"
+
+# à la fin
+scripts/ops/worksession.sh stop
+
+# savoir où on en est
+scripts/ops/worksession.sh status
+```
+
+**Sécurité : un verrou oublié ne gèle rien pour toujours.** Au-delà de **90 minutes**, le démon le
+considère abandonné, le lève, le journalise et notifie. Les sauvegardes reprennent seules.
+
+**Pendant un lot, la preuve de vie reste rafraîchie** : le démon est vivant, il attend. La
+surveillance ne doit pas conclure à une panne — c'est l'erreur commise le 2026-09-20 avec l'arrêt
+d'urgence, et elle n'est pas reproduite ici.
+
+**Ce n'est pas l'arrêt d'urgence**, qui reste ci-dessous : celui-ci n'expire jamais et se lève à la
+main. Les deux mécanismes coexistent et se testent séparément.
+
+| | Verrou de session | Arrêt d'urgence |
+|---|---|---|
+| Posé par | le travail en cours, automatiquement | un humain |
+| Expire | oui, au bout de 90 min | non, jamais |
+| Preuve de vie | maintenue (le démon attend) | non rafraîchie (la pause est signalée après 1 h) |
+| Fichier | `autopush.worksession` | `autopush.off` / `.autopush-off` |
 
 ## Arrêt d'urgence (kill-switch)
 
