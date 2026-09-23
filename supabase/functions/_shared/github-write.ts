@@ -192,3 +192,74 @@ export function creerGestionnaire(deps: Deps) {
     }
   };
 }
+
+// ── Variante « remplacement dans un fichier » (gh-edit-file) ─────────────────────────────
+// Mêmes gardes que ci-dessus, plus la règle propre à l'édition : on n'écrit que si le texte
+// cherché existe, et on refuse une occurrence ambiguë au lieu de deviner.
+export type DepsEdition = Omit<Deps, "pousser"> & {
+  lireFichier: (a: { token: string; owner: string; repo: string; branche: string; chemin: string }) => Promise<string | null>;
+  pousser: (args: { token: string; owner: string; repo: string; branche: string; message: string; fichiers: { path: string; content_b64: string }[] }) => Promise<{ sha: string }>;
+};
+
+export function appliquerRemplacement(contenu: string, cherche: string, remplace: string, toutes: boolean): { texte: string; occurrences: number } {
+  if (!cherche) throw new Refus(400, "cherche_requis");
+  const occurrences = contenu.split(cherche).length - 1;
+  if (occurrences === 0) throw new Refus(404, "texte_introuvable");
+  if (!toutes && occurrences > 1) throw new Refus(409, "texte_ambigu");
+  const texte = toutes ? contenu.split(cherche).join(remplace) : contenu.replace(cherche, remplace);
+  if (texte === contenu) throw new Refus(400, "aucun_changement");
+  return { texte, occurrences };
+}
+
+export function enBase64(texte: string): string {
+  const octets = new TextEncoder().encode(texte);
+  let bin = "";
+  for (let i = 0; i < octets.length; i++) bin += String.fromCharCode(octets[i]);
+  return btoa(bin);
+}
+
+export function creerGestionnaireEdition(deps: DepsEdition) {
+  const maintenant = deps.maintenant || (() => Date.now());
+  return async function gestionnaire(req: Request): Promise<Response> {
+    if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
+    if (req.method !== "POST") return json({ error: "POST only" }, 405);
+
+    let appelant = "";
+    try {
+      const jwt = (req.headers.get("authorization") || "").replace(/^Bearer\s+/i, "").trim();
+      if (!jwt) throw new Refus(401, "authentification_requise");
+      const u = await deps.utilisateurDepuisJeton(jwt);
+      if (!u) throw new Refus(401, "jeton_invalide");
+      appelant = u.id;
+      const p = await deps.profil(u.id);
+      if (!estPersonnel(p?.role, p?.is_active)) throw new Refus(403, "reserve_au_personnel");
+
+      let body: any;
+      try { body = await req.json(); } catch { throw new Refus(400, "json_invalide"); }
+
+      const token = jetonServeur(deps.env, body?.token);
+      const cible = verifierCible(deps.env, body?.owner, body?.repo, body?.branch);
+      const chemin = verifierChemin(body?.file_path);
+      const message = String(body?.message || "").trim();
+      if (!message) throw new Refus(400, "message_requis");
+
+      const appels = verifierDebit(await deps.appelsRecents(appelant), maintenant());
+      await deps.noterAppel(appelant, appels);
+
+      const contenu = await deps.lireFichier({ token, owner: cible.owner, repo: cible.repo, branche: cible.branche, chemin });
+      if (contenu === null) throw new Refus(404, "fichier_introuvable");
+      const { texte, occurrences } = appliquerRemplacement(contenu, String(body?.find ?? ""), String(body?.replace ?? ""), body?.replace_all === true);
+      const content_b64 = enBase64(texte);
+      if (tailleBase64(content_b64) > MAX_OCTETS) throw new Refus(413, "charge_trop_lourde");
+
+      const { sha } = await deps.pousser({ token, owner: cible.owner, repo: cible.repo, branche: cible.branche, message, fichiers: [{ path: chemin, content_b64 }] });
+      deps.journal(ligneJournal({ evt: "gh_edit_ok", appelant, owner: cible.owner, repo: cible.repo, branche: cible.branche, fichiers: 1, octets: tailleBase64(content_b64), commit: sha }));
+      return json({ success: true, commit_sha: sha, branch: cible.branche, file_path: chemin, occurrences_replaced: body?.replace_all === true ? occurrences : 1 });
+    } catch (e) {
+      const code = e instanceof Refus ? e.code : 500;
+      const raison = e instanceof Refus ? e.message : "erreur_interne";
+      deps.journal(ligneJournal({ evt: "gh_edit_refus", appelant, code, raison } as Record<string, unknown>));
+      return json({ error: raison }, code);
+    }
+  };
+}
