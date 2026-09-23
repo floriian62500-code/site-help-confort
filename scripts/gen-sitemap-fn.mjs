@@ -47,7 +47,6 @@ Deno.serve(async (_req: Request) => {
       .order("published_at", { ascending: false });
     let actus: any[] = [];
     try {
-      const r = await sb.from("actualites").select("slug,published_at,updated_at")
         .eq("status", "publie").order("published_at", { ascending: false });
       actus = r.data || [];
     } catch (_) { /* table optionnelle */ }
@@ -73,7 +72,6 @@ Deno.serve(async (_req: Request) => {
     actus.forEach((a: any) => {
       const lastmod = (a.updated_at || a.published_at || "").slice(0, 10);
       urls.push(\`  <url>
-    <loc>\${SITE_URL}/actualites/\${encodeURIComponent(a.slug)}.html</loc>
     \${lastmod ? \`<lastmod>\${lastmod}</lastmod>\` : ""}
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

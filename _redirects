@@ -12,6 +12,32 @@
 # Sitemap dynamique servi par Edge Function Supabase
 /sitemap.xml https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sitemap 200!
 
+
+# Doublon SEO actualités ↔ réalisations (5778526407 §3) : une publication chantier = UNE URL.
+# La fiche /realisations/<slug> est canonique ; l'ancienne actualité y renvoie définitivement.
+# « ! » = la redirection l'emporte sur le fichier statique encore présent dans le dépôt.
+# Les actualités qui ne sont pas des chantiers (conseils, guides, vie de l'agence) ne sont pas touchées.
+/actualites/2026-01-07-votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-c.html /realisations/votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-correctement 301!
+/actualites/2026-01-07-votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-c /realisations/votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-correctement 301!
+/actualites/2026-02-11-cellier-travaux-de-plafond-reparation-peinture-de-finition.html /realisations/cellier-travaux-de-plafond-reparation-peinture-de-finition 301!
+/actualites/2026-02-11-cellier-travaux-de-plafond-reparation-peinture-de-finition /realisations/cellier-travaux-de-plafond-reparation-peinture-de-finition 301!
+/actualites/2026-03-03-votre-insert-gaz-presente-un-vitrage-fissure-terni-ou-endomm.html /realisations/votre-insert-gaz-presente-un-vitrage-fissure-terni-ou-endommage 301!
+/actualites/2026-03-03-votre-insert-gaz-presente-un-vitrage-fissure-terni-ou-endomm /realisations/votre-insert-gaz-presente-un-vitrage-fissure-terni-ou-endommage 301!
+/actualites/2026-03-12-votre-double-vitrage-dans-la-salle-a-manger-est-fissure-embu.html /realisations/votre-double-vitrage-dans-la-salle-a-manger-est-fissure-embue-ou-moins-isolant 301!
+/actualites/2026-03-12-votre-double-vitrage-dans-la-salle-a-manger-est-fissure-embu /realisations/votre-double-vitrage-dans-la-salle-a-manger-est-fissure-embue-ou-moins-isolant 301!
+/actualites/2026-03-17-votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite.html /realisations/votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite-a-un-bris-de-glace 301!
+/actualites/2026-03-17-votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite /realisations/votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite-a-un-bris-de-glace 301!
+/actualites/2026-04-08-votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le.html /realisations/votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le-temps 301!
+/actualites/2026-04-08-votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le /realisations/votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le-temps 301!
+/actualites/2026-04-14-votre-soupape-de-securite-ou-votre-manometre-est-defectueux.html /realisations/votre-soupape-de-securite-ou-votre-manometre-est-defectueux-use-ou-ne-fonctionne 301!
+/actualites/2026-04-14-votre-soupape-de-securite-ou-votre-manometre-est-defectueux /realisations/votre-soupape-de-securite-ou-votre-manometre-est-defectueux-use-ou-ne-fonctionne 301!
+/actualites/2026-04-22-remplacement-de-double-vitrage-apres-bris-de-glace.html /realisations/remplacement-de-double-vitrage-apres-bris-de-glace 301!
+/actualites/2026-04-22-remplacement-de-double-vitrage-apres-bris-de-glace /realisations/remplacement-de-double-vitrage-apres-bris-de-glace 301!
+/actualites/2026-04-29-remplacement-de-mitigeur-evier-bec-long-douchette.html /realisations/remplacement-de-mitigeur-evier-bec-long-douchette 301!
+/actualites/2026-04-29-remplacement-de-mitigeur-evier-bec-long-douchette /realisations/remplacement-de-mitigeur-evier-bec-long-douchette 301!
+/actualites/2026-05-07-remplacement-de-panneau-pvc-modele-surinam-3.html /realisations/remplacement-de-panneau-pvc-modele-surinam-3 301!
+/actualites/2026-05-07-remplacement-de-panneau-pvc-modele-surinam-3 /realisations/remplacement-de-panneau-pvc-modele-surinam-3 301!
+
 # Nettoyage : ancienne page dynamique de réalisation (orpheline, noindex) → listing (convention unique /realisations/<slug>)
 /realisation.html /realisations.html 301!
 /realisation /realisations.html 301!

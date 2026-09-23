@@ -205,6 +205,26 @@ def download_image(url, dest_path):
         return False
 
 # ────────────────────────────────────────────────
+# Doublon actualité ↔ réalisation (5778526407 §3)
+# Une publication chantier a UNE seule URL : la fiche /realisations/<slug>.
+# Si la fiche existe déjà, on ne regénère pas de page actualité concurrente :
+# l'entrée de la liste pointe directement la fiche.
+# ────────────────────────────────────────────────
+def fiche_chantier(slug):
+    """Retourne le slug de la fiche réalisation correspondante, ou None."""
+    base = SITE_ROOT / 'realisations'
+    if (base / f"{slug}.html").exists():
+        return slug
+    court = re.sub(r'^\d{4}-\d{2}-\d{2}-', '', slug)
+    if court != slug and (base / f"{court}.html").exists():
+        return court
+    for f in sorted(base.glob('*.html')):
+        nom = f.stem
+        if len(court) > 25 and len(nom) > 25 and (court in nom or nom in court):
+            return nom
+    return None
+
+# ────────────────────────────────────────────────
 # Génération HTML
 # ────────────────────────────────────────────────
 def build_html(post_data):
@@ -229,14 +249,14 @@ def build_html(post_data):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title_html} — HELP Confort Saint-Omer</title>
 <meta name="description" content="{html.escape(resume)}">
-<link rel="canonical" href="https://www.helpconfort-saintomer.fr/actualites/{post_data['slug']}.html">
+<link rel="canonical" href="https://depan59-62.fr/actualites/{post_data['slug']}.html">
 
 <meta property="og:type" content="article">
 <meta property="og:title" content="{title_html}">
 <meta property="og:description" content="{html.escape(resume)}">
 <meta property="og:locale" content="fr_FR">
-<meta property="og:url" content="https://www.helpconfort-saintomer.fr/actualites/{post_data['slug']}.html">
-<meta property="og:image" content="https://www.helpconfort-saintomer.fr/{img_local or 'logo-officiel.jpg'}">
+<meta property="og:url" content="https://depan59-62.fr/actualites/{post_data['slug']}.html">
+<meta property="og:image" content="https://depan59-62.fr/{img_local or 'logo-officiel.jpg'}">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -403,11 +423,17 @@ def main():
             'stats': stats,
         }
 
-        # Génération HTML
-        html_content = build_html(post_data)
-        if not args.dry_run:
-            ACTU_DIR.mkdir(parents=True, exist_ok=True)
-            (ACTU_DIR / f"{slug}.html").write_text(html_content, encoding='utf-8')
+        # La fiche chantier est canonique : pas de page actualité concurrente (cf. fiche_chantier)
+        fiche = fiche_chantier(slug)
+        if fiche:
+            url_entree = f"/realisations/{fiche}"
+            print(f"  ↷ {slug} : fiche chantier existante → /realisations/{fiche} (aucune page actualité créée)")
+        else:
+            url_entree = f"actualites/{slug}.html"
+            html_content = build_html(post_data)
+            if not args.dry_run:
+                ACTU_DIR.mkdir(parents=True, exist_ok=True)
+                (ACTU_DIR / f"{slug}.html").write_text(html_content, encoding='utf-8')
 
         new_entries.append({
             'fb_id': fb_id,
@@ -417,13 +443,15 @@ def main():
             'zone': 'Les deux',
             'resume': make_resume(message),
             'image': image_local,
-            'url': f"actualites/{slug}.html",
+            'url': url_entree,
+            **({'canonical_type': 'realisation'} if fiche else {}),
             'published': True,
             'source_facebook': permalien,
             'stats': stats,
         })
         n_new += 1
-        print(f"  ✓ {slug}.html  [{cat}]  {'+image' if image_local else 'sans image'}")
+        if not fiche:
+            print(f"  ✓ {slug}.html  [{cat}]  {'+image' if image_local else 'sans image'}")
 
     # 4. Merge avec existant : remplace ou ajoute
     if not args.dry_run:
