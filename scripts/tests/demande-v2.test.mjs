@@ -201,13 +201,41 @@ ok('confidentialité : nouvel onglet / nouvel utilisateur (pas de session) → a
 ok('confidentialité : session corrompue ou hostile → valeurs typées uniquement', (() => { const m = C.mergeState(null, { contact: { prenom: { x: 1 }, nom: 'A' }, lieu: { adresse: 12, cp: '62500', lat: 'x' }, desc: 5 }); return m.contact.prenom === '' && m.contact.nom === 'A' && m.lieu.adresse === '12' && m.lieu.lat === null && m.devis.desc === ''; })());
 ok('demande en cours : prestations, métiers ou saisie personnelle ; jamais après envoi', !C.hasDraft(C.emptyState(), 0) && C.hasDraft(C.emptyState(), 1) && C.hasDraft(Object.assign(C.emptyState(), { devis: { metiers: ['Vitrerie'], desc: '' } }), 0) && C.hasDraft(Object.assign({}, back, { sent: null }), 0) && !C.hasDraft(back, 0) && !C.hasDraft(Object.assign(C.emptyState(), { sent: {} }), 3));
 ok('UI : écriture séparée localStorage (brouillon) / sessionStorage (données personnelles), plus aucune écriture de l’état complet', /localStorage\.setItem\(STORE, JSON\.stringify\(parts\.draft\)\)/.test(uiSrc) && /sessionStorage\.setItem\(STORE_PII, JSON\.stringify\(parts\.pii\)\)/.test(uiSrc) && !/localStorage\.setItem\(STORE, JSON\.stringify\(state\)\)/.test(uiSrc));
-ok('UI : lien d’entrée avec demande en cours → écran de choix (Reprendre / Nouvelle demande), jamais de pré-remplissage silencieux', /if \(h\.entry && C\.hasDraft\(state, cart \? cart\.count\(\) : 0\)\) \{ pendingEntry = h; start = 'choix'; \}/.test(uiSrc) && /r\.entry = \(!sm && !!\(raw \|\| cm\)\) \|\| raw === 'entretien'/.test(uiSrc) && />Nouvelle demande<\/button>/.test(uiSrc));
+ok('UI : lien d’entrée avec demande en cours → écran de choix (Reprendre / Nouvelle demande), jamais de pré-remplissage silencieux', /if \(h\.entry && C\.hasDraft\(state, cart \? cart\.count\(\) : 0\)\) \{ pendingEntry = h; start = 'choix'; \}/.test(uiSrc) && /r\.entry = \(!sm && !!\(raw \|\| cm[^)]*\)\) \|\| raw === 'entretien'/.test(uiSrc) && />Nouvelle demande<\/button>/.test(uiSrc));
 ok('UI : envoi réussi → identité et adresse retirées de l’état stocké (2 parcours)', (uiSrc.match(/forgetIdentityAfterSend\(\); save\(\);/g) || []).length === 2);
 ok('UI : nouvelle demande (choix de parcours, « Nouvelle demande », « Faire une autre demande ») → état vierge, aucune identité ni adresse recopiée', /if \(state\.sent \|\| C\.hasDraft\(state, cart \? cart\.count\(\) : 0\)\) startClean\(\);/.test(uiSrc) && !/lastIdentity|carryIdentity/.test(uiSrc) && /var entry = pendingEntry; pendingEntry = null; startClean\(\); var to = entry \? applyEntry\(entry\) : 'choix';/.test(uiSrc) && !/var keep = \{ contact: state\.contact/.test(uiSrc));
 ok('UI : « Effacer mes informations » vide l’état, les champs affichés et toutes les clés personnelles de l’appareil', /state = C\.emptyState\(\); pendingEntry = null; clearFields\(\); try \{ C\.purgeDevice\(localStorage, sessionStorage\); \}/.test(uiSrc));
 ok('UI : aucune donnée personnelle dans l’URL (hash = étape + catégorie uniquement)', !/(history\.(push|replace)State\([^)]*(contact|lieu|tel|nom|adresse))/.test(uiSrc) && /'#step=' \+ target \+ \(state\.mode === 'intervention' && state\.fam \? '&cat=' \+ encodeURIComponent\(state\.fam\) : ''\)/.test(uiSrc));
 const choixSrc = (uiSrc.match(/ENTER\.choix = function \(\) \{[\s\S]*?\n  \};/) || [''])[0];
 ok('reprise : la carte « demande en cours » n’affiche aucune donnée personnelle (ni ville, ni nom, ni adresse)', choixSrc.length > 0 && !/state\.lieu\.(ville|adresse|cp)\b|state\.contact/.test(choixSrc.replace(/C\.lieuValid\(state\.lieu\)/g, '')));
+// ---- Bandeau saisonnier → tunnel avec contexte (5812875220)
+// Le client qui clique a déjà exprimé son intention : il ne doit ni revenir au hub, ni rechercher
+// sa prestation, ni voir un parcours de paiement pour une prestation qui n'a pas de prix ferme.
+const CHAUFFAGE = [
+  { name: 'Dépannage & recherche de panne chauffage', slug: 'depannage-recherche-panne-chauffage', price_ttc: 148.01 },
+  { name: 'Entretien chaudière gaz', slug: 'entretien-chaudiere-gaz', price_ttc: 121 },
+  { name: 'Désembouage radiateur', slug: 'desembouage-radiateur', price_ttc: 105 },
+  { name: 'Entretien chaudière fioul', slug: 'entretien-chaudiere-fioul', price_ttc: 178.2 },
+  { name: 'Détartrage circuit chauffage', slug: 'detartrage-circuit', price_ttc: 237 },
+  { name: 'Entretien chaudière fioul gros volume', slug: 'entretien-chaudiere-fioul-gros-volume', price_ttc: 218.9 },
+];
+const cible = C.focusFiltre(CHAUFFAGE, 'entretien');
+ok('intention « entretien » : la famille chauffage est réduite aux 3 prestations d’entretien (gaz, fioul, gros volume)',
+  cible.length === 3 && cible.every((x) => /entretien chaudi/i.test(x.name)));
+ok('le choix gaz / fioul se fait DANS le tunnel : les deux restent proposés',
+  cible.some((x) => /gaz/i.test(x.name)) && cible.some((x) => /fioul/i.test(x.name)));
+ok('intention inconnue ou catalogue modifié : on rend la famille entière, jamais un écran vide',
+  C.focusFiltre(CHAUFFAGE, 'inexistante').length === 6 && C.focusFiltre([], 'entretien').length === 0);
+ok('l’intention est mémorisée dans l’état (elle survit au rechargement, au retour et à la porte tarifs)',
+  'focus' in C.emptyState());
+ok('le moteur lit l’intention dans le lien d’entrée (presta= et sujet=)',
+  /\[#&\]presta=\(\[a-z-\]\+\)/.test(uiSrc) && /\[#&\]sujet=\(\[a-z-\]\+\)/.test(uiSrc) && /state\.focus = h\.presta/.test(uiSrc));
+ok('ramonage et poêle / insert : absents du catalogue → devis, avec métier et description déjà posés',
+  /SUJETS = \{[\s\S]*ramonage:[\s\S]*'poele-insert':[\s\S]*\};/.test(uiSrc) &&
+  /state\.mode = 'devis'[\s\S]{0,400}return h\.step \|\| 'dv-projet';/.test(uiSrc));
+ok('la liste ciblée laisse toujours un retour explicite vers toute la famille',
+  /data-focus-off/.test(uiSrc) && /state\.focus = null; save\(\); renderOffers\(\)/.test(uiSrc));
+
 // ---- Cache immuable /assets/* : accueil et page dédiée doivent pointer la MÊME version d'assets
 const vHome = (home.match(/hc-demande(?:-launch)?\.js\?v=(\d{8}[a-z]?)/) || [])[1];
 const vPage = (cat.match(/hc-demande\.js\?v=(\d{8}[a-z]?)/) || [])[1];

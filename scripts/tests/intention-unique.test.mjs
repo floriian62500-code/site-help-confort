@@ -86,8 +86,13 @@ ok('la page de service ne vend pas le contrat : elle compare et renvoie',
 
 // ── 6. Les points d'entrée marketing visent les URL canoniques
 const home = visible('index.html');
-ok('bandeau d’accueil : le bouton principal vise la page de service canonique',
-  new RegExp('href="/' + CANON_SERVICE + '"[^>]*data-hc-promo-fam="chaudiere"').test(home));
+// Depuis 5812875220, le bandeau est transactionnel : il ouvre le tunnel avec le contexte, il ne
+// renvoie plus vers la page de contenu. Les deux coexistent sans se concurrencer — la page reste
+// la surface éditoriale et la destination des Ads, le tunnel est la transaction.
+ok('bandeau d’accueil : le bouton principal ouvre le tunnel ciblé, pas une page intermédiaire',
+  /href="\/catalogue\.html#cat=chauffage&amp;presta=entretien/.test(home) && !/hcs-cta" href="\/entretien-chaudiere/.test(home));
+ok('la page de service canonique reste atteignable ailleurs (menu, Ads, pages métier)',
+  [...pages].some((f) => f !== CANON_SERVICE && new RegExp('href="[^"]*' + CANON_SERVICE).test(visible(f))));
 const ads = lire('docs/marketing/PAID-ACQUISITION-ENTRETIEN-2026-09.md');
 ok('dossier Ads : aucune destination vers une page qui redirige',
   !/\/entretien-poele-insert/.test(ads) && /\/entretien-chaudiere\.html/.test(ads));

@@ -810,7 +810,11 @@
     var aide = state.precMode === 'aide';
     $('#tab-liste').setAttribute('aria-selected', String(!aide)); $('#tab-aide').setAttribute('aria-selected', String(aide));
     $('#precAide').hidden = !aide; $('#precSearchWrap').hidden = aide;
-    var list = byFam[state.fam] || [], q = C.norm($('#precSearch').value), items = [], reco = null, html = '';
+    var toutes = byFam[state.fam] || [];
+    // Le client est arrivé avec une intention précise : on lui montre d'abord ce qu'il est venu
+    // chercher, avec un moyen visible de revenir à toute la famille. On ne l'oblige pas à chercher.
+    var cible = C.focusFiltre(toutes, state.focus), cibleActive = state.focus && cible.length < toutes.length;
+    var list = cibleActive ? cible : toutes, q = C.norm($('#precSearch').value), items = [], reco = null, html = '';
     if (q.length >= 2) {
       var sr = C.searchOffers(ALL, $('#precSearch').value); items = sr.items;
       head.textContent = items.length ? (sr.approx ? 'Résultats approchants pour « ' : items.length + ' résultat' + (items.length > 1 ? 's' : '') + ' pour « ') + $('#precSearch').value.trim() + ' »' : '';
@@ -828,9 +832,12 @@
         if (!reco) html = '<div class="empty">Un technicien doit voir la situation. <button class="link" type="button" data-switch-devis>Demander un devis gratuit</button>.</div>';
       }
     } else {
-      head.textContent = list.length + ' intervention' + (list.length > 1 ? 's' : '') + ' · prix TTC, fermes sauf mention';
+      head.textContent = cibleActive
+        ? C.focusLibelle(state.focus) + ' · ' + list.length + ' prestation' + (list.length > 1 ? 's' : '') + ' · prix TTC'
+        : list.length + ' intervention' + (list.length > 1 ? 's' : '') + ' · prix TTC, fermes sauf mention';
       var all = state.showAll === state.fam, shown = all ? list : list.filter(function (x, i) { return i < 6 || inCart(x.id); });
       html = shown.map(function (x) { return offerHtml(x); }).join('') + (shown.length < list.length ? '<button type="button" class="more-btn" data-showall>Voir les ' + (list.length - shown.length) + ' autres interventions</button>' : '');
+      if (cibleActive) html += '<p class="alt-line">Besoin d\'autre chose en ' + esc(famName(state.fam).toLowerCase()) + '&nbsp;? <button class="link" type="button" data-focus-off>Voir les ' + toutes.length + ' interventions de la famille</button></p>';
     }
     if (loaded) html += '<p class="alt-line">Vous ne trouvez pas votre besoin&nbsp;? <button class="link" type="button" data-switch-devis>Décrivez votre besoin (devis gratuit)</button></p>';
     off.innerHTML = html;
@@ -938,6 +945,13 @@
   $('#f-precisions').addEventListener('input', function () { state.prise.precisions = this.value; save(); });
 
   // ---------- Devis ----------
+  // Prestations demandées depuis l'accueil mais ABSENTES du catalogue : elles partent en devis,
+  // avec le métier et une description déjà remplis. Aucun parcours de paiement n'est proposé,
+  // puisqu'il n'y a pas de prix ferme à payer (décision Florian du 22/09 : pas d'écriture au catalogue).
+  var SUJETS = {
+    ramonage: { metier: 'Chauffage', nature: 'Entretien', desc: 'Ramonage : cheminée, conduit ou poêle. Merci de me rappeler pour convenir d\'une date et me confirmer le tarif.' },
+    'poele-insert': { metier: 'Chauffage', nature: 'Entretien', desc: 'Entretien de poêle ou d\'insert, ramonage compris. Merci de me rappeler pour convenir d\'une date et me confirmer le tarif.' }
+  };
   var DV_METIERS = [['Plomberie', 'f-plomberie'], ['Chauffage', 'f-chauffage'], ['Électricité', 'f-electricite'], ['Serrurerie', 'f-serrurerie'], ['Vitrerie', 'f-vitrerie'], ['Menuiserie', 'f-menuiserie'], ['Rénovation', 'f-renovation'], ['Salle de bain', 'f-plomberie'], ['Volets', 'f-volets'], ['Adaptation PMR', 'f-pmr'], ['Sinistre assurance', 'f-sinistre'], ['Contrat entretien', 'f-entretien']];
   var NATURES = ['Réparation', 'Remplacement', 'Installation neuve', 'Rénovation', 'Mise aux normes', 'Entretien'];
   ENTER['dv-metier'] = function () {
@@ -1174,6 +1188,7 @@
     if ((el = t.closest('[data-unjoin]'))) { var uid = el.getAttribute('data-unjoin'), ul = cart && cart.lines().filter(function (x) { return x.id === uid; })[0]; if (cart) cart.remove(uid); save(); track('hc_demande_remove', { item: ul && ul.slug, from: 'dv-recap' }); ENTER['dv-recap'](); renderRecap(); toast('« ' + (ul ? ul.name : 'Intervention') + ' » retirée de la demande'); var nx = $('#dvRows [data-unjoin]') || $('#sendDevis'); if (nx) nx.focus(); return; }
     if ((el = t.closest('[data-remove]'))) { var rid = el.getAttribute('data-remove'); if (cart) { var rl = cart.lines().filter(function (x) { return x.id === rid; })[0]; cart.remove(rid); track('hc_demande_remove', { item: rl && rl.slug, from: 'demande' }); toast('« ' + (rl ? rl.name : 'Intervention') + ' » retirée de votre demande'); } save(); renderDemande(); renderRecap(); if (!cart.count()) go('besoin'); return; }
     if ((el = t.closest('[data-clearfam]'))) { state.fam = null; state.prob = null; save(); renderKickers(state.step); renderRecap(); return; }
+    if ((el = t.closest('[data-focus-off]'))) { state.focus = null; save(); renderOffers(); return; }
     if ((el = t.closest('[data-showall]'))) { var nShown = $$('#offers .offer').length; state.showAll = state.fam; save(); renderOffers(); var nxt = $$('#offers .offer-pick')[nShown]; if (nxt) nxt.focus(); return; }
     if ((el = t.closest('[data-prec]'))) { state.precMode = el.getAttribute('data-prec'); $('#precSearch').value = ''; save(); return renderOffers(); }
     if ((el = t.closest('[data-prob]'))) { var pid = el.getAttribute('data-prob'); state.prob = pid; save(); renderOffers(); var np = $('#probChips [data-prob="' + pid + '"]'); if (np) np.focus(); return; }
@@ -1217,8 +1232,13 @@
     var h = location.hash || '', sm = h.match(/step=([a-z-]+)/), cm = h.match(/cat=([^&]+)/), sub = h.match(/[&?]s=(\d)/);
     var raw = sm ? sm[1] : (h === '#intervention' ? 'intervention' : (h === '#devis' ? 'devis' : (h === '#entretien' ? 'entretien' : null)));
     var r = { step: C.legacyStep(raw, sub ? parseInt(sub[1], 10) : null), cat: cm ? decodeURIComponent(cm[1]) : null, entretien: raw === 'entretien' };
+    // Intention précise venue d'un lien d'entrée (bandeau saisonnier de l'accueil) :
+    //   presta=<intention>  → on ouvre la famille ET on cible les prestations correspondantes
+    //   sujet=<intention>   → prestation non vendue au catalogue : devis, contexte déjà rempli
+    var pm = h.match(/[#&]presta=([a-z-]+)/); r.presta = pm && C.focusConnu(pm[1]) ? pm[1] : null;
+    var jm = h.match(/[#&]sujet=([a-z-]+)/); r.sujet = jm ? jm[1] : null;
     if (raw === 'intervention') r.mode = 'intervention'; if (raw === 'devis' || raw === 'entretien') r.mode = 'devis';
-    r.entry = (!sm && !!(raw || cm)) || raw === 'entretien'; // lien d'entrée (accueil, pages métiers) ≠ navigation interne #step=…
+    r.entry = (!sm && !!(raw || cm || r.presta || r.sujet)) || raw === 'entretien'; // lien d'entrée (accueil, pages métiers) ≠ navigation interne #step=…
     var srcm = h.match(/[#&]src=([a-z-]+)/); r.src = C.maintenanceSrc(srcm && srcm[1]); // page d'atterrissage « entretien » (campagnes)
     return r;
   }
@@ -1259,6 +1279,20 @@
     if (h.entry && h.mode === 'intervention' && !h.cat) { state.fam = null; state.prob = null; state.precMode = 'liste'; }
     if (h.cat) { state.mode = 'intervention'; state.fam = h.cat; }
     if (h.entretien && (state.devis.metiers || []).indexOf('Contrat entretien') < 0) state.devis.metiers = (state.devis.metiers || []).concat(['Contrat entretien']).slice(0, 3);
+    // Intention précise : elle est mémorisée dans l'état, donc elle survit à la porte tarifs,
+    // au rechargement et au retour arrière — c'est tout l'intérêt de ne pas la garder dans l'URL seule.
+    if (h.presta) { state.mode = 'intervention'; state.focus = h.presta; state.precMode = 'liste'; }
+    else if (h.cat) { state.focus = null; }
+    // Sujet sans prestation au catalogue (ramonage, poêle/insert) : devis, avec le métier et la
+    // description déjà posés. Le client ne repasse pas par « Que souhaitez-vous faire ? ».
+    if (h.sujet && SUJETS[h.sujet]) {
+      var su = SUJETS[h.sujet];
+      state.mode = 'devis'; state.focus = null;
+      if ((state.devis.metiers || []).indexOf(su.metier) < 0) state.devis.metiers = (state.devis.metiers || []).concat([su.metier]).slice(0, 3);
+      if (!state.devis.nature) state.devis.nature = su.nature;
+      if (!(state.devis.desc || '').trim()) state.devis.desc = su.desc;
+      return h.step || 'dv-projet';
+    }
     return h.step || (h.cat ? 'lieu' : 'choix');
   }
   // Entrée (chargement de la page ou ouverture de l'overlay depuis un CTA) : lien d'entrée avec une demande

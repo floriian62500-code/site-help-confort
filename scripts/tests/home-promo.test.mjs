@@ -13,7 +13,14 @@ const iRes = h.indexOf('<section id="hc-reservation"'), iEndRes = h.indexOf('</s
 const mod = iMod > 0 ? h.slice(iMod, h.indexOf('</section>', iMod)) : '';
 ok('placé juste après « Que souhaitez-vous faire ? », sans le remplacer', iRes > 0 && iMod > iEndRes && h.slice(iEndRes, iMod).replace(/<!--[\s\S]*?-->/g, '').trim() === '</section>' && /Que souhaitez-vous faire \?/.test(h));
 ok('un seul module (pas de carrousel, pas de fenêtre)', (h.match(/id="entretien-saison"/g) || []).length === 1 && !/carousel|setInterval|popup|modal/i.test(mod));
-ok('1 message, 1 bouton principal (chaudière → page d’atterrissage), 2 entrées secondaires (poêle / insert, ramonage)', (mod.match(/<h2\b/g) || []).length === 1 && (mod.match(/class="hcs-cta"/g) || []).length === 1 && /<a class="hcs-cta" href="\/entretien-chaudiere\.html" data-hc-promo-fam="chaudiere">/.test(mod) && (mod.match(/class="hcs-link"/g) || []).length === 2 && /href="\/prestations\/ramonage\.html#poele-insert" data-hc-promo-fam="poele"/.test(mod) && /href="\/prestations\/ramonage\.html" data-hc-promo-fam="ramonage"/.test(mod));
+// 5812875220 : le bandeau n'envoie plus vers des pages de contenu. Le client qui clique a déjà dit
+// ce qu'il voulait : chaque CTA ouvre le tunnel AVEC son contexte, et aucun ne repasse par un hub.
+ok('1 message, 1 bouton principal, 2 entrées secondaires', (mod.match(/<h2\b/g) || []).length === 1 && (mod.match(/class="hcs-cta"/g) || []).length === 1 && (mod.match(/class="hcs-link"/g) || []).length === 2);
+ok('chaudière : ouvre le tunnel sur la famille chauffage, ciblé sur l’entretien', /<a class="hcs-cta" href="\/catalogue\.html#cat=chauffage&amp;presta=entretien&amp;src=home-saison"[^>]*data-hc-promo-fam="chaudiere"/.test(mod));
+ok('poêle / insert : ouvre le tunnel en devis, sujet déjà posé', /href="\/catalogue\.html#devis&amp;sujet=poele-insert&amp;src=home-saison"[^>]*data-hc-promo-fam="poele"/.test(mod));
+ok('ramonage : ouvre le tunnel en devis, sujet déjà posé', /href="\/catalogue\.html#devis&amp;sujet=ramonage&amp;src=home-saison"[^>]*data-hc-promo-fam="ramonage"/.test(mod));
+ok('aucun CTA ne renvoie vers un hub générique ni vers une page intermédiaire', !/href="\/catalogue\.html#(intervention|devis)"/.test(mod) && !/href="\/(entretien-chaudiere|prestations\/ramonage)/.test(mod));
+ok('le bandeau dit ce qui est au prix ferme et ce qui part en devis', /prix ferme en ligne/.test(mod) && /sur devis/.test(mod));
 ok('aucun prix ni téléphone dans le module (source tarifaire : pages dédiées)', !/€|\d+\s?%|tel:|03 66/.test(mod.replace(/<style>[\s\S]*?<\/style>/, '')));
 ok('aucune promesse de délai ni de sécurité inventée', !/sous \d+ ?h|garanti|sécurité|obligatoire|urgent/i.test(mod.replace(/<style>[\s\S]*?<\/style>/, '')));
 ok('mesure : vue (moitié visible, une fois) et clic par famille, GA4 seulement en production et après consentement', /send\('view_home_maintenance_promo'/.test(h) && /send\('click_home_maintenance_promo', \{ module: 'entretien_saison', service_family: a\.getAttribute\('data-hc-promo-fam'\)/.test(h) && /if \(PROD && typeof window\.hcGtag === 'function'\)/.test(h) && /intersectionRatio >= 0\.5/.test(h));

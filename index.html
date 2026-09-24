@@ -825,7 +825,7 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
    <div class="hcs-txt">
     <p class="hcs-kicker"><i aria-hidden="true"></i>Avant l’hiver</p>
     <h2 id="hcSeasonTitle">Entretien et ramonage : préparez votre chauffage</h2>
-    <p class="hcs-sub">Chaudière, poêle ou insert : l’entretien annuel par nos techniciens, attestation ou certificat de ramonage remis.</p>
+    <p class="hcs-sub">Chaudière, poêle ou insert : l’entretien annuel par nos techniciens, attestation ou certificat de ramonage remis. Chaudière : prix ferme en ligne. Poêle, insert et ramonage : sur devis.</p>
     <ul class="hcs-pts">
      <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Chaudière gaz ou fioul</li>
      <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Poêle et insert, ramonage compris</li>
@@ -833,10 +833,10 @@ body.hc-locked-wizard .hc-resa-title{font-size:clamp(1.3rem,2.5vw,1.8rem) !impor
     </ul>
    </div>
    <div class="hcs-actions">
-    <a class="hcs-cta" href="/entretien-chaudiere.html" data-hc-promo-fam="chaudiere">Entretien chaudière <span aria-hidden="true">→</span></a>
+    <a class="hcs-cta" href="/catalogue.html#cat=chauffage&amp;presta=entretien&amp;src=home-saison" data-hc-promo-fam="chaudiere">Entretien chaudière <span aria-hidden="true">→</span></a>
     <div class="hcs-links">
-     <a class="hcs-link" href="/prestations/ramonage.html#poele-insert" data-hc-promo-fam="poele">Poêle ou insert</a>
-     <a class="hcs-link" href="/prestations/ramonage.html" data-hc-promo-fam="ramonage">Ramonage</a>
+     <a class="hcs-link" href="/catalogue.html#devis&amp;sujet=poele-insert&amp;src=home-saison" data-hc-promo-fam="poele">Poêle ou insert</a>
+     <a class="hcs-link" href="/catalogue.html#devis&amp;sujet=ramonage&amp;src=home-saison" data-hc-promo-fam="ramonage">Ramonage</a>
     </div>
    </div>
   </div>
@@ -1035,7 +1035,7 @@ track1.innerHTML = '<div class="hc-logo-card"><span class="cat">Réseau</span><s
  .hcs-cm svg{color:#94a3b8}
  @media(prefers-reduced-motion:reduce){.hcs-card,.hcs-photo img,.hcs-all{transition:none}.hcs-card:hover{transform:none}.hcs-card:hover .hcs-photo img{transform:none}}
  </style>
- <script src="/assets/hc-realisations.js?v=20260922a"></script>
+ <script src="/assets/hc-realisations.js?v=20260924a"></script>
  <script>(function(){
   var SUPA='https://btcbjwqiivhpwoszomhg.supabase.co';
   function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
@@ -1378,7 +1378,7 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
 <script defer src="assets/hc-review.js?v=2"></script>
 <!-- Tunnel « Ma demande » : le lanceur est partagé (assets/hc-demande-launch.js), pas recopié ici.
      Il ouvre la fenêtre premium sur les liens /catalogue… et retombe sur la navigation normale si un fichier ne charge pas. -->
-<script src="assets/hc-demande-launch.js?v=20260922a" defer></script>
+<script src="assets/hc-demande-launch.js?v=20260924a" defer></script>
 <script>
 /* Relance entretien & ramonage (5733153347) : view_home_maintenance_promo (module à moitié visible, une fois) et
    click_home_maintenance_promo (famille chaudiere / poele / ramonage). Consigné dans window.__hcFunnel (recette) ;

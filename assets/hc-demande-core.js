@@ -44,7 +44,29 @@
       contact: { prenom: '', nom: '', tel: '', email: '' },
       prise: { quand: null, date: '', rappel: 'asap', precisions: '' },
       devis: { metiers: [], nature: null, desc: '' },
+      focus: null,   // intention précise venue d'un lien d'entrée (ex. « entretien » depuis le bandeau d'accueil)
       sent: null, _pgPending: null, updatedAt: Date.now() };
+  }
+
+  // ---- Intention précise d'un lien d'entrée -------------------------------------------------
+  // Le bandeau saisonnier de l'accueil envoie le client vers une INTENTION (« entretien »), pas
+  // vers une famille entière : il a déjà dit ce qu'il voulait, on ne le fait pas rechercher.
+  // FOCUS décrit, pour chaque intention, ce qu'on garde dans la liste des prestations.
+  var FOCUS = {
+    entretien: { libelle: 'Entretien de chaudière', mots: ['entretien chaudiere'] }
+  };
+  function focusConnu(f) { return !!(f && FOCUS[f]); }
+  function focusLibelle(f) { return focusConnu(f) ? FOCUS[f].libelle : null; }
+  // Filtre : on ne garde que les prestations qui correspondent à l'intention. Si rien ne correspond
+  // (catalogue modifié, par exemple), on rend la liste entière plutôt qu'un écran vide.
+  function focusFiltre(liste, f) {
+    if (!focusConnu(f) || !Array.isArray(liste)) return liste || [];
+    var mots = FOCUS[f].mots;
+    var gardees = liste.filter(function (s) {
+      var n = norm((s && s.name) || '') + ' ' + norm((s && s.slug) || '').replace(/-/g, ' ');
+      return mots.some(function (m) { return n.indexOf(m) >= 0; });
+    });
+    return gardees.length ? gardees : liste;
   }
 
   // ---- Règle tarifs (P0) : session courante OU identification horodatée < 2 h. Jamais l'identité seule.
@@ -434,7 +456,7 @@
 
   return { AGENCE: AGENCE, PG_TTL_MS: PG_TTL_MS, FLOWS: FLOWS, ALL_STEPS: ALL_STEPS, PRICED_STEPS: PRICED_STEPS, LABELS: LABELS, FAM_HINTS: FAM_HINTS, QUAND: QUAND, RAPPEL: RAPPEL,
     norm: norm, esc: esc, nameOk: nameOk, normPhone: normPhone, phoneOk: phoneOk, phoneDisplay: phoneDisplay, flowIndex: flowIndex, emailOk: emailOk, cpOk: cpOk, descOk: descOk, dateOk: dateOk, lieuValid: lieuValid, contactValid: contactValid,
-    emptyState: emptyState, priceGatePassed: priceGatePassed, isPricedStep: isPricedStep, modeForStep: modeForStep, guardStep: guardStep, nextStep: nextStep, prevStep: prevStep,
+    emptyState: emptyState, priceGatePassed: priceGatePassed, focusConnu: focusConnu, focusLibelle: focusLibelle, focusFiltre: focusFiltre, isPricedStep: isPricedStep, modeForStep: modeForStep, guardStep: guardStep, nextStep: nextStep, prevStep: prevStep,
     progress: progress, legacyStep: legacyStep, haversineKm: haversineKm, zoneFor: zoneFor, zoneText: zoneText, priced: priced, perUnit: perUnit, priceKind: priceKind, eur: eur,
     firmTotal: firmTotal, searchText: searchText, problemsFor: problemsFor, matchProblem: matchProblem, diagFor: diagFor, suggest: suggest, searchNorm: searchNorm, searchOffers: searchOffers, famHasPrices: famHasPrices, agencyStatus: agencyStatus, diagnosticOffer: diagnosticOffer, frDate: frDate, priseText: priseText,
     lineLabel: lineLabel, interventionPayload: interventionPayload, devisPayload: devisPayload, gatePayload: gatePayload, refFromId: refFromId, simulationAllowed: simulationAllowed,

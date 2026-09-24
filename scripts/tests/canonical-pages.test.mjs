@@ -31,7 +31,13 @@ ok('aucune page ne pointe encore vers le doublon', !restes.length, restes.join('
 ok('dossier Ads : plus aucune destination vers le doublon (mention historique tolérée), familles pointées sur les pages canoniques', !/depan59-62\.fr\/entretien-poele-insert|`entretien-poele-insert\.html` →/.test(ads) && ads.includes(RAM + '#poele-insert') && ads.includes(CHAUD));
 
 // ---- Une seule URL canonique côté accueil, sitemap et balises
-ok('accueil : relance saisonnière → pages canoniques uniquement', new RegExp('href="' + CHAUD + '" data-hc-promo-fam="chaudiere"').test(home) && home.includes('href="' + RAM + '#poele-insert" data-hc-promo-fam="poele"'));
+// 5812875220 : le bandeau d'accueil est devenu transactionnel — il ouvre le tunnel avec le contexte
+// au lieu de renvoyer vers les pages de contenu. La règle canonique porte donc désormais sur les
+// pages elles-mêmes (canonical, sitemap, liens internes), pas sur le bandeau.
+ok('accueil : la relance saisonnière ouvre le tunnel avec son contexte, sans page intermédiaire',
+  /href="\/catalogue\.html#cat=chauffage&amp;presta=entretien/.test(home) &&
+  /href="\/catalogue\.html#devis&amp;sujet=poele-insert/.test(home) &&
+  /href="\/catalogue\.html#devis&amp;sujet=ramonage/.test(home));
 ok('sitemap : les deux pages canoniques listées, le doublon retiré', sitemap.includes(CHAUD + ' ') && sitemap.includes(RAM + ' ') && !sitemap.includes('entretien-poele-insert'));
 for (const [nom, f, url] of [['chaudière', 'entretien-chaudiere.html', CHAUD], ['ramonage + poêle / insert', 'prestations/ramonage.html', RAM]]) {
   const s = rd(f);
