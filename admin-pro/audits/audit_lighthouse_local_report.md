@@ -1,6 +1,6 @@
-# 🔦 Audit Lighthouse local — 2026-08-02 06:04
+# 🔦 Audit Lighthouse local — 2026-08-12 04:47
 
-**117 pages auditées** · **7 erreurs** · **70 warnings** · **Score moyen 97/100**
+**117 pages auditées** · **7 erreurs** · **76 warnings** · **Score moyen 97/100**
 
 ## 📊 Résumé par page
 
@@ -10,8 +10,7 @@
 | `maprimeadapt.html` | **84/100** | 0 | 4 |
 | `espace-client-dashboard.html` | **88/100** | 0 | 3 |
 | `notre-equipe.html` | **88/100** | 0 | 3 |
-| `partenaire.html` | **88/100** | 0 | 3 |
-| `fournisseur.html` | **92/100** | 0 | 2 |
+| `partenaire.html` | **92/100** | 0 | 2 |
 | `plombier-coudekerque-branche.html` | **92/100** | 0 | 2 |
 | `plombier-grande-synthe.html` | **92/100** | 0 | 2 |
 | `plombier-saint-martin-boulogne.html` | **92/100** | 0 | 2 |
@@ -32,12 +31,17 @@
 | `blog-porte-claquee-cle-perdue-que-faire.html` | **96/100** | 0 | 1 |
 | `blog-preparer-sa-maison-hiver-checklist.html` | **96/100** | 0 | 1 |
 | `blog-remplacement-chaudiere-gaz-aides-2026.html` | **96/100** | 0 | 1 |
+| `chauffagiste-boulogne-sur-mer.html` | **96/100** | 0 | 1 |
+| `chauffagiste-calais.html` | **96/100** | 0 | 1 |
 | `chauffagiste-coudekerque-branche.html` | **96/100** | 0 | 1 |
 | `chauffagiste-saint-omer.html` | **96/100** | 0 | 1 |
 | `chauffagiste-wimereux.html` | **96/100** | 0 | 1 |
 | `debouchage-canalisation.html` | **96/100** | 0 | 1 |
 | `diagnostic-electrique.html` | **96/100** | 0 | 1 |
+| `electricien-boulogne-sur-mer.html` | **96/100** | 0 | 1 |
+| `electricien-calais.html` | **96/100** | 0 | 1 |
 | `entretien-chaudiere.html` | **96/100** | 0 | 1 |
+| `fournisseur.html` | **96/100** | 0 | 1 |
 | `garanties.html` | **96/100** | 0 | 1 |
 | `nos-metiers.html` | **96/100** | 0 | 1 |
 | `nos-villes.html` | **96/100** | 0 | 1 |
@@ -45,6 +49,8 @@
 | `panne-chaudiere.html` | **96/100** | 0 | 1 |
 | `partenaires.html` | **96/100** | 0 | 1 |
 | `plan-du-site.html` | **96/100** | 0 | 1 |
+| `plombier-boulogne-sur-mer.html` | **96/100** | 0 | 1 |
+| `plombier-calais.html` | **96/100** | 0 | 1 |
 | `plombier-coulogne.html` | **96/100** | 0 | 1 |
 | `plombier-guines.html` | **96/100** | 0 | 1 |
 | `plombier-le-portel.html` | **96/100** | 0 | 1 |
@@ -54,6 +60,8 @@
 | `plombier-wimereux.html` | **96/100** | 0 | 1 |
 | `pro.html` | **96/100** | 0 | 1 |
 | `reseau-help-confort.html` | **96/100** | 0 | 1 |
+| `serrurier-boulogne-sur-mer.html` | **96/100** | 0 | 1 |
+| `serrurier-calais.html` | **96/100** | 0 | 1 |
 | `serrurier-saint-omer.html` | **96/100** | 0 | 1 |
 | `tarifs.html` | **96/100** | 0 | 1 |
 | `urgence.html` | **96/100** | 0 | 1 |
@@ -64,8 +72,6 @@
 | `blog-fenetres-double-vitrage-pvc-alu-bois.html` | **100/100** | 0 | 0 |
 | `blog.html` | **100/100** | 0 | 0 |
 | `carrieres.html` | **100/100** | 0 | 0 |
-| `chauffagiste-boulogne-sur-mer.html` | **100/100** | 0 | 0 |
-| `chauffagiste-calais.html` | **100/100** | 0 | 0 |
 | `chauffagiste-dunkerque.html` | **100/100** | 0 | 0 |
 | `chauffagiste-marck.html` | **100/100** | 0 | 0 |
 | `chauffagiste-outreau.html` | **100/100** | 0 | 0 |
@@ -84,8 +90,6 @@
 | `depannage-saint-pol-sur-mer.html` | **100/100** | 0 | 0 |
 | `depannage-sangatte.html` | **100/100** | 0 | 0 |
 | `devis-express.html` | **100/100** | 0 | 0 |
-| `electricien-boulogne-sur-mer.html` | **100/100** | 0 | 0 |
-| `electricien-calais.html` | **100/100** | 0 | 0 |
 | `electricien-dunkerque.html` | **100/100** | 0 | 0 |
 | `electricien-saint-omer.html` | **100/100** | 0 | 0 |
 | `espace-client.html` | **100/100** | 0 | 0 |
@@ -100,16 +104,12 @@
 | `menuisier-dunkerque.html` | **100/100** | 0 | 0 |
 | `menuisier-saint-omer.html` | **100/100** | 0 | 0 |
 | `nos-prestations.html` | **100/100** | 0 | 0 |
-| `plombier-boulogne-sur-mer.html` | **100/100** | 0 | 0 |
-| `plombier-calais.html` | **100/100** | 0 | 0 |
 | `plombier-dunkerque.html` | **100/100** | 0 | 0 |
 | `plombier-saint-omer.html` | **100/100** | 0 | 0 |
 | `pmr-dunkerque.html` | **100/100** | 0 | 0 |
 | `pmr-saint-omer.html` | **100/100** | 0 | 0 |
 | `processus.html` | **100/100** | 0 | 0 |
 | `realisations.html` | **100/100** | 0 | 0 |
-| `serrurier-boulogne-sur-mer.html` | **100/100** | 0 | 0 |
-| `serrurier-calais.html` | **100/100** | 0 | 0 |
 | `serrurier-dunkerque.html` | **100/100** | 0 | 0 |
 | `serrurier-marck.html` | **100/100** | 0 | 0 |
 | `serrurier-outreau.html` | **100/100** | 0 | 0 |
@@ -164,17 +164,10 @@
 - ⚠️ meta description longue (178 chars)
 - ⚠️ Aucun rel=preconnect
 
-### partenaire.html — 88/100
+### partenaire.html — 92/100
 
 **Warnings :**
 - ⚠️ SEO title court (23 chars, idéal 30–65)
-- ⚠️ og:image manquant
-- ⚠️ Aucun rel=preconnect
-
-### fournisseur.html — 92/100
-
-**Warnings :**
-- ⚠️ og:image manquant
 - ⚠️ Aucun rel=preconnect
 
 ### plombier-coudekerque-branche.html — 92/100
@@ -284,6 +277,16 @@
 **Warnings :**
 - ⚠️ SEO title long (72 chars)
 
+### chauffagiste-boulogne-sur-mer.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (74 chars)
+
+### chauffagiste-calais.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (76 chars)
+
 ### chauffagiste-coudekerque-branche.html — 96/100
 
 **Warnings :**
@@ -309,7 +312,22 @@
 **Warnings :**
 - ⚠️ Aucun rel=preconnect
 
+### electricien-boulogne-sur-mer.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (74 chars)
+
+### electricien-calais.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (71 chars)
+
 ### entretien-chaudiere.html — 96/100
+
+**Warnings :**
+- ⚠️ Aucun rel=preconnect
+
+### fournisseur.html — 96/100
 
 **Warnings :**
 - ⚠️ Aucun rel=preconnect
@@ -348,6 +366,16 @@
 
 **Warnings :**
 - ⚠️ Aucun rel=preconnect
+
+### plombier-boulogne-sur-mer.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (67 chars)
+
+### plombier-calais.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (72 chars)
 
 ### plombier-coulogne.html — 96/100
 
@@ -394,6 +422,16 @@
 **Warnings :**
 - ⚠️ meta description longue (169 chars)
 
+### serrurier-boulogne-sur-mer.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (70 chars)
+
+### serrurier-calais.html — 96/100
+
+**Warnings :**
+- ⚠️ SEO title long (72 chars)
+
 ### serrurier-saint-omer.html — 96/100
 
 **Warnings :**
@@ -418,8 +456,6 @@
 - blog-fenetres-double-vitrage-pvc-alu-bois.html
 - blog.html
 - carrieres.html
-- chauffagiste-boulogne-sur-mer.html
-- chauffagiste-calais.html
 - chauffagiste-dunkerque.html
 - chauffagiste-marck.html
 - chauffagiste-outreau.html
@@ -438,8 +474,6 @@
 - depannage-saint-pol-sur-mer.html
 - depannage-sangatte.html
 - devis-express.html
-- electricien-boulogne-sur-mer.html
-- electricien-calais.html
 - electricien-dunkerque.html
 - electricien-saint-omer.html
 - espace-client.html
@@ -454,16 +488,12 @@
 - menuisier-dunkerque.html
 - menuisier-saint-omer.html
 - nos-prestations.html
-- plombier-boulogne-sur-mer.html
-- plombier-calais.html
 - plombier-dunkerque.html
 - plombier-saint-omer.html
 - pmr-dunkerque.html
 - pmr-saint-omer.html
 - processus.html
 - realisations.html
-- serrurier-boulogne-sur-mer.html
-- serrurier-calais.html
 - serrurier-dunkerque.html
 - serrurier-marck.html
 - serrurier-outreau.html

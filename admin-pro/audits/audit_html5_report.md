@@ -1,4 +1,4 @@
-# Audit HTML5 — 2026-08-02 06:04
+# Audit HTML5 — 2026-08-12 04:47
 
 > Audit local rapide HTML5 + a11y de base. Lancement : `python3 admin-pro/audits/audit_html5.py`
 > ⚠️ Ce n'est pas un substitut au validateur W3C officiel, mais il pré-filtre les erreurs évidentes.
@@ -47,7 +47,7 @@
 ### `index.html`
 
 - ❌ 1 id(s) dupliqué(s) : #hc-avis-live×2
-- ℹ️ 20 <img> avec alt vide (OK si décoratif)
+- ℹ️ 18 <img> avec alt vide (OK si décoratif)
 
 ### `blog-cout-renovation-salle-de-bain.html`
 
@@ -98,11 +98,11 @@
 
 ### `a-propos.html`
 
-- ℹ️ 11 <img> avec alt vide (OK si décoratif)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `actualites.html`
 
-- ℹ️ 11 <img> avec alt vide (OK si décoratif)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `agence-dunkerque.html`
 
@@ -158,11 +158,11 @@
 
 ### `chauffagiste-boulogne-sur-mer.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `chauffagiste-calais.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `chauffagiste-coudekerque-branche.html`
 
@@ -170,7 +170,7 @@
 
 ### `chauffagiste-dunkerque.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `chauffagiste-marck.html`
 
@@ -182,7 +182,7 @@
 
 ### `chauffagiste-saint-omer.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `chauffagiste-wimereux.html`
 
@@ -190,11 +190,11 @@
 
 ### `contact.html`
 
-- ℹ️ 20 <img> avec alt vide (OK si décoratif)
+- ℹ️ 18 <img> avec alt vide (OK si décoratif)
 
 ### `contrats-entretien.html`
 
-- ℹ️ 11 <img> avec alt vide (OK si décoratif)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `debouchage-canalisation.html`
 
@@ -210,19 +210,19 @@
 
 ### `depannage-boulogne-sur-mer.html`
 
-- ℹ️ 11 <img> avec alt vide (OK si décoratif)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `depannage-calais.html`
 
-- ℹ️ 11 <img> avec alt vide (OK si décoratif)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `depannage-coquelles.html`
 
-- ℹ️ 11 <img> avec alt vide (OK si décoratif)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `depannage-dunkerque.html`
 
-- ℹ️ 11 <img> avec alt vide (OK si décoratif)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `depannage-gravelines.html`
 
@@ -238,31 +238,31 @@
 
 ### `depannage-saint-omer.html`
 
-- ℹ️ 11 <img> avec alt vide (OK si décoratif)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `depannage-saint-pol-sur-mer.html`
 
-- ℹ️ 11 <img> avec alt vide (OK si décoratif)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `depannage-sangatte.html`
 
-- ℹ️ 11 <img> avec alt vide (OK si décoratif)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `electricien-boulogne-sur-mer.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `electricien-calais.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `electricien-dunkerque.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `electricien-saint-omer.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `entretien-chaudiere.html`
 
@@ -302,15 +302,15 @@
 
 ### `mentions-legales.html`
 
-- ℹ️ 11 <img> avec alt vide (OK si décoratif)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `menuisier-dunkerque.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `menuisier-saint-omer.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `nos-metiers.html`
 
@@ -342,11 +342,11 @@
 
 ### `plombier-boulogne-sur-mer.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `plombier-calais.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `plombier-coulogne.html`
 
@@ -354,7 +354,7 @@
 
 ### `plombier-dunkerque.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `plombier-guines.html`
 
@@ -374,7 +374,7 @@
 
 ### `plombier-saint-omer.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `plombier-teteghem.html`
 
@@ -386,11 +386,11 @@
 
 ### `pmr-dunkerque.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `pmr-saint-omer.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `pro.html`
 
@@ -402,7 +402,7 @@
 
 ### `realisations.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `remplacement-chauffe-eau.html`
 
@@ -414,11 +414,11 @@
 
 ### `serrurier-boulogne-sur-mer.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `serrurier-calais.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `serrurier-coudekerque-branche.html`
 
@@ -426,7 +426,7 @@
 
 ### `serrurier-dunkerque.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `serrurier-marck.html`
 
@@ -438,7 +438,7 @@
 
 ### `serrurier-saint-omer.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `serrurier-wimereux.html`
 
@@ -454,11 +454,11 @@
 
 ### `travaux-dunkerque.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `travaux-saint-omer.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `urgence.html`
 
@@ -466,23 +466,23 @@
 
 ### `vitrier-dunkerque.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `vitrier-saint-omer.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `volets-dunkerque.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `volets-saint-omer.html`
 
-- ℹ️ 12 <img> avec alt vide (OK si décoratif)
+- ℹ️ 10 <img> avec alt vide (OK si décoratif)
 
 ### `zones-intervention.html`
 
-- ℹ️ 20 <img> avec alt vide (OK si décoratif)
+- ℹ️ 18 <img> avec alt vide (OK si décoratif)
 
 ## ✅ Pages sans erreur ni warning
 

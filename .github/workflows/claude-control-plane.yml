@@ -1,0 +1,75 @@
+name: Claude Control Plane
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
+
+concurrency:
+  group: claude-control-plane
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    outputs:
+      configured: ${{ steps.auth.outputs.configured }}
+    steps:
+      - id: auth
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -n "$ANTHROPIC_API_KEY" ]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::error::ANTHROPIC_API_KEY is not configured in GitHub Actions secrets."
+            exit 1
+          fi
+
+  execute:
+    needs: preflight
+    if: needs.preflight.outputs.configured == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: recette
+          fetch-depth: 0
+
+      - name: Run Claude control-plane
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            You are the technical executor for HELP CONFORT Saint-Omer / Dunkerque.
+            Read docs/control/README.md and docs/control/PROJECT_STATE.json first.
+            Inspect docs/control/inbox/chatgpt/ and process the highest-priority OPEN instruction not already completed in docs/control/outbox/claude/.
+            CP-0001 is the bootstrap instruction if still OPEN.
+            Execute real work, tests and proofs. Do not stop at analysis.
+            Never deploy production, activate LIVE payments, mutate sensitive production data, bypass security, commit secrets, force-push, or perform destructive DB/Git operations without the documented human gate.
+            All visible site changes must remain on recette and go through /recette.html.
+            Publish a complete response in docs/control/outbox/claude/<message_id>.md with ACK, actions, files, tests, SHA/push or workflow evidence, deployments, proofs, anomalies, gates, needs_human and next action.
+            Update docs/control/runner-status.json heartbeat/state/current_action/last_action_id/last_outbox_id/last_error/consecutive_failures.
+            If no OPEN instruction exists, update runner-status.json heartbeat and exit cleanly.
+          claude_args: '--max-turns 80'
+
+      - name: Persist control-plane outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- docs/control; then
+            echo "No control-plane changes to persist."
+            exit 0
+          fi
+          git config user.name "helpconfort-control-plane[bot]"
+          git config user.email "helpconfort-control-plane[bot]@users.noreply.github.com"
+          git add docs/control
+          git commit -m "chore(control): persist Claude runner output [skip ci]"
+          git push origin HEAD:recette

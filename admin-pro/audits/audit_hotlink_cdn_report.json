@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-02T06:05:22",
+  "generated_at": "2026-08-12T04:48:53",
   "scanned_html": 116,
-  "scanned_js": 40,
+  "scanned_js": 38,
   "total_hosts": 75,
   "by_class": {
     "self": [
@@ -1303,14 +1303,19 @@
     },
     {
       "host": "{s}.basemaps.cartocdn.com",
-      "occurrences": 1,
-      "image_occurrences": 1,
+      "occurrences": 2,
+      "image_occurrences": 2,
       "files": [
-        "assets/hc-map-zones.js"
+        "assets/hc-map-zones.js",
+        "assets/hc-mini-zone.js"
       ],
       "examples": [
         {
           "file": "assets/hc-map-zones.js",
+          "url": "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+        },
+        {
+          "file": "assets/hc-mini-zone.js",
           "url": "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
         }
       ]
