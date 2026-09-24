@@ -20,7 +20,7 @@
 | Stocker un jeton | authentification par `gh auth git-credential` (trousseau macOS) ; **aucun PAT dans le dépôt ni dans le script** |
 | Committer pendant une édition | anti-rebond de 180 s, plus refus si `index.lock`, rebase, merge, cherry-pick ou bisect en cours |
 | Tourner deux fois en parallèle | verrou atomique `autopush.lock` (répertoire), repris automatiquement s'il est figé depuis plus de 10 min |
-| Capturer un état intermédiaire pendant un lot | verrou de session `autopush.worksession` : ni commit ni push tant qu'il est posé, expiration de sécurité à 90 min (voir plus bas) |
+| Capturer un état intermédiaire pendant un lot | verrou de session `autopush.worksession` : ni commit ni push tant qu'il est posé, préavis 15 min avant, expiration de sécurité à 90 min (voir plus bas) |
 
 ## Verrou de session de travail (pendant un lot)
 
@@ -45,6 +45,17 @@ scripts/ops/worksession.sh renew
 # savoir où on en est
 scripts/ops/worksession.sh status
 ```
+
+### Le déroulé d'un lot, en trois temps
+
+```
+start  →  (renew autant que nécessaire)  →  stop
+```
+
+Depuis la v3.3 du démon (24/09), **on est prévenu 15 minutes avant l'expiration** : une notification
+et une ligne de journal, **une seule fois** par session. Prévenir ne prolonge rien — c'est un rappel,
+pas un renouvellement. Le TTL de 90 minutes reste entier, et il n'existe aucun renouvellement
+automatique : un verrou ne peut pas se prolonger tout seul indéfiniment, c'est voulu.
 
 ⚠️ **Un lot de plus de 90 minutes doit se prolonger.** Le 2026-09-23 à 22 h 11, le verrou a expiré
 en plein travail : le mécanisme a fonctionné exactement comme prévu — il refuse de geler les

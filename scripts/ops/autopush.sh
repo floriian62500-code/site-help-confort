@@ -1,6 +1,7 @@
 #!/bin/bash
 # ─────────────────────────────────────────────────────────────────────────────
-# AUTO-PUSH HELP Confort — v3.2 (2026-09-23 : verrou de session de travail, directive 5796732231 §5)
+# AUTO-PUSH HELP Confort — v3.3 (2026-09-24 : préavis avant expiration du verrou, directive 5812637851 §3)
+#                            v3.2 (2026-09-23 : verrou de session de travail, directive 5796732231 §5)
 #                            v3.1 (2026-09-22 : preuve de vie) · v3 (2026-09-20, directive 5732805778)
 #
 # Ce que fait ce script, toutes les 60 s :
@@ -48,6 +49,7 @@ LOCK="$SUPPORT/autopush.lock"        # répertoire = verrou atomique
 OFF="$SUPPORT/autopush.off"
 WORKSESSION="$SUPPORT/autopush.worksession"   # verrou de lot (voir en-tête) ; le dépôt peut aussi en porter un
 WORKSESSION_TTL=5400                          # 90 min : au-delà, le verrou est considéré abandonné
+WORKSESSION_PREAVIS=900                       # 15 min avant l'expiration, on prévient (une seule fois)
 
 DRY=0; ONCE=0
 for a in "$@"; do
@@ -84,9 +86,22 @@ if verrou_actif; then
   # Preuve de vie quand même : en lot, le démon est vivant, il attend. La surveillance ne doit pas
   # crier à la panne (c'est exactement l'erreur commise le 2026-09-20 avec l'arrêt d'urgence).
   touch "$SUPPORT/autopush.heartbeat" 2>/dev/null
+
+  # Préavis d'expiration (5812637851 §3) : le 2026-09-23 à 22 h 11, le verrou a lâché en plein lot
+  # sans que personne soit prévenu. On alerte UNE fois, 15 min avant — pas de renouvellement
+  # automatique, le TTL de secours reste entier : c'est un rappel, pas un prolongement.
+  RESTE=$(( WORKSESSION_TTL - VERROU_AGE ))
+  PREAVIS_MARQUE="$SUPPORT/autopush.worksession.preavis"
+  if [ "$RESTE" -le "$WORKSESSION_PREAVIS" ] && [ ! -f "$PREAVIS_MARQUE" ]; then
+    touch "$PREAVIS_MARQUE"
+    log "⏳ le verrou de session expire dans $((RESTE / 60)) min — « worksession.sh renew » pour le prolonger"
+    notify "Auto-push HELP Confort" "Verrou de session : expiration dans $((RESTE / 60)) min. renew pour prolonger."
+  fi
+
   log "⏸ session de travail en cours depuis ${VERROU_AGE}s ($(head -1 "$VERROU_FICHIER" 2>/dev/null)) — ni commit ni push"
   exit 0
 fi
+rm -f "$SUPPORT/autopush.worksession.preavis" 2>/dev/null   # plus de session : le préavis se réarme
 
 # ── Preuve de vie pour la surveillance (scripts/automation/monitoring-uptime.sh) : un passage actif
 #    la rafraîchit même quand il n'y a rien à pousser. En pause, elle vieillit : c'est voulu.

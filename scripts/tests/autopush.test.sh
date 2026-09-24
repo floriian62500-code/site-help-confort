@@ -177,6 +177,26 @@ if [ -f "$RENEW" ]; then
   unset HC_SUPPORT HC_REPO
 fi
 
+# 10f. Préavis avant expiration : on est prévenu 15 min avant, UNE seule fois, et le TTL reste entier.
+git checkout -q -- . 2>/dev/null; rm -f "$BAC/support/autopush.state" "$BAC/support/autopush.worksession.preavis"
+AVANT_P=$(git rev-parse HEAD)
+printf 'lot qui va expirer\n' > "$BAC/support/autopush.worksession"
+# on vieillit le verrou jusqu'à la zone de préavis (TTL 5400 - 900 = 4500 s), sans l'expirer
+touch -t "$(date -v-80M '+%Y%m%d%H%M' 2>/dev/null || date -d '80 minutes ago' '+%Y%m%d%H%M')" "$BAC/support/autopush.worksession"
+run
+grep -q 'le verrou de session expire dans' "$LOG" && ok "préavis : l'expiration proche est annoncée" || ko "préavis" "aucune alerte journalisée"
+[ -f "$BAC/support/autopush.worksession.preavis" ] && ok "préavis : marqué, pour ne pas alerter à chaque minute" || ko "préavis" "pas de marque"
+N1=$(grep -c 'le verrou de session expire dans' "$LOG")
+run; run
+N2=$(grep -c 'le verrou de session expire dans' "$LOG")
+[ "$N1" = "$N2" ] && ok "préavis : une seule alerte, même après plusieurs passages" || ko "préavis répété" "$N1 → $N2"
+[ "$(git rev-parse HEAD)" = "$AVANT_P" ] && ok "préavis : prévenir ne prolonge rien, le verrou tient toujours" || ko "préavis" "le démon a committé"
+# et le TTL de secours reste entier : au-delà, ça expire quand même
+touch -t 202001010000 "$BAC/support/autopush.worksession"; rm -f "$BAC/support/autopush.state"
+echo "encore" > fichier.txt; run
+[ ! -f "$BAC/support/autopush.worksession" ] && ok "préavis : le TTL de secours n'est pas désarmé pour autant" || ko "TTL" "le verrou n'a pas expiré"
+rm -f "$BAC/support/autopush.worksession.preavis"
+
 # 10e. Le verrou de session et l'arrêt d'urgence restent deux choses distinctes
 grep -q 'autopush.off' "$SRC" && grep -q 'autopush.worksession' "$SRC" \
   && ok "arrêt d'urgence et verrou de session coexistent (mécanismes séparés)" || ko "mécanismes séparés" "l'un des deux manque"

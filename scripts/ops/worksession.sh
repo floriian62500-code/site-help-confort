@@ -38,6 +38,7 @@ case "${1:-status}" in
   start)
     LIBELLE="${2:-lot en cours}"
     printf '%s — depuis %s (pid %s)\n' "$LIBELLE" "$(date '+%Y-%m-%d %H:%M:%S')" "$$" > "$VERROU"
+    rm -f "$SUPPORT/autopush.worksession.preavis" 2>/dev/null   # nouveau lot : le préavis se réarme
     echo "🔒 session de travail ouverte : $LIBELLE"
     echo "   l'auto-sauvegarde ne committera ni ne poussera jusqu'à « worksession.sh stop »"
     echo "   (expiration automatique au bout de $((TTL / 60)) min si on oublie)"
@@ -46,6 +47,7 @@ case "${1:-status}" in
     if [ -f "$VERROU" ]; then
       A=$(age "$VERROU")
       touch "$VERROU"
+      rm -f "$SUPPORT/autopush.worksession.preavis" 2>/dev/null   # prolongée : le préavis se réarme
       echo "🔄 session prolongée (elle courait depuis ${A}s) — encore $((TTL / 60)) min"
     else
       echo "⚠️ aucune session en cours : rien à prolonger (utiliser « start »)" >&2
