@@ -60,23 +60,40 @@ async function run() {
   (nosp.includes('id="nvLgAdresse"') && /nvLgAdresse[^>]*data-autocomplete-skip|data-autocomplete-skip[^>]*id="nvLgAdresse"/.test(nosp)) ? ok('Modale tarifs : adresse skip (CP/ville non wipes)') : ko('Modale tarifs adresse', 'skip absent');
   // 11. Entrée transactionnelle principale = « Demander une intervention » → module (vocabulaire demande, pas commande)
   (home.includes('Demander une intervention') && home.includes('/catalogue') && !home.includes('Décrire mon besoin')) ? ok('Entrée principale = module (Demander une intervention)') : ko('Entrée module', 'CTA principal ne pointe pas le module');
-  // 12. Accueil : les CTA ouvrent la fenêtre premium (module chargé à la demande), avec repli navigation
+  // 12. Accueil : les CTA ouvrent la fenêtre premium (module chargé à la demande), avec repli navigation.
+  // Depuis le 23/09, l'ouverture n'est plus recopiée dans la page : elle vit dans le lanceur partagé
+  // assets/hc-demande-launch.js, que l'accueil charge. On vérifie donc la chaîne réelle.
   const modCss = await status('/assets/hc-demande.css');
-  (home.includes('HcDemande.open(') && home.includes('/assets/hc-demande.js') && modCss===200)
-    ? ok('Accueil : tunnel en fenêtre premium (chargement à la demande)')
-    : ko('Accueil fenêtre premium', 'ouverture depuis la home absente (CSS HTTP '+modCss+')');
+  const launch = await (await fetch(BASE + '/assets/hc-demande-launch.js?z=' + Date.now())).text();
+  (/src="[^"]*assets\/hc-demande-launch\.js/.test(home) && launch.includes('HcDemande.open(') && launch.includes('/assets/hc-demande.js') && modCss === 200)
+    ? ok('Accueil : tunnel en fenêtre premium (lanceur partagé, chargement à la demande)')
+    : ko('Accueil fenêtre premium', 'chaîne accueil → lanceur → module incomplète (CSS HTTP ' + modCss + ')');
 
   // 13. Campagnes « entretien » : les prix de la page d'atterrissage chaudière = catalogue + contrats en base
   try {
     const H = { apikey: KEY, Authorization: 'Bearer ' + KEY };
     const fmt = n => Number(n).toLocaleString('fr-FR', { minimumFractionDigits: Number.isInteger(Number(n)) ? 0 : 2, maximumFractionDigits: 2 });
-    const svc = await (await fetch(`${SUPA}/rest/v1/v_services_public?select=slug,price_ttc&slug=like.entretien-chaudiere*`, { headers: H })).json();
+    // La landing qui récitait les neuf prix a été supprimée le 24/09 : plus aucune page ne les
+    // écrit en dur, et c'est voulu (un seul endroit dit les prix, la page contrats, qui les lit dans
+    // la base). Le contrôle en ligne devient donc plus utile : vérifier que le relevé servant de
+    // référence aux tests hors ligne (data/contrats-tarifs.json) n'a pas dérivé du catalogue réel.
+    const ref = JSON.parse(await (await fetch(BASE + '/data/contrats-tarifs.json', { headers: { 'Cache-Control': 'no-store' } })).text());
+    const svc = await (await fetch(`${SUPA}/rest/v1/v_services_public?select=slug,name,price_ttc&slug=like.entretien-chaudiere*`, { headers: H })).json();
     const off = await (await fetch(`${SUPA}/rest/v1/v_contract_offers?select=slug,price_ttc_month&energy=in.(gaz,fioul)`, { headers: H })).json();
-    const page = await (await fetch(BASE + '/entretien-chaudiere.html', { headers: { 'Cache-Control': 'no-store' } })).text();
-    const want = svc.map(x => fmt(x.price_ttc) + ' € TTC').concat(off.map(x => fmt(Number(x.price_ttc_month).toFixed(2)) + ' €/mois'));
-    const missing = want.filter(w => !page.includes(w));
-    want.length >= 9 && !missing.length ? ok('Landing entretien chaudière : ' + want.length + ' prix = base (catalogue + contrats)') : ko('Landing entretien chaudière : prix ≠ base', missing.join(', ') || 'base incomplète');
-  } catch (e) { ko('Landing entretien chaudière : prix', e.message); }
+    const derive = [];
+    for (const o of off) {
+      const attendu = ref.contrats_ttc_mois[o.slug];
+      if (attendu === undefined) derive.push(`contrat ${o.slug} absent du relevé`);
+      else if (Number(attendu).toFixed(2) !== Number(o.price_ttc_month).toFixed(2)) derive.push(`contrat ${o.slug} : relevé ${attendu} ≠ base ${o.price_ttc_month}`);
+    }
+    for (const x of svc) {
+      const attendu = ref.prestations_ponctuelles_ttc[x.name];
+      if (attendu !== undefined && Number(attendu).toFixed(2) !== Number(x.price_ttc).toFixed(2)) derive.push(`prestation ${x.name} : relevé ${attendu} ≠ base ${x.price_ttc}`);
+    }
+    off.length >= 6 && !derive.length
+      ? ok(`Relevé tarifaire = catalogue (${off.length} contrats, ${svc.length} prestations)`)
+      : ko('Relevé tarifaire dérivé du catalogue', derive.join(' | ') || 'catalogue vide');
+  } catch (e) { ko('Relevé tarifaire : comparaison impossible', e.message); }
   console.log(`\nRÉSULTAT : ${pass} PASS / ${fail} FAIL`);
   process.exit(fail > 0 ? 1 : 0);
 }

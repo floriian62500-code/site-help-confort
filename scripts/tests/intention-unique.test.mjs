@@ -10,7 +10,9 @@
  *
  * Règle tenue ici :
  *   · l'offre de CONTRAT ne se vend que sur /contrats-entretien.html ;
- *   · le SERVICE entretien a une seule page commerciale : /entretien-chaudiere.html ;
+ *   · le SERVICE entretien a une seule page commerciale : /chauffagiste-saint-omer.html
+ *     (24/09 : la landing autonome /entretien-chaudiere.html a été supprimée, elle doublonnait
+ *     cette page, la page contrats et le catalogue) ;
  *   · les autres pages peuvent mentionner l'offre et y renvoyer, jamais la revendre.
  *
  *   node scripts/tests/intention-unique.test.mjs
@@ -21,7 +23,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const CANON_CONTRAT = 'contrats-entretien.html';
-const CANON_SERVICE = 'entretien-chaudiere.html';
+const CANON_SERVICE = 'chauffagiste-saint-omer.html';
 let pass = 0, fail = 0;
 const ok = (l, c, d) => { if (c) { pass++; console.log('  ✅ ' + l); } else { fail++; console.log('  ❌ ' + l); if (d) console.log('     ' + d); } };
 const lire = (p) => readFileSync(join(ROOT, p), 'utf8');
@@ -65,37 +67,42 @@ for (const f of pages) {
 ok(`le repère de prix affiché ailleurs est unique et TTC (${[...reperes].join(', ') || '—'})`,
   reperes.size <= 1 && (reperes.size === 0 || reperes.has('9,90')));
 
-// ── 4. Les pages métier renvoient vers les deux pages canoniques, sans les concurrencer
+// ── 4. Les pages métier portent l'entretien et les contrats, sans les revendre
 const metiers = ['chauffagiste-saint-omer.html', 'chauffagiste-dunkerque.html', 'chauffagiste-calais.html', 'chauffagiste-boulogne-sur-mer.html'];
 for (const f of metiers) {
   const v = visible(f);
-  ok(`${f.replace('.html', '')} : renvoie vers les deux pages canoniques, sans vendre`,
-    new RegExp('href="[^"]*' + CANON_CONTRAT).test(v) && new RegExp('href="[^"]*' + CANON_SERVICE).test(v) &&
+  ok(`${f.replace('.html', '')} : renvoie vers les contrats et ouvre l'entretien dans le tunnel, sans vendre`,
+    new RegExp('href="[^"]*' + CANON_CONTRAT).test(v) &&
+    /href="catalogue\.html#cat=chauffage&amp;presta=entretien/.test(v) &&
     !/Souscrire (BASIC|CONFORT|SÉCURITÉ)/.test(v));
 }
 
-// ── 5. La page de service reste la page commerciale de l'intention, et n'est pas redirigée
+// ── 5. La page de service est la page Chauffage, et elle n'est pas redirigée
 const redirects = lire('_redirects');
-ok('la page de service n’est pas redirigée (c’est la destination des Ads et du bandeau d’accueil)',
+ok('la page de service n’est pas redirigée (c’est la destination des Ads et de la redirection de l’ancienne landing)',
   !new RegExp('^/' + CANON_SERVICE.replace('.html', '') + '(\\.html)?\\s+\\S+\\s+30', 'm').test(redirects));
 ok('la page de service se déclare canonique d’elle-même',
   new RegExp('<link rel="canonical" href="https://depan59-62\\.fr/' + CANON_SERVICE + '"').test(lire(CANON_SERVICE)));
-ok('la page de service ne vend pas le contrat : elle compare et renvoie',
+ok('la page de service ne vend pas le contrat : elle présente les formules et renvoie',
   !/Souscrire (BASIC|CONFORT|SÉCURITÉ)/.test(visible(CANON_SERVICE)) &&
   new RegExp('href="[^"]*' + CANON_CONTRAT).test(visible(CANON_SERVICE)));
+// La landing supprimée ne doit pas se reformer ailleurs : aucune autre page ne reprend son rôle.
+ok('la landing autonome supprimée n’est reconstruite nulle part',
+  !pages.includes('entretien-chaudiere.html') &&
+  !pages.some((f) => /data-hc-cta="landing_chaudiere_(hero|side)"/.test(lire(f))));
 
 // ── 6. Les points d'entrée marketing visent les URL canoniques
 const home = visible('index.html');
 // Depuis 5812875220, le bandeau est transactionnel : il ouvre le tunnel avec le contexte, il ne
-// renvoie plus vers la page de contenu. Les deux coexistent sans se concurrencer — la page reste
-// la surface éditoriale et la destination des Ads, le tunnel est la transaction.
+// renvoie plus vers une page intermédiaire. Depuis le 24/09, il n'y a plus de page intermédiaire
+// du tout pour l'entretien : la page Chauffage présente, le tunnel transige.
 ok('bandeau d’accueil : le bouton principal ouvre le tunnel ciblé, pas une page intermédiaire',
   /href="\/catalogue\.html#cat=chauffage&amp;presta=entretien/.test(home) && !/hcs-cta" href="\/entretien-chaudiere/.test(home));
-ok('la page de service canonique reste atteignable ailleurs (menu, Ads, pages métier)',
+ok('la page de service canonique reste atteignable ailleurs (menu, Ads, pages liées)',
   [...pages].some((f) => f !== CANON_SERVICE && new RegExp('href="[^"]*' + CANON_SERVICE).test(visible(f))));
 const ads = lire('docs/marketing/PAID-ACQUISITION-ENTRETIEN-2026-09.md');
-ok('dossier Ads : aucune destination vers une page qui redirige',
-  !/\/entretien-poele-insert/.test(ads) && /\/entretien-chaudiere\.html/.test(ads));
+ok('dossier Ads : aucune destination vers une page qui redirige ou qui n’existe plus',
+  !/\/entretien-poele-insert/.test(ads) && /\/chauffagiste-saint-omer\.html/.test(ads));
 
 // ── 7. Les trois boutons du bandeau saisonnier mènent chacun à SON intention (5812875220)
 // Le défaut corrigé : quel que soit le bouton cliqué, un brouillon plus ancien (Plomberie) reprenait

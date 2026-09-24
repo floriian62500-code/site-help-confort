@@ -80,5 +80,6 @@ contenu en deux colonnes avec encart collant, FAQ `<details>`, avis vérifiés).
 | Date | Décision |
 |---|---|
 | 2026-09-20 | `/entretien-chaudiere.html` (existante depuis le 2026-05-17) confirmée **canonique** pour l'entretien chaudière et passée au gabarit premium. |
+| 2026-09-24 | `/entretien-chaudiere.html` **supprimée** (décision Florian) : elle doublonnait la page Chauffage, la page contrats et le catalogue. La canonique de l'intention devient `/chauffagiste-saint-omer.html` ; la demande passe par le tunnel `#cat=chauffage&presta=entretien` ; 301 préparée, avec et sans `.html`. La page était **en ligne et dans le sitemap de production** : la redirection doit voyager dans le même lot que la suppression. |
 | 2026-09-20 | `/entretien-poele-insert.html` (créée le 2026-09-19) **fusionnée** dans `/prestations/ramonage.html` (§ `#poele-insert`) puis redirigée en 301. |
 | 2026-09-20 | Doublons hérités documentés : `/actualites/<date>-<slug>` ↔ `/realisations/<slug>`, gabarits `/fournisseur.html` et `/partenaire.html` dans le sitemap. |

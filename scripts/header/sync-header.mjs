@@ -38,7 +38,7 @@ export function sectionOf(p) {
   if (p === 'index.html') return 'accueil';
   if (/^(zones-intervention|nos-villes|agence-[a-z-]+|depannage-[a-z-]+)\.html$/.test(p)) return 'zones';
   if (/^(plombier|chauffagiste|electricien|serrurier|vitrier|menuisier|travaux|volets|pmr)-[a-z-]+\.html$/.test(p)
-    || /^(nos-metiers|contrats-entretien|entretien-chaudiere|panne-chaudiere|debouchage-canalisation|diagnostic-electrique|ouverture-porte-claquee)\.html$/.test(p)) return 'metiers';
+    || /^(nos-metiers|contrats-entretien|panne-chaudiere|debouchage-canalisation|diagnostic-electrique|ouverture-porte-claquee)\.html$/.test(p)) return 'metiers';
   if (/^prestations\//.test(p) || /^(nos-prestations|devis-express|aides|maprimeadapt|garanties)\.html$/.test(p)) return 'prestations';
   if (/^(realisations|actualites)\//.test(p) || /^(realisations|realisation|actualites|blog|avant-apres|temoignages)\.html$/.test(p) || /^blog-[a-z0-9-]+\.html$/.test(p)) return 'actu';
   if (/^(a-propos|notre-equipe|carrieres|processus|faq)\.html$/.test(p)) return 'apropos';

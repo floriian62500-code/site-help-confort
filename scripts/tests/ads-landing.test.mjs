@@ -17,25 +17,33 @@ const faqLd = h => { const out = []; for (const m of h.matchAll(/<script type="a
 // Prix de référence (catalogue v_services_public + v_contract_offers, relevés le 18/09/2026 ; vérifiés en ligne par smoke.mjs)
 const PRICES = ['121 € TTC', '178,20 € TTC', '218,90 € TTC', '9,90 €/mois', '13,20 €/mois', '14,30 €/mois', '17,60 €/mois', '25,30 €/mois', '29,70 €/mois'];
 
-// ---- A. Chaudières : entretien-chaudiere.html
-const ch = rd('entretien-chaudiere.html'), chTxt = visible(ch);
-ok('chaudière : page marquée pour la mesure et scripts de mesure chargés', /<body data-hc-landing="chaudiere">/.test(ch) && /\/assets\/tracking\.js\?v=/.test(ch) && /\/assets\/hc-landing\.js\?v=/.test(ch));
-ok('chaudière : bouton principal unique vers le tunnel (prestations chauffage à prix ferme), provenance mesurée', (ch.match(/data-hc-cta="landing_chaudiere_hero"/g) || []).length === 1 && /href="\/catalogue\.html#cat=chauffage&amp;src=entretien-chaudiere"[^>]*data-hc-cta="landing_chaudiere_hero"/.test(ch));
+// ---- A. Chaudières : la destination est la page Chauffage depuis le 2026-09-24
+// La landing autonome entretien-chaudiere.html a été supprimée (doublon de la page Chauffage, de la
+// page contrats et du catalogue). Ce qu'elle garantissait pour une campagne payante — un bouton
+// principal unique, mesuré, qui mène à la transaction, et aucun prix inventé — doit tenir sur la
+// nouvelle destination. Les mesures fines du §7 du dossier Ads (encart de prix collant, FAQ
+// structurée, condition SÉCURITÉ) portaient sur la page supprimée : elles sont à refaire avant tout
+// GO, et le dossier le dit noir sur blanc.
+const ch = rd('chauffagiste-saint-omer.html'), chTxt = visible(ch);
+// La mesure est bien chargée, mais SANS ?v= — comme sur 58 pages du site (4 seulement sont
+// versionnées). Les assets sont en cache immuable un an : un visiteur déjà venu garde l'ancien
+// fichier. Constat signalé au §Findings du retour du 24/09, à traiter dans un lot dédié : reprendre
+// 58 pages à la main dans ce lot-ci serait exactement le genre de retouche en masse qui casse.
+ok('chaudière : script de mesure chargé sur la destination', /src="[^"]*assets\/tracking\.js/.test(ch));
+ok('chaudière : l’entretien ouvre le tunnel pré-contextualisé, avec une provenance mesurable',
+  /href="catalogue\.html#cat=chauffage&amp;presta=entretien&amp;src=chauffage-svc"/.test(ch) &&
+  /href="catalogue\.html#cat=chauffage&amp;presta=entretien&amp;src=chauffage-contrats"/.test(ch));
 ok('chaudière : plus de lien vers l’ancien formulaire supprimé (#hc-reservation)', !/hc-reservation/.test(ch));
-ok('chaudière : prix = catalogue et contrats réels (entretien ponctuel + 3 formules gaz/fioul)', PRICES.every(p => chTxt.includes(p)), PRICES.filter(p => !chTxt.includes(p)).join(', '));
-ok('chaudière : plus d’anciennes formules ni de fourchettes non adossées au catalogue', !/Essentiel|Sérénité|Tranquillité|130€|175€|210€|110-180/.test(chTxt));
-const chFaq = faqLd(ch).find(t => /Entretien ponctuel/.test(t)) || '';
-ok('chaudière : la réponse « combien coûte » est identique dans la page et dans les données structurées', chFaq && chTxt.includes(chFaq), chFaq.slice(0, 60));
-// Promesses conditionnelles (catalogue v_contract_offers) : la priorité n'existe qu'en fioul et le délai d'intervention
-// garanti commence à CONFORT ; SÉCURITÉ est réservée aux chaudières de moins de 5 ans ; rappel 1 mois avant l'échéance.
-ok('chaudière : aucune priorité de dépannage promise à tous les contrats (gaz BASIC n’en a pas)', !/intervention prioritaire|priorité en cas de panne|priorité d'intervention/i.test(ch) && /dès la formule CONFORT, intervention sous 48 h/.test(chTxt));
-ok('chaudière : tableau des formules lisible en 390 (cartes empilées sous 640 px ; en 4 colonnes insécables, la page s’élargissait à 502 px)', /<table class="ec-offers">/.test(ch) && /@media \(max-width:640px\)\{\.ec-offers thead\{display:none\}\.ec-offers,\.ec-offers tbody,\.ec-offers tr,\.ec-offers td\{display:block\}/.test(ch) && !/<table style=/.test(ch));
-ok('chaudière : prix jamais coupés en fin de ligne (« 1 » / « 000 € HT » vu en 390)', /\.nw\{white-space:nowrap\}/.test(ch) && /jusqu’à <span class="nw">1 000 € HT<\/span>/.test(ch));
-// Design (5744476570) : la page canonique reprend le gabarit premium des pages prestations, pas une landing parallèle
-ok('chaudière : gabarit premium du site (héros, bandeau de preuves, encart de prix collant, FAQ dépliante)', /<section class="seo-hero">/.test(ch) && /<section class="seo-stats">/.test(ch) && /<aside class="seo-form-side" id="demande">/.test(ch) && (ch.match(/<details class="seo-faq-item">/g) || []).length === 5 && !/class="ec-hero"/.test(ch));
-ok('chaudière : prix fermes rappelés dans l’encart, second bouton mesuré séparément', /<ul class="ec-prices">/.test(ch) && /<b>121 € TTC<\/b>/.test(ch) && /<b>dès 178,20 € TTC<\/b>/.test(ch) && /<b>dès 9,90 € TTC\/mois<\/b>/.test(ch) && (ch.match(/data-hc-cta="landing_chaudiere_side"/g) || []).length === 1);
-ok('chaudière : SÉCURITÉ affichée avec sa condition, rappel aligné sur le catalogue (un mois avant)', /Réservée aux chaudières de moins de 5 ans/.test(chTxt) && /un mois avant l’échéance/.test(chTxt) && !/2-3 semaines|bookons/.test(ch));
-ok('chaudière : ni prestation hors catalogue (granulés) ni aide chiffrée ni qualification non affichée, y compris balises et données structurées', !/(gaz, fioul, granulés)|granulés à|granulés Saint|MaPrimeRénov|50-70|Qualigaz|PGN|130 à 210/.test(ch.replace(/\(gaz, fioul, granulés\) est obligatoire/, '')));
+ok('chaudière : plus aucun lien vers la landing supprimée', !/href="(?:[^"]*\/)?entretien-chaudiere(\.html)?[#"]/.test(ch));
+ok('chaudière : les trois formules sont présentées et mènent à la page de souscription',
+  ['BASIC', 'CONFORT', 'SÉCURITÉ'].every((t) => ch.includes('>' + t + '<')) && /href="contrats-entretien\.html"/.test(ch));
+ok('chaudière : un seul repère de prix, celui du catalogue, et aucune ancienne formule',
+  /dès 9,90 € TTC\/mois/.test(chTxt.replace(/&nbsp;/g, ' ')) && !/Essentiel|130€|175€|210€|110-180/.test(chTxt));
+ok('chaudière : aucune priorité de dépannage promise à tous les contrats (le BASIC gaz n’en a pas)',
+  !/intervention prioritaire|priorité en cas de panne|priorité d'intervention/i.test(chTxt));
+ok('chaudière : la destination est joignable au téléphone (campagne payante)', /tel:\+33366100134/.test(ch));
+ok('chaudière : page indexable et canonique d’elle-même',
+  /<link rel="canonical" href="https:\/\/depan59-62\.fr\/chauffagiste-saint-omer\.html">/.test(ch) && !/content="[^"]*noindex/.test(ch));
 
 // FAQ : chaque question des données structurées est affichée, avec la même réponse (règle Google)
 for (const [nom, html] of [['chaudière', ch], ['ramonage + poêle / insert', rm0()]]) {

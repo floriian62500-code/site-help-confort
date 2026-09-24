@@ -15,7 +15,7 @@ const ok = (n, c, d) => { if (c) { pass++; console.log('  ✅', n); } else { fai
 const REG = JSON.parse(rd('docs/seo/pages-canoniques.json'));
 const reds = rd('_redirects'), home = rd('index.html'), ads = rd('docs/marketing/PAID-ACQUISITION-ENTRETIEN-2026-09.md');
 const sitemap = rd('supabase/functions/sitemap/index.ts');
-const CHAUD = '/entretien-chaudiere.html', RAM = '/prestations/ramonage.html', DOUBLON = '/entretien-poele-insert.html';
+const CHAUD = '/chauffagiste-saint-omer.html', RAM = '/prestations/ramonage.html', DOUBLON = '/entretien-poele-insert.html';
 
 // ---- Registre et règle projet
 ok('règle inscrite dans le contrat de travail du repo et documentée', /SEARCH_EXISTING → IDENTIFY_CANONICAL → REUSE_OR_EXTEND → CREATE_ONLY_IF_NONE/.test(rd('CLAUDE.md')) && existe('docs/process/REGLE-PAGE-CANONIQUE.md') && REG.regle.includes('CREATE_ONLY_IF_NONE'));
@@ -25,7 +25,7 @@ ok('registre : une page canonique par intention, toutes présentes', intentions.
 // ---- Le doublon n'existe plus et ne laisse aucun lien mort
 ok('page doublon supprimée (poêle / insert)', !existe(DOUBLON.replace(/^\//, '')));
 ok('redirections permanentes vers la section canonique (avec et sans .html)', /\/entretien-poele-insert\.html\s+\/prestations\/ramonage\.html#poele-insert\s+301!/.test(reds) && /\/entretien-poele-insert\s+\/prestations\/ramonage\.html#poele-insert\s+301!/.test(reds));
-const restes = ['index.html', 'prestations/ramonage.html', 'contrats-entretien.html', 'entretien-chaudiere.html', 'realisations.html', 'nos-prestations.html']
+const restes = ['index.html', 'prestations/ramonage.html', 'contrats-entretien.html', 'chauffagiste-saint-omer.html', 'realisations.html', 'nos-prestations.html']
   .filter(f => rd(f).includes('entretien-poele-insert'));
 ok('aucune page ne pointe encore vers le doublon', !restes.length, restes.join(', '));
 ok('dossier Ads : plus aucune destination vers le doublon (mention historique tolérée), familles pointées sur les pages canoniques', !/depan59-62\.fr\/entretien-poele-insert|`entretien-poele-insert\.html` →/.test(ads) && ads.includes(RAM + '#poele-insert') && ads.includes(CHAUD));
@@ -39,7 +39,7 @@ ok('accueil : la relance saisonnière ouvre le tunnel avec son contexte, sans pa
   /href="\/catalogue\.html#devis&amp;sujet=poele-insert/.test(home) &&
   /href="\/catalogue\.html#devis&amp;sujet=ramonage/.test(home));
 ok('sitemap : les deux pages canoniques listées, le doublon retiré', sitemap.includes(CHAUD + ' ') && sitemap.includes(RAM + ' ') && !sitemap.includes('entretien-poele-insert'));
-for (const [nom, f, url] of [['chaudière', 'entretien-chaudiere.html', CHAUD], ['ramonage + poêle / insert', 'prestations/ramonage.html', RAM]]) {
+for (const [nom, f, url] of [['chaudière', 'chauffagiste-saint-omer.html', CHAUD], ['ramonage + poêle / insert', 'prestations/ramonage.html', RAM]]) {
   const s = rd(f);
   ok(nom + ' : canonical auto-référent et page indexable', new RegExp('<link rel="canonical" href="https://depan59-62\\.fr' + url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '"').test(s) && !/content="[^"]*noindex/.test(s));
 }
@@ -51,11 +51,24 @@ ok('ramonage : section poêle / insert complète (ancre, barème, ce qui est com
 ok('ramonage : données structurées alignées sur la nouvelle intention', /"name": ?"Ramonage & entretien poêle, insert, cheminée"/.test(rm) && /Le ramonage est-il compris dans l’entretien d’un poêle ou d’un insert \?|Le ramonage est-il compris dans l'entretien d'un poêle ou d'un insert \?/.test(rm));
 ok('ramonage : tableau du barème lisible en 390 (cartes empilées sous 640 px)', /@media \(max-width:640px\)\{\.pi-table thead\{display:none\}/.test(rm));
 
-// ---- Design : la page canonique chaudière est au niveau du site premium
-const ch = rd('entretien-chaudiere.html'), gabarit = ['seo-hero', 'seo-stats', 'seo-body', 'seo-grid', 'seo-section', 'seo-faq-item', 'seo-form-box'];
-ok('chaudière : même gabarit premium que les pages prestations', gabarit.every(c => ch.includes('class="' + c) || ch.includes(c + '"') || ch.includes(c + ' ')), gabarit.filter(c => !ch.includes(c)).join(', '));
-ok('chaudière : plus aucune trace de l’ancienne accroche parallèle', !/class="ec-hero"|class="ec-cta"|class="ec-back"/.test(ch));
-ok('chaudière : lien d’évitement et repère de contenu principal (le gabarit en a besoin)', /class="hc-skip-link"/.test(ch) && /<main id="main-content">/.test(ch));
+// ---- La landing autonome a disparu, et le parcours ne s'est pas troué (2026-09-24)
+// Décision de Florian : /entretien-chaudiere.html doublonnait la page Chauffage, la page contrats
+// et le catalogue. Elle était EN LIGNE et DANS LE SITEMAP de production : la redirection doit donc
+// voyager dans le même lot que la suppression, sinon une URL indexée tombe en 404.
+const ch = rd('chauffagiste-saint-omer.html');
+ok('landing autonome supprimée du dépôt', !existe('entretien-chaudiere.html'));
+ok('redirection permanente prête, avec et sans .html, vers la page Chauffage',
+  /\/entretien-chaudiere\.html\s+\/chauffagiste-saint-omer\.html\s+301!/.test(reds) &&
+  /\/entretien-chaudiere\s+\/chauffagiste-saint-omer\.html\s+301!/.test(reds));
+ok('sitemap : l’URL supprimée n’y est plus (le guide et l’article de blog, eux, restent)',
+  !/\/entretien-chaudiere\.html /.test(sitemap) && sitemap.includes('/guide-entretien-chaudiere.html ') && sitemap.includes('/blog-entretien-chaudiere-annuel-obligatoire.html '));
+const pointent = fs.readdirSync(ROOT).filter(f => f.endsWith('.html'))
+  .concat(fs.readdirSync(path.join(ROOT, 'prestations')).filter(f => f.endsWith('.html')).map(f => 'prestations/' + f))
+  .filter(f => /href="(?:[^"]*\/)?entretien-chaudiere(\.html)?[#"]/.test(rd(f)));
+ok('aucune page publique ne pointe encore vers la landing supprimée', !pointent.length, pointent.join(', '));
+ok('page Chauffage : elle porte l’entretien (vers le tunnel, provenance mesurée) et les contrats',
+  /href="catalogue\.html#cat=chauffage&amp;presta=entretien&amp;src=chauffage-svc"/.test(ch) &&
+  /href="contrats-entretien\.html"/.test(ch) && ['BASIC', 'CONFORT', 'SÉCURITÉ'].every(t => ch.includes('>' + t + '<')));
 
 // ---- Le garde-fou tourne et bloque un doublon non justifié
 let sortie = '', code = 0;

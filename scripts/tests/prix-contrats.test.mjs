@@ -70,7 +70,7 @@ ok(`toute amplitude annoncée correspond au catalogue (${amp.min} → ${amp.max}
 //     C'est le guide qui me l'a appris — il distingue déjà proprement les deux.
 const MARCHE = /en France|prix moyen|en moyenne|selon la région|selon les régions|sur le marché|comptez entre/i;
 const ponctuelsFautifs = [];
-for (const p of ['entretien-chaudiere.html', 'blog-entretien-chaudiere-annuel-obligatoire.html', 'guide-entretien-chaudiere.html']) {
+for (const p of ['chauffagiste-saint-omer.html', 'blog-entretien-chaudiere-annuel-obligatoire.html', 'guide-entretien-chaudiere.html']) {
   const s = texte(p);
   for (const m of s.matchAll(/(\d{2,3}(?:,\d{2})?)\s*€\s*TTC(?!\s*\/?\s*mois)/g)) {
     const v = m[1];
@@ -111,12 +111,12 @@ ok('le délai annoncé pour la formule CONFORT est le même partout', delais.siz
   delais.size > 1 ? 'valeurs trouvées : ' + [...delais].join(' h, ') + ' h' : '');
 
 // ── 7. Maillage de la campagne : aucune page n'est un cul-de-sac
-const groupe = ['entretien-chaudiere.html', 'contrats-entretien.html', 'prestations/ramonage.html',
+const groupe = ['chauffagiste-saint-omer.html', 'contrats-entretien.html', 'prestations/ramonage.html',
                 'guide-entretien-chaudiere.html', 'blog-entretien-chaudiere-annuel-obligatoire.html'];
 const editorial = (p) => texte(p).replace(/<header[\s\S]*?<\/header>/, '').replace(/<footer[\s\S]*?<\/footer>/g, '');
 const culsDeSac = groupe.filter((p) => {
   const c = editorial(p);
-  return groupe.filter((q) => q !== p && new RegExp('href="[^"]*' + q.replace('.html', '').replace('/', '\\/') + '(\\.html)?[#"]').test(c)).length < 2;
+  return groupe.filter((q) => q !== p && new RegExp('href="(?:[^"]*/)?' + q.replace('.html', '').replace('/', '\\/') + '(\\.html)?[#"]').test(c)).length < 2;
 });
 ok('chaque page de la campagne entretien renvoie vers au moins 2 autres (hors en-tête et pied de page)',
   culsDeSac.length === 0, culsDeSac.join(', '));

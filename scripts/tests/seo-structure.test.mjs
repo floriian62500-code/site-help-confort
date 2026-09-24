@@ -89,7 +89,7 @@ ok('l’audit T14/T15 existe et porte le constat', existsSync(join(ROOT, 'docs/a
 
 // ── 5. Les destinations de la campagne doivent être déclarées quelque part
 const packed = (fn.match(/const PACKED = '([^']*)'/) || [])[1] || '';
-const campagne = ['/entretien-chaudiere.html', '/contrats-entretien.html', '/prestations/ramonage.html'];
+const campagne = ['/chauffagiste-saint-omer.html', '/contrats-entretien.html', '/prestations/ramonage.html'];
 const absentes = campagne.filter((u) => !packed.includes(u + ' '));
 ok('les pages de la campagne entretien figurent dans la liste du sitemap', absentes.length === 0, absentes.join(', '));
 

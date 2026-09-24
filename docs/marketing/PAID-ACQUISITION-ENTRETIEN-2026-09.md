@@ -13,9 +13,19 @@ Aucune annonce ne cite une prestation, une zone ou un prix absents de ces source
 
 ## 0. Statut par famille
 
+> **2026-09-24 — la destination de la famille A a changé.** Sur décision de Florian
+> (`CHATGPT-2026-09-24-P0-REMOVE-ENTRETIEN-LANDING`), la landing autonome `entretien-chaudiere.html`
+> a été **supprimée** : elle doublonnait la page Chauffage, la page contrats et le catalogue.
+> La destination devient `/chauffagiste-saint-omer.html`, qui présente l'entretien, les trois formules
+> de contrat et ouvre le tunnel pré-contextualisé.
+> **Conséquence à traiter avant tout GO** : l'analyse détaillée du §7 (encart de prix ferme, FAQ
+> structurée, condition SÉCURITÉ, mesures 1440/390 du bouton principal) portait sur la page
+> supprimée. Elle doit être **refaite sur la nouvelle destination** : ces propriétés ne sont plus
+> garanties par les tests, faute de page à garder.
+
 | Famille | Ce que l'entreprise propose réellement (preuve) | Page d'atterrissage | Statut |
 |---|---|---|---|
-| **A. Chaudières** (gaz, fioul) | Entretien ponctuel au catalogue (gaz 121 €, fioul 178,20 € / 218,90 € TTC) ; contrats BASIC / CONFORT / SÉCURITÉ ; page `entretien-chaudiere.html` | `entretien-chaudiere.html` → tunnel sur les prestations chauffage à prix ferme | **READY** (préparé) |
+| **A. Chaudières** (gaz, fioul) | Entretien ponctuel au catalogue (gaz 121 €, fioul 178,20 € / 218,90 € TTC) ; contrats BASIC / CONFORT / SÉCURITÉ ; page `chauffagiste-saint-omer.html` | `chauffagiste-saint-omer.html` → tunnel sur les prestations chauffage à prix ferme | **READY** (préparé) |
 | **B. Poêles / inserts** (bois, granulés) | Barème agence transmis par Florian le 18/09/2026 (directive 5733225819) : **EPB** entretien annuel poêle / insert à bois, ramonage compris, **115 € HT** ; **EPG** poêle / insert à granulés, ramonage compris, **136 € HT**. TTC : 126,50 / 149,60 € (TVA 10 %, logement de plus de 2 ans), 138 / 163,20 € (TVA 20 %). Référence interne : `admin-pro/TARIFS_REFERENCE.md`. Pas encore au catalogue en ligne : les deux lignes sont prêtes (`supabase/_pending_migrations/20260919100000_catalogue_entretien_poele_insert.sql`) et le site sait déjà les afficher (sous-groupe « Entretien & dépannage », icône 🔥, famille de mesure « poele » dans le tunnel) ; application reportée par Florian le 22/09 (« pas maintenant »). D'ici là, la demande passe par le formulaire de rappel de la page. | `prestations/ramonage.html#poele-insert` → formulaire de rappel | **READY** (préparé) |
 | **C. Ramonage** (cheminée, conduit de chaudière ; poêle et insert : voir B, **même page canonique**, ancre `#poele-insert`) | Page `prestations/ramonage.html` : ramonage mécanique, vérification du tirage, contrôle du conduit, certificat. **Pas de prix au catalogue.** | `prestations/ramonage.html` → formulaire court « Demande de rappel » | **READY** (préparé, prix non affiché) |
 
@@ -28,7 +38,7 @@ Aucune annonce ne cite une prestation, une zone ou un prix absents de ces source
 ### Pages concernées
 | Page | Rôle | Constat | Action |
 |---|---|---|---|
-| `entretien-chaudiere.html` | Meilleure page chaudière (contrôles détaillés, obligation légale, FAQ) | ❌ Le bouton principal « Prendre rendez-vous » menait à l'ancien formulaire **supprimé** (`#hc-reservation`) ; ❌ formules **inventées** (Essentiel 130 €, Sérénité 175 €, Tranquillité 210 €) ; ❌ FAQ « 110-180 € » et « 130 à 210 €/an » (page et données structurées) ; ❌ « priorité en cas de panne » promise à tous les contrats (la formule gaz BASIC n'en a pas) ; ❌ « MaPrimeRénov + CEE peuvent couvrir 50-70 % » ; ❌ « granulés » dans les descriptions (hors catalogue) ; ❌ qualifications (Qualigaz, PGN, PGP) citées dans les données structurées mais affichées nulle part ; ❌ rappel « 2-3 semaines avant » (le catalogue dit 1 mois) ; ❌ 2 questions de FAQ présentes en données structurées mais absentes de la page ; ⚠️ aucune mesure GA4 (seulement `hc-tracking.js`, dont les événements ne partent pas) | ✅ **Corrigé** (`08cebf89` + commit de ce dossier) : bouton unique « Demander mon entretien » → tunnel ; vraies formules, prix et conditions (SÉCURITÉ : chaudières de moins de 5 ans) ; FAQ identique entre page et données structurées (5 questions) ; plus aucune promesse non adossée au catalogue ; mesure ajoutée |
+| `entretien-chaudiere.html` *(supprimée le 24/09, 301 vers la page Chauffage)* | Ancienne page chaudière (contrôles détaillés, obligation légale, FAQ) | ❌ Le bouton principal « Prendre rendez-vous » menait à l'ancien formulaire **supprimé** (`#hc-reservation`) ; ❌ formules **inventées** (Essentiel 130 €, Sérénité 175 €, Tranquillité 210 €) ; ❌ FAQ « 110-180 € » et « 130 à 210 €/an » (page et données structurées) ; ❌ « priorité en cas de panne » promise à tous les contrats (la formule gaz BASIC n'en a pas) ; ❌ « MaPrimeRénov + CEE peuvent couvrir 50-70 % » ; ❌ « granulés » dans les descriptions (hors catalogue) ; ❌ qualifications (Qualigaz, PGN, PGP) citées dans les données structurées mais affichées nulle part ; ❌ rappel « 2-3 semaines avant » (le catalogue dit 1 mois) ; ❌ 2 questions de FAQ présentes en données structurées mais absentes de la page ; ⚠️ aucune mesure GA4 (seulement `hc-tracking.js`, dont les événements ne partent pas) | ✅ **Corrigé** (`08cebf89` + commit de ce dossier) : bouton unique « Demander mon entretien » → tunnel ; vraies formules, prix et conditions (SÉCURITÉ : chaudières de moins de 5 ans) ; FAQ identique entre page et données structurées (5 questions) ; plus aucune promesse non adossée au catalogue ; mesure ajoutée |
 | `contrats-entretien.html` | Formules et souscription (prélèvement) | ⚠️ En PROD, la souscription affiche succès **et** erreur (RLS) ; correctif en recette (`docs/control/CONTRACT-RLS-GATE.md`) | Lien secondaire seulement, jamais page d'atterrissage payante tant que le gate n'est pas levé |
 | `prestations/ramonage.html` | Page ramonage | ❌ « Intervention en 1h » (non garanti) ; ❌ « Garantie complète », « Aides & éligibilité » (faux ou vague) ; ❌ « 60-90 € TTC » sans source ; ❌ coquille « ouvrées ouvrées » ; ⚠️ aucune mesure GA4 | ✅ **Corrigé** : engagements vrais (rappel sous 24 h ouvrées, certificat remis), prix retiré en attendant un tarif au catalogue, mesure ajoutée |
 | `guide-entretien-chaudiere.html`, `blog-entretien-chaudiere-annuel-obligatoire.html` | Contenu informatif | Pages de contenu, pas d'atterrissage payant (trop de lecture avant l'action) | Aucune ; utiles en liens annexes |
@@ -427,7 +437,7 @@ Aucune requête vers GA4, Google Ads, Meta ou le serveur de dossiers ; aucune do
 ---
 
 ## 7. Pages d'atterrissage (état recette)
-| Critère | Page A (`entretien-chaudiere.html`) | Pages B + C (`prestations/ramonage.html`, ancre `#poele-insert`) |
+| Critère | Page A — **mesurée sur `entretien-chaudiere.html`, page supprimée le 24/09 ; destination désormais `chauffagiste-saint-omer.html`, à remesurer** | Pages B + C (`prestations/ramonage.html`, ancre `#poele-insert`) |
 |---|---|---|
 | Message immédiat | « Entretien chaudière gaz & fioul à Saint-Omer & Dunkerque » + encart de prix ferme (gaz / fioul / contrat) | « Ramonage & entretien poêle, insert, cheminée » + section barème poêle / insert |
 | Prestation nommée | ✅ | ✅ |

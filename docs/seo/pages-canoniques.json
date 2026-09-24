@@ -2,13 +2,18 @@
   "regle": "SEARCH_EXISTING → IDENTIFY_CANONICAL → REUSE_OR_EXTEND → CREATE_ONLY_IF_NONE",
   "doc": "docs/process/REGLE-PAGE-CANONIQUE.md",
   "controle": "node scripts/seo/duplicate-intent.mjs",
-  "maj": "2026-09-20 (directive 5744476570)",
+  "maj": "2026-09-24 (CHATGPT-2026-09-24-P0-REMOVE-ENTRETIEN-LANDING)",
   "intentions": [
     {
       "intention": "Entretien chaudière (commercial, gaz et fioul)",
-      "canonique": "/entretien-chaudiere.html",
-      "depuis": "2026-05-17 (fee4f59b)",
+      "canonique": "/chauffagiste-saint-omer.html",
+      "depuis": "2026-09-24 (suppression de la landing autonome /entretien-chaudiere.html)",
       "pages_liees": [
+        {
+          "url": "/catalogue.html#cat=chauffage&presta=entretien",
+          "role": "demande d'entretien ponctuel (tunnel)",
+          "justification": "Intention transactionnelle : prix ferme au catalogue, pas une page éditoriale."
+        },
         {
           "url": "/guide-entretien-chaudiere.html",
           "role": "guide informationnel (loi, déroulé, fréquence)",
@@ -39,7 +44,12 @@
           "role": "diagnostic de panne",
           "justification": "Intention d'urgence."
         }
-      ]
+      ],
+      "doublons_rediriges": [
+        "/entretien-chaudiere.html",
+        "/entretien-chaudiere"
+      ],
+      "note": "La landing autonome a été supprimée le 2026-09-24 sur décision de Florian : elle doublonnait la page Chauffage, la page contrats et le catalogue. L'entretien se présente désormais sur la page Chauffage, se souscrit en contrat sur /contrats-entretien.html, et se demande dans le tunnel via #cat=chauffage&presta=entretien. Une page canonique reste nécessaire pour l'intention : c'est la page Chauffage."
     },
     {
       "intention": "Ramonage et entretien poêle / insert (ramonage compris)",

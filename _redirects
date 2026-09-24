@@ -13,6 +13,16 @@
 /sitemap.xml https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sitemap 200!
 
 
+# Landing entretien chaudiere supprimee le 2026-09-24 (decision Florian, CHATGPT-2026-09-24-P0-
+# REMOVE-ENTRETIEN-LANDING) : l'entretien se presente sur la page Chauffage, les contrats sur
+# /contrats-entretien.html, la demande passe par le tunnel. L'URL etait EN LIGNE en production et
+# PRESENTE DANS LE SITEMAP : sans cette regle, sa suppression ferait un 404 sur une URL indexee.
+# La regle voyage donc dans le meme lot que la suppression -- elle ne prend effet en production
+# qu'au moment ou Florian livre ce lot, pas avant.
+/entretien-chaudiere.html /chauffagiste-saint-omer.html 301!
+/entretien-chaudiere /chauffagiste-saint-omer.html 301!
+
+
 # Doublon SEO actualités ↔ réalisations (5778526407 §3) : une publication chantier = UNE URL.
 # La fiche /realisations/<slug> est canonique ; l'ancienne actualité y renvoie définitivement.
 # « ! » = la redirection l'emporte sur le fichier statique encore présent dans le dépôt.
