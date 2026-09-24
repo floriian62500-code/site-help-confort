@@ -7,8 +7,13 @@
 # avec une fonction momentanément cassée poussée sur recette.
 #
 #   scripts/ops/worksession.sh start "libellé du lot"   pose le verrou
+#   scripts/ops/worksession.sh renew                    repousse l'expiration (lot qui dure)
 #   scripts/ops/worksession.sh stop                     le retire ; la sauvegarde repart seule
 #   scripts/ops/worksession.sh status                   dit s'il y en a un, depuis quand
+#
+# ⚠️ Un lot qui dure plus de 90 minutes DOIT se renouveler : sinon le verrou expire en cours de
+# route et l'auto-sauvegarde reprend au milieu du travail. C'est arrivé le 2026-09-23 à 22 h 11 —
+# le mécanisme a fonctionné exactement comme prévu, mais le lot durait 90 minutes de plus.
 #
 # Ce n'est PAS l'arrêt d'urgence : celui-ci reste `touch .autopush-off`, sans expiration, et se
 # lève à la main. Le verrou de session, lui, expire tout seul au bout de 90 minutes — un verrou
@@ -37,6 +42,16 @@ case "${1:-status}" in
     echo "   l'auto-sauvegarde ne committera ni ne poussera jusqu'à « worksession.sh stop »"
     echo "   (expiration automatique au bout de $((TTL / 60)) min si on oublie)"
     ;;
+  renew)
+    if [ -f "$VERROU" ]; then
+      A=$(age "$VERROU")
+      touch "$VERROU"
+      echo "🔄 session prolongée (elle courait depuis ${A}s) — encore $((TTL / 60)) min"
+    else
+      echo "⚠️ aucune session en cours : rien à prolonger (utiliser « start »)" >&2
+      exit 1
+    fi
+    ;;
   stop)
     if [ -f "$VERROU" ]; then
       echo "🔓 session de travail fermée après $(age "$VERROU")s — l'auto-sauvegarde reprend"
@@ -59,7 +74,7 @@ case "${1:-status}" in
     echo "✅ aucune session de travail : l'auto-sauvegarde est active"
     ;;
   *)
-    echo "usage : worksession.sh start \"libellé\" | stop | status" >&2
+    echo "usage : worksession.sh start \"libellé\" | renew | stop | status" >&2
     exit 2
     ;;
 esac

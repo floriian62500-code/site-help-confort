@@ -9,6 +9,7 @@ set -u
 SRC="${1:-$HOME/Library/Application Support/HelpConfort/autopush.sh}"
 [ -f "$SRC" ] || { echo "❌ script introuvable : $SRC"; exit 1; }
 SRC="$(cd "$(dirname "$SRC")" && pwd)/$(basename "$SRC")"   # chemin absolu : le test change de dossier ensuite
+RACINE="$(cd "$(dirname "$0")/../.." && pwd)"                      # idem : résolu avant tout cd
 
 BAC=$(mktemp -d "${TMPDIR:-/tmp}/autopush-test.XXXXXX")
 trap 'rm -rf "$BAC"' EXIT
@@ -158,6 +159,23 @@ run
   || ko "verrou abandonné" "toujours présent"
 grep -q 'verrou de session expiré' "$LOG" && ok "verrou abandonné : l'expiration est signalée, pas silencieuse" || ko "expiration signalée" "absente du journal"
 [ "$(git rev-parse HEAD)" != "$APRES" ] && ok "verrou abandonné : les sauvegardes ont repris" || ko "reprise après expiration" "rien n'a été committé"
+
+# 10d-bis. Un lot qui dure se prolonge : « renew » repousse l'expiration.
+#          Sans cela, le verrou lâche au bout de 90 min en plein travail — vécu le 23/09 à 22 h 11.
+RENEW="$RACINE/scripts/ops/worksession.sh"
+if [ -f "$RENEW" ]; then
+  export HC_SUPPORT="$BAC/support" HC_REPO="$BAC/repo"
+  bash "$RENEW" start "lot de test" >/dev/null 2>&1
+  touch -t 202001010000 "$BAC/support/autopush.worksession"
+  bash "$RENEW" renew >/dev/null 2>&1
+  AGE=$(( $(date +%s) - $(stat -f%m "$BAC/support/autopush.worksession" 2>/dev/null || echo 0) ))
+  [ "$AGE" -lt 60 ] && ok "« renew » prolonge un verrou vieilli (un lot long ne perd plus sa protection)" \
+    || ko "renew" "le verrou n'a pas été rafraîchi (âge ${AGE}s)"
+  bash "$RENEW" renew >/dev/null 2>&1 && : || true
+  bash "$RENEW" stop >/dev/null 2>&1
+  bash "$RENEW" renew >/dev/null 2>&1 && ko "renew sans session" "aurait dû échouer" || ok "« renew » sans session en cours échoue proprement"
+  unset HC_SUPPORT HC_REPO
+fi
 
 # 10e. Le verrou de session et l'arrêt d'urgence restent deux choses distinctes
 grep -q 'autopush.off' "$SRC" && grep -q 'autopush.worksession' "$SRC" \

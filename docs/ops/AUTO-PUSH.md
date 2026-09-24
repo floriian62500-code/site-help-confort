@@ -39,9 +39,17 @@ scripts/ops/worksession.sh start "libellé du lot"
 # à la fin
 scripts/ops/worksession.sh stop
 
+# un lot qui dure : prolonger AVANT l'expiration
+scripts/ops/worksession.sh renew
+
 # savoir où on en est
 scripts/ops/worksession.sh status
 ```
+
+⚠️ **Un lot de plus de 90 minutes doit se prolonger.** Le 2026-09-23 à 22 h 11, le verrou a expiré
+en plein travail : le mécanisme a fonctionné exactement comme prévu — il refuse de geler les
+sauvegardes indéfiniment — mais le lot durait plus longtemps, et le démon a repris la main au milieu.
+`renew` repousse l'expiration de 90 minutes ; il échoue s'il n'y a pas de session en cours.
 
 **Sécurité : un verrou oublié ne gèle rien pour toujours.** Au-delà de **90 minutes**, le démon le
 considère abandonné, le lève, le journalise et notifie. Les sauvegardes reprennent seules.
