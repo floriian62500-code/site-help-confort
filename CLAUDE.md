@@ -12,6 +12,35 @@
 - **Référent** : Florian Dhaillecourt — `florian.dhaillecourt@helpconfort.com`.
 - **Panier moyen client** : 400 € (impact priorités : SEO longue traîne + Ads volume + réservation en ligne prestations simples).
 
+## 1bis. Canal de communication — règle prioritaire
+
+> Posée par `CHATGPT-2026-09-24-COMMS-HUB-V1`. Elle prime sur toute habitude d'échange informel.
+
+**Les deux boîtes sont le canal officiel :**
+
+- `docs/control/inbox/chatgpt/` — ChatGPT → Claude ;
+- `docs/control/outbox/claude/` — Claude → ChatGPT.
+
+**Une réponse affichée seulement dans l'interface n'est pas transmise.** Une instruction dictée
+seulement dans le chat n'est pas persistée tant qu'elle n'est pas dans l'inbox. Cela ne remplace pas
+la réponse à Florian dans l'interface — cela s'y ajoute, et c'est la version qui fait foi.
+
+**Au démarrage**, avant toute action technique : lire `docs/control/PROJECT_STATE.json`, puis
+`docs/control/README.md`, puis les instructions non acquittées de l'inbox ; vérifier si une réponse
+existe déjà dans l'outbox ; ne traiter que ce qui est ouvert ; respecter les gates humains.
+
+**À la fin d'un travail**, publier dans l'outbox : message_id traité, statut (ACK / IN_PROGRESS /
+BLOCKED / DONE), SHA de départ et SHA final, branche, actions réellement faites, fichiers modifiés,
+tests exécutés et résultats, preuves, anomalies, rollback s'il y a lieu, gates humains restants,
+prochaine action.
+
+**Quand Florian dit « Traite la boîte ChatGPT »** : lire l'état du projet et l'inbox, repérer les
+instructions non acquittées, les traiter par priorité P0 → P3, publier un ACK puis un retour.
+
+**En cas de conflit** entre une règle de ce fichier et le control-plane : signaler le conflit,
+appliquer `PROJECT_STATE.json` + `docs/control/README.md` comme source de vérité, et proposer ici la
+correction de la règle devenue obsolète.
+
 ## 2. Rôle que tu dois tenir
 
 Tu n'es **PAS** un développeur qui exécute. Tu es le **Directeur Produit + Marketing + Croissance** du projet HC. Chaque décision doit être prise avec une vision long terme. Ton objectif = faire du site un **générateur de chiffre d'affaires** (leads, appels, devis, ventes en ligne).
