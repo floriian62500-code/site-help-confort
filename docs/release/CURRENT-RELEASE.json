@@ -1,0 +1,22 @@
+{
+ "_lisezmoi": [
+  "Source de vérité d'une livraison en production (instruction CHATGPT-2026-09-24-RELEASE-CATCHUP-V1).",
+  "Une seule release active à la fois. Tant que release_branch est null, aucune livraison n'est en cours.",
+  "États autorisés par élément : DEV | TESTED | WAITING_FLORIAN | READY_FOR_RELEASE | IN_RELEASE | PROD | PROD_VERIFIED.",
+  "« Terminé » ne s'emploie qu'à partir de PROD_VERIFIED."
+ ],
+ "release_id": null,
+ "base_main_sha": "e5b61c6e",
+ "release_branch": null,
+ "created_at": null,
+ "statut": "AUCUNE_RELEASE_ACTIVE",
+ "raison": "Aucun élément READY_100 avec effet en production au 2026-09-24 : les correctifs utiles ne se transplantent pas proprement sur main (conflits mesurés : prix 1, entités JSON-LD 47, canonicalisation actualités 3). Voir ECART-PROD-2026-09-24.md.",
+ "elements": [],
+ "exclusions": [
+  { "lot": "bandeau d'accueil", "etat": "WAITING_FLORIAN", "raison": "validation visuelle jamais donnée" },
+  { "lot": "sous-lot saisonnier (5812875220)", "etat": "WAITING_FLORIAN", "raison": "réouvert puis corrigé, non revalidé" },
+  { "lot": "pipeline de leads (submit-lead-v6, notify-lead-v6)", "etat": "TESTED", "raison": "version du dépôt jamais mise en ligne : 211 et 296 lignes d'écart avec la production" },
+  { "lot": "migrations", "etat": "WAITING_FLORIAN", "raison": "base partagée avec la production ; application = décision humaine" }
+ ],
+ "derniere_release_prod": { "sha": null, "date": null, "note": "aucune release contrôlée depuis la mise en place de ce fichier" }
+}

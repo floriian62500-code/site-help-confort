@@ -70,6 +70,15 @@ jobs:
       - name: Fonctions edge durcies (sans réseau)
         run: deno test supabase/functions/gh-push-inline/handler.test.ts supabase/functions/gh-edit-file/handler.test.ts supabase/functions/stripe-create-payment-link/handler.test.ts
 
+      # Dérive recette → production : on ALERTE, on ne bloque pas. Rendre la CI rouge en permanence
+      # noierait le signal et casserait l'indicateur sur lequel tout le monde s'appuie. Le mode
+      # --strict existe pour le processus de release, où le seuil doit arrêter la main.
+      - name: Alerte de dérive vers la production (non bloquante)
+        if: always()
+        run: |
+          git fetch --no-tags --quiet origin main:refs/remotes/audit/main || true
+          node scripts/release/derive.mjs || true
+
       - name: Récapitulatif
         if: always()
         run: |
