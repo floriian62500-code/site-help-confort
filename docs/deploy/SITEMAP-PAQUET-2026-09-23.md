@@ -22,6 +22,22 @@ absentes du sitemap ». C'était vrai **de la fonction**, pas de la production �
 en contient 33. En revanche, il ignore toutes les réalisations publiées depuis juin, et il pointe
 l'hôte `www`.
 
+### La preuve, pour ne plus avoir à y revenir
+
+Comparaison faite le 2026-09-24 :
+
+```
+fichier sitemap.xml committé sur main   38 204 octets
+réponse de https://depan59-62.fr/sitemap.xml   38 204 octets
+empreintes SHA-1                        identiques
+```
+
+La production sert donc **octet pour octet** le fichier statique de `main`. La fonction edge, elle,
+répond bien — mais seulement si on l'appelle directement. Elle n'a jamais alimenté le site public.
+
+`SITEMAP_LIVE_SOURCE = fichier statique /sitemap.xml de main (identifié)`
+`SITEMAP_DUPLICATE_SOURCE = fonction edge « sitemap » (identifiée, jamais servie en production)`
+
 ## 2. Source canonique, source à neutraliser
 
 - **Source canonique : la fonction edge `sitemap`.** Elle lit les réalisations en base, donc elle
