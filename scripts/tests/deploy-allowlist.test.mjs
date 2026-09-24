@@ -101,5 +101,17 @@ ok('les deux fonctions d’administration restent « pending »',
 ok('chaque « pending » et chaque « quarantine » porte une raison écrite',
   Object.values(registre.fonctions).every((v) => v.etat === 'current' || (typeof v.raison === 'string' && v.raison.length > 20)));
 
+// ── 6. Le dossier des migrations est appliqué automatiquement : rien d'autre n'y a sa place
+const migDir = join(ROOT, 'supabase/migrations');
+const mig = readdirSync(migDir).filter((f) => f.endsWith('.sql'));
+const intrus = mig.filter((f) => /^PROPOSED|rollback/i.test(f));
+ok(`aucune proposition ni retour arrière dans le dossier appliqué automatiquement (${mig.length} migrations)`,
+  intrus.length === 0, intrus.join(', '));
+ok('le dossier des migrations porte la note qui explique la règle', existsSync(join(migDir, 'LISEZ-MOI.md')));
+ok('les propositions vivent dans le dossier qui n’est jamais exécuté',
+  readdirSync(join(ROOT, 'supabase/_pending_migrations')).some((f) => /^PROPOSED/.test(f)));
+ok('le workflow applique bien les migrations (donc la règle ci-dessus n’est pas théorique)',
+  /supabase db push --linked/.test(workflow));
+
 console.log(`\nRÉSULTAT LISTE BLANCHE : ${pass} PASS / ${fail} FAIL\n`);
 process.exit(fail ? 1 : 0);

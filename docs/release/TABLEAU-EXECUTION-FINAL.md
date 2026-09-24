@@ -139,6 +139,26 @@
 
 ---
 
+## Vue compacte — `PRIORITE | RISQUE | ACTION_FLORIAN | ACTION_CLAUDE_APRES_GO | TEST_SUCCES | ROLLBACK`
+
+Demandée par 5812906621 §5. Le détail de chaque ligne est ci-dessus.
+
+| # | Prio | Risque | Action Florian | Action Claude après GO | Test de succès | Rollback |
+|---|---|---|---|---|---|---|
+| 1 | P0 | Élevé — données clients lisibles et modifiables | Paquet privé : fermer l'inscription (10 s) puis appliquer la migration | Remettre migration, rollback et test dans le dépôt ; compléter le retour public | Plus aucune politique sans condition ; back-office et espace client intacts | `.ROLLBACK.sql` fourni, testé (22 contrôles) |
+| 2 | P0 | Élevé — montant accepté depuis la requête, appelant non vérifié | Couper l'endpoint **ou** GO déploiement de la version durcie en TEST | Archiver la version en ligne, migration du montant, variables TEST, déployer avec `verify_jwt` | 6 contrôles en TEST : 401/403, montant de la requête ignoré, 404/409/422, idempotence, `livemode:false` | Redéployer le dossier archivé |
+| 3 | P0 | Moyen — jeton non révoqué | Révoquer l'ancien jeton sur GitHub | Rien : l'authentification passe par `gh` depuis le 23/09 | `git ls-remote origin` fonctionne toujours | Sans objet |
+| 4 | P1 | Faible technique, réel en référencement | GO déploiement fonction **+** fusion contrôlée (retire le statique) | Paquet sitemap : relever, déployer, fusionner, contrôler, resoumettre | 0 URL en `www`, ≥147 URL, ramonage présent, 0 URL d'actualité | Remettre le fichier statique (il reprend la main) |
+| 5 | P1 | Moyen — identifiant public depuis juin | Netlify : supprimer et recréer le build hook | Retirer l'identifiant du dépôt | L'ancien échoue, le nouveau déclenche un build | Sans objet |
+| 6 | P1 | **Élevé si fait par inadvertance** — pipeline de leads jamais mis en ligne | Décider : déployer `submit-lead-v6`/`notify-lead-v6` comme lot à part, ou les remettre en quarantaine | Déployer avec un test réel `NE PAS TRAITER`, archivé | Le lead s'enregistre, l'email porte le bon type | Redéployer la version relevée |
+| 7 | P1 | Faible — pas de paiement en ligne aujourd'hui | Décider : déployer `create-payment-session` ou retirer l'appel | Les 7 prérequis (Stripe TEST, montant serveur, idempotence…) | Parcours complet en TEST, aucun paiement réel | Repasser en `pending` |
+| 8 | P1 | Moyen — relais d'écriture ouverts | Trancher « supprimer » ou « durcir » les fonctions GitHub | Suppression contrôlée une par une, **ou** patch durci (35 tests) | Site et admin intacts, **ou** 401/403/403/429 | Redéployer la version relevée |
+| 9 | P2 | Nul | Répondre oui/non aux 4 questions d'affichage | Appliquer, une décision par commit | Rendu 1440 + 390, suite verte | `git revert` |
+| 10 | P2 | Commercial — engagement public | Dire si « Sous 2 h en journée ouvrée » est tenu | Reformuler les pages désignées | Test des prix publics vert | `git revert` |
+| 11 | P2 | Nul | **Ouvrir la preview et valider le bandeau** | Rien si validé ; ajuster sinon | Ton accord | `git revert` |
+| 12 | P2 | Nul tant qu'on ne bouge pas | Remplir les 6 champs d'identité | Normaliser puis appliquer l'identité unique | Une seule valeur par champ, 0 contradiction | `git revert` |
+| 13 | P2 | **Non validé visuellement** | **Retester le bandeau saisonnier** sur la preview (les 3 CTA) | Promouvoir le lot si tu valides | Tes trois clics | `git revert` du lot |
+
 ## Ordre recommandé
 
 **1 → 3 → 2** pour la sécurité (le premier prend dix secondes et protège des données clients ;
@@ -146,3 +166,7 @@ le troisième est presque gratuit), puis **4** quand tu veux passer en productio
 au fil de l'eau.
 
 `AUTONOMOUS_QUEUE = EMPTY` · `NEXT_ACTION = FLORIAN_P0_SECURITY`
+
+> **Écart avec la production** : l'inventaire complet est dans `ECART-PROD-2026-09-24.md`. La part
+> réellement sûre de cet écart (docs et outillage) n'a aucun effet visible en production ; tout le
+> reste passe par l'un des trois blocages décrits là-bas.
