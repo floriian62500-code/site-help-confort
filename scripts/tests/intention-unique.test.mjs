@@ -97,5 +97,32 @@ const ads = lire('docs/marketing/PAID-ACQUISITION-ENTRETIEN-2026-09.md');
 ok('dossier Ads : aucune destination vers une page qui redirige',
   !/\/entretien-poele-insert/.test(ads) && /\/entretien-chaudiere\.html/.test(ads));
 
+// ── 7. Les trois boutons du bandeau saisonnier mènent chacun à SON intention (5812875220)
+// Le défaut corrigé : quel que soit le bouton cliqué, un brouillon plus ancien (Plomberie) reprenait
+// la main et le client retombait sur sa demande précédente. L'intention doit gagner, et rester
+// lisible dans l'état du tunnel — pas seulement dans la description, qui vit en session 2 h.
+const tunnel = lire('assets/hc-demande.js');
+const noyau = lire('assets/hc-demande-core.js');
+const ctas = [...home.matchAll(/href="\/catalogue\.html#([^"]+)"[^>]*data-hc-promo-fam="([a-z-]+)"/g)].map((m) => ({ hash: m[1].replace(/&amp;/g, '&'), fam: m[2] }));
+ok(`bandeau : trois boutons, trois intentions distinctes (${ctas.map((c) => c.fam).join(', ') || '—'})`,
+  ctas.length === 3 && new Set(ctas.map((c) => c.hash)).size === 3);
+const sujets = new Set([...tunnel.matchAll(/^\s{4}'?([a-z-]+)'?: \{ metier:/gm)].map((m) => m[1]));
+const focusConnus = new Set([...noyau.matchAll(/^\s{4}([a-z-]+): \{ libelle:/gm)].map((m) => m[1]));
+for (const c of ctas) {
+  const presta = (c.hash.match(/presta=([a-z-]+)/) || [])[1];
+  const sujet = (c.hash.match(/sujet=([a-z-]+)/) || [])[1];
+  ok(`bandeau ${c.fam} : l'intention est déclarée côté tunnel (${presta ? 'presta ' + presta : 'sujet ' + sujet})`,
+    presta ? focusConnus.has(presta) : !!sujet && sujets.has(sujet));
+  ok(`bandeau ${c.fam} : porte la source pour le suivi`, /src=home-saison/.test(c.hash));
+}
+ok('devis sans prestation au catalogue : l’intention est inscrite dans l’état durable, pas seulement dans la description',
+  /state\.mode = 'devis'; state\.focus = h\.sujet;/.test(tunnel));
+ok('une intention hors catalogue ne filtre rien : elle ne sert que de trace',
+  /if \(!focusConnu\(f\)[\s\S]{0,40}?\) return liste \|\| \[\];/.test(noyau));
+ok('un lien d’entrée avec une demande en cours passe par le choix explicite (jamais de reprise silencieuse)',
+  /if \(h\.entry && C\.hasDraft\(state, cart \? cart\.count\(\) : 0\)\) \{ pendingEntry = h; start = 'choix'; \}/.test(tunnel));
+ok('aucun bouton du bandeau ne vise une URL redirigée',
+  ctas.every((c) => !new RegExp('^/catalogue(\\.html)?\\s+\\S+\\s+30', 'm').test(redirects)));
+
 console.log(`\nRÉSULTAT INTENTION UNIQUE : ${pass} PASS / ${fail} FAIL\n`);
 process.exit(fail ? 1 : 0);

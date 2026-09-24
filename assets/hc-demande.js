@@ -1287,7 +1287,10 @@
     // description déjà posés. Le client ne repasse pas par « Que souhaitez-vous faire ? ».
     if (h.sujet && SUJETS[h.sujet]) {
       var su = SUJETS[h.sujet];
-      state.mode = 'devis'; state.focus = null;
+      // L'intention reste inscrite dans l'état durable (pas dans les données personnelles) : la
+      // description, elle, vit en session et s'efface au bout de 2 h. Un sujet inconnu du catalogue
+      // ne filtre rien (focusConnu le rejette), il sert uniquement de trace.
+      state.mode = 'devis'; state.focus = h.sujet;
       if ((state.devis.metiers || []).indexOf(su.metier) < 0) state.devis.metiers = (state.devis.metiers || []).concat([su.metier]).slice(0, 3);
       if (!state.devis.nature) state.devis.nature = su.nature;
       if (!(state.devis.desc || '').trim()) state.devis.desc = su.desc;
