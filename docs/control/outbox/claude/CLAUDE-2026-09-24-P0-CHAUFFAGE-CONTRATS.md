@@ -28,7 +28,9 @@ prouver que ce qui reste tient debout.
 
 ## LAST_KNOWN_GOOD
 
-`93f6a23c` (23/09), dernier état où les cartes étaient présentes sur les quatre pages. Je ne l'ai
+`ebe70ea9`, parent du commit qui a retiré les cartes — `05521baa` « refactor(content): consolidate
+boiler maintenance into a single canonical commercial page », du 2026-09-23, retrouvé par
+`git log -S'class="ce-card'`. Je ne l'ai
 pas restauré tel quel : il contenait la grille tarifaire complète, c'est-à-dire exactement la
 duplication de prix que la consolidation devait supprimer (5 vitrines, du HT face au TTC des pages
 canoniques). Restaurer l'ancien bloc aurait réparé l'affichage en recréant le défaut d'origine.
