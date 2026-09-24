@@ -1618,28 +1618,45 @@
  <h2>Profitez de notre <em>tranquillité annuelle</em></h2>
  <p>Visite annuelle, attestation remise, rappel automatique un mois avant la date. Trois formules&nbsp;: <strong>BASIC</strong>, <strong>CONFORT</strong>, <strong>SÉCURITÉ</strong>, en gaz comme en fioul — <strong>dès 9,90&nbsp;€ TTC/mois</strong>. Engagement 1 an renouvelable, résiliable à chaque échéance.</p>
  </div>
- <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:18px">
-  <a href="contrats-entretien.html" class="ce-cta" style="min-height:52px;display:inline-flex;align-items:center;justify-content:center;padding:14px 26px">Comparer les formules et souscrire →</a>
-  <a href="entretien-chaudiere.html" class="ce-cta" style="min-height:52px;display:inline-flex;align-items:center;justify-content:center;padding:14px 26px;background:transparent;border:1.5px solid #E55A0C;color:#E55A0C">L'entretien annuel en détail</a>
+ <div class="ce-grid" style="margin-top:30px">
+  <article class="ce-card">
+   <div class="ce-eyebrow">Formule gaz ou fioul</div>
+   <h3 class="ce-name">BASIC</h3>
+   <p class="ce-baseline">L&apos;essentiel pour rester en règle.</p>
+   <ul class="ce-list">
+    <li class="yes"><span>Visite annuelle &amp; attestation officielle</span></li>
+    <li class="yes"><span>Rappel automatique 1 mois avant la date</span></li>
+   </ul>
+  </article>
+  <article class="ce-card is-featured">
+   <span class="ce-badge">★ Le plus choisi</span>
+   <div class="ce-eyebrow">Formule gaz ou fioul</div>
+   <h3 class="ce-name">CONFORT</h3>
+   <p class="ce-baseline">Sérénité au quotidien.</p>
+   <ul class="ce-list">
+    <li class="yes"><span>Tout BASIC inclus</span></li>
+    <li class="yes"><span>2 dépannages/an (main d&apos;œuvre + déplacement)</span></li>
+    <li class="yes"><span>Intervention sous 48&nbsp;h max</span></li>
+   </ul>
+  </article>
+  <article class="ce-card is-securite">
+   <div class="ce-eyebrow">Formule gaz ou fioul</div>
+   <h3 class="ce-name">SÉCURITÉ</h3>
+   <p class="ce-baseline">Tranquillité totale.</p>
+   <ul class="ce-list">
+    <li class="yes"><span>Tout CONFORT inclus</span></li>
+    <li class="yes"><span>Pièces incluses sans frais en gaz, jusqu&apos;à 1&nbsp;000&nbsp;€ HT en fioul</span></li>
+    <li class="yes"><span>Intervention sous 24&nbsp;h max</span></li>
+   </ul>
+  </article>
  </div>
+ <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:28px">
+  <a href="contrats-entretien.html" class="ce-cta" style="min-height:52px;display:inline-flex;align-items:center;justify-content:center;padding:14px 26px">Découvrir nos contrats d&apos;entretien →</a>
+  <a href="catalogue.html#cat=chauffage&amp;presta=entretien&amp;src=chauffage-contrats" class="ce-cta" style="min-height:52px;display:inline-flex;align-items:center;justify-content:center;padding:14px 26px;background:transparent;border:1.5px solid #E55A0C;color:#E55A0C">Juste un entretien ponctuel</a>
+ </div>
+ <p style="text-align:center;margin:18px auto 0;max-width:640px;font-size:.86rem;color:#6b7384">Tarifs détaillés, comparatif gaz / fioul / adoucisseur et souscription sur la page contrats : c&apos;est le seul endroit où les prix sont écrits, ils ne peuvent donc pas se contredire d&apos;une page à l&apos;autre.</p>
  </div>
 </section>
-<script>
-(function(){
- var btns = document.querySelectorAll('.ce-energy-btn');
- var panes = document.querySelectorAll('.ce-pane');
- btns.forEach(function(btn){
-   btn.addEventListener('click', function(){
-     var target = btn.getAttribute('data-energy');
-     btns.forEach(function(b){ b.classList.remove('is-active'); b.setAttribute('aria-selected','false'); });
-     btn.classList.add('is-active'); btn.setAttribute('aria-selected','true');
-     panes.forEach(function(p){
-       p.classList.toggle('is-active', p.getAttribute('data-pane') === target);
-     });
-   });
- });
-})();
-</script>
 
 
 

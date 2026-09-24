@@ -121,5 +121,28 @@ const culsDeSac = groupe.filter((p) => {
 ok('chaque page de la campagne entretien renvoie vers au moins 2 autres (hors en-tête et pied de page)',
   culsDeSac.length === 0, culsDeSac.join(', '));
 
+// ── 8. Un bloc contrats annoncé est un bloc contrats montré (CHATGPT-2026-09-24-P0-CHAUFFAGE-CONTRATS-MISSING)
+// Régression constatée par Florian : la consolidation des vitrines avait retiré les trois cartes
+// des pages chauffagiste mais laissé le titre, le texte « Trois formules : BASIC, CONFORT,
+// SÉCURITÉ » et deux boutons. Résultat : un grand bandeau orange qui promet trois formules et n'en
+// montre aucune. Ce contrôle interdit que le conteneur survive à son contenu.
+const avecSection = pages.filter((f) => /m-contrats-section/.test(texte(f)));
+const sectionDe = (f) => (texte(f).match(/<section[^>]*m-contrats-section[\s\S]*?<\/section>/) || [''])[0];
+ok(`les pages chauffagiste portent toutes le bloc contrats (${avecSection.length} page(s))`,
+  ['chauffagiste-saint-omer.html', 'chauffagiste-dunkerque.html', 'chauffagiste-calais.html', 'chauffagiste-boulogne-sur-mer.html']
+    .every((f) => avecSection.includes(f)));
+for (const f of avecSection) {
+  const sec = sectionDe(f);
+  const cartes = (sec.match(/class="ce-name"[^>]*>([^<]+)</g) || []).map((m) => m.split('>').pop());
+  const troisFormules = ['BASIC', 'CONFORT', 'SÉCURITÉ'].every((t) => cartes.some((c) => c.includes(t)));
+  ok(`${f.replace('.html', '')} : les trois formules sont réellement affichées, pas seulement annoncées`,
+    troisFormules, 'cartes trouvées : ' + (cartes.join(', ') || 'aucune'));
+  ok(`${f.replace('.html', '')} : le bloc mène à la page canonique de souscription`,
+    /href="[^"]*contrats-entretien(\.html)?[#"]/.test(sec));
+  // Le teaser ne rejoue pas la grille tarifaire : un seul endroit dit les prix.
+  ok(`${f.replace('.html', '')} : le teaser n’écrit aucun tarif mensuel de son côté`,
+    !/\d+[.,]\d{2}\s*€\s*(TTC|HT)?\s*(?:<[^>]+>\s*)*(?:\/|par\s)\s*mois/i.test(sec.replace(/<p class="m-head-sub"[\s\S]*?<\/p>/, '')) || !/ce-price/.test(sec));
+}
+
 console.log(`\nRÉSULTAT PRIX PUBLICS : ${pass} PASS / ${fail} FAIL\n`);
 process.exit(fail ? 1 : 0);
