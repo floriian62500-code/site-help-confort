@@ -93,5 +93,41 @@ const campagne = ['/chauffagiste-saint-omer.html', '/contrats-entretien.html', '
 const absentes = campagne.filter((u) => !packed.includes(u + ' '));
 ok('les pages de la campagne entretien figurent dans la liste du sitemap', absentes.length === 0, absentes.join(', '));
 
+// ── 6. La description de l'entité décrit LA page, pas une autre (trouvé le 2026-09-25)
+// Douze pages annonçaient dans leurs données structurées « Plombier à Saint-Omer : recherche de
+// fuite, dégorgement… » — dont les pages volets, vitrerie, menuiserie et PMR. Le défaut vient du
+// gabarit d'origine (il est aussi sur main), l'alignement d'entité le répandait aux autres nœuds de
+// la page. Un moteur lisait donc « plomberie » sur une page de volets roulants.
+// Portée : les pages que la source partagée gouverne réellement, c'est-à-dire celles dont une
+// entité porte déjà un `@id`. Le script refuse d'inventer une identité là où il n'y en a pas, et un
+// test ne doit pas exiger plus que ce que la règle promet.
+const htmls = readdirSync(ROOT).filter((f) => f.endsWith('.html'));
+const desaccord = [];
+let gouvernees = 0;
+for (const f of htmls) {
+  const h = lire(f);
+  const meta = (h.match(/<meta name="description" content="([^"]*)"/) || [])[1];
+  if (!meta) continue;
+  if (!/"@id"\s*:\s*"[^"]*#business"/.test(h)) continue;
+  gouvernees++;
+  const attendu = meta.replace(/&amp;/g, '&').replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"');
+  for (const m of h.matchAll(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/g)) {
+    let doc; try { doc = JSON.parse(m[1]); } catch { continue; }
+    const pile = [doc];
+    while (pile.length) {
+      const o = pile.pop();
+      if (Array.isArray(o)) { pile.push(...o); continue; }
+      if (!o || typeof o !== 'object') continue;
+      pile.push(...Object.values(o));
+      if (!/Business|Organization|LocalBusiness|HVACBusiness|Plumber|Electrician|HomeAndConstructionBusiness/.test(String(o['@type'] || ''))) continue;
+      if (typeof o.description === 'string' && o.description !== attendu) desaccord.push(f);
+    }
+  }
+}
+ok(`la description d'entité suit la page, jamais celle d'un autre métier (${gouvernees} pages gouvernées)`,
+  desaccord.length === 0, [...new Set(desaccord)].slice(0, 6).join(', '));
+ok('la règle est portée par la source partagée, pas appliquée à la main',
+  /HORS_IDENTITE/.test(lire('scripts/seo/entite-jsonld.mjs')) && /meta name="description"/.test(lire('scripts/seo/entite-jsonld.mjs')));
+
 console.log(`\nRÉSULTAT SEO STRUCTURE : ${pass} PASS / ${fail} FAIL\n`);
 process.exit(fail ? 1 : 0);

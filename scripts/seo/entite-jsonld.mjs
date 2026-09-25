@@ -14,8 +14,17 @@
  * Ce script fait les deux choses, et il est la SOURCE de cette règle — on ne l'applique plus à la
  * main, page par page :
  *   1. les nœuds établissement d'une page partagent l'identifiant de la page ;
- *   2. ils portent exactement les mêmes valeurs, alignées sur la description la plus complète.
+ *   2. ils portent exactement les mêmes valeurs d'IDENTITÉ, alignées sur la plus complète.
  *      Aucun champ n'est supprimé : un nœud ne peut que gagner de l'information.
+ *
+ * Une exception, trouvée le 2026-09-25 en essayant de rejouer ce script depuis `main` : `description`
+ * n'est PAS un champ d'identité. Douze pages portaient dans leur entité la description du gabarit
+ * plombier — « recherche de fuite, dégorgement… » — y compris les pages volets, vitrerie, menuiserie
+ * et PMR. Le défaut est antérieur à ce script (il est aussi sur `main`), mais l'alignement le
+ * répandait aux autres nœuds de la même page. Une page annonçait donc à Google qu'elle parlait de
+ * plomberie alors qu'elle parle de volets roulants.
+ * La règle est désormais : la description de l'entité, c'est la description de LA page, celle de sa
+ * balise meta. Une seule source par page, et elle est déjà juste.
  *
  * Ce qu'il NE fait PAS : donner une identité unique à tout le site. Les pages ne s'accordent pas
  * encore sur le nom, l'URL, l'email, le logo ni la note (6 noms différents relevés) : il faudrait
@@ -41,6 +50,9 @@ const pages = [
   ...['prestations', 'actualites', 'realisations', 'emploi'].filter((d) => existsSync(join(ROOT, d)))
      .flatMap((d) => readdirSync(join(ROOT, d)).filter((f) => f.endsWith('.html')).map((f) => d + '/' + f)),
 ];
+
+// Ce qui décrit la PAGE et non l'établissement : jamais propagé d'un nœud à l'autre.
+const HORS_IDENTITE = new Set(['description']);
 
 const estEtablissement = (o) => o && typeof o === 'object' && !Array.isArray(o) && ETABLISSEMENT.has(String(o['@type']));
 
@@ -71,16 +83,20 @@ for (const p of pages) {
   for (const e of docs) if (e) parcourir(e.d, (o) => { if (!ident && estEtablissement(o) && o['@id']) ident = o['@id']; });
   if (!ident) continue;   // page sans identité déclarée : on n'en invente pas
 
-  // 2. description de référence : union des champs, en gardant la valeur la plus complète
+  // 2. référence d'identité : union des champs, en gardant la valeur la plus complète.
+  // `description` en est exclue : elle décrit la page, pas l'établissement (voir l'en-tête).
   const reference = {};
   for (const e of docs) if (e) parcourir(e.d, (o) => {
     if (!estEtablissement(o)) return;
     if (o['@id'] && o['@id'] !== ident) return;           // une autre entité : on n'y touche pas
     for (const [k, v] of Object.entries(o)) {
-      if (k === '@id' || k === '@type' || k === '@context') continue;
+      if (k === '@id' || k === '@type' || k === '@context' || HORS_IDENTITE.has(k)) continue;
       if (!(k in reference) || poids(v) > poids(reference[k])) reference[k] = v;
     }
   });
+  // La description de la page fait autorité sur celle des nœuds — quand la page en déclare une.
+  const metaDesc = (html.match(/<meta name="description" content="([^"]*)"/) || [])[1];
+  if (metaDesc) reference.description = metaDesc.replace(/&amp;/g, '&').replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"');
 
   // 3. application
   let change = false;
