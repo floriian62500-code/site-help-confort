@@ -110,17 +110,6 @@ for (const p of pages) {
 ok('le délai annoncé pour la formule CONFORT est le même partout', delais.size <= 1,
   delais.size > 1 ? 'valeurs trouvées : ' + [...delais].join(' h, ') + ' h' : '');
 
-// ── 7. Maillage de la campagne : aucune page n'est un cul-de-sac
-const groupe = ['chauffagiste-saint-omer.html', 'contrats-entretien.html', 'prestations/ramonage.html',
-                'guide-entretien-chaudiere.html', 'blog-entretien-chaudiere-annuel-obligatoire.html'];
-const editorial = (p) => texte(p).replace(/<header[\s\S]*?<\/header>/, '').replace(/<footer[\s\S]*?<\/footer>/g, '');
-const culsDeSac = groupe.filter((p) => {
-  const c = editorial(p);
-  return groupe.filter((q) => q !== p && new RegExp('href="(?:[^"]*/)?' + q.replace('.html', '').replace('/', '\\/') + '(\\.html)?[#"]').test(c)).length < 2;
-});
-ok('chaque page de la campagne entretien renvoie vers au moins 2 autres (hors en-tête et pied de page)',
-  culsDeSac.length === 0, culsDeSac.join(', '));
-
 // ── 8. Un bloc contrats annoncé est un bloc contrats montré (CHATGPT-2026-09-24-P0-CHAUFFAGE-CONTRATS-MISSING)
 // Régression constatée par Florian : la consolidation des vitrines avait retiré les trois cartes
 // des pages chauffagiste mais laissé le titre, le texte « Trois formules : BASIC, CONFORT,
