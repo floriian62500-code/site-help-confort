@@ -33,10 +33,18 @@ from pathlib import Path
 # ────────────────────────────────────────────────
 # Dépendances
 # ────────────────────────────────────────────────
+# `requests` ne sert qu'à parler à Facebook. On ne meurt donc pas à l'import : un script qui refuse
+# d'être importé sans sa dépendance réseau ne peut pas être testé — et c'est justement la garde
+# anti-recréation de doublons qu'il faut pouvoir tester (CHATGPT-2026-09-25-CONTROL-4 §3).
+# L'absence est signalée au moment où elle empêche vraiment quelque chose : la synchronisation.
 try:
     import requests
 except ImportError:
-    print("❌ Dépendance manquante : pip3 install requests"); sys.exit(1)
+    requests = None
+
+def _exiger_requests():
+    if requests is None:
+        print("❌ Dépendance manquante : pip3 install requests"); sys.exit(1)
 try:
     from dotenv import load_dotenv
     load_dotenv(Path(__file__).resolve().parent.parent / '.env')
@@ -63,12 +71,15 @@ GRAPH_BASE = f"https://graph.facebook.com/{GRAPH_VERSION}"
 TOKEN = os.environ.get("FB_PAGE_ACCESS_TOKEN", "").strip()
 PAGE_ID = os.environ.get("FB_PAGE_ID", "").strip()
 
-if not TOKEN or not PAGE_ID:
-    print("❌ Variables d'environnement manquantes.")
-    print("   Crée un fichier .env à la racine du projet (voir SETUP-API-FACEBOOK.md) :")
-    print("     FB_PAGE_ACCESS_TOKEN=EAA...")
-    print("     FB_PAGE_ID=100064802658263")
-    sys.exit(1)
+# Même raison que pour `requests` : on ne meurt pas à l'import faute de jeton. Sans jeton on ne peut
+# pas parler à Facebook, mais on peut parfaitement relire les règles du script — et les tester.
+def _exiger_identifiants():
+    if not TOKEN or not PAGE_ID:
+        print("❌ Variables d'environnement manquantes.")
+        print("   Crée un fichier .env à la racine du projet (voir SETUP-API-FACEBOOK.md) :")
+        print("     FB_PAGE_ACCESS_TOKEN=EAA...")
+        print("     FB_PAGE_ID=100064802658263")
+        sys.exit(1)
 
 # ────────────────────────────────────────────────
 # Args
@@ -350,6 +361,8 @@ def build_html(post_data):
 # Pipeline principal
 # ────────────────────────────────────────────────
 def main():
+    _exiger_requests()
+    _exiger_identifiants()
     print(f"🔄 Synchronisation Facebook → site")
     print(f"   Page ID : {PAGE_ID}")
     if args.dry_run: print(f"   Mode    : DRY-RUN (aucun fichier ne sera écrit)")
