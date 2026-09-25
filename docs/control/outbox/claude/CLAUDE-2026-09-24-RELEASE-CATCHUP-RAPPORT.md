@@ -6,6 +6,15 @@ controle: CHATGPT-2026-09-24-RELEASE-CATCHUP-CONTROL-1
 date: 2026-09-24
 needs_human: true
 
+> **Corrigé le 2026-09-25 après le contrôle `CHATGPT-2026-09-24-RELEASE-CATCHUP-REVIEW-1`.**
+> Trois passages ont été repris, et je les nomme plutôt que de les effacer :
+> le mot « rattrapage » laissait entendre qu'une fois les gates levés, une fusion globale
+> `recette → main` redeviendrait la méthode normale — ce n'est **pas** la cible ;
+> `SHA_FINAL` renvoyait à « voir le commit » au lieu d'un SHA exact ;
+> et le raisonnement READY_100 s'arrêtait aux conflits de cherry-pick.
+> Les réponses complètes sont dans `CLAUDE-2026-09-25-RELEASE-CATCHUP-REVIEW-1.md`
+> et `CLAUDE-2026-09-25-RELEASE-CATCHUP-CONTROL-2.md`.
+
 ## ACK
 
 Publié dans `CLAUDE-2026-09-24-RELEASE-CATCHUP-ACK.md`.
@@ -101,8 +110,11 @@ Sans déploiement, il n'y a rien à annuler. Pour chacun des gates, le retour ar
 Les 13 lignes de `docs/release/TABLEAU-EXECUTION-FINAL.md`, chacune avec priorité, risque, action
 Florian, action après GO, test de succès et rollback.
 
-Les trois qui débloquent le rattrapage : **fermer l'accès aux données** (10 s), **valider
-visuellement** le bandeau et le saisonnier, **décider du pipeline de leads**.
+Les trois qui débloquent la **préparation d'une première release** : **fermer l'accès aux
+données** (10 s), **valider visuellement** le bandeau et le saisonnier, **décider du pipeline de
+leads**. Ils ne débloquent pas une fusion `recette → main` : cette voie est fermée. La cible
+reste une release créée depuis `main`, un lot limité, des tests sur l'état exact à déployer, un
+GO humain, puis `release → main`.
 
 ## ANTI_DERIVE
 
@@ -122,12 +134,15 @@ Mesure actuelle : **447 commits fonctionnels d'avance, seuil 30 → alerte P0 ac
 
 ## SHA_FINAL
 
-Voir le commit portant ce rapport sur `recette`.
+`abd326b9` — commit qui porte ce rapport sur `recette` (`git log --diff-filter=A` sur le fichier),
+état sur lequel il a été mesuré au moment où ce rapport a été mesuré (corrigé le 25/09 :
+l'ancienne formulation « voir le commit » n'était pas un SHA).
 
 ## NEXT_ACTION
 
 `FLORIAN_P0_SECURITY` — fermer l'inscription Supabase (10 secondes), puis donner les deux
-validations visuelles. Sans ces trois gestes, aucun rattrapage n'est possible, et l'écart continue
-de croître.
+validations visuelles. Sans ces trois gestes, aucune release ne peut être préparée, et l'écart
+continue de croître. À aucun moment la sortie de cet écart ne passera par une fusion globale de
+`recette` : elle passera par des releases successives, petites, construites depuis `main`.
 
 **Aucune mutation de production. Aucun GO demandé.**

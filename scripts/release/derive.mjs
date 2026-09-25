@@ -16,7 +16,12 @@
  * Ce script n'AGIT jamais : il mesure et il alerte. Aucun déploiement n'est automatique.
  *
  *   node scripts/release/derive.mjs            rapport lisible
- *   node scripts/release/derive.mjs --strict   sort 1 si un seuil est franchi (CI)
+ *   node scripts/release/derive.mjs --strict   code de sortie exploitable :
+ *       0 = aucun seuil franchi
+ *       1 = seuil franchi  → le garde-fou de WIP refuse d'ouvrir un nouveau gros lot
+ *       3 = mesure impossible (référence main absente en local) → on avertit, on ne bloque pas :
+ *           une référence manquante n'est pas une dérive prouvée, et bloquer sur un « je ne sais
+ *           pas » empêcherait de travailler hors ligne.
  */
 import { execSync } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
@@ -96,4 +101,9 @@ if (!alertes.length) {
   console.log('  et ne pas ouvrir de nouveau gros lot avant. Aucun déploiement automatique.');
 }
 console.log('');
-if (STRICT && alertes.length) process.exit(1);
+if (STRICT) {
+  // Une alerte « je n'ai pas pu mesurer » ne vaut pas une dérive constatée : elle a son propre code.
+  const bloquantes = alertes.filter((a) => !/^Impossible de mesurer/.test(a));
+  if (bloquantes.length) process.exit(1);
+  if (alertes.length) process.exit(3);
+}

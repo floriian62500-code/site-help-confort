@@ -46,6 +46,10 @@ jobs:
             exit 1
           fi
 
+      # Le garde-fou de WIP se joue en bac à sable : dépôt temporaire, jamais le vrai verrou.
+      - name: Garde-fou anti-dérive à l'ouverture d'un lot
+        run: bash scripts/tests/garde-wip.test.sh
+
       - name: Garde-fous SEO
         run: |
           set -uo pipefail

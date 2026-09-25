@@ -47,7 +47,24 @@ ok('la CI signale la dérive à chaque passage', /derive\.mjs/.test(ci));
 ok('… mais ne bloque pas dessus (sinon la CI serait rouge en permanence et le signal serait perdu)',
   /derive\.mjs \|\| true/.test(ci) && !/derive\.mjs --strict/.test(ci));
 
-ok('le mode strict existe pour le processus de release', /--strict/.test(readFileSync(join(ROOT, 'scripts/release/derive.mjs'), 'utf8')));
+const src = readFileSync(join(ROOT, 'scripts/release/derive.mjs'), 'utf8');
+ok('le mode strict existe pour le processus de release', /--strict/.test(src));
+
+// ── Le garde-fou de WIP (REVIEW-1 point 2) : l'alerte en CI ne bloque pas, mais l'ouverture d'un
+// nouveau gros lot, si. Les deux doivent coexister, et le refus doit rester contournable.
+ok('le mode strict distingue « seuil franchi » (1) de « mesure impossible » (3)',
+  /process\.exit\(1\)/.test(src) && /process\.exit\(3\)/.test(src) && /Impossible de mesurer/.test(src));
+const session = readFileSync(join(ROOT, 'scripts/ops/worksession.sh'), 'utf8');
+ok('l’ouverture d’un lot passe par la garde, et un refus n’ouvre rien',
+  /garde_wip "\$LIBELLE" "\$FORCE" \|\| exit 3/.test(session));
+ok('la garde appelle bien la mesure de dérive en mode strict',
+  /derive\.mjs" --strict/.test(session));
+ok('les échappatoires exigées par le contrôle existent toutes (correctif, sécurité, release, GO Florian)',
+  /p0\|p1\|secu/.test(session) && /release\|rollback/.test(session) && /--go-florian/.test(session) && /HC_GO_FLORIAN/.test(session));
+ok('une release corrective active lève le blocage', /release_active/.test(session) && /AUCUNE_RELEASE_ACTIVE/.test(session));
+ok('la garde n’agit qu’à l’ouverture : renew, stop et status restent libres',
+  !/garde_wip/.test(session.slice(session.indexOf('  renew)'))));
+ok('le comportement de la garde est prouvé par un test dédié', existsSync(join(ROOT, 'scripts/tests/garde-wip.test.sh')));
 ok('rien n’est déployé par ce contrôle', !/functions deploy|db push|git push/.test(readFileSync(join(ROOT, 'scripts/release/derive.mjs'), 'utf8')));
 
 console.log(`\nRÉSULTAT PILOTAGE DES LIVRAISONS : ${pass} PASS / ${fail} FAIL\n`);
