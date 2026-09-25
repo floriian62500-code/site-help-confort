@@ -724,6 +724,16 @@ if (document.fonts && document.fonts.ready) {
  }
  } catch(e){ console.warn('[actus] Supabase fetch:', e.message); }
 
+ // Une publication = une seule carte : les entrées legacy qui pointent une fiche chantier
+ // et les imports Supabase peuvent désigner la même URL (cf. doublon actualités ↔ réalisations).
+ var vues = {};
+ allArticles = allArticles.filter(function(a){
+ var u = String(a.url || '').replace(/^\/+/, '').replace(/\.html$/, '');
+ if (!u || u === '#') return true;
+ if (vues[u]) return false;
+ vues[u] = 1; return true;
+ });
+
  if (!allArticles.length) {
  grid.innerHTML = '<div class="actu-empty" style="grid-column:1/-1"><h3>Aucun article publié pour le moment.</h3><p>Les actualités et publications Facebook apparaîtront ici automatiquement.</p></div>';
  return;

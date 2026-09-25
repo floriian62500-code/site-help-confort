@@ -15,11 +15,9 @@ Deno.serve(async (_req) => {
     const sb = createClient(Deno.env.get('SUPABASE_URL'), Deno.env.get('SUPABASE_ANON_KEY'));
     const rr = await sb.from('realisations').select('slug,published_at,updated_at').eq('status', 'publie').order('published_at', { ascending: false });
     const reals = rr.data || [];
-    let actus = [];
-    try {
-      const ra = await sb.from('actualites').select('slug,published_at,updated_at').eq('status', 'publie').order('published_at', { ascending: false });
-      actus = ra.data || [];
-    } catch (_) { /* table optionnelle */ }
+    // Les actualités de chantier ne sont plus publiées au sitemap : leur URL canonique est la
+    // fiche /realisations/<slug>, et l'ancienne URL redirige en 301. Publier les deux, c'est
+    // annoncer soi-même le doublon qu'on vient de supprimer.
 
     const rows = [];
     for (const p of STATIC_PAGES) {
@@ -28,10 +26,6 @@ Deno.serve(async (_req) => {
     for (const r of reals) {
       const lm = (r.updated_at || r.published_at || '').slice(0, 10);
       rows.push('  <url><loc>' + SITE_URL + '/realisations/' + encodeURIComponent(r.slug) + '</loc>' + (lm ? '<lastmod>' + lm + '</lastmod>' : '') + '<changefreq>monthly</changefreq><priority>0.6</priority></url>');
-    }
-    for (const a of actus) {
-      const lm = (a.updated_at || a.published_at || '').slice(0, 10);
-      rows.push('  <url><loc>' + SITE_URL + '/actualites/' + encodeURIComponent(a.slug) + '.html</loc>' + (lm ? '<lastmod>' + lm + '</lastmod>' : '') + '<changefreq>monthly</changefreq><priority>0.6</priority></url>');
     }
 
     const xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + rows.join('\n') + '\n</urlset>';
