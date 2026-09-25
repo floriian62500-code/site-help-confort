@@ -1,0 +1,30 @@
+{
+ "_lisezmoi": [
+  "Relevé des tarifs publics, pris dans le catalogue de production le 2026-09-23.",
+  "Source exacte : select ... from public.v_contract_offers  et  public.v_services_public (lecture seule).",
+  "Sert de référence à scripts/tests/prix-contrats.test.mjs : tout montant mensuel écrit en dur dans une",
+  "page doit exister ici. Une page qui affiche un prix absent du catalogue est un défaut public.",
+  "À mettre à jour quand les tarifs changent — et le test dira quelles pages suivre."
+ ],
+ "_releve_le": "2026-09-23",
+ "contrats_ttc_mois": {
+  "adoucisseur-standard": 8.80,
+  "gaz-basic": 9.90,
+  "fioul-basic": 13.20,
+  "gaz-confort": 14.30,
+  "fioul-confort": 17.60,
+  "gaz-securite": 25.30,
+  "fioul-securite": 29.70
+ },
+ "amplitude_affichable": { "min": 9.90, "max": 29.70 },
+ "prestations_ponctuelles_ttc": {
+  "Entretien chaudière gaz": 121.00,
+  "Entretien chaudière fioul": 178.20,
+  "Entretien chaudière fioul gros volume": 218.90,
+  "Contrat entretien chauffe-eau annuel": 220.00
+ },
+ "_non_au_catalogue": [
+  "Aucune ligne « entretien chaudière à condensation » : ne pas en afficher le prix.",
+  "Aucune ligne ramonage / poêle / insert au catalogue (décision Florian du 2026-09-22 : pas d'écriture en base pour l'instant)."
+ ]
+}
