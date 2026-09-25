@@ -162,6 +162,23 @@ for (const p of pages) {
 }
 if (!liens) ok('aucun lien interne vers un doublon (' + doublons.length + ' surveillé·s)');
 
+// ── Deux pages qui portent le MÊME H1 décrivent la même chose, quoi qu'en disent leurs titres.
+// Trouvé le 2026-09-25 en reprenant le « DOUBLONS » de Florian du 12 août : c'est le signal le plus
+// sûr du lot (le vocabulaire se recoupe naturellement à 63-78 % entre pages d'un même gabarit, donc
+// le recoupement seul ne prouve rien — un H1 identique, si).
+const NL = String.fromCharCode(10);
+const parH1 = {};
+for (const p of pages) {
+  const h1 = ((p.html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/) || [])[1] || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  if (h1) (parH1[h1] = parH1[h1] || []).push(p.url);
+}
+const h1Partages = Object.entries(parH1).filter(([, v]) => v.length > 1);
+if (!h1Partages.length) ok('aucun H1 partagé par deux pages');
+else for (const [h1, urls] of h1Partages) {
+  warn('même H1 sur ' + urls.length + ' pages : « ' + h1 + ' »' + NL + '       ' + urls.join(' + ') +
+       NL + '       → arbitrage métier en attente (fusionner ou distinguer) : une décision, pas un nettoyage');
+}
+
 console.log('\nRÉSULTAT DOUBLONS D’INTENTION : ' + (erreurs ? erreurs + ' à traiter' : 'OK') +
             (avertis ? ' · ' + avertis + ' avertissement(s) hérité(s)' : '') + '\n');
 process.exit(erreurs ? 1 : 0);
