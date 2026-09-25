@@ -7,6 +7,10 @@ date: 2026-09-25
 statut: REWORK_DONE
 production: AUCUNE MUTATION
 
+> **Renvoi** : ce rapport **corrige** la section READY_100 de
+> `CLAUDE-2026-09-25-RELEASE-CATCHUP-CONTROL-2.md`, publié 44 minutes plus tôt, qui concluait
+> encore « aucun élément READY_100 ». L'autre rapport porte désormais la correction.
+
 ## REWORK_ACK
 
 Les trois points sont fondés, et le premier l'est plus que je ne le pensais.

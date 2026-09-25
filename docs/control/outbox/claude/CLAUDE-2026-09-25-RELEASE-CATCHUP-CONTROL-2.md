@@ -7,6 +7,14 @@ date: 2026-09-25
 statut: REWORK_DONE
 production: AUCUNE MUTATION
 
+> **Corrigé le 2026-09-25 à 12 h 30 — une section de ce rapport était périmée quand je l'ai publiée.**
+> Publié à 11 h 14, il conclut « toujours aucun élément READY_100 ». À 11 h 58, en répondant au
+> contrôle `REVIEW-1`, j'ai reconstruit **trois candidats depuis `main`** et je les ai classés
+> READY_100. Les deux rapports se contredisaient donc pendant 44 minutes, par ma faute : j'ai
+> traité les deux contrôles l'un après l'autre sans relire le premier à la lumière du second.
+> La section **READY_100_REVISE** ci-dessous est corrigée ; **EXCLUSIONS_REVISEES** aussi.
+> Le détail des trois candidats est dans `CLAUDE-2026-09-25-RELEASE-CATCHUP-REVIEW-1.md`.
+
 ## REWORK_ACK
 
 Les deux reproches sont fondés, et le second est une erreur de fait que je n'avais pas vue.
@@ -75,7 +83,7 @@ Mesuré le 2026-09-25 sur `origin/main` = `e5b61c6e9855745321adda064c8099b3c2b81
 | Mesure | Valeur | Commande |
 |---|---|---|
 | Base commune | `755ed1bf9` — 2026-08-08 | `git merge-base origin/main origin/recette` |
-| Commits recette absents de main | **719**, dont **466 fonctionnels** | `git rev-list --count` + filtre `estFonctionnel` |
+| Commits recette absents de main | **719**, dont **466 fonctionnels** (au 2026-09-25 11 h 14 ; **727 / 474** à 12 h 30 — mes propres commits du jour) | `git rev-list --count` + filtre `estFonctionnel` |
 | Commits main absents de recette | **54** = 53 rapports nightly + 1 fusion | `git log --format=%s origin/recette..origin/main` |
 | Fichiers que main a et que recette n'a pas | **104**, tous sous `admin-pro/audits/` | `git diff --name-only origin/recette...origin/main` |
 | Fichiers différents au total | **855** | `git diff --name-only origin/main...origin/recette` |
@@ -86,8 +94,31 @@ La dérive continue de croître pendant qu'on en parle — c'est exactement ce q
 
 ## READY_100_REVISE
 
-**Toujours aucun élément READY_100**, et la correction sur les validations ne change pas cette
-conclusion — elle en change la *justification* pour cinq lots.
+> **Corrigé à 12 h 30.** Ce que cette section disait à 11 h 14 — « toujours aucun élément
+> READY_100 » — **est faux depuis 11 h 58**. Le contrôle `REVIEW-1` demandait d'arrêter de prendre
+> un conflit de cherry-pick pour une preuve d'inséparabilité, et de reconstruire à la main depuis
+> `main`. Je l'ai fait, et **trois candidats passent** :
+>
+> | Candidat | Portée | Commit d'essai |
+> |---|---|---|
+> | Entité JSON-LD unique par page | 63 pages + la source partagée | `ded02b78` |
+> | Prix publics conformes au catalogue | 1 page + le relevé tarifaire | `fae11203` |
+> | Actualités chantier canonicalisées | 10 actualités + `_redirects` + le listing | `c3bd39fe` |
+>
+> Branche d'essai poussée : `origin/essai/release-candidats-2026-09-25` (tip `c3bd39fe`), construite
+> depuis `origin/main` = `e5b61c6e`. **Ce n'est pas une branche de release** et elle ne doit pas
+> être fusionnée ; elle existe pour que le contrôle puisse relire ce que j'affirme.
+>
+> Ce que la correction sur les validations change — et qui reste vrai : aucun lot **à effet visuel**
+> ne dispose d'une validation actuelle, donc aucun de ces trois candidats n'en est un. Les trois
+> touchent des données structurées, des prix faux et des redirections : rien qui demande un avis
+> visuel, tout qui demande un GO de livraison.
+
+**Ce qui suit était le raisonnement du 11 h 14, conservé parce qu'il reste juste sur les lots
+à effet visuel** — il ne l'est plus comme conclusion générale.
+
+La correction sur les validations ne change pas le sort de ces lots-là — elle en change la
+*justification* pour cinq d'entre eux.
 
 Avant, j'écrivais « jamais validé par Florian ». C'était faux dans la lettre. La formulation exacte
 est : **il existe des validations, elles sont toutes périmées ou sans objet, donc aucun lot ne
@@ -99,6 +130,10 @@ actualités. Ces mesures datent du 24/09 et n'ont pas été refaites — les ref
 donnerait pas moins de conflits, la base commune n'ayant pas bougé.
 
 ## EXCLUSIONS_REVISEES
+
+> **Corrigé à 12 h 30** : ce tableau énumérait ce qui ne part pas, à un moment où je pensais que
+> **rien** ne partait. Il reste exact ligne à ligne, mais il n'est plus exhaustif de la situation :
+> les trois candidats reconstruits n'y figurent pas, puisqu'ils ne sont plus exclus.
 
 | Lot | Classe | Raison **corrigée** |
 |---|---|---|
@@ -202,8 +237,10 @@ Les seuls accès base de ce lot sont trois `select`, dont un consolidé.
 
 `704ce4d2c98c843ec6ae544fa47a3cd938ecf5eb`
 
-C'est l'état exact sur lequel tous les faits ci-dessus ont été mesurés (branche `recette`). Le
-commit qui publie ce rapport en est le successeur direct et n'ajoute que ce fichier.
+État sur lequel les faits de la version du 11 h 14 ont été mesurés (branche `recette`).
+
+Les corrections du 12 h 30 ont été mesurées sur `42f7452a2b1b1de84a02b55fb963bd0f36f98e8f`,
+et la branche d'essai des candidats est `c3bd39fe`, construite depuis `origin/main` = `e5b61c6e`.
 
 ## NEXT_ACTION
 
