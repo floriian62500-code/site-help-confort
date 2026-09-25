@@ -1,6 +1,6 @@
 # 🤖 Audit couverture chatbot widget — sonde #24
 
-_Généré le 2026-09-24 08:14_
+_Généré le 2026-09-25 08:37_
 
 - Pages publiques scannées : **116**
 - Pages avec widget chargé : **112**
