@@ -4,15 +4,46 @@
   "Une seule release active a la fois. Tant que release_branch est null, aucune livraison n'est en cours.",
   "Etats autorises par element : DEV | TESTED | WAITING_FLORIAN | READY_FOR_RELEASE | IN_RELEASE | PROD | PROD_VERIFIED.",
   "« Termine » ne s'emploie qu'a partir de PROD_VERIFIED.",
-  "Mis a jour le 2026-09-25 apres CHATGPT-2026-09-25-CONTROL-4 : une vraie branche release existe, ce fichier doit le dire."
+  "Mis a jour le 2026-09-25 apres CHATGPT-2026-09-25-CONTROL-5 : la release active ne contient plus que C. Une decision metier non tranchee (les prix de B) ne doit pas retenir un element independant deja pret."
  ],
- "release_id": "lot-bc-2026-09-25",
+ "release_id": "lot-c-2026-09-25",
  "base_main_sha": "570225bff7f451318399bc52176fdcea9b1adc45",
- "release_branch": "release/lot-bc-2026-09-25",
- "created_at": "2026-09-25T12:20:00Z",
+ "release_branch": "release/lot-c-2026-09-25",
+ "created_at": "2026-09-25T15:40:00Z",
  "statut": "RELEASE_CONSTITUEE_EN_ATTENTE_DE_CONTROLE",
- "raison": "Lot constitue depuis le main courant (merge, sans force-push), teste sur son SHA exact. Il n'est pas fusionne et ne le sera pas sans un nouveau controle ChatGPT et le GO de Florian.",
- "elements": [],
+ "raison": "Lot C seul, construit depuis le main courant, teste sur son SHA exact (behind_by = 0). B en est sorti : il attend une validation metier de Florian et n'a pas a retenir C.",
+ "elements": [
+  {
+   "id": "C",
+   "intitule": "Une publication de chantier = une URL indexable",
+   "etat": "IN_RELEASE",
+   "release": "release/lot-c-2026-09-25",
+   "sha": "a33875773d1cfc739b203db86ab53369f64dadb7",
+   "perimetre": [
+    "10 actualites chantier canonicalisees",
+    "_redirects avec et sans .html",
+    "listing dedoublonne",
+    "garde du generateur (anti-recreation)",
+    "source du sitemap",
+    "normalisation d hote des actualites",
+    "tests du lot : couples, generateur, canonique"
+   ]
+  },
+  {
+   "id": "B",
+   "intitule": "Prix publics du blog alignes sur le catalogue",
+   "etat": "READY_FOR_RELEASE",
+   "gate": "WAITING_FLORIAN_BUSINESS",
+   "document": "docs/release/B-DIFF-PRIX-METIER.md",
+   "note": "Techniquement pret et prouve (20/20 sur son etat exact). N entre dans une release qu apres validation metier explicite de Florian."
+  },
+  {
+   "id": "A",
+   "intitule": "Entite JSON-LD unique par page",
+   "etat": "DEV",
+   "gate": "Arbitrage Florian sur le nom unique de l entreprise"
+  }
+ ],
  "exclusions": [
   {
    "lot": "bandeau d'accueil",
@@ -48,8 +79,9 @@
  "branche_release_existante": {
   "nom": "release/rattrapage-2026-09-24",
   "sha": "e5b61c6e9855745321adda064c8099b3c2b819fc",
-  "etat": "EXISTE_MAIS_VIDE",
-  "note": "Pointe exactement sur origin/main : 0 commit propre, diff nul. Une branche qui existe n'est pas une release active."
+  "etat": "EXISTE_MAIS_VIDE_ET_EN_RETARD",
+  "fait_au_2026-09-25": "0 commit propre ; en retard d'un commit sur origin/main (570225bff). Elle ne pointe plus exactement sur main : ce n'est plus vrai depuis que main a avance.",
+  "note": "Branche sans contenu, conservee pour trace. Ne pas confondre avec la release active."
  },
  "validations_historiques": {
   "source": "table recette_validation (projet btcbjwqiivhpwoszomhg), lecture seule",
@@ -73,25 +105,14 @@
    "suppression de la landing entretien-chaudiere"
   ]
  },
- "release_sha": "8cebd8e2475e268ad7bc4c1ae7a82a4bea5861d4",
- "production_status": "AUCUNE_MUTATION",
+ "release_sha": "a33875773d1cfc739b203db86ab53369f64dadb7",
+ "production_status": "NOT_DEPLOYED",
  "needs_human": true,
  "included_items": [
   {
-   "id": "B",
-   "intitule": "Prix publics du blog alignes sur le catalogue",
-   "etat": "TECH_READY + WAITING_FLORIAN_BUSINESS",
-   "pages": [
-    "blog-entretien-chaudiere-annuel-obligatoire.html"
-   ],
-   "source_canonique": "data/contrats-tarifs.json (releve catalogue, compare au catalogue reel le 2026-09-25 : aucun ecart)",
-   "diff_metier": "docs/release/B-DIFF-PRIX-METIER.md",
-   "gate": "Prix visibles publiquement : validation metier de Florian obligatoire avant production."
-  },
-  {
    "id": "C",
    "intitule": "Une publication de chantier = une URL indexable",
-   "etat": "TECH_READY",
+   "etat": "IN_RELEASE",
    "pages": [
     "10 actualites de chantier",
     "_redirects",
@@ -106,6 +127,11 @@
   }
  ],
  "excluded_items": [
+  {
+   "id": "B",
+   "intitule": "Prix publics du blog",
+   "raison": "Sorti de la release active le 2026-09-25 : WAITING_FLORIAN_BUSINESS. Une decision metier non tranchee ne doit pas bloquer un element independant deja pret (CONTROL-5 §1)."
+  },
   {
    "id": "A",
    "intitule": "Entite JSON-LD unique par page",
@@ -125,22 +151,44 @@
   }
  ],
  "test_status": {
-  "joues_sur": "8cebd8e2475e268ad7bc4c1ae7a82a4bea5861d4",
+  "joues_sur": "a33875773d1cfc739b203db86ab53369f64dadb7",
+  "verdict": "PASS",
   "resultats": {
-   "prix-contrats": "20/20",
    "actualites-couples": "8/8",
    "actualites-generateur": "6/6",
-   "actualites-canonique": "44/44"
+   "actualites-canonique": "44/44",
+   "depot-propre": "4/4 (joue sur l etat, hors perimetre du lot)"
   },
-  "suites_rouges_non_justifiees": 0,
-  "note": "Toutes les suites pertinentes au lot sont 100 % vertes sur le SHA exact de la release."
+  "controles_cibles": {
+   "boucles_redirects": 0,
+   "cibles_absentes": 0,
+   "formes_sans_html_manquantes": 0,
+   "entrees_listing_vers_url_redirigee": 0,
+   "urls_recreables_par_le_generateur": 0
+  },
+  "suites_rouges_non_justifiees": 0
  },
- "rollback": "La release n'est pas fusionnee : l'annuler, c'est ne pas la fusionner. Une fois livree, `git revert 8cebd8e2 8adaba03 04cd9ee1 990e65e2` sur main remet l'etat d'avant. Aucune base, aucun paiement, aucune fonction edge deployee ; les redirections disparaissent avec le revert.",
+ "rollback": "La release n'est pas fusionnee : l'annuler, c'est ne pas la fusionner. Une fois livree, `git revert a3387577 0746a9cf 309a9308` sur main remet l'etat d'avant. Aucune base, aucun paiement, aucune fonction edge deployee.",
  "candidats_hors_release": [
   {
    "id": "A",
    "etat": "BLOQUE_ARBITRAGE_IDENTITE",
    "preuve": "scripts/seo/entite-jsonld-preuve.mjs : HTML visible identique, 460 blocs relisibles, 0 cle perdue, 54 valeurs remplacees toutes enrichissantes."
   }
- ]
+ ],
+ "needs_human_raison": "Gate final de production uniquement. C ne demande pas de validation metier : aucun changement visible non documente n'a ete trouve.",
+ "releases_precedentes": [
+  {
+   "nom": "release/lot-bc-2026-09-25",
+   "sha": "8cebd8e2475e268ad7bc4c1ae7a82a4bea5861d4",
+   "etat": "REMPLACEE",
+   "raison": "Contenait B et C ensemble. Separee le 2026-09-25 sur demande du controle : B attend un gate metier. Conservee pour trace, a ne pas fusionner."
+  }
+ ],
+ "sitemap": {
+  "source_dans_git": "Modifiee par C : la fonction ne publie plus les actualites de chantier.",
+  "fonction_edge_deployee": "Version du 2026-08-08, inchangee. Le sitemap servi en production contient encore 17 URL /actualites/.",
+  "gate": "Le redeploiement de la fonction sitemap est un gate SEPARE. Inclure la source dans la release ne la deploie pas.",
+  "consequence": "Tant que la fonction n'est pas redeployee, le sitemap annonce des URL qui repondront 301. Propre, mais a savoir."
+ }
 }
