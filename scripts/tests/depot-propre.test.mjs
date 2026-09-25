@@ -56,5 +56,57 @@ ok(`les workflows sont uniques et nommés proprement (${workflows.length})`,
 const ignore = execFileSync('git', ['check-ignore', '-q', 'exemple 2.html'], { cwd: ROOT }).status;
 ok('.gitignore écarte les copies de conflit (le disque en recrée tout seul)', ignore === undefined || ignore === 0);
 
+
+// ── Secrets : aucune valeur de jeton ou de clé privée ne doit être suivie par git.
+// On distingue ce qui EST un secret de ce qui n'en est pas : la clé publiable Supabase et la clé
+// anon d'un site statique sont faites pour être servies au navigateur — les signaler chaque jour
+// finirait par faire ignorer l'alerte le jour où elle est vraie.
+const MOTIFS = [
+  [/ghp_[A-Za-z0-9]{20,}/, 'jeton GitHub'],
+  [/github_pat_[A-Za-z0-9_]{20,}/, 'jeton GitHub (nouveau format)'],
+  [/sk_live_[A-Za-z0-9]{10,}/, 'clé secrète Stripe LIVE'],
+  [/sk_test_[A-Za-z0-9]{10,}/, 'clé secrète Stripe TEST'],
+  [/rk_live_[A-Za-z0-9]{10,}/, 'clé restreinte Stripe LIVE'],
+  [/whsec_[A-Za-z0-9]{10,}/, 'secret de webhook Stripe'],
+  [/-----BEGIN [A-Z ]*PRIVATE KEY-----/, 'clé privée'],
+  [/SUPABASE_SERVICE_ROLE_KEY\s*[:=]\s*['"][A-Za-z0-9._-]{20,}/, 'clé service_role en dur'],
+];
+const TEXTE = /\.(html|js|mjs|cjs|ts|tsx|json|md|py|sh|ya?ml|toml|txt|sql)$/i;
+const trouvailles = [];
+for (const f of suivis.filter((x) => TEXTE.test(x))) {
+  let c; try { c = readFileSync(join(ROOT, f), 'utf8'); } catch { continue; }
+  for (const [re, quoi] of MOTIFS) {
+    const m = c.match(re);
+    // Un motif cité dans un test ou une documentation de règle n'est pas une fuite : on exige que
+    // la valeur ressemble à une vraie (longueur), et on exclut ce fichier-ci qui les énumère.
+    if (m && f !== 'scripts/tests/depot-propre.test.mjs') trouvailles.push(`${f} : ${quoi} (${m[0].slice(0, 8)}…)`);
+  }
+}
+ok(`aucun secret en clair dans les ${suivis.length} fichiers suivis`, trouvailles.length === 0, trouvailles.slice(0, 5).join('\n     '));
+
+// ── Rien ne doit salir le dépôt en s'exécutant : ni un test, ni un simple import de script.
+// Le 2026-09-25, un module écrivait son fichier généré au seul fait d'être importé ; le démon de
+// sauvegarde committait ce bruit à chaque exécution des tests.
+const etatGit = () => execFileSync('git', ['status', '--porcelain'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 1 << 26 });
+const avant = etatGit();
+
+const modules = suivis.filter((f) => /^scripts\/.*\.mjs$/.test(f) && !/\.test\.mjs$/.test(f));
+const ecrivains = [];
+for (const m of modules) {
+  try { execFileSync(process.execPath, ['-e', `import(${JSON.stringify(join(ROOT, m))}).catch(() => {})`], { cwd: ROOT, stdio: 'ignore', timeout: 20000 }); }
+  catch { /* un module qui refuse de s'importer n'écrit rien : ce n'est pas le sujet ici */ }
+  if (etatGit() !== avant) { ecrivains.push(m); break; }
+}
+ok(`importer un script ne modifie aucun fichier du dépôt (${modules.length} modules)`,
+  ecrivains.length === 0, ecrivains.join(', ') + ' a modifié le dépôt au simple import');
+
+const tests = suivis.filter((f) => /^scripts\/tests\/.*\.test\.mjs$/.test(f) && !f.endsWith('depot-propre.test.mjs'));
+const salissants = [];
+for (const t of tests) {
+  try { execFileSync(process.execPath, [join(ROOT, t)], { cwd: ROOT, stdio: 'ignore', timeout: 60000 }); } catch { /* un test rouge reste un test propre */ }
+  if (etatGit() !== avant) { salissants.push(t); break; }
+}
+ok(`aucun test n’écrit dans le dépôt (${tests.length} fichiers joués)`, salissants.length === 0, salissants.join(', '));
+
 console.log(`\nRÉSULTAT DÉPÔT PROPRE : ${pass} PASS / ${fail} FAIL\n`);
 process.exit(fail ? 1 : 0);
