@@ -47,6 +47,9 @@ jobs:
           fi
 
       # Le garde-fou de WIP se joue en bac à sable : dépôt temporaire, jamais le vrai verrou.
+      - name: Hygiène du dépôt (copies de conflit, workflows en double)
+        run: node scripts/tests/depot-propre.test.mjs
+
       - name: Garde-fou anti-dérive à l'ouverture d'un lot
         run: bash scripts/tests/garde-wip.test.sh
 
