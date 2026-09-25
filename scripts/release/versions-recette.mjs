@@ -49,11 +49,19 @@ export function versions(racine = ROOT, features = null) {
   return out;
 }
 
+// Ce fichier est aussi importé par les tests : sans cette garde, un simple `import` déclencherait
+// l'écriture du fichier généré — c'est exactement ce qui est arrivé le 2026-09-25, le démon de
+// sauvegarde committant à chaque exécution des tests une version dont seuls la date et le commit
+// changeaient. Un module qui écrit sur disque au seul fait d'être importé est un piège.
+const LANCE_DIRECTEMENT = !!process.argv[1] && process.argv[1].endsWith('versions-recette.mjs');
+
 const sha = (() => {
   try { return execFileSync('git', ['rev-parse', 'HEAD'], { cwd: ROOT, encoding: 'utf8' }).trim().slice(0, 12); }
   catch { return null; }
 })();
 
+if (!LANCE_DIRECTEMENT) { /* importé : on n'expose que les fonctions, on n'écrit rien */ }
+else {
 const doc = { _lisezmoi: 'Généré par scripts/release/versions-recette.mjs — ne pas éditer à la main.', code_sha: sha, genere_le: new Date().toISOString(), elements: versions() };
 
 if (JSON_SEUL) { console.log(JSON.stringify(doc, null, 1)); process.exit(0); }
@@ -78,3 +86,4 @@ writeFileSync(chemin, JSON.stringify(doc, null, 1) + '\n');
 const sansVersion = Object.entries(doc.elements).filter(([, v]) => !v.version);
 console.log(`versions écrites dans ${SORTIE} · ${Object.keys(doc.elements).length} élément(s)` +
   (sansVersion.length ? ` · ${sansVersion.length} sans version (${sansVersion.map(([k]) => k).join(', ')})` : ''));
+}

@@ -14,7 +14,13 @@
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { existsSync, readFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { dirname, join as joindre } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { empreinte, versions } from '../release/versions-recette.mjs';
+
+const ROOT_DEPOT = joindre(dirname(fileURLToPath(import.meta.url)), '..', '..');
 import { classer, resume } from '../release/validation-fraicheur.mjs';
 
 let pass = 0, fail = 0;
@@ -73,6 +79,20 @@ ok('aucun verdict ne tombe par défaut sur « actuelle »',
 const r = resume(classer([...valide, ...aout], v2));
 ok('le résumé additionne les verdicts', r.VALIDATION_PERIMEE === 1 && r.NON_RATTACHABLE === 2 && !r.VALIDATION_ACTUELLE,
   JSON.stringify(r));
+
+// ── 7. Importer le module ne doit RIEN écrire. Le 2026-09-25, l'import déclenchait la génération
+// du fichier de versions : le démon de sauvegarde committait alors, à chaque exécution des tests,
+// une version dont seuls la date et le commit changeaient.
+// La mesure se fait dans un PROCESSUS SÉPARÉ : en ESM les imports sont évalués avant le corps du
+// module, donc un « avant » lu ici arriverait déjà après l'effet de bord. Première version de ce
+// contrôle : fausse pour cette raison exacte.
+const genere = joindre(ROOT_DEPOT, 'assets/recette-versions.json');
+const avantImport = existsSync(genere) ? readFileSync(genere, 'utf8') : null;
+execFileSync(process.execPath, ['-e', "import('" + joindre(ROOT_DEPOT, 'scripts/release/versions-recette.mjs') + "')"], { stdio: 'ignore' });
+const apresImport = existsSync(genere) ? readFileSync(genere, 'utf8') : null;
+ok('importer le générateur n’écrit pas sur le disque (il expose des fonctions, il n’agit pas)',
+  avantImport === apresImport,
+  'assets/recette-versions.json a été réécrit par le simple fait d’importer le module');
 
 rmSync(bac, { recursive: true, force: true });
 console.log(`\nRÉSULTAT FRAÎCHEUR VALIDATIONS : ${pass} PASS / ${fail} FAIL\n`);
