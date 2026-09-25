@@ -117,6 +117,14 @@
 .hcd .resume-txt{flex:1;display:flex;flex-direction:column}
 .hcd .resume-txt strong{font-weight:650}
 .hcd .resume-txt span{color:var(--muted);font-size:.92rem}
+/* Sous 560 px, la carte de reprise tient mal en ligne : le libellé de l'intention est long
+   (« Démarrer Entretien de poêle ou d'insert ») et le texte se serrait sur quatre lignes à côté du
+   bouton. On empile, et les deux actions prennent la largeur. */
+@media (max-width:560px){
+ .hcd .resume{flex-direction:column;align-items:stretch;gap:12px;padding:16px}
+ .hcd .resume .btn-soft,.hcd .resume .link{width:100%;justify-content:center;text-align:center}
+ .hcd .resume-txt{gap:2px}
+}
 .hcd .choix-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;text-align:left}
 .hcd .choice{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:34px 34px 30px;border:0;border-radius:var(--r-xl);background:var(--surface);box-shadow:var(--sh-2);cursor:pointer;text-align:left;
   transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
