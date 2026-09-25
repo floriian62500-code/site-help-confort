@@ -629,9 +629,34 @@
     box.hidden = !label;
     var resumeOnly = !!pendingEntry && !!label, sc = $('.step[data-step="choix"]');
     if (sc) sc.classList.toggle('is-resume', resumeOnly);
-    $('#h-choix').innerHTML = resumeOnly ? 'Reprendre votre demande&nbsp;?' : 'Comment <span class="nw">pouvons-nous</span> vous aider&nbsp;?';
-    if (label) box.innerHTML = '<span class="resume-txt"><strong>Vous avez une demande en cours</strong><span>' + esc(label) + '</span></span><button type="button" class="link" data-reset>Nouvelle demande</button><button type="button" class="btn-soft" data-resume>Reprendre ' + ic('i-arrow', 16) + '</button>';
+    // Le client vient de cliquer « Ramonage » : lui proposer « Nouvelle demande » lui ferait
+    // rechoisir ce qu'il vient de choisir. Quand l'intention entrante a un nom, on l'affiche, et
+    // c'est elle le bouton principal — l'ancien brouillon devient l'option secondaire.
+    var intention = libelleEntree(pendingEntry);
+    $('#h-choix').innerHTML = !resumeOnly ? 'Comment <span class="nw">pouvons-nous</span> vous aider&nbsp;?'
+      : intention ? 'Vous avez une demande en cours' : 'Reprendre votre demande&nbsp;?';
+    if (label) {
+      var repartir = intention
+        ? '<button type="button" class="btn-soft" data-reset>Démarrer ' + esc(intention) + ' ' + ic('i-arrow', 16) + '</button>'
+        : '<button type="button" class="link" data-reset>Nouvelle demande</button>';
+      var reprendre = intention
+        ? '<button type="button" class="link" data-resume>Continuer&nbsp;: ' + esc(label) + '</button>'
+        : '<button type="button" class="btn-soft" data-resume>Reprendre ' + ic('i-arrow', 16) + '</button>';
+      var carte = '<span class="resume-txt"><strong>' + (intention ? 'Demande en cours sur votre appareil' : 'Vous avez une demande en cours') + '</strong><span>' + esc(label) + '</span></span>';
+      // L'intention d'abord dans le DOM comme à l'écran : c'est elle que le client vient de demander.
+      box.innerHTML = intention ? carte + repartir + reprendre : carte + repartir + reprendre;
+    }
   };
+
+  // Nom lisible de l'intention portée par un lien d'entrée. Null si le lien n'en porte aucune :
+  // on n'invente pas un libellé pour une entrée générique.
+  function libelleEntree(h) {
+    if (!h) return null;
+    if (h.sujet && SUJETS[h.sujet]) return SUJETS[h.sujet].libelle;
+    if (h.presta && C.focusConnu(h.presta)) return C.focusLibelle(h.presta);
+    if (h.entretien) return 'Contrat d\'entretien';
+    return null;
+  }
 
   // ---------- Lieu + zone ----------
   var adr = $('#f-adresse'), cpI = $('#f-cp'), viI = $('#f-ville'), acL = $('#acList'), zoneBox = $('#zoneBox');
@@ -949,8 +974,8 @@
   // avec le métier et une description déjà remplis. Aucun parcours de paiement n'est proposé,
   // puisqu'il n'y a pas de prix ferme à payer (décision Florian du 22/09 : pas d'écriture au catalogue).
   var SUJETS = {
-    ramonage: { metier: 'Chauffage', nature: 'Entretien', desc: 'Ramonage : cheminée, conduit ou poêle. Merci de me rappeler pour convenir d\'une date et me confirmer le tarif.' },
-    'poele-insert': { metier: 'Chauffage', nature: 'Entretien', desc: 'Entretien de poêle ou d\'insert, ramonage compris. Merci de me rappeler pour convenir d\'une date et me confirmer le tarif.' }
+    ramonage: { libelle: 'Ramonage', metier: 'Chauffage', nature: 'Entretien', desc: 'Ramonage : cheminée, conduit ou poêle. Merci de me rappeler pour convenir d\'une date et me confirmer le tarif.' },
+    'poele-insert': { libelle: 'Entretien de poêle ou d\'insert', metier: 'Chauffage', nature: 'Entretien', desc: 'Entretien de poêle ou d\'insert, ramonage compris. Merci de me rappeler pour convenir d\'une date et me confirmer le tarif.' }
   };
   var DV_METIERS = [['Plomberie', 'f-plomberie'], ['Chauffage', 'f-chauffage'], ['Électricité', 'f-electricite'], ['Serrurerie', 'f-serrurerie'], ['Vitrerie', 'f-vitrerie'], ['Menuiserie', 'f-menuiserie'], ['Rénovation', 'f-renovation'], ['Salle de bain', 'f-plomberie'], ['Volets', 'f-volets'], ['Adaptation PMR', 'f-pmr'], ['Sinistre assurance', 'f-sinistre'], ['Contrat entretien', 'f-entretien']];
   var NATURES = ['Réparation', 'Remplacement', 'Installation neuve', 'Rénovation', 'Mise aux normes', 'Entretien'];

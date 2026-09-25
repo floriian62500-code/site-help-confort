@@ -343,5 +343,41 @@ ok('tunnel : début du parcours entretien (entrée, ajout d’une prestation d�
 ok('tunnel : coordonnées saisies (étape tarifs ou coordonnées) → maintenance_contact_entered', /sessionStorage\.setItem\('hc_pg', '1'\); \} catch \(e2\) \{\} state\._pgPending = null; save\(\); maintContact\(\);/.test(uiFile) && /track\('hc_coordonnees_ok'\); maintContact\(\);/.test(uiFile));
 ok('tunnel : envoi → maintenance_submit puis generate_lead avec la famille, calculée AVANT de vider le panier', /var lines = cart\.lines\(\), fam = maintFamily\(\);/.test(uiFile) && /var joined = cart \? cart\.lines\(\) : \[\], fam = maintFamily\(\);/.test(uiFile) && /if \(fam\) track\('maintenance_submit'/.test(uiFile) && /leadTracked\('intervention', \{ lines: lines\.length, service_family: fam \}/.test(uiFile));
 ok('dossier : la page d’atterrissage d’origine est jointe à l’attribution (UTM/gclid/fbclid inchangés)', /if \(state\.src\) \{ a = a \|\| \{\}; a\.landing = state\.src; \}/.test(uiFile) && /r\.src = C\.maintenanceSrc\(srcm && srcm\[1\]\)/.test(uiFile) && /if \(h\.src\) state\.src = h\.src;/.test(uiFile));
+// ---- Intention de campagne contre brouillon ancien (CHATGPT-2026-09-24-P0-PROMO-DRAFT-ROUTING)
+// Preuve utilisateur : après un clic « Ramonage », le tunnel proposait « Nouvelle demande » /
+// « Reprendre » sur un vieux devis Plomberie. Techniquement l'intention n'était pas perdue — elle
+// attendait dans pendingEntry — mais à l'écran le client ne la voyait plus et devait la rechoisir.
+// C'est le comportement explicitement interdit par l'instruction. Les six contrôles portent les
+// noms qu'elle demande.
+ok('explicit_intent_overrides_unrelated_draft : l’écran de reprise nomme l’intention cliquée et en fait le bouton principal',
+  /var intention = libelleEntree\(pendingEntry\);/.test(uiFile) &&
+  /class="btn-soft" data-reset>D\u00e9marrer '/.test(uiFile) &&
+  /intention \? 'Vous avez une demande en cours'/.test(uiFile));
+
+ok('explicit_intent_survives_resume_gate : l’intention entrante est retenue, pas appliquée en silence, puis appliquée au choix',
+  /if \(h\.entry && C\.hasDraft\(state, cart \? cart\.count\(\) : 0\)\) \{ pendingEntry = h; start = 'choix'; \}/.test(uiFile) &&
+  /var entry = pendingEntry; pendingEntry = null; startClean\(\); var to = entry \? applyEntry\(entry\) : 'choix';/.test(uiFile));
+
+ok('new_request_preserves_campaign_intent : démarrer la nouvelle demande applique l’intention ET sa provenance',
+  /if \(h\.src\) state\.src = h\.src;/.test(uiFile) &&
+  /if \(h\.presta\) \{ state\.mode = 'intervention'; state\.focus = h\.presta;/.test(uiFile) &&
+  /state\.mode = 'devis'; state\.focus = h\.sujet;/.test(uiFile));
+
+ok('resume_old_draft_does_not_destroy_new_intent : reprendre garde le brouillon intact et n’applique pas l’intention',
+  /if \(\(el = t\.closest\('\[data-resume\]'\)\)\) \{ var viaEntry = !!pendingEntry; pendingEntry = null;/.test(uiFile) &&
+  !/data-resume[\s\S]{0,200}applyEntry/.test(uiFile));
+
+ok('refresh_keeps_explicit_intent : l’intention vit dans l’état durable, pas seulement dans la description (session, 2 h)',
+  /focus: null/.test(coreFile) && /state\.focus = h\.sujet;/.test(uiFile) &&
+  ['ramonage', 'poele-insert'].every((k) => new RegExp("'?" + k + "'?: \\{ libelle:").test(uiFile)));
+
+ok('back_forward_keeps_explicit_intent : le retour arrière relit le pas courant sans repasser par une entrée périmée',
+  /var h = parseHash\(\); go\(h\.step \|\| 'choix', \{ noHash: true, back: true \}\);/.test(uiFile) &&
+  /pendingEntry = null; \/\/ jamais d'entrée périmée d'une ouverture précédente/.test(uiFile));
+
+ok('aucun libellé générique « Nouvelle demande » quand l’intention a un nom (comportement interdit)',
+  /intention\s*\n?\s*\? '<button type="button" class="btn-soft" data-reset>D/.test(uiFile) &&
+  /: '<button type="button" class="link" data-reset>Nouvelle demande<\/button>'/.test(uiFile));
+
 console.log(`\nRÉSULTAT MODULE DEMANDE V2 : ${pass} PASS / ${fail} FAIL`);
 process.exit(fail > 0 ? 1 : 0);
