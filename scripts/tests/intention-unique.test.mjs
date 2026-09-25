@@ -113,7 +113,7 @@ const noyau = lire('assets/hc-demande-core.js');
 const ctas = [...home.matchAll(/href="\/catalogue\.html#([^"]+)"[^>]*data-hc-promo-fam="([a-z-]+)"/g)].map((m) => ({ hash: m[1].replace(/&amp;/g, '&'), fam: m[2] }));
 ok(`bandeau : trois boutons, trois intentions distinctes (${ctas.map((c) => c.fam).join(', ') || '—'})`,
   ctas.length === 3 && new Set(ctas.map((c) => c.hash)).size === 3);
-const sujets = new Set([...tunnel.matchAll(/^\s{4}'?([a-z-]+)'?: \{ metier:/gm)].map((m) => m[1]));
+const sujets = new Set([...tunnel.matchAll(/^\s{4}'?([a-z-]+)'?: \{ (?:libelle|metier):/gm)].map((m) => m[1]));
 const focusConnus = new Set([...noyau.matchAll(/^\s{4}([a-z-]+): \{ libelle:/gm)].map((m) => m[1]));
 for (const c of ctas) {
   const presta = (c.hash.match(/presta=([a-z-]+)/) || [])[1];
