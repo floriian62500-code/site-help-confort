@@ -75,6 +75,16 @@ ok('une validation sur un élément qui n’existe plus n’est pas comptée com
 ok('aucun verdict ne tombe par défaut sur « actuelle »',
   !cl.some((c) => c.verdict === 'VALIDATION_ACTUELLE'));
 
+// ── 5bis. La cible est explicite : feature_version / code_sha. `recette_version` n'est qu'un repli
+// hérité, et il doit se voir dans le verdict — sinon on reproduirait en plus discret le problème
+// qu'on corrige (CHATGPT-2026-09-25-CONTROL-4 §7).
+const explicite = classer([{ feature_id: 'page-simple', statut: 'ok', feature_version: v2['page-simple'].version }], v2)[0];
+ok('une validation portant feature_version est rattachée par le champ explicite',
+  explicite.verdict === 'VALIDATION_ACTUELLE' && explicite.source_version === 'feature_version');
+const repli = classer([{ feature_id: 'page-simple', statut: 'ok', recette_version: v2['page-simple'].version }], v2)[0];
+ok('une validation qui n’a que recette_version est acceptée, mais le repli est tracé',
+  repli.verdict === 'VALIDATION_ACTUELLE' && /repli/.test(repli.source_version) && /migrer vers code_sha/.test(repli.raison || ''));
+
 // ── 6. Le résumé compte ce qu'il dit
 const r = resume(classer([...valide, ...aout], v2));
 ok('le résumé additionne les verdicts', r.VALIDATION_PERIMEE === 1 && r.NON_RATTACHABLE === 2 && !r.VALIDATION_ACTUELLE,

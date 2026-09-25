@@ -60,9 +60,14 @@ attendu, pas un défaut du mécanisme.
 | `scripts/tests/validation-fraicheur.test.mjs` | **12 contrôles**, en bac à sable : même code → même version ; un fichier modifié périme l'élément **et lui seul** ; un refus reste un refus ; une validation sans empreinte n'est jamais « actuelle » |
 | `supabase/_pending_migrations/PROPOSED_validation_sha.sql` | colonnes `feature_id`, `code_sha`, `build_id` + vue de lecture — **non appliquée** |
 
-**Le mécanisme fonctionne sans la migration** : la colonne existante `recette_version` peut porter
-l'empreinte, et le classement se fait hors base. La migration n'ajoute que la traçabilité (quel
-commit, quel déploiement) et une vue de confort.
+**La cible est une donnée structurée explicite : `feature_id` + `code_sha`/`build_id` + empreinte.**
+La colonne existante `recette_version` peut la porter *le temps de la transition*, et le
+classificateur l'accepte alors en repli — mais il le **trace dans le verdict**
+(« rattachée par repli sur recette_version — à migrer vers code_sha »). Ce n'est pas le
+mécanisme permanent : réutiliser indéfiniment un champ prévu pour autre chose, c'est reproduire
+en plus discret le problème qu'on corrige. La migration est donc un **prérequis** de
+l'activation, pas un confort — elle reste gatée, comme toute migration sur base partagée
+(exigence `CHATGPT-2026-09-25-CONTROL-4` §7).
 
 ## Ce qui reste à faire, et qui n'est pas de moi
 

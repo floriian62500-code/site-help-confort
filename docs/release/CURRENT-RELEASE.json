@@ -1,17 +1,17 @@
 {
  "_lisezmoi": [
-  "Source de vérité d'une livraison en production (instruction CHATGPT-2026-09-24-RELEASE-CATCHUP-V1).",
-  "Une seule release active à la fois. Tant que release_branch est null, aucune livraison n'est en cours.",
-  "États autorisés par élément : DEV | TESTED | WAITING_FLORIAN | READY_FOR_RELEASE | IN_RELEASE | PROD | PROD_VERIFIED.",
-  "« Terminé » ne s'emploie qu'à partir de PROD_VERIFIED.",
-  "Mis a jour le 2026-09-25 apres CHATGPT-2026-09-25-CONTROL-3 : ce fichier disait encore qu'aucun element n'etait livrable et fondait cette conclusion sur des conflits Git. Les deux affirmations sont perimees."
+  "Source de verite d'une livraison en production (instruction CHATGPT-2026-09-24-RELEASE-CATCHUP-V1).",
+  "Une seule release active a la fois. Tant que release_branch est null, aucune livraison n'est en cours.",
+  "Etats autorises par element : DEV | TESTED | WAITING_FLORIAN | READY_FOR_RELEASE | IN_RELEASE | PROD | PROD_VERIFIED.",
+  "« Termine » ne s'emploie qu'a partir de PROD_VERIFIED.",
+  "Mis a jour le 2026-09-25 apres CHATGPT-2026-09-25-CONTROL-4 : une vraie branche release existe, ce fichier doit le dire."
  ],
- "release_id": null,
- "base_main_sha": "e5b61c6e",
- "release_branch": null,
- "created_at": null,
- "statut": "AUCUNE_RELEASE_ACTIVE",
- "raison": "Aucune release active : aucun lot n'a encore ete explicitement constitue. Ce n'est plus faute de candidats (trois ont ete reconstruits depuis main le 2026-09-25 et sont en cours d'evaluation), ni a cause de conflits Git : le contrôle CONTROL-3 a rappele qu'un conflit de cherry-pick ne prouve pas l'inseparabilite. Aucun GO PROD n'est demande ni accorde.",
+ "release_id": "lot-bc-2026-09-25",
+ "base_main_sha": "570225bff7f451318399bc52176fdcea9b1adc45",
+ "release_branch": "release/lot-bc-2026-09-25",
+ "created_at": "2026-09-25T12:20:00Z",
+ "statut": "RELEASE_CONSTITUEE_EN_ATTENTE_DE_CONTROLE",
+ "raison": "Lot constitue depuis le main courant (merge, sans force-push), teste sur son SHA exact. Il n'est pas fusionne et ne le sera pas sans un nouveau controle ChatGPT et le GO de Florian.",
  "elements": [],
  "exclusions": [
   {
@@ -59,26 +59,6 @@
   "detail": "4 perimees (le fichier concerne a change de 10 a 87 commits depuis), 2 sans objet (l'element juge n'existe plus), 2 refus jamais leves (menuiserie), 1 resolue a l'interieur de la serie puis perimee.",
   "limite_structurelle": "La table ne porte ni SHA ni identifiant de build : le rattachement a un etat du code est reconstruit par horodatage, ce n'est pas une preuve stockee. Correction en preparation (VALIDATION-SHA)."
  },
- "candidats_en_evaluation": [
-  {
-   "id": "A",
-   "intitule": "Entite JSON-LD unique par page",
-   "etat": "EN_EVALUATION",
-   "reserve": "Diff volumineux (reindentation des blocs) : reduction ou preuve machine exigee avant mise en release."
-  },
-  {
-   "id": "B",
-   "intitule": "Prix publics conformes au catalogue",
-   "etat": "EN_EVALUATION",
-   "reserve": "Ne peut pas etre READY_100 seul : son test de reference n'etait pas 100 % vert sur son etat exact."
-  },
-  {
-   "id": "C",
-   "intitule": "Actualites chantier canonicalisees",
-   "etat": "EN_EVALUATION",
-   "reserve": "A regrouper avec B en lot atomique, ou B doit devenir independant."
-  }
- ],
  "branche_essai": {
   "nom": "essai/release-candidats-2026-09-25",
   "role": "PREUVE_UNIQUEMENT",
@@ -92,5 +72,75 @@
    "bloc contrats Chauffage",
    "suppression de la landing entretien-chaudiere"
   ]
- }
+ },
+ "release_sha": "8cebd8e2475e268ad7bc4c1ae7a82a4bea5861d4",
+ "production_status": "AUCUNE_MUTATION",
+ "needs_human": true,
+ "included_items": [
+  {
+   "id": "B",
+   "intitule": "Prix publics du blog alignes sur le catalogue",
+   "etat": "TECH_READY + WAITING_FLORIAN_BUSINESS",
+   "pages": [
+    "blog-entretien-chaudiere-annuel-obligatoire.html"
+   ],
+   "source_canonique": "data/contrats-tarifs.json (releve catalogue, compare au catalogue reel le 2026-09-25 : aucun ecart)",
+   "diff_metier": "docs/release/B-DIFF-PRIX-METIER.md",
+   "gate": "Prix visibles publiquement : validation metier de Florian obligatoire avant production."
+  },
+  {
+   "id": "C",
+   "intitule": "Une publication de chantier = une URL indexable",
+   "etat": "TECH_READY",
+   "pages": [
+    "10 actualites de chantier",
+    "_redirects",
+    "content/actualites/index.json",
+    "actualites.html",
+    "scripts/sync-facebook-posts.py",
+    "supabase/functions/sitemap/index.ts",
+    "21 actualites (hote canonique)"
+   ],
+   "stabilite": "Garde anti-recreation incluse : le generateur ne recree plus une URL redirigee (teste en executant sa fonction de decision), le listing dedoublonne, le sitemap ne publie plus les actualites de chantier.",
+   "gate": "Le fichier source du sitemap change, mais son deploiement reste un gate distinct : tant que la fonction edge n'est pas redeployee, le sitemap servi continue d'annoncer les anciennes URL (qui repondront 301)."
+  }
+ ],
+ "excluded_items": [
+  {
+   "id": "A",
+   "intitule": "Entite JSON-LD unique par page",
+   "raison": "Attend l'arbitrage de Florian sur le nom unique de l'entreprise. Ne pas elargir le lot BC."
+  },
+  {
+   "lot": "pages menuiserie",
+   "raison": "Dossier de revalidation dedie (docs/qa/MENUISERIE-REVALIDATION.md) ; arbitrage panneau de porte en attente."
+  },
+  {
+   "lot": "bandeau, saisonnier, bloc contrats, suppression landing entretien",
+   "raison": "Acceptes techniquement ; WAITING_FLORIAN_VISUAL sur la preview courante."
+  },
+  {
+   "lot": "pipeline de leads, migrations, Stripe",
+   "raison": "Gates inchanges."
+  }
+ ],
+ "test_status": {
+  "joues_sur": "8cebd8e2475e268ad7bc4c1ae7a82a4bea5861d4",
+  "resultats": {
+   "prix-contrats": "20/20",
+   "actualites-couples": "8/8",
+   "actualites-generateur": "6/6",
+   "actualites-canonique": "44/44"
+  },
+  "suites_rouges_non_justifiees": 0,
+  "note": "Toutes les suites pertinentes au lot sont 100 % vertes sur le SHA exact de la release."
+ },
+ "rollback": "La release n'est pas fusionnee : l'annuler, c'est ne pas la fusionner. Une fois livree, `git revert 8cebd8e2 8adaba03 04cd9ee1 990e65e2` sur main remet l'etat d'avant. Aucune base, aucun paiement, aucune fonction edge deployee ; les redirections disparaissent avec le revert.",
+ "candidats_hors_release": [
+  {
+   "id": "A",
+   "etat": "BLOQUE_ARBITRAGE_IDENTITE",
+   "preuve": "scripts/seo/entite-jsonld-preuve.mjs : HTML visible identique, 460 blocs relisibles, 0 cle perdue, 54 valeurs remplacees toutes enrichissantes."
+  }
+ ]
 }

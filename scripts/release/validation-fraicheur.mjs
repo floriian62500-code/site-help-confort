@@ -32,11 +32,20 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 export function classer(validations, versionsActuelles) {
   return validations.map((v) => {
     const actuelle = (versionsActuelles[v.feature_id] || {}).version || null;
-    const base = { ...v, version_actuelle: actuelle };
+    // Cible : une donnée structurée explicite (feature_id + code_sha/build_id + empreinte).
+    // `recette_version` n'est accepté qu'en REPLI, pour les lignes écrites avant la migration, et
+    // le repli est tracé dans le verdict — il ne doit pas devenir le mécanisme permanent
+    // (CHATGPT-2026-09-25-CONTROL-4 §7).
+    const empreinte = v.feature_version || v.version || null;
+    const parRepli = !v.feature_version && !v.version && !!v.recette_version;
+    const stockee = empreinte || (parRepli ? v.recette_version : null);
+    const base = { ...v, version_actuelle: actuelle, source_version: v.feature_version ? 'feature_version'
+      : v.version ? 'version' : parRepli ? 'recette_version (repli hérité)' : 'aucune' };
     if (v.statut === 'a_corriger') return { ...base, verdict: 'REFUS_OUVERT' };
     if (!actuelle) return { ...base, verdict: 'NON_RATTACHABLE', raison: 'élément inconnu ou sans fichier' };
-    if (!v.version) return { ...base, verdict: 'NON_RATTACHABLE', raison: 'validation sans version du code' };
-    if (v.version !== actuelle) return { ...base, verdict: 'VALIDATION_PERIMEE', raison: 'le code a changé depuis' };
+    if (!stockee) return { ...base, verdict: 'NON_RATTACHABLE', raison: 'validation sans version du code' };
+    if (stockee !== actuelle) return { ...base, verdict: 'VALIDATION_PERIMEE', raison: 'le code a changé depuis' };
+    if (parRepli) return { ...base, verdict: 'VALIDATION_ACTUELLE', raison: 'rattachée par repli sur recette_version — à migrer vers code_sha' };
     return { ...base, verdict: 'VALIDATION_ACTUELLE' };
   });
 }
