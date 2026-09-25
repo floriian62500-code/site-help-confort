@@ -34,8 +34,12 @@ ok('dossier Ads : plus aucune destination vers le doublon (mention historique to
 // 5812875220 : le bandeau d'accueil est devenu transactionnel — il ouvre le tunnel avec le contexte
 // au lieu de renvoyer vers les pages de contenu. La règle canonique porte donc désormais sur les
 // pages elles-mêmes (canonical, sitemap, liens internes), pas sur le bandeau.
-ok('accueil : la relance saisonnière ouvre le tunnel avec son contexte, sans page intermédiaire',
-  /href="\/catalogue\.html#cat=chauffage&amp;presta=entretien/.test(home) &&
+// 2026-09-25, décision de Florian : la chaudière repasse par la page métier. Le tunnel reste
+// l'étape transactionnelle, mais il s'ouvre depuis la page Chauffage, pas depuis le bandeau. Les
+// deux sujets hors catalogue (poêle, ramonage) n'ont pas de page métier dédiée : ils continuent
+// d'aller directement au tunnel, en devis.
+ok('accueil : la chaudière mène à la page Chauffage, les deux sujets hors catalogue au tunnel',
+  /class="hcs-cta" href="\/chauffagiste-saint-omer\.html"/.test(home) &&
   /href="\/catalogue\.html#devis&amp;sujet=poele-insert/.test(home) &&
   /href="\/catalogue\.html#devis&amp;sujet=ramonage/.test(home));
 ok('sitemap : les deux pages canoniques listées, le doublon retiré', sitemap.includes(CHAUD + ' ') && sitemap.includes(RAM + ' ') && !sitemap.includes('entretien-poele-insert'));

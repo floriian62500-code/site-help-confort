@@ -93,11 +93,16 @@ ok('la landing autonome supprimée n’est reconstruite nulle part',
 
 // ── 6. Les points d'entrée marketing visent les URL canoniques
 const home = visible('index.html');
-// Depuis 5812875220, le bandeau est transactionnel : il ouvre le tunnel avec le contexte, il ne
-// renvoie plus vers une page intermédiaire. Depuis le 24/09, il n'y a plus de page intermédiaire
-// du tout pour l'entretien : la page Chauffage présente, le tunnel transige.
-ok('bandeau d’accueil : le bouton principal ouvre le tunnel ciblé, pas une page intermédiaire',
-  /href="\/catalogue\.html#cat=chauffage&amp;presta=entretien/.test(home) && !/hcs-cta" href="\/entretien-chaudiere/.test(home));
+// Le bandeau n'a jamais eu le droit de renvoyer vers une page qui redirige, ni vers un hub
+// générique. Ce qu'il vise a changé deux fois, et c'est chaque fois une décision de Florian :
+// le 24/09 la landing autonome disparaît ; le 25/09 la chaudière repasse par la page Chauffage,
+// qui redevient la porte d'entrée métier — le tunnel s'ouvre depuis elle, pas depuis l'accueil.
+ok('bandeau d’accueil : le bouton principal mène à la page Chauffage, qui n’est pas une page redirigée',
+  /class="hcs-cta" href="\/chauffagiste-saint-omer\.html"/.test(home) &&
+  !/hcs-cta" href="\/entretien-chaudiere/.test(home) &&
+  !new RegExp('^/chauffagiste-saint-omer(\\.html)?\\s+\\S+\\s+30', 'm').test(redirects));
+ok('depuis la page Chauffage, le tunnel reste accessible pour l’entretien ponctuel',
+  /href="catalogue\.html#cat=chauffage&amp;presta=entretien/.test(lire(CANON_SERVICE)));
 ok('la page de service canonique reste atteignable ailleurs (menu, Ads, pages liées)',
   [...pages].some((f) => f !== CANON_SERVICE && new RegExp('href="[^"]*' + CANON_SERVICE).test(visible(f))));
 const ads = lire('docs/marketing/PAID-ACQUISITION-ENTRETIEN-2026-09.md');
@@ -110,9 +115,15 @@ ok('dossier Ads : aucune destination vers une page qui redirige ou qui n’exist
 // lisible dans l'état du tunnel — pas seulement dans la description, qui vit en session 2 h.
 const tunnel = lire('assets/hc-demande.js');
 const noyau = lire('assets/hc-demande-core.js');
-const ctas = [...home.matchAll(/href="\/catalogue\.html#([^"]+)"[^>]*data-hc-promo-fam="([a-z-]+)"/g)].map((m) => ({ hash: m[1].replace(/&amp;/g, '&'), fam: m[2] }));
-ok(`bandeau : trois boutons, trois intentions distinctes (${ctas.map((c) => c.fam).join(', ') || '—'})`,
-  ctas.length === 3 && new Set(ctas.map((c) => c.hash)).size === 3);
+// Les trois boutons ne visent plus tous le tunnel : la chaudière a une page métier, les deux
+// sujets hors catalogue n'en ont pas. Ce qui doit rester vrai, c'est que chacun mène à SA chose,
+// et que deux boutons ne partagent jamais la même destination.
+const tous = [...home.matchAll(/href="([^"]+)"[^>]*data-hc-promo-fam="([a-z-]+)"/g)].map((m) => ({ href: m[1].replace(/&amp;/g, '&'), fam: m[2] }));
+ok(`bandeau : trois boutons, trois destinations distinctes (${tous.map((c) => c.fam).join(', ') || '—'})`,
+  tous.length === 3 && new Set(tous.map((c) => c.href)).size === 3);
+ok('bandeau chaudiere : mène à la page Chauffage (décision du 25/09), pas au tunnel',
+  (tous.find((c) => c.fam === 'chaudiere') || {}).href === '/chauffagiste-saint-omer.html');
+const ctas = tous.filter((c) => c.href.startsWith('/catalogue.html#')).map((c) => ({ hash: c.href.split('#')[1], fam: c.fam }));
 const sujets = new Set([...tunnel.matchAll(/^\s{4}'?([a-z-]+)'?: \{ (?:libelle|metier):/gm)].map((m) => m[1]));
 const focusConnus = new Set([...noyau.matchAll(/^\s{4}([a-z-]+): \{ libelle:/gm)].map((m) => m[1]));
 for (const c of ctas) {

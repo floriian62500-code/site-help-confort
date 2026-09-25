@@ -13,10 +13,12 @@ const iRes = h.indexOf('<section id="hc-reservation"'), iEndRes = h.indexOf('</s
 const mod = iMod > 0 ? h.slice(iMod, h.indexOf('</section>', iMod)) : '';
 ok('placé juste après « Que souhaitez-vous faire ? », sans le remplacer', iRes > 0 && iMod > iEndRes && h.slice(iEndRes, iMod).replace(/<!--[\s\S]*?-->/g, '').trim() === '</section>' && /Que souhaitez-vous faire \?/.test(h));
 ok('un seul module (pas de carrousel, pas de fenêtre)', (h.match(/id="entretien-saison"/g) || []).length === 1 && !/carousel|setInterval|popup|modal/i.test(mod));
-// 5812875220 : le bandeau n'envoie plus vers des pages de contenu. Le client qui clique a déjà dit
-// ce qu'il voulait : chaque CTA ouvre le tunnel AVEC son contexte, et aucun ne repasse par un hub.
+// 5812875220 : le bandeau n'envoie plus vers un hub générique ; le client qui clique a déjà dit ce
+// qu'il voulait. Précision du 2026-09-25 (décision de Florian) : la chaudière a une page métier, elle
+// y mène, et le tunnel s'ouvre ensuite depuis cette page. Poêle et ramonage n'ont pas de page
+// dédiée : ils vont directement au tunnel, en devis.
 ok('1 message, 1 bouton principal, 2 entrées secondaires', (mod.match(/<h2\b/g) || []).length === 1 && (mod.match(/class="hcs-cta"/g) || []).length === 1 && (mod.match(/class="hcs-link"/g) || []).length === 2);
-ok('chaudière : ouvre le tunnel sur la famille chauffage, ciblé sur l’entretien', /<a class="hcs-cta" href="\/catalogue\.html#cat=chauffage&amp;presta=entretien&amp;src=home-saison"[^>]*data-hc-promo-fam="chaudiere"/.test(mod));
+ok('chaudière : mène à la page Chauffage, porte d’entrée métier (décision du 25/09)', /<a class="hcs-cta" href="\/chauffagiste-saint-omer\.html"[^>]*data-hc-promo-fam="chaudiere"/.test(mod));
 ok('poêle / insert : ouvre le tunnel en devis, sujet déjà posé', /href="\/catalogue\.html#devis&amp;sujet=poele-insert&amp;src=home-saison"[^>]*data-hc-promo-fam="poele"/.test(mod));
 ok('ramonage : ouvre le tunnel en devis, sujet déjà posé', /href="\/catalogue\.html#devis&amp;sujet=ramonage&amp;src=home-saison"[^>]*data-hc-promo-fam="ramonage"/.test(mod));
 ok('aucun CTA ne renvoie vers un hub générique ni vers une page intermédiaire', !/href="\/catalogue\.html#(intervention|devis)"/.test(mod) && !/href="\/(entretien-chaudiere|prestations\/ramonage)/.test(mod));
