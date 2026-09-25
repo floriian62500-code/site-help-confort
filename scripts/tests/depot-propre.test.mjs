@@ -63,13 +63,16 @@ ok('.gitignore écarte les copies de conflit (le disque en recrée tout seul)', 
 // On distingue ce qui EST un secret de ce qui n'en est pas : la clé publiable Supabase et la clé
 // anon d'un site statique sont faites pour être servies au navigateur — les signaler chaque jour
 // finirait par faire ignorer l'alerte le jour où elle est vraie.
+// Longueurs : une vraie clé Stripe dépasse 24 caractères après son préfixe ; les fixtures de
+// test (« rk_live_restreinte », « ghp_navigateur ») restent en dessous. Le seuil sépare les deux
+// sans affaiblir la détection — vérifié contre une clé de forme réelle.
 const MOTIFS = [
   [/ghp_[A-Za-z0-9]{20,}/, 'jeton GitHub'],
   [/github_pat_[A-Za-z0-9_]{20,}/, 'jeton GitHub (nouveau format)'],
-  [/sk_live_[A-Za-z0-9]{10,}/, 'clé secrète Stripe LIVE'],
-  [/sk_test_[A-Za-z0-9]{10,}/, 'clé secrète Stripe TEST'],
-  [/rk_live_[A-Za-z0-9]{10,}/, 'clé restreinte Stripe LIVE'],
-  [/whsec_[A-Za-z0-9]{10,}/, 'secret de webhook Stripe'],
+  [/sk_live_[A-Za-z0-9]{24,}/, 'clé secrète Stripe LIVE'],
+  [/sk_test_[A-Za-z0-9]{24,}/, 'clé secrète Stripe TEST'],
+  [/rk_live_[A-Za-z0-9]{24,}/, 'clé restreinte Stripe LIVE'],
+  [/whsec_[A-Za-z0-9]{24,}/, 'secret de webhook Stripe'],
   // Le marqueur seul ne prouve rien : trois pages d'admin l'emploient comme littéral pour
   // découper un PEM collé par l'utilisateur. On exige donc un vrai corps encodé derrière.
   [/-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\\n"']{0,6}[A-Za-z0-9+/=]{40,}/, 'clé privée'],
