@@ -51,8 +51,15 @@ const pages = [
      .flatMap((d) => readdirSync(join(ROOT, d)).filter((f) => f.endsWith('.html')).map((f) => d + '/' + f)),
 ];
 
-// Ce qui décrit la PAGE et non l'établissement : jamais propagé d'un nœud à l'autre.
-const HORS_IDENTITE = new Set(['description']);
+// Ce qui décrit la PAGE et non l'établissement, ou ce qui n'est pas encore tranché : jamais
+// propagé d'un nœud à l'autre.
+//   · description : décrit la page (elle vient de sa balise meta, voir plus bas) ;
+//   · name et areaServed : le site ne s'accorde pas encore dessus — sur `main`, aligner le nom
+//     écrivait « HELP Confort — Chauffagiste Saint-Omer & Dunkerque » sur la page de Calais, et
+//     remplaçait la zone desservie d'une page par celle d'une autre. Ce n'est pas un nettoyage,
+//     c'est une décision de marque : elle appartient à Florian (constat prouvé le 2026-09-25 par
+//     entite-jsonld-preuve.mjs : 34 noms et 6 zones remplacés sans être des enrichissements).
+const HORS_IDENTITE = new Set(['description', 'name', 'areaServed']);
 
 const estEtablissement = (o) => o && typeof o === 'object' && !Array.isArray(o) && ETABLISSEMENT.has(String(o['@type']));
 
@@ -75,7 +82,10 @@ for (const p of pages) {
 
   const docs = [];
   for (const m of blocs) {
-    try { docs.push({ m, d: JSON.parse(m[2]) }); } catch { docs.push(null); }
+    // On garde l'écriture d'origine de chaque bloc : un bloc qu'on ne modifie pas ne doit pas être
+    // réécrit. Sans cela, corriger un champ dans un bloc réindentait les trois autres de la page,
+    // et le diff passait de quelques lignes à plusieurs centaines (constat CONTROL-3).
+    try { docs.push({ m, d: JSON.parse(m[2]), avant: JSON.stringify(JSON.parse(m[2])) }); } catch { docs.push(null); }
   }
 
   // 1. l'identifiant de la page = celui que porte déjà une entité complète
@@ -116,7 +126,12 @@ for (const p of pages) {
   for (let i = docs.length - 1; i >= 0; i--) {
     const e = docs[i];
     if (!e) continue;
-    out = out.slice(0, e.m.index + e.m[1].length) + JSON.stringify(e.d, null, 1) + out.slice(e.m.index + e.m[1].length + e.m[2].length);
+    if (JSON.stringify(e.d) === e.avant) continue;   // bloc inchangé : on laisse son texte d'origine
+    // On réécrit dans le style du bloc d'origine : compact s'il l'était, indenté s'il l'était.
+    // Réindenter un bloc compact ajoutait des centaines de lignes de diff pour un champ corrigé.
+    const compact = !/\n\s/.test(e.m[2].trim());
+    const texte = compact ? JSON.stringify(e.d) : JSON.stringify(e.d, null, 1);
+    out = out.slice(0, e.m.index + e.m[1].length) + texte + out.slice(e.m.index + e.m[1].length + e.m[2].length);
   }
   writeFileSync(chemin, out);
   modifiees++;

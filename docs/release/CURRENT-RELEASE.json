@@ -3,20 +3,94 @@
   "Source de vérité d'une livraison en production (instruction CHATGPT-2026-09-24-RELEASE-CATCHUP-V1).",
   "Une seule release active à la fois. Tant que release_branch est null, aucune livraison n'est en cours.",
   "États autorisés par élément : DEV | TESTED | WAITING_FLORIAN | READY_FOR_RELEASE | IN_RELEASE | PROD | PROD_VERIFIED.",
-  "« Terminé » ne s'emploie qu'à partir de PROD_VERIFIED."
+  "« Terminé » ne s'emploie qu'à partir de PROD_VERIFIED.",
+  "Mis a jour le 2026-09-25 apres CHATGPT-2026-09-25-CONTROL-3 : ce fichier disait encore qu'aucun element n'etait livrable et fondait cette conclusion sur des conflits Git. Les deux affirmations sont perimees."
  ],
  "release_id": null,
  "base_main_sha": "e5b61c6e",
  "release_branch": null,
  "created_at": null,
  "statut": "AUCUNE_RELEASE_ACTIVE",
- "raison": "Aucun élément READY_100 avec effet en production au 2026-09-24 : les correctifs utiles ne se transplantent pas proprement sur main (conflits mesurés : prix 1, entités JSON-LD 47, canonicalisation actualités 3). Voir ECART-PROD-2026-09-24.md.",
+ "raison": "Aucune release active : aucun lot n'a encore ete explicitement constitue. Ce n'est plus faute de candidats (trois ont ete reconstruits depuis main le 2026-09-25 et sont en cours d'evaluation), ni a cause de conflits Git : le contrôle CONTROL-3 a rappele qu'un conflit de cherry-pick ne prouve pas l'inseparabilite. Aucun GO PROD n'est demande ni accorde.",
  "elements": [],
  "exclusions": [
-  { "lot": "bandeau d'accueil", "etat": "WAITING_FLORIAN", "raison": "validation visuelle jamais donnée" },
-  { "lot": "sous-lot saisonnier (5812875220)", "etat": "WAITING_FLORIAN", "raison": "réouvert puis corrigé, non revalidé" },
-  { "lot": "pipeline de leads (submit-lead-v6, notify-lead-v6)", "etat": "TESTED", "raison": "version du dépôt jamais mise en ligne : 211 et 296 lignes d'écart avec la production" },
-  { "lot": "migrations", "etat": "WAITING_FLORIAN", "raison": "base partagée avec la production ; application = décision humaine" }
+  {
+   "lot": "bandeau d'accueil",
+   "etat": "WAITING_FLORIAN",
+   "raison": "Des validations existent (11-12 aout) mais aucune ne couvre le bandeau actuel, cree le 23/09. WAITING_FLORIAN_VISUAL sur la preview courante."
+  },
+  {
+   "lot": "sous-lot saisonnier (5812875220)",
+   "etat": "WAITING_FLORIAN",
+   "raison": "Corrige et accepte techniquement par le contrôle du 25/09 ; reste WAITING_FLORIAN_VISUAL sur la preview courante."
+  },
+  {
+   "lot": "pipeline de leads (submit-lead-v6, notify-lead-v6)",
+   "etat": "TESTED",
+   "raison": "version du dépôt jamais mise en ligne : 211 et 296 lignes d'écart avec la production"
+  },
+  {
+   "lot": "migrations",
+   "etat": "WAITING_FLORIAN",
+   "raison": "base partagée avec la production ; application = décision humaine"
+  },
+  {
+   "lot": "menuiserie",
+   "etat": "WAITING_FLORIAN",
+   "raison": "Deux a_corriger du 12 aout jamais leves. Perimetre isole dans un dossier de revalidation dedie ; ne bloque que ces pages."
+  }
  ],
- "derniere_release_prod": { "sha": null, "date": null, "note": "aucune release contrôlée depuis la mise en place de ce fichier" }
+ "derniere_release_prod": {
+  "sha": null,
+  "date": null,
+  "note": "aucune release contrôlée depuis la mise en place de ce fichier"
+ },
+ "branche_release_existante": {
+  "nom": "release/rattrapage-2026-09-24",
+  "sha": "e5b61c6e9855745321adda064c8099b3c2b819fc",
+  "etat": "EXISTE_MAIS_VIDE",
+  "note": "Pointe exactement sur origin/main : 0 commit propre, diff nul. Une branche qui existe n'est pas une release active."
+ },
+ "validations_historiques": {
+  "source": "table recette_validation (projet btcbjwqiivhpwoszomhg), lecture seule",
+  "nombre": 9,
+  "periode": "2026-08-11 au 2026-08-12",
+  "conclusion": "Des validations historiques existent, mais aucune n'est une validation actuelle fiable du code courant.",
+  "detail": "4 perimees (le fichier concerne a change de 10 a 87 commits depuis), 2 sans objet (l'element juge n'existe plus), 2 refus jamais leves (menuiserie), 1 resolue a l'interieur de la serie puis perimee.",
+  "limite_structurelle": "La table ne porte ni SHA ni identifiant de build : le rattachement a un etat du code est reconstruit par horodatage, ce n'est pas une preuve stockee. Correction en preparation (VALIDATION-SHA)."
+ },
+ "candidats_en_evaluation": [
+  {
+   "id": "A",
+   "intitule": "Entite JSON-LD unique par page",
+   "etat": "EN_EVALUATION",
+   "reserve": "Diff volumineux (reindentation des blocs) : reduction ou preuve machine exigee avant mise en release."
+  },
+  {
+   "id": "B",
+   "intitule": "Prix publics conformes au catalogue",
+   "etat": "EN_EVALUATION",
+   "reserve": "Ne peut pas etre READY_100 seul : son test de reference n'etait pas 100 % vert sur son etat exact."
+  },
+  {
+   "id": "C",
+   "intitule": "Actualites chantier canonicalisees",
+   "etat": "EN_EVALUATION",
+   "reserve": "A regrouper avec B en lot atomique, ou B doit devenir independant."
+  }
+ ],
+ "branche_essai": {
+  "nom": "essai/release-candidats-2026-09-25",
+  "role": "PREUVE_UNIQUEMENT",
+  "interdiction": "Ne jamais fusionner. Une release se construit depuis main, pas depuis une branche d'essai."
+ },
+ "gate_visuel": {
+  "regle": "Un element accepte techniquement n'est pas PROD_READY. Il reste WAITING_FLORIAN_VISUAL tant que Florian n'a pas valide la preview courante.",
+  "concerne": [
+   "bandeau saisonnier",
+   "ecran de reprise contextualise",
+   "bloc contrats Chauffage",
+   "suppression de la landing entretien-chaudiere"
+  ]
+ }
 }
