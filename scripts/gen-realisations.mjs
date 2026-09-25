@@ -148,6 +148,13 @@ ${FOOTER}
 </body></html>`;
 }
 
+// Ce script ÉCRIT des fichiers : il ne doit agir que lancé directement. Importé — par un test, un
+// outil d'analyse, un éditeur — il ne fait rien. Un module qui écrit au seul fait d'être importé
+// salit le dépôt sans que personne ne l'ait demandé (constat du 2026-09-25, test d'hygiène).
+if (!process.argv[1] || !process.argv[1].endsWith('gen-realisations.mjs')) {
+  // importé : on n'exécute rien
+} else {
+
 // ── run ──
 const res = await fetch(`${SUPA}/functions/v1/realisations-json`, { headers: { apikey: 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2' } });
 let data = await res.json();
@@ -169,3 +176,4 @@ writeFileSync(RP, rc);
 // /realisations/:slug → /realisation.html → /realisations.html recharge la liste : « le clic ne fait rien »).
 writeFileSync(join(OUT, 'index.json'), JSON.stringify({ generated: new Date().toISOString(), slugs: slugs.slice().sort() }, null, 1) + '\n');
 console.log(`OK ${n} pages générées dans realisations/ · _redirects mis à jour (${slugs.length} règles) · manifeste realisations/index.json.`);
+}

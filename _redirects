@@ -9,6 +9,41 @@
 /admin-pro/valider-staging.html  /404.html 404!
 /admin-pro/photos.html           /404.html 404!
 
+# SECURITE (audit du 2026-09-25) : le site est publie depuis la RACINE du depot (netlify.toml,
+# publish = "."). Tout fichier suivi est donc servi, sauf regle ci-dessous. Le `ignore` de
+# netlify.toml ne protege rien : il decide seulement s'il faut reconstruire.
+# Dossiers internes : outils de deploiement, journaux d'audit, workflows, back-office non-HTML.
+/tools/*              /404.html 404!
+/logs/*               /404.html 404!
+/.github/*            /404.html 404!
+/.autopush/*          /404.html 404!
+/secrets/*            /404.html 404!
+/admin/*              /404.html 404!
+/admin-pro/audits/*   /404.html 404!
+/admin-pro/scripts/*  /404.html 404!
+/admin-pro/comm-packs/* /404.html 404!
+
+# Notes de travail et procedures d'exploitation a la racine : elles decrivent l'architecture, les
+# incidents et les noms de secrets. Rien d'exploitable directement, mais rien a faire en public.
+/CLAUDE.md            /404.html 404!
+/CLAUDE-AUTONOME.md   /404.html 404!
+/POUR-FLORIAN.md      /404.html 404!
+/BUGS-HISTORY.md      /404.html 404!
+/TODO.md              /404.html 404!
+/ALERTES.md           /404.html 404!
+/CONTEXTE-ACTIF.md    /404.html 404!
+/AUDIT-COMPLET-2026-05-28.md /404.html 404!
+/SETUP-AUTO-DEPLOY.md /404.html 404!
+/SETUP-EMAIL-RESEND.md /404.html 404!
+/SETUP-API-FACEBOOK.md /404.html 404!
+/CONFIG-PUSH-NOTIFICATIONS.md /404.html 404!
+/GOOGLE-ADS-SETUP.md  /404.html 404!
+/MAIL-APOGEE-API.md   /404.html 404!
+/_PROMPT-MODE-BATCH.md /404.html 404!
+/_gen_blog_articles.py /404.html 404!
+/_gen_seo_pages.py    /404.html 404!
+/.env.example         /404.html 404!
+
 # Sitemap dynamique servi par Edge Function Supabase
 /sitemap.xml https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sitemap 200!
 

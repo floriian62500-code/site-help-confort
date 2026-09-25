@@ -15,7 +15,7 @@
  *   node scripts/tests/depot-propre.test.mjs
  */
 import { execFileSync } from 'node:child_process';
-import { readdirSync, statSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -43,7 +43,9 @@ const copies = tous.filter((f) => COPIE.test(f));
 ok(`aucune copie de conflit sur le disque (${tous.length} fichiers parcourus)`, copies.length === 0,
   copies.slice(0, 8).join('\n     ') + (copies.length > 8 ? `\n     … et ${copies.length - 8} autres` : ''));
 
-const suivis = execFileSync('git', ['ls-files'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 1 << 26 }).split('\n').filter(Boolean);
+// -z : git cite les chemins accentués entre guillemets sans cette option, et le guillemet se
+// retrouve dans le nom du dossier au moment de découper (constaté ici même).
+const suivis = execFileSync('git', ['ls-files', '-z'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 1 << 26 }).split('\0').filter(Boolean);
 const copiesSuivies = suivis.filter((f) => COPIE.test(f));
 ok('aucune copie de conflit suivie par git', copiesSuivies.length === 0, copiesSuivies.slice(0, 8).join(', '));
 
@@ -68,7 +70,9 @@ const MOTIFS = [
   [/sk_test_[A-Za-z0-9]{10,}/, 'clé secrète Stripe TEST'],
   [/rk_live_[A-Za-z0-9]{10,}/, 'clé restreinte Stripe LIVE'],
   [/whsec_[A-Za-z0-9]{10,}/, 'secret de webhook Stripe'],
-  [/-----BEGIN [A-Z ]*PRIVATE KEY-----/, 'clé privée'],
+  // Le marqueur seul ne prouve rien : trois pages d'admin l'emploient comme littéral pour
+  // découper un PEM collé par l'utilisateur. On exige donc un vrai corps encodé derrière.
+  [/-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\\n"']{0,6}[A-Za-z0-9+/=]{40,}/, 'clé privée'],
   [/SUPABASE_SERVICE_ROLE_KEY\s*[:=]\s*['"][A-Za-z0-9._-]{20,}/, 'clé service_role en dur'],
 ];
 const TEXTE = /\.(html|js|mjs|cjs|ts|tsx|json|md|py|sh|ya?ml|toml|txt|sql)$/i;
@@ -107,6 +111,34 @@ for (const t of tests) {
   if (etatGit() !== avant) { salissants.push(t); break; }
 }
 ok(`aucun test n’écrit dans le dépôt (${tests.length} fichiers joués)`, salissants.length === 0, salissants.join(', '));
+
+
+// ── Ce qui est interne ne doit pas être servi.
+// Le site est publié depuis la RACINE du dépôt (`publish = "."`) : tout fichier suivi part chez
+// Netlify. Le `ignore` de netlify.toml ne protège rien — il décide seulement s'il faut
+// reconstruire. Le seul blocage réel est une règle de `_redirects` terminée par « ! », qui passe
+// devant le fichier statique. Audit du 2026-09-25 : `tools/`, `logs/`, `.github/` et les notes de
+// travail de la racine étaient servis.
+const redirects = readFileSync(join(ROOT, '_redirects'), 'utf8');
+const bloque = (chemin) => new RegExp('^' + chemin.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\\\*/g, '\\*') + '\\s+\\S+\\s+404!', 'm').test(redirects);
+const INTERNES = ['/docs/*', '/scripts/*', '/supabase/*', '/partials/*', '/tools/*', '/logs/*',
+                  '/.github/*', '/.autopush/*', '/secrets/*', '/admin/*',
+                  '/admin-pro/audits/*', '/admin-pro/scripts/*'];
+const nonBloques = INTERNES.filter((c) => !bloque(c));
+ok(`les dossiers internes sont tous bloqués (${INTERNES.length} surveillés)`, nonBloques.length === 0, nonBloques.join(', '));
+
+// Un dossier interne apparu depuis doit se faire remarquer : on compare ce qui existe à la liste.
+const SERVIS_LEGITIMES = new Set(['actualites', 'assets', 'content', 'data', 'emploi', 'guides', 'images',
+  'og', 'prestations', 'realisations', 'videos', 'admin-pro', '.well-known']);
+const dossiers = [...new Set(suivis.filter((f) => f.includes('/')).map((f) => f.split('/')[0]))];
+const inconnus = dossiers.filter((d) => !SERVIS_LEGITIMES.has(d) && !bloque('/' + d + '/*'));
+ok('aucun dossier suivi n’échappe à la fois à la liste des dossiers publics et aux règles de blocage',
+  inconnus.length === 0, inconnus.join(', '));
+
+// Les notes de travail de la racine : elles décrivent l'architecture et les incidents.
+const NOTES = ['/CLAUDE.md', '/POUR-FLORIAN.md', '/BUGS-HISTORY.md', '/TODO.md', '/ALERTES.md'];
+const notesServies = NOTES.filter((c) => !bloque(c));
+ok('les notes de travail de la racine ne sont pas servies', notesServies.length === 0, notesServies.join(', '));
 
 console.log(`\nRÉSULTAT DÉPÔT PROPRE : ${pass} PASS / ${fail} FAIL\n`);
 process.exit(fail ? 1 : 0);

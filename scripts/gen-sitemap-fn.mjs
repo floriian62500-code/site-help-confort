@@ -28,6 +28,13 @@ function priority(f) {
   return [0.7,'monthly'];
 }
 
+
+// Ce script ÉCRIT des fichiers : il ne doit agir que lancé directement. Importé — par un test, un
+// outil d'analyse, un éditeur — il ne fait rien. Un module qui écrit au seul fait d'être importé
+// salit le dépôt sans que personne ne l'ait demandé (constat du 2026-09-25, test d'hygiène).
+if (!process.argv[1] || !process.argv[1].endsWith('gen-sitemap-fn.mjs')) {
+  // importé : on n'exécute rien
+} else {
 const files = readdirSync(ROOT).filter(f => f.endsWith('.html') && !isExcluded(f)).sort();
 const staticPages = [{ path:'/', priority:1.0, freq:'weekly' },
   ...files.map(f => { const [p,fr]=priority(f); return { path:'/'+f, priority:p, freq:fr }; })];
@@ -90,3 +97,4 @@ Deno.serve(async (_req: Request) => {
 `;
 writeFileSync(join(ROOT,'supabase/functions/sitemap/index.ts'), body);
 console.log(`OK sitemap/index.ts régénéré : ${staticPages.length} pages statiques + réalisations (URL jolie).`);
+}

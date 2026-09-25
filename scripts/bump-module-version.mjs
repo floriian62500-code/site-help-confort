@@ -27,7 +27,12 @@ const next = process.argv[2] || (() => {
   return day + String.fromCharCode(letter.charCodeAt(0) + 1);
 })();
 
-for (const f of FILES) {
+// Ce script RÉÉCRIT des pages : il ne doit agir que lancé directement. Importé — par un test, un
+// outil d'analyse, un éditeur — il ne fait rien. Sans cette garde, un simple `import` bumpait la
+// version des assets de l'accueil et du catalogue (trouvé le 2026-09-25 par le test d'hygiène).
+const LANCE_DIRECTEMENT = !!process.argv[1] && process.argv[1].endsWith('bump-module-version.mjs');
+
+if (LANCE_DIRECTEMENT) for (const f of FILES) {
   const p = join(ROOT, f), s = readFileSync(p, 'utf8');
   const out = s.split(current).join(next);
   writeFileSync(p, out, 'utf8');

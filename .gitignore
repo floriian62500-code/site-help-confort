@@ -92,3 +92,14 @@ docs/ALERT-MONITORING.md
 * 3.*
 * 4.*
 * 5.*
+
+# Jeton de build Netlify : un POST sur cette URL declenche un deploiement de production.
+# Il a ete committe par erreur le 2026-06-10 et retire le 2026-09-25 (depot PUBLIC).
+.netlify-build-hook
+tools/.netlify-build-hook
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+.npmrc
