@@ -152,6 +152,30 @@ const TOUTES = (function lister(dir, acc = []) {
   return acc;
 })('');
 
+// ── 3quater. Un bouton qui promet des prix ne doit pas ouvrir un formulaire
+// Constat Florian du 2026-09-26, capture à l'appui : « Voir nos prestations chauffage avec prix »
+// envoyait sur /catalogue#step=lieu&cat=chauffage, c'est-à-dire l'étape 1 du tunnel de demande.
+// La règle, elle, est simple : un libellé de CONSULTATION mène à une vue de consultation ; un
+// libellé de DEMANDE mène au tunnel. L'audit a trouvé 26 liens vers le tunnel sur les pages
+// métier, dont 22 portaient un libellé de consultation — le même bouton, décliné par métier.
+const CONSULTATION = /(voir|consulter|découvrir|tous? nos|nos prestations|avec prix|tarifs)/i;
+const DEMANDE = /(demander|devis|intervention|dépannage|être rappelé|urgence|souscrire)/i;
+const malRoutes = [];
+let ctaConsultation = 0;
+for (const f of pages) {
+  for (const m of lire(f).matchAll(/<a href="([^"]+)"[^>]*>([\s\S]{0,240}?)<\/a>/g)) {
+    const lib = m[2].replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+    if (!lib || !CONSULTATION.test(lib) || DEMANDE.test(lib)) continue;
+    ctaConsultation++;
+    // Le tunnel, c'est /catalogue (page ou fenêtre) et toute ancre d'étape.
+    if (/\/?catalogue(\.html)?(#|$)/.test(m[1]) || /#step=/.test(m[1])) {
+      malRoutes.push(`${f} : « ${lib.slice(0, 44)} » → ${m[1]}`);
+    }
+  }
+}
+ok(`aucun bouton de consultation n’ouvre le tunnel (${ctaConsultation} boutons de consultation sur ${pages.length} pages métier)`,
+  malRoutes.length === 0, malRoutes.slice(0, 6).join('\n     '));
+
 // ── 3ter. Le footer dit vrai : un lien « Plomberie » mène à la plomberie
 // Constat Florian du 2026-09-26 : les pictos et libellés du footer « Métiers » étaient faux. La
 // mesure montre une signature de remplacement automatique passé trop large : sur 14 pages métier,
