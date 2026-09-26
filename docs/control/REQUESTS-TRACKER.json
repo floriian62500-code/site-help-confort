@@ -13,10 +13,11 @@
   "WAITING_FLORIAN",
   "READY_FOR_CONTROL",
   "CLOSED",
-  "ACCEPTED_AUDIT"
+  "ACCEPTED_AUDIT",
+  "READY_FOR_FLORIAN_VALIDATION"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-024",
+ "prochain_id": "REQ-20260926-025",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -506,7 +507,7 @@
    ],
    "latest_sha": null,
    "claude_outbox": null,
-   "human_gate": "—",
+   "human_gate": "GO après validation de la proposition globale",
    "blocked_by": "—",
    "next_action": "instruction canonique créée ; attente de validation de la proposition avant implémentation",
    "attempt": 1,
@@ -544,7 +545,7 @@
    "request_id": "REQ-20260926-022",
    "title": "Montrer / prototyper avant toute modification structurelle",
    "priority": "P0",
-   "status": "READY_FOR_CONTROL",
+   "status": "READY_FOR_FLORIAN_VALIDATION",
    "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-022-EXECUTE-SHOW-BEFORE-CHANGE.md",
    "legacy_instruction_id": "REQ-20260926-015",
    "created_at": "2026-09-26",
@@ -564,13 +565,39 @@
    "claude_outbox": "docs/audit/PROPOSITION-SITE-CIBLE-2026-09-26.md",
    "human_gate": "OUI/NON de Florian avant toute implémentation",
    "blocked_by": "—",
-   "next_action": "contrôle de la version corrigée : achat direct rétabli, SEO non prouvé retiré, matrice de mode mesurée, ECS traité",
-   "attempt": 3,
+   "next_action": "validation de Florian écran par écran — pas encore bon pour implémentation",
+   "attempt": 4,
    "closed_at": null,
    "closure_proof": null
   },
   {
    "request_id": "REQ-20260926-023",
+   "title": "Zones d'intervention : Calais et Boulogne comme pôles principaux",
+   "priority": "P1",
+   "status": "OPEN",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-023-ZONES-CALAIS-BOULOGNE.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "quatre pôles de même poids visuel",
+    "Calais et Boulogne présentés comme ZONES, pas comme agences",
+    "wireframe desktop et mobile montré avant toute modification HTML"
+   ],
+   "evidence_required": [
+    "maquette dans la proposition cible",
+    "validation visuelle de Florian"
+   ],
+   "latest_sha": null,
+   "claude_outbox": "docs/audit/PROPOSITION-SITE-CIBLE-2026-09-26.md §10bis",
+   "human_gate": "WAITING_FLORIAN_VISUAL",
+   "blocked_by": "—",
+   "next_action": "validation du wireframe, puis implémentation sur GO",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null
+  },
+  {
+   "request_id": "REQ-20260926-024",
    "title": "Carte des zones grise tant qu'on ne défile pas",
    "priority": "P1",
    "status": "WAITING_FLORIAN",
@@ -594,7 +621,8 @@
    "next_action": "appliquer le correctif de 3 lignes sur accord",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": null,
+   "note_numerotation": "créée par Claude en parallèle sous le numéro 023 ; renumérotée 024 dès réception de REQ-20260926-023-ZONES-CALAIS-BOULOGNE.md, publiée par ChatGPT. Le contenu métier est inchangé."
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id.",
