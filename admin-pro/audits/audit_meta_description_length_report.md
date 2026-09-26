@@ -1,6 +1,6 @@
 # Audit meta description length — Rapport
 
-_Généré le 2026-09-25 08:37_
+_Généré le 2026-09-26 08:24_
 
 ## Synthèse
 

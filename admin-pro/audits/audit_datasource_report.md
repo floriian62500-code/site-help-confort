@@ -1,6 +1,6 @@
 # Audit data-source — Sonde IA #29
 
-_Généré le 2026-09-25 08:35 — `admin-pro/audits/audit_datasource.py`_
+_Généré le 2026-09-26 08:22 — `admin-pro/audits/audit_datasource.py`_
 
 - Pages avec attribut `data-source` : **1**
 - Occurrences totales : **2**
