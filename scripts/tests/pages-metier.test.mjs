@@ -152,6 +152,28 @@ const TOUTES = (function lister(dir, acc = []) {
   return acc;
 })('');
 
+// ── 3ter. Le footer dit vrai : un lien « Plomberie » mène à la plomberie
+// Constat Florian du 2026-09-26 : les pictos et libellés du footer « Métiers » étaient faux. La
+// mesure montre une signature de remplacement automatique passé trop large : sur 14 pages métier,
+// le PREMIER lien du footer pointait bien vers la plomberie mais portait le nom du métier de la
+// page — « Chauffage » sur les pages chauffagiste, « Électricité » sur les pages électricien.
+// Le picto, lui, était le bon (la goutte) : c'est le texte qui avait dérivé.
+const LIBELLES = { 'plombier-saint-omer': 'Plomberie', 'chauffagiste-saint-omer': 'Chauffage', 'electricien-saint-omer': 'Électricité' };
+const fautifs = [];
+let footers = 0;
+for (const f of TOUTES) {
+  const c = lire(f), i = c.indexOf('<h3>Métiers</h3>');
+  if (i < 0) continue;
+  footers++;
+  const bloc = c.slice(i, i + 2600);
+  for (const m of bloc.matchAll(/<a href="\/?([a-z-]+)(?:\.html)?"[^>]*>(?:<svg[\s\S]*?<\/svg>)?([^<]+)<\/a>/g)) {
+    const attendu = LIBELLES[m[1]];
+    if (attendu && m[2].trim() !== attendu) fautifs.push(`${f} : ${m[1]} étiqueté « ${m[2].trim()} »`);
+  }
+}
+ok(`footer : chaque lien métier porte le nom de sa destination (${footers} footers)`,
+  fautifs.length === 0, fautifs.slice(0, 6).join('\n     '));
+
 // `hc-contact-journey` / `hcj-*` est un AUTRE composant, sur contact.html, au titre plus court
 // (« Voici comment ça se passe ») : il n'est pas visé par la décision et reste en place tant que
 // Florian ne s'est pas prononcé. Les motifs ci-dessous ne l'attrapent donc pas — c'est voulu.

@@ -155,6 +155,15 @@ for (const f of CHAUFFAGISTES) {
     montants.length <= 1 && montants.every((v) => mensuels.has(v)), montants.join(', '));
 }
 
+// Le bouton « Voir nos prestations chauffage avec prix » doit montrer des PRIX, pas ouvrir une
+// demande : il visait /catalogue, qui est le tunnel. Constat Florian du 2026-09-26.
+for (const f of CHAUFFAGISTES) {
+  const page = texte(f);
+  const m = page.match(/<a href="([^"]+)"[^>]*>Voir nos prestations chauffage avec prix/);
+  ok(`${f.replace('.html', '')} : « voir les prestations avec prix » mène au catalogue public, pas au tunnel`,
+    !!m && m[1] === '/nos-prestations.html#sec-chauffage', m ? m[1] : 'bouton introuvable');
+}
+
 // Et la page qui détaille doit continuer de le faire : sinon on aurait tout déplacé vers rien.
 const pageContrats = lire('contrats-entretien.html');
 ok('la page contrats reste la seule à porter le comparatif complet',
