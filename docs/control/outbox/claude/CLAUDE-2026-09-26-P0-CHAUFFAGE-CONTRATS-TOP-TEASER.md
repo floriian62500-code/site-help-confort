@@ -73,7 +73,7 @@ Retiré des quatre pages `chauffagiste-*` (`9dc56a9e`) :
 Même traitement sur `nos-prestations.html`, qui portait la copie jumelle (classes `npce-*`) :
 les trois cartes disparaissent, un paragraphe les remplace et renvoie à la page contrats.
 
-Et la peau du module, retirée ensuite (`d23c71ba`) : **3 861 octets identiques sur chacune des
+Et la peau du module, retirée ensuite (`d23c71ba`) : **3 881 octets identiques sur chacune des
 quatre pages** — grille, cartes, badges, sélecteur gaz/fioul, blocs de prix — envoyés à chaque
 visiteur pour décrire un module qui n'existe plus. Preuve exigée avant toute suppression (« jamais
 un fichier probablement mort ») :
@@ -90,6 +90,11 @@ Les deux règles encore utiles (`.ce-cta` et son survol) ont été remontées **
 pour octet**, dans le bloc de style du teaser. Contrôle après déploiement : bouton principal plein
 `rgb(10,20,40)`, secondaire `transparent` + filet `rgb(229,90,12)`, 314 px, rayon 999 px, padding
 12/22 px, teaser toujours à 1 077 px — géométrie inchangée.
+
+(Correction : les commits annoncent « 3 861 octets ». C'est le nombre de *caractères* — la
+mesure venait de la longueur d'une chaîne, et ces pages sont pleines d'accents. En octets, le
+bloc pèse 3 881 ; la page passe de 147 368 à 144 088, soit 3 280 de moins, la différence étant
+les deux règles `.ce-cta` remontées avec leur commentaire.)
 
 Ce qui reste, et à un seul endroit : `/contrats-entretien.html`, alimentée par `v_contract_offers`.
 Elle n'a pas été touchée par ce lot (0 commit sur ce fichier).

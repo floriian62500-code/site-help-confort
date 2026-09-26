@@ -5,7 +5,7 @@ run : 2026-09-26 · branche `recette` · aucune mise en production
 ## ROOT_CAUSE
 
 Ce bloc n'était pas un composant, c'était une **recopie**. Les sept pages le portaient à l'octet
-près — 2 901 octets, même empreinte sur les sept — avec son propre `<style>` embarqué dans la
+près — 2 911 octets, même empreinte sur les sept — avec son propre `<style>` embarqué dans la
 section. Rien ne le centralisait : ni `assets/`, ni `partials/`, ni un script.
 
 C'est ce qui explique la remarque de Florian (« ce point avait déjà été demandé ») : un composant
@@ -38,8 +38,12 @@ Les sept pages métier qui le portaient — toutes Saint-Omer :
 `plombier-saint-omer.html` · `serrurier-saint-omer.html` · `travaux-saint-omer.html` ·
 `vitrier-saint-omer.html`
 
-−2 901 octets chacune. La demande citait aussi volets, PMR et dépannage : ces pages existent (le
+−2 910 octets chacune (le bloc en pèse 2 911, une fin de ligne est conservée). La demande citait aussi volets, PMR et dépannage : ces pages existent (le
 corpus métier en compte 44) mais **ne portaient pas le module** — vérifié, pas supposé.
+
+(Correction : les commits et la garde annoncent « 2 901 octets ». C'est un nombre de
+*caractères* — la mesure venait de la longueur d'une chaîne, et le bloc est plein d'accents. En
+octets : 2 911 pour le bloc, 2 910 de moins par page.)
 
 Sur les sept, le bloc était placé entre la FAQ et le footer. La FAQ remonte donc au contact de la
 bande de réassurance, qui touche le footer : c'est l'enchaînement d'origine de ces pages.
