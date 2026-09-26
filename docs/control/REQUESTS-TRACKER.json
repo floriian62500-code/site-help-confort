@@ -16,7 +16,7 @@
   "ACCEPTED_AUDIT"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-023",
+ "prochain_id": "REQ-20260926-024",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -566,6 +566,33 @@
    "blocked_by": "—",
    "next_action": "contrôle de la version corrigée : achat direct rétabli, SEO non prouvé retiré, matrice de mode mesurée, ECS traité",
    "attempt": 3,
+   "closed_at": null,
+   "closure_proof": null
+  },
+  {
+   "request_id": "REQ-20260926-023",
+   "title": "Carte des zones grise tant qu'on ne défile pas",
+   "priority": "P1",
+   "status": "WAITING_FLORIAN",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-023-CARTE-ZONES-GRISE.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "carte peinte sans défiler en moins de 3 s",
+    "comportement paresseux conservé ailleurs",
+    "1440 et 390"
+   ],
+   "evidence_required": [
+    "mesure avant/après",
+    "captures",
+    "suite complète"
+   ],
+   "latest_sha": null,
+   "claude_outbox": "CLAUDE-2026-09-26-REQ-023-DIAGNOSTIC-CARTE-ZONES.md",
+   "human_gate": "feu vert avant application (gel + REQ-022)",
+   "blocked_by": "—",
+   "next_action": "appliquer le correctif de 3 lignes sur accord",
+   "attempt": 1,
    "closed_at": null,
    "closure_proof": null
   }
