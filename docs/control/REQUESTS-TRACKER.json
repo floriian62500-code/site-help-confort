@@ -543,22 +543,28 @@
    "request_id": "REQ-20260926-022",
    "title": "Montrer / prototyper avant toute modification structurelle",
    "priority": "P0",
-   "status": "OPEN",
-   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-015-SHOW-BEFORE-CHANGE-GUARD.md",
+   "status": "READY_FOR_CONTROL",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-022-EXECUTE-SHOW-BEFORE-CHANGE.md",
    "legacy_instruction_id": "REQ-20260926-015",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
-    "proposition montrée et validée avant implémentation"
+    "arborescence cible par type de page",
+    "6 parcours en flèches",
+    "décision par doublon sans l'appliquer",
+    "maquettes des 5 écrans",
+    "une action commerciale par mode",
+    "paiement client vs back-office",
+    "contrats options A/B sans trancher"
    ],
    "evidence_required": [
     "rapport outbox dédié"
    ],
    "latest_sha": null,
-   "claude_outbox": null,
-   "human_gate": "—",
+   "claude_outbox": "docs/audit/PROPOSITION-SITE-CIBLE-2026-09-26.md",
+   "human_gate": "OUI/NON de Florian avant toute implémentation",
    "blocked_by": "—",
-   "next_action": "après REQ-021",
-   "attempt": 1,
+   "next_action": "attendre la validation écran par écran",
+   "attempt": 2,
    "closed_at": null,
    "closure_proof": null
   }
