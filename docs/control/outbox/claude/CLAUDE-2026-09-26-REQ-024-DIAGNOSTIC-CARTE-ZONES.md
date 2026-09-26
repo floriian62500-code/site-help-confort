@@ -1,4 +1,4 @@
-# REQ-20260926-023 — diagnostic de la carte grise, correctif préparé et **non appliqué**
+# REQ-20260926-024 — diagnostic de la carte grise, correctif préparé et **non appliqué**
 
 run : 2026-09-26 · branche `recette` · **aucune modification de page dans ce lot**
 
@@ -72,3 +72,8 @@ aucun déploiement. `origin/main` toujours sur `570225bf`.
 
 Attendre le feu vert de Florian pour appliquer le correctif — ou son instruction de le laisser
 dans le plan global si la page des zones entre de toute façon dans la refonte.
+
+
+---
+
+*Renumérotée de 023 en 024 le 2026-09-26 : le numéro 023 était pris, au même moment, par `REQ-20260926-023-ZONES-CALAIS-BOULOGNE.md` publiée par ChatGPT. Le contenu métier n'a pas changé.*

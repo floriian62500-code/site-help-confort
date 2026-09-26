@@ -1,6 +1,6 @@
-# REQ-20260926-023 — La carte des zones reste grise tant qu'on ne défile pas
+# REQ-20260926-024 — La carte des zones reste grise tant qu'on ne défile pas
 
-request_id: REQ-20260926-023
+request_id: REQ-20260926-024
 priority: P1
 status: OPEN
 date: 2026-09-26
@@ -51,3 +51,8 @@ l'élément est déjà dans l'écran. Trois lignes, un seul fichier, aucun chang
 
 ROOT_CAUSE · MESURE_AVANT · MESURE_APRES · FILES_CHANGED · TESTS · SCREENSHOTS_1440_390 · SHA ·
 PREVIEW · ROLLBACK · NO_PROD_MUTATION_PROOF
+
+
+---
+
+*Renumérotée de 023 en 024 le 2026-09-26 : le numéro 023 était pris, au même moment, par `REQ-20260926-023-ZONES-CALAIS-BOULOGNE.md` publiée par ChatGPT. Le contenu métier n'a pas changé.*
