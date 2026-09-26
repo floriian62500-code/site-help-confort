@@ -75,7 +75,11 @@ jobs:
           deno-version: v2.x
 
       - name: Fonctions edge durcies (sans réseau)
-        run: deno test supabase/functions/gh-push-inline/handler.test.ts supabase/functions/gh-edit-file/handler.test.ts supabase/functions/stripe-create-payment-link/handler.test.ts
+        run: |
+          deno test supabase/functions/gh-push-inline/handler.test.ts supabase/functions/gh-edit-file/handler.test.ts supabase/functions/stripe-create-payment-link/handler.test.ts
+          # Les versions prêtes à déployer vivent dans functions-staging/ : elles doivent rester vertes,
+          # sinon le jour du GO on déploierait un correctif qu'on n'a pas rejoué.
+          deno test supabase/functions-staging/_shared/stripe-signature.test.ts supabase/functions-staging/gh-push-inline/handler.test.ts supabase/functions-staging/gh-edit-file/handler.test.ts supabase/functions-staging/stripe-create-payment-link/handler.test.ts
 
       # Dérive recette → production : on ALERTE, on ne bloque pas. Rendre la CI rouge en permanence
       # noierait le signal et casserait l'indicateur sur lequel tout le monde s'appuie. Le mode

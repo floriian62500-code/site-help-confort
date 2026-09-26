@@ -24,17 +24,21 @@ let pass = 0, fail = 0;
 const ok = (l, c, d) => { if (c) { pass++; console.log('  ✅ ' + l); } else { fail++; console.log('  ❌ ' + l); if (d) console.log('     ' + d); } };
 
 // « nom 2.ext », « nom 3.ext »… : la forme que prend une copie de conflit sur macOS/iCloud.
-const COPIE = / \d+\.[^.]+$/;
+const COPIE = / \d+(\.[^.]+)?\/?$/;
 
 function parcourir(dir, acc = []) {
   for (const e of readdirSync(join(ROOT, dir), { withFileTypes: true })) {
     if (e.name === '.git' || e.name === 'node_modules') continue;
     const rel = dir ? dir + '/' + e.name : e.name;
-    if (e.isDirectory()) parcourir(rel, acc);
+    // Un DOSSIER de conflit (« _shared/templates 2 ») échappait au contrôle : le motif exigeait une
+    // extension, et `.gitignore` un point. Git ne suit pas les dossiers vides, donc rien ne le
+    // signalait — trouvé le 2026-09-26, six jours après le nettoyage des fichiers.
+    if (e.isDirectory()) { if (DOSSIER_COPIE.test(e.name)) acc.push(rel + '/'); parcourir(rel, acc); }
     else acc.push(rel);
   }
   return acc;
 }
+const DOSSIER_COPIE = / \d+$/;
 
 console.log('\nHYGIÈNE DU DÉPÔT\n');
 

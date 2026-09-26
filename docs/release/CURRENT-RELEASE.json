@@ -10,8 +10,8 @@
  "base_main_sha": "570225bff7f451318399bc52176fdcea9b1adc45",
  "release_branch": "release/lot-c-2026-09-25",
  "created_at": "2026-09-25T15:40:00Z",
- "statut": "RELEASE_CONSTITUEE_EN_ATTENTE_DE_CONTROLE",
- "raison": "Lot C seul, construit depuis le main courant, teste sur son SHA exact (behind_by = 0). B en est sorti : il attend une validation metier de Florian et n'a pas a retenir C.",
+ "statut": "HOLD_SECURITY",
+ "raison": "La release C est techniquement PASS et prete, mais la mise en production est en HOLD : des vulnerabilites critiques sont ouvertes en production (webhook Stripe sans verification de signature, lien de paiement pilote par le client, relais d'ecriture GitHub ouverts, app_settings lisible par tout compte authentifie, ecritures anonymes). On ne pousse pas une release fonctionnelle tant que leur traitement ou leur acceptation explicite n'est pas cadre.",
  "elements": [
   {
    "id": "C",
@@ -190,5 +190,70 @@
   "fonction_edge_deployee": "Version du 2026-08-08, inchangee. Le sitemap servi en production contient encore 17 URL /actualites/.",
   "gate": "Le redeploiement de la fonction sitemap est un gate SEPARE. Inclure la source dans la release ne la deploie pas.",
   "consequence": "Tant que la fonction n'est pas redeployee, le sitemap annonce des URL qui repondront 301. Propre, mais a savoir."
- }
+ },
+ "hold_security": {
+  "declare_le": "2026-09-26",
+  "source": "CHATGPT-2026-09-25-PROD-HOLD-SECURITY-1",
+  "release_c": "techniquement PASS, conservee telle quelle, NON deployee",
+  "blocage": "risques securite critiques ouverts en production",
+  "go_prod": "AUCUN",
+  "prochain_gate": "decision de Florian sur le paquet securite",
+  "paquets": [
+   {
+    "id": "SECURITY-STRIPE",
+    "couvre": [
+     "P0-1 webhook sans signature",
+     "P0-2 lien de paiement"
+    ],
+    "doc": "docs/security/SECURITY-STRIPE.md",
+    "pret": true
+   },
+   {
+    "id": "SECURITY-GITHUB-WRITE",
+    "couvre": [
+     "P0-3 relais d'ecriture GitHub"
+    ],
+    "doc": "docs/security/SECURITY-GITHUB-WRITE.md",
+    "pret": true
+   },
+   {
+    "id": "SECURITY-RLS-SECRETS",
+    "couvre": [
+     "P0-4 app_settings"
+    ],
+    "doc": "docs/security/SECURITY-RLS-SECRETS.md",
+    "pret": true
+   },
+   {
+    "id": "SECURITY-ANON-WRITES",
+    "couvre": [
+     "P0-5 leads anonyme",
+     "P0-5 bucket photos"
+    ],
+    "doc": "docs/security/SECURITY-ANON-WRITES.md",
+    "pret": true
+   },
+   {
+    "id": "NETLIFY-HOOK-ROTATION",
+    "couvre": [
+     "P0-6 build hook expose"
+    ],
+    "doc": "docs/security/NETLIFY-HOOK-ROTATION.md",
+    "pret": true,
+    "note": "action humaine : runbook seulement"
+   }
+  ],
+  "correctifs_deployables": "supabase/functions-staging/ — les versions durcies portent enfin le nom index.ts, que l'outil de deploiement est capable de prendre. 64 tests Deno verts."
+ },
+ "correctifs_hors_release": [
+  {
+   "id": "CTA-CHAUDIERE",
+   "intitule": "Le CTA chaudiere de l'accueil mene a la page Chauffage",
+   "etat": "TECH_ACCEPTED",
+   "gate": "WAITING_FLORIAN_VISUAL",
+   "sha_recette": "77b8a5ec",
+   "source": "CHATGPT-2026-09-26-P0-CHAUDIERE-REVIEW-1",
+   "note": "Ne pas ajouter a la release C : elle reste limitee a son perimetre SEO/canonicalisation. Entrera dans une petite release dediee creee depuis main, apres validation visuelle et apres traitement des gates securite."
+  }
+ ]
 }
