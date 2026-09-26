@@ -255,6 +255,12 @@
         });
       }, { rootMargin: '100px' });
       io.observe(el);
+      // Un élément DÉJÀ visible au chargement ne déclenche pas toujours l'observateur. Sur
+      // /zones-intervention, le hero EST la carte : le visiteur voyait un rectangle gris jusqu'à
+      // son premier défilement (mesuré : Leaflet absent après 10 s, 0 tuile). On amorce donc tout
+      // de suite quand l'élément est déjà dans l'écran ; ailleurs, le chargement reste différé.
+      var r = el.getBoundingClientRect();
+      if (r.top < (window.innerHeight || 0) + 100 && r.bottom > -100) { io.disconnect(); loadLeaflet(buildMap); }
     });
   }
 
