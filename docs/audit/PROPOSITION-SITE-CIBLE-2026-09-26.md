@@ -369,7 +369,7 @@ relevé de positions dans ce dépôt, donc je n'ai rien pour l'affirmer.
 | UX | un clic de plus pour souscrire |
 | structure | deux surfaces, donc une source de prix commune obligatoire (`v_contract_offers`) |
 | coût de migration | nul |
-| risque SEO | nul par construction |
+| risque SEO | **pas de risque de migration d'URL identifié** — aucune URL ne change. Je n'écris pas « risque nul » : un risque SEO global ne se prouve pas depuis ce dépôt |
 | réversible | oui |
 
 ### Ce que le module contrats doit montrer, dans les deux options
@@ -456,7 +456,7 @@ présentes que dans les listes de communes. Les données existent (H1, introduct
 pied de page) : **c'est un problème de hiérarchie visuelle, pas de données manquantes.**
 
 **Point à ne jamais perdre de vue dans le rendu : Calais et Boulogne sont des ZONES D'INTERVENTION,
-pas des agences.** Une seule agence physique, Saint-Omer (Dépan'Audo), plus l'antenne de Dunkerque.
+pas des agences.** **Saint-Omer (Dépan'Audo) est la seule agence dont ce dépôt porte la preuve** — adresse, horaires, mentions légales. Pour Dunkerque, Calais et Boulogne, je n'ai trouvé aucune preuve juridique ou organisationnelle d'une implantation : je les nomme donc **pôles / zones d'intervention**, et pas autrement. Si Dunkerque est bien une antenne, il suffira de le prouver pour changer le libellé.
 Le libellé et le visuel doivent le dire sans ambiguïté, sinon on promet une implantation qui
 n'existe pas.
 
@@ -465,11 +465,12 @@ n'existe pas.
 ┌──────────────────────────────────────────────────────────┐
 │        CÔTE D'OPALE · AUDOMAROIS · FLANDRES              │
 │        Une agence, toute la Côte d'Opale                 │
-│  Agence de Saint-Omer · antenne de Dunkerque             │
+│  Agence de Saint-Omer · pôles : Dunkerque, Calais,       │
+│  Boulogne — zones d'intervention, pas d'agences          │
 │  Calais et Boulogne : zones desservies, sans agence      │
 ├────────────────────────────┬─────────────────────────────┤
 │ ◉ Saint-Omer & Audomarois  │ ◉ Dunkerque & littoral      │
-│   AGENCE · Dépan'Audo      │   ANTENNE                   │
+│   AGENCE · Dépan'Audo      │   PÔLE D'INTERVENTION       │
 │   …texte…                  │   …texte…                   │
 │   [pastilles de communes]  │   [pastilles de communes]   │
 ├────────────────────────────┼─────────────────────────────┤
@@ -489,7 +490,7 @@ n'existe pas.
 │   [communes]       │
 ├────────────────────┤
 │ ◉ Dunkerque        │
-│   ANTENNE          │
+│   PÔLE             │
 ├────────────────────┤
 │ ◉ Calais           │
 │   ZONE DESSERVIE   │
@@ -501,7 +502,7 @@ n'existe pas.
 
 Chaque carte garde la structure actuelle — pastille de couleur, titre, sous-titre, texte,
 pastilles de communes — pour que rien ne paraisse rapporté. La **différence de statut** (agence /
-antenne / zone desservie) est portée par le sous-titre, pas par la taille de la carte : les quatre
+pôle d'intervention) est portée par le sous-titre, pas par la taille de la carte : les quatre
 pôles ont le même poids visuel, c'est ce que demande Florian.
 
 `REQ-20260926-023` reste **OPEN / WAITING_FLORIAN_VISUAL** : aucune page n'est modifiée.

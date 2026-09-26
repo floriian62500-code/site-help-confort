@@ -14,7 +14,11 @@
   "READY_FOR_CONTROL",
   "CLOSED",
   "ACCEPTED_AUDIT",
-  "READY_FOR_FLORIAN_VALIDATION"
+  "READY_FOR_FLORIAN_VALIDATION",
+  "SUPERSEDED",
+  "TECH_ACCEPTED",
+  "READY_FOR_DESIGN",
+  "WAITING_FLORIAN_VISUAL"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
  "prochain_id": "REQ-20260926-025",
@@ -40,17 +44,18 @@
    "claude_outbox": "CLAUDE-2026-09-26-REQ-001-CLOTURE-PAIEMENT-SECURITE.md",
    "human_gate": "GO Florian requis pour les 5 points du §4",
    "blocked_by": "—",
-   "next_action": "GO Florian sur les 5 actions production ; plusieurs lignes restent PROD_UNSAFE",
+   "next_action": "AUDIT/PRÉPARATION seulement · production UNSAFE sur plusieurs points · aucun déploiement sans GO Florian",
    "attempt": 2,
    "closed_at": null,
    "closure_proof": null,
-   "scope": "AUDIT/PRÉPARATION COMPLÈTE · PRODUCTION NON SÛRE SUR PLUSIEURS POINTS · WAITING_FLORIAN_GO — ne jamais écrire « clôture sécurité »"
+   "scope": "AUDIT/PRÉPARATION COMPLÈTE · PRODUCTION NON SÛRE SUR PLUSIEURS POINTS · WAITING_FLORIAN_GO — ne jamais écrire « clôture sécurité »",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-002",
    "title": "Registre numéroté des demandes",
    "priority": "P0",
-   "status": "READY_FOR_CONTROL",
+   "status": "TECH_ACCEPTED",
    "parent_instruction": "CHATGPT-2026-09-26-P0-NUMBERED-REQUEST-TRACKING",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -66,16 +71,17 @@
    "claude_outbox": "CLAUDE-2026-09-26-REQ-002-TRACKER.md",
    "human_gate": "clôture par ChatGPT/Florian uniquement",
    "blocked_by": "—",
-   "next_action": "contrôle ChatGPT",
+   "next_action": "clôture possible par le contrôle",
    "attempt": 2,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": "docs/control/REQUESTS-TRACKER.json : 24 demandes, 0 doublon, prochain_id 025, règle « Claude ne met jamais CLOSED » inscrite dans le fichier",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-003",
    "title": "Grille prestations Chauffage",
    "priority": "P0",
-   "status": "READY_FOR_CONTROL",
+   "status": "WAITING_FLORIAN_VISUAL",
    "parent_instruction": "CHATGPT-2026-09-26-REQ-025-CHAUFFAGE-GRID-REWORK",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -94,10 +100,11 @@
    "claude_outbox": "CLAUDE-2026-09-26-REQ-025-CHAUFFAGE-GRID-REWORK.md",
    "human_gate": "WAITING_FLORIAN_VISUAL — ne pas fermer, les captures ont montré des défauts successifs",
    "blocked_by": "3 photos manquantes (chaudière, ramonage, poêle) — n'empêchent pas le rendu",
-   "next_action": "contrôle visuel Florian",
+   "next_action": "ne pas fermer",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-004",
@@ -119,10 +126,11 @@
    "claude_outbox": "CLAUDE-2026-09-26-P0-CHAUFFAGE-CONTRATS-PREMIUM.md",
    "human_gate": "WAITING_FLORIAN_DIRECTION",
    "blocked_by": "Florian maintient que les pictos sont mauvais visuellement ; ne pas clôturer sur « le libellé était faux »",
-   "next_action": "repartir du rendu attendu par Florian, pas du mapping actuel",
+   "next_action": "rendu visuel non validé ; la source unique est acceptée comme architecture, pas les pictos actuels",
    "attempt": 2,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-005",
@@ -145,16 +153,17 @@
    "claude_outbox": "CLAUDE-2026-09-26-P0-CHAUFFAGE-CONTRATS-PREMIUM.md",
    "human_gate": "refus visuel de Florian sur la section premium",
    "blocked_by": "—",
-   "next_action": "reprendre selon REQ-20260926-005-REWORK-2.md, après l'audit global",
+   "next_action": "bloc sombre refusé ; ne plus retravailler ce teaser si REQ-017 (module complet sur Chauffage) le remplace",
    "attempt": 2,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-006",
    "title": "Bannière d'accueil flottante + routage Chauffage",
    "priority": "P0",
-   "status": "READY_FOR_CONTROL",
+   "status": "WAITING_FLORIAN_VISUAL",
    "parent_instruction": "CHATGPT-2026-09-26-P0-HOME-BANNER-FLOATING-ROUTING",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -170,16 +179,17 @@
    "claude_outbox": "CLAUDE-2026-09-26-P0-HOME-BANNER-FLOATING-ROUTING.md",
    "human_gate": "validation visuelle Florian",
    "blocked_by": "—",
-   "next_action": "ne plus modifier avant validation",
+   "next_action": "aucun nouveau changement",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-007",
    "title": "Suppression du module parcours sur les pages métier",
    "priority": "P0",
-   "status": "READY_FOR_CONTROL",
+   "status": "TECH_ACCEPTED",
    "parent_instruction": "CHATGPT-2026-09-26-P0-REMOVE-METIER-JOURNEY-GLOBAL",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -195,16 +205,17 @@
    "claude_outbox": "CLAUDE-2026-09-26-P0-REMOVE-METIER-JOURNEY-GLOBAL.md",
    "human_gate": "—",
    "blocked_by": "question ouverte : le composant voisin de contact.html",
-   "next_action": "décision Florian sur contact.html",
+   "next_action": "contact.html hors périmètre, ne bloque pas",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": "0 occurrence des 6 motifs sur 264 pages · garde pages-metier rejouée contre l'état d'avant (échoue et nomme les 7 pages) · SHA 1fa6b647",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-008",
    "title": "Suppression du bloc final de la page contrats",
    "priority": "P0",
-   "status": "READY_FOR_CONTROL",
+   "status": "TECH_ACCEPTED",
    "parent_instruction": "CHATGPT-2026-09-26-P0-REMOVE-CONTRATS-FINAL-CTA",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -220,16 +231,17 @@
    "claude_outbox": "CLAUDE-2026-09-26-P0-REMOVE-CONTRATS-FINAL-CTA.md",
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "contrôle ChatGPT",
+   "next_action": "clôture possible par le contrôle",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": "bloc supprimé, 3 règles orphelines retirées, contrats 35 contrôles, souscription testée en ligne sans envoi · SHA 6ae55ed8",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-009",
    "title": "Régression #intervention (écran de reprise générique)",
    "priority": "P0",
-   "status": "READY_FOR_CONTROL",
+   "status": "TECH_ACCEPTED",
    "parent_instruction": "CHATGPT-2026-09-26-P0-HOME-INTERVENTION-REGRESSION",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -245,16 +257,17 @@
    "claude_outbox": "CLAUDE-2026-09-26-P0-HOME-INTERVENTION-REGRESSION.md",
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "contrôle ChatGPT",
+   "next_action": "clôture possible par le contrôle",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": "contrôle home_intervention_cta_bypasses_generic_resume_gate (5 assertions) · 7 échecs contre l'ancien code · parcours et reprise vérifiés en ligne · SHA 020b2666",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-010",
    "title": "Teaser contrats en haut de la page Chauffage",
    "priority": "P0",
-   "status": "READY_FOR_CONTROL",
+   "status": "SUPERSEDED",
    "parent_instruction": "CHATGPT-2026-09-26-P0-CHAUFFAGE-CONTRATS-TOP-TEASER",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -269,16 +282,17 @@
    "claude_outbox": "CLAUDE-2026-09-26-P0-CHAUFFAGE-CONTRATS-TOP-TEASER.md",
    "human_gate": "—",
    "blocked_by": "remplacé par REQ-005 (Florian a demandé plus fort)",
-   "next_action": "—",
+   "next_action": "remplacée par REQ-005 puis REQ-017 ; ne plus traiter",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-011",
    "title": "Routage des boutons « prestations avec prix »",
    "priority": "P0",
-   "status": "READY_FOR_CONTROL",
+   "status": "TECH_ACCEPTED",
    "parent_instruction": "CHATGPT-2026-09-26-P0-CTA-PRESTATIONS-ROUTING",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -294,10 +308,11 @@
    "claude_outbox": "CLAUDE-2026-09-26-P0-CTA-PRESTATIONS-ROUTING.md",
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "contrôle ChatGPT",
+   "next_action": "les 16 liens de cartes restants relèvent de l'audit global, pas de cette REQ",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": "22 CTA recâblés sur 26 · garde « aucun bouton de consultation n'ouvre le tunnel » (234 boutons, 44 pages) rejouée contre l'état d'avant · SHA 0f09e466",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-012",
@@ -319,10 +334,11 @@
    "claude_outbox": "—",
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "tenir le gel jusqu'au contrôle ChatGPT",
+   "next_action": "gel maintenu jusqu'à validation Florian de l'architecture et des visuels",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-013",
@@ -342,10 +358,11 @@
    "claude_outbox": "CLAUDE-2026-09-26-PROD-HOLD-SECURITY-1.md",
    "human_gate": "GO Florian",
    "blocked_by": "REQ-001",
-   "next_action": "attendre le GO",
+   "next_action": "maintenu",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-014",
@@ -364,10 +381,11 @@
    "claude_outbox": "—",
    "human_gate": "—",
    "blocked_by": "gel : ne pas ouvrir avant clôture des P0",
-   "next_action": "à planifier après le gel",
+   "next_action": "gelé",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-015",
@@ -386,16 +404,17 @@
    "claude_outbox": "—",
    "human_gate": "Florian fournit les photos",
    "blocked_by": "—",
-   "next_action": "attendre les photos",
+   "next_action": "photos attendues",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-016",
    "title": "Réconciliation du tracker et gel avant audit global",
    "priority": "P0",
-   "status": "READY_FOR_CONTROL",
+   "status": "TECH_ACCEPTED",
    "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-016-TRACKER-RECONCILIATION.md",
    "legacy_instruction_id": null,
    "created_at": "2026-09-26",
@@ -412,10 +431,11 @@
    "claude_outbox": null,
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "contrôle ChatGPT, puis REQ-021",
+   "next_action": "clôture possible par le contrôle",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": "001→015 conservés, 016→022 remappés avec legacy_instruction_id, 0 doublon vérifié · SHA 8462cc4e",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-017",
@@ -436,16 +456,17 @@
    "claude_outbox": null,
    "human_gate": "WAITING_FLORIAN_ARCHITECTURE",
    "blocked_by": "gel renforcé",
-   "next_action": "décision A ou B sur les contrats (proposition §8)",
+   "next_action": "direction métier : OPTION A préférée (module complet sur Chauffage). Étape suivante : prototype isolé + plan de migration des 571 liens, SANS suppression ni 301",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-018",
    "title": "Chauffe-eau / ECS dans l'offre contrats",
    "priority": "P1",
-   "status": "IN_PROGRESS",
+   "status": "READY_FOR_DESIGN",
    "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-011-CHAUFFE-EAU-ECS-CONTRATS.md",
    "legacy_instruction_id": "REQ-20260926-011",
    "created_at": "2026-09-26",
@@ -461,10 +482,11 @@
    "claude_outbox": null,
    "human_gate": "WAITING_FLORIAN_DIRECTION",
    "blocked_by": "conflit à arbitrer : la prestation est tarifée dans v_services_public, dont les prix sont soumis à la porte des tarifs",
-   "next_action": "source canonique prouvée (v_services_public, 220 € TTC/an, « Engagement annuel ») ; reste l'arbitrage de la porte des tarifs",
+   "next_action": "source prouvée (220 € TTC/an, v_services_public, Engagement annuel) ; afficher dans le même espace entretien, visuellement distinct des formules mensuelles ; ne pas convertir en mensualité",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-019",
@@ -486,10 +508,11 @@
    "claude_outbox": null,
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "contrôle ChatGPT + vérification visuelle",
+   "next_action": "rapport de preuve dédié à publier : captures desktop/mobile + 0 slug technique sur toutes les familles",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-020",
@@ -509,10 +532,11 @@
    "claude_outbox": null,
    "human_gate": "GO après validation de la proposition globale",
    "blocked_by": "—",
-   "next_action": "instruction canonique créée ; attente de validation de la proposition avant implémentation",
+   "next_action": "règle validée par Florian · autorisation RECETTE pour correction minimale, un seul commit isolé",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-021",
@@ -536,10 +560,11 @@
    "claude_outbox": "docs/audit/AUDIT-FONCTIONNEL-SITE-2026-09-26.md",
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "validation de l'architecture cible par Florian, puis REQ-022 (montrer avant de modifier)",
+   "next_action": "clôture possible par le contrôle ; l'audit reste la référence",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": "docs/audit/AUDIT-FONCTIONNEL-SITE-2026-09-26.md — table par URL/composant + PARCOURS-CIBLE",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-022",
@@ -565,10 +590,11 @@
    "claude_outbox": "docs/audit/PROPOSITION-SITE-CIBLE-2026-09-26.md",
    "human_gate": "OUI/NON de Florian avant toute implémentation",
    "blocked_by": "—",
-   "next_action": "validation de Florian écran par écran — pas encore bon pour implémentation",
+   "next_action": "après les deux corrections de formulation (Dunkerque, SEO) ; ne pas implémenter avant validation écran par écran",
    "attempt": 4,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-023",
@@ -591,10 +617,11 @@
    "claude_outbox": "docs/audit/PROPOSITION-SITE-CIBLE-2026-09-26.md §10bis",
    "human_gate": "WAITING_FLORIAN_VISUAL",
    "blocked_by": "—",
-   "next_action": "validation du wireframe, puis implémentation sur GO",
+   "next_action": "besoin validé · autorisation RECETTE pour implémentation isolée APRÈS wireframe · ne pas présenter Calais/Boulogne comme agences · pour Dunkerque, pas d'« antenne » sans preuve",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   },
   {
    "request_id": "REQ-20260926-024",
@@ -618,11 +645,12 @@
    "claude_outbox": "CLAUDE-2026-09-26-REQ-024-DIAGNOSTIC-CARTE-ZONES.md",
    "human_gate": "feu vert avant application (gel + REQ-022)",
    "blocked_by": "—",
-   "next_action": "appliquer le correctif de 3 lignes sur accord",
+   "next_action": "diagnostic accepté · autorisation RECETTE pour le correctif minimal de 3 lignes, preuve avant/après sans défilement",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": null,
-   "note_numerotation": "créée par Claude en parallèle sous le numéro 023 ; renumérotée 024 dès réception de REQ-20260926-023-ZONES-CALAIS-BOULOGNE.md, publiée par ChatGPT. Le contenu métier est inchangé."
+   "note_numerotation": "créée par Claude en parallèle sous le numéro 023 ; renumérotée 024 dès réception de REQ-20260926-023-ZONES-CALAIS-BOULOGNE.md, publiée par ChatGPT. Le contenu métier est inchangé.",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id.",
@@ -634,5 +662,6 @@
   "aucune nouvelle architecture",
   "aucune modification Stripe LIVE",
   "aucune mise en production"
- ]
+ ],
+ "note_cloture": "Claude ne met jamais CLOSED. Le contrôle CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1 autorise la clôture de 002, 007, 008, 009, 016 et 021. REQ-011 est TECH_ACCEPTED « sous réserve » : sa preuve est jointe, mais les 16 liens de cartes restants relèvent de l'audit global et non de cette demande — le contrôle tranche."
 }
