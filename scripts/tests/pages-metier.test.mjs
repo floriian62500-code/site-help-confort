@@ -119,6 +119,23 @@ for (const f of pages) {
 }
 ok(`les ${cartes} cartes savoir-faire mènent toutes à une page existante`, morts.length === 0, morts.join(', '));
 
+// ── 3bis. Les cartes prestations : jamais deux fois la même
+// Né d'une bêtise à moi, le 2026-09-26 : en remplaçant la grille des cartes chauffage, mon motif
+// s'est arrêté trop tôt et les anciennes cartes sont restées sous les nouvelles. La page affichait
+// « Chaudière » deux fois, et la suite complète était verte — parce que personne ne comptait les
+// cartes. Maintenant si.
+for (const f of pages) {
+  const grille = (lire(f).match(/<div class="m-services-grid"[\s\S]*?<div style="text-align:center/) || [''])[0];
+  if (!grille) continue;
+  const titres = [...grille.matchAll(/<h3>([^<]+)<\/h3>/g)].map((m) => m[1].trim());
+  const doublons = titres.filter((x, i) => titres.indexOf(x) !== i);
+  ok(`${f.replace('.html', '')} : aucune carte prestation en double (${titres.length} cartes)`,
+    doublons.length === 0, [...new Set(doublons)].join(', '));
+  const ids = [...grille.matchAll(/<a id="([a-z-]+)"/g)].map((m) => m[1]);
+  ok(`${f.replace('.html', '')} : les ancres de cartes sont uniques (${ids.length})`,
+    new Set(ids).size === ids.length, ids.join(', '));
+}
+
 // ── 4. Le module « parcours » ne revient pas (décision Florian du 2026-09-26)
 // Il avait déjà été demandé une fois. Il était encore là, à l'identique, sur sept pages métier :
 // une bande « Voici comment ça se passe une fois votre demande envoyée » posée juste avant le
