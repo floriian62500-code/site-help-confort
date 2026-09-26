@@ -1445,6 +1445,11 @@
   </div>
 </section>
 <style>
+ /* Boutons du teaser. Ces deux règles sont tout ce qui reste utile du module contrats détaillé
+    retiré le 2026-09-26 : la grille, les cartes, les badges et les prix vivaient avec lui et sont
+    partis avec lui. Recopiées ici à l’identique pour que le rendu ne bouge pas d’un pixel. */
+ .ce-cta{display:inline-flex;justify-content:center;align-items:center;gap:8px;padding:14px 22px;background:#0A1428;color:#fff;border-radius:999px;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .3s ease;margin-top:auto}
+ .ce-cta:hover{background:#1a2742;transform:scale(1.03)}
  /* Teaser contrats : une bande compacte, deux colonnes qui s'empilent au premier resserrement. */
  .ct-teaser{display:flex;align-items:center;gap:26px;max-width:1080px;margin:0 auto;padding:22px 26px;background:#fff;border-radius:20px;box-shadow:0 14px 34px -22px rgba(10,20,40,.22);border:1px solid rgba(255,107,26,.16)}
  .ct-teaser-txt{flex:1;min-width:0}
@@ -1452,8 +1457,8 @@
  .ct-teaser-p{margin:0;color:#475569;line-height:1.6;font-size:.96rem}
  .ct-teaser-actions{display:flex;flex-direction:column;gap:10px;flex-shrink:0}
  .ct-teaser-actions .ce-cta{min-height:48px;padding:12px 22px;white-space:nowrap}
- /* Spécificité : `.ce-cta` est déclarée plus bas dans la page et gagnait à égalité de poids —
-    le bouton secondaire ressortait plein et sombre, donc indistinct du principal. */
+ /* Spécificité : à poids égal avec `.ce-cta`, le bouton secondaire ressortait plein et sombre,
+    donc indistinct du principal. Le sélecteur descendant tranche, quel que soit l’ordre. */
  .ct-teaser-actions .ct-teaser-sec{background:transparent;border:1.5px solid #E55A0C;color:#E55A0C}
  .ct-teaser-actions .ct-teaser-sec:hover{background:rgba(229,90,12,.07)}
  @media (max-width:860px){
@@ -1608,47 +1613,6 @@
  </div>
  </div>
 </section>
-
-<!-- ─── MODULE CONTRATS D'ENTRETIEN — VRAI MODULE (switch Gaz/Fioul/Adoucisseur + features détaillées) ─── -->
-<style>
- .ce-switch{display:flex;gap:6px;padding:6px;background:#f4f7fb;border-radius:999px;max-width:380px;margin:24px auto 36px;border:1px solid rgba(10,20,40,.05)}
- .ce-switch button{flex:1;text-align:center;padding:12px 18px;border-radius:999px;cursor:pointer;font-weight:600;color:#6b7384;transition:all .3s ease;user-select:none;font-size:.92rem;background:transparent;border:0;font-family:inherit}
- .ce-switch button:hover{color:#0A1428}
- .ce-switch button.is-active{background:#0A1428;color:#fff;box-shadow:0 4px 12px rgba(10,20,40,.15)}
- .ce-pane{display:none}
- .ce-pane.is-active{display:block;animation:ceFadeUp .4s ease}
- @keyframes ceFadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
- .ce-grid{display:grid;gap:22px;grid-template-columns:1fr;margin:0 auto;max-width:1100px}
- @media(min-width:768px){.ce-grid{max-width:680px}}@media(min-width:1024px){.ce-grid{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1100px}}
- .ce-grid .ce-grid-single{grid-template-columns:1fr;max-width:680px}
- .ce-card{background:#fff;border:1px solid rgba(10,20,40,.06);border-radius:24px;padding:32px 28px;display:flex;flex-direction:column;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative}
- .ce-card:hover{transform:translateY(-6px);box-shadow:0 30px 60px -20px rgba(10,20,40,.12);border-color:rgba(255,107,26,.25)}
- .ce-card.is-featured{background:linear-gradient(180deg,#fff,#FFF4E8);border:2px solid #FF6B1A;box-shadow:0 18px 40px rgba(255,107,26,.18)}
- .ce-card.is-featured:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 30px 70px rgba(255,107,26,.25)}
- .ce-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#FF6B1A,#E55510);color:#fff;padding:6px 16px;border-radius:999px;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 6px 16px rgba(255,107,26,.4);white-space:nowrap}
- .ce-eyebrow{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:#94a3b8;font-weight:700;margin-bottom:6px}
- .ce-card.is-featured .ce-eyebrow{color:#FF6B1A}
- .ce-card.is-securite .ce-eyebrow{color:#E11D48}
- .ce-name{margin:0 0 18px;font-size:1.5rem;font-weight:800;letter-spacing:-.02em;color:#0A1428}
- .ce-price-block{padding:18px 0;border-top:1px solid rgba(10,20,40,.08);border-bottom:1px solid rgba(10,20,40,.08);margin-bottom:20px}
- .ce-price{font-size:2.4rem;font-weight:900;color:#0A1428;line-height:1;letter-spacing:-.04em}
- .ce-price small{font-size:.85rem;font-weight:500;color:#6b7384;letter-spacing:0}
- .ce-price-year{font-size:.85rem;color:#6b7384;margin-top:4px}
- .ce-baseline{font-size:1rem;color:#475569;margin-bottom:18px;font-weight:500}
- .ce-list{list-style:none;padding:0;margin:0 0 22px;flex-grow:1}
- .ce-list li{padding:8px 0;display:flex;gap:10px;align-items:flex-start;font-size:.94rem;color:#0A1428;border-bottom:1px solid rgba(10,20,40,.04)}
- .ce-list li:last-child{border-bottom:none}
- .ce-list li.yes::before{content:"✓";color:#1aa260;font-weight:800;flex-shrink:0;font-size:1.1rem}
- .ce-list li.no::before{content:"–";color:#cbd5e1;font-weight:800;flex-shrink:0;font-size:1.1rem}
- .ce-list li.no{color:#94a3b8}
- .ce-cta{display:inline-flex;justify-content:center;align-items:center;gap:8px;padding:14px 22px;background:#0A1428;color:#fff;border-radius:999px;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .3s ease;margin-top:auto}
- .ce-cta:hover{background:#1a2742;transform:scale(1.03)}
- .ce-card.is-featured .ce-cta{background:linear-gradient(135deg,#FF6B1A,#E55510);color:#fff}
- .ce-card.is-featured .ce-cta:hover{box-shadow:0 14px 28px rgba(255,107,26,.4)}
- .ce-note{font-size:.78rem;color:#94a3b8;margin-top:12px;line-height:1.4;display:block}
-</style>
-
-
 
 
 <!-- ─── 4. CHANTIERS + AVIS (2 colonnes côte à côte, sans défilement) ─── -->
