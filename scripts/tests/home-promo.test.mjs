@@ -9,22 +9,43 @@ const h = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 let pass = 0, fail = 0;
 const ok = (n, c, d) => { if (c) { pass++; console.log('  ✅', n); } else { fail++; console.log('  ❌', n, d ? '— ' + d : ''); } };
 
-const iRes = h.indexOf('<section id="hc-reservation"'), iEndRes = h.indexOf('</section>', iRes), iMod = h.indexOf('<section class="hc-season" id="entretien-saison"');
-const mod = iMod > 0 ? h.slice(iMod, h.indexOf('</section>', iMod)) : '';
-ok('placé juste après « Que souhaitez-vous faire ? », sans le remplacer', iRes > 0 && iMod > iEndRes && h.slice(iEndRes, iMod).replace(/<!--[\s\S]*?-->/g, '').trim() === '</section>' && /Que souhaitez-vous faire \?/.test(h));
-ok('un seul module (pas de carrousel, pas de fenêtre)', (h.match(/id="entretien-saison"/g) || []).length === 1 && !/carousel|setInterval|popup|modal/i.test(mod));
-// 5812875220 : le bandeau n'envoie plus vers un hub générique ; le client qui clique a déjà dit ce
-// qu'il voulait. Précision du 2026-09-25 (décision de Florian) : la chaudière a une page métier, elle
-// y mène, et le tunnel s'ouvre ensuite depuis cette page. Poêle et ramonage n'ont pas de page
-// dédiée : ils vont directement au tunnel, en devis.
-ok('1 message, 1 bouton principal, 2 entrées secondaires', (mod.match(/<h2\b/g) || []).length === 1 && (mod.match(/class="hcs-cta"/g) || []).length === 1 && (mod.match(/class="hcs-link"/g) || []).length === 2);
-ok('chaudière : mène à la page Chauffage, porte d’entrée métier (décision du 25/09)', /<a class="hcs-cta" href="\/chauffagiste-saint-omer\.html"[^>]*data-hc-promo-fam="chaudiere"/.test(mod));
-ok('poêle / insert : ouvre le tunnel en devis, sujet déjà posé', /href="\/catalogue\.html#devis&amp;sujet=poele-insert&amp;src=home-saison"[^>]*data-hc-promo-fam="poele"/.test(mod));
-ok('ramonage : ouvre le tunnel en devis, sujet déjà posé', /href="\/catalogue\.html#devis&amp;sujet=ramonage&amp;src=home-saison"[^>]*data-hc-promo-fam="ramonage"/.test(mod));
-ok('aucun CTA ne renvoie vers un hub générique ni vers une page intermédiaire', !/href="\/catalogue\.html#(intervention|devis)"/.test(mod) && !/href="\/(entretien-chaudiere|prestations\/ramonage)/.test(mod));
-ok('le bandeau dit ce qui est au prix ferme et ce qui part en devis', /prix ferme en ligne/.test(mod) && /sur devis/.test(mod));
-ok('aucun prix ni téléphone dans le module (source tarifaire : pages dédiées)', !/€|\d+\s?%|tel:|03 66/.test(mod.replace(/<style>[\s\S]*?<\/style>/, '')));
-ok('aucune promesse de délai ni de sécurité inventée', !/sous \d+ ?h|garanti|sécurité|obligatoire|urgent/i.test(mod.replace(/<style>[\s\S]*?<\/style>/, '')));
+// Décision Florian du 2026-09-26 : la relance n'est plus une section du flux, c'est une mise en
+// avant commerciale FLOTTANTE, et ses trois boutons mènent à la page Chauffage. L'enchaînement
+// voulu est : accueil → encart promo → page métier → prestation → tunnel. Ces contrôles disent
+// ce qui doit rester vrai de cet enchaînement, pas la forme d'hier.
+const iMod = h.indexOf('<aside class="hcs-flot" id="entretien-saison"');
+const mod = iMod > 0 ? h.slice(iMod, h.indexOf('</aside>', iMod)) : '';
+const styleFlot = (h.match(/\.hcs-flot\{[^}]*\}/) || [''])[0];
+
+ok('l’encart existe, une seule fois, et ne remplace pas « Que souhaitez-vous faire ? »',
+  !!mod && (h.match(/id="entretien-saison"/g) || []).length === 1 && /Que souhaitez-vous faire \?/.test(h));
+ok('il ne vit plus dans le flux de la page : plus de <section class="hc-season">',
+  !/<section class="hc-season"/.test(h) && /<aside class="hcs-flot"/.test(h));
+ok('il est réellement flottant : position fixe, au-dessus du contenu, et il ne pousse rien',
+  /position:fixed/.test(styleFlot) && /z-index:\d+/.test(styleFlot));
+ok('il ne recouvre pas la fenêtre d’action du bas sur mobile (marge au-dessus de la barre collante)',
+  /@media \(max-width:720px\)\{[^}]*\.hcs-flot\{[^}]*bottom:calc\(84px/.test(h.replace(/\s+/g, '')) || /bottom:calc\(84px \+ env\(safe-area-inset-bottom/.test(h));
+ok('il se ferme, et ne revient pas de la semaine', /data-hcs-fermer/.test(mod) && /hc_promo_saison_ferme/.test(h) && /7 \* 864e5/.test(h));
+ok('il n’apparaît qu’une fois le hero dépassé (une publicité qui recouvre l’accueil est une nuisance)',
+  /window\.innerHeight \* 0\.6/.test(h) && /el\.hidden = false/.test(h));
+
+ok('1 message, 1 bouton principal, 2 entrées secondaires',
+  (mod.match(/<h2\b/g) || []).length === 1 && (mod.match(/class="hcs-cta"/g) || []).length === 1 && (mod.match(/class="hcs-link"/g) || []).length === 2);
+
+// Le cœur de la demande : plus aucun bouton ne part au tunnel, donc plus aucun ne peut retomber
+// sur l'écran « Vous avez une demande en cours ».
+const cibles = [...mod.matchAll(/href="([^"]+)"[^>]*data-hc-promo-fam="([a-z-]+)"/g)].map((m) => ({ href: m[1], fam: m[2] }));
+ok('les trois boutons mènent à la page Chauffage, chacun sur son ancre',
+  cibles.length === 3 && cibles.every((c) => /^\/chauffagiste-saint-omer\.html#[a-z-]+$/.test(c.href)) &&
+  new Set(cibles.map((c) => c.href)).size === 3);
+ok('aucun bouton n’ouvre le tunnel ni un hub générique (c’est la régression corrigée)',
+  !/catalogue\.html#/.test(mod) && !/#devis|#intervention|#entretien&|sujet=/.test(mod));
+ok('les ancres visées existent sur la page Chauffage',
+  cibles.every((c) => fs.readFileSync(path.join(ROOT, 'chauffagiste-saint-omer.html'), 'utf8').includes('id="' + c.href.split('#')[1] + '"')));
+
+ok('aucun prix ni téléphone dans l’encart (source tarifaire : la page métier et le catalogue)', !/€|\d+\s?%|tel:|03 66/.test(mod));
+ok('aucune promesse de délai ni de sécurité inventée', !/sous \d+ ?h|garanti|sécurité|obligatoire|urgent/i.test(mod));
+
 ok('mesure : vue (moitié visible, une fois) et clic par famille, GA4 seulement en production et après consentement', /send\('view_home_maintenance_promo'/.test(h) && /send\('click_home_maintenance_promo', \{ module: 'entretien_saison', service_family: a\.getAttribute\('data-hc-promo-fam'\)/.test(h) && /if \(PROD && typeof window\.hcGtag === 'function'\)/.test(h) && /intersectionRatio >= 0\.5/.test(h));
 ok('carte « entretien » du bloc principal : prix cohérent avec /contrats-entretien (9,90 € TTC, plus de « 9 €/mois » sans HT ni TTC)', /Dès 9,90 € TTC\/mois, chaudière gaz ou fioul\./.test(h) && !/Dès 9 €\/mois/.test(h));
 

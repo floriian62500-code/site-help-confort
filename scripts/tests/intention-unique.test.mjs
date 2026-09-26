@@ -98,7 +98,7 @@ const home = visible('index.html');
 // le 24/09 la landing autonome disparaît ; le 25/09 la chaudière repasse par la page Chauffage,
 // qui redevient la porte d'entrée métier — le tunnel s'ouvre depuis elle, pas depuis l'accueil.
 ok('bandeau d’accueil : le bouton principal mène à la page Chauffage, qui n’est pas une page redirigée',
-  /class="hcs-cta" href="\/chauffagiste-saint-omer\.html"/.test(home) &&
+  /class="hcs-cta" href="\/chauffagiste-saint-omer\.html#/.test(home) &&
   !/hcs-cta" href="\/entretien-chaudiere/.test(home) &&
   !new RegExp('^/chauffagiste-saint-omer(\\.html)?\\s+\\S+\\s+30', 'm').test(redirects));
 ok('depuis la page Chauffage, le tunnel reste accessible pour l’entretien ponctuel',
@@ -121,9 +121,19 @@ const noyau = lire('assets/hc-demande-core.js');
 const tous = [...home.matchAll(/href="([^"]+)"[^>]*data-hc-promo-fam="([a-z-]+)"/g)].map((m) => ({ href: m[1].replace(/&amp;/g, '&'), fam: m[2] }));
 ok(`bandeau : trois boutons, trois destinations distinctes (${tous.map((c) => c.fam).join(', ') || '—'})`,
   tous.length === 3 && new Set(tous.map((c) => c.href)).size === 3);
-ok('bandeau chaudiere : mène à la page Chauffage (décision du 25/09), pas au tunnel',
-  (tous.find((c) => c.fam === 'chaudiere') || {}).href === '/chauffagiste-saint-omer.html');
+// 2026-09-26 : les trois familles mènent à la page Chauffage, chacune sur SON ancre. Le tunnel
+// n'est plus une destination de l'accueil — il s'ouvre depuis une prestation de la page métier.
+ok('bandeau : les trois familles mènent à la page Chauffage, chacune sur son ancre',
+  tous.every((c) => /^\/chauffagiste-saint-omer\.html#[a-z-]+$/.test(c.href)) &&
+  (tous.find((c) => c.fam === 'chaudiere') || {}).href === '/chauffagiste-saint-omer.html#entretien' &&
+  (tous.find((c) => c.fam === 'poele') || {}).href === '/chauffagiste-saint-omer.html#poele-insert' &&
+  (tous.find((c) => c.fam === 'ramonage') || {}).href === '/chauffagiste-saint-omer.html#ramonage');
+ok('les ancres visées existent vraiment sur la page Chauffage',
+  tous.every((c) => lire(CANON_SERVICE).includes('id="' + c.href.split('#')[1] + '"')));
 const ctas = tous.filter((c) => c.href.startsWith('/catalogue.html#')).map((c) => ({ hash: c.href.split('#')[1], fam: c.fam }));
+// Les contrôles qui suivent portaient sur les liens profonds vers le tunnel. Ils n'ont plus de
+// sujet depuis le 26/09, et une boucle vide ne prouve rien : on l'écrit donc noir sur blanc.
+ok('aucun bouton de l’encart ne vise le tunnel (le tunnel s’ouvre depuis la page métier)', ctas.length === 0);
 const sujets = new Set([...tunnel.matchAll(/^\s{4}'?([a-z-]+)'?: \{ (?:libelle|metier):/gm)].map((m) => m[1]));
 const focusConnus = new Set([...noyau.matchAll(/^\s{4}([a-z-]+): \{ libelle:/gm)].map((m) => m[1]));
 for (const c of ctas) {
