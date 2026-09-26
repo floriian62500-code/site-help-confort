@@ -516,7 +516,7 @@
    "request_id": "REQ-20260926-021",
    "title": "Audit fonctionnel complet du site",
    "priority": "P0",
-   "status": "OPEN",
+   "status": "READY_FOR_CONTROL",
    "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-014-FULL-SITE-FUNCTIONAL-AUDIT.md",
    "legacy_instruction_id": "REQ-20260926-014",
    "created_at": "2026-09-26",
@@ -526,13 +526,15 @@
     "aucune implémentation avant validation"
    ],
    "evidence_required": [
-    "rapport outbox dédié"
+    "table d'audit par URL/composant",
+    "table PARCOURS-CIBLE en 5 étapes max",
+    "aucune correction pendant l'audit"
    ],
    "latest_sha": null,
-   "claude_outbox": null,
+   "claude_outbox": "docs/audit/AUDIT-FONCTIONNEL-SITE-2026-09-26.md",
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "à démarrer immédiatement après le contrôle de REQ-016",
+   "next_action": "validation de l'architecture cible par Florian, puis REQ-022 (montrer avant de modifier)",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": null
