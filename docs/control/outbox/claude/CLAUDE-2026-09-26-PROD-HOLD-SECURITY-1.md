@@ -35,8 +35,8 @@ ensuite ce qui touche l'argent, ensuite le reste.**
 | 1 | **fermer l'inscription publique** | 10 secondes, et cela coupe la chaîne « n'importe qui crée un compte → lit tous les secrets » | Florian |
 | 2 | **faire tourner le build hook Netlify** | il est public depuis juin ; le retirer du dépôt ne l'invalide pas | Florian |
 | 3 | **P0-1 webhook Stripe** | c'est le seul risque qui touche directement l'argent encaissé, et le correctif est prêt et testé | Florian |
-| 4 | **P0-4 ** | ferme la lecture des secrets pour de bon (le n°1 ne fait que réduire la surface) | Florian |
-| 5 | **P0-5a  anonyme** | impact nul prouvé, gain immédiat | Florian |
+| 4 | **P0-4 `app_settings`** | ferme la lecture des secrets pour de bon (le n°1 ne fait que réduire la surface) | Florian |
+| 5 | **P0-5a `leads` anonyme** | impact nul prouvé, gain immédiat | Florian |
 | 6 | **P0-3 écritures GitHub** | demande une migration et des secrets, donc un peu de préparation | Florian |
 | 7 | **P0-2 lien de paiement** | demande la migration du montant **et** un arbitrage sur deux pages d'admin | Florian |
 | 8 | **P0-5b bucket photos** | après confirmation de l'état réel des politiques côté Supabase | Florian |
