@@ -119,5 +119,47 @@ for (const f of pages) {
 }
 ok(`les ${cartes} cartes savoir-faire mènent toutes à une page existante`, morts.length === 0, morts.join(', '));
 
+// ── 4. Le module « parcours » ne revient pas (décision Florian du 2026-09-26)
+// Il avait déjà été demandé une fois. Il était encore là, à l'identique, sur sept pages métier :
+// une bande « Voici comment ça se passe une fois votre demande envoyée » posée juste avant le
+// footer, 2 901 octets recopiés page par page. Un contrôle vaut mieux qu'une seconde demande.
+// La recherche porte sur TOUTES les pages publiques, pas seulement les pages métier : le module
+// est arrivé par recopie, il reviendrait par recopie.
+const TOUTES = (function lister(dir, acc = []) {
+  for (const e of readdirSync(join(ROOT, dir), { withFileTypes: true })) {
+    if (['node_modules', '.git', 'docs', 'scripts', 'supabase', 'admin', 'admin-pro'].includes(e.name)) continue;
+    const rel = dir ? dir + '/' + e.name : e.name;
+    if (e.isDirectory()) lister(rel, acc);
+    else if (e.name.endsWith('.html')) acc.push(rel);
+  }
+  return acc;
+})('');
+
+// `hc-contact-journey` / `hcj-*` est un AUTRE composant, sur contact.html, au titre plus court
+// (« Voici comment ça se passe ») : il n'est pas visé par la décision et reste en place tant que
+// Florian ne s'est pas prononcé. Les motifs ci-dessous ne l'attrapent donc pas — c'est voulu.
+const TRACES = ['hc-metier-journey', 'hmj-title', 'hmj-num', 'hmj-lbl', 'hmj-steps',
+                'Voici comment ça se passe une fois votre demande envoyée'];
+const restes = [];
+for (const f of TOUTES) {
+  const c = lire(f);
+  for (const m of TRACES) if (c.includes(m)) restes.push(f + ' : ' + m);
+}
+ok(`aucune trace du module parcours sur les ${TOUTES.length} pages publiques`, restes.length === 0,
+  restes.slice(0, 8).join('\n     '));
+
+// Et son style ne doit pas survivre ailleurs : une règle orpheline est une invitation à recoller
+// le bloc « puisque le CSS est déjà là ».
+const ORPHELINS = [];
+for (const dossier of ['assets', 'partials']) {
+  if (!existsSync(join(ROOT, dossier))) continue;
+  for (const f of readdirSync(join(ROOT, dossier))) {
+    if (!/\.(css|js)$/.test(f)) continue;
+    const c = lire(dossier + '/' + f);
+    if (/hmj-|hc-metier-journey/.test(c)) ORPHELINS.push(dossier + '/' + f);
+  }
+}
+ok('aucun CSS ni JS partagé ne décrit encore ce module', ORPHELINS.length === 0, ORPHELINS.join(', '));
+
 console.log(`\nRÉSULTAT PAGES MÉTIER : ${pass} PASS / ${fail} FAIL\n`);
 process.exit(fail ? 1 : 0);
