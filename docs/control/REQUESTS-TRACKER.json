@@ -774,5 +774,12 @@
  "rollbacks": {
   "REQ-20260926-023": "git revert --no-commit 948f17b9 4af89736 && git commit"
  },
- "gel_visuel": "STOP sur toute modification visuelle tant que Florian n’a pas validé REQ-023 sur la preview. Ordre imposé ensuite : checkpoint validé → REQ-026 → REQ-020 (STOP visuel) → REQ-017 prototype (STOP visuel) → REQ-027 après GO métier."
+ "gel_visuel": "STOP sur toute modification visuelle tant que Florian n’a pas validé REQ-023 sur la preview. Ordre imposé ensuite : checkpoint validé → REQ-026 → REQ-020 (STOP visuel) → REQ-017 prototype (STOP visuel) → REQ-027 après GO métier.",
+ "dernier_controle": {
+  "message_id": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-6",
+  "commit": "0104ac1b7297caf8e5ef7f4088c0f9417333f937",
+  "verdict": "maintien de l’état : 10 points de pilotage vérifiés, 10 conformes, aucun statut modifié",
+  "retour_claude": "CLAUDE-2026-09-26-CONTROL-ALL-REQUESTS-6.md",
+  "lacune_signalee": "aucun CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-5 dans l’inbox : la numérotation saute de 4 à 6 (règle de non-disparition — à confirmer côté contrôle)"
+ }
 }
