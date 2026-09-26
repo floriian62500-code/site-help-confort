@@ -201,7 +201,7 @@ ok('confidentialité : nouvel onglet / nouvel utilisateur (pas de session) → a
 ok('confidentialité : session corrompue ou hostile → valeurs typées uniquement', (() => { const m = C.mergeState(null, { contact: { prenom: { x: 1 }, nom: 'A' }, lieu: { adresse: 12, cp: '62500', lat: 'x' }, desc: 5 }); return m.contact.prenom === '' && m.contact.nom === 'A' && m.lieu.adresse === '12' && m.lieu.lat === null && m.devis.desc === ''; })());
 ok('demande en cours : prestations, métiers ou saisie personnelle ; jamais après envoi', !C.hasDraft(C.emptyState(), 0) && C.hasDraft(C.emptyState(), 1) && C.hasDraft(Object.assign(C.emptyState(), { devis: { metiers: ['Vitrerie'], desc: '' } }), 0) && C.hasDraft(Object.assign({}, back, { sent: null }), 0) && !C.hasDraft(back, 0) && !C.hasDraft(Object.assign(C.emptyState(), { sent: {} }), 3));
 ok('UI : écriture séparée localStorage (brouillon) / sessionStorage (données personnelles), plus aucune écriture de l’état complet', /localStorage\.setItem\(STORE, JSON\.stringify\(parts\.draft\)\)/.test(uiSrc) && /sessionStorage\.setItem\(STORE_PII, JSON\.stringify\(parts\.pii\)\)/.test(uiSrc) && !/localStorage\.setItem\(STORE, JSON\.stringify\(state\)\)/.test(uiSrc));
-ok('UI : lien d’entrée avec demande en cours → écran de choix (Reprendre / Nouvelle demande), jamais de pré-remplissage silencieux', /if \(h\.entry && C\.hasDraft\(state, cart \? cart\.count\(\) : 0\)\) \{ pendingEntry = h; start = 'choix'; \}/.test(uiSrc) && /r\.entry = \(!sm && !!\(raw \|\| cm[^)]*\)\) \|\| raw === 'entretien'/.test(uiSrc) && />Nouvelle demande<\/button>/.test(uiSrc));
+ok('UI : lien d’entrée PORTANT UNE INTENTION avec demande en cours → écran de choix, jamais de pré-remplissage silencieux', /if \(decision === 'gate'\) \{ pendingEntry = h; start = 'choix'; \}/.test(uiSrc) && /r\.entry = \(!sm && !!\(raw \|\| cm[^)]*\)\) \|\| raw === 'entretien'/.test(uiSrc) && />Nouvelle demande<\/button>/.test(uiSrc));
 ok('UI : envoi réussi → identité et adresse retirées de l’état stocké (2 parcours)', (uiSrc.match(/forgetIdentityAfterSend\(\); save\(\);/g) || []).length === 2);
 ok('UI : nouvelle demande (choix de parcours, « Nouvelle demande », « Faire une autre demande ») → état vierge, aucune identité ni adresse recopiée', /if \(state\.sent \|\| C\.hasDraft\(state, cart \? cart\.count\(\) : 0\)\) startClean\(\);/.test(uiSrc) && !/lastIdentity|carryIdentity/.test(uiSrc) && /var entry = pendingEntry; pendingEntry = null; startClean\(\); var to = entry \? applyEntry\(entry\) : 'choix';/.test(uiSrc) && !/var keep = \{ contact: state\.contact/.test(uiSrc));
 ok('UI : « Effacer mes informations » vide l’état, les champs affichés et toutes les clés personnelles de l’appareil', /state = C\.emptyState\(\); pendingEntry = null; clearFields\(\); try \{ C\.purgeDevice\(localStorage, sessionStorage\); \}/.test(uiSrc));
@@ -309,7 +309,7 @@ const tplInputs = [...uiFile.matchAll(/<input\b[^>]*>/g)].map(m => m[0]);
 const skipped = tplInputs.filter(t => /type="(checkbox|radio|hidden|button|submit|reset)"/.test(t));
 ok('champs : chaque champ texte du formulaire (dont Nom à l’étape tarifs) est couvert par le vidage', tplInputs.length >= 12 && skipped.length === 0 && tplInputs.some(t => /id="pg-nom"/.test(t)));
 ok('après envoi : la référence du dossier finalisé est abandonnée (la demande suivante n’est jamais prise pour un doublon)', /function forgetIdentityAfterSend\(\) \{ var e = C\.emptyState\(\); state\.contact = e\.contact; state\.lieu = e\.lieu; state\._cid = null; clearFields\(\); \}/.test(uiFile) && (uiFile.match(/forgetIdentityAfterSend\(\); save\(\);/g) || []).length === 2);
-ok('lien d’entrée sans demande en cours = nouvelle demande → nouvelle référence de dossier', /else \{ if \(h\.entry\) state\._cid = null; start = applyEntry\(h\); \}/.test(uiFile));
+ok('lien d’entrée sans demande en cours = nouvelle demande → nouvelle référence de dossier', /if \(h\.entry\) state\._cid = null; start = applyEntry\(h\); \/\/ nouvelle demande/.test(uiFile));
 ok('accès tarifs : une référence déjà finalisée (ancien brouillon) est abandonnée', /if \(r && r\.duplicate\) state\._cid = null;/.test(uiFile));
 ok('expiration appliquée au chargement ET à chaque réouverture de la fenêtre', /if \(C\.piiExpired\(st, Date\.now\(\)\)\) \{ C\.stripPii\(st\);/.test(uiFile) && /if \(C\.piiExpired\(state, Date\.now\(\)\)\) \{ C\.stripPii\(state\); clearFields\(\);/.test(uiFile) && /try \{ C\.purgeLegacy\(localStorage\); \} catch \(e\) \{\}/.test(uiFile));
 const presta = readFileSync(join(ROOT, 'nos-prestations.html'), 'utf8');
@@ -355,8 +355,36 @@ ok('explicit_intent_overrides_unrelated_draft : l’écran de reprise nomme l’
   /intention \? 'Vous avez une demande en cours'/.test(uiFile));
 
 ok('explicit_intent_survives_resume_gate : l’intention entrante est retenue, pas appliquée en silence, puis appliquée au choix',
-  /if \(h\.entry && C\.hasDraft\(state, cart \? cart\.count\(\) : 0\)\) \{ pendingEntry = h; start = 'choix'; \}/.test(uiFile) &&
+  /if \(decision === 'gate'\) \{ pendingEntry = h; start = 'choix'; \}/.test(uiFile) &&
   /var entry = pendingEntry; pendingEntry = null; startClean\(\); var to = entry \? applyEntry\(entry\) : 'choix';/.test(uiFile));
+
+// ---- CHATGPT-2026-09-26-P0-HOME-INTERVENTION-REGRESSION
+// Depuis l'accueil, « Demander une intervention » (#intervention) retombait sur l'écran générique
+// « Reprendre votre demande ? » dès qu'un vieux brouillon traînait sur l'appareil. Un bouton qui
+// DIT ce qu'il démarre n'a pas à demander la permission. Ce contrôle est permanent, et il échoue
+// contre l'ancien comportement : `entryDecision` n'existait pas, et la règle d'alors envoyait
+// TOUTE entrée sur l'écran de reprise dès qu'un brouillon existait.
+const brouillon = true, rien = false;
+// Contre l'ancien code, `entryDecision` n'existe pas : sans ce garde-fou le test planterait au lieu
+// d'échouer, et un test qui plante ne prouve rien de lisible.
+const decide = (h, d) => (typeof C.entryDecision === 'function' ? C.entryDecision(h, d) : 'gate');
+ok('home_intervention_cta_bypasses_generic_resume_gate : #intervention démarre une intervention, avec ou sans brouillon',
+  decide({ entry: true, mode: 'intervention' }, brouillon) === 'start-new' &&
+  decide({ entry: true, mode: 'intervention' }, rien) === 'apply' &&
+  decide({ entry: true, mode: 'devis' }, brouillon) === 'start-new');
+ok('home_intervention_cta_bypasses_generic_resume_gate : une entrée qui NOMME son intention garde l’écran de reprise',
+  decide({ entry: true, mode: 'devis', sujet: 'ramonage' }, brouillon) === 'gate' &&
+  decide({ entry: true, mode: 'devis', entretien: true }, brouillon) === 'gate' &&
+  decide({ entry: true, cat: 'plomberie' }, brouillon) === 'gate' &&
+  decide({ entry: true, mode: 'intervention', presta: 'entretien-chaudiere' }, brouillon) === 'gate');
+ok('home_intervention_cta_bypasses_generic_resume_gate : la navigation interne (#step=) n’est jamais concernée',
+  decide({ entry: false, step: 'lieu' }, brouillon) === 'apply' && decide(null, brouillon) === 'apply');
+ok('home_intervention_cta_bypasses_generic_resume_gate : l’ancien brouillon est mis de côté, jamais effacé en silence',
+  /if \(decision === 'start-new'\) \{ misDeCote = archiverBrouillon\(\); startClean\(\); \}/.test(uiFile) &&
+  /localStorage\.setItem\(ARCHIVE, JSON\.stringify\(\{ ts: Date\.now\(\), draft: d, cart: c \}\)\)/.test(uiFile) &&
+  /data-reprendre-archive/.test(uiFile) && C.DEVICE_KEYS.local.indexOf('hc_demande_v2_reprise') >= 0);
+ok('home_intervention_cta_bypasses_generic_resume_gate : la mise de côté ne garde aucune donnée personnelle (elle vit en session, 2 h)',
+  !/localStorage\.setItem\(ARCHIVE[^)]*STORE_PII/.test(uiFile) && /ARCHIVE = 'hc_demande_v2_reprise'/.test(uiFile));
 
 ok('new_request_preserves_campaign_intent : démarrer la nouvelle demande applique l’intention ET sa provenance',
   /if \(h\.src\) state\.src = h\.src;/.test(uiFile) &&

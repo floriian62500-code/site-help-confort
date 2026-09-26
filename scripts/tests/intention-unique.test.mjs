@@ -137,8 +137,16 @@ ok('devis sans prestation au catalogue : l’intention est inscrite dans l’ét
   /state\.mode = 'devis'; state\.focus = h\.sujet;/.test(tunnel));
 ok('une intention hors catalogue ne filtre rien : elle ne sert que de trace',
   /if \(!focusConnu\(f\)[\s\S]{0,40}?\) return liste \|\| \[\];/.test(noyau));
-ok('un lien d’entrée avec une demande en cours passe par le choix explicite (jamais de reprise silencieuse)',
-  /if \(h\.entry && C\.hasDraft\(state, cart \? cart\.count\(\) : 0\)\) \{ pendingEntry = h; start = 'choix'; \}/.test(tunnel));
+// Nuance apportée le 2026-09-26 (P0-HOME-INTERVENTION-REGRESSION) : l'écran de choix reste la
+// règle pour les liens qui PORTENT UNE INTENTION — sujet, prestation, métier, contrat. Un lien qui
+// ne fait qu'annoncer un démarrage (#intervention, #devis) démarre, et l'ancienne demande est mise
+// de côté au lieu d'être effacée. Dans les deux cas, rien n'est repris en silence : c'est ce que ce
+// contrôle vérifie.
+ok('un lien d’entrée PORTANT UNE INTENTION avec une demande en cours passe par le choix explicite (jamais de reprise silencieuse)',
+  /if \(decision === 'gate'\) \{ pendingEntry = h; start = 'choix'; \}/.test(tunnel) &&
+  /var decision = C\.entryDecision\(h, C\.hasDraft\(state, cart \? cart\.count\(\) : 0\)\)/.test(tunnel));
+ok('un démarrage explicite ne reprend rien en silence non plus : l’ancienne demande est mise de côté',
+  /if \(decision === 'start-new'\) \{ misDeCote = archiverBrouillon\(\); startClean\(\); \}/.test(tunnel));
 ok('aucun bouton du bandeau ne vise une URL redirigée',
   ctas.every((c) => !new RegExp('^/catalogue(\\.html)?\\s+\\S+\\s+30', 'm').test(redirects)));
 

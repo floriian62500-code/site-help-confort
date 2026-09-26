@@ -63,6 +63,15 @@
 
  <main class="body">
   <div class="stage" id="stage">
+   <!-- Demande mise de côté : rappel non bloquant, affiché seulement après un démarrage explicite
+        qui a trouvé un brouillon (voir entryDecision). Il n'arrête pas le parcours, il dit où est
+        passée la demande précédente et permet de la reprendre. Il est placé DANS la colonne de
+        contenu : `.body` est une grille à deux colonnes, un enfant de plus y déplacerait l'étape. -->
+   <div class="mise-de-cote" id="miseDeCote" hidden>
+    <span class="mdc-txt">Votre demande précédente est conservée sur cet appareil.</span>
+    <button type="button" class="link" data-reprendre-archive>La reprendre</button>
+    <button type="button" class="mdc-x" data-ignorer-archive aria-label="Masquer ce rappel"><svg width="16" height="16" aria-hidden="true"><use href="#i-x"/></svg></button>
+   </div>
 
    <!-- 0 · ENTRÉE -->
    <section class="step" data-step="choix" aria-labelledby="h-choix">
@@ -387,7 +396,7 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var esc = C.esc, app = $('#app');
   var cart = window.HcCart ? window.HcCart.create() : null;
-  var STORE = 'hc_demande_v2', STORE_PII = 'hc_demande_v2_pii';
+  var STORE = 'hc_demande_v2', STORE_PII = 'hc_demande_v2_pii', CART_STORE = 'hc_cart_v1', ARCHIVE = 'hc_demande_v2_reprise';
   var ALL = [], byId = {}, byFam = {}, FAMS = [], loaded = false, loadFailed = false;
   var dvFiles = [];
   function ic(id, s) { s = s || 18; return '<svg width="' + s + '" height="' + s + '" aria-hidden="true"><use href="#' + id + '"/></svg>'; }
@@ -433,6 +442,53 @@
     if (cart) cart.clear(); dvFiles = []; state = C.emptyState(); state._priceGateOk = pg.ok; state._priceGateAt = pg.at;
     try { sessionStorage.removeItem(STORE_PII); } catch (e) {}
     clearFields();
+  }
+  // ── Mettre de côté une demande, plutôt que la perdre ou barrer la route
+  //
+  // Quand un bouton qui dit « Demander une intervention » tombe sur un brouillon vieux de trois
+  // jours, il y a trois façons de faire, et deux sont mauvaises : barrer la route avec un écran de
+  // reprise (ce que nous faisions, et ce que Florian refuse), ou écraser le brouillon en silence.
+  // La troisième : démarrer ce qui est demandé, et ranger l'ancienne demande à portée de main.
+  //
+  // Ce qui est rangé, c'est exactement ce qui vit dans le stockage durable — le brouillon non
+  // personnel et le panier. L'identité, l'adresse et les textes libres vivent en session avec une
+  // durée de vie de 2 h : les archiver plus longtemps que le tunnel lui-même serait une régression
+  // de confidentialité déguisée en service. La reprise restitue donc la demande, pas l'identité.
+  function archiverBrouillon() {
+    try {
+      var d = localStorage.getItem(STORE), c = localStorage.getItem(CART_STORE);
+      if (!d && !c) return false;
+      localStorage.setItem(ARCHIVE, JSON.stringify({ ts: Date.now(), draft: d, cart: c }));
+      return true;
+    } catch (e) { return false; }
+  }
+  function archiveDisponible() {
+    try {
+      var a = JSON.parse(localStorage.getItem(ARCHIVE) || 'null');
+      if (!a || !a.ts || Date.now() - a.ts > 7 * 864e5) return null; // même durée de vie qu'un brouillon
+      return a;
+    } catch (e) { return null; }
+  }
+  function montrerMiseDeCote(v) { var el = $('#miseDeCote'); if (el) el.hidden = !v || !archiveDisponible(); }
+  // Reprise : on remet le stockage dans l'état archivé, puis on relit — pas de chemin de
+  // restauration parallèle à maintenir, c'est le même code qu'au démarrage qui reconstruit l'état.
+  function reprendreArchive() {
+    var a = archiveDisponible(); if (!a) return 'choix';
+    try {
+      if (a.draft) localStorage.setItem(STORE, a.draft); else localStorage.removeItem(STORE);
+      if (a.cart) localStorage.setItem(CART_STORE, a.cart); else localStorage.removeItem(CART_STORE);
+      localStorage.removeItem(ARCHIVE);
+    } catch (e) {}
+    var s = null; try { s = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch (e) {}
+    state = C.mergeState(s && s.v === 2 ? s : null, null);
+    if (root.HcCart) cart = root.HcCart.create();
+    pendingEntry = null; state._entryStep = null;
+    montrerMiseDeCote(false);
+    save();
+    var n = cart ? cart.count() : 0;
+    if (n > 0) { state.mode = 'intervention'; return 'demande'; }
+    if ((state.devis.metiers || []).length) { state.mode = 'devis'; return 'dv-projet'; }
+    return state.step && state.step !== 'choix' && state.step !== 'envoye' ? state.step : (state.mode === 'devis' ? 'dv-metier' : 'lieu');
   }
   // Après envoi : plus aucune donnée personnelle dans l'état (le récapitulatif reste dans l'onglet), dossier clos → la demande
   // suivante aura sa propre référence (jamais celle d'un dossier finalisé, qui serait traitée comme un doublon)
@@ -516,6 +572,7 @@
     app.setAttribute('data-step', target); app.setAttribute('data-mode', state.mode || '');
     $$('.step').forEach(function (s) { var on = s.getAttribute('data-step') === target; s.classList.toggle('is-active', on); s.classList.toggle('is-back', on && !!o.back); });
     renderKickers(target);
+    if (!o.initial) montrerMiseDeCote(false); // le rappel accompagne la première étape, pas tout le parcours
     if (ENTER[target]) ENTER[target](o);
     renderProgress(target); renderRecap();
     $('#topBack').hidden = !C.prevStep(state.mode, target);
@@ -626,6 +683,16 @@
     else if ((state.devis.metiers || []).length) label = 'Devis ' + state.devis.metiers.join(', ') + ((state.devis.photos || 0) > 0 && !dvFiles.length ? ' · photos à rajouter' : '');
     else if (!state.sent && state.mode && C.lieuValid(state.lieu)) label = state.mode === 'devis' ? 'Demande de devis' : "Demande d'intervention";
     if (!label && C.hasDraft(state, n)) label = state.mode === 'devis' ? 'Demande de devis commencée' : 'Demande commencée';
+    // Aucune demande en cours, mais une demande mise de côté par un démarrage explicite : c'est ici,
+    // sur l'écran d'entrée, que le client peut la reprendre — parce qu'ici il le demande vraiment.
+    var mdc = !label && archiveDisponible();
+    if (mdc) {
+      box.hidden = false;
+      box.innerHTML = '<span class="resume-txt"><strong>Demande mise de côté</strong><span>Conservée sur cet appareil</span></span>'
+        + '<button type="button" class="btn-soft" data-reprendre-archive>Reprendre ' + ic('i-arrow', 16) + '</button>';
+      $('#h-choix').innerHTML = 'Comment <span class="nw">pouvons-nous</span> vous aider&nbsp;?';
+      return;
+    }
     box.hidden = !label;
     var resumeOnly = !!pendingEntry && !!label, sc = $('.step[data-step="choix"]');
     if (sc) sc.classList.toggle('is-resume', resumeOnly);
@@ -1222,6 +1289,8 @@
     if ((el = t.closest('[data-dvm]'))) return toggleMetier(el);
     if ((el = t.closest('[data-nature]'))) { var nv = el.getAttribute('data-nature'); state.devis.nature = state.devis.nature === nv ? null : nv; save(); return $$('#natureOpts [data-nature]').forEach(function (b) { b.setAttribute('aria-checked', String(b.getAttribute('data-nature') === state.devis.nature)); }); }
     if ((el = t.closest('[data-switch-devis]'))) return switchToDevis(state.fam, false);
+    if ((el = t.closest('[data-reprendre-archive]'))) { return go(reprendreArchive()); }
+    if ((el = t.closest('[data-ignorer-archive]'))) { montrerMiseDeCote(false); return; } // masqué, jamais supprimé : la demande reste reprenable depuis l'écran d'accueil du module
     if ((el = t.closest('[data-forget]'))) { if (cart) cart.clear(); dvFiles = []; state = C.emptyState(); pendingEntry = null; clearFields(); try { C.purgeDevice(localStorage, sessionStorage); } catch (e2) {} toast('Informations effacées de cet appareil'); return go('choix'); }
     if ((el = t.closest('[data-open-sheet]'))) return openSheet(el);
     if ((el = t.closest('[data-close-sheet]'))) return closeSheet();
@@ -1334,12 +1403,21 @@
     // Nouvelle demande depuis un lien d'entrée après un envoi : le récapitulatif précédent est purgé de l'onglet
     if (h.entry && state.sent) startClean();
     pendingEntry = null; // jamais d'entrée périmée d'une ouverture précédente
-    if (h.entry && C.hasDraft(state, cart ? cart.count() : 0)) { pendingEntry = h; start = 'choix'; }
-    else { if (h.entry) state._cid = null; start = applyEntry(h); } // nouvelle demande → nouvelle référence de dossier
+    // « Demander une intervention » démarre une intervention : un lien qui dit ce qu'il démarre ne
+    // repasse plus par l'écran générique de reprise (régression du 2026-09-26). Les entrées qui
+    // portent une intention nommée (#cat=, presta=, sujet=, entretien) gardent cet écran : là, le
+    // client gagne à voir les deux demandes côte à côte.
+    var decision = C.entryDecision(h, C.hasDraft(state, cart ? cart.count() : 0)), misDeCote = false;
+    if (decision === 'gate') { pendingEntry = h; start = 'choix'; }
+    else {
+      if (decision === 'start-new') { misDeCote = archiverBrouillon(); startClean(); } // rien n'est effacé en silence
+      if (h.entry) state._cid = null; start = applyEntry(h); // nouvelle demande → nouvelle référence de dossier
+    }
     if (h.entry && !pendingEntry) state._entryStep = start; // lien explicite : « retour » depuis cette étape = page d'origine
     else if (!location.hash) state._entryStep = null; // entrée générique volontaire : l'écran de choix est l'étape précédente
     save();
     go(start, { replace: true, initial: true });
+    if (misDeCote) montrerMiseDeCote(true);
     return h;
   }
   addLightAssure();

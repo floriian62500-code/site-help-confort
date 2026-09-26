@@ -377,6 +377,31 @@
   }
   // Demande en cours non envoyée (prestations, métiers de devis ou saisie personnelle) → reprise EXPLICITE uniquement
   function hasDraft(st, cartCount) { return !!st && !st.sent && ((cartCount || 0) > 0 || ((st.devis && st.devis.metiers) || []).length > 0 || hasPii(st)); }
+  // ── Que faire quand un lien d'entrée arrive alors qu'une demande est déjà commencée ?
+  //
+  // Régression constatée par Florian le 2026-09-26 : depuis l'accueil, « Demander une intervention »
+  // (#intervention) rouvrait l'écran générique « Reprendre votre demande ? » dès qu'un vieux
+  // brouillon Plomberie traînait sur l'appareil. Un bouton qui DIT ce qu'il démarre n'a pas à
+  // demander la permission de le démarrer.
+  //
+  // La règle distingue deux natures de liens :
+  //   · l'entrée NOMME son intention (#cat=, presta=, sujet=, entretien) → l'écran de reprise garde
+  //     son sens : le client voit ce qu'il vient de demander ET ce qu'il avait commencé ;
+  //   · l'entrée EST un démarrage explicite (#intervention, #devis) → on démarre. L'ancien
+  //     brouillon n'est pas perdu pour autant : l'appelant le met de côté (voir hc-demande.js).
+  function startExplicite(h) {
+    if (!h || !h.entry) return false;
+    if (h.cat || h.presta || h.sujet || h.entretien) return false;
+    return h.mode === 'intervention' || h.mode === 'devis';
+  }
+  // 'apply'     : appliquer l'entrée telle quelle (rien en cours, ou navigation interne)
+  // 'start-new' : démarrer la demande annoncée, après avoir mis l'ancienne de côté
+  // 'gate'      : écran de reprise — réservé aux entrées qui ne disent pas ce qu'elles démarrent
+  function entryDecision(h, brouillonEnCours) {
+    if (!h || !h.entry || !brouillonEnCours) return 'apply';
+    return startExplicite(h) ? 'start-new' : 'gate';
+  }
+
   // Durée de vie des données personnelles sur l'appareil : 2 h sans activité, même onglet ouvert
   // (un navigateur peut restaurer la session d'un onglet après redémarrage). Au-delà : effacées, seul le brouillon non personnel reste.
   var PII_TTL_MS = 2 * 60 * 60 * 1000;
@@ -393,7 +418,7 @@
   // « Effacer mes informations de cet appareil » : toutes les clés du site pouvant contenir une donnée personnelle ou une demande
   // (module actuel + anciens formulaires + historique de l'assistant). Le choix cookies (hc-consent) est conservé.
   var DEVICE_KEYS = {
-    local: ['hc_demande_v2', 'hc_cart_v1', 'hc_lead_v1', 'hc_chat_history', 'hc_chat_session_id'],
+    local: ['hc_demande_v2', 'hc_demande_v2_reprise', 'hc_cart_v1', 'hc_lead_v1', 'hc_chat_history', 'hc_chat_session_id'],
     localPrefixes: ['hc_tarif_lead_'],
     session: ['hc_demande_v2_pii', 'hc_pg', 'hc_fs_intervention', 'hc_fs_devis', 'hc_utm', 'hc_referrer', 'hc_sid', 'hc_lead_v1', 'hc_wizard_prefill']
   };
@@ -462,6 +487,7 @@
     lineLabel: lineLabel, interventionPayload: interventionPayload, devisPayload: devisPayload, gatePayload: gatePayload, refFromId: refFromId, simulationAllowed: simulationAllowed,
     trackDecision: trackDecision, trackParams: trackParams, attributionFrom: attributionFrom,
     splitState: splitState, mergeState: mergeState, hasPii: hasPii, hasDraft: hasDraft,
+    startExplicite: startExplicite, entryDecision: entryDecision,
     PII_TTL_MS: PII_TTL_MS, piiExpired: piiExpired, stripPii: stripPii, DEVICE_KEYS: DEVICE_KEYS, purgeDevice: purgeDevice, purgeLegacy: purgeLegacy,
     maintenanceSrc: maintenanceSrc, serviceFamily: serviceFamily };
 });

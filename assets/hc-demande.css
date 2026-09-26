@@ -630,3 +630,18 @@
 /* ===== REPRISE SUR LIEN D'ENTRÉE (19/09/2026) : avec une demande en cours, un lien explicite (accueil, page d'atterrissage)
    n'affiche que « Reprendre / Nouvelle demande », jamais la grille générique « Intervention / Devis ». ===== */
 .hcd .step[data-step="choix"].is-resume .choix-grid,.hcd .step[data-step="choix"].is-resume .lede{display:none}
+
+/* Demande mise de côté — rappel non bloquant affiché sous l'en-tête du module, le temps de la
+   première étape. Il dit où est passée la demande précédente ; il n'arrête rien, ne recouvre rien
+   et ne pousse pas la page : il prend sa place dans le flux, au-dessus de l'étape.
+   Toutes les règles sont préfixées .hcd : le module se monte en surcouche sur n'importe quelle
+   page du site, une règle nue finirait par styler autre chose. */
+.hcd .stage > .mise-de-cote{margin:0 0 12px}
+.hcd .mise-de-cote{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;max-width:980px;margin:10px auto 0;padding:10px 14px;border:1px solid #FFD9B8;background:#FFF7EF;border-radius:12px;font-size:.92rem;color:#7A4A16}
+.hcd .mise-de-cote[hidden]{display:none}
+.hcd .mise-de-cote .mdc-txt{flex:1 1 auto;min-width:0}
+.hcd .mise-de-cote .link{color:#C2410C;font-weight:700;text-decoration:underline;text-underline-offset:3px;background:none;border:0;cursor:pointer;font:inherit;padding:6px 2px}
+.hcd .mise-de-cote .mdc-x{flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;border:0;background:transparent;color:#9A6434;cursor:pointer}
+.hcd .mise-de-cote .mdc-x:hover{background:rgba(194,65,12,.10);color:#7A4A16}
+.hcd .mise-de-cote .link:focus-visible,.hcd .mise-de-cote .mdc-x:focus-visible{outline:3px solid #C2410C;outline-offset:2px}
+@media (max-width:560px){.hcd .mise-de-cote{margin:8px 12px 0;font-size:.88rem}}
