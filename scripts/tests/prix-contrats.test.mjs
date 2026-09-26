@@ -120,9 +120,14 @@ ok('le délai annoncé pour la formule CONFORT est le même partout', delais.siz
 // endroit décrit les formules.
 const CHAUFFAGISTES = ['chauffagiste-saint-omer.html', 'chauffagiste-dunkerque.html',
                        'chauffagiste-calais.html', 'chauffagiste-boulogne-sur-mer.html'];
-const teaserDe = (f) => (texte(f).match(/<section[^>]*m-contrats-teaser[\s\S]*?<\/section>/) || [''])[0];
+// 2026-09-26, deuxième passe : Florian trouve le teaser trop discret. Il devient une section
+// premium — fond sombre, prix d'appel en grand, badges des trois formules, action principale
+// dominante. Ce que le contrôle vérifie n'est pas l'esthétique, c'est ce qui doit rester vrai :
+// la section existe, elle NOMME sans décrire, elle mène à la page qui décrit, elle n'écrit qu'un
+// repère de prix, et son action principale est visuellement dominante.
+const teaserDe = (f) => (texte(f).match(/<section[^>]*m-contrats-premium[\s\S]*?<\/section>/) || [''])[0];
 
-ok(`les pages chauffagiste portent toutes le teaser contrats (${CHAUFFAGISTES.length})`,
+ok(`les pages chauffagiste portent toutes la section contrats (${CHAUFFAGISTES.length})`,
   CHAUFFAGISTES.every((f) => !!teaserDe(f)), CHAUFFAGISTES.filter((f) => !teaserDe(f)).join(', '));
 
 for (const f of CHAUFFAGISTES) {
@@ -131,6 +136,16 @@ for (const f of CHAUFFAGISTES) {
     ['BASIC', 'CONFORT', 'SÉCURITÉ'].every((n) => t.includes(n)));
   ok(`${f.replace('.html', '')} : il mène à la page qui, elle, détaille`,
     /href="contrats-entretien\.html"/.test(t));
+  // « Le CTA principal doit être dominant » : il l'est par sa surface (hauteur minimale et
+  // remplissage), par sa couleur pleine, et parce que la sortie secondaire n'est qu'un contour.
+  const src = texte(f);
+  ok(`${f.replace('.html', '')} : l’action principale domine visuellement la sortie secondaire`,
+    /\.ctp-cta\{[^}]*min-height:58px/.test(src) && /\.ctp-cta\{[^}]*background:linear-gradient\(135deg,#E55A0C/.test(src) &&
+    /\.ctp-lien\{[^}]*min-height:44px/.test(src) && /\.ctp-lien\{[^}]*border:1\.5px solid/.test(page));
+  ok(`${f.replace('.html', '')} : la section tranche sur la page (fond sombre, seul bloc de ce contraste en haut)`,
+    /\.ctp\{[^}]*background:linear-gradient\(135deg,#0A1428/.test(src));
+  ok(`${f.replace('.html', '')} : les trois formules sont montrées comme des repères, pas comme des cartes`,
+    (teaserDe(f).match(/class="ctp-badge/g) || []).length === 3);
   // Le point de la décision du 26/09 : plus aucune reprise des cartes et de leurs garanties.
   ok(`${f.replace('.html', '')} : aucune carte détaillée recopiée depuis la page contrats`,
     !/class="ce-card|class="formula-card/.test(page) && !/Tout BASIC inclus|Tout CONFORT inclus/.test(page));
