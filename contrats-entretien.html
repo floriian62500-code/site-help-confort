@@ -34,7 +34,6 @@
 .contracts-hero .lead{font-size:clamp(1.02rem,1.3vw,1.15rem);color:#475569;max-width:680px;line-height:1.55;margin:0 0 22px}
 .ct-cta{display:inline-flex;align-items:center;gap:8px;padding:14px 24px;background:#0A1428;color:#fff;border-radius:999px;text-decoration:none;font-weight:700;font-size:.98rem;transition:background .2s ease}
 .ct-cta:hover{background:#1a2742}
-.ct-link{display:inline-flex;align-items:center;padding:14px 8px;color:#0A1428;font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .ct-h2{font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.15;letter-spacing:-.025em;font-weight:800;margin:0 0 6px;text-align:center}
 .ct-offers{padding:36px 0 48px;scroll-margin-top:96px}
 .energy-switch{display:flex;gap:6px;padding:6px;background:#f4f7fb;border-radius:999px;max-width:380px;margin:22px auto 34px;border:1px solid rgba(10,20,40,.05)}
@@ -82,10 +81,8 @@
 .ct-why-list span{display:block;font-size:.92rem;color:#475569;line-height:1.5}
 .ct-faq{padding:44px 0}
 .contracts-faq{max-width:780px;margin:22px auto 0}
-.ct-final{padding:40px 0 56px;text-align:center}
-.ct-final h2{margin-bottom:8px}
-.ct-final p{color:#475569;margin:0 auto 18px;max-width:560px}
-.ct-final-actions{display:flex;gap:10px 18px;justify-content:center;align-items:center;flex-wrap:wrap}
+.ct-renvois{padding:40px 0 56px;text-align:center}
+.ct-renvois p{color:#475569;margin:0 auto 18px;max-width:560px}
 </style>
 
 <style>
@@ -478,15 +475,13 @@
  </div>
 </section>
 
-<!-- ============ ACTION FINALE ============ -->
-<section class="ct-final" aria-labelledby="finalTitle">
+<!-- ============ RENVOIS ============
+     Le bloc d'appel à l'action qui fermait la page (titre, phrase de rappel, bouton vers les
+     formules et lien « être rappelé ») a été retiré le 2026-09-26 sur décision de Florian : il
+     répétait l'action déjà offerte par le hero et par chaque formule. Ne reste que ce paragraphe
+     de renvois, qui ne demande rien et sert au visiteur qui n'a pas besoin d'un contrat. -->
+<section class="ct-renvois" aria-label="Autres options d'entretien">
  <div class="container">
- <h2 class="ct-h2" id="finalTitle">Une question avant de souscrire ?</h2>
- <p>L'agence vous rappelle pour choisir la formule adaptée à votre équipement.</p>
- <div class="ct-final-actions">
- <a href="#formules" class="ct-cta" data-hc-cta="contrats_final_formules">Choisir ma formule</a>
- <a href="contact.html?presta=Contrat+d%27entretien&amp;objet=Question+sur+un+contrat#form" class="ct-link" data-hc-cta="contrats_final_rappel">Être rappelé</a>
- </div>
     <p class="ct-ailleurs" style="margin:18px 0 0;font-size:.9rem;color:#6b7384;line-height:1.7"> Pas encore sûr d'avoir besoin d'un contrat ? Voir <a href="/catalogue.html#cat=chauffage&amp;presta=entretien&amp;src=contrats-ailleurs">l'entretien de chaudière à l'intervention</a>, le <a href="/prestations/ramonage.html">ramonage et l'entretien poêle / insert</a>, ou <a href="/guide-entretien-chaudiere.html">ce que dit la loi</a>.</p>
  </div>
 </section>

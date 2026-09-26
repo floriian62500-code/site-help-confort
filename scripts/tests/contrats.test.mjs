@@ -37,10 +37,20 @@ ok('conditions : TVA expliquée (10 % particulier, logement de plus de 2 ans ; 2
 
 // ---- 3. Page courte : hero (1 action) → formules → 3 raisons → FAQ → action finale
 const sections = (main.match(/<section\b/g) || []).length;
-ok('page courte : 5 sections (hero, formules, raisons, FAQ, action finale), une seule h1', sections === 5 && (h.match(/<h1\b/g) || []).length === 1, sections + ' sections');
+ok('page courte : 5 sections (hero, formules, raisons, FAQ, renvois), une seule h1', sections === 5 && (h.match(/<h1\b/g) || []).length === 1, sections + ' sections');
 ok('hero : une seule action (vers les formules)', (main.slice(0, main.indexOf('id="formules"')).match(/<a\b[^>]*class="ct-cta"/g) || []).length === 1 && /href="#formules" class="ct-cta" data-hc-cta="contrats_hero"/.test(h));
 ok('3 raisons, sans répétition de la grille', ((h.match(/<ul class="ct-why-list">[\s\S]*?<\/ul>/) || [''])[0].match(/<li>/g) || []).length === 3);
-ok('action finale : 2 choix (formules, être rappelé), pas de téléphone répété (déjà dans l’en-tête)', /data-hc-cta="contrats_final_formules"/.test(h) && /data-hc-cta="contrats_final_rappel"/.test(h) && !/href="tel:/.test(main));
+// La page ne se ferme plus par un appel à l'action (décision Florian du 2026-09-26) : le bloc
+// « une question avant de souscrire » répétait ce que le hero et chaque formule proposent déjà.
+// Ce qui doit rester vrai : l'action existe toujours, mais une seule fois par endroit utile, et
+// le paragraphe de renvois — la seule sortie pour qui n'a pas besoin d'un contrat — survit.
+ok('la page ne se ferme plus par un appel à l’action redondant', !/contrats_final_formules|contrats_final_rappel|ct-final/.test(h) && !/Une question avant de souscrire/.test(h));
+ok('l’action reste offerte là où elle sert : le hero et chaque formule', /data-hc-cta="contrats_hero"/.test(h) && /data-hc-cta="contrats_souscrire_\$\{escapeHtml\(o\.slug \|\| ''\)\}"/.test(h));
+ok('pas de téléphone répété dans le corps (il est déjà dans l’en-tête)', !/href="tel:/.test(main));
+const renvois = (h.match(/<p class="ct-ailleurs"[\s\S]*?<\/p>/) || [''])[0];
+ok('le paragraphe de renvois survit, avec ses trois sorties (intervention, ramonage, la loi)',
+  /catalogue\.html#cat=chauffage&amp;presta=entretien/.test(renvois) && /prestations\/ramonage\.html/.test(renvois) && /guide-entretien-chaudiere\.html/.test(renvois));
+ok('aucune règle de style orpheline laissée par le bloc retiré', !/\.ct-final|\.ct-link\{/.test(h));
 ok('plus de section « labels » ni de note interne affichée au public', !/HC-LABELS|Note pour la mise en ligne|hc-labels/.test(h));
 
 // ---- 4. Promesses exactes (catalogue : la priorité n'existe qu'en fioul ; délai garanti dès CONFORT)
