@@ -66,7 +66,7 @@
    <!-- Demande mise de côté : rappel non bloquant, affiché seulement après un démarrage explicite
         qui a trouvé un brouillon (voir entryDecision). Il n'arrête pas le parcours, il dit où est
         passée la demande précédente et permet de la reprendre. Il est placé DANS la colonne de
-        contenu : `.body` est une grille à deux colonnes, un enfant de plus y déplacerait l'étape. -->
+        contenu : la zone « body » est une grille à deux colonnes, un enfant de plus y déplacerait l'étape. -->
    <div class="mise-de-cote" id="miseDeCote" hidden>
     <span class="mdc-txt">Votre demande précédente est conservée sur cet appareil.</span>
     <button type="button" class="link" data-reprendre-archive>La reprendre</button>

@@ -358,6 +358,28 @@ ok('explicit_intent_survives_resume_gate : l’intention entrante est retenue, p
   /if \(decision === 'gate'\) \{ pendingEntry = h; start = 'choix'; \}/.test(uiFile) &&
   /var entry = pendingEntry; pendingEntry = null; startClean\(\); var to = entry \? applyEntry\(entry\) : 'choix';/.test(uiFile));
 
+// ---- Le module se charge-t-il, tout simplement ?
+// Contrôle né d'une bêtise à moi, le 2026-09-26 : un accent grave écrit dans un commentaire HTML
+// **à l'intérieur du gabarit** (un littéral gabarit, donc délimité par des accents graves) a fermé
+// la chaîne au milieu. Le fichier restait syntaxiquement valide — `node --check` disait OK — mais
+// le gabarit devenait un appel de fonction et la page du tunnel s'affichait blanche.
+// La leçon : vérifier que ça compile ne dit pas que ça se charge. Ici, on le charge.
+{
+  const el = () => ({ style: {}, classList: { add() {}, remove() {}, toggle() {}, contains: () => false }, setAttribute() {}, getAttribute: () => null, appendChild() {}, addEventListener() {}, querySelector: () => null, querySelectorAll: () => [], insertAdjacentHTML() {}, focus() {}, remove() {} });
+  const bac = { document: { querySelector: () => null, querySelectorAll: () => [], getElementById: () => null, createElement: el, addEventListener() {}, documentElement: el(), body: el() },
+    localStorage: { getItem: () => null, setItem() {}, removeItem() {} }, sessionStorage: { getItem: () => null, setItem() {}, removeItem() {} },
+    location: { hash: '', hostname: 'localhost', pathname: '/', search: '' }, history: { replaceState() {}, pushState() {} }, navigator: {},
+    setTimeout, clearTimeout, addEventListener() {}, removeEventListener() {}, matchMedia: () => ({ matches: false, addEventListener() {} }),
+    fetch: () => Promise.resolve({ ok: false, json: () => Promise.resolve([]) }) };
+  bac.window = bac; bac.self = bac;
+  let charge = '';
+  try { vm.runInNewContext(uiFile, bac, { timeout: 5000 }); } catch (e) { charge = e.message; }
+  ok('le module se charge sans lever d’erreur, et publie son interface', !charge && typeof bac.HcDemande === 'object', charge);
+  // Et la cause précise, nommée : aucun accent grave ni interpolation dans le gabarit.
+  const gabarit = uiFile.slice(uiFile.indexOf('var TPL = `') + 11, uiFile.indexOf('`;', uiFile.indexOf('var TPL = `')));
+  ok('aucun accent grave ni ${…} dans le gabarit (ils y fermeraient la chaîne)', !gabarit.includes('`') && !gabarit.includes('${'));
+}
+
 // ---- CHATGPT-2026-09-26-P0-HOME-INTERVENTION-REGRESSION
 // Depuis l'accueil, « Demander une intervention » (#intervention) retombait sur l'écran générique
 // « Reprendre votre demande ? » dès qu'un vieux brouillon traînait sur l'appareil. Un bouton qui
