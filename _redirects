@@ -1,32 +1,130 @@
+# SÉCURITÉ : ne jamais servir les fichiers internes (suivi control-plane, docs/audits, scripts, sources edge/SQL)
+/docs/*      /404.html 404!
+/scripts/*   /404.html 404!
+/supabase/*  /404.html 404!
+/partials/*  /404.html 404!
+# SÉCURITÉ (#9 T8) : pages admin manipulant un PAT GitHub / la promotion prod côté client
+# étaient publiquement accessibles (HTTP 200) → bloquées. Si besoin d'y accéder : passer par une
+# authentification (Netlify Identity / mot de passe), pas par une URL publique.
+/admin-pro/valider-staging.html  /404.html 404!
+/admin-pro/photos.html           /404.html 404!
+
+# SECURITE (audit du 2026-09-25) : le site est publie depuis la RACINE du depot (netlify.toml,
+# publish = "."). Tout fichier suivi est donc servi, sauf regle ci-dessous. Le `ignore` de
+# netlify.toml ne protege rien : il decide seulement s'il faut reconstruire.
+# Dossiers internes : outils de deploiement, journaux d'audit, workflows, back-office non-HTML.
+/tools/*              /404.html 404!
+/logs/*               /404.html 404!
+/.github/*            /404.html 404!
+/.autopush/*          /404.html 404!
+/secrets/*            /404.html 404!
+/admin/*              /404.html 404!
+/admin-pro/audits/*   /404.html 404!
+/admin-pro/scripts/*  /404.html 404!
+/admin-pro/comm-packs/* /404.html 404!
+
+# Notes de travail et procedures d'exploitation a la racine : elles decrivent l'architecture, les
+# incidents et les noms de secrets. Rien d'exploitable directement, mais rien a faire en public.
+/CLAUDE.md            /404.html 404!
+/CLAUDE-AUTONOME.md   /404.html 404!
+/POUR-FLORIAN.md      /404.html 404!
+/BUGS-HISTORY.md      /404.html 404!
+/TODO.md              /404.html 404!
+/ALERTES.md           /404.html 404!
+/CONTEXTE-ACTIF.md    /404.html 404!
+/AUDIT-COMPLET-2026-05-28.md /404.html 404!
+/SETUP-AUTO-DEPLOY.md /404.html 404!
+/SETUP-EMAIL-RESEND.md /404.html 404!
+/SETUP-API-FACEBOOK.md /404.html 404!
+/CONFIG-PUSH-NOTIFICATIONS.md /404.html 404!
+/GOOGLE-ADS-SETUP.md  /404.html 404!
+/MAIL-APOGEE-API.md   /404.html 404!
+/_PROMPT-MODE-BATCH.md /404.html 404!
+/_gen_blog_articles.py /404.html 404!
+/_gen_seo_pages.py    /404.html 404!
+/.env.example         /404.html 404!
+
 # Sitemap dynamique servi par Edge Function Supabase
-/sitemap.xml https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sitemap 200
+/sitemap.xml https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sitemap 200!
+
+
+# Landing entretien chaudiere supprimee le 2026-09-24 (decision Florian, CHATGPT-2026-09-24-P0-
+# REMOVE-ENTRETIEN-LANDING) : l'entretien se presente sur la page Chauffage, les contrats sur
+# /contrats-entretien.html, la demande passe par le tunnel. L'URL etait EN LIGNE en production et
+# PRESENTE DANS LE SITEMAP : sans cette regle, sa suppression ferait un 404 sur une URL indexee.
+# La regle voyage donc dans le meme lot que la suppression -- elle ne prend effet en production
+# qu'au moment ou Florian livre ce lot, pas avant.
+/entretien-chaudiere.html /chauffagiste-saint-omer.html 301!
+/entretien-chaudiere /chauffagiste-saint-omer.html 301!
+
+
+# Doublon SEO actualités ↔ réalisations (5778526407 §3) : une publication chantier = UNE URL.
+# La fiche /realisations/<slug> est canonique ; l'ancienne actualité y renvoie définitivement.
+# « ! » = la redirection l'emporte sur le fichier statique encore présent dans le dépôt.
+# Les actualités qui ne sont pas des chantiers (conseils, guides, vie de l'agence) ne sont pas touchées.
+/actualites/2026-01-07-votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-c.html /realisations/votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-correctement 301!
+/actualites/2026-01-07-votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-c /realisations/votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-correctement 301!
+/actualites/2026-02-11-cellier-travaux-de-plafond-reparation-peinture-de-finition.html /realisations/cellier-travaux-de-plafond-reparation-peinture-de-finition 301!
+/actualites/2026-02-11-cellier-travaux-de-plafond-reparation-peinture-de-finition /realisations/cellier-travaux-de-plafond-reparation-peinture-de-finition 301!
+/actualites/2026-03-03-votre-insert-gaz-presente-un-vitrage-fissure-terni-ou-endomm.html /realisations/votre-insert-gaz-presente-un-vitrage-fissure-terni-ou-endommage 301!
+/actualites/2026-03-03-votre-insert-gaz-presente-un-vitrage-fissure-terni-ou-endomm /realisations/votre-insert-gaz-presente-un-vitrage-fissure-terni-ou-endommage 301!
+/actualites/2026-03-12-votre-double-vitrage-dans-la-salle-a-manger-est-fissure-embu.html /realisations/votre-double-vitrage-dans-la-salle-a-manger-est-fissure-embue-ou-moins-isolant 301!
+/actualites/2026-03-12-votre-double-vitrage-dans-la-salle-a-manger-est-fissure-embu /realisations/votre-double-vitrage-dans-la-salle-a-manger-est-fissure-embue-ou-moins-isolant 301!
+/actualites/2026-03-17-votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite.html /realisations/votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite-a-un-bris-de-glace 301!
+/actualites/2026-03-17-votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite /realisations/votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite-a-un-bris-de-glace 301!
+/actualites/2026-04-08-votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le.html /realisations/votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le-temps 301!
+/actualites/2026-04-08-votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le /realisations/votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le-temps 301!
+/actualites/2026-04-14-votre-soupape-de-securite-ou-votre-manometre-est-defectueux.html /realisations/votre-soupape-de-securite-ou-votre-manometre-est-defectueux-use-ou-ne-fonctionne 301!
+/actualites/2026-04-14-votre-soupape-de-securite-ou-votre-manometre-est-defectueux /realisations/votre-soupape-de-securite-ou-votre-manometre-est-defectueux-use-ou-ne-fonctionne 301!
+/actualites/2026-04-22-remplacement-de-double-vitrage-apres-bris-de-glace.html /realisations/remplacement-de-double-vitrage-apres-bris-de-glace 301!
+/actualites/2026-04-22-remplacement-de-double-vitrage-apres-bris-de-glace /realisations/remplacement-de-double-vitrage-apres-bris-de-glace 301!
+/actualites/2026-04-29-remplacement-de-mitigeur-evier-bec-long-douchette.html /realisations/remplacement-de-mitigeur-evier-bec-long-douchette 301!
+/actualites/2026-04-29-remplacement-de-mitigeur-evier-bec-long-douchette /realisations/remplacement-de-mitigeur-evier-bec-long-douchette 301!
+/actualites/2026-05-07-remplacement-de-panneau-pvc-modele-surinam-3.html /realisations/remplacement-de-panneau-pvc-modele-surinam-3 301!
+/actualites/2026-05-07-remplacement-de-panneau-pvc-modele-surinam-3 /realisations/remplacement-de-panneau-pvc-modele-surinam-3 301!
+
+# Nettoyage : ancienne page dynamique de réalisation (orpheline, noindex) → listing (convention unique /realisations/<slug>)
+/realisation.html /realisations.html 301!
+/realisation /realisations.html 301!
+
+
+
+
+# ── Consolidation entretien (5744476570) : une seule page canonique par intention
+/entretien-poele-insert.html  /prestations/ramonage.html#poele-insert  301!
+/entretien-poele-insert       /prestations/ramonage.html#poele-insert  301!
 
 # Réalisations pré-rendues statiques (contenu indexable dans le HTML initial) — auto-généré
+/realisations/nouvelle-intervention-plomberie-help-confort-saint-omer /realisations/nouvelle-intervention-plomberie-help-confort-saint-omer.html 200
+/realisations/remplacement-de-parquet-massif /realisations/remplacement-de-parquet-massif.html 200
+/realisations/remplacement-de-la-serrurerie-sur-porte-dentree /realisations/remplacement-de-la-serrurerie-sur-porte-dentree.html 200
+/realisations/nouvelle-realisation-signee-help-confort-saint-omer /realisations/nouvelle-realisation-signee-help-confort-saint-omer.html 200
+/realisations/nouvelle-renovation-realisee-par-help-confort-saint-omer /realisations/nouvelle-renovation-realisee-par-help-confort-saint-omer.html 200
 /realisations/nouvelle-intervention-realisee-par-help-confort-saint-omer /realisations/nouvelle-intervention-realisee-par-help-confort-saint-omer.html 200
 /realisations/remplacement-complet-dun-ensemble-de-boites-aux-lettres /realisations/remplacement-complet-dun-ensemble-de-boites-aux-lettres.html 200
 /realisations/intervention-realisee-par-help-confort-remplacement-dun-coulissant-de-facade /realisations/intervention-realisee-par-help-confort-remplacement-dun-coulissant-de-facade.html 200
 /realisations/renovation-dune-salle-de-bain-a-letage /realisations/renovation-dune-salle-de-bain-a-letage.html 200
+/realisations/nouvelle-renovation-de-salle-de-bain-realisee-par-help-confort /realisations/nouvelle-renovation-de-salle-de-bain-realisee-par-help-confort.html 200
+/realisations/remplacement-dun-bloc-porte-en-cave-help-confort-saint-omer /realisations/remplacement-dun-bloc-porte-en-cave-help-confort-saint-omer.html 200
 /realisations/remplacement-de-porte-de-garage-a-arques /realisations/remplacement-de-porte-de-garage-a-arques.html 200
 /realisations/fourniture-dune-corniche-et-dun-caisson-blanc-renovation-de-murs-chez-notre-clie /realisations/fourniture-dune-corniche-et-dun-caisson-blanc-renovation-de-murs-chez-notre-clie.html 200
 /realisations/remplacement-de-menuiserie-renovation-de-piece-chez-notre-cliente /realisations/remplacement-de-menuiserie-renovation-de-piece-chez-notre-cliente.html 200
 /realisations/remplacement-dun-panneau-pvc-chez-notre-cliente-a-hazebrouck /realisations/remplacement-dun-panneau-pvc-chez-notre-cliente-a-hazebrouck.html 200
-/realisations/nouvelle-renovation-de-salle-de-bain-realisee-par-help-confort /realisations/nouvelle-renovation-de-salle-de-bain-realisee-par-help-confort.html 200
-/realisations/remplacement-dun-bloc-porte-en-cave-help-confort-saint-omer /realisations/remplacement-dun-bloc-porte-en-cave-help-confort-saint-omer.html 200
 /realisations/refection-complete-pour-une-nouvelle-ambiance-moderne-et-accueillante /realisations/refection-complete-pour-une-nouvelle-ambiance-moderne-et-accueillante.html 200
 /realisations/remplacement-dune-porte-dentree-bois-par-une-porte-dentree-pvc /realisations/remplacement-dune-porte-dentree-bois-par-une-porte-dentree-pvc.html 200
 /realisations/remplacement-dune-porte-de-garage-basculante-manuelle /realisations/remplacement-dune-porte-de-garage-basculante-manuelle.html 200
-/realisations/votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite-a-un-bris-de-glace /realisations/votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite-a-un-bris-de-glace.html 200
-/realisations/remplacement-de-double-vitrage-avec-croisillon-intervention-help-confort-saint-o /realisations/remplacement-de-double-vitrage-avec-croisillon-intervention-help-confort-saint-o.html 200
 /realisations/vitre-dinsert-cassee /realisations/vitre-dinsert-cassee.html 200
 /realisations/remplacement-de-panneau-pvc-modele-surinam-3 /realisations/remplacement-de-panneau-pvc-modele-surinam-3.html 200
-/realisations/cellier-travaux-de-plafond-reparation-peinture-de-finition /realisations/cellier-travaux-de-plafond-reparation-peinture-de-finition.html 200
+/realisations/remplacement-de-mitigeur-evier-bec-long-douchette /realisations/remplacement-de-mitigeur-evier-bec-long-douchette.html 200
 /realisations/votre-insert-gaz-presente-un-vitrage-fissure-terni-ou-endommage /realisations/votre-insert-gaz-presente-un-vitrage-fissure-terni-ou-endommage.html 200
 /realisations/votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le-temps /realisations/votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le-temps.html 200
-/realisations/remplacement-de-mitigeur-evier-bec-long-douchette /realisations/remplacement-de-mitigeur-evier-bec-long-douchette.html 200
 /realisations/votre-double-vitrage-dans-la-salle-a-manger-est-fissure-embue-ou-moins-isolant /realisations/votre-double-vitrage-dans-la-salle-a-manger-est-fissure-embue-ou-moins-isolant.html 200
-/realisations/votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-correctement /realisations/votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-correctement.html 200
 /realisations/remplacement-de-double-vitrage-apres-bris-de-glace /realisations/remplacement-de-double-vitrage-apres-bris-de-glace.html 200
+/realisations/votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-correctement /realisations/votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-correctement.html 200
+/realisations/remplacement-de-double-vitrage-avec-croisillon-intervention-help-confort-saint-o /realisations/remplacement-de-double-vitrage-avec-croisillon-intervention-help-confort-saint-o.html 200
 /realisations/votre-soupape-de-securite-ou-votre-manometre-est-defectueux-use-ou-ne-fonctionne /realisations/votre-soupape-de-securite-ou-votre-manometre-est-defectueux-use-ou-ne-fonctionne.html 200
+/realisations/votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite-a-un-bris-de-glace /realisations/votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite-a-un-bris-de-glace.html 200
+/realisations/cellier-travaux-de-plafond-reparation-peinture-de-finition /realisations/cellier-travaux-de-plafond-reparation-peinture-de-finition.html 200
 
 # Anciennes URLs réalisations (legacy JSON) → page détail dynamique
 /realisations/:slug /realisation.html?slug=:slug 301

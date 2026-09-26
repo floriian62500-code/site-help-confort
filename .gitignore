@@ -53,6 +53,8 @@ supabase/.temp/
 supabase/.branches/
 .env
 .env.local
+# E2E local isolé (voie A) : env runtime avec service_role LOCAL éphémère — jamais commité
+supabase/local-test/functions.env
 
 # Autopush local config (contient SUPABASE_DB_PASSWORD)
 .autopush/.env
@@ -71,3 +73,43 @@ tools/.netlify-access-token
 *.netlify-access-token
 *.html.bak
 *.bak
+# junk/temp (LOT L cleanup)
+~$*
+*.tmp.png
+.agent1-lock
+.helpconfort/agent1-lock
+*.bak.before-minify
+
+# Alerte locale de la surveillance (scripts/automation/monitoring-uptime.sh) : notifiée, pas versionnée
+docs/ALERT-MONITORING.md
+
+# Coupe-circuit local du démon d'auto-push : jamais versionné (sinon il resterait posé pour tout le monde)
+.autopush-off
+
+# Copies de conflit iCloud (« fichier 2.html ») : le dépôt est sous Documents/, synchronisé.
+# Elles ont été committées par erreur le 2026-09-25 (162 fichiers) : plus jamais.
+* 2.*
+* 3.*
+* 4.*
+* 5.*
+
+# Jeton de build Netlify : un POST sur cette URL declenche un deploiement de production.
+# Il a ete committe par erreur le 2026-06-10 et retire le 2026-09-25 (depot PUBLIC).
+.netlify-build-hook
+tools/.netlify-build-hook
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+.npmrc
+
+# Rapports de scan internes : ecrits par scripts/maintenance-scan.py, figes depuis mai 2026,
+# lus par personne, et servis publiquement jusqu au 2026-09-25. Gardes sur disque, hors du depot.
+logs/
+
+# Dossiers de conflit iCloud (« templates 2 ») : le motif fichier ne les attrapait pas.
+* 2/
+* 3/
+* 4/
+* 5/

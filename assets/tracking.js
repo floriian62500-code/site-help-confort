@@ -16,6 +16,11 @@
 (function () {
   'use strict';
 
+  // ─── Garde d'environnement (P0.4, 17/09/2026) ──────────────────────
+  // Aucune mesure hors du domaine de production : recette / Deploy Previews / domaine
+  // Netlify ne doivent ni alimenter GA4 ni écrire dans click_events (données PROD).
+  if (!/^(www\.)?depan59-62\.fr$/.test(location.hostname)) return;
+
   // ─── Garde de consentement RGPD (HC-CONSENT-V1, 15/05/2026) ────────
   // Aucune analytics ne tourne tant que l'utilisateur n'a pas explicitement
   // accepté via le banner (assets/hc-consent.js). Sans consent → return.
@@ -56,6 +61,7 @@
     document.head.appendChild(s);
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
+    window.hcGtag = gtag; // émetteur GA4 explicite (tunnel « Ma demande », CTA accueil) : n'existe qu'après consentement
     gtag('js', new Date());
     gtag('config', id);
   })();

@@ -1,0 +1,259 @@
+{
+ "_lisezmoi": [
+  "Source de verite d'une livraison en production (instruction CHATGPT-2026-09-24-RELEASE-CATCHUP-V1).",
+  "Une seule release active a la fois. Tant que release_branch est null, aucune livraison n'est en cours.",
+  "Etats autorises par element : DEV | TESTED | WAITING_FLORIAN | READY_FOR_RELEASE | IN_RELEASE | PROD | PROD_VERIFIED.",
+  "« Termine » ne s'emploie qu'a partir de PROD_VERIFIED.",
+  "Mis a jour le 2026-09-25 apres CHATGPT-2026-09-25-CONTROL-5 : la release active ne contient plus que C. Une decision metier non tranchee (les prix de B) ne doit pas retenir un element independant deja pret."
+ ],
+ "release_id": "lot-c-2026-09-25",
+ "base_main_sha": "570225bff7f451318399bc52176fdcea9b1adc45",
+ "release_branch": "release/lot-c-2026-09-25",
+ "created_at": "2026-09-25T15:40:00Z",
+ "statut": "HOLD_SECURITY",
+ "raison": "La release C est techniquement PASS et prete, mais la mise en production est en HOLD : des vulnerabilites critiques sont ouvertes en production (webhook Stripe sans verification de signature, lien de paiement pilote par le client, relais d'ecriture GitHub ouverts, app_settings lisible par tout compte authentifie, ecritures anonymes). On ne pousse pas une release fonctionnelle tant que leur traitement ou leur acceptation explicite n'est pas cadre.",
+ "elements": [
+  {
+   "id": "C",
+   "intitule": "Une publication de chantier = une URL indexable",
+   "etat": "IN_RELEASE",
+   "release": "release/lot-c-2026-09-25",
+   "sha": "a33875773d1cfc739b203db86ab53369f64dadb7",
+   "perimetre": [
+    "10 actualites chantier canonicalisees",
+    "_redirects avec et sans .html",
+    "listing dedoublonne",
+    "garde du generateur (anti-recreation)",
+    "source du sitemap",
+    "normalisation d hote des actualites",
+    "tests du lot : couples, generateur, canonique"
+   ]
+  },
+  {
+   "id": "B",
+   "intitule": "Prix publics du blog alignes sur le catalogue",
+   "etat": "READY_FOR_RELEASE",
+   "gate": "WAITING_FLORIAN_BUSINESS",
+   "document": "docs/release/B-DIFF-PRIX-METIER.md",
+   "note": "Techniquement pret et prouve (20/20 sur son etat exact). N entre dans une release qu apres validation metier explicite de Florian."
+  },
+  {
+   "id": "A",
+   "intitule": "Entite JSON-LD unique par page",
+   "etat": "DEV",
+   "gate": "Arbitrage Florian sur le nom unique de l entreprise"
+  }
+ ],
+ "exclusions": [
+  {
+   "lot": "bandeau d'accueil",
+   "etat": "WAITING_FLORIAN",
+   "raison": "Des validations existent (11-12 aout) mais aucune ne couvre le bandeau actuel, cree le 23/09. WAITING_FLORIAN_VISUAL sur la preview courante."
+  },
+  {
+   "lot": "sous-lot saisonnier (5812875220)",
+   "etat": "WAITING_FLORIAN",
+   "raison": "Corrige et accepte techniquement par le contrôle du 25/09 ; reste WAITING_FLORIAN_VISUAL sur la preview courante."
+  },
+  {
+   "lot": "pipeline de leads (submit-lead-v6, notify-lead-v6)",
+   "etat": "TESTED",
+   "raison": "version du dépôt jamais mise en ligne : 211 et 296 lignes d'écart avec la production"
+  },
+  {
+   "lot": "migrations",
+   "etat": "WAITING_FLORIAN",
+   "raison": "base partagée avec la production ; application = décision humaine"
+  },
+  {
+   "lot": "menuiserie",
+   "etat": "WAITING_FLORIAN",
+   "raison": "Deux a_corriger du 12 aout jamais leves. Perimetre isole dans un dossier de revalidation dedie ; ne bloque que ces pages."
+  }
+ ],
+ "derniere_release_prod": {
+  "sha": null,
+  "date": null,
+  "note": "aucune release contrôlée depuis la mise en place de ce fichier"
+ },
+ "branche_release_existante": {
+  "nom": "release/rattrapage-2026-09-24",
+  "sha": "e5b61c6e9855745321adda064c8099b3c2b819fc",
+  "etat": "EXISTE_MAIS_VIDE_ET_EN_RETARD",
+  "fait_au_2026-09-25": "0 commit propre ; en retard d'un commit sur origin/main (570225bff). Elle ne pointe plus exactement sur main : ce n'est plus vrai depuis que main a avance.",
+  "note": "Branche sans contenu, conservee pour trace. Ne pas confondre avec la release active."
+ },
+ "validations_historiques": {
+  "source": "table recette_validation (projet btcbjwqiivhpwoszomhg), lecture seule",
+  "nombre": 9,
+  "periode": "2026-08-11 au 2026-08-12",
+  "conclusion": "Des validations historiques existent, mais aucune n'est une validation actuelle fiable du code courant.",
+  "detail": "4 perimees (le fichier concerne a change de 10 a 87 commits depuis), 2 sans objet (l'element juge n'existe plus), 2 refus jamais leves (menuiserie), 1 resolue a l'interieur de la serie puis perimee.",
+  "limite_structurelle": "La table ne porte ni SHA ni identifiant de build : le rattachement a un etat du code est reconstruit par horodatage, ce n'est pas une preuve stockee. Correction en preparation (VALIDATION-SHA)."
+ },
+ "branche_essai": {
+  "nom": "essai/release-candidats-2026-09-25",
+  "role": "PREUVE_UNIQUEMENT",
+  "interdiction": "Ne jamais fusionner. Une release se construit depuis main, pas depuis une branche d'essai."
+ },
+ "gate_visuel": {
+  "regle": "Un element accepte techniquement n'est pas PROD_READY. Il reste WAITING_FLORIAN_VISUAL tant que Florian n'a pas valide la preview courante.",
+  "concerne": [
+   "bandeau saisonnier",
+   "ecran de reprise contextualise",
+   "bloc contrats Chauffage",
+   "suppression de la landing entretien-chaudiere"
+  ]
+ },
+ "release_sha": "a33875773d1cfc739b203db86ab53369f64dadb7",
+ "production_status": "NOT_DEPLOYED",
+ "needs_human": true,
+ "included_items": [
+  {
+   "id": "C",
+   "intitule": "Une publication de chantier = une URL indexable",
+   "etat": "IN_RELEASE",
+   "pages": [
+    "10 actualites de chantier",
+    "_redirects",
+    "content/actualites/index.json",
+    "actualites.html",
+    "scripts/sync-facebook-posts.py",
+    "supabase/functions/sitemap/index.ts",
+    "21 actualites (hote canonique)"
+   ],
+   "stabilite": "Garde anti-recreation incluse : le generateur ne recree plus une URL redirigee (teste en executant sa fonction de decision), le listing dedoublonne, le sitemap ne publie plus les actualites de chantier.",
+   "gate": "Le fichier source du sitemap change, mais son deploiement reste un gate distinct : tant que la fonction edge n'est pas redeployee, le sitemap servi continue d'annoncer les anciennes URL (qui repondront 301)."
+  }
+ ],
+ "excluded_items": [
+  {
+   "id": "B",
+   "intitule": "Prix publics du blog",
+   "raison": "Sorti de la release active le 2026-09-25 : WAITING_FLORIAN_BUSINESS. Une decision metier non tranchee ne doit pas bloquer un element independant deja pret (CONTROL-5 §1)."
+  },
+  {
+   "id": "A",
+   "intitule": "Entite JSON-LD unique par page",
+   "raison": "Attend l'arbitrage de Florian sur le nom unique de l'entreprise. Ne pas elargir le lot BC."
+  },
+  {
+   "lot": "pages menuiserie",
+   "raison": "Dossier de revalidation dedie (docs/qa/MENUISERIE-REVALIDATION.md) ; arbitrage panneau de porte en attente."
+  },
+  {
+   "lot": "bandeau, saisonnier, bloc contrats, suppression landing entretien",
+   "raison": "Acceptes techniquement ; WAITING_FLORIAN_VISUAL sur la preview courante."
+  },
+  {
+   "lot": "pipeline de leads, migrations, Stripe",
+   "raison": "Gates inchanges."
+  }
+ ],
+ "test_status": {
+  "joues_sur": "a33875773d1cfc739b203db86ab53369f64dadb7",
+  "verdict": "PASS",
+  "resultats": {
+   "actualites-couples": "8/8",
+   "actualites-generateur": "6/6",
+   "actualites-canonique": "44/44",
+   "depot-propre": "4/4 (joue sur l etat, hors perimetre du lot)"
+  },
+  "controles_cibles": {
+   "boucles_redirects": 0,
+   "cibles_absentes": 0,
+   "formes_sans_html_manquantes": 0,
+   "entrees_listing_vers_url_redirigee": 0,
+   "urls_recreables_par_le_generateur": 0
+  },
+  "suites_rouges_non_justifiees": 0
+ },
+ "rollback": "La release n'est pas fusionnee : l'annuler, c'est ne pas la fusionner. Une fois livree, `git revert a3387577 0746a9cf 309a9308` sur main remet l'etat d'avant. Aucune base, aucun paiement, aucune fonction edge deployee.",
+ "candidats_hors_release": [
+  {
+   "id": "A",
+   "etat": "BLOQUE_ARBITRAGE_IDENTITE",
+   "preuve": "scripts/seo/entite-jsonld-preuve.mjs : HTML visible identique, 460 blocs relisibles, 0 cle perdue, 54 valeurs remplacees toutes enrichissantes."
+  }
+ ],
+ "needs_human_raison": "Gate final de production uniquement. C ne demande pas de validation metier : aucun changement visible non documente n'a ete trouve.",
+ "releases_precedentes": [
+  {
+   "nom": "release/lot-bc-2026-09-25",
+   "sha": "8cebd8e2475e268ad7bc4c1ae7a82a4bea5861d4",
+   "etat": "REMPLACEE",
+   "raison": "Contenait B et C ensemble. Separee le 2026-09-25 sur demande du controle : B attend un gate metier. Conservee pour trace, a ne pas fusionner."
+  }
+ ],
+ "sitemap": {
+  "source_dans_git": "Modifiee par C : la fonction ne publie plus les actualites de chantier.",
+  "fonction_edge_deployee": "Version du 2026-08-08, inchangee. Le sitemap servi en production contient encore 17 URL /actualites/.",
+  "gate": "Le redeploiement de la fonction sitemap est un gate SEPARE. Inclure la source dans la release ne la deploie pas.",
+  "consequence": "Tant que la fonction n'est pas redeployee, le sitemap annonce des URL qui repondront 301. Propre, mais a savoir."
+ },
+ "hold_security": {
+  "declare_le": "2026-09-26",
+  "source": "CHATGPT-2026-09-25-PROD-HOLD-SECURITY-1",
+  "release_c": "techniquement PASS, conservee telle quelle, NON deployee",
+  "blocage": "risques securite critiques ouverts en production",
+  "go_prod": "AUCUN",
+  "prochain_gate": "decision de Florian sur le paquet securite",
+  "paquets": [
+   {
+    "id": "SECURITY-STRIPE",
+    "couvre": [
+     "P0-1 webhook sans signature",
+     "P0-2 lien de paiement"
+    ],
+    "doc": "docs/security/SECURITY-STRIPE.md",
+    "pret": true
+   },
+   {
+    "id": "SECURITY-GITHUB-WRITE",
+    "couvre": [
+     "P0-3 relais d'ecriture GitHub"
+    ],
+    "doc": "docs/security/SECURITY-GITHUB-WRITE.md",
+    "pret": true
+   },
+   {
+    "id": "SECURITY-RLS-SECRETS",
+    "couvre": [
+     "P0-4 app_settings"
+    ],
+    "doc": "docs/security/SECURITY-RLS-SECRETS.md",
+    "pret": true
+   },
+   {
+    "id": "SECURITY-ANON-WRITES",
+    "couvre": [
+     "P0-5 leads anonyme",
+     "P0-5 bucket photos"
+    ],
+    "doc": "docs/security/SECURITY-ANON-WRITES.md",
+    "pret": true
+   },
+   {
+    "id": "NETLIFY-HOOK-ROTATION",
+    "couvre": [
+     "P0-6 build hook expose"
+    ],
+    "doc": "docs/security/NETLIFY-HOOK-ROTATION.md",
+    "pret": true,
+    "note": "action humaine : runbook seulement"
+   }
+  ],
+  "correctifs_deployables": "supabase/functions-staging/ — les versions durcies portent enfin le nom index.ts, que l'outil de deploiement est capable de prendre. 64 tests Deno verts."
+ },
+ "correctifs_hors_release": [
+  {
+   "id": "CTA-CHAUDIERE",
+   "intitule": "Le CTA chaudiere de l'accueil mene a la page Chauffage",
+   "etat": "TECH_ACCEPTED",
+   "gate": "WAITING_FLORIAN_VISUAL",
+   "sha_recette": "77b8a5ec",
+   "source": "CHATGPT-2026-09-26-P0-CHAUDIERE-REVIEW-1",
+   "note": "Ne pas ajouter a la release C : elle reste limitee a son perimetre SEO/canonicalisation. Entrera dans une petite release dediee creee depuis main, apres validation visuelle et apres traitement des gates securite."
+  }
+ ]
+}

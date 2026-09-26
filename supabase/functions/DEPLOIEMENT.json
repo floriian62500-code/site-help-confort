@@ -1,0 +1,255 @@
+{
+ "_lisezmoi": [
+  "Liste blanche de déploiement des fonctions edge (directive 5796732231 §1).",
+  "Le workflow .github/workflows/supabase-deploy.yml ne déploie QUE les fonctions en état « current ».",
+  "Un dossier qui n'est pas listé ici fait ÉCHOUER le workflow : une nouvelle fonction ne part jamais",
+  "en production parce qu'un dossier existe. La faire passer en « current » est une modification",
+  "explicite et visible de ce fichier, donc une décision.",
+  "Garde : node scripts/tests/deploy-allowlist.test.mjs (lancé aussi en CI)."
+ ],
+ "_mis_a_jour_le": "2026-09-23",
+ "etats": {
+  "current": "déployée en production ET autorisée au redéploiement automatique",
+  "pending": "présente dans le dépôt, NON déployée — le workflow ne la déploie jamais",
+  "quarantine": "déployée mais sous surveillance — aucun redéploiement automatique, décision humaine à chaque fois"
+ },
+ "fonctions": {
+  "actu-generator": {
+   "etat": "pending",
+   "raison": "PENDING_PRODUCT_DECISION (§4) : appelée par un écran d'administration, non déployée"
+  },
+  "auto-publish-from-photos": {
+   "etat": "pending",
+   "raison": "PENDING_PRODUCT_DECISION (§4) : appelée par un écran d'administration, non déployée"
+  },
+  "chat-assistant": {
+   "etat": "current"
+  },
+  "chat-fallback-human": {
+   "etat": "current"
+  },
+  "check-tokens": {
+   "etat": "current"
+  },
+  "communes-list": {
+   "etat": "current"
+  },
+  "create-payment-session": {
+   "etat": "pending",
+   "raison": "KEEP_PENDING_DEPLOY (§3) : appelée par le tunnel, volontairement non déployée. Prérequis avant GO dans docs/deploy/EDGE-FUNCTIONS.md"
+  },
+  "crm-apogee-push": {
+   "etat": "pending",
+   "raison": "présente dans le dépôt, jamais déployée — aucune décision produit prise"
+  },
+  "ga4-oauth-test": {
+   "etat": "current"
+  },
+  "ga4-stats": {
+   "etat": "current"
+  },
+  "gbp-diagnostic": {
+   "etat": "current"
+  },
+  "gbp-discover-account": {
+   "etat": "current"
+  },
+  "gbp-fix-account": {
+   "etat": "current"
+  },
+  "gbp-oauth-callback": {
+   "etat": "current"
+  },
+  "generate-content": {
+   "etat": "current"
+  },
+  "generate-post-from-prompt": {
+   "etat": "pending",
+   "raison": "présente dans le dépôt, jamais déployée — aucune décision produit prise"
+  },
+  "generate-service-content": {
+   "etat": "current"
+  },
+  "gh-bulk-purge-seo-stats": {
+   "etat": "quarantine",
+   "raison": "écriture GitHub sans appelant, opération unique de juin — idem §2"
+  },
+  "gh-delete-files": {
+   "etat": "quarantine",
+   "raison": "écriture GitHub sans appelant, et c'est celle qui supprime des fichiers — idem §2"
+  },
+  "gh-edit-file": {
+   "etat": "quarantine",
+   "raison": "écriture GitHub encore appelée ; patch durci prêt, aucun déploiement sans GO — §2"
+  },
+  "gh-push-batch": {
+   "etat": "quarantine",
+   "raison": "écriture GitHub sans appelant — 5796732231 §2 : pas de suppression sur 24 h d'observation, pas de redéploiement automatique"
+  },
+  "gh-push-from-chunks": {
+   "etat": "quarantine",
+   "raison": "écriture GitHub sans appelant — idem §2"
+  },
+  "gh-push-inline": {
+   "etat": "quarantine",
+   "raison": "écriture GitHub encore appelée ; patch durci prêt, aucun déploiement sans GO — §2"
+  },
+  "google-ads-status": {
+   "etat": "current"
+  },
+  "hc-content-save": {
+   "etat": "current"
+  },
+  "html-script-check": {
+   "etat": "current"
+  },
+  "indexnow-ping": {
+   "etat": "current"
+  },
+  "js-syntax-check": {
+   "etat": "current"
+  },
+  "lead-action": {
+   "etat": "current"
+  },
+  "lead-auto-reply": {
+   "etat": "current"
+  },
+  "lead-photo-signed-url": {
+   "etat": "current"
+  },
+  "leads-abandon-sweep": {
+   "etat": "pending",
+   "raison": "présente dans le dépôt, jamais déployée — aucune décision produit prise"
+  },
+  "manage-users": {
+   "etat": "pending",
+   "raison": "présente dans le dépôt, jamais déployée — aucune décision produit prise"
+  },
+  "migrate-fb-images": {
+   "etat": "current"
+  },
+  "notify-action": {
+   "etat": "current"
+  },
+  "notify-lead": {
+   "etat": "current"
+  },
+  "notify-lead-v6": {
+   "etat": "current"
+  },
+  "notify-pending-reviews": {
+   "etat": "current"
+  },
+  "notify-subscription": {
+   "etat": "current"
+  },
+  "partner-logo": {
+   "etat": "current"
+  },
+  "partners-json": {
+   "etat": "current"
+  },
+  "pipeline-health-check": {
+   "etat": "current"
+  },
+  "promote-to-prod": {
+   "etat": "current"
+  },
+  "publish-gbp": {
+   "etat": "current"
+  },
+  "publish-linkedin": {
+   "etat": "current"
+  },
+  "publish-meta": {
+   "etat": "current"
+  },
+  "publish-scheduled": {
+   "etat": "current"
+  },
+  "purge-orphan-lead-photos": {
+   "etat": "current"
+  },
+  "realisations-json": {
+   "etat": "current"
+  },
+  "refresh-fb-images": {
+   "etat": "current"
+  },
+  "refresh-meta-token": {
+   "etat": "current"
+  },
+  "reply-review": {
+   "etat": "current"
+  },
+  "resend-status-check": {
+   "etat": "current"
+  },
+  "send-email-notification": {
+   "etat": "current"
+  },
+  "send-transactional-email": {
+   "etat": "current"
+  },
+  "sitemap": {
+   "etat": "current"
+  },
+  "smoke-tests-prod": {
+   "etat": "current"
+  },
+  "smoke-tests-staging": {
+   "etat": "current"
+  },
+  "stripe-create-payment-link": {
+   "etat": "quarantine",
+   "raison": "version durcie prête et non déployée : le redéploiement automatique remettrait la version vulnérable — GO Florian"
+  },
+  "stripe-webhook": {
+   "etat": "current"
+  },
+  "stripe-webhook-test": {
+   "etat": "pending",
+   "raison": "présente dans le dépôt, jamais déployée — aucune décision produit prise"
+  },
+  "submit-lead": {
+   "etat": "current"
+  },
+  "submit-lead-v6": {
+   "etat": "current"
+  },
+  "suggest-prompt-improvement": {
+   "etat": "pending",
+   "raison": "présente dans le dépôt, jamais déployée — aucune décision produit prise"
+  },
+  "suggest-reply": {
+   "etat": "pending",
+   "raison": "présente dans le dépôt, jamais déployée — aucune décision produit prise"
+  },
+  "suppliers-by-metier": {
+   "etat": "current"
+  },
+  "sync-facebook-posts": {
+   "etat": "current"
+  },
+  "sync-files-staging-to-main": {
+   "etat": "quarantine",
+   "raison": "écriture GitHub sans appelant, publie vers la production — idem §2"
+  },
+  "sync-google-ads": {
+   "etat": "current"
+  },
+  "sync-reviews": {
+   "etat": "current"
+  },
+  "sync-reviews-places": {
+   "etat": "current"
+  },
+  "upload-lead-photos": {
+   "etat": "current"
+  },
+  "weekly-recap": {
+   "etat": "current"
+  }
+ }
+}

@@ -1,0 +1,98 @@
+name: Tests de non-régression
+
+# Pourquoi ce fichier existe (2026-09-23, directive 5797206638) :
+# la suite de contrôle du site compte plus de 350 vérifications, et elle ne tournait
+# NULLE PART automatiquement. Elle n'était jouée que quand quelqu'un pensait à la lancer.
+# Un garde-fou qu'on oublie de lancer n'est pas un garde-fou.
+#
+# Ce workflow ne déploie rien, ne pousse rien, ne touche à aucune base : il lit le dépôt et
+# fait échouer la CI si une règle est cassée.
+
+on:
+  push:
+    branches: [recette, integration/lot1-lot2-vs-prod]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  suite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Suite du site
+        run: |
+          set -uo pipefail
+          ECHECS=""
+          for t in scripts/tests/*.test.mjs; do
+            echo "═══ $(basename "$t")"
+            node "$t" || ECHECS="$ECHECS $(basename "$t")"
+          done
+          if [ -n "$ECHECS" ]; then
+            echo "::error::Tests en échec :$ECHECS"
+            exit 1
+          fi
+
+      # Le garde-fou de WIP se joue en bac à sable : dépôt temporaire, jamais le vrai verrou.
+      - name: Hygiène du dépôt (copies de conflit, workflows en double)
+        run: node scripts/tests/depot-propre.test.mjs
+
+      - name: Garde-fou anti-dérive à l'ouverture d'un lot
+        run: bash scripts/tests/garde-wip.test.sh
+
+      - name: Garde-fous SEO
+        run: |
+          set -uo pipefail
+          node scripts/seo/seo-guardrails.mjs | tail -20
+          node scripts/seo/seo-guardrails.mjs | grep -q '^ERRORS=0' || { echo "::error::Garde-fous SEO en erreur"; exit 1; }
+          node scripts/seo/fix-compound-selectors.mjs --check
+
+      - name: Entité JSON-LD alignée (la source doit rester la source)
+        run: node scripts/seo/entite-jsonld.mjs --check
+
+      - name: En-tête unique (la source doit rester la source)
+        run: node scripts/header/sync-header.mjs --check
+
+      - name: Inventaire — aucun élément non classé
+        run: node scripts/audit/inventaire.mjs --strict | tail -12
+
+      # Les tests Deno couvrent les fonctions edge durcies (jamais déployées par ce workflow).
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Fonctions edge durcies (sans réseau)
+        run: |
+          deno test supabase/functions/gh-push-inline/handler.test.ts supabase/functions/gh-edit-file/handler.test.ts supabase/functions/stripe-create-payment-link/handler.test.ts
+          # Les versions prêtes à déployer vivent dans functions-staging/ : elles doivent rester vertes,
+          # sinon le jour du GO on déploierait un correctif qu'on n'a pas rejoué.
+          deno test supabase/functions-staging/_shared/stripe-signature.test.ts supabase/functions-staging/gh-push-inline/handler.test.ts supabase/functions-staging/gh-edit-file/handler.test.ts supabase/functions-staging/stripe-create-payment-link/handler.test.ts
+
+      # Dérive recette → production : on ALERTE, on ne bloque pas. Rendre la CI rouge en permanence
+      # noierait le signal et casserait l'indicateur sur lequel tout le monde s'appuie. Le mode
+      # --strict existe pour le processus de release, où le seuil doit arrêter la main.
+      - name: Alerte de dérive vers la production (non bloquante)
+        if: always()
+        run: |
+          git fetch --no-tags --quiet origin main:refs/remotes/audit/main || true
+          node scripts/release/derive.mjs || true
+
+      - name: Récapitulatif
+        if: always()
+        run: |
+          echo "═══════════════════════════════════════════════════"
+          echo "Aucun déploiement, aucune écriture : ce workflow lit et vérifie."
+          echo "═══════════════════════════════════════════════════"

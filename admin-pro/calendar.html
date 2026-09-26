@@ -170,7 +170,7 @@
           type: 'pub',
           title: x.title,
           sub: (x.metier ? x.metier[0].toUpperCase() + x.metier.slice(1) : '') + (x.ville ? ' · ' + x.ville : ''),
-          link: 'realisation.html?slug=' + encodeURIComponent(x.slug || ''),
+          link: '/realisations/' + encodeURIComponent(x.slug || ''),
           adminLink: 'realisations.html?edit=' + x.id
         });
       });

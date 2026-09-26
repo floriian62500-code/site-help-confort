@@ -161,8 +161,22 @@ function toast(msg,type='ok',d=2400){
 
 const STATUS_LABELS = {
   nouveau:'Nouveau', en_cours:'En cours', qualifie:'Qualifié',
-  devis_envoye:'Devis envoyé', gagne:'Gagné', perdu:'Perdu', archive:'Archivé'
+  devis_envoye:'Devis envoyé', gagne:'Gagné', perdu:'Perdu', archive:'Archivé',
+  // Cycle commercial du tunnel « Ma demande » : accès aux tarifs sans finalisation
+  intent:'Tarifs consultés (en cours)', needs_followup:'À relancer (non finalisé)'
 };
+// Identité : prénom et nom sont distincts (le tunnel ne recopie plus le prénom dans le nom)
+const fullName = l => [l.prenom, l.nom].filter(Boolean).join(' ').trim() || l.nom || l.email || 'Client';
+// Paiement en ligne facultatif (metadata.payment, confirmé par le webhook Stripe)
+function onlinePayment(l){
+  const p = l && l.metadata && l.metadata.payment;
+  if (!p || !p.status) return null;
+  const amount = p.amount != null ? Number(p.amount).toFixed(2).replace('.', ',') + ' €' : '';
+  if (p.status === 'paid') return { cls:'paid', label:'PAYÉ EN LIGNE', amount, when: p.paid_at, ref: p.payment_intent || p.session_id || '', test: p.livemode !== true };
+  if (p.status === 'pending') return { cls:'pending', label:'PAIEMENT EN ATTENTE', amount, when: p.created_at, ref: p.session_id || '', test: p.livemode !== true };
+  if (p.status === 'expired' || p.status === 'failed') return { cls:'failed', label: p.status === 'expired' ? 'PAIEMENT EXPIRÉ' : 'PAIEMENT ÉCHOUÉ', amount, when: p.updated_at, ref: p.session_id || '', test: p.livemode !== true };
+  return null;
+}
 const METIER_LABELS = { plomberie:'Plomberie',chauffage:'Chauffage',electricite:'Électricité',serrurerie:'Serrurerie',vitrerie:'Vitrerie',renovation:'Rénovation',menuiserie:'Menuiserie',volets:'Volets',pmr:'Adaptation PMR',multiservice:'Multi-services',autre:'Autre' };
 
 let _all = [];
@@ -197,7 +211,8 @@ let _filterStatusOverride = null;
       { key:'nouveau', lbl:'Nouveaux', val:counts.nouveau, cls:'nouveau' },
       { key:'en_cours', lbl:'En cours', val:counts.en_cours, cls:'en_cours' },
       { key:'devis_envoye', lbl:'Devis envoyés', val:counts.devis_envoye },
-      { key:'gagne', lbl:'Gagnés', val:counts.gagne, cls:'gagne' }
+      { key:'gagne', lbl:'Gagnés', val:counts.gagne, cls:'gagne' },
+      { key:'needs_followup', lbl:'À relancer', val:counts.needs_followup }
     ];
     document.getElementById('leadsStats').innerHTML = stats.map(s => `
       <div class="stat-pill ${s.cls||''} ${_filterStatusOverride === s.key ? 'is-active' : ''}" data-statkey="${s.key}">
@@ -222,10 +237,11 @@ let _filterStatusOverride = null;
     const sFilter = document.getElementById('filterStatus').value || _filterStatusOverride;
     const mFilter = document.getElementById('filterMetier').value;
     return _all.filter(l => {
+      if (l.status === 'intent' && sFilter !== 'intent') return false;
       if (sFilter && sFilter !== 'all' && l.status !== sFilter) return false;
       if (mFilter && l.metier !== mFilter) return false;
       if (q){
-        const hay = [l.nom,l.email,l.telephone,l.ville,l.message,l.metier].filter(Boolean).join(' ').toLowerCase();
+        const hay = [l.prenom,l.nom,l.email,l.telephone,l.ville,l.message,l.metier].filter(Boolean).join(' ').toLowerCase();
         if (!hay.includes(q)) return false;
       }
       return true;
@@ -279,7 +295,8 @@ let _filterStatusOverride = null;
           <div class="lead-body">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;flex-wrap:wrap">
               ${typeBadge}
-              <h3 style="margin:0;display:inline">${escapeHtml(l.nom)}${metierStr}</h3>
+              ${(() => { const op = onlinePayment(l); return op ? `<span style="background:${op.cls==='paid'?'#DCFCE7':op.cls==='pending'?'#FEF3C7':'#FEE2E2'};color:${op.cls==='paid'?'#15803D':op.cls==='pending'?'#92400E':'#B91C1C'};font-size:.68rem;padding:2px 8px;border-radius:4px;font-weight:800;letter-spacing:.04em">💳 ${op.label}${op.amount ? ' · ' + op.amount : ''}</span>` : ''; })()}
+              <h3 style="margin:0;display:inline">${escapeHtml(fullName(l))}${metierStr}</h3>
             </div>
             <div class="meta">
               ${cityLine ? '📍 ' + escapeHtml(cityLine) : ''}
@@ -318,6 +335,7 @@ let _filterStatusOverride = null;
     { key: 'devis_envoye',  label: '📤 Devis envoyé',    color: '#06B6D4', bg: 'rgba(6,182,212,.06)' },
     { key: 'gagne',         label: '🎉 Gagné',           color: '#22A06B', bg: 'rgba(34,160,107,.06)' },
     { key: 'perdu',         label: '❌ Perdu',           color: '#B91C1C', bg: 'rgba(185,28,28,.06)' },
+    { key: 'needs_followup', label: '📞 À relancer',     color: '#EA580C', bg: 'rgba(234,88,12,.06)' },
     { key: 'archive',       label: '📦 Archivé',         color: '#64748b', bg: 'rgba(100,116,139,.06)' }
   ];
 
@@ -337,6 +355,7 @@ let _filterStatusOverride = null;
     const byStatus = {};
     KANBAN_COLUMNS.forEach(c => byStatus[c.key] = []);
     filtered.forEach(l => {
+      if (l.status === 'intent') return; // tarifs consultés il y a moins de 15 min : pas encore une demande
       const key = byStatus[l.status] ? l.status : 'nouveau';
       byStatus[key].push(l);
     });
@@ -633,7 +652,7 @@ let _filterStatusOverride = null;
 
     document.getElementById('leadBody').innerHTML = `
       <div class="lead-info-grid">
-        <div class="lead-info-cell"><div class="lbl">Nom complet</div><div class="val">${escapeHtml(l.nom)}</div></div>
+        <div class="lead-info-cell"><div class="lbl">Nom complet</div><div class="val">${escapeHtml(fullName(l))}</div></div>
         <div class="lead-info-cell"><div class="lbl">Statut</div><div class="val"><span class="lead-status ${l.status}">${STATUS_LABELS[l.status]}</span>${l.priority && l.priority !== 'normale' ? ` <span style="background:#FFEDD5;color:#C2410C;font-size:.66rem;padding:1px 6px;border-radius:4px;font-weight:800;margin-left:4px">${escapeHtml(l.priority.toUpperCase())}</span>` : ''}</div></div>
         <div class="lead-info-cell"><div class="lbl">Téléphone</div><div class="val">${phoneVal}</div></div>
         <div class="lead-info-cell"><div class="lbl">Email</div><div class="val">${emailVal}</div></div>
@@ -647,6 +666,16 @@ let _filterStatusOverride = null;
 
       ${contractBlock}
       ${caracBlock}
+      ${(() => { const op = onlinePayment(l); if (!op) return ''; return `
+      <div style="margin-top:18px;padding:14px;border-radius:12px;border:1px solid ${op.cls==='paid'?'rgba(21,128,61,.3)':op.cls==='pending'?'rgba(146,64,14,.3)':'rgba(185,28,28,.3)'};background:${op.cls==='paid'?'#F0FDF4':op.cls==='pending'?'#FFFBEB':'#FEF2F2'}">
+        <h4 style="margin:0 0 8px 0;font-size:.96rem;font-weight:800;color:#0A1428">💳 Paiement en ligne — ${op.label}${op.test ? ' <span style="font-size:.7rem;color:#92400E">(Stripe TEST)</span>' : ''}</h4>
+        <div style="font-size:.86rem;line-height:1.6;color:#0A1428">
+          ${op.amount ? `<div><strong>Montant :</strong> ${op.amount} TTC</div>` : ''}
+          ${op.when ? `<div><strong>Date :</strong> ${new Date(op.when).toLocaleString('fr-FR')}</div>` : ''}
+          ${op.ref ? `<div><strong>Référence de transaction :</strong> ${escapeHtml(op.ref)}</div>` : ''}
+          <div style="margin-top:6px;color:#475569;font-size:.8rem">Réserve tarifaire : montant des forfaits choisis ; tout ajustement constaté sur place se propose au client avant d'intervenir.</div>
+        </div>
+      </div>`; })()}
       ${paymentBlock}
       ${photosBlock}
 
@@ -775,7 +804,7 @@ let _filterStatusOverride = null;
 
 <div class="header">
   <div>
-    <h1>Fiche client — ${escapeHtml(l.nom)}</h1>
+    <h1>Fiche client — ${escapeHtml(fullName(l))}</h1>
     <div style="font-size:11px;color:#64748b">Demande reçue le ${fmtDate(l.created_at)} · Statut : <span class="badge ${l.status==='gagne'?'success':l.status==='perdu'?'danger':l.status==='nouveau'?'warning':''}">${STATUS_LABELS[l.status] || l.status}</span></div>
   </div>
   <div class="header-right">

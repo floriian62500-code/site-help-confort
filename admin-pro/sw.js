@@ -7,7 +7,7 @@
 //   - Pas de offline complet (le back-office a besoin de Supabase live)
 // ═══════════════════════════════════════════════════════════════════════════
 
-const CACHE_NAME = 'hc-admin-v1';
+const CACHE_NAME = 'hc-admin-v2'; // 2026-09-17 : v1 servait admin.js/layout.js en cache-first sans jamais se renouveler
 const STATIC_ASSETS = [
   '/admin-pro/',
   '/admin-pro/assets/admin.css',
@@ -52,10 +52,16 @@ self.addEventListener('fetch', (event) => {
     return; // laisse passer normalement
   }
 
-  // Static assets : cache-first
+  // Static assets : network-first (les correctifs du back-office arrivent tout de suite), cache en secours hors ligne
   if (STATIC_ASSETS.some(p => url.pathname === p || url.pathname.endsWith(p))) {
     event.respondWith(
-      caches.match(event.request).then((cached) => cached || fetch(event.request))
+      fetch(event.request)
+        .then((response) => {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((c) => c.put(event.request, clone));
+          return response;
+        })
+        .catch(() => caches.match(event.request))
     );
     return;
   }

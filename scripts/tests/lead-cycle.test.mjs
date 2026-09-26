@@ -1,0 +1,121 @@
+#!/usr/bin/env node
+// Cycle commercial d'un lead — garanties vérifiées sur la SOURCE des fonctions serveur.
+// Directives 5713150094 / 5713186419 : identité réelle, accès aux tarifs silencieux,
+// une seule notification finale, relance d'abandon unique, emails conformes à la vérité métier.
+//   node scripts/tests/lead-cycle.test.mjs
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
+const read = (p) => readFileSync(join(ROOT, p), 'utf8');
+const submit = read('supabase/functions/submit-lead-v6/index.ts');
+const notify = read('supabase/functions/notify-lead-v6/index.ts');
+const reply = read('supabase/functions/lead-auto-reply/index.ts');
+// Les commentaires d'en-tête citent les promesses supprimées : on contrôle le code, pas la documentation.
+const replyCode = reply.replace(/\/\/[^\n]*/g, '');
+const sweep = read('supabase/functions/leads-abandon-sweep/index.ts');
+const crm = read('supabase/functions/crm-apogee-push/index.ts');
+const core = read('assets/hc-demande-core.js');
+
+let pass = 0, fail = 0;
+const ok = (n, c) => { c ? (pass++, console.log('  ✅', n)) : (fail++, console.log('  ❌', n)); };
+
+// ---- Identité : prénom et nom distincts de bout en bout
+ok('serveur : le nom n’est jamais recopié depuis le prénom (fin de « Florian Florian »)',
+  /nom: nom \|\| null,/.test(submit) && !/nom: nom \|\| prenom/.test(submit));
+ok('front : l’accès aux tarifs transmet le nom saisi', /nom: c\.nom \|\| null,/.test(core));
+ok('email agence : prénom et nom affichés séparément', /\[lead\.prenom, lead\.nom\]\.filter\(Boolean\)/.test(notify));
+
+// ---- Accès aux tarifs : enregistrement silencieux
+ok('accès tarifs : contrat serveur dédié (price_gate)', /price_gate:\s*\{ name: true, contact: true/.test(submit));
+ok('accès tarifs : statut « intent » et priorité basse', /status: isIntent \? 'intent' : 'nouveau'/.test(submit) && /priority: isIntent \? 'basse' : 'normale'/.test(submit));
+ok('accès tarifs : AUCUNE notification agence ni client tant que la demande n’est pas finalisée',
+  /if \(!isTestLead && !isIntent\) \{/.test(submit) && (submit.match(/functions\/v1\/notify-lead-v6/g) || []).length === 1);
+ok('email client : refusé pour une demande non finalisée', /intent_not_finalized/.test(reply) && /if \(isIntent && !meta\.finalized_at\)/.test(reply));
+
+// ---- Dossier unique : intention ↔ demande finale
+ok('dossier unique : recherche par référence de corrélation', /\.eq\('utm->>correlation_id', correlationId\)/.test(submit));
+ok('dossier unique : un dossier finalisé n’est jamais réécrit', /\['intent', 'needs_followup'\]\.includes\(String\(row\.status \|\| ''\)\)/.test(submit));
+ok('dossier unique : mise à jour au lieu d’un second enregistrement', /if \(existing\) \{[\s\S]{0,200}\.update\(payload\)\.eq\('id', existing\.id\)/.test(submit));
+ok('dossier unique : la finalisation est horodatée', /meta\.finalized_at = nowIso/.test(submit));
+ok('front : la référence de dossier accompagne l’intention et les 2 envois finaux', (core.match(/correlation_id: d\.cid \|\| null/g) || []).length >= 3);
+
+// ---- Relance d'abandon
+ok('abandon : seuil par défaut à 15 minutes d’inactivité', /Number\(body\.minutes\) \|\| 15/.test(sweep));
+ok('abandon : ne cible que des intentions non finalisées et jamais alertées',
+  /\.eq\('status', 'intent'\)/.test(sweep) && /metadata->>finalized_at', 'is', null/.test(sweep) && /metadata->>abandon_notified_at', 'is', null/.test(sweep));
+ok('abandon : drapeau posé AVANT l’envoi → une seule alerte par dossier',
+  sweep.indexOf('abandon_notified_at: new Date().toISOString()') < sweep.indexOf('kind: \'abandon\'') && /\.eq\('status', 'intent'\)\n\s*\.select\('id'\)/.test(sweep));
+ok('abandon : alerte interne uniquement (aucun email au client)', /notify-lead-v6/.test(sweep) && !/lead-auto-reply/.test(sweep));
+ok('abandon : les leads de test ne déclenchent pas d’alerte', /TEST\\s\*RECETTE\|NE\\s\*PAS\\s\*TRAITER/.test(sweep));
+ok('email agence : variante « demande non finalisée »', /String\(kind \|\| ''\) === 'abandon'/.test(notify) && /Demande non finalisée/.test(notify));
+
+// ---- Vérité métier des emails
+ok('email client : plus de promesse « sous 30 minutes »', !/30 min/i.test(replyCode));
+ok('email client : plus de « 7j/7 »', !/7j\/7/.test(replyCode));
+ok('email client : une seule agence physique (plus de « Saint-Omer & Dunkerque »)', !/Saint-Omer\s*&(amp;)?\s*Dunkerque/.test(reply));
+ok('email client : horaires réels lun–ven 9h–17h, sam 9h–16h', /lun–ven 9h–17h, sam 9h–16h/.test(reply));
+ok('email client : message adapté au type réel (intervention / devis / entretien)', /function demandeKind/.test(reply) && /demande de devis/.test(reply) && /demande d’entretien/.test(reply));
+ok('email agence : libellé explicite pour une consultation des tarifs', /consultation_tarifs: 'Consultation des tarifs \(demande non finalisée\)'/.test(notify));
+
+// ---- CRM Apogée : file d'attente prête, aucun faux succès
+ok('CRM : chaque dossier entre en file d’attente dès la collecte des coordonnées', /crm_status: 'pending'/.test(submit));
+ok('CRM : sans accès Apogée, la fonction ne fait rien et le dit', /blocked: 'missing_credentials'/.test(crm) && /needed: \['APOGEE_API_URL', 'APOGEE_API_KEY'\]/.test(crm));
+ok('CRM : aucun endpoint ni secret inventé', !/https:\/\/[a-z0-9.-]*apogee/i.test(crm));
+
+// ---- Réserve tarifaire (le forfait affiché est validé après constat sur place)
+const ui = read('assets/hc-demande.js');
+const css = read('assets/hc-demande.css');
+ok('réserve : bloc visible sur l’écran « Votre demande »', /note note--warm reserve/.test(ui) && /Important — prix sous réserve de vérification sur place/.test(ui));
+ok('réserve : mention sur l’étape d’affichage des tarifs', /Les tarifs affichés correspondent à des forfaits, sous réserve de vérification sur place/.test(ui));
+ok('réserve : rappelée sur la confirmation dès qu’un montant est affiché', /if \(!dv && \(s\.lines \|\| \[\]\)\.length\) h \+= '<p class="reserve-line">/.test(ui));
+ok('réserve : rappelée sous le total du récapitulatif latéral', /rc-reserve">Sous réserve de vérification sur place/.test(ui));
+ok('réserve : styles dédiés (lisible, non anxiogène)', /\.hcd \.reserve-line\{/.test(css) && /\.hcd \.rc-reserve\{/.test(css));
+ok('réserve : transmise à l’agence dans le message du dossier', /Réserve tarifaire : les montants correspondent aux forfaits sélectionnés/.test(core));
+ok('réserve : rappelée dans l’email agence quand un montant figure', /Réserve tarifaire/.test(notify) && /prix ferme\|Total prix fermes/.test(notify));
+ok('réserve : rappelée dans l’email client d’une intervention', /Prix sous réserve de vérification sur place/.test(reply) && /aucun supplément n'est engagé sans votre accord/.test(reply));
+ok('réserve : engagement d’information AVANT tout supplément (front + emails)', /avant<\/strong> toute intervention/.test(ui) && /AVANT d'intervenir/.test(notify));
+
+// ---- Paiement en ligne facultatif (directive 5713247831) — Stripe TEST uniquement
+const pay = read('supabase/functions/create-payment-session/index.ts');
+const hook = read('supabase/functions/stripe-webhook-test/index.ts');
+ok('paiement : ne lit jamais la configuration Stripe de production (clé live)', !/app_settings/.test(pay.replace(/\/\/[^\n]*/g, '')) && /STRIPE_TEST_SECRET_KEY/.test(pay));
+ok('paiement : toute clé qui n’est pas sk_test_ est refusée', /key\.startsWith\('sk_test_'\)/.test(pay) && /blocked: 'live_key_refused'/.test(pay));
+ok('paiement : sans clé TEST, aucun faux succès', /blocked: 'missing_stripe_test_key'/.test(pay));
+ok('paiement : montant recalculé côté serveur depuis le catalogue (jamais celui du navigateur)', /from\('v_services_public'\)/.test(pay) && !/body\.amount/.test(pay));
+ok('paiement : éligible seulement si toutes les prestations sont à prix ferme', /if \(k !== 'ferme'\) \{ eligible = false;/.test(pay));
+ok('paiement : réservé à l’auteur de la demande (jeton comparé en temps constant, expiration)', /sameToken\(String\(meta\.pay_token/.test(pay) && /pay_token_expires/.test(pay));
+ok('paiement : un dossier payé n’est jamais facturé deux fois', /already_paid: true/.test(pay) && /Idempotency-Key/.test(pay));
+ok('paiement : URL de retour limitée aux domaines du site', /RETURN_OK/.test(pay) && /url de retour non autorisée/.test(pay));
+ok('paiement : jeton remis uniquement à la finalisation (jamais à une intention)', /meta\.finalized_at = nowIso; meta\.intent = false;[\s\S]{0,300}meta\.pay_token = /.test(submit));
+ok('webhook : signature Stripe vérifiée (HMAC SHA-256, tolérance 5 min)', /crypto\.subtle\.importKey\('raw'/.test(hook) && /Math\.abs\(Date\.now\(\) \/ 1000 - t\) > 300/.test(hook));
+ok('webhook : événement live refusé', /event\.livemode === true\) return json\(\{ error: 'live_event_refused' \}/.test(hook));
+ok('webhook : idempotent (événement rejoué ou dossier déjà payé → rien de plus)', /seen\.includes\(event\.id\)/.test(hook) && /if \(pay\.status === 'paid'\) return json\(\{ ok: true, already_paid: true \}\)/.test(hook));
+ok('webhook : le paiement met à jour le MÊME dossier puis notifie une fois agence + client', /metadata: \{ \.\.\.meta, payment: next \}/.test(hook) && /kind: 'payment'/.test(hook));
+ok('email agence : « Paiement reçu » rattaché au dossier (jamais un nouveau lead)', /Paiement reçu — dossier \$\{ref\}/.test(notify) && /PAIEMENT REÇU — dossier existant/.test(notify));
+ok('email client : confirmation de paiement distincte, envoyée une seule fois', /buildPaymentHtml/.test(reply) && /payment_not_confirmed/.test(reply) && /client_notified_at/.test(reply));
+
+// ---- Notifications finales : 1 interne + 1 client, zéro doublon (directive 5717005198)
+ok('interne : le client n’est jamais destinataire de la notification interne (to/cc filtrés)', /const notClient = \(a: string\) => !!a && a\.trim\(\)\.toLowerCase\(\) !== clientEmail;/.test(notify) && /\.filter\(notClient\)/.test(notify));
+ok('interne : une seule notification par événement et par dossier (journal)', /journal\.some\(\(j: any\) => j && j\.kind === notifKind/.test(notify) && /reason: 'already_notified'/.test(notify));
+ok('interne : un échec d’envoi laisse un nouvel essai possible', /reason: 'resend_error'/.test(notify) && !/j\.reason === 'resend_error'/.test(notify));
+ok('interne : fiche opérationnelle (client, demande, tarification, origine, actions, dossier)', /sec\('Client'/.test(notify) && /sec\('Demande'/.test(notify) && /sec\('Tarification'/.test(notify) && /sec\('Origine'/.test(notify) && /Ouvrir le dossier \$\{esc\(dossierRef\)\} dans le back-office/.test(notify));
+ok('interne : statut de paiement très visible (payé / en attente / non payé / non éligible)', /PAIEMENT : PAYÉ EN LIGNE/.test(notify) && /PAIEMENT : EN ATTENTE/.test(notify) && /PAIEMENT : NON PAYÉ/.test(notify) && /PAIEMENT : NON ÉLIGIBLE \/ SUR DEVIS/.test(notify));
+ok('interne : prénom et nom sur des lignes distinctes, téléphone cliquable', /kv\('Prénom'/.test(notify) && /kv\('Nom'/.test(notify) && /href="tel:\$\{esc\(l\.telephone\)\}"/.test(notify));
+ok('finalisation : répétée (double clic, rafraîchissement, réseau) → même dossier, aucune nouvelle notification', /if \(!reusable && row && meta0\.finalized_at\) \{/.test(submit) && /duplicate: true/.test(submit));
+ok('client : email avec référence, prestations, total et statut de paiement', /function recapOf\(l: any\)/.test(reply) && /Votre dossier \$\{escapeHtml\(r\.ref\)\}/.test(reply) && /Total des prix fermes/.test(reply));
+ok('client : lien de paiement proposé seulement si éligible ET paiement disponible (clé TEST), domaines du site uniquement', /const payLink = allFirm && payAvailable && l\.metadata\?\.pay_token/.test(reply) && /PAY_ORIGINS/.test(reply));
+ok('client : « Paiement reçu » affiché quand le dossier est payé', /r\.payState === 'paid'/.test(reply) && /Paiement reçu/.test(reply));
+ok('front : le lien de l’email rouvre le récapitulatif du dossier avec le paiement (sans donnée personnelle dans l’URL)', /payer=\(\[0-9a-f-\]\{36\}\)/.test(ui) && /function openPayLink\(leadId, token\)/.test(ui));
+
+ok('dédup : la référence de corrélation est toujours conservée dans utm (clé de recherche stable)', /correlationId \? \{ correlation_id: correlationId \} : \{\}/.test(submit));
+// ---- Back-office : statut de paiement, nouveaux statuts, prénom + nom (directive 5717153299)
+const admin = read('admin-pro/leads.html');
+ok('back-office : statut PAYÉ EN LIGNE visible (liste + fiche) avec montant, date et transaction', /function onlinePayment\(l\)/.test(admin) && /label:'PAYÉ EN LIGNE'/.test(admin) && /Paiement en ligne — \$\{op\.label\}/.test(admin) && /Référence de transaction/.test(admin));
+ok('back-office : statuts « tarifs consultés » et « à relancer » nommés, colonne « À relancer »', /intent:'Tarifs consultés \(en cours\)'/.test(admin) && /needs_followup:'À relancer \(non finalisé\)'/.test(admin) && /key: 'needs_followup'/.test(admin));
+ok('back-office : une intention en cours ne tombe jamais dans « Nouveau »', /if \(l\.status === 'intent'\) return; \/\/ tarifs consultés/.test(admin) && /if \(l\.status === 'intent' && sFilter !== 'intent'\) return false;/.test(admin));
+ok('back-office : prénom et nom affichés ensemble (liste, fiche, impression, recherche)', /const fullName = l => \[l\.prenom, l\.nom\]/.test(admin) && (admin.match(/escapeHtml\(fullName\(l\)\)/g) || []).length >= 3 && /\[l\.prenom,l\.nom,l\.email/.test(admin));
+
+console.log(`\nRÉSULTAT CYCLE LEAD : ${pass} PASS / ${fail} FAIL`);
+process.exit(fail > 0 ? 1 : 0);

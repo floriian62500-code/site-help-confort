@@ -1,4 +1,11 @@
 #!/usr/bin/env node
+// ⚠️ NE PAS RÉGÉNÉRER SANS RELIRE LE RÉSULTAT (leçon du 2026-09-24).
+// Le fichier versionné supabase/functions/sitemap/index.ts a été retouché à la main depuis :
+//   · il porte un avertissement sur l'écart avec la version DÉPLOYÉE (qui émet encore du www) ;
+//   · il stocke les pages dans un format compact « chemin priorité fréquence| », que
+//     scripts/seo/duplicate-intent.mjs lit pour vérifier que chaque page canonique y figure.
+// Ce générateur écrit du JSON et n'a pas l'avertissement : le lancer tel quel écrase les deux.
+// Pour retirer ou ajouter UNE page, éditer le fichier cible à la main.
 // Génère supabase/functions/sitemap/index.ts avec la liste COMPLÈTE des pages du repo
 // + réalisations en URL jolie /realisations/{slug}. Exclut pages non-indexables.
 import { readdirSync, writeFileSync } from 'node:fs';
@@ -15,12 +22,19 @@ function priority(f) {
   if (/^(plombier|chauffagiste|electricien|serrurier|vitrier|menuisier|travaux|volets|pmr)-/.test(f)) return [0.8,'monthly'];
   if (/^depannage-/.test(f)) return [0.8,'monthly'];
   if (/^(nos-prestations|realisations|contrats-entretien|urgence|devis-express)\.html$/.test(f)) return [0.9,'weekly'];
-  if (/^(nos-metiers|nos-villes|zones-intervention|entretien-chaudiere|debouchage-canalisation|ouverture-porte-claquee|remplacement-chauffe-eau|panne-chaudiere|diagnostic-electrique)\.html$/.test(f)) return [0.85,'monthly'];
+  if (/^(nos-metiers|nos-villes|zones-intervention|debouchage-canalisation|ouverture-porte-claquee|remplacement-chauffe-eau|panne-chaudiere|diagnostic-electrique)\.html$/.test(f)) return [0.85,'monthly'];
   if (/^(guide|guides|blog|actualites|faq|temoignages|avant-apres|nos-realisations)/.test(f)) return [0.6,'weekly'];
   if (/^(mentions-legales|garanties|carrieres|reset)/.test(f)) return [0.3,'yearly'];
   return [0.7,'monthly'];
 }
 
+
+// Ce script ÉCRIT des fichiers : il ne doit agir que lancé directement. Importé — par un test, un
+// outil d'analyse, un éditeur — il ne fait rien. Un module qui écrit au seul fait d'être importé
+// salit le dépôt sans que personne ne l'ait demandé (constat du 2026-09-25, test d'hygiène).
+if (!process.argv[1] || !process.argv[1].endsWith('gen-sitemap-fn.mjs')) {
+  // importé : on n'exécute rien
+} else {
 const files = readdirSync(ROOT).filter(f => f.endsWith('.html') && !isExcluded(f)).sort();
 const staticPages = [{ path:'/', priority:1.0, freq:'weekly' },
   ...files.map(f => { const [p,fr]=priority(f); return { path:'/'+f, priority:p, freq:fr }; })];
@@ -33,7 +47,10 @@ const body = `// ═════════════════════
 // @ts-ignore Deno
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const SITE_URL = "https://www.depan59-62.fr";
+// Doublon SEO actualités ↔ réalisations (5778526407 §3) : une publication de chantier n'a qu'UNE url,
+// la fiche /realisations/<slug>. Le sitemap ne publie donc aucune url /actualites/<slug> :
+// la branche qui les listait (table actualites, inexistante en base) a été retirée.
+const SITE_URL = "https://depan59-62.fr";
 
 const STATIC_PAGES = ${JSON.stringify(staticPages)};
 
@@ -45,12 +62,6 @@ Deno.serve(async (_req: Request) => {
     const { data: reals } = await sb.from("realisations")
       .select("slug,published_at,updated_at").eq("status", "publie")
       .order("published_at", { ascending: false });
-    let actus: any[] = [];
-    try {
-      const r = await sb.from("actualites").select("slug,published_at,updated_at")
-        .eq("status", "publie").order("published_at", { ascending: false });
-      actus = r.data || [];
-    } catch (_) { /* table optionnelle */ }
 
     const urls: string[] = [];
     STATIC_PAGES.forEach((p: any) => {
@@ -65,15 +76,6 @@ Deno.serve(async (_req: Request) => {
       const lastmod = (r.updated_at || r.published_at || "").slice(0, 10);
       urls.push(\`  <url>
     <loc>\${SITE_URL}/realisations/\${encodeURIComponent(r.slug)}</loc>
-    \${lastmod ? \`<lastmod>\${lastmod}</lastmod>\` : ""}
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>\`);
-    });
-    actus.forEach((a: any) => {
-      const lastmod = (a.updated_at || a.published_at || "").slice(0, 10);
-      urls.push(\`  <url>
-    <loc>\${SITE_URL}/actualites/\${encodeURIComponent(a.slug)}.html</loc>
     \${lastmod ? \`<lastmod>\${lastmod}</lastmod>\` : ""}
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -95,3 +97,4 @@ Deno.serve(async (_req: Request) => {
 `;
 writeFileSync(join(ROOT,'supabase/functions/sitemap/index.ts'), body);
 console.log(`OK sitemap/index.ts régénéré : ${staticPages.length} pages statiques + réalisations (URL jolie).`);
+}

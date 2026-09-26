@@ -304,5 +304,16 @@
 
 })();
 </script>
+<script src="../assets/hc-fn-dispo.js?v=20260923a"></script>
+<script>
+/* 5796732231 §4 : la fonction serveur « actu-generator » n'est pas déployée en production.
+   On le dit avant le clic au lieu de laisser le bouton finir en 404. Sonde réelle : le jour où
+   la fonction est déployée, le bouton se réactive sans toucher à cette page. */
+HcFn.garder('actu-generator', {
+  boutons: [document.getElementById('btnGenerate'), document.getElementById('btnRegenerate'), document.getElementById('btnSave')],
+  zone: document.getElementById('results'),
+  quoi: 'La génération d’actualités'
+});
+</script>
 </body>
 </html>

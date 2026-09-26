@@ -7,11 +7,13 @@
 import { writeFileSync, readFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
+const { isRecruitment } = createRequire(import.meta.url)('../assets/hc-realisations.js'); // annonce de recrutement : pas de fiche chantier
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'realisations');
 const SUPA = 'https://btcbjwqiivhpwoszomhg.supabase.co';
-const SITE = 'https://www.depan59-62.fr';
+const SITE = 'https://depan59-62.fr';
 const PHONE = '03 66 10 01 34', TEL = '+33366100134';
 
 const METIERS = {
@@ -43,7 +45,6 @@ const HEADER = `<header style="background:rgba(255,255,255,.95);backdrop-filter:
 <div style="max-width:1480px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px">
 <a href="/" style="display:flex;align-items:center;text-decoration:none"><img width="200" height="60" decoding="async" src="/logo-officiel.jpg" alt="HELP Confort Saint-Omer & Dunkerque" style="height:44px;width:auto"></a>
 <nav style="display:flex;align-items:center;gap:16px">
-<a href="/realisations.html" style="color:#0DA0CF;font-weight:600;text-decoration:none;font-size:.9rem">← Réalisations</a>
 <a href="tel:${TEL}" style="background:#FF6B1A;color:#fff;padding:9px 16px;border-radius:10px;font-weight:800;text-decoration:none;font-size:.9rem">📞 ${PHONE}</a>
 </nav></div></header>`;
 
@@ -147,11 +148,18 @@ ${FOOTER}
 </body></html>`;
 }
 
+// Ce script ÉCRIT des fichiers : il ne doit agir que lancé directement. Importé — par un test, un
+// outil d'analyse, un éditeur — il ne fait rien. Un module qui écrit au seul fait d'être importé
+// salit le dépôt sans que personne ne l'ait demandé (constat du 2026-09-25, test d'hygiène).
+if (!process.argv[1] || !process.argv[1].endsWith('gen-realisations.mjs')) {
+  // importé : on n'exécute rien
+} else {
+
 // ── run ──
 const res = await fetch(`${SUPA}/functions/v1/realisations-json`, { headers: { apikey: 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2' } });
 let data = await res.json();
 let list = Array.isArray(data) ? data : (data.realisations || data.data || data.items || []);
-list = list.filter(r => r && r.slug && (r.status ? r.status === 'publie' : true));
+list = list.filter(r => r && r.slug && (r.status ? r.status === 'publie' : true) && !isRecruitment(r));
 if (!existsSync(OUT)) mkdirSync(OUT, { recursive: true });
 let n = 0; const slugs = [];
 for (const r of list) { writeFileSync(join(OUT, `${r.slug}.html`), page(r, list)); slugs.push(r.slug); n++; }
@@ -164,4 +172,8 @@ const block = `\n# Réalisations pré-rendues statiques (contenu indexable dans 
   slugs.map(s => `/realisations/${s} /realisations/${s}.html 200`).join('\n') + '\n';
 rc = rc.replace(/(# Anciennes URLs)/, block.trimStart() + '\n$1');
 writeFileSync(RP, rc);
-console.log(`OK ${n} pages générées dans realisations/ · _redirects mis à jour (${slugs.length} règles).`);
+// Manifeste des fiches réellement générées : les cartes du site ne pointent QUE vers ces fiches (sinon le fallback
+// /realisations/:slug → /realisation.html → /realisations.html recharge la liste : « le clic ne fait rien »).
+writeFileSync(join(OUT, 'index.json'), JSON.stringify({ generated: new Date().toISOString(), slugs: slugs.slice().sort() }, null, 1) + '\n');
+console.log(`OK ${n} pages générées dans realisations/ · _redirects mis à jour (${slugs.length} règles) · manifeste realisations/index.json.`);
+}

@@ -31,6 +31,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Setup Supabase CLI
         uses: supabase/setup-cli@v1
         with:
@@ -58,17 +63,44 @@ jobs:
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
 
-      - name: Deploy Edge Functions (si modifiées)
+      # ─────────────────────────────────────────────────────────────────────────────────
+      # Déploiement des fonctions edge : liste blanche explicite (directive 5796732231 §1).
+      #
+      # AVANT : la boucle déployait TOUT supabase/functions/*/. Un simple dossier dans le dépôt
+      # partait donc en production au premier merge, sans décision — et un merge recette → main
+      # aurait créé 10 fonctions jamais décidées.
+      #
+      # MAINTENANT : seules les fonctions en état « current » dans supabase/functions/DEPLOIEMENT.json
+      # sont déployées. « pending » (non déployée) et « quarantine » (déployée, sous surveillance)
+      # ne le sont JAMAIS automatiquement. Un dossier absent du fichier fait échouer l'étape :
+      # ajouter une fonction à la production est une modification visible de ce fichier, donc un acte.
+      # ─────────────────────────────────────────────────────────────────────────────────
+      - name: Contrôle de la liste blanche de déploiement
+        run: node scripts/tests/deploy-allowlist.test.mjs
+
+      - name: Deploy Edge Functions (liste blanche « current » uniquement)
         if: ${{ hashFiles('supabase/functions/**') != '' }}
-        continue-on-error: true
         run: |
-          for fn in supabase/functions/*/; do
-            name=$(basename "$fn")
-            # On skip les dossiers d'utilitaires (_shared, etc.)
-            if [[ "$name" == _* ]]; then continue; fi
+          set -euo pipefail
+          LISTE=$(node -e "const r=require('./supabase/functions/DEPLOIEMENT.json');console.log(Object.entries(r.fonctions).filter(([,v])=>v.etat==='current').map(([k])=>k).join(' '))")
+          if [ -z "$LISTE" ]; then
+            echo "::error::Liste blanche vide : aucune fonction à déployer. Arrêt."
+            exit 1
+          fi
+          echo "Fonctions autorisées : $(echo "$LISTE" | wc -w)"
+          ECHECS=""
+          for name in $LISTE; do
+            if [ ! -f "supabase/functions/$name/index.ts" ]; then
+              echo "::error::$name est en « current » mais n'a pas de source. Arrêt avant tout déploiement."
+              exit 1
+            fi
             echo "→ Deploy $name"
-            supabase functions deploy "$name" --project-ref $PROJECT_REF || echo "::warning::Échec deploy $name"
+            supabase functions deploy "$name" --project-ref $PROJECT_REF || ECHECS="$ECHECS $name"
           done
+          if [ -n "$ECHECS" ]; then
+            echo "::error::Échec de déploiement :$ECHECS"
+            exit 1
+          fi
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
 
