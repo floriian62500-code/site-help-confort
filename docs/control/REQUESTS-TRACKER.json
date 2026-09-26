@@ -12,7 +12,8 @@
   "REWORK_REQUIRED",
   "WAITING_FLORIAN",
   "READY_FOR_CONTROL",
-  "CLOSED"
+  "CLOSED",
+  "ACCEPTED_AUDIT"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
  "prochain_id": "REQ-20260926-023",
@@ -42,7 +43,7 @@
    "attempt": 2,
    "closed_at": null,
    "closure_proof": null,
-   "scope": "AUDIT/PREPARATION uniquement — la sécurité production n'est PAS clôturée"
+   "scope": "AUDIT/PRÉPARATION COMPLÈTE · PRODUCTION NON SÛRE SUR PLUSIEURS POINTS · WAITING_FLORIAN_GO — ne jamais écrire « clôture sécurité »"
   },
   {
    "request_id": "REQ-20260926-002",
@@ -432,9 +433,9 @@
    ],
    "latest_sha": null,
    "claude_outbox": null,
-   "human_gate": "—",
+   "human_gate": "WAITING_FLORIAN_ARCHITECTURE",
    "blocked_by": "gel renforcé",
-   "next_action": "gelé : attendre REQ-021 puis REQ-022",
+   "next_action": "décision A ou B sur les contrats (proposition §8)",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": null
@@ -459,7 +460,7 @@
    "claude_outbox": null,
    "human_gate": "WAITING_FLORIAN_DIRECTION",
    "blocked_by": "conflit à arbitrer : la prestation est tarifée dans v_services_public, dont les prix sont soumis à la porte des tarifs",
-   "next_action": "source canonique lue et documentée ; l'intégration attend l'arbitrage porte des tarifs",
+   "next_action": "source canonique prouvée (v_services_public, 220 € TTC/an, « Engagement annuel ») ; reste l'arbitrage de la porte des tarifs",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": null
@@ -494,7 +495,7 @@
    "title": "Cartes prestations limitées à deux actions",
    "priority": "P1",
    "status": "OPEN",
-   "parent_instruction": "(fichier d'instruction absent de l'inbox au 2026-09-26)",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-020-CARTES-DEUX-ACTIONS.md",
    "legacy_instruction_id": "REQ-20260926-013",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -506,8 +507,8 @@
    "latest_sha": null,
    "claude_outbox": null,
    "human_gate": "—",
-   "blocked_by": "instruction non reçue dans le dépôt",
-   "next_action": "en attente du fichier d'instruction ; correction minimale possible sans détourner l'audit",
+   "blocked_by": "—",
+   "next_action": "instruction canonique créée ; attente de validation de la proposition avant implémentation",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": null
@@ -516,7 +517,7 @@
    "request_id": "REQ-20260926-021",
    "title": "Audit fonctionnel complet du site",
    "priority": "P0",
-   "status": "READY_FOR_CONTROL",
+   "status": "ACCEPTED_AUDIT",
    "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-014-FULL-SITE-FUNCTIONAL-AUDIT.md",
    "legacy_instruction_id": "REQ-20260926-014",
    "created_at": "2026-09-26",
@@ -563,8 +564,8 @@
    "claude_outbox": "docs/audit/PROPOSITION-SITE-CIBLE-2026-09-26.md",
    "human_gate": "OUI/NON de Florian avant toute implémentation",
    "blocked_by": "—",
-   "next_action": "attendre la validation écran par écran",
-   "attempt": 2,
+   "next_action": "contrôle de la version corrigée : achat direct rétabli, SEO non prouvé retiré, matrice de mode mesurée, ECS traité",
+   "attempt": 3,
    "closed_at": null,
    "closure_proof": null
   }
