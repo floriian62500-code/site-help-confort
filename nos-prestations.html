@@ -1190,10 +1190,18 @@
    };
    bar.appendChild(allBtn);
    // Une pill par sous-catégorie
+   // Un slug technique n'est pas un libellé. Le repli « sinon, affiche le slug » faisait
+   // apparaître « _default » comme sous-filtre dans Plomberie (constat Florian, REQ-20260926-012) :
+   // une prestation sans sous-catégorie métier tombe dans le groupe `_default`, ce groupe n'a pas
+   // d'en-tête (il n'a pas de nom), donc le repli prenait le slug. Le client lisait le nom d'une
+   // variable interne. Règle maintenant : le libellé vient de l'en-tête ; à défaut, c'est
+   // « Autres prestations » ; jamais le slug.
+   var SLUGS_TECHNIQUES = { '_default': 1, 'default': 1, 'null': 1, 'undefined': 1, '': 1 };
    subgroups.forEach(function(sg){
-     var slug = sg.getAttribute('data-subcat-slug');
+     var slug = sg.getAttribute('data-subcat-slug') || '';
      var head = sg.querySelector('.nv-subcat-head');
-     var label = head ? (head.querySelector('.nv-subcat-label')||{}).textContent : slug;
+     var libelleHead = head ? ((head.querySelector('.nv-subcat-label')||{}).textContent || '') : '';
+     var label = libelleHead.trim() || (SLUGS_TECHNIQUES[slug] ? 'Autres prestations' : '');
      var emoji = head ? (head.querySelector('.nv-subcat-emoji')||{}).textContent : '';
      var count = sg.querySelectorAll('.nv-card').length;
      if (!label || !slug) return;
