@@ -30,9 +30,12 @@ const ch = rd('chauffagiste-saint-omer.html'), chTxt = visible(ch);
 // fichier. Constat signalé au §Findings du retour du 24/09, à traiter dans un lot dédié : reprendre
 // 58 pages à la main dans ce lot-ci serait exactement le genre de retouche en masse qui casse.
 ok('chaudière : script de mesure chargé sur la destination', /src="[^"]*assets\/tracking\.js/.test(ch));
+// Deux entrées vers le tunnel, deux provenances distinctes : la carte savoir-faire et le teaser
+// contrats (qui a remplacé le bloc détaillé le 26/09). Des provenances distinctes, c'est ce qui
+// permet de savoir lequel des deux chemins convertit.
 ok('chaudière : l’entretien ouvre le tunnel pré-contextualisé, avec une provenance mesurable',
   /href="catalogue\.html#cat=chauffage&amp;presta=entretien&amp;src=chauffage-svc"/.test(ch) &&
-  /href="catalogue\.html#cat=chauffage&amp;presta=entretien&amp;src=chauffage-contrats"/.test(ch));
+  /href="catalogue\.html#cat=chauffage&amp;presta=entretien&amp;src=chauffage-teaser"/.test(ch));
 ok('chaudière : plus de lien vers l’ancien formulaire supprimé (#hc-reservation)', !/hc-reservation/.test(ch));
 ok('chaudière : plus aucun lien vers la landing supprimée', !/href="(?:[^"]*\/)?entretien-chaudiere(\.html)?[#"]/.test(ch));
 ok('chaudière : les trois formules sont présentées et mènent à la page de souscription',

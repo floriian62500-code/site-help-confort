@@ -33,6 +33,7 @@ const pages = [
   ...readdirSync(join(ROOT, 'prestations')).filter((f) => f.endsWith('.html')).map((f) => 'prestations/' + f),
 ];
 // Le JS lit le catalogue à l'exécution : seuls les montants écrits en dur dans le texte comptent.
+const lire = (p) => readFileSync(join(ROOT, p), 'utf8');
 const texte = (p) => readFileSync(join(ROOT, p), 'utf8').replace(/<script[\s\S]*?<\/script>/g, '');
 
 console.log('\nPRIX PUBLICS — aucune page n’invente un tarif\n');
@@ -110,28 +111,40 @@ for (const p of pages) {
 ok('le délai annoncé pour la formule CONFORT est le même partout', delais.size <= 1,
   delais.size > 1 ? 'valeurs trouvées : ' + [...delais].join(' h, ') + ' h' : '');
 
-// ── 8. Un bloc contrats annoncé est un bloc contrats montré (CHATGPT-2026-09-24-P0-CHAUFFAGE-CONTRATS-MISSING)
-// Régression constatée par Florian : la consolidation des vitrines avait retiré les trois cartes
-// des pages chauffagiste mais laissé le titre, le texte « Trois formules : BASIC, CONFORT,
-// SÉCURITÉ » et deux boutons. Résultat : un grand bandeau orange qui promet trois formules et n'en
-// montre aucune. Ce contrôle interdit que le conteneur survive à son contenu.
-const avecSection = pages.filter((f) => /m-contrats-section/.test(texte(f)));
-const sectionDe = (f) => (texte(f).match(/<section[^>]*m-contrats-section[\s\S]*?<\/section>/) || [''])[0];
-ok(`les pages chauffagiste portent toutes le bloc contrats (${avecSection.length} page(s))`,
-  ['chauffagiste-saint-omer.html', 'chauffagiste-dunkerque.html', 'chauffagiste-calais.html', 'chauffagiste-boulogne-sur-mer.html']
-    .every((f) => avecSection.includes(f)));
-for (const f of avecSection) {
-  const sec = sectionDe(f);
-  const cartes = (sec.match(/class="ce-name"[^>]*>([^<]+)</g) || []).map((m) => m.split('>').pop());
-  const troisFormules = ['BASIC', 'CONFORT', 'SÉCURITÉ'].every((t) => cartes.some((c) => c.includes(t)));
-  ok(`${f.replace('.html', '')} : les trois formules sont réellement affichées, pas seulement annoncées`,
-    troisFormules, 'cartes trouvées : ' + (cartes.join(', ') || 'aucune'));
-  ok(`${f.replace('.html', '')} : le bloc mène à la page canonique de souscription`,
-    /href="[^"]*contrats-entretien(\.html)?[#"]/.test(sec));
-  // Le teaser ne rejoue pas la grille tarifaire : un seul endroit dit les prix.
-  ok(`${f.replace('.html', '')} : le teaser n’écrit aucun tarif mensuel de son côté`,
-    !/\d+[.,]\d{2}\s*€\s*(TTC|HT)?\s*(?:<[^>]+>\s*)*(?:\/|par\s)\s*mois/i.test(sec.replace(/<p class="m-head-sub"[\s\S]*?<\/p>/, '')) || !/ce-price/.test(sec));
+// ── 8. Le teaser contrats annonce, la page contrats détaille (décision Florian du 2026-09-26)
+// Histoire de ce contrôle, parce qu'elle explique sa forme : le 23/09 j'avais retiré les cartes des
+// pages chauffagiste en laissant le conteneur, donc un titre promettant trois formules au-dessus de
+// rien. Le 24/09 je les ai rétablies. Le 26/09 Florian tranche autrement : les cartes détaillées
+// font doublon avec la page contrats, elles n'ont rien à faire ici. Ce qui doit rester vrai dans
+// les trois cas, c'est qu'une page ne promet jamais ce qu'elle ne montre pas — et qu'un seul
+// endroit décrit les formules.
+const CHAUFFAGISTES = ['chauffagiste-saint-omer.html', 'chauffagiste-dunkerque.html',
+                       'chauffagiste-calais.html', 'chauffagiste-boulogne-sur-mer.html'];
+const teaserDe = (f) => (texte(f).match(/<section[^>]*m-contrats-teaser[\s\S]*?<\/section>/) || [''])[0];
+
+ok(`les pages chauffagiste portent toutes le teaser contrats (${CHAUFFAGISTES.length})`,
+  CHAUFFAGISTES.every((f) => !!teaserDe(f)), CHAUFFAGISTES.filter((f) => !teaserDe(f)).join(', '));
+
+for (const f of CHAUFFAGISTES) {
+  const t = teaserDe(f), page = texte(f);
+  ok(`${f.replace('.html', '')} : le teaser nomme les trois formules, sans les détailler`,
+    ['BASIC', 'CONFORT', 'SÉCURITÉ'].every((n) => t.includes(n)));
+  ok(`${f.replace('.html', '')} : il mène à la page qui, elle, détaille`,
+    /href="contrats-entretien\.html"/.test(t));
+  // Le point de la décision du 26/09 : plus aucune reprise des cartes et de leurs garanties.
+  ok(`${f.replace('.html', '')} : aucune carte détaillée recopiée depuis la page contrats`,
+    !/class="ce-card|class="formula-card/.test(page) && !/Tout BASIC inclus|Tout CONFORT inclus/.test(page));
+  // Un seul chiffre toléré : le prix d'entrée du catalogue, déjà vérifié plus haut.
+  const montants = [...t.matchAll(/(\d+[.,]\d{2})\s*€/g)].map((m) => m[1]);
+  ok(`${f.replace('.html', '')} : le teaser n'écrit qu'un repère de prix, celui du catalogue`,
+    montants.length <= 1 && montants.every((v) => mensuels.has(v)), montants.join(', '));
 }
+
+// Et la page qui détaille doit continuer de le faire : sinon on aurait tout déplacé vers rien.
+const pageContrats = lire('contrats-entretien.html');
+ok('la page contrats reste la seule à porter le comparatif complet',
+  /v_contract_offers|formula-card|formula-grid/.test(pageContrats));
+
 
 console.log(`\nRÉSULTAT PRIX PUBLICS : ${pass} PASS / ${fail} FAIL\n`);
 process.exit(fail ? 1 : 0);
