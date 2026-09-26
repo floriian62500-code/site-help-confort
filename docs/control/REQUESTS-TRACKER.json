@@ -23,7 +23,7 @@
   "WAITING_FLORIAN_GO"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-025",
+ "prochain_id": "REQ-20260926-026",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -159,7 +159,8 @@
    "attempt": 2,
    "closed_at": null,
    "closure_proof": null,
-   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2"
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2",
+   "note_design": "REQ-005-REWORK-2 précise la direction visuelle refusée : bloc sombre pleine largeur, effet « panneau publicitaire ». Direction imposée : fond clair/crème, texte bleu nuit, accents orange, carte blanche ou très légèrement teintée, ombre et bordure discrètes. Cette direction s'applique désormais au prototype de REQ-017, puisque REQ-005 est SUPERSEDED_BY_REQ017."
   },
   {
    "request_id": "REQ-20260926-006",
@@ -602,7 +603,7 @@
    "request_id": "REQ-20260926-023",
    "title": "Zones d'intervention : Calais et Boulogne comme pôles principaux",
    "priority": "P1",
-   "status": "READY_FOR_CONTROL",
+   "status": "WAITING_FLORIAN_VISUAL",
    "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-023-ZONES-CALAIS-BOULOGNE.md",
    "legacy_instruction_id": null,
    "created_at": "2026-09-26",
@@ -619,11 +620,11 @@
    "claude_outbox": "CLAUDE-2026-09-26-REQ-023-QUATRE-POLES.md",
    "human_gate": "WAITING_FLORIAN_VISUAL",
    "blocked_by": "—",
-   "next_action": "contrôle visuel Florian",
+   "next_action": "validation visuelle de Florian sur la preview ; ne pas CLOSED avant",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": "avant : 2 blocs · après : 4 cartes (Saint-Omer=Agence, Dunkerque/Calais/Boulogne=Pôle d'intervention), 2×2 en 1440, empilées en 390, 0 débordement",
-   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-1"
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-3"
   },
   {
    "request_id": "REQ-20260926-024",
@@ -653,6 +654,38 @@
    "closure_proof": "Leaflet peint sans défilement en 402 ms, 9 tuiles en 1440 et 4 en 390, chargement différé conservé sur /contact · SHA 65953e28",
    "note_numerotation": "créée par Claude en parallèle sous le numéro 023 ; renumérotée 024 dès réception de REQ-20260926-023-ZONES-CALAIS-BOULOGNE.md, publiée par ChatGPT. Le contenu métier est inchangé.",
    "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2 (CLOSED_BY_CONTROL)"
+  },
+  {
+   "request_id": "REQ-20260926-025",
+   "title": "Cohérence communes-list vs zones réellement desservies",
+   "priority": "P0",
+   "status": "READY_FOR_CONTROL",
+   "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-3.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "source de vérité identifiée",
+    "consommateurs listés",
+    "villes revendiquées absentes",
+    "villes canoniques jamais citées",
+    "impact réel sur l'éligibilité",
+    "correctif recommandé",
+    "aucune mutation"
+   ],
+   "evidence_required": [
+    "lecture de la fonction publique",
+    "distances calculées",
+    "comparaison pages/pastilles vs canonique"
+   ],
+   "latest_sha": null,
+   "claude_outbox": "CLAUDE-2026-09-26-REQ-025-AUDIT-COMMUNES.md",
+   "human_gate": "décision sur le correctif de données (compléter la liste = mutation, GO requis)",
+   "blocked_by": "—",
+   "next_action": "choisir entre garde automatique (sans risque), complétion de la liste (GO), ou dérivation par distance",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": "aucun impact d'éligibilité aujourd'hui (le tunnel décide par distance, Boulogne à 45 km pour un seuil de 50) ; 3 villes revendiquées absentes du canonique ; 169 communes canoniques jamais citées",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-3"
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id.",
