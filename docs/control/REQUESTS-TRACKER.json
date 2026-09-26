@@ -15,7 +15,7 @@
   "CLOSED"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-016",
+ "prochain_id": "REQ-20260926-023",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -38,10 +38,11 @@
    "claude_outbox": "CLAUDE-2026-09-26-REQ-001-CLOTURE-PAIEMENT-SECURITE.md",
    "human_gate": "GO Florian requis pour les 5 points du §4",
    "blocked_by": "—",
-   "next_action": "contrôle ChatGPT du rapport",
+   "next_action": "GO Florian sur les 5 actions production ; plusieurs lignes restent PROD_UNSAFE",
    "attempt": 2,
    "closed_at": null,
-   "closure_proof": null
+   "closure_proof": null,
+   "scope": "AUDIT/PREPARATION uniquement — la sécurité production n'est PAS clôturée"
   },
   {
    "request_id": "REQ-20260926-002",
@@ -89,7 +90,7 @@
    ],
    "latest_sha": "0f09e466",
    "claude_outbox": "CLAUDE-2026-09-26-REQ-025-CHAUFFAGE-GRID-REWORK.md",
-   "human_gate": "validation visuelle Florian",
+   "human_gate": "WAITING_FLORIAN_VISUAL — ne pas fermer, les captures ont montré des défauts successifs",
    "blocked_by": "3 photos manquantes (chaudière, ramonage, poêle) — n'empêchent pas le rendu",
    "next_action": "contrôle visuel Florian",
    "attempt": 1,
@@ -100,7 +101,7 @@
    "request_id": "REQ-20260926-004",
    "title": "Pictos et libellés du footer Métiers",
    "priority": "P0",
-   "status": "IN_PROGRESS",
+   "status": "REWORK_REQUIRED",
    "parent_instruction": "CHATGPT-2026-09-26-CONTROL-NUMBERED-1 §REQ-004",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -114,10 +115,10 @@
    ],
    "latest_sha": "330210c9",
    "claude_outbox": "CLAUDE-2026-09-26-P0-CHAUFFAGE-CONTRATS-PREMIUM.md",
-   "human_gate": "—",
-   "blocked_by": "désaccord à lever : le libellé « Chauffage » sur un lien vers la plomberie a été corrigé côté LIBELLÉ ; REQ-004 demande de ne pas toucher aux libellés. Audit des pictos à produire.",
-   "next_action": "produire l'audit picto par picto et trancher avec ChatGPT",
-   "attempt": 1,
+   "human_gate": "WAITING_FLORIAN_DIRECTION",
+   "blocked_by": "Florian maintient que les pictos sont mauvais visuellement ; ne pas clôturer sur « le libellé était faux »",
+   "next_action": "repartir du rendu attendu par Florian, pas du mapping actuel",
+   "attempt": 2,
    "closed_at": null,
    "closure_proof": null
   },
@@ -125,8 +126,8 @@
    "request_id": "REQ-20260926-005",
    "title": "Section contrats Chauffage — mise en avant",
    "priority": "P0",
-   "status": "READY_FOR_CONTROL",
-   "parent_instruction": "CHATGPT-2026-09-26-P0-CHAUFFAGE-CONTRATS-PREMIUM",
+   "status": "REWORK_REQUIRED",
+   "parent_instruction": "REQ-20260926-005-REWORK-2.md",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
     "section premium, hiérarchie forte",
@@ -140,10 +141,10 @@
    ],
    "latest_sha": "c805737d",
    "claude_outbox": "CLAUDE-2026-09-26-P0-CHAUFFAGE-CONTRATS-PREMIUM.md",
-   "human_gate": "validation visuelle Florian",
+   "human_gate": "refus visuel de Florian sur la section premium",
    "blocked_by": "—",
-   "next_action": "contrôle visuel Florian",
-   "attempt": 1,
+   "next_action": "reprendre selon REQ-20260926-005-REWORK-2.md, après l'audit global",
+   "attempt": 2,
    "closed_at": null,
    "closure_proof": null
   },
@@ -387,6 +388,187 @@
    "attempt": 1,
    "closed_at": null,
    "closure_proof": null
+  },
+  {
+   "request_id": "REQ-20260926-016",
+   "title": "Réconciliation du tracker et gel avant audit global",
+   "priority": "P0",
+   "status": "READY_FOR_CONTROL",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-016-TRACKER-RECONCILIATION.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "aucun request_id réutilisé",
+    "001→015 conservés comme historique",
+    "016→022 créés avec legacy_instruction_id",
+    "statuts 001/003/004/005 corrigés"
+   ],
+   "evidence_required": [
+    "rapport outbox dédié"
+   ],
+   "latest_sha": null,
+   "claude_outbox": null,
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "contrôle ChatGPT, puis REQ-021",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null
+  },
+  {
+   "request_id": "REQ-20260926-017",
+   "title": "Contrats sur une seule page / module complet sur Chauffage",
+   "priority": "P1",
+   "status": "OPEN",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-010-CONTRATS-ONE-PAGE.md",
+   "legacy_instruction_id": "REQ-20260926-010",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "une seule page décrit les contrats",
+    "module complet sur Chauffage sans doublon"
+   ],
+   "evidence_required": [
+    "rapport outbox dédié"
+   ],
+   "latest_sha": null,
+   "claude_outbox": null,
+   "human_gate": "—",
+   "blocked_by": "gel renforcé",
+   "next_action": "gelé : attendre REQ-021 puis REQ-022",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null
+  },
+  {
+   "request_id": "REQ-20260926-018",
+   "title": "Chauffe-eau / ECS dans l'offre contrats",
+   "priority": "P1",
+   "status": "IN_PROGRESS",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-011-CHAUFFE-EAU-ECS-CONTRATS.md",
+   "legacy_instruction_id": "REQ-20260926-011",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "source canonique prouvée",
+    "type de produit et périodicité sans ambiguïté",
+    "aucun prix inventé"
+   ],
+   "evidence_required": [
+    "rapport outbox dédié"
+   ],
+   "latest_sha": null,
+   "claude_outbox": null,
+   "human_gate": "WAITING_FLORIAN_DIRECTION",
+   "blocked_by": "conflit à arbitrer : la prestation est tarifée dans v_services_public, dont les prix sont soumis à la porte des tarifs",
+   "next_action": "source canonique lue et documentée ; l'intégration attend l'arbitrage porte des tarifs",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null
+  },
+  {
+   "request_id": "REQ-20260926-019",
+   "title": "Bug catalogue : sous-catégorie _default visible",
+   "priority": "P0",
+   "status": "READY_FOR_CONTROL",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-012-CATALOGUE-DEFAULT-FILTER-BUG.md",
+   "legacy_instruction_id": "REQ-20260926-012",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "0 slug technique visible",
+    "audit de toutes les familles",
+    "filtres et compteurs inchangés"
+   ],
+   "evidence_required": [
+    "rapport outbox dédié"
+   ],
+   "latest_sha": null,
+   "claude_outbox": null,
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "contrôle ChatGPT + vérification visuelle",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null
+  },
+  {
+   "request_id": "REQ-20260926-020",
+   "title": "Cartes prestations limitées à deux actions",
+   "priority": "P1",
+   "status": "OPEN",
+   "parent_instruction": "(fichier d'instruction absent de l'inbox au 2026-09-26)",
+   "legacy_instruction_id": "REQ-20260926-013",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "deux actions maximum par carte"
+   ],
+   "evidence_required": [
+    "rapport outbox dédié"
+   ],
+   "latest_sha": null,
+   "claude_outbox": null,
+   "human_gate": "—",
+   "blocked_by": "instruction non reçue dans le dépôt",
+   "next_action": "en attente du fichier d'instruction ; correction minimale possible sans détourner l'audit",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null
+  },
+  {
+   "request_id": "REQ-20260926-021",
+   "title": "Audit fonctionnel complet du site",
+   "priority": "P0",
+   "status": "OPEN",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-014-FULL-SITE-FUNCTIONAL-AUDIT.md",
+   "legacy_instruction_id": "REQ-20260926-014",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "inventaire des doublons fonctionnels",
+    "parcours cible clair",
+    "aucune implémentation avant validation"
+   ],
+   "evidence_required": [
+    "rapport outbox dédié"
+   ],
+   "latest_sha": null,
+   "claude_outbox": null,
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "à démarrer immédiatement après le contrôle de REQ-016",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null
+  },
+  {
+   "request_id": "REQ-20260926-022",
+   "title": "Montrer / prototyper avant toute modification structurelle",
+   "priority": "P0",
+   "status": "OPEN",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-015-SHOW-BEFORE-CHANGE-GUARD.md",
+   "legacy_instruction_id": "REQ-20260926-015",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "proposition montrée et validée avant implémentation"
+   ],
+   "evidence_required": [
+    "rapport outbox dédié"
+   ],
+   "latest_sha": null,
+   "claude_outbox": null,
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "après REQ-021",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null
   }
+ ],
+ "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id.",
+ "gel_renforce": [
+  "aucune nouvelle refonte",
+  "aucune suppression de page",
+  "aucune 301",
+  "aucune fusion de parcours",
+  "aucune nouvelle architecture",
+  "aucune modification Stripe LIVE",
+  "aucune mise en production"
  ]
 }
