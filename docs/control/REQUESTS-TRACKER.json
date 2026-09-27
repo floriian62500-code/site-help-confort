@@ -29,7 +29,7 @@
   "WAITING_FLORIAN_BUSINESS_GO"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-031",
+ "prochain_id": "REQ-20260926-032",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -843,6 +843,34 @@
    "closed_at": null,
    "closure_proof": null,
    "decide_par": "ChatGPT 2026-09-27"
+  },
+  {
+   "request_id": "REQ-20260926-031",
+   "title": "Réparer la garde de publication cassée dans recette par l’outillage (.vscode, .cursor)",
+   "priority": "P1",
+   "status": "WAITING_FLORIAN",
+   "parent_instruction": "contrôle Claude de la PR #11 ; suite de REQ-20260926-028 (1db70eed) et REQ-20260926-030 (df788e04)",
+   "created_at": "2026-09-27",
+   "acceptance_criteria": [
+    "/.vscode/* et /.cursor/* bloqués dans _redirects (règle terminée par 404!)",
+    "depot-propre repasse à 10 PASS / 0 FAIL sur recette",
+    "suite complète 840 PASS / 0 FAIL sur recette",
+    "aucun fichier public du site modifié"
+   ],
+   "evidence_required": [
+    "sortie de depot-propre sur recette avant et après",
+    "suite complète sur recette"
+   ],
+   "latest_sha": "f34f6d18 (correctifs prêts sur tooling/cursor-vscode-setup)",
+   "claude_outbox": "CLAUDE-2026-09-27-PR11-OUTILLAGE.md",
+   "human_gate": "merge de la PR #11 OU GO pour réécrire les 4 fichiers directement sur recette",
+   "blocked_by": "garde d’outil « Merge Without Review » : cherry-pick vers recette refusé, non contourné",
+   "next_action": "Florian choisit : merge PR #11, ou GO d’application directe ; aucun impact visuel",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": "recette rouge : depot-propre 9 PASS / 1 FAIL (.cursor, .vscode) ; deux lots d’outillage fusionnés (1db70eed, df788e04) ont ajouté des fichiers dans ces dossiers sans règle de blocage ; correctifs prouvés sur la branche de la PR (840 PASS / 0 FAIL)",
+   "scope": null,
+   "decide_par": null
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id.",
