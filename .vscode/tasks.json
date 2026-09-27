@@ -1,0 +1,51 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "HC: serveur local",
+      "type": "shell",
+      "command": "python3 -m http.server 8765",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "HC: tests Node complets",
+      "type": "shell",
+      "command": "for t in scripts/tests/*.test.mjs; do echo \"== $t\"; node \"$t\" || exit 1; done",
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "HC: controles pre-commit",
+      "type": "shell",
+      "command": "for t in scripts/tests/*.test.mjs; do node \"$t\" || exit 1; done && bash scripts/tests/autopush.test.sh && node scripts/seo/seo-guardrails.mjs && node scripts/header/sync-header.mjs --check && node scripts/seo/duplicate-intent.mjs && node scripts/seo/fix-compound-selectors.mjs --check && node scripts/gen-offres-emploi.mjs --check",
+      "problemMatcher": [],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "HC: audit doublon intention",
+      "type": "shell",
+      "command": "node scripts/seo/duplicate-intent.mjs",
+      "problemMatcher": []
+    },
+    {
+      "label": "HC: verifier en-tete",
+      "type": "shell",
+      "command": "node scripts/header/sync-header.mjs --check",
+      "problemMatcher": []
+    },
+    {
+      "label": "HC: statut Git",
+      "type": "shell",
+      "command": "git status --short --branch && git log -1 --oneline",
+      "problemMatcher": []
+    }
+  ]
+}
