@@ -29,7 +29,7 @@
   "WAITING_FLORIAN_BUSINESS_GO"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-029",
+ "prochain_id": "REQ-20260926-030",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -757,7 +757,7 @@
    "request_id": "REQ-20260926-028",
    "title": "Mise en place outillage developpement + qualite SEO externe",
    "priority": "P1",
-   "status": "READY_FOR_FLORIAN_VALIDATION",
+   "status": "CLOSED",
    "parent_instruction": "demande Florian 2026-09-27 - mettre en place tous les outils utiles",
    "created_at": "2026-09-27",
    "acceptance_criteria": [
@@ -773,11 +773,42 @@
     "liste des fichiers ajoutes",
     "aucun fichier public modifie"
    ],
-   "latest_sha": "798d24452e36da0c8bba8e231f46d0377fb839f4",
+   "latest_sha": "1db70eedc1b6dd13f3a6ff2105345775d7a6a6a9",
    "claude_outbox": null,
    "human_gate": "validation Florian avant merge dans recette",
    "blocked_by": "—",
-   "next_action": "valider PR #11 puis merger dans recette; ensuite connecter/valider les comptes Google manuellement",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-09-27",
+   "closure_proof": "PR #12 mergee dans recette : Cursor/VS Code, Lighthouse, Screaming Frog et documentation SEO externe ; aucun fichier public du site modifie",
+   "decide_par": "ChatGPT 2026-09-27 (CLOSED_BY_CONTROL)"
+  },
+  {
+   "request_id": "REQ-20260926-029",
+   "title": "Activation des outils externes SEO et qualite",
+   "priority": "P1",
+   "status": "WAITING_FLORIAN",
+   "parent_instruction": "suite de REQ-20260926-028",
+   "created_at": "2026-09-27",
+   "acceptance_criteria": [
+    "Search Console : proprietaire verifie et sitemap controle",
+    "Google Business Profile : fiche agence verifiee",
+    "Screaming Frog installe sur le Mac et premier crawl execute",
+    "premier rapport Lighthouse execute",
+    "Rich Results utilise sur les pages schema critiques"
+   ],
+   "evidence_required": [
+    "capture/statut Search Console",
+    "capture/statut Business Profile",
+    "export du premier crawl Screaming Frog",
+    "rapport Lighthouse",
+    "resultat Rich Results"
+   ],
+   "latest_sha": null,
+   "claude_outbox": null,
+   "human_gate": "connexion aux comptes Google et installation locale requises",
+   "blocked_by": "acces interactifs au Mac et aux comptes Google de Florian",
+   "next_action": "Florian ouvre/autorise les outils externes ; ChatGPT analyse ensuite les premiers rapports",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": null,
