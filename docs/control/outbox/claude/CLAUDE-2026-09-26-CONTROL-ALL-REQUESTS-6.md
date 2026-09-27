@@ -85,3 +85,35 @@ déploiement, aucun merge vers `main`.
 À sa validation, sans le redemander : checkpoint `backup/recette-validated-2026-09-26-req023`
 → REQ-026 → REQ-020 (commit isolé, puis STOP visuel) → REQ-017 prototype contrats
 (puis STOP visuel). REQ-027 hors file jusqu'au GO métier.
+
+## TRACABILITE DU COMMIT — à lire avant de chercher un commit « control: »
+Ce rapport et la modification du tracker sont portés par le commit
+**`a0fe7947a25020074a5039366285ba4a40faa955`**, dont le message est générique :
+`chore(auto): sauvegarde automatique 2026-09-26 22:31 — 2 fichier(s)`.
+
+Ce n'est pas un commit de travail parasite : son contenu est exactement mes deux
+fichiers `docs/control/` de ce lot, et rien d'autre (vérifié fichier par fichier).
+
+Cause, établie par le journal du démon d'auto-sauvegarde et non supposée :
+```
+[2026-09-26 22:27:06] ⏸ session de travail en cours depuis 5390s … — ni commit ni push
+[2026-09-26 22:28:06] 🔓 verrou de session expiré (5450s > 5400s) — sauvegardes reprises
+[2026-09-26 22:31:07] 📝 commit auto (2 fichier(s)) sur recette
+[2026-09-26 22:31:09] ✅ push a0fe7947… → recette
+```
+Le verrou de lot avait été posé à 20:57 et n'a jamais été **renouvelé** : `start`
+sur une session déjà ouverte conserve l'horodatage d'origine et ne remet pas le TTL
+de 90 min à zéro — seul `worksession.sh renew` le fait. Le verrou a donc expiré
+pendant l'attente, et le démon a committé puis poussé mon lot en cours.
+
+Le message correct a bien été écrit ensuite (`commit --amend`), mais le `git rebase
+origin/recette` qui a suivi l'a **écarté** : le démon avait déjà poussé le même
+contenu, le patch était donc déjà en amont. Je n'ai pas force-pushé `recette` pour
+réparer un simple libellé — la branche est lue par le contrôle.
+
+Conséquence réelle : aucune sur le site public (lot 100 % `docs/control/`), aucune
+sur le contenu du rapport. Seul le libellé du commit est générique.
+
+Mesure que j'applique à partir de maintenant : `renew` pendant un lot qui dure, et
+surtout `stop` **avant** toute attente humaine, pour ne plus laisser un verrou
+expirer en silence au milieu d'un lot.
