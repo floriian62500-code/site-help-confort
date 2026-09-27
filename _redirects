@@ -17,6 +17,11 @@
 /logs/*               /404.html 404!
 /.github/*            /404.html 404!
 /.autopush/*          /404.html 404!
+# Configuration d'editeur (PR #11 outillage Cursor/VS Code) : jamais publique. Netlify ne sert
+# deja pas les chemins commencant par un point (verifie : /.gitignore et /.env.example repondent
+# 404 sans regle), mais la garde depot-propre exige une regle explicite pour tout dossier suivi.
+/.vscode/*            /404.html 404!
+/.cursor/*            /404.html 404!
 /secrets/*            /404.html 404!
 /admin/*              /404.html 404!
 /admin-pro/audits/*   /404.html 404!
