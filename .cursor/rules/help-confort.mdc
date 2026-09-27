@@ -1,0 +1,35 @@
+---
+description: Règles obligatoires pour travailler sur HELP CONFORT Saint-Omer
+alwaysApply: true
+---
+
+# HELP CONFORT — règles Cursor
+
+Avant toute modification, lire dans cet ordre :
+1. `docs/control/PROJECT_STATE.json`
+2. `docs/control/README.md`
+3. `docs/control/REQUESTS-TRACKER.json`
+4. `CLAUDE.md`
+5. l'instruction active dans `docs/control/inbox/chatgpt/`
+
+Règles absolues :
+- `main` = production. Ne jamais pousser ou merger vers `main` sans GO explicite de Florian.
+- `recette` = validation. Les changements structurants sont d'abord isolés et testés.
+- Une demande = un request_id = un lot de code isolé.
+- Ne jamais mélanger une correction demandée avec un refactor opportuniste.
+- Avant un changement important, vérifier le checkpoint/rollback indiqué dans le tracker.
+- Aucun force-push, reset destructif, secret committé ou mutation production implicite.
+- Ne jamais exécuter `supabase db push`, déployer une fonction, modifier Stripe LIVE, DNS ou auth/RLS production sans GO explicite.
+- Les formulaires locaux parlent à la vraie Supabase : ne jamais soumettre un lead réel pour tester.
+- Les prix, prestations, contrats et conditions doivent venir de leur source canonique. Ne pas inventer.
+- `nos-prestations.html` = catalogue public. `catalogue.html` = tunnel historique ; ne pas les confondre.
+- Toute page visible modifiée doit être contrôlée sur la preview Netlify en 1440 et 390.
+- Si Florian refuse un rendu, revenir au dernier état stable plutôt que corriger en cascade.
+
+Avant commit :
+- lancer la tâche VS Code/Cursor `HC: controles pre-commit`;
+- fournir SHA, fichiers changés, tests, BEFORE/AFTER, rollback et preuve NO_PROD_MUTATION;
+- ne jamais déclarer une demande CLOSED : seul le contrôle ChatGPT/Florian le fait.
+
+Objectif produit :
+site vitrine haut de gamme de HELP CONFORT Saint-Omer permettant de comprendre les métiers, voir les prestations et réalisations, demander un devis, réserver/acheter les prestations éligibles et gérer les contrats d'entretien, avec le moins de doublons fonctionnels possible.
