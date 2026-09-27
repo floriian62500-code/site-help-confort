@@ -29,7 +29,7 @@
   "WAITING_FLORIAN_BUSINESS_GO"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-028",
+ "prochain_id": "REQ-20260926-029",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -752,6 +752,36 @@
    "closed_at": null,
    "closure_proof": null,
    "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-4"
+  },
+  {
+   "request_id": "REQ-20260926-028",
+   "title": "Mise en place outillage developpement + qualite SEO externe",
+   "priority": "P1",
+   "status": "READY_FOR_FLORIAN_VALIDATION",
+   "parent_instruction": "demande Florian 2026-09-27 - mettre en place tous les outils utiles",
+   "created_at": "2026-09-27",
+   "acceptance_criteria": [
+    "Cursor/VS Code prepares sans toucher au site public",
+    "workflow Lighthouse ajoute sur branche dediee",
+    "Screaming Frog automatise localement",
+    "documentation Search Console, Business Profile, Rich Results et PageSpeed",
+    "aucune mutation production"
+   ],
+   "evidence_required": [
+    "branche tooling/cursor-vscode-setup",
+    "PR #11 brouillon",
+    "liste des fichiers ajoutes",
+    "aucun fichier public modifie"
+   ],
+   "latest_sha": "798d24452e36da0c8bba8e231f46d0377fb839f4",
+   "claude_outbox": null,
+   "human_gate": "validation Florian avant merge dans recette",
+   "blocked_by": "—",
+   "next_action": "valider PR #11 puis merger dans recette; ensuite connecter/valider les comptes Google manuellement",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null,
+   "decide_par": "ChatGPT 2026-09-27"
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id.",
