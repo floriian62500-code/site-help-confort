@@ -848,7 +848,7 @@
    "request_id": "REQ-20260926-031",
    "title": "Réparer la garde de publication cassée dans recette par l’outillage (.vscode, .cursor)",
    "priority": "P1",
-   "status": "IN_PROGRESS",
+   "status": "READY_FOR_CONTROL",
    "parent_instruction": "contrôle Claude de la PR #11 ; suite de REQ-20260926-028 (1db70eed) et REQ-20260926-030 (df788e04)",
    "created_at": "2026-09-27",
    "acceptance_criteria": [
@@ -861,14 +861,14 @@
     "sortie de depot-propre sur recette avant et après",
     "suite complète sur recette"
    ],
-   "latest_sha": "2c65ff00d557b2a05b5942d579d41fcf635a7c59",
+   "latest_sha": "356479c3",
    "claude_outbox": "CLAUDE-2026-09-27-PR11-OUTILLAGE.md",
-   "human_gate": "aucun pour recette ; GO Florian requis seulement pour production",
-   "blocked_by": "CI GitHub Actions de la PR #14 en cours",
-   "next_action": "PR #14 ouverte; attendre CI verte puis merger dans recette; aucune prod",
+   "human_gate": "—  (correctif appliqué par Florian ; clôture = geste du contrôle)",
+   "blocked_by": "—",
+   "next_action": "contrôle ChatGPT : la garde est repassée au vert, REQ-031 peut être close",
    "attempt": 2,
    "closed_at": null,
-   "closure_proof": "recette rouge : depot-propre 9 PASS / 1 FAIL (.cursor, .vscode) ; deux lots d’outillage fusionnés (1db70eed, df788e04) ont ajouté des fichiers dans ces dossiers sans règle de blocage ; correctifs prouvés sur la branche de la PR (840 PASS / 0 FAIL)",
+   "closure_proof": "correctif intégré par Florian dans recette (356479c3, 4 fichiers, +96/-14), contenu identique au caractère près à la version testée sur la branche de la PR ; depot-propre 9 PASS / 1 FAIL -> 10 PASS / 0 FAIL ; suite complète 840 PASS / 0 FAIL sur recette ; la branche tooling/cursor-vscode-setup n’apporte plus aucune différence de contenu (PR #11 vidée de son objet)",
    "scope": null,
    "decide_par": null
   }
