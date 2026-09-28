@@ -30,7 +30,7 @@
   "READY_FOR_FLORIAN_VISUAL"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-034",
+ "prochain_id": "REQ-20260926-035",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -934,6 +934,39 @@
    "closure_proof": "configuration de production corrigée et relue champ par champ : leads_cc vidé (donc aucun en-tête cc n’est envoyé, la condition if (cc.length) étant fausse) et branding.email_reply_to basculé sur la boîte Saint-Omer ; tous les autres champs inchangés. Sources déployées des 3 fonctions archivées avant modification (empreintes 8bd31f39, 4c96f81c, 38c1475f). Substitution et redéploiement non faits : refus de la garde d’outil, non contourné.",
    "decide_par": "ChatGPT 2026-09-28",
    "legacy_instruction_id": "REQ-20260926-032-ROUTAGE-EMAIL-SAINT-OMER.md (nom de fichier d’origine conservé) — renumérotée de REQ-20260926-032 vers REQ-20260926-033 le 2026-09-28 sur instruction CHATGPT-2026-09-28-CONTROL-REQ-ID-COLLISION (collision d’identifiant : deux demandes créées à la même minute). Aucun contenu modifié."
+  },
+  {
+   "request_id": "REQ-20260926-034",
+   "title": "Rattrapage production des lots verts depuis main",
+   "priority": "P0",
+   "status": "IN_PROGRESS",
+   "parent_instruction": "demande Florian 2026-09-28 — verifier diff prod et envoyer ce qui est vert",
+   "created_at": "2026-09-28",
+   "acceptance_criteria": [
+    "comparer main production et recette sans merge massif",
+    "identifier uniquement les lots fonctionnels/visuels reellement valides",
+    "reconstruire une release depuis main",
+    "tests complets sur l'etat exact de release",
+    "aucun lot en attente Florian ou rework dans la release",
+    "rollback documente par lot"
+   ],
+   "evidence_required": [
+    "base main SHA",
+    "liste des request_id inclus/exclus",
+    "SHAs ports dans la release",
+    "tests et CI",
+    "diff final release vs main",
+    "rollback"
+   ],
+   "latest_sha": null,
+   "claude_outbox": null,
+   "human_gate": "GO Florian donne pour envoyer les lots verts; le gate securite critique REQ-001/013 reste a traiter ou a accepter explicitement avant merge/deploiement final",
+   "blocked_by": "construction et validation de la release green",
+   "next_action": "assembler release/green-2026-09-28 depuis main avec seulement les lots verts et prouver l'etat exact",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null,
+   "decide_par": "ChatGPT 2026-09-28"
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id. Le 2026-09-28, deux demandes ont reçu 032 à la même minute (refonte Nos métiers et routage e-mail) : 032 reste à « Nos métiers », le routage devient 033, prochain_id passe à 034. Le nom du fichier d’instruction d’origine est conservé dans legacy_instruction_id.",
