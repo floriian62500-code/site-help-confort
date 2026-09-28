@@ -252,6 +252,10 @@
         });
       }, { rootMargin: '100px' });
       io.observe(el);
+      // Déjà visible au chargement ? On ne fait pas attendre un défilement qui ne viendra pas :
+      // l'observateur ne se déclenche qu'au franchissement du seuil, pas à l'état initial.
+      var r = el.getBoundingClientRect();
+      if (r.top < (window.innerHeight || 0) + 100 && r.bottom > -100) { io.disconnect(); loadLeaflet(buildMap); }
     });
   }
 
