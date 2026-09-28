@@ -10,12 +10,12 @@
   :root{--bleu:#0DA0CF;--encre:#0A6C8F;--marine:#0A1428;--orange:#B83E0A;--fond:#F3F5F8;--tint:#E8F5FA;--bord:#E3E8EF;--gris:#6B7A90;--texte:#46566E}
   *{box-sizing:border-box}
   body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#0D1520;color:var(--marine);-webkit-font-smoothing:antialiased}
-  .bar{position:sticky;top:0;z-index:50;background:#0D1520;border-bottom:1px solid #22314a;padding:14px 20px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .bar{z-index:50;background:#0D1520;border-bottom:1px solid #22314a;padding:14px 20px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
   .bar h1{margin:0;font-size:15px;font-weight:800;color:#fff;letter-spacing:-.2px;margin-right:auto}
   .bar h1 span{display:block;font-size:11.5px;font-weight:500;color:#8FA3BF;letter-spacing:0}
   .onglet{appearance:none;border:1px solid #2C3D59;background:#16223a;color:#CBD9EC;font:inherit;font-size:13px;font-weight:700;padding:10px 14px;border-radius:10px;cursor:pointer;min-height:44px}
   .onglet[aria-selected="true"]{background:var(--bleu);border-color:var(--bleu);color:#fff}
-  .scene{padding:26px 20px 60px;display:flex;justify-content:center}
+  .scene{padding:26px 20px 60px;display:flex;justify-content:center;overflow-x:auto}
   .cadre{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.45)}
   .cadre.desk{width:1440px;transform-origin:top center}
   .cadre.mob{width:390px;border-radius:26px;border:8px solid #16223a}
@@ -235,8 +235,7 @@ function rendre(){
   c.className = 'cadre ' + (mob ? 'mob' : 'desk');
   c.innerHTML = vue==='page-desk'?pageDesk():vue==='page-mob'?pageMob():vue==='acc-desk'?accDesk():accMob();
   document.getElementById('legende').innerHTML = LEG[vue];
-  if(!mob){ const e=(window.innerWidth-56)/1440; c.style.zoom = e<1 ? e.toFixed(3) : '1'; }
-  else c.style.zoom='1';
+  c.style.zoom='1';
   c.querySelectorAll('.hot').forEach(g=>{
     const go=()=>{ sel=+g.dataset.i; rendre(); };
     g.addEventListener('click',go);
@@ -248,7 +247,6 @@ document.querySelectorAll('.onglet').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('.onglet').forEach(x=>x.setAttribute('aria-selected', x===b?'true':'false'));
   rendre();
 }));
-window.addEventListener('resize',rendre);
 rendre();
 </script>
 </body>
