@@ -1272,9 +1272,16 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
    bar.appendChild(allBtn);
    // Une pill par sous-catégorie
    subgroups.forEach(function(sg){
-     var slug = sg.getAttribute('data-subcat-slug');
+     // Un slug technique n'est pas un libellé. Le repli « sinon, affiche le slug » faisait
+     // apparaître « _default » comme sous-filtre dans Plomberie (constat Florian, REQ-20260926-019) :
+     // une prestation sans sous-catégorie tombe dans le groupe `_default`, ce groupe n'a pas
+     // d'en-tête, donc le repli prenait le slug. Le client lisait le nom d'une variable interne.
+     var SLUGS_TECHNIQUES = { '_default': 1, 'default': 1, 'null': 1, 'undefined': 1, '': 1 };
+     var slug = sg.getAttribute('data-subcat-slug') || '';
      var head = sg.querySelector('.nv-subcat-head');
-     var label = head ? (head.querySelector('.nv-subcat-label')||{}).textContent : slug;
+     var libelleHead = head ? ((head.querySelector('.nv-subcat-label')||{}).textContent || '') : '';
+     var label = libelleHead.trim() || (SLUGS_TECHNIQUES[slug] ? 'Autres prestations' : '');
+     if (!label || !slug) return;
      var emoji = head ? (head.querySelector('.nv-subcat-emoji')||{}).textContent : '';
      var count = sg.querySelectorAll('.nv-card').length;
      if (!label || !slug) return;
