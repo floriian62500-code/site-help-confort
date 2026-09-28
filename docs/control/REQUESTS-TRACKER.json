@@ -29,7 +29,7 @@
   "WAITING_FLORIAN_BUSINESS_GO"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-033",
+ "prochain_id": "REQ-20260926-034",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -904,7 +904,7 @@
    "decide_par": null
   },
   {
-   "request_id": "REQ-20260926-032",
+   "request_id": "REQ-20260926-033",
    "title": "Routage de toutes les demandes site vers saint-omer@helpconfort.com",
    "priority": "P0",
    "status": "IN_PROGRESS",
@@ -924,17 +924,18 @@
     "preuve etat deploye"
    ],
    "latest_sha": null,
-   "claude_outbox": null,
-   "human_gate": "GO metier donne pour remplacer le destinataire des demandes site par la boite Saint-Omer; toute autre mutation prod reste gatee",
-   "blocked_by": "verification de la configuration de notification reellement deployee",
-   "next_action": "Claude audite les flux et corrige uniquement le routage email concerne",
+   "claude_outbox": "CLAUDE-2026-09-28-REQ-033-ROUTAGE-EMAIL.md",
+   "human_gate": "GO Florian : 1) vider leads_cc en base 2) aligner branding.email_reply_to 3) redéployer 3 fonctions edge — 3 mutations de production, aucune faite",
+   "blocked_by": "GO production non donné",
+   "next_action": "attendre le GO, plus 2 décisions : alertes techniques (adresse personnelle en dur) et nom d’expéditeur client",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null,
-   "decide_par": "ChatGPT 2026-09-28"
+   "closure_proof": "audit de la configuration RÉELLEMENT déployée : leads_to, orders_to, subscriptions_to et reply_to sont déjà sur saint-omer@helpconfort.com ; le défaut est leads_cc, resté sur l’adresse personnelle, donc en copie de chaque demande. Trois adresses personnelles restent en dur dans le code déployé (List-Unsubscribe, repli reply_to, branding.email_reply_to). Écart déployé/dépôt constaté sur notify-lead-v6 : le filtre anti-client du dépôt n’est pas en ligne et l’expéditeur y est codé en dur. Aucune écriture, aucun déploiement, aucun e-mail envoyé.",
+   "decide_par": "ChatGPT 2026-09-28",
+   "legacy_instruction_id": "REQ-20260926-032-ROUTAGE-EMAIL-SAINT-OMER.md (nom de fichier d’origine conservé) — renumérotée de REQ-20260926-032 vers REQ-20260926-033 le 2026-09-28 sur instruction CHATGPT-2026-09-28-CONTROL-REQ-ID-COLLISION (collision d’identifiant : deux demandes créées à la même minute). Aucun contenu modifié."
   }
  ],
- "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id.",
+ "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id. Le 2026-09-28, deux demandes ont reçu 032 à la même minute (refonte Nos métiers et routage e-mail) : 032 reste à « Nos métiers », le routage devient 033, prochain_id passe à 034. Le nom du fichier d’instruction d’origine est conservé dans legacy_instruction_id.",
  "gel_renforce": [
   "aucune nouvelle refonte",
   "aucune suppression de page",
