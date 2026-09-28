@@ -129,11 +129,11 @@ const ICO_PANIER='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" st
 const ICO_DEVIS='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A1428" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>';
 const ICO_FLECHE='<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
 
-function maison(interactif, r){
+function maison(interactif, r, avecLabels){
   const pts = M.map((m,i)=>{
     const a = interactif && i===sel;
     const ly = m.n==='8' ? m.cy-32 : m.ly;
-    const lbl = interactif && r>20 ? '<text x="'+m.cx+'" y="'+ly+'" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0A1428" stroke="#fff" stroke-width="3.4" paint-order="stroke">'+m.nom+'</text>' : '';
+    const lbl = interactif && avecLabels ? '<text x="'+m.cx+'" y="'+ly+'" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0A1428" stroke="#fff" stroke-width="3.4" paint-order="stroke">'+m.nom+'</text>' : '';
     return '<g class="hot" data-i="'+i+'" role="button" tabindex="0" aria-label="Voir '+m.nom+'">'
       + '<circle cx="'+m.cx+'" cy="'+m.cy+'" r="'+r+'" fill="'+(a?'#0A6C8F':'#fff')+'" stroke="'+(a?'#0A6C8F':'#0A1428')+'" stroke-width="'+(a?3:2)+'"/>'
       + '<text x="'+m.cx+'" y="'+(m.cy+(r>22?6:5))+'" text-anchor="middle" font-size="'+(r>22?17:13)+'" font-weight="800" fill="'+(a?'#fff':'#0A1428')+'">'+m.n+'</text>'+lbl+'</g>';
@@ -180,7 +180,7 @@ function pageDesk(){
   + '<div style="display:flex;gap:14px"><div class="stat"><b>9</b><span>métiers internes</span></div><div class="stat"><b>34</b><span>prestations au tarif affiché</span></div><div class="stat"><b>4,7</b><span>343 avis Google</span></div></div></div>'
   + '<div class="corps"><div class="duo"><div class="carte" style="width:812px;padding:26px">'
   + '<div style="display:flex;justify-content:space-between;margin-bottom:10px"><b style="font-size:15px">Choisissez la pièce concernée</b><span style="font-size:12.5px;font-weight:600;color:var(--gris)">9 zones · cliquez pour explorer</span></div>'
-  + maison(true,21) + '</div>' + panneau() + '</div>'
+  + maison(true,21,true) + '</div>' + panneau() + '</div>'
   + '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:40px"><h2 style="margin:0;font-size:24px;font-weight:800;letter-spacing:-.6px">Les neuf métiers, en un coup d\'œil</h2>'
   + '<span style="font-size:13.5px;font-weight:600;color:var(--gris)">Chaque métier garde sa page actuelle — rien n\'est supprimé</span></div>'
   + '<div class="grille">' + M.map(m=>'<a class="tuile" href="#"><div style="display:flex;align-items:center;gap:12px"><span class="pastille">'+m.n+'</span><b style="font-size:17px;letter-spacing:-.3px">'+m.nom+'</b></div>'
@@ -193,7 +193,7 @@ function pageMob(){
   + '<span style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;background:var(--marine)">'+ICO_TEL+'</span></div>'
   + '<div class="m-hero"><div class="kicker" style="font-size:10.5px">NOS MÉTIERS</div><h1>Tout ce que nous savons faire,<br><span class="ital">sous un seul toit.</span></h1>'
   + '<p>Neuf métiers, des techniciens salariés. Touchez une pièce pour voir ce que nous y faisons.</p></div>'
-  + '<div class="m-pad"><div class="carte" style="padding:12px">'+maison(true,26)+'</div></div>'
+  + '<div class="m-pad"><div class="carte" style="padding:12px">'+maison(true,26,false)+'</div></div>'
   + '<div class="m-pad"><div class="carte" style="padding:18px 16px">'
   + '<div style="display:flex;gap:11px;align-items:center"><span class="pastille" style="width:40px;height:40px;border-radius:11px;font-size:15px">'+m.n+'</span>'
   + '<div><h2 style="margin:0;font-size:21px;font-weight:800;letter-spacing:-.5px">'+m.nom+'</h2><div style="font-size:11.5px;font-weight:600;color:var(--gris)">'+m.piece+'</div></div></div>'
@@ -207,7 +207,7 @@ function pageMob(){
   + '</div></div>';
 }
 function accDesk(){
-  return '<div class="acc"><div style="width:620px;flex-shrink:0;background:var(--fond);border:1px solid var(--bord);border-radius:22px;padding:18px">'+maison(false,19)+'</div>'
+  return '<div class="acc"><div style="width:620px;flex-shrink:0;background:var(--fond);border:1px solid var(--bord);border-radius:22px;padding:18px">'+maison(false,19,false)+'</div>'
   + '<div style="flex:1"><div class="kicker" style="color:var(--encre)">NOS MÉTIERS</div>'
   + '<h2>Neuf métiers,<br><span class="ital">une seule équipe salariée.</span></h2>'
   + '<p style="font-size:16.5px;line-height:1.6;color:var(--texte);max-width:560px">De la fuite d\'eau au monte-escalier, nous intervenons sur toute la maison. Pas de sous-traitance : nos techniciens sont chez nous.</p>'
@@ -219,7 +219,7 @@ function accMob(){
   return '<div class="m-acc"><div class="kicker" style="color:var(--encre);font-size:10.5px">NOS MÉTIERS</div>'
   + '<h2>Neuf métiers,<br><span class="ital">une seule équipe.</span></h2>'
   + '<p style="font-size:14.5px;line-height:1.55;color:var(--texte)">De la fuite d\'eau au monte-escalier, nous intervenons sur toute la maison. Pas de sous-traitance.</p>'
-  + '<div style="background:var(--fond);border:1px solid var(--bord);border-radius:16px;padding:10px;margin:18px 0">'+maison(false,24)+'</div>'
+  + '<div style="background:var(--fond);border:1px solid var(--bord);border-radius:16px;padding:10px;margin:18px 0">'+maison(false,24,false)+'</div>'
   + '<div class="m-grille">'+M.map(m=>'<a class="puce" style="height:46px;font-size:13px" href="#"><em style="width:22px;height:22px;font-size:11px">'+m.n+'</em>'+m.nom+'</a>').join('')+'</div>'
   + '<a href="#" style="display:flex;align-items:center;justify-content:center;gap:10px;height:56px;border-radius:14px;background:var(--orange);color:#fff;font-size:16px;font-weight:700;margin-top:18px">Découvrir nos métiers'+ICO_FLECHE+'</a></div>';
 }
