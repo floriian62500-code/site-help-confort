@@ -132,7 +132,8 @@ const ICO_FLECHE='<svg width="19" height="19" viewBox="0 0 24 24" fill="none" st
 function maison(interactif, r){
   const pts = M.map((m,i)=>{
     const a = interactif && i===sel;
-    const lbl = interactif && r>20 ? '<text x="'+m.cx+'" y="'+m.ly+'" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0A1428" stroke="#fff" stroke-width="3.4" paint-order="stroke">'+m.nom+'</text>' : '';
+    const ly = m.n==='8' ? m.cy-32 : m.ly;
+    const lbl = interactif && r>20 ? '<text x="'+m.cx+'" y="'+ly+'" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0A1428" stroke="#fff" stroke-width="3.4" paint-order="stroke">'+m.nom+'</text>' : '';
     return '<g class="hot" data-i="'+i+'" role="button" tabindex="0" aria-label="Voir '+m.nom+'">'
       + '<circle cx="'+m.cx+'" cy="'+m.cy+'" r="'+r+'" fill="'+(a?'#0A6C8F':'#fff')+'" stroke="'+(a?'#0A6C8F':'#0A1428')+'" stroke-width="'+(a?3:2)+'"/>'
       + '<text x="'+m.cx+'" y="'+(m.cy+(r>22?6:5))+'" text-anchor="middle" font-size="'+(r>22?17:13)+'" font-weight="800" fill="'+(a?'#fff':'#0A1428')+'">'+m.n+'</text>'+lbl+'</g>';
@@ -234,8 +235,8 @@ function rendre(){
   c.className = 'cadre ' + (mob ? 'mob' : 'desk');
   c.innerHTML = vue==='page-desk'?pageDesk():vue==='page-mob'?pageMob():vue==='acc-desk'?accDesk():accMob();
   document.getElementById('legende').innerHTML = LEG[vue];
-  if(!mob){ const e=(window.innerWidth-56)/1440; c.style.transform = e<1 ? 'scale('+e.toFixed(3)+')' : 'none'; c.style.marginBottom = e<1 ? (-(1-e)*c.offsetHeight)+'px' : '0'; }
-  else c.style.transform='none';
+  if(!mob){ const e=(window.innerWidth-56)/1440; c.style.zoom = e<1 ? e.toFixed(3) : '1'; }
+  else c.style.zoom='1';
   c.querySelectorAll('.hot').forEach(g=>{
     const go=()=>{ sel=+g.dataset.i; rendre(); };
     g.addEventListener('click',go);
