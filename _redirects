@@ -1,6 +1,7 @@
 # SÉCURITÉ : ne jamais servir les fichiers internes (suivi control-plane, docs/audits, scripts, sources edge/SQL)
 # PREVIEW DE MAQUETTE — branche preview/maquette-nos-metiers UNIQUEMENT, jamais fusionnee.
 # (rebuild force le 2026-09-28 : la base de la PR est passee a main pour obtenir un deploy preview)
+# (rebuild 2 : un commit touchant seulement docs/ est ignore par netlify.toml — piege connu)
 # La maquette vit sous /docs/ (donc bloquee comme le reste des docs) ; cette seule reecriture
 # lui ouvre une adresse lisible, en noindex. A retirer avec la branche.
 /maquette-metiers   /docs/maquettes/nos-metiers.html   200
