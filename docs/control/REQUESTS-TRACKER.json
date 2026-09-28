@@ -925,13 +925,13 @@
     "preuve etat deploye"
    ],
    "latest_sha": "65ffa1b7 (retour d’audit) — changeset publié, non exécuté",
-   "claude_outbox": "CLAUDE-2026-09-28-REQ-033-ROUTAGE-EMAIL.md puis CLAUDE-2026-09-28-REQ-033-CHANGESET.md",
-   "human_gate": "GO explicite Florian reçu le 2026-09-28 pour le changeset défini",
-   "blocked_by": "—",
-   "next_action": "exécuter strictement le changeset validé, tester, publier les preuves, puis READY_FOR_CONTROL",
+   "claude_outbox": "CLAUDE-2026-09-28-REQ-033-CHANGESET.md puis CLAUDE-2026-09-28-REQ-033-EXECUTION.md",
+   "human_gate": "GO donné par Florian le 2026-09-28 ; il reste une autorisation d’outil pour déployer les 3 fonctions",
+   "blocked_by": "garde d’outil « Production Deploy » sur les commandes de déploiement de fonctions — non contournée",
+   "next_action": "appliquer les 6 lignes (2 par fonction) et redéployer avec verify_jwt=false, puis test contrôlé et preuves ; ensuite READY_FOR_CONTROL",
    "attempt": 2,
    "closed_at": null,
-   "closure_proof": "audit de la configuration RÉELLEMENT déployée : leads_to, orders_to, subscriptions_to et reply_to sont déjà sur saint-omer@helpconfort.com ; le défaut est leads_cc, resté sur l’adresse personnelle, donc en copie de chaque demande. Trois adresses personnelles restent en dur dans le code déployé (List-Unsubscribe, repli reply_to, branding.email_reply_to). Écart déployé/dépôt constaté sur notify-lead-v6 : le filtre anti-client du dépôt n’est pas en ligne et l’expéditeur y est codé en dur. Aucune écriture, aucun déploiement, aucun e-mail envoyé.",
+   "closure_proof": "configuration de production corrigée et relue champ par champ : leads_cc vidé (donc aucun en-tête cc n’est envoyé, la condition if (cc.length) étant fausse) et branding.email_reply_to basculé sur la boîte Saint-Omer ; tous les autres champs inchangés. Sources déployées des 3 fonctions archivées avant modification (empreintes 8bd31f39, 4c96f81c, 38c1475f). Substitution et redéploiement non faits : refus de la garde d’outil, non contourné.",
    "decide_par": "ChatGPT 2026-09-28",
    "legacy_instruction_id": "REQ-20260926-032-ROUTAGE-EMAIL-SAINT-OMER.md (nom de fichier d’origine conservé) — renumérotée de REQ-20260926-032 vers REQ-20260926-033 le 2026-09-28 sur instruction CHATGPT-2026-09-28-CONTROL-REQ-ID-COLLISION (collision d’identifiant : deux demandes créées à la même minute). Aucun contenu modifié."
   }
