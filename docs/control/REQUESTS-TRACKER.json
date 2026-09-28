@@ -861,14 +861,14 @@
     "sortie de depot-propre sur recette avant et après",
     "suite complète sur recette"
    ],
-   "latest_sha": "356479c3",
+   "latest_sha": "356479c3 (merge de la PR #14, branche fix/tooling-guards-req031@2c65ff00)",
    "claude_outbox": "CLAUDE-2026-09-27-PR11-OUTILLAGE.md",
    "human_gate": "—  (correctif appliqué par Florian ; clôture = geste du contrôle)",
    "blocked_by": "—",
-   "next_action": "contrôle ChatGPT : la garde est repassée au vert, REQ-031 peut être close",
+   "next_action": "rien à faire : PR #14 fusionnée, CI « suite » verte, gardes vertes sur recette. Le contrôle avait fixé IN_PROGRESS « en attente de la CI de la PR #14 » : cette condition est levée, d’où READY_FOR_CONTROL. Écart signalé, pas corrigé en silence.",
    "attempt": 2,
    "closed_at": null,
-   "closure_proof": "correctif intégré par Florian dans recette (356479c3, 4 fichiers, +96/-14), contenu identique au caractère près à la version testée sur la branche de la PR ; depot-propre 9 PASS / 1 FAIL -> 10 PASS / 0 FAIL ; suite complète 840 PASS / 0 FAIL sur recette ; la branche tooling/cursor-vscode-setup n’apporte plus aucune différence de contenu (PR #11 vidée de son objet)",
+   "closure_proof": "PR #14 MERGED, check « suite » PASS en 1m21s ; merge = 356479c3 ; CI « Tests de non-régression » success sur 356479c3 ; contenu des 4 fichiers identique au caractère près à la version testée sur tooling/cursor-vscode-setup ; sur recette : depot-propre 9/1 -> 10 PASS / 0 FAIL, suite complète 840 PASS / 0 FAIL (31 fichiers en code 0)",
    "scope": null,
    "decide_par": null
   }
@@ -895,10 +895,10 @@
  },
  "gel_visuel": "STOP sur toute modification visuelle tant que Florian n’a pas validé REQ-023 sur la preview. Ordre imposé ensuite : checkpoint validé → REQ-026 → REQ-020 (STOP visuel) → REQ-017 prototype (STOP visuel) → REQ-027 après GO métier.",
  "dernier_controle": {
-  "message_id": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-6",
-  "commit": "0104ac1b7297caf8e5ef7f4088c0f9417333f937",
-  "verdict": "maintien de l’état : 10 points de pilotage vérifiés, 10 conformes, aucun statut modifié",
-  "retour_claude": "CLAUDE-2026-09-26-CONTROL-ALL-REQUESTS-6.md",
-  "lacune_signalee": "aucun CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-5 dans l’inbox : la numérotation saute de 4 à 6 (règle de non-disparition — à confirmer côté contrôle)"
+  "message_id": "CHATGPT-2026-09-28-CONTROL-ALL-REQUESTS-7",
+  "commit": "présent dans recette (docs/control/inbox/chatgpt/CHATGPT-2026-09-28-CONTROL-ALL-REQUESTS-7.md)",
+  "verdict": "diagnostic outillage accepté ; PR #14 reprise par ChatGPT ; HOLD jusqu’au résultat CI",
+  "retour_claude": "CLAUDE-2026-09-28-ACK-CONTROL-7.md",
+  "lacune_signalee": "le n°5 manque toujours dans l’inbox (numérotation 4 → 6 → 7) : jamais reçu ni traité"
  }
 }

@@ -32,8 +32,9 @@ Elles couvrent aussi `.cursor/mcp.json`, arrivé plus tard avec le lot Figma/Pla
 (REQ-20260926-030), puisque c'est le dossier entier qui est bloqué.
 
 ## ETAT_DE_LA_PR_11
-La branche `tooling/cursor-vscode-setup` **n'apporte plus aucune différence de contenu** avec
-`recette` : son objet est entièrement intégré (le gros par le squash `1db70eed`, les correctifs par
+Précision (28/09, après vérification ligne à ligne) : la branche `tooling/cursor-vscode-setup`
+**n'apporte plus rien de nouveau** — elle est seulement *en retard* sur `recette`. Le seul `+`
+de son diff est un `prochain_id` périmé (`REQ-20260926-028`). Autrement dit : son objet est entièrement intégré (le gros par le squash `1db70eed`, les correctifs par
 `356479c3`). La PR #11 peut être fermée sans rien perdre — c'est un geste qui appartient à Florian,
 je ne l'ai pas fait.
 
