@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Maquette — Nos métiers | HELP Confort</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,500;1,600&display=swap">
+<style>
+  :root{--bleu:#0DA0CF;--encre:#0A6C8F;--marine:#0A1428;--orange:#B83E0A;--fond:#F3F5F8;--tint:#E8F5FA;--bord:#E3E8EF;--gris:#6B7A90;--texte:#46566E}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#0D1520;color:var(--marine);-webkit-font-smoothing:antialiased}
+  .bar{position:sticky;top:0;z-index:50;background:#0D1520;border-bottom:1px solid #22314a;padding:14px 20px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .bar h1{margin:0;font-size:15px;font-weight:800;color:#fff;letter-spacing:-.2px;margin-right:auto}
+  .bar h1 span{display:block;font-size:11.5px;font-weight:500;color:#8FA3BF;letter-spacing:0}
+  .onglet{appearance:none;border:1px solid #2C3D59;background:#16223a;color:#CBD9EC;font:inherit;font-size:13px;font-weight:700;padding:10px 14px;border-radius:10px;cursor:pointer;min-height:44px}
+  .onglet[aria-selected="true"]{background:var(--bleu);border-color:var(--bleu);color:#fff}
+  .scene{padding:26px 20px 60px;display:flex;justify-content:center}
+  .cadre{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+  .cadre.desk{width:1440px;transform-origin:top center}
+  .cadre.mob{width:390px;border-radius:26px;border:8px solid #16223a}
+  .legende{max-width:760px;margin:0 auto 22px;color:#9FB3CC;font-size:13.5px;line-height:1.6;text-align:center}
+  .legende b{color:#fff}
+  a{text-decoration:none}
+  /* ——— page ——— */
+  .top{height:76px;background:#fff;border-bottom:1px solid var(--bord);display:flex;align-items:center;padding:0 56px;gap:28px}
+  .logo{width:46px;height:46px;border-radius:10px;background:var(--bleu);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:17px}
+  .nav{flex:1;display:flex;justify-content:center;gap:30px;font-size:14.5px;font-weight:600;color:var(--texte)}
+  .nav .on{color:var(--encre);border-bottom:2px solid var(--bleu);padding-bottom:5px}
+  .tel{display:flex;align-items:center;gap:9px;height:44px;padding:0 20px;border-radius:999px;background:var(--marine);color:#fff;font-size:14.5px;font-weight:700}
+  .hero{background:var(--marine);padding:52px 56px 46px;display:flex;align-items:flex-end;justify-content:space-between;gap:48px}
+  .kicker{font-size:12px;font-weight:700;letter-spacing:2.2px;color:#1FC4F0}
+  .hero h1{margin:14px 0 0;font-size:54px;line-height:1.08;font-weight:800;color:#fff;letter-spacing:-1.4px}
+  .ital{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:500;color:#7FDCF7}
+  .hero p{margin:14px 0 0;font-size:17px;line-height:1.6;color:#C3CEDE;max-width:640px}
+  .stat{width:168px;padding:16px 18px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
+  .stat b{display:block;font-size:26px;font-weight:800;color:#fff;letter-spacing:-.8px}
+  .stat span{font-size:12.5px;font-weight:600;color:#9FB0C6}
+  .corps{background:var(--fond);padding:44px 56px}
+  .duo{display:flex;gap:28px;align-items:flex-start}
+  .carte{background:#fff;border:1px solid var(--bord);border-radius:22px;box-shadow:0 10px 30px rgba(10,20,40,.06)}
+  .hot{cursor:pointer}
+  .hot:hover circle{stroke:var(--orange);stroke-width:3}
+  .panneau{width:488px;flex-shrink:0;padding:30px}
+  .presta{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 14px;border:1px solid var(--bord);border-radius:12px;background:#FAFBFD;margin-bottom:9px}
+  .presta b{font-size:14px;font-weight:600}
+  .presta i{font-style:normal;font-size:14px;font-weight:800;color:var(--encre);white-space:nowrap}
+  .cta{display:flex;align-items:center;justify-content:center;gap:10px;height:54px;border-radius:14px;font-size:16px;font-weight:700;margin-bottom:10px}
+  .cta.achat{background:var(--orange);color:#fff}
+  .cta.devis{background:#fff;border:2px solid var(--marine);color:var(--marine)}
+  .grille{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:18px}
+  .tuile{display:flex;flex-direction:column;gap:9px;padding:20px;background:#fff;border:1px solid var(--bord);border-radius:16px}
+  .pastille{width:38px;height:38px;border-radius:10px;background:var(--tint);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--encre)}
+  /* ——— mobile ——— */
+  .m-top{height:60px;background:#fff;border-bottom:1px solid var(--bord);display:flex;align-items:center;padding:0 16px;gap:10px}
+  .m-hero{background:var(--marine);padding:26px 16px 24px}
+  .m-hero h1{margin:8px 0 0;font-size:29px;line-height:1.14;font-weight:800;color:#fff;letter-spacing:-.9px}
+  .m-hero p{margin:10px 0 0;font-size:14.5px;line-height:1.55;color:#C3CEDE}
+  .m-pad{padding:16px 16px 0}
+  .m-grille{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .m-tuile{display:flex;flex-direction:column;gap:5px;padding:13px;background:#fff;border:1px solid var(--bord);border-radius:13px;min-height:44px}
+  .m-cta{display:flex;align-items:center;justify-content:center;gap:9px;height:52px;border-radius:13px;font-size:15.5px;font-weight:700;margin-top:10px}
+  /* ——— accueil ——— */
+  .acc{padding:58px 56px;display:flex;gap:46px;align-items:center;background:#fff}
+  .acc h2{margin:10px 0 0;font-size:42px;line-height:1.1;font-weight:800;letter-spacing:-1.2px}
+  .acc .ital{color:var(--encre)}
+  .puces{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;max-width:620px}
+  .puce{display:flex;align-items:center;gap:10px;height:52px;padding:0 14px;border:1px solid var(--bord);border-radius:13px;background:#fff;font-size:14.5px;font-weight:700;color:var(--marine)}
+  .puce em{font-style:normal;width:26px;height:26px;border-radius:8px;background:var(--tint);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--encre)}
+  .m-acc{padding:30px 16px;background:#fff}
+  .m-acc h2{margin:8px 0 0;font-size:29px;line-height:1.12;font-weight:800;letter-spacing:-.9px}
+</style>
+</head>
+<body>
+
+<div class="bar" role="tablist" aria-label="Vues de la maquette">
+  <h1>Maquette « Nos métiers »<span>HELP Confort · proposition du 28/09/2026 — aucune page du site n'est modifiée</span></h1>
+  <button class="onglet" role="tab" aria-selected="true" data-vue="page-desk">Page métiers · 1440</button>
+  <button class="onglet" role="tab" aria-selected="false" data-vue="page-mob">Page métiers · 390</button>
+  <button class="onglet" role="tab" aria-selected="false" data-vue="acc-desk">Bloc accueil · 1440</button>
+  <button class="onglet" role="tab" aria-selected="false" data-vue="acc-mob">Bloc accueil · 390</button>
+</div>
+
+<p class="legende" id="legende"></p>
+<div class="scene"><div id="cadre" class="cadre desk"></div></div>
+
+<script>
+const M = [
+ {n:'1',nom:'Plomberie',piece:'Salle de bain, cuisine, sanitaires',cx:233,cy:250,ly:296,achat:true,
+  desc:"Fuite, recherche de fuite, débouchage canalisation, ballon d'eau chaude, sanitaire, mécanisme WC. Intervention rapide.",
+  resume:'15 prestations au tarif affiché',
+  p:[['Intervention urgente — 1 h + déplacement','114 €'],['Recherche de fuite visuelle','148 €'],['Désengorgement canalisation','165 €']]},
+ {n:'2',nom:'Chauffage',piece:'Chaufferie, chaudière, radiateurs',cx:224,cy:392,ly:438,achat:true,
+  desc:"Chaudière en panne, entretien annuel obligatoire, désembouage, radiateurs froids, remplacement chauffe-eau thermodynamique.",
+  resume:'6 prestations au tarif affiché',
+  p:[['Désembouage radiateur','105 €'],['Entretien chaudière gaz','121 €'],['Entretien chaudière fioul','178 €']]},
+ {n:'3',nom:'Électricité',piece:'Tableau électrique, réseau intérieur',cx:330,cy:392,ly:438,achat:true,
+  desc:"Panne, mise aux normes NF C 15-100, tableau électrique, diagnostic DEO, installation bornes véhicules électriques.",
+  resume:'2 prestations publiées',
+  p:[['Intervention urgente — 1 h + déplacement','114 €'],['VMC simple ou double flux','sur devis']]},
+ {n:'4',nom:'Serrurerie',piece:"Porte d'entrée, cylindres, blindage",cx:400,cy:412,ly:458,achat:true,
+  desc:"Ouverture de porte claquée, changement de serrure, cylindre A2P, blindage anti-effraction, dépannage non destructif.",
+  resume:'5 prestations au tarif affiché',
+  p:[['Ouverture porte simple (non blindée)','98 €'],['Ouverture porte claquée','176 €'],['Ouverture porte de sécurité A2P','196 €']]},
+ {n:'5',nom:'Vitrerie',piece:'Fenêtres, double vitrage, bris de glace',cx:526,cy:244,ly:290,achat:true,
+  desc:"Vitre cassée, remplacement double vitrage, bris de glace, sécurisation d'urgence, prise en charge assurance.",
+  resume:'2 prestations publiées',
+  p:[['Mise en sécurité vitre (au m²)','120 €'],['Vitre insert / poêle','sur devis']]},
+ {n:'6',nom:'Volets',piece:'Façade, volets roulants et battants',cx:624,cy:244,ly:290,achat:false,
+  desc:"Pose, réparation, motorisation Somfy / Bubendorff / Profalux. Volets roulants, battants, dépannage moteurs.",
+  resume:'sur devis — aucun tarif en ligne',
+  p:[['Motorisation et dépannage','sur devis'],['Pose volets roulants','sur devis']]},
+ {n:'7',nom:'Menuiserie',piece:'Fenêtres, portes, baies vitrées',cx:627,cy:402,ly:448,achat:false,
+  desc:"Pose de fenêtres, portes, baies vitrées, panneaux PVC. Sur-mesure ou catalogue, conformité MaPrimeRénov.",
+  resume:'sur devis — aucun tarif en ligne',
+  p:[['Fenêtres et baies sur mesure','sur devis'],['Portes et panneaux PVC','sur devis']]},
+ {n:'8',nom:'Travaux & Rénovation',piece:'Combles, pièces, peinture, sols',cx:400,cy:150,ly:196,achat:false,
+  desc:"Salle de bain, cuisine, plafond, peinture, sol. Garantie décennale, coordination multi-corps en interne.",
+  resume:'4 prestations, toutes sur devis',
+  p:[['Peinture intérieure','sur devis'],['Isolation thermique / phonique','sur devis'],['Revêtements muraux','sur devis']]},
+ {n:'9',nom:'Adaptation PMR',piece:'Accès plain-pied, douche sécurisée',cx:490,cy:452,ly:498,achat:false,
+  desc:"Douche italienne sécurisée, barres d'appui, monte-escalier. Labels PMR & Senior, MaPrimeAdapt'.",
+  resume:'sur devis — aides MaPrimeAdapt',
+  p:[['Douche italienne sécurisée','sur devis'],["Barres d'appui et monte-escalier",'sur devis']]}
+];
+let sel = 1, vue = 'page-desk';
+const ICO_TEL='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+const ICO_PANIER='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>';
+const ICO_DEVIS='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A1428" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>';
+const ICO_FLECHE='<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+
+function maison(interactif, r){
+  const pts = M.map((m,i)=>{
+    const a = interactif && i===sel;
+    const lbl = interactif && r>20 ? '<text x="'+m.cx+'" y="'+m.ly+'" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0A1428" stroke="#fff" stroke-width="3.4" paint-order="stroke">'+m.nom+'</text>' : '';
+    return '<g class="hot" data-i="'+i+'" role="button" tabindex="0" aria-label="Voir '+m.nom+'">'
+      + '<circle cx="'+m.cx+'" cy="'+m.cy+'" r="'+r+'" fill="'+(a?'#0A6C8F':'#fff')+'" stroke="'+(a?'#0A6C8F':'#0A1428')+'" stroke-width="'+(a?3:2)+'"/>'
+      + '<text x="'+m.cx+'" y="'+(m.cy+(r>22?6:5))+'" text-anchor="middle" font-size="'+(r>22?17:13)+'" font-weight="800" fill="'+(a?'#fff':'#0A1428')+'">'+m.n+'</text>'+lbl+'</g>';
+  }).join('');
+  return '<svg viewBox="0 0 800 520" style="width:100%;height:auto;display:block" role="img" aria-label="Coupe d\'une maison : neuf zones correspondant à nos neuf métiers">'
+  + '<rect x="0" y="0" width="800" height="520" rx="16" fill="#EFF7FB"/>'
+  + '<line x1="40" y1="470" x2="760" y2="470" stroke="#C6D4E2" stroke-width="2"/>'
+  + '<polygon points="104,196 400,54 696,196" fill="#0A1428"/><polygon points="150,196 400,76 650,196" fill="#132340"/>'
+  + '<rect x="150" y="196" width="500" height="274" fill="#fff" stroke="#0A1428" stroke-width="2.5"/>'
+  + '<line x1="150" y1="336" x2="650" y2="336" stroke="#0A1428" stroke-width="2.5"/>'
+  + '<line x1="400" y1="196" x2="400" y2="336" stroke="#CBD7E5" stroke-width="2"/>'
+  + '<line x1="300" y1="336" x2="300" y2="470" stroke="#CBD7E5" stroke-width="2"/>'
+  + '<line x1="540" y1="336" x2="540" y2="470" stroke="#CBD7E5" stroke-width="2"/>'
+  + '<rect x="196" y="236" width="74" height="58" rx="5" fill="#E8F5FA" stroke="#9EC6D8" stroke-width="1.6"/>'
+  + '<rect x="480" y="230" width="92" height="66" rx="5" fill="#E8F5FA" stroke="#9EC6D8" stroke-width="1.6"/>'
+  + '<line x1="526" y1="230" x2="526" y2="296" stroke="#9EC6D8" stroke-width="1.6"/>'
+  + '<rect x="594" y="230" width="14" height="66" rx="3" fill="#B83E0A" opacity=".85"/><rect x="572" y="230" width="14" height="66" rx="3" fill="#B83E0A" opacity=".5"/>'
+  + '<rect x="586" y="372" width="82" height="60" rx="5" fill="#E8F5FA" stroke="#9EC6D8" stroke-width="1.6"/>'
+  + '<rect x="366" y="376" width="68" height="94" rx="4" fill="#132340"/><circle cx="422" cy="424" r="4.5" fill="#FFD27A"/>'
+  + '<rect x="196" y="392" width="56" height="62" rx="6" fill="#E3E8EF" stroke="#8E9EB4" stroke-width="1.6"/>'
+  + '<line x1="210" y1="392" x2="210" y2="368" stroke="#8E9EB4" stroke-width="3"/><line x1="238" y1="392" x2="238" y2="368" stroke="#8E9EB4" stroke-width="3"/>'
+  + '<path d="M434 470 L520 470 L520 452 Z" fill="#CBD7E5"/>'
+  + pts + '</svg>';
+}
+function panneau(){
+  const m = M[sel];
+  return '<div class="carte panneau">'
+  + '<div style="display:flex;gap:14px;align-items:flex-start"><div class="pastille" style="width:46px;height:46px;border-radius:12px;font-size:17px">'+m.n+'</div>'
+  + '<div><h2 style="margin:0;font-size:27px;font-weight:800;letter-spacing:-.7px">'+m.nom+'</h2><div style="font-size:12.5px;font-weight:600;color:var(--gris);margin-top:3px">'+m.piece+'</div></div></div>'
+  + '<p style="font-size:15px;line-height:1.62;color:var(--texte)">'+m.desc+'</p>'
+  + '<div style="font-size:11.5px;font-weight:700;letter-spacing:1.4px;color:var(--gris);margin-bottom:9px">'+(m.achat?'EXEMPLES DE TARIFS AFFICHÉS':'CE QUE NOUS FAISONS')+'</div>'
+  + m.p.map(p=>'<div class="presta"><b>'+p[0]+'</b><i>'+p[1]+'</i></div>').join('')
+  + (m.achat?'<a class="cta achat" href="#">'+ICO_PANIER+'Réserver en ligne — prix affiché</a>':'')
+  + '<a class="cta devis" href="#">'+ICO_DEVIS+'Demander un devis gratuit</a>'
+  + '<div style="font-size:12.5px;line-height:1.5;color:var(--gris);text-align:center">'+(m.achat?'Prix TTC annoncé avant intervention — vous réservez, nous confirmons le créneau.':"Ce métier n'a pas de tarif public aujourd'hui : la demande passe par le devis.")+'</div>'
+  + '<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--bord);font-size:14px;font-weight:700;color:var(--encre)">Voir la page '+m.nom+' et nos villes →</div></div>';
+}
+function pageDesk(){
+  return '<div class="top"><div class="logo">HC</div><div><div style="font-size:15px;font-weight:700">Dépan\'Audo</div><div style="font-size:10px;font-weight:600;color:var(--gris);letter-spacing:1.1px">HELP CONFORT · SAINT-OMER</div></div>'
+  + '<div class="nav"><span>Accueil</span><span class="on">Nos métiers</span><span>Zones d\'intervention</span><span>Nos prestations</span><span>Actu &amp; réalisations</span><span>Contact</span></div>'
+  + '<span class="tel">'+ICO_TEL+'03 66 10 01 34</span></div>'
+  + '<div class="hero"><div><div class="kicker">NOS MÉTIERS</div><h1>Tout ce que nous savons faire,<br><span class="ital">chez vous, sous un seul toit.</span></h1>'
+  + '<p>Neuf métiers, des techniciens salariés, une seule équipe. Cliquez sur une pièce de la maison pour voir ce que nous y faisons — et à quel prix.</p></div>'
+  + '<div style="display:flex;gap:14px"><div class="stat"><b>9</b><span>métiers internes</span></div><div class="stat"><b>34</b><span>prestations au tarif affiché</span></div><div class="stat"><b>4,7</b><span>343 avis Google</span></div></div></div>'
+  + '<div class="corps"><div class="duo"><div class="carte" style="width:812px;padding:26px">'
+  + '<div style="display:flex;justify-content:space-between;margin-bottom:10px"><b style="font-size:15px">Choisissez la pièce concernée</b><span style="font-size:12.5px;font-weight:600;color:var(--gris)">9 zones · cliquez pour explorer</span></div>'
+  + maison(true,21) + '</div>' + panneau() + '</div>'
+  + '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:40px"><h2 style="margin:0;font-size:24px;font-weight:800;letter-spacing:-.6px">Les neuf métiers, en un coup d\'œil</h2>'
+  + '<span style="font-size:13.5px;font-weight:600;color:var(--gris)">Chaque métier garde sa page actuelle — rien n\'est supprimé</span></div>'
+  + '<div class="grille">' + M.map(m=>'<a class="tuile" href="#"><div style="display:flex;align-items:center;gap:12px"><span class="pastille">'+m.n+'</span><b style="font-size:17px;letter-spacing:-.3px">'+m.nom+'</b></div>'
+  + '<span style="font-size:13.5px;line-height:1.5;color:var(--gris)">'+m.resume+'</span>'
+  + '<span style="font-size:12.5px;font-weight:700;color:'+(m.achat?'var(--orange)':'var(--encre)')+'">'+(m.achat?'Réservable en ligne':'Sur devis')+'</span></a>').join('') + '</div></div>';
+}
+function pageMob(){
+  const m = M[sel];
+  return '<div class="m-top"><div class="logo" style="width:36px;height:36px;font-size:13px">HC</div><div style="flex:1"><div style="font-size:13px;font-weight:700">Dépan\'Audo</div><div style="font-size:9px;font-weight:600;color:var(--gris);letter-spacing:.9px">HELP CONFORT · SAINT-OMER</div></div>'
+  + '<span style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;background:var(--marine)">'+ICO_TEL+'</span></div>'
+  + '<div class="m-hero"><div class="kicker" style="font-size:10.5px">NOS MÉTIERS</div><h1>Tout ce que nous savons faire,<br><span class="ital">sous un seul toit.</span></h1>'
+  + '<p>Neuf métiers, des techniciens salariés. Touchez une pièce pour voir ce que nous y faisons.</p></div>'
+  + '<div class="m-pad"><div class="carte" style="padding:12px">'+maison(true,26)+'</div></div>'
+  + '<div class="m-pad"><div class="carte" style="padding:18px 16px">'
+  + '<div style="display:flex;gap:11px;align-items:center"><span class="pastille" style="width:40px;height:40px;border-radius:11px;font-size:15px">'+m.n+'</span>'
+  + '<div><h2 style="margin:0;font-size:21px;font-weight:800;letter-spacing:-.5px">'+m.nom+'</h2><div style="font-size:11.5px;font-weight:600;color:var(--gris)">'+m.piece+'</div></div></div>'
+  + '<p style="font-size:14px;line-height:1.6;color:var(--texte)">'+m.desc+'</p>'
+  + m.p.map(p=>'<div class="presta"><b style="font-size:13px">'+p[0]+'</b><i style="font-size:13px">'+p[1]+'</i></div>').join('')
+  + (m.achat?'<a class="m-cta" style="background:var(--orange);color:#fff" href="#">'+ICO_PANIER+'Réserver en ligne</a>':'')
+  + '<a class="m-cta" style="background:#fff;border:2px solid var(--marine);color:var(--marine)" href="#">'+ICO_DEVIS+'Demander un devis</a>'
+  + '<div style="font-size:12px;color:var(--gris);text-align:center;margin-top:10px">'+(m.achat?'Prix TTC annoncé avant intervention.':"Pas de tarif public : la demande passe par le devis.")+'</div></div></div>'
+  + '<div style="padding:18px 16px 24px"><h2 style="margin:0 0 12px;font-size:18px;font-weight:800">Les neuf métiers</h2><div class="m-grille">'
+  + M.map(x=>'<a class="m-tuile" href="#"><b style="font-size:14.5px">'+x.nom+'</b><span style="font-size:11.5px;font-weight:700;color:'+(x.achat?'var(--orange)':'var(--encre)')+'">'+(x.achat?'Réservable en ligne':'Sur devis')+'</span></a>').join('')
+  + '</div></div>';
+}
+function accDesk(){
+  return '<div class="acc"><div style="width:620px;flex-shrink:0;background:var(--fond);border:1px solid var(--bord);border-radius:22px;padding:18px">'+maison(false,19)+'</div>'
+  + '<div style="flex:1"><div class="kicker" style="color:var(--encre)">NOS MÉTIERS</div>'
+  + '<h2>Neuf métiers,<br><span class="ital">une seule équipe salariée.</span></h2>'
+  + '<p style="font-size:16.5px;line-height:1.6;color:var(--texte);max-width:560px">De la fuite d\'eau au monte-escalier, nous intervenons sur toute la maison. Pas de sous-traitance : nos techniciens sont chez nous.</p>'
+  + '<div class="puces">'+M.map(m=>'<a class="puce" href="#"><em>'+m.n+'</em>'+m.nom+'</a>').join('')+'</div>'
+  + '<div style="display:flex;gap:14px;margin-top:22px"><a href="#" style="display:flex;align-items:center;gap:10px;height:58px;padding:0 30px;border-radius:15px;background:var(--orange);color:#fff;font-size:16.5px;font-weight:700">Découvrir nos métiers'+ICO_FLECHE+'</a>'
+  + '<a href="#" style="display:flex;align-items:center;height:58px;padding:0 26px;border-radius:15px;border:2px solid var(--marine);color:var(--marine);font-size:16.5px;font-weight:700">Voir les tarifs</a></div></div></div>';
+}
+function accMob(){
+  return '<div class="m-acc"><div class="kicker" style="color:var(--encre);font-size:10.5px">NOS MÉTIERS</div>'
+  + '<h2>Neuf métiers,<br><span class="ital">une seule équipe.</span></h2>'
+  + '<p style="font-size:14.5px;line-height:1.55;color:var(--texte)">De la fuite d\'eau au monte-escalier, nous intervenons sur toute la maison. Pas de sous-traitance.</p>'
+  + '<div style="background:var(--fond);border:1px solid var(--bord);border-radius:16px;padding:10px;margin:18px 0">'+maison(false,24)+'</div>'
+  + '<div class="m-grille">'+M.map(m=>'<a class="puce" style="height:46px;font-size:13px" href="#"><em style="width:22px;height:22px;font-size:11px">'+m.n+'</em>'+m.nom+'</a>').join('')+'</div>'
+  + '<a href="#" style="display:flex;align-items:center;justify-content:center;gap:10px;height:56px;border-radius:14px;background:var(--orange);color:#fff;font-size:16px;font-weight:700;margin-top:18px">Découvrir nos métiers'+ICO_FLECHE+'</a></div>';
+}
+const LEG = {
+ 'page-desk':"<b>La page « Nos métiers », version ordinateur.</b> Cliquez une pièce de la maison : le panneau de droite change. Deux boutons maximum — « Réserver en ligne » n'apparaît que pour les cinq métiers qui ont un vrai tarif public.",
+ 'page-mob':"<b>La même page sur téléphone.</b> La maison reste pour comprendre, mais la liste en deux colonnes devient la navigation principale : viser une zone d'un dessin sur 390 px n'est pas fiable.",
+ 'acc-desk':"<b>Le bloc sur la page d'accueil, version ordinateur.</b> Une vue d'ensemble qui envoie vers la page Métiers — il ne recrée pas un troisième hub.",
+ 'acc-mob':"<b>Le bloc d'accueil sur téléphone.</b> Même logique, empilée."
+};
+function rendre(){
+  const c = document.getElementById('cadre');
+  const mob = vue.endsWith('mob');
+  c.className = 'cadre ' + (mob ? 'mob' : 'desk');
+  c.innerHTML = vue==='page-desk'?pageDesk():vue==='page-mob'?pageMob():vue==='acc-desk'?accDesk():accMob();
+  document.getElementById('legende').innerHTML = LEG[vue];
+  if(!mob){ const e=(window.innerWidth-56)/1440; c.style.transform = e<1 ? 'scale('+e.toFixed(3)+')' : 'none'; c.style.marginBottom = e<1 ? (-(1-e)*c.offsetHeight)+'px' : '0'; }
+  else c.style.transform='none';
+  c.querySelectorAll('.hot').forEach(g=>{
+    const go=()=>{ sel=+g.dataset.i; rendre(); };
+    g.addEventListener('click',go);
+    g.addEventListener('keydown',ev=>{ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); go(); }});
+  });
+}
+document.querySelectorAll('.onglet').forEach(b=>b.addEventListener('click',()=>{
+  vue=b.dataset.vue;
+  document.querySelectorAll('.onglet').forEach(x=>x.setAttribute('aria-selected', x===b?'true':'false'));
+  rendre();
+}));
+window.addEventListener('resize',rendre);
+rendre();
+</script>
+</body>
+</html>

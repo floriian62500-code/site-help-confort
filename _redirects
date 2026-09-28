@@ -1,4 +1,8 @@
 # SÉCURITÉ : ne jamais servir les fichiers internes (suivi control-plane, docs/audits, scripts, sources edge/SQL)
+# PREVIEW DE MAQUETTE — branche preview/maquette-nos-metiers UNIQUEMENT, jamais fusionnee.
+# La maquette vit sous /docs/ (donc bloquee comme le reste des docs) ; cette seule reecriture
+# lui ouvre une adresse lisible, en noindex. A retirer avec la branche.
+/maquette-metiers   /docs/maquettes/nos-metiers.html   200
 /docs/*      /404.html 404!
 /scripts/*   /404.html 404!
 /supabase/*  /404.html 404!
