@@ -55,7 +55,7 @@
    "next_action": "production UNSAFE sur plusieurs points · aucun déploiement sans GO explicite",
    "attempt": 2,
    "closed_at": null,
-   "closure_proof": null,
+   "closure_proof": " — PREUVE P0 SUPPLÉMENTAIRE (2026-09-28) : la table app_settings de production ne contient pas que des adresses ; elle stocke aussi en clair des identifiants Google (clé privée de compte de service, jetons de rafraîchissement, secrets client, jeton développeur Ads). Aucune valeur n’est reproduite dans Git. Si cette table reste lisible par tout compte authentifié, comme le note la documentation sécurité du projet, n’importe quel inscrit peut les lire. Aucune mutation RLS/secrets sans gate dédié.",
    "scope": "AUDIT/PRÉPARATION COMPLÈTE · PRODUCTION NON SÛRE SUR PLUSIEURS POINTS · WAITING_FLORIAN_GO — ne jamais écrire « clôture sécurité »",
    "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2"
   },
@@ -370,7 +370,7 @@
    "next_action": "maintenu",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null,
+   "closure_proof": " — PREUVE P0 SUPPLÉMENTAIRE (2026-09-28) : la table app_settings de production ne contient pas que des adresses ; elle stocke aussi en clair des identifiants Google (clé privée de compte de service, jetons de rafraîchissement, secrets client, jeton développeur Ads). Aucune valeur n’est reproduite dans Git. Si cette table reste lisible par tout compte authentifié, comme le note la documentation sécurité du projet, n’importe quel inscrit peut les lire. Aucune mutation RLS/secrets sans gate dédié.",
    "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2"
   },
   {
@@ -876,7 +876,7 @@
    "request_id": "REQ-20260926-032",
    "title": "Refonte « Nos métiers » : page vitrine, menu, bloc accueil",
    "priority": "P1",
-   "status": "READY_FOR_FLORIAN_VALIDATION",
+   "status": "READY_FOR_FLORIAN_VISUAL",
    "parent_instruction": "demande Florian 2026-09-28 (chat) — montrer avant de coder",
    "created_at": "2026-09-28",
    "acceptance_criteria": [
@@ -894,14 +894,14 @@
    ],
    "latest_sha": null,
    "claude_outbox": "CLAUDE-2026-09-28-REQ-032-PROPOSITION-METIERS.md",
-   "human_gate": "validation de la maquette + 2 décisions commerciales (métiers sans prestation, photos)",
+   "human_gate": "validation visuelle de la maquette par Florian ; lots A-D interdits tant que REQ-023 n’est pas validée",
    "blocked_by": "gel visuel REQ-023 pour toute implémentation",
-   "next_action": "Florian valide ou corrige la maquette ; ensuite lots A→D, un commit par lot",
+   "next_action": "décision métier tranchée par le contrôle : aucun faux prix, « Devis » seul pour les 4 métiers sans offre canonique ; photos = lot séparé, ne bloquent pas",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": "livrables 1 à 6 produits sans toucher au site : diagnostic (page /nos-metiers.html orpheline mais en ligne, H1 faux, 0 CTA), UX 3 niveaux, 4 planches desktop+mobile, plan de pages sans suppression, plan technique 4 lots, plan de rollback",
    "scope": null,
-   "decide_par": null
+   "decide_par": "CHATGPT-2026-09-28-CONTROL-ALL-REQUESTS-9 (§2 : diagnostic et architecture acceptés)"
   },
   {
    "request_id": "REQ-20260926-033",
@@ -923,11 +923,11 @@
     "tests sans faux lead production",
     "preuve etat deploye"
    ],
-   "latest_sha": null,
-   "claude_outbox": "CLAUDE-2026-09-28-REQ-033-ROUTAGE-EMAIL.md",
-   "human_gate": "GO Florian : 1) vider leads_cc en base 2) aligner branding.email_reply_to 3) redéployer 3 fonctions edge — 3 mutations de production, aucune faite",
-   "blocked_by": "GO production non donné",
-   "next_action": "attendre le GO, plus 2 décisions : alertes techniques (adresse personnelle en dur) et nom d’expéditeur client",
+   "latest_sha": "65ffa1b7 (retour d’audit) — changeset publié, non exécuté",
+   "claude_outbox": "CLAUDE-2026-09-28-REQ-033-ROUTAGE-EMAIL.md puis CLAUDE-2026-09-28-REQ-033-CHANGESET.md",
+   "human_gate": "GO d’exécution de Florian sur le changeset publié (2 champs de configuration + 3 fonctions, périmètre strict du contrôle n°9)",
+   "blocked_by": "GO d’exécution non donné",
+   "next_action": "sur GO : configuration d’abord, fonctions ensuite, puis preuves ; REQ-033 passera READY_FOR_CONTROL, jamais CLOSED",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": "audit de la configuration RÉELLEMENT déployée : leads_to, orders_to, subscriptions_to et reply_to sont déjà sur saint-omer@helpconfort.com ; le défaut est leads_cc, resté sur l’adresse personnelle, donc en copie de chaque demande. Trois adresses personnelles restent en dur dans le code déployé (List-Unsubscribe, repli reply_to, branding.email_reply_to). Écart déployé/dépôt constaté sur notify-lead-v6 : le filtre anti-client du dépôt n’est pas en ligne et l’expéditeur y est codé en dur. Aucune écriture, aucun déploiement, aucun e-mail envoyé.",
