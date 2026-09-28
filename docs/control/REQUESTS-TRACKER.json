@@ -891,13 +891,14 @@
    "evidence_required": [
     "docs/ux/PROPOSITION-NOS-METIERS-2026-09-28.md",
     "maquette cliquable https://claude.ai/artifact/2WW7DyBSsoJmM8oCW5pNsm",
-    "chiffres lus dans v_services_public le 2026-09-28"
+    "chiffres lus dans v_services_public le 2026-09-28",
+    "preview isolée noindex sur branche non fusionnée : https://deploy-preview-15--remarkable-dragon-364e2b.netlify.app/maquette-metiers"
    ],
-   "latest_sha": null,
-   "claude_outbox": "CLAUDE-2026-09-28-REQ-032-PROPOSITION-METIERS.md",
+   "latest_sha": "f276167e (branche preview/maquette-nos-metiers, PR #15, non fusionnée)",
+   "claude_outbox": "CLAUDE-2026-09-28-REQ-032-PROPOSITION-METIERS.md puis CLAUDE-2026-09-28-REQ-032-PREVIEW.md",
    "human_gate": "validation visuelle de la maquette par Florian ; lots A-D interdits tant que REQ-023 n’est pas validée",
    "blocked_by": "maquette non accessible a Florian",
-   "next_action": "fournir une preview isolee noindex sur branche non mergee avec URL exacte",
+   "next_action": "maquette en ligne et consultable sans compte à https://deploy-preview-15--remarkable-dragon-364e2b.netlify.app/maquette-metiers (branche non fusionnée, noindex, aucune page publique modifiée) ; 4 défauts corrigés pendant la mise en ligne ; attente du oui/non de Florian, lots A-D toujours interdits avant validation",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": "livrables 1 à 6 produits sans toucher au site : diagnostic (page /nos-metiers.html orpheline mais en ligne, H1 faux, 0 CTA), UX 3 niveaux, 4 planches desktop+mobile, plan de pages sans suppression, plan technique 4 lots, plan de rollback",
