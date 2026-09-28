@@ -2,7 +2,29 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "HC: session de travail — ouvrir",
+      "detail": "Pose le verrou : le demon d'auto-sauvegarde arrete de committer et de pousser pendant le lot.",
+      "type": "shell",
+      "command": "bash scripts/ops/worksession.sh start \"${input:libelleLot}\"",
+      "problemMatcher": []
+    },
+    {
+      "label": "HC: session de travail — prolonger",
+      "detail": "A lancer avant 90 min : « ouvrir » sur une session deja ouverte ne remet PAS le compteur a zero.",
+      "type": "shell",
+      "command": "bash scripts/ops/worksession.sh renew && bash scripts/ops/worksession.sh status",
+      "problemMatcher": []
+    },
+    {
+      "label": "HC: session de travail — fermer",
+      "detail": "A lancer a la fin du lot ET avant toute attente longue, sinon le verrou expire et le demon pousse le travail en cours.",
+      "type": "shell",
+      "command": "bash scripts/ops/worksession.sh stop",
+      "problemMatcher": []
+    },
+    {
       "label": "HC: serveur local",
+      "detail": "Sert le depot sur http://localhost:8765. Attention : pas de pretty URLs comme Netlify, les liens sans .html tombent en 404 en local.",
       "type": "shell",
       "command": "python3 -m http.server 8765",
       "isBackground": true,
@@ -13,21 +35,30 @@
       }
     },
     {
-      "label": "HC: tests Node complets",
+      "label": "HC: tests complets",
+      "detail": "Les 31 fichiers de la suite, .mjs ET .sh (garde-wip et autopush sont des scripts shell).",
       "type": "shell",
-      "command": "for t in scripts/tests/*.test.mjs; do echo \"== $t\"; node \"$t\" || exit 1; done",
+      "command": "for t in scripts/tests/*.test.mjs; do echo \"== $t\"; node \"$t\" || exit 1; done && for t in scripts/tests/*.test.sh; do echo \"== $t\"; bash \"$t\" || exit 1; done",
       "problemMatcher": [],
       "group": "test"
     },
     {
       "label": "HC: controles pre-commit",
+      "detail": "Tout ce qui doit etre vert avant un commit : suite complete (.mjs + .sh) puis les gardes SEO, en-tete et generateurs.",
       "type": "shell",
-      "command": "for t in scripts/tests/*.test.mjs; do node \"$t\" || exit 1; done && bash scripts/tests/autopush.test.sh && node scripts/seo/seo-guardrails.mjs && node scripts/header/sync-header.mjs --check && node scripts/seo/duplicate-intent.mjs && node scripts/seo/fix-compound-selectors.mjs --check && node scripts/gen-offres-emploi.mjs --check",
+      "command": "for t in scripts/tests/*.test.mjs; do node \"$t\" || exit 1; done && for t in scripts/tests/*.test.sh; do bash \"$t\" || exit 1; done && node scripts/seo/seo-guardrails.mjs && node scripts/header/sync-header.mjs --check && node scripts/seo/duplicate-intent.mjs && node scripts/seo/fix-compound-selectors.mjs --check && node scripts/gen-offres-emploi.mjs --check",
       "problemMatcher": [],
       "group": {
         "kind": "test",
         "isDefault": true
       }
+    },
+    {
+      "label": "HC: verifier en-tete",
+      "detail": "L'en-tete ne s'edite jamais dans une page : il vient du partiel, propage par sync-header.mjs.",
+      "type": "shell",
+      "command": "node scripts/header/sync-header.mjs --check",
+      "problemMatcher": []
     },
     {
       "label": "HC: audit doublon intention",
@@ -36,9 +67,10 @@
       "problemMatcher": []
     },
     {
-      "label": "HC: verifier en-tete",
+      "label": "HC: bump version des assets",
+      "detail": "Obligatoire apres toute modification d'un fichier de assets/ : le cache est immuable 1 an, sans bump personne ne voit le correctif.",
       "type": "shell",
-      "command": "node scripts/header/sync-header.mjs --check",
+      "command": "node scripts/bump-module-version.mjs",
       "problemMatcher": []
     },
     {
@@ -46,6 +78,14 @@
       "type": "shell",
       "command": "git status --short --branch && git log -1 --oneline",
       "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "libelleLot",
+      "type": "promptString",
+      "description": "Libelle du lot (mettre P0, fix, secu, correctif, release ou rollback si la garde WIP refuse l'ouverture)",
+      "default": "lot en cours"
     }
   ]
 }
