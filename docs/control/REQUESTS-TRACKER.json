@@ -698,7 +698,7 @@
    "request_id": "REQ-20260926-026",
    "title": "Garde automatique de cohérence des zones (ville revendiquée absente de communes-list)",
    "priority": "P0",
-   "status": "OPEN_BLOCKED_BY_REQ023_VISUAL",
+   "status": "READY_FOR_CONTROL",
    "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-4.md",
    "legacy_instruction_id": null,
    "created_at": "2026-09-26",
@@ -714,14 +714,14 @@
     "sortie du test au vert une fois l’écart déclaré comme exception explicite",
     "diff limité à scripts/tests/"
    ],
-   "latest_sha": null,
-   "claude_outbox": null,
+   "latest_sha": "1534226d",
+   "claude_outbox": "CLAUDE-2026-09-28-REQ-026-GARDE-ZONES.md",
    "human_gate": "—",
-   "blocked_by": "REQ-20260926-023 (validation visuelle Florian) — ne pas exécuter avant",
-   "next_action": "après validation visuelle de REQ-023 et checkpoint validé : écrire la garde, puis STOP",
-   "attempt": 0,
+   "blocked_by": "—",
+   "next_action": "contrôle ChatGPT ; les 6 écarts détectés relèvent de REQ-027 (décision métier Florian)",
+   "attempt": 1,
    "closed_at": null,
-   "closure_proof": null,
+   "closure_proof": "garde livrée dans scripts/tests/zones-coherence.test.mjs (6 contrôles) + instantané canonique versionné ; échec prouvé sur l’écart réel une fois les exceptions vidées : 6 villes revendiquées par 13 pages sans commune canonique (Boulogne-sur-Mer, Le Portel, Outreau, Saint-Martin-Boulogne, Wimereux, Saint-Pol-sur-Mer) ; vert une fois les écarts déclarés avec leur raison ; suite complète 846 PASS / 0 FAIL ; diff limité à scripts/tests/ ; doublon Pihen-lès-Guînes signalé sans bloquer",
    "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-4"
   },
   {
@@ -751,7 +751,7 @@
    "next_action": "poser les 4 questions métier à Florian ; ne rien muter avant sa réponse ET son GO",
    "attempt": 0,
    "closed_at": null,
-   "closure_proof": null,
+   "closure_proof": " — 2026-09-28, mesure élargie par la garde REQ-026 : ce ne sont pas 3 mais 6 villes qui ont une page dédiée sans commune canonique (Boulogne-sur-Mer, Le Portel, Outreau, Saint-Martin-Boulogne, Wimereux, Saint-Pol-sur-Mer), soit 13 pages ; le Boulonnais canonique se limite à 6 villages ruraux ; Pihen-lès-Guînes est en double.",
    "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-4"
   },
   {
@@ -897,7 +897,7 @@
    "claude_outbox": "CLAUDE-2026-09-28-REQ-032-PROPOSITION-METIERS.md",
    "human_gate": "validation visuelle de la maquette par Florian ; lots A-D interdits tant que REQ-023 n’est pas validée",
    "blocked_by": "maquette actuelle non visible par Florian",
-   "next_action": "fournir une maquette/prototype visible sur preview recette, desktop 1440 et mobile 390, sans implémenter les lots A-D",
+   "next_action": "maquette rendue accessible sans compte Claude : fichier HTML autonome de 24 Ko remis à Florian, 4 vues (page 1440/390, accueil 1440/390), maison cliquable. En attente de son avis ; lots A-D toujours interdits avant validation.",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": "livrables 1 à 6 produits sans toucher au site : diagnostic (page /nos-metiers.html orpheline mais en ligne, H1 faux, 0 CTA), UX 3 niveaux, 4 planches desktop+mobile, plan de pages sans suppression, plan technique 4 lots, plan de rollback",
@@ -963,5 +963,13 @@
   "verdict": "diagnostic outillage accepté ; PR #14 reprise par ChatGPT ; HOLD jusqu’au résultat CI",
   "retour_claude": "CLAUDE-2026-09-28-ACK-CONTROL-7.md",
   "lacune_signalee": "le n°5 manque toujours dans l’inbox (numérotation 4 → 6 → 7) : jamais reçu ni traité"
+ },
+ "checkpoint_valide": {
+  "branche": "backup/recette-validated-2026-09-28-req023",
+  "sha": "64a96a823fc8cc6521d45dfb1850531ba66b489a",
+  "cree_par": "Florian",
+  "objet": "état de recette au moment de la validation visuelle des 4 pôles (REQ-023)",
+  "regle": "ne jamais modifier, déplacer, rebaser, merger ni force-pusher cette branche",
+  "verifie_le": "2026-09-28"
  }
 }
