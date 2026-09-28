@@ -24,7 +24,8 @@
     el.setAttribute('aria-labelledby', 'hcSeasonTitle');
     el.innerHTML =
       '<p class="hcs-kicker"><i aria-hidden="true"></i>Avant l’hiver</p>' +
-      '<h2 id="hcSeasonTitle">Entretien et ramonage : préparez votre chauffage</h2>' +
+      '<h2 id="hcSeasonTitle"><span class="hcs-long">Entretien et ramonage : préparez votre chauffage</span>' +
+      '<span class="hcs-court">Entretien &amp; ramonage</span></h2>' +
       '<p class="hcs-sub">Chaudière, poêle ou insert : l’entretien annuel par nos techniciens, ' +
       'attestation ou certificat de ramonage remis.</p>' +
       '<div class="hcs-actions">' +
