@@ -18,7 +18,11 @@ const sha = s => crypto.createHash('sha1').update(s).digest('hex').slice(0, 10);
 
 const PARTIAL = rd('partials/hc-header.html').replace(/^<!--[\s\S]*?-->\n/, '').trim();
 const V_CSS = sha(rd('assets/hc-header.css')), V_JS = sha(rd('assets/hc-header.js'));
-const ASSETS = `<link rel="stylesheet" href="/assets/hc-header.css?v=${V_CSS}">\n<script src="/assets/hc-header.js?v=${V_JS}" defer></script>\n`;
+// Encart saisonnier : décision de Florian du 2026-09-28, il doit être sur TOUTES les pages.
+// Il voyage donc avec l'en-tête, seul canal qui atteint toutes les pages publiques d'un coup.
+const V_PCSS = sha(rd('assets/hc-promo-saison.css')), V_PJS = sha(rd('assets/hc-promo-saison.js'));
+const ASSETS = `<link rel="stylesheet" href="/assets/hc-header.css?v=${V_CSS}">\n<script src="/assets/hc-header.js?v=${V_JS}" defer></script>\n`
+  + `<link rel="stylesheet" href="/assets/hc-promo-saison.css?v=${V_PCSS}">\n<script src="/assets/hc-promo-saison.js?v=${V_PJS}" defer></script>\n`;
 const FONT = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">\n';
 const CRUMB_ACTU = '<nav class="hc-crumb" aria-label="Fil d’Ariane"><a href="/actualites.html">← Toutes les actualités</a></nav>';
 
@@ -82,6 +86,7 @@ export function transform(p, src) {
   h = h.replace(/<script\b(?![^>]*\bsrc=)([^>]*)>([\s\S]*?)<\/script>\s*/g, (m, attrs, js) => OLD_SCRIPTS.has(norm(js)) ? '' : m);
   // Feuille + script uniques (idempotent : on retire les anciennes références avant de reposer les nouvelles)
   h = h.replace(/<link rel="stylesheet" href="\/assets\/hc-header\.css[^"]*">\s*/g, '').replace(/<script src="\/assets\/hc-header\.js[^"]*" defer><\/script>\s*/g, '');
+  h = h.replace(/<link rel="stylesheet" href="\/assets\/hc-promo-saison\.css[^"]*">\s*/g, '').replace(/<script src="\/assets\/hc-promo-saison\.js[^"]*" defer><\/script>\s*/g, '');
   const head = h.slice(0, h.indexOf('</head>'));
   const needFont = !/fonts\.googleapis\.com\/css2\?[^"']*family=Inter[:&"']/.test(head);
   h = h.replace('</head>', (needFont ? FONT : '') + ASSETS + '</head>');

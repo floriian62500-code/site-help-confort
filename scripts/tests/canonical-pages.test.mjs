@@ -41,9 +41,11 @@ ok('dossier Ads : plus aucune destination vers le doublon (mention historique to
 // Décision Florian du 2026-09-26 : les TROIS boutons de l'encart mènent à la page Chauffage.
 // La bannière est une porte d'entrée marketing ; la page métier est la porte d'entrée du parcours ;
 // le tunnel ne s'ouvre qu'ensuite, depuis une prestation choisie.
-ok('accueil : les trois boutons de l’encart mènent à la page Chauffage, aucun au tunnel',
-  [...home.matchAll(/href="([^"]+)"[^>]*data-hc-promo-fam=/g)].map((m) => m[1]).length === 3 &&
-  [...home.matchAll(/href="([^"]+)"[^>]*data-hc-promo-fam=/g)].every((m) => m[1].startsWith('/chauffagiste-saint-omer.html#')));
+// 2026-09-28 : l'encart n'est plus dans l'accueil, il est partagé par toutes les pages.
+const promo = rd('assets/hc-promo-saison.js');
+ok('encart saisonnier : les trois boutons mènent à la page Chauffage, aucun au tunnel',
+  [...promo.matchAll(/href="([^"]+)"[^>]*data-hc-promo-fam=/g)].map((m) => m[1]).length === 3 &&
+  [...promo.matchAll(/href="([^"]+)"[^>]*data-hc-promo-fam=/g)].every((m) => m[1].startsWith('/chauffagiste-saint-omer.html#')));
 ok('sitemap : les deux pages canoniques listées, le doublon retiré', sitemap.includes(CHAUD + ' ') && sitemap.includes(RAM + ' ') && !sitemap.includes('entretien-poele-insert'));
 for (const [nom, f, url] of [['chaudière', 'chauffagiste-saint-omer.html', CHAUD], ['ramonage + poêle / insert', 'prestations/ramonage.html', RAM]]) {
   const s = rd(f);

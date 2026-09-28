@@ -110,7 +110,12 @@ const bornes = h => [h.indexOf('<header'), h.indexOf('</header>') + 9];
 const sansEntete = h => {
   const [a, b] = bornes(h);
   const sans = a < 0 || b < 9 ? h : h.slice(0, a) + '@ENTETE@' + h.slice(b);
-  return sans.replace(/<link rel="stylesheet" href="\/assets\/hc-header\.css\?v=[0-9a-z]+">\n?/g, '');
+  // Ces fichiers appartiennent eux aussi à sync-header (encart saisonnier, 2026-09-28) : les
+  // comparer ferait croire à une page périmée à chaque changement de version d'asset.
+  return sans
+    .replace(/<link rel="stylesheet" href="\/assets\/hc-header\.css\?v=[0-9a-z]+">\n?/g, '')
+    .replace(/<link rel="stylesheet" href="\/assets\/hc-promo-saison\.css\?v=[0-9a-z]+">\n?/g, '')
+    .replace(/<script src="\/assets\/hc-promo-saison\.js\?v=[0-9a-z]+" defer><\/script>\n?/g, '');
 };
 const avecEntete = (neuf, ancien) => {
   if (!ancien) return neuf;
