@@ -235,7 +235,9 @@ function rendre(){
   c.className = 'cadre ' + (mob ? 'mob' : 'desk');
   c.innerHTML = vue==='page-desk'?pageDesk():vue==='page-mob'?pageMob():vue==='acc-desk'?accDesk():accMob();
   document.getElementById('legende').innerHTML = LEG[vue];
-  c.style.zoom='1';
+  // Sur un écran plus étroit que 1440, on réduit l'affichage : le cadre garde sa vraie
+  // largeur de mise en page, seul le rendu est mis à l'échelle.
+  c.style.zoom = (!mob && window.innerWidth < 1460) ? (window.innerWidth / 1460).toFixed(3) : '1';
   c.querySelectorAll('.hot').forEach(g=>{
     const go=()=>{ sel=+g.dataset.i; rendre(); };
     g.addEventListener('click',go);
@@ -248,6 +250,7 @@ document.querySelectorAll('.onglet').forEach(b=>b.addEventListener('click',()=>{
   rendre();
 }));
 rendre();
+window.addEventListener('resize', () => { clearTimeout(window.__t); window.__t = setTimeout(rendre, 150); });
 </script>
 </body>
 </html>
