@@ -902,6 +902,36 @@
    "closure_proof": "livrables 1 à 6 produits sans toucher au site : diagnostic (page /nos-metiers.html orpheline mais en ligne, H1 faux, 0 CTA), UX 3 niveaux, 4 planches desktop+mobile, plan de pages sans suppression, plan technique 4 lots, plan de rollback",
    "scope": null,
    "decide_par": null
+  },
+  {
+   "request_id": "REQ-20260926-032",
+   "title": "Routage de toutes les demandes site vers saint-omer@helpconfort.com",
+   "priority": "P0",
+   "status": "IN_PROGRESS",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-032-ROUTAGE-EMAIL-SAINT-OMER.md",
+   "created_at": "2026-09-28",
+   "acceptance_criteria": [
+    "toutes les demandes internes du site arrivent sur saint-omer@helpconfort.com",
+    "aucune adresse personnelle Florian dans to/cc/bcc pour ces demandes",
+    "tous les flux entrants sont audites",
+    "etat deploye verifie",
+    "rollback documente"
+   ],
+   "evidence_required": [
+    "config destinataire avant/apres",
+    "liste des flux audites",
+    "tests sans faux lead production",
+    "preuve etat deploye"
+   ],
+   "latest_sha": null,
+   "claude_outbox": null,
+   "human_gate": "GO metier donne pour remplacer le destinataire des demandes site par la boite Saint-Omer; toute autre mutation prod reste gatee",
+   "blocked_by": "verification de la configuration de notification reellement deployee",
+   "next_action": "Claude audite les flux et corrige uniquement le routage email concerne",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null,
+   "decide_par": "ChatGPT 2026-09-28"
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id.",
