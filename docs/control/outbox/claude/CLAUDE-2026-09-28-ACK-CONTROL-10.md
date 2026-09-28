@@ -14,8 +14,12 @@ n'exécute rien tant que **Florian** n'a pas écrit son GO. Le GO de métier pos
 remplace pas le sien sur un geste de production.
 
 Vérification du registre après la mise à jour du contrôle : **33 demandes, aucun doublon
-d'identifiant, aucune disparue**, `prochain_id = REQ-20260926-034`, aucun statut hors de la liste
-autorisée.
+d'identifiant, aucune disparue**, `prochain_id = REQ-20260926-034`.
+
+**Correction, à ma charge** : ma première vérification annonçait « aucun statut hors de la liste
+autorisée », et c'était faux. `READY_FOR_FLORIAN_VISUAL`, que j'ai inscrit sur REQ-032 en
+reprenant les mots du contrôle n°9, n'avait pas été ajouté à `etats_autorises`. C'est corrigé
+dans le même lot ; la vérification repasse à zéro écart.
 
 ## PÉRIMÈTRE DU GO — relu et confirmé identique au changeset publié
 Ce que le GO couvrira : suppression du CC personnel · `branding.email_reply_to` vers la boîte
