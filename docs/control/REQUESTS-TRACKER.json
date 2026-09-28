@@ -940,7 +940,7 @@
    "request_id": "REQ-20260926-034",
    "title": "Rattrapage production des lots verts depuis main",
    "priority": "P0",
-   "status": "IN_PROGRESS",
+   "status": "READY_FOR_FLORIAN_VISUAL",
    "parent_instruction": "demande Florian 2026-09-28 — verifier diff prod et envoyer ce qui est vert",
    "created_at": "2026-09-28",
    "acceptance_criteria": [
@@ -959,14 +959,14 @@
     "diff final release vs main",
     "rollback"
    ],
-   "latest_sha": null,
-   "claude_outbox": null,
-   "human_gate": "GO Florian donne pour envoyer les lots verts; le gate securite critique REQ-001/013 reste a traiter ou a accepter explicitement avant merge/deploiement final",
-   "blocked_by": "construction et validation de la release green",
-   "next_action": "assembler release/green-2026-09-28 depuis main avec seulement les lots verts et prouver l'etat exact",
+   "latest_sha": "e216ea88 (release/green-2026-09-28, PR #16 brouillon)",
+   "claude_outbox": "CLAUDE-2026-09-28-REQ-034-RELEASE-VERTE.md",
+   "human_gate": "validation visuelle de Florian sur la preview de release, puis GO explicite pour fusionner dans main",
+   "blocked_by": "aucune suite de tests sur main + validation visuelle manquante + HOLD_SECURITY actif",
+   "next_action": "Florian valide les 3 lots sur https://deploy-preview-16--remarkable-dragon-364e2b.netlify.app ; il tranche REQ-023 (réécriture sur la version main + revalidation, ou hors release) ; puis GO pour fusionner la PR #16",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null,
+   "closure_proof": "matrice établie : main n’a reçu aucun travail fonctionnel depuis le 08/08 (57 rapports nocturnes + 1 fusion), recette a 876 commits d’avance. 3 lots portés (007, 019, 024) en 3 commits isolés, 9 fichiers, +13/-163, prouvés en ligne sur la preview de release. HORS : 008 et 009 sans objet (bloc et tunnel absents de main), 023 nécessite une revalidation visuelle car la page de main est l’ancienne version, 026 sans intérêt (main n’a aucun test). Verdict BLOCKED : pas de suite de tests exécutable sur main, validation visuelle Florian manquante, HOLD_SECURITY actif.",
    "decide_par": "ChatGPT 2026-09-28"
   }
  ],
