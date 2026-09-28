@@ -29,7 +29,7 @@
   "WAITING_FLORIAN_BUSINESS_GO"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-032",
+ "prochain_id": "REQ-20260926-033",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -871,6 +871,37 @@
    "closure_proof": "PR #14 fusionnee en 356479c3; CI push success; depot-propre 10/10; suite complete 840 PASS / 0 FAIL; PR #11 historique fermee sans merge",
    "scope": null,
    "decide_par": "ChatGPT 2026-09-28 (CLOSED_BY_CONTROL)"
+  },
+  {
+   "request_id": "REQ-20260926-032",
+   "title": "Refonte « Nos métiers » : page vitrine, menu, bloc accueil",
+   "priority": "P1",
+   "status": "READY_FOR_FLORIAN_VALIDATION",
+   "parent_instruction": "demande Florian 2026-09-28 (chat) — montrer avant de coder",
+   "created_at": "2026-09-28",
+   "acceptance_criteria": [
+    "diagnostic de l’existant fourni avant toute implémentation",
+    "proposition UX : arborescence et navigation",
+    "maquettes desktop ET mobile pour le bloc accueil et la page métiers",
+    "plan de pages : conservées / refondues / simplifiées, sans suppression ni 301",
+    "plan technique en lots isolés + plan de retour arrière",
+    "aucune ligne de code avant validation Florian"
+   ],
+   "evidence_required": [
+    "docs/ux/PROPOSITION-NOS-METIERS-2026-09-28.md",
+    "maquette cliquable https://claude.ai/artifact/2WW7DyBSsoJmM8oCW5pNsm",
+    "chiffres lus dans v_services_public le 2026-09-28"
+   ],
+   "latest_sha": null,
+   "claude_outbox": "CLAUDE-2026-09-28-REQ-032-PROPOSITION-METIERS.md",
+   "human_gate": "validation de la maquette + 2 décisions commerciales (métiers sans prestation, photos)",
+   "blocked_by": "gel visuel REQ-023 pour toute implémentation",
+   "next_action": "Florian valide ou corrige la maquette ; ensuite lots A→D, un commit par lot",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": "livrables 1 à 6 produits sans toucher au site : diagnostic (page /nos-metiers.html orpheline mais en ligne, H1 faux, 0 CTA), UX 3 niveaux, 4 planches desktop+mobile, plan de pages sans suppression, plan technique 4 lots, plan de rollback",
+   "scope": null,
+   "decide_par": null
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id.",
