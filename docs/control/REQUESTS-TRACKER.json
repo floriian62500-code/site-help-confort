@@ -451,7 +451,7 @@
    "request_id": "REQ-20260926-017",
    "title": "Contrats sur une seule page / module complet sur Chauffage",
    "priority": "P1",
-   "status": "OPEN_NEXT_DESIGN",
+   "status": "READY_FOR_FLORIAN_VISUAL",
    "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-010-CONTRATS-ONE-PAGE.md",
    "legacy_instruction_id": "REQ-20260926-010",
    "created_at": "2026-09-26",
@@ -462,14 +462,14 @@
    "evidence_required": [
     "rapport outbox dédié"
    ],
-   "latest_sha": null,
-   "claude_outbox": null,
-   "human_gate": "WAITING_FLORIAN_ARCHITECTURE",
-   "blocked_by": "gel renforcé",
-   "next_action": "NEXT_DESIGN : prototype isolé du module complet sur Chauffage, sans suppression ni 301",
-   "attempt": 1,
+   "latest_sha": "57bf79cd (branche feat/req-017-contrats-sur-chauffage, PR #17 brouillon)",
+   "claude_outbox": "CLAUDE-2026-09-29-REQ-017-PROTOTYPE.md",
+   "human_gate": "validation visuelle de Florian sur la preview du prototype avant toute suppression, 301 ou fusion",
+   "blocked_by": "—",
+   "next_action": "Florian regarde https://deploy-preview-17--remarkable-dragon-364e2b.netlify.app/chauffagiste-saint-omer#entretien et tranche",
+   "attempt": 2,
    "closed_at": null,
-   "closure_proof": null,
+   "closure_proof": "prototype livré sur branche isolée : module complet monté sur la page Chauffage (onglets, cartes, chauffe-eau annuel, souscription sur place), extrait de contrats-entretien.html sans réécriture, prix lus dans v_contract_offers, aucun prix en dur ; vérifié par script sur la preview en 1440 et 390 : 3 cartes, prix 9,90/14,30/25,30, modale ouverte sur place, URL inchangée ; 168 liens de contenu vers /contrats-entretien inventoriés (139 pages hors en-tête) et plan de migration proposé sans exécution ; aucune suppression, aucune 301, aucune fusion ; suite 851 PASS / 0 FAIL",
    "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-4"
   },
   {
