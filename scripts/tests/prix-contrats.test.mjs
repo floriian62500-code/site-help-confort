@@ -118,7 +118,12 @@ ok('le délai annoncé pour la formule CONFORT est le même partout', delais.siz
 // font doublon avec la page contrats, elles n'ont rien à faire ici. Ce qui doit rester vrai dans
 // les trois cas, c'est qu'une page ne promet jamais ce qu'elle ne montre pas — et qu'un seul
 // endroit décrit les formules.
-const CHAUFFAGISTES = ['chauffagiste-saint-omer.html', 'chauffagiste-dunkerque.html',
+// 2026-09-29, REQ-017 : Florian refuse la « double page ». La page Chauffage de Saint-Omer porte
+// désormais le MODULE COMPLET — onglets, cartes, souscription — et non plus un teaser qui renvoie
+// ailleurs. Les trois pages de ville gardent le teaser tant que l'extension n'est pas validée :
+// c'est un prototype, il se juge sur une page avant de se répandre sur quatre.
+const CHAUFFAGE_MODULE = 'chauffagiste-saint-omer.html';
+const CHAUFFAGISTES = ['chauffagiste-dunkerque.html',
                        'chauffagiste-calais.html', 'chauffagiste-boulogne-sur-mer.html'];
 // 2026-09-26, deuxième passe : Florian trouve le teaser trop discret. Il devient une section
 // premium — fond sombre, prix d'appel en grand, badges des trois formules, action principale
@@ -127,8 +132,28 @@ const CHAUFFAGISTES = ['chauffagiste-saint-omer.html', 'chauffagiste-dunkerque.h
 // repère de prix, et son action principale est visuellement dominante.
 const teaserDe = (f) => (texte(f).match(/<section[^>]*m-contrats-premium[\s\S]*?<\/section>/) || [''])[0];
 
-ok(`les pages chauffagiste portent toutes la section contrats (${CHAUFFAGISTES.length})`,
+ok(`les pages de ville portent encore le teaser contrats (${CHAUFFAGISTES.length})`,
   CHAUFFAGISTES.every((f) => !!teaserDe(f)), CHAUFFAGISTES.filter((f) => !teaserDe(f)).join(', '));
+
+// ── La page qui porte le module : ce qui doit rester vrai de la décision du 29/09
+{
+  const page = texte(CHAUFFAGE_MODULE);
+  ok('Chauffage Saint-Omer : le module complet est monté sur la page',
+    /data-hc-contrats/.test(page) && /assets\/hc-contrats\.js/.test(page) && /assets\/hc-contrats\.css/.test(page));
+  ok('Chauffage Saint-Omer : plus de teaser sombre qui renvoie ailleurs',
+    !teaserDe(CHAUFFAGE_MODULE) && !/href="contrats-entretien\.html"/.test(page.match(/<section class="ct-contrats-page[\s\S]*?<\/section>/) || ['']) [0]);
+  ok('Chauffage Saint-Omer : aucun prix écrit dans la page (la source canonique fait foi)',
+    !/\d+[,.]\d{2}\s*€/.test(page.replace(/<[^>]+>/g, ' ')));
+  ok('Chauffage Saint-Omer : la sortie « entretien ponctuel » reste offerte, avec sa provenance',
+    /src=chauffage-contrats/.test(page));
+  const mod = texte('assets/hc-contrats.js');
+  ok('le module lit la source canonique des offres, et n’écrit aucun prix en dur',
+    /v_contract_offers/.test(mod) && !/\b(9,90|14,30|25,30|13,20|17,60|29,70)\b/.test(mod));
+  ok('le module porte la souscription : on choisit et on souscrit sans changer de page',
+    /openSouscriptionModal/.test(mod) && /souscriptionModal/.test(mod) && /submit-lead-v6/.test(mod));
+  ok('le module distingue l’entretien annuel du chauffe-eau des mensualités',
+    /data-hc-ecs/.test(mod) && /par an, et non par mois/.test(mod) && /contrat-entretien-chauffe-eau/.test(mod));
+}
 
 for (const f of CHAUFFAGISTES) {
   const t = teaserDe(f), page = texte(f);

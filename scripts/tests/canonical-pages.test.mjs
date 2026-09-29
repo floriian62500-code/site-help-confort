@@ -74,9 +74,11 @@ const pointent = fs.readdirSync(ROOT).filter(f => f.endsWith('.html'))
   .concat(fs.readdirSync(path.join(ROOT, 'prestations')).filter(f => f.endsWith('.html')).map(f => 'prestations/' + f))
   .filter(f => /href="(?:[^"]*\/)?entretien-chaudiere(\.html)?[#"]/.test(rd(f)));
 ok('aucune page publique ne pointe encore vers la landing supprimée', !pointent.length, pointent.join(', '));
-ok('page Chauffage : elle porte l’entretien (vers le tunnel, provenance mesurée) et les contrats',
+// 2026-09-29, REQ-017 : les contrats ne sont plus un renvoi vers une seconde page, ils sont sur
+// la page Chauffage. La page reste le point d'entrée de l'entretien ponctuel vers le tunnel.
+ok('page Chauffage : elle porte l’entretien (vers le tunnel, provenance mesurée) et le module contrats',
   /href="catalogue\.html#cat=chauffage&amp;presta=entretien&amp;src=chauffage-svc"/.test(ch) &&
-  /href="contrats-entretien\.html"/.test(ch) && ['BASIC', 'CONFORT', 'SÉCURITÉ'].every(t => ch.includes('>' + t + '<')));
+  /data-hc-contrats/.test(ch) && /assets\/hc-contrats\.js/.test(ch));
 
 // ---- Le garde-fou tourne et bloque un doublon non justifié
 let sortie = '', code = 0;
