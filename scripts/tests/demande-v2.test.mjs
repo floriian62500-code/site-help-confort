@@ -189,11 +189,7 @@ const full = C.emptyState(); full.mode = 'devis';
 full.contact = { prenom: 'Jean', nom: 'Dupont', tel: '0612345678', email: 'jean@exemple.fr' };
 full.lieu = { adresse: '3 rue Exemple', cp: '62500', ville: 'Saint-Omer', lat: 50.75, lon: 2.25, zone: { status: 'in', km: 1 } };
 full.devis.metiers = ['Plomberie']; full.devis.desc = 'Fuite sous évier chez M. Dupont'; full.prise.precisions = 'code portail 1234'; full.sent = { prenom: 'Jean', tel: '06 12 34 56 78' };
-const parts = C.splitState(full);
-// L'horodatage du brouillon est un nombre : selon l'heure, il contient « 0612 » ou « 62500 » et
-// faisait virer ce contrôle au rouge sans qu'aucune donnée personnelle ne fuie. On l'écarte de la
-// comparaison au lieu de laisser une garde de confidentialité dépendre de la pendule.
-const draftJson = JSON.stringify(parts.draft, (k, v) => (k === 'updatedAt' ? undefined : v));
+const parts = C.splitState(full), draftJson = JSON.stringify(parts.draft);
 ok('confidentialité : le brouillon durable (localStorage) ne contient ni identité, ni adresse, ni texte libre, ni récap envoyé', !/Jean|Dupont|0612|06 12|exemple|3 rue|62500|Saint-Omer|portail|Fuite/.test(draftJson) && parts.draft.sent === null);
 ok('confidentialité : le brouillon durable garde les choix non personnels (parcours, métiers)', parts.draft.mode === 'devis' && parts.draft.devis.metiers[0] === 'Plomberie');
 ok('confidentialité : les données personnelles et le récapitulatif envoyé restent dans la session de l’onglet (retour de paiement), jamais en stockage durable', parts.pii.contact.nom === 'Dupont' && parts.pii.lieu.cp === '62500' && /Fuite/.test(parts.pii.desc) && /portail/.test(parts.pii.precisions) && parts.pii.sent && parts.pii.sent.prenom === 'Jean');
