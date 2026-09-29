@@ -4,7 +4,7 @@
    fermeture et de la mémoire locale qui le masquait sept jours.
    Il reste posé au-dessus de la barre d'action collante sur mobile : il ne couvre
    jamais le bouton d'appel. */
-.hcs-flot{position:fixed;z-index:9990;left:24px;bottom:24px;width:min(370px,calc(100vw - 32px));background:linear-gradient(135deg,#0A1428 0%,#123055 55%,#1B2B4D 100%);color:#fff;border-radius:20px;padding:20px 22px 22px;box-shadow:0 26px 60px -18px rgba(10,20,40,.55);overflow:hidden;opacity:0;transform:translateY(14px);transition:opacity .32s ease,transform .32s ease}
+.hcs-flot{box-sizing:border-box;position:fixed;z-index:9990;left:24px;bottom:24px;width:min(370px,calc(100vw - 32px));background:linear-gradient(135deg,#0A1428 0%,#123055 55%,#1B2B4D 100%);color:#fff;border-radius:20px;padding:20px 22px 22px;box-shadow:0 26px 60px -18px rgba(10,20,40,.55);overflow:hidden;opacity:0;transform:translateY(14px);transition:opacity .32s ease,transform .32s ease}
 .hcs-flot.est-visible{opacity:1;transform:none}
 .hcs-flot[hidden]{display:none}
 .hcs-flot::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,#FF6B1A,#FFB061 45%,#1FC4F0)}
