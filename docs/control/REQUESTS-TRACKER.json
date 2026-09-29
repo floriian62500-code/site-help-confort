@@ -199,7 +199,7 @@
    "request_id": "REQ-20260926-007",
    "title": "Suppression du module parcours sur les pages métier",
    "priority": "P0",
-   "status": "CLOSED",
+   "status": "TECH_ACCEPTED",
    "parent_instruction": "CHATGPT-2026-09-26-P0-REMOVE-METIER-JOURNEY-GLOBAL",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -215,17 +215,17 @@
    "claude_outbox": "CLAUDE-2026-09-26-P0-REMOVE-METIER-JOURNEY-GLOBAL.md",
    "human_gate": "—",
    "blocked_by": "question ouverte : le composant voisin de contact.html",
-   "next_action": "—",
+   "next_action": "Attendre inclusion dans une release validée, déploiement autorisé, puis preuve PROD_VERIFIED avant CLOSED.",
    "attempt": 1,
-   "closed_at": "2026-09-26",
-   "closure_proof": "0 occurrence des 6 motifs sur 264 pages · garde pages-metier sensible · SHA 1fa6b647 · périmètre pages métier, contact.html hors périmètre",
-   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2 (CLOSED_BY_CONTROL)"
+   "closed_at": null,
+   "closure_proof": "0 occurrence des 6 motifs sur 264 pages · garde pages-metier sensible · SHA 1fa6b647 · périmètre pages métier, contact.html hors périmètre · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED",
+   "decide_par": "CHATGPT-2026-09-30-CONTROL-SYNC"
   },
   {
    "request_id": "REQ-20260926-008",
    "title": "Suppression du bloc final de la page contrats",
    "priority": "P0",
-   "status": "CLOSED",
+   "status": "TECH_ACCEPTED",
    "parent_instruction": "CHATGPT-2026-09-26-P0-REMOVE-CONTRATS-FINAL-CTA",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -241,17 +241,17 @@
    "claude_outbox": "CLAUDE-2026-09-26-P0-REMOVE-CONTRATS-FINAL-CTA.md",
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "—",
+   "next_action": "Attendre inclusion dans une release validée, déploiement autorisé, puis preuve PROD_VERIFIED avant CLOSED.",
    "attempt": 1,
-   "closed_at": "2026-09-26",
-   "closure_proof": "bloc supprimé, 3 règles orphelines retirées, 35 contrôles, souscription testée sans envoi · SHA 6ae55ed8",
-   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2 (CLOSED_BY_CONTROL)"
+   "closed_at": null,
+   "closure_proof": "bloc supprimé, 3 règles orphelines retirées, 35 contrôles, souscription testée sans envoi · SHA 6ae55ed8 · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED",
+   "decide_par": "CHATGPT-2026-09-30-CONTROL-SYNC"
   },
   {
    "request_id": "REQ-20260926-009",
    "title": "Régression #intervention (écran de reprise générique)",
    "priority": "P0",
-   "status": "CLOSED",
+   "status": "TECH_ACCEPTED",
    "parent_instruction": "CHATGPT-2026-09-26-P0-HOME-INTERVENTION-REGRESSION",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -267,11 +267,11 @@
    "claude_outbox": "CLAUDE-2026-09-26-P0-HOME-INTERVENTION-REGRESSION.md",
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "—",
+   "next_action": "Attendre inclusion dans une release validée, déploiement autorisé, puis preuve PROD_VERIFIED avant CLOSED.",
    "attempt": 1,
-   "closed_at": "2026-09-26",
-   "closure_proof": "contrôle home_intervention_cta_bypasses_generic_resume_gate, 7 échecs contre l'ancien code, parcours et reprise vérifiés en ligne · SHA 020b2666",
-   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2 (CLOSED_BY_CONTROL)"
+   "closed_at": null,
+   "closure_proof": "contrôle home_intervention_cta_bypasses_generic_resume_gate, 7 échecs contre l'ancien code, parcours et reprise vérifiés en ligne · SHA 020b2666 · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED",
+   "decide_par": "CHATGPT-2026-09-30-CONTROL-SYNC"
   },
   {
    "request_id": "REQ-20260926-010",
@@ -465,12 +465,12 @@
    "latest_sha": "57bf79cd (branche feat/req-017-contrats-sur-chauffage, PR #17 brouillon)",
    "claude_outbox": "CLAUDE-2026-09-29-REQ-017-PROTOTYPE.md",
    "human_gate": "validation visuelle de Florian sur la preview du prototype avant toute suppression, 301 ou fusion",
-   "blocked_by": "—",
-   "next_action": "Florian regarde https://deploy-preview-17--remarkable-dragon-364e2b.netlify.app/chauffagiste-saint-omer#entretien et tranche",
+   "blocked_by": "Gate visuel Florian : les captures 1440/390 montrent l'encart REQ-035 recouvrant la carte BASIC et une partie du CTA.",
+   "next_action": "Conserver la PR #17 en brouillon. Florian doit valider/refuser le rendu après correction ou arbitrage du chevauchement REQ-035 ; aucune fusion avant verdict.",
    "attempt": 2,
    "closed_at": null,
    "closure_proof": "prototype livré sur branche isolée : module complet monté sur la page Chauffage (onglets, cartes, chauffe-eau annuel, souscription sur place), extrait de contrats-entretien.html sans réécriture, prix lus dans v_contract_offers, aucun prix en dur ; vérifié par script sur la preview en 1440 et 390 : 3 cartes, prix 9,90/14,30/25,30, modale ouverte sur place, URL inchangée ; 168 liens de contenu vers /contrats-entretien inventoriés (139 pages hors en-tête) et plan de migration proposé sans exécution ; aucune suppression, aucune 301, aucune fusion ; suite 851 PASS / 0 FAIL",
-   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-4"
+   "decide_par": "CHATGPT-2026-09-30-CONTROL-SYNC"
   },
   {
    "request_id": "REQ-20260926-018",
@@ -502,7 +502,7 @@
    "request_id": "REQ-20260926-019",
    "title": "Bug catalogue : sous-catégorie _default visible",
    "priority": "P0",
-   "status": "CLOSED",
+   "status": "TECH_ACCEPTED",
    "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-012-CATALOGUE-DEFAULT-FILTER-BUG.md",
    "legacy_instruction_id": "REQ-20260926-012",
    "created_at": "2026-09-26",
@@ -518,11 +518,11 @@
    "claude_outbox": "CLAUDE-2026-09-26-REQ-019-PREUVE-DEFAULT.md",
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "—",
+   "next_action": "Attendre inclusion dans une release validée, déploiement autorisé, puis preuve PROD_VERIFIED avant CLOSED.",
    "attempt": 1,
-   "closed_at": "2026-09-26",
-   "closure_proof": "7 familles auditées, Plomberie et Serrurerie corrigées, 0 slug technique visible, contrôle permanent · SHA 15c46539",
-   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2 (CLOSED_BY_CONTROL)"
+   "closed_at": null,
+   "closure_proof": "7 familles auditées, Plomberie et Serrurerie corrigées, 0 slug technique visible, contrôle permanent · SHA 15c46539 · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED",
+   "decide_par": "CHATGPT-2026-09-30-CONTROL-SYNC"
   },
   {
    "request_id": "REQ-20260926-020",
@@ -637,7 +637,7 @@
    "request_id": "REQ-20260926-024",
    "title": "Carte des zones grise tant qu'on ne défile pas",
    "priority": "P1",
-   "status": "CLOSED",
+   "status": "TECH_ACCEPTED",
    "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-024-CARTE-ZONES-GRISE.md",
    "legacy_instruction_id": null,
    "created_at": "2026-09-26",
@@ -655,12 +655,12 @@
    "claude_outbox": "CLAUDE-2026-09-26-REQ-024-CARTE-ZONES-CORRIGEE.md",
    "human_gate": "feu vert avant application (gel + REQ-022)",
    "blocked_by": "—",
-   "next_action": "—",
+   "next_action": "Attendre inclusion dans une release validée, déploiement autorisé, puis preuve PROD_VERIFIED avant CLOSED.",
    "attempt": 1,
-   "closed_at": "2026-09-26",
-   "closure_proof": "Leaflet peint sans défilement en 402 ms, 9 tuiles en 1440 et 4 en 390, chargement différé conservé sur /contact · SHA 65953e28",
+   "closed_at": null,
+   "closure_proof": "Leaflet peint sans défilement en 402 ms, 9 tuiles en 1440 et 4 en 390, chargement différé conservé sur /contact · SHA 65953e28 · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED",
    "note_numerotation": "créée par Claude en parallèle sous le numéro 023 ; renumérotée 024 dès réception de REQ-20260926-023-ZONES-CALAIS-BOULOGNE.md, publiée par ChatGPT. Le contenu métier est inchangé.",
-   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2 (CLOSED_BY_CONTROL)"
+   "decide_par": "CHATGPT-2026-09-30-CONTROL-SYNC"
   },
   {
    "request_id": "REQ-20260926-025",
@@ -698,7 +698,7 @@
    "request_id": "REQ-20260926-026",
    "title": "Garde automatique de cohérence des zones (ville revendiquée absente de communes-list)",
    "priority": "P0",
-   "status": "CLOSED",
+   "status": "TECH_ACCEPTED",
    "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-4.md",
    "legacy_instruction_id": null,
    "created_at": "2026-09-26",
@@ -718,11 +718,11 @@
    "claude_outbox": "CLAUDE-2026-09-28-REQ-026-GARDE-ZONES.md",
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "—",
+   "next_action": "Attendre inclusion dans une release validée, déploiement autorisé, puis preuve PROD_VERIFIED avant CLOSED.",
    "attempt": 1,
-   "closed_at": "2026-09-28",
-   "closure_proof": "garde livrée dans scripts/tests/zones-coherence.test.mjs (6 contrôles) + instantané canonique versionné ; échec prouvé sur l’écart réel une fois les exceptions vidées : 6 villes revendiquées par 13 pages sans commune canonique (Boulogne-sur-Mer, Le Portel, Outreau, Saint-Martin-Boulogne, Wimereux, Saint-Pol-sur-Mer) ; vert une fois les écarts déclarés avec leur raison ; suite complète 846 PASS / 0 FAIL ; diff limité à scripts/tests/ ; doublon Pihen-lès-Guînes signalé sans bloquer",
-   "decide_par": "ChatGPT 2026-09-28"
+   "closed_at": null,
+   "closure_proof": "garde livrée dans scripts/tests/zones-coherence.test.mjs (6 contrôles) + instantané canonique versionné ; échec prouvé sur l’écart réel une fois les exceptions vidées : 6 villes revendiquées par 13 pages sans commune canonique (Boulogne-sur-Mer, Le Portel, Outreau, Saint-Martin-Boulogne, Wimereux, Saint-Pol-sur-Mer) ; vert une fois les écarts déclarés avec leur raison ; suite complète 846 PASS / 0 FAIL ; diff limité à scripts/tests/ ; doublon Pihen-lès-Guînes signalé sans bloquer · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED",
+   "decide_par": "CHATGPT-2026-09-30-CONTROL-SYNC"
   },
   {
    "request_id": "REQ-20260926-027",
@@ -877,7 +877,7 @@
    "request_id": "REQ-20260926-032",
    "title": "Refonte « Nos métiers » : page vitrine, menu, bloc accueil",
    "priority": "P1",
-   "status": "READY_FOR_FLORIAN_VISUAL",
+   "status": "REWORK_REQUIRED",
    "parent_instruction": "demande Florian 2026-09-28 (chat) — montrer avant de coder",
    "created_at": "2026-09-28",
    "acceptance_criteria": [
@@ -897,13 +897,13 @@
    "latest_sha": "f276167e (branche preview/maquette-nos-metiers, PR #15, non fusionnée)",
    "claude_outbox": "CLAUDE-2026-09-28-REQ-032-PROPOSITION-METIERS.md puis CLAUDE-2026-09-28-REQ-032-PREVIEW.md",
    "human_gate": "validation visuelle de la maquette par Florian ; lots A-D interdits tant que REQ-023 n’est pas validée",
-   "blocked_by": "—",
-   "next_action": "maquette consultable sans compte : https://deploy-preview-15--remarkable-dragon-364e2b.netlify.app/maquette-metiers (branche non fusionnée, noindex). En attente du oui/non de Florian ; lots A-D toujours interdits avant validation.",
-   "attempt": 1,
+   "blocked_by": "Preview non isolée : PR #15 comporte 1026 fichiers modifiés ; captures 1440/390 non archivées dans les preuves contrôlables.",
+   "next_action": "Reconstruire la preview depuis le main courant avec uniquement la maquette et son routage minimal ; archiver 4 captures contrôlables (page métiers 1440/390 + bloc accueil 1440/390), puis seulement présenter à Florian.",
+   "attempt": 2,
    "closed_at": null,
    "closure_proof": "livrables 1 à 6 produits sans toucher au site : diagnostic (page /nos-metiers.html orpheline mais en ligne, H1 faux, 0 CTA), UX 3 niveaux, 4 planches desktop+mobile, plan de pages sans suppression, plan technique 4 lots, plan de rollback",
    "scope": null,
-   "decide_par": "CHATGPT-2026-09-28-CONTROL-ALL-REQUESTS-9 (§2 : diagnostic et architecture acceptés)"
+   "decide_par": "docs/control/inbox/chatgpt/REQ-20260926-032-CONTROL-14.md"
   },
   {
    "request_id": "REQ-20260926-033",
@@ -925,22 +925,22 @@
     "tests sans faux lead production",
     "preuve etat deploye"
    ],
-   "latest_sha": "65ffa1b7 (retour d’audit) — changeset publié, non exécuté",
+   "latest_sha": "2417462a3546efeeb685285cbd2346ebc7d75c88 (retour d'exécution ; configuration partielle appliquée, fonctions non redéployées)",
    "claude_outbox": "CLAUDE-2026-09-28-REQ-033-CHANGESET.md puis CLAUDE-2026-09-28-REQ-033-EXECUTION.md",
    "human_gate": "GO donné par Florian le 2026-09-28 ; il reste une autorisation d’outil pour déployer les 3 fonctions",
    "blocked_by": "garde d’outil « Production Deploy » sur les commandes de déploiement de fonctions — non contournée",
-   "next_action": "appliquer les 6 lignes (2 par fonction) et redéployer avec verify_jwt=false, puis test contrôlé et preuves ; ensuite READY_FOR_CONTROL",
+   "next_action": "La demande reste ouverte : les fonctions doivent encore être alignées sur le routage Saint-Omer, avec autorisation explicite applicable au geste sensible, test contrôlé et preuves ; sinon aucune mutation.",
    "attempt": 2,
    "closed_at": null,
    "closure_proof": "configuration de production corrigée et relue champ par champ : leads_cc vidé (donc aucun en-tête cc n’est envoyé, la condition if (cc.length) étant fausse) et branding.email_reply_to basculé sur la boîte Saint-Omer ; tous les autres champs inchangés. Sources déployées des 3 fonctions archivées avant modification (empreintes 8bd31f39, 4c96f81c, 38c1475f). Substitution et redéploiement non faits : refus de la garde d’outil, non contourné.",
-   "decide_par": "ChatGPT 2026-09-28",
+   "decide_par": "docs/control/inbox/chatgpt/REQ-20260926-033-REVIEW.md",
    "legacy_instruction_id": "REQ-20260926-032-ROUTAGE-EMAIL-SAINT-OMER.md (nom de fichier d’origine conservé) — renumérotée de REQ-20260926-032 vers REQ-20260926-033 le 2026-09-28 sur instruction CHATGPT-2026-09-28-CONTROL-REQ-ID-COLLISION (collision d’identifiant : deux demandes créées à la même minute). Aucun contenu modifié."
   },
   {
    "request_id": "REQ-20260926-034",
    "title": "Rattrapage production des lots verts depuis main",
    "priority": "P0",
-   "status": "READY_FOR_FLORIAN_VISUAL",
+   "status": "REWORK_REQUIRED",
    "parent_instruction": "demande Florian 2026-09-28 — verifier diff prod et envoyer ce qui est vert",
    "created_at": "2026-09-28",
    "acceptance_criteria": [
@@ -962,18 +962,18 @@
    "latest_sha": "e216ea88 (release/green-2026-09-28, PR #16 brouillon)",
    "claude_outbox": "CLAUDE-2026-09-28-REQ-034-RELEASE-VERTE.md",
    "human_gate": "validation visuelle de Florian sur la preview de release, puis GO explicite pour fusionner dans main",
-   "blocked_by": "aucune suite de tests sur main + validation visuelle manquante + HOLD_SECURITY actif",
-   "next_action": "Florian valide les 3 lots sur https://deploy-preview-16--remarkable-dragon-364e2b.netlify.app ; il tranche REQ-023 (réécriture sur la version main + revalidation, ou hors release) ; puis GO pour fusionner la PR #16",
-   "attempt": 1,
+   "blocked_by": "Release basée sur un main périmé, tests/CI insuffisants sur le SHA exact, captures 1440/390 non archivées et HOLD_SECURITY actif.",
+   "next_action": "Appliquer docs/control/inbox/chatgpt/REQ-20260926-034-REWORK.md : reconstruire depuis le main courant, ne garder que les items validés, retester le head exact, archiver les captures et documenter le rollback. Aucun merge.",
+   "attempt": 2,
    "closed_at": null,
    "closure_proof": "matrice établie : main n’a reçu aucun travail fonctionnel depuis le 08/08 (57 rapports nocturnes + 1 fusion), recette a 876 commits d’avance. 3 lots portés (007, 019, 024) en 3 commits isolés, 9 fichiers, +13/-163, prouvés en ligne sur la preview de release. HORS : 008 et 009 sans objet (bloc et tunnel absents de main), 023 nécessite une revalidation visuelle car la page de main est l’ancienne version, 026 sans intérêt (main n’a aucun test). Verdict BLOCKED : pas de suite de tests exécutable sur main, validation visuelle Florian manquante, HOLD_SECURITY actif.",
-   "decide_par": "ChatGPT 2026-09-28"
+   "decide_par": "docs/control/inbox/chatgpt/REQ-20260926-034-REWORK.md"
   },
   {
    "request_id": "REQ-20260926-035",
    "title": "Encart saisonnier : non fermable et présent sur toutes les pages",
    "priority": "P1",
-   "status": "WAITING_FLORIAN_VISUAL",
+   "status": "REWORK_REQUIRED",
    "parent_instruction": "décision Florian du 2026-09-28 (chat) : « on ne doit pas pouvoir la fermer, elle doit rester systématiquement et sur toutes les pages du site »",
    "created_at": "2026-09-28",
    "acceptance_criteria": [
@@ -991,13 +991,13 @@
    "latest_sha": "27211895 (captures) · lot : 2aef11f7, bd70147a, d8a0f4e4, ee2b2984",
    "claude_outbox": "CLAUDE-2026-09-28-REQ-035-ENCART-PARTOUT.md puis CLAUDE-2026-09-29-REQ-035-REWORK.md",
    "human_gate": "validation visuelle de Florian sur la recette",
-   "blocked_by": "—",
-   "next_action": "regarder n’importe quelle page de la recette : l’encart doit être là, sans croix. Rework accepté par le contrôle n°15 ; les trois blocages (captures, périmètre, rollback isolé) sont levés.",
-   "attempt": 2,
+   "blocked_by": "Rollback non isolé : le commit 2aef11f7 contient aussi scripts/tests/demande-v2.test.mjs ; le rollback proposé modifierait ce correctif indépendant.",
+   "next_action": "Fournir et prouver un rollback sélectif de REQ-035 qui laisse scripts/tests/demande-v2.test.mjs strictement intact ; conserver le lot ouvert jusque-là.",
+   "attempt": 3,
    "closed_at": null,
-   "closure_proof": "rework des 4 points : 8 captures archivées dans docs/qa/REQ-035 reliées au SHA ee2b2984 (0 bouton de fermeture relevé sur les 8, tailles mesurées sur l’élément) ; périmètre aligné à 202 pages, tunnel de commande compris, seule exception reset.html prouvée par noindex+titre+absence de maillage et contrôlée par la garde ; correction demande-v2 sortie du lot (21cbc668 puis 354251fa) donc rollback isolé ; suite 852 PASS / 0 FAIL, en-tête 0 à mettre à jour, SEO ERRORS=0 ; aucune prod",
+   "closure_proof": "rework des 4 points : 8 captures archivées dans docs/qa/REQ-035 reliées au SHA ee2b2984 (0 bouton de fermeture relevé sur les 8, tailles mesurées sur l’élément) ; périmètre aligné à 202 pages, tunnel de commande compris, seule exception reset.html prouvée par noindex+titre+absence de maillage et contrôlée par la garde ; correction demande-v2 sortie du lot (21cbc668 puis 354251fa) donc rollback isolé ; suite 852 PASS / 0 FAIL, en-tête 0 à mettre à jour, SEO ERRORS=0 ; aucune prod · contrôle ultérieur : rollback isolé NON prouvé ; le lot reste ouvert",
    "scope": null,
-   "decide_par": "docs/control/inbox/chatgpt/REQ-20260926-035-REWORK.md"
+   "decide_par": "docs/control/inbox/chatgpt/REQ-20260926-035-ROLLBACK-REWORK.md"
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id. Le 2026-09-28, deux demandes ont reçu 032 à la même minute (refonte Nos métiers et routage e-mail) : 032 reste à « Nos métiers », le routage devient 033, prochain_id passe à 034. Le nom du fichier d’instruction d’origine est conservé dans legacy_instruction_id.",
@@ -1022,11 +1022,11 @@
  },
  "gel_visuel": "STOP sur toute modification visuelle tant que Florian n’a pas validé REQ-023 sur la preview. Ordre imposé ensuite : checkpoint validé → REQ-026 → REQ-020 (STOP visuel) → REQ-017 prototype (STOP visuel) → REQ-027 après GO métier.",
  "dernier_controle": {
-  "message_id": "CHATGPT-2026-09-28-CONTROL-ALL-REQUESTS-7",
-  "commit": "présent dans recette (docs/control/inbox/chatgpt/CHATGPT-2026-09-28-CONTROL-ALL-REQUESTS-7.md)",
-  "verdict": "diagnostic outillage accepté ; PR #14 reprise par ChatGPT ; HOLD jusqu’au résultat CI",
-  "retour_claude": "CLAUDE-2026-09-28-ACK-CONTROL-7.md",
-  "lacune_signalee": "le n°5 manque toujours dans l’inbox (numérotation 4 → 6 → 7) : jamais reçu ni traité"
+  "message_id": "CHATGPT-2026-09-30-CONTROL-SYNC",
+  "commit": "2a6c96d04c4b31408a260bc5d9031a3c38eeaf21 (instruction corrective REQ-034)",
+  "verdict": "aucun nouveau retour Claude depuis f21bf298 ; suivi réconcilié : gates visuels/rework maintenus et CLOSED produit interdit sans PROD_VERIFIED",
+  "retour_claude": "aucun nouveau retour depuis f21bf29849422170fc483a606a9150d50a6709bd",
+  "lacune_signalee": "REQ-032, REQ-034 et REQ-035 restent en rework ; REQ-017 reste au gate visuel Florian ; REQ-033 reste ouvert"
  },
  "checkpoint_valide": {
   "branche": "backup/recette-validated-2026-09-28-req023",
