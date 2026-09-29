@@ -21,8 +21,16 @@ const V_CSS = sha(rd('assets/hc-header.css')), V_JS = sha(rd('assets/hc-header.j
 // Encart saisonnier : décision de Florian du 2026-09-28, il doit être sur TOUTES les pages.
 // Il voyage donc avec l'en-tête, seul canal qui atteint toutes les pages publiques d'un coup.
 const V_PCSS = sha(rd('assets/hc-promo-saison.css')), V_PJS = sha(rd('assets/hc-promo-saison.js'));
-const ASSETS = `<link rel="stylesheet" href="/assets/hc-header.css?v=${V_CSS}">\n<script src="/assets/hc-header.js?v=${V_JS}" defer></script>\n`
-  + `<link rel="stylesheet" href="/assets/hc-promo-saison.css?v=${V_PCSS}">\n<script src="/assets/hc-promo-saison.js?v=${V_PJS}" defer></script>\n`;
+const PROMO = `<link rel="stylesheet" href="/assets/hc-promo-saison.css?v=${V_PCSS}">\n<script src="/assets/hc-promo-saison.js?v=${V_PJS}" defer></script>\n`;
+const ASSETS = `<link rel="stylesheet" href="/assets/hc-header.css?v=${V_CSS}">\n<script src="/assets/hc-header.js?v=${V_JS}" defer></script>\n` + PROMO;
+const sansPromo = (h) => h
+  .replace(/<link rel="stylesheet" href="\/assets\/hc-promo-saison\.css[^"]*">\s*/g, '')
+  .replace(/<script src="\/assets\/hc-promo-saison\.js[^"]*" defer><\/script>\s*/g, '');
+/** Pose l'encart sur une page qui n'a pas l'en-tête partagé (le tunnel). Idempotent. */
+export function withPromo(html) {
+  const h = sansPromo(html);
+  return h.replace('</head>', PROMO + '</head>');
+}
 const FONT = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">\n';
 const CRUMB_ACTU = '<nav class="hc-crumb" aria-label="Fil d’Ariane"><a href="/actualites.html">← Toutes les actualités</a></nav>';
 
@@ -32,6 +40,16 @@ const SKIP_FILE = /(^|\/)(admin-pro|admin|docs)\//;
 const SKIP_NAME = /^(recette|google[0-9a-f]+|espace-client|espace-client-dashboard)\.html$/i;
 export const EXCLUDED = ['catalogue.html', 'reset.html']; // tunnel « Ma demande » (barre propre) ; page technique noindex
 function walk(dir) { let o = []; for (const e of fs.readdirSync(dir, { withFileTypes: true })) { if (e.isDirectory()) { if (!SKIP_DIRS.has(e.name)) o = o.concat(walk(path.join(dir, e.name))); } else if (e.name.endsWith('.html')) o.push(path.join(dir, e.name)); } return o; }
+/* Périmètre de l'encart saisonnier (REQ-20260926-035).
+   Florian : « elle doit rester systématiquement et sur toutes les pages du site ». Le tunnel de
+   commande en fait partie, même s'il n'a pas l'en-tête partagé : son exclusion n'était pas une
+   décision, seulement un effet de bord de la liste EXCLUDED. Seule `reset.html` reste dehors, et
+   c'est prouvé, pas supposé : elle porte `noindex, nofollow` et s'intitule « Reset cache
+   navigateur » — une page d'outillage, pas une page du site. */
+export const PROMO_HORS_PERIMETRE = ['reset.html'];
+export function promoPages() {
+  return [...publicPages(), ...EXCLUDED.filter((p) => !PROMO_HORS_PERIMETRE.includes(p))].sort();
+}
 export function publicPages() {
   return walk(ROOT).map(f => path.relative(ROOT, f).split(path.sep).join('/'))
     .filter(f => !SKIP_FILE.test(f) && !SKIP_NAME.test(path.basename(f)) && !EXCLUDED.includes(f)).sort();
@@ -86,7 +104,7 @@ export function transform(p, src) {
   h = h.replace(/<script\b(?![^>]*\bsrc=)([^>]*)>([\s\S]*?)<\/script>\s*/g, (m, attrs, js) => OLD_SCRIPTS.has(norm(js)) ? '' : m);
   // Feuille + script uniques (idempotent : on retire les anciennes références avant de reposer les nouvelles)
   h = h.replace(/<link rel="stylesheet" href="\/assets\/hc-header\.css[^"]*">\s*/g, '').replace(/<script src="\/assets\/hc-header\.js[^"]*" defer><\/script>\s*/g, '');
-  h = h.replace(/<link rel="stylesheet" href="\/assets\/hc-promo-saison\.css[^"]*">\s*/g, '').replace(/<script src="\/assets\/hc-promo-saison\.js[^"]*" defer><\/script>\s*/g, '');
+  h = sansPromo(h);
   const head = h.slice(0, h.indexOf('</head>'));
   const needFont = !/fonts\.googleapis\.com\/css2\?[^"']*family=Inter[:&"']/.test(head);
   h = h.replace('</head>', (needFont ? FONT : '') + ASSETS + '</head>');
@@ -106,7 +124,16 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
     if (r.html !== src) { changed.push(p); if (!CHECK) fs.writeFileSync(path.join(ROOT, p), r.html); }
     if (LIST) console.log(p.padEnd(70), r.mode.padEnd(10), (sectionOf(p) || '—').padEnd(12), r.font ? '+Inter' : '', r.html !== src ? 'modifiée' : 'à jour');
   }
+  // L'encart saisonnier va plus loin que l'en-tête : il couvre aussi le tunnel de commande.
+  const horsEntete = promoPages().filter((p) => !pages.includes(p));
+  for (const p of horsEntete) {
+    const src = rd(p), neuf = withPromo(src);
+    if (neuf !== src) { changed.push(p); if (!CHECK) fs.writeFileSync(path.join(ROOT, p), neuf); }
+  }
+  const sansEncart = promoPages().filter((p) => !/\/assets\/hc-promo-saison\.js/.test(CHECK ? rd(p) : rd(p)));
+  if (!CHECK && sansEncart.length) problems.push('encart absent de : ' + sansEncart.join(', '));
   console.log(`en-tête unique : ${pages.length} pages · ${JSON.stringify(stats)} · ${changed.length} ${CHECK ? 'à mettre à jour' : 'mises à jour'} · css v=${V_CSS} js v=${V_JS}`);
+  console.log(`encart saisonnier : ${promoPages().length} pages (dont ${horsEntete.length} hors en-tête) · hors périmètre : ${PROMO_HORS_PERIMETRE.join(', ')}`);
   problems.forEach(x => console.log('  ⚠', x));
   if (problems.length || (CHECK && changed.length)) process.exit(1);
 }

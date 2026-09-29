@@ -8,7 +8,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { publicPages } from '../header/sync-header.mjs';
+import { promoPages, publicPages, PROMO_HORS_PERIMETRE } from '../header/sync-header.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const lire = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
@@ -39,9 +39,17 @@ ok('il NE PEUT PAS être fermé : aucun bouton de fermeture, aucune mémoire de 
 ok('il s’affiche sans condition : plus de seuil de défilement à franchir',
   !/innerHeight \* 0\.6|scrollY/.test(js) && /classList\.add\('est-visible'\)/.test(js));
 
-const pages = publicPages();
+const pages = promoPages();
 const sans = pages.filter((p) => !/\/assets\/hc-promo-saison\.js/.test(lire(p)));
-ok(`il est présent sur toutes les pages publiques (${pages.length} pages)`, sans.length === 0, sans.slice(0, 5).join(', '));
+ok(`il est présent sur toutes les pages du site (${pages.length} pages, tunnel de commande compris)`,
+  sans.length === 0, sans.slice(0, 5).join(', '));
+ok('le tunnel de commande n’est pas une exception silencieuse : il porte l’encart lui aussi',
+  pages.includes('catalogue.html') && /\/assets\/hc-promo-saison\.js/.test(lire('catalogue.html')));
+// La seule page laissée dehors doit être prouvée technique, pas seulement déclarée telle.
+ok(`la seule exception est documentée et prouvée (${PROMO_HORS_PERIMETRE.join(', ') || 'aucune'})`,
+  PROMO_HORS_PERIMETRE.length === 1 && PROMO_HORS_PERIMETRE[0] === 'reset.html' &&
+  /<meta name="robots" content="noindex, ?nofollow">/i.test(lire('reset.html')) &&
+  /Reset cache navigateur/i.test(lire('reset.html')));
 ok('il arrive par le même canal que l’en-tête (une seule source, jamais recopiée dans une page)',
   /hc-promo-saison\.css\?v=/.test(lire('index.html')) && /hc-promo-saison\.js\?v=/.test(lire('index.html')));
 
