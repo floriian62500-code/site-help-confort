@@ -16,7 +16,8 @@
 .energy-pane{display:none}
 #en-gaz:checked ~ .energy-content #pane-gaz,#en-fioul:checked ~ .energy-content #pane-fioul,#en-eau:checked ~ .energy-content #pane-eau{display:block}
 .formula-grid{display:grid;gap:20px;grid-template-columns:1fr;margin:0 auto;max-width:1100px}
-}
+@media(min-width:768px){.formula-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}}
+@media(min-width:1024px){.formula-grid{gap:22px}}
 .formula-card{background:#fafbfd;border:1px solid rgba(10,20,40,.08);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;position:relative;min-width:0}
 .formula-card.confort{background:linear-gradient(180deg,#fff,#E6F8FE);border:2px solid #1FC4F0;box-shadow:0 14px 34px rgba(31,196,240,.16)}
 .formula-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#1FC4F0,#0DA0CF);color:#fff;padding:5px 14px;border-radius:999px;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
@@ -27,7 +28,7 @@
 .formula-price-block{padding:14px 0;border-top:1px solid rgba(10,20,40,.08);border-bottom:1px solid rgba(10,20,40,.08);margin-bottom:16px}
 .formula-price{font-size:2.1rem;font-weight:900;color:#0A1428;line-height:1.1;letter-spacing:-.035em}
 .formula-amount{white-space:nowrap}
-}
+@media(min-width:768px) and (max-width:1023px){.formula-price{font-size:1.75rem}}
 .formula-price small{font-size:.85rem;font-weight:600;color:#6b7384;letter-spacing:0}
 .formula-price-ht{font-size:.84rem;color:#6b7384;margin-top:4px}
 .formula-baseline{font-size:.98rem;color:#475569;margin:0 0 12px;font-weight:500}
@@ -43,16 +44,15 @@
 .formula-card.confort .formula-cta{background:linear-gradient(135deg,#1FC4F0,#0DA0CF)}
 .legal-strip{background:#fafbfd;border-radius:14px;padding:16px 20px;margin:26px auto 0;max-width:1100px;font-size:.84rem;color:#6b7384;line-height:1.55;border:1px solid rgba(10,20,40,.05)}
 .legal-strip strong{color:#0A1428}
-}
- /* Une fois cochée, on enlève l'animation et la flèche disparaît */.sw-cgv-box:has(input:checked) { animation: none; border-color: #16A34A; background: linear-gradient(135deg, rgba(34,197,94,.08), rgba(34,197,94,.02)); }
+/* Une fois cochée, on enlève l'animation et la flèche disparaît */.sw-cgv-box:has(input:checked) { animation: none; border-color: #16A34A; background: linear-gradient(135deg, rgba(34,197,94,.08), rgba(34,197,94,.02)); }
 .sw-cgv-box:has(input:checked) .sw-cgv-hint { display: none; }
 .sous-modal.open{display:flex !important;animation:sousFadeIn .25s ease}
-}.sous-modal.open .sous-card{animation:sousSlideUp .35s cubic-bezier(.16,1,.3,1)}
-}.sous-inp{width:100%;padding:11px 14px;border:1.5px solid #E5EDF3;border-radius:10px;background:#F7FBFD;color:#0A1428;font-size:.94rem;font-family:inherit;outline:none;transition:border-color .2s,background .2s;box-sizing:border-box}
+.sous-modal.open .sous-card{animation:sousSlideUp .35s cubic-bezier(.16,1,.3,1)}
+.sous-inp{width:100%;padding:11px 14px;border:1.5px solid #E5EDF3;border-radius:10px;background:#F7FBFD;color:#0A1428;font-size:.94rem;font-family:inherit;outline:none;transition:border-color .2s,background .2s;box-sizing:border-box}
 .sous-inp:focus{border-color:#1FC4F0;background:#fff}
 /* ═══ WIZARD MULTI-ÉTAPES ═══ */.sous-step{display:none;animation:swFadeIn .3s ease}
 .sous-step.is-active{display:block}
-}.sw-intro{margin-bottom:16px}
+.sw-intro{margin-bottom:16px}
 .sw-step-title{margin:0 0 4px;font-size:1.18rem;font-weight:800;color:#0A1428;letter-spacing:-.01em}
 .sw-step-hint{margin:0;font-size:.88rem;color:#64748b;line-height:1.5}
 /* Progress bar */.sw-progress{margin:0 0 22px}
@@ -83,13 +83,10 @@
 .sw-help-list li:last-child{border-bottom:0;color:#0DA0CF;font-weight:600}
 .sw-help-list li::before{content:"";position:absolute;left:4px;top:13px;width:6px;height:6px;border-radius:50%;background:#1FC4F0}
 .sw-help-list li:last-child::before{display:none}
-.sw-help-illust{max-width:200px;margin:0 auto}
-}
-
- /* Navigation buttons */.sw-nav{display:flex;align-items:center;gap:12px;margin-top:8px;padding-top:18px;border-top:1px solid #E5EDF3}
-.sw-btn-next,.sw-btn-submit{flex:1 0 100%;justify-content:center}
-.sw-pstep-lbl{display:none}
-}.sw-step-counter{flex:1;text-align:center;font-size:.78rem;color:#64748b;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+@media (max-width:540px){.sw-help-body{grid-template-columns:1fr}.sw-help-illust{max-width:200px;margin:0 auto}}
+/* Navigation buttons */.sw-nav{display:flex;align-items:center;gap:12px;margin-top:8px;padding-top:18px;border-top:1px solid #E5EDF3}
+@media (max-width:560px){.sw-nav{flex-wrap:wrap;gap:10px}.sw-btn-next,.sw-btn-submit{flex:1 0 100%;justify-content:center}.sw-pstep-lbl{display:none}}
+.sw-step-counter{flex:1;text-align:center;font-size:.78rem;color:#64748b;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
 .sw-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-weight:700;font-size:.92rem;cursor:pointer;font-family:inherit;border:0;transition:all .2s ease;white-space:nowrap}
 .sw-btn[hidden],.sous-step:not(.is-active),#swError[hidden]{display:none !important}
 /* ═══ DOCUMENTS JURIDIQUES (RIB, SEPA, facture) ═══ */.sw-info-box{display:flex;gap:14px;padding:16px 18px;background:linear-gradient(135deg,rgba(255,180,0,.10),rgba(255,107,26,.04));border:1.5px solid rgba(255,180,0,.30);border-radius:14px;margin-bottom:22px;align-items:flex-start}
@@ -136,9 +133,7 @@
 /* Erreur */.sw-error{margin-top:10px;padding:10px 14px;background:rgba(225,29,72,.08);border:1px solid rgba(225,29,72,.30);border-radius:10px;color:#BE1238;font-size:.86rem;font-weight:600;display:flex;align-items:center;gap:8px}
 .sw-error::before{content:"⚠";font-size:1rem}
 .sous-inp.has-error{border-color:#E11D48 !important;background:rgba(225,29,72,.04) !important;animation:swShake .35s ease}
-}
-
- /* Récap final */.sw-recap{background:linear-gradient(135deg,rgba(34,197,94,.06),rgba(34,197,94,.02));border:1px solid rgba(34,197,94,.20);border-radius:12px;padding:14px 16px;font-size:.84rem;color:#0A1428}
+/* Récap final */.sw-recap{background:linear-gradient(135deg,rgba(34,197,94,.06),rgba(34,197,94,.02));border:1px solid rgba(34,197,94,.20);border-radius:12px;padding:14px 16px;font-size:.84rem;color:#0A1428}
 .sw-recap-title{font-size:.7rem;color:#16A34A;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .sw-recap-row{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px dashed rgba(34,197,94,.18);line-height:1.4}
 .sw-recap-row:last-child{border-bottom:0}
@@ -158,6 +153,7 @@
 select.sous-inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
 .sous-modal button[type=submit]:hover{transform:translateY(-2px);box-shadow:0 18px 36px rgba(255,107,26,.42)}
 .sous-card form > div h4 + div + div + div{margin-top:0}
+@media(max-width:560px){.sous-card form > div > div[style*="grid-template-columns:1fr 1fr"],.sous-card form > div > div[style*="grid-template-columns:120px"]{grid-template-columns:1fr !important}}
 
 /* Entretien annuel du chauffe-eau — présenté à part des mensualités, parce que ce n'en est pas une. */
 .ecs-annuel{display:flex;flex-wrap:wrap;align-items:center;gap:24px;max-width:960px;margin:28px auto 0;padding:22px 26px;background:#fff;border:1px solid #E3E8EF;border-radius:18px;box-shadow:0 10px 30px rgba(10,20,40,.05)}
