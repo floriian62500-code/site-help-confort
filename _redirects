@@ -1,3 +1,10 @@
+# PREVIEW DE MAQUETTE — branche preview/maquette-metiers-from-main UNIQUEMENT, jamais fusionnee.
+# La maquette vit sous /docs/. Sur cette branche, /docs/ n est pas encore bloque : la deuxieme
+# regle le fait, pour qu aucune note interne ne soit servie par la preview. Premiere regle
+# gagnante : seule la maquette est joignable, en noindex. A retirer avec la branche.
+/maquette-metiers   /docs/maquettes/nos-metiers.html   200
+/docs/*             /404.html 404!
+
 # Sitemap dynamique servi par Edge Function Supabase
 /sitemap.xml https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sitemap 200
 
