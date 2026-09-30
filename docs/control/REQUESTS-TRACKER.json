@@ -451,7 +451,7 @@
    "request_id": "REQ-20260926-017",
    "title": "Contrats sur une seule page / module complet sur Chauffage",
    "priority": "P1",
-   "status": "REWORK_REQUIRED",
+   "status": "READY_FOR_FLORIAN_VISUAL",
    "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-010-CONTRATS-ONE-PAGE.md",
    "legacy_instruction_id": "REQ-20260926-010",
    "created_at": "2026-09-26",
@@ -462,12 +462,12 @@
    "evidence_required": [
     "rapport outbox dédié"
    ],
-   "latest_sha": "23feb7c6 (feat/req-017-contrats-chauffage-from-main, PR #21, partie du main courant)",
-   "claude_outbox": "CLAUDE-2026-09-29-REQ-017-PROTOTYPE.md puis CLAUDE-2026-09-30-ACK-CONTROL-17.md",
+   "latest_sha": "2bc22e92 (feat/req-017-contrats-chauffage-from-main, PR #21)",
+   "claude_outbox": "CLAUDE-2026-09-30-ACK-CONTROL-18.md",
    "human_gate": "validation visuelle de Florian sur la preview du prototype avant toute suppression, 301 ou fusion",
-   "blocked_by": "Contrôle ChatGPT n°18 : assets/hc-contrats.js contient encore le placeholder tarifaire codé en dur « 13 € HT/mois », contrairement à la preuve « aucun prix en dur ». Les preuves 1440/390 et le relevé fourni démontrent les 3 tarifs Gaz, mais pas explicitement Fioul 13,20/17,60/29,70 €, Adoucisseur 8,80 €/mois et chauffe-eau ECS 220 € TTC/an.",
-   "next_action": "Sur la branche from-main PR #21 : supprimer/remplacer tout placeholder tarifaire codé en dur par un état neutre non tarifaire ; prouver par recherche que les 8 prix canoniques ne sont pas codés dans le module ; fournir un relevé contrôlable des 8 tarifs rendus depuis les sources de données (Gaz 9,90/14,30/25,30 ; Fioul 13,20/17,60/29,70 ; Adoucisseur 8,80 ; ECS 220 €/an), avec desktop 1440 et mobile 390 sans recouvrement ; retester la souscription sans envoi ; STOP Florian.",
-   "attempt": 5,
+   "blocked_by": "—",
+   "next_action": "les deux écarts du contrôle n°18 sont fermés : placeholder tarifaire supprimé (recherche contrôlable : aucun des 8 tarifs dans le module), 8 tarifs lus dans le DOM rendu aux deux largeurs, absence de recouvrement mesurée bouton par bouton, souscription ouverte sans envoi. 12 captures dans docs/qa/REQ-017-from-main. En attente du verdict visuel de Florian.",
+   "attempt": 6,
    "closed_at": null,
    "closure_proof": "prototype livré sur branche isolée : module complet monté sur la page Chauffage (onglets, cartes, chauffe-eau annuel, souscription sur place), extrait de contrats-entretien.html sans réécriture, prix lus dans v_contract_offers, aucun prix en dur ; vérifié par script sur la preview en 1440 et 390 : 3 cartes, prix 9,90/14,30/25,30, modale ouverte sur place, URL inchangée ; 168 liens de contenu vers /contrats-entretien inventoriés (139 pages hors en-tête) et plan de migration proposé sans exécution ; aucune suppression, aucune 301, aucune fusion ; suite 851 PASS / 0 FAIL",
    "decide_par": "CHATGPT-2026-09-30-CONTROL-ALL-REQUESTS-18"
