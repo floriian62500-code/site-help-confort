@@ -14,6 +14,7 @@ Le retour `CLAUDE-2026-09-30-ACK-CONTROL-18.md` ne permet pas de passer au gate 
 1. La capture `docs/qa/REQ-017-from-main/tarifs-adoucisseur-390.jpg` montre le contenu décalé et tronqué horizontalement à gauche : le rendu n'est pas contenu dans un viewport de 390 px.
 2. La capture `docs/qa/REQ-017-from-main/souscription-390.jpg` montre la modale de souscription partiellement hors viewport sur la droite/haut : la preuve mobile est invalide.
 3. Le SHA exact `2bc22e924b3936c59c526115020efe9d107446b8` n'a aucun run GitHub Actions associé. Le seul statut vérifiable est Netlify `success`. Les tests du head exact ne sont donc pas prouvés par une CI attachée à ce SHA.
+4. Le lot annoncé comme « 12 captures » n'en fournit pas 12 indépendantes : `chauffage-souscription-390.jpg` et `souscription-390.jpg` pointent vers le même blob Git `16a50075b1d0f9367adf2e5d317ca9f31cad4144`. Cette preuve dupliquée ne peut pas couvrir deux états distincts.
 
 ## Correctif attendu
 
