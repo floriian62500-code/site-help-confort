@@ -1,22 +1,35 @@
-# REQ-20260926-017 — captures du prototype reconstruit depuis `main`
+# REQ-20260926-017 — preuve tarifaire complète (contrôle n°18)
 
-Preview : `https://deploy-preview-21--remarkable-dragon-364e2b.netlify.app/chauffagiste-saint-omer#entretien`
-Branche : `feat/req-017-contrats-chauffage-from-main`, partie du `main` courant `5e009e35`
-Commit : **`23feb7c6`** · PR #21 (brouillon) · 2026-09-30
+Branche `feat/req-017-contrats-chauffage-from-main`, partie du `main` courant `5e009e35`.
+Head : **`2bc22e92`** · PR #21 (brouillon) · preview
+`https://deploy-preview-21--remarkable-dragon-364e2b.netlify.app/chauffagiste-saint-omer#entretien`
 
-| fichier | vue |
-|---|---|
-| `chauffage-contrats-1440.jpg` | les trois formules Gaz sur la page Chauffage |
-| `chauffage-contrats-390.jpg` | la même chose sur téléphone |
-| `chauffage-souscription-1440.jpg` | la modale de souscription ouverte **sur la page** |
-| `chauffage-souscription-390.jpg` | idem sur téléphone |
+## Les 8 tarifs canoniques, lus dans le DOM rendu
 
-Relevé par script, aux deux largeurs :
+| onglet | formule | 1440 | 390 |
+|---|---|---|---|
+| Gaz | BASIC | 9,90 € TTC / mois | 9,90 € TTC / mois |
+| Gaz | CONFORT | 14,30 € TTC / mois | 14,30 € TTC / mois |
+| Gaz | SÉCURITÉ | 25,30 € TTC / mois | 25,30 € TTC / mois |
+| Fioul | BASIC | 13,20 € TTC / mois | 13,20 € TTC / mois |
+| Fioul | CONFORT | 17,60 € TTC / mois | 17,60 € TTC / mois |
+| Fioul | SÉCURITÉ | 29,70 € TTC / mois | 29,70 € TTC / mois |
+| Adoucisseur | Contrat Adoucisseur | à partir de 8,80 € TTC / mois | idem |
+| Chauffe-eau | Contrat entretien annuel | **220 € TTC** — « par an, et non par mois » | idem |
 
-```
-cartes : 3   prix : 9,90 € / 14,30 € / 25,30 €   chauffe-eau : visible
-souscription sur place : true   ·   URL inchangée : true
-```
+## Absence de recouvrement — mesurée bouton par bouton
+Chaque bouton « Souscrire » a été amené à l'écran puis interrogé : **qui est au-dessus de son
+centre ?** Réponse, pour les 7 boutons et aux deux largeurs : **« le bouton lui-même »**, et
+chacun est entièrement dans l'écran.
 
-Les prix affichés sont ceux de `v_contract_offers`. Sur `main`, la section remplacée en citait
-d'autres — 12, 13, 16 et 23 € par mois — qui ne sont plus les bons.
+## Souscription
+Ouverte **sur la page**, URL inchangée, tarif repris de la carte : .
+**Aucun envoi** : le formulaire n'a pas été soumis.
+
+## Aucun tarif codé en dur
+Le placeholder « 13 € HT/mois » de la modale est supprimé (état neutre). Recherche sur le module
+entier (JS + CSS), en virgule et en point : **aucun** des huit tarifs n'y figure.
+
+## Fichiers
+`tarifs-gaz-*.jpg`, `tarifs-fioul-*.jpg`, `tarifs-adoucisseur-*.jpg`,
+`chauffage-contrats-*.jpg`, `souscription-*.jpg` — en 1440 et 390.
