@@ -466,7 +466,7 @@
    "claude_outbox": "CLAUDE-2026-09-29-REQ-017-PROTOTYPE.md",
    "human_gate": "validation visuelle de Florian sur la preview du prototype avant toute suppression, 301 ou fusion",
    "blocked_by": "PR #17 non isolée : 895 commits / 1052 fichiers modifiés par rapport à main, malgré le libellé prototype isolé ; en plus REQ-035 recouvre une partie de l'offre sur la capture.",
-   "next_action": "Recréer une branche de prototype depuis le main courant avec uniquement les fichiers strictement nécessaires au module Contrats, conserver /contrats-entretien.html, aucune 301, archiver 1440/390 et STOP pour validation Florian.",
+   "next_action": "prototype livré (preview PR #17) ; diff réel lisible en PR #18 (11 fichiers). Reconstruction depuis main NON faite : main est le site du 8 août, la validation visuelle n’y serait pas transférable — arbitrage de Florian demandé. En attente de son verdict visuel.",
    "attempt": 3,
    "closed_at": null,
    "closure_proof": "prototype livré sur branche isolée : module complet monté sur la page Chauffage (onglets, cartes, chauffe-eau annuel, souscription sur place), extrait de contrats-entretien.html sans réécriture, prix lus dans v_contract_offers, aucun prix en dur ; vérifié par script sur la preview en 1440 et 390 : 3 cartes, prix 9,90/14,30/25,30, modale ouverte sur place, URL inchangée ; 168 liens de contenu vers /contrats-entretien inventoriés (139 pages hors en-tête) et plan de migration proposé sans exécution ; aucune suppression, aucune 301, aucune fusion ; suite 851 PASS / 0 FAIL",
@@ -894,11 +894,11 @@
     "chiffres lus dans v_services_public le 2026-09-28",
     "preview isolée noindex sur branche non fusionnée : https://deploy-preview-15--remarkable-dragon-364e2b.netlify.app/maquette-metiers"
    ],
-   "latest_sha": "f276167e (branche preview/maquette-nos-metiers, PR #15, non fusionnée)",
+   "latest_sha": "8470a48a (preview/maquette-metiers-from-main, PR #20 — reconstruite depuis main)",
    "claude_outbox": "CLAUDE-2026-09-28-REQ-032-PROPOSITION-METIERS.md puis CLAUDE-2026-09-28-REQ-032-PREVIEW.md",
    "human_gate": "validation visuelle de la maquette par Florian ; lots A-D interdits tant que REQ-023 n’est pas validée",
    "blocked_by": "Preview non isolée : PR #15 comporte 1026 fichiers modifiés ; captures 1440/390 non archivées dans les preuves contrôlables.",
-   "next_action": "Reconstruire la preview depuis le main courant avec uniquement la maquette et son routage minimal ; archiver 4 captures contrôlables (page métiers 1440/390 + bloc accueil 1440/390), puis seulement présenter à Florian.",
+   "next_action": "maquette reconstruite depuis le main courant, 2 fichiers : https://deploy-preview-20--remarkable-dragon-364e2b.netlify.app/maquette-metiers — 4 captures dans docs/qa/REQ-032. Isolation vérifiée : /docs/control en 404, page en noindex. En attente du oui/non de Florian.",
    "attempt": 2,
    "closed_at": null,
    "closure_proof": "livrables 1 à 6 produits sans toucher au site : diagnostic (page /nos-metiers.html orpheline mais en ligne, H1 faux, 0 CTA), UX 3 niveaux, 4 planches desktop+mobile, plan de pages sans suppression, plan technique 4 lots, plan de rollback",
@@ -995,7 +995,7 @@
    "next_action": "Fournir et prouver un rollback sélectif de REQ-035 qui laisse scripts/tests/demande-v2.test.mjs strictement intact ; conserver le lot ouvert jusque-là.",
    "attempt": 3,
    "closed_at": null,
-   "closure_proof": "rework des 4 points : 8 captures archivées dans docs/qa/REQ-035 reliées au SHA ee2b2984 (0 bouton de fermeture relevé sur les 8, tailles mesurées sur l’élément) ; périmètre aligné à 202 pages, tunnel de commande compris, seule exception reset.html prouvée par noindex+titre+absence de maillage et contrôlée par la garde ; correction demande-v2 sortie du lot (21cbc668 puis 354251fa) donc rollback isolé ; suite 852 PASS / 0 FAIL, en-tête 0 à mettre à jour, SEO ERRORS=0 ; aucune prod · contrôle ultérieur : rollback isolé NON prouvé ; le lot reste ouvert",
+   "closure_proof": "rework des 4 points : 8 captures archivées dans docs/qa/REQ-035 reliées au SHA ee2b2984 (0 bouton de fermeture relevé sur les 8, tailles mesurées sur l’élément) ; périmètre aligné à 202 pages, tunnel de commande compris, seule exception reset.html prouvée par noindex+titre+absence de maillage et contrôlée par la garde ; correction demande-v2 sortie du lot (21cbc668 puis 354251fa) donc rollback isolé ; suite 852 PASS / 0 FAIL, en-tête 0 à mettre à jour, SEO ERRORS=0 ; aucune prod · contrôle ultérieur : rollback isolé NON prouvé ; le lot reste ouvert — 2026-09-30 : retour arrière sélectif PROUVÉ sur copie jetable. Le revert simple touchait bien demande-v2 (le contrôle avait raison) ; la commande correcte ajoute git checkout HEAD -- scripts/tests/demande-v2.test.mjs. Résultat mesuré : correctif intact (1 occurrence), fichier non modifié, asset supprimé, 0 page portant l’encart, encart de nouveau dans l’accueil, suite 846 PASS / 0 FAIL.",
    "scope": null,
    "decide_par": "docs/control/inbox/chatgpt/REQ-20260926-035-ROLLBACK-REWORK.md"
   }
