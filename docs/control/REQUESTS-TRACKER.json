@@ -877,7 +877,7 @@
    "request_id": "REQ-20260926-032",
    "title": "Refonte « Nos métiers » : page vitrine, menu, bloc accueil",
    "priority": "P1",
-   "status": "REWORK_REQUIRED",
+   "status": "READY_FOR_FLORIAN_VISUAL",
    "parent_instruction": "demande Florian 2026-09-28 (chat) — montrer avant de coder",
    "created_at": "2026-09-28",
    "acceptance_criteria": [
@@ -897,13 +897,13 @@
    "latest_sha": "8470a48a (preview/maquette-metiers-from-main, PR #20 — reconstruite depuis main)",
    "claude_outbox": "CLAUDE-2026-09-28-REQ-032-PROPOSITION-METIERS.md puis CLAUDE-2026-09-28-REQ-032-PREVIEW.md",
    "human_gate": "validation visuelle de la maquette par Florian ; lots A-D interdits tant que REQ-023 n’est pas validée",
-   "blocked_by": "Preview non isolée : PR #15 comporte 1026 fichiers modifiés ; captures 1440/390 non archivées dans les preuves contrôlables.",
-   "next_action": "maquette reconstruite depuis le main courant, 2 fichiers : https://deploy-preview-20--remarkable-dragon-364e2b.netlify.app/maquette-metiers — 4 captures dans docs/qa/REQ-032. Isolation vérifiée : /docs/control en 404, page en noindex. En attente du oui/non de Florian.",
+   "blocked_by": "Aucun blocage technique restant sur la maquette isolée ; gate humain Florian.",
+   "next_action": "Valider ou refuser visuellement la preview #20 et les 4 captures 1440/390. Aucun lot A-D avant verdict Florian.",
    "attempt": 2,
    "closed_at": null,
    "closure_proof": "livrables 1 à 6 produits sans toucher au site : diagnostic (page /nos-metiers.html orpheline mais en ligne, H1 faux, 0 CTA), UX 3 niveaux, 4 planches desktop+mobile, plan de pages sans suppression, plan technique 4 lots, plan de rollback",
    "scope": null,
-   "decide_par": "docs/control/inbox/chatgpt/REQ-20260926-032-CONTROL-14.md"
+   "decide_par": "Contrôle ChatGPT 2026-09-30 : isolation + captures contrôlées"
   },
   {
    "request_id": "REQ-20260926-033",
@@ -962,9 +962,9 @@
    "latest_sha": "e216ea88 (release/green-2026-09-28, PR #16 brouillon)",
    "claude_outbox": "CLAUDE-2026-09-28-REQ-034-RELEASE-VERTE.md",
    "human_gate": "validation visuelle de Florian sur la preview de release, puis GO explicite pour fusionner dans main",
-   "blocked_by": "La branche release/green-2026-09-28 est désormais en retard d'un commit sur le main courant : merge-base 48d2f89b..., main 5e009e35..., release e216ea88.... La release n'est donc pas construite depuis le main courant.",
-   "next_action": "Reconstruire/rebaser proprement le contenu validé depuis le main courant 5e009e3583d6bdb1d24ecc945b6db1cdd01c840e sans gros merge recette->main ; conserver des commits isolés par lot ; retester le head exact ; captures 1440/390 ; rollback ; aucun merge sans GO Florian.",
-   "attempt": 3,
+   "blocked_by": "Release e216ea88 derrière le main courant 9c6202d4 de 2 commits ; merge-base 48d2f89b.",
+   "next_action": "Reconstruire le candidat depuis main 9c6202d4 avec uniquement les request_id autorisés ; retester le head exact, captures si visible, rollback par lot ; rester en brouillon.",
+   "attempt": 4,
    "closed_at": null,
    "closure_proof": "matrice établie : main n’a reçu aucun travail fonctionnel depuis le 08/08 (57 rapports nocturnes + 1 fusion), recette a 876 commits d’avance. 3 lots portés (007, 019, 024) en 3 commits isolés, 9 fichiers, +13/-163, prouvés en ligne sur la preview de release. HORS : 008 et 009 sans objet (bloc et tunnel absents de main), 023 nécessite une revalidation visuelle car la page de main est l’ancienne version, 026 sans intérêt (main n’a aucun test). Verdict BLOCKED : pas de suite de tests exécutable sur main, validation visuelle Florian manquante, HOLD_SECURITY actif.",
    "decide_par": "CHATGPT-2026-09-30-CONTROL-ALL-REQUESTS-17"
@@ -991,11 +991,11 @@
    "latest_sha": "27211895 (captures) · lot : 2aef11f7, bd70147a, d8a0f4e4, ee2b2984",
    "claude_outbox": "CLAUDE-2026-09-28-REQ-035-ENCART-PARTOUT.md puis CLAUDE-2026-09-29-REQ-035-REWORK.md",
    "human_gate": "validation visuelle de Florian sur la recette",
-   "blocked_by": "Claude fournit maintenant une preuve déclarative de rollback sélectif dans ACK contrôle n°16 ; cette preuve doit être contrôlée avant toute requalification.",
-   "next_action": "Maintenir REWORK_REQUIRED jusqu'au contrôle indépendant des éléments du rollback sélectif et du rendu 1440/390. Aucune clôture ni production.",
-   "attempt": 3,
+   "blocked_by": "Preuve visuelle invalide : le bandeau cookies est visible sur 6 captures sur 8 malgré le README qui affirme le consentement refusé avant capture.",
+   "next_action": "Refaire les 8 captures accueil/contact/catalogue/zones en 1440/390 sur le SHA exact, sans bandeau cookies, encart visible et absence de recouvrement prouvée ; STOP Florian.",
+   "attempt": 4,
    "closed_at": null,
-   "closure_proof": "rework des 4 points : 8 captures archivées dans docs/qa/REQ-035 reliées au SHA ee2b2984 (0 bouton de fermeture relevé sur les 8, tailles mesurées sur l’élément) ; périmètre aligné à 202 pages, tunnel de commande compris, seule exception reset.html prouvée par noindex+titre+absence de maillage et contrôlée par la garde ; correction demande-v2 sortie du lot (21cbc668 puis 354251fa) donc rollback isolé ; suite 852 PASS / 0 FAIL, en-tête 0 à mettre à jour, SEO ERRORS=0 ; aucune prod · contrôle ultérieur : rollback isolé NON prouvé ; le lot reste ouvert — 2026-09-30 : retour arrière sélectif PROUVÉ sur copie jetable. Le revert simple touchait bien demande-v2 (le contrôle avait raison) ; la commande correcte ajoute git checkout HEAD -- scripts/tests/demande-v2.test.mjs. Résultat mesuré : correctif intact (1 occurrence), fichier non modifié, asset supprimé, 0 page portant l’encart, encart de nouveau dans l’accueil, suite 846 PASS / 0 FAIL.",
+   "closure_proof": "rework des 4 points : 8 captures archivées dans docs/qa/REQ-035 reliées au SHA ee2b2984 (0 bouton de fermeture relevé sur les 8, tailles mesurées sur l’élément) ; périmètre aligné à 202 pages, tunnel de commande compris, seule exception reset.html prouvée par noindex+titre+absence de maillage et contrôlée par la garde ; correction demande-v2 sortie du lot (21cbc668 puis 354251fa) donc rollback isolé ; suite 852 PASS / 0 FAIL, en-tête 0 à mettre à jour, SEO ERRORS=0 ; aucune prod · contrôle ultérieur : rollback isolé NON prouvé ; le lot reste ouvert — 2026-09-30 : retour arrière sélectif PROUVÉ sur copie jetable. Le revert simple touchait bien demande-v2 (le contrôle avait raison) ; la commande correcte ajoute git checkout HEAD -- scripts/tests/demande-v2.test.mjs. Résultat mesuré : correctif intact (1 occurrence), fichier non modifié, asset supprimé, 0 page portant l’encart, encart de nouveau dans l’accueil, suite 846 PASS / 0 FAIL. — Contrôle 2026-09-30 : rollback sélectif jugé cohérent ; blocage restant = preuves visuelles contradictoires (cookies visibles sur 6/8 captures).",
    "scope": null,
    "decide_par": "CHATGPT-2026-09-30-CONTROL-ALL-REQUESTS-17"
   }
