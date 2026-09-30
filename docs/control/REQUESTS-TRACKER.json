@@ -451,7 +451,7 @@
    "request_id": "REQ-20260926-017",
    "title": "Contrats sur une seule page / module complet sur Chauffage",
    "priority": "P1",
-   "status": "READY_FOR_FLORIAN_VISUAL",
+   "status": "REWORK_REQUIRED",
    "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-010-CONTRATS-ONE-PAGE.md",
    "legacy_instruction_id": "REQ-20260926-010",
    "created_at": "2026-09-26",
@@ -465,12 +465,12 @@
    "latest_sha": "57bf79cd (branche feat/req-017-contrats-sur-chauffage, PR #17 brouillon)",
    "claude_outbox": "CLAUDE-2026-09-29-REQ-017-PROTOTYPE.md",
    "human_gate": "validation visuelle de Florian sur la preview du prototype avant toute suppression, 301 ou fusion",
-   "blocked_by": "Gate visuel Florian : les captures 1440/390 montrent l'encart REQ-035 recouvrant la carte BASIC et une partie du CTA.",
-   "next_action": "Conserver la PR #17 en brouillon. Florian doit valider/refuser le rendu après correction ou arbitrage du chevauchement REQ-035 ; aucune fusion avant verdict.",
-   "attempt": 2,
+   "blocked_by": "PR #17 non isolée : 895 commits / 1052 fichiers modifiés par rapport à main, malgré le libellé prototype isolé ; en plus REQ-035 recouvre une partie de l'offre sur la capture.",
+   "next_action": "Recréer une branche de prototype depuis le main courant avec uniquement les fichiers strictement nécessaires au module Contrats, conserver /contrats-entretien.html, aucune 301, archiver 1440/390 et STOP pour validation Florian.",
+   "attempt": 3,
    "closed_at": null,
    "closure_proof": "prototype livré sur branche isolée : module complet monté sur la page Chauffage (onglets, cartes, chauffe-eau annuel, souscription sur place), extrait de contrats-entretien.html sans réécriture, prix lus dans v_contract_offers, aucun prix en dur ; vérifié par script sur la preview en 1440 et 390 : 3 cartes, prix 9,90/14,30/25,30, modale ouverte sur place, URL inchangée ; 168 liens de contenu vers /contrats-entretien inventoriés (139 pages hors en-tête) et plan de migration proposé sans exécution ; aucune suppression, aucune 301, aucune fusion ; suite 851 PASS / 0 FAIL",
-   "decide_par": "CHATGPT-2026-09-30-CONTROL-SYNC"
+   "decide_par": "CHATGPT-2026-09-30-CONTROL-ALL-REQUESTS-16"
   },
   {
    "request_id": "REQ-20260926-018",
@@ -1022,11 +1022,11 @@
  },
  "gel_visuel": "STOP sur toute modification visuelle tant que Florian n’a pas validé REQ-023 sur la preview. Ordre imposé ensuite : checkpoint validé → REQ-026 → REQ-020 (STOP visuel) → REQ-017 prototype (STOP visuel) → REQ-027 après GO métier.",
  "dernier_controle": {
-  "message_id": "CHATGPT-2026-09-30-CONTROL-SYNC",
-  "commit": "2a6c96d04c4b31408a260bc5d9031a3c38eeaf21 (instruction corrective REQ-034)",
-  "verdict": "aucun nouveau retour Claude depuis f21bf298 ; suivi réconcilié : gates visuels/rework maintenus et CLOSED produit interdit sans PROD_VERIFIED",
-  "retour_claude": "aucun nouveau retour depuis f21bf29849422170fc483a606a9150d50a6709bd",
-  "lacune_signalee": "REQ-032, REQ-034 et REQ-035 restent en rework ; REQ-017 reste au gate visuel Florian ; REQ-033 reste ouvert"
+  "message_id": "CHATGPT-2026-09-30-CONTROL-ALL-REQUESTS-16",
+  "commit": "à créer dans docs/control/inbox/chatgpt/",
+  "verdict": "aucun nouveau retour Claude après REQ-017 prototype/ACK15 ; REQ-017 repasse REWORK_REQUIRED car PR #17 n'est pas isolée ; REQ-032/034/035 restent REWORK_REQUIRED ; REQ-033 reste IN_PROGRESS ; aucune prod",
+  "retour_claude": "CLAUDE-2026-09-29-REQ-017-PROTOTYPE.md + CLAUDE-2026-09-29-ACK-CONTROL-15.md",
+  "lacune_signalee": "PR #17 annonce un prototype isolé mais contient 895 commits et 1052 fichiers vs main ; impossible à fusionner proprement"
  },
  "checkpoint_valide": {
   "branche": "backup/recette-validated-2026-09-28-req023",
