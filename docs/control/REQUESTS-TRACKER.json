@@ -959,10 +959,10 @@
     "diff final release vs main",
     "rollback"
    ],
-   "latest_sha": "ddf02dcb (release/green-2026-09-30, PR #22, partie du main courant 5e009e35)",
+   "latest_sha": "ddf02dcb (release/green-2026-09-30, PR #22, base de création 5e009e35)",
    "claude_outbox": "CLAUDE-2026-09-28-REQ-034-RELEASE-VERTE.md",
    "human_gate": "validation visuelle de Florian sur la preview de release, puis GO explicite pour fusionner dans main",
-   "blocked_by": "Gate humain Florian + HOLD_SECURITY. Le main courant est 40aaa84984b63e357349b381538dbedc78431612 ; la branche release/green-2026-09-30 reste divergée et doit être resynchronisée depuis le main alors courant avant tout GO/merge, puis retestée sur son head exact avec rollback vérifié.",
+   "blocked_by": "Gate humain Florian + HOLD_SECURITY. Le main courant est 57b323a5d403defc45ed796f6fc140866501b5f8 ; release/green-2026-09-30 est divergée de main (3 commits devant / 3 derrière, merge-base 5e009e3583d6bdb1d24ecc945b6db1cdd01c840e). Resynchronisation depuis le main alors courant obligatoire avant tout GO/merge, puis retest du head exact et rollback vérifié.",
    "next_action": "La preview PR #22 peut rester présentée pour validation visuelle. Avant tout GO/merge : reconstruire/resynchroniser depuis le main courant, vérifier que seuls les éléments validés sont inclus, retester le head exact, revalider le rollback et maintenir HOLD_SECURITY. Aucun déploiement sans GO Florian.",
    "attempt": 4,
    "closed_at": null,
