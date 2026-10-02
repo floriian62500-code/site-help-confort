@@ -1,35 +1,67 @@
-# REQ-20260926-017 — preuve tarifaire complète (contrôle n°18)
+# REQ-20260926-017 — preuves au SHA `b5cd68fb`
 
-Branche `feat/req-017-contrats-chauffage-from-main`, partie du `main` courant `5e009e35`.
-Head : **`2bc22e92`** · PR #21 (brouillon) · preview
+Branche `feat/req-017-contrats-chauffage-from-main` (partie du `main` courant), PR #21.
+SHA exact : **`b5cd68fbbf5bfa76696c078ba073f42cb13e7d9d`** · preview
 `https://deploy-preview-21--remarkable-dragon-364e2b.netlify.app/chauffagiste-saint-omer#entretien`
 
-## Les 8 tarifs canoniques, lus dans le DOM rendu
+Les mesures brutes sont dans `MESURES-b5cd68fb.txt`, et le script qui les produit dans
+`mesures.mjs` : n'importe qui peut les rejouer.
 
-| onglet | formule | 1440 | 390 |
+## Ce que le contrôle n°22 reprochait, point par point
+
+### 1 et 2 — débordement et modale hors cadre à 390
+**La cause est réelle, mais elle n'est pas dans ce lot.** Mesuré à 390 px, sur la même page, avec et
+sans le module :
+
+| | page `scrollWidth` | dépassement | coupable |
 |---|---|---|---|
-| Gaz | BASIC | 9,90 € TTC / mois | 9,90 € TTC / mois |
-| Gaz | CONFORT | 14,30 € TTC / mois | 14,30 € TTC / mois |
-| Gaz | SÉCURITÉ | 25,30 € TTC / mois | 25,30 € TTC / mois |
-| Fioul | BASIC | 13,20 € TTC / mois | 13,20 € TTC / mois |
-| Fioul | CONFORT | 17,60 € TTC / mois | 17,60 € TTC / mois |
-| Fioul | SÉCURITÉ | 29,70 € TTC / mois | 29,70 € TTC / mois |
-| Adoucisseur | Contrat Adoucisseur | à partir de 8,80 € TTC / mois | idem |
-| Chauffe-eau | Contrat entretien annuel | **220 € TTC** — « par an, et non par mois » | idem |
+| preview 21 (**avec** le module) | 842 | 452 px | `DIV.hcf-track`, largeur 2 304 px |
+| preview 22 (**sans** le module) | 842 | 452 px | le même |
 
-## Absence de recouvrement — mesurée bouton par bouton
-Chaque bouton « Souscrire » a été amené à l'écran puis interrogé : **qui est au-dessus de son
-centre ?** Réponse, pour les 7 boutons et aux deux largeurs : **« le bouton lui-même »**, et
-chacun est entièrement dans l'écran.
+C'est le **carrousel de logos partenaires de la page Chauffage**, déjà présent sur `main`. Le module
+n'y change rien : il est strictement contenu.
+
+Pourquoi mes captures précédentes semblaient décalées : je les prenais avec l'**émulation iPhone**,
+qui « rétrécit pour faire tenir » une page qui déborde — `innerWidth` valait alors 842 au lieu de
+390. L'observation du contrôle était donc juste, et ma preuve était faussée par mon propre outil.
+Les nouvelles captures sont prises à **390 px réels, sans émulation**.
+
+Mesures au SHA `b5cd68fb` :
+
+| vue | onglet | page | section du module | éléments hors cadre |
+|---|---|---|---|---|
+| 1440 | gaz / fioul / adoucisseur | 1440 ≤ 1440 ✅ | [0→1440] | **0** |
+| 390 | gaz / fioul / adoucisseur | 842 > 390 ⚠️ (carrousel, hors lot) | **[0→390]** | **0** |
+
+Modale de souscription :
+
+| vue | position | entièrement dans le cadre | enfants hors cadre |
+|---|---|---|---|
+| 1440 | [380→1060], haut 40 | **oui** | 0 |
+| 390 | **[20→370]**, haut 40 | **oui** | 0 |
+
+Deux corrections ont quand même été faites **dans le lot**, parce qu'elles relevaient du module :
+- le champ anti-robot de la modale était posé à `-9999px`, ce qui agrandit la zone défilable dans
+  plusieurs navigateurs : il est masqué par découpe (`clip-path`), sans surface hors cadre ;
+- une garde de confinement (`max-width:100%; overflow-x:clip`) garantit que le module ne
+  contribuera jamais au débordement de la page qui l'accueille, même si celle-ci change.
+
+### 3 — deux captures partageaient le même blob
+Exact. Les deux fichiers `chauffage-souscription-*` ont été **supprimés** ; les huit nouvelles
+captures `v2-*` ont **huit empreintes distinctes** (vérifié).
+
+### 4 — aucun run GitHub Actions sur le SHA exact
+Explication vérifiable : le workflow `tests.yml` **n'existe pas sur `main`** — `main` ne porte que
+`audit.yml` et `supabase-deploy.yml`. Une branche partie de `main` n'a donc aucun workflow de tests
+à déclencher, et **aucun fichier de test** non plus (`scripts/tests/` : 0 fichier sur cette branche).
+Le contrôle demande des tests sur le head exact ; sur une base qui n'en contient aucun, la seule
+preuve honnête est celle qui est ici : des **mesures DOM reproductibles**, prises sur le déploiement
+de ce SHA, avec le script qui les produit.
 
 ## Souscription
-Ouverte **sur la page**, URL inchangée, tarif repris de la carte : .
-**Aucun envoi** : le formulaire n'a pas été soumis.
+Ouverte **sur la page**, aux deux largeurs, tarif repris de la carte : `9,90 € TTC/mois (9 € HT)`.
+**Aucun formulaire soumis**, aucune demande créée.
 
-## Aucun tarif codé en dur
-Le placeholder « 13 € HT/mois » de la modale est supprimé (état neutre). Recherche sur le module
-entier (JS + CSS), en virgule et en point : **aucun** des huit tarifs n'y figure.
-
-## Fichiers
-`tarifs-gaz-*.jpg`, `tarifs-fioul-*.jpg`, `tarifs-adoucisseur-*.jpg`,
-`chauffage-contrats-*.jpg`, `souscription-*.jpg` — en 1440 et 390.
+## Rollback — toujours isolé
+`git revert --no-commit <les 3 commits du lot> && git commit`. Le lot ne touche que trois fichiers :
+`assets/hc-contrats.css`, `assets/hc-contrats.js`, `chauffagiste-saint-omer.html`.
