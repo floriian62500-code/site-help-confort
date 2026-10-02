@@ -451,8 +451,8 @@
    "request_id": "REQ-20260926-017",
    "title": "Contrats sur une seule page / module complet sur Chauffage",
    "priority": "P1",
-   "status": "READY_FOR_FLORIAN_VISUAL",
-   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-010-CONTRATS-ONE-PAGE.md",
+   "status": "REWORK_REQUIRED",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-017-MOBILE-OVERFLOW-REWORK.md",
    "legacy_instruction_id": "REQ-20260926-010",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -464,13 +464,13 @@
    ],
    "latest_sha": "2bc22e92 (feat/req-017-contrats-chauffage-from-main, PR #21)",
    "claude_outbox": "CLAUDE-2026-09-30-ACK-CONTROL-18.md",
-   "human_gate": "validation visuelle de Florian sur la preview du prototype avant toute suppression, 301 ou fusion",
-   "blocked_by": "—",
-   "next_action": "les deux écarts du contrôle n°18 sont fermés : placeholder tarifaire supprimé (recherche contrôlable : aucun des 8 tarifs dans le module), 8 tarifs lus dans le DOM rendu aux deux largeurs, absence de recouvrement mesurée bouton par bouton, souscription ouverte sans envoi. 12 captures dans docs/qa/REQ-017-from-main. En attente du verdict visuel de Florian.",
-   "attempt": 6,
+   "human_gate": "Gate visuel Florian suspendu jusqu'à nouvelles preuves conformes sur le SHA exact ; aucun merge/301/suppression/production.",
+   "blocked_by": "Captures 390 non conformes (débordement/modale hors viewport) + preuve dupliquée + aucun run GitHub Actions rattaché au SHA exact 2bc22e924b3936c59c526115020efe9d107446b8.",
+   "next_action": "Corriger le débordement 390, refaire les preuves 390 et 1440 si CSS/JS change, mesurer scrollWidth<=innerWidth et modale entièrement dans le viewport, rejouer les tests sur le nouveau SHA exact, confirmer rollback isolé, puis STOP contrôle avant gate Florian.",
+   "attempt": 7,
    "closed_at": null,
-   "closure_proof": "prototype livré sur branche isolée : module complet monté sur la page Chauffage (onglets, cartes, chauffe-eau annuel, souscription sur place), extrait de contrats-entretien.html sans réécriture, prix lus dans v_contract_offers, aucun prix en dur ; vérifié par script sur la preview en 1440 et 390 : 3 cartes, prix 9,90/14,30/25,30, modale ouverte sur place, URL inchangée ; 168 liens de contenu vers /contrats-entretien inventoriés (139 pages hors en-tête) et plan de migration proposé sans exécution ; aucune suppression, aucune 301, aucune fusion ; suite 851 PASS / 0 FAIL",
-   "decide_par": "CHATGPT-2026-09-30-CONTROL-ALL-REQUESTS-18"
+   "closure_proof": "prototype livré sur branche isolée : module complet monté sur la page Chauffage (onglets, cartes, chauffe-eau annuel, souscription sur place), extrait de contrats-entretien.html sans réécriture, prix lus dans v_contract_offers, aucun prix en dur ; vérifié par script sur la preview en 1440 et 390 : 3 cartes, prix 9,90/14,30/25,30, modale ouverte sur place, URL inchangée ; 168 liens de contenu vers /contrats-entretien inventoriés (139 pages hors en-tête) et plan de migration proposé sans exécution ; aucune suppression, aucune 301, aucune fusion ; suite 851 PASS / 0 FAIL Contrôle ChatGPT : instruction corrective versionnée dans docs/control/inbox/chatgpt/REQ-20260926-017-MOBILE-OVERFLOW-REWORK.md ; le statut READY_FOR_FLORIAN_VISUAL était trop permissif et est corrigé en REWORK_REQUIRED. Aucune preuve PROD_VERIFIED.",
+   "decide_par": "CHATGPT-2026-10-02-CONTROL-SYNC"
   },
   {
    "request_id": "REQ-20260926-018",
@@ -962,12 +962,12 @@
    "latest_sha": "ddf02dcb (release/green-2026-09-30, PR #22, partie du main courant 5e009e35)",
    "claude_outbox": "CLAUDE-2026-09-28-REQ-034-RELEASE-VERTE.md",
    "human_gate": "validation visuelle de Florian sur la preview de release, puis GO explicite pour fusionner dans main",
-   "blocked_by": "Gate humain Florian + HOLD_SECURITY. Le main a avancé après construction uniquement via le commit nightly 9c6202d4 (rapports admin-pro/audits, aucun fichier fonctionnel du lot). Resynchronisation obligatoire avant tout GO/merge.",
-   "next_action": "Présenter la preview PR #22 pour validation visuelle. Si Florian valide et donne ensuite GO production, resynchroniser d'abord la branche sur le main alors courant, recontrôler le diff fonctionnel inchangé, retester le head exact, puis seulement préparer le geste de production. Aucun merge tant que HOLD_SECURITY/GO ne sont pas levés.",
+   "blocked_by": "Gate humain Florian + HOLD_SECURITY. Le main courant est 40aaa84984b63e357349b381538dbedc78431612 ; la branche release/green-2026-09-30 reste divergée et doit être resynchronisée depuis le main alors courant avant tout GO/merge, puis retestée sur son head exact avec rollback vérifié.",
+   "next_action": "La preview PR #22 peut rester présentée pour validation visuelle. Avant tout GO/merge : reconstruire/resynchroniser depuis le main courant, vérifier que seuls les éléments validés sont inclus, retester le head exact, revalider le rollback et maintenir HOLD_SECURITY. Aucun déploiement sans GO Florian.",
    "attempt": 4,
    "closed_at": null,
    "closure_proof": "matrice établie : main n’a reçu aucun travail fonctionnel depuis le 08/08 (57 rapports nocturnes + 1 fusion), recette a 876 commits d’avance. 3 lots portés (007, 019, 024) en 3 commits isolés, 9 fichiers, +13/-163, prouvés en ligne sur la preview de release. HORS : 008 et 009 sans objet (bloc et tunnel absents de main), 023 nécessite une revalidation visuelle car la page de main est l’ancienne version, 026 sans intérêt (main n’a aucun test). Verdict BLOCKED : pas de suite de tests exécutable sur main, validation visuelle Florian manquante, HOLD_SECURITY actif.",
-   "decide_par": "CHATGPT-2026-09-30-CONTROL-ALL-REQUESTS-18"
+   "decide_par": "CHATGPT-2026-10-02-CONTROL-SYNC"
   },
   {
    "request_id": "REQ-20260926-035",
