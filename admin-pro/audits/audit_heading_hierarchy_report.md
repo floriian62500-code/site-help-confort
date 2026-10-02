@@ -1,6 +1,6 @@
 # Audit Heading hierarchy — Rapport
 
-Généré le : `2026-10-01T09:52:14`
+Généré le : `2026-10-02T09:28:57`
 
 Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il y a exactement un <h1>, et que la séquence commence bien par un <h1>.
 
