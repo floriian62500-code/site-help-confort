@@ -462,11 +462,11 @@
    "evidence_required": [
     "rapport outbox dédié"
    ],
-   "latest_sha": "2bc22e92 (feat/req-017-contrats-chauffage-from-main, PR #21)",
-   "claude_outbox": "CLAUDE-2026-09-30-ACK-CONTROL-18.md",
+   "latest_sha": "b5cd68fbbf5bfa76696c078ba073f42cb13e7d9d (PR #21)",
+   "claude_outbox": "CLAUDE-2026-10-02-REQ-017-REWORK-MOBILE.md",
    "human_gate": "Gate visuel Florian suspendu jusqu'à nouvelles preuves conformes sur le SHA exact ; aucun merge/301/suppression/production.",
-   "blocked_by": "Captures 390 non conformes (débordement/modale hors viewport) + preuve dupliquée + aucun run GitHub Actions rattaché au SHA exact 2bc22e924b3936c59c526115020efe9d107446b8.",
-   "next_action": "Corriger le débordement 390, refaire les preuves 390 et 1440 si CSS/JS change, mesurer scrollWidth<=innerWidth et modale entièrement dans le viewport, rejouer les tests sur le nouveau SHA exact, confirmer rollback isolé, puis STOP contrôle avant gate Florian.",
+   "blocked_by": "contrôle ChatGPT du nouveau paquet de preuves, puis gate visuel Florian",
+   "next_action": "4 écarts du contrôle n°22 traités au SHA b5cd68fbbf5bfa76696c078ba073f42cb13e7d9d : débordement 390 mesuré AVEC et SANS le module (452 px identiques, cause = carrousel .hcf-track de la page, hors lot) ; module [0→390] et modale [20→370] entièrement dans le cadre, 0 élément hors cadre ; 8 captures aux empreintes distinctes ; absence de run CI expliquée (main ne porte ni tests.yml ni fichiers de test). Mesures et script joints dans docs/qa/REQ-017-from-main.",
    "attempt": 7,
    "closed_at": null,
    "closure_proof": "prototype livré sur branche isolée : module complet monté sur la page Chauffage (onglets, cartes, chauffe-eau annuel, souscription sur place), extrait de contrats-entretien.html sans réécriture, prix lus dans v_contract_offers, aucun prix en dur ; vérifié par script sur la preview en 1440 et 390 : 3 cartes, prix 9,90/14,30/25,30, modale ouverte sur place, URL inchangée ; 168 liens de contenu vers /contrats-entretien inventoriés (139 pages hors en-tête) et plan de migration proposé sans exécution ; aucune suppression, aucune 301, aucune fusion ; suite 851 PASS / 0 FAIL Contrôle ChatGPT : instruction corrective versionnée dans docs/control/inbox/chatgpt/REQ-20260926-017-MOBILE-OVERFLOW-REWORK.md ; le statut READY_FOR_FLORIAN_VISUAL était trop permissif et est corrigé en REWORK_REQUIRED. Aucune preuve PROD_VERIFIED.",
