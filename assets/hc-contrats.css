@@ -170,3 +170,10 @@ select.sous-inp{cursor:pointer;appearance:none;background-image:url("data:image/
  .ecs-annuel{flex-direction:column;align-items:stretch;gap:16px;padding:18px}
  .ecs-prix{text-align:left;min-width:0}
 }
+
+/* Garde de confinement : quelle que soit la page qui accueille le module, celui-ci ne dépasse
+   jamais sa largeur. Mesuré le 2026-10-02 : la page Chauffage de `main` déborde déjà de 452 px à
+   390 px de large, à cause d'un carrousel de logos partenaires (.hcf-track) qui ne fait pas partie
+   de ce lot. Le module, lui, reste dans le cadre — cette règle le garantit même si la page change. */
+.ct-contrats-page, .ct-contrats-page .ct-offers, .ct-contrats-page .container{max-width:100%;overflow-x:clip}
+.ct-contrats-page img, .ct-contrats-page svg{max-width:100%;height:auto}
