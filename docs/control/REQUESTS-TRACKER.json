@@ -451,8 +451,8 @@
    "request_id": "REQ-20260926-017",
    "title": "Contrats sur une seule page / module complet sur Chauffage",
    "priority": "P1",
-   "status": "REWORK_REQUIRED",
-   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-017-MOBILE-OVERFLOW-REWORK.md",
+   "status": "WAITING_CLAUDE_PROOF",
+   "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-03-REQ-017-FINAL-PROOF-PR23.md",
    "legacy_instruction_id": "REQ-20260926-010",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -462,15 +462,15 @@
    "evidence_required": [
     "rapport outbox dédié"
    ],
-   "latest_sha": "b5cd68fbbf5bfa76696c078ba073f42cb13e7d9d (PR #21)",
+   "latest_sha": "8740467f2fa2782a898efd9f01deb3f6d0f0b36b (PR #23, release/req017-contract-flow-2026-10-03)",
    "claude_outbox": "CLAUDE-2026-10-02-REQ-017-REWORK-MOBILE.md",
-   "human_gate": "Gate visuel Florian suspendu jusqu'à nouvelles preuves conformes sur le SHA exact ; aucun merge/301/suppression/production.",
-   "blocked_by": "contrôle ChatGPT du nouveau paquet de preuves, puis gate visuel Florian",
-   "next_action": "4 écarts du contrôle n°22 traités au SHA b5cd68fbbf5bfa76696c078ba073f42cb13e7d9d : débordement 390 mesuré AVEC et SANS le module (452 px identiques, cause = carrousel .hcf-track de la page, hors lot) ; module [0→390] et modale [20→370] entièrement dans le cadre, 0 élément hors cadre ; 8 captures aux empreintes distinctes ; absence de run CI expliquée (main ne porte ni tests.yml ni fichiers de test). Mesures et script joints dans docs/qa/REQ-017-from-main.",
-   "attempt": 7,
+   "human_gate": "GO production exprimé par Florian le 2026-10-03, conditionné par le protocole projet : preview + preuves 1440/390 + parcours complet + rollback contrôlés avant merge/deploy.",
+   "blocked_by": "Paquet de preuves PR #23 demandé à Claude : Chauffage 1440/390, transition formule→Contrats avec sélection conservée, modale 390 sans soumission, mesures overflow/console et rollback.",
+   "next_action": "Claude contrôle la preview PR #23 au SHA exact 8740467f, fournit le paquet de preuves dans outbox et STOP. ChatGPT tranche ensuite. Aucun merge/deploy avant verdict.",
+   "attempt": 8,
    "closed_at": null,
    "closure_proof": "prototype livré sur branche isolée : module complet monté sur la page Chauffage (onglets, cartes, chauffe-eau annuel, souscription sur place), extrait de contrats-entretien.html sans réécriture, prix lus dans v_contract_offers, aucun prix en dur ; vérifié par script sur la preview en 1440 et 390 : 3 cartes, prix 9,90/14,30/25,30, modale ouverte sur place, URL inchangée ; 168 liens de contenu vers /contrats-entretien inventoriés (139 pages hors en-tête) et plan de migration proposé sans exécution ; aucune suppression, aucune 301, aucune fusion ; suite 851 PASS / 0 FAIL Contrôle ChatGPT : instruction corrective versionnée dans docs/control/inbox/chatgpt/REQ-20260926-017-MOBILE-OVERFLOW-REWORK.md ; le statut READY_FOR_FLORIAN_VISUAL était trop permissif et est corrigé en REWORK_REQUIRED. Aucune preuve PROD_VERIFIED.",
-   "decide_par": "CHATGPT-2026-10-02-CONTROL-SYNC"
+   "decide_par": "CHATGPT-2026-10-03-REQ-017-FINAL-PROOF-PR23"
   },
   {
    "request_id": "REQ-20260926-018",
@@ -1022,11 +1022,11 @@
  },
  "gel_visuel": "STOP sur toute modification visuelle tant que Florian n’a pas validé REQ-023 sur la preview. Ordre imposé ensuite : checkpoint validé → REQ-026 → REQ-020 (STOP visuel) → REQ-017 prototype (STOP visuel) → REQ-027 après GO métier.",
  "dernier_controle": {
-  "message_id": "CHATGPT-2026-09-30-CONTROL-ALL-REQUESTS-16",
-  "commit": "à créer dans docs/control/inbox/chatgpt/",
-  "verdict": "aucun nouveau retour Claude après REQ-017 prototype/ACK15 ; REQ-017 repasse REWORK_REQUIRED car PR #17 n'est pas isolée ; REQ-032/034/035 restent REWORK_REQUIRED ; REQ-033 reste IN_PROGRESS ; aucune prod",
-  "retour_claude": "CLAUDE-2026-09-29-REQ-017-PROTOTYPE.md + CLAUDE-2026-09-29-ACK-CONTROL-15.md",
-  "lacune_signalee": "PR #17 annonce un prototype isolé mais contient 895 commits et 1052 fichiers vs main ; impossible à fusionner proprement"
+  "message_id": "CHATGPT-2026-10-03-REQ-017-FINAL-PROOF-PR23",
+  "commit": "docs/control/inbox/chatgpt/CHATGPT-2026-10-03-REQ-017-FINAL-PROOF-PR23.md",
+  "verdict": "PR #23 reconstruite depuis le main courant et preview Netlify verte au déploiement ; preuve visuelle/E2E encore obligatoire avant production.",
+  "retour_claude": "en attente",
+  "lacune_signalee": "Environnement ChatGPT ne peut pas ouvrir la preview Netlify pour produire lui-même les captures 1440/390 ; paquet de preuves confié à Claude/QA."
  },
  "checkpoint_valide": {
   "branche": "backup/recette-validated-2026-09-28-req023",
