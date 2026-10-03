@@ -1,0 +1,23 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = false
+
+[*.{js,mjs,json,md,toml,yml,yaml}]
+indent_style = space
+indent_size = 2
+
+[*.html]
+indent_style = space
+indent_size = 2
+# 70 des 265 pages suivies n'ont pas de saut de ligne final. Si l'editeur l'ajoutait a
+# l'enregistrement, chaque page simplement ouverte produirait un diff parasite — que le demon
+# d'auto-sauvegarde committerait aussitot. On ne touche donc pas a la fin de fichier ici.
+insert_final_newline = false
+
+[*.py]
+indent_style = space
+indent_size = 4

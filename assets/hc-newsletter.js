@@ -8,7 +8,7 @@
   'use strict';
 
   var SUPA_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
-  var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0Y2Jqd3FpaXZocG93c3pvbWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMzMjY1NjUsImV4cCI6MjA3ODkwMjU2NX0.fJC6_VxoSxr2hf-NUS7Of4kbJ4f0Lv3PFG6JsLrqLng';
+  var SUPA_KEY = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
 
   var CSS = '\
 .hc-news{background:linear-gradient(135deg,#0A1428,#172240);color:#fff;border-radius:20px;padding:36px 32px;margin:40px auto;max-width:1080px;position:relative;overflow:hidden}\

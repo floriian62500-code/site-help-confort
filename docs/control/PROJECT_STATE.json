@@ -1,0 +1,48 @@
+{
+  "project": "HELP CONFORT Saint-Omer / Dunkerque website",
+  "repository": "floriian62500-code/site-help-confort",
+  "production_domain": "https://depan59-62.fr",
+  "production_branch": "main",
+  "validation_branch": "recette",
+  "validation_center": "/recette.html",
+  "control_plane_version": 1,
+  "mode": "human-gated-production",
+  "roles": {
+    "claude": "technical_executor",
+    "chatgpt": "controller_and_pilot",
+    "florian": "business_decider"
+  },
+  "human_gates": [
+    "production deployment",
+    "live payment activation or mutation",
+    "sensitive production data mutation",
+    "destructive database or Git operation",
+    "authentication/RLS security change with production impact",
+    "DNS/domain change",
+    "major legal, financial or contractual decision",
+    "visual/business validation in recette center"
+  ],
+  "forbidden_without_gate": [
+    "force push",
+    "destructive reset",
+    "mass deletion",
+    "security bypass",
+    "secrets committed to Git",
+    "live payment tests with real customer money"
+  ],
+  "current_policy": "All visible changes go through recette.html page-by-page validation before production.",
+  "initialized_at": "2026-08-11",
+  "sync": {
+    "repository": "floriian62500-code/site-help-confort",
+    "owner_repo": "floriian62500-code/site-help-confort",
+    "dev_branch": "integration/lot1-lot2-vs-prod",
+    "recette_branch": "recette",
+    "production_branch": "main",
+    "tracking_file": "docs/control/PROJECT_STATE.json",
+    "outbox_dir": "docs/control/outbox/claude/",
+    "repo_visibility": "PUBLIC — À PASSER EN PRIVÉ (gate humain : décision Florian, impact intégration Netlify)",
+    "netlify_internal_files_blocked": "docs/*, scripts/*, supabase/* -> 404 forcé via _redirects",
+    "chatgpt_read_source": "GitHub (repo). Ne PAS exposer ces fichiers sur Netlify.",
+    "updated_at": "2026-08-12"
+  }
+}
