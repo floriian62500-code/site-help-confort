@@ -1,0 +1,68 @@
+---
+description: Règles obligatoires pour travailler sur HELP CONFORT Saint-Omer
+alwaysApply: true
+---
+
+# HELP CONFORT — règles Cursor
+
+Avant toute modification, lire dans cet ordre :
+1. `docs/control/PROJECT_STATE.json`
+2. `docs/control/README.md`
+3. `docs/control/REQUESTS-TRACKER.json`
+4. `CLAUDE.md`
+5. l'instruction active dans `docs/control/inbox/chatgpt/`
+
+Règles absolues :
+- `main` = production. Ne jamais pousser ou merger vers `main` sans GO explicite de Florian.
+- `recette` = validation. Les changements structurants sont d'abord isolés et testés.
+- Une demande = un request_id = un lot de code isolé.
+- Ne jamais mélanger une correction demandée avec un refactor opportuniste.
+- Avant un changement important, vérifier le checkpoint/rollback indiqué dans le tracker. La branche
+  de sauvegarde citée par le tracker ne se modifie, ne se déplace, ne se rebase et ne se merge jamais.
+- Aucun force-push, reset destructif, secret committé ou mutation production implicite. `recette` est
+  lue par le contrôle : on ne réécrit pas son historique, même pour corriger un simple libellé.
+- Ne jamais exécuter `supabase db push`, déployer une fonction, modifier Stripe LIVE, DNS ou auth/RLS
+  production sans GO explicite.
+- Les formulaires locaux parlent à la vraie Supabase : ne jamais soumettre un lead réel pour tester.
+  Ne jamais cliquer « Réserver » en recette (cela envoie une vraie notification à l'agence) et ne
+  jamais franchir l'étape tarifs du tunnel en test.
+- Les prix, prestations, contrats et conditions doivent venir de leur source canonique. Ne pas inventer.
+- `nos-prestations.html` = catalogue public (vitrine des prestations). `catalogue.html` = le tunnel de
+  commande en service (accueil 2 modes + diagnostic → panier → coordonnées → envoi) : ce n'est pas un
+  reliquat, c'est le parcours vivant. Ne pas les confondre, ne pas dupliquer l'un dans l'autre.
+- Toute page visible modifiée doit être contrôlée sur la preview Netlify en 1440 et 390 :
+  `https://deploy-preview-2--remarkable-dragon-364e2b.netlify.app/`
+- Si Florian refuse un rendu, revenir au dernier état stable plutôt que corriger en cascade.
+
+Pièges de ce dépôt — chacun vient d'un incident réel :
+- **Cache des assets** : `/assets/*` est servi avec un cache immuable d'un an. Après toute
+  modification dans `assets/`, lancer la tâche « HC: bump version des assets »
+  (`node scripts/bump-module-version.mjs`) : sans le `?v=` relevé, le correctif est invisible en ligne.
+- **En-tête** : il ne s'édite jamais dans une page. Le partiel est la source, `sync-header.mjs`
+  propage, `--check` vérifie (tâche « HC: verifier en-tete »).
+- **Tout fichier suivi est publié** : `netlify.toml` publie depuis la racine (`publish = "."`). Tout
+  dossier interne ajouté au dépôt doit recevoir une règle de blocage dans `_redirects`, terminée par
+  `404!` — la garde `scripts/tests/depot-propre.test.mjs` échoue sinon, et c'est voulu. Le `ignore` de
+  `netlify.toml` ne protège rien : il décide seulement s'il faut reconstruire.
+- **Démon d'auto-sauvegarde** : il committe ET pousse tout seul sur `recette`. Ouvrir un verrou de lot
+  (« HC: session de travail — ouvrir ») avant d'éditer, le fermer à la fin. Le verrou expire au bout
+  de 90 minutes et « ouvrir » une seconde fois ne remet pas le compteur à zéro : utiliser
+  « prolonger » pendant un lot long, et « fermer » avant toute attente. Sinon le travail en cours part
+  sur `recette` sous un message générique. Après chaque push, vérifier que `HEAD` et `origin/recette`
+  coïncident et que le message du commit est bien le sien.
+- **Serveur local** : `python3 -m http.server` ne fait pas les URL sans `.html` comme Netlify. Un lien
+  qui tombe en 404 en local peut être parfaitement valide en ligne — vérifier sur la preview.
+
+Avant commit :
+- lancer la tâche VS Code/Cursor `HC: controles pre-commit` (elle doit sortir au vert, y compris les
+  fichiers de test `.sh`) ;
+- fournir SHA, fichiers changés, tests, BEFORE/AFTER, rollback et preuve NO_PROD_MUTATION, dans un
+  rapport déposé sous `docs/control/outbox/claude/` ;
+- un commit de code par demande : ne jamais regrouper plusieurs request_id ;
+- ne jamais déclarer une demande CLOSED : seul le contrôle ChatGPT/Florian le fait. Le maximum
+  atteignable seul est READY_FOR_CONTROL.
+
+Objectif produit :
+site vitrine haut de gamme de HELP CONFORT Saint-Omer permettant de comprendre les métiers, voir les
+prestations et réalisations, demander un devis, réserver/acheter les prestations éligibles et gérer
+les contrats d'entretien, avec le moins de doublons fonctionnels possible.

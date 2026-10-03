@@ -37,6 +37,17 @@
     } catch (e) { return null; }
   }
 
+  // Absence mémorisée pour la session : même durée de vie que le manifest lui-même.
+  function absenceMemorisee() {
+    try {
+      var raw = sessionStorage.getItem(CACHE_KEY + '_absent');
+      return !!raw && Date.now() - Number(raw) < CACHE_TTL;
+    } catch (e) { return false; }
+  }
+  function memoriserAbsence() {
+    try { sessionStorage.setItem(CACHE_KEY + '_absent', String(Date.now())); } catch (e) {}
+  }
+
   function setCachedManifest(m) {
     try {
       sessionStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), m: m }));
@@ -64,8 +75,8 @@
 
   function fetchManifest() {
     return fetch(BASE_URL + MANIFEST_PATH, { cache: 'no-cache' })
-      .then(function(r) { return r.ok ? r.json() : null; })
-      .catch(function() { return null; });
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; });
   }
 
   function init() {
@@ -74,8 +85,14 @@
       applyOverride(cached);
       return;
     }
-    fetchManifest().then(function(m) {
-      if (!m) return;
+    // Le manifest n'existe pas aujourd'hui dans le bucket : la réponse est un 400 « NoSuchKey ».
+    // Le repli sur les images locales marchait déjà, mais l'appel repartait à CHAQUE page, et son
+    // erreur s'affichait à chaque fois dans la console — au point de masquer les vraies. On retient
+    // donc aussi l'absence, pour la session : un seul appel, une seule ligne, et la fonction se
+    // réveille d'elle-même à la session suivante si le manifest est déposé entre-temps.
+    if (absenceMemorisee()) return;
+    fetchManifest().then(function (m) {
+      if (!m) { memoriserAbsence(); return; }
       setCachedManifest(m);
       applyOverride(m);
     });

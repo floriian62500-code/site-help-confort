@@ -25,6 +25,7 @@
     try { localStorage.setItem(STORAGE_KEY, value); } catch (e) {}
     var banner = document.getElementById('hc-consent-banner');
     if (banner) banner.parentNode.removeChild(banner);
+    try { document.documentElement.style.removeProperty('--hc-consent-h'); } catch (e) {}
     if (value === 'granted') {
       try { window.dispatchEvent(new Event('hc-consent-granted')); } catch (e) {}
     }
@@ -51,9 +52,12 @@
       '#hc-consent-banner .hc-c-accept:hover{background:#0a86ad;}',
       '#hc-consent-banner .hc-c-refuse{background:#fff;color:#0b1f33;border-color:#cfd8e3;}',
       '#hc-consent-banner .hc-c-refuse:hover{background:#f1f5f9;}',
-      '@media(max-width:560px){#hc-consent-banner{flex-direction:column;align-items:stretch;}',
+      '@media(max-width:560px){#hc-consent-banner{flex-direction:column;align-items:stretch;left:10px;right:10px;bottom:10px;padding:12px 14px;gap:10px;}',
+      '#hc-consent-banner p{flex:none;font-size:13px;line-height:1.45;}',
       '#hc-consent-banner .hc-c-btns{justify-content:stretch;}',
-      '#hc-consent-banner button{flex:1;}}'
+      '#hc-consent-banner button{flex:1;padding:10px 12px;}}',
+      // Tant que le bandeau est affiché : pas de seconde barre en bas d’écran (appel/devis), ni pastille de recette sur « Refuser »
+      'body:has(#hc-consent-banner) #hcStickyCta,body:has(#hc-consent-banner) #hc-sv-cta{display:none !important;}'
     ].join('');
     document.head.appendChild(style);
 
@@ -73,6 +77,11 @@
       '<button type="button" class="hc-c-accept" aria-label="Accepter les cookies de mesure">Accepter</button>' +
       '</div>';
     document.body.appendChild(div);
+
+    // Hauteur occupée (bandeau + marge basse) publiée en variable CSS : les barres d’action collées en bas s’en décalent
+    function publish() { try { var b = document.getElementById('hc-consent-banner'); if (!b) return; var h = Math.ceil(b.getBoundingClientRect().height + (parseFloat(getComputedStyle(b).bottom) || 0)); document.documentElement.style.setProperty('--hc-consent-h', h + 'px'); } catch (e) {} }
+    publish();
+    try { if (window.ResizeObserver) new ResizeObserver(publish).observe(div); else window.addEventListener('resize', publish); } catch (e) {}
 
     div.querySelector('.hc-c-accept').addEventListener('click', function () { persist('granted'); });
     div.querySelector('.hc-c-refuse').addEventListener('click', function () { persist('denied'); });

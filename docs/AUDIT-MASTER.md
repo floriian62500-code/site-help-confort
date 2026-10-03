@@ -1,0 +1,81 @@
+# AUDIT-MASTER — Registre d'audit consolidé
+
+> **Audit total CP-0004** — Site BTP Help Confort (recette)
+> Date : 2026-08-13
+> Périmètre : 177 pages scannées · 24 findings bruts remontés par les agents de scan
+> Consolidation : 24 findings → **19 anomalies** (regroupement des récurrences ville/lot)
+> Statut global : DÉTECTÉ (aucune correction, aucun déploiement — gates PROD & Stripe LIVE gelés)
+
+## Compteur par sévérité
+
+| Sévérité | Findings bruts | Anomalies consolidées | Pages impactées (approx.) |
+|----------|:--:|:--:|:--:|
+| **P0** | 0 | 0 | 0 |
+| **P1** | 5 | 2 | 25 |
+| **P2** | 13 | 12 | ~40 |
+| **P3** | 6 | 5 | ~30 |
+| **Total** | **24** | **19** | — |
+
+---
+
+## Registre
+
+| ID | Pages | Type | Priorité | Anomalie | Preuve | Correction proposée | Statut |
+|----|-------|------|:--:|----------|--------|---------------------|:--:|
+| A-2026-001 | **22 pages métier-ville** — plombier & chauffagiste (boulogne-sur-mer, calais, dunkerque, saint-omer) + electricien (boulogne, calais, dunkerque, saint-omer), menuisier (dunkerque, saint-omer), serrurier (boulogne, calais, dunkerque, saint-omer), vitrier (dunkerque, saint-omer), volets (dunkerque, saint-omer) | incoherence-commerciale-honnetete | **P1** | Légende sous le CTA catalogue promet « réservation en ligne · acompte 40 % » alors que le paiement/réservation en ligne est **GELÉ**. Aucune infra de paiement/acompte n'existe → promesse trompeuse (risque honnêteté + conversion). | `L1179` (plombier) / `L1240` (chauffagiste) : « Catalogue … · réservation en ligne · acompte 40 % » ; ex. `electricien-calais.html L1132`. Formulaire = simple lead (`data-hc-lead="reservation"`, `id m-reserve-form`), pas un paiement. | Retirer « réservation en ligne » et « acompte 40 % » ; reformuler en « prise de RDV / devis gratuit ». Correction templatisée (un seul bloc partagé). | DÉTECTÉ |
+| A-2026-002 | **3 pages core institutionnel** — nos-prestations.html, garanties.html, contact.html | incoherence-commerciale | **P1** | Promesses de réservation + acompte / paiement en ligne Stripe contradictoires avec le gel du paiement en ligne affiché ailleurs (index) → problème d'honnêteté commerciale. | nos-prestations `L262` : « Réservez en ligne en 2 minutes avec un acompte de 40 %… » ; garanties `L222` + `L286` : « paiement en ligne sécurisé via Stripe (lien SMS/email) » ; contact `L709` (JS pré-remplissage) : « …payer en ligne… Merci de m'envoyer le lien de paiement sécurisé ». | Aligner les 3 pages sur le gel : supprimer/reformuler les mentions paiement & acompte en ligne (→ devis / RDV / paiement à l'intervention). Vérifier cohérence avec index. | DÉTECTÉ |
+| A-2026-003 | espace-client.html | incoherence-commerciale | P2 | Feature « paiement en ligne des contrats d'entretien » mise en avant alors que le paiement est gelé (roadmap / pré-inscription à clarifier). | `L293` « paiement en ligne des contrats d'entretien » ; `L469` `<option>Paiement en ligne des contrats d'entretien</option>`. | Marquer explicitement « à venir / bientôt disponible » ou retirer jusqu'au dégel Stripe. | DÉTECTÉ |
+| A-2026-004 | realisation.html | seo-redirect | P2 | Renvoie 301 sur recette (→ realisations.html) alors que le lot l'attend en 200 ; le stub local expédie encore canonical→self + noindex + 3 `<h1>` (tous JS). Stub mort. | HTTP `301` → realisations.html ; `canonical=https://depan59-62.fr/realisation.html` ; `meta robots noindex,follow`. | Nettoyer/supprimer le stub mort ou aligner la redirection ; retirer canonical self + noindex résiduels. | DÉTECTÉ |
+| A-2026-005 | **10 pages bi-ville** — chauffagiste-saint-omer, chauffagiste-dunkerque, plombier-saint-omer, plombier-dunkerque, electricien-saint-omer, menuisier-saint-omer, serrurier-saint-omer, vitrier-saint-omer, volets-saint-omer, serrurier-dunkerque | seo-geo-dilution | P2 | Title/H1 mélangent deux villes distantes (~60–90 km, agglos différentes) Saint-Omer & Dunkerque → dilue la pertinence locale, rendu « template ». Certains titles sans séparateur. | title « Électricien Saint-Omer Dunkerque \| HELP Confort » (sans séparateur) ; H1 « Électricité & dépannage à Saint-Omer et Dunkerque » ; serrurier-dunkerque H1 « … à Dunkerque & Saint-Omer ». | Un ciblage mono-ville par page (title + H1 + contenu). Scinder ou dédier chaque variante à sa ville. | DÉTECTÉ |
+| A-2026-006 | travaux-saint-omer.html, pmr-saint-omer.html (vs travaux-dunkerque, pmr-dunkerque) | seo-duplication-ville | P2 | Cannibalisation : les variantes Saint-Omer ciblent « Saint-Omer & Dunkerque » dans le title tandis que les variantes Dunkerque ne ciblent que Dunkerque ; H1 identiques par paire de villes. | travaux-saint-omer title « …Saint-Omer & Dunkerque » vs travaux-dunkerque « …Dunkerque » ; idem pmr ; H1 dupliqués « Travaux tous corps d'état à » / « Adaptation PMR à domicile — ». | Différencier title + H1 par ville ; supprimer le double-ciblage sur la variante Saint-Omer. | DÉTECTÉ |
+| A-2026-007 | **14 satellites** — chauffagiste (coudekerque-branche, marck, outreau, wimereux) + plombier (coudekerque-branche, coulogne, grande-synthe, guines, le-portel, marck, outreau, saint-martin-boulogne, teteghem, wimereux) | seo-contenu-duplique | P2 | Pages ville « Intervention rapide » quasi-dupliquées : contenu templatisé à ~90 %, seul le nom de ville change → contenu mince / cannibalisation SEO local. | `comm -12 plombier-guines.html vs plombier-le-portel.html` = 281/311 lignes identiques (~90 %) ; titres identiques au mot ville près. | Enrichir chaque page de contenu local unique (zones, délais, références locales) ou consolider en pages hub + réduire l'indexation des satellites. | DÉTECTÉ |
+| A-2026-008 | **4 satellites serrurier** — serrurier-marck, serrurier-outreau, serrurier-wimereux, serrurier-coudekerque-branche | contenu-thin-duplication-seo | P2 | Pages satellites serrurier strictement templatisées (seul le nom de ville change) → risque « doorway » / duplication Google. | `words=1319` EXACTEMENT sur les 4 pages (vs ~7635 pour serrurier-dunkerque/calais) ; H1 identique « Serrurier {Ville} — ouverture de porte, serrure, effraction, blindage ». | Enrichir avec du contenu local unique ; sinon dé-indexer ou fusionner vers la page métier principale. | DÉTECTÉ |
+| A-2026-009 | **4 satellites serrurier** (mêmes pages que A-2026-008) | conversion | P2 | Absence de formulaire de lead on-page (les pages principales en ont un) → seul chemin de conversion = appel tél / lien contact ; perte des visiteurs préférant un formulaire. | `grep '<form'` = 0 sur les 4 pages ; `tel:` présent (5 occ.) + liens contact (7). Pages principales : `form=1`. | Ajouter le composant formulaire lead partagé sur les 4 satellites. | DÉTECTÉ |
+| A-2026-010 | partenaires.html (vs partenaire.html, fournisseur.html) | taxonomie-melange | P2 | Mélange fournisseurs/partenaires : la page listing s'appelle partenaires.html mais s'intitule « Nos fournisseurs & marques » (h1 « Les marques »), coexistant avec partenaire.html (détail partenaire) et fournisseur.html (détail marque). | partenaires.html `title="Nos fournisseurs & marques"` / `h1="Les marques"` vs partenaire.html vs fournisseur.html. | Clarifier la taxonomie : séparer nettement « partenaires » ≠ « fournisseurs/marques » (URL, title, H1, maillage). | DÉTECTÉ |
+| A-2026-011 | partenaire.html | seo-structure | P2 | Aucun JSON-LD et `<h1>` statique vide (généré uniquement en JS `${esc(p.name)}`) : sans JS / pour un crawler, la page n'a ni H1 ni données structurées. | `jsonld:0` ; `h1` statique = `"${esc(p.name)}"`. | Rendre H1 + JSON-LD côté serveur (ou fallback statique) pour l'indexation. | DÉTECTÉ |
+| A-2026-012 | maprimeadapt.html | content-seo | P2 | Contenu mince pour une landing commerciale SEO sur un terme concurrentiel (« MaPrimeAdapt' Saint-Omer & Dunkerque ») → faible profondeur vs pages sœurs. | ~469 mots + 1 bloc JSON-LD, contre ~1295 mots / 2 blocs pour les articles blog du lot (ex. blog-pompe-a-chaleur). Fichier 9 Ko vs 21–22 Ko. | Étoffer le contenu (éligibilité, montants, process, FAQ, preuves locales) ; viser la profondeur des pages sœurs. | DÉTECTÉ |
+| A-2026-013 | prestations/salle-de-bain.html (vs salle-de-bain-pmr.html) | seo-duplicate-title | P2 | Deux pages indexables partagent exactement le même `<title>` → cannibalisation SEO (Google peut confondre les deux). H1 & meta description diffèrent pourtant. | `<title>="Rénovation salle de bain clés en main \| HELP Confort…"` identique sur salle-de-bain.html ET salle-de-bain-pmr.html ; H1 différents (« Rénovation salle de bain » vs « Salle de bain PMR adaptée »). | Différencier le title de la page PMR (« Salle de bain PMR / adaptée … »). | DÉTECTÉ |
+| A-2026-014 | **7 pages core institutionnel** — notre-equipe (71c), nos-metiers (67c), ouverture-porte-claquee (67c), realisations (67c), reseau-help-confort (66c), tarifs (66c), diagnostic-electrique (66c) | seo-title | P2 | Titres trop longs (>65 car.) tronqués en SERP sur plusieurs pages du lot institutionnel. | Longueurs mesurées : notre-equipe 71c ; nos-metiers, ouverture-porte-claquee, realisations 67c ; reseau-help-confort, tarifs, diagnostic-electrique 66c. | Raccourcir les intitulés / le suffixe de marque pour rester ≤ 60–65 car. | DÉTECTÉ |
+| A-2026-015 | **11 pages** — depannage-saint-pol-sur-mer (68c), depannage-boulogne-sur-mer (67c), depannage-bergues (66c) ; prestations/ porte-garage (105c), porte-entree (94c), depannage-chaudiere (94c), fenetres-bois-alu-pvc (93c), vitrerie-panneau-porte (88c), remplacement-chaudiere (86c), reseaux-plomberie (85c), sanitaire (84c) | seo-title-length | P3 | Titres > ~65 car. tronqués en SERP (~600px/60 car.), à cause du suffixe long « \| HELP Confort Saint-Omer & Dunkerque » ajouté à des intitulés déjà longs. | Longueurs mesurées ci-contre (max 105c sur porte-garage). | Raccourcir le suffixe de marque ou les intitulés ; gabarit title ≤ 60 car. | DÉTECTÉ |
+| A-2026-016 | **8 pages realisations/** — fourniture-dune-corniche…, intervention-realisee…coulissant, refection-complete…, remplacement-de-double-vitrage-avec-croisillon…, votre-double-vitrage-dans-la-salle-a-manger…, votre-double-vitrage-de-salle-de-bain-a-ete-endommage…, votre-porte-de-service…, votre-soupape-de-securite… | seo-title-truncation | P3 | `<title>` tronqué en plein milieu de phrase par une ellipsis « … » avant le suffixe « — HELP Confort Saint-Omer ». Rendu inachevé en onglet & SERP (artefact de troncature auto avant ajout du suffixe). | 8 titres avec « … » au milieu (ex. « …caisson blanc & rénovation de… — HELP » ; « embué… — HELP » ; « ne ferme plus… — HELP »). | Corriger le générateur de title : tronquer proprement (fin de mot/phrase) avant d'ajouter le suffixe, ou raccourcir la source. | DÉTECTÉ |
+| A-2026-017 | chauffagiste-dunkerque.html, plombier-dunkerque.html | seo-title-mince | P3 | Titles Dunkerque plus courts/génériques que leurs équivalents ville (pas de code postal ni proposition de valeur) → incohérence de gabarit SEO. | « Chauffagiste Dunkerque — HELP Confort » / « Plombier Dunkerque — HELP Confort » vs siblings « … (62xxx) — Intervention rapide \| HELP Confort ». | Aligner le gabarit title Dunkerque sur les siblings (CP + proposition de valeur). | DÉTECTÉ |
+| A-2026-018 | urgence.html | seo-polish | P3 | Double espace dans le `<title>` avant le séparateur → tail légèrement dégradé en SERP. | `<title>Urgence dépannage Saint-Omer & Dunkerque␣␣\| HELP Confort</title>` (deux espaces avant le pipe). | Supprimer le double espace. | DÉTECTÉ |
+| A-2026-019 | prestations/sanitaire.html | content-consistency | P3 | Incohérence de casse sur un nom de marque dans le corps (polish éditorial mineur). | « grohe » (minuscule, x8) et « Grohe » (x2) coexistent ; harmoniser. | Harmoniser en « Grohe » partout. | DÉTECTÉ |
+
+---
+
+## Notes de consolidation
+
+- **Racine transverse P1 « paiement gelé »** (A-2026-001 + A-2026-002) : contradiction honnêteté sur 25 pages. La correction A-2026-001 est essentiellement **un seul bloc templatisé** répliqué → correctif à haut ratio impact/effort.
+- **Racine transverse SEO local bi-ville** (A-2026-005, A-2026-006) : ciblage Saint-Omer + Dunkerque simultané → dilution + cannibalisation.
+- **Racine transverse contenu mince/dupliqué satellites** (A-2026-007, A-2026-008, A-2026-009, A-2026-012).
+- **Racine transverse titles** (A-2026-013 à A-2026-019) : longueurs, doublons, troncatures, polish.
+- Gates respectés : **aucune** action PROD, **aucun** déploiement, **Stripe LIVE gelé**. Registre en lecture/détection uniquement.
+
+## Corrections appliquées (recette)
+
+| ID | Statut | Correction | Preuve |
+|----|--------|------------|--------|
+| **A-2026-001** (P1) | ✅ CORRIGÉ (recette) | 24 pages métier×ville : sous-titre « · réservation en ligne · acompte 40 % » → « · devis & prise en charge rapide » (paiement gelé). | résidu 0 |
+| **A-2026-002** (P1) | �️ PARTIEL (recette) | `nos-prestations.html` meta + hero : « Réservez en ligne… acompte 40 %… solde » → « Devis rapide / prise en charge sur rendez-vous ». Reste : garanties/contact/espace-client (moyens de paiement post-intervention = revue nuancée, pas de suppression aveugle du lien Stripe staff). | résidu 0 sur nos-prestations |
+
+> Les autres anomalies (P2 SEO bi-ville, realisation.html, A-2026-003 espace-client « à venir », etc.) restent en DÉTECTÉ, à traiter dans l'ordre P1 restant → P2.
+
+### Corrections complémentaires (recette)
+| ID | Statut | Note |
+|----|--------|------|
+| **A-2026-003** (P2) | ✅ CORRIGÉ (recette) | `espace-client.html` : « paiement en ligne des contrats d'entretien » → « … (à venir) » (paiement gelé). |
+| **A-2026-004** (P2) | ⚪ REQUALIFIÉ non-bug | `/realisation.html` renvoie un **301 intentionnel** vers `/realisations.html` (nettoyage legacy, `_redirects`). Le 301 est correct ; l'agent attendait 200 à tort. Aucune action. |
+
+### Corrections P2/P3 (recette, cycle CP-0010)
+| ID | Statut | Note |
+|----|--------|------|
+| **A-2026-013** (P2) | ✅ CORRIGÉ | Title `salle-de-bain-pmr.html` dé-dupliqué → « Salle de bain PMR & adaptée séniors — accès sécurisé | … ». |
+| **A-2026-017** (P3) | ✅ CORRIGÉ | Titles Dunkerque alignés sur le gabarit sibling : « {Métier} Dunkerque (59140) — Dépannage & intervention rapide | HELP Confort » (chauffagiste + plombier). |
+| **A-2026-018** (P3) | ✅ CORRIGÉ | `urgence.html` : double-espace avant le pipe retiré (title + og:title + twitter:title). |
+| **A-2026-019** (P3) | ⚪ REQUALIFIÉ non-bug | Les « grohe » sont dans « **Hansgrohe** » (marque, casse correcte) ≠ « Grohe » (autre marque). Aucune incohérence. |
+
+### A-2026-002 — clôture P1 (recette, CP-0013)
+| ID | Statut | Note |
+|----|--------|------|
+| **A-2026-002** (P1) | ✅ CORRIGÉ (complet) | contact.html : message client « réserver et payer en ligne / envoyer lien de paiement » → « réserver une intervention / me recontacter pour un créneau ». garanties.html : « paiement en ligne sécurisé Stripe / lien SMS » → « règlement sécurisé à l'intervention / par lien envoyé par l'équipe ». **0 résidu** de promesse paiement en ligne client. (Cohérent Stripe LIVE gelé + distinction règlement staff post-intervention.) |

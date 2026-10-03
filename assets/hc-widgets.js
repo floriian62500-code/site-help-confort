@@ -714,184 +714,29 @@
 })();
 
 /* HC-WYSIWYG-LEGACY 2026-06-12 : ancien mode images-only — code mort retiré 2026-06-16, remplacé par hc-edit-mode.js */
-/* HC-STAGING-VALIDATOR 2026-06-12 : widget de validation flottant visible UNIQUEMENT sur staging */
+/* HC-STAGING-VALIDATOR : remplacé par un CTA unique vers le centre de validation (CP-0015, 2026-08-13).
+   Le centre /recette.html est la SEULE source de validation (OK / À corriger / commentaire).
+   Suppression de l'ancien panneau flottant OK/KO + persistance staging_validations + bouton "Promouvoir en prod". */
 (function(){
   var host = location.hostname;
-  if (!/staging|netlify\.app/.test(host)) return;
-  if (/depan59-62\.fr$/.test(host)) return;
+  if (!/staging|netlify\.app/.test(host)) return;   // recette/staging uniquement
+  if (/depan59-62\.fr$/.test(host)) return;          // jamais en production
   if (/\/admin-pro\/|\/admin\//.test(location.pathname)) return;
-
-  var SUPA_URL = "https://btcbjwqiivhpwoszomhg.supabase.co";
-  var SUPA_KEY = "sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2";
-  var BATCH = "2026-06-12";
-
-  function api(path, opts){
-    opts = opts || {};
-    opts.headers = Object.assign({
-      "apikey": SUPA_KEY,
-      "Authorization": "Bearer " + SUPA_KEY,
-      "Content-Type": "application/json",
-      "Prefer": "return=representation"
-    }, opts.headers || {});
-    return fetch(SUPA_URL + "/rest/v1/" + path, opts).then(function(r){ return r.json(); });
-  }
-
-  function esc(s){ return String(s||"").replace(/[&<>"]/g, function(c){return ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"})[c];}); }
-
-  var items = [];
-  function counters(){
-    var ok = items.filter(function(i){return i.status==="ok";}).length;
-    var ko = items.filter(function(i){return i.status==="ko";}).length;
-    return { ok: ok, ko: ko, total: items.length, all_ok: items.length>0 && ok===items.length };
-  }
-
-  function injectStyle(){
-    if (document.getElementById("hc-sv-style")) return;
+  if (/\/recette\.html$/.test(location.pathname)) return; // inutile sur le centre lui-même
+  function build(){
+    if (document.getElementById("hc-sv-cta")) return;
     var s = document.createElement("style");
-    s.id = "hc-sv-style";
-    s.textContent = [
-      "#hc-sv-fab{position:fixed;bottom:18px;left:18px;z-index:99999;background:#FF6B1A;color:#fff;border:none;border-radius:50px;padding:12px 18px;font-weight:800;font-family:Inter,system-ui,sans-serif;font-size:.9rem;cursor:pointer;box-shadow:0 8px 24px rgba(255,107,26,.4);display:flex;align-items:center;gap:10px}",
-      "#hc-sv-fab:hover{background:#E55510}",
-      "#hc-sv-fab .count{background:rgba(0,0,0,.2);padding:2px 8px;border-radius:20px;font-size:.78rem}",
-      "#hc-sv-panel{position:fixed;bottom:80px;left:18px;width:440px;max-width:calc(100vw - 36px);max-height:75vh;background:#fff;border:1px solid #E5EDF3;border-radius:14px;box-shadow:0 20px 60px rgba(10,20,40,.25);z-index:99998;overflow:hidden;display:none;flex-direction:column;font-family:Inter,system-ui,sans-serif}",
-      "#hc-sv-panel.open{display:flex}",
-      "#hc-sv-head{background:#0A1428;color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}",
-      "#hc-sv-head h3{margin:0;font-size:.96rem;font-weight:800}",
-      "#hc-sv-head .close{background:transparent;border:none;color:#fff;font-size:1.4rem;cursor:pointer;padding:0;line-height:1}",
-      "#hc-sv-list{overflow-y:auto;flex:1;padding:8px}",
-      ".hc-sv-item{border:1px solid #E5EDF3;border-radius:10px;padding:10px 12px;margin-bottom:8px;background:#fff}",
-      ".hc-sv-item.ok{background:#F0FDF4;border-color:#86EFAC}",
-      ".hc-sv-item.ko{background:#FEF2F2;border-color:#FCA5A5}",
-      ".hc-sv-item.here{outline:2px solid #0DA0CF;outline-offset:1px}",
-      ".hc-sv-t{font-size:.86rem;font-weight:700;color:#0A1428;margin-bottom:4px}",
-      ".hc-sv-d{font-size:.74rem;color:#64748b;line-height:1.35;margin-bottom:6px}",
-      ".hc-sv-c{font-size:.74rem;color:#475569;background:#FAFCFD;padding:6px 8px;border-radius:6px;margin-bottom:8px;border-left:3px solid #0DA0CF;line-height:1.4}",
-      ".hc-sv-act{display:flex;gap:6px;flex-wrap:wrap}",
-      ".hc-sv-b{flex:1;border:1px solid #E5EDF3;background:#fff;border-radius:6px;padding:6px 8px;font-size:.74rem;font-weight:700;cursor:pointer;color:#475569;font-family:inherit;min-width:60px}",
-      ".hc-sv-b.v{background:#0DA0CF;color:#fff;border-color:#0DA0CF}",
-      ".hc-sv-b.o{background:#22C55E;color:#fff;border-color:#22C55E}",
-      ".hc-sv-b.k{background:#EF4444;color:#fff;border-color:#EF4444}",
-      "#hc-sv-foot{padding:12px;border-top:1px solid #E5EDF3;background:#FAFCFD}",
-      "#hc-sv-promote{width:100%;background:#22C55E;color:#fff;border:none;border-radius:8px;padding:11px;font-weight:800;font-size:.92rem;cursor:pointer;font-family:inherit}",
-      "#hc-sv-promote:disabled{background:#CBD5E1;cursor:not-allowed}"
-    ].join("");
+    s.textContent = "#hc-sv-cta{position:fixed;bottom:18px;left:18px;z-index:99999;background:#0A1428;color:#fff;text-decoration:none;border-radius:50px;padding:11px 18px;font-weight:800;font-family:Inter,system-ui,sans-serif;font-size:.86rem;box-shadow:0 8px 24px rgba(10,20,40,.35);display:inline-flex;align-items:center;gap:8px}#hc-sv-cta:hover{background:#12233f}@media(max-width:480px){#hc-sv-cta{font-size:.8rem;padding:10px 14px}}";
     document.head.appendChild(s);
+    var a = document.createElement("a");
+    a.id = "hc-sv-cta";
+    a.href = "/recette.html";
+    a.innerHTML = "🧭 Centre de validation";
+    a.setAttribute("aria-label","Ouvrir le centre de validation");
+    document.body.appendChild(a);
   }
-
-  function isHere(it){
-    try{ var u = new URL(it.page_url, location.origin); return u.pathname === location.pathname; }catch(e){ return false; }
-  }
-
-  function renderFab(){
-    var fab = document.getElementById("hc-sv-fab");
-    var c = counters();
-    if (!fab){
-      fab = document.createElement("button");
-      fab.id = "hc-sv-fab";
-      fab.addEventListener("click", togglePanel);
-      document.body.appendChild(fab);
-    }
-    fab.innerHTML = "\u2713 Modifs <span class=\"count\">"+c.ok+"/"+c.total+(c.ko?" \u00b7 "+c.ko+" KO":"")+"</span>";
-  }
-
-  function togglePanel(){
-    var p = document.getElementById("hc-sv-panel");
-    if (!p){ renderPanel(); return; }
-    p.classList.toggle("open");
-  }
-
-  function renderPanel(){
-    var p = document.createElement("div");
-    p.id = "hc-sv-panel";
-    p.className = "open";
-    p.innerHTML =
-      "<div id=\"hc-sv-head\"><h3>Valider modifs staging</h3><button class=\"close\" id=\"hc-sv-close\">\u00d7</button></div>"+
-      "<div id=\"hc-sv-list\"></div>"+
-      "<div id=\"hc-sv-foot\"><button id=\"hc-sv-promote\" disabled>Reste \u00e0 valider</button></div>";
-    document.body.appendChild(p);
-    document.getElementById("hc-sv-close").addEventListener("click", function(){ p.classList.remove("open"); });
-    document.getElementById("hc-sv-promote").addEventListener("click", promote);
-    refresh();
-  }
-
-  function refresh(){
-    var list = document.getElementById("hc-sv-list");
-    if (!list) return;
-    var c = counters();
-    // Tri : items de la page courante en premier
-    var sorted = items.slice().sort(function(a,b){
-      var aH = isHere(a) ? 0 : 1;
-      var bH = isHere(b) ? 0 : 1;
-      return aH - bH || (a.position||0) - (b.position||0);
-    });
-    list.innerHTML = sorted.map(function(it){
-      var cls = it.status==="ok"?" ok":(it.status==="ko"?" ko":"");
-      if (isHere(it)) cls += " here";
-      var num = Math.round((it.position||0)/10);
-      var emoji = it.status==="ok"?" \u2705":(it.status==="ko"?" \u274c":"");
-      return "<div class=\"hc-sv-item"+cls+"\" data-id=\""+it.id+"\">"+
-        "<div class=\"hc-sv-t\">"+num+". "+esc(it.title)+emoji+"</div>"+
-        "<div class=\"hc-sv-d\">"+esc(it.description||"")+"</div>"+
-        (it.what_to_check?"<div class=\"hc-sv-c\">"+esc(it.what_to_check)+"</div>":"")+
-        "<div class=\"hc-sv-act\">"+
-          "<button class=\"hc-sv-b v\" data-url=\""+esc(it.page_url)+"\">Voir</button>"+
-          "<button class=\"hc-sv-b o\" data-act=\"ok\" data-id=\""+it.id+"\">OK</button>"+
-          "<button class=\"hc-sv-b k\" data-act=\"ko\" data-id=\""+it.id+"\">KO</button>"+
-        "</div>"+
-      "</div>";
-    }).join("");
-    list.querySelectorAll("button.hc-sv-b.v").forEach(function(b){
-      b.addEventListener("click", function(){ location.href = b.getAttribute("data-url"); });
-    });
-    list.querySelectorAll("button[data-act]").forEach(function(b){
-      b.addEventListener("click", function(){ updateStatus(b.getAttribute("data-id"), b.getAttribute("data-act")); });
-    });
-    var pb = document.getElementById("hc-sv-promote");
-    if (pb){
-      pb.disabled = !c.all_ok;
-      pb.textContent = c.all_ok ? "\ud83d\ude80 Promouvoir en prod" : (c.ko>0?"\ud83d\udd34 "+c.ko+" KO \u00e0 fixer":"Reste "+(c.total-c.ok)+" \u00e0 valider");
-    }
-  }
-
-  function updateStatus(id, status){
-    var it = items.find(function(i){return i.id===id;});
-    if (!it) return;
-    var reason = null;
-    if (status==="ko") reason = prompt("Pourquoi ce point n est pas OK ?") || "Non pr\u00e9cis\u00e9";
-    it.status = status;
-    it.ko_reason = reason;
-    api("staging_validations?id=eq."+id, {
-      method: "PATCH",
-      body: JSON.stringify({ status: status, ko_reason: reason, validated_at: new Date().toISOString(), validated_by: "Florian" })
-    }).then(function(){ renderFab(); refresh(); });
-  }
-
-  function promote(){
-    if (!confirm("Promouvoir staging vers prod ?\nLes smoke tests vont s ex\u00e9cuter avant.")) return;
-    var token = prompt("Token GitHub PAT (ghp_...) :");
-    if (!token) return;
-    var pb = document.getElementById("hc-sv-promote");
-    pb.disabled = true; pb.textContent = "\u23f3 En cours...";
-    fetch(SUPA_URL+"/functions/v1/promote-to-prod", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({ token: token })
-    }).then(function(r){return r.json();}).then(function(d){
-      if (d.success){ alert("\u2705 Promote r\u00e9ussi ! Commit "+(d.merge_sha||"")); pb.textContent = "\u2705 Promoted"; }
-      else { alert("\u274c "+JSON.stringify(d)); pb.disabled = false; pb.textContent = "\ud83d\ude80 Promouvoir en prod"; }
-    }).catch(function(e){ alert("Erreur : "+e.message); pb.disabled=false; pb.textContent="\ud83d\ude80 Promouvoir en prod"; });
-  }
-
-  function init(){
-    injectStyle();
-    renderFab(); // Affiche le FAB immédiatement même avant fetch
-    api("staging_validations?batch_id=eq."+BATCH+"&order=position.asc").then(function(data){
-      items = Array.isArray(data) ? data : [];
-      renderFab();
-    }).catch(function(e){ console.warn("[hc-sv] api failed:", e); renderFab(); });
-  }
-  if (document.readyState==="loading") document.addEventListener("DOMContentLoaded", init);
-  else init();
+  if (document.readyState==="loading") document.addEventListener("DOMContentLoaded", build);
+  else build();
 })();
 
 /* HC-PRICE-HIDER 2026-06-12 : masque tout bouton "options au choix" / "Voir le tarif" / "Voir les tarifs" via MutationObserver */
@@ -900,6 +745,11 @@
   var KEYWORDS = ["options au choix","Voir le tarif","Voir les tarifs","voir le tarif"];
   function hideBy(el){
     if (!el || el.nodeType !== 1) return;
+    // NE JAMAIS masquer les contrôles légitimes : le CTA de la modale lead-gate
+    // ("Voir les tarifs") et tout vrai bouton d'envoi de formulaire. Sinon le sweep
+    // texte casse la validation du tunnel (bug modale sans bouton — 2026-08-27).
+    if (el.closest && el.closest("#nvLeadgateModal, form")) return;
+    if (el.type === "submit" || (el.getAttribute && el.getAttribute("type") === "submit")) return;
     var t = (el.textContent || "").trim();
     if (!t || t.length > 80) return;
     for (var i=0; i<KEYWORDS.length; i++){

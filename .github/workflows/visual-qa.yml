@@ -1,0 +1,49 @@
+name: QA visuelle preview
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: "URL de la preview Netlify a controler"
+        required: true
+        default: "https://deploy-preview-2--remarkable-dragon-364e2b.netlify.app"
+
+permissions:
+  contents: read
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Installer Chromium Playwright
+        run: npx --yes playwright@1.55.0 install --with-deps chromium
+      - name: Captures desktop et mobile
+        env:
+          BASE_URL: ${{ inputs.base_url }}
+        run: |
+          set -eu
+          mkdir -p visual-qa/desktop visual-qa/mobile
+          pages="/ /chauffagiste-saint-omer /nos-prestations /zones-intervention /realisations /contrats-entretien"
+          for path in $pages; do
+            slug=$(printf '%s' "$path" | sed 's#^/$#home#; s#^/##; s#[/?&=]#-#g')
+            url="${BASE_URL%/}${path}"
+            echo "Capture $url"
+            npx --yes playwright@1.55.0 screenshot --browser chromium --full-page --viewport-size="1440,1000" --wait-for-timeout=1500 "$url" "visual-qa/desktop/${slug}.png"
+            npx --yes playwright@1.55.0 screenshot --browser chromium --full-page --viewport-size="390,844" --wait-for-timeout=1500 "$url" "visual-qa/mobile/${slug}.png"
+          done
+      - name: Archiver les captures
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-qa-screenshots
+          path: visual-qa/
+          retention-days: 14
+      - name: Rappel
+        if: always()
+        run: |
+          echo "Lecture seule : aucune soumission de formulaire, aucun paiement, aucun deploiement."
+          echo "Validation visuelle finale = Florian."

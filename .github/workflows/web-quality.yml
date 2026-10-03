@@ -1,0 +1,54 @@
+name: Qualite web externe
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 5 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: web-quality
+  cancel-in-progress: true
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Verifier Chrome
+        run: google-chrome --version
+      - name: Auditer les pages de reference
+        run: |
+          mkdir -p /tmp/hc-lighthouse
+          urls=(
+            "https://depan59-62.fr/"
+            "https://depan59-62.fr/nos-prestations"
+            "https://depan59-62.fr/chauffagiste-saint-omer"
+            "https://depan59-62.fr/zones-intervention"
+            "https://depan59-62.fr/realisations"
+          )
+          i=0
+          for url in "${urls[@]}"; do
+            i=$((i+1))
+            echo "=== $url"
+            npx --yes lighthouse@12 "$url" --chrome-flags="--headless --no-sandbox" --form-factor=mobile --output=json --output-path="/tmp/hc-lighthouse/page-$i.json" --quiet
+          done
+      - name: Resume Lighthouse
+        run: node scripts/quality/lighthouse-summary.mjs /tmp/hc-lighthouse/*.json
+      - name: Archiver les rapports
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: /tmp/hc-lighthouse/*.json
+          retention-days: 14
+      - name: Rappel
+        if: always()
+        run: |
+          echo "Workflow lecture seule : aucun deploiement, aucune donnee modifiee."
+          echo "Lighthouse = mesure de laboratoire, pas Core Web Vitals terrain."

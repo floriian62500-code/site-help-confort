@@ -1,0 +1,109 @@
+/*! HELP Confort — en-tête du site : SOURCE UNIQUE des styles.
+ *  Référence : en-tête de l'accueil en 1440 px (logo 140, signature Dépan'Audo, navigation, téléphone).
+ *  Balisage : partials/hc-header.html, appliqué à toutes les pages par scripts/header/sync-header.mjs.
+ *  Tout est préfixé #hcHeader : les anciennes règles propres aux pages (classes seules) ne peuvent plus
+ *  modifier l'en-tête. Contrôle : scripts/tests/header.test.mjs. */
+
+/* ---------- Gabarit par largeur (hauteur de barre, logo, marge) ----------
+ * ≥1440 : référence (barre 165, logo 140, navigation complète, numéro affiché)
+ * 1280–1439 : logo 110, navigation resserrée, téléphone en icône
+ * 980–1279 : logo 110, menu burger (la navigation complète ne tient pas)
+ * 769–979 : logo 90, menu burger
+ * ≤768 : barre compacte (logo 70), « Appeler » + menu burger */
+#hcHeader{--hch-row:165px;--hch-row-s:111px;--hch-logo:140px;--hch-logo-s:90px;--hch-pad-x:clamp(28px,4vw,64px)}
+@media (max-width:1439px){#hcHeader{--hch-row:141px;--hch-row-s:101px;--hch-logo:110px;--hch-logo-s:80px}}
+@media (max-width:979px){#hcHeader{--hch-row:121px;--hch-row-s:97px;--hch-logo:90px;--hch-logo-s:72px}}
+@media (max-width:768px){#hcHeader{--hch-row:95px;--hch-row-s:95px;--hch-logo:70px;--hch-logo-s:70px;--hch-pad-x:20px}}
+@media (max-width:380px){#hcHeader{--hch-pad-x:14px}}
+
+/* ---------- Boîte collante : hauteur CONSTANTE (la barre se réduit au défilement sans déplacer le contenu) ---------- */
+#hcHeader.hc-header{position:sticky;top:0;z-index:100;display:block;box-sizing:border-box;width:100%;height:var(--hch-row);margin:0;padding:0;border:0;background:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;transform:none;pointer-events:none;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:15px;line-height:24px;font-weight:400;font-style:normal;font-feature-settings:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;text-indent:0;text-shadow:none;color:#0A1428;text-align:left}
+#hcHeader *,#hcHeader *::before,#hcHeader *::after{box-sizing:border-box}
+
+/* ---------- Barre ---------- */
+#hcHeader .hc-header-row{position:relative;display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%;max-width:none;height:var(--hch-row);min-height:0;margin:0;padding:0 var(--hch-pad-x);background:rgba(255,255,255,.85);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border:0;border-bottom:1px solid rgba(229,237,243,.5);pointer-events:auto;transition:height .2s ease,background-color .3s ease,box-shadow .3s ease,border-color .3s ease}
+#hcHeader.is-scrolled .hc-header-row{height:var(--hch-row-s);background:rgba(255,255,255,.92);border-bottom-color:rgba(229,237,243,.9);box-shadow:0 1px 0 rgba(229,237,243,.5),0 8px 24px rgba(13,160,207,.04)}
+
+/* ---------- Marque : logo + signature de l'agence ---------- */
+#hcHeader .hc-brand-wrap{display:flex;align-items:center;gap:14px;flex:0 0 auto;min-width:0;margin:0;padding:0}
+#hcHeader .hc-logo{display:flex;align-items:center;flex:0 0 auto;margin:0;padding:0;text-decoration:none;transition:opacity .2s ease}
+#hcHeader .hc-logo:hover{opacity:.85}
+#hcHeader .hc-logo img{display:block;width:auto;height:var(--hch-logo);max-width:none;max-height:none;margin:0;object-fit:contain;transition:height .2s ease}
+#hcHeader.is-scrolled .hc-logo img{height:var(--hch-logo-s)}
+#hcHeader .hc-agency-sig{display:flex;flex-direction:column;justify-content:center;margin:0;padding:0 0 0 14px;border-left:1px solid #E5EDF3;line-height:1.14}
+#hcHeader .hc-agency-sig strong{display:block;font-size:14.4px;font-weight:800;color:#0A1428;letter-spacing:-.01em;white-space:nowrap}
+#hcHeader .hc-agency-sig>span{display:block;margin-top:3px;font-size:10.56px;font-weight:700;color:#8493A6;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+
+/* ---------- Navigation principale ---------- */
+#hcHeader .hc-nav{display:none;align-items:center;justify-content:center;gap:4px;flex:1 1 0%;min-width:0;position:relative;margin:0;padding:0}
+@media (min-width:1280px){#hcHeader .hc-nav{display:flex}}
+#hcHeader .hc-nav-link{display:inline-flex;align-items:center;gap:6px;position:relative;margin:0;padding:8px 12px;border:0;border-radius:8px;background:transparent;font-family:inherit;font-size:14.4px;font-weight:500;line-height:normal;letter-spacing:-.005em;word-spacing:normal;color:#0A1428;text-decoration:none;white-space:normal;cursor:pointer;transition:color .2s ease,background-color .2s ease}
+@media (min-width:1600px){#hcHeader .hc-nav-link{padding:8px 14px}}
+@media (max-width:1439px){#hcHeader .hc-nav-link{padding:8px 10px}}
+#hcHeader .hc-nav-link:hover,#hcHeader .hc-nav-trigger[aria-expanded="true"]{color:#0DA0CF;background:rgba(13,160,207,.06)}
+#hcHeader .hc-nav-link.is-active{color:#0DA0CF;font-weight:600}
+#hcHeader .hc-nav-link.is-active::after{content:"";position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:16px;height:2px;background:#0DA0CF;border-radius:1px}
+#hcHeader .hc-nav-link svg{flex:0 0 auto}
+#hcHeader a:focus-visible,#hcHeader button:focus-visible,#hcHeader summary:focus-visible{outline:2px solid #0DA0CF;outline-offset:2px}
+
+/* ---------- Méga-menu Métiers ---------- */
+#hcHeader .hc-megamenu{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(-6px);display:grid;grid-template-columns:repeat(2,1fr);gap:6px;min-width:380px;margin:0;padding:14px;background:#fff;border:1px solid #E5EDF3;border-radius:18px;box-shadow:0 24px 48px rgba(10,20,40,.10),0 4px 12px rgba(13,160,207,.06);opacity:0;visibility:hidden;pointer-events:none;z-index:50;transition:opacity .2s ease,visibility .2s ease,transform .2s cubic-bezier(.16,1,.3,1)}
+#hcHeader .hc-megamenu::before{content:"";position:absolute;top:-16px;left:0;right:0;height:16px}
+#hcHeader .hc-nav-trigger:hover~.hc-megamenu,#hcHeader .hc-megamenu:hover,#hcHeader .hc-megamenu:focus-within,#hcHeader .hc-megamenu.is-open,#hcHeader .hc-megamenu.is-hovered{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+#hcHeader .hc-megamenu.mm-force-closed{opacity:0 !important;visibility:hidden !important;pointer-events:none !important;transform:translateX(-50%) translateY(-6px) !important}
+#hcHeader .hc-megamenu a{display:inline-flex;align-items:center;gap:12px;margin:0;padding:12px 14px;border-radius:10px;color:#0A1428;text-decoration:none;font-size:15.04px;font-weight:500;line-height:1.2;white-space:nowrap;transition:background-color .15s ease,color .15s ease,transform .15s ease}
+#hcHeader .hc-megamenu a:hover{background:rgba(13,160,207,.08);color:#0DA0CF;transform:translateX(2px)}
+#hcHeader .hc-megamenu a img{width:24px;height:24px;object-fit:contain;flex:0 0 auto}
+#hcHeader .hc-megamenu .hc-mm-foot{grid-column:1/-1;margin-top:8px;padding:12px 14px 4px;border-top:1px solid #E5EDF3;border-radius:0;color:#0DA0CF;font-weight:600;font-size:14.4px}
+
+/* ---------- Actions : téléphone + menu ---------- */
+#hcHeader .hc-header-actions{display:flex;align-items:center;gap:10px;flex:0 0 auto;margin:0;padding:0}
+#hcHeader .hc-btn-tel{display:inline-flex;align-items:center;gap:8px;margin:0;padding:9px 16px;border:0;border-radius:10px;background:#0A1428;color:#fff;font-size:14.4px;font-weight:600;line-height:1.6;letter-spacing:-.005em;text-decoration:none;white-space:nowrap;transition:background-color .25s cubic-bezier(.16,1,.3,1),transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1)}
+#hcHeader .hc-btn-tel:hover{background:#0DA0CF;color:#fff;transform:translateY(-1px);box-shadow:0 8px 18px rgba(13,160,207,.25)}
+#hcHeader .hc-btn-tel svg{flex:0 0 auto;width:16px;height:16px}
+#hcHeader .hc-btn-tel-num{display:inline;letter-spacing:.02em}
+@media (max-width:1439px){#hcHeader .hc-btn-tel-num{display:none}#hcHeader .hc-btn-tel{min-height:44px}}
+@media (max-width:720px){#hcHeader .hc-btn-tel{padding:10px 14px !important;min-height:44px}#hcHeader .hc-btn-tel::after{content:"Appeler";font-weight:700;font-size:14.72px;letter-spacing:-.005em}}
+#hcHeader .hc-burger{display:inline-flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;width:44px;height:44px;margin:0;padding:0;background:transparent;border:1px solid #E5EDF3;border-radius:10px;cursor:pointer;transition:border-color .2s ease}
+#hcHeader .hc-burger:hover{border-color:#0DA0CF}
+#hcHeader .hc-burger span{display:block;width:18px;height:1.5px;margin:0;background:#0A1428;border-radius:2px;transition:transform .25s cubic-bezier(.16,1,.3,1),opacity .2s ease}
+#hcHeader .hc-burger.is-open span:nth-child(1){transform:translateY(5.5px) rotate(45deg)}
+#hcHeader .hc-burger.is-open span:nth-child(2){opacity:0}
+#hcHeader .hc-burger.is-open span:nth-child(3){transform:translateY(-5.5px) rotate(-45deg)}
+@media (min-width:1280px){#hcHeader .hc-burger{display:none}}
+
+/* ---------- Menu mobile : panneau sous la barre (position calculée par hc-header.js) ---------- */
+#hcHeader .hc-nav-mobile{display:block;position:fixed;top:var(--hch-panel-top,95px);left:0;right:0;bottom:0;margin:0;padding:0;background:rgba(255,255,255,.98);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);transform:translateX(100%);visibility:hidden;overflow-y:auto;overscroll-behavior:contain;pointer-events:auto;z-index:99;transition:transform .35s cubic-bezier(.16,1,.3,1),visibility 0s linear .35s}
+#hcHeader .hc-nav-mobile.is-open{transform:translateX(0);visibility:visible;transition:transform .35s cubic-bezier(.16,1,.3,1),visibility 0s}
+@media (min-width:1280px){#hcHeader .hc-nav-mobile{display:none}}
+#hcHeader .hc-nav-mobile-inner{display:flex;flex-direction:column;gap:4px;max-width:600px;margin:0 auto;padding:24px 24px 100px}
+#hcHeader .hc-nav-mobile-inner>a,#hcHeader .hc-nav-m-section>summary{display:flex;align-items:center;justify-content:space-between;margin:0;padding:16px 4px;border-bottom:1px solid #E5EDF3;color:#0A1428;text-decoration:none;font-size:17.6px;font-weight:500;letter-spacing:-.01em;cursor:pointer;list-style:none}
+#hcHeader .hc-nav-m-section>summary::-webkit-details-marker{display:none}
+#hcHeader .hc-nav-m-section>summary::after{content:"";width:9px;height:9px;border-right:2px solid #94a3b8;border-bottom:2px solid #94a3b8;transform:rotate(45deg);transition:transform .2s ease}
+#hcHeader .hc-nav-m-section[open]>summary::after{transform:rotate(-135deg)}
+#hcHeader .hc-nav-m-sub{display:flex;flex-direction:column;padding:0 0 8px 16px}
+#hcHeader .hc-nav-m-sub a{padding:12px 4px;border-bottom:1px solid rgba(229,237,243,.55);color:#475569;text-decoration:none;font-size:15.36px}
+#hcHeader .hc-nav-mobile-inner>a.hc-nav-m-tel{display:inline-flex !important;align-items:center;justify-content:center !important;gap:12px;margin-top:24px;padding:16px !important;border-bottom:0 !important;border-radius:12px;background:#0A1428;color:#fff !important;font-size:17.6px;font-weight:600;text-decoration:none;transition:background-color .2s ease}
+#hcHeader .hc-nav-mobile-inner>a.hc-nav-m-tel:hover{background:#0DA0CF}
+html.hc-menu-open,html.hc-menu-open body{overflow:hidden !important}
+
+/* ---------- Signature et marges en petite largeur ---------- */
+@media (max-width:768px){
+  #hcHeader .hc-header-row{gap:12px}
+  #hcHeader .hc-brand-wrap{gap:10px}
+  #hcHeader .hc-agency-sig{padding-left:10px}
+  #hcHeader .hc-agency-sig strong{font-size:12.48px}
+  #hcHeader .hc-agency-sig>span{font-size:9.28px;margin-top:2px}
+  #hcHeader .hc-header-actions{gap:8px}
+}
+@media (max-width:420px){#hcHeader .hc-agency-sig{padding-left:8px}#hcHeader .hc-agency-sig>span{display:none}}
+@media (max-width:359px){#hcHeader .hc-agency-sig{display:none}}
+
+/* Fil d'Ariane posé sous l'en-tête sur les articles (remplace l'ancienne barre sombre des actualités) */
+.hc-crumb{max-width:1100px;margin:0 auto;padding:16px 24px 0;font:600 14.72px/1.4 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.hc-crumb a{color:#0DA0CF;text-decoration:none}
+.hc-crumb a:hover{text-decoration:underline}
+@media print{#hcHeader.hc-header{position:static;height:auto}#hcHeader .hc-nav,#hcHeader .hc-header-actions,#hcHeader .hc-nav-mobile{display:none !important}}
+/* Lien d'évitement (accessibilité) : invisible jusqu'au focus clavier, sur toutes les pages */
+.hc-skip-link{position:absolute;left:8px;top:-100px;z-index:1000;padding:10px 16px;border-radius:8px;background:#0A1428;color:#fff;font:600 14px/1.2 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;text-decoration:none}
+.hc-skip-link:focus{top:8px}
