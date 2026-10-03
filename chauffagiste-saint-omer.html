@@ -1294,6 +1294,9 @@ if (document.fonts && document.fonts.ready) {
   <p class="ct-intro">Gaz ou fioul, nos techniciens salariés s'occupent de tout : la visite annuelle,
    l'attestation à remettre à votre assureur, et le rappel un mois avant la date. Comparez les formules ici, puis choisissez celle qui vous convient : votre sélection est conservée
    sur la page contrat pour poursuivre sans rupture de parcours.</p>
+  <a class="ct-scroll-down" href="#formules" aria-label="Voir les formules de contrat">
+   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+  </a>
  </div>
  <div data-hc-contrats data-hc-contrats-mode="handoff"></div>
 </section>
@@ -1302,7 +1305,12 @@ if (document.fonts && document.fonts.ready) {
  .ct-contrats-page .ctp-eyebrow{display:inline-block;font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#B83E0A;margin-bottom:10px}
  .ct-contrats-page .ct-h2{margin:0;font-size:clamp(1.6rem,3.4vw,2.2rem);font-weight:800;color:#0A1428;letter-spacing:-.02em}
  .ct-contrats-page .ct-intro{margin:12px 0 0;max-width:680px;font-size:1rem;line-height:1.62;color:#46566E}
- .ct-contrats-page .ct-offers{padding-top:28px}
+ .ct-scroll-down{width:46px;height:46px;margin:22px auto 0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#0A1428;background:#fff;border:1px solid #DCE6EE;box-shadow:0 10px 24px rgba(10,20,40,.12);text-decoration:none;animation:ctScrollBounce 1.8s ease-in-out infinite;transition:transform .2s ease,box-shadow .2s ease}
+ .ct-scroll-down:hover{transform:translateY(3px);box-shadow:0 14px 30px rgba(10,20,40,.16)}
+ .ct-scroll-down:focus-visible{outline:3px solid #1FC4F0;outline-offset:3px}
+ @keyframes ctScrollBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+ @media (prefers-reduced-motion:reduce){.ct-scroll-down{animation:none}}
+ .ct-contrats-page .ct-offers{padding-top:20px}
 </style>
 
 <script>
