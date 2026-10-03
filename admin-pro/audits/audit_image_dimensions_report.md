@@ -1,12 +1,12 @@
 # 📐 Audit dimensions images (PIL) — extension CLS prevention
 
-_Généré le 2026-08-02 06:05_
+_Généré le 2026-08-12 04:48_
 
 - Pages scannées : **116**
-- `<img>` avec width+height : **1460**
+- `<img>` avec width+height : **1378**
 - Patchables (dimensions lues PIL) : **1**
 - Externes (CDN/hot-link) : **3**
-- Non-résolues (fichier absent) : **42**
+- Non-résolues (fichier absent) : **49**
 - Dynamiques (template `${...}`) : **7**
 
 ## 🛠️ Patches proposés (dimensions lues PIL)
@@ -28,129 +28,136 @@ APRÈS : <img width="1080" height="1080" src="logo-officiel.jpg" alt="HELP Confo
 Source externe (CDN, hot-link) — PIL ne peut pas les lire sans accès réseau.
 Recommandation : rapatrier en local (cf. `audit_hotlink_cdn.py`) puis re-runner.
 
-- `volets-saint-omer.html` (3) : L1112, L1141, L1151
+- `volets-saint-omer.html` (3) : L1110, L1139, L1149
 
 ## ❓ Sources non résolues
 
 ### `actualites.html` — 1
-- L764 — `'+a.image+'` (fichier introuvable sur disque)
+- L762 — `'+a.image+'` (fichier introuvable sur disque)
 
 ### `avant-apres.html` — 1
 - L192 — `' + src + '` (fichier introuvable sur disque)
 
 ### `blog.html` — 1
-- L425 — `'+a.image+'` (fichier introuvable sur disque)
+- L423 — `'+a.image+'` (fichier introuvable sur disque)
 
 ### `chauffagiste-boulogne-sur-mer.html` — 1
-- L1406 — `'+r.image+'` (fichier introuvable sur disque)
+- L1401 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `chauffagiste-calais.html` — 1
-- L1406 — `'+r.image+'` (fichier introuvable sur disque)
+- L1401 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `chauffagiste-dunkerque.html` — 1
-- L1408 — `'+r.image+'` (fichier introuvable sur disque)
+- L1403 — `'+r.image+'` (fichier introuvable sur disque)
 
-### `chauffagiste-saint-omer.html` — 1
-- L1414 — `'+r.image+'` (fichier introuvable sur disque)
+### `chauffagiste-saint-omer.html` — 2
+- L1485 — `'+r.image+'` (fichier introuvable sur disque)
+- L1812 — `' + escapeHtml(s.logo_url) + '` (fichier introuvable sur disque)
 
 ### `contrats-entretien.html` — 1
-- L2082 — `' + p.data + '` (fichier introuvable sur disque)
+- L1850 — `' + p.data + '` (fichier introuvable sur disque)
 
 ### `electricien-boulogne-sur-mer.html` — 1
-- L1205 — `'+r.image+'` (fichier introuvable sur disque)
+- L1200 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `electricien-calais.html` — 1
-- L1205 — `'+r.image+'` (fichier introuvable sur disque)
+- L1200 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `electricien-dunkerque.html` — 1
-- L1206 — `'+r.image+'` (fichier introuvable sur disque)
+- L1201 — `'+r.image+'` (fichier introuvable sur disque)
 
-### `electricien-saint-omer.html` — 1
-- L1213 — `'+r.image+'` (fichier introuvable sur disque)
+### `electricien-saint-omer.html` — 2
+- L1284 — `'+r.image+'` (fichier introuvable sur disque)
+- L1609 — `' + escapeHtml(s.logo_url) + '` (fichier introuvable sur disque)
 
 ### `fournisseur.html` — 1
-- L136 — `' + esc(s.logo_url) + '` (fichier introuvable sur disque)
+- L187 — `' + esc(s.logo_url) + '` (fichier introuvable sur disque)
 
 ### `index.html` — 4
-- L733 — `'+data.logo+'` (fichier introuvable sur disque)
-- L845 — `' + escapeHtml(a.logo) + '` (fichier introuvable sur disque)
-- L1386 — `'+a.image+'` (fichier introuvable sur disque)
-- L1475 — `'+p.dataUrl+'` (fichier introuvable sur disque)
+- L782 — `'+data.logo+'` (fichier introuvable sur disque)
+- L894 — `' + escapeHtml(a.logo) + '` (fichier introuvable sur disque)
+- L1466 — `'+a.image+'` (fichier introuvable sur disque)
+- L1555 — `'+p.dataUrl+'` (fichier introuvable sur disque)
 
 ### `menuisier-dunkerque.html` — 1
-- L1234 — `'+r.image+'` (fichier introuvable sur disque)
+- L1229 — `'+r.image+'` (fichier introuvable sur disque)
 
-### `menuisier-saint-omer.html` — 1
-- L1242 — `'+r.image+'` (fichier introuvable sur disque)
+### `menuisier-saint-omer.html` — 2
+- L1312 — `'+r.image+'` (fichier introuvable sur disque)
+- L1636 — `' + escapeHtml(s.logo_url) + '` (fichier introuvable sur disque)
 
 ### `nos-prestations.html` — 2
-- L918 — `' + src + '` (fichier introuvable sur disque)
-- L1447 — `' + u + '` (fichier introuvable sur disque)
+- L941 — `' + src + '` (fichier introuvable sur disque)
+- L1470 — `' + u + '` (fichier introuvable sur disque)
 
 ### `partenaire.html` — 1
-- L110 — `' + esc(p.logo_url) + '` (fichier introuvable sur disque)
+- L126 — `' + esc(p.logo_url) + '` (fichier introuvable sur disque)
 
 ### `plombier-boulogne-sur-mer.html` — 1
-- L1239 — `'+r.image+'` (fichier introuvable sur disque)
+- L1234 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `plombier-calais.html` — 1
-- L1239 — `'+r.image+'` (fichier introuvable sur disque)
+- L1234 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `plombier-dunkerque.html` — 1
-- L1241 — `'+r.image+'` (fichier introuvable sur disque)
+- L1236 — `'+r.image+'` (fichier introuvable sur disque)
 
-### `plombier-saint-omer.html` — 1
-- L1247 — `'+r.image+'` (fichier introuvable sur disque)
+### `plombier-saint-omer.html` — 2
+- L1341 — `'+r.image+'` (fichier introuvable sur disque)
+- L1669 — `' + escapeHtml(s.logo_url) + '` (fichier introuvable sur disque)
 
 ### `pmr-dunkerque.html` — 1
-- L1213 — `'+r.image+'` (fichier introuvable sur disque)
+- L1208 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `pmr-saint-omer.html` — 1
-- L1282 — `'+r.image+'` (fichier introuvable sur disque)
+- L1277 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `realisations.html` — 4
-- L624 — `(empty)` (src vide)
-- L1035 — `'+r.photo_apres+'` (fichier introuvable sur disque)
-- L1036 — `'+r.photo_avant+'` (fichier introuvable sur disque)
-- L1045 — `'+r.photo_apres+'` (fichier introuvable sur disque)
+- L472 — `(empty)` (src vide)
+- L883 — `'+r.photo_apres+'` (fichier introuvable sur disque)
+- L884 — `'+r.photo_avant+'` (fichier introuvable sur disque)
+- L893 — `'+r.photo_apres+'` (fichier introuvable sur disque)
 
 ### `serrurier-boulogne-sur-mer.html` — 1
-- L1204 — `'+r.image+'` (fichier introuvable sur disque)
+- L1199 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `serrurier-calais.html` — 1
-- L1204 — `'+r.image+'` (fichier introuvable sur disque)
+- L1199 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `serrurier-dunkerque.html` — 1
-- L1206 — `'+r.image+'` (fichier introuvable sur disque)
+- L1201 — `'+r.image+'` (fichier introuvable sur disque)
 
-### `serrurier-saint-omer.html` — 1
-- L1212 — `'+r.image+'` (fichier introuvable sur disque)
+### `serrurier-saint-omer.html` — 2
+- L1283 — `'+r.image+'` (fichier introuvable sur disque)
+- L1608 — `' + escapeHtml(s.logo_url) + '` (fichier introuvable sur disque)
 
 ### `travaux-dunkerque.html` — 1
-- L1140 — `'+r.image+'` (fichier introuvable sur disque)
+- L1135 — `'+r.image+'` (fichier introuvable sur disque)
 
-### `travaux-saint-omer.html` — 1
-- L1148 — `'+r.image+'` (fichier introuvable sur disque)
+### `travaux-saint-omer.html` — 2
+- L1219 — `'+r.image+'` (fichier introuvable sur disque)
+- L1548 — `' + escapeHtml(s.logo_url) + '` (fichier introuvable sur disque)
 
 ### `vitrier-dunkerque.html` — 1
-- L1189 — `'+r.image+'` (fichier introuvable sur disque)
+- L1184 — `'+r.image+'` (fichier introuvable sur disque)
 
-### `vitrier-saint-omer.html` — 1
-- L1197 — `'+r.image+'` (fichier introuvable sur disque)
+### `vitrier-saint-omer.html` — 2
+- L1267 — `'+r.image+'` (fichier introuvable sur disque)
+- L1591 — `' + escapeHtml(s.logo_url) + '` (fichier introuvable sur disque)
 
 ### `volets-dunkerque.html` — 1
-- L1190 — `'+r.image+'` (fichier introuvable sur disque)
+- L1185 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `volets-saint-omer.html` — 1
-- L1219 — `'+r.image+'` (fichier introuvable sur disque)
+- L1214 — `'+r.image+'` (fichier introuvable sur disque)
 
 ## 🔁 Sources dynamiques (template JS)
 
 Ces `<img>` reçoivent leur `src` via interpolation JS — dimensions doivent
 être ajoutées soit en dur dans le template, soit calculées via `onload`.
 
-- `nos-prestations.html` (3) : L1415, L1542, L1556
-- `realisation.html` (4) : L283, L284, L290, L355
+- `nos-prestations.html` (3) : L1438, L1565, L1579
+- `realisation.html` (4) : L282, L283, L289, L354
 
 ---
 

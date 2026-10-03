@@ -1,9 +1,9 @@
 # 🖼️ Audit images hot-linkées CDN tiers — sonde #13
 
-_Généré le 2026-08-02 06:05_
+_Généré le 2026-08-12 04:48_
 
 - Pages HTML scannées : **116**
-- Fichiers JS scannés : **40**
+- Fichiers JS scannés : **38**
 - Hosts uniques détectés : **75**
   - Self (HC) : 1
   - Supabase projet : 1
@@ -551,11 +551,12 @@ Fichiers concernés : `partenaires.html`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
-### 🖼️ `{s}.basemaps.cartocdn.com` — 1 occurrence(s) (1 image(s))
+### 🖼️ `{s}.basemaps.cartocdn.com` — 2 occurrence(s) (2 image(s))
 
-Fichiers concernés : `assets/hc-map-zones.js`
+Fichiers concernés : `assets/hc-map-zones.js`, `assets/hc-mini-zone.js`
 
 - `assets/hc-map-zones.js` → `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`
+- `assets/hc-mini-zone.js` → `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`
 
 → **Recommandation** : télécharger les assets critiques dans `/images/` pour garantir le contrôle, le cache et la conformité CSP.
 
@@ -569,7 +570,7 @@ Fichiers concernés : `assets/hc-map-zones.js`
 | `akw.fr` | 🔴 external | 1 | 0 |
 | `api-adresse.data.gouv.fr` | ⚪ trusted | 60 | 0 |
 | `bricard.com` | 🔴 external | 1 | 0 |
-| `btcbjwqiivhpwoszomhg.supabase.co` | 🔵 supabase | 126 | 47 |
+| `btcbjwqiivhpwoszomhg.supabase.co` | 🔵 supabase | 124 | 47 |
 | `carto.com` | 🔴 external | 1 | 0 |
 | `cdn.jsdelivr.net` | ⚪ trusted | 67 | 0 |
 | `comap.aalberts-hfc.com` | 🔴 external | 1 | 0 |
@@ -590,7 +591,7 @@ Fichiers concernés : `assets/hc-map-zones.js`
 | `shop.siegenia.com` | 🔴 external | 1 | 0 |
 | `siamp.fr` | 🔴 external | 1 | 0 |
 | `trustville.com` | 🔴 external | 27 | 0 |
-| `unpkg.com` | ⚪ trusted | 4 | 0 |
+| `unpkg.com` | ⚪ trusted | 6 | 0 |
 | `www.anah.fr` | 🔴 external | 1 | 0 |
 | `www.anah.gouv.fr` | 🔴 external | 2 | 0 |
 | `www.atlantic.fr` | 🔴 external | 1 | 0 |
@@ -601,7 +602,7 @@ Fichiers concernés : `assets/hc-map-zones.js`
 | `www.cnil.fr` | 🔴 external | 1 | 0 |
 | `www.dedietrich-thermique.fr` | 🔴 external | 1 | 0 |
 | `www.delabie.fr` | 🔴 external | 1 | 0 |
-| `www.depan59-62.fr` | 🟢 self | 229 | 114 |
+| `www.depan59-62.fr` | 🟢 self | 231 | 116 |
 | `www.ecologie.gouv.fr` | 🔴 external | 1 | 0 |
 | `www.esri.com` | 🔴 external | 1 | 0 |
 | `www.facebook.com` | 🔴 external | 98 | 0 |
@@ -640,4 +641,4 @@ Fichiers concernés : `assets/hc-map-zones.js`
 | `www.velux.fr` | 🔴 external | 1 | 0 |
 | `www.w3.org` | 🔴 external | 1 | 0 |
 | `www.winkhaus.com` | 🔴 external | 1 | 0 |
-| `{s}.basemaps.cartocdn.com` | 🔴 external | 1 | 1 |
+| `{s}.basemaps.cartocdn.com` | 🔴 external | 2 | 2 |

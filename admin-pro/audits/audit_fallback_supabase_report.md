@@ -1,4 +1,4 @@
-# Audit fallback Supabase — 2026-08-02 06:05
+# Audit fallback Supabase — 2026-08-12 04:48
 
 Sonde MEMOIRE #49 — toute page qui consomme Supabase doit déclarer un `LOCAL_CATALOG` / `FALLBACK_DATA` pour éviter une page vide en cas de coupure ou de RLS bloquée.
 
@@ -6,8 +6,8 @@ Sonde MEMOIRE #49 — toute page qui consomme Supabase doit déclarer un `LOCAL_
 
 - Pages auditées : **116**
 - Pages qui consomment Supabase : **15**
-- Pages avec fallback explicite : **7**
-- **Alertes** : **9** (3 erreur(s), 6 warning(s))
+- Pages avec fallback explicite : **6**
+- **Alertes** : **10** (3 erreur(s), 7 warning(s))
 
 ## 🚨 Pages sans fallback
 
@@ -22,6 +22,7 @@ Sonde MEMOIRE #49 — toute page qui consomme Supabase doit déclarer un `LOCAL_
 | `nos-villes.html` | ⚠️ warning | `/rest/v1/communes` | oui |
 | `partenaire.html` | ⚠️ warning | `/rest/v1/partners` | non |
 | `realisation.html` | ❌ erreur | `createClient(` | non |
+| `realisations.html` | ⚠️ warning | `createClient(` | non |
 
 ## ✅ Pages avec fallback (Supabase + LOCAL_CATALOG/FALLBACK)
 
@@ -29,8 +30,6 @@ Sonde MEMOIRE #49 — toute page qui consomme Supabase doit déclarer un `LOCAL_
 - `blog.html` — `fetch('content/actualites/index.json?t='`
 - `index.html` — `LOCAL_CATALOG`, `fetch('content/apporteurs/index.json?v='`, `fetch('content/config/reviews.json?v='`
 - `nos-prestations.html` — `LOCAL_CATALOG`
-- `realisations.html` — `actus = [
- { url:'guide-entretien-chaudiere.html', title:`
 - `temoignages.html` — `allReviews = [
  {author_name:`
 

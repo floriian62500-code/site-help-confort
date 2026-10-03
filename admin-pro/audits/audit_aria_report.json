@@ -1,61 +1,33 @@
 {
   "version": 1,
   "scanned_pages": 117,
-  "total_findings": 279,
+  "total_findings": 197,
   "by_code": {
-    "INPUT-NO-LABEL": 97,
-    "INPUT-NO-ARIA-LABEL": 96,
     "A-NO-NAME": 53,
+    "INPUT-NO-LABEL": 56,
+    "INPUT-NO-ARIA-LABEL": 55,
     "DIALOG-NO-LABEL": 28,
     "H1-MISSING": 4,
     "DUP-ID": 1
   },
-  "pages_clean": 30,
+  "pages_clean": 42,
   "pages_with_errors": 31,
   "details": [
     {
       "file": "a-propos.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 2,
-      "by_code": {
-        "INPUT-NO-LABEL": 1,
-        "INPUT-NO-ARIA-LABEL": 1
-      },
-      "findings": [
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1020
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1020
-        }
-      ]
+      "findings_total": 0,
+      "by_code": {},
+      "findings": []
     },
     {
       "file": "actualites.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 2,
-      "by_code": {
-        "INPUT-NO-LABEL": 1,
-        "INPUT-NO-ARIA-LABEL": 1
-      },
-      "findings": [
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 871
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 871
-        }
-      ]
+      "findings_total": 0,
+      "by_code": {},
+      "findings": []
     },
     {
       "file": "agence-dunkerque.html",
@@ -370,12 +342,12 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 485
+          "line": 484
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 485
+          "line": 484
         }
       ]
     },
@@ -383,37 +355,27 @@
       "file": "chauffagiste-boulogne-sur-mer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1531
+          "line": 1511
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1572
+          "line": 1553
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1572
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 2039
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 2039
+          "line": 1553
         }
       ]
     },
@@ -421,37 +383,27 @@
       "file": "chauffagiste-calais.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1531
+          "line": 1511
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1572
+          "line": 1553
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1572
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 2039
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 2039
+          "line": 1553
         }
       ]
     },
@@ -467,7 +419,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -475,37 +427,27 @@
       "file": "chauffagiste-dunkerque.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1533
+          "line": 1513
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1574
+          "line": 1555
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1574
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 2043
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 2043
+          "line": 1555
         }
       ]
     },
@@ -521,7 +463,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -537,7 +479,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -545,37 +487,27 @@
       "file": "chauffagiste-saint-omer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1539
+          "line": 1595
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1580
+          "line": 1637
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1580
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 2049
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 2049
+          "line": 1637
         }
       ]
     },
@@ -591,7 +523,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -599,136 +531,136 @@
       "file": "contact.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 28,
+      "findings_total": 26,
       "by_code": {
-        "INPUT-NO-LABEL": 14,
-        "INPUT-NO-ARIA-LABEL": 14
+        "INPUT-NO-LABEL": 13,
+        "INPUT-NO-ARIA-LABEL": 13
       },
       "findings": [
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 407
+          "line": 410
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 407
+          "line": 410
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 703
+          "line": 776
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 703
+          "line": 776
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 704
+          "line": 777
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 704
+          "line": 777
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 705
+          "line": 778
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 705
+          "line": 778
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 706
+          "line": 779
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 706
+          "line": 779
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 707
+          "line": 780
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 707
+          "line": 780
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 708
+          "line": 781
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 708
+          "line": 781
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 709
+          "line": 782
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 709
+          "line": 782
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 710
+          "line": 783
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 710
+          "line": 783
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 711
+          "line": 784
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 711
+          "line": 784
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 712
+          "line": 785
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 712
+          "line": 785
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 713
+          "line": 786
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\"> sans id",
-          "line": 713
+          "line": 786
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"services[]\">",
-          "line": 714
+          "line": 787
         }
       ]
     },
@@ -736,56 +668,46 @@
       "file": "contrats-entretien.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 9,
+      "findings_total": 7,
       "by_code": {
-        "INPUT-NO-LABEL": 5,
-        "INPUT-NO-ARIA-LABEL": 4
+        "INPUT-NO-LABEL": 4,
+        "INPUT-NO-ARIA-LABEL": 3
       },
       "findings": [
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 970
+          "line": 936
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 970
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1168
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1168
+          "line": 936
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"no_facture\">",
-          "line": 1456
+          "line": 1224
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"sepa_principe\">",
-          "line": 1471
+          "line": 1239
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"sepa_principe\"> sans id",
-          "line": 1471
+          "line": 1239
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"cgv\">",
-          "line": 1502
+          "line": 1270
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"cgv\"> sans id",
-          "line": 1502
+          "line": 1270
         }
       ]
     },
@@ -817,89 +739,33 @@
       "file": "depannage-boulogne-sur-mer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 2,
-      "by_code": {
-        "INPUT-NO-LABEL": 1,
-        "INPUT-NO-ARIA-LABEL": 1
-      },
-      "findings": [
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1116
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1116
-        }
-      ]
+      "findings_total": 0,
+      "by_code": {},
+      "findings": []
     },
     {
       "file": "depannage-calais.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 2,
-      "by_code": {
-        "INPUT-NO-LABEL": 1,
-        "INPUT-NO-ARIA-LABEL": 1
-      },
-      "findings": [
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1116
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1116
-        }
-      ]
+      "findings_total": 0,
+      "by_code": {},
+      "findings": []
     },
     {
       "file": "depannage-coquelles.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 2,
-      "by_code": {
-        "INPUT-NO-LABEL": 1,
-        "INPUT-NO-ARIA-LABEL": 1
-      },
-      "findings": [
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1100
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1100
-        }
-      ]
+      "findings_total": 0,
+      "by_code": {},
+      "findings": []
     },
     {
       "file": "depannage-dunkerque.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 2,
-      "by_code": {
-        "INPUT-NO-LABEL": 1,
-        "INPUT-NO-ARIA-LABEL": 1
-      },
-      "findings": [
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1092
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1092
-        }
-      ]
+      "findings_total": 0,
+      "by_code": {},
+      "findings": []
     },
     {
       "file": "depannage-gravelines.html",
@@ -929,67 +795,25 @@
       "file": "depannage-saint-omer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 2,
-      "by_code": {
-        "INPUT-NO-LABEL": 1,
-        "INPUT-NO-ARIA-LABEL": 1
-      },
-      "findings": [
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1102
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1102
-        }
-      ]
+      "findings_total": 0,
+      "by_code": {},
+      "findings": []
     },
     {
       "file": "depannage-saint-pol-sur-mer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 2,
-      "by_code": {
-        "INPUT-NO-LABEL": 1,
-        "INPUT-NO-ARIA-LABEL": 1
-      },
-      "findings": [
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1100
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1100
-        }
-      ]
+      "findings_total": 0,
+      "by_code": {},
+      "findings": []
     },
     {
       "file": "depannage-sangatte.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 2,
-      "by_code": {
-        "INPUT-NO-LABEL": 1,
-        "INPUT-NO-ARIA-LABEL": 1
-      },
-      "findings": [
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1100
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1100
-        }
-      ]
+      "findings_total": 0,
+      "by_code": {},
+      "findings": []
     },
     {
       "file": "devis-express.html",
@@ -1005,17 +829,17 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"logo\"></a>",
-          "line": 76
+          "line": 79
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 101
+          "line": 105
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 101
+          "line": 105
         }
       ]
     },
@@ -1031,37 +855,27 @@
       "file": "electricien-boulogne-sur-mer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1330
+          "line": 1310
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1371
+          "line": 1352
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1371
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1837
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1837
+          "line": 1352
         }
       ]
     },
@@ -1069,37 +883,27 @@
       "file": "electricien-calais.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1330
+          "line": 1310
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1371
+          "line": 1352
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1371
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1837
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1837
+          "line": 1352
         }
       ]
     },
@@ -1107,37 +911,27 @@
       "file": "electricien-dunkerque.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1331
+          "line": 1311
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1372
+          "line": 1353
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1372
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1839
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1839
+          "line": 1353
         }
       ]
     },
@@ -1145,37 +939,27 @@
       "file": "electricien-saint-omer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1338
+          "line": 1394
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1379
+          "line": 1436
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1379
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1846
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1846
+          "line": 1436
         }
       ]
     },
@@ -1216,12 +1000,12 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 426
+          "line": 425
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 426
+          "line": 425
         }
       ]
     },
@@ -1254,7 +1038,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\"></a>",
-          "line": 57
+          "line": 107
         },
         {
           "code": "H1-MISSING",
@@ -1339,23 +1123,23 @@
       "file": "index.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 19,
+      "findings_total": 17,
       "by_code": {
         "DIALOG-NO-LABEL": 2,
         "DUP-ID": 1,
-        "INPUT-NO-LABEL": 8,
-        "INPUT-NO-ARIA-LABEL": 8
+        "INPUT-NO-LABEL": 7,
+        "INPUT-NO-ARIA-LABEL": 7
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 689
+          "line": 738
         },
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 2781
+          "line": 2822
         },
         {
           "code": "DUP-ID",
@@ -1365,82 +1149,72 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\">",
-          "line": 1034
+          "line": 1108
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\"> sans id",
-          "line": 1034
+          "line": 1108
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\">",
-          "line": 1035
+          "line": 1109
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\"> sans id",
-          "line": 1035
+          "line": 1109
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\">",
-          "line": 1036
+          "line": 1110
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\"> sans id",
-          "line": 1036
+          "line": 1110
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\">",
-          "line": 1037
+          "line": 1111
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\"> sans id",
-          "line": 1037
+          "line": 1111
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\">",
-          "line": 1038
+          "line": 1112
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\"> sans id",
-          "line": 1038
+          "line": 1112
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\">",
-          "line": 1039
+          "line": 1113
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\"> sans id",
-          "line": 1039
+          "line": 1113
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\">",
-          "line": 1040
+          "line": 1114
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"checkbox\" name=\"resa-metiers[]\"> sans id",
-          "line": 1040
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 2694
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 2694
+          "line": 1114
         }
       ]
     },
@@ -1464,59 +1238,35 @@
       "file": "mentions-legales.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 2,
-      "by_code": {
-        "INPUT-NO-LABEL": 1,
-        "INPUT-NO-ARIA-LABEL": 1
-      },
-      "findings": [
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 774
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 774
-        }
-      ]
+      "findings_total": 0,
+      "by_code": {},
+      "findings": []
     },
     {
       "file": "menuisier-dunkerque.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1359
+          "line": 1339
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1400
+          "line": 1381
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1400
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1870
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1870
+          "line": 1381
         }
       ]
     },
@@ -1524,37 +1274,27 @@
       "file": "menuisier-saint-omer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1367
+          "line": 1422
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1408
+          "line": 1464
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1408
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1878
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1878
+          "line": 1464
         }
       ]
     },
@@ -1580,17 +1320,17 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"hc-logo\"></a>",
-          "line": 188
+          "line": 187
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 496
+          "line": 495
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 496
+          "line": 495
         }
       ]
     },
@@ -1639,7 +1379,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\"></a>",
-          "line": 52
+          "line": 68
         },
         {
           "code": "H1-MISSING",
@@ -1668,37 +1408,27 @@
       "file": "plombier-boulogne-sur-mer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1364
+          "line": 1344
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1405
+          "line": 1386
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1405
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1879
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1879
+          "line": 1386
         }
       ]
     },
@@ -1706,37 +1436,27 @@
       "file": "plombier-calais.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1364
+          "line": 1344
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1405
+          "line": 1386
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1405
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1879
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1879
+          "line": 1386
         }
       ]
     },
@@ -1752,7 +1472,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -1768,7 +1488,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -1776,37 +1496,27 @@
       "file": "plombier-dunkerque.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1366
+          "line": 1346
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1407
+          "line": 1388
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1407
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1881
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1881
+          "line": 1388
         }
       ]
     },
@@ -1822,7 +1532,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -1838,7 +1548,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -1854,7 +1564,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -1870,7 +1580,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -1886,7 +1596,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -1902,7 +1612,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -1910,37 +1620,27 @@
       "file": "plombier-saint-omer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1372
+          "line": 1451
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1413
+          "line": 1493
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1413
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1887
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1887
+          "line": 1493
         }
       ]
     },
@@ -1956,7 +1656,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -1972,7 +1672,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -1980,37 +1680,27 @@
       "file": "pmr-dunkerque.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1335
+          "line": 1315
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1376
+          "line": 1357
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1376
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1855
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1855
+          "line": 1357
         }
       ]
     },
@@ -2018,37 +1708,27 @@
       "file": "pmr-saint-omer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1404
+          "line": 1384
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1445
+          "line": 1426
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1445
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1924
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1924
+          "line": 1426
         }
       ]
     },
@@ -2065,12 +1745,12 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 590
+          "line": 589
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 590
+          "line": 589
         }
       ]
     },
@@ -2095,7 +1775,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"/\"></a>",
-          "line": 46
+          "line": 45
         },
         {
           "code": "H1-MISSING",
@@ -2108,23 +1788,9 @@
       "file": "realisations.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 2,
-      "by_code": {
-        "INPUT-NO-LABEL": 1,
-        "INPUT-NO-ARIA-LABEL": 1
-      },
-      "findings": [
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1191
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1191
-        }
-      ]
+      "findings_total": 0,
+      "by_code": {},
+      "findings": []
     },
     {
       "file": "remplacement-chauffe-eau.html",
@@ -2154,37 +1820,27 @@
       "file": "serrurier-boulogne-sur-mer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1329
+          "line": 1309
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1370
+          "line": 1351
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1370
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1836
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1836
+          "line": 1351
         }
       ]
     },
@@ -2192,37 +1848,27 @@
       "file": "serrurier-calais.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1329
+          "line": 1309
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1370
+          "line": 1351
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1370
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1836
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1836
+          "line": 1351
         }
       ]
     },
@@ -2238,7 +1884,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -2246,37 +1892,27 @@
       "file": "serrurier-dunkerque.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1331
+          "line": 1311
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1372
+          "line": 1353
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1372
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1839
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1839
+          "line": 1353
         }
       ]
     },
@@ -2292,7 +1928,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -2308,7 +1944,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -2316,37 +1952,27 @@
       "file": "serrurier-saint-omer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1337
+          "line": 1393
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1378
+          "line": 1435
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1378
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1845
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1845
+          "line": 1435
         }
       ]
     },
@@ -2362,7 +1988,7 @@
         {
           "code": "A-NO-NAME",
           "snippet": "<a href=\"index.html\" class=\"fv3-logo\"></a>",
-          "line": 276
+          "line": 279
         }
       ]
     },
@@ -2379,12 +2005,12 @@
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 443
+          "line": 442
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 443
+          "line": 442
         }
       ]
     },
@@ -2416,37 +2042,27 @@
       "file": "travaux-dunkerque.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1269
+          "line": 1249
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1310
+          "line": 1291
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1310
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1777
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1777
+          "line": 1291
         }
       ]
     },
@@ -2454,37 +2070,27 @@
       "file": "travaux-saint-omer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1277
+          "line": 1333
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1318
+          "line": 1375
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1318
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1785
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1785
+          "line": 1375
         }
       ]
     },
@@ -2500,37 +2106,27 @@
       "file": "vitrier-dunkerque.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1314
+          "line": 1294
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1355
+          "line": 1336
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1355
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1826
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1826
+          "line": 1336
         }
       ]
     },
@@ -2538,37 +2134,27 @@
       "file": "vitrier-saint-omer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1322
+          "line": 1377
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1363
+          "line": 1419
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1363
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1834
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1834
+          "line": 1419
         }
       ]
     },
@@ -2576,37 +2162,27 @@
       "file": "volets-dunkerque.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1315
+          "line": 1295
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1356
+          "line": 1337
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1356
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1827
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1827
+          "line": 1337
         }
       ]
     },
@@ -2614,37 +2190,27 @@
       "file": "volets-saint-omer.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 5,
+      "findings_total": 3,
       "by_code": {
         "DIALOG-NO-LABEL": 1,
-        "INPUT-NO-LABEL": 2,
-        "INPUT-NO-ARIA-LABEL": 2
+        "INPUT-NO-LABEL": 1,
+        "INPUT-NO-ARIA-LABEL": 1
       },
       "findings": [
         {
           "code": "DIALOG-NO-LABEL",
           "snippet": "<div role=\"dialog\">",
-          "line": 1344
+          "line": 1324
         },
         {
           "code": "INPUT-NO-LABEL",
           "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1385
+          "line": 1366
         },
         {
           "code": "INPUT-NO-ARIA-LABEL",
           "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1385
-        },
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1856
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1856
+          "line": 1366
         }
       ]
     },
@@ -2652,23 +2218,9 @@
       "file": "zones-intervention.html",
       "lang": "fr",
       "h1_count": 1,
-      "findings_total": 2,
-      "by_code": {
-        "INPUT-NO-LABEL": 1,
-        "INPUT-NO-ARIA-LABEL": 1
-      },
-      "findings": [
-        {
-          "code": "INPUT-NO-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\">",
-          "line": 1399
-        },
-        {
-          "code": "INPUT-NO-ARIA-LABEL",
-          "snippet": "<input type=\"text\" name=\"website\"> sans id",
-          "line": 1399
-        }
-      ]
+      "findings_total": 0,
+      "by_code": {},
+      "findings": []
     }
   ]
 }

@@ -1,14 +1,14 @@
 {
   "audit": "fallback_supabase",
-  "generated_at": "2026-08-02T06:05:18",
+  "generated_at": "2026-08-12T04:48:50",
   "stats": {
     "pages_audited": 116,
     "pages_using_supabase": 15,
-    "pages_with_fallback": 7,
-    "pages_alerted": 9,
-    "total_findings": 9,
+    "pages_with_fallback": 6,
+    "pages_alerted": 10,
+    "total_findings": 10,
     "code_distribution": {
-      "NO-FALLBACK": 9
+      "NO-FALLBACK": 10
     }
   },
   "results": [
@@ -268,7 +268,7 @@
       "supabase_signatures": [],
       "has_fallback": false,
       "fallback_signatures": [],
-      "soft_fallback_catch": false,
+      "soft_fallback_catch": true,
       "findings": []
     },
     {
@@ -482,7 +482,7 @@
       "supabase_signatures": [],
       "has_fallback": false,
       "fallback_signatures": [],
-      "soft_fallback_catch": false,
+      "soft_fallback_catch": true,
       "findings": []
     },
     {
@@ -666,7 +666,7 @@
       "supabase_signatures": [],
       "has_fallback": false,
       "fallback_signatures": [],
-      "soft_fallback_catch": false,
+      "soft_fallback_catch": true,
       "findings": []
     },
     {
@@ -876,7 +876,7 @@
       "supabase_signatures": [],
       "has_fallback": false,
       "fallback_signatures": [],
-      "soft_fallback_catch": false,
+      "soft_fallback_catch": true,
       "findings": []
     },
     {
@@ -954,15 +954,18 @@
       "file": "realisations.html",
       "uses_supabase": true,
       "supabase_signatures": [
-        "/rest/v1/realisations",
         "createClient("
       ],
-      "has_fallback": true,
-      "fallback_signatures": [
-        "actus = [\n { url:'guide-entretien-chaudiere.html', title:"
-      ],
+      "has_fallback": false,
+      "fallback_signatures": [],
       "soft_fallback_catch": false,
-      "findings": []
+      "findings": [
+        {
+          "code": "NO-FALLBACK",
+          "severity": "warning",
+          "detail": "Page utilise Supabase (1 appel(s) détecté(s)) mais aucun fallback local (`LOCAL_CATALOG`, `FALLBACK_DATA`, …) n'est déclaré dans les <script>. Aucun catch() de secours visible."
+        }
+      ]
     },
     {
       "file": "remplacement-chauffe-eau.html",
@@ -1042,7 +1045,7 @@
       "supabase_signatures": [],
       "has_fallback": false,
       "fallback_signatures": [],
-      "soft_fallback_catch": false,
+      "soft_fallback_catch": true,
       "findings": []
     },
     {
@@ -1100,7 +1103,7 @@
       "supabase_signatures": [],
       "has_fallback": false,
       "fallback_signatures": [],
-      "soft_fallback_catch": false,
+      "soft_fallback_catch": true,
       "findings": []
     },
     {
@@ -1127,7 +1130,7 @@
       "supabase_signatures": [],
       "has_fallback": false,
       "fallback_signatures": [],
-      "soft_fallback_catch": false,
+      "soft_fallback_catch": true,
       "findings": []
     },
     {
