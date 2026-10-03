@@ -35,13 +35,17 @@ ok('chaudière : script de mesure chargé sur la destination', /src="[^"]*assets
 // permet de savoir lequel des deux chemins convertit.
 ok('chaudière : l’entretien ouvre le tunnel pré-contextualisé, avec une provenance mesurable',
   /href="catalogue\.html#cat=chauffage&amp;presta=entretien&amp;src=chauffage-svc"/.test(ch) &&
-  /href="catalogue\.html#cat=chauffage&amp;presta=entretien&amp;src=chauffage-teaser"/.test(ch));
+  /href="catalogue\.html#cat=chauffage&amp;presta=entretien&amp;src=chauffage-contrats"/.test(ch));
 ok('chaudière : plus de lien vers l’ancien formulaire supprimé (#hc-reservation)', !/hc-reservation/.test(ch));
 ok('chaudière : plus aucun lien vers la landing supprimée', !/href="(?:[^"]*\/)?entretien-chaudiere(\.html)?[#"]/.test(ch));
-ok('chaudière : les trois formules sont présentées et mènent à la page de souscription',
-  ['BASIC', 'CONFORT', 'SÉCURITÉ'].every((t) => ch.includes('>' + t + '<')) && /href="contrats-entretien\.html"/.test(ch));
-ok('chaudière : un seul repère de prix, celui du catalogue, et aucune ancienne formule',
-  /dès 9,90 € TTC\/mois/.test(chTxt.replace(/&nbsp;/g, ' ')) && !/Essentiel|130€|175€|210€|110-180/.test(chTxt));
+// 2026-09-29, REQ-017 : Florian ne veut plus de « teaser ici, comparatif là-bas ». Le module
+// complet est monté sur la page Chauffage ; les formules et leurs prix viennent de la source
+// canonique au chargement. Ce qui doit rester vrai n'est donc plus « la page nomme les formules »
+// mais « la page porte le module, et on peut souscrire sans la quitter ».
+ok('chaudière : le module complet des contrats est monté sur la page elle-même',
+  /data-hc-contrats/.test(ch) && /assets\/hc-contrats\.js/.test(ch));
+ok('chaudière : plus aucun prix écrit dans la page (ils viennent de la source canonique)',
+  !/\d+[,.]\d{2}\s*€/.test(chTxt) && !/Essentiel|130€|175€|210€|110-180/.test(chTxt));
 ok('chaudière : aucune priorité de dépannage promise à tous les contrats (le BASIC gaz n’en a pas)',
   !/intervention prioritaire|priorité en cas de panne|priorité d'intervention/i.test(chTxt));
 ok('chaudière : la destination est joignable au téléphone (campagne payante)', /tel:\+33366100134/.test(ch));
