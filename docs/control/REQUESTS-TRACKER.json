@@ -215,11 +215,11 @@
    "claude_outbox": "CLAUDE-2026-09-26-P0-REMOVE-METIER-JOURNEY-GLOBAL.md",
    "human_gate": "—",
    "blocked_by": "question ouverte : le composant voisin de contact.html",
-   "next_action": "Attendre inclusion dans une release validée, déploiement autorisé, puis preuve PROD_VERIFIED avant CLOSED.",
+   "next_action": "Fusionné dans main via PR #22 (merge dc9b39eb7e9ee9edd73684d324fee7aa5911016d) sous GO batch Florian du 2026-10-03. Attendre preuve production avant PROD_VERIFIED/CLOSED.",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": "0 occurrence des 6 motifs sur 264 pages · garde pages-metier sensible · SHA 1fa6b647 · périmètre pages métier, contact.html hors périmètre · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED",
-   "decide_par": "CHATGPT-2026-09-30-CONTROL-SYNC"
+   "decide_par": "CHATGPT-2026-10-03-GREEN-SYNC"
   },
   {
    "request_id": "REQ-20260926-008",
@@ -518,11 +518,11 @@
    "claude_outbox": "CLAUDE-2026-09-26-REQ-019-PREUVE-DEFAULT.md",
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "Attendre inclusion dans une release validée, déploiement autorisé, puis preuve PROD_VERIFIED avant CLOSED.",
+   "next_action": "Fusionné dans main via PR #22 (merge dc9b39eb7e9ee9edd73684d324fee7aa5911016d) sous GO batch Florian du 2026-10-03. Attendre preuve production avant PROD_VERIFIED/CLOSED.",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": "7 familles auditées, Plomberie et Serrurerie corrigées, 0 slug technique visible, contrôle permanent · SHA 15c46539 · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED",
-   "decide_par": "CHATGPT-2026-09-30-CONTROL-SYNC"
+   "decide_par": "CHATGPT-2026-10-03-GREEN-SYNC"
   },
   {
    "request_id": "REQ-20260926-020",
@@ -610,7 +610,7 @@
    "request_id": "REQ-20260926-023",
    "title": "Zones d'intervention : Calais et Boulogne comme pôles principaux",
    "priority": "P1",
-   "status": "READY_FOR_FLORIAN_VALIDATION",
+   "status": "WAITING_CLAUDE_PROOF",
    "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-023-ZONES-CALAIS-BOULOGNE.md",
    "legacy_instruction_id": null,
    "created_at": "2026-09-26",
@@ -623,21 +623,21 @@
     "maquette dans la proposition cible",
     "validation visuelle de Florian"
    ],
-   "latest_sha": "4af89736",
+   "latest_sha": "PR #24 head f16d1749a76851af452f285c98f68afac9ab04e1, reconstruction depuis main courant",
    "claude_outbox": "CLAUDE-2026-09-26-REQ-023-QUATRE-POLES.md",
    "human_gate": "validation visuelle Florian reçue le 2026-09-28",
-   "blocked_by": "—",
-   "next_action": "préparer inclusion dans une future release depuis main, sans déploiement avant gates sécurité/prod",
+   "blocked_by": "preuve exacte PR #24 1440/390 requise par le nouveau process avant fusion",
+   "next_action": "Validation visuelle Florian déjà reçue ; attendre preuve technique/visuelle du head exact PR #24, puis merge sous GO batch si PASS.",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": "avant : 2 blocs · après : 4 cartes (Saint-Omer=Agence, Dunkerque/Calais/Boulogne=Pôle d'intervention), 2×2 en 1440, empilées en 390, 0 débordement",
-   "decide_par": "Florian + ChatGPT 2026-09-28"
+   "decide_par": "CHATGPT-2026-10-03-GREEN-SYNC"
   },
   {
    "request_id": "REQ-20260926-024",
    "title": "Carte des zones grise tant qu'on ne défile pas",
    "priority": "P1",
-   "status": "TECH_ACCEPTED",
+   "status": "WAITING_CLAUDE_PROOF",
    "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-024-CARTE-ZONES-GRISE.md",
    "legacy_instruction_id": null,
    "created_at": "2026-09-26",
@@ -651,16 +651,16 @@
     "captures",
     "suite complète"
    ],
-   "latest_sha": "65953e28",
+   "latest_sha": "PR #24 head f16d1749a76851af452f285c98f68afac9ab04e1 (asset JS déjà fusionné via PR #22 ; cache-bust 4 pages dans PR #24)",
    "claude_outbox": "CLAUDE-2026-09-26-REQ-024-CARTE-ZONES-CORRIGEE.md",
    "human_gate": "feu vert avant application (gel + REQ-022)",
-   "blocked_by": "—",
-   "next_action": "Attendre inclusion dans une release validée, déploiement autorisé, puis preuve PROD_VERIFIED avant CLOSED.",
+   "blocked_by": "preuve exacte PR #24 : carte 1440/390 + lazy contact + cache-bust + rollback",
+   "next_action": "Claude fournit CHATGPT-2026-10-03-GREEN-SYNC-PR24-PROOF ; si PASS, merge PR #24 au titre du GO batch puis contrôle production.",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": "Leaflet peint sans défilement en 402 ms, 9 tuiles en 1440 et 4 en 390, chargement différé conservé sur /contact · SHA 65953e28 · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED",
    "note_numerotation": "créée par Claude en parallèle sous le numéro 023 ; renumérotée 024 dès réception de REQ-20260926-023-ZONES-CALAIS-BOULOGNE.md, publiée par ChatGPT. Le contenu métier est inchangé.",
-   "decide_par": "CHATGPT-2026-09-30-CONTROL-SYNC"
+   "decide_par": "CHATGPT-2026-10-03-GREEN-SYNC"
   },
   {
    "request_id": "REQ-20260926-025",
@@ -940,7 +940,7 @@
    "request_id": "REQ-20260926-034",
    "title": "Rattrapage production des lots verts depuis main",
    "priority": "P0",
-   "status": "READY_FOR_FLORIAN_VISUAL",
+   "status": "IN_PROGRESS",
    "parent_instruction": "demande Florian 2026-09-28 — verifier diff prod et envoyer ce qui est vert",
    "created_at": "2026-09-28",
    "acceptance_criteria": [
@@ -959,15 +959,15 @@
     "diff final release vs main",
     "rollback"
    ],
-   "latest_sha": "ddf02dcb (release/green-2026-09-30, PR #22, base de création 5e009e35)",
+   "latest_sha": "PR #22 merged -> main dc9b39eb7e9ee9edd73684d324fee7aa5911016d ; PR #24 head f16d1749a76851af452f285c98f68afac9ab04e1",
    "claude_outbox": "CLAUDE-2026-09-28-REQ-034-RELEASE-VERTE.md",
-   "human_gate": "validation visuelle de Florian sur la preview de release, puis GO explicite pour fusionner dans main",
-   "blocked_by": "Gate humain Florian + HOLD_SECURITY. Le main courant est 57b323a5d403defc45ed796f6fc140866501b5f8 ; release/green-2026-09-30 est divergée de main (3 commits devant / 3 derrière, merge-base 5e009e3583d6bdb1d24ecc945b6db1cdd01c840e). Resynchronisation depuis le main alors courant obligatoire avant tout GO/merge, puis retest du head exact et rollback vérifié.",
-   "next_action": "La preview PR #22 peut rester présentée pour validation visuelle. Avant tout GO/merge : reconstruire/resynchroniser depuis le main courant, vérifier que seuls les éléments validés sont inclus, retester le head exact, revalider le rollback et maintenir HOLD_SECURITY. Aucun déploiement sans GO Florian.",
+   "human_gate": "GO batch Florian reçu le 2026-10-03 pour les éléments déjà verts de CURRENT-GREEN-RELEASE.json",
+   "blocked_by": "preuves production PR #22 + paquet exact PR #24 ; pas de PROD_VERIFIED tant que le domaine public n'est pas contrôlé",
+   "next_action": "Finir PR #24 après preuve exacte, puis vérifier production. Process permanent : docs/control/RELEASE-PROCESS.md.",
    "attempt": 4,
    "closed_at": null,
    "closure_proof": "matrice établie : main n’a reçu aucun travail fonctionnel depuis le 08/08 (57 rapports nocturnes + 1 fusion), recette a 876 commits d’avance. 3 lots portés (007, 019, 024) en 3 commits isolés, 9 fichiers, +13/-163, prouvés en ligne sur la preview de release. HORS : 008 et 009 sans objet (bloc et tunnel absents de main), 023 nécessite une revalidation visuelle car la page de main est l’ancienne version, 026 sans intérêt (main n’a aucun test). Verdict BLOCKED : pas de suite de tests exécutable sur main, validation visuelle Florian manquante, HOLD_SECURITY actif.",
-   "decide_par": "CHATGPT-2026-10-02-CONTROL-SYNC"
+   "decide_par": "CHATGPT-2026-10-03-GREEN-SYNC"
   },
   {
    "request_id": "REQ-20260926-035",
@@ -1022,11 +1022,11 @@
  },
  "gel_visuel": "STOP sur toute modification visuelle tant que Florian n’a pas validé REQ-023 sur la preview. Ordre imposé ensuite : checkpoint validé → REQ-026 → REQ-020 (STOP visuel) → REQ-017 prototype (STOP visuel) → REQ-027 après GO métier.",
  "dernier_controle": {
-  "message_id": "CHATGPT-2026-10-03-REQ-017-FINAL-PROOF-PR23",
-  "commit": "docs/control/inbox/chatgpt/CHATGPT-2026-10-03-REQ-017-FINAL-PROOF-PR23.md",
-  "verdict": "PR #23 reconstruite depuis le main courant et preview Netlify verte au déploiement ; preuve visuelle/E2E encore obligatoire avant production.",
-  "retour_claude": "en attente",
-  "lacune_signalee": "Environnement ChatGPT ne peut pas ouvrir la preview Netlify pour produire lui-même les captures 1440/390 ; paquet de preuves confié à Claude/QA."
+  "message_id": "CHATGPT-2026-10-03-GREEN-SYNC",
+  "commit": "docs/control/RELEASE-PROCESS.md + docs/control/CURRENT-GREEN-RELEASE.json",
+  "verdict": "Process recette→prod rétabli. PR #22 fusionnée sous GO batch. PR #24 preview verte mais preuve exacte 1440/390 encore requise avant merge. Aucun PROD_VERIFIED déclaré sans contrôle du domaine public.",
+  "retour_claude": "preuve PR #24 demandée",
+  "lacune_signalee": "Le main n'est pas protégé côté GitHub ; discipline PR/process appliquée, protection serveur à traiter séparément avec droits admin."
  },
  "checkpoint_valide": {
   "branche": "backup/recette-validated-2026-09-28-req023",
