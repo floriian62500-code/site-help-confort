@@ -252,6 +252,9 @@
         });
       }, { rootMargin: '100px' });
       io.observe(el);
+      // Déjà visible au chargement ? L'observateur ne se déclenche qu'au franchissement du seuil.
+      var r = el.getBoundingClientRect();
+      if (r.top < (window.innerHeight || 0) + 100 && r.bottom > -100) { io.disconnect(); loadLeaflet(buildMap); }
     });
   }
 
