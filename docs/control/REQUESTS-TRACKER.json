@@ -30,7 +30,7 @@
   "READY_FOR_FLORIAN_VISUAL"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-036",
+ "prochain_id": "REQ-20260926-037",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -451,7 +451,7 @@
    "request_id": "REQ-20260926-017",
    "title": "Contrats sur une seule page / module complet sur Chauffage",
    "priority": "P1",
-   "status": "WAITING_CLAUDE_PROOF",
+   "status": "REWORK_REQUIRED",
    "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-03-REQ-017-FINAL-PROOF-PR23.md",
    "legacy_instruction_id": "REQ-20260926-010",
    "created_at": "2026-09-26",
@@ -460,16 +460,19 @@
     "module complet sur Chauffage sans doublon"
    ],
    "evidence_required": [
-    "rapport outbox dédié"
+    "rapport outbox dedie",
+    "reproducteur versionne mesurant les DEUX etats (main exact et head de la PR)",
+    "captures 1440 et 390 : page Chauffage, transition vers Contrats, modale ouverte",
+    "empreintes sha256 des captures reellement produites par le script"
    ],
-   "latest_sha": "8740467f2fa2782a898efd9f01deb3f6d0f0b36b (PR #23, release/req017-contract-flow-2026-10-03)",
-   "claude_outbox": "CLAUDE-2026-10-02-REQ-017-REWORK-MOBILE.md",
+   "latest_sha": "46906e4ec548fc11c31796b8a86f067687840578 (PR #23, release/req017-contract-flow-2026-10-03 ; le controle attendait 8740467f, un commit de plus a ete pousse)",
+   "claude_outbox": "CLAUDE-2026-10-03-REQ-017-PR23-PREUVE-FINALE.md",
    "human_gate": "GO production exprimé par Florian le 2026-10-03, conditionné par le protocole projet : preview + preuves 1440/390 + parcours complet + rollback contrôlés avant merge/deploy.",
-   "blocked_by": "Paquet de preuves PR #23 demandé à Claude : Chauffage 1440/390, transition formule→Contrats avec sélection conservée, modale 390 sans soumission, mesures overflow/console et rollback.",
-   "next_action": "Claude contrôle la preview PR #23 au SHA exact 8740467f, fournit le paquet de preuves dans outbox et STOP. ChatGPT tranche ensuite. Aucun merge/deploy avant verdict.",
-   "attempt": 8,
+   "blocked_by": "La PR #23 est 4 commits en retard sur le main courant dc9b39eb7e9ee9edd73684d324fee7aa5911016d : elle conserve les 23 lignes de .hc-metier-journey que REQ-007 vient de retirer de chauffagiste-saint-omer.html, donc la fusionner telle quelle annulerait REQ-007 en production (prouve sur les deux sites servis : marqueur hc-metier-journey = 0 en production, 10 sur la preview). Resynchronisation sans force-push requise avant tout gate ou merge.",
+   "next_action": "Fusionner origin/main DANS release/req017-contract-flow-2026-10-03 (sans force-push, la PR #23 et sa preview restent les memes), rejouer l'integralite de docs/qa/REQ-017-pr23/mesures.mjs sur le nouveau head exact, publier le second rapport, puis STOP pour controle ChatGPT. Aucun merge d'initiative malgre le GO conditionnel de Florian : la condition « preuves controlees » n'est pas levee.",
+   "attempt": 9,
    "closed_at": null,
-   "closure_proof": "prototype livré sur branche isolée : module complet monté sur la page Chauffage (onglets, cartes, chauffe-eau annuel, souscription sur place), extrait de contrats-entretien.html sans réécriture, prix lus dans v_contract_offers, aucun prix en dur ; vérifié par script sur la preview en 1440 et 390 : 3 cartes, prix 9,90/14,30/25,30, modale ouverte sur place, URL inchangée ; 168 liens de contenu vers /contrats-entretien inventoriés (139 pages hors en-tête) et plan de migration proposé sans exécution ; aucune suppression, aucune 301, aucune fusion ; suite 851 PASS / 0 FAIL Contrôle ChatGPT : instruction corrective versionnée dans docs/control/inbox/chatgpt/REQ-20260926-017-MOBILE-OVERFLOW-REWORK.md ; le statut READY_FOR_FLORIAN_VISUAL était trop permissif et est corrigé en REWORK_REQUIRED. Aucune preuve PROD_VERIFIED.",
+   "closure_proof": "Paquet de preuves PR #23 publie (docs/qa/REQ-017-pr23/ : mesures.mjs, mesures.json, MESURES-PR23.md, 10 captures JPEG avec empreintes). PASS sur les criteres A, B, D, E du controle du 2026-10-03, au head 46906e4ec548fc11c31796b8a86f067687840578 : module [0 -> 390] et [0 -> 1440] avec 0 descendant hors cadre ; onglets Gaz (actif)/Fioul/Adoucisseur ; 7 cartes = les 7 offres actives de v_contract_offers ; prix 9,90/14,30/25,30 EUR TTC lus dans la vue et 0 prix en dur dans la page ; ancien bloc .ce-card de 6 cartes en production -> 0 sur la preview, donc aucune double presentation ; transition Gaz CONFORT prouvee aux deux largeurs (URL avec parametres, radio en-gaz cochee, pane-gaz visible, carte CONFORT mise en evidence, CTA visible ET focalisable) ; modale ouverte sur la bonne energie/formule/prix, 0 case pre-cochee, 0 champ pre-rempli, scroll vertical operant, AUCUN ENVOI ; /contrats-entretien.html et /contrats-entretien en 200, 11 liens historiques intacts ; aucune erreur console imputable au site. Deux defauts mesures sont PREEXISTANTS, prouves identiques sur la production : le debordement de 452 px a 390 px (.hcf-track large de 2304 px, ancetres en overflow-x visible) et le clipping interne de l'indicateur d'etapes .sw-pstep dans la modale a 390 px. Un point reste a trancher par Florian : la page Chauffage affiche le TTC (14,30 EUR) et la page Contrats le HT (13 EUR) pour le meme contrat. Aucun PROD_VERIFIED.",
    "decide_par": "CHATGPT-2026-10-03-REQ-017-FINAL-PROOF-PR23"
   },
   {
@@ -998,6 +1001,33 @@
    "closure_proof": "rework des 4 points : 8 captures archivées dans docs/qa/REQ-035 reliées au SHA ee2b2984 (0 bouton de fermeture relevé sur les 8, tailles mesurées sur l’élément) ; périmètre aligné à 202 pages, tunnel de commande compris, seule exception reset.html prouvée par noindex+titre+absence de maillage et contrôlée par la garde ; correction demande-v2 sortie du lot (21cbc668 puis 354251fa) donc rollback isolé ; suite 852 PASS / 0 FAIL, en-tête 0 à mettre à jour, SEO ERRORS=0 ; aucune prod · contrôle ultérieur : rollback isolé NON prouvé ; le lot reste ouvert — 2026-09-30 : retour arrière sélectif PROUVÉ sur copie jetable. Le revert simple touchait bien demande-v2 (le contrôle avait raison) ; la commande correcte ajoute git checkout HEAD -- scripts/tests/demande-v2.test.mjs. Résultat mesuré : correctif intact (1 occurrence), fichier non modifié, asset supprimé, 0 page portant l’encart, encart de nouveau dans l’accueil, suite 846 PASS / 0 FAIL. — Contrôle 2026-09-30 : rollback sélectif jugé cohérent ; blocage restant = preuves visuelles contradictoires (cookies visibles sur 6/8 captures).",
    "scope": null,
    "decide_par": "CHATGPT-2026-09-30-CONTROL-ALL-REQUESTS-17"
+  },
+  {
+   "request_id": "REQ-20260926-036",
+   "title": "Debordement horizontal mobile du carrousel fournisseurs (page Chauffage)",
+   "priority": "P1",
+   "status": "WAITING_FLORIAN_GO",
+   "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-02-CONTROL-ALL-REQUESTS-24.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-02",
+   "acceptance_criteria": [
+    "a 390 px reels, document.documentElement.scrollWidth <= window.innerWidth sur la page Chauffage",
+    "le carrousel de logos continue de defiler et reste lisible"
+   ],
+   "evidence_required": [
+    "reproduction sur le main exact en viewport reel 390 et controle 1440",
+    "journal URL/SHA, innerWidth, scrollWidth, rect .hcf-track, rect .hcf-marquee, overflow-x des ancetres",
+    "si correctif : lot isole, preview du head exact, captures 1440/390, rollback selectif"
+   ],
+   "latest_sha": "dc9b39eb7e9ee9edd73684d324fee7aa5911016d (main courant, bug present en production)",
+   "claude_outbox": "CLAUDE-2026-10-03-REQ-017-PR23-PREUVE-FINALE.md",
+   "human_gate": "Correctif visible : attendre la fermeture de REQ-017 (gel visuel) et le GO de Florian.",
+   "blocked_by": "Gel visuel : ordre impose, REQ-017 d'abord. Le bug est confirme, le correctif n'est pas engage.",
+   "next_action": "Apres fermeture de REQ-017 : lot isole corrigeant l'overflow-x des ancetres de .hcf-marquee, preview du head exact, captures 1440/390, rollback selectif.",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": "Exigences 1 a 3 du controle n24 satisfaites par docs/qa/REQ-017-pr23/mesures.mjs. Mesure sur la production au main dc9b39eb7e9ee9edd73684d324fee7aa5911016d, viewport REEL 390 (sans emulation) : scrollWidth 842 contre innerWidth 390, soit 452 px de depassement, SANS aucun module. Controle 1440 : scrollWidth 1440 = innerWidth, 0 px. Cause attribuee sans extrapolation : .hcf-track fait 2304 px de large dans un .hcf-marquee de 350 px ; .hcf-marquee est bien en overflow-x hidden, mais ses ancetres DIV.container et le DIV de section sont en overflow-x visible, donc la piste s'echappe. Rects journalises : .hcf-track [-30 -> 2274], .hcf-marquee [20 -> 370]. Le meme reproducteur mesure 452 px sur la preview PR #23 : le module n'y est pour rien. Exigence 4 (correctif) non engagee.",
+   "decide_par": "CHATGPT-2026-10-02-CONTROL-ALL-REQUESTS-24"
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id. Le 2026-09-28, deux demandes ont reçu 032 à la même minute (refonte Nos métiers et routage e-mail) : 032 reste à « Nos métiers », le routage devient 033, prochain_id passe à 034. Le nom du fichier d’instruction d’origine est conservé dans legacy_instruction_id.",
@@ -1022,11 +1052,11 @@
  },
  "gel_visuel": "STOP sur toute modification visuelle tant que Florian n’a pas validé REQ-023 sur la preview. Ordre imposé ensuite : checkpoint validé → REQ-026 → REQ-020 (STOP visuel) → REQ-017 prototype (STOP visuel) → REQ-027 après GO métier.",
  "dernier_controle": {
-  "message_id": "CHATGPT-2026-10-03-GREEN-SYNC",
-  "commit": "docs/control/RELEASE-PROCESS.md + docs/control/CURRENT-GREEN-RELEASE.json",
-  "verdict": "Process recette→prod rétabli. PR #22 fusionnée sous GO batch. PR #24 preview verte mais preuve exacte 1440/390 encore requise avant merge. Aucun PROD_VERIFIED déclaré sans contrôle du domaine public.",
-  "retour_claude": "preuve PR #24 demandée",
-  "lacune_signalee": "Le main n'est pas protégé côté GitHub ; discipline PR/process appliquée, protection serveur à traiter séparément avec droits admin."
+  "message_id": "CHATGPT-2026-10-03-REQ-017-FINAL-PROOF-PR23",
+  "commit": "docs/control/inbox/chatgpt/CHATGPT-2026-10-03-REQ-017-FINAL-PROOF-PR23.md + CHATGPT-2026-10-02-CONTROL-ALL-REQUESTS-23/24 + TRACKER-DELTA-23/24",
+  "verdict": "Deltas des controles n23 et n24 appliques (le write ChatGPT etait bloque). REQ-017 repasse REWORK_REQUIRED, tentative 9 : les preuves A/B/D/E de la PR #23 sont fournies et passent, mais la PR est 4 commits en retard sur main et annulerait REQ-007 en production. REQ-036 ouverte ET prouvee : debordement de 452 px confirme en production sans module. Aucun PROD_VERIFIED.",
+  "retour_claude": "CLAUDE-2026-10-03-REQ-017-PR23-PREUVE-FINALE.md",
+  "lacune_signalee": "La suite de tests et sync-header.mjs n'existent que sur recette : une PR construite depuis main ne peut pas etre controlee par la suite au head exact. A trancher separement. Par ailleurs la page Chauffage affiche le TTC et la page Contrats le HT pour le meme contrat : decision Florian."
  },
  "checkpoint_valide": {
   "branche": "backup/recette-validated-2026-09-28-req023",
