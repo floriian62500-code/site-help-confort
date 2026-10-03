@@ -184,7 +184,7 @@
             <div class="review-comment">${escapeHtml(a.comment || '(pas de commentaire)')}</div>
           </div>
           <div>
-            ${a.source_url ? `<a href="${a.source_url}" target="_blank" class="cta" style="padding:6px 12px;font-size:0.78rem;">Voir sur Google ↗</a>` : ''}
+            ${a.source_url ? `<a href="${a.source_url}" target="_blank" class="cta" style="padding:6px 12px;font-size:0.78rem;" rel="noopener noreferrer">Voir sur Google ↗</a>` : ''}
           </div>
         </div>
       `;

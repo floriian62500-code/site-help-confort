@@ -252,7 +252,7 @@
         <select id="filterAgence">
           <option value="">Toutes agences</option>
           <option value="depan-audo">Dépan'Audo (Saint-Omer)</option>
-          <option value="depan-dk">Dépan'DK (Dunkerque)</option>
+          <option value="depan-dk">Zone Dunkerquois</option>
         </select>
         <select id="filterStatus">
           <option value="">Tous statuts</option>
@@ -390,7 +390,7 @@
                 <option value="Lumbres">Lumbres</option>
                 <option value="Saint-Martin-lez-Tatinghem">Saint-Martin-lez-Tatinghem</option>
               </optgroup>
-              <optgroup label="Zone Dunkerque (Dépan'DK)">
+              <optgroup label="Zone Dunkerquois">
                 <option value="Dunkerque">Dunkerque</option>
                 <option value="Grande-Synthe">Grande-Synthe</option>
                 <option value="Coudekerque-Branche">Coudekerque-Branche</option>
@@ -442,7 +442,7 @@
                 <select id="f_agence">
                   <option value="">— Auto-déduite de la ville —</option>
                   <option value="depan-audo">Dépan'Audo (Saint-Omer)</option>
-                  <option value="depan-dk">Dépan'DK (Dunkerque)</option>
+                  <option value="depan-dk">Zone Dunkerquois</option>
                 </select>
               </div>
               <div class="field-block">
@@ -709,7 +709,7 @@ function deduceAgence(ville) {
   if (!ville) return '';
   if (VILLES_DEPAN_AUDO.includes(ville)) return 'depan-audo';
   if (VILLES_DEPAN_DK.includes(ville)) return 'depan-dk';
-  // Calais / Boulogne / autre : par défaut Dépan'DK (plus proche)
+  // Calais / Boulogne / autre : par défaut zone Dunkerquois (plus proche)
   if (['Calais','Boulogne-sur-Mer'].includes(ville)) return 'depan-dk';
   return '';
 }

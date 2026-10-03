@@ -146,7 +146,7 @@ ZIP preview prêt dans `outputs/help-confort-preview.zip` (46 MB) pour drag-drop
 - Site : `remarkable-dragon-364e2b`
 - URL prod : https://depan59-62.fr
 - URL staging : https://staging--remarkable-dragon-364e2b.netlify.app
-- Build hook : `https://api.netlify.com/build_hooks/6a26eff522f7d312d7a47790` (dans `tools/.netlify-build-hook`)
+- Build hook : ``https://api.netlify.com/build_hooks/<identifiant — RETIRE DU DEPOT le 2026-09-25 : ce depot est PUBLIC. A faire tourner cote Netlify.>` (dans `tools/.netlify-build-hook`)
 - `NETLIFY_TOKEN` en Supabase Secret (utilisé par pipeline-health-check)
 
 ### Meta / Facebook

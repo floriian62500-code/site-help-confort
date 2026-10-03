@@ -1,0 +1,371 @@
+// e2e-local.mjs — Harnais E2E contre le stack Supabase LOCAL (voie A). FAIL-CLOSED : zéro PROD.
+// Usage : LOCAL_SUPA=http://127.0.0.1:54321 LOCAL_ANON='<anon local>' node scripts/test/e2e-local.mjs
+// Prérequis : `supabase start` + bootstrap.sql + `supabase functions serve` (RESEND_API_KEY vide → 0 email).
+// Couvre : parcours historiques J1–J5 + parcours du module « Ma demande » v2 (payloads construits par le
+// cœur réel de catalogue.html) : accès tarifs, INTERVENTION, DEVIS (photo + intervention jointe), ENTRETIEN.
+// Pour chaque lead : création réelle (id), notification invoquée (notify-lead-v6 lit le lead), et pour le devis
+// photo réellement stockée (upload-lead-photos, jeton à usage unique, rejeu refusé). Parcours v2 : relecture de la ligne
+// en base LOCALE (LOCAL_SRK = clé service du stack local, lecture seule) → ce que le front envoie est ce qui est stocké.
+import { assertTestTarget } from './prod-write-guard.mjs';
+import { readFileSync, existsSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import vm from 'vm';
+import { createHmac } from 'crypto';
+
+const SUPA = process.env.LOCAL_SUPA || 'http://localhost:54321';
+const ANON = process.env.LOCAL_ANON || '';
+const SRK = process.env.LOCAL_SRK || '';
+
+// 1) GARDE ABSOLUE avant toute écriture — abort si cible ≠ TEST/localhost.
+const guard = assertTestTarget({ supabaseUrl: SUPA, mode: 'test', allowTest: true });
+console.log('[guard] cible TEST validée:', guard.host);
+if (!ANON) { console.error('LOCAL_ANON manquant (clé anon locale affichée par `supabase start`).'); process.exit(2); }
+
+const H = { 'Content-Type': 'application/json', apikey: ANON, Authorization: 'Bearer ' + ANON };
+const results = [];
+async function post(fn, body) {
+  const r = await fetch(`${SUPA}/functions/v1/${fn}`, { method: 'POST', headers: H, body: JSON.stringify(body) });
+  const j = await r.json().catch(() => ({}));
+  return { status: r.status, body: j };
+}
+// Limiteur anti-spam de submit-lead-v6 (index.ts rateLimit) : 5 envois / IP / 60 s, fenêtre fixe.
+// Le harnais RESPECTE ce rythme (pause) sans le contourner ; un 429 résiduel (fenêtre ouverte par un run
+// précédent sur le même worker) est rejoué une seule fois après expiration de la fenêtre.
+const RL_MAX = 5, RL_WAIT_MS = 62_000;
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+let rlStart = 0, rlCount = 0;
+async function submitLead(payload) {
+  if (Date.now() - rlStart > RL_WAIT_MS) { rlStart = Date.now(); rlCount = 0; }
+  if (rlCount >= RL_MAX) {
+    const wait = Math.max(0, rlStart + RL_WAIT_MS - Date.now());
+    console.log(`[rythme] limiteur submit-lead-v6 (${RL_MAX}/min) atteint : pause ${Math.ceil(wait / 1000)} s`);
+    await sleep(wait);
+    rlStart = Date.now(); rlCount = 0;
+  }
+  rlCount++;
+  let res = await post('submit-lead-v6', payload);
+  if (res.status === 429) {
+    console.log(`[rythme] HTTP 429 (fenêtre ouverte avant ce run) : nouvel essai dans ${RL_WAIT_MS / 1000} s`);
+    await sleep(RL_WAIT_MS);
+    rlStart = Date.now(); rlCount = 1;
+    res = await post('submit-lead-v6', payload);
+  }
+  return res;
+}
+function tag(m) { return `E2E-LOCAL — NE PAS TRAITER — ${m}`; }
+const base = { prenom: 'TEST', nom: 'E2E', telephone: '0612345678', email: 'e2e@localhost.test',
+  adresse: '1 rue Test', code_postal: '62500', ville: 'Saint-Omer', source: 'e2e_local' };
+
+// PNG valide 1×1 (≥ 12 octets : l'edge vérifie le vrai type par les octets magiques)
+const PNG_1PX = Uint8Array.from(Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==', 'base64'));
+
+async function notifyCheck(journey, id) {
+  // Notification : la fonction lit le lead ; sans clé d'envoi locale elle répond email_sent=false (0 email réel).
+  const n = await post('notify-lead-v6', { lead_id: id });
+  const ok = n.status === 200 && n.body && n.body.ok === true && n.body.email_sent === false;
+  results.push({ journey: journey + '_notification', status: n.status, id: n.body && (n.body.reason || n.body.error) || null, ok });
+  console.log(`[${journey}_notification] HTTP ${n.status} ${JSON.stringify(n.body)} ${ok ? 'OK' : 'FAIL'}`);
+}
+async function photoCheck(journey, id, token) {
+  const fd = new FormData();
+  fd.append('lead_id', id); fd.append('upload_token', token);
+  fd.append('files', new Blob([PNG_1PX], { type: 'image/png' }), 'e2e.png');
+  const up = await fetch(`${SUPA}/functions/v1/upload-lead-photos`, { method: 'POST', headers: { apikey: ANON, Authorization: 'Bearer ' + ANON }, body: fd });
+  const uj = await up.json().catch(() => ({}));
+  const stored = typeof uj.stored === 'number' ? uj.stored : (Array.isArray(uj.stored) ? uj.stored.length : 0);
+  const ok = up.status === 200 && stored >= 1;
+  results.push({ journey: journey + '_photo', status: up.status, id: 'stored=' + stored, ok });
+  console.log(`[${journey}_photo] HTTP ${up.status} stored=${stored} ${ok ? 'OK' : 'FAIL ' + JSON.stringify(uj).slice(0, 160)}`);
+  // Jeton à usage unique : le même jeton rejoué doit être refusé (403)
+  const fd2 = new FormData();
+  fd2.append('lead_id', id); fd2.append('upload_token', token);
+  fd2.append('files', new Blob([PNG_1PX], { type: 'image/png' }), 'e2e-rejeu.png');
+  const re = await fetch(`${SUPA}/functions/v1/upload-lead-photos`, { method: 'POST', headers: { apikey: ANON, Authorization: 'Bearer ' + ANON }, body: fd2 });
+  await re.text().catch(() => '');
+  const reOk = re.status === 403;
+  results.push({ journey: journey + '_photo_rejeu', status: re.status, id: reOk ? 'refusé' : 'accepté', ok: reOk });
+  console.log(`[${journey}_photo_rejeu] HTTP ${re.status} ${reOk ? 'OK (refusé)' : 'FAIL (jeton réutilisable)'}`);
+}
+async function dbCheck(journey, id, checks) {
+  if (!SRK) { results.push({ journey: journey + '_db', status: 0, id: 'LOCAL_SRK absent : relecture non prouvée', ok: false }); return; }
+  const r = await fetch(`${SUPA}/rest/v1/leads?id=eq.${encodeURIComponent(id)}&select=*`, { headers: { apikey: SRK, Authorization: 'Bearer ' + SRK } });
+  const rows = await r.json().catch(() => []);
+  const row = Array.isArray(rows) ? rows[0] : null;
+  const failed = row ? Object.entries(checks(row)).filter(([, v]) => !v).map(([k]) => k) : ['ligne absente'];
+  const ok = failed.length === 0;
+  results.push({ journey: journey + '_db', status: r.status, id: ok ? 'ligne conforme' : failed.join(' ; '), ok });
+  console.log(`[${journey}_db] HTTP ${r.status} ${ok ? 'OK ligne conforme' : 'FAIL ' + failed.join(' ; ')}`);
+}
+// Contrôles communs d'une ligne module v2 : stockée telle qu'envoyée par le cœur du front
+function v2Common(row, payload) {
+  const u = row.utm || {};
+  return {
+    'message identique au front': row.message === String(payload.message).trim().slice(0, 4000),
+    'source': row.source === payload.source,
+    'type_demande': row.type_demande === payload.type_demande,
+    'utm.form_type': u.form_type === payload.form_type,
+    'utm.module=demande_v2': u.module === 'demande_v2',
+    'téléphone normalisé': /^(\+33|0)[1-9][0-9]{8}$/.test(String(row.telephone || '')),
+    'aucun vocabulaire panier': !/panier/i.test(String(row.message || '')),
+  };
+}
+async function journey(name, payload, opts = {}) {
+  const res = await submitLead(payload);
+  const id = res.body && res.body.id;
+  const ok = res.status === 200 && !!id;
+  results.push({ journey: name, status: res.status, id: id || null, ok });
+  console.log(`[${name}] HTTP ${res.status} id=${id || '—'} ${ok ? 'OK' : 'FAIL ' + JSON.stringify(res.body).slice(0, 200)}`);
+  if (!ok) return;
+  if (opts.notify) await notifyCheck(name, id);
+  if (opts.photo && res.body.upload_token) await photoCheck(name, id, res.body.upload_token);
+  else if (opts.photo) { results.push({ journey: name + '_photo', status: 0, id: 'upload_token absent', ok: false }); }
+  if (opts.expect) await dbCheck(name, id, (row) => ({ ...(opts.common === false ? {} : v2Common(row, payload)), ...opts.expect(row) }));
+}
+
+// 2) Parcours historiques (contrat submit-lead-v6)
+await journey('J1_prestation_tarifee', { ...base, metier: 'Plomberie', type_demande: 'commande', form_type: 'demande_metier', message: tag('J1 commande 114€') });
+await journey('J2_diagnostic',         { ...base, metier: 'Électricité', type_demande: 'diagnostic', form_type: 'demande_metier', message: tag('J2 diagnostic') });
+await journey('J3_devis',              { ...base, metier: 'Plomberie', type_demande: 'devis', form_type: 'devis_express', message: tag('J3 devis') }, { photo: true });
+await journey('J4_entretien',          { ...base, metier: 'Chauffage', type_demande: 'entretien', form_type: 'demande_metier', message: tag('J4 entretien') });
+await journey('J5_rappel',             { ...base, type_demande: 'rappel', form_type: 'rappel', message: tag('J5 rappel') });
+// J6 : souscription contrat d'entretien — MIROIR du payload envoyé par contrats-entretien.html (recette, voie submit-lead-v6)
+const pSous = { prenom: 'TEST', nom: 'NE PAS TRAITER', telephone: '06 12 34 56 78', email: null, adresse: '1 rue Test', code_postal: '62500', ville: 'Saint-Omer',
+  metier: 'chauffage', type_demande: 'contrat_entretien', form_type: 'demande_metier',
+  message: ['DEMANDE DE CONTRAT ENTRETIEN', '- Énergie : Gaz', '- Formule : CONFORT (149 €/an)', '- Agence : Saint-Omer', '- Logement : Maison / Propriétaire',
+    '- Équipement : Saunier Duval ThemaPlus (2015)', '- Dernier entretien : 2025', '- Début souhaité : —', '- Photos jointes : 0 (facultatif)', '- RIB fourni : non', '- Accord principe SEPA : oui', '- Commentaire : ' + tag('J6 souscription')].join('\n'),
+  source: 'e2e_local_contrat_souscription', source_page: 'http://localhost/contrats-entretien.html (E2E LOCAL)',
+  utm: { energie: 'Gaz', formule: 'CONFORT', prix: '149 €/an', tier: 'confort', photos_count: 0, wizard_tags: ['contrat-entretien', 'Gaz', 'confort'] } };
+await journey('J6_souscription_entretien', pSous, { notify: true, common: false, expect: (row) => ({
+  'type_demande=contrat_entretien': row.type_demande === 'contrat_entretien',
+  'message complet (formule, SEPA)': /DEMANDE DE CONTRAT ENTRETIEN/.test(row.message || '') && /Formule : CONFORT/.test(row.message || '') && /Accord principe SEPA : oui/.test(row.message || ''),
+  'utm énergie/formule': (row.utm || {}).energie === 'Gaz' && (row.utm || {}).formule === 'CONFORT',
+  'téléphone normalisé': row.telephone === '0612345678',
+  'lead test auto-archivé': row.status === 'archive',
+}) });
+
+// 3) Module « Ma demande » v2 : payloads construits par le cœur RÉEL du front (catalogue.html)
+const catPath = [join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'assets', 'hc-demande-core.js')].find(existsSync);
+if (catPath) {
+  const box = { module: { exports: {} } };
+  vm.runInNewContext(readFileSync(catPath, 'utf8'), box);
+  const C = box.module.exports;
+  const contact = { prenom: 'TEST', nom: 'NE PAS TRAITER', tel: '+33 (0)6 12 34 56 78', email: '' };
+  const lieu = { adresse: '1 rue Test', cp: '62500', ville: 'Saint-Omer', zone: C.zoneFor(50.7508, 2.2522, '62500') };
+  const byId = { a: { id: 'a', name: 'Intervention urgente plomberie — 1h + déplacement', price_ttc: 114.43, category_name: 'Plomberie & Sanitaires' }, b: { id: 'b', name: 'Peinture intérieure', price_ttc: 0, requires_quote: true, category_name: 'Rénovation' } };
+  const lines = [{ id: 'a', slug: 'intervention-urgente-plomberie', name: byId.a.name, ttc: 114.43, qty: 1 }, { id: 'b', slug: 'peinture-interieure', name: byId.b.name, ttc: 0, requires_quote: true, qty: 1 }];
+  const page = 'http://localhost/catalogue.html (E2E LOCAL)';
+  const withSrc = (p) => ({ ...p, source: 'e2e_local_v2_' + p.source });
+  // Attribution telle que mémorisée avec consentement par tracking.js (sessionStorage hc_utm / hc_referrer)
+  const attribution = C.attributionFrom(JSON.stringify({ utm_source: 'e2e_local', utm_medium: 'test', utm_campaign: 'demande_v2', _first_landing: '/' }), 'https://www.google.com/');
+  const attrOk = (row) => ({ 'attribution stockée (utm.attribution)': !!(row.utm && row.utm.attribution && row.utm.attribution.utm_source === 'e2e_local' && row.utm.attribution.first_landing === '/'), 'source_referer': row.source_referer === 'https://www.google.com/' });
+  const pGate = withSrc(C.gatePayload({ contact, lieu, famLabel: 'Plomberie & Sanitaires', fam: 'plomberie', page, attribution }));
+  await journey('V2_acces_tarifs', pGate, { notify: true, expect: (row) => ({ 'utm.cat=plomberie': (row.utm || {}).cat === 'plomberie', ...attrOk(row) }) });
+  const pInter = withSrc(C.interventionPayload({ lines, byId, contact, lieu, prise: { quand: 'asap', rappel: 'matin', precisions: tag('V2 intervention') }, cartMode: 'mixte', page, attribution }));
+  await journey('V2_INTERVENTION', pInter, { notify: true, expect: (row) => ({
+    '2 prestations (utm.cart)': Array.isArray((row.utm || {}).cart) && row.utm.cart.length === 2,
+    'métiers regroupés': row.metier === pInter.metier,
+    'prix ferme + sur devis': /prix ferme/.test(row.message) && /sur devis/.test(row.message),
+    'adresse non redemandée (reprise du lieu)': row.code_postal === '62500' && row.ville === 'Saint-Omer',
+    'lead test auto-archivé': row.status === 'archive',
+    ...attrOk(row),
+  }) });
+  const pDevis = withSrc(C.devisPayload({ contact, lieu, devis: { metiers: ['Salle de bain', 'Plomberie'], nature: 'Rénovation', desc: tag('V2 devis salle de bain') }, photos: 1, lines: [lines[0]], byId, page, attribution }));
+  await journey('V2_DEVIS', pDevis, { notify: true, photo: true, expect: (row) => ({
+    'métier principal': row.metier === 'Salle de bain',
+    'intervention jointe dans le dossier': /Interventions également demandées/.test(row.message),
+    'photo associée au lead': Array.isArray((row.metadata || {}).photos) && row.metadata.photos.length >= 1,
+    'jeton photo invalidé': !(row.metadata || {}).upload_token,
+    'lead test auto-archivé': row.status === 'archive',
+    ...attrOk(row),
+  }) });
+  const pEntretien = withSrc(C.devisPayload({ contact, lieu, devis: { metiers: ['Contrat entretien'], nature: 'Entretien', desc: tag('V2 entretien chaudière gaz annuel') }, photos: 0, page, attribution }));
+  await journey('V2_ENTRETIEN', pEntretien, { notify: true, expect: (row) => ({
+    'métier=Contrat entretien': row.metier === 'Contrat entretien',
+    'nature Entretien': /Nature du projet : Entretien/.test(row.message),
+    'lead test auto-archivé': row.status === 'archive',
+    ...attrOk(row),
+  }) });
+} else {
+  console.log('[V2] assets/hc-demande-core.js introuvable : parcours module v2 non exécutés');
+  results.push({ journey: 'V2_module', status: 0, id: 'hc-demande-core.js absent', ok: false });
+}
+
+// ---------------------------------------------------------------------------
+// 4) Cycle commercial : intention silencieuse → finalisation → relance d'abandon
+//    (directives 5713150094 / 5713186419). Tout est local : aucun email, aucune PROD.
+// ---------------------------------------------------------------------------
+async function readLead(id) {
+  if (!SRK) return null;
+  const r = await fetch(`${SUPA}/rest/v1/leads?id=eq.${encodeURIComponent(id)}&select=*`, { headers: { apikey: SRK, Authorization: 'Bearer ' + SRK } });
+  const rows = await r.json().catch(() => []);
+  return Array.isArray(rows) ? rows[0] || null : null;
+}
+async function patchLead(id, patch) {
+  await fetch(`${SUPA}/rest/v1/leads?id=eq.${encodeURIComponent(id)}`, {
+    method: 'PATCH', headers: { apikey: SRK, Authorization: 'Bearer ' + SRK, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+    body: JSON.stringify(patch),
+  });
+}
+function check(name, ok, detail) {
+  results.push({ journey: name, status: ok ? 200 : 0, id: detail || (ok ? 'conforme' : 'écart'), ok });
+  console.log(`[${name}] ${ok ? 'OK ' + (detail || '') : 'FAIL ' + (detail || '')}`);
+}
+
+if (catPath) {
+  const box2 = { module: { exports: {} } };
+  vm.runInNewContext(readFileSync(catPath, 'utf8'), box2);
+  const C2 = box2.module.exports;
+  const cid = 'e2e-' + Date.now().toString(36);
+  const byId2 = { a: { id: 'a', name: 'Intervention urgente plomberie — 1h + déplacement', price_ttc: 114.43, category_name: 'Plomberie & Sanitaires' } };
+  const lines2 = [{ id: 'a', slug: 'intervention-urgente-plomberie', name: byId2.a.name, ttc: 114.43, qty: 1 }];
+  const withSrc2 = (p) => ({ ...p, source: 'e2e_local_cycle_' + p.source });
+  const contact2 = { prenom: 'TEST', nom: 'NE PAS TRAITER', tel: '+33 (0)6 12 34 56 78', email: '' };
+  const lieu2 = { adresse: '1 rue Test', cp: '62500', ville: 'Saint-Omer', zone: C2.zoneFor(50.7508, 2.2522, '62500') };
+
+  // A. Accès aux tarifs : intention enregistrée, AUCUNE notification
+  const gate = C2.gatePayload({ contact: contact2, lieu: lieu2, famLabel: 'Plomberie & Sanitaires', fam: 'plomberie', page: 'http://localhost/ (E2E)', cid, step: 'acces' });
+  gate.source = 'e2e_local_intent';
+  const rA = await submitLead(gate);
+  const intentId = rA.body && rA.body.id;
+  check('CYCLE_A_intention_silencieuse', rA.status === 200 && !!intentId && rA.body.intent === true, 'id=' + (intentId || '—'));
+  const rowA = await readLead(intentId);
+  check('CYCLE_A_statut_intention', !!rowA && ((rowA.metadata || {}).intent === true) && !!(rowA.metadata || {}).last_activity_at && ['intent', 'archive'].includes(rowA.status), 'status=' + (rowA && rowA.status) + ' (archive = lead de test)');
+  check('CYCLE_A_identite_distincte', !!rowA && rowA.prenom === 'TEST' && rowA.nom === 'NE PAS TRAITER', `${rowA && rowA.prenom} / ${rowA && rowA.nom}`);
+  const rAR = await post('lead-auto-reply', { lead_id: intentId });
+  check('CYCLE_A_aucun_email_client', rAR.status === 200 && rAR.body && rAR.body.sent === false && rAR.body.reason === 'intent_not_finalized', 'reason=' + (rAR.body && rAR.body.reason));
+
+  // B. Le client finalise : MÊME dossier, statut demande, notifications autorisées
+  const finalPayload = withSrc2(C2.interventionPayload({ lines: lines2, byId: byId2, contact: contact2, lieu: lieu2, prise: { quand: 'asap', rappel: 'matin' }, cartMode: 'mixte', page: 'http://localhost/ (E2E)', cid }));
+  const rB = await submitLead(finalPayload);
+  check('CYCLE_B_meme_dossier', rB.status === 200 && rB.body.id === intentId && rB.body.reused === true, 'id=' + (rB.body && rB.body.id));
+  const rowB = await readLead(intentId);
+  check('CYCLE_B_finalisee', !!rowB && !!(rowB.metadata || {}).finalized_at && (rowB.metadata || {}).intent === false && ['nouveau', 'archive'].includes(rowB.status), 'status=' + (rowB && rowB.status));
+
+  // C. Abandon : intention inactive depuis plus de 15 min → UNE alerte interne, une seule
+  const cid2 = 'e2e-ab-' + Date.now().toString(36);
+  const gate2 = C2.gatePayload({ contact: { prenom: 'TEST', nom: 'ABANDON', tel: '06 12 34 56 78', email: '' }, lieu: lieu2, famLabel: 'Chauffage', fam: 'chauffage', page: 'http://localhost/ (E2E)', cid: cid2, step: 'acces' });
+  gate2.source = 'e2e_local_abandon';
+  const rC = await submitLead(gate2);
+  const abId = rC.body && rC.body.id;
+  const rowC0 = await readLead(abId);
+  await patchLead(abId, { metadata: { ...(rowC0.metadata || {}), last_activity_at: new Date(Date.now() - 30 * 60000).toISOString() } });
+  const sweep1 = await post('leads-abandon-sweep', { minutes: 15 });
+  const rowC1 = await readLead(abId);
+  check('CYCLE_C_alerte_abandon', sweep1.status === 200 && sweep1.body.ok === true && (sweep1.body.ids || []).includes(abId) && rowC1.status === 'needs_followup' && !!(rowC1.metadata || {}).abandon_notified_at, 'notified=' + (sweep1.body && sweep1.body.notified));
+  const sweep2 = await post('leads-abandon-sweep', { minutes: 15 });
+  check('CYCLE_C_une_seule_alerte', sweep2.status === 200 && !(sweep2.body.ids || []).includes(abId), 'notified=' + (sweep2.body && sweep2.body.notified));
+
+  // D. Le client revient après l'abandon : même dossier, aucun doublon
+  const rD = await submitLead(withSrc2(C2.devisPayload({ contact: { prenom: 'TEST', nom: 'ABANDON', tel: '06 12 34 56 78', email: '' }, lieu: lieu2, devis: { metiers: ['Chauffage'], nature: 'Réparation', desc: tag('D reprise après abandon') }, photos: 0, page: 'http://localhost/ (E2E)', cid: cid2 })));
+  const rowD = await readLead(abId);
+  check('CYCLE_D_reprise_meme_dossier', rD.status === 200 && rD.body.id === abId && rD.body.reused === true && !!(rowD.metadata || {}).finalized_at, 'id=' + (rD.body && rD.body.id));
+
+  // E. Relance d'abandon jamais envoyée à un dossier finalisé
+  const sweep3 = await post('leads-abandon-sweep', { minutes: 15 });
+  check('CYCLE_E_pas_de_relance_apres_finalisation', sweep3.status === 200 && !(sweep3.body.ids || []).includes(abId), 'notified=' + (sweep3.body && sweep3.body.notified));
+
+  // G. Finalisation répétée (double clic / nouvel essai réseau) : même dossier, UNE seule notification interne
+  const cid3 = 'e2e-dup-' + Date.now().toString(36);
+  const dupPayload = withSrc2(C2.interventionPayload({ lines: lines2, byId: byId2, contact: { prenom: 'Camille', nom: 'DOUBLON', tel: '06 12 34 56 78', email: 'camille@exemple.test' }, lieu: lieu2, prise: { quand: 'asap' }, cartMode: 'paiement', page: 'http://localhost/ (E2E)', cid: cid3 }));
+  const g1 = await submitLead(dupPayload);
+  const g2 = await submitLead(dupPayload);
+  check('CYCLE_G_finalisation_repetee_meme_dossier', g1.status === 200 && g2.status === 200 && g2.body.id === g1.body.id && g2.body.duplicate === true, `ids=${g1.body && g1.body.id === (g2.body && g2.body.id) ? 'identiques' : 'différents'}`);
+  let journalNew = -1;
+  for (let i = 0; i < 10; i++) { await sleep(700); const r = await readLead(g1.body.id); const j = ((r && r.metadata) || {}).notifications || []; journalNew = j.filter((x) => x && x.kind === 'new').length; if (journalNew >= 1) break; }
+  await sleep(1500);
+  const rg = await readLead(g1.body.id); journalNew = ((((rg && rg.metadata) || {}).notifications) || []).filter((x) => x && x.kind === 'new').length;
+  check('CYCLE_G_une_seule_notification_interne', journalNew === 1, 'notifications internes=' + journalNew);
+  const again = await post('notify-lead-v6', { lead_id: g1.body.id });
+  check('CYCLE_G_rappel_du_notifieur_sans_effet', again.status === 200 && again.body.reason === 'already_notified', 'raison=' + (again.body && again.body.reason));
+
+  // F. CRM Apogée : file d'attente alimentée, envoi bloqué faute d'accès (aucun faux succès)
+  const crm = await post('crm-apogee-push', { dry_run: true });
+  check('CYCLE_F_crm_en_attente_bloque', crm.status === 200 && crm.body.ok === false && crm.body.blocked === 'missing_credentials' && crm.body.pending >= 1, 'pending=' + (crm.body && crm.body.pending));
+}
+
+// ---------------------------------------------------------------------------
+// 5) Paiement en ligne facultatif (directive 5713247831) — Stripe TEST, prouvé sans Stripe :
+//    montant serveur, blocage sans clé TEST, jeton, webhook signé, idempotence, live refusé.
+// ---------------------------------------------------------------------------
+if (catPath) {
+  const box3 = { module: { exports: {} } };
+  vm.runInNewContext(readFileSync(catPath, 'utf8'), box3);
+  const C3 = box3.module.exports;
+  // une prestation réelle du catalogue local (prix ferme)
+  const cat = await fetch(`${SUPA}/rest/v1/v_services_public?select=*&order=position.asc&limit=1`, { headers: { apikey: ANON, Authorization: 'Bearer ' + ANON } }).then((r) => r.json()).catch(() => []);
+  const svc = Array.isArray(cat) ? cat[0] : null;
+  if (!svc) { check('PAY_catalogue_local', false, 'catalogue local vide'); }
+  else {
+    const byIdP = { [svc.id]: { ...svc, requires_quote: false } };
+    const linesP = [{ id: svc.id, slug: 'e2e', name: svc.name, ttc: Number(svc.price_ttc), qty: 1 }];
+    const cidP = 'e2e-pay-' + Date.now().toString(36);
+    const contactP = { prenom: 'TEST', nom: 'PAIEMENT', tel: '06 12 34 56 78', email: 'paiement@exemple.test' };
+    const lieuP = { adresse: '1 rue Test', cp: '62500', ville: 'Saint-Omer', zone: C3.zoneFor(50.7508, 2.2522, '62500') };
+    // montant falsifié côté client : le serveur doit l'ignorer
+    const finalP = { ...C3.interventionPayload({ lines: linesP, byId: byIdP, contact: contactP, lieu: lieuP, prise: { quand: 'asap' }, cartMode: 'paiement', page: 'http://localhost/ (E2E)', cid: cidP }), source: 'e2e_local_pay', amount: 1 };
+    const rF = await submitLead(finalP);
+    const leadP = rF.body && rF.body.id, tok = rF.body && rF.body.pay_token;
+    check('PAY_A_jeton_remis_a_la_finalisation', rF.status === 200 && !!leadP && typeof tok === 'string' && tok.length >= 32, 'jeton=' + (tok ? 'oui' : 'non'));
+    const chk = await post('create-payment-session', { lead_id: leadP, pay_token: tok, mode: 'check' });
+    check('PAY_B_montant_serveur_et_eligibilite', chk.status === 200 && chk.body.eligible === true && Math.abs(chk.body.amount - Number(svc.price_ttc)) < 0.001, `montant=${chk.body && chk.body.amount} (client envoyait 1)`);
+    check('PAY_C_indisponible_sans_cle_test', chk.body.available === false, 'available=' + (chk.body && chk.body.available));
+    const cre = await post('create-payment-session', { lead_id: leadP, pay_token: tok, mode: 'create', return_url: 'http://localhost/catalogue.html' });
+    check('PAY_D_creation_bloquee_sans_cle_test', cre.status === 200 && cre.body.ok === false && cre.body.blocked === 'missing_stripe_test_key', 'blocked=' + (cre.body && cre.body.blocked));
+    const bad = await post('create-payment-session', { lead_id: leadP, pay_token: 'x'.repeat(tok.length), mode: 'check' });
+    check('PAY_E_jeton_falsifie_refuse', bad.status === 403, 'HTTP ' + bad.status);
+    // prestation inconnue → pas de paiement proposé
+    const finalX = { ...C3.interventionPayload({ lines: [{ id: '00000000-0000-0000-0000-000000000000', slug: 'x', name: 'Inconnue', ttc: 50, qty: 1 }], byId: {}, contact: contactP, lieu: lieuP, prise: { quand: 'asap' }, cartMode: 'paiement', page: 'http://localhost/ (E2E)' }), source: 'e2e_local_pay' };
+    const rX = await submitLead(finalX);
+    const chkX = await post('create-payment-session', { lead_id: rX.body.id, pay_token: rX.body.pay_token, mode: 'check' });
+    check('PAY_F_non_eligible_si_prestation_non_ferme', chkX.status === 200 && chkX.body.eligible === false, 'raison=' + (chkX.body && chkX.body.reason));
+
+    // Panier mixte (prix ferme + sur devis) : aucun paiement proposé, garde serveur
+    const devisRow = await fetch(`${SUPA}/rest/v1/v_services_public?select=*&price_ttc=eq.0&limit=1`, { headers: { apikey: ANON, Authorization: 'Bearer ' + ANON } }).then((r) => r.json()).catch(() => []);
+    const dv = Array.isArray(devisRow) ? devisRow[0] : null;
+    if (dv) {
+      const mixLines = [linesP[0], { id: dv.id, slug: 'devis', name: dv.name, ttc: 0, qty: 1, requires_quote: true }];
+      const mixById = { ...byIdP, [dv.id]: { ...dv, requires_quote: true } };
+      const rM = await submitLead({ ...C3.interventionPayload({ lines: mixLines, byId: mixById, contact: contactP, lieu: lieuP, prise: { quand: 'asap' }, cartMode: 'mixte', page: 'http://localhost/ (E2E)' }), source: 'e2e_local_pay' });
+      const chkM = await post('create-payment-session', { lead_id: rM.body.id, pay_token: rM.body.pay_token, mode: 'check' });
+      const creM = await post('create-payment-session', { lead_id: rM.body.id, pay_token: rM.body.pay_token, mode: 'create', return_url: 'http://localhost/catalogue.html' });
+      check('PAY_M_panier_mixte_aucun_paiement', chkM.status === 200 && chkM.body.eligible === false && /devis/.test(chkM.body.reason || '') && creM.body.ok === false, 'raison=' + (chkM.body && chkM.body.reason));
+    } else {
+      check('PAY_M_panier_mixte_aucun_paiement', false, 'prestation sur devis absente du catalogue local');
+    }
+
+    // Webhook signé (secret local fictif) : paiement confirmé sur le MÊME dossier, une seule fois
+    const WH = process.env.LOCAL_WH_SECRET || '';
+    const signed = async (evt, secret = WH, ts = Math.floor(Date.now() / 1000)) => {
+      const raw = JSON.stringify(evt);
+      const sig = createHmac('sha256', secret).update(`${ts}.${raw}`).digest('hex');
+      const r = await fetch(`${SUPA}/functions/v1/stripe-webhook-test`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'stripe-signature': `t=${ts},v1=${sig}`, apikey: ANON, Authorization: 'Bearer ' + ANON }, body: raw });
+      return { status: r.status, body: await r.json().catch(() => ({})) };
+    };
+    const evt = { id: 'evt_e2e_' + Date.now(), type: 'checkout.session.completed', livemode: false, data: { object: { id: 'cs_test_e2e', payment_status: 'paid', amount_total: Math.round(Number(svc.price_ttc) * 100), currency: 'eur', client_reference_id: leadP, metadata: { lead_id: leadP }, payment_intent: 'pi_test_e2e' } } };
+    const w1 = await signed(evt);
+    const rowW = await readLead(leadP);
+    check('PAY_G_webhook_paiement_meme_dossier', w1.status === 200 && w1.body.status === 'paid' && rowW && rowW.metadata && rowW.metadata.payment && rowW.metadata.payment.status === 'paid', 'statut=' + (rowW && rowW.metadata && rowW.metadata.payment && rowW.metadata.payment.status));
+    const w2 = await signed(evt);
+    check('PAY_H_webhook_rejoue_sans_effet', w2.status === 200 && w2.body.duplicate === true, JSON.stringify(w2.body));
+    const w3 = await signed({ ...evt, id: evt.id + '_bis' });
+    check('PAY_I_dossier_deja_paye_jamais_refacture', w3.status === 200 && w3.body.already_paid === true, JSON.stringify(w3.body));
+    const w4 = await signed(evt, 'whsec_faux');
+    check('PAY_J_signature_invalide_refusee', w4.status === 400, 'HTTP ' + w4.status);
+    const w5 = await signed({ ...evt, id: evt.id + '_live', livemode: true });
+    check('PAY_K_evenement_live_refuse', w5.status === 400 && w5.body.error === 'live_event_refused', JSON.stringify(w5.body));
+    const cre2 = await post('create-payment-session', { lead_id: leadP, pay_token: tok, mode: 'check' });
+    check('PAY_L_statut_paye_relu_par_le_recapitulatif', cre2.status === 200 && cre2.body.payment && cre2.body.payment.status === 'paid', 'payment=' + (cre2.body && cre2.body.payment && cre2.body.payment.status));
+  }
+}
+
+// Verdict calculé APRÈS tous les blocs (historiques, cycle commercial, paiement)
+const pass = results.every(r => r.ok);
+console.log('\n=== RÉSULTAT E2E LOCAL ===');
+console.table(results);
+const flow = (prefix) => { const rs = results.filter((r) => r.journey.startsWith(prefix)); return rs.length && rs.every((r) => r.ok) ? 'PASS' : 'FAIL'; };
+const both = (a, b) => (flow(a) === 'PASS' && flow(b) === 'PASS' ? 'PASS' : 'FAIL');
+console.log(`INTERVENTION_BACKEND_E2E=${flow('V2_INTERVENTION')} | QUOTE_BACKEND_E2E=${flow('V2_DEVIS')} | MAINTENANCE_BACKEND_E2E=${both('V2_ENTRETIEN', 'J6_souscription_entretien')} (devis module + souscription page) | PRICE_GATE_BACKEND_E2E=${flow('V2_acces_tarifs')} (local isolé)`);
+console.log(pass ? 'FULL_E2E_TEST=PASS (local isolé)' : 'FULL_E2E_TEST=PARTIAL/FAIL');
+console.log('Purge : delete from public.leads where source ilike \'%e2e%\';');
+process.exit(pass ? 0 : 1);
