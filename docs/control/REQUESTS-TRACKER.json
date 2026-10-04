@@ -1104,18 +1104,19 @@
     "aucune regression desktop 1440"
    ],
    "evidence_required": [
-    "scan des 117 pages avant/apres a 390 px reels (docs/qa/REQ-039/scan-390.mjs)",
-    "captures 390 et 1440 sur un echantillon representatif de chaque cause",
+    "scan des 117 pages avant/apres a 390 px reels avec attente reseau complete",
+    "captures 390 et 1440 sur un echantillon de chaque cause",
+    "carrousels, modules et modales toujours fonctionnels",
     "console et rollback"
    ],
    "latest_sha": null,
    "claude_outbox": "CLAUDE-2026-10-04-PREPARATION-REQ-038-ET-SUITE.md",
    "human_gate": null,
    "blocked_by": "Sequencement : après REQ-038 PROD_VERIFIED.",
-   "next_action": "Après REQ-038 : lot isolé depuis main pour corriger tous les overflows 390 restants sur les pages publiques, scan 117 pages avant/après, échantillons 1440/390, console, rollback.",
+   "next_action": "Lot pret des que la PR #28 est fusionnee : appliquer les deux declarations deja prouvees dans le <style> en ligne de chaque page (25 pages a l'ancre .m-proof-col, 8 a l'ancre .hc-labels-grid, 5 pages depannage-* dont l'ancre s'ecrit autrement), plus un correctif propre pour le tableau de remplacement-chauffe-eau.html. Option ecartee : porter le correctif dans styles.css, charge par 114 pages sur 118, car il est servi avec max-age=2592000 et 49 pages le referencent SANS numero de version : les visiteurs deja venus garderaient l'ancien CSS jusqu'a 30 jours.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": "Scan des 117 pages publiques a 390 px reels sur depan59-62.fr le 2026-10-04 : AU MOINS 45 pages debordent. Trois causes : .m-proof-col (>=30 pages, 452 px, meme mecanisme que la page Chauffage), .hc-labels-grid (14 pages depannage-* et la page Contrats, 90 px) et TABLE.rh-table sur remplacement-chauffe-eau.html (1 page, 112 px, cause distincte). La mesure sous-compte : le scan rapide attend peu et chauffagiste-saint-omer, chauffagiste-dunkerque, chauffagiste-calais et contrats-entretien debordent aussi sans figurer dans la liste automatique.",
+   "closure_proof": "RELEVE EXACT du 2026-10-04 (docs/qa/REQ-039/, scan-390-complet.mjs avec attente reseau complete, 0 erreur de chargement) : 39 pages sur 117 debordent a 390 px reels sur depan59-62.fr. 25 pages a 452 px par .hcal-wrap dans .m-proof-col (bloc avis Google) : chauffagiste-boulogne/calais/dunkerque, electricien x4, menuisier x2, plombier x4, pmr x2, serrurier x4, travaux x2, vitrier x2, volets x2. 12 pages depannage-* a 90 px et a-propos.html a 213 px par .hc-labels-grid. 1 page, remplacement-chauffe-eau.html, a 112 px par un TABLE.rh-table : cause distincte. chauffagiste-saint-omer.html et contrats-entretien.html ne figurent PLUS dans le releve : la meme mesure confirme que REQ-036 est effectif en production.",
    "decide_par": "Claude — constat de production, a arbitrer"
   }
  ],
