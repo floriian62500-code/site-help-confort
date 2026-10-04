@@ -1,0 +1,80 @@
+{
+ "genere_le": "2026-10-04T16:26:09.339Z",
+ "etats": {
+  "prod-avant": {
+   "libelle": "production (avant correctif)",
+   "base": "https://depan59-62.fr",
+   "sha": "a7b91f61995bb8cb4003bee43b21626259e23daf",
+   "largeurs": {
+    "390": {
+     "appelsVue": [
+      {
+       "statut": 400,
+       "url": "v_services_public?select=*&_ts=1791131176268"
+      },
+      {
+       "statut": 200,
+       "url": "v_services_public?select=*"
+      }
+     ],
+     "appelsEnErreur": [
+      {
+       "statut": 400,
+       "url": "v_services_public?select=*&_ts=1791131176268"
+      }
+     ],
+     "vue": {
+      "cartes": 380,
+      "nbPrix": 214,
+      "empreinteAffichage": "29277:♨️ Contrat entretien chauffe-eau annuel Visite annuelle pour prolonger la durée de vie de votre cumulus. ~1.5 h Engageme",
+      "messageVide": false,
+      "debordement": 0
+     },
+     "console": [
+      "Failed to load resource: the server responded with a status of 400 ()",
+      "[catalog] HTTP error: 400 {\"code\":\"PGRST100\",\"details\":\"unexpected \\\"1\\\" expecting \\\"not\\\" or operator (eq, gt, ...)\",\"hint\":null,\"message\":\"\\\"failed to parse filter (179"
+     ]
+    },
+    "1440": {
+     "appelsVue": [
+      {
+       "statut": 400,
+       "url": "v_services_public?select=*&_ts=1791131171065"
+      },
+      {
+       "statut": 200,
+       "url": "v_services_public?select=*"
+      }
+     ],
+     "appelsEnErreur": [
+      {
+       "statut": 400,
+       "url": "v_services_public?select=*&_ts=1791131171065"
+      }
+     ],
+     "vue": {
+      "cartes": 380,
+      "nbPrix": 214,
+      "empreinteAffichage": "29277:♨️ Contrat entretien chauffe-eau annuel Visite annuelle pour prolonger la durée de vie de votre cumulus. ~1.5 h Engageme",
+      "messageVide": false,
+      "debordement": 0
+     },
+     "console": [
+      "Failed to load resource: the server responded with a status of 400 ()",
+      "[catalog] HTTP error: 400 {\"code\":\"PGRST100\",\"details\":\"unexpected \\\"1\\\" expecting \\\"not\\\" or operator (eq, gt, ...)\",\"hint\":null,\"message\":\"\\\"failed to parse filter (179"
+     ]
+    }
+   }
+  }
+ },
+ "captures": [
+  {
+   "fichier": "prod-avant-1440.jpg",
+   "sha256": "f1c621873da3fe28"
+  },
+  {
+   "fichier": "prod-avant-390.jpg",
+   "sha256": "a3943cbc694c1c76"
+  }
+ ]
+}
