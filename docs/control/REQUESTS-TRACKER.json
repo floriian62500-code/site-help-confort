@@ -1004,32 +1004,32 @@
   },
   {
    "request_id": "REQ-20260926-036",
-   "title": "Debordement horizontal mobile du carrousel fournisseurs (page Chauffage)",
+   "title": "Debordement horizontal mobile a 390 px (pages Chauffage et Contrats)",
    "priority": "P0",
-   "status": "IN_PROGRESS",
+   "status": "READY_FOR_CONTROL",
    "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-02-CONTROL-ALL-REQUESTS-24.md",
    "legacy_instruction_id": null,
    "created_at": "2026-10-02",
    "acceptance_criteria": [
-    "a 390 px reels, document.documentElement.scrollWidth <= window.innerWidth + 1 sur la page Chauffage",
-    "le carrousel de logos continue de defiler et reste lisible",
-    "aucune regression desktop 1440",
-    "relevé le 2026-10-04 : la page Contrats deborde aussi de 90 px a 390 — a traiter ici ou dans une demande propre"
+    "a 390 px reels, scrollWidth - innerWidth <= 1 px sur chauffagiste-saint-omer.html",
+    "a 390 px reels, scrollWidth - innerWidth <= 1 px sur contrats-entretien.html",
+    "carrousel fournisseurs, carrousel d avis, formules et modale toujours fonctionnels",
+    "aucune regression desktop 1440"
    ],
    "evidence_required": [
     "reproduction sur le main exact en viewport reel 390 et controle 1440",
     "journal URL/SHA, innerWidth, scrollWidth, rect .hcf-track, rect .hcf-marquee, overflow-x des ancetres",
     "si correctif : lot isole, preview du head exact, captures 1440/390, rollback selectif"
    ],
-   "latest_sha": "dc9b39eb7e9ee9edd73684d324fee7aa5911016d (main courant, bug present en production)",
-   "claude_outbox": "CLAUDE-2026-10-04-PR25-CAMPAGNE-CHAUFFAGE.md",
+   "latest_sha": "29ab676f98e1a6bf7705771d9230c0c8b4f7a424 (PR #27, feat/req-036-overflow-390, isolee depuis main a7b91f61 — 2 fichiers)",
+   "claude_outbox": "CLAUDE-2026-10-04-REQ-036-OVERFLOW.md",
    "human_gate": "GO de suivi/correction donné par Florian le 2026-10-03 : préparer le correctif après REQ-017. Aucun changement sensible.",
-   "blocked_by": "Aucun blocage métier. Démarrer depuis le main après merge REQ-037.",
-   "next_action": "Créer lot isolé depuis main courant pour corriger les deux overflows mobiles : +452 px sur Chauffage et +90 px sur Contrats, sans casser carrousel/module. Preuves 390/1440 puis STOP pour merge ChatGPT.",
+   "blocked_by": null,
+   "next_action": "Controle ChatGPT puis fusion et verification sur depan59-62.fr avant PROD_VERIFIED. Ensuite REQ-038. Aucun merge de mon initiative.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": "Exigences 1 a 3 du controle n24 satisfaites par docs/qa/REQ-017-pr23/mesures.mjs. Mesure sur la production au main dc9b39eb7e9ee9edd73684d324fee7aa5911016d, viewport REEL 390 (sans emulation) : scrollWidth 842 contre innerWidth 390, soit 452 px de depassement, SANS aucun module. Controle 1440 : scrollWidth 1440 = innerWidth, 0 px. Cause attribuee sans extrapolation : .hcf-track fait 2304 px de large dans un .hcf-marquee de 350 px ; .hcf-marquee est bien en overflow-x hidden, mais ses ancetres DIV.container et le DIV de section sont en overflow-x visible, donc la piste s'echappe. Rects journalises : .hcf-track [-30 -> 2274], .hcf-marquee [20 -> 370]. Le meme reproducteur mesure 452 px sur la preview PR #23 : le module n'y est pour rien. Exigence 4 (correctif) non engagee. Reverifie le 2026-10-04 sur le DOMAINE PUBLIC depan59-62.fr (atterrissage Google Ads), viewport reel 390 : scrollWidth 842 contre innerWidth 390, soit 452 px. Coupable inchange : .hcf-track large de 2304 px.",
-   "decide_par": "CHATGPT-2026-10-02-CONTROL-ALL-REQUESTS-24"
+   "closure_proof": "PASS au head 29ab676f98e1a6bf7705771d9230c0c8b4f7a424. CORRECTION DE DIAGNOSTIC : le carrousel de logos fournisseurs n'est PAS le coupable — .hcf-track fait 2304 px mais il est decoupe par .hcf-marquee en overflow-x hidden, et un element decoupe n'elargit pas la page. La bissection du DOM (masquer un noeud, remesurer scrollWidth) designe deux causes reelles : sur Chauffage, .m-proof-col est un element de grille a taille minimale automatique et le carrousel d'avis Google (.hcal-grid, 3 cartes de 250 px = 778 px) fixe sa largeur minimale a 778 px ; sur Contrats, meme mecanisme sur .hc-labels-grid plus un mot insecable. Correctif : min-width:0 d'un cote, min-width:0 + overflow-wrap:anywhere de l'autre, soit 2 fichiers et 2 declarations. Mesure avant/apres : Chauffage 390 passe de 452 px a 0 px, Contrats 390 de 90 px a 0 px, et 1440 reste a 0 px sur les deux pages. Rien casse : le carrousel d'avis retrouve son role (302 px, defilable, 3 cartes, contre 778 px non defilable avant), le carrousel fournisseurs est identique (marquee 350, piste 2304, 36 logos), les formules 9,90/14,30/25,30 EUR TTC et les 4 cartes labels sont intactes, la modale s'ouvre sur 14,30 EUR TTC et tient dans [20->370]. Aucune ecriture reseau donc aucun lead, console sans erreur imputable au site. Le meme motif existe sur 25 autres pages metier et 13 autres pages ville : signale, non touche. Preuves : docs/qa/REQ-036/. Aucun PROD_VERIFIED.",
+   "decide_par": "Florian — ordre du 2026-10-04"
   },
   {
    "request_id": "REQ-20260926-037",
@@ -1052,13 +1052,13 @@
     "aucun faux lead/paiement"
    ],
    "latest_sha": "a7b91f61995bb8cb4003bee43b21626259e23daf",
-   "claude_outbox": "CLAUDE-2026-10-04-REQ-037-TTC.md",
+   "claude_outbox": "CLAUDE-2026-10-04-REQ-037-TTC.md + CLAUDE-2026-10-04-REQ-036-OVERFLOW.md",
    "human_gate": "GO donné par Florian le 2026-10-03 pour assurer le suivi de toutes les demandes jusqu'à production ; correctif non sensible.",
    "blocked_by": "Fusionnée dans main ; attente déploiement public et PROD_VERIFY.",
-   "next_action": "Vérifier depan59-62.fr : TTC identique Chauffage → Contrats → modale en 1440/390, puis CLOSED si conforme.",
+   "next_action": "Fusionnee en production le 2026-10-04 (a7b91f61) et verifiee sur depan59-62.fr : PROD_VERIFIED a poser par ChatGPT.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": "PASS au head 176c28d147ae9440b89783f7eac5eb49dcd94916. Lot isole d'UN fichier (contrats-entretien.html) : la page Contrats et sa modale passent au TTC principal, comme la page Chauffage. Mesure sur les TROIS surfaces en 1440 et 390, comparee a la source canonique v_contract_offers (gaz-confort : price_ttc_month 14.3, price_ttc_year 171.6, price_ht_month 13) : avant, page Chauffage 14,30 EUR TTC mais page Contrats 13 EUR HT et modale « 13 EUR HT/mois — 156 EUR/an » ; apres, 14,30 EUR TTC sur les trois, avec « 171,60 EUR TTC par an · soit 13 EUR HT par mois » en secondaire etiquete et la modale « 14,30 EUR TTC/mois (13 EUR HT) — 171,60 EUR TTC/an ». Energie et formule conservees (radio en-gaz, carte CONFORT mise en evidence), aucune case pre-cochee, AUCUNE ecriture reseau sur les quatre passages donc aucun lead, console sans erreur imputable au site. Debordements strictement inchanges : Chauffage 0/452 px, Contrats 0/90 px avant comme apres. Piege corrige au passage : monthly_amount etait extrait du LIBELLE par une regex qui n'acceptait que « HT » et serait tombe a 0 ; le montant HT voyage desormais en donnee brute (champs caches prouves a 13 et 14.3) et la semantique du champ reste le HT. Preuves : docs/qa/REQ-037/ (reproducteur, mesures.json, MESURES-REQ-037.md, 12 captures avec empreintes). Aucun PROD_VERIFIED.",
+   "closure_proof": "PASS au head 176c28d147ae9440b89783f7eac5eb49dcd94916. Lot isole d'UN fichier (contrats-entretien.html) : la page Contrats et sa modale passent au TTC principal, comme la page Chauffage. Mesure sur les TROIS surfaces en 1440 et 390, comparee a la source canonique v_contract_offers (gaz-confort : price_ttc_month 14.3, price_ttc_year 171.6, price_ht_month 13) : avant, page Chauffage 14,30 EUR TTC mais page Contrats 13 EUR HT et modale « 13 EUR HT/mois — 156 EUR/an » ; apres, 14,30 EUR TTC sur les trois, avec « 171,60 EUR TTC par an · soit 13 EUR HT par mois » en secondaire etiquete et la modale « 14,30 EUR TTC/mois (13 EUR HT) — 171,60 EUR TTC/an ». Energie et formule conservees (radio en-gaz, carte CONFORT mise en evidence), aucune case pre-cochee, AUCUNE ecriture reseau sur les quatre passages donc aucun lead, console sans erreur imputable au site. Debordements strictement inchanges : Chauffage 0/452 px, Contrats 0/90 px avant comme apres. Piege corrige au passage : monthly_amount etait extrait du LIBELLE par une regex qui n'acceptait que « HT » et serait tombe a 0 ; le montant HT voyage desormais en donnee brute (champs caches prouves a 13 et 14.3) et la semantique du champ reste le HT. Preuves : docs/qa/REQ-037/ (reproducteur, mesures.json, MESURES-REQ-037.md, 12 captures avec empreintes). Aucun PROD_VERIFIED. CONTROLE DE PRODUCTION le 2026-10-04 sur depan59-62.fr apres la fusion a7b91f61 : 14,30 EUR TTC sur les trois surfaces en 1440 comme en 390, modale « 14,30 EUR TTC/mois (13 EUR HT) — 171,60 EUR TTC/an », energie et formule conservees, aucune ecriture reseau, console propre. Preuves : docs/qa/REQ-037-prod/.",
    "decide_par": "Florian — ordre du 2026-10-04, funnel Chauffage prioritaire"
   },
   {
@@ -1081,7 +1081,7 @@
    "latest_sha": "96e75d88f57dbe867fb8490dbdc2749093340a70 (bug present en production)",
    "claude_outbox": "CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
    "human_gate": null,
-   "blocked_by": "Sequencement : REQ-037 puis REQ-036 d'abord. Impact visible nul, ce n'est pas un bloquant de campagne.",
+   "blocked_by": "Sequencement : la PR #27 (REQ-036) doit etre fusionnee d'abord, pour ne pas laisser deux lots ouverts sur le meme main.",
    "next_action": "Remplacer le contournement de cache _ts (lu par PostgREST comme un filtre sur une colonne inexistante) par un en-tete de cache ou un parametre ignore par PostgREST ; verifier qu'il ne reste qu'un seul appel, en 200.",
    "attempt": 1,
    "closed_at": null,
