@@ -30,7 +30,7 @@
   "READY_FOR_FLORIAN_VISUAL"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-038",
+ "prochain_id": "REQ-20260926-039",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -212,13 +212,13 @@
     "garde rejouée contre l'état d'avant"
    ],
    "latest_sha": "1fa6b647",
-   "claude_outbox": "CLAUDE-2026-09-26-P0-REMOVE-METIER-JOURNEY-GLOBAL.md",
+   "claude_outbox": "CLAUDE-2026-09-26-P0-REMOVE-METIER-JOURNEY-GLOBAL.md + CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
    "human_gate": "—",
    "blocked_by": "question ouverte : le composant voisin de contact.html",
-   "next_action": "Fusionné dans main via PR #22 (merge dc9b39eb7e9ee9edd73684d324fee7aa5911016d) sous GO batch Florian du 2026-10-03. Attendre preuve production avant PROD_VERIFIED/CLOSED.",
+   "next_action": "Mesures de production fournies sur depan59-62.fr : PROD_VERIFIED a poser par ChatGPT. Claude ne declare pas PROD_VERIFIED et ne met jamais CLOSED.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": "0 occurrence des 6 motifs sur 264 pages · garde pages-metier sensible · SHA 1fa6b647 · périmètre pages métier, contact.html hors périmètre · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED",
+   "closure_proof": "0 occurrence des 6 motifs sur 264 pages · garde pages-metier sensible · SHA 1fa6b647 · périmètre pages métier, contact.html hors périmètre · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED CONTROLE DE PRODUCTION le 2026-10-04 sur depan59-62.fr, main 96e75d88f57dbe867fb8490dbdc2749093340a70 : 0 occurrence de hc-metier-journey sur les 7 pages metier servies (toutes en 200). Preuves : docs/qa/PROD-VERIFY-20261004/ (reproducteur, mesures.json, captures).",
    "decide_par": "CHATGPT-2026-10-03-GREEN-SYNC"
   },
   {
@@ -238,13 +238,13 @@
     "souscription testée en ligne sans envoi"
    ],
    "latest_sha": "6ae55ed8",
-   "claude_outbox": "CLAUDE-2026-09-26-P0-REMOVE-CONTRATS-FINAL-CTA.md",
+   "claude_outbox": "CLAUDE-2026-09-26-P0-REMOVE-CONTRATS-FINAL-CTA.md + CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "Attendre inclusion dans une release validée, déploiement autorisé, puis preuve PROD_VERIFIED avant CLOSED.",
+   "next_action": "Decision Florian requise : ni le bloc final retire sur recette ni son remplacant ct-renvois n'existent dans main ; la page de production se termine par une section cta-band qui lui est propre. Ce n'est pas un report mais une modification visuelle neuve.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": "bloc supprimé, 3 règles orphelines retirées, 35 contrôles, souscription testée sans envoi · SHA 6ae55ed8 · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED",
+   "closure_proof": "bloc supprimé, 3 règles orphelines retirées, 35 contrôles, souscription testée sans envoi · SHA 6ae55ed8 · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED Verifie le 2026-10-04 : main ne contient ni ct-renvois (0 occurrence) ni le bloc retire ; la page de production se termine par cta-band. Le correctif recette n'est pas applicable tel quel.",
    "decide_par": "CHATGPT-2026-09-30-CONTROL-SYNC"
   },
   {
@@ -264,13 +264,13 @@
     "7 échecs contre l'ancien code"
    ],
    "latest_sha": "020b2666",
-   "claude_outbox": "CLAUDE-2026-09-26-P0-HOME-INTERVENTION-REGRESSION.md",
+   "claude_outbox": "CLAUDE-2026-09-26-P0-HOME-INTERVENTION-REGRESSION.md + CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "Attendre inclusion dans une release validée, déploiement autorisé, puis preuve PROD_VERIFIED avant CLOSED.",
+   "next_action": "Ne pas porter vers main : sans objet sur la lignee de production. A reconsiderer seulement si le tunnel est un jour deploye.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": "contrôle home_intervention_cta_bypasses_generic_resume_gate, 7 échecs contre l'ancien code, parcours et reprise vérifiés en ligne · SHA 020b2666 · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED",
+   "closure_proof": "contrôle home_intervention_cta_bypasses_generic_resume_gate, 7 échecs contre l'ancien code, parcours et reprise vérifiés en ligne · SHA 020b2666 · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED Sans objet en production : /catalogue.html repond 404 et l'accueil ne charge aucun hc-demande — le tunnel de demande n'existe pas sur le site public. Rien a porter depuis recette.",
    "decide_par": "CHATGPT-2026-09-30-CONTROL-SYNC"
   },
   {
@@ -315,13 +315,13 @@
     "garde rejouée contre l'état d'avant"
    ],
    "latest_sha": "0f09e466",
-   "claude_outbox": "CLAUDE-2026-09-26-P0-CTA-PRESTATIONS-ROUTING.md",
+   "claude_outbox": "CLAUDE-2026-09-26-P0-CTA-PRESTATIONS-ROUTING.md + CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "garder la liste des 16 liens de cartes métier dans le plan global",
+   "next_action": "Ne pas porter vers main : sans objet sur la lignee de production. A reconsiderer seulement si le tunnel est un jour deploye.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": "22 CTA recâblés sur 26 · garde « aucun bouton de consultation n'ouvre le tunnel » (234 boutons, 44 pages) rejouée contre l'état d'avant · SHA 0f09e466",
+   "closure_proof": "22 CTA recâblés sur 26 · garde « aucun bouton de consultation n'ouvre le tunnel » (234 boutons, 44 pages) rejouée contre l'état d'avant · SHA 0f09e466 Sans objet en production : les boutons vises ouvraient le tunnel de demande, absent du site public (/catalogue.html en 404). Rien a porter depuis recette.",
    "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2"
   },
   {
@@ -466,13 +466,13 @@
     "empreintes sha256 des captures reellement produites par le script"
    ],
    "latest_sha": "a83c1ce50645f3115e15cf31e5249151eef803d0 (commit de fusion dans main, parents dc9b39eb + 39cd0037 — PR #23 fusionnee par Florian le 2026-10-04 a 09:18)",
-   "claude_outbox": "CLAUDE-2026-10-03-REQ-017-PR23-RESYNC-PREUVES.md + CLAUDE-2026-10-04-REQ-017-MISE-EN-PRODUCTION.md",
+   "claude_outbox": "CLAUDE-2026-10-03-REQ-017-PR23-RESYNC-PREUVES.md + CLAUDE-2026-10-04-REQ-017-MISE-EN-PRODUCTION.md + CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
    "human_gate": "GO production exerce par Florian le 2026-10-04 : PR #23 fusionnee dans main (a83c1ce50645f3115e15cf31e5249151eef803d0), hors de l'ordre fixe au controle n25 (PR #24 d'abord, REQ-037 avant production).",
    "blocked_by": "Ordre de release : PR #24 doit être clôturée d'abord. Puis resynchroniser PR #23 sur le nouveau main. REQ-037 (affichage TTC cohérent) doit être intégré et prouvé avant merge.",
-   "next_action": "PROD_VERIFY a poser par ChatGPT : le module est en ligne et mesure sur le site reel (docs/qa/REQ-017-prod/). Priorite immediate cote Claude : REQ-037, car l'incoherence TTC/HT est desormais publique.",
+   "next_action": "Mesures de production fournies sur depan59-62.fr : PROD_VERIFIED a poser par ChatGPT. Claude ne declare pas PROD_VERIFIED et ne met jamais CLOSED.",
    "attempt": 9,
    "closed_at": null,
-   "closure_proof": "Fusionnee en production le 2026-10-04 (commit a83c1ce50645f3115e15cf31e5249151eef803d0). Mesures sur le site reel, meme reproducteur, artefacts dans docs/qa/REQ-017-prod/ : module [0->1440] et [0->390] avec 0 descendant hors cadre ; ancien bloc .ce-card a 0 ; prix 9,90/14,30/25,30 EUR TTC lus dans v_contract_offers ; onglets Gaz (actif)/Fioul/Adoucisseur ; transition Gaz CONFORT vers /contrats-entretien.html?energie=gaz&formule=confort#formules avec en-gaz coche, pane-gaz visible, carte CONFORT mise en avant et CTA focalisable aux deux largeurs ; souscription ouverte sur la bonne energie et la bonne formule, aucun envoi ; /contrats-entretien.html et /contrats-entretien en 200 ; 11 liens historiques intacts ; aucune erreur console imputable au site ; REQ-007 preservee (hc-metier-journey absent du HTML servi). Restent en ligne et inchanges : l'incoherence TTC/HT (REQ-037), le debordement de 452 px a 390 (REQ-036) et le rognage de l'indicateur d'etapes de la modale a 390, tous trois prouves preexistants ou hors lot. Aucun PROD_VERIFIED declare par Claude.",
+   "closure_proof": "Fusionnee en production le 2026-10-04 (commit a83c1ce50645f3115e15cf31e5249151eef803d0). Mesures sur le site reel, meme reproducteur, artefacts dans docs/qa/REQ-017-prod/ : module [0->1440] et [0->390] avec 0 descendant hors cadre ; ancien bloc .ce-card a 0 ; prix 9,90/14,30/25,30 EUR TTC lus dans v_contract_offers ; onglets Gaz (actif)/Fioul/Adoucisseur ; transition Gaz CONFORT vers /contrats-entretien.html?energie=gaz&formule=confort#formules avec en-gaz coche, pane-gaz visible, carte CONFORT mise en avant et CTA focalisable aux deux largeurs ; souscription ouverte sur la bonne energie et la bonne formule, aucun envoi ; /contrats-entretien.html et /contrats-entretien en 200 ; 11 liens historiques intacts ; aucune erreur console imputable au site ; REQ-007 preservee (hc-metier-journey absent du HTML servi). Restent en ligne et inchanges : l'incoherence TTC/HT (REQ-037), le debordement de 452 px a 390 (REQ-036) et le rognage de l'indicateur d'etapes de la modale a 390, tous trois prouves preexistants ou hors lot. Aucun PROD_VERIFIED declare par Claude. CONTROLE DE PRODUCTION le 2026-10-04 sur depan59-62.fr, main 96e75d88f57dbe867fb8490dbdc2749093340a70 : module present en 1440 et 390, onglets Gaz/Fioul/Adoucisseur, 9,90/14,30/25,30 EUR TTC, 0 descendant hors cadre. Preuves : docs/qa/PROD-VERIFY-20261004/ (reproducteur, mesures.json, captures).",
    "decide_par": "CHATGPT-2026-10-03-REQ-017-FINAL-PROOF-PR23"
   },
   {
@@ -518,13 +518,13 @@
     "rapport outbox dédié"
    ],
    "latest_sha": null,
-   "claude_outbox": "CLAUDE-2026-09-26-REQ-019-PREUVE-DEFAULT.md",
+   "claude_outbox": "CLAUDE-2026-09-26-REQ-019-PREUVE-DEFAULT.md + CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "Fusionné dans main via PR #22 (merge dc9b39eb7e9ee9edd73684d324fee7aa5911016d) sous GO batch Florian du 2026-10-03. Attendre preuve production avant PROD_VERIFIED/CLOSED.",
+   "next_action": "Mesures de production fournies sur depan59-62.fr : PROD_VERIFIED a poser par ChatGPT. Claude ne declare pas PROD_VERIFIED et ne met jamais CLOSED.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": "7 familles auditées, Plomberie et Serrurerie corrigées, 0 slug technique visible, contrôle permanent · SHA 15c46539 · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED",
+   "closure_proof": "7 familles auditées, Plomberie et Serrurerie corrigées, 0 slug technique visible, contrôle permanent · SHA 15c46539 · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED CONTROLE DE PRODUCTION le 2026-10-04 sur depan59-62.fr, main 96e75d88f57dbe867fb8490dbdc2749093340a70 : 0 slug technique sur 37 libelles de sous-filtres de /nos-prestations.html, aux deux largeurs. Preuves : docs/qa/PROD-VERIFY-20261004/ (reproducteur, mesures.json, captures).",
    "decide_par": "CHATGPT-2026-10-03-GREEN-SYNC"
   },
   {
@@ -627,13 +627,13 @@
     "validation visuelle de Florian"
    ],
    "latest_sha": "96e75d88f57dbe867fb8490dbdc2749093340a70",
-   "claude_outbox": "CLAUDE-2026-10-04-PR24-PREUVES.md",
+   "claude_outbox": "CLAUDE-2026-10-04-PR24-PREUVES.md + CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
    "human_gate": "validation visuelle Florian reçue le 2026-09-28",
    "blocked_by": "Fusionné dans main via PR #24 ; attente du déploiement public et de la preuve PROD_VERIFIED.",
-   "next_action": "Contrôler le domaine public après déploiement du merge 96e75d88f57dbe867fb8490dbdc2749093340a70 ; si conforme, passer PROD_VERIFIED/CLOSED.",
+   "next_action": "Mesures de production fournies sur depan59-62.fr : PROD_VERIFIED a poser par ChatGPT. Claude ne declare pas PROD_VERIFIED et ne met jamais CLOSED.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": "Preuves produites au head exact f16d1749a76851af452f285c98f68afac9ab04e1 de la PR #24 par le reproducteur versionne docs/qa/REQ-024-pr24/mesures.mjs (preview ET production en reference, captures JPEG avec empreintes sha256 dans MESURES-PR24.md). PASS aux deux largeurs : 4/4 poles attendus presents avec leur etiquette exacte (Saint-Omer & Audomarois = Agence Depan'Audo ; Dunkerque & Littoral, Calais & Calaisis, Boulogne-sur-Mer & Boulonnais = Pole d'intervention), plus aucune revendication « Deux agences » (la production en revendique encore une et affiche une « Agence Depan'DK »), debordement horizontal 0 px en 1440 comme en 390, en-tete (35 liens, identique a la production) et pied de page presents : aucune regression. Captures pr24-preview-1440-zones-4poles.jpg et pr24-preview-390-zones-4poles.jpg, references avant main-prod-1440/390-zones-4poles.jpg. Aucun PROD_VERIFIED.",
+   "closure_proof": "Preuves produites au head exact f16d1749a76851af452f285c98f68afac9ab04e1 de la PR #24 par le reproducteur versionne docs/qa/REQ-024-pr24/mesures.mjs (preview ET production en reference, captures JPEG avec empreintes sha256 dans MESURES-PR24.md). PASS aux deux largeurs : 4/4 poles attendus presents avec leur etiquette exacte (Saint-Omer & Audomarois = Agence Depan'Audo ; Dunkerque & Littoral, Calais & Calaisis, Boulogne-sur-Mer & Boulonnais = Pole d'intervention), plus aucune revendication « Deux agences » (la production en revendique encore une et affiche une « Agence Depan'DK »), debordement horizontal 0 px en 1440 comme en 390, en-tete (35 liens, identique a la production) et pied de page presents : aucune regression. Captures pr24-preview-1440-zones-4poles.jpg et pr24-preview-390-zones-4poles.jpg, references avant main-prod-1440/390-zones-4poles.jpg. Aucun PROD_VERIFIED. CONTROLE DE PRODUCTION le 2026-10-04 sur depan59-62.fr, main 96e75d88f57dbe867fb8490dbdc2749093340a70 : les 4 cartes de poles avec leur etiquette exacte, plus aucune revendication « Deux agences », 0 debordement. Preuves : docs/qa/PROD-VERIFY-20261004/ (reproducteur, mesures.json, captures).",
    "decide_par": "CHATGPT-2026-10-03-GREEN-SYNC-PR24-PROOF"
   },
   {
@@ -655,13 +655,13 @@
     "suite complète"
    ],
    "latest_sha": "96e75d88f57dbe867fb8490dbdc2749093340a70",
-   "claude_outbox": "CLAUDE-2026-10-04-PR24-PREUVES.md",
+   "claude_outbox": "CLAUDE-2026-10-04-PR24-PREUVES.md + CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
    "human_gate": "feu vert avant application (gel + REQ-022)",
    "blocked_by": "Fusionné dans main via PR #24 ; attente du déploiement public et de la preuve PROD_VERIFIED.",
-   "next_action": "Contrôler le domaine public après déploiement du merge 96e75d88f57dbe867fb8490dbdc2749093340a70 ; si conforme, passer PROD_VERIFIED/CLOSED.",
+   "next_action": "Mesures de production fournies sur depan59-62.fr : PROD_VERIFIED a poser par ChatGPT. Claude ne declare pas PROD_VERIFIED et ne met jamais CLOSED.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": "Preuves produites au head exact f16d1749a76851af452f285c98f68afac9ab04e1 de la PR #24 par le reproducteur versionne docs/qa/REQ-024-pr24/mesures.mjs (preview ET production en reference, captures JPEG avec empreintes sha256 dans MESURES-PR24.md). PASS : carte mesuree SANS AUCUN DEFILEMENT (scrollY = 0 au moment de la mesure du delai et de la mesure de couverture). Leaflet charge ; conteneur pose a 317 ms en 1440 et 868 ms en 390 ; premiere tuile peinte a 419 ms et 910 ms ; 8 tuiles a 423 ms en 1440 ; une fois posee, 12 tuiles en 1440 et 6 en 390 avec 100 % de couverture du conteneur et 0 tuile en erreur, donc carte non grise. Tres en deca des 3 s exigees. contact.html : 0 conteneur et 0 tuile avant defilement, initialisation apres defilement vers la carte, aux deux largeurs : la paresse est preservee. Cache-bust assets/hc-map-zones.js?v=20261003a servi, en une seule version, par les quatre pages (zones-intervention, contact, a-propos, nos-villes) alors que la production sert encore ?v=20260603. Console : aucune erreur imputable au site. Constat d'honnetete : la production du jour peint elle aussi la carte sans defilement et garde contact.html paresseuse, je ne peux donc pas exhiber un « avant » en echec sur ces deux points ; le gain mesurable est le cache-bust. Aucun PROD_VERIFIED.",
+   "closure_proof": "Preuves produites au head exact f16d1749a76851af452f285c98f68afac9ab04e1 de la PR #24 par le reproducteur versionne docs/qa/REQ-024-pr24/mesures.mjs (preview ET production en reference, captures JPEG avec empreintes sha256 dans MESURES-PR24.md). PASS : carte mesuree SANS AUCUN DEFILEMENT (scrollY = 0 au moment de la mesure du delai et de la mesure de couverture). Leaflet charge ; conteneur pose a 317 ms en 1440 et 868 ms en 390 ; premiere tuile peinte a 419 ms et 910 ms ; 8 tuiles a 423 ms en 1440 ; une fois posee, 12 tuiles en 1440 et 6 en 390 avec 100 % de couverture du conteneur et 0 tuile en erreur, donc carte non grise. Tres en deca des 3 s exigees. contact.html : 0 conteneur et 0 tuile avant defilement, initialisation apres defilement vers la carte, aux deux largeurs : la paresse est preservee. Cache-bust assets/hc-map-zones.js?v=20261003a servi, en une seule version, par les quatre pages (zones-intervention, contact, a-propos, nos-villes) alors que la production sert encore ?v=20260603. Console : aucune erreur imputable au site. Constat d'honnetete : la production du jour peint elle aussi la carte sans defilement et garde contact.html paresseuse, je ne peux donc pas exhiber un « avant » en echec sur ces deux points ; le gain mesurable est le cache-bust. Aucun PROD_VERIFIED. CONTROLE DE PRODUCTION le 2026-10-04 sur depan59-62.fr, main 96e75d88f57dbe867fb8490dbdc2749093340a70 : carte peinte SANS defilement (scrollY 0) : 1re tuile a 576 ms en 1440 et 402 ms en 390, 12 et 6 tuiles, 100 % de couverture, 0 tuile en erreur ; contact.html toujours paresseux (0 conteneur avant defilement) ; cache-bust ?v=20261003a servi par les 4 pages. Preuves : docs/qa/PROD-VERIFY-20261004/ (reproducteur, mesures.json, captures).",
    "note_numerotation": "créée par Claude en parallèle sous le numéro 023 ; renumérotée 024 dès réception de REQ-20260926-023-ZONES-CALAIS-BOULOGNE.md, publiée par ChatGPT. Le contenu métier est inchangé.",
    "decide_par": "CHATGPT-2026-10-03-GREEN-SYNC-PR24-PROOF"
   },
@@ -721,7 +721,7 @@
    "claude_outbox": "CLAUDE-2026-09-28-REQ-026-GARDE-ZONES.md",
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "Attendre inclusion dans une release validée, déploiement autorisé, puis preuve PROD_VERIFIED avant CLOSED.",
+   "next_action": "Reste sur recette : main n'heberge pas scripts/tests/. Ecart d'outillage entre les deux lignees, a trancher separement ; cette demande n'a pas vocation a partir en production.",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": "garde livrée dans scripts/tests/zones-coherence.test.mjs (6 contrôles) + instantané canonique versionné ; échec prouvé sur l’écart réel une fois les exceptions vidées : 6 villes revendiquées par 13 pages sans commune canonique (Boulogne-sur-Mer, Le Portel, Outreau, Saint-Martin-Boulogne, Wimereux, Saint-Pol-sur-Mer) ; vert une fois les écarts déclarés avec leur raison ; suite complète 846 PASS / 0 FAIL ; diff limité à scripts/tests/ ; doublon Pihen-lès-Guînes signalé sans bloquer · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED",
@@ -1060,6 +1060,33 @@
    "closed_at": null,
    "closure_proof": "PASS au head 176c28d147ae9440b89783f7eac5eb49dcd94916. Lot isole d'UN fichier (contrats-entretien.html) : la page Contrats et sa modale passent au TTC principal, comme la page Chauffage. Mesure sur les TROIS surfaces en 1440 et 390, comparee a la source canonique v_contract_offers (gaz-confort : price_ttc_month 14.3, price_ttc_year 171.6, price_ht_month 13) : avant, page Chauffage 14,30 EUR TTC mais page Contrats 13 EUR HT et modale « 13 EUR HT/mois — 156 EUR/an » ; apres, 14,30 EUR TTC sur les trois, avec « 171,60 EUR TTC par an · soit 13 EUR HT par mois » en secondaire etiquete et la modale « 14,30 EUR TTC/mois (13 EUR HT) — 171,60 EUR TTC/an ». Energie et formule conservees (radio en-gaz, carte CONFORT mise en evidence), aucune case pre-cochee, AUCUNE ecriture reseau sur les quatre passages donc aucun lead, console sans erreur imputable au site. Debordements strictement inchanges : Chauffage 0/452 px, Contrats 0/90 px avant comme apres. Piege corrige au passage : monthly_amount etait extrait du LIBELLE par une regex qui n'acceptait que « HT » et serait tombe a 0 ; le montant HT voyage desormais en donnee brute (champs caches prouves a 13 et 14.3) et la semantique du champ reste le HT. Preuves : docs/qa/REQ-037/ (reproducteur, mesures.json, MESURES-REQ-037.md, 12 captures avec empreintes). Aucun PROD_VERIFIED.",
    "decide_par": "Florian — ordre du 2026-10-04, funnel Chauffage prioritaire"
+  },
+  {
+   "request_id": "REQ-20260926-038",
+   "title": "Requete REST de /nos-prestations.html en 400 : le parametre _ts est lu comme un filtre",
+   "priority": "P2",
+   "status": "OPEN",
+   "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-04",
+   "acceptance_criteria": [
+    "aucune reponse 400 sur /nos-prestations.html en production",
+    "les prestations restent chargees depuis v_services_public",
+    "aucune erreur de console imputable au site sur cette page"
+   ],
+   "evidence_required": [
+    "mesure reseau et console avant/apres, 1440 et 390",
+    "rollback"
+   ],
+   "latest_sha": "96e75d88f57dbe867fb8490dbdc2749093340a70 (bug present en production)",
+   "claude_outbox": "CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
+   "human_gate": null,
+   "blocked_by": "Sequencement : REQ-037 puis REQ-036 d'abord. Impact visible nul, ce n'est pas un bloquant de campagne.",
+   "next_action": "Remplacer le contournement de cache _ts (lu par PostgREST comme un filtre sur une colonne inexistante) par un en-tete de cache ou un parametre ignore par PostgREST ; verifier qu'il ne reste qu'un seul appel, en 200.",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": "Mesure en production le 2026-10-04 sur depan59-62.fr/nos-prestations.html : GET /rest/v1/v_services_public?select=*&_ts=1791127911925 renvoie 400 PGRST100 « failed to parse filter (1791127911925) ». Un second appel sans _ts repond 200 avec 34 lignes : l'affichage est correct (41 cartes, tarifs issus de la source), l'impact visible est nul, mais chaque visite paie un aller-retour perdu et une erreur de console qui masquerait un vrai echec.",
+   "decide_par": "Claude — constat de production, a arbitrer"
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id. Le 2026-09-28, deux demandes ont reçu 032 à la même minute (refonte Nos métiers et routage e-mail) : 032 reste à « Nos métiers », le routage devient 033, prochain_id passe à 034. Le nom du fichier d’instruction d’origine est conservé dans legacy_instruction_id.",
