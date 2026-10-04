@@ -953,7 +953,7 @@ if (document.fonts && document.fonts.ready) {
  Souscription en ligne
  </div>
  <h3 id="sousTitle" style="margin:0;font-size:1.4rem;font-weight:800;line-height:1.2">Contrat <span id="sousType">Gaz</span> — <span id="sousFormule">CONFORT</span></h3>
- <p style="margin:6px 0 0;font-size:.92rem;color:rgba(255,255,255,.92);font-weight:500">Tarif&nbsp;: <strong id="sousPrix" style="color:#fff">13 € HT/mois</strong> · Renseignez le formulaire et nous validons votre dossier sous 24h ouvrées.</p>
+ <p style="margin:6px 0 0;font-size:.92rem;color:rgba(255,255,255,.92);font-weight:500">Tarif&nbsp;: <strong id="sousPrix" style="color:#fff"></strong> · Renseignez le formulaire et nous validons votre dossier sous 24h ouvrées.</p>
  </div>
 
  <!-- Form -->
@@ -964,6 +964,8 @@ if (document.fonts && document.fonts.ready) {
  <input type="hidden" name="energie" id="f-energie">
  <input type="hidden" name="formule" id="f-formule">
  <input type="hidden" name="prix" id="f-prix">
+ <input type="hidden" name="prix_ht_mensuel" id="f-prix-ht">
+ <input type="hidden" name="prix_ttc_mensuel" id="f-prix-ttc">
 
  <!-- Champ caché agence -->
  <input type="hidden" name="agence" id="f-agence" value="Saint-Omer">
@@ -1425,15 +1427,16 @@ if (document.fonts && document.fonts.ready) {
  const featuresHtml = featuresArr.map(f =>
  `<li class="${f.included === false ? 'no' : 'yes'}">${safeFeature(f.text)}</li>`
  ).join('');
- const priceStr = o.price_label ? escapeHtml(o.price_label) : `${o.price_ht_month} € HT`;
- const yearStr = o.price_label
- ? '<div class="formula-price-year">tarif selon modèle &amp; volume</div>'
- : (o.price_ht_year ? `<div class="formula-price-year">soit ${o.price_ht_year} € HT/an</div>` : '');
+ // REQ-20260926-037 — le TTC est le prix principal, ici comme sur la page Chauffage et dans la
+ // modale : un particulier ne doit pas lire 14,30 € puis 13 € pour le même contrat. Les deux
+ // montants viennent de la source canonique, aucun n'est recalculé.
+ const fmt = n => Number(n).toLocaleString('fr-FR', { minimumFractionDigits: Number.isInteger(Number(n)) ? 0 : 2, maximumFractionDigits: 2 });
+ const fromPrice = !!o.price_label && /partir/i.test(o.price_label);
+ const priceStr = (o.price_label && !fromPrice) ? escapeHtml(o.price_label) : `${fromPrice ? '<small>à partir de </small>' : ''}${fmt(o.price_ttc_month)}&nbsp;€`;
+ const yearStr = `<div class="formula-price-year">${o.price_ttc_year ? `${fmt(o.price_ttc_year)} € TTC par an · ` : ''}soit ${fmt(o.price_ht_month)} € HT par mois${o.price_label ? ' · tarif selon modèle et volume' : ''}</div>`;
  // Tier → classe CSS pour styler la card
  const tierClass = { basic:'basic', confort:'confort', securite:'securite', custom:'confort' }[o.tier] || 'basic';
- const dataPrix = o.price_label
- ? `${o.price_label} /mois`
- : `${o.price_ht_month} € HT/mois — ${o.price_ht_year || (o.price_ht_month*12)} €/an`;
+ const dataPrix = `${fromPrice ? 'à partir de ' : ''}${fmt(o.price_ttc_month)} € TTC/mois (${fmt(o.price_ht_month)} € HT)${o.price_ttc_year ? ` — ${fmt(o.price_ttc_year)} € TTC/an` : ''}`;
 
  return `
  <div class="formula-card ${tierClass}" data-energy="${escapeHtml(energyKey)}" data-tier="${escapeHtml(o.tier || '')}"${o.is_recommended && energyKey==='adoucisseur' ? ' style="border-color:#1FC4F0"' : ''}>
@@ -1441,7 +1444,7 @@ if (document.fonts && document.fonts.ready) {
  <div class="formula-eyebrow">Formule ${escapeHtml(o.energy_label)}</div>
  <h2 class="formula-name">${escapeHtml(o.tier_label)}</h2>
  <div class="formula-price-block">
- <div class="formula-price">${priceStr}<small> /mois</small></div>
+ <div class="formula-price">${priceStr}<small> TTC / mois</small></div>
  ${yearStr}
  </div>
  <p class="formula-baseline">${escapeHtml(o.baseline || '')}</p>
@@ -1451,6 +1454,8 @@ if (document.fonts && document.fonts.ready) {
  data-energie="${escapeHtml(o.energy_label)}"
  data-formule="${escapeHtml(o.tier_label)}"
  data-prix="${escapeHtml(dataPrix)}"
+ data-prix-ht="${o.price_ht_month == null ? '' : o.price_ht_month}"
+ data-prix-ttc="${o.price_ttc_month == null ? '' : o.price_ttc_month}"
  onclick="openSouscriptionModal(this)">${escapeHtml(o.cta_label || 'Souscrire')}</button>
  </div>`;
  }).join('');
@@ -1466,6 +1471,9 @@ if (document.fonts && document.fonts.ready) {
  var energie = btn.getAttribute('data-energie') || 'Gaz';
  var formule = btn.getAttribute('data-formule') || 'CONFORT';
  var prix = btn.getAttribute('data-prix') || '';
+ // REQ-037 : les montants voyagent en donnee brute, plus en texte a reparser
+ var prixHt = btn.getAttribute('data-prix-ht') || '';
+ var prixTtc = btn.getAttribute('data-prix-ttc') || '';
 
  document.getElementById('sousType').textContent = energie;
  document.getElementById('sousFormule').textContent = formule;
@@ -1474,6 +1482,8 @@ if (document.fonts && document.fonts.ready) {
  document.getElementById('f-energie').value = energie;
  document.getElementById('f-formule').value = formule;
  document.getElementById('f-prix').value = prix;
+ document.getElementById('f-prix-ht').value = prixHt;
+ document.getElementById('f-prix-ttc').value = prixTtc;
 
  // Pour l'adoucisseur on cache le bloc "Marque/modèle chaudière" et on le renomme
  var equipBlock = document.getElementById('f-equipement-block');
@@ -1573,9 +1583,14 @@ if (document.fonts && document.fonts.ready) {
  var tier = formule.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z]/g,'');
  if (!['basic','confort','securite','custom'].includes(tier)) tier = 'custom';
 
- // Extrait le prix mensuel HT depuis le label (ex: "9 € HT/mois — 108 €/an" → 9)
- var monthlyMatch = /([\d.,]+)\s*€\s*(?:HT)?\s*\/?\s*mois/i.exec(prix || '');
- var monthly = monthlyMatch ? parseFloat(monthlyMatch[1].replace(',','.')) : 0;
+ // REQ-037 : monthly_amount reste le montant HT, mais il est lu en donnee brute et non plus
+ // extrait du libelle affiche — changer le texte du prix ne doit pas pouvoir corrompre le lead.
+ var monthlyBrut = parseFloat(String(data.get('prix_ht_mensuel') || '').replace(',', '.'));
+ var monthly = Number.isFinite(monthlyBrut) ? monthlyBrut : 0;
+ if (!monthly) { // filet pour une page servie depuis un cache anterieur
+ var monthlyMatch = /([\d.,]+)\s*€\s*(?:TTC|HT)?\s*\/?\s*mois/i.exec(prix || '');
+ monthly = monthlyMatch ? parseFloat(monthlyMatch[1].replace(',','.')) : 0;
+ }
 
  var payload = {
  status: 'prospect',
