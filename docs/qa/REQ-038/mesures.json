@@ -1,16 +1,57 @@
 {
- "genere_le": "2026-10-04T16:26:09.339Z",
+ "genere_le": "2026-10-04T16:39:22.281Z",
  "etats": {
+  "pr-preview": {
+   "libelle": "lot REQ-038 (preview)",
+   "base": "https://deploy-preview-28--remarkable-dragon-364e2b.netlify.app",
+   "sha": "4c52120a07fde2ab365333de1f7b807a19003cde",
+   "largeurs": {
+    "390": {
+     "appelsVue": [
+      {
+       "statut": 200,
+       "url": "v_services_public?select=*"
+      }
+     ],
+     "appelsEnErreur": [],
+     "vue": {
+      "cartes": 380,
+      "nbPrix": 214,
+      "empreinteAffichage": "29277:♨️ Contrat entretien chauffe-eau annuel Visite annuelle pour prolonger la durée de vie de votre cumulus. ~1.5 h Engageme",
+      "messageVide": false,
+      "debordement": 0
+     },
+     "console": []
+    },
+    "1440": {
+     "appelsVue": [
+      {
+       "statut": 200,
+       "url": "v_services_public?select=*"
+      }
+     ],
+     "appelsEnErreur": [],
+     "vue": {
+      "cartes": 380,
+      "nbPrix": 214,
+      "empreinteAffichage": "29277:♨️ Contrat entretien chauffe-eau annuel Visite annuelle pour prolonger la durée de vie de votre cumulus. ~1.5 h Engageme",
+      "messageVide": false,
+      "debordement": 0
+     },
+     "console": []
+    }
+   }
+  },
   "prod-avant": {
    "libelle": "production (avant correctif)",
    "base": "https://depan59-62.fr",
-   "sha": "a7b91f61995bb8cb4003bee43b21626259e23daf",
+   "sha": "77620ab7a8cb1d0f3405094331b87f837490cdfb",
    "largeurs": {
     "390": {
      "appelsVue": [
       {
        "statut": 400,
-       "url": "v_services_public?select=*&_ts=1791131176268"
+       "url": "v_services_public?select=*&_ts=1791131978063"
       },
       {
        "statut": 200,
@@ -20,7 +61,7 @@
      "appelsEnErreur": [
       {
        "statut": 400,
-       "url": "v_services_public?select=*&_ts=1791131176268"
+       "url": "v_services_public?select=*&_ts=1791131978063"
       }
      ],
      "vue": {
@@ -39,7 +80,7 @@
      "appelsVue": [
       {
        "statut": 400,
-       "url": "v_services_public?select=*&_ts=1791131171065"
+       "url": "v_services_public?select=*&_ts=1791131973539"
       },
       {
        "statut": 200,
@@ -49,7 +90,7 @@
      "appelsEnErreur": [
       {
        "statut": 400,
-       "url": "v_services_public?select=*&_ts=1791131171065"
+       "url": "v_services_public?select=*&_ts=1791131973539"
       }
      ],
      "vue": {
@@ -69,12 +110,20 @@
  },
  "captures": [
   {
+   "fichier": "pr-preview-1440.jpg",
+   "sha256": "0e66958221501ecc"
+  },
+  {
+   "fichier": "pr-preview-390.jpg",
+   "sha256": "d75c5df1527e33ba"
+  },
+  {
    "fichier": "prod-avant-1440.jpg",
-   "sha256": "f1c621873da3fe28"
+   "sha256": "a7ba9aa463b6b250"
   },
   {
    "fichier": "prod-avant-390.jpg",
-   "sha256": "a3943cbc694c1c76"
+   "sha256": "33008dbf954c1d04"
   }
  ]
 }

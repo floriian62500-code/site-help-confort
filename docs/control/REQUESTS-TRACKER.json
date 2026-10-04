@@ -1065,7 +1065,7 @@
    "request_id": "REQ-20260926-038",
    "title": "Requete REST de /nos-prestations.html en 400 : le parametre _ts est lu comme un filtre",
    "priority": "P2",
-   "status": "IN_PROGRESS",
+   "status": "READY_FOR_CONTROL",
    "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
    "legacy_instruction_id": null,
    "created_at": "2026-10-04",
@@ -1080,15 +1080,15 @@
     "empreinte d'affichage identique (380 cartes, 214 elements de prix, empreinte 29277)",
     "rollback"
    ],
-   "latest_sha": "96e75d88f57dbe867fb8490dbdc2749093340a70 (bug present en production)",
-   "claude_outbox": "CLAUDE-2026-10-04-INVENTAIRE-PROD.md + CLAUDE-2026-10-04-PREPARATION-REQ-038-ET-SUITE.md",
+   "latest_sha": "4c52120a07fde2ab365333de1f7b807a19003cde (PR #28, feat/req-038-ts-postgrest, isolee depuis main 77620ab7 — 1 fichier)",
+   "claude_outbox": "CLAUDE-2026-10-04-REQ-038-TS.md",
    "human_gate": null,
-   "blocked_by": "Aucun blocage : REQ-036 fusionnée. Démarrer depuis main 77620ab7.",
-   "next_action": "Créer lot isolé depuis main 77620ab7 : retirer &_ts de l'appel v_services_public dans nos-prestations.html, garder no-store/headers, preview, preuves 1440/390 réseau+console+empreinte affichage, PASS/BLOCKED.",
+   "blocked_by": null,
+   "next_action": "Controle ChatGPT puis fusion et verification sur depan59-62.fr avant PROD_VERIFIED. Ensuite REQ-039.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": "Mesure en production le 2026-10-04 sur depan59-62.fr/nos-prestations.html : GET /rest/v1/v_services_public?select=*&_ts=1791127911925 renvoie 400 PGRST100 « failed to parse filter (1791127911925) ». Un second appel sans _ts repond 200 avec 34 lignes : l'affichage est correct (41 cartes, tarifs issus de la source), l'impact visible est nul, mais chaque visite paie un aller-retour perdu et une erreur de console qui masquerait un vrai echec.",
-   "decide_par": "Claude — constat de production, a arbitrer"
+   "closure_proof": "PASS au head 4c52120a07fde2ab365333de1f7b807a19003cde. Lot isole d'UN fichier. Mesure avant/apres en 1440 et 390 (docs/qa/REQ-038/) : les appels a v_services_public passent de DEUX (400 avec _ts puis 200 de repli) a UN SEUL en 200 ; les reponses REST en erreur de 1 a 0 ; les erreurs de console de 2 a 0. L'affichage est strictement identique, prouve par l'empreinte du texte rendu par toutes les cartes : 29277 caracteres au caractere pres avant comme apres, 380 cartes, 214 elements de prix, aucun debordement. Cause : PostgREST lit tout parametre non reserve comme un filtre de colonne, donc aucun renommage n'aurait suffi ; l'intention no-cache reste assuree par cache:'no-store' et les en-tetes. Aucune mutation Supabase. Aucun PROD_VERIFIED.",
+   "decide_par": "CHATGPT-2026-10-04-NO-IDLE-PIPELINE"
   },
   {
    "request_id": "REQ-20260926-039",
