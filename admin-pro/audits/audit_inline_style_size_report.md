@@ -1,11 +1,11 @@
 # Audit inline `<style>` size — Rapport
 
-_Généré le 2026-10-03 08:58_
+_Généré le 2026-10-04 09:27_
 
 ## Synthèse
 
 - Pages scannées : **137**
-- CSS inline cumulé : **2924.0 KB**
+- CSS inline cumulé : **2911.6 KB**
 - CSS inline moyen : **21.3 KB / page**
 - ❌ Pages > 50 KB : **27**
 - ⚠️ Pages 25–50 KB : **3**
@@ -14,13 +14,13 @@ _Généré le 2026-10-03 08:58_
 
 | # | Fichier | Poids `<style>` | Nb blocs |
 |---|---------|-----------------|----------|
-| 1 | ❌ `chauffagiste-saint-omer.html` | **73.6 KB** | 15 |
-| 2 | ❌ `plombier-saint-omer.html` | **70.2 KB** | 15 |
-| 3 | ❌ `menuisier-saint-omer.html` | **70.0 KB** | 14 |
-| 4 | ❌ `electricien-saint-omer.html` | **70.0 KB** | 14 |
-| 5 | ❌ `serrurier-saint-omer.html` | **70.0 KB** | 14 |
-| 6 | ❌ `vitrier-saint-omer.html` | **70.0 KB** | 14 |
-| 7 | ❌ `travaux-saint-omer.html` | **68.4 KB** | 13 |
+| 1 | ❌ `chauffagiste-saint-omer.html` | **72.8 KB** | 15 |
+| 2 | ❌ `plombier-saint-omer.html` | **68.3 KB** | 14 |
+| 3 | ❌ `menuisier-saint-omer.html` | **68.0 KB** | 13 |
+| 4 | ❌ `electricien-saint-omer.html` | **68.0 KB** | 13 |
+| 5 | ❌ `serrurier-saint-omer.html` | **68.0 KB** | 13 |
+| 6 | ❌ `vitrier-saint-omer.html` | **68.0 KB** | 13 |
+| 7 | ❌ `travaux-saint-omer.html` | **66.4 KB** | 12 |
 | 8 | ❌ `chauffagiste-boulogne-sur-mer.html` | **61.9 KB** | 10 |
 | 9 | ❌ `chauffagiste-calais.html` | **61.9 KB** | 10 |
 | 10 | ❌ `chauffagiste-dunkerque.html` | **61.9 KB** | 10 |
@@ -29,13 +29,13 @@ _Généré le 2026-10-03 08:58_
 
 Ces pages gagneraient à voir leur CSS inline extrait vers un fichier `.css` externe (cache partagé inter-pages, render-blocking réduit, taille HTML diminuée).
 
-- `chauffagiste-saint-omer.html` — **73.6 KB** (15 bloc(s) `<style>`)
-- `plombier-saint-omer.html` — **70.2 KB** (15 bloc(s) `<style>`)
-- `menuisier-saint-omer.html` — **70.0 KB** (14 bloc(s) `<style>`)
-- `electricien-saint-omer.html` — **70.0 KB** (14 bloc(s) `<style>`)
-- `serrurier-saint-omer.html` — **70.0 KB** (14 bloc(s) `<style>`)
-- `vitrier-saint-omer.html` — **70.0 KB** (14 bloc(s) `<style>`)
-- `travaux-saint-omer.html` — **68.4 KB** (13 bloc(s) `<style>`)
+- `chauffagiste-saint-omer.html` — **72.8 KB** (15 bloc(s) `<style>`)
+- `plombier-saint-omer.html` — **68.3 KB** (14 bloc(s) `<style>`)
+- `menuisier-saint-omer.html` — **68.0 KB** (13 bloc(s) `<style>`)
+- `electricien-saint-omer.html` — **68.0 KB** (13 bloc(s) `<style>`)
+- `serrurier-saint-omer.html` — **68.0 KB** (13 bloc(s) `<style>`)
+- `vitrier-saint-omer.html` — **68.0 KB** (13 bloc(s) `<style>`)
+- `travaux-saint-omer.html` — **66.4 KB** (12 bloc(s) `<style>`)
 - `chauffagiste-boulogne-sur-mer.html` — **61.9 KB** (10 bloc(s) `<style>`)
 - `chauffagiste-calais.html` — **61.9 KB** (10 bloc(s) `<style>`)
 - `chauffagiste-dunkerque.html` — **61.9 KB** (10 bloc(s) `<style>`)

@@ -1,9 +1,9 @@
 # 🖼️ Audit images hot-linkées CDN tiers — sonde #13
 
-_Généré le 2026-10-03 08:58_
+_Généré le 2026-10-04 09:27_
 
 - Pages HTML scannées : **116**
-- Fichiers JS scannés : **38**
+- Fichiers JS scannés : **39**
 - Hosts uniques détectés : **75**
   - Self (HC) : 1
   - Supabase projet : 1
@@ -535,11 +535,12 @@ Fichiers concernés : `partenaires.html`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
-### 📄 `www.w3.org` — 1 occurrence(s) (0 image(s))
+### 📄 `www.w3.org` — 2 occurrence(s) (0 image(s))
 
-Fichiers concernés : `assets/hc-before-after.js`
+Fichiers concernés : `assets/hc-before-after.js`, `assets/hc-contrats.js`
 
 - `assets/hc-before-after.js` → `http://www.w3.org/2000/svg\`
+- `assets/hc-contrats.js` → `http://www.w3.org/2000/svg\`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
@@ -570,9 +571,9 @@ Fichiers concernés : `assets/hc-map-zones.js`, `assets/hc-mini-zone.js`
 | `akw.fr` | 🔴 external | 1 | 0 |
 | `api-adresse.data.gouv.fr` | ⚪ trusted | 60 | 0 |
 | `bricard.com` | 🔴 external | 1 | 0 |
-| `btcbjwqiivhpwoszomhg.supabase.co` | 🔵 supabase | 124 | 47 |
+| `btcbjwqiivhpwoszomhg.supabase.co` | 🔵 supabase | 127 | 47 |
 | `carto.com` | 🔴 external | 1 | 0 |
-| `cdn.jsdelivr.net` | ⚪ trusted | 67 | 0 |
+| `cdn.jsdelivr.net` | ⚪ trusted | 68 | 0 |
 | `comap.aalberts-hfc.com` | 🔴 external | 1 | 0 |
 | `connect.facebook.net` | ⚪ trusted | 1 | 0 |
 | `coretecfloors.com` | 🔴 external | 1 | 0 |
@@ -639,6 +640,6 @@ Fichiers concernés : `assets/hc-map-zones.js`, `assets/hc-mini-zone.js`
 | `www.trenois.com` | 🔴 external | 1 | 0 |
 | `www.vachette.fr` | 🔴 external | 1 | 0 |
 | `www.velux.fr` | 🔴 external | 1 | 0 |
-| `www.w3.org` | 🔴 external | 1 | 0 |
+| `www.w3.org` | 🔴 external | 2 | 0 |
 | `www.winkhaus.com` | 🔴 external | 1 | 0 |
 | `{s}.basemaps.cartocdn.com` | 🔴 external | 2 | 2 |

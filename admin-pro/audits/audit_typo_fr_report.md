@@ -1,4 +1,4 @@
-# Audit typographie FR (espaces insécables) — 2026-10-03 08:58
+# Audit typographie FR (espaces insécables) — 2026-10-04 09:27
 
 Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une espace **insécable** (`&nbsp;`, U+00A0, U+202F). Seuil d'alerte : > **5** occurrences fautives par page.
 
@@ -7,7 +7,7 @@ Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une
 - Pages auditées : **116**
 - Pages clean (≤ seuil) : **44**
 - Pages avec alerte : **72**
-- Occurrences fautives cumulées : **1046**
+- Occurrences fautives cumulées : **1048**
 
 ## ⚠️ Pages au-delà du seuil
 
@@ -36,6 +36,7 @@ Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une
 | `ouverture-porte-claquee.html` | **16** | `…ns la serrure, clé perdue : nos serruriers intervien…` · `…dans la panique, vérifiez : numéro de SIRET, adresse…` · `…Décrivez votre situation : claquée, clé bloquée, se…` |
 | `blog-comment-detecter-fuite-eau-cachee.html` | **15** | `…fique Le test du compteur : 3 minutes pour confirmer…` · `…ntement, ne minimisez pas : une fuite de 1L/heure =…` · `…ous les éviers et lavabos : raccords, siphons, joint…` |
 | `blog-preparer-sa-maison-hiver-checklist.html` | **15** | `…er sa maison pour l'hiver : la checklist du pro | Bl…` · `…er sa maison pour l'hiver : la checklist du pro Sept…` · `…nts de fenêtres et portes : remplacer si écrasés Cal…` |
+| `chauffagiste-saint-omer.html` | **15** | `…retien annuel obligatoire : nos chauffagistes interv…` · `…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…` · `…panne ? Plus d'eau chaude ? Je vous mets en relation…` |
 | `contrats-entretien.html` | **15** | `…ioul ou adoucisseur d'eau : choisissez la formule qu…` · `…des formules… Cadre légal : Tarifs HT, TVA en vigueu…` · `…tement la visite annuelle ? Pour une chaudière gaz :…` |
 | `urgence.html` | **15** | `…rt-circuit, porte claquée : appelez-nous en priorité…` · `…l'assurance Appelez-nous : 03 66 10 01 34 → Guide c…` · `…) Code erreur sur l'écran ? Chauffage d'appoint sécu…` |
 | `depannage-saint-omer.html` | **14** | `…uffage, une porte bloquée ? Notre équipe basée à Sai…` · `…Omer, le bâti est typique : maisons audomaroises en…` · `…ans une fermette d'Arques : on intervient avec le bo…` |
@@ -45,7 +46,6 @@ Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une
 | `vitrier-saint-omer.html` | **14** | `…sur-mesure, sécurisation : nos vitriers intervienne…` · `…le Indép. 👋 Bris de glace ? Double vitrage à remplac…` · `…ouble vitrage à remplacer ? On envoie notre vitrier.…` |
 | `blog-entretien-chaudiere-annuel-obligatoire.html` | **13** | `…Entretien chaudière : pourquoi c'est obligatoi…` · `…ffage Entretien chaudière : pourquoi c'est obligatoi…` · `…e passe si vous l'oubliez ? Spoiler : amende ET refu…` |
 | `blog-pmr-adapter-salle-de-bain-senior.html` | **13** | `…e bain pour senior ou PMR : guide complet | Blog HEL…` · `…e bain pour senior ou PMR : guide complet Que ce soi…` · `…sage libre). Devant le WC : 80 cm × 130 cm de zone l…` |
-| `chauffagiste-saint-omer.html` | **13** | `…retien annuel obligatoire : nos chauffagistes interv…` · `…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…` · `…panne ? Plus d'eau chaude ? Je vous mets en relation…` |
 | `diagnostic-electrique.html` | **13** | `…ntion ⚖️ Qui est concerné ? Le DEO est obligatoire s…` · `…s ou rénovations récentes : l'attestation Consuel su…` · `…suffit. Durée de validité : 3 ans pour vente · 6 ans…` |
 | `travaux-saint-omer.html` | **13** | `…enuiserie, adaptation PMR : un seul interlocuteur po…` · `…👋 Un projet de rénovation ? Salle de bain, cuisine,…` · `…lle de bain, cuisine, PMR : parlons de votre chantie…` |
 | `blog-isolation-combles-aides-2026.html` | **12** | `…Isolation des combles : la meilleure rentabilité…` · `…ion Isolation des combles : la meilleure rentabilité…` · `…rgétique le plus rentable : amortissement en 3-5 ans…` |

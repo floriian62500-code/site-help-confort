@@ -1,6 +1,6 @@
 # 📐 Audit dimensions images (PIL) — extension CLS prevention
 
-_Généré le 2026-10-03 08:58_
+_Généré le 2026-10-04 09:27_
 
 - Pages scannées : **116**
 - `<img>` avec width+height : **1378**
@@ -51,11 +51,11 @@ Recommandation : rapatrier en local (cf. `audit_hotlink_cdn.py`) puis re-runner.
 - L1403 — `'+r.image+'` (fichier introuvable sur disque)
 
 ### `chauffagiste-saint-omer.html` — 2
-- L1485 — `'+r.image+'` (fichier introuvable sur disque)
-- L1812 — `' + escapeHtml(s.logo_url) + '` (fichier introuvable sur disque)
+- L1383 — `'+r.image+'` (fichier introuvable sur disque)
+- L1710 — `' + escapeHtml(s.logo_url) + '` (fichier introuvable sur disque)
 
 ### `contrats-entretien.html` — 1
-- L1850 — `' + p.data + '` (fichier introuvable sur disque)
+- L1878 — `' + p.data + '` (fichier introuvable sur disque)
 
 ### `electricien-boulogne-sur-mer.html` — 1
 - L1200 — `'+r.image+'` (fichier introuvable sur disque)
@@ -88,7 +88,7 @@ Recommandation : rapatrier en local (cf. `audit_hotlink_cdn.py`) puis re-runner.
 
 ### `nos-prestations.html` — 2
 - L941 — `' + src + '` (fichier introuvable sur disque)
-- L1470 — `' + u + '` (fichier introuvable sur disque)
+- L1474 — `' + u + '` (fichier introuvable sur disque)
 
 ### `partenaire.html` — 1
 - L126 — `' + esc(p.logo_url) + '` (fichier introuvable sur disque)
@@ -156,7 +156,7 @@ Recommandation : rapatrier en local (cf. `audit_hotlink_cdn.py`) puis re-runner.
 Ces `<img>` reçoivent leur `src` via interpolation JS — dimensions doivent
 être ajoutées soit en dur dans le template, soit calculées via `onload`.
 
-- `nos-prestations.html` (3) : L1438, L1565, L1579
+- `nos-prestations.html` (3) : L1442, L1569, L1583
 - `realisation.html` (4) : L282, L283, L289, L354
 
 ---

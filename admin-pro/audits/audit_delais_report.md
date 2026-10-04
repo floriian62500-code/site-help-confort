@@ -1,6 +1,6 @@
 # ⏱️ Audit délais d'intervention promis — Sonde IA #43
 
-*Généré le 2026-10-03 08:57 — `admin-pro/audits/audit_delais.py`*
+*Généré le 2026-10-04 09:26 — `admin-pro/audits/audit_delais.py`*
 
 **Pages scannées** : 118
 **Findings (promesses commerciales détectées)** : **117**
@@ -36,16 +36,16 @@ Décision Florian 15 mai 2026 : retirer tous les délais d'intervention promis d
 | `chauffagiste-dunkerque.html` | 973 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
 | `chauffagiste-marck.html` | 232 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
 | `chauffagiste-outreau.html` | 232 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
-| `chauffagiste-saint-omer.html` | 983 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
-| `chauffagiste-saint-omer.html` | 983 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
-| `chauffagiste-saint-omer.html` | 983 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
+| `chauffagiste-saint-omer.html` | 985 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
+| `chauffagiste-saint-omer.html` | 985 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
+| `chauffagiste-saint-omer.html` | 985 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
 | `chauffagiste-wimereux.html` | 232 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
 | `contact.html` | 463 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.94rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.74rem;color… |
 | `contact.html` | 463 | engagement « sous X (h/min) » | `sous 24h` | …us adressons un <strong>devis gratuit et détaillé</strong> (sous 24h ouvrées pour les demandes simples)</li> <li>Vous décid… |
-| `contrats-entretien.html` | 929 | engagement « sous X (h/min) » | `sous 24h` | …> · Renseignez le formulaire et nous validons votre dossier sous 24h ouvrées.</p> </div> <form id="sousForm" onsubmit="retu… |
-| `contrats-entretien.html` | 929 | engagement « sous X (h/min) » | `sous 24h` | …oordonnées</h4> <p class="sw-step-hint">Pour vous rappeler sous 24h ouvrées et envoyer votre contrat.</p> </div> <div style="… |
-| `contrats-entretien.html` | 929 | engagement « sous X (h/min) » | `sous 24h` | …ons puis envoyez votre demande. Un conseiller vous rappelle sous 24h ouvrées pour planifier la visite technique.</p> </div>… |
-| `contrats-entretien.html` | 929 | engagement « sous X (h/min) » | `sous 24h` | …ata-validate="checked"> <span>J'accepte d'être contacté(e) sous 24h ouvrées pour finaliser mon contrat. Je reconnais que ce for… |
+| `contrats-entretien.html` | 956 | engagement « sous X (h/min) » | `sous 24h` | …> · Renseignez le formulaire et nous validons votre dossier sous 24h ouvrées.</p> </div> <form id="sousForm" onsubmit="retu… |
+| `contrats-entretien.html` | 956 | engagement « sous X (h/min) » | `sous 24h` | …oordonnées</h4> <p class="sw-step-hint">Pour vous rappeler sous 24h ouvrées et envoyer votre contrat.</p> </div> <div style="… |
+| `contrats-entretien.html` | 956 | engagement « sous X (h/min) » | `sous 24h` | …ons puis envoyez votre demande. Un conseiller vous rappelle sous 24h ouvrées pour planifier la visite technique.</p> </div>… |
+| `contrats-entretien.html` | 956 | engagement « sous X (h/min) » | `sous 24h` | …ata-validate="checked"> <span>J'accepte d'être contacté(e) sous 24h ouvrées pour finaliser mon contrat. Je reconnais que ce for… |
 | `diagnostic-electrique.html` | 57 | engagement « sous X (h/min) » | `sous 48h` | …tion de plus de 15 ans. Conforme arrêté 28/09/2017. Rapport sous 48h ouvrées.</p> <a href="tel:+33366100134" class="de-cta">📞… |
 | `diagnostic-electrique.html` | 57 | engagement « sous X (h/min) » | `sous 48h` | …<p style="font-size:.92rem;color:#64748b">📄 Rapport remis sous 48h ouvrées. Compatible toutes notariées + agences immobilières… |
 | `diagnostic-electrique.html` | 57 | engagement « sous X (h/min) » | `sous 48h` | …ur T2-T4 standard. Tarif annoncé avant déplacement, rapport sous 48h ouvrées.</p> </div> <div class="de-faq"> <h3>Mon install… |

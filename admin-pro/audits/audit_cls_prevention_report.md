@@ -1,6 +1,6 @@
 # 📐 Audit CLS prevention (img width/height) — sonde #56
 
-_Généré le 2026-10-03 08:58_
+_Généré le 2026-10-04 09:27_
 
 - Pages scannées : **116**
 - `<img>` total : **1438**
@@ -38,12 +38,12 @@ Taux de couverture dimensions : **95.8%**
 
 ### `chauffagiste-saint-omer.html` — 2 `<img>` à corriger
 
-- L1485 (width+height manquant) — `'+r.image+'`
-- L1812 (width+height manquant) — `' + escapeHtml(s.logo_url) + '`
+- L1383 (width+height manquant) — `'+r.image+'`
+- L1710 (width+height manquant) — `' + escapeHtml(s.logo_url) + '`
 
 ### `contrats-entretien.html` — 1 `<img>` à corriger
 
-- L1850 (width+height manquant) — `' + p.data + '`
+- L1878 (width+height manquant) — `' + p.data + '`
 
 ### `electricien-boulogne-sur-mer.html` — 1 `<img>` à corriger
 
@@ -89,10 +89,10 @@ Taux de couverture dimensions : **95.8%**
 ### `nos-prestations.html` — 5 `<img>` à corriger
 
 - L941 (width+height manquant) — `' + src + '`
-- L1438 (width+height manquant) — `${imgUrl}`
-- L1470 (width+height manquant) — `' + u + '`
-- L1565 (width+height manquant) — `${svc.image_url || 'https://btcbjwqiivhpwoszomhg.supabase.co/storage/v1/object/p`
-- L1579 (width+height manquant) — `${variantPhoto}`
+- L1442 (width+height manquant) — `${imgUrl}`
+- L1474 (width+height manquant) — `' + u + '`
+- L1569 (width+height manquant) — `${svc.image_url || 'https://btcbjwqiivhpwoszomhg.supabase.co/storage/v1/object/p`
+- L1583 (width+height manquant) — `${variantPhoto}`
 
 ### `partenaire.html` — 1 `<img>` à corriger
 

@@ -1,10 +1,10 @@
 # Audit Tarifs — Sonde IA #28
 
-_Généré le 2026-10-03 08:57 — `admin-pro/audits/audit_tarifs.py`_
+_Généré le 2026-10-04 09:26 — `admin-pro/audits/audit_tarifs.py`_
 
 - Pages publiques scannées : **118**
 - Montants validés (TARIFS_REFERENCE.md) : **53**
-- Alertes : **196**
+- Alertes : **193**
 - Erreurs lecture : **0**
 
 ## Règle
@@ -121,9 +121,6 @@ Tout montant `\d+\s*€` visible doit :
 | `chauffagiste-dunkerque.html` | 1281 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
 | `chauffagiste-dunkerque.html` | 1299 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
 | `chauffagiste-dunkerque.html` | 1316 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
-| `chauffagiste-saint-omer.html` | 1363 | **144 €** | ="ce-price">12 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 144 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'es |
-| `chauffagiste-saint-omer.html` | 1381 | **192 €** | ="ce-price">16 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 192 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">L'en |
-| `chauffagiste-saint-omer.html` | 1398 | **324 €** | ="ce-price">27 € HT<small> /mois</small></div> ⏎  <div class="ce-price-year">soit 324 € HT/an</div> ⏎  </div> ⏎  <p class="ce-baseline">Tout |
 | `debouchage-canalisation.html` | 290 | **180 €** | papier accumulé, cheveux). Intervention courte (30 min à 1h) — tarif moyen 90 à 180€ TTC sur Saint-Omer / Dunkerque.</p> ⏎  ⏎ <h3>2. Hydrocu |
 | `debouchage-canalisation.html` | 293 | **400 €** | utile aussi en préventif après plusieurs bouchons rapprochés. Tarif moyen 180 à 400€ TTC selon l'accessibilité.</p> ⏎  ⏎ <h3>3. Inspection c |
 | `debouchage-canalisation.html` | 304 | **180 €** | c55e"> ⏎     <h3 style="color:#22c55e">Débouchage simple</h3> ⏎     <p><strong>90 à 180€ TTC</strong><br>Furet WC, évier, lavabo. Interventi |
@@ -245,7 +242,7 @@ Tout montant `\d+\s*€` visible doit :
 | `chauffagiste-dunkerque.html` | 9 | 0 | 0 | 0 | **3** |
 | `chauffagiste-marck.html` | 0 | 0 | 0 | 0 | **0** |
 | `chauffagiste-outreau.html` | 0 | 0 | 0 | 0 | **0** |
-| `chauffagiste-saint-omer.html` | 9 | 0 | 0 | 0 | **3** |
+| `chauffagiste-saint-omer.html` | 0 | 0 | 0 | 0 | **0** |
 | `chauffagiste-wimereux.html` | 0 | 0 | 0 | 0 | **0** |
 | `contact.html` | 0 | 0 | 0 | 0 | **0** |
 | `contrats-entretien.html` | 3 | 0 | 0 | 2 | **0** |
