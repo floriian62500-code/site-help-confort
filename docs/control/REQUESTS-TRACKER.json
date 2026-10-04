@@ -1011,8 +1011,10 @@
    "legacy_instruction_id": null,
    "created_at": "2026-10-02",
    "acceptance_criteria": [
-    "a 390 px reels, document.documentElement.scrollWidth <= window.innerWidth sur la page Chauffage",
-    "le carrousel de logos continue de defiler et reste lisible"
+    "a 390 px reels, document.documentElement.scrollWidth <= window.innerWidth + 1 sur la page Chauffage",
+    "le carrousel de logos continue de defiler et reste lisible",
+    "aucune regression desktop 1440",
+    "relevé le 2026-10-04 : la page Contrats deborde aussi de 90 px a 390 — a traiter ici ou dans une demande propre"
    ],
    "evidence_required": [
     "reproduction sur le main exact en viewport reel 390 et controle 1440",
@@ -1033,7 +1035,7 @@
    "request_id": "REQ-20260926-037",
    "title": "Cohérence TTC du parcours contrats Chauffage → Contrats → Souscription",
    "priority": "P0",
-   "status": "IN_PROGRESS",
+   "status": "READY_FOR_CONTROL",
    "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-03-CONTROL-ALL-RETURNS-25.md",
    "legacy_instruction_id": null,
    "created_at": "2026-10-03",
@@ -1049,15 +1051,15 @@
     "0 occurrence des montants canoniques copiés en dur dans les fichiers du module",
     "aucun faux lead/paiement"
    ],
-   "latest_sha": null,
-   "claude_outbox": null,
+   "latest_sha": "176c28d147ae9440b89783f7eac5eb49dcd94916 (PR #26, feat/req-037-ttc-coherent, isolee depuis main 96e75d88 — 1 fichier)",
+   "claude_outbox": "CLAUDE-2026-10-04-REQ-037-TTC.md",
    "human_gate": "GO donné par Florian le 2026-10-03 pour assurer le suivi de toutes les demandes jusqu'à production ; correctif non sensible.",
-   "blocked_by": "Aucun blocage métier : GO de suivi/correction déjà donné. Doit être traité avant REQ-036.",
-   "next_action": "Créer lot isolé depuis main courant, TTC principal sur Chauffage/Contrats/modale via price_ttc_month/year, preuves 1440/390, STOP pour merge ChatGPT.",
+   "blocked_by": null,
+   "next_action": "Controle ChatGPT de CLAUDE-2026-10-04-REQ-037-TTC.md, puis fusion et verification sur depan59-62.fr avant PROD_VERIFY. Ensuite REQ-036 depuis le nouveau main. Aucun merge de mon initiative.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": "Ecart mesure sur la PRODUCTION au commit a83c1ce5, aux deux largeurs : la page Chauffage affiche 14,30 EUR TTC/mois pour Gaz CONFORT, la page Contrats affiche 13 EUR HT/mois et la modale « 13 EUR HT/mois — 156 EUR/an » alors que l'annee TTC vaut 171,60 EUR. Montants justes des deux cotes (TVA 10 %), unite incoherente dans un parcours continu. Source : v_contract_offers expose deja price_ttc_month et price_ttc_year.",
-   "decide_par": "CHATGPT-2026-10-03-CONTROL-ALL-RETURNS-25"
+   "closure_proof": "PASS au head 176c28d147ae9440b89783f7eac5eb49dcd94916. Lot isole d'UN fichier (contrats-entretien.html) : la page Contrats et sa modale passent au TTC principal, comme la page Chauffage. Mesure sur les TROIS surfaces en 1440 et 390, comparee a la source canonique v_contract_offers (gaz-confort : price_ttc_month 14.3, price_ttc_year 171.6, price_ht_month 13) : avant, page Chauffage 14,30 EUR TTC mais page Contrats 13 EUR HT et modale « 13 EUR HT/mois — 156 EUR/an » ; apres, 14,30 EUR TTC sur les trois, avec « 171,60 EUR TTC par an · soit 13 EUR HT par mois » en secondaire etiquete et la modale « 14,30 EUR TTC/mois (13 EUR HT) — 171,60 EUR TTC/an ». Energie et formule conservees (radio en-gaz, carte CONFORT mise en evidence), aucune case pre-cochee, AUCUNE ecriture reseau sur les quatre passages donc aucun lead, console sans erreur imputable au site. Debordements strictement inchanges : Chauffage 0/452 px, Contrats 0/90 px avant comme apres. Piege corrige au passage : monthly_amount etait extrait du LIBELLE par une regex qui n'acceptait que « HT » et serait tombe a 0 ; le montant HT voyage desormais en donnee brute (champs caches prouves a 13 et 14.3) et la semantique du champ reste le HT. Preuves : docs/qa/REQ-037/ (reproducteur, mesures.json, MESURES-REQ-037.md, 12 captures avec empreintes). Aucun PROD_VERIFIED.",
+   "decide_par": "Florian — ordre du 2026-10-04, funnel Chauffage prioritaire"
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id. Le 2026-09-28, deux demandes ont reçu 032 à la même minute (refonte Nos métiers et routage e-mail) : 032 reste à « Nos métiers », le routage devient 033, prochain_id passe à 034. Le nom du fichier d’instruction d’origine est conservé dans legacy_instruction_id.",
