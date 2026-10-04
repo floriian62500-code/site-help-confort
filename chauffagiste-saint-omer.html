@@ -303,7 +303,9 @@
 .m-modal-success-icon{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#1aa260,#22c55e);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 8px 24px rgba(26,162,96,.30)}
 </style>
 <script src="assets/hc-fournisseurs.js?v=20260603" defer></script>
-<style>.hc-topbar{min-height:44px}(max-width:1023px){.hc-topbar{min-height:60px}}(max-width:767px){.hc-topbar{min-height:86px}}(max-width:429px){.hc-topbar{min-height:136px}}</style></head>
+<style>.hc-topbar{min-height:44px}(max-width:1023px){.hc-topbar{min-height:60px}}(max-width:767px){.hc-topbar{min-height:86px}}(max-width:429px){.hc-topbar{min-height:136px}}</style><link rel="stylesheet" href="/assets/hc-contrats.css?v=d7bc2975ef">
+<script src="/assets/hc-contrats.js?v=5767dd21bd" defer></script>
+</head>
 <body>
 <a href="#main-content" class="hc-skip-link">Aller au contenu principal</a>
 <!-- TOPBAR globale : badge réseau + zones + horaires (visible toutes pages) -->
@@ -1280,141 +1282,37 @@ if (document.fonts && document.fonts.ready) {
  .ce-card.is-featured .ce-cta:hover{box-shadow:0 14px 28px rgba(255,107,26,.4)}
  .ce-note{font-size:.78rem;color:#94a3b8;margin-top:12px;line-height:1.4;display:block}
 </style>
-<section class="m-section m-contrats-section" style="background:linear-gradient(180deg,#FFF9F0 0%,#FFF3E0 100%);padding:48px 0" aria-label="Contrats d'entretien chauffage">
+<!-- ============ CONTRATS D'ENTRETIEN — module complet, sur cette page ============
+     REQ-20260926-017. La section précédente affichait des boutons « Souscrire » qui envoyaient en
+     réalité sur une deuxième page, et elle citait des prix qui ne sont plus ceux du back-office.
+     Le module complet est maintenant ici même, monté par assets/hc-contrats.js à partir de la
+     source canonique v_contract_offers : aucun prix n'est écrit dans cette page. -->
+<section class="ct-contrats-page" id="entretien" aria-labelledby="contratsTitre">
  <div class="container">
- <div class="m-head" style="text-align:center;margin-bottom:12px">
- <span class="eyebrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Contrats d'entretien</span>
- <h2>Profitez de notre <em>tranquillité annuelle</em></h2>
- <p>Choisissez votre énergie, puis votre formule. Engagement 1 an renouvelable — résiliable à chaque échéance.</p>
+  <span class="ctp-eyebrow">Contrats d'entretien</span>
+  <h2 class="ct-h2" id="contratsTitre">Entretenez votre chaudière sans y penser</h2>
+  <p class="ct-intro">Gaz ou fioul, nos techniciens salariés s'occupent de tout : la visite annuelle,
+   l'attestation à remettre à votre assureur, et le rappel un mois avant la date. Comparez les formules ici, puis choisissez celle qui vous convient : votre sélection est conservée
+   sur la page contrat pour poursuivre sans rupture de parcours.</p>
+  <a class="ct-scroll-down" href="#formules" aria-label="Voir les formules de contrat">
+   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+  </a>
  </div>
-
- <!-- Switch Gaz / Fioul -->
- <div class="ce-switch" role="tablist" aria-label="Choisir l'énergie">
- <button type="button" class="ce-energy-btn is-active" data-energy="gaz" role="tab" aria-selected="true">⚡ Gaz</button>
- <button type="button" class="ce-energy-btn" data-energy="fioul" role="tab" aria-selected="false">🛢️ Fioul</button>
- </div>
-
- <!-- Pane GAZ -->
- <div class="ce-pane is-active" data-pane="gaz">
- <div class="ce-grid">
- <div class="ce-card">
- <div class="ce-eyebrow">Formule Gaz</div>
- <h3 class="ce-name">BASIC</h3>
- <div class="ce-price-block">
- <div class="ce-price">9 € HT<small> /mois</small></div>
- <div class="ce-price-year">soit 108 € HT/an</div>
- </div>
- <p class="ce-baseline">L'essentiel pour être en règle.</p>
- <ul class="ce-list">
- <li class="yes">Visite annuelle <strong>+ attestation officielle</strong></li>
- <li class="yes">Rappel automatique 1 mois avant la date</li>
- <li class="yes">Conformité décret n° 2009-649</li>
- <li class="no">Dépannages facturés en sus</li>
- <li class="no">Pièces de rechange non incluses</li>
- </ul>
- <a href="contrats-entretien.html#basic" class="ce-cta">Souscrire BASIC</a>
- </div>
- <div class="ce-card is-featured">
- <span class="ce-badge">★ Le plus choisi</span>
- <div class="ce-eyebrow">Formule Gaz</div>
- <h3 class="ce-name">CONFORT</h3>
- <div class="ce-price-block">
- <div class="ce-price">13 € HT<small> /mois</small></div>
- <div class="ce-price-year">soit 156 € HT/an</div>
- </div>
- <p class="ce-baseline">L'entretien + la tranquillité dépannage.</p>
- <ul class="ce-list">
- <li class="yes">Tout <strong>BASIC</strong> inclus</li>
- <li class="yes"><strong>2 dépannages/an</strong> (MO + déplacement offerts)</li>
- <li class="yes">Intervention sous <strong>48 h max</strong></li>
- <li class="yes">Accès prioritaire en saison de chauffe</li>
- <li class="no">Pièces de rechange non incluses</li>
- </ul>
- <a href="contrats-entretien.html#confort" class="ce-cta">Souscrire CONFORT</a>
- </div>
- <div class="ce-card is-securite">
- <div class="ce-eyebrow">Formule Gaz</div>
- <h3 class="ce-name">SÉCURITÉ</h3>
- <div class="ce-price-block">
- <div class="ce-price">23 € HT<small> /mois</small></div>
- <div class="ce-price-year">soit 276 € HT/an</div>
- </div>
- <p class="ce-baseline">Tout compris, plus rien à payer en cas de panne.</p>
- <ul class="ce-list">
- <li class="yes">Tout <strong>CONFORT</strong> inclus</li>
- <li class="yes"><strong>Pièces incluses sans frais</strong> (carte, sonde, vase, circulateur…)</li>
- <li class="yes">Intervention sous <strong>24 h max</strong></li>
- <li class="yes">Sérénité totale, zéro mauvaise surprise</li>
- </ul>
- <small class="ce-note">Réservée aux chaudières &lt; 5 ans, après contrôle technique. Hors corps de chauffe, échangeur principal, ballon ECS et pièces non disponibles fabricant.</small>
- <a href="contrats-entretien.html#securite" class="ce-cta" style="margin-top:14px">Souscrire SÉCURITÉ</a>
- </div>
- </div>
- </div>
-
- <!-- Pane FIOUL -->
- <div class="ce-pane" data-pane="fioul">
- <div class="ce-grid">
- <div class="ce-card">
- <div class="ce-eyebrow">Formule Fioul</div>
- <h3 class="ce-name">BASIC</h3>
- <div class="ce-price-block">
- <div class="ce-price">12 € HT<small> /mois</small></div>
- <div class="ce-price-year">soit 144 € HT/an</div>
- </div>
- <p class="ce-baseline">L'essentiel pour être en règle.</p>
- <ul class="ce-list">
- <li class="yes">Visite annuelle fioul <strong>+ attestation</strong></li>
- <li class="yes">Nettoyage brûleur, foyer, chambre de combustion</li>
- <li class="yes">Mesures de combustion et contrôle gicleur</li>
- <li class="no">Dépannages facturés en sus</li>
- <li class="no">Pièces de rechange non incluses</li>
- </ul>
- <a href="contrats-entretien.html#basic" class="ce-cta">Souscrire BASIC</a>
- </div>
- <div class="ce-card is-featured">
- <span class="ce-badge">★ Le plus choisi</span>
- <div class="ce-eyebrow">Formule Fioul</div>
- <h3 class="ce-name">CONFORT</h3>
- <div class="ce-price-block">
- <div class="ce-price">16 € HT<small> /mois</small></div>
- <div class="ce-price-year">soit 192 € HT/an</div>
- </div>
- <p class="ce-baseline">L'entretien + la tranquillité dépannage.</p>
- <ul class="ce-list">
- <li class="yes">Tout <strong>BASIC</strong> inclus</li>
- <li class="yes"><strong>2 dépannages/an</strong> (MO + déplacement offerts)</li>
- <li class="yes">Intervention sous <strong>48 h max</strong></li>
- <li class="yes">Accès prioritaire en saison de chauffe</li>
- <li class="no">Pièces de rechange non incluses</li>
- </ul>
- <a href="contrats-entretien.html#confort" class="ce-cta">Souscrire CONFORT</a>
- </div>
- <div class="ce-card is-securite">
- <div class="ce-eyebrow">Formule Fioul</div>
- <h3 class="ce-name">SÉCURITÉ</h3>
- <div class="ce-price-block">
- <div class="ce-price">27 € HT<small> /mois</small></div>
- <div class="ce-price-year">soit 324 € HT/an</div>
- </div>
- <p class="ce-baseline">Tout compris, plus rien à payer en cas de panne.</p>
- <ul class="ce-list">
- <li class="yes">Tout <strong>CONFORT</strong> inclus</li>
- <li class="yes"><strong>Pièces incluses sans frais</strong> (gicleur, électrodes, pompe…)</li>
- <li class="yes">Intervention sous <strong>24 h max</strong></li>
- <li class="yes">Sérénité totale, zéro mauvaise surprise</li>
- </ul>
- <small class="ce-note">Réservée aux chaudières &lt; 5 ans, après contrôle technique. Hors corps de chauffe et pièces non disponibles fabricant.</small>
- <a href="contrats-entretien.html#securite" class="ce-cta" style="margin-top:14px">Souscrire SÉCURITÉ</a>
- </div>
- </div>
- </div>
-
- <p style="text-align:center;margin-top:28px;color:#475569;font-size:.88rem">
- <a href="contrats-entretien.html" style="color:#FF6B1A;font-weight:700;text-decoration:none">Comparer toutes les formules en détail →</a>
- </p>
- </div>
+ <div data-hc-contrats data-hc-contrats-mode="handoff"></div>
 </section>
+<style>
+ .ct-contrats-page{scroll-margin-top:96px;padding:56px 0 48px;background:linear-gradient(180deg,#FFFFFF,#F3F5F8)}
+ .ct-contrats-page .ctp-eyebrow{display:inline-block;font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#B83E0A;margin-bottom:10px}
+ .ct-contrats-page .ct-h2{margin:0;font-size:clamp(1.6rem,3.4vw,2.2rem);font-weight:800;color:#0A1428;letter-spacing:-.02em}
+ .ct-contrats-page .ct-intro{margin:12px 0 0;max-width:680px;font-size:1rem;line-height:1.62;color:#46566E}
+ .ct-scroll-down{width:46px;height:46px;margin:22px auto 0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#0A1428;background:#fff;border:1px solid #DCE6EE;box-shadow:0 10px 24px rgba(10,20,40,.12);text-decoration:none;animation:ctScrollBounce 1.8s ease-in-out infinite;transition:transform .2s ease,box-shadow .2s ease}
+ .ct-scroll-down:hover{transform:translateY(3px);box-shadow:0 14px 30px rgba(10,20,40,.16)}
+ .ct-scroll-down:focus-visible{outline:3px solid #1FC4F0;outline-offset:3px}
+ @keyframes ctScrollBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+ @media (prefers-reduced-motion:reduce){.ct-scroll-down{animation:none}}
+ .ct-contrats-page .ct-offers{padding-top:20px}
+</style>
+
 <script>
 (function(){
  var btns = document.querySelectorAll('.ce-energy-btn');
