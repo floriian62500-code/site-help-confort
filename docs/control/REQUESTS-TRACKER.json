@@ -465,14 +465,14 @@
     "captures 1440 et 390 : page Chauffage, transition vers Contrats, modale ouverte",
     "empreintes sha256 des captures reellement produites par le script"
    ],
-   "latest_sha": "39cd0037a42eaa031c2817bc898bc885b3ed46c3 (PR #23 resynchronisee sur le main courant dc9b39eb7e9ee9edd73684d324fee7aa5911016d, sans force-push ; 4 fichiers, 0 commit de retard)",
-   "claude_outbox": "CLAUDE-2026-10-03-REQ-017-PR23-PREUVE-FINALE.md + CLAUDE-2026-10-03-REQ-017-PR23-RESYNC-PREUVES.md",
-   "human_gate": "GO production exprimé par Florian le 2026-10-03, conditionné par le protocole projet : preview + preuves 1440/390 + parcours complet + rollback contrôlés avant merge/deploy.",
+   "latest_sha": "a83c1ce50645f3115e15cf31e5249151eef803d0 (commit de fusion dans main, parents dc9b39eb + 39cd0037 — PR #23 fusionnee par Florian le 2026-10-04 a 09:18)",
+   "claude_outbox": "CLAUDE-2026-10-03-REQ-017-PR23-RESYNC-PREUVES.md + CLAUDE-2026-10-04-REQ-017-MISE-EN-PRODUCTION.md",
+   "human_gate": "GO production exerce par Florian le 2026-10-04 : PR #23 fusionnee dans main (a83c1ce50645f3115e15cf31e5249151eef803d0), hors de l'ordre fixe au controle n25 (PR #24 d'abord, REQ-037 avant production).",
    "blocked_by": "Ordre de release : PR #24 doit être clôturée d'abord. Puis resynchroniser PR #23 sur le nouveau main. REQ-037 (affichage TTC cohérent) doit être intégré et prouvé avant merge.",
-   "next_action": "1) finir PR #24 ; 2) après merge #24, fusionner main dans PR #23 ; 3) intégrer REQ-037 sans prix en dur ; 4) rejouer preuves 1440/390 et parcours complet au head exact ; 5) contrôle ChatGPT puis merge sous GO utilisateur du 2026-10-03 si PASS.",
+   "next_action": "PROD_VERIFY a poser par ChatGPT : le module est en ligne et mesure sur le site reel (docs/qa/REQ-017-prod/). Priorite immediate cote Claude : REQ-037, car l'incoherence TTC/HT est desormais publique.",
    "attempt": 9,
    "closed_at": null,
-   "closure_proof": "Paquet de preuves PR #23 publie (docs/qa/REQ-017-pr23/ : mesures.mjs, mesures.json, MESURES-PR23.md, 10 captures JPEG avec empreintes). PASS sur les criteres A, B, D, E du controle du 2026-10-03, au head 46906e4ec548fc11c31796b8a86f067687840578 : module [0 -> 390] et [0 -> 1440] avec 0 descendant hors cadre ; onglets Gaz (actif)/Fioul/Adoucisseur ; 7 cartes = les 7 offres actives de v_contract_offers ; prix 9,90/14,30/25,30 EUR TTC lus dans la vue et 0 prix en dur dans la page ; ancien bloc .ce-card de 6 cartes en production -> 0 sur la preview, donc aucune double presentation ; transition Gaz CONFORT prouvee aux deux largeurs (URL avec parametres, radio en-gaz cochee, pane-gaz visible, carte CONFORT mise en evidence, CTA visible ET focalisable) ; modale ouverte sur la bonne energie/formule/prix, 0 case pre-cochee, 0 champ pre-rempli, scroll vertical operant, AUCUN ENVOI ; /contrats-entretien.html et /contrats-entretien en 200, 11 liens historiques intacts ; aucune erreur console imputable au site. Deux defauts mesures sont PREEXISTANTS, prouves identiques sur la production : le debordement de 452 px a 390 px (.hcf-track large de 2304 px, ancetres en overflow-x visible) et le clipping interne de l'indicateur d'etapes .sw-pstep dans la modale a 390 px. Un point reste a trancher par Florian : la page Chauffage affiche le TTC (14,30 EUR) et la page Contrats le HT (13 EUR) pour le meme contrat. Le seul blocage trouve (4 commits de retard sur main, qui aurait annule REQ-007 en production) est leve : origin/main a ete fusionne DANS la branche, sans force-push, head 39cd0037a42eaa031c2817bc898bc885b3ed46c3, et toutes les preuves ont ete refaites a ce head. Verifie sur les deux sites servis : le marqueur hc-metier-journey passe de 10 a 0 sur la preview, 0 en production. Le lot reste isole a 4 fichiers. Aucun PROD_VERIFIED.",
+   "closure_proof": "Fusionnee en production le 2026-10-04 (commit a83c1ce50645f3115e15cf31e5249151eef803d0). Mesures sur le site reel, meme reproducteur, artefacts dans docs/qa/REQ-017-prod/ : module [0->1440] et [0->390] avec 0 descendant hors cadre ; ancien bloc .ce-card a 0 ; prix 9,90/14,30/25,30 EUR TTC lus dans v_contract_offers ; onglets Gaz (actif)/Fioul/Adoucisseur ; transition Gaz CONFORT vers /contrats-entretien.html?energie=gaz&formule=confort#formules avec en-gaz coche, pane-gaz visible, carte CONFORT mise en avant et CTA focalisable aux deux largeurs ; souscription ouverte sur la bonne energie et la bonne formule, aucun envoi ; /contrats-entretien.html et /contrats-entretien en 200 ; 11 liens historiques intacts ; aucune erreur console imputable au site ; REQ-007 preservee (hc-metier-journey absent du HTML servi). Restent en ligne et inchanges : l'incoherence TTC/HT (REQ-037), le debordement de 452 px a 390 (REQ-036) et le rognage de l'indicateur d'etapes de la modale a 390, tous trois prouves preexistants ou hors lot. Aucun PROD_VERIFIED declare par Claude.",
    "decide_par": "CHATGPT-2026-10-03-REQ-017-FINAL-PROOF-PR23"
   },
   {
@@ -1033,7 +1033,7 @@
    "request_id": "REQ-20260926-037",
    "title": "Cohérence TTC du parcours contrats Chauffage → Contrats → Souscription",
    "priority": "P1",
-   "status": "OPEN",
+   "status": "WAITING_FLORIAN_GO",
    "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-03-CONTROL-ALL-RETURNS-25.md",
    "legacy_instruction_id": null,
    "created_at": "2026-10-03",
@@ -1052,11 +1052,11 @@
    "latest_sha": null,
    "claude_outbox": null,
    "human_gate": "GO donné par Florian le 2026-10-03 pour assurer le suivi de toutes les demandes jusqu'à production ; correctif non sensible.",
-   "blocked_by": "À intégrer dans la PR #23 après merge PR #24 et resynchronisation sur main.",
-   "next_action": "Modifier uniquement la présentation tarifaire déjà dans le périmètre contrats : TTC principal avec price_ttc_month/year ; rejouer le parcours exact et joindre les preuves.",
+   "blocked_by": "Plus bloquee par l'ordre de release : REQ-017 est en production depuis le 2026-10-04, donc l'ecart TTC/HT est public. Lot isole a construire depuis le main courant.",
+   "next_action": "Lot isole depuis le main courant : TTC principal lu dans price_ttc_month/price_ttc_year, HT secondaire et etiquete, coherence page Chauffage + page Contrats + modale, aucun tarif en dur ni recalcule, preuves 1440/390 du clic initial jusqu'a la modale, rollback. Pret a demarrer sur accord.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null,
+   "closure_proof": "Ecart mesure sur la PRODUCTION au commit a83c1ce5, aux deux largeurs : la page Chauffage affiche 14,30 EUR TTC/mois pour Gaz CONFORT, la page Contrats affiche 13 EUR HT/mois et la modale « 13 EUR HT/mois — 156 EUR/an » alors que l'annee TTC vaut 171,60 EUR. Montants justes des deux cotes (TVA 10 %), unite incoherente dans un parcours continu. Source : v_contract_offers expose deja price_ttc_month et price_ttc_year.",
    "decide_par": "CHATGPT-2026-10-03-CONTROL-ALL-RETURNS-25"
   }
  ],
@@ -1084,7 +1084,7 @@
  "dernier_controle": {
   "message_id": "CHATGPT-2026-10-03-CONTROL-ALL-RETURNS-25",
   "verdict": "Dernier retour REQ-017 accepté comme preuve technique au head 39cd0037, mais release séquencée : PR24 d'abord ; puis resync PR23 + REQ037 TTC ; REQ036 ensuite. Aucun merge sensible.",
-  "retour_claude": "CLAUDE-2026-10-04-PR24-PREUVES.md (PR #24 : PASS, en attente de fusion ChatGPT)",
+  "retour_claude": "CLAUDE-2026-10-04-PR24-PREUVES.md + CLAUDE-2026-10-04-REQ-017-MISE-EN-PRODUCTION.md",
   "lacune_signalee": "PR24 n'a toujours pas son rapport de preuve exact ; REQ017 révèle une incohérence TTC/HT à corriger avant production."
  },
  "checkpoint_valide": {

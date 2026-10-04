@@ -16,13 +16,14 @@
 import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync, readdirSync, unlinkSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 
 const pw = await import(process.env.PLAYWRIGHT_IMPORT || 'playwright');
 const chromium = pw.chromium || (pw.default && pw.default.chromium); // CJS ou ESM selon le point d'entrée
 if (!chromium) throw new Error('playwright introuvable : installer playwright ou définir PLAYWRIGHT_IMPORT');
 
-const ICI = dirname(fileURLToPath(import.meta.url));
+// SORTIE permet de rejouer le même contrôle ailleurs (ex. vérification après mise en production)
+const ICI = process.env.SORTIE ? resolve(process.env.SORTIE) : dirname(fileURLToPath(import.meta.url));
 const PROD = process.env.URL_MAIN || 'https://remarkable-dragon-364e2b.netlify.app';
 const PREVIEW = process.env.URL_PR || 'https://deploy-preview-23--remarkable-dragon-364e2b.netlify.app';
 const ETATS = [
