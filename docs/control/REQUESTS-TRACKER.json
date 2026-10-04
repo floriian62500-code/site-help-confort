@@ -30,7 +30,7 @@
   "READY_FOR_FLORIAN_VISUAL"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-037",
+ "prochain_id": "REQ-20260926-038",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -468,8 +468,8 @@
    "latest_sha": "39cd0037a42eaa031c2817bc898bc885b3ed46c3 (PR #23 resynchronisee sur le main courant dc9b39eb7e9ee9edd73684d324fee7aa5911016d, sans force-push ; 4 fichiers, 0 commit de retard)",
    "claude_outbox": "CLAUDE-2026-10-03-REQ-017-PR23-PREUVE-FINALE.md + CLAUDE-2026-10-03-REQ-017-PR23-RESYNC-PREUVES.md",
    "human_gate": "GO production exprimé par Florian le 2026-10-03, conditionné par le protocole projet : preview + preuves 1440/390 + parcours complet + rollback contrôlés avant merge/deploy.",
-   "blocked_by": null,
-   "next_action": "Controle ChatGPT du paquet de preuves au head exact 39cd0037a42eaa031c2817bc898bc885b3ed46c3, puis gate Florian. Aucun merge ni deploiement d'initiative : le GO de Florian est conditionne par des preuves controlees, et le controle ne m'appartient pas. Deux decisions restent ouvertes hors lot : l'unite TTC/HT entre les deux pages (Florian) et le correctif REQ-036 (apres fermeture de REQ-017).",
+   "blocked_by": "Ordre de release : PR #24 doit être clôturée d'abord. Puis resynchroniser PR #23 sur le nouveau main. REQ-037 (affichage TTC cohérent) doit être intégré et prouvé avant merge.",
+   "next_action": "1) finir PR #24 ; 2) après merge #24, fusionner main dans PR #23 ; 3) intégrer REQ-037 sans prix en dur ; 4) rejouer preuves 1440/390 et parcours complet au head exact ; 5) contrôle ChatGPT puis merge sous GO utilisateur du 2026-10-03 si PASS.",
    "attempt": 9,
    "closed_at": null,
    "closure_proof": "Paquet de preuves PR #23 publie (docs/qa/REQ-017-pr23/ : mesures.mjs, mesures.json, MESURES-PR23.md, 10 captures JPEG avec empreintes). PASS sur les criteres A, B, D, E du controle du 2026-10-03, au head 46906e4ec548fc11c31796b8a86f067687840578 : module [0 -> 390] et [0 -> 1440] avec 0 descendant hors cadre ; onglets Gaz (actif)/Fioul/Adoucisseur ; 7 cartes = les 7 offres actives de v_contract_offers ; prix 9,90/14,30/25,30 EUR TTC lus dans la vue et 0 prix en dur dans la page ; ancien bloc .ce-card de 6 cartes en production -> 0 sur la preview, donc aucune double presentation ; transition Gaz CONFORT prouvee aux deux largeurs (URL avec parametres, radio en-gaz cochee, pane-gaz visible, carte CONFORT mise en evidence, CTA visible ET focalisable) ; modale ouverte sur la bonne energie/formule/prix, 0 case pre-cochee, 0 champ pre-rempli, scroll vertical operant, AUCUN ENVOI ; /contrats-entretien.html et /contrats-entretien en 200, 11 liens historiques intacts ; aucune erreur console imputable au site. Deux defauts mesures sont PREEXISTANTS, prouves identiques sur la production : le debordement de 452 px a 390 px (.hcf-track large de 2304 px, ancetres en overflow-x visible) et le clipping interne de l'indicateur d'etapes .sw-pstep dans la modale a 390 px. Un point reste a trancher par Florian : la page Chauffage affiche le TTC (14,30 EUR) et la page Contrats le HT (13 EUR) pour le meme contrat. Le seul blocage trouve (4 commits de retard sur main, qui aurait annule REQ-007 en production) est leve : origin/main a ete fusionne DANS la branche, sans force-push, head 39cd0037a42eaa031c2817bc898bc885b3ed46c3, et toutes les preuves ont ete refaites a ce head. Verifie sur les deux sites servis : le marqueur hc-metier-journey passe de 10 a 0 sur la preview, 0 en production. Le lot reste isole a 4 fichiers. Aucun PROD_VERIFIED.",
@@ -630,7 +630,7 @@
    "claude_outbox": "CLAUDE-2026-09-26-REQ-023-QUATRE-POLES.md",
    "human_gate": "validation visuelle Florian reçue le 2026-09-28",
    "blocked_by": "preuve exacte PR #24 1440/390 requise par le nouveau process avant fusion",
-   "next_action": "Validation visuelle Florian déjà reçue ; attendre preuve technique/visuelle du head exact PR #24, puis merge sous GO batch si PASS.",
+   "next_action": "PR #24 prioritaire : produire les preuves exactes demandées dans CHATGPT-2026-10-03-GREEN-SYNC-PR24-PROOF.md. Si PASS, STOP ; ChatGPT fusionne et vérifie la production.",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": "avant : 2 blocs · après : 4 cartes (Saint-Omer=Agence, Dunkerque/Calais/Boulogne=Pôle d'intervention), 2×2 en 1440, empilées en 390, 0 débordement",
@@ -658,7 +658,7 @@
    "claude_outbox": "CLAUDE-2026-09-26-REQ-024-CARTE-ZONES-CORRIGEE.md",
    "human_gate": "feu vert avant application (gel + REQ-022)",
    "blocked_by": "preuve exacte PR #24 : carte 1440/390 + lazy contact + cache-bust + rollback",
-   "next_action": "Claude fournit CHATGPT-2026-10-03-GREEN-SYNC-PR24-PROOF ; si PASS, merge PR #24 au titre du GO batch puis contrôle production.",
+   "next_action": "PR #24 prioritaire : preuves head exact f16d1749a..., 1440/390 zones 4 pôles, carte Leaflet, lazy contact, cache-bust, overflow/console, rollback. Si PASS, STOP pour merge ChatGPT.",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": "Leaflet peint sans défilement en 402 ms, 9 tuiles en 1440 et 4 en 390, chargement différé conservé sur /contact · SHA 65953e28 · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED",
@@ -1006,7 +1006,7 @@
    "request_id": "REQ-20260926-036",
    "title": "Debordement horizontal mobile du carrousel fournisseurs (page Chauffage)",
    "priority": "P1",
-   "status": "WAITING_FLORIAN_GO",
+   "status": "OPEN",
    "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-02-CONTROL-ALL-REQUESTS-24.md",
    "legacy_instruction_id": null,
    "created_at": "2026-10-02",
@@ -1021,13 +1021,43 @@
    ],
    "latest_sha": "dc9b39eb7e9ee9edd73684d324fee7aa5911016d (main courant, bug present en production)",
    "claude_outbox": "CLAUDE-2026-10-03-REQ-017-PR23-PREUVE-FINALE.md",
-   "human_gate": "Correctif visible : attendre la fermeture de REQ-017 (gel visuel) et le GO de Florian.",
-   "blocked_by": "Gel visuel : ordre impose, REQ-017 d'abord. Le bug est confirme, le correctif n'est pas engage.",
-   "next_action": "Apres fermeture de REQ-017 : lot isole corrigeant l'overflow-x des ancetres de .hcf-marquee, preview du head exact, captures 1440/390, rollback selectif.",
+   "human_gate": "GO de suivi/correction donné par Florian le 2026-10-03 : préparer le correctif après REQ-017. Aucun changement sensible.",
+   "blocked_by": "Séquençage uniquement : PR #24 puis REQ-017/REQ-037. Le bug est confirmé en production.",
+   "next_action": "Après merge/PROD_VERIFY de REQ-017 : créer lot isolé depuis main corrigeant l'overflow du carrousel, preview, preuves 1440/390, rollback ; si PASS, merge et PROD_VERIFY.",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": "Exigences 1 a 3 du controle n24 satisfaites par docs/qa/REQ-017-pr23/mesures.mjs. Mesure sur la production au main dc9b39eb7e9ee9edd73684d324fee7aa5911016d, viewport REEL 390 (sans emulation) : scrollWidth 842 contre innerWidth 390, soit 452 px de depassement, SANS aucun module. Controle 1440 : scrollWidth 1440 = innerWidth, 0 px. Cause attribuee sans extrapolation : .hcf-track fait 2304 px de large dans un .hcf-marquee de 350 px ; .hcf-marquee est bien en overflow-x hidden, mais ses ancetres DIV.container et le DIV de section sont en overflow-x visible, donc la piste s'echappe. Rects journalises : .hcf-track [-30 -> 2274], .hcf-marquee [20 -> 370]. Le meme reproducteur mesure 452 px sur la preview PR #23 : le module n'y est pour rien. Exigence 4 (correctif) non engagee.",
    "decide_par": "CHATGPT-2026-10-02-CONTROL-ALL-REQUESTS-24"
+  },
+  {
+   "request_id": "REQ-20260926-037",
+   "title": "Cohérence TTC du parcours contrats Chauffage → Contrats → Souscription",
+   "priority": "P1",
+   "status": "OPEN",
+   "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-03-CONTROL-ALL-RETURNS-25.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-03",
+   "acceptance_criteria": [
+    "le prix présenté au particulier reste cohérent entre la page Chauffage, la page Contrats et la modale",
+    "TTC affiché comme référence principale sur le parcours public",
+    "aucun prix calculé ou copié en dur : utiliser price_ttc_month et price_ttc_year de la source canonique",
+    "si une information HT est conservée, elle est secondaire et clairement étiquetée"
+   ],
+   "evidence_required": [
+    "preuve DOM 1440/390 sur Gaz CONFORT depuis Chauffage jusqu'à la modale",
+    "valeurs lues depuis v_contract_offers",
+    "0 occurrence des montants canoniques copiés en dur dans les fichiers du module",
+    "aucun faux lead/paiement"
+   ],
+   "latest_sha": null,
+   "claude_outbox": null,
+   "human_gate": "GO donné par Florian le 2026-10-03 pour assurer le suivi de toutes les demandes jusqu'à production ; correctif non sensible.",
+   "blocked_by": "À intégrer dans la PR #23 après merge PR #24 et resynchronisation sur main.",
+   "next_action": "Modifier uniquement la présentation tarifaire déjà dans le périmètre contrats : TTC principal avec price_ttc_month/year ; rejouer le parcours exact et joindre les preuves.",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-10-03-CONTROL-ALL-RETURNS-25"
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id. Le 2026-09-28, deux demandes ont reçu 032 à la même minute (refonte Nos métiers et routage e-mail) : 032 reste à « Nos métiers », le routage devient 033, prochain_id passe à 034. Le nom du fichier d’instruction d’origine est conservé dans legacy_instruction_id.",
@@ -1052,11 +1082,10 @@
  },
  "gel_visuel": "STOP sur toute modification visuelle tant que Florian n’a pas validé REQ-023 sur la preview. Ordre imposé ensuite : checkpoint validé → REQ-026 → REQ-020 (STOP visuel) → REQ-017 prototype (STOP visuel) → REQ-027 après GO métier.",
  "dernier_controle": {
-  "message_id": "CHATGPT-2026-10-03-REQ-017-FINAL-PROOF-PR23",
-  "commit": "docs/control/inbox/chatgpt/CHATGPT-2026-10-03-REQ-017-FINAL-PROOF-PR23.md + CHATGPT-2026-10-02-CONTROL-ALL-REQUESTS-23/24 + TRACKER-DELTA-23/24",
-  "verdict": "Deltas des controles n23 et n24 appliques (le write ChatGPT etait bloque). REQ-017 repasse REWORK_REQUIRED, tentative 9 : les preuves A/B/D/E de la PR #23 sont fournies et passent, le retard de 4 commits sur main, qui aurait annule REQ-007 en production, est resorbe par fusion sans force-push (head 39cd0037a42eaa031c2817bc898bc885b3ed46c3) et les preuves sont refaites a ce head : REQ-017 passe READY_FOR_CONTROL. REQ-036 ouverte ET prouvee : debordement de 452 px confirme en production sans module. Aucun PROD_VERIFIED.",
-  "retour_claude": "CLAUDE-2026-10-03-REQ-017-PR23-PREUVE-FINALE.md puis CLAUDE-2026-10-03-REQ-017-PR23-RESYNC-PREUVES.md",
-  "lacune_signalee": "La suite de tests et sync-header.mjs n'existent que sur recette : une PR construite depuis main ne peut pas etre controlee par la suite au head exact. A trancher separement. Par ailleurs la page Chauffage affiche le TTC et la page Contrats le HT pour le meme contrat : decision Florian."
+  "message_id": "CHATGPT-2026-10-03-CONTROL-ALL-RETURNS-25",
+  "verdict": "Dernier retour REQ-017 accepté comme preuve technique au head 39cd0037, mais release séquencée : PR24 d'abord ; puis resync PR23 + REQ037 TTC ; REQ036 ensuite. Aucun merge sensible.",
+  "retour_claude": "CLAUDE-2026-10-03-REQ-017-PR23-RESYNC-PREUVES.md",
+  "lacune_signalee": "PR24 n'a toujours pas son rapport de preuve exact ; REQ017 révèle une incohérence TTC/HT à corriger avant production."
  },
  "checkpoint_valide": {
   "branche": "backup/recette-validated-2026-09-28-req023",
