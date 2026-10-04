@@ -613,7 +613,7 @@
    "request_id": "REQ-20260926-023",
    "title": "Zones d'intervention : Calais et Boulogne comme pôles principaux",
    "priority": "P1",
-   "status": "WAITING_CLAUDE_PROOF",
+   "status": "READY_FOR_CONTROL",
    "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-023-ZONES-CALAIS-BOULOGNE.md",
    "legacy_instruction_id": null,
    "created_at": "2026-09-26",
@@ -626,21 +626,21 @@
     "maquette dans la proposition cible",
     "validation visuelle de Florian"
    ],
-   "latest_sha": "PR #24 head f16d1749a76851af452f285c98f68afac9ab04e1, reconstruction depuis main courant",
-   "claude_outbox": "CLAUDE-2026-09-26-REQ-023-QUATRE-POLES.md",
+   "latest_sha": "f16d1749a76851af452f285c98f68afac9ab04e1 (PR #24, release/green-sync-2026-10-03)",
+   "claude_outbox": "CLAUDE-2026-10-04-PR24-PREUVES.md",
    "human_gate": "validation visuelle Florian reçue le 2026-09-28",
-   "blocked_by": "preuve exacte PR #24 1440/390 requise par le nouveau process avant fusion",
-   "next_action": "PR #24 prioritaire : produire les preuves exactes demandées dans CHATGPT-2026-10-03-GREEN-SYNC-PR24-PROOF.md. Si PASS, STOP ; ChatGPT fusionne et vérifie la production.",
+   "blocked_by": null,
+   "next_action": "Controle ChatGPT du rapport CLAUDE-2026-10-04-PR24-PREUVES.md, puis fusion et PROD_VERIFY sous le GO batch Florian. Aucun merge de mon initiative.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": "avant : 2 blocs · après : 4 cartes (Saint-Omer=Agence, Dunkerque/Calais/Boulogne=Pôle d'intervention), 2×2 en 1440, empilées en 390, 0 débordement",
-   "decide_par": "CHATGPT-2026-10-03-GREEN-SYNC"
+   "closure_proof": "Preuves produites au head exact f16d1749a76851af452f285c98f68afac9ab04e1 de la PR #24 par le reproducteur versionne docs/qa/REQ-024-pr24/mesures.mjs (preview ET production en reference, captures JPEG avec empreintes sha256 dans MESURES-PR24.md). PASS aux deux largeurs : 4/4 poles attendus presents avec leur etiquette exacte (Saint-Omer & Audomarois = Agence Depan'Audo ; Dunkerque & Littoral, Calais & Calaisis, Boulogne-sur-Mer & Boulonnais = Pole d'intervention), plus aucune revendication « Deux agences » (la production en revendique encore une et affiche une « Agence Depan'DK »), debordement horizontal 0 px en 1440 comme en 390, en-tete (35 liens, identique a la production) et pied de page presents : aucune regression. Captures pr24-preview-1440-zones-4poles.jpg et pr24-preview-390-zones-4poles.jpg, references avant main-prod-1440/390-zones-4poles.jpg. Aucun PROD_VERIFIED.",
+   "decide_par": "CHATGPT-2026-10-03-GREEN-SYNC-PR24-PROOF"
   },
   {
    "request_id": "REQ-20260926-024",
    "title": "Carte des zones grise tant qu'on ne défile pas",
    "priority": "P1",
-   "status": "WAITING_CLAUDE_PROOF",
+   "status": "READY_FOR_CONTROL",
    "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-024-CARTE-ZONES-GRISE.md",
    "legacy_instruction_id": null,
    "created_at": "2026-09-26",
@@ -654,16 +654,16 @@
     "captures",
     "suite complète"
    ],
-   "latest_sha": "PR #24 head f16d1749a76851af452f285c98f68afac9ab04e1 (asset JS déjà fusionné via PR #22 ; cache-bust 4 pages dans PR #24)",
-   "claude_outbox": "CLAUDE-2026-09-26-REQ-024-CARTE-ZONES-CORRIGEE.md",
+   "latest_sha": "f16d1749a76851af452f285c98f68afac9ab04e1 (PR #24, release/green-sync-2026-10-03)",
+   "claude_outbox": "CLAUDE-2026-10-04-PR24-PREUVES.md",
    "human_gate": "feu vert avant application (gel + REQ-022)",
-   "blocked_by": "preuve exacte PR #24 : carte 1440/390 + lazy contact + cache-bust + rollback",
-   "next_action": "PR #24 prioritaire : preuves head exact f16d1749a..., 1440/390 zones 4 pôles, carte Leaflet, lazy contact, cache-bust, overflow/console, rollback. Si PASS, STOP pour merge ChatGPT.",
+   "blocked_by": null,
+   "next_action": "Controle ChatGPT puis fusion et PROD_VERIFY sous le GO batch Florian. Aucun merge de mon initiative.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": "Leaflet peint sans défilement en 402 ms, 9 tuiles en 1440 et 4 en 390, chargement différé conservé sur /contact · SHA 65953e28 · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED",
+   "closure_proof": "Preuves produites au head exact f16d1749a76851af452f285c98f68afac9ab04e1 de la PR #24 par le reproducteur versionne docs/qa/REQ-024-pr24/mesures.mjs (preview ET production en reference, captures JPEG avec empreintes sha256 dans MESURES-PR24.md). PASS : carte mesuree SANS AUCUN DEFILEMENT (scrollY = 0 au moment de la mesure du delai et de la mesure de couverture). Leaflet charge ; conteneur pose a 317 ms en 1440 et 868 ms en 390 ; premiere tuile peinte a 419 ms et 910 ms ; 8 tuiles a 423 ms en 1440 ; une fois posee, 12 tuiles en 1440 et 6 en 390 avec 100 % de couverture du conteneur et 0 tuile en erreur, donc carte non grise. Tres en deca des 3 s exigees. contact.html : 0 conteneur et 0 tuile avant defilement, initialisation apres defilement vers la carte, aux deux largeurs : la paresse est preservee. Cache-bust assets/hc-map-zones.js?v=20261003a servi, en une seule version, par les quatre pages (zones-intervention, contact, a-propos, nos-villes) alors que la production sert encore ?v=20260603. Console : aucune erreur imputable au site. Constat d'honnetete : la production du jour peint elle aussi la carte sans defilement et garde contact.html paresseuse, je ne peux donc pas exhiber un « avant » en echec sur ces deux points ; le gain mesurable est le cache-bust. Aucun PROD_VERIFIED.",
    "note_numerotation": "créée par Claude en parallèle sous le numéro 023 ; renumérotée 024 dès réception de REQ-20260926-023-ZONES-CALAIS-BOULOGNE.md, publiée par ChatGPT. Le contenu métier est inchangé.",
-   "decide_par": "CHATGPT-2026-10-03-GREEN-SYNC"
+   "decide_par": "CHATGPT-2026-10-03-GREEN-SYNC-PR24-PROOF"
   },
   {
    "request_id": "REQ-20260926-025",
@@ -1084,7 +1084,7 @@
  "dernier_controle": {
   "message_id": "CHATGPT-2026-10-03-CONTROL-ALL-RETURNS-25",
   "verdict": "Dernier retour REQ-017 accepté comme preuve technique au head 39cd0037, mais release séquencée : PR24 d'abord ; puis resync PR23 + REQ037 TTC ; REQ036 ensuite. Aucun merge sensible.",
-  "retour_claude": "CLAUDE-2026-10-03-REQ-017-PR23-RESYNC-PREUVES.md",
+  "retour_claude": "CLAUDE-2026-10-04-PR24-PREUVES.md (PR #24 : PASS, en attente de fusion ChatGPT)",
   "lacune_signalee": "PR24 n'a toujours pas son rapport de preuve exact ; REQ017 révèle une incohérence TTC/HT à corriger avant production."
  },
  "checkpoint_valide": {
