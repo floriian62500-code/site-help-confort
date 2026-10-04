@@ -975,8 +975,11 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') force
  try {
  // 2026-05-30 — FORCE no-cache (fetch direct PostgREST) pour que toute modif dashboard apparaisse instant.
  // Sinon : Supabase JS + Browser pouvaient cacher la réponse → désynchro BDD ↔ site signalée par Florian.
- const cacheBust = Date.now();
- const resp = await fetch(`${SUPABASE_URL}/rest/v1/v_services_public?select=*&_ts=${cacheBust}`, {
+ // REQ-20260926-038 : pas d'horodatage dans l'URL. PostgREST lit tout parametre non reserve
+ // comme un filtre de colonne : « &_ts=<timestamp> » faisait chercher une colonne _ts inexistante
+ // et renvoyait 400 PGRST100 a chaque visite, avant qu'un second appel de repli ne sauve l'affichage.
+ // Le contournement du cache reste entier : cache:'no-store' et les en-tetes ci-dessous.
+ const resp = await fetch(`${SUPABASE_URL}/rest/v1/v_services_public?select=*`, {
    headers: {
      apikey: SUPABASE_ANON,
      Authorization: `Bearer ${SUPABASE_ANON}`,
