@@ -12,7 +12,7 @@ verdict: **PASS**
 | branche | `feat/req-039-overflow-390-reste`, isolée depuis le `main` courant `a9507ff6` |
 | PR | **#29**, brouillon |
 | head exact | `030b8fb119ccfc369846bb40c5785666b33dddd1` |
-| périmètre | **39 fichiers**, une déclaration CSS chacun |
+| périmètre | **40 fichiers**, une déclaration CSS chacun |
 | preview | https://deploy-preview-29--remarkable-dragon-364e2b.netlify.app |
 
 ## Scan des 117 pages, avant / après
@@ -82,6 +82,24 @@ La troisième est la seule qui satisfait les deux exigences : elle est retenue.
 
 Le tableau garde ses 8 colonnes et ses 5 lignes, et défile dans son cadre sur mobile au lieu
 d'élargir la page — même philosophie que le carrousel d'avis.
+
+## Un 40e fichier, et pourquoi
+
+Le lot touche **40 fichiers**, pas 39. Le 40e est `contrats-entretien.html`, déjà corrigé par
+REQ-036 et en production : ma passe de bornage y a harmonisé la déclaration vers la forme
+`@media(max-width:700px)`, pour que le site n'ait pas deux écritures de la même règle.
+
+Je l'ai mesuré plutôt que de le supposer — production contre preview, deux largeurs :
+
+| | 390 | 1440 |
+| --- | --- | --- |
+| débordement | 0 px → **0 px** | 0 px → **0 px** |
+| hauteur du document | 11833 px → **11833 px** | 5891 px → **5891 px** |
+| grille des labels | `[24→366]`, h 869 → **identique** | `[230→1210]`, h 252 → **identique** |
+| cartes labels / formules | 4 et 7 → **4 et 7** | 4 et 7 → **4 et 7** |
+
+Strictement rien ne bouge. Si vous préférez un lot à 39 fichiers exactement, je retire ce
+fichier et je republie — dites-le, c'est une ligne.
 
 ## Pourquoi pas `styles.css`
 
