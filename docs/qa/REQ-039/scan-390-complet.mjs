@@ -1,4 +1,6 @@
-import { chromium } from 'playwright';
+const pw = await import(process.env.PLAYWRIGHT_IMPORT || 'playwright');
+const chromium = pw.chromium || (pw.default && pw.default.chromium);
+if (!chromium) throw new Error('playwright introuvable : installer playwright ou definir PLAYWRIGHT_IMPORT');
 import { readFileSync, writeFileSync } from 'node:fs';
 const pages = readFileSync(process.env.LISTE || '/tmp/pages.txt', 'utf8').split('\n').filter(Boolean);
 const BASE = process.env.BASE || 'https://depan59-62.fr';
