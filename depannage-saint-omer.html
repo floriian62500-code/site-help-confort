@@ -734,7 +734,7 @@ if (document.fonts && document.fonts.ready) {
  </p>
  </div>
  <style>
- @media(min-width:900px) {.hc-labels-grid{grid-template-columns:repeat(4,1fr) !important} }.hc-label-card:hover { transform:translateY(-3px); border-color:#1FC4F0 !important; box-shadow:0 14px 32px rgba(13,160,207,.10) }
+ @media(min-width:900px) {.hc-labels-grid{grid-template-columns:repeat(4,1fr) !important} }@media(max-width:700px){.hc-labels-grid>*{min-width:0;overflow-wrap:anywhere}} /* REQ-039 : enferme sous 700 px — la coupure de mot abimerait les cartes en desktop, mesure sur a-propos.html */.hc-label-card:hover { transform:translateY(-3px); border-color:#1FC4F0 !important; box-shadow:0 14px 32px rgba(13,160,207,.10) }
  </style>
 </section>
 
