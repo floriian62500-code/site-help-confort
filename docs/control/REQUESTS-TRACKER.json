@@ -1065,7 +1065,7 @@
    "request_id": "REQ-20260926-038",
    "title": "Requete REST de /nos-prestations.html en 400 : le parametre _ts est lu comme un filtre",
    "priority": "P2",
-   "status": "TECH_ACCEPTED",
+   "status": "CLOSED",
    "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
    "legacy_instruction_id": null,
    "created_at": "2026-10-04",
@@ -1083,12 +1083,12 @@
    "latest_sha": "a9507ff641959fbe8e1002d3ed8ea994bae1c02a (commit de fusion dans main)",
    "claude_outbox": "CLAUDE-2026-10-04-REQ-038-TS.md + CLAUDE-2026-10-05-REQ-038-PROD-VERIFY.md",
    "human_gate": null,
-   "blocked_by": null,
-   "next_action": "PROD_VERIFIED a poser par ChatGPT : les mesures sur depan59-62.fr sont fournies.",
+   "blocked_by": "—",
+   "next_action": "—",
    "attempt": 1,
-   "closed_at": null,
-   "closure_proof": "PASS au head 4c52120a07fde2ab365333de1f7b807a19003cde. Lot isole d'UN fichier. Mesure avant/apres en 1440 et 390 (docs/qa/REQ-038/) : les appels a v_services_public passent de DEUX (400 avec _ts puis 200 de repli) a UN SEUL en 200 ; les reponses REST en erreur de 1 a 0 ; les erreurs de console de 2 a 0. L'affichage est strictement identique, prouve par l'empreinte du texte rendu par toutes les cartes : 29277 caracteres au caractere pres avant comme apres, 380 cartes, 214 elements de prix, aucun debordement. Cause : PostgREST lit tout parametre non reserve comme un filtre de colonne, donc aucun renommage n'aurait suffi ; l'intention no-cache reste assuree par cache:'no-store' et les en-tetes. Aucune mutation Supabase. Aucun PROD_VERIFIED. CONTROLE DE PRODUCTION le 2026-10-05 sur depan59-62.fr apres la fusion a9507ff6 : UN SEUL appel a v_services_public, en 200, zero reponse REST en erreur, zero erreur de console, et l'affichage reste identique au caractere pres (empreinte 29277, 380 cartes, 214 elements de prix, 0 px de debordement), en 1440 comme en 390. Preuves : docs/qa/REQ-038-prod/.",
-   "decide_par": "CHATGPT-2026-10-04-NO-IDLE-PIPELINE"
+   "closed_at": "2026-10-05",
+   "closure_proof": "PASS au head 4c52120a07fde2ab365333de1f7b807a19003cde. Lot isole d'UN fichier. Mesure avant/apres en 1440 et 390 (docs/qa/REQ-038/) : les appels a v_services_public passent de DEUX (400 avec _ts puis 200 de repli) a UN SEUL en 200 ; les reponses REST en erreur de 1 a 0 ; les erreurs de console de 2 a 0. L'affichage est strictement identique, prouve par l'empreinte du texte rendu par toutes les cartes : 29277 caracteres au caractere pres avant comme apres, 380 cartes, 214 elements de prix, aucun debordement. Cause : PostgREST lit tout parametre non reserve comme un filtre de colonne, donc aucun renommage n'aurait suffi ; l'intention no-cache reste assuree par cache:'no-store' et les en-tetes. Aucune mutation Supabase. Aucun PROD_VERIFIED. CONTROLE DE PRODUCTION le 2026-10-05 sur depan59-62.fr apres la fusion a9507ff6 : UN SEUL appel a v_services_public, en 200, zero reponse REST en erreur, zero erreur de console, et l'affichage reste identique au caractere pres (empreinte 29277, 380 cartes, 214 elements de prix, 0 px de debordement), en 1440 comme en 390. Preuves : docs/qa/REQ-038-prod/. PROD_VERIFIED sur depan59-62.fr : un seul appel v_services_public en 200, 0 erreur REST/console, affichage identique (empreinte 29277, 380 cartes, 214 prix) en 1440/390.",
+   "decide_par": "ChatGPT 2026-10-05 (PROD_VERIFIED)"
   },
   {
    "request_id": "REQ-20260926-039",
