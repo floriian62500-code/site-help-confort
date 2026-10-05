@@ -1,6 +1,6 @@
 # REQ-039 — échantillon, une page par cause
 
-Généré le 2026-10-05T10:38:26.590Z
+Généré le 2026-10-05T10:49:21.267Z
 
 ## 390 px
 
@@ -34,7 +34,7 @@ Généré le 2026-10-05T10:38:26.590Z
 | --- | --- | --- |
 | `electricien-saint-omer.html` | 6908 px | **6908 px** |
 | `depannage-arques.html` | 5947 px | **5947 px** |
-| `a-propos.html` | 9661 px | **9814 px** |
+| `a-propos.html` | 9661 px | **9661 px** |
 | `remplacement-chauffe-eau.html` | 3615 px | **3615 px** |
 
 - console avant : Failed to load resource: the server responded with a status of 401 ()
@@ -42,19 +42,21 @@ Généré le 2026-10-05T10:38:26.590Z
 
 ## Empreintes des captures
 
-- `apres-1440-a-propos.jpg` — sha256 `552c62caf50119d9`
-- `apres-1440-depannage-arques.jpg` — sha256 `0f64cb1203db576b`
-- `apres-1440-electricien-saint-omer.jpg` — sha256 `916487851aec446e`
+- `apres-1440-a-propos-labels.jpg` — sha256 `760b14d24b4ceb18`
+- `apres-1440-a-propos.jpg` — sha256 `06db990fe2c2f373`
+- `apres-1440-depannage-arques.jpg` — sha256 `5c1ca618cb048c31`
+- `apres-1440-electricien-saint-omer.jpg` — sha256 `f6dc108b83dd84fc`
 - `apres-1440-remplacement-chauffe-eau.jpg` — sha256 `0e016a32b2954c17`
 - `apres-390-a-propos.jpg` — sha256 `8adf273b944d6a29`
-- `apres-390-depannage-arques.jpg` — sha256 `bcf8dee38076225e`
-- `apres-390-electricien-saint-omer.jpg` — sha256 `8ea2ff8fa932cbac`
-- `apres-390-remplacement-chauffe-eau.jpg` — sha256 `c8bf0dda420f5199`
-- `avant-1440-a-propos.jpg` — sha256 `7d068bcbca8afaf6`
-- `avant-1440-depannage-arques.jpg` — sha256 `605764b94acc2313`
-- `avant-1440-electricien-saint-omer.jpg` — sha256 `12ae01d68441b234`
+- `apres-390-depannage-arques.jpg` — sha256 `a8a76e467b002e87`
+- `apres-390-electricien-saint-omer.jpg` — sha256 `b922fe341e146309`
+- `apres-390-remplacement-chauffe-eau.jpg` — sha256 `046f97308402cf47`
+- `avant-1440-a-propos-labels.jpg` — sha256 `1ebfffae902732e0`
+- `avant-1440-a-propos.jpg` — sha256 `aa82a94ff69e306f`
+- `avant-1440-depannage-arques.jpg` — sha256 `d65c580e4c9ca3df`
+- `avant-1440-electricien-saint-omer.jpg` — sha256 `ffa0d8c1bbf422a2`
 - `avant-1440-remplacement-chauffe-eau.jpg` — sha256 `9dd7f7b2a17e062b`
-- `avant-390-a-propos.jpg` — sha256 `0802706603ea2cbf`
-- `avant-390-depannage-arques.jpg` — sha256 `f2b05406850b05e1`
-- `avant-390-electricien-saint-omer.jpg` — sha256 `2db743965c3f330e`
-- `avant-390-remplacement-chauffe-eau.jpg` — sha256 `f31453128244aa85`
+- `avant-390-a-propos.jpg` — sha256 `0cf73660c03bf2e1`
+- `avant-390-depannage-arques.jpg` — sha256 `572967e67923e50b`
+- `avant-390-electricien-saint-omer.jpg` — sha256 `d2ae996c19fe0cbf`
+- `avant-390-remplacement-chauffe-eau.jpg` — sha256 `843a48a59d758aad`

@@ -30,7 +30,7 @@
   "READY_FOR_FLORIAN_VISUAL"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-040",
+ "prochain_id": "REQ-20260926-041",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -1094,7 +1094,7 @@
    "request_id": "REQ-20260926-039",
    "title": "Debordement horizontal a 390 px sur les pages restantes (meme motif que REQ-036)",
    "priority": "P1",
-   "status": "IN_PROGRESS",
+   "status": "READY_FOR_CONTROL",
    "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-04-PREPARATION-REQ-038-ET-SUITE.md",
    "legacy_instruction_id": null,
    "created_at": "2026-10-04",
@@ -1109,14 +1109,40 @@
     "carrousels, modules et modales toujours fonctionnels",
     "console et rollback"
    ],
-   "latest_sha": null,
-   "claude_outbox": "CLAUDE-2026-10-04-PREPARATION-REQ-038-ET-SUITE.md",
+   "latest_sha": "030b8fb119ccfc369846bb40c5785666b33dddd1 (PR #29, feat/req-039-overflow-390-reste, isolee depuis main a9507ff6 — 39 fichiers)",
+   "claude_outbox": "CLAUDE-2026-10-05-REQ-039-OVERFLOW-RESTE.md",
    "human_gate": null,
-   "blocked_by": "Aucun blocage. Démarrer depuis main a9507ff6.",
-   "next_action": "Créer lot isolé depuis main a9507ff6 pour supprimer les overflows 390 restants sur les pages publiques ; scan 117 pages avant/après, causes distinctes, 1440 sans régression, console, rollback, PASS/BLOCKED.",
+   "blocked_by": null,
+   "next_action": "Controle ChatGPT puis fusion et releve des 117 pages sur depan59-62.fr avant PROD_VERIFIED. Aucun merge de mon initiative.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": "RELEVE EXACT du 2026-10-04 (docs/qa/REQ-039/, scan-390-complet.mjs avec attente reseau complete, 0 erreur de chargement) : 39 pages sur 117 debordent a 390 px reels sur depan59-62.fr. 25 pages a 452 px par .hcal-wrap dans .m-proof-col (bloc avis Google) : chauffagiste-boulogne/calais/dunkerque, electricien x4, menuisier x2, plombier x4, pmr x2, serrurier x4, travaux x2, vitrier x2, volets x2. 12 pages depannage-* a 90 px et a-propos.html a 213 px par .hc-labels-grid. 1 page, remplacement-chauffe-eau.html, a 112 px par un TABLE.rh-table : cause distincte. chauffagiste-saint-omer.html et contrats-entretien.html ne figurent PLUS dans le releve : la meme mesure confirme que REQ-036 est effectif en production.",
+   "closure_proof": "RELEVE EXACT du 2026-10-04 (docs/qa/REQ-039/, scan-390-complet.mjs avec attente reseau complete, 0 erreur de chargement) : 39 pages sur 117 debordent a 390 px reels sur depan59-62.fr. 25 pages a 452 px par .hcal-wrap dans .m-proof-col (bloc avis Google) : chauffagiste-boulogne/calais/dunkerque, electricien x4, menuisier x2, plombier x4, pmr x2, serrurier x4, travaux x2, vitrier x2, volets x2. 12 pages depannage-* a 90 px et a-propos.html a 213 px par .hc-labels-grid. 1 page, remplacement-chauffe-eau.html, a 112 px par un TABLE.rh-table : cause distincte. chauffagiste-saint-omer.html et contrats-entretien.html ne figurent PLUS dans le releve : la meme mesure confirme que REQ-036 est effectif en production. PASS au head 030b8fb119ccfc369846bb40c5785666b33dddd1. Scan des 117 pages, meme methode avant et apres, zero erreur de chargement : 39 pages debordaient a 390, ZERO apres. Echantillon d'une page par cause : electricien-saint-omer 452->0 avec le carrousel d'avis redevenu defilable, depannage-arques 90->0, a-propos 213->0, remplacement-chauffe-eau 112->0 avec son tableau de 5 lignes x 8 colonnes qui defile dans son cadre. Desktop 1440 strictement inchange, prouve au pixel : hauteurs de document identiques avant/apres (6908, 5947, 9661, 3615 px). Deux erreurs de ma part rattrapees par le scan et corrigees : la declaration avait atterri DANS un @media(min-width:900px) sur cinq pages depannage (sans effet a 390), et la coupure de mot non bornee cassait les libelles en 1440 sur a-propos (hauteur 9661->9814). Trois variantes mesurees : seule « anywhere sous 700 px » satisfait les deux exigences. Console : aucune erreur introduite ; la seule relevee, 401 sur stats_publiques dans a-propos.html, est identique avant et apres, donc preexistante et hors lot. Aucun PROD_VERIFIED.",
+   "decide_par": "Florian — ordre du 2026-10-05"
+  },
+  {
+   "request_id": "REQ-20260926-040",
+   "title": "a-propos.html : la vue stats_publiques repond 401 avec la cle publique",
+   "priority": "P2",
+   "status": "OPEN",
+   "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-05-REQ-039-OVERFLOW-RESTE.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-05",
+   "acceptance_criteria": [
+    "aucune reponse 401 sur a-propos.html en production",
+    "le bloc de statistiques affiche bien ses valeurs, ou degrade proprement si la vue reste fermee"
+   ],
+   "evidence_required": [
+    "mesure reseau et console avant/apres en 1440 et 390",
+    "rollback"
+   ],
+   "latest_sha": null,
+   "claude_outbox": "CLAUDE-2026-10-05-REQ-039-OVERFLOW-RESTE.md",
+   "human_gate": "GATE : le correctif touche les droits de lecture Supabase (RLS ou exposition de la vue). Rien sans GO explicite de Florian.",
+   "blocked_by": "Gate Supabase/RLS : interdit sans GO specifique.",
+   "next_action": "Diagnostic cote base a faire d'abord en LECTURE SEULE : la vue stats_publiques existe-t-elle, est-elle exposee, quelle politique la couvre. Ensuite seulement, et sur GO, decider entre ouvrir la lecture publique ou faire degrader la page proprement.",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": "Releve le 2026-10-05 sur depan59-62.fr/a-propos.html, en 1440 et 390 : GET /rest/v1/stats_publiques?select=* repond 401. Mesure identique avant et apres le lot REQ-039, donc preexistante. C'est la seule erreur de console relevee sur l'echantillon des quatre pages.",
    "decide_par": "Claude — constat de production, a arbitrer"
   }
  ],
