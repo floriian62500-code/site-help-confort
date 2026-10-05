@@ -1,6 +1,6 @@
 # Audit script async/defer — Rapport
 
-_Généré le 2026-10-04 09:27_
+_Généré le 2026-10-05 10:08_
 
 ## Synthèse
 
@@ -48,8 +48,8 @@ _Généré le 2026-10-04 09:27_
 
 ### `contrats-entretien.html`
 - ⚠️ L.932 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.1373 (head) `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js` — ajouter `defer` ou `async`
-- ⚠️ L.1676 (head) `assets/hc-leads-capture.js?v=20260804` — ajouter `defer` ou `async`
+- ⚠️ L.1375 (head) `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js` — ajouter `defer` ou `async`
+- ⚠️ L.1691 (head) `assets/hc-leads-capture.js?v=20260804` — ajouter `defer` ou `async`
 
 ### `depannage-boulogne-sur-mer.html`
 - ⚠️ L.1053 (head) `script.js` — ajouter `defer` ou `async`
@@ -212,5 +212,5 @@ _Généré le 2026-10-04 09:27_
 
 ### `zones-intervention.html`
 - ⚠️ L.800 (head) `https://unpkg.com/leaflet@1.9.4/dist/leaflet.js` — ajouter `defer` ou `async`
-- ⚠️ L.1334 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.1347 (head) `assets/hc-leads-capture.js?v=20260804` — ajouter `defer` ou `async`
+- ⚠️ L.1371 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.1384 (head) `assets/hc-leads-capture.js?v=20260804` — ajouter `defer` ou `async`

@@ -1,4 +1,4 @@
-# Audit FAQPage doublon — 2026-10-04 09:27
+# Audit FAQPage doublon — 2026-10-05 10:07
 
 - **Pages scannées** : 117
 - **Pages avec 1 bloc FAQPage** : 32

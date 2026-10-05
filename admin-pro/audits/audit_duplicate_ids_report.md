@@ -1,10 +1,10 @@
-# Audit duplicate IDs — 2026-10-04 09:26
+# Audit duplicate IDs — 2026-10-05 10:06
 
 Sonde #63 : détecte les `id="X"` répétés dans une page (HTML invalide) et les ids partagés par > 10 pages (potentielle factorisation).
 
 - **Pages scannées** : 117
-- **IDs totaux (toutes pages)** : 1108
-- **IDs uniques (clés)** : 253
+- **IDs totaux (toutes pages)** : 1110
+- **IDs uniques (clés)** : 255
 - **🚨 Pages avec ids dupliqués** : 1
 - **🟠 IDs partagés par ≥ 10 pages** : 20
 

@@ -54,11 +54,11 @@ _Généré par `admin-pro/audits/audit_aria.py` — 117 pages scannées._
 
 - **INPUT-NO-LABEL** (avertissement, l. 963) — `<input type="text" name="website">`
 - **INPUT-NO-ARIA-LABEL** (avertissement, l. 963) — `<input type="text" name="website"> sans id`
-- **INPUT-NO-LABEL** (avertissement, l. 1251) — `<input type="checkbox" name="no_facture">`
-- **INPUT-NO-LABEL** (avertissement, l. 1266) — `<input type="checkbox" name="sepa_principe">`
-- **INPUT-NO-ARIA-LABEL** (avertissement, l. 1266) — `<input type="checkbox" name="sepa_principe"> sans id`
-- **INPUT-NO-LABEL** (avertissement, l. 1297) — `<input type="checkbox" name="cgv">`
-- **INPUT-NO-ARIA-LABEL** (avertissement, l. 1297) — `<input type="checkbox" name="cgv"> sans id`
+- **INPUT-NO-LABEL** (avertissement, l. 1253) — `<input type="checkbox" name="no_facture">`
+- **INPUT-NO-LABEL** (avertissement, l. 1268) — `<input type="checkbox" name="sepa_principe">`
+- **INPUT-NO-ARIA-LABEL** (avertissement, l. 1268) — `<input type="checkbox" name="sepa_principe"> sans id`
+- **INPUT-NO-LABEL** (avertissement, l. 1299) — `<input type="checkbox" name="cgv">`
+- **INPUT-NO-ARIA-LABEL** (avertissement, l. 1299) — `<input type="checkbox" name="cgv"> sans id`
 
 ### `chauffagiste-boulogne-sur-mer.html` — 3 finding(s)
 

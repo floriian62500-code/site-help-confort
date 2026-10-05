@@ -1,6 +1,6 @@
 # Audit Tarifs — Sonde IA #28
 
-_Généré le 2026-10-04 09:26 — `admin-pro/audits/audit_tarifs.py`_
+_Généré le 2026-10-05 10:06 — `admin-pro/audits/audit_tarifs.py`_
 
 - Pages publiques scannées : **118**
 - Montants validés (TARIFS_REFERENCE.md) : **53**
@@ -245,7 +245,7 @@ Tout montant `\d+\s*€` visible doit :
 | `chauffagiste-saint-omer.html` | 0 | 0 | 0 | 0 | **0** |
 | `chauffagiste-wimereux.html` | 0 | 0 | 0 | 0 | **0** |
 | `contact.html` | 0 | 0 | 0 | 0 | **0** |
-| `contrats-entretien.html` | 3 | 0 | 0 | 2 | **0** |
+| `contrats-entretien.html` | 2 | 0 | 0 | 2 | **0** |
 | `debouchage-canalisation.html` | 1 | 0 | 0 | 2 | **6** |
 | `depannage-arques.html` | 0 | 0 | 0 | 0 | **0** |
 | `depannage-bergues.html` | 3 | 0 | 0 | 0 | **0** |

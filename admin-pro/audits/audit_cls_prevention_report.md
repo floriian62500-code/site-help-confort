@@ -1,6 +1,6 @@
 # 📐 Audit CLS prevention (img width/height) — sonde #56
 
-_Généré le 2026-10-04 09:27_
+_Généré le 2026-10-05 10:07_
 
 - Pages scannées : **116**
 - `<img>` total : **1438**
@@ -43,7 +43,7 @@ Taux de couverture dimensions : **95.8%**
 
 ### `contrats-entretien.html` — 1 `<img>` à corriger
 
-- L1878 (width+height manquant) — `' + p.data + '`
+- L1893 (width+height manquant) — `' + p.data + '`
 
 ### `electricien-boulogne-sur-mer.html` — 1 `<img>` à corriger
 
@@ -89,10 +89,10 @@ Taux de couverture dimensions : **95.8%**
 ### `nos-prestations.html` — 5 `<img>` à corriger
 
 - L941 (width+height manquant) — `' + src + '`
-- L1442 (width+height manquant) — `${imgUrl}`
-- L1474 (width+height manquant) — `' + u + '`
-- L1569 (width+height manquant) — `${svc.image_url || 'https://btcbjwqiivhpwoszomhg.supabase.co/storage/v1/object/p`
-- L1583 (width+height manquant) — `${variantPhoto}`
+- L1445 (width+height manquant) — `${imgUrl}`
+- L1477 (width+height manquant) — `' + u + '`
+- L1572 (width+height manquant) — `${svc.image_url || 'https://btcbjwqiivhpwoszomhg.supabase.co/storage/v1/object/p`
+- L1586 (width+height manquant) — `${variantPhoto}`
 
 ### `partenaire.html` — 1 `<img>` à corriger
 

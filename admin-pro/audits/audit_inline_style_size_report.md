@@ -1,11 +1,11 @@
 # Audit inline `<style>` size — Rapport
 
-_Généré le 2026-10-04 09:27_
+_Généré le 2026-10-05 10:08_
 
 ## Synthèse
 
 - Pages scannées : **137**
-- CSS inline cumulé : **2911.6 KB**
+- CSS inline cumulé : **2911.9 KB**
 - CSS inline moyen : **21.3 KB / page**
 - ❌ Pages > 50 KB : **27**
 - ⚠️ Pages 25–50 KB : **3**
@@ -14,7 +14,7 @@ _Généré le 2026-10-04 09:27_
 
 | # | Fichier | Poids `<style>` | Nb blocs |
 |---|---------|-----------------|----------|
-| 1 | ❌ `chauffagiste-saint-omer.html` | **72.8 KB** | 15 |
+| 1 | ❌ `chauffagiste-saint-omer.html` | **73.0 KB** | 15 |
 | 2 | ❌ `plombier-saint-omer.html` | **68.3 KB** | 14 |
 | 3 | ❌ `menuisier-saint-omer.html` | **68.0 KB** | 13 |
 | 4 | ❌ `electricien-saint-omer.html` | **68.0 KB** | 13 |
@@ -29,7 +29,7 @@ _Généré le 2026-10-04 09:27_
 
 Ces pages gagneraient à voir leur CSS inline extrait vers un fichier `.css` externe (cache partagé inter-pages, render-blocking réduit, taille HTML diminuée).
 
-- `chauffagiste-saint-omer.html` — **72.8 KB** (15 bloc(s) `<style>`)
+- `chauffagiste-saint-omer.html` — **73.0 KB** (15 bloc(s) `<style>`)
 - `plombier-saint-omer.html` — **68.3 KB** (14 bloc(s) `<style>`)
 - `menuisier-saint-omer.html` — **68.0 KB** (13 bloc(s) `<style>`)
 - `electricien-saint-omer.html` — **68.0 KB** (13 bloc(s) `<style>`)
