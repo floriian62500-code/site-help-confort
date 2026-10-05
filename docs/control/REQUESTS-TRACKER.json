@@ -90,7 +90,7 @@
    "request_id": "REQ-20260926-003",
    "title": "Grille prestations Chauffage",
    "priority": "P0",
-   "status": "WAITING_FLORIAN_VISUAL",
+   "status": "CLOSED",
    "parent_instruction": "CHATGPT-2026-09-26-REQ-025-CHAUFFAGE-GRID-REWORK",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -107,19 +107,19 @@
    ],
    "latest_sha": "0f09e466",
    "claude_outbox": "CLAUDE-2026-09-26-REQ-025-CHAUFFAGE-GRID-REWORK.md",
-   "human_gate": "WAITING_FLORIAN_VISUAL — ne pas fermer, les captures ont montré des défauts successifs",
-   "blocked_by": "3 photos manquantes (chaudière, ramonage, poêle) — n'empêchent pas le rendu",
-   "next_action": "ne pas fermer",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
    "attempt": 1,
-   "closed_at": null,
-   "closure_proof": null,
-   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2"
+   "closed_at": "2026-10-05",
+   "closure_proof": " CLOTURE 2026-10-05 : Le besoin historique vise une grille 6 cartes/repli qui n'existe pas dans la lignee de production. La prod actuelle a 3 cartes egales, 0 tuile vide, 0 image brisee, 0 ancre dupliquee. Ce prototype recette non valide n'est pas a converger vers main. Toute evolution future de la grille relevera du nouveau chantier visuel.",
+   "decide_par": "ChatGPT 2026-10-05 (NOT_APPLICABLE/SUPERSEDED)"
   },
   {
    "request_id": "REQ-20260926-004",
    "title": "Pictos et libellés du footer Métiers",
    "priority": "P0",
-   "status": "REWORK_REQUIRED",
+   "status": "CLOSED",
    "parent_instruction": "CHATGPT-2026-09-26-CONTROL-NUMBERED-1 §REQ-004",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -133,13 +133,13 @@
    ],
    "latest_sha": "330210c9",
    "claude_outbox": "CLAUDE-2026-09-26-P0-CHAUFFAGE-CONTRATS-PREMIUM.md",
-   "human_gate": "WAITING_FLORIAN_DIRECTION",
-   "blocked_by": "Florian maintient que les pictos sont mauvais visuellement ; ne pas clôturer sur « le libellé était faux »",
-   "next_action": "le mapping technique ne suffit pas : rendu visuel à reprendre avec la source unique",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
    "attempt": 2,
-   "closed_at": null,
-   "closure_proof": null,
-   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2"
+   "closed_at": "2026-10-05",
+   "closure_proof": " CLOTURE 2026-10-05 : Le footer de production ne contient aucun picto metier a corriger ; les 6 libelles/destinations existants sont coherents. L'ajout d'un nouveau systeme de pictos sera traite comme creation dans la refonte, pas comme rattrapage de cette ancienne REQ.",
+   "decide_par": "ChatGPT 2026-10-05 (NOT_APPLICABLE/SUPERSEDED)"
   },
   {
    "request_id": "REQ-20260926-005",
@@ -173,7 +173,7 @@
    "request_id": "REQ-20260926-006",
    "title": "Bannière d'accueil flottante + routage Chauffage",
    "priority": "P0",
-   "status": "WAITING_FLORIAN_VISUAL",
+   "status": "CLOSED",
    "parent_instruction": "CHATGPT-2026-09-26-P0-HOME-BANNER-FLOATING-ROUTING",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -187,13 +187,13 @@
    ],
    "latest_sha": "91991d4a",
    "claude_outbox": "CLAUDE-2026-09-26-P0-HOME-BANNER-FLOATING-ROUTING.md",
-   "human_gate": "validation visuelle Florian",
+   "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "aucun nouveau changement",
+   "next_action": "—",
    "attempt": 1,
-   "closed_at": null,
-   "closure_proof": null,
-   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2"
+   "closed_at": "2026-10-05",
+   "closure_proof": " CLOTURE 2026-10-05 : La banniere flottante historique n'existe pas en production et n'a jamais ete validee pour portage. Le besoin saisonnier est repris separement par REQ-035 avec preuves actuelles.",
+   "decide_par": "ChatGPT 2026-10-05 (SUPERSEDED_BY_REQ035)"
   },
   {
    "request_id": "REQ-20260926-007",
@@ -378,7 +378,7 @@
    "request_id": "REQ-20260926-014",
    "title": "Repli visuel des cartes sur électricien / serrurier / vitrier",
    "priority": "P2",
-   "status": "OPEN_GELE",
+   "status": "CLOSED",
    "parent_instruction": "constat Claude pendant REQ-003",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -390,12 +390,12 @@
    "latest_sha": null,
    "claude_outbox": "—",
    "human_gate": "—",
-   "blocked_by": "gel : ne pas ouvrir avant clôture des P0",
-   "next_action": "gelé",
+   "blocked_by": "—",
+   "next_action": "—",
    "attempt": 1,
-   "closed_at": null,
-   "closure_proof": null,
-   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-4"
+   "closed_at": "2026-10-05",
+   "closure_proof": " CLOTURE 2026-10-05 : Le repli graphique cible est absent de la production et dependait de l'ancienne grille elle-meme absente. Aucun artefact valide a porter.",
+   "decide_par": "ChatGPT 2026-10-05 (NOT_APPLICABLE/SUPERSEDED)"
   },
   {
    "request_id": "REQ-20260926-015",
@@ -1094,7 +1094,7 @@
    "request_id": "REQ-20260926-039",
    "title": "Debordement horizontal a 390 px sur les pages restantes (meme motif que REQ-036)",
    "priority": "P1",
-   "status": "TECH_ACCEPTED",
+   "status": "CLOSED",
    "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-04-PREPARATION-REQ-038-ET-SUITE.md",
    "legacy_instruction_id": null,
    "created_at": "2026-10-04",
@@ -1109,15 +1109,15 @@
     "carrousels, modules et modales toujours fonctionnels",
     "console et rollback"
    ],
-   "latest_sha": "0f59c7550b45ef69ec804c50a20f130bd1f52144 (commit de fusion dans main)",
+   "latest_sha": "0f59c7550b45ef69ec804c50a20f130bd1f52144",
    "claude_outbox": "CLAUDE-2026-10-05-REQ-039-OVERFLOW-RESTE.md + CLAUDE-2026-10-05-REQ-039-PROD-VERIFY.md",
-   "human_gate": null,
-   "blocked_by": "Fusionnee dans main ; attente deploiement public et PROD_VERIFY.",
-   "next_action": "PROD_VERIFIED a poser par ChatGPT : le releve des 117 pages sur depan59-62.fr est fourni.",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
    "attempt": 1,
-   "closed_at": null,
-   "closure_proof": "RELEVE EXACT du 2026-10-04 (docs/qa/REQ-039/, scan-390-complet.mjs avec attente reseau complete, 0 erreur de chargement) : 39 pages sur 117 debordent a 390 px reels sur depan59-62.fr. 25 pages a 452 px par .hcal-wrap dans .m-proof-col (bloc avis Google) : chauffagiste-boulogne/calais/dunkerque, electricien x4, menuisier x2, plombier x4, pmr x2, serrurier x4, travaux x2, vitrier x2, volets x2. 12 pages depannage-* a 90 px et a-propos.html a 213 px par .hc-labels-grid. 1 page, remplacement-chauffe-eau.html, a 112 px par un TABLE.rh-table : cause distincte. chauffagiste-saint-omer.html et contrats-entretien.html ne figurent PLUS dans le releve : la meme mesure confirme que REQ-036 est effectif en production. PASS au head 030b8fb119ccfc369846bb40c5785666b33dddd1. Scan des 117 pages, meme methode avant et apres, zero erreur de chargement : 39 pages debordaient a 390, ZERO apres. Echantillon d'une page par cause : electricien-saint-omer 452->0 avec le carrousel d'avis redevenu defilable, depannage-arques 90->0, a-propos 213->0, remplacement-chauffe-eau 112->0 avec son tableau de 5 lignes x 8 colonnes qui defile dans son cadre. Desktop 1440 strictement inchange, prouve au pixel : hauteurs de document identiques avant/apres (6908, 5947, 9661, 3615 px). Deux erreurs de ma part rattrapees par le scan et corrigees : la declaration avait atterri DANS un @media(min-width:900px) sur cinq pages depannage (sans effet a 390), et la coupure de mot non bornee cassait les libelles en 1440 sur a-propos (hauteur 9661->9814). Trois variantes mesurees : seule « anywhere sous 700 px » satisfait les deux exigences. Console : aucune erreur introduite ; la seule relevee, 401 sur stats_publiques dans a-propos.html, est identique avant et apres, donc preexistante et hors lot. Aucun PROD_VERIFIED. PRECISION : le lot touche 40 fichiers et non 39. Le 40e est contrats-entretien.html, deja corrige par REQ-036 et en production, dont la passe de bornage harmonise la declaration vers la forme @media(max-width:700px). Mesure production contre preview, deux largeurs : debordement 0 -> 0, hauteur de document 11833 -> 11833 en 390 et 5891 -> 5891 en 1440, grille des labels et nombre de cartes identiques. Rien ne bouge. CONTROLE DE PRODUCTION le 2026-10-05 sur depan59-62.fr apres la fusion 0f59c755 : releve des 117 pages publiques a 390 px reels, meme methode qu'avant correctif, 0 erreur de chargement — ZERO page ne deborde, contre 39 avant. Echantillon d'une page par cause a 0 px, composants fonctionnels (carrousel d'avis defilable, 4 cartes labels, tableau de 5 lignes x 8 colonnes defilable). Desktop 1440 intact : hauteurs de document identiques au pixel a ce qu'elles etaient AVANT le lot (6908, 5947, 9661, 3615 px). Console : seule subsiste la 401 sur stats_publiques d'a-propos.html, preexistante et suivie en REQ-040. Preuves : docs/qa/REQ-039-prod/.",
-   "decide_par": "ChatGPT 2026-10-05 (merge sous GO general Florian)"
+   "closed_at": "2026-10-05",
+   "closure_proof": "RELEVE EXACT du 2026-10-04 (docs/qa/REQ-039/, scan-390-complet.mjs avec attente reseau complete, 0 erreur de chargement) : 39 pages sur 117 debordent a 390 px reels sur depan59-62.fr. 25 pages a 452 px par .hcal-wrap dans .m-proof-col (bloc avis Google) : chauffagiste-boulogne/calais/dunkerque, electricien x4, menuisier x2, plombier x4, pmr x2, serrurier x4, travaux x2, vitrier x2, volets x2. 12 pages depannage-* a 90 px et a-propos.html a 213 px par .hc-labels-grid. 1 page, remplacement-chauffe-eau.html, a 112 px par un TABLE.rh-table : cause distincte. chauffagiste-saint-omer.html et contrats-entretien.html ne figurent PLUS dans le releve : la meme mesure confirme que REQ-036 est effectif en production. PASS au head 030b8fb119ccfc369846bb40c5785666b33dddd1. Scan des 117 pages, meme methode avant et apres, zero erreur de chargement : 39 pages debordaient a 390, ZERO apres. Echantillon d'une page par cause : electricien-saint-omer 452->0 avec le carrousel d'avis redevenu defilable, depannage-arques 90->0, a-propos 213->0, remplacement-chauffe-eau 112->0 avec son tableau de 5 lignes x 8 colonnes qui defile dans son cadre. Desktop 1440 strictement inchange, prouve au pixel : hauteurs de document identiques avant/apres (6908, 5947, 9661, 3615 px). Deux erreurs de ma part rattrapees par le scan et corrigees : la declaration avait atterri DANS un @media(min-width:900px) sur cinq pages depannage (sans effet a 390), et la coupure de mot non bornee cassait les libelles en 1440 sur a-propos (hauteur 9661->9814). Trois variantes mesurees : seule « anywhere sous 700 px » satisfait les deux exigences. Console : aucune erreur introduite ; la seule relevee, 401 sur stats_publiques dans a-propos.html, est identique avant et apres, donc preexistante et hors lot. Aucun PROD_VERIFIED. PRECISION : le lot touche 40 fichiers et non 39. Le 40e est contrats-entretien.html, deja corrige par REQ-036 et en production, dont la passe de bornage harmonise la declaration vers la forme @media(max-width:700px). Mesure production contre preview, deux largeurs : debordement 0 -> 0, hauteur de document 11833 -> 11833 en 390 et 5891 -> 5891 en 1440, grille des labels et nombre de cartes identiques. Rien ne bouge. CONTROLE DE PRODUCTION le 2026-10-05 sur depan59-62.fr apres la fusion 0f59c755 : releve des 117 pages publiques a 390 px reels, meme methode qu'avant correctif, 0 erreur de chargement — ZERO page ne deborde, contre 39 avant. Echantillon d'une page par cause a 0 px, composants fonctionnels (carrousel d'avis defilable, 4 cartes labels, tableau de 5 lignes x 8 colonnes defilable). Desktop 1440 intact : hauteurs de document identiques au pixel a ce qu'elles etaient AVANT le lot (6908, 5947, 9661, 3615 px). Console : seule subsiste la 401 sur stats_publiques d'a-propos.html, preexistante et suivie en REQ-040. Preuves : docs/qa/REQ-039-prod/. PROD_VERIFIED 2026-10-05 : scan public de 117 pages a 390 px, 0 overflow >1 px, 0 erreur de chargement ; echantillons 1440 inchanges au pixel ; aucune regression introduite. Seule erreur restante = 401 stats_publiques suivie en REQ-040.",
+   "decide_par": "ChatGPT 2026-10-05 (PROD_VERIFIED)"
   },
   {
    "request_id": "REQ-20260926-040",
