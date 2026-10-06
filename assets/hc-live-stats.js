@@ -8,7 +8,10 @@
   'use strict';
 
   var SUPA_URL = 'https://btcbjwqiivhpwoszomhg.supabase.co';
-  var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0Y2Jqd3FpaXZocG93c3pvbWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMzMjY1NjUsImV4cCI6MjA3ODkwMjU2NX0.fJC6_VxoSxr2hf-NUS7Of4kbJ4f0Lv3PFG6JsLrqLng';
+  // REQ-20260926-040 : la cle anon historique a ete revoquee cote Supabase — elle repond
+  // « Invalid API key » — et la page tombait donc toujours sur les valeurs de repli.
+  // On utilise la cle publiable, celle que tous les autres modules du site emploient deja.
+  var SUPA_KEY = 'sb_publishable_Zyd4jmm3_qOcTjFdN8pnBw_sOybyyB2';
 
   // Valeurs fallback si l'API ne répond pas
   var FALLBACK = {
