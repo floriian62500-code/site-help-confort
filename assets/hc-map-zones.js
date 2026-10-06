@@ -1,12 +1,12 @@
 /* ============================================================
    HC-MAP-ZONES — Carte interactive Leaflet zones d'intervention
-   V3 (2026-05-30) — 4 villes + polygone zone + tiles CartoDB neutres
+   V4 (2026-10-06) — 1 agence + 3 pôles d'intervention + tuiles OpenStreetMap
    Utilisation : <div data-hc-map-zones></div>
    ============================================================ */
 (function () {
   'use strict';
 
-  // 4 villes principales — 2 agences + 2 zones intervention élargies
+  // 4 villes principales — 1 agence + 3 pôles d'intervention
   var VILLES = [
     {
       name: 'Saint-Omer', cp: '62500', zone: 'Audomarois',
@@ -18,21 +18,21 @@
     {
       name: 'Dunkerque', cp: '59140', zone: 'Dunkerquois',
       lat: 51.0344, lng: 2.3768, color: '#0DA0CF',
-      role: 'agence',
+      role: 'pole',
       url: 'depannage-dunkerque.html',
-      desc: "Agence Dépan'DK · littoral"
+      desc: "Pôle d'intervention Dunkerque · littoral"
     },
     {
       name: 'Calais', cp: '62100', zone: 'Calaisis',
       lat: 50.9513, lng: 1.8587, color: '#FFB400',
-      role: 'zone',
+      role: 'pole',
       url: 'depannage-calais.html',
       desc: "Zone Cité de l'Europe · Côte d'Opale"
     },
     {
       name: 'Boulogne-sur-Mer', cp: '62200', zone: 'Boulonnais',
       lat: 50.7264, lng: 1.6147, color: '#22C55E',
-      role: 'zone',
+      role: 'pole',
       url: 'depannage-boulogne-sur-mer.html',
       desc: "Port + agglomération CAB · sud Côte d'Opale"
     }
@@ -94,8 +94,7 @@
 .leaflet-container img[alt*="ukraine" i],\
 .leaflet-container [class*="ukraine" i],\
 .leaflet-container [style*="ukraine" i],\
-.leaflet-control-attribution a[href*="osm"],\
-.leaflet-control-attribution a[href*="openstreetmap"]{display:none !important;visibility:hidden !important;width:0 !important;height:0 !important}';
+.leaflet-container [style*="ukraine" i]{display:none !important;visibility:hidden !important}';
 
   function injectCSS() {
     if (document.getElementById('hc-map-style')) return;
@@ -128,13 +127,13 @@
         <div class="hc-map-head">\
           <span class="hc-map-eyebrow">Zones d\'intervention</span>\
           <h2>Toute la <em>Côte d\'Opale</em> &amp; l\'arrière-pays</h2>\
-          <p>De Saint-Omer à Boulogne-sur-Mer en passant par Calais et Dunkerque — nos 2 agences locales couvrent la totalité du Pas-de-Calais nord et du Dunkerquois. Cliquez sur un marqueur pour voir les détails.</p>\
+          <p>Depuis notre agence de Saint-Omer, nos équipes interviennent jusqu’à Dunkerque, Calais et Boulogne-sur-Mer via nos pôles d’intervention. Cliquez sur un marqueur pour voir les détails.</p>\
         </div>\
         <div class="hc-map-container">\
           <div class="hc-map-legend">\
             <strong>Notre zone d\'intervention</strong>\
             <div class="hc-map-legend-row"><span class="hc-map-legend-dot" style="background:#FF6B1A;width:13px;height:13px;border:2px solid #fff"></span><strong style="font-size:.78rem;color:#0A1428;font-weight:700">Saint-Omer</strong> <span style="opacity:.7;font-size:.72rem">· Dépan\'Audo</span></div>\
-            <div class="hc-map-legend-row"><span class="hc-map-legend-dot" style="background:#0DA0CF;width:13px;height:13px;border:2px solid #fff"></span><strong style="font-size:.78rem;color:#0A1428;font-weight:700">Dunkerque</strong> <span style="opacity:.7;font-size:.72rem">· Dépan\'DK</span></div>\
+            <div class="hc-map-legend-row"><span class="hc-map-legend-dot" style="background:#0DA0CF;width:13px;height:13px;border:2px solid #fff"></span><strong style="font-size:.78rem;color:#0A1428;font-weight:700">Dunkerque</strong> <span style="opacity:.7;font-size:.72rem">· Pôle d\'intervention</span></div>\
             <div class="hc-map-legend-row"><span class="hc-map-legend-dot" style="background:#FFB400"></span><span style="font-size:.76rem">Calais &amp; Calaisis</span></div>\
             <div class="hc-map-legend-row"><span class="hc-map-legend-dot" style="background:#22C55E"></span><span style="font-size:.76rem">Boulogne &amp; Boulonnais</span></div>\
             <div style="margin-top:10px;padding-top:8px;border-top:1px solid #f0f4f7;display:flex;align-items:center;gap:8px"><span class="hc-map-legend-zone"></span><span style="font-size:.72rem">Zone d\'intervention complète</span></div>\
@@ -144,7 +143,8 @@
             <div class="hc-map-info-stats">\
               <div class="hc-map-info-stat"><strong>4</strong><span>Villes principales</span></div>\
               <div class="hc-map-info-stat"><strong>80+</strong><span>Communes couvertes</span></div>\
-              <div class="hc-map-info-stat"><strong>2</strong><span>Agences locales</span></div>\
+              <div class="hc-map-info-stat"><strong>1</strong><span>Agence à Saint-Omer</span></div>\
+              <div class="hc-map-info-stat"><strong>3</strong><span>Pôles d\'intervention</span></div>\
               <div class="hc-map-info-stat"><strong>24h</strong><span>Devis ouvré</span></div>\
             </div>\
             <a href="nos-villes.html">Voir toutes nos villes →</a>\
@@ -166,7 +166,7 @@
       });
       // Attribution Leaflet : remplacer entièrement
       var attr = document.querySelector('#hcMapEl .leaflet-control-attribution');
-      if (attr) attr.innerHTML = 'Tuiles © <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>';
+      if (attr) attr.innerHTML = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors';
     } catch (e) {}
   }
 
@@ -180,11 +180,11 @@
       attributionControl: true
     });
 
-    // Tiles CartoDB Voyager — neutres, pas d'overlay drapeau Ukraine
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      attribution: 'Tuiles © CARTO',
-      subdomains: 'abcd',
-      maxZoom: 18
+    // Tuiles OpenStreetMap standard — sans clé API, attribution obligatoire
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors',
+      subdomains: 'abc',
+      maxZoom: 19
     }).addTo(map);
 
     // Kill overlay drapeau Ukraine après chargement + tous les 2s pendant 10s (parano)
@@ -196,7 +196,7 @@
     map.on('focus', function () { map.scrollWheelZoom.enable(); });
     map.on('blur', function () { map.scrollWheelZoom.disable(); });
 
-    // ─── 2 CERCLES colorés visibles : rayon intervention par agence ───
+    // ─── CERCLES de couverture : agence Saint-Omer + pôle Dunkerque ───
     var circleSO = L.circle([50.7508, 2.2522], {
       radius: 30000,
       color: '#FF6B1A', weight: 3, opacity: 1,
@@ -207,7 +207,7 @@
       radius: 25000,
       color: '#0DA0CF', weight: 3, opacity: 1,
       fillColor: '#0DA0CF', fillOpacity: 0.25
-    }).addTo(map).bindTooltip('Zone agence Dunkerque · Dépan\'DK', { sticky: true });
+    }).addTo(map).bindTooltip('Pôle d\'intervention Dunkerque', { sticky: true });
 
     // ─── Markers 4 villes ───
     VILLES.forEach(function (v) {
@@ -223,7 +223,7 @@
         iconAnchor: isAgence ? [27, 27] : [19, 19]
       });
       var marker = L.marker([v.lat, v.lng], { icon: icon, zIndexOffset: isAgence ? 1000 : 500 }).addTo(map);
-      var roleLabel = isAgence ? '★ Agence locale' : 'Zone d\'intervention';
+      var roleLabel = isAgence ? '★ Agence Saint-Omer' : 'Pôle d\'intervention';
       marker.bindPopup(
         '<small style="color:' + v.color + '">' + roleLabel + ' · ' + v.zone + ' · ' + v.cp + '</small>' +
         '<strong>' + v.name + '</strong>' +
@@ -232,7 +232,7 @@
       );
     });
 
-    // Fit bounds sur les cercles agences (zoom adapté pour voir les 2 zones)
+    // Fit bounds sur les zones de couverture Saint-Omer + Dunkerque
     var group = L.featureGroup([circleSO, circleDK]);
     map.fitBounds(group.getBounds(), { padding: [40, 40] });
   }
