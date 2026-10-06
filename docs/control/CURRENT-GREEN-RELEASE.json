@@ -1,0 +1,74 @@
+{
+  "generated_at": "2026-10-03",
+  "go": "Florian: pousser en prod tout ce qui est vert",
+  "production_main_after_pr22": "dc9b39eb7e9ee9edd73684d324fee7aa5911016d",
+  "process": "docs/control/RELEASE-PROCESS.md",
+  "items": [
+    {
+      "request_id": "REQ-20260926-007",
+      "state": "MERGED_MAIN_AWAITING_PROD_PROOF",
+      "release": "PR #22",
+      "note": "retrait du module parcours pages métier"
+    },
+    {
+      "request_id": "REQ-20260926-019",
+      "state": "MERGED_MAIN_AWAITING_PROD_PROOF",
+      "release": "PR #22",
+      "note": "slug _default masqué"
+    },
+    {
+      "request_id": "REQ-20260926-024",
+      "state": "PARTIAL_MAIN_RELEASE_PR24_PENDING_EXACT_PROOF",
+      "release": "PR #22 + PR #24",
+      "note": "JS fusionné; cache-bust 4 pages dans PR #24"
+    },
+    {
+      "request_id": "REQ-20260926-011",
+      "state": "ALREADY_PRESENT_IN_MAIN_AWAITING_PROD_PROOF",
+      "release": "main",
+      "note": "CTA avec prix pointent déjà vers nos-prestations sur main; pas de duplication de diff"
+    },
+    {
+      "request_id": "REQ-20260926-023",
+      "state": "PR24_PENDING_EXACT_PROOF",
+      "release": "PR #24",
+      "note": "4 pôles validés visuellement auparavant; reconstruction depuis main courant"
+    },
+    {
+      "request_id": "REQ-20260926-008",
+      "state": "NO_PROD_DIFF_ON_CURRENT_MAIN",
+      "release": null,
+      "note": "bloc visé absent du main lors du packaging; ne rien supprimer artificiellement"
+    },
+    {
+      "request_id": "REQ-20260926-009",
+      "state": "NO_RELEASE_DIFF_PROVEN",
+      "release": null,
+      "note": "ne pas inventer un portage sans preuve d'applicabilité sur main courant"
+    },
+    {
+      "request_id": "REQ-20260926-026",
+      "state": "TEST_ONLY_NOT_IN_PROD_ARTIFACT",
+      "release": null,
+      "note": "garde de cohérence; main ne porte pas la suite de tests correspondante"
+    },
+    {
+      "request_id": "REQ-20260926-017",
+      "state": "NOT_GREEN",
+      "release": "PR #23",
+      "note": "preview verte mais nouvelle preuve 1440/390 + parcours complet exigée; PR doit être resynchronisée après les merges main"
+    },
+    {
+      "request_id": "REQ-20260926-035",
+      "state": "NOT_GREEN",
+      "release": null,
+      "note": "preuves visuelles invalides"
+    },
+    {
+      "request_id": "REQ-20260926-001",
+      "state": "EXCLUDED_SENSITIVE",
+      "release": null,
+      "note": "paiement/sécurité hors GO batch"
+    }
+  ]
+}
