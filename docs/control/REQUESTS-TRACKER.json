@@ -30,7 +30,7 @@
   "READY_FOR_FLORIAN_VISUAL"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-041",
+ "prochain_id": "REQ-20260926-042",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -1122,8 +1122,8 @@
   {
    "request_id": "REQ-20260926-040",
    "title": "a-propos.html : la vue stats_publiques repond 401 avec la cle publique",
-   "priority": "P2",
-   "status": "IN_PROGRESS",
+   "priority": "P1",
+   "status": "READY_FOR_CONTROL",
    "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-05-REQ-039-OVERFLOW-RESTE.md",
    "legacy_instruction_id": null,
    "created_at": "2026-10-05",
@@ -1135,14 +1135,41 @@
     "mesure reseau et console avant/apres en 1440 et 390",
     "rollback"
    ],
-   "latest_sha": null,
-   "claude_outbox": "CLAUDE-2026-10-05-REQ-039-OVERFLOW-RESTE.md",
-   "human_gate": "GATE : le correctif touche les droits de lecture Supabase (RLS ou exposition de la vue). Rien sans GO explicite de Florian.",
-   "blocked_by": "Aucun blocage pour l'audit lecture seule. Mutation Supabase/RLS toujours interdite sans GO specifique.",
-   "next_action": "Faire maintenant l'audit read-only de stats_publiques. Chercher en priorite une correction applicative non sensible (degradation propre/suppression appel inutile) ; si seule une mutation de droits resout le probleme, revenir avec delta/risque/rollback.",
+   "latest_sha": "3cc281bb2900f5875cdcd8c36abfdb60697c59e3 (PR #30, feat/req-040-cle-publiable-stats — 1 fichier)",
+   "claude_outbox": "CLAUDE-2026-10-06-REQ-040-CLE-REVOQUEE.md",
+   "human_gate": null,
+   "blocked_by": null,
+   "next_action": "Controle ChatGPT puis fusion et verification sur depan59-62.fr. Decision separee attendue sur les six autres fichiers qui portent encore la cle revoquee.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": "Releve le 2026-10-05 sur depan59-62.fr/a-propos.html, en 1440 et 390 : GET /rest/v1/stats_publiques?select=* repond 401. Mesure identique avant et apres le lot REQ-039, donc preexistante. C'est la seule erreur de console relevee sur l'echantillon des quatre pages.",
+   "closure_proof": "PASS au head 3cc281bb2900f5875cdcd8c36abfdb60697c59e3. AUDIT EN LECTURE SEULE, sans toucher la base : ce n'etait pas un probleme de droits. La vue stats_publiques repond 200 avec la cle publiable et renvoie ses donnees ; c'est la cle anon historique, encore utilisee par assets/hc-live-stats.js, que Supabase refuse desormais (« Invalid API key »). Verifie sur trois familles d'endpoints : rest/v1/stats_publiques, rest/v1/newsletter_subscribers et auth/v1/settings repondent 401 avec la cle historique et 200 avec la publiable. Correctif : une chaine de caracteres dans un fichier. Mesure avant/apres en 1440 et 390 : l'appel passe de 401 a 200 et la console passe de deux messages (401 + « [hc-stats] fallback values ») a aucune erreur imputable au site. Aucune mutation Supabase, aucune RLS, aucune donnee ecrite.",
+   "decide_par": "Florian — GO audit lecture seule du 2026-10-05"
+  },
+  {
+   "request_id": "REQ-20260926-041",
+   "title": "Le site annonce encore « 2 agences » sur 12 pages, en contradiction avec REQ-023",
+   "priority": "P1",
+   "status": "OPEN",
+   "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-06-REQ-040-CLE-REVOQUEE.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-06",
+   "acceptance_criteria": [
+    "aucune page publique n'annonce une agence qui n'existe pas",
+    "la formulation retenue est celle validee par Florian",
+    "coherence avec la page Zones : une agence a Saint-Omer, des poles d'intervention ailleurs"
+   ],
+   "evidence_required": [
+    "releve avant/apres des pages concernees",
+    "captures 1440/390 sur un echantillon"
+   ],
+   "latest_sha": null,
+   "claude_outbox": "CLAUDE-2026-10-06-REQ-040-CLE-REVOQUEE.md",
+   "human_gate": "La formulation commerciale appartient a Florian : je ne reecris pas un argument sans son mot.",
+   "blocked_by": "Formulation a valider.",
+   "next_action": "Florian donne la formulation ; lot isole depuis le main courant, releve avant/apres, captures, rollback.",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": "Releve le 2026-10-06 sur le main courant : 12 pages publiques portent encore « 2 Agences locales » ou « deux agences » — a-propos, contact (meme bloc), chauffagiste-saint-omer, electricien-saint-omer, menuisier-saint-omer, nos-villes, notre-equipe, plombier-saint-omer, reseau-help-confort, serrurier-saint-omer, travaux-saint-omer, vitrier-saint-omer. La page Zones dit desormais l'inverse depuis REQ-023 : une seule agence a Saint-Omer, des poles d'intervention ailleurs. Le site se contredit d'une page a l'autre.",
    "decide_par": "Claude — constat de production, a arbitrer"
   }
  ],
