@@ -763,7 +763,9 @@
 .m-modal-success-icon{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#1aa260,#22c55e);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 8px 24px rgba(26,162,96,.30)}
 </style>
 <script src="assets/hc-fournisseurs.js?v=20260603" defer></script>
-<style>.hc-topbar{min-height:44px}@media(max-width:1023px){.hc-topbar{min-height:60px}}@media(max-width:767px){.hc-topbar{min-height:86px}}@media(max-width:429px){.hc-topbar{min-height:136px}}</style><link rel="stylesheet" href="/assets/hc-header.css?v=54651f4abb">
+<style>.hc-topbar{min-height:44px}@media(max-width:1023px){.hc-topbar{min-height:60px}}@media(max-width:767px){.hc-topbar{min-height:86px}}@media(max-width:429px){.hc-topbar{min-height:136px}}</style><link rel="stylesheet" href="/assets/hc-contrats.css?v=7162fd1eb9">
+<script src="/assets/hc-contrats.js?v=0ef4fc4846" defer></script>
+<link rel="stylesheet" href="/assets/hc-header.css?v=54651f4abb">
 <script src="/assets/hc-header.js?v=718ed22c6e" defer></script>
 <link rel="stylesheet" href="/assets/hc-promo-saison.css?v=fb525678f2">
 <script src="/assets/hc-promo-saison.js?v=2447d96f54" defer></script>
@@ -1446,82 +1448,35 @@
     </div>
   </div>
 </section>
-<style>
- /* ===== Contrats d'entretien — section premium (décision Florian du 2026-09-26) =====
-    Le teaser précédent était une bande blanche sur fond crème, au milieu d'une page blanche :
-    exact, complet, et invisible. Ce qui rend un bloc commercial repérable, ce n'est pas sa taille
-    seule, c'est le CONTRASTE avec ce qui l'entoure. D'où le fond sombre : c'est le seul bloc
-    foncé du premier écran et demi, donc l'œil y va.
-    Ce qui ne change pas : la page contrats reste la seule à DÉCRIRE les formules. Ici on nomme,
-    on donne le prix d'appel, on liste les bénéfices — pas les garanties détaillées. */
- .ce-cta{display:inline-flex;justify-content:center;align-items:center;gap:8px;padding:14px 22px;background:#0A1428;color:#fff;border-radius:999px;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .3s ease;margin-top:auto}
- .ce-cta:hover{background:#1a2742;transform:scale(1.03)}
- .m-contrats-premium{padding:clamp(34px,4.4vw,56px) 0;background:linear-gradient(180deg,#FFF6EC 0%,#FDEEDD 100%)}
- .ctp{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.95fr);gap:clamp(22px,3vw,44px);align-items:center;max-width:1120px;margin:0 auto;padding:clamp(26px,3.4vw,42px) clamp(22px,3.4vw,44px);background:linear-gradient(135deg,#0A1428 0%,#132F52 58%,#1B2B4D 100%);color:#fff;border-radius:26px;box-shadow:0 30px 70px -28px rgba(10,20,40,.55)}
- .ctp::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,#FF6B1A,#FFB061 45%,#1FC4F0)}
- .ctp::after{content:"";position:absolute;right:-110px;top:-90px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,26,.24),transparent 68%);pointer-events:none}
- .ctp-main{position:relative;min-width:0}
- .ctp-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:10px;padding:5px 13px;border-radius:999px;background:rgba(255,107,26,.18);border:1px solid rgba(255,159,102,.36);font-size:.71rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#FFC09A}
- .ctp h2{margin:0;font-size:clamp(1.6rem,3vw,2.35rem);line-height:1.12;letter-spacing:-.025em;color:#fff;font-weight:800}
- .ctp h2 em{font-style:italic;color:#FFB061}
- .ctp-lede{margin:12px 0 0;font-size:clamp(.97rem,1.15vw,1.08rem);line-height:1.6;color:rgba(255,255,255,.86);max-width:52ch}
- .ctp-benef{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 22px}
- .ctp-benef li{display:flex;align-items:flex-start;gap:9px;font-size:.93rem;font-weight:600;color:rgba(255,255,255,.93);line-height:1.4}
- .ctp-benef svg{flex-shrink:0;margin-top:2px;color:#5FE3B0}
- .ctp-offre{position:relative;display:flex;flex-direction:column;gap:14px;padding:22px 20px;background:rgba(255,255,255,.07);border:1px solid rgba(168,228,247,.26);border-radius:20px;backdrop-filter:blur(2px)}
- .ctp-prix{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
- .ctp-prix .ctp-des{font-size:.9rem;font-weight:700;color:rgba(255,255,255,.72)}
- .ctp-prix strong{font-size:clamp(2.2rem,3.6vw,2.9rem);font-weight:900;letter-spacing:-.04em;color:#fff;line-height:1}
- .ctp-prix .ctp-unite{font-size:.92rem;font-weight:700;color:#FFC09A}
- .ctp-formules{display:flex;flex-wrap:wrap;gap:8px}
- .ctp-badge{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);font-size:.78rem;font-weight:800;letter-spacing:.06em;color:#E8F4FB}
- .ctp-badge--phare{background:linear-gradient(135deg,#FF6B1A,#E55510);border-color:transparent;color:#fff;box-shadow:0 8px 20px rgba(255,107,26,.34)}
- .ctp-cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:58px;padding:16px 24px;background:linear-gradient(135deg,#E55A0C,#FF7A2B);color:#fff;font-weight:800;font-size:1.04rem;border-radius:14px;text-decoration:none;box-shadow:0 14px 30px rgba(255,107,26,.38);transition:transform .18s ease,filter .18s ease}
- .ctp-cta:hover{filter:brightness(1.07);transform:translateY(-1px)}
- .ctp-lien{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border-radius:12px;border:1.5px solid rgba(168,228,247,.42);color:#C9EEFB;font-weight:700;font-size:.92rem;text-decoration:none}
- .ctp-lien:hover{background:rgba(255,255,255,.10);border-color:#1FC4F0;color:#fff}
- .ctp-note{margin:12px 0 0;font-size:.82rem;color:rgba(255,255,255,.62);text-align:center}
- .ctp a:focus-visible{outline:3px solid #1FC4F0;outline-offset:3px}
- @media (prefers-reduced-motion:reduce){.ctp-cta{transition:none}.ctp-cta:hover{transform:none}}
- @media (max-width:900px){
-  .ctp{grid-template-columns:minmax(0,1fr);gap:22px;padding:24px 20px}
-  .ctp-benef{grid-template-columns:minmax(0,1fr);gap:9px}
-  .ctp-offre{padding:20px 18px}
- }
-</style>
-<!-- Contrats d'entretien — mise en avant forte, haut de page. Les formules sont NOMMÉES ici, pas
-     décrites : le comparatif, les garanties et les prix par énergie vivent sur
-     /contrats-entretien.html, qui reste la seule page détaillée et la seule à jour (elle lit
-     v_contract_offers). Le seul chiffre repris est le prix d'entrée du catalogue, vérifié par
-     scripts/tests/prix-contrats. -->
-<section class="m-section m-contrats-premium" id="contrats" aria-labelledby="ctpTitle">
+<!-- ============ CONTRATS D'ENTRETIEN — module complet, sur cette page ============
+     REQ-20260926-017. Le teaser sombre renvoyait vers /contrats-entretien pour comparer et
+     souscrire : deux pages pour une seule décision. Le module complet est maintenant ici même,
+     monté par assets/hc-contrats.js à partir de la source canonique v_contract_offers. Aucun prix
+     n'est écrit dans cette page. -->
+<section class="ct-contrats-page" id="entretien" aria-labelledby="contratsTitre">
  <div class="container">
-  <div class="ctp">
-   <div class="ctp-main">
-    <span class="ctp-eyebrow">Contrats d&apos;entretien</span>
-    <h2 id="ctpTitle">Entretenez votre chaudière <em>sans y penser</em></h2>
-    <p class="ctp-lede">Gaz ou fioul, nos techniciens salariés s&apos;occupent de tout : la visite annuelle, l&apos;attestation à remettre à votre assureur, et le rappel un mois avant la date.</p>
-    <ul class="ctp-benef">
-     <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Visite annuelle par un technicien de l&apos;agence</li>
-     <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Attestation d&apos;entretien remise</li>
-     <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Rappel automatique un mois avant</li>
-     <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Engagement 1 an, renouvelable</li>
-    </ul>
-   </div>
-   <aside class="ctp-offre">
-    <p class="ctp-prix"><span class="ctp-des">dès </span><strong>9,90&nbsp;€ </strong><span class="ctp-unite">TTC/mois</span></p>
-    <div class="ctp-formules">
-     <span class="ctp-badge">BASIC</span>
-     <span class="ctp-badge ctp-badge--phare"><span aria-hidden="true">★</span>CONFORT</span>
-     <span class="ctp-badge">SÉCURITÉ</span>
-    </div>
-    <a href="contrats-entretien.html" class="ctp-cta">Découvrir nos contrats d&apos;entretien <span aria-hidden="true">→</span></a>
-    <a href="catalogue.html#cat=chauffage&amp;presta=entretien&amp;src=chauffage-teaser" class="ctp-lien">Juste un entretien ponctuel</a>
-    <p class="ctp-note">Comparatif complet et prix par énergie sur la page contrats.</p>
-   </aside>
-  </div>
+  <span class="ctp-eyebrow">Contrats d'entretien</span>
+  <h2 class="ct-h2" id="contratsTitre">Entretenez votre chaudière sans y penser</h2>
+  <p class="ct-intro">Gaz ou fioul, nos techniciens salariés s'occupent de tout : la visite annuelle,
+   l'attestation à remettre à votre assureur, et le rappel un mois avant la date. Comparez et
+   souscrivez ici, sans changer de page.</p>
+ </div>
+ <div data-hc-contrats></div>
+ <div class="container ct-ponctuel">
+  <a href="catalogue.html#cat=chauffage&amp;presta=entretien&amp;src=chauffage-contrats" class="ctp-lien">Je veux juste un entretien ponctuel</a>
  </div>
 </section>
+<style>
+ /* Habillage propre au contexte de la page métier : le module apporte ses propres styles. */
+ .ct-contrats-page{scroll-margin-top:96px;padding:56px 0 48px;background:linear-gradient(180deg,#FFFFFF,#F3F5F8)}
+ .ct-contrats-page .ctp-eyebrow{display:inline-block;font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#B83E0A;margin-bottom:10px}
+ .ct-contrats-page .ct-h2{margin:0;font-size:clamp(1.6rem,3.4vw,2.2rem);font-weight:800;color:#0A1428;letter-spacing:-.02em}
+ .ct-contrats-page .ct-intro{margin:12px 0 0;max-width:680px;font-size:1rem;line-height:1.62;color:#46566E}
+ .ct-contrats-page .ct-offers{padding-top:28px}
+ .ct-ponctuel{margin-top:22px;text-align:center}
+ .ct-contrats-page .ctp-lien{display:inline-flex;align-items:center;min-height:44px;padding:10px 18px;color:#0A1428;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+</style>
+
 <!-- Pourquoi choisir HELP Confort (Lot 2 — position #1). 6 engagements concrets. -->
 <section class="m-pourquoi-top" style="padding: 34px 20px 30px; background: linear-gradient(180deg, transparent, #F8FCFE)">
  <div class="container" style="max-width:1180px">
