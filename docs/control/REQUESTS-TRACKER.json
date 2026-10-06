@@ -328,7 +328,7 @@
    "request_id": "REQ-20260926-012",
    "title": "Gel des modifications UX non correctives",
    "priority": "P0",
-   "status": "IN_PROGRESS",
+   "status": "CLOSED",
    "parent_instruction": "CHATGPT-2026-09-26-P0-FREEZE-AND-STABILIZE",
    "created_at": "2026-09-26",
    "acceptance_criteria": [
@@ -344,11 +344,11 @@
    "claude_outbox": "—",
    "human_gate": "—",
    "blocked_by": "—",
-   "next_action": "gel maintenu jusqu'à validation visuelle et architecture",
+   "next_action": "—",
    "attempt": 1,
-   "closed_at": null,
-   "closure_proof": null,
-   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2"
+   "closed_at": "2026-10-06",
+   "closure_proof": " CLOTURE 2026-10-06 : la règle de gel/une REQ à la fois est désormais remplacée par RELEASE-PROCESS.md et le process actuel de lots isolés depuis main, preuves, merge et PROD_VERIFY.",
+   "decide_par": "ChatGPT 2026-10-06 (CONTROL_ONLY/SUPERSEDED)"
   },
   {
    "request_id": "REQ-20260926-013",
@@ -1123,7 +1123,7 @@
    "request_id": "REQ-20260926-040",
    "title": "a-propos.html : la vue stats_publiques repond 401 avec la cle publique",
    "priority": "P1",
-   "status": "READY_FOR_CONTROL",
+   "status": "TECH_ACCEPTED",
    "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-05-REQ-039-OVERFLOW-RESTE.md",
    "legacy_instruction_id": null,
    "created_at": "2026-10-05",
@@ -1135,15 +1135,15 @@
     "mesure reseau et console avant/apres en 1440 et 390",
     "rollback"
    ],
-   "latest_sha": "3cc281bb2900f5875cdcd8c36abfdb60697c59e3 (PR #30, feat/req-040-cle-publiable-stats — 1 fichier)",
+   "latest_sha": "5d475d3813b3efe60117eacdb2c64c8663ed05c7",
    "claude_outbox": "CLAUDE-2026-10-06-REQ-040-CLE-REVOQUEE.md",
    "human_gate": null,
-   "blocked_by": null,
-   "next_action": "Controle ChatGPT puis fusion et verification sur depan59-62.fr. Decision separee attendue sur les six autres fichiers qui portent encore la cle revoquee.",
+   "blocked_by": "Fusionnée dans main ; attente déploiement public et PROD_VERIFY.",
+   "next_action": "Vérifier a-propos.html en 1440/390 : stats_publiques=200, 0 ancien 401, console propre ; si conforme CLOSED.",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": "PASS au head 3cc281bb2900f5875cdcd8c36abfdb60697c59e3. AUDIT EN LECTURE SEULE, sans toucher la base : ce n'etait pas un probleme de droits. La vue stats_publiques repond 200 avec la cle publiable et renvoie ses donnees ; c'est la cle anon historique, encore utilisee par assets/hc-live-stats.js, que Supabase refuse desormais (« Invalid API key »). Verifie sur trois familles d'endpoints : rest/v1/stats_publiques, rest/v1/newsletter_subscribers et auth/v1/settings repondent 401 avec la cle historique et 200 avec la publiable. Correctif : une chaine de caracteres dans un fichier. Mesure avant/apres en 1440 et 390 : l'appel passe de 401 a 200 et la console passe de deux messages (401 + « [hc-stats] fallback values ») a aucune erreur imputable au site. Aucune mutation Supabase, aucune RLS, aucune donnee ecrite.",
-   "decide_par": "Florian — GO audit lecture seule du 2026-10-05"
+   "decide_par": "ChatGPT 2026-10-06 (merge sous GO général Florian)"
   },
   {
    "request_id": "REQ-20260926-041",
