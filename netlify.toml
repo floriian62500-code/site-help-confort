@@ -11,7 +11,7 @@
   # Ignore les commits qui ne touchent QUE des fichiers non-publiés en prod.
   # Retourne 0 (skip build) si le diff HEAD^..HEAD est entièrement contenu dans les paths exclus.
   # → admin-pro/audits/ (rapports IA), .md (docs), .autopush/, scripts/, content/, supabase/, logs, _backup
-  ignore = "git diff --quiet HEAD^ HEAD -- . ':!admin-pro/audits/' ':!admin-pro/AGENT_TODO.md' ':!admin-pro/MEMOIRE_IA_MAINTENANCE.md' ':!admin-pro/TARIFS_REFERENCE.md' ':!admin-pro/URGENT.md' ':!admin-pro/DEPLOY.md' ':!.autopush/' ':!scripts/' ':!docs/' ':!logs/' ':!images/_backup_png/' ':!**/*.md' ':!**/*.log'"
+  ignore = "[ \"$CACHED_COMMIT_REF\" != \"$COMMIT_REF\" ] && git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':!admin-pro/audits/' ':!admin-pro/AGENT_TODO.md' ':!admin-pro/MEMOIRE_IA_MAINTENANCE.md' ':!admin-pro/TARIFS_REFERENCE.md' ':!admin-pro/URGENT.md' ':!admin-pro/DEPLOY.md' ':!.autopush/' ':!scripts/' ':!docs/' ':!logs/' ':!images/_backup_png/' ':!**/*.md' ':!**/*.log' ':!docs/'"
 
 # ═══════════════════════════════════════════════════════════════════
 # Pretty URLs : /plombier-saint-omer → /plombier-saint-omer.html
