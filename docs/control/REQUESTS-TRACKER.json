@@ -1149,7 +1149,7 @@
    "request_id": "REQ-20260926-041",
    "title": "Le site annonce encore « 2 agences » sur 12 pages, en contradiction avec REQ-023",
    "priority": "P1",
-   "status": "OPEN",
+   "status": "IN_PROGRESS",
    "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-06-REQ-040-CLE-REVOQUEE.md",
    "legacy_instruction_id": null,
    "created_at": "2026-10-06",
@@ -1164,13 +1164,13 @@
    ],
    "latest_sha": null,
    "claude_outbox": "CLAUDE-2026-10-06-REQ-040-CLE-REVOQUEE.md",
-   "human_gate": "La formulation commerciale appartient a Florian : je ne reecris pas un argument sans son mot.",
-   "blocked_by": "Formulation a valider.",
-   "next_action": "Florian donne la formulation ; lot isole depuis le main courant, releve avant/apres, captures, rollback.",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "Corriger depuis le main courant toutes les occurrences incohérentes : Saint-Omer = seule agence ; Dunkerque, Calais, Boulogne = pôles d’intervention. Preview, preuves, PASS/BLOCKED.",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": "Releve le 2026-10-06 sur le main courant : 12 pages publiques portent encore « 2 Agences locales » ou « deux agences » — a-propos, contact (meme bloc), chauffagiste-saint-omer, electricien-saint-omer, menuisier-saint-omer, nos-villes, notre-equipe, plombier-saint-omer, reseau-help-confort, serrurier-saint-omer, travaux-saint-omer, vitrier-saint-omer. La page Zones dit desormais l'inverse depuis REQ-023 : une seule agence a Saint-Omer, des poles d'intervention ailleurs. Le site se contredit d'une page a l'autre.",
-   "decide_par": "Claude — constat de production, a arbitrer"
+   "decide_par": "Florian 2026-10-06"
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id. Le 2026-09-28, deux demandes ont reçu 032 à la même minute (refonte Nos métiers et routage e-mail) : 032 reste à « Nos métiers », le routage devient 033, prochain_id passe à 034. Le nom du fichier d’instruction d’origine est conservé dans legacy_instruction_id.",
