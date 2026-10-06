@@ -9,9 +9,13 @@
   publish = "."
   command = ""
   # Ignore les commits qui ne touchent QUE des fichiers non-publiés en prod.
-  # Retourne 0 (skip build) si le diff HEAD^..HEAD est entièrement contenu dans les paths exclus.
+  # Retourne 0 (skip build) si le diff est entièrement contenu dans les paths exclus.
+# On compare au dernier commit RÉELLEMENT CONSTRUIT ($CACHED_COMMIT_REF), pas au commit
+# précédent : sinon un commit de tête ne touchant que des .md annule le build, et le HTML
+# poussé juste avant n'est jamais déployé. C'est déjà arrivé.
+# Le test d'inégalité force le build quand Netlify n'a pas de cache (premier build, purge).
   # → admin-pro/audits/ (rapports IA), .md (docs), .autopush/, scripts/, content/, supabase/, logs, _backup
-  ignore = "git diff --quiet HEAD^ HEAD -- . ':!admin-pro/audits/' ':!admin-pro/AGENT_TODO.md' ':!admin-pro/MEMOIRE_IA_MAINTENANCE.md' ':!admin-pro/TARIFS_REFERENCE.md' ':!admin-pro/URGENT.md' ':!admin-pro/DEPLOY.md' ':!.autopush/' ':!scripts/' ':!docs/' ':!logs/' ':!images/_backup_png/' ':!**/*.md' ':!**/*.log'"
+  ignore = "[ \"$CACHED_COMMIT_REF\" != \"$COMMIT_REF\" ] && git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':!admin-pro/audits/' ':!admin-pro/AGENT_TODO.md' ':!admin-pro/MEMOIRE_IA_MAINTENANCE.md' ':!admin-pro/TARIFS_REFERENCE.md' ':!admin-pro/URGENT.md' ':!admin-pro/DEPLOY.md' ':!.autopush/' ':!scripts/' ':!docs/' ':!logs/' ':!images/_backup_png/' ':!**/*.md' ':!**/*.log'"
 
 # ═══════════════════════════════════════════════════════════════════
 # Pretty URLs : /plombier-saint-omer → /plombier-saint-omer.html
