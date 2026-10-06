@@ -1,0 +1,283 @@
+{
+ "_lisezmoi": [
+  "Classement des éléments que l'inventaire signale sans appelant dans le dépôt.",
+  "Un élément classé n'est pas forcément à garder : il est EXPLIQUÉ. Le but est qu'aucun",
+  "élément ne reste « non classé », pour qu'une suppression soit toujours une décision, jamais un oubli.",
+  "Classes : vivant-planificateur | vivant-sans-appelant | outil-manuel | archive | a-decider | a-verifier | a-supprimer | KNOWN_DEAD_SAFE_TO_KEEP"
+ ],
+ "_verifie_le": "2026-09-23",
+ "fonctions": {
+  "indexnow-ping": [
+   "vivant-planificateur",
+   "appelée par le cron « indexnow-daily-ping » (7 h, actif) — vérifié en base le 23/09"
+  ],
+  "smoke-tests-prod": [
+   "vivant-planificateur",
+   "appelée par le cron « smoke-tests-prod » (toutes les 6 h, actif) — vérifié en base le 23/09"
+  ],
+  "gh-bulk-purge-seo-stats": [
+   "a-decider",
+   "écrit sur GitHub, déployée et joignable, aucun appelant dans le dépôt — 5778526407 §2.B : Florian tranche « supprimer » ou « durcir »"
+  ],
+  "gh-delete-files": [
+   "a-decider",
+   "écrit sur GitHub, déployée et joignable, aucun appelant dans le dépôt — 5778526407 §2.B : Florian tranche « supprimer » ou « durcir »"
+  ],
+  "gh-push-batch": [
+   "a-decider",
+   "écrit sur GitHub, déployée et joignable, aucun appelant dans le dépôt — 5778526407 §2.B : Florian tranche « supprimer » ou « durcir »"
+  ],
+  "gh-push-from-chunks": [
+   "a-decider",
+   "écrit sur GitHub, déployée et joignable, aucun appelant dans le dépôt — 5778526407 §2.B : Florian tranche « supprimer » ou « durcir »"
+  ],
+  "sync-files-staging-to-main": [
+   "a-decider",
+   "écrit sur GitHub, déployée et joignable, aucun appelant dans le dépôt — 5778526407 §2.B : Florian tranche « supprimer » ou « durcir »"
+  ],
+  "ga4-oauth-test": [
+   "vivant-sans-appelant",
+   "test de connexion GA4, lancée à la main depuis l'admin — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "gbp-discover-account": [
+   "vivant-sans-appelant",
+   "découverte du compte Google Business, lancée à la main — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "gbp-fix-account": [
+   "vivant-sans-appelant",
+   "réparation du rattachement Google Business, lancée à la main — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "google-ads-status": [
+   "vivant-sans-appelant",
+   "état de la connexion Google Ads, lancée à la main — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "resend-status-check": [
+   "vivant-sans-appelant",
+   "état du service d'envoi d'emails, lancée à la main — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "html-script-check": [
+   "vivant-sans-appelant",
+   "contrôle de syntaxe HTML, outil de maintenance — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "js-syntax-check": [
+   "vivant-sans-appelant",
+   "contrôle de syntaxe JS, outil de maintenance — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "migrate-fb-images": [
+   "vivant-sans-appelant",
+   "reprise unique des images Facebook (mai 2026) — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "refresh-fb-images": [
+   "vivant-sans-appelant",
+   "rafraîchissement des images Facebook expirées, lancée à la main — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "sync-reviews-places": [
+   "vivant-sans-appelant",
+   "import des avis via Places, doublon probable de sync-reviews (qui, elle, a un cron) — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "notify-pending-reviews": [
+   "vivant-sans-appelant",
+   "rappel des avis sans réponse — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "chat-fallback-human": [
+   "vivant-sans-appelant",
+   "bascule du chat vers un humain — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "suppliers-by-metier": [
+   "vivant-sans-appelant",
+   "liste des fournisseurs pour l'admin — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "partner-logo": [
+   "vivant-sans-appelant",
+   "sert les logos partenaires ; l'URL est construite à l'exécution, d'où l'absence de trace dans le dépôt — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "lead-photo-signed-url": [
+   "vivant-sans-appelant",
+   "lien signé d'une photo de demande (JWT exigé) — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "purge-orphan-lead-photos": [
+   "vivant-sans-appelant",
+   "ménage des photos sans demande — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "notify-action": [
+   "vivant-sans-appelant",
+   "notification d'action (JWT exigé) — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "send-email-notification": [
+   "vivant-sans-appelant",
+   "envoi d'email (JWT exigé) — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ],
+  "send-transactional-email": [
+   "vivant-sans-appelant",
+   "envoi transactionnel (JWT exigé) — déployée et ACTIVE, à revoir dans la revue de surface exposée"
+  ]
+ },
+ "pages": {
+  "docs/audits/RAPPORT-AUDIT-COMPLET-2026-08-13.html": [
+   "archive",
+   "rapport d'audit daté, conservé comme trace ; /docs/* est renvoyé en 404 par _redirects"
+  ],
+  "admin-pro/SEO-CHECKLIST-GSC.html": [
+   "outil-manuel",
+   "aide-mémoire ouvert à la main par l'agence ; back-office"
+  ],
+  "admin-pro/actu-generator.html": [
+   "outil-manuel",
+   "écran de back-office en noindex, ouvert par URL directe ; à relier à la barre latérale ou à archiver"
+  ],
+  "admin-pro/audit-doublons-services.html": [
+   "outil-manuel",
+   "écran de back-office en noindex, ouvert par URL directe ; à relier à la barre latérale ou à archiver"
+  ],
+  "admin-pro/avis-google-toolkit.html": [
+   "outil-manuel",
+   "écran de back-office en noindex, ouvert par URL directe ; à relier à la barre latérale ou à archiver"
+  ],
+  "admin-pro/avis-non-repondus.html": [
+   "outil-manuel",
+   "écran de back-office en noindex, ouvert par URL directe ; à relier à la barre latérale ou à archiver"
+  ],
+  "admin-pro/backlinks-partenaires.html": [
+   "outil-manuel",
+   "écran de back-office en noindex, ouvert par URL directe ; à relier à la barre latérale ou à archiver"
+  ],
+  "admin-pro/bilan-mensuel.html": [
+   "outil-manuel",
+   "écran de back-office en noindex, ouvert par URL directe ; à relier à la barre latérale ou à archiver"
+  ],
+  "admin-pro/diagnostic-connexions.html": [
+   "outil-manuel",
+   "écran de back-office en noindex, ouvert par URL directe ; à relier à la barre latérale ou à archiver"
+  ],
+  "admin-pro/maintenance-agent.html": [
+   "outil-manuel",
+   "écran de back-office en noindex, ouvert par URL directe ; à relier à la barre latérale ou à archiver"
+  ],
+  "admin-pro/photos-prestations.html": [
+   "outil-manuel",
+   "écran de back-office en noindex, ouvert par URL directe ; à relier à la barre latérale ou à archiver"
+  ],
+  "admin-pro/refresh-meta-token-client.html": [
+   "outil-manuel",
+   "écran de back-office en noindex, ouvert par URL directe ; à relier à la barre latérale ou à archiver"
+  ],
+  "admin-pro/seo-dashboard.html": [
+   "outil-manuel",
+   "écran de back-office en noindex, ouvert par URL directe ; à relier à la barre latérale ou à archiver"
+  ],
+  "admin-pro/sync-fb.html": [
+   "outil-manuel",
+   "écran de back-office en noindex, ouvert par URL directe ; à relier à la barre latérale ou à archiver"
+  ],
+  "admin-pro/sync-google-reviews.html": [
+   "outil-manuel",
+   "écran de back-office en noindex, ouvert par URL directe ; à relier à la barre latérale ou à archiver"
+  ]
+ },
+ "images": {
+  "admin-pro/comm-packs/avril-2026/(Bulk 1) Heading (7).png": [
+   "archive",
+   "pack de communication daté, conservé comme source"
+  ],
+  "admin-pro/comm-packs/avril-2026/(Bulk 1) Heading (8).png": [
+   "archive",
+   "pack de communication daté, conservé comme source"
+  ],
+  "og/realisation.png": [
+   "a-verifier",
+   "image de partage (og:) sans référence : vérifier si une page la cite à l'exécution avant de la retirer"
+  ],
+  "og/reset.png": [
+   "a-verifier",
+   "image de partage (og:) sans référence : vérifier si une page la cite à l'exécution avant de la retirer"
+  ]
+ },
+ "selecteurs": {
+  "chauffagiste-saint-omer.html": [
+   "KNOWN_DEAD_SAFE_TO_KEEP",
+   "KNOWN_DEAD_SAFE_TO_KEEP (5800544498 §2) — styles de la grille de vente retirée le 23/09 (.ce-card / .npce-card…). Code mort avéré, sans effet visuel. À NE PAS supprimer avec un découpage par expression régulière : le mien a cassé les @media et fait déborder la page de 388 px en 390 (prouvé en local, annulé). Retrait possible uniquement avec un vrai analyseur CSS."
+  ],
+  "chauffagiste-dunkerque.html": [
+   "KNOWN_DEAD_SAFE_TO_KEEP",
+   "KNOWN_DEAD_SAFE_TO_KEEP (5800544498 §2) — styles de la grille de vente retirée le 23/09 (.ce-card / .npce-card…). Code mort avéré, sans effet visuel. À NE PAS supprimer avec un découpage par expression régulière : le mien a cassé les @media et fait déborder la page de 388 px en 390 (prouvé en local, annulé). Retrait possible uniquement avec un vrai analyseur CSS."
+  ],
+  "chauffagiste-calais.html": [
+   "KNOWN_DEAD_SAFE_TO_KEEP",
+   "KNOWN_DEAD_SAFE_TO_KEEP (5800544498 §2) — styles de la grille de vente retirée le 23/09 (.ce-card / .npce-card…). Code mort avéré, sans effet visuel. À NE PAS supprimer avec un découpage par expression régulière : le mien a cassé les @media et fait déborder la page de 388 px en 390 (prouvé en local, annulé). Retrait possible uniquement avec un vrai analyseur CSS."
+  ],
+  "chauffagiste-boulogne-sur-mer.html": [
+   "KNOWN_DEAD_SAFE_TO_KEEP",
+   "KNOWN_DEAD_SAFE_TO_KEEP (5800544498 §2) — styles de la grille de vente retirée le 23/09 (.ce-card / .npce-card…). Code mort avéré, sans effet visuel. À NE PAS supprimer avec un découpage par expression régulière : le mien a cassé les @media et fait déborder la page de 388 px en 390 (prouvé en local, annulé). Retrait possible uniquement avec un vrai analyseur CSS."
+  ],
+  "nos-prestations.html": [
+   "KNOWN_DEAD_SAFE_TO_KEEP",
+   "KNOWN_DEAD_SAFE_TO_KEEP (5800544498 §2) — styles de la grille de vente retirée le 23/09 (.ce-card / .npce-card…). Code mort avéré, sans effet visuel. À NE PAS supprimer avec un découpage par expression régulière : le mien a cassé les @media et fait déborder la page de 388 px en 390 (prouvé en local, annulé). Retrait possible uniquement avec un vrai analyseur CSS."
+  ]
+ },
+ "scripts": {
+  "scripts/automation/monitoring/check-health.py": [
+   "vivant-planificateur",
+   "déclenché par le LaunchAgent com.helpconfort.health-check.plist sur le Mac de l'agence — vérifié le 23/09"
+  ],
+  "scripts/automation/monitoring/recap-hebdo-slack.py": [
+   "vivant-planificateur",
+   "déclenché par le LaunchAgent com.helpconfort.recap-hebdo-slack.plist sur le Mac de l'agence — vérifié le 23/09"
+  ],
+  "scripts/automation/publish-template-post.py": [
+   "vivant-planificateur",
+   "déclenché par le LaunchAgent com.helpconfort.template-post.plist sur le Mac de l'agence — vérifié le 23/09"
+  ],
+  "scripts/automation/rapport-hebdo.py": [
+   "vivant-planificateur",
+   "déclenché par le LaunchAgent com.helpconfort.rapport-hebdo.plist sur le Mac de l'agence — vérifié le 23/09"
+  ],
+  "scripts/automation/recap-business.py": [
+   "vivant-planificateur",
+   "déclenché par le LaunchAgent com.helpconfort.recap-business.plist sur le Mac de l'agence — vérifié le 23/09"
+  ],
+  "scripts/automation/scan-regressions-soir.py": [
+   "vivant-planificateur",
+   "déclenché par le LaunchAgent com.helpconfort.scan-regressions-soir.plist sur le Mac de l'agence — vérifié le 23/09"
+  ],
+  "scripts/automation/sync-social.sh": [
+   "vivant-planificateur",
+   "déclenché par le LaunchAgent com.helpconfort.sync-social.plist sur le Mac de l'agence — vérifié le 23/09"
+  ],
+  "scripts/automation/monitoring/generate-dashboard.py": [
+   "vivant-sans-appelant",
+   "tableau de bord du contrôle de santé, lancé à la suite de check-health.py (lui-même planifié)"
+  ],
+  "scripts/cleanup-import-hc-fr.sh": [
+   "archive",
+   "reprise unique de l'import HC France (mai 2026) — conservé comme trace de ce qui a été fait, pas destiné à tourner à nouveau"
+  ],
+  "scripts/finalize-images-hc-fr.sh": [
+   "archive",
+   "reprise unique des images de cet import (mai 2026) — conservé comme trace de ce qui a été fait, pas destiné à tourner à nouveau"
+  ],
+  "scripts/import-photos-hc-fr.sh": [
+   "archive",
+   "reprise unique des photos de cet import (mai 2026) — conservé comme trace de ce qui a été fait, pas destiné à tourner à nouveau"
+  ],
+  "scripts/setup-actu-generator.sh": [
+   "archive",
+   "installation unique du générateur d'actualités (mai 2026) — conservé comme trace de ce qui a été fait, pas destiné à tourner à nouveau"
+  ],
+  "scripts/footer-metier-pictos.mjs": [
+   "archive",
+   "transformation unique du pied de page (14/09) — conservé comme trace de ce qui a été fait, pas destiné à tourner à nouveau"
+  ],
+  "scripts/remove-hc-topbar.mjs": [
+   "archive",
+   "transformation unique de l'ancienne barre haute (14/09) — conservé comme trace de ce qui a été fait, pas destiné à tourner à nouveau"
+  ],
+  "scripts/deploy-notify-functions.sh": [
+   "outil-manuel",
+   "aide au déploiement des fonctions de notification ; un déploiement reste une décision humaine"
+  ],
+  "scripts/indexnow-ping.sh": [
+   "a-verifier",
+   "double la fonction edge indexnow-ping, qui a un cron actif : vérifier lequel fait foi avant de retirer l'autre"
+  ]
+ }
+}

@@ -1,0 +1,1211 @@
+{
+ "$schema_version": "1.0",
+ "genere_par": "Claude",
+ "genere_le": "2026-09-26",
+ "branche": "recette",
+ "regle": "Claude ne met JAMAIS le statut CLOSED. Il peut aller jusqu'à READY_FOR_CONTROL. La clôture est un geste humain (Florian) ou un verdict de contrôle ChatGPT.",
+ "etats_autorises": [
+  "OPEN",
+  "ACKNOWLEDGED",
+  "IN_PROGRESS",
+  "WAITING_CLAUDE_PROOF",
+  "REWORK_REQUIRED",
+  "WAITING_FLORIAN",
+  "READY_FOR_CONTROL",
+  "CLOSED",
+  "ACCEPTED_AUDIT",
+  "READY_FOR_FLORIAN_VALIDATION",
+  "SUPERSEDED",
+  "TECH_ACCEPTED",
+  "READY_FOR_DESIGN",
+  "WAITING_FLORIAN_VISUAL",
+  "SUPERSEDED_BY_REQ017",
+  "WAITING_FLORIAN_GO",
+  "CLOSED_BY_CONTROL_AUDIT",
+  "OPEN_GELE",
+  "OPEN_NEXT_DESIGN",
+  "OPEN_RECETTE_ALLOWED_AFTER_REQ023",
+  "OPEN_BLOCKED_BY_REQ023_VISUAL",
+  "WAITING_FLORIAN_BUSINESS_GO",
+  "READY_FOR_FLORIAN_VISUAL"
+ ],
+ "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
+ "prochain_id": "REQ-20260926-042",
+ "requests": [
+  {
+   "request_id": "REQ-20260926-001",
+   "title": "Clôture paiement en ligne / sécurité / nettoyage",
+   "priority": "P0",
+   "status": "WAITING_FLORIAN_GO",
+   "parent_instruction": "CHATGPT-2026-09-26-P0-CLOSE-SECURITY-CLEANUP-PAYMENT",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "matrice de tous les flux paiement, chaque ligne classée",
+    "aucun emploi du mot « prêt » sans dire si c'est en production",
+    "liste courte des actions qui demandent un GO"
+   ],
+   "evidence_required": [
+    "lecture des fonctions déployées en production",
+    "64 tests Deno du paquet durci",
+    "ordre de déploiement et retour arrière"
+   ],
+   "latest_sha": null,
+   "claude_outbox": "CLAUDE-2026-09-26-REQ-001-CLOTURE-PAIEMENT-SECURITE.md",
+   "human_gate": "GO Florian requis pour les 5 points du §4",
+   "blocked_by": "—",
+   "next_action": "production UNSAFE sur plusieurs points · aucun déploiement sans GO explicite",
+   "attempt": 2,
+   "closed_at": null,
+   "closure_proof": " — PREUVE P0 SUPPLÉMENTAIRE (2026-09-28) : la table app_settings de production ne contient pas que des adresses ; elle stocke aussi en clair des identifiants Google (clé privée de compte de service, jetons de rafraîchissement, secrets client, jeton développeur Ads). Aucune valeur n’est reproduite dans Git. Si cette table reste lisible par tout compte authentifié, comme le note la documentation sécurité du projet, n’importe quel inscrit peut les lire. Aucune mutation RLS/secrets sans gate dédié.",
+   "scope": "AUDIT/PRÉPARATION COMPLÈTE · PRODUCTION NON SÛRE SUR PLUSIEURS POINTS · WAITING_FLORIAN_GO — ne jamais écrire « clôture sécurité »",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2"
+  },
+  {
+   "request_id": "REQ-20260926-002",
+   "title": "Registre numéroté des demandes",
+   "priority": "P0",
+   "status": "CLOSED",
+   "parent_instruction": "CHATGPT-2026-09-26-P0-NUMBERED-REQUEST-TRACKING",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "docs/control/REQUESTS-TRACKER.json existe",
+    "toutes les demandes ouvertes importées",
+    "Claude ne met jamais CLOSED"
+   ],
+   "evidence_required": [
+    "le fichier, versionné et poussé",
+    "la carte de numérotation dans le rapport"
+   ],
+   "latest_sha": null,
+   "claude_outbox": "CLAUDE-2026-09-26-REQ-002-TRACKER.md",
+   "human_gate": "clôture par ChatGPT/Florian uniquement",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 2,
+   "closed_at": "2026-09-26",
+   "closure_proof": "tracker existant, non-réutilisation des identifiants, prochain_id géré, règle « Claude ne met jamais CLOSED » inscrite dans le fichier",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2 (CLOSED_BY_CONTROL)"
+  },
+  {
+   "request_id": "REQ-20260926-003",
+   "title": "Grille prestations Chauffage",
+   "priority": "P0",
+   "status": "CLOSED",
+   "parent_instruction": "CHATGPT-2026-09-26-REQ-025-CHAUFFAGE-GRID-REWORK",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "6 cartes de hauteur identique",
+    "aucune tuile orange vide",
+    "repli graphique propre",
+    "desktop 1440 et mobile 390",
+    "ancres uniques, aucun doublon"
+   ],
+   "evidence_required": [
+    "mesures DOM des 6 cartes",
+    "capture mobile",
+    "garde anti-doublon rejouée contre l'état fautif"
+   ],
+   "latest_sha": "0f09e466",
+   "claude_outbox": "CLAUDE-2026-09-26-REQ-025-CHAUFFAGE-GRID-REWORK.md",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-05",
+   "closure_proof": " CLOTURE 2026-10-05 : Le besoin historique vise une grille 6 cartes/repli qui n'existe pas dans la lignee de production. La prod actuelle a 3 cartes egales, 0 tuile vide, 0 image brisee, 0 ancre dupliquee. Ce prototype recette non valide n'est pas a converger vers main. Toute evolution future de la grille relevera du nouveau chantier visuel.",
+   "decide_par": "ChatGPT 2026-10-05 (NOT_APPLICABLE/SUPERSEDED)"
+  },
+  {
+   "request_id": "REQ-20260926-004",
+   "title": "Pictos et libellés du footer Métiers",
+   "priority": "P0",
+   "status": "CLOSED",
+   "parent_instruction": "CHATGPT-2026-09-26-CONTROL-NUMBERED-1 §REQ-004",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "le picto de chaque métier correspond à sa destination",
+    "la source de vérité des pictos est identifiée",
+    "les libellés ne changent pas"
+   ],
+   "evidence_required": [
+    "audit des 9 entrées sur les 148 footers",
+    "garde permanente"
+   ],
+   "latest_sha": "330210c9",
+   "claude_outbox": "CLAUDE-2026-09-26-P0-CHAUFFAGE-CONTRATS-PREMIUM.md",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 2,
+   "closed_at": "2026-10-05",
+   "closure_proof": " CLOTURE 2026-10-05 : Le footer de production ne contient aucun picto metier a corriger ; les 6 libelles/destinations existants sont coherents. L'ajout d'un nouveau systeme de pictos sera traite comme creation dans la refonte, pas comme rattrapage de cette ancienne REQ.",
+   "decide_par": "ChatGPT 2026-10-05 (NOT_APPLICABLE/SUPERSEDED)"
+  },
+  {
+   "request_id": "REQ-20260926-005",
+   "title": "Section contrats Chauffage — mise en avant",
+   "priority": "P0",
+   "status": "SUPERSEDED_BY_REQ017",
+   "parent_instruction": "REQ-20260926-005-REWORK-2.md",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "section premium, hiérarchie forte",
+    "3 formules citées sans recopier les cartes détaillées",
+    "prix d'appel canonique",
+    "CTA principal dominant"
+   ],
+   "evidence_required": [
+    "mesures avant/après (hauteur, titre, surface des CTA)",
+    "prix-contrats : 41 contrôles"
+   ],
+   "latest_sha": "c805737d",
+   "claude_outbox": "CLAUDE-2026-09-26-P0-CHAUFFAGE-CONTRATS-PREMIUM.md",
+   "human_gate": "refus visuel de Florian sur la section premium",
+   "blocked_by": "—",
+   "next_action": "ne plus investir dans le teaser sombre refusé",
+   "attempt": 2,
+   "closed_at": null,
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2",
+   "note_design": "REQ-005-REWORK-2 précise la direction visuelle refusée : bloc sombre pleine largeur, effet « panneau publicitaire ». Direction imposée : fond clair/crème, texte bleu nuit, accents orange, carte blanche ou très légèrement teintée, ombre et bordure discrètes. Cette direction s'applique désormais au prototype de REQ-017, puisque REQ-005 est SUPERSEDED_BY_REQ017."
+  },
+  {
+   "request_id": "REQ-20260926-006",
+   "title": "Bannière d'accueil flottante + routage Chauffage",
+   "priority": "P0",
+   "status": "CLOSED",
+   "parent_instruction": "CHATGPT-2026-09-26-P0-HOME-BANNER-FLOATING-ROUTING",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "encart flottant, hors du flux",
+    "les 3 CTA mènent à la page Chauffage",
+    "aucun ne rouvre le tunnel"
+   ],
+   "evidence_required": [
+    "mesures 1440/390",
+    "ancres vérifiées sur la page cible"
+   ],
+   "latest_sha": "91991d4a",
+   "claude_outbox": "CLAUDE-2026-09-26-P0-HOME-BANNER-FLOATING-ROUTING.md",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-05",
+   "closure_proof": " CLOTURE 2026-10-05 : La banniere flottante historique n'existe pas en production et n'a jamais ete validee pour portage. Le besoin saisonnier est repris separement par REQ-035 avec preuves actuelles.",
+   "decide_par": "ChatGPT 2026-10-05 (SUPERSEDED_BY_REQ035)"
+  },
+  {
+   "request_id": "REQ-20260926-007",
+   "title": "Suppression du module parcours sur les pages métier",
+   "priority": "P0",
+   "status": "CLOSED",
+   "parent_instruction": "CHATGPT-2026-09-26-P0-REMOVE-METIER-JOURNEY-GLOBAL",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "0 occurrence sur les pages publiques",
+    "CSS/JS mort retiré",
+    "garde permanente"
+   ],
+   "evidence_required": [
+    "décompte avant/après sur 264 pages",
+    "garde rejouée contre l'état d'avant"
+   ],
+   "latest_sha": "1fa6b647",
+   "claude_outbox": "CLAUDE-2026-09-26-P0-REMOVE-METIER-JOURNEY-GLOBAL.md + CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-04",
+   "closure_proof": "PROD_VERIFIED sur depan59-62.fr via docs/qa/PROD-VERIFY-20261004/ et CLAUDE-2026-10-04-INVENTAIRE-PROD.md ; contrôles 1440/390 conformes.",
+   "decide_par": "ChatGPT 2026-10-04 (PROD_VERIFIED)"
+  },
+  {
+   "request_id": "REQ-20260926-008",
+   "title": "Suppression du bloc final de la page contrats",
+   "priority": "P0",
+   "status": "CLOSED",
+   "parent_instruction": "CHATGPT-2026-09-26-P0-REMOVE-CONTRATS-FINAL-CTA",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "bloc supprimé",
+    "paragraphe de renvois conservé",
+    "styles orphelins nettoyés"
+   ],
+   "evidence_required": [
+    "contrats : 35 contrôles",
+    "souscription testée en ligne sans envoi"
+   ],
+   "latest_sha": "6ae55ed8",
+   "claude_outbox": "CLAUDE-2026-09-26-P0-REMOVE-CONTRATS-FINAL-CTA.md + CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-05",
+   "closure_proof": "bloc supprimé, 3 règles orphelines retirées, 35 contrôles, souscription testée sans envoi · SHA 6ae55ed8 · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED Verifie le 2026-10-04 : main ne contient ni ct-renvois (0 occurrence) ni le bloc retire ; la page de production se termine par cta-band. Le correctif recette n'est pas applicable tel quel. CLOTURE CONTROLE 2026-10-05 : Le correctif recette ne correspond plus a la lignee production : ni le bloc retire ni ct-renvois n'existent sur main ; la production a sa propre fin cta-band. Aucun artefact a porter. Toute modification serait un nouveau choix visuel, pas un rattrapage.",
+   "decide_par": "ChatGPT 2026-10-05 (NOT_APPLICABLE)"
+  },
+  {
+   "request_id": "REQ-20260926-009",
+   "title": "Régression #intervention (écran de reprise générique)",
+   "priority": "P0",
+   "status": "CLOSED",
+   "parent_instruction": "CHATGPT-2026-09-26-P0-HOME-INTERVENTION-REGRESSION",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "le CTA démarre une intervention avec ou sans brouillon",
+    "l'ancien brouillon n'est ni repris ni effacé en silence",
+    "contrôle nommé home_intervention_cta_bypasses_generic_resume_gate"
+   ],
+   "evidence_required": [
+    "parcours vérifié en ligne, reprise comprise",
+    "7 échecs contre l'ancien code"
+   ],
+   "latest_sha": "020b2666",
+   "claude_outbox": "CLAUDE-2026-09-26-P0-HOME-INTERVENTION-REGRESSION.md + CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-05",
+   "closure_proof": "contrôle home_intervention_cta_bypasses_generic_resume_gate, 7 échecs contre l'ancien code, parcours et reprise vérifiés en ligne · SHA 020b2666 · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED Sans objet en production : /catalogue.html repond 404 et l'accueil ne charge aucun hc-demande — le tunnel de demande n'existe pas sur le site public. Rien a porter depuis recette. CLOTURE CONTROLE 2026-10-05 : Le tunnel vise n'existe pas en production (/catalogue.html 404, aucun hc-demande sur l'accueil). Aucun correctif applicable a main.",
+   "decide_par": "ChatGPT 2026-10-05 (NOT_APPLICABLE)"
+  },
+  {
+   "request_id": "REQ-20260926-010",
+   "title": "Teaser contrats en haut de la page Chauffage",
+   "priority": "P0",
+   "status": "SUPERSEDED",
+   "parent_instruction": "CHATGPT-2026-09-26-P0-CHAUFFAGE-CONTRATS-TOP-TEASER",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "teaser compact haut de page",
+    "aucune carte détaillée recopiée"
+   ],
+   "evidence_required": [
+    "mesures 1440/390",
+    "prix-contrats"
+   ],
+   "latest_sha": "d23c71ba",
+   "claude_outbox": "CLAUDE-2026-09-26-P0-CHAUFFAGE-CONTRATS-TOP-TEASER.md",
+   "human_gate": "—",
+   "blocked_by": "remplacé par REQ-005 (Florian a demandé plus fort)",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null,
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2"
+  },
+  {
+   "request_id": "REQ-20260926-011",
+   "title": "Routage des boutons « prestations avec prix »",
+   "priority": "P0",
+   "status": "CLOSED",
+   "parent_instruction": "CHATGPT-2026-09-26-P0-CTA-PRESTATIONS-ROUTING",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "aucun bouton de consultation n'ouvre le tunnel",
+    "audit des 9 métiers",
+    "contrôle permanent"
+   ],
+   "evidence_required": [
+    "22 CTA corrigés sur 26",
+    "garde rejouée contre l'état d'avant"
+   ],
+   "latest_sha": "0f09e466",
+   "claude_outbox": "CLAUDE-2026-09-26-P0-CTA-PRESTATIONS-ROUTING.md + CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-05",
+   "closure_proof": "22 CTA recâblés sur 26 · garde « aucun bouton de consultation n'ouvre le tunnel » (234 boutons, 44 pages) rejouée contre l'état d'avant · SHA 0f09e466 Sans objet en production : les boutons vises ouvraient le tunnel de demande, absent du site public (/catalogue.html en 404). Rien a porter depuis recette. CLOTURE CONTROLE 2026-10-05 : Le routage corrigeait des CTA vers un tunnel absent de la lignee production. Aucun artefact applicable a main.",
+   "decide_par": "ChatGPT 2026-10-05 (NOT_APPLICABLE)"
+  },
+  {
+   "request_id": "REQ-20260926-012",
+   "title": "Gel des modifications UX non correctives",
+   "priority": "P0",
+   "status": "CLOSED",
+   "parent_instruction": "CHATGPT-2026-09-26-P0-FREEZE-AND-STABILIZE",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "aucun nouveau sujet",
+    "une REQ à la fois",
+    "retour au dernier état stable si une correction casse"
+   ],
+   "evidence_required": [
+    "ce registre",
+    "les rapports par REQ"
+   ],
+   "latest_sha": null,
+   "claude_outbox": "—",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-06",
+   "closure_proof": " CLOTURE 2026-10-06 : la règle de gel/une REQ à la fois est désormais remplacée par RELEASE-PROCESS.md et le process actuel de lots isolés depuis main, preuves, merge et PROD_VERIFY.",
+   "decide_par": "ChatGPT 2026-10-06 (CONTROL_ONLY/SUPERSEDED)"
+  },
+  {
+   "request_id": "REQ-20260926-013",
+   "title": "HOLD production / sécurité",
+   "priority": "P0",
+   "status": "WAITING_FLORIAN",
+   "parent_instruction": "CHATGPT-2026-09-25-PROD-HOLD-SECURITY-1",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "aucune mise en production",
+    "5 paquets préparés non déployés"
+   ],
+   "evidence_required": [
+    "CURRENT-RELEASE.json en HOLD_SECURITY"
+   ],
+   "latest_sha": null,
+   "claude_outbox": "CLAUDE-2026-09-26-PROD-HOLD-SECURITY-1.md",
+   "human_gate": "GO Florian",
+   "blocked_by": "REQ-001",
+   "next_action": "maintenu",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": " — PREUVE P0 SUPPLÉMENTAIRE (2026-09-28) : la table app_settings de production ne contient pas que des adresses ; elle stocke aussi en clair des identifiants Google (clé privée de compte de service, jetons de rafraîchissement, secrets client, jeton développeur Ads). Aucune valeur n’est reproduite dans Git. Si cette table reste lisible par tout compte authentifié, comme le note la documentation sécurité du projet, n’importe quel inscrit peut les lire. Aucune mutation RLS/secrets sans gate dédié.",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2"
+  },
+  {
+   "request_id": "REQ-20260926-014",
+   "title": "Repli visuel des cartes sur électricien / serrurier / vitrier",
+   "priority": "P2",
+   "status": "CLOSED",
+   "parent_instruction": "constat Claude pendant REQ-003",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "même repli propre que sur Chauffage"
+   ],
+   "evidence_required": [
+    "mesures 1440/390"
+   ],
+   "latest_sha": null,
+   "claude_outbox": "—",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-05",
+   "closure_proof": " CLOTURE 2026-10-05 : Le repli graphique cible est absent de la production et dependait de l'ancienne grille elle-meme absente. Aucun artefact valide a porter.",
+   "decide_par": "ChatGPT 2026-10-05 (NOT_APPLICABLE/SUPERSEDED)"
+  },
+  {
+   "request_id": "REQ-20260926-015",
+   "title": "Trois photos manquantes (chaudière, ramonage, poêle/insert)",
+   "priority": "P1",
+   "status": "CLOSED",
+   "parent_instruction": "constat Claude pendant REQ-003",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "une photo paysage par prestation"
+   ],
+   "evidence_required": [
+    "fichiers fournis par Florian"
+   ],
+   "latest_sha": null,
+   "claude_outbox": "— + CLAUDE-2026-10-05-BACKLOG-015-A-013.md",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-05",
+   "closure_proof": " MESURE du 2026-10-05 sur depan59-62.fr/nos-prestations.html, 380 cartes rendues : 34 prestations distinctes sans photo chargee, 54 cartes concernees ; 66 cartes portent une balise img dont 28 seulement affichent reellement une image ; aucune prestation « ramonage » au catalogue. CLOTURE 2026-10-05 : L'ancienne demande « 3 photos » est devenue obsolete : l'audit production montre 34 prestations distinctes sans visuel et le ramonage n'existe pas au catalogue. Le besoin est requalifie dans le futur chantier MEDIA-LIBRARY/refonte, pas comme rattrapage production.",
+   "decide_par": "ChatGPT 2026-10-05 (SUPERSEDED_BY_MEDIA_REDESIGN)"
+  },
+  {
+   "request_id": "REQ-20260926-016",
+   "title": "Réconciliation du tracker et gel avant audit global",
+   "priority": "P0",
+   "status": "CLOSED",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-016-TRACKER-RECONCILIATION.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "aucun request_id réutilisé",
+    "001→015 conservés comme historique",
+    "016→022 créés avec legacy_instruction_id",
+    "statuts 001/003/004/005 corrigés"
+   ],
+   "evidence_required": [
+    "rapport outbox dédié"
+   ],
+   "latest_sha": null,
+   "claude_outbox": null,
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-09-26",
+   "closure_proof": "001→015 conservés, 016→022 remappés avec legacy_instruction_id, 0 doublon · SHA 8462cc4e",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2 (CLOSED_BY_CONTROL)"
+  },
+  {
+   "request_id": "REQ-20260926-017",
+   "title": "Contrats sur une seule page / module complet sur Chauffage",
+   "priority": "P1",
+   "status": "CLOSED",
+   "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-03-REQ-017-FINAL-PROOF-PR23.md",
+   "legacy_instruction_id": "REQ-20260926-010",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "une seule page décrit les contrats",
+    "module complet sur Chauffage sans doublon"
+   ],
+   "evidence_required": [
+    "rapport outbox dedie",
+    "reproducteur versionne mesurant les DEUX etats (main exact et head de la PR)",
+    "captures 1440 et 390 : page Chauffage, transition vers Contrats, modale ouverte",
+    "empreintes sha256 des captures reellement produites par le script"
+   ],
+   "latest_sha": "a83c1ce50645f3115e15cf31e5249151eef803d0 (commit de fusion dans main, parents dc9b39eb + 39cd0037 — PR #23 fusionnee par Florian le 2026-10-04 a 09:18)",
+   "claude_outbox": "CLAUDE-2026-10-03-REQ-017-PR23-RESYNC-PREUVES.md + CLAUDE-2026-10-04-REQ-017-MISE-EN-PRODUCTION.md + CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
+   "human_gate": "GO production exerce par Florian le 2026-10-04 : PR #23 fusionnee dans main (a83c1ce50645f3115e15cf31e5249151eef803d0), hors de l'ordre fixe au controle n25 (PR #24 d'abord, REQ-037 avant production).",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 9,
+   "closed_at": "2026-10-04",
+   "closure_proof": "PROD_VERIFIED sur depan59-62.fr via docs/qa/PROD-VERIFY-20261004/ et CLAUDE-2026-10-04-INVENTAIRE-PROD.md ; contrôles 1440/390 conformes.",
+   "decide_par": "ChatGPT 2026-10-04 (PROD_VERIFIED)"
+  },
+  {
+   "request_id": "REQ-20260926-018",
+   "title": "Chauffe-eau / ECS dans l'offre contrats",
+   "priority": "P1",
+   "status": "CLOSED",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-011-CHAUFFE-EAU-ECS-CONTRATS.md",
+   "legacy_instruction_id": "REQ-20260926-011",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "source canonique prouvée",
+    "type de produit et périodicité sans ambiguïté",
+    "aucun prix inventé"
+   ],
+   "evidence_required": [
+    "rapport outbox dédié"
+   ],
+   "latest_sha": null,
+   "claude_outbox": " + CLAUDE-2026-10-05-BACKLOG-015-A-013.md",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-05",
+   "closure_proof": " SATISFAITE EN PRODUCTION, mesure du 2026-10-05 sur depan59-62.fr/chauffagiste-saint-omer.html : bloc ECS present et non masque, titre « Contrat entretien chauffe-eau annuel », montant 220 EUR TTC exactement egal a la valeur de v_services_public (slug contrat-entretien-chauffe-eau), unite ecrite en toutes lettres « par an, et non par mois », bouton « Voir le contrat ». Source canonique prouvee, periodicite sans ambiguite, aucun prix invente. Nuance : le bloc n'apparait pas sur /contrats-entretien.html, ce qu'aucun critere n'exige. CLOTURE 2026-10-05 : Satisfaite sur la production : bloc « Contrat entretien chauffe-eau annuel » visible sur Chauffage, 220 EUR TTC lu depuis v_services_public, periodicite explicite « par an, et non par mois », aucun prix invente.",
+   "decide_par": "ChatGPT 2026-10-05 (PROD_SATISFIED)"
+  },
+  {
+   "request_id": "REQ-20260926-019",
+   "title": "Bug catalogue : sous-catégorie _default visible",
+   "priority": "P0",
+   "status": "CLOSED",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-012-CATALOGUE-DEFAULT-FILTER-BUG.md",
+   "legacy_instruction_id": "REQ-20260926-012",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "0 slug technique visible",
+    "audit de toutes les familles",
+    "filtres et compteurs inchangés"
+   ],
+   "evidence_required": [
+    "rapport outbox dédié"
+   ],
+   "latest_sha": null,
+   "claude_outbox": "CLAUDE-2026-09-26-REQ-019-PREUVE-DEFAULT.md + CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-04",
+   "closure_proof": "PROD_VERIFIED sur depan59-62.fr via docs/qa/PROD-VERIFY-20261004/ et CLAUDE-2026-10-04-INVENTAIRE-PROD.md ; contrôles 1440/390 conformes.",
+   "decide_par": "ChatGPT 2026-10-04 (PROD_VERIFIED)"
+  },
+  {
+   "request_id": "REQ-20260926-020",
+   "title": "Cartes prestations limitées à deux actions",
+   "priority": "P1",
+   "status": "READY_FOR_FLORIAN_VALIDATION",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-020-CARTES-DEUX-ACTIONS.md",
+   "legacy_instruction_id": "REQ-20260926-013",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "deux actions maximum par carte"
+   ],
+   "evidence_required": [
+    "rapport outbox dédié"
+   ],
+   "latest_sha": null,
+   "claude_outbox": " + CLAUDE-2026-10-05-BACKLOG-015-A-013.md",
+   "human_gate": "GO après validation de la proposition globale",
+   "blocked_by": "Decision commerciale unique : retirer l'appel direct des cartes, ou une autre action.",
+   "next_action": "Preparer comparaison visuelle/UX actuelle vs version a 2 actions. Recommandation ChatGPT : garder « Reserver » + « Devis » sur la carte et laisser l'appel global dans header/sticky mobile ; ne pas merger avant validation Florian.",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": " MESURE du 2026-10-05 : 45 cartes sur 380 portent 3 actions visibles en production. La troisieme est un bouton d'appel sans texte. Retirer un bouton d'appel pendant une campagne Google Ads est une decision commerciale, pas technique.",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-4"
+  },
+  {
+   "request_id": "REQ-20260926-021",
+   "title": "Audit fonctionnel complet du site",
+   "priority": "P0",
+   "status": "CLOSED",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-014-FULL-SITE-FUNCTIONAL-AUDIT.md",
+   "legacy_instruction_id": "REQ-20260926-014",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "inventaire des doublons fonctionnels",
+    "parcours cible clair",
+    "aucune implémentation avant validation"
+   ],
+   "evidence_required": [
+    "table d'audit par URL/composant",
+    "table PARCOURS-CIBLE en 5 étapes max",
+    "aucune correction pendant l'audit"
+   ],
+   "latest_sha": null,
+   "claude_outbox": "docs/audit/AUDIT-FONCTIONNEL-SITE-2026-09-26.md",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-09-26",
+   "closure_proof": "docs/audit/AUDIT-FONCTIONNEL-SITE-2026-09-26.md — référence fonctionnelle du site",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-2 (CLOSED_BY_CONTROL)"
+  },
+  {
+   "request_id": "REQ-20260926-022",
+   "title": "Montrer / prototyper avant toute modification structurelle",
+   "priority": "P0",
+   "status": "CLOSED",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-022-EXECUTE-SHOW-BEFORE-CHANGE.md",
+   "legacy_instruction_id": "REQ-20260926-015",
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "arborescence cible par type de page",
+    "6 parcours en flèches",
+    "décision par doublon sans l'appliquer",
+    "maquettes des 5 écrans",
+    "une action commerciale par mode",
+    "paiement client vs back-office",
+    "contrats options A/B sans trancher"
+   ],
+   "evidence_required": [
+    "rapport outbox dédié"
+   ],
+   "latest_sha": null,
+   "claude_outbox": "docs/audit/PROPOSITION-SITE-CIBLE-2026-09-26.md",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 4,
+   "closed_at": "2026-10-05",
+   "closure_proof": " CLOTURE 2026-10-05 : La gouvernance « montrer/prototyper avant modification structurelle » est desormais integree au process de release et au chantier de refonte visuelle cadre par Florian. Aucun artefact prod a deployer.",
+   "decide_par": "ChatGPT 2026-10-05 (CONTROL_ONLY/SUPERSEDED)"
+  },
+  {
+   "request_id": "REQ-20260926-023",
+   "title": "Zones d'intervention : Calais et Boulogne comme pôles principaux",
+   "priority": "P1",
+   "status": "CLOSED",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-023-ZONES-CALAIS-BOULOGNE.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "quatre pôles de même poids visuel",
+    "Calais et Boulogne présentés comme ZONES, pas comme agences",
+    "wireframe desktop et mobile montré avant toute modification HTML"
+   ],
+   "evidence_required": [
+    "maquette dans la proposition cible",
+    "validation visuelle de Florian"
+   ],
+   "latest_sha": "96e75d88f57dbe867fb8490dbdc2749093340a70",
+   "claude_outbox": "CLAUDE-2026-10-04-PR24-PREUVES.md + CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
+   "human_gate": "validation visuelle Florian reçue le 2026-09-28",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-04",
+   "closure_proof": "PROD_VERIFIED sur depan59-62.fr via docs/qa/PROD-VERIFY-20261004/ et CLAUDE-2026-10-04-INVENTAIRE-PROD.md ; contrôles 1440/390 conformes.",
+   "decide_par": "ChatGPT 2026-10-04 (PROD_VERIFIED)"
+  },
+  {
+   "request_id": "REQ-20260926-024",
+   "title": "Carte des zones grise tant qu'on ne défile pas",
+   "priority": "P1",
+   "status": "CLOSED",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-024-CARTE-ZONES-GRISE.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "carte peinte sans défiler en moins de 3 s",
+    "comportement paresseux conservé ailleurs",
+    "1440 et 390"
+   ],
+   "evidence_required": [
+    "mesure avant/après",
+    "captures",
+    "suite complète"
+   ],
+   "latest_sha": "96e75d88f57dbe867fb8490dbdc2749093340a70",
+   "claude_outbox": "CLAUDE-2026-10-04-PR24-PREUVES.md + CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
+   "human_gate": "feu vert avant application (gel + REQ-022)",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-04",
+   "closure_proof": "PROD_VERIFIED sur depan59-62.fr via docs/qa/PROD-VERIFY-20261004/ et CLAUDE-2026-10-04-INVENTAIRE-PROD.md ; contrôles 1440/390 conformes.",
+   "note_numerotation": "créée par Claude en parallèle sous le numéro 023 ; renumérotée 024 dès réception de REQ-20260926-023-ZONES-CALAIS-BOULOGNE.md, publiée par ChatGPT. Le contenu métier est inchangé.",
+   "decide_par": "ChatGPT 2026-10-04 (PROD_VERIFIED)"
+  },
+  {
+   "request_id": "REQ-20260926-025",
+   "title": "Cohérence communes-list vs zones réellement desservies",
+   "priority": "P0",
+   "status": "CLOSED_BY_CONTROL_AUDIT",
+   "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-3.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "source de vérité identifiée",
+    "consommateurs listés",
+    "villes revendiquées absentes",
+    "villes canoniques jamais citées",
+    "impact réel sur l'éligibilité",
+    "correctif recommandé",
+    "aucune mutation"
+   ],
+   "evidence_required": [
+    "lecture de la fonction publique",
+    "distances calculées",
+    "comparaison pages/pastilles vs canonique"
+   ],
+   "latest_sha": null,
+   "claude_outbox": "CLAUDE-2026-09-26-REQ-025-AUDIT-COMMUNES.md",
+   "human_gate": "—  (clôture audit ; l’écart de données reste ouvert sous REQ-026 et REQ-027)",
+   "blocked_by": "—",
+   "next_action": "aucune sur REQ-025 : la suite est portée par REQ-026 (garde) et REQ-027 (réconciliation)",
+   "attempt": 1,
+   "closed_at": "2026-09-26",
+   "closure_proof": "aucun impact d'éligibilité aujourd'hui (le tunnel décide par distance, Boulogne à 45 km pour un seuil de 50) ; 3 villes revendiquées absentes du canonique ; 169 communes canoniques jamais citées — clôturée comme AUDIT par le contrôle n°4 ; l’écart de données NON refermé",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-4"
+  },
+  {
+   "request_id": "REQ-20260926-026",
+   "title": "Garde automatique de cohérence des zones (ville revendiquée absente de communes-list)",
+   "priority": "P0",
+   "status": "CLOSED",
+   "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-4.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "test automatique qui échoue si une ville affichée publiquement est absente de communes-list",
+    "la liste des villes revendiquées est extraite des pages, pas écrite en dur deux fois",
+    "aucune mutation de données (ni Supabase, ni communes-list)",
+    "aucun changement public : ni HTML servi, ni assets, ni navigation",
+    "le test tourne dans scripts/tests/ avec le reste de la suite"
+   ],
+   "evidence_required": [
+    "sortie du test en échec sur l’écart connu (Boulogne-sur-Mer, Saint-Pol-sur-Mer, Aire-sur-la-Lys)",
+    "sortie du test au vert une fois l’écart déclaré comme exception explicite",
+    "diff limité à scripts/tests/"
+   ],
+   "latest_sha": "1534226d",
+   "claude_outbox": "CLAUDE-2026-09-28-REQ-026-GARDE-ZONES.md",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-05",
+   "closure_proof": "garde livrée dans scripts/tests/zones-coherence.test.mjs (6 contrôles) + instantané canonique versionné ; échec prouvé sur l’écart réel une fois les exceptions vidées : 6 villes revendiquées par 13 pages sans commune canonique (Boulogne-sur-Mer, Le Portel, Outreau, Saint-Martin-Boulogne, Wimereux, Saint-Pol-sur-Mer) ; vert une fois les écarts déclarés avec leur raison ; suite complète 846 PASS / 0 FAIL ; diff limité à scripts/tests/ ; doublon Pihen-lès-Guînes signalé sans bloquer · preuve technique/recette uniquement ; aucune preuve PROD_VERIFIED CLOTURE CONTROLE 2026-10-05 : Garde de coherence livree et prouvee sur recette uniquement ; main n'heberge pas scripts/tests. C'est un outil de controle, pas un artefact de production.",
+   "decide_par": "ChatGPT 2026-10-05 (CONTROL_ONLY)"
+  },
+  {
+   "request_id": "REQ-20260926-027",
+   "title": "Réconciliation de la liste canonique des communes desservies",
+   "priority": "P0",
+   "status": "WAITING_FLORIAN_BUSINESS_GO",
+   "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-4.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-09-26",
+   "acceptance_criteria": [
+    "confirmation métier Florian sur Boulogne-sur-Mer",
+    "confirmation métier Florian sur Saint-Pol-sur-Mer",
+    "confirmation métier Florian sur Aire-sur-la-Lys",
+    "liste des communes du Boulonnais réellement desservies (6 seulement dans le canonique aujourd’hui)",
+    "puis seulement : diff préparé, rollback écrit, demande de GO — aucune mutation avant GO"
+   ],
+   "evidence_required": [
+    "réponse métier de Florian consignée",
+    "diff proposé sur la source de vérité (fonction edge communes-list)",
+    "procédure de retour arrière"
+   ],
+   "latest_sha": null,
+   "claude_outbox": null,
+   "human_gate": "confirmation métier Florian PUIS GO explicite avant toute mutation de données",
+   "blocked_by": "réponse métier de Florian (4 points)",
+   "next_action": "poser les 4 questions métier à Florian ; ne rien muter avant sa réponse ET son GO",
+   "attempt": 0,
+   "closed_at": null,
+   "closure_proof": " — 2026-09-28, mesure élargie par la garde REQ-026 : ce ne sont pas 3 mais 6 villes qui ont une page dédiée sans commune canonique (Boulogne-sur-Mer, Le Portel, Outreau, Saint-Martin-Boulogne, Wimereux, Saint-Pol-sur-Mer), soit 13 pages ; le Boulonnais canonique se limite à 6 villages ruraux ; Pihen-lès-Guînes est en double.",
+   "decide_par": "CHATGPT-2026-09-26-CONTROL-ALL-REQUESTS-4"
+  },
+  {
+   "request_id": "REQ-20260926-028",
+   "title": "Mise en place outillage developpement + qualite SEO externe",
+   "priority": "P1",
+   "status": "CLOSED",
+   "parent_instruction": "demande Florian 2026-09-27 - mettre en place tous les outils utiles",
+   "created_at": "2026-09-27",
+   "acceptance_criteria": [
+    "Cursor/VS Code prepares sans toucher au site public",
+    "workflow Lighthouse ajoute sur branche dediee",
+    "Screaming Frog automatise localement",
+    "documentation Search Console, Business Profile, Rich Results et PageSpeed",
+    "aucune mutation production"
+   ],
+   "evidence_required": [
+    "branche tooling/cursor-vscode-setup",
+    "PR #11 brouillon",
+    "liste des fichiers ajoutes",
+    "aucun fichier public modifie"
+   ],
+   "latest_sha": "1db70eedc1b6dd13f3a6ff2105345775d7a6a6a9",
+   "claude_outbox": null,
+   "human_gate": "validation Florian avant merge dans recette",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-09-27",
+   "closure_proof": "PR #12 mergee dans recette : Cursor/VS Code, Lighthouse, Screaming Frog et documentation SEO externe ; aucun fichier public du site modifie",
+   "decide_par": "ChatGPT 2026-09-27 (CLOSED_BY_CONTROL)"
+  },
+  {
+   "request_id": "REQ-20260926-029",
+   "title": "Activation des outils externes SEO et qualite",
+   "priority": "P1",
+   "status": "CLOSED",
+   "parent_instruction": "suite de REQ-20260926-028",
+   "created_at": "2026-09-27",
+   "acceptance_criteria": [
+    "Search Console : proprietaire verifie et sitemap controle",
+    "Google Business Profile : fiche agence verifiee",
+    "Screaming Frog installe sur le Mac et premier crawl execute",
+    "premier rapport Lighthouse execute",
+    "Rich Results utilise sur les pages schema critiques"
+   ],
+   "evidence_required": [
+    "capture/statut Search Console",
+    "capture/statut Business Profile",
+    "export du premier crawl Screaming Frog",
+    "rapport Lighthouse",
+    "resultat Rich Results"
+   ],
+   "latest_sha": null,
+   "claude_outbox": null,
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-05",
+   "closure_proof": " CLOTURE 2026-10-05 : Outils externes SEO/qualite : prerequis d'outillage, pas une release applicative. Sorti du backlog production.",
+   "decide_par": "ChatGPT 2026-10-05 (CONTROL_ONLY)"
+  },
+  {
+   "request_id": "REQ-20260926-030",
+   "title": "Figma + Playwright + QA visuelle automatisee",
+   "priority": "P1",
+   "status": "CLOSED",
+   "parent_instruction": "demande Florian 2026-09-27 - lancer les outils utiles pour ameliorer le visuel",
+   "created_at": "2026-09-27",
+   "acceptance_criteria": [
+    "Figma MCP configure",
+    "Playwright MCP configure",
+    "workflow captures 1440/390 ajoute",
+    "documentation QA visuelle ajoutee",
+    "aucun fichier public du site modifie"
+   ],
+   "evidence_required": [
+    "PR #13 mergee dans recette",
+    "workflow visual-qa.yml",
+    "configuration .cursor/mcp.json",
+    "aucune mutation production"
+   ],
+   "latest_sha": "df788e042dcf89425bb93e874e2d33b6e88e22b9",
+   "claude_outbox": null,
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-05",
+   "closure_proof": " CLOTURE 2026-10-05 : Figma + QA visuelle : prerequis d'outillage/acces, pas une release applicative. Sorti du backlog production.",
+   "decide_par": "ChatGPT 2026-10-05 (CONTROL_ONLY)"
+  },
+  {
+   "request_id": "REQ-20260926-031",
+   "title": "Réparer la garde de publication cassée dans recette par l’outillage (.vscode, .cursor)",
+   "priority": "P1",
+   "status": "CLOSED",
+   "parent_instruction": "contrôle Claude de la PR #11 ; suite de REQ-20260926-028 (1db70eed) et REQ-20260926-030 (df788e04)",
+   "created_at": "2026-09-27",
+   "acceptance_criteria": [
+    "/.vscode/* et /.cursor/* bloqués dans _redirects (règle terminée par 404!)",
+    "depot-propre repasse à 10 PASS / 0 FAIL sur recette",
+    "suite complète 840 PASS / 0 FAIL sur recette",
+    "aucun fichier public du site modifié"
+   ],
+   "evidence_required": [
+    "sortie de depot-propre sur recette avant et après",
+    "suite complète sur recette"
+   ],
+   "latest_sha": "356479c35b6d7e99c11a1e9228144cf22907cc2c",
+   "claude_outbox": "CLAUDE-2026-09-27-PR11-OUTILLAGE.md",
+   "human_gate": "—  (correctif appliqué par Florian ; clôture = geste du contrôle)",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 2,
+   "closed_at": "2026-09-28",
+   "closure_proof": "PR #14 fusionnee en 356479c3; CI push success; depot-propre 10/10; suite complete 840 PASS / 0 FAIL; PR #11 historique fermee sans merge",
+   "scope": null,
+   "decide_par": "ChatGPT 2026-09-28 (CLOSED_BY_CONTROL)"
+  },
+  {
+   "request_id": "REQ-20260926-032",
+   "title": "Refonte « Nos métiers » : page vitrine, menu, bloc accueil",
+   "priority": "P1",
+   "status": "CLOSED",
+   "parent_instruction": "demande Florian 2026-09-28 (chat) — montrer avant de coder",
+   "created_at": "2026-09-28",
+   "acceptance_criteria": [
+    "diagnostic de l’existant fourni avant toute implémentation",
+    "proposition UX : arborescence et navigation",
+    "maquettes desktop ET mobile pour le bloc accueil et la page métiers",
+    "plan de pages : conservées / refondues / simplifiées, sans suppression ni 301",
+    "plan technique en lots isolés + plan de retour arrière",
+    "aucune ligne de code avant validation Florian"
+   ],
+   "evidence_required": [
+    "docs/ux/PROPOSITION-NOS-METIERS-2026-09-28.md",
+    "maquette cliquable https://claude.ai/artifact/2WW7DyBSsoJmM8oCW5pNsm",
+    "chiffres lus dans v_services_public le 2026-09-28",
+    "preview isolée noindex sur branche non fusionnée : https://deploy-preview-15--remarkable-dragon-364e2b.netlify.app/maquette-metiers"
+   ],
+   "latest_sha": "8470a48a (preview/maquette-metiers-from-main, PR #20 — reconstruite depuis main)",
+   "claude_outbox": "CLAUDE-2026-09-28-REQ-032-PROPOSITION-METIERS.md puis CLAUDE-2026-09-28-REQ-032-PREVIEW.md",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 2,
+   "closed_at": "2026-10-05",
+   "closure_proof": "livrables 1 à 6 produits sans toucher au site : diagnostic (page /nos-metiers.html orpheline mais en ligne, H1 faux, 0 CTA), UX 3 niveaux, 4 planches desktop+mobile, plan de pages sans suppression, plan technique 4 lots, plan de rollback CLOTURE 2026-10-05 : L'ancienne maquette Nos metiers est depassee par le nouveau cadrage valide : direction architecte/maitre d'oeuvre, maison interactive, video accueil conservee, mascotte fournie par Florian. Elle ne doit pas etre mergee. Le nouveau chantier visuel sera traite apres nettoyage prod.",
+   "scope": null,
+   "decide_par": "ChatGPT 2026-10-05 (SUPERSEDED_BY_NEW_VISUAL_DIRECTION)"
+  },
+  {
+   "request_id": "REQ-20260926-033",
+   "title": "Routage de toutes les demandes site vers saint-omer@helpconfort.com",
+   "priority": "P0",
+   "status": "IN_PROGRESS",
+   "parent_instruction": "docs/control/inbox/chatgpt/REQ-20260926-032-ROUTAGE-EMAIL-SAINT-OMER.md",
+   "created_at": "2026-09-28",
+   "acceptance_criteria": [
+    "toutes les demandes internes du site arrivent sur saint-omer@helpconfort.com",
+    "aucune adresse personnelle Florian dans to/cc/bcc pour ces demandes",
+    "tous les flux entrants sont audites",
+    "etat deploye verifie",
+    "rollback documente"
+   ],
+   "evidence_required": [
+    "config destinataire avant/apres",
+    "liste des flux audites",
+    "tests sans faux lead production",
+    "preuve etat deploye"
+   ],
+   "latest_sha": "2417462a3546efeeb685285cbd2346ebc7d75c88 (retour d'exécution ; configuration partielle appliquée, fonctions non redéployées)",
+   "claude_outbox": "CLAUDE-2026-09-28-REQ-033-CHANGESET.md puis CLAUDE-2026-09-28-REQ-033-EXECUTION.md",
+   "human_gate": "GO donné par Florian le 2026-09-28 ; il reste une autorisation d’outil pour déployer les 3 fonctions",
+   "blocked_by": "garde d’outil « Production Deploy » sur les commandes de déploiement de fonctions — non contournée",
+   "next_action": "La demande reste ouverte : les fonctions doivent encore être alignées sur le routage Saint-Omer, avec autorisation explicite applicable au geste sensible, test contrôlé et preuves ; sinon aucune mutation.",
+   "attempt": 2,
+   "closed_at": null,
+   "closure_proof": "configuration de production corrigée et relue champ par champ : leads_cc vidé (donc aucun en-tête cc n’est envoyé, la condition if (cc.length) étant fausse) et branding.email_reply_to basculé sur la boîte Saint-Omer ; tous les autres champs inchangés. Sources déployées des 3 fonctions archivées avant modification (empreintes 8bd31f39, 4c96f81c, 38c1475f). Substitution et redéploiement non faits : refus de la garde d’outil, non contourné.",
+   "decide_par": "docs/control/inbox/chatgpt/REQ-20260926-033-REVIEW.md",
+   "legacy_instruction_id": "REQ-20260926-032-ROUTAGE-EMAIL-SAINT-OMER.md (nom de fichier d’origine conservé) — renumérotée de REQ-20260926-032 vers REQ-20260926-033 le 2026-09-28 sur instruction CHATGPT-2026-09-28-CONTROL-REQ-ID-COLLISION (collision d’identifiant : deux demandes créées à la même minute). Aucun contenu modifié."
+  },
+  {
+   "request_id": "REQ-20260926-034",
+   "title": "Rattrapage production des lots verts depuis main",
+   "priority": "P0",
+   "status": "CLOSED",
+   "parent_instruction": "demande Florian 2026-09-28 — verifier diff prod et envoyer ce qui est vert",
+   "created_at": "2026-09-28",
+   "acceptance_criteria": [
+    "comparer main production et recette sans merge massif",
+    "identifier uniquement les lots fonctionnels/visuels reellement valides",
+    "reconstruire une release depuis main",
+    "tests complets sur l'etat exact de release",
+    "aucun lot en attente Florian ou rework dans la release",
+    "rollback documente par lot"
+   ],
+   "evidence_required": [
+    "base main SHA",
+    "liste des request_id inclus/exclus",
+    "SHAs ports dans la release",
+    "tests et CI",
+    "diff final release vs main",
+    "rollback"
+   ],
+   "latest_sha": "PR #22 merged -> main dc9b39eb7e9ee9edd73684d324fee7aa5911016d ; PR #24 head f16d1749a76851af452f285c98f68afac9ab04e1",
+   "claude_outbox": "CLAUDE-2026-09-28-REQ-034-RELEASE-VERTE.md",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 4,
+   "closed_at": "2026-10-05",
+   "closure_proof": "matrice établie : main n’a reçu aucun travail fonctionnel depuis le 08/08 (57 rapports nocturnes + 1 fusion), recette a 876 commits d’avance. 3 lots portés (007, 019, 024) en 3 commits isolés, 9 fichiers, +13/-163, prouvés en ligne sur la preview de release. HORS : 008 et 009 sans objet (bloc et tunnel absents de main), 023 nécessite une revalidation visuelle car la page de main est l’ancienne version, 026 sans intérêt (main n’a aucun test). Verdict BLOCKED : pas de suite de tests exécutable sur main, validation visuelle Florian manquante, HOLD_SECURITY actif. CLOTURE CONTROLE 2026-10-05 : Objectif de rattrapage atteint : les lots verts applicables 007/017/019/023/024/036/037/038 ont ete portes et PROD_VERIFIED ; 039 est maintenant fusionnee et attend seulement son PROD_VERIFY. Le process permanent est repris par RELEASE-PROCESS.md.",
+   "decide_par": "ChatGPT 2026-10-05 (CONTROL_ONLY)"
+  },
+  {
+   "request_id": "REQ-20260926-035",
+   "title": "Encart saisonnier : non fermable et présent sur toutes les pages",
+   "priority": "P1",
+   "status": "WAITING_FLORIAN_VISUAL",
+   "parent_instruction": "décision Florian du 2026-09-28 (chat) : « on ne doit pas pouvoir la fermer, elle doit rester systématiquement et sur toutes les pages du site »",
+   "created_at": "2026-09-28",
+   "acceptance_criteria": [
+    "aucun bouton de fermeture, aucune mémoire de masquage",
+    "plus de condition de défilement : l’encart s’affiche sans que le visiteur ait à descendre",
+    "présent sur toutes les pages publiques, par une source unique jamais recopiée",
+    "ne recouvre jamais la barre d’action collante du mobile",
+    "la mesure d’audience suit, et dit sur quelle page l’encart a été vu"
+   ],
+   "evidence_required": [
+    "suite complète verte",
+    "contrôle d’en-tête à 0 à mettre à jour",
+    "captures 1440 et 390 sur la preview"
+   ],
+   "latest_sha": "8d44fd181a363e84f420277e30f40d640b80b07c (recette — preuves seules, aucun fichier du site modifie)",
+   "claude_outbox": "CLAUDE-2026-09-28-REQ-035-ENCART-PARTOUT.md puis CLAUDE-2026-09-29-REQ-035-REWORK.md puis CLAUDE-2026-10-05-REQ-035-PREUVE-REFAITE.md",
+   "human_gate": "validation visuelle de Florian sur la recette",
+   "blocked_by": null,
+   "next_action": "Verdict visuel de Florian sur la recette. La preuve reprochee est refaite : bandeau cookies absent et CONSTATE sur les 10 captures, encart visible sans defilement, aucun bouton de fermeture, et le non-recouvrement de la barre collante prouve avec la barre reellement affichee. Aucun fichier du site touche par ce lot.",
+   "attempt": 5,
+   "closed_at": null,
+   "closure_proof": "rework des 4 points : 8 captures archivées dans docs/qa/REQ-035 reliées au SHA ee2b2984 (0 bouton de fermeture relevé sur les 8, tailles mesurées sur l’élément) ; périmètre aligné à 202 pages, tunnel de commande compris, seule exception reset.html prouvée par noindex+titre+absence de maillage et contrôlée par la garde ; correction demande-v2 sortie du lot (21cbc668 puis 354251fa) donc rollback isolé ; suite 852 PASS / 0 FAIL, en-tête 0 à mettre à jour, SEO ERRORS=0 ; aucune prod · contrôle ultérieur : rollback isolé NON prouvé ; le lot reste ouvert — 2026-09-30 : retour arrière sélectif PROUVÉ sur copie jetable. Le revert simple touchait bien demande-v2 (le contrôle avait raison) ; la commande correcte ajoute git checkout HEAD -- scripts/tests/demande-v2.test.mjs. Résultat mesuré : correctif intact (1 occurrence), fichier non modifié, asset supprimé, 0 page portant l’encart, encart de nouveau dans l’accueil, suite 846 PASS / 0 FAIL. — Contrôle 2026-09-30 : rollback sélectif jugé cohérent ; blocage restant = preuves visuelles contradictoires (cookies visibles sur 6/8 captures). PREUVE REFAITE le 2026-10-05 (docs/qa/REQ-035-v3/) : reproducteur qui pose le consentement avant tout script de page, CONSTATE l'absence du bandeau apres chargement et publie l'etat constate. 10 captures, 5 pages x 2 largeurs : bandeau cookies absent partout, encart visible a scrollY 0, dans l'ecran, zero bouton de fermeture. Le non-recouvrement de la barre d'action collante est prouve AVEC LA BARRE REELLEMENT AFFICHEE (elle ne se montre qu'apres defilement) sur les trois pages qui la portent : barre haut 783, encart bas 760, soit 23 px de degagement. Deux fausses pistes de methode corrigees : le selecteur de la barre etait faux (.hc-sticky-cta au lieu de #hcStickyCta), ce qui produisait un faux negatif ; et deux pretendus recouvrements n'en etaient pas, dont #hc-sv-cta qui est le widget « Centre de validation » de la recette, absent de main et de la production.",
+   "scope": null,
+   "decide_par": "CHATGPT-2026-09-30-CONTROL-ALL-REQUESTS-17"
+  },
+  {
+   "request_id": "REQ-20260926-036",
+   "title": "Debordement horizontal mobile a 390 px (pages Chauffage et Contrats)",
+   "priority": "P0",
+   "status": "CLOSED",
+   "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-02-CONTROL-ALL-REQUESTS-24.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-02",
+   "acceptance_criteria": [
+    "a 390 px reels, scrollWidth - innerWidth <= 1 px sur chauffagiste-saint-omer.html",
+    "a 390 px reels, scrollWidth - innerWidth <= 1 px sur contrats-entretien.html",
+    "carrousel fournisseurs, carrousel d avis, formules et modale toujours fonctionnels",
+    "aucune regression desktop 1440"
+   ],
+   "evidence_required": [
+    "reproduction sur le main exact en viewport reel 390 et controle 1440",
+    "journal URL/SHA, innerWidth, scrollWidth, rect .hcf-track, rect .hcf-marquee, overflow-x des ancetres",
+    "si correctif : lot isole, preview du head exact, captures 1440/390, rollback selectif"
+   ],
+   "latest_sha": "77620ab7a8cb1d0f3405094331b87f837490cdfb (commit de fusion dans main, parents a7b91f61 + 29ab676f)",
+   "claude_outbox": "CLAUDE-2026-10-04-REQ-036-OVERFLOW.md + CLAUDE-2026-10-04-REQ-036-PAQUET-FINAL.md + CLAUDE-2026-10-04-REQ-036-PROD-VERIFY.md",
+   "human_gate": "GO de suivi/correction donné par Florian le 2026-10-03 : préparer le correctif après REQ-017. Aucun changement sensible.",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-05",
+   "closure_proof": "PASS au head 29ab676f98e1a6bf7705771d9230c0c8b4f7a424. CORRECTION DE DIAGNOSTIC : le carrousel de logos fournisseurs n'est PAS le coupable — .hcf-track fait 2304 px mais il est decoupe par .hcf-marquee en overflow-x hidden, et un element decoupe n'elargit pas la page. La bissection du DOM (masquer un noeud, remesurer scrollWidth) designe deux causes reelles : sur Chauffage, .m-proof-col est un element de grille a taille minimale automatique et le carrousel d'avis Google (.hcal-grid, 3 cartes de 250 px = 778 px) fixe sa largeur minimale a 778 px ; sur Contrats, meme mecanisme sur .hc-labels-grid plus un mot insecable. Correctif : min-width:0 d'un cote, min-width:0 + overflow-wrap:anywhere de l'autre, soit 2 fichiers et 2 declarations. Mesure avant/apres : Chauffage 390 passe de 452 px a 0 px, Contrats 390 de 90 px a 0 px, et 1440 reste a 0 px sur les deux pages. Rien casse : le carrousel d'avis retrouve son role (302 px, defilable, 3 cartes, contre 778 px non defilable avant), le carrousel fournisseurs est identique (marquee 350, piste 2304, 36 logos), les formules 9,90/14,30/25,30 EUR TTC et les 4 cartes labels sont intactes, la modale s'ouvre sur 14,30 EUR TTC et tient dans [20->370]. Aucune ecriture reseau donc aucun lead, console sans erreur imputable au site. Le meme motif existe sur 25 autres pages metier et 13 autres pages ville : signale, non touche. Preuves : docs/qa/REQ-036/. Aucun PROD_VERIFIED. PAQUET FINAL (CLAUDE-2026-10-04-REQ-036-PAQUET-FINAL.md) : head de la PR identique a celui annonce par ChatGPT, branche contenant le main courant a7b91f61, 0 commit de retard. 1440 sans aucune regression, prouve au pixel : .m-proof-col [84->700] h728, .hcal-grid [780->1316] h507, .ct-contrats-page [0->1440] h1453, .hc-labels-grid [230->1210] h252 et surtout hauteur de document identique avant/apres (8415 px sur Chauffage, 5891 px sur Contrats). Modale a 390 : carte [20->370], 7 controles visibles, un seul hors ecran qui est le pot de miel anti-spam, defilement vertical operant ; le rognage interne de l'indicateur d'etapes .sw-pstep (bord droit 384 contre 370) est mesure IDENTIQUE avant et apres, donc preexistant et non bloquant. 12 captures avec empreintes sha256. Console sans erreur imputable au site sur 4 passages, aucune ecriture reseau, aucun lead. CONTROLE DE PRODUCTION le 2026-10-04 sur depan59-62.fr apres la fusion 77620ab7 : chauffagiste-saint-omer.html et contrats-entretien.html a 0 px de debordement en 390 comme en 1440 (contre 452 px et 90 px avant), carrousel d'avis defilable [44->346] avec ses 3 cartes, carrousel fournisseurs intact avec ses 36 logos, formules 9,90/14,30/25,30 EUR TTC sur les deux pages, 4 cartes labels, modale ouverte sur « 14,30 EUR TTC/mois (13 EUR HT) — 171,60 EUR TTC/an » et contenue, aucune ecriture reseau donc aucun lead, console sans erreur imputable au site. Preuves : docs/qa/REQ-036-prod/. PROD_VERIFIED sur depan59-62.fr après merge 77620ab7 : 0 px overflow en 390/1440 sur Chauffage et Contrats, carrousels/formules/modale intacts, console propre, aucun lead.",
+   "decide_par": "ChatGPT 2026-10-05 (PROD_VERIFIED)"
+  },
+  {
+   "request_id": "REQ-20260926-037",
+   "title": "Cohérence TTC du parcours contrats Chauffage → Contrats → Souscription",
+   "priority": "P0",
+   "status": "CLOSED",
+   "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-03-CONTROL-ALL-RETURNS-25.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-03",
+   "acceptance_criteria": [
+    "le prix présenté au particulier reste cohérent entre la page Chauffage, la page Contrats et la modale",
+    "TTC affiché comme référence principale sur le parcours public",
+    "aucun prix calculé ou copié en dur : utiliser price_ttc_month et price_ttc_year de la source canonique",
+    "si une information HT est conservée, elle est secondaire et clairement étiquetée"
+   ],
+   "evidence_required": [
+    "preuve DOM 1440/390 sur Gaz CONFORT depuis Chauffage jusqu'à la modale",
+    "valeurs lues depuis v_contract_offers",
+    "0 occurrence des montants canoniques copiés en dur dans les fichiers du module",
+    "aucun faux lead/paiement"
+   ],
+   "latest_sha": "a7b91f61995bb8cb4003bee43b21626259e23daf",
+   "claude_outbox": "CLAUDE-2026-10-04-REQ-037-TTC.md + CLAUDE-2026-10-04-REQ-036-OVERFLOW.md",
+   "human_gate": "GO donné par Florian le 2026-10-03 pour assurer le suivi de toutes les demandes jusqu'à production ; correctif non sensible.",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-04",
+   "closure_proof": "PASS au head 176c28d147ae9440b89783f7eac5eb49dcd94916. Lot isole d'UN fichier (contrats-entretien.html) : la page Contrats et sa modale passent au TTC principal, comme la page Chauffage. Mesure sur les TROIS surfaces en 1440 et 390, comparee a la source canonique v_contract_offers (gaz-confort : price_ttc_month 14.3, price_ttc_year 171.6, price_ht_month 13) : avant, page Chauffage 14,30 EUR TTC mais page Contrats 13 EUR HT et modale « 13 EUR HT/mois — 156 EUR/an » ; apres, 14,30 EUR TTC sur les trois, avec « 171,60 EUR TTC par an · soit 13 EUR HT par mois » en secondaire etiquete et la modale « 14,30 EUR TTC/mois (13 EUR HT) — 171,60 EUR TTC/an ». Energie et formule conservees (radio en-gaz, carte CONFORT mise en evidence), aucune case pre-cochee, AUCUNE ecriture reseau sur les quatre passages donc aucun lead, console sans erreur imputable au site. Debordements strictement inchanges : Chauffage 0/452 px, Contrats 0/90 px avant comme apres. Piege corrige au passage : monthly_amount etait extrait du LIBELLE par une regex qui n'acceptait que « HT » et serait tombe a 0 ; le montant HT voyage desormais en donnee brute (champs caches prouves a 13 et 14.3) et la semantique du champ reste le HT. Preuves : docs/qa/REQ-037/ (reproducteur, mesures.json, MESURES-REQ-037.md, 12 captures avec empreintes). Aucun PROD_VERIFIED. CONTROLE DE PRODUCTION le 2026-10-04 sur depan59-62.fr apres la fusion a7b91f61 : 14,30 EUR TTC sur les trois surfaces en 1440 comme en 390, modale « 14,30 EUR TTC/mois (13 EUR HT) — 171,60 EUR TTC/an », energie et formule conservees, aucune ecriture reseau, console propre. Preuves : docs/qa/REQ-037-prod/. PROD_VERIFIED sur depan59-62.fr après merge a7b91f61 : TTC cohérent sur Chauffage, Contrats et modale en 1440/390, aucune écriture réseau, console propre.",
+   "decide_par": "ChatGPT 2026-10-04 (PROD_VERIFIED)"
+  },
+  {
+   "request_id": "REQ-20260926-038",
+   "title": "Requete REST de /nos-prestations.html en 400 : le parametre _ts est lu comme un filtre",
+   "priority": "P2",
+   "status": "CLOSED",
+   "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-04-INVENTAIRE-PROD.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-04",
+   "acceptance_criteria": [
+    "aucune reponse 400 sur /nos-prestations.html en production",
+    "les prestations restent chargees depuis v_services_public",
+    "aucune erreur de console imputable au site sur cette page"
+   ],
+   "evidence_required": [
+    "appels REST listes avant/apres en 1440 et 390",
+    "console avant/apres",
+    "empreinte d'affichage identique (380 cartes, 214 elements de prix, empreinte 29277)",
+    "rollback"
+   ],
+   "latest_sha": "a9507ff641959fbe8e1002d3ed8ea994bae1c02a (commit de fusion dans main)",
+   "claude_outbox": "CLAUDE-2026-10-04-REQ-038-TS.md + CLAUDE-2026-10-05-REQ-038-PROD-VERIFY.md",
+   "human_gate": null,
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-05",
+   "closure_proof": "PASS au head 4c52120a07fde2ab365333de1f7b807a19003cde. Lot isole d'UN fichier. Mesure avant/apres en 1440 et 390 (docs/qa/REQ-038/) : les appels a v_services_public passent de DEUX (400 avec _ts puis 200 de repli) a UN SEUL en 200 ; les reponses REST en erreur de 1 a 0 ; les erreurs de console de 2 a 0. L'affichage est strictement identique, prouve par l'empreinte du texte rendu par toutes les cartes : 29277 caracteres au caractere pres avant comme apres, 380 cartes, 214 elements de prix, aucun debordement. Cause : PostgREST lit tout parametre non reserve comme un filtre de colonne, donc aucun renommage n'aurait suffi ; l'intention no-cache reste assuree par cache:'no-store' et les en-tetes. Aucune mutation Supabase. Aucun PROD_VERIFIED. CONTROLE DE PRODUCTION le 2026-10-05 sur depan59-62.fr apres la fusion a9507ff6 : UN SEUL appel a v_services_public, en 200, zero reponse REST en erreur, zero erreur de console, et l'affichage reste identique au caractere pres (empreinte 29277, 380 cartes, 214 elements de prix, 0 px de debordement), en 1440 comme en 390. Preuves : docs/qa/REQ-038-prod/. PROD_VERIFIED sur depan59-62.fr : un seul appel v_services_public en 200, 0 erreur REST/console, affichage identique (empreinte 29277, 380 cartes, 214 prix) en 1440/390.",
+   "decide_par": "ChatGPT 2026-10-05 (PROD_VERIFIED)"
+  },
+  {
+   "request_id": "REQ-20260926-039",
+   "title": "Debordement horizontal a 390 px sur les pages restantes (meme motif que REQ-036)",
+   "priority": "P1",
+   "status": "CLOSED",
+   "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-04-PREPARATION-REQ-038-ET-SUITE.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-04",
+   "acceptance_criteria": [
+    "a 390 px reels, scrollWidth - innerWidth <= 1 px sur toutes les pages publiques servies",
+    "carrousels, modules et modales toujours fonctionnels",
+    "aucune regression desktop 1440"
+   ],
+   "evidence_required": [
+    "scan des 117 pages avant/apres a 390 px reels avec attente reseau complete",
+    "captures 390 et 1440 sur un echantillon de chaque cause",
+    "carrousels, modules et modales toujours fonctionnels",
+    "console et rollback"
+   ],
+   "latest_sha": "0f59c7550b45ef69ec804c50a20f130bd1f52144",
+   "claude_outbox": "CLAUDE-2026-10-05-REQ-039-OVERFLOW-RESTE.md + CLAUDE-2026-10-05-REQ-039-PROD-VERIFY.md",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-05",
+   "closure_proof": "RELEVE EXACT du 2026-10-04 (docs/qa/REQ-039/, scan-390-complet.mjs avec attente reseau complete, 0 erreur de chargement) : 39 pages sur 117 debordent a 390 px reels sur depan59-62.fr. 25 pages a 452 px par .hcal-wrap dans .m-proof-col (bloc avis Google) : chauffagiste-boulogne/calais/dunkerque, electricien x4, menuisier x2, plombier x4, pmr x2, serrurier x4, travaux x2, vitrier x2, volets x2. 12 pages depannage-* a 90 px et a-propos.html a 213 px par .hc-labels-grid. 1 page, remplacement-chauffe-eau.html, a 112 px par un TABLE.rh-table : cause distincte. chauffagiste-saint-omer.html et contrats-entretien.html ne figurent PLUS dans le releve : la meme mesure confirme que REQ-036 est effectif en production. PASS au head 030b8fb119ccfc369846bb40c5785666b33dddd1. Scan des 117 pages, meme methode avant et apres, zero erreur de chargement : 39 pages debordaient a 390, ZERO apres. Echantillon d'une page par cause : electricien-saint-omer 452->0 avec le carrousel d'avis redevenu defilable, depannage-arques 90->0, a-propos 213->0, remplacement-chauffe-eau 112->0 avec son tableau de 5 lignes x 8 colonnes qui defile dans son cadre. Desktop 1440 strictement inchange, prouve au pixel : hauteurs de document identiques avant/apres (6908, 5947, 9661, 3615 px). Deux erreurs de ma part rattrapees par le scan et corrigees : la declaration avait atterri DANS un @media(min-width:900px) sur cinq pages depannage (sans effet a 390), et la coupure de mot non bornee cassait les libelles en 1440 sur a-propos (hauteur 9661->9814). Trois variantes mesurees : seule « anywhere sous 700 px » satisfait les deux exigences. Console : aucune erreur introduite ; la seule relevee, 401 sur stats_publiques dans a-propos.html, est identique avant et apres, donc preexistante et hors lot. Aucun PROD_VERIFIED. PRECISION : le lot touche 40 fichiers et non 39. Le 40e est contrats-entretien.html, deja corrige par REQ-036 et en production, dont la passe de bornage harmonise la declaration vers la forme @media(max-width:700px). Mesure production contre preview, deux largeurs : debordement 0 -> 0, hauteur de document 11833 -> 11833 en 390 et 5891 -> 5891 en 1440, grille des labels et nombre de cartes identiques. Rien ne bouge. CONTROLE DE PRODUCTION le 2026-10-05 sur depan59-62.fr apres la fusion 0f59c755 : releve des 117 pages publiques a 390 px reels, meme methode qu'avant correctif, 0 erreur de chargement — ZERO page ne deborde, contre 39 avant. Echantillon d'une page par cause a 0 px, composants fonctionnels (carrousel d'avis defilable, 4 cartes labels, tableau de 5 lignes x 8 colonnes defilable). Desktop 1440 intact : hauteurs de document identiques au pixel a ce qu'elles etaient AVANT le lot (6908, 5947, 9661, 3615 px). Console : seule subsiste la 401 sur stats_publiques d'a-propos.html, preexistante et suivie en REQ-040. Preuves : docs/qa/REQ-039-prod/. PROD_VERIFIED 2026-10-05 : scan public de 117 pages a 390 px, 0 overflow >1 px, 0 erreur de chargement ; echantillons 1440 inchanges au pixel ; aucune regression introduite. Seule erreur restante = 401 stats_publiques suivie en REQ-040.",
+   "decide_par": "ChatGPT 2026-10-05 (PROD_VERIFIED)"
+  },
+  {
+   "request_id": "REQ-20260926-040",
+   "title": "a-propos.html : la vue stats_publiques repond 401 avec la cle publique",
+   "priority": "P1",
+   "status": "CLOSED",
+   "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-05-REQ-039-OVERFLOW-RESTE.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-05",
+   "acceptance_criteria": [
+    "aucune reponse 401 sur a-propos.html en production",
+    "le bloc de statistiques affiche bien ses valeurs, ou degrade proprement si la vue reste fermee"
+   ],
+   "evidence_required": [
+    "mesure reseau et console avant/apres en 1440 et 390",
+    "rollback"
+   ],
+   "latest_sha": "5d475d3813b3efe60117eacdb2c64c8663ed05c7 (commit de fusion dans main)",
+   "claude_outbox": "CLAUDE-2026-10-06-REQ-040-CLE-REVOQUEE.md + CLAUDE-2026-10-06-REQ-041-UNE-AGENCE.md",
+   "human_gate": "—",
+   "blocked_by": "—",
+   "next_action": "—",
+   "attempt": 1,
+   "closed_at": "2026-10-06",
+   "closure_proof": "PASS au head 3cc281bb2900f5875cdcd8c36abfdb60697c59e3. AUDIT EN LECTURE SEULE, sans toucher la base : ce n'etait pas un probleme de droits. La vue stats_publiques repond 200 avec la cle publiable et renvoie ses donnees ; c'est la cle anon historique, encore utilisee par assets/hc-live-stats.js, que Supabase refuse desormais (« Invalid API key »). Verifie sur trois familles d'endpoints : rest/v1/stats_publiques, rest/v1/newsletter_subscribers et auth/v1/settings repondent 401 avec la cle historique et 200 avec la publiable. Correctif : une chaine de caracteres dans un fichier. Mesure avant/apres en 1440 et 390 : l'appel passe de 401 a 200 et la console passe de deux messages (401 + « [hc-stats] fallback values ») a aucune erreur imputable au site. Aucune mutation Supabase, aucune RLS, aucune donnee ecrite. CONTROLE DE PRODUCTION le 2026-10-06 apres la fusion 5d475d38 : sur depan59-62.fr/a-propos.html, en 1440 comme en 390, l'appel stats_publiques repond 200 et la console ne porte plus aucune erreur imputable au site (seul subsiste un avertissement de prechargement de police, preexistant). PROD_VERIFIED 2026-10-06 : stats_publiques=200 en 1440/390 sur production, ancien 401 disparu, console sans erreur imputable au site.",
+   "decide_par": "ChatGPT 2026-10-06 (PROD_VERIFIED)"
+  },
+  {
+   "request_id": "REQ-20260926-041",
+   "title": "Le site annonce encore « 2 agences » sur 12 pages, en contradiction avec REQ-023",
+   "priority": "P1",
+   "status": "TECH_ACCEPTED",
+   "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-06-REQ-040-CLE-REVOQUEE.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-06",
+   "acceptance_criteria": [
+    "aucune page publique n'annonce une agence qui n'existe pas",
+    "la formulation retenue est celle validee par Florian",
+    "coherence avec la page Zones : une agence a Saint-Omer, des poles d'intervention ailleurs"
+   ],
+   "evidence_required": [
+    "releve avant/apres des pages concernees",
+    "captures 1440/390 sur un echantillon"
+   ],
+   "latest_sha": "193db8fba6f8524a6c421365c86c370cd2b9fd84 (commit de fusion dans main)",
+   "claude_outbox": "CLAUDE-2026-10-06-REQ-041-UNE-AGENCE.md + CLAUDE-2026-10-06-REQ-041-PREUVE-CORRIGEE.md + CLAUDE-2026-10-06-REQ-041-PROD-ET-PR32-COMPLET.md + CLAUDE-2026-10-06-PROD-VERIFY-CARTE-ET-AGENCE.md",
+   "human_gate": "La formulation retenue applique la doctrine deja validee par Florian. Restent a trancher : la citation et le recit de a-propos.html, et surtout le statut de l'etablissement de Dunkerque.",
+   "blocked_by": "PR #31 fusionnée ; reste hotfix carte PR #32 puis PROD_VERIFY global REQ-041.",
+   "next_action": "Decision Florian : soit je corrige les SIX occurrences de texte courant de a-propos.html en laissant la citation (lot court, pret), soit REQ-041 est close en l'etat et l'ecart d'a-propos doit etre ecrit dans la cloture. Le reste est conforme en production.",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": "PASS au head a1ab8ff9f4323b54d05affb164e11afa3175164e. Releve des 117 pages servies, meme methode avant et apres, en ignorant le contenu des <script> : 27 pages portaient une affirmation incoherente, ZERO apres. 29 fichiers alignes sur la doctrine REQ-023 : « Deux agences locales » -> « Une agence a Saint-Omer » (7 pages), « Deux agences locales couvrent plus de 220 communes » -> « Notre agence de Saint-Omer couvre... » (7), « Depuis nos agences Depan'Audo et Depan'DK » -> « Depuis notre agence Depan'Audo (Saint-Omer) et nos poles d'intervention » (18), la statistique « 2 agences locales » -> « 4 poles d'intervention », et deux formulations isolees. Equilibre des balises verifie fichier par fichier : aucun fichier dont l'equilibre change. Trois exclusions assumees : la citation et le recit editorial de a-propos.html, le compteur « 100+ agences locales en France » du reseau national qui reste vrai, et le libelle de navigation de plan-du-site.html. CONSTAT DE FOND : les mentions legales ne declarent qu'une entite (SARL Depan'Audo, SIRET 89819615900013), alors que le site publie agence-dunkerque.html en 200, avec horaires et fiche schema.org Plumber, sous le SIREN 898 196 159 — le MEME que Depan'Audo. « Depan'DK » n'est donc pas une societe distincte, et son nom apparait sur 152 pages. Ce lot corrige les phrases, pas l'architecture de marque : decision Florian requise. PREUVE CORRIGEE : ma premiere mesure etait incomplete. Elle lisait le HTML servi en ecartant les <script>, donc elle ne voyait pas le texte injecte a l'execution — notamment le panneau de la carte, dont le libelle vit dans assets/hc-map-zones.js. Releve refait sur le DOM RENDU (docs/qa/REQ-041/releve-dom.mjs) : 32 pages incoherentes avant (et non 27), 5 apres. Les 5 sont nommees : contact, nos-villes et zones-intervention portent le libelle de la carte, traite par la PR #32 ; reseau-help-confort porte le compteur « 100+ agences locales en France », qui parle du reseau national et reste vrai ; a-propos porte la citation et le recit d'entreprise, qui relevent d'une decision Florian. Deux formulations ajoutees au lot depuis le premier rapport : le bouton « Nos agences Saint-Omer & Dunkerque » de reseau-help-confort et la rubrique « Nos agences » du plan du site. Le lot passe a 31 fichiers. CONTROLE DE PRODUCTION le 2026-10-06 apres la fusion 193db8fb : releve du DOM rendu sur les 117 pages de depan59-62.fr, 0 erreur de chargement — 5 pages incoherentes contre 32 avant. Les 5 sont celles annoncees : contact, nos-villes et zones-intervention portent le libelle de la carte, traite par la PR #32 non encore fusionnee ; reseau-help-confort porte le compteur du reseau national, qui reste vrai ; a-propos porte la citation et le recit d'entreprise. Tout ce que REQ-041 devait corriger est corrige en production. Artefact : docs/qa/REQ-041-prod/releve-dom-production.json. PROD_VERIFY FINAL le 2026-10-06 apres les fusions 193db8fb (#31) et 998aadb5 (#32) : releve du DOM rendu sur les 117 pages de depan59-62.fr, 0 erreur de chargement — 2 pages restantes contre 32 avant. reseau-help-confort porte le compteur « 100+ agences locales en France », l'exception normale du reseau national. a-propos.html reste un ECART REEL : 7 occurrences, dont SIX de texte courant et UNE SEULE citation entre guillemets. La carte est conforme en production : tuiles OpenStreetMap (plus aucune occurrence de cartocdn dans le script servi), 12 et 6 tuiles chargees, 0 en erreur, 100 % de couverture, zoom et deplacement operants, 4 marqueurs dont 1 seul role agence et 3 zone, panneau « 1 agence a Saint-Omer · 3 poles d'intervention », attribution OpenStreetMap visible, aucune mention « 2 agences » sur la page Zones, 0 debordement, console propre. Artefacts : docs/qa/CARTE-prod/ et docs/qa/REQ-041-prod/releve-dom-final.json.",
+   "decide_par": "ChatGPT 2026-10-06 (merge partiel REQ-041)"
+  }
+ ],
+ "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id. Le 2026-09-28, deux demandes ont reçu 032 à la même minute (refonte Nos métiers et routage e-mail) : 032 reste à « Nos métiers », le routage devient 033, prochain_id passe à 034. Le nom du fichier d’instruction d’origine est conservé dans legacy_instruction_id.",
+ "gel_renforce": [
+  "aucune nouvelle refonte",
+  "aucune suppression de page",
+  "aucune 301",
+  "aucune fusion de parcours",
+  "aucune nouvelle architecture",
+  "aucune modification Stripe LIVE",
+  "aucune mise en production"
+ ],
+ "note_cloture": "Les clôtures sont prononcées par le contrôle ChatGPT, jamais par Claude. CLOSED_BY_CONTROL du 2026-09-26 : 002, 007, 008, 009, 016, 019, 021, 024. CLOSED_BY_CONTROL_AUDIT du 2026-09-26 : 025 (audit uniquement — l’écart de données reste ouvert sous REQ-026 et REQ-027).",
+ "checkpoint": {
+  "branche": "backup/recette-2026-09-26-before-architecture",
+  "sha": "c0a4d70b5e634d15fa4a527bbd17fbc7d025c1c1",
+  "regle": "ne jamais modifier, déplacer, rebaser, merger ni force-pusher cette branche",
+  "verifie_le": "2026-09-26"
+ },
+ "rollbacks": {
+  "REQ-20260926-023": "git revert --no-commit 948f17b9 4af89736 && git commit"
+ },
+ "gel_visuel": "STOP sur toute modification visuelle tant que Florian n’a pas validé REQ-023 sur la preview. Ordre imposé ensuite : checkpoint validé → REQ-026 → REQ-020 (STOP visuel) → REQ-017 prototype (STOP visuel) → REQ-027 après GO métier.",
+ "dernier_controle": {
+  "message_id": "CHATGPT-2026-10-05-CONTINUE-TO-PROD",
+  "verdict": "REQ036 PROD_VERIFIED/CLOSED ; PR28/REQ038 fusionnée au SHA a9507ff6 ; REQ039 lancée immédiatement.",
+  "retour_claude": "CLAUDE-2026-10-04-REQ-036-PROD-VERIFY.md + CLAUDE-2026-10-04-REQ-038-TS.md",
+  "lacune_signalee": "REQ038 attend PROD_VERIFY ; REQ039 à exécuter."
+ },
+ "checkpoint_valide": {
+  "branche": "backup/recette-validated-2026-09-28-req023",
+  "sha": "64a96a823fc8cc6521d45dfb1850531ba66b489a",
+  "cree_par": "Florian",
+  "objet": "état de recette au moment de la validation visuelle des 4 pôles (REQ-023)",
+  "regle": "ne jamais modifier, déplacer, rebaser, merger ni force-pusher cette branche",
+  "verifie_le": "2026-09-28"
+ }
+}

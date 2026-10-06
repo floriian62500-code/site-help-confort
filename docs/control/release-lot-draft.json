@@ -1,0 +1,1472 @@
+{
+  "release_id": "REL-2026-08-21-DRAFT",
+  "base_sha": "a8272eb9",
+  "head_sha": "44771708",
+  "generated_note": "DRAFT — inventaire, aucune promotion. Les items validés Florian doivent être rattachés avant PRET_PROD.",
+  "counts": {
+    "total": 118,
+    "promotable": 71,
+    "excluded": 47,
+    "files_touched": 200
+  },
+  "promotable_commits": [
+    {
+      "sha": "8d0f5209",
+      "subject": "fix(#5/#6 wizard validation): « Continuer » n'est plus désactivé silencieusement — cliquable, au clic invalide révèle le message + scroll/focus vers le 1er champ problématique + aria-invalid. Étape 4 (résultat) inchangée",
+      "files": [
+        "index.html"
+      ]
+    },
+    {
+      "sha": "6ce4c7b4",
+      "subject": "docs(#8 P0): proposition technique flux release recette→prod + schéma DB 4 états + inventaire validations (recette 114 commits∉main ; seuls tarif-lead v2 + home-desktop-width OK ; rien de prod-ready)",
+      "files": [
+        "docs/RELEASE-FLOW-PROPOSAL.md"
+      ]
+    },
+    {
+      "sha": "44a320e9",
+      "subject": "fix(#6 P0 CAUSE RACINE): échappe les caractères spéciaux regex dans le match catalogue — un « + » dans short_desc cassait TOUT le chargement Supabase (ALL_PRESTAS vide) → funnel systématiquement en « on vous recontacte ». + try/catch défensif",
+      "files": [
+        "index.html"
+      ]
+    },
+    {
+      "sha": "d38e2c95",
+      "subject": "fix(issue #5 volet 1): HOME — retire le doublon CTA « Appeler maintenant » du hero (déjà dans le header), « Décrire mon besoin » devient CTA principal (orange), ajoute « Voir nos prestations » en secondaire",
+      "files": [
+        "index.html"
+      ]
+    },
+    {
+      "sha": "4b592aff",
+      "subject": "fix(CP-0015): source unique de validation — remplace le panneau flottant « Modifs » (OK/KO + persistance staging_validations + bouton Promouvoir-en-prod avec PAT) par un CTA unique « Centre de validation » → /recette.html. Recette-only, jamais prod. -168 lignes de code mort",
+      "files": [
+        "assets/hc-widgets.js"
+      ]
+    },
+    {
+      "sha": "548918e1",
+      "subject": "fix(A-2026-002 P1 clôture): retire les promesses de paiement en ligne CLIENT sur contact.html + garanties.html (Stripe LIVE gelé) — reste distinct le règlement à l'intervention/staff. 0 résidu",
+      "files": [
+        "contact.html",
+        "docs/AUDIT-MASTER.md",
+        "garanties.html"
+      ]
+    },
+    {
+      "sha": "325b5aad",
+      "subject": "fix(A-2026-014): titre notre-equipe raccourci ≤65c + runner-status: repo PRIVATE (GO Florian) — preuve build Netlify post-privé",
+      "files": [
+        "notre-equipe.html"
+      ]
+    },
+    {
+      "sha": "44c73efb",
+      "subject": "audit(CP-0010): corrections P2/P3 (A-2026-013/017/018 corrigés, 019 requalifié) + runner-status 2 états (runner gated / site actif) + ACK CP-0009/CP-0010 + HUMAN_ACTION_REQUIRED repo PRIVATE",
+      "files": [
+        "chauffagiste-dunkerque.html",
+        "docs/AUDIT-MASTER.md",
+        "plombier-dunkerque.html",
+        "prestations/salle-de-bain-pmr.html",
+        "urgence.html"
+      ]
+    },
+    {
+      "sha": "dafc571b",
+      "subject": "fix(A-2026-002 suite): résidus « Réservation en ligne » sur nos-prestations (œil-de-bœuf + description) captés à la passe E2E → « Devis clair » / « prise en charge sur rendez-vous » (0 résidu)",
+      "files": [
+        "nos-prestations.html"
+      ]
+    },
+    {
+      "sha": "bfe4eb56",
+      "subject": "fix(A-2026-003)+audit: espace-client paiement contrats « (à venir) » + registre MAJ (A-2026-004 requalifié 301 intentionnel). ACK CP-0005 + transparence couverture E2E/responsive restante",
+      "files": [
+        "docs/AUDIT-MASTER.md",
+        "espace-client.html"
+      ]
+    },
+    {
+      "sha": "00053b15",
+      "subject": "fix(A-2026-001/002 P1 honnêteté): retire les promesses « réservation en ligne · acompte 40 % » (24 pages métier×ville + nos-prestations meta/hero) — cohérent avec paiement gelé + décision funnel sans paiement. Registre MAJ",
+      "files": [
+        "chauffagiste-boulogne-sur-mer.html",
+        "chauffagiste-calais.html",
+        "chauffagiste-dunkerque.html",
+        "chauffagiste-saint-omer.html",
+        "docs/AUDIT-MASTER.md",
+        "electricien-boulogne-sur-mer.html",
+        "electricien-calais.html",
+        "electricien-dunkerque.html",
+        "electricien-saint-omer.html",
+        "menuisier-dunkerque.html",
+        "menuisier-saint-omer.html",
+        "nos-prestations.html",
+        "plombier-boulogne-sur-mer.html",
+        "plombier-calais.html",
+        "plombier-dunkerque.html",
+        "plombier-saint-omer.html",
+        "pmr-dunkerque.html",
+        "pmr-saint-omer.html",
+        "serrurier-boulogne-sur-mer.html",
+        "serrurier-calais.html",
+        "serrurier-dunkerque.html",
+        "serrurier-saint-omer.html",
+        "vitrier-dunkerque.html",
+        "vitrier-saint-omer.html",
+        "volets-dunkerque.html",
+        "volets-saint-omer.html"
+      ]
+    },
+    {
+      "sha": "a9b3d59e",
+      "subject": "audit(CP-0004): registre AUDIT-MASTER + rapport full-site (177 pages, 0 P0 / 2 P1 / 12 P2 / 5 P3) — racine dominante: promesses paiement en ligne vs Stripe gelé (25 pages)",
+      "files": [
+        "docs/AUDIT-MASTER.md"
+      ]
+    },
+    {
+      "sha": "8941cd23",
+      "subject": "fix(CP-0003 P0 recette): centre de validation inutilisable sur nos-prestations — ancre tarif-lead déplacée du template JS (dynamique→'non trouvée') vers #catalogRoot statique + hc-review.js robuste (MutationObserver+timeout, bandeau safe-area/anti-coupure, z-index modale). Débloque la validation depuis la page cible",
+      "files": [
+        "assets/hc-review.js",
+        "nos-prestations.html"
+      ]
+    },
+    {
+      "sha": "1984acf1",
+      "subject": "fix(wizard HOME, KO home-wizard-freeze/wizard-funnel): funnel réservation SANS paiement — bouton « Réserver ma prise en charge » (lead+rappel) au lieu de « payer en ligne » (promesse non tenue) + message réservation. Mods wizard → v2 (À REVALIDER). Décision Florian: funnel sans paiement pour l'instant. Stripe LIVE reste gelé",
+      "files": [
+        "index.html",
+        "recette.html"
+      ]
+    },
+    {
+      "sha": "dcf57ece",
+      "subject": "fix(recette KO): mojibake corps 3 pages menuiserie (porte-entree/garage/fenetres, encodage double→UTF-8 propre) + doublon promesse hero dé-dupliquée + contour carte zones-intervention retiré. Mods zones-map/menuiserie-cards/porte-entree → v2 (À REVALIDER)",
+      "files": [
+        "prestations/fenetres-bois-alu-pvc.html",
+        "prestations/porte-entree.html",
+        "prestations/porte-garage.html",
+        "recette.html",
+        "zones-intervention.html"
+      ]
+    },
+    {
+      "sha": "6d939ee3",
+      "subject": "fix(recette KO): mojibake corps 3 pages menuiserie (porte-entree/garage/fenetres, encodage double→UTF-8 propre) + doublon promesse hero dé-dupliquée + contour carte zones-intervention retiré. Mods zones-map/menuiserie-cards/porte-entree → v2 (À REVALIDER)",
+      "files": [
+        "prestations/fenetres-bois-alu-pvc.html",
+        "prestations/porte-entree.html",
+        "prestations/porte-garage.html",
+        "recette.html",
+        "zones-intervention.html"
+      ]
+    },
+    {
+      "sha": "04fdb483",
+      "subject": "fix(ci/netlify): règle ignore compare $CACHED_COMMIT_REF..$COMMIT_REF (dernier déployé→HEAD) au lieu de HEAD^..HEAD — un tip docs-only (MAJ outbox) n'annule plus le build → déploie l'arriéré HTML A22 (plomberie/élec/vitrerie/volets)",
+      "files": [
+        "netlify.toml"
+      ]
+    },
+    {
+      "sha": "d6eb9c46",
+      "subject": "feat(A22 vitrerie+volets): 6 cartes vitrerie + 2 cartes volets rebranchées vers pages dédiées + ancres revue + cartes centre. Serrurerie/volets-dépannage/motorisation/install-élec = backlog (pages dédiées à créer)",
+      "files": [
+        "recette.html",
+        "vitrier-dunkerque.html",
+        "vitrier-saint-omer.html",
+        "volets-dunkerque.html",
+        "volets-saint-omer.html"
+      ]
+    },
+    {
+      "sha": "853a98ac",
+      "subject": "feat(A22 électricité): 8 cartes (Tableau, Dépannage) rebranchées vers pages dédiées + ancre revue + carte centre ELECTRICITE (Installation&rénovation laissée catalogue: page dédiée à créer)",
+      "files": [
+        "electricien-boulogne-sur-mer.html",
+        "electricien-calais.html",
+        "electricien-dunkerque.html",
+        "electricien-saint-omer.html",
+        "recette.html"
+      ]
+    },
+    {
+      "sha": "e3707967",
+      "subject": "feat(A22 plomberie): 8 cartes savoir-faire rebranchées vers pages dédiées (recherche-fuite, sanitaire, reseaux, debouchage, chauffe-eau) + ancre revue + carte centre PLOMBERIE",
+      "files": [
+        "plombier-boulogne-sur-mer.html",
+        "plombier-calais.html",
+        "plombier-dunkerque.html",
+        "plombier-saint-omer.html",
+        "recette.html"
+      ]
+    },
+    {
+      "sha": "374e3e60",
+      "subject": "feat(centre): carte CHAUFFAGE (rebranchement cartes) ajoutée au centre de validation",
+      "files": [
+        "recette.html"
+      ]
+    },
+    {
+      "sha": "505c8dd1",
+      "subject": "feat(A22 chauffage): 12 cartes savoir-faire rebranchées vers pages dédiées (chaudière/dépannage/entretien) + ancre revue + hc-review.js",
+      "files": [
+        "chauffagiste-boulogne-sur-mer.html",
+        "chauffagiste-calais.html",
+        "chauffagiste-dunkerque.html",
+        "chauffagiste-saint-omer.html"
+      ]
+    },
+    {
+      "sha": "8693fc32",
+      "subject": "sécurité(sync): bloque docs/scripts/supabase du serveur Netlify (404) + infos sync ChatGPT dans PROJECT_STATE.json",
+      "files": [
+        "_redirects"
+      ]
+    },
+    {
+      "sha": "ccc0b416",
+      "subject": "feat(centre): contrôles techniques auto-testés + preuve lisible (sitemap: 25 attendues/présentes/doublons/erreurs/PASS + note www), plus de XML brut. Règle: Florian ne valide manuellement que le visuel/ergo/métier.",
+      "files": [
+        "recette.html"
+      ]
+    },
+    {
+      "sha": "56d6b8b2",
+      "subject": "feat(A22 portail-cloture): ancre revue + hc-review.js + carte centre (4 pages menuiserie prioritaires livrées)",
+      "files": [
+        "prestations/portail-cloture.html",
+        "recette.html"
+      ]
+    },
+    {
+      "sha": "10034e0b",
+      "subject": "feat(A22 fenetres): ancre revue + hc-review.js + réalisation menuiserie liée + carte centre",
+      "files": [
+        "prestations/fenetres-bois-alu-pvc.html",
+        "recette.html"
+      ]
+    },
+    {
+      "sha": "d04db10c",
+      "subject": "feat(A22 porte-garage): ancre revue + hc-review.js + 2 réalisations liées + carte centre",
+      "files": [
+        "prestations/porte-garage.html",
+        "recette.html"
+      ]
+    },
+    {
+      "sha": "0ec86efa",
+      "subject": "fix(P1 funnel wizard): carte urgence ne sur-promet plus 'Réservable en ligne' (paiement gelé) -> 'Prise en charge rapide' + ancre revue + carte centre",
+      "files": [
+        "index.html",
+        "recette.html"
+      ]
+    },
+    {
+      "sha": "88975f8c",
+      "subject": "feat(A22 porte-entree): ancre de revue + hc-review.js + maillage réalisation (page dédiée validable via le centre)",
+      "files": [
+        "prestations/porte-entree.html"
+      ]
+    },
+    {
+      "sha": "d8173075",
+      "subject": "docs(A22): corrige la ligne registre (pivot rebranchement menuiserie)",
+      "files": [
+        "docs/AUDIT-MASTER.md"
+      ]
+    },
+    {
+      "sha": "4b43a8d6",
+      "subject": "docs(A22): pivot — pages sous-métier déjà dans prestations/, rebranchement (pas création). Menuiserie fait.",
+      "files": [
+        "docs/AUDIT-MASTER.md"
+      ]
+    },
+    {
+      "sha": "1a6f05ed",
+      "subject": "fix(A22 menuiserie): les pages sous-métier existent déjà dans prestations/ → rebranche les 8 cartes vers elles (pas de création, doublon /porte-entree.html retiré) + A17 comblé sur prestations/ (35 pages apex) + ancre revue + carte centre",
+      "files": [
+        "menuisier-dunkerque.html",
+        "menuisier-saint-omer.html",
+        "prestations/changement-cylindre.html",
+        "prestations/chauffe-eau.html",
+        "prestations/coulissant-baie-vitree.html",
+        "prestations/debouchage.html",
+        "prestations/depannage-chaudiere.html",
+        "prestations/depannage-electrique.html",
+        "prestations/desembouage.html",
+        "prestations/fenetres-bois-alu-pvc.html",
+        "prestations/fenetres-completes.html",
+        "prestations/garde-corps-rampes.html",
+        "prestations/index.html",
+        "prestations/luminaire.html",
+        "prestations/mise-securite-vitrerie.html",
+        "prestations/ouverture-porte.html",
+        "prestations/parquet.html",
+        "prestations/portail-cloture.html",
+        "prestations/porte-claquee.html",
+        "prestations/porte-entree.html",
+        "prestations/porte-fermee-cle.html",
+        "prestations/porte-garage.html",
+        "prestations/ramonage.html",
+        "prestations/recherche-fuite.html",
+        "prestations/recherche-panne-elec.html",
+        "prestations/remplacement-chaudiere.html",
+        "prestations/remplacement-panneau-porte.html",
+        "prestations/reseaux-plomberie.html",
+        "prestations/salle-de-bain-pmr.html",
+        "prestations/salle-de-bain.html",
+        "prestations/sanitaire.html",
+        "prestations/tableau-electrique.html",
+        "prestations/vitrage-insert-poele.html",
+        "prestations/vitrage-simple-double-triple.html",
+        "prestations/vitrerie-panneau-porte.html",
+        "prestations/vmc.html",
+        "prestations/volet-roulant.html",
+        "recette.html"
+      ]
+    },
+    {
+      "sha": "683609cb",
+      "subject": "fix(A23): surlignage revue adouci (halo orange doux, plus de carré bleu vif) suite retour Florian sur tarif-lead + tarif-lead v2 → à revalider",
+      "files": [
+        "assets/hc-review.js",
+        "docs/AUDIT-MASTER.md",
+        "index.html",
+        "nos-prestations.html",
+        "realisations.html",
+        "recette.html",
+        "zones-intervention.html"
+      ]
+    },
+    {
+      "sha": "6d1a1a62",
+      "subject": "docs(A22): inventaire cartes métiers — 86% vers catalogue générique, 0 page sous-métier dédiée. Plan rebranchement + création (docs/AUDIT-A22-CARTES-METIERS.md)",
+      "files": [
+        "docs/AUDIT-A22-CARTES-METIERS.md",
+        "docs/AUDIT-MASTER.md"
+      ]
+    },
+    {
+      "sha": "de849273",
+      "subject": "docs(audit): A17 frontend canonique apex fait (recette), edge au cutover",
+      "files": [
+        "docs/AUDIT-MASTER.md"
+      ]
+    },
+    {
+      "sha": "1d9a0eab",
+      "subject": "fix(A17,SEO): canonique unique = apex depan59-62.fr — canonical/og:url/JSON-LD/liens absolus (141 pages) + robots + générateurs. Sitemap edge préparé (redéploiement au cutover prod).",
+      "files": [
+        "404.html",
+        "a-propos.html",
+        "actualites.html",
+        "agence-dunkerque.html",
+        "agence-saint-omer.html",
+        "aides.html",
+        "avant-apres.html",
+        "blog-comment-detecter-fuite-eau-cachee.html",
+        "blog-cout-renovation-salle-de-bain.html",
+        "blog-debouchage-canalisation-furet-hydrocurage.html",
+        "blog-entretien-chaudiere-annuel-obligatoire.html",
+        "blog-fenetres-double-vitrage-pvc-alu-bois.html",
+        "blog-isolation-combles-aides-2026.html",
+        "blog-panne-electrique-disjoncteur-saute.html",
+        "blog-pmr-adapter-salle-de-bain-senior.html",
+        "blog-pompe-a-chaleur-air-eau-tout-savoir.html",
+        "blog-porte-claquee-cle-perdue-que-faire.html",
+        "blog-preparer-sa-maison-hiver-checklist.html",
+        "blog-remplacement-chaudiere-gaz-aides-2026.html",
+        "blog.html",
+        "carrieres.html",
+        "chauffagiste-boulogne-sur-mer.html",
+        "chauffagiste-calais.html",
+        "chauffagiste-coudekerque-branche.html",
+        "chauffagiste-dunkerque.html",
+        "chauffagiste-marck.html",
+        "chauffagiste-outreau.html",
+        "chauffagiste-saint-omer.html",
+        "chauffagiste-wimereux.html",
+        "contact.html",
+        "contrats-entretien.html",
+        "debouchage-canalisation.html",
+        "depannage-arques.html",
+        "depannage-bergues.html",
+        "depannage-boulogne-sur-mer.html",
+        "depannage-calais.html",
+        "depannage-coquelles.html",
+        "depannage-dunkerque.html",
+        "depannage-gravelines.html",
+        "depannage-longuenesse.html",
+        "depannage-saint-martin-lez-tatinghem.html",
+        "depannage-saint-omer.html",
+        "depannage-saint-pol-sur-mer.html",
+        "depannage-sangatte.html",
+        "devis-express.html",
+        "diagnostic-electrique.html",
+        "electricien-boulogne-sur-mer.html",
+        "electricien-calais.html",
+        "electricien-dunkerque.html",
+        "electricien-saint-omer.html",
+        "entretien-chaudiere.html",
+        "espace-client.html",
+        "faq.html",
+        "fournisseur.html",
+        "garanties.html",
+        "guide-adaptation-pmr.html",
+        "guide-entretien-chaudiere.html",
+        "guide-fuite-eau.html",
+        "guide-mise-aux-normes-electriques.html",
+        "guides.html",
+        "index.html",
+        "maprimeadapt.html",
+        "mentions-legales.html",
+        "menuisier-dunkerque.html",
+        "menuisier-saint-omer.html",
+        "nos-metiers.html",
+        "nos-prestations.html",
+        "nos-villes.html",
+        "notre-equipe.html",
+        "ouverture-porte-claquee.html",
+        "panne-chaudiere.html",
+        "partenaire.html",
+        "partenaires.html",
+        "plan-du-site.html",
+        "plombier-boulogne-sur-mer.html",
+        "plombier-calais.html",
+        "plombier-coudekerque-branche.html",
+        "plombier-coulogne.html",
+        "plombier-dunkerque.html",
+        "plombier-grande-synthe.html",
+        "plombier-guines.html",
+        "plombier-le-portel.html",
+        "plombier-marck.html",
+        "plombier-outreau.html",
+        "plombier-saint-martin-boulogne.html",
+        "plombier-saint-omer.html",
+        "plombier-teteghem.html",
+        "plombier-wimereux.html",
+        "pmr-dunkerque.html",
+        "pmr-saint-omer.html",
+        "pro.html",
+        "processus.html",
+        "realisation.html",
+        "realisations.html",
+        "realisations/cellier-travaux-de-plafond-reparation-peinture-de-finition.html",
+        "realisations/fourniture-dune-corniche-et-dun-caisson-blanc-renovation-de-murs-chez-notre-clie.html",
+        "realisations/intervention-realisee-par-help-confort-remplacement-dun-coulissant-de-facade.html",
+        "realisations/nouvelle-intervention-realisee-par-help-confort-saint-omer.html",
+        "realisations/nouvelle-renovation-de-salle-de-bain-realisee-par-help-confort.html",
+        "realisations/refection-complete-pour-une-nouvelle-ambiance-moderne-et-accueillante.html",
+        "realisations/remplacement-complet-dun-ensemble-de-boites-aux-lettres.html",
+        "realisations/remplacement-de-double-vitrage-apres-bris-de-glace.html",
+        "realisations/remplacement-de-double-vitrage-avec-croisillon-intervention-help-confort-saint-o.html",
+        "realisations/remplacement-de-menuiserie-renovation-de-piece-chez-notre-cliente.html",
+        "realisations/remplacement-de-mitigeur-evier-bec-long-douchette.html",
+        "realisations/remplacement-de-panneau-pvc-modele-surinam-3.html",
+        "realisations/remplacement-de-porte-de-garage-a-arques.html",
+        "realisations/remplacement-dun-bloc-porte-en-cave-help-confort-saint-omer.html",
+        "realisations/remplacement-dun-panneau-pvc-chez-notre-cliente-a-hazebrouck.html",
+        "realisations/remplacement-dune-porte-de-garage-basculante-manuelle.html",
+        "realisations/remplacement-dune-porte-dentree-bois-par-une-porte-dentree-pvc.html",
+        "realisations/renovation-dune-salle-de-bain-a-letage.html",
+        "realisations/vitre-dinsert-cassee.html",
+        "realisations/votre-double-vitrage-dans-la-salle-a-manger-est-fissure-embue-ou-moins-isolant.html",
+        "realisations/votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite-a-un-bris-de-glace.html",
+        "realisations/votre-insert-gaz-presente-un-vitrage-fissure-terni-ou-endommage.html",
+        "realisations/votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le-temps.html",
+        "realisations/votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-correctement.html",
+        "realisations/votre-soupape-de-securite-ou-votre-manometre-est-defectueux-use-ou-ne-fonctionne.html",
+        "remplacement-chauffe-eau.html",
+        "reseau-help-confort.html",
+        "reset.html",
+        "robots.txt",
+        "scripts/gen-realisations.mjs",
+        "scripts/gen-sitemap-fn.mjs",
+        "serrurier-boulogne-sur-mer.html",
+        "serrurier-calais.html",
+        "serrurier-coudekerque-branche.html",
+        "serrurier-dunkerque.html",
+        "serrurier-marck.html",
+        "serrurier-outreau.html",
+        "serrurier-saint-omer.html",
+        "serrurier-wimereux.html",
+        "sinistres.html",
+        "supabase/functions/sitemap/index.ts",
+        "tarifs.html",
+        "temoignages.html",
+        "travaux-dunkerque.html",
+        "travaux-saint-omer.html",
+        "urgence.html",
+        "vitrier-dunkerque.html",
+        "vitrier-saint-omer.html",
+        "volets-dunkerque.html",
+        "volets-saint-omer.html",
+        "zones-intervention.html"
+      ]
+    },
+    {
+      "sha": "d5f13f71",
+      "subject": "docs(audit): A21 centre de validation finalisé — 7 points livrés et testés",
+      "files": [
+        "docs/AUDIT-MASTER.md"
+      ]
+    },
+    {
+      "sha": "9bf1e3a0",
+      "subject": "feat(recette v2): Voir→surlignage réel (hc-review.js + data-review-id), lecture via vue sécurisée (RLS), liaison version (OK obsolète si l'item change → à revalider), geler la page, vue « en production »",
+      "files": [
+        "assets/hc-review.js",
+        "index.html",
+        "nos-prestations.html",
+        "realisations.html",
+        "recette.html",
+        "zones-intervention.html"
+      ]
+    },
+    {
+      "sha": "fece67c9",
+      "subject": "docs(audit): A21 centre de validation testé (persistance OK), A20 clé anon désactivée → migrer REST vers publishable",
+      "files": [
+        "docs/AUDIT-MASTER.md"
+      ]
+    },
+    {
+      "sha": "3626aba7",
+      "subject": "fix(recette): utilise la clé publishable Supabase (l'anon JWT est désactivée) — persistance des retours OK",
+      "files": [
+        "recette.html"
+      ]
+    },
+    {
+      "sha": "c7700db4",
+      "subject": "feat(recette): centre de validation Florian /recette.html — cartes par page, OK/À corriger + commentaire (persistés Supabase), progression, bouton Valider pour prod (enregistre la décision, ne déploie pas). Gated recette.",
+      "files": [
+        "recette.html"
+      ]
+    },
+    {
+      "sha": "f9801bb2",
+      "subject": "docs(audit): A19 P0 wizard paiement gelé (contrôle final Home) + A18 page /realisations en cours (inventaire 25 réal / 9 actu)",
+      "files": [
+        "docs/AUDIT-MASTER.md"
+      ]
+    },
+    {
+      "sha": "13987312",
+      "subject": "fix(sécurité,Home P0): GEL du paiement en ligne du wizard — envoyait un montant client à stripe-create-payment-link (non sécurisé). Le wizard s'arrête sur le lead (agence recontacte). Contrôle final Home.",
+      "files": [
+        "index.html"
+      ]
+    },
+    {
+      "sha": "87e1b2cf",
+      "subject": "docs(audit): A14 durci (prestation_id/anti-doublon/mobile/Dunkerque), A15 sweep 0 débordement, A12b sitemap public=25 (fichier statique retiré), A17 canonique www/apex",
+      "files": [
+        "docs/AUDIT-MASTER.md"
+      ]
+    },
+    {
+      "sha": "0e9b685e",
+      "subject": "fix(sitemap): supprime les sitemap statiques périmés (19 réal.) qui masquaient l'edge dynamique + redirection forcée → sitemap public = 25 (source unique edge)",
+      "files": [
+        "_redirects",
+        "sitemap-actus.xml",
+        "sitemap-index.xml",
+        "sitemap-pages.xml",
+        "sitemap.xml"
+      ]
+    },
+    {
+      "sha": "8e391132",
+      "subject": "fix(A14): verrou anti-doublon synchrone in-flight — double-clic/double-submit ne crée plus qu'UN lead",
+      "files": [
+        "nos-prestations.html"
+      ]
+    },
+    {
+      "sha": "2518dc10",
+      "subject": "fix(A14): capture prestation_id (référence serveur autoritaire) — le prix DOM devient un simple instantané, le prix réel reste dérivable du catalogue",
+      "files": [
+        "nos-prestations.html"
+      ]
+    },
+    {
+      "sha": "f0fd78ba",
+      "subject": "docs(audit): matrice prestations (34, 1 anomalie devis+prix) + A16 SEO citations Achetez en Pays de Saint-Omer au registre",
+      "files": [
+        "docs/AUDIT-MASTER.md"
+      ]
+    },
+    {
+      "sha": "1982eff3",
+      "subject": "docs(audit): A14 fermé — Voir le tarif → lead exploitable prouvé jusqu'à la DB",
+      "files": [
+        "docs/AUDIT-MASTER.md"
+      ]
+    },
+    {
+      "sha": "f2d63645",
+      "subject": "feat(A14): Voir le tarif → LEAD EXPLOITABLE via submit-lead-v6 (form_type=tarif_prestation, prestation consultée, agence CP, anti-doublon, tracking) — fin du système parallèle contracts + RGPD reformulé",
+      "files": [
+        "nos-prestations.html"
+      ]
+    },
+    {
+      "sha": "7081e47b",
+      "subject": "docs(audit): MAJ tableau maître — sitemap réconcilié (25=25), grille desktop Home (chantiers 57→90%)",
+      "files": [
+        "docs/AUDIT-MASTER.md"
+      ]
+    },
+    {
+      "sha": "d04fa04d",
+      "subject": "fix(desktop): grille cohérente — container global 1200→1320/1440/1520 responsive + section chantiers/actualités sort du wizard 920px (cartes plus grandes)",
+      "files": [
+        "404.html",
+        "a-propos.html",
+        "actualites.html",
+        "aides.html",
+        "avant-apres.html",
+        "blog.html",
+        "carrieres.html",
+        "chauffagiste-boulogne-sur-mer.html",
+        "chauffagiste-calais.html",
+        "chauffagiste-dunkerque.html",
+        "chauffagiste-saint-omer.html",
+        "contact.html",
+        "contrats-entretien.html",
+        "depannage-arques.html",
+        "depannage-bergues.html",
+        "depannage-boulogne-sur-mer.html",
+        "depannage-calais.html",
+        "depannage-coquelles.html",
+        "depannage-dunkerque.html",
+        "depannage-gravelines.html",
+        "depannage-longuenesse.html",
+        "depannage-saint-martin-lez-tatinghem.html",
+        "depannage-saint-omer.html",
+        "depannage-saint-pol-sur-mer.html",
+        "depannage-sangatte.html",
+        "docs/ALERT-MONITORING.md",
+        "electricien-boulogne-sur-mer.html",
+        "electricien-calais.html",
+        "electricien-dunkerque.html",
+        "electricien-saint-omer.html",
+        "espace-client.html",
+        "faq.html",
+        "guide-adaptation-pmr.html",
+        "guide-entretien-chaudiere.html",
+        "guide-fuite-eau.html",
+        "guide-mise-aux-normes-electriques.html",
+        "guides.html",
+        "index.html",
+        "mentions-legales.html",
+        "menuisier-dunkerque.html",
+        "menuisier-saint-omer.html",
+        "nos-prestations.html",
+        "partenaires.html",
+        "plombier-boulogne-sur-mer.html",
+        "plombier-calais.html",
+        "plombier-dunkerque.html",
+        "plombier-saint-omer.html",
+        "pmr-dunkerque.html",
+        "pmr-saint-omer.html",
+        "pro.html",
+        "processus.html",
+        "realisation.html",
+        "realisations.html",
+        "reseau-help-confort.html",
+        "serrurier-boulogne-sur-mer.html",
+        "serrurier-calais.html",
+        "serrurier-dunkerque.html",
+        "serrurier-saint-omer.html",
+        "sinistres.html",
+        "styles.css",
+        "temoignages.html",
+        "travaux-dunkerque.html",
+        "travaux-saint-omer.html",
+        "vitrier-dunkerque.html",
+        "vitrier-saint-omer.html",
+        "volets-dunkerque.html",
+        "volets-saint-omer.html",
+        "zones-intervention.html"
+      ]
+    },
+    {
+      "sha": "0ddfd0ab",
+      "subject": "fix(carte hero): neutralise .z-hero-map svg{100%} qui déformait le calque Leaflet → halo de couverture enfin visible",
+      "files": [
+        "zones-intervention.html"
+      ]
+    },
+    {
+      "sha": "e91cce7c",
+      "subject": "style(carte): halo de couverture bien visible sur fond Positron",
+      "files": [
+        "a-propos.html",
+        "assets/hc-map-zones.js",
+        "contact.html",
+        "nos-villes.html",
+        "zones-intervention.html"
+      ]
+    },
+    {
+      "sha": "d3129a5e",
+      "subject": "style(carte): fond Positron minimal + suppression barre stats (coupée) + moins de points secondaires — rendu pro/épuré demandé par Florian",
+      "files": [
+        "a-propos.html",
+        "assets/hc-map-zones.js",
+        "contact.html",
+        "nos-villes.html",
+        "zones-intervention.html"
+      ]
+    },
+    {
+      "sha": "6059d6fc",
+      "subject": "docs(audit): MAJ tableau maître — carte restylée, routing réalisations prouvé, legacy nettoyée, lots suivants (CTA, tarif→lead)",
+      "files": [
+        "docs/AUDIT-MASTER.md"
+      ]
+    },
+    {
+      "sha": "35aba552",
+      "subject": "chore(cleanup): redirige l'ancienne realisation.html (orpheline, noindex) vers le listing — convention unique /realisations/<slug>",
+      "files": [
+        "_redirects"
+      ]
+    },
+    {
+      "sha": "bc96e216",
+      "subject": "fix(routing): actualites.html — dernier lien réalisation à l'ancienne convention corrigé vers /realisations/<slug>",
+      "files": [
+        "actualites.html"
+      ]
+    },
+    {
+      "sha": "e0411aa6",
+      "subject": "style(carte): halo de couverture plus visible (fidélité référence)",
+      "files": [
+        "assets/hc-map-zones.js"
+      ]
+    },
+    {
+      "sha": "dac946d4",
+      "subject": "feat(carte): restyle façon référence — points bleus uniformes + labels villes permanents + halo de couverture unique + communes secondaires ; légende couleur retirée",
+      "files": [
+        "a-propos.html",
+        "assets/hc-map-zones.js",
+        "contact.html",
+        "nos-villes.html",
+        "zones-intervention.html"
+      ]
+    },
+    {
+      "sha": "50a152c4",
+      "subject": "docs(audit): A08b — webhook Stripe sans vérif signature (statut payé forgeable) ; paiement à garder GELÉ jusqu'au hardening backend",
+      "files": [
+        "docs/AUDIT-MASTER.md"
+      ]
+    },
+    {
+      "sha": "aa31947a",
+      "subject": "fix(sécurité,paiement): GEL du paiement public — le montant Stripe venait du DOM (client pouvait payer 1€). Route vers devis/lead. Usage dashboard admin intact. (AUDIT-MASTER A08)",
+      "files": [
+        "assets/hc-reserve-modal.js",
+        "chauffagiste-boulogne-sur-mer.html",
+        "chauffagiste-calais.html",
+        "chauffagiste-dunkerque.html",
+        "chauffagiste-saint-omer.html",
+        "docs/AUDIT-MASTER.md",
+        "electricien-boulogne-sur-mer.html",
+        "electricien-calais.html",
+        "electricien-dunkerque.html",
+        "electricien-saint-omer.html",
+        "menuisier-dunkerque.html",
+        "menuisier-saint-omer.html",
+        "plombier-boulogne-sur-mer.html",
+        "plombier-calais.html",
+        "plombier-dunkerque.html",
+        "plombier-saint-omer.html",
+        "pmr-dunkerque.html",
+        "pmr-saint-omer.html",
+        "realisation.html",
+        "serrurier-boulogne-sur-mer.html",
+        "serrurier-calais.html",
+        "serrurier-dunkerque.html",
+        "serrurier-saint-omer.html",
+        "travaux-dunkerque.html",
+        "travaux-saint-omer.html",
+        "vitrier-dunkerque.html",
+        "vitrier-saint-omer.html",
+        "volets-dunkerque.html",
+        "volets-saint-omer.html"
+      ]
+    },
+    {
+      "sha": "d3846e91",
+      "subject": "fix(css,cls): répare les @media avalés du correctif CLS topbar sur 104 pages (media-queries invalides → hauteurs responsive non appliquées)",
+      "files": [
+        "404.html",
+        "a-propos.html",
+        "actualites.html",
+        "agence-dunkerque.html",
+        "agence-saint-omer.html",
+        "aides.html",
+        "blog-comment-detecter-fuite-eau-cachee.html",
+        "blog-cout-renovation-salle-de-bain.html",
+        "blog-debouchage-canalisation-furet-hydrocurage.html",
+        "blog-entretien-chaudiere-annuel-obligatoire.html",
+        "blog-fenetres-double-vitrage-pvc-alu-bois.html",
+        "blog-isolation-combles-aides-2026.html",
+        "blog-panne-electrique-disjoncteur-saute.html",
+        "blog-pmr-adapter-salle-de-bain-senior.html",
+        "blog-pompe-a-chaleur-air-eau-tout-savoir.html",
+        "blog-porte-claquee-cle-perdue-que-faire.html",
+        "blog-preparer-sa-maison-hiver-checklist.html",
+        "blog-remplacement-chaudiere-gaz-aides-2026.html",
+        "blog.html",
+        "carrieres.html",
+        "chauffagiste-boulogne-sur-mer.html",
+        "chauffagiste-calais.html",
+        "chauffagiste-coudekerque-branche.html",
+        "chauffagiste-dunkerque.html",
+        "chauffagiste-marck.html",
+        "chauffagiste-outreau.html",
+        "chauffagiste-saint-omer.html",
+        "chauffagiste-wimereux.html",
+        "contact.html",
+        "contrats-entretien.html",
+        "debouchage-canalisation.html",
+        "depannage-arques.html",
+        "depannage-bergues.html",
+        "depannage-boulogne-sur-mer.html",
+        "depannage-calais.html",
+        "depannage-coquelles.html",
+        "depannage-dunkerque.html",
+        "depannage-gravelines.html",
+        "depannage-longuenesse.html",
+        "depannage-saint-martin-lez-tatinghem.html",
+        "depannage-saint-omer.html",
+        "depannage-saint-pol-sur-mer.html",
+        "depannage-sangatte.html",
+        "diagnostic-electrique.html",
+        "electricien-boulogne-sur-mer.html",
+        "electricien-calais.html",
+        "electricien-dunkerque.html",
+        "electricien-saint-omer.html",
+        "entretien-chaudiere.html",
+        "espace-client.html",
+        "garanties.html",
+        "guide-adaptation-pmr.html",
+        "guide-entretien-chaudiere.html",
+        "guide-fuite-eau.html",
+        "guide-mise-aux-normes-electriques.html",
+        "guides.html",
+        "index.html",
+        "mentions-legales.html",
+        "menuisier-dunkerque.html",
+        "menuisier-saint-omer.html",
+        "nos-metiers.html",
+        "nos-prestations.html",
+        "nos-villes.html",
+        "notre-equipe.html",
+        "ouverture-porte-claquee.html",
+        "panne-chaudiere.html",
+        "partenaires.html",
+        "plombier-boulogne-sur-mer.html",
+        "plombier-calais.html",
+        "plombier-coudekerque-branche.html",
+        "plombier-coulogne.html",
+        "plombier-dunkerque.html",
+        "plombier-grande-synthe.html",
+        "plombier-guines.html",
+        "plombier-le-portel.html",
+        "plombier-marck.html",
+        "plombier-outreau.html",
+        "plombier-saint-martin-boulogne.html",
+        "plombier-saint-omer.html",
+        "plombier-teteghem.html",
+        "plombier-wimereux.html",
+        "pmr-dunkerque.html",
+        "pmr-saint-omer.html",
+        "pro.html",
+        "realisations.html",
+        "remplacement-chauffe-eau.html",
+        "reseau-help-confort.html",
+        "serrurier-boulogne-sur-mer.html",
+        "serrurier-calais.html",
+        "serrurier-coudekerque-branche.html",
+        "serrurier-dunkerque.html",
+        "serrurier-marck.html",
+        "serrurier-outreau.html",
+        "serrurier-saint-omer.html",
+        "serrurier-wimereux.html",
+        "sinistres.html",
+        "tarifs.html",
+        "travaux-dunkerque.html",
+        "travaux-saint-omer.html",
+        "urgence.html",
+        "vitrier-dunkerque.html",
+        "vitrier-saint-omer.html",
+        "volets-dunkerque.html",
+        "volets-saint-omer.html"
+      ]
+    },
+    {
+      "sha": "28053dea",
+      "subject": "fix(zones): carte hero non rognée (structure .z-hero-map) + répare @media avalés du correctif CLS topbar",
+      "files": [
+        "zones-intervention.html"
+      ]
+    },
+    {
+      "sha": "919a3cc2",
+      "subject": "fix(carte): setView centre fixe (50.82,2.02) zoom adaptatif — fin de la dérive fitBounds dans le bloc hero",
+      "files": [
+        "a-propos.html",
+        "assets/hc-map-zones.js",
+        "contact.html",
+        "nos-villes.html",
+        "zones-intervention.html"
+      ]
+    },
+    {
+      "sha": "c772cda1",
+      "subject": "fix(carte): cadrage déterministe sur la couverture 4 villes (Boulogne→Bray-Dunes) — corrige la dérive vers la mer/Belgique dans le bloc hero",
+      "files": [
+        "a-propos.html",
+        "assets/hc-map-zones.js",
+        "contact.html",
+        "nos-villes.html",
+        "zones-intervention.html"
+      ]
+    },
+    {
+      "sha": "44022e69",
+      "subject": "fix(carte): invalidateSize + ResizeObserver dans hc-map-zones — la carte n'affichait que la mer (conteneur mal dimensionné à l'init)",
+      "files": [
+        "a-propos.html",
+        "assets/hc-map-zones.js",
+        "contact.html",
+        "nos-villes.html",
+        "zones-intervention.html"
+      ]
+    },
+    {
+      "sha": "e6b4dbdb",
+      "subject": "fix(realisations): supprime le double bouton retour (header + contenu) — un seul lien retour par page",
+      "files": [
+        "_redirects",
+        "docs/ALERT-MONITORING.md",
+        "realisation.html",
+        "realisations/cellier-travaux-de-plafond-reparation-peinture-de-finition.html",
+        "realisations/fourniture-dune-corniche-et-dun-caisson-blanc-renovation-de-murs-chez-notre-clie.html",
+        "realisations/intervention-realisee-par-help-confort-remplacement-dun-coulissant-de-facade.html",
+        "realisations/nouvelle-intervention-realisee-par-help-confort-saint-omer.html",
+        "realisations/nouvelle-renovation-de-salle-de-bain-realisee-par-help-confort.html",
+        "realisations/refection-complete-pour-une-nouvelle-ambiance-moderne-et-accueillante.html",
+        "realisations/remplacement-complet-dun-ensemble-de-boites-aux-lettres.html",
+        "realisations/remplacement-de-double-vitrage-apres-bris-de-glace.html",
+        "realisations/remplacement-de-double-vitrage-avec-croisillon-intervention-help-confort-saint-o.html",
+        "realisations/remplacement-de-menuiserie-renovation-de-piece-chez-notre-cliente.html",
+        "realisations/remplacement-de-mitigeur-evier-bec-long-douchette.html",
+        "realisations/remplacement-de-panneau-pvc-modele-surinam-3.html",
+        "realisations/remplacement-de-porte-de-garage-a-arques.html",
+        "realisations/remplacement-dun-bloc-porte-en-cave-help-confort-saint-omer.html",
+        "realisations/remplacement-dun-panneau-pvc-chez-notre-cliente-a-hazebrouck.html",
+        "realisations/remplacement-dune-porte-de-garage-basculante-manuelle.html",
+        "realisations/remplacement-dune-porte-dentree-bois-par-une-porte-dentree-pvc.html",
+        "realisations/renovation-dune-salle-de-bain-a-letage.html",
+        "realisations/vitre-dinsert-cassee.html",
+        "realisations/votre-double-vitrage-dans-la-salle-a-manger-est-fissure-embue-ou-moins-isolant.html",
+        "realisations/votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite-a-un-bris-de-glace.html",
+        "realisations/votre-insert-gaz-presente-un-vitrage-fissure-terni-ou-endommage.html",
+        "realisations/votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le-temps.html",
+        "realisations/votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-correctement.html",
+        "realisations/votre-soupape-de-securite-ou-votre-manometre-est-defectueux-use-ou-ne-fonctionne.html",
+        "scripts/gen-realisations.mjs"
+      ]
+    },
+    {
+      "sha": "53933a3e",
+      "subject": "fix(affichage): route tous les liens réalisation vers /realisations/<slug> (pages propres) — répare liens listing 404 (realisation/slug.html) + showcases pointant vers l'ancienne page emoji",
+      "files": [
+        "admin-pro/calendar.html",
+        "admin-pro/magic.html",
+        "admin-pro/publications.html",
+        "avant-apres.html",
+        "chauffagiste-saint-omer.html",
+        "electricien-saint-omer.html",
+        "menuisier-saint-omer.html",
+        "plombier-saint-omer.html",
+        "realisation.html",
+        "realisations.html",
+        "serrurier-saint-omer.html",
+        "travaux-saint-omer.html",
+        "vitrier-saint-omer.html"
+      ]
+    },
+    {
+      "sha": "9eae687c",
+      "subject": "fix(affichage): logo header width:auto sur realisation/avant-apres/temoignages (était étiré 1080x48 = bande bleue déformée)",
+      "files": [
+        "avant-apres.html",
+        "realisation.html",
+        "temoignages.html"
+      ]
+    },
+    {
+      "sha": "9bafadb5",
+      "subject": "docs(release): cutover PROD VÉRIFIÉ (65fd1802) + résultats recette prod + 2 P2 backlog (401 stats, ville autocomplete)",
+      "files": [
+        "docs/RELEASE-CHECKLIST.md"
+      ]
+    }
+  ],
+  "excluded_commits": [
+    {
+      "sha": "44771708",
+      "subject": "Auto-push 2026-08-21 10:44 — 7 fichier(s)",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "814a911c",
+      "subject": "Auto-push 2026-08-21 10:37 — 1 fichier(s)",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "a11e2889",
+      "subject": "Auto-push 2026-08-20 17:05 — 1 fichier(s)",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "81360323",
+      "subject": "control-plane(CP-0016): outbox dédiée — runner site NON actif (plist placeholder), agent PID1107=click-and-clock (séparé), défauts runner listés, UNE action UI Netlify, activation gated (public=injection)",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "2afc229e",
+      "subject": "control: add launchd schedule for Claude runner",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "5df00a78",
+      "subject": "control: add local Claude inbox runner",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "58ff4406",
+      "subject": "control: CP-0016 finalize automation and remove human relay",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "1cae5085",
+      "subject": "control-plane(CP-0015): outbox — source unique validation (panneau Modifs+promote-prod retiré → CTA centre), preuves serveur",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "388e83b3",
+      "subject": "control: CP-0015 simplify validation UX to single source",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "dc6ded3f",
+      "subject": "control-plane(CP-0014): GO privé EXÉCUTÉ → finding décisif: privé casse le build Netlify (prouvé), repo restauré public. Action humaine exacte = autoriser app Netlify sur repo privé. Runner reste gated",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "0b6ab619",
+      "subject": "chore: trigger Netlify rebuild (repo repassé public, vérif lien deploy-preview)",
+      "reason": "fichiers non publiables"
+    },
+    {
+      "sha": "788655eb",
+      "subject": "control: CP-0014 direct GO private and continue",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "1a020ee1",
+      "subject": "control-plane(CP-0012): outbox dédiée — repo ADMIN/PUBLIC, privé faisable mais confirmation chat directe requise (autorisation dans commit ≠ parole directe) ; runner reste bloqué hors session interactive",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "8bc1a653",
+      "subject": "control: continue immediately from latest Claude outbox",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "ea8c5654",
+      "subject": "control: explicit user authorization to finalize privacy and runner",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "6f9697ff",
+      "subject": "control-plane: réponse outbox dédiée (reprise/finalisation) — re-contrôle 8/8 corrections PASS + non-régression centre 15/15 ancres (preuves réelles recette)",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "c9ad0ab7",
+      "subject": "control-plane(CP-0011): ACK + actions humaines EXACTES (repo private + lever blocage harness) ; audit en pause per CP-0011 ; runner-status site_work_state=PAUSED",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "141732f4",
+      "subject": "control: finalize runner immediately after repo private",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "9c2e5424",
+      "subject": "control: no idle while runner activation is gated",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "f0442915",
+      "subject": "docs(audit): rapport d'audit complet ultra-détaillé (177 pages, 0 P0/2 P1/12 P2/5 P3, corrections vérifiées recette, observations E2E/responsive)",
+      "reason": "fichiers non publiables"
+    },
+    {
+      "sha": "4a6c3c9c",
+      "subject": "control: make runner finalization priority one",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "1e1fa3a1",
+      "subject": "control: document runner blockers and continue audit",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "68485557",
+      "subject": "control-plane(CP-0007+CP-0008): ACK — runner build→DISABLED→PRIVATE→activer; runner-status reflète la réalité; nettoyage références inter-projets de l'outbox (isolation site)",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "1364c596",
+      "subject": "control-plane(CP-0006): dépendance bloquante documentée — classifier harness refuse la création du runner autonome (garde indépendante du GO verbal); variantes proposées",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "1d7de7a8",
+      "subject": "control: isolate site runner from click-and-clock",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "b7010be3",
+      "subject": "control: decide runner activation with privacy gate",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "20fb6fc5",
+      "subject": "control-plane(CP-0006): ACK + HOLD sécurité — runner autonome persistant = décision humaine Florian (injection repo public + neutralisation 2026-07-30). Constat: plist existant non chargé, cible click-and-clock",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "5a6c1b71",
+      "subject": "control: runner status must become reliable and observable",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "19dbd877",
+      "subject": "control: approve multi-agent full-site audit",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "88381a41",
+      "subject": "control-plane(CP-0001): P1 honnêteté paiement corrigé+vérifié (A-2026-001 full, A-2026-002 partiel), reste audit priorisé",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "d56bf533",
+      "subject": "control-plane(CP-0001): ACK CP-0003 (résolu+vérifié) + CP-0004 (audit total reçu, programme multi-phases amorcé)",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "1986d4cc",
+      "subject": "control-plane(CP-0001): KO wizard traité (funnel sans paiement, décision Florian), SHA 58a5766f",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "dcaa289a",
+      "subject": "control: launch full-site last-generation audit",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "bb24df63",
+      "subject": "merge: réconcilie integration (fixes KO, SHA pré-rebase) avec recette (commits ChatGPT b3bcfa9b/3ceda710 + fixes rebasés)",
+      "reason": "fichiers non publiables"
+    },
+    {
+      "sha": "e934ee30",
+      "subject": "control-plane(CP-0001): traitement KO recette (mojibake/doublon/contour) + wizard=gate Stripe TEST, SHA 6d939ee3",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "487376d1",
+      "subject": "control-plane(CP-0001): traitement KO recette (mojibake/doublon/contour) + wizard=gate Stripe TEST, SHA 6d939ee3",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "b3bcfa9b",
+      "subject": "control: fix broken recette validation overlay",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "3ceda710",
+      "subject": "control: prioritize Florian recette KO feedback",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "d75faa36",
+      "subject": "control-plane(CP-0001): fix CI déploiement Netlify (ignore CACHED_COMMIT_REF) + preuves recette A22 plomberie/élec/vitrerie/volets déployées",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "67406335",
+      "subject": "control-plane(CP-0001): MAJ outbox — A22 vitrerie(6)+volets(2)+backlog serrurerie, SHA d6eb9c46",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "090bba6d",
+      "subject": "control-plane(CP-0001): MAJ outbox — A22 électricité 8 cartes, SHA 853a98ac",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "69a950f7",
+      "subject": "control-plane(CP-0001): MAJ outbox — A22 plomberie 8 cartes, SHA e3707967",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "f85257ba",
+      "subject": "control-plane(CP-0001): MAJ outbox — A22 menuiserie(4)+chauffage(12), sécurité expo Netlify, vue technique centre, SHA 374e3e60",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "1129e47f",
+      "subject": "control-plane(CP-0001): MAJ outbox — chantier site repris (A22 menuiserie), gate clé Stripe LIVE, SHA d04db10c",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "f774436c",
+      "subject": "control-plane(CP-0001): ACK + audit repo + porte-entree au centre de validation ; poursuite LOT A menuiserie via /recette.html",
+      "reason": "control-plane subject"
+    },
+    {
+      "sha": "eec0393d",
+      "subject": "Merge branch 'recette' of https://github.com/floriian62500-code/site-help-confort into integration/lot1-lot2-vs-prod",
+      "reason": "fichiers non publiables"
+    },
+    {
+      "sha": "0754dab6",
+      "subject": "chore: bootstrap Claude-ChatGPT control-plane [skip ci]",
+      "reason": "fichiers non publiables"
+    }
+  ],
+  "files_promoted": [
+    "404.html",
+    "_redirects",
+    "a-propos.html",
+    "actualites.html",
+    "admin-pro/calendar.html",
+    "admin-pro/magic.html",
+    "admin-pro/publications.html",
+    "agence-dunkerque.html",
+    "agence-saint-omer.html",
+    "aides.html",
+    "assets/hc-map-zones.js",
+    "assets/hc-reserve-modal.js",
+    "assets/hc-review.js",
+    "assets/hc-widgets.js",
+    "avant-apres.html",
+    "blog-comment-detecter-fuite-eau-cachee.html",
+    "blog-cout-renovation-salle-de-bain.html",
+    "blog-debouchage-canalisation-furet-hydrocurage.html",
+    "blog-entretien-chaudiere-annuel-obligatoire.html",
+    "blog-fenetres-double-vitrage-pvc-alu-bois.html",
+    "blog-isolation-combles-aides-2026.html",
+    "blog-panne-electrique-disjoncteur-saute.html",
+    "blog-pmr-adapter-salle-de-bain-senior.html",
+    "blog-pompe-a-chaleur-air-eau-tout-savoir.html",
+    "blog-porte-claquee-cle-perdue-que-faire.html",
+    "blog-preparer-sa-maison-hiver-checklist.html",
+    "blog-remplacement-chaudiere-gaz-aides-2026.html",
+    "blog.html",
+    "carrieres.html",
+    "chauffagiste-boulogne-sur-mer.html",
+    "chauffagiste-calais.html",
+    "chauffagiste-coudekerque-branche.html",
+    "chauffagiste-dunkerque.html",
+    "chauffagiste-marck.html",
+    "chauffagiste-outreau.html",
+    "chauffagiste-saint-omer.html",
+    "chauffagiste-wimereux.html",
+    "contact.html",
+    "contrats-entretien.html",
+    "debouchage-canalisation.html",
+    "depannage-arques.html",
+    "depannage-bergues.html",
+    "depannage-boulogne-sur-mer.html",
+    "depannage-calais.html",
+    "depannage-coquelles.html",
+    "depannage-dunkerque.html",
+    "depannage-gravelines.html",
+    "depannage-longuenesse.html",
+    "depannage-saint-martin-lez-tatinghem.html",
+    "depannage-saint-omer.html",
+    "depannage-saint-pol-sur-mer.html",
+    "depannage-sangatte.html",
+    "devis-express.html",
+    "diagnostic-electrique.html",
+    "docs/ALERT-MONITORING.md",
+    "docs/AUDIT-A22-CARTES-METIERS.md",
+    "docs/AUDIT-MASTER.md",
+    "docs/RELEASE-CHECKLIST.md",
+    "docs/RELEASE-FLOW-PROPOSAL.md",
+    "electricien-boulogne-sur-mer.html",
+    "electricien-calais.html",
+    "electricien-dunkerque.html",
+    "electricien-saint-omer.html",
+    "entretien-chaudiere.html",
+    "espace-client.html",
+    "faq.html",
+    "fournisseur.html",
+    "garanties.html",
+    "guide-adaptation-pmr.html",
+    "guide-entretien-chaudiere.html",
+    "guide-fuite-eau.html",
+    "guide-mise-aux-normes-electriques.html",
+    "guides.html",
+    "index.html",
+    "maprimeadapt.html",
+    "mentions-legales.html",
+    "menuisier-dunkerque.html",
+    "menuisier-saint-omer.html",
+    "netlify.toml",
+    "nos-metiers.html",
+    "nos-prestations.html",
+    "nos-villes.html",
+    "notre-equipe.html",
+    "ouverture-porte-claquee.html",
+    "panne-chaudiere.html",
+    "partenaire.html",
+    "partenaires.html",
+    "plan-du-site.html",
+    "plombier-boulogne-sur-mer.html",
+    "plombier-calais.html",
+    "plombier-coudekerque-branche.html",
+    "plombier-coulogne.html",
+    "plombier-dunkerque.html",
+    "plombier-grande-synthe.html",
+    "plombier-guines.html",
+    "plombier-le-portel.html",
+    "plombier-marck.html",
+    "plombier-outreau.html",
+    "plombier-saint-martin-boulogne.html",
+    "plombier-saint-omer.html",
+    "plombier-teteghem.html",
+    "plombier-wimereux.html",
+    "pmr-dunkerque.html",
+    "pmr-saint-omer.html",
+    "prestations/changement-cylindre.html",
+    "prestations/chauffe-eau.html",
+    "prestations/coulissant-baie-vitree.html",
+    "prestations/debouchage.html",
+    "prestations/depannage-chaudiere.html",
+    "prestations/depannage-electrique.html",
+    "prestations/desembouage.html",
+    "prestations/fenetres-bois-alu-pvc.html",
+    "prestations/fenetres-completes.html",
+    "prestations/garde-corps-rampes.html",
+    "prestations/index.html",
+    "prestations/luminaire.html",
+    "prestations/mise-securite-vitrerie.html",
+    "prestations/ouverture-porte.html",
+    "prestations/parquet.html",
+    "prestations/portail-cloture.html",
+    "prestations/porte-claquee.html",
+    "prestations/porte-entree.html",
+    "prestations/porte-fermee-cle.html",
+    "prestations/porte-garage.html",
+    "prestations/ramonage.html",
+    "prestations/recherche-fuite.html",
+    "prestations/recherche-panne-elec.html",
+    "prestations/remplacement-chaudiere.html",
+    "prestations/remplacement-panneau-porte.html",
+    "prestations/reseaux-plomberie.html",
+    "prestations/salle-de-bain-pmr.html",
+    "prestations/salle-de-bain.html",
+    "prestations/sanitaire.html",
+    "prestations/tableau-electrique.html",
+    "prestations/vitrage-insert-poele.html",
+    "prestations/vitrage-simple-double-triple.html",
+    "prestations/vitrerie-panneau-porte.html",
+    "prestations/vmc.html",
+    "prestations/volet-roulant.html",
+    "pro.html",
+    "processus.html",
+    "realisation.html",
+    "realisations.html",
+    "realisations/cellier-travaux-de-plafond-reparation-peinture-de-finition.html",
+    "realisations/fourniture-dune-corniche-et-dun-caisson-blanc-renovation-de-murs-chez-notre-clie.html",
+    "realisations/intervention-realisee-par-help-confort-remplacement-dun-coulissant-de-facade.html",
+    "realisations/nouvelle-intervention-realisee-par-help-confort-saint-omer.html",
+    "realisations/nouvelle-renovation-de-salle-de-bain-realisee-par-help-confort.html",
+    "realisations/refection-complete-pour-une-nouvelle-ambiance-moderne-et-accueillante.html",
+    "realisations/remplacement-complet-dun-ensemble-de-boites-aux-lettres.html",
+    "realisations/remplacement-de-double-vitrage-apres-bris-de-glace.html",
+    "realisations/remplacement-de-double-vitrage-avec-croisillon-intervention-help-confort-saint-o.html",
+    "realisations/remplacement-de-menuiserie-renovation-de-piece-chez-notre-cliente.html",
+    "realisations/remplacement-de-mitigeur-evier-bec-long-douchette.html",
+    "realisations/remplacement-de-panneau-pvc-modele-surinam-3.html",
+    "realisations/remplacement-de-porte-de-garage-a-arques.html",
+    "realisations/remplacement-dun-bloc-porte-en-cave-help-confort-saint-omer.html",
+    "realisations/remplacement-dun-panneau-pvc-chez-notre-cliente-a-hazebrouck.html",
+    "realisations/remplacement-dune-porte-de-garage-basculante-manuelle.html",
+    "realisations/remplacement-dune-porte-dentree-bois-par-une-porte-dentree-pvc.html",
+    "realisations/renovation-dune-salle-de-bain-a-letage.html",
+    "realisations/vitre-dinsert-cassee.html",
+    "realisations/votre-double-vitrage-dans-la-salle-a-manger-est-fissure-embue-ou-moins-isolant.html",
+    "realisations/votre-double-vitrage-de-salle-de-bain-a-ete-endommage-suite-a-un-bris-de-glace.html",
+    "realisations/votre-insert-gaz-presente-un-vitrage-fissure-terni-ou-endommage.html",
+    "realisations/votre-panneau-de-porte-pvc-est-abime-fissure-ou-terni-par-le-temps.html",
+    "realisations/votre-porte-de-service-est-abimee-vetuste-ou-ne-ferme-plus-correctement.html",
+    "realisations/votre-soupape-de-securite-ou-votre-manometre-est-defectueux-use-ou-ne-fonctionne.html",
+    "recette.html",
+    "remplacement-chauffe-eau.html",
+    "reseau-help-confort.html",
+    "reset.html",
+    "robots.txt",
+    "scripts/gen-realisations.mjs",
+    "scripts/gen-sitemap-fn.mjs",
+    "serrurier-boulogne-sur-mer.html",
+    "serrurier-calais.html",
+    "serrurier-coudekerque-branche.html",
+    "serrurier-dunkerque.html",
+    "serrurier-marck.html",
+    "serrurier-outreau.html",
+    "serrurier-saint-omer.html",
+    "serrurier-wimereux.html",
+    "sinistres.html",
+    "sitemap-actus.xml",
+    "sitemap-index.xml",
+    "sitemap-pages.xml",
+    "sitemap.xml",
+    "styles.css",
+    "supabase/functions/sitemap/index.ts",
+    "tarifs.html",
+    "temoignages.html",
+    "travaux-dunkerque.html",
+    "travaux-saint-omer.html",
+    "urgence.html",
+    "vitrier-dunkerque.html",
+    "vitrier-saint-omer.html",
+    "volets-dunkerque.html",
+    "volets-saint-omer.html",
+    "zones-intervention.html"
+  ]
+}
