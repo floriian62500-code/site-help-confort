@@ -58,8 +58,8 @@ ok('rappel accueil : verrou explicite avant toute validation (un 2ᵉ envoi sort
 // L'ordre du fichier n'est pas l'ordre d'exécution : la fonction qui appelle submit-lead-v6 est
 // déclarée avant les gestionnaires qui l'utilisent. On vérifie donc, pour chaque envoi déclenché
 // par un clic, que le verrou est posé avant l'appel — dans le corps du gestionnaire.
-const envois = [...home.matchAll(/await\s+persistLeadToSupabase\(/g)].map((m) => m.index);
-const verrouPose = envois.every((i) => /\w+\.dataset\.sending\s*=\s*'1'/.test(home.slice(Math.max(0, i - 700), i)));
+const envois = [...home.matchAll(/functions\/v1\/submit-lead-v6|await\s+persistLeadToSupabase\(/g)].map((m) => m.index);
+const verrouPose = envois.every((i) => /\w+\.dataset\.sending\s*=\s*'1'/.test(home.slice(Math.max(0, i - 900), i)));
 ok('rappel accueil : le verrou est posé AVANT l’appel au serveur', envois.length > 0 && verrouPose);
 ok('rappel accueil : le verrou est levé dans les deux issues (succès et échec)',
   (home.match(/\w+\.dataset\.sending\s*=\s*'0'/g) || []).length >= 2);
