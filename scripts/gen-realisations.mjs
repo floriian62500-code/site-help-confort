@@ -184,13 +184,14 @@ for (const r of list) { writeFileSync(join(OUT, `${r.slug}.html`), page(r, list)
 // _redirects : règles statiques par slug AVANT le fallback JS
 const RP = join(ROOT, '_redirects');
 let rc = readFileSync(RP, 'utf8');
-rc = rc.replace(/\n# Réalisations pré-rendues[\s\S]*?(?=\n# Anciennes URLs|$)/, '\n'); // purge ancien bloc si relance
-const block = `\n# Réalisations pré-rendues statiques (contenu indexable dans le HTML initial) — auto-généré\n` +
-  slugs.map(s => `/realisations/${s} /realisations/${s}.html 200`).join('\n') + '\n';
-rc = rc.replace(/(# Anciennes URLs)/, block.trimStart() + '\n$1');
+rc = rc.replace(/\n*# Réalisations pré-rendues[\s\S]*?(?=\n# Anciennes URLs|$)/, ''); // purge ancien bloc si relance
+const block = `# Réalisations pré-rendues statiques (contenu indexable dans le HTML initial) — auto-généré\n` +
+  slugs.map(s => `/realisations/${s} /realisations/${s}.html 200`).join('\n');
+rc = rc.replace(/\n*(# Anciennes URLs)/, '\n\n' + block + '\n\n$1'); // idempotent : une relance redonne le meme fichier
 writeFileSync(RP, rc);
 // Manifeste des fiches réellement générées : les cartes du site ne pointent QUE vers ces fiches (sinon le fallback
 // /realisations/:slug → /realisation.html → /realisations.html recharge la liste : « le clic ne fait rien »).
-writeFileSync(join(OUT, 'index.json'), JSON.stringify({ generated: new Date().toISOString(), slugs: slugs.slice().sort() }, null, 1) + '\n');
+// Pas d'horodatage : une regeneration sans changement doit redonner le meme fichier (git date le commit).
+writeFileSync(join(OUT, 'index.json'), JSON.stringify({ slugs: slugs.slice().sort() }, null, 1) + '\n');
 console.log(`OK ${n} pages générées dans realisations/ · _redirects mis à jour (${slugs.length} règles) · manifeste realisations/index.json.`);
 }
