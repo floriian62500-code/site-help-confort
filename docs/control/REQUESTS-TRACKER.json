@@ -30,7 +30,7 @@
   "READY_FOR_FLORIAN_VISUAL"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-049",
+ "prochain_id": "REQ-20260926-050",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -1355,6 +1355,36 @@
    "human_gate": null,
    "blocked_by": null,
    "next_action": "Controle ChatGPT de la PR #46, puis merge.",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null,
+   "decide_par": null
+  },
+  {
+   "request_id": "REQ-20260926-049",
+   "title": "Bandeau legacy : le masque CSS n atteignait pas les visiteurs en cache, et le balisage restait dans 140 pages",
+   "priority": "P1",
+   "status": "READY_FOR_CONTROL",
+   "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-07-REGRESSION-TOPBAR.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-07",
+   "acceptance_criteria": [
+    "aucune page ne porte le balisage ni les regles du bandeau",
+    "la version des assets d en-tete correspond au fichier servi",
+    "une synchronisation future ne peut pas le ramener",
+    "une garde echoue si le bandeau revient"
+   ],
+   "evidence_required": [
+    "nombre de pages avec balisage, avant et apres",
+    "empreinte du css servi contre la version demandee par les pages",
+    "la garde jouee sur main (doit echouer) et sur le lot (doit passer)",
+    "mesures 1440 et 390 sur la preview"
+   ],
+   "latest_sha": "PR #49, branche fix/topbar-legacy (non fusionnee)",
+   "claude_outbox": "CLAUDE-2026-10-07-TOPBAR-NETTOYAGE.md",
+   "human_gate": "a-propos.html dit « une seconde agence a Dunkerque » : recit historique, arbitrage Florian. Et 76 pages nomment les deux villes dans leurs titres : compatible doctrine (zone d intervention), mais c est une decision de marque si vous voulez n y garder que Saint-Omer.",
+   "blocked_by": null,
+   "next_action": "Controle ChatGPT de la PR #49, puis merge et PROD_VERIFY.",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": null,
