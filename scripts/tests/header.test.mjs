@@ -45,7 +45,9 @@ ok('une seule rubrique active au plus par page', pages.every(p => ((rd(p).match(
 
 // 4. Styles : tout est confiné à l'en-tête (aucune règle ne fuit sur le reste des pages)
 const rules = css.replace(/\/\*[\s\S]*?\*\//g, '').replace(/@media[^{]+\{/g, '').split('}').map(r => r.split('{')[0].trim()).filter(Boolean);
-const leaks = rules.flatMap(r => r.split(',')).map(s => s.trim()).filter(s => s && !/^#hcHeader\b/.test(s) && !/^\.hc-crumb\b/.test(s) && !/^\.hc-skip-link\b/.test(s) && !/^html\.hc-menu-open\b/.test(s));
+// `.hc-topbar` est volontairement global : le bandeau legacy qu'il masque n'est pas dans l'en-tete.
+// C'est la seconde barriere, derriere le retrait du balisage (scripts/tests/topbar-legacy.test.mjs).
+const leaks = rules.flatMap(r => r.split(',')).map(s => s.trim()).filter(s => s && !/^#hcHeader\b/.test(s) && !/^\.hc-crumb\b/.test(s) && !/^\.hc-skip-link\b/.test(s) && !/^\.hc-topbar\b/.test(s) && !/^html\.hc-menu-open\b/.test(s));
 ok('styles : chaque sélecteur est préfixé #hcHeader (hors fil d’Ariane, lien d’évitement et verrou de défilement)', leaks.length === 0, leaks.slice(0, 5).join(' | '));
 ok('gabarit : référence 1440 = barre 165 / logo 140, réduite 111 / 90 ; burger sous 1280 ; mobile compact', /#hcHeader\{--hch-row:165px;--hch-row-s:111px;--hch-logo:140px;--hch-logo-s:90px/.test(css) && /@media \(min-width:1280px\)\{#hcHeader \.hc-nav\{display:flex\}\}/.test(css) && /@media \(max-width:768px\)\{#hcHeader\{--hch-row:95px/.test(css));
 ok('défilement sans déplacement du contenu : boîte collante de hauteur constante, seule la barre se réduit', /#hcHeader\.hc-header\{position:sticky;[^}]*height:var\(--hch-row\)/.test(css) && /#hcHeader\.is-scrolled \.hc-header-row\{height:var\(--hch-row-s\)/.test(css) && !/#hcHeader\.is-scrolled\.hc-header\{[^}]*height/.test(css));

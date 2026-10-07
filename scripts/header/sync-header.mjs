@@ -105,9 +105,40 @@ export function transform(p, src) {
     h = h.slice(0, skip.index + skip[0].length) + '\n' + hdr + '\n' + h.slice(skip.index + skip[0].length);
     mode = 'ajout';
   }
+  // Bandeau orange legacy `.hc-topbar` (Saint-Omer · Dépan'Audo · Dunkerque · horaires) : retiré du
+// site le 2026-09-14, revenu avec les pages non synchronisées, masqué en urgence par la feuille
+// d'en-tête (PR #45). On retire le balisage ET ses règles mortes à chaque synchronisation, pour
+// qu'une génération future ne puisse pas le ramener. Le masque CSS reste, en seconde barrière.
+function sansTopbarLegacy(h) {
+  // 1. le bloc <div class="hc-topbar" ...> ... </div>, par comptage d'imbrication
+  for (;;) {
+    const i = h.search(/<div\s+[^>]*class="[^"]*\bhc-topbar\b[^"]*"/);
+    if (i < 0) break;
+    let j = h.indexOf('>', i);
+    if (j < 0) break;
+    let prof = 1, k = j + 1;
+    while (k < h.length && prof > 0) {
+      const o = h.indexOf('<div', k), f = h.indexOf('</div>', k);
+      if (f < 0) break;
+      if (o >= 0 && o < f) { prof++; k = o + 4; } else { prof--; k = f + 6; }
+    }
+    if (prof !== 0) break;            // balisage non équilibré : on ne touche à rien
+    h = h.slice(0, i) + h.slice(k);
+  }
+  // 2. ses règles, devenues mortes. Un <style> qui ne contenait que ça disparaît.
+  h = h.replace(/<style\b([^>]*)>([\s\S]*?)<\/style>/g, (bloc, attrs, css) => {
+    if (!/\.hc-topbar\b/.test(css)) return bloc;
+    const net = css.replace(/\.hc-topbar[^{};]*\{[^}]*\}/g, '')
+                   .replace(/\(max-width:\s*\d+px\)\s*\{\s*\}/g, '');
+    return net.trim() ? `<style${attrs}>${net}</style>` : '';
+  });
+  return h;
+}
+
   // Anciens styles « critiques » d'en-tête et anciens scripts d'en-tête
   h = h.replace(/(\/\*[^*]*CSS critique[^*]*\*\/\s*)?<style id="hc-critical-header">[\s\S]*?<\/style>\s*/g, '');
   h = h.replace(/<script\b(?![^>]*\bsrc=)([^>]*)>([\s\S]*?)<\/script>\s*/g, (m, attrs, js) => OLD_SCRIPTS.has(norm(js)) ? '' : m);
+  h = sansTopbarLegacy(h);
   // Feuille + script uniques (idempotent : on retire les anciennes références avant de reposer les nouvelles)
   h = h.replace(/<link rel="stylesheet" href="\/assets\/hc-header\.css[^"]*">\s*/g, '').replace(/<script src="\/assets\/hc-header\.js[^"]*" defer><\/script>\s*/g, '');
   h = sansPromo(h);
