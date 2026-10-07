@@ -15,7 +15,8 @@
  *   node scripts/tests/depot-propre.test.mjs
  */
 import { execFileSync } from 'node:child_process';
-import { readdirSync, readFileSync } from 'node:fs';
+import { readdirSync, readFileSync, mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -98,26 +99,49 @@ ok(`aucun secret en clair dans les ${suivis.length} fichiers suivis`, trouvaille
 // ── Rien ne doit salir le dépôt en s'exécutant : ni un test, ni un simple import de script.
 // Le 2026-09-25, un module écrivait son fichier généré au seul fait d'être importé ; le démon de
 // sauvegarde committait ce bruit à chaque exécution des tests.
-const etatGit = () => execFileSync('git', ['status', '--porcelain'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 1 << 26 });
-const avant = etatGit();
-
+// Les sondes s'exécutent dans une COPIE JETABLE du dépôt, jamais ici. Avant le 2026-10-07, cette
+// garde jouait chaque module et chaque suite dans l'arbre de travail et ne restaurait rien : la
+// faire tourner laissait 111 pages de la racine modifiées, et réécrivait 6 pages de `admin-pro/`
+// en cassant des sélecteurs CSS composés. La garde qui cherche ce qui salit le dépôt le salissait.
+// La copie part de HEAD : une modification non committée n'est pas vue par les sondes, et c'est
+// voulu — on teste ce que le dépôt contient, pas l'état de la table de travail.
 const modules = suivis.filter((f) => /^scripts\/.*\.mjs$/.test(f) && !/\.test\.mjs$/.test(f));
-const ecrivains = [];
-for (const m of modules) {
-  try { execFileSync(process.execPath, ['-e', `import(${JSON.stringify(join(ROOT, m))}).catch(() => {})`], { cwd: ROOT, stdio: 'ignore', timeout: 20000 }); }
-  catch { /* un module qui refuse de s'importer n'écrit rien : ce n'est pas le sujet ici */ }
-  if (etatGit() !== avant) { ecrivains.push(m); break; }
-}
-ok(`importer un script ne modifie aucun fichier du dépôt (${modules.length} modules)`,
-  ecrivains.length === 0, ecrivains.join(', ') + ' a modifié le dépôt au simple import');
-
 const tests = suivis.filter((f) => /^scripts\/tests\/.*\.test\.mjs$/.test(f) && !f.endsWith('depot-propre.test.mjs'));
-const salissants = [];
-for (const t of tests) {
-  try { execFileSync(process.execPath, [join(ROOT, t)], { cwd: ROOT, stdio: 'ignore', timeout: 60000 }); } catch { /* un test rouge reste un test propre */ }
-  if (etatGit() !== avant) { salissants.push(t); break; }
+const ecrivains = [], salissants = [];
+let sondeImpossible = null;
+const bac = mkdtempSync(join(tmpdir(), 'hc-depot-propre-'));
+const SONDE = join(bac, 'copie');
+try {
+  execFileSync('git', ['worktree', 'add', '--detach', '--quiet', SONDE, 'HEAD'], { cwd: ROOT, stdio: 'ignore' });
+  const etat = () => execFileSync('git', ['status', '--porcelain'], { cwd: SONDE, encoding: 'utf8', maxBuffer: 1 << 26 });
+  // La copie est jetable : on la remet d'aplomb après chaque sonde, donc on liste TOUS les
+  // fautifs au lieu de s'arrêter au premier.
+  const remettre = () => {
+    execFileSync('git', ['checkout', '--quiet', '--', '.'], { cwd: SONDE, stdio: 'ignore' });
+    execFileSync('git', ['clean', '-qfd'], { cwd: SONDE, stdio: 'ignore' });
+  };
+  const propre = etat();
+  for (const m of modules) {
+    try { execFileSync(process.execPath, ['-e', `import(${JSON.stringify(join(SONDE, m))}).catch(() => {})`], { cwd: SONDE, stdio: 'ignore', timeout: 20000 }); }
+    catch { /* un module qui refuse de s'importer n'écrit rien : ce n'est pas le sujet ici */ }
+    if (etat() !== propre) { ecrivains.push(m); remettre(); }
+  }
+  for (const t of tests) {
+    try { execFileSync(process.execPath, [join(SONDE, t)], { cwd: SONDE, stdio: 'ignore', timeout: 60000 }); }
+    catch { /* un test rouge reste un test propre */ }
+    if (etat() !== propre) { salissants.push(t); remettre(); }
+  }
+} catch (e) {
+  sondeImpossible = String(e && e.message || e).split('\n')[0].slice(0, 120);
+} finally {
+  try { execFileSync('git', ['worktree', 'remove', '--force', SONDE], { cwd: ROOT, stdio: 'ignore' }); } catch { /* deja parti */ }
+  rmSync(bac, { recursive: true, force: true });
 }
-ok(`aucun test n’écrit dans le dépôt (${tests.length} fichiers joués)`, salissants.length === 0, salissants.join(', '));
+
+ok(`importer un script ne modifie aucun fichier du dépôt (${modules.length} modules)`,
+  !sondeImpossible && ecrivains.length === 0, sondeImpossible ? 'sonde impossible : ' + sondeImpossible : ecrivains.join(', ') + ' écrit au simple import');
+ok(`aucun test n’écrit dans le dépôt (${tests.length} fichiers joués)`,
+  !sondeImpossible && salissants.length === 0, sondeImpossible ? 'sonde impossible : ' + sondeImpossible : salissants.join(', '));
 
 
 // ── Ce qui est interne ne doit pas être servi.
