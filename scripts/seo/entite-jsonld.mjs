@@ -36,6 +36,7 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { pathToFileURL as __versUrl } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const CHECK = process.argv.includes('--check');
@@ -71,6 +72,11 @@ function parcourir(o, fn) {
 // « Plus complet » : d'abord le nombre de champs, puis la taille écrite. Départage stable.
 const poids = (v) => (v && typeof v === 'object' ? Object.keys(v).length * 1000 : 0) + JSON.stringify(v ?? '').length;
 
+
+// Ce fichier exporte ETABLISSEMENT (lu par seo-structure.test.mjs et entite-jsonld-preuve.mjs).
+// Tout ce qui suit est l'outil en ligne de commande : importe, il ne doit rien ecrire.
+const __appelDirect = !!process.argv[1] && import.meta.url === __versUrl(process.argv[1]).href;
+if (__appelDirect) {
 let modifiees = 0, idAjoutes = 0, champsAlignes = 0;
 const restant = [];
 
@@ -146,4 +152,5 @@ if (CHECK) {
   console.log('✅ entité JSON-LD alignée sur toutes les pages (identifiant commun, mêmes valeurs)');
 } else {
   console.log(`entité JSON-LD : ${modifiees} page(s) mise(s) à jour · ${idAjoutes} identifiant(s) ajouté(s) · ${champsAlignes} champ(s) aligné(s)`);
+}
 }

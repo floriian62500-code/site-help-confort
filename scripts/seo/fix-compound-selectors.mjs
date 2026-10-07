@@ -18,6 +18,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { pathToFileURL as __versUrl } from 'node:url';
+// Outil en ligne de commande : importe (par une suite de tests, par un autre script), il ne doit
+// rien faire. Sans cette garde, un simple import reecrivait des pages du depot.
+const __appelDirect = !!process.argv[1] && import.meta.url === __versUrl(process.argv[1]).href;
+if (__appelDirect) {
+
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const CHECK = process.argv.includes('--check');
 const LIST = process.argv.includes('--list');
@@ -123,3 +129,4 @@ console.log(total
   ? (CHECK || LIST ? '❌ ' + total + ' sélecteur(s) cassé(s) sur ' + pages + ' page(s)' : '✅ ' + total + ' sélecteur(s) rétabli(s) sur ' + pages + ' page(s)')
   : '✅ aucun sélecteur descendant cassé');
 process.exit((CHECK && total) ? 1 : 0);
+}

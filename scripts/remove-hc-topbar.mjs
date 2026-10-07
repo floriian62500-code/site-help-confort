@@ -7,6 +7,12 @@
 import { readdirSync, statSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
+import { pathToFileURL as __versUrl } from 'node:url';
+// Outil en ligne de commande : importe (par une suite de tests, par un autre script), il ne doit
+// rien faire. Sans cette garde, un simple import reecrivait des pages du depot.
+const __appelDirect = !!process.argv[1] && import.meta.url === __versUrl(process.argv[1]).href;
+if (__appelDirect) {
+
 const DRY = process.argv.includes('--dry');
 const SKIP = new Set(['node_modules', '.git', '__pycache__', 'logs', 'admin-pro', 'admin']);
 
@@ -55,3 +61,4 @@ for (const f of files) {
   changed++;
 }
 console.log(`\n${DRY ? '[DRY] ' : ''}hc-topbar retiré : ${changed} page(s) · ${skipped} sans bandeau`);
+}
