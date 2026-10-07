@@ -26,14 +26,13 @@
       '<p class="hcs-kicker"><i aria-hidden="true"></i>Avant l’hiver</p>' +
       '<h2 id="hcSeasonTitle"><span class="hcs-long">Entretien et ramonage : préparez votre chauffage</span>' +
       '<span class="hcs-court">Entretien &amp; ramonage</span></h2>' +
-      '<p class="hcs-sub">Chaudière, poêle ou insert : l’entretien annuel par nos techniciens, ' +
-      'attestation ou certificat de ramonage remis.</p>' +
+      '<p class="hcs-sub">Entretien de chaudière et ramonage : intervention par nos techniciens, ' +
+      'attestation ou certificat remis selon la prestation.</p>' +
       '<div class="hcs-actions">' +
         '<a class="hcs-cta" href="/chauffagiste-saint-omer.html#entretien" data-hc-promo-fam="chaudiere">' +
           'Entretien chaudière <span aria-hidden="true">→</span></a>' +
         '<div class="hcs-links">' +
-          '<a class="hcs-link" href="/chauffagiste-saint-omer.html#poele-insert" data-hc-promo-fam="poele">Poêle ou insert</a>' +
-          '<a class="hcs-link" href="/chauffagiste-saint-omer.html#ramonage" data-hc-promo-fam="ramonage">Ramonage</a>' +
+          '<a class="hcs-link" href="/prestations/ramonage.html" data-hc-promo-fam="ramonage">Ramonage</a>' +
         '</div>' +
       '</div>';
     document.body.appendChild(el);
