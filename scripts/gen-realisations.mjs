@@ -8,12 +8,19 @@ import { writeFileSync, readFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
+import { createHash } from 'node:crypto';
 const { isRecruitment } = createRequire(import.meta.url)('../assets/hc-realisations.js'); // annonce de recrutement : pas de fiche chantier
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'realisations');
 const SUPA = 'https://btcbjwqiivhpwoszomhg.supabase.co';
 const SITE = 'https://depan59-62.fr';
+// Encart saisonnier : present sur toutes les pages publiques (PR #38). Sans ces deux balises,
+// chaque regeneration le retirerait des fiches deja en ligne.
+const sha10 = (f) => createHash('sha256').update(readFileSync(join(ROOT, f))).digest('hex').slice(0, 10);
+const PROMO = `<link rel="stylesheet" href="/assets/hc-promo-saison.css?v=${sha10('assets/hc-promo-saison.css')}">
+<script src="/assets/hc-promo-saison.js?v=${sha10('assets/hc-promo-saison.js')}" defer></script>`;
+
 const PHONE = '03 66 10 01 34', TEL = '+33366100134';
 
 const METIERS = {
@@ -28,6 +35,15 @@ const METIERS = {
   menuiserie:  { label: 'Menuiserie',  page: 'travaux-saint-omer.html',      svc: 'Menuiserie' },
   volets:      { label: 'Volets',      page: 'volets-saint-omer.html',       svc: 'Volets roulants' },
 };
+// Classement corrige a la main : la base renvoie un metier faux pour ces publications.
+// Sans ce tableau, chaque regeneration ecrase la correction (c'est arrive avec la PR #39).
+// Le correctif de fond est dans la donnee, cote back-office.
+const METIER_CORRIGE = {
+  'remplacement-de-la-serrurerie-sur-porte-dentree': 'serrurerie',
+  'remplacement-de-parquet-massif': 'rénovation',
+  'avant-lhiver-pensez-a-lentretien-de-votre-chauffage': 'chauffage',
+};
+const metierDe = r => METIER_CORRIGE[r && r.slug] || (r && r.metier);
 const metierOf = m => METIERS[String(m||'').toLowerCase()] || { label: 'Travaux', page: 'travaux-saint-omer.html', svc: 'Travaux' };
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -74,7 +90,7 @@ const FOOTER = `<footer style="background:linear-gradient(180deg,#0A1428,#060E1D
 const HEAD_CSS = `.real-page{max-width:960px;margin:0 auto;padding:28px clamp(16px,4vw,40px) 40px}.real-back{display:inline-flex;align-items:center;gap:6px;font-size:.86rem;color:#0DA0CF;font-weight:600;text-decoration:none;margin-bottom:16px}.real-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}.real-tag{padding:5px 12px;border-radius:999px;font-size:.78rem;font-weight:700}.real-tag.metier{background:rgba(13,160,207,.1);color:#0DA0CF}.real-tag.ville{background:rgba(255,107,26,.1);color:#FF6B1A}.real-tag.date{background:#F5F8FB;color:#475569}.real-h1{font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.7rem,4vw,2.4rem);font-weight:700;color:#0A1428;line-height:1.18;margin:0 0 14px}.real-lead{font-size:1.05rem;color:#475569;line-height:1.6;margin:0 0 24px;max-width:760px}.real-photo{border-radius:16px;overflow:hidden;background:#F5F8FB;box-shadow:0 8px 24px rgba(10,20,40,.08);margin-bottom:28px}.real-photo img{width:100%;height:auto;display:block;aspect-ratio:16/10;object-fit:cover}.real-grid{display:grid;grid-template-columns:1.7fr 1fr;gap:30px;align-items:start}.real-body{font-size:1rem;color:#0A1428;line-height:1.75}.real-body p{margin:0 0 14px}.real-side{position:sticky;top:80px;background:#fff;border:1px solid #E5EDF3;border-radius:14px;padding:20px}.real-side h2{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#475569;margin:0 0 12px}.real-side-info div{font-size:.88rem;color:#0A1428;margin-bottom:8px}.real-side-info span{display:block;color:#475569;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;font-weight:600}.real-cta{display:flex;flex-direction:column;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid #E5EDF3}.real-cta a{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:10px;font-weight:700;font-size:.92rem;text-decoration:none}.real-cta .p{background:#FF6B1A;color:#fff}.real-cta .d{background:#0DA0CF;color:#fff}.real-similar{margin-top:44px;padding-top:32px;border-top:1px solid #E5EDF3}.real-similar h2{font-family:'Playfair Display',Georgia,serif;font-size:1.35rem;color:#0A1428;margin:0 0 16px}.real-similar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}.real-sc{display:block;border:1px solid #E5EDF3;border-radius:12px;overflow:hidden;text-decoration:none;color:inherit}.real-sc img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}.real-sc div{padding:11px;font-size:.9rem;font-weight:700;color:#0A1428;line-height:1.35}@media(max-width:780px){.real-grid{grid-template-columns:1fr}.real-side{position:static}}`;
 
 function page(r, all) {
-  const m = metierOf(r.metier);
+  const m = metierOf(metierDe(r));
   const ville = r.ville || 'Saint-Omer';
   const title = cleanTitle(r.title);
   const h1 = title;
@@ -84,7 +100,7 @@ function page(r, all) {
   const date = (r.date_intervention || r.published_at || '').slice(0,10);
   const body = paragraphs(r.description_long || r.description || '');
   const bodyHtml = body.map(p => `<p>${esc(p)}</p>`).join('\n') || `<p>${esc(desc)}</p>`;
-  const similar = all.filter(x => x.slug !== r.slug && String(x.metier).toLowerCase() === String(r.metier).toLowerCase()).slice(0,3);
+  const similar = all.filter(x => x.slug !== r.slug && String(metierDe(x)).toLowerCase() === String(metierDe(r)).toLowerCase()).slice(0,3);
   const similarHtml = similar.length ? `<section class="real-similar"><h2>Autres réalisations en ${esc(m.label.toLowerCase())}</h2><div class="real-similar-grid">${similar.map(s => `<a class="real-sc" href="/realisations/${esc(s.slug)}">${s.image_after?`<img src="${esc(s.image_after)}" alt="${esc(cleanTitle(s.title))}" loading="lazy">`:''}<div>${esc(cleanTitle(s.title))}</div></a>`).join('')}</div></section>` : '';
 
   const ld = {
@@ -122,6 +138,7 @@ ${img?`<meta property="og:image" content="${esc(img)}">`:''}
 <style>*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,sans-serif;color:#0A1428;background:#fff}a{color:#0DA0CF}${HEAD_CSS}</style>
 <script type="application/ld+json">${JSON.stringify(ld)}</script>
 <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
+${PROMO}
 </head><body>
 ${HEADER}
 <main class="real-page">
