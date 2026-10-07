@@ -152,8 +152,11 @@ ok(`aucun test n’écrit dans le dépôt (${tests.length} fichiers joués)`,
 // travail de la racine étaient servis.
 const redirects = readFileSync(join(ROOT, '_redirects'), 'utf8');
 const bloque = (chemin) => new RegExp('^' + chemin.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\\\*/g, '\\*') + '\\s+\\S+\\s+404!', 'm').test(redirects);
+// `/admin/*` ne doit PAS etre bloque : c'est le back-office Decap, lie depuis actualites.html et
+// realisations.html (« Connectez-vous au back-office »), et il lit son propre config.yml au
+// chargement. Le bloquer retirerait l'interface d'edition. Il reste hors des moteurs par robots.txt.
 const INTERNES = ['/docs/*', '/scripts/*', '/supabase/*', '/partials/*', '/tools/*', '/logs/*',
-                  '/.github/*', '/.autopush/*', '/secrets/*', '/admin/*',
+                  '/.github/*', '/.autopush/*', '/secrets/*',
                   '/admin-pro/audits/*', '/admin-pro/scripts/*'];
 const nonBloques = INTERNES.filter((c) => !bloque(c));
 ok(`les dossiers internes sont tous bloqués (${INTERNES.length} surveillés)`, nonBloques.length === 0, nonBloques.join(', '));
