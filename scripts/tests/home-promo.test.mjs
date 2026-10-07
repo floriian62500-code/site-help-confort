@@ -24,8 +24,13 @@ console.log('\nENCART SAISONNIER — PRÉSENT PARTOUT, NON FERMABLE\n');
 const mod = (js.match(/el\.innerHTML =([\s\S]*?);\n/) || [''])[0];
 const styleFlot = (css.match(/\.hcs-flot\{[^}]*\}/) || [''])[0];
 
-ok('l’encart est produit une seule fois, et ne remplace pas « Que souhaitez-vous faire ? »',
-  !!mod && (js.match(/id = 'entretien-saison'/g) || []).length === 1 && /Que souhaitez-vous faire \?/.test(h));
+// Le bloc d'aide a la decision de l'accueil doit survivre a l'encart. On verifie le bloc, pas son
+// titre : « Que souhaitez-vous faire ? » a ete reecrit en « Quel est votre besoin ? » le 2026-09-27
+// (reformulation volontaire, commit 5cf82c11 et suivants). Un test qui fige une formulation se
+// casse a chaque relecture editoriale, et ne protege rien de plus.
+const blocDecision = /class="mq-head"/.test(h) && /class="mq-grid"/.test(h) && (h.match(/class="mq-card /g) || []).length >= 3;
+ok('l’encart est produit une seule fois, et ne remplace pas le bloc d’aide à la décision de l’accueil',
+  !!mod && (js.match(/id = 'entretien-saison'/g) || []).length === 1 && blocDecision);
 ok('il ne vit plus dans une page : ni section dans le flux, ni copie en dur dans l’accueil',
   !/<section class="hc-season"/.test(h) && !/hcs-flot/.test(h) && !/id="entretien-saison"/.test(h));
 ok('il est réellement flottant : position fixe, au-dessus du contenu, et il ne pousse rien',
