@@ -30,7 +30,7 @@
   "READY_FOR_FLORIAN_VISUAL"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-044",
+ "prochain_id": "REQ-20260926-047",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -1220,11 +1220,91 @@
     "git status apres trois executions",
     "verdicts de la suite de tests, reference contre lot"
    ],
-   "latest_sha": "PR #42, branche fix/realisations-redirects-idempotent (non fusionnee)",
+   "latest_sha": "a5cf4fa28e41e09d2e80bff9cdd8a458eb21e52d (commit de fusion dans main, PR #42)",
    "claude_outbox": "CLAUDE-2026-10-07-REQ-042-PROD-VERIFY.md",
    "human_gate": null,
    "blocked_by": null,
-   "next_action": "Controle ChatGPT de la PR #42, puis merge par Florian.",
+   "next_action": "Cloture par Florian ou par le controle ChatGPT.",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": "Le manifeste servi en production ne porte plus d horodatage ; trois executions du generateur laissent l arbre propre.",
+   "decide_par": null
+  },
+  {
+   "request_id": "REQ-20260926-044",
+   "title": "En-tete unifie : 27 en-tetes differents sur les pages de la racine, et les assets que le depot reclame n etaient nulle part",
+   "priority": "P1",
+   "status": "READY_FOR_CONTROL",
+   "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-07-REQ-044-EN-TETE-UNIQUE.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-07",
+   "acceptance_criteria": [
+    "toutes les pages publiques portent le meme en-tete, une seule feuille et un seul script",
+    "la rubrique active correspond a la page",
+    "une regeneration des fiches ne defait pas l en-tete",
+    "aucune page ne deborde a 1440 ni a 390, menu mobile accessible"
+   ],
+   "evidence_required": [
+    "scripts/tests/header.test.mjs vert",
+    "les 29 autres suites inchangees entre main et le lot",
+    "mesures 1440 et 390 sur la preview",
+    "perimetre par famille de dossier"
+   ],
+   "latest_sha": "PR #43, branche feat/en-tete-unique (non fusionnee)",
+   "claude_outbox": "CLAUDE-2026-10-07-REQ-044-EN-TETE-UNIQUE.md",
+   "human_gate": "La barre au-dessus de l en-tete (.hc-topbar, 139 pages, 7 balisages) : la faire entrer dans le partiel ou la retirer. Elle affiche les deux agences.",
+   "blocked_by": null,
+   "next_action": "Controle ChatGPT de la PR #43, puis merge par Florian et PROD_VERIFY.",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null,
+   "decide_par": null
+  },
+  {
+   "request_id": "REQ-20260926-045",
+   "title": "La garde d hygiene du depot salit le depot en s executant, et casse 6 pages du back-office",
+   "priority": "P1",
+   "status": "READY_FOR_CONTROL",
+   "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-07-REQ-044-EN-TETE-UNIQUE.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-07",
+   "acceptance_criteria": [
+    "jouer la suite de tests ne modifie aucun fichier du depot",
+    "les selecteurs CSS composes des pages admin-pro ne sont pas reecrits"
+   ],
+   "evidence_required": [
+    "git status apres execution sur main nu",
+    "diff des pages admin-pro touchees"
+   ],
+   "latest_sha": "constat sur main a5cf4fa2, aucun correctif ecrit",
+   "claude_outbox": "CLAUDE-2026-10-07-REQ-044-EN-TETE-UNIQUE.md",
+   "human_gate": null,
+   "blocked_by": null,
+   "next_action": "Lot dedie : la garde doit restaurer ce que ses sondes ecrivent, ou sonder dans une copie jetable.",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null,
+   "decide_par": null
+  },
+  {
+   "request_id": "REQ-20260926-046",
+   "title": "Des dossiers internes sont servis en production : aucun des 12 surveilles n a de regle de blocage",
+   "priority": "P1",
+   "status": "READY_FOR_CONTROL",
+   "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-07-REQ-044-EN-TETE-UNIQUE.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-07",
+   "acceptance_criteria": [
+    "les 12 dossiers internes repondent 404 sur depan59-62.fr"
+   ],
+   "evidence_required": [
+    "statut HTTP d un fichier temoin par dossier, avant et apres"
+   ],
+   "latest_sha": "constat sur main a5cf4fa2 ; la PR #43 n ajoute la regle que pour /partials/*",
+   "claude_outbox": "CLAUDE-2026-10-07-REQ-044-EN-TETE-UNIQUE.md",
+   "human_gate": "Verifier qu aucun chemin bloque n est utilise par une page publique avant d appliquer les 404!.",
+   "blocked_by": null,
+   "next_action": "Lot dedie : ajouter les regles 404! manquantes dans _redirects, puis PROD_VERIFY.",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": null,
