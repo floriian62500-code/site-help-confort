@@ -1,14 +1,14 @@
 # 🖼️ Audit images hot-linkées CDN tiers — sonde #13
 
-_Généré le 2026-10-06 09:52_
+_Généré le 2026-10-07 09:58_
 
 - Pages HTML scannées : **116**
-- Fichiers JS scannés : **39**
-- Hosts uniques détectés : **75**
+- Fichiers JS scannés : **40**
+- Hosts uniques détectés : **76**
   - Self (HC) : 1
   - Supabase projet : 1
   - CDN tolérés (CSP-whitelistés) : 7
-  - **Externes non whitelistés** : **66**
+  - **Externes non whitelistés** : **67**
 
 ## ⚠️ Hosts externes non whitelistés
 
@@ -25,14 +25,6 @@ Fichiers concernés : `partenaires.html`
 Fichiers concernés : `partenaires.html`
 
 - `partenaires.html` → `https://bricard.com/particuliers/`
-
-→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
-
-### 📄 `carto.com` — 1 occurrence(s) (0 image(s))
-
-Fichiers concernés : `assets/hc-map-zones.js`
-
-- `assets/hc-map-zones.js` → `https://carto.com/attributions`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
@@ -447,6 +439,14 @@ Fichiers concernés : `mentions-legales.html`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
+### 📄 `www.openstreetmap.org` — 1 occurrence(s) (0 image(s))
+
+Fichiers concernés : `assets/hc-map-zones.js`
+
+- `assets/hc-map-zones.js` → `https://www.openstreetmap.org/copyright`
+
+→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
+
 ### 📄 `www.riouglass.com` — 1 occurrence(s) (0 image(s))
 
 Fichiers concernés : `partenaires.html`
@@ -552,12 +552,19 @@ Fichiers concernés : `partenaires.html`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
-### 🖼️ `{s}.basemaps.cartocdn.com` — 2 occurrence(s) (2 image(s))
+### 🖼️ `{s}.basemaps.cartocdn.com` — 1 occurrence(s) (1 image(s))
 
-Fichiers concernés : `assets/hc-map-zones.js`, `assets/hc-mini-zone.js`
+Fichiers concernés : `assets/hc-mini-zone.js`
 
-- `assets/hc-map-zones.js` → `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`
 - `assets/hc-mini-zone.js` → `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`
+
+→ **Recommandation** : télécharger les assets critiques dans `/images/` pour garantir le contrôle, le cache et la conformité CSP.
+
+### 🖼️ `{s}.tile.openstreetmap.org` — 1 occurrence(s) (1 image(s))
+
+Fichiers concernés : `assets/hc-map-zones.js`
+
+- `assets/hc-map-zones.js` → `https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`
 
 → **Recommandation** : télécharger les assets critiques dans `/images/` pour garantir le contrôle, le cache et la conformité CSP.
 
@@ -572,11 +579,11 @@ Fichiers concernés : `assets/hc-map-zones.js`, `assets/hc-mini-zone.js`
 | `api-adresse.data.gouv.fr` | ⚪ trusted | 60 | 0 |
 | `bricard.com` | 🔴 external | 1 | 0 |
 | `btcbjwqiivhpwoszomhg.supabase.co` | 🔵 supabase | 127 | 47 |
-| `carto.com` | 🔴 external | 1 | 0 |
 | `cdn.jsdelivr.net` | ⚪ trusted | 68 | 0 |
 | `comap.aalberts-hfc.com` | 🔴 external | 1 | 0 |
 | `connect.facebook.net` | ⚪ trusted | 1 | 0 |
 | `coretecfloors.com` | 🔴 external | 1 | 0 |
+| `depan59-62.fr` | 🟢 self | 231 | 116 |
 | `fonts.googleapis.com` | ⚪ trusted | 240 | 0 |
 | `fonts.gstatic.com` | ⚪ trusted | 95 | 0 |
 | `fr.indeed.com` | 🔴 external | 1 | 0 |
@@ -603,7 +610,6 @@ Fichiers concernés : `assets/hc-map-zones.js`, `assets/hc-mini-zone.js`
 | `www.cnil.fr` | 🔴 external | 1 | 0 |
 | `www.dedietrich-thermique.fr` | 🔴 external | 1 | 0 |
 | `www.delabie.fr` | 🔴 external | 1 | 0 |
-| `www.depan59-62.fr` | 🟢 self | 231 | 116 |
 | `www.ecologie.gouv.fr` | 🔴 external | 1 | 0 |
 | `www.esri.com` | 🔴 external | 1 | 0 |
 | `www.facebook.com` | 🔴 external | 98 | 0 |
@@ -629,6 +635,7 @@ Fichiers concernés : `assets/hc-map-zones.js`, `assets/hc-mini-zone.js`
 | `www.maprimerenov.gouv.fr` | 🔴 external | 1 | 0 |
 | `www.meister.com` | 🔴 external | 1 | 0 |
 | `www.netlify.com` | 🔴 external | 1 | 0 |
+| `www.openstreetmap.org` | 🔴 external | 1 | 0 |
 | `www.riouglass.com` | 🔴 external | 1 | 0 |
 | `www.roziere.fr` | 🔴 external | 1 | 0 |
 | `www.saunierduval.fr` | 🔴 external | 1 | 0 |
@@ -642,4 +649,5 @@ Fichiers concernés : `assets/hc-map-zones.js`, `assets/hc-mini-zone.js`
 | `www.velux.fr` | 🔴 external | 1 | 0 |
 | `www.w3.org` | 🔴 external | 2 | 0 |
 | `www.winkhaus.com` | 🔴 external | 1 | 0 |
-| `{s}.basemaps.cartocdn.com` | 🔴 external | 2 | 2 |
+| `{s}.basemaps.cartocdn.com` | 🔴 external | 1 | 1 |
+| `{s}.tile.openstreetmap.org` | 🔴 external | 1 | 1 |

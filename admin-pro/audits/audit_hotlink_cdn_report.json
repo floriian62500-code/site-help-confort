@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-10-06T09:52:43",
+  "generated_at": "2026-10-07T09:58:35",
   "scanned_html": 116,
-  "scanned_js": 39,
-  "total_hosts": 75,
+  "scanned_js": 40,
+  "total_hosts": 76,
   "by_class": {
     "self": [
-      "www.depan59-62.fr"
+      "depan59-62.fr"
     ],
     "supabase": [
       "btcbjwqiivhpwoszomhg.supabase.co"
@@ -22,7 +22,6 @@
     "external": [
       "akw.fr",
       "bricard.com",
-      "carto.com",
       "comap.aalberts-hfc.com",
       "coretecfloors.com",
       "fr.indeed.com",
@@ -72,6 +71,7 @@
       "www.maprimerenov.gouv.fr",
       "www.meister.com",
       "www.netlify.com",
+      "www.openstreetmap.org",
       "www.riouglass.com",
       "www.roziere.fr",
       "www.saunierduval.fr",
@@ -85,7 +85,8 @@
       "www.velux.fr",
       "www.w3.org",
       "www.winkhaus.com",
-      "{s}.basemaps.cartocdn.com"
+      "{s}.basemaps.cartocdn.com",
+      "{s}.tile.openstreetmap.org"
     ]
   },
   "external_findings": [
@@ -114,20 +115,6 @@
         {
           "file": "partenaires.html",
           "url": "https://bricard.com/particuliers/"
-        }
-      ]
-    },
-    {
-      "host": "carto.com",
-      "occurrences": 1,
-      "image_occurrences": 0,
-      "files": [
-        "assets/hc-map-zones.js"
-      ],
-      "examples": [
-        {
-          "file": "assets/hc-map-zones.js",
-          "url": "https://carto.com/attributions"
         }
       ]
     },
@@ -1120,6 +1107,20 @@
       ]
     },
     {
+      "host": "www.openstreetmap.org",
+      "occurrences": 1,
+      "image_occurrences": 0,
+      "files": [
+        "assets/hc-map-zones.js"
+      ],
+      "examples": [
+        {
+          "file": "assets/hc-map-zones.js",
+          "url": "https://www.openstreetmap.org/copyright"
+        }
+      ]
+    },
+    {
       "host": "www.riouglass.com",
       "occurrences": 1,
       "image_occurrences": 0,
@@ -1308,20 +1309,29 @@
     },
     {
       "host": "{s}.basemaps.cartocdn.com",
-      "occurrences": 2,
-      "image_occurrences": 2,
+      "occurrences": 1,
+      "image_occurrences": 1,
       "files": [
-        "assets/hc-map-zones.js",
         "assets/hc-mini-zone.js"
       ],
       "examples": [
         {
-          "file": "assets/hc-map-zones.js",
-          "url": "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-        },
-        {
           "file": "assets/hc-mini-zone.js",
           "url": "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+        }
+      ]
+    },
+    {
+      "host": "{s}.tile.openstreetmap.org",
+      "occurrences": 1,
+      "image_occurrences": 1,
+      "files": [
+        "assets/hc-map-zones.js"
+      ],
+      "examples": [
+        {
+          "file": "assets/hc-map-zones.js",
+          "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         }
       ]
     }

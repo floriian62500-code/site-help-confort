@@ -1,6 +1,6 @@
 # Audit phone consistency — Rapport
 
-_Généré le 2026-10-06 09:52_
+_Généré le 2026-10-07 09:58_
 
 ## Synthèse
 
@@ -18,10 +18,10 @@ Liste des occurrences à vérifier (orphelin éditorial, ancien numéro, exemple
 
 | Ligne | Type | Numéro brut | Normalisé |
 |-------|------|-------------|-----------|
-| 1671 | `fr-display` | `06 12 34 56 78` | `0612345678` |
+| 1673 | `fr-display` | `06 12 34 56 78` | `0612345678` |
 
 ### `nos-prestations.html` — 1 occurrence(s)
 
 | Ligne | Type | Numéro brut | Normalisé |
 |-------|------|-------------|-----------|
-| 1726 | `fr-display` | `06 12 34 56 78` | `0612345678` |
+| 1728 | `fr-display` | `06 12 34 56 78` | `0612345678` |

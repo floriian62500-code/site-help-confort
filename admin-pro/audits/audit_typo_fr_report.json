@@ -1,11 +1,11 @@
 {
   "audit": "typo_fr",
-  "generated_at": "2026-10-06T09:52:40",
+  "generated_at": "2026-10-07T09:58:32",
   "threshold": 5,
   "stats": {
     "pages_audited": 116,
     "pages_alerted": 72,
-    "total_fautifs": 1050,
+    "total_fautifs": 1048,
     "code_distribution": {
       "TYPO-FR": 72
     }
@@ -13,14 +13,13 @@
   "results": [
     {
       "file": "a-propos.html",
-      "fautifs": 22,
+      "fautifs": 21,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "22 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "21 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
-            "…par deux agences locales : Dépan'Audo à Saint-Marti…",
             "…vec une conviction simple : les habitants de Saint-O…",
             "…manque souvent au métier : l'organisation. Un stand…",
             "…ne entreprise structurée. » « Aujourd'hui, on couvre…",
@@ -31,7 +30,8 @@
             "…t ici que tout a commencé : une équipe locale audoma…",
             "…gion. Zone d'intervention : Saint-Omer, Saint-Martin…",
             "…uois. Zone d'intervention : Dunkerque, Coudekerque-B…",
-            "…ervention Pas des slogans : des engagements concrets…"
+            "…ervention Pas des slogans : des engagements concrets…",
+            "…cité, serrurerie, travaux : une équipe formée et com…"
           ]
         }
       ]
@@ -1315,7 +1315,7 @@
     },
     {
       "file": "notre-equipe.html",
-      "fautifs": 3,
+      "fautifs": 2,
       "findings": []
     },
     {

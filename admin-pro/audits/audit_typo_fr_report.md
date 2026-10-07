@@ -1,4 +1,4 @@
-# Audit typographie FR (espaces insécables) — 2026-10-06 09:52
+# Audit typographie FR (espaces insécables) — 2026-10-07 09:58
 
 Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une espace **insécable** (`&nbsp;`, U+00A0, U+202F). Seuil d'alerte : > **5** occurrences fautives par page.
 
@@ -7,7 +7,7 @@ Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une
 - Pages auditées : **116**
 - Pages clean (≤ seuil) : **44**
 - Pages avec alerte : **72**
-- Occurrences fautives cumulées : **1050**
+- Occurrences fautives cumulées : **1048**
 
 ## ⚠️ Pages au-delà du seuil
 
@@ -18,9 +18,9 @@ Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une
 | `blog-debouchage-canalisation-furet-hydrocurage.html` | **26** | `…Canalisation bouchée : furet, hydrocurage ou pr…` · `…t, hydrocurage ou produit ? | Blog HELP Confort Sain…` · `…erie Canalisation bouchée : furet, hydrocurage ou pr…` |
 | `blog-cout-renovation-salle-de-bain.html` | **24** | `…savez pas combien prévoir ? Voici la décomposition d…` · `…hissement (5 000-8 000 €) : peinture, joints, robine…` · `…omplète (10 000-16 000 €) : nouveau carrelage + sani…` |
 | `blog-fenetres-double-vitrage-pvc-alu-bois.html` | **23** | `…Fenêtres double vitrage : PVC, alu ou bois ? | Blo…` · `…itrage : PVC, alu ou bois ? | Blog HELP Confort Sain…` · `…e Fenêtres double vitrage : PVC, alu ou bois ? Rempl…` |
-| `a-propos.html` | **22** | `…par deux agences locales : Dépan'Audo à Saint-Marti…` · `…vec une conviction simple : les habitants de Saint-O…` · `…manque souvent au métier : l'organisation. Un stand…` |
 | `blog-panne-electrique-disjoncteur-saute.html` | **22** | `…Panne électrique : décoder un disjoncteur q…` · `…ctricité Panne électrique : décoder un disjoncteur q…` · `…Plus de courant chez vous ? Avant d'appeler un élect…` |
 | `blog-pompe-a-chaleur-air-eau-tout-savoir.html` | **22** | `…Pompe à chaleur air/eau : tout ce qu'il faut savoi…` · `…e Pompe à chaleur air/eau : tout ce qu'il faut savoi…` · `…térieur (oui, même à -5°C !) via un fluide réfrigéra…` |
+| `a-propos.html` | **21** | `…vec une conviction simple : les habitants de Saint-O…` · `…manque souvent au métier : l'organisation. Un stand…` · `…ne entreprise structurée. » « Aujourd'hui, on couvre…` |
 | `blog-porte-claquee-cle-perdue-que-faire.html` | **21** | `…rte claquée ou clé perdue : 5 réflexes avant d'appel…` · `…rte claquée ou clé perdue : 5 réflexes avant d'appel…` · `…coincé devant votre porte ? Avant de céder à la pani…` |
 | `panne-chaudiere.html` | **20** | `…e de pression, eau froide : nos chauffagistes diagno…` · `…à 1-1.5 bar. Si récurrent : fuite circuit. EA / E1 S…` · `…apides Pression chaudière : doit être entre 1 et 1.5…` |
 | `guide-mise-aux-normes-electriques.html` | **19** | `…s électriques NF C 15-100 : le guide complet 📖 7 min…` · `…a norme s'applique-t-elle ? La NF C 15-100 est oblig…` · `…atoire dans plusieurs cas : Construction neuve (touj…` |
