@@ -14,7 +14,9 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const CHECK = process.argv.includes('--check'), LIST = process.argv.includes('--list');
 const rd = p => fs.readFileSync(path.join(ROOT, p), 'utf8');
-const sha = s => crypto.createHash('sha1').update(s).digest('hex').slice(0, 10);
+// Empreinte de cache : sha256 tronque a 10, la convention du site (les 197 pages de la PR #38 et
+// scripts/gen-realisations.mjs). En sha1, cette synchro ramenait 204 pages sur une autre valeur.
+const sha = s => crypto.createHash('sha256').update(s).digest('hex').slice(0, 10);
 
 const PARTIAL = rd('partials/hc-header.html').replace(/^<!--[\s\S]*?-->\n/, '').trim();
 const V_CSS = sha(rd('assets/hc-header.css')), V_JS = sha(rd('assets/hc-header.js'));
@@ -36,7 +38,9 @@ const CRUMB_ACTU = '<nav class="hc-crumb" aria-label="Fil d’Ariane"><a href="/
 
 // Pages publiques (même périmètre que scripts/seo/seo-guardrails.mjs) + 404, hors tunnel et page technique.
 const SKIP_DIRS = new Set(['node_modules', '.git', '.netlify', 'dist', 'partials']);
-const SKIP_FILE = /(^|\/)(admin-pro|admin|docs)\//;
+// `scripts/` porte des fragments de page (corps sans <head> ni <body>), pas des pages : robots.txt
+// les met deja hors perimetre (Disallow: /scripts/).
+const SKIP_FILE = /(^|\/)(admin-pro|admin|docs|scripts)\//;
 const SKIP_NAME = /^(recette|google[0-9a-f]+|espace-client|espace-client-dashboard)\.html$/i;
 export const EXCLUDED = ['catalogue.html', 'reset.html']; // tunnel « Ma demande » (barre propre) ; page technique noindex
 function walk(dir) { let o = []; for (const e of fs.readdirSync(dir, { withFileTypes: true })) { if (e.isDirectory()) { if (!SKIP_DIRS.has(e.name)) o = o.concat(walk(path.join(dir, e.name))); } else if (e.name.endsWith('.html')) o.push(path.join(dir, e.name)); } return o; }
@@ -48,7 +52,9 @@ function walk(dir) { let o = []; for (const e of fs.readdirSync(dir, { withFileT
    navigateur » — une page d'outillage, pas une page du site. */
 export const PROMO_HORS_PERIMETRE = ['reset.html'];
 export function promoPages() {
-  return [...publicPages(), ...EXCLUDED.filter((p) => !PROMO_HORS_PERIMETRE.includes(p))].sort();
+  // Une page exclue peut ne pas exister dans cet etat du depot (le tunnel arrive dans un lot a part) :
+  // elle n'est alors pas une page a traiter, pas une erreur.
+  return [...publicPages(), ...EXCLUDED.filter((p) => !PROMO_HORS_PERIMETRE.includes(p) && fs.existsSync(path.join(ROOT, p)))].sort();
 }
 export function publicPages() {
   return walk(ROOT).map(f => path.relative(ROOT, f).split(path.sep).join('/'))

@@ -10,6 +10,8 @@ import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import { createHash } from 'node:crypto';
 const { isRecruitment } = createRequire(import.meta.url)('../assets/hc-realisations.js'); // annonce de recrutement : pas de fiche chantier
+// L'en-tete des fiches est celui du site : une seule source, sinon une regeneration le defait.
+import { transform } from './header/sync-header.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'realisations');
@@ -179,7 +181,11 @@ let list = Array.isArray(data) ? data : (data.realisations || data.data || data.
 list = list.filter(r => r && r.slug && (r.status ? r.status === 'publie' : true) && !isRecruitment(r));
 if (!existsSync(OUT)) mkdirSync(OUT, { recursive: true });
 let n = 0; const slugs = [];
-for (const r of list) { writeFileSync(join(OUT, `${r.slug}.html`), page(r, list)); slugs.push(r.slug); n++; }
+for (const r of list) {
+  const rel = `realisations/${r.slug}.html`;
+  writeFileSync(join(OUT, `${r.slug}.html`), transform(rel, page(r, list)).html);
+  slugs.push(r.slug); n++;
+}
 
 // _redirects : règles statiques par slug AVANT le fallback JS
 const RP = join(ROOT, '_redirects');
