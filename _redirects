@@ -1,3 +1,7 @@
+# Fragments internes : ce lot ajoute partials/hc-header.html, et le site est publie depuis la
+# racine. Sans cette regle, le fragment serait servi comme une page.
+/partials/* /404.html 404!
+
 # Sitemap dynamique servi par Edge Function Supabase
 /sitemap.xml https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sitemap 200
 
