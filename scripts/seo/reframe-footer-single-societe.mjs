@@ -5,6 +5,12 @@
 // Dunkerque reste zone desservie ailleurs (intact).
 import fs from 'node:fs';
 import path from 'node:path';
+
+import { pathToFileURL as __versUrl } from 'node:url';
+// Outil en ligne de commande : importe (par une suite de tests, par un autre script), il ne doit
+// rien faire. Sans cette garde, un simple import reecrivait des pages du depot.
+const __appelDirect = !!process.argv[1] && import.meta.url === __versUrl(process.argv[1]).href;
+if (__appelDirect) {
 const dry = process.argv.includes('--dry');
 const SKIP = new Set(['node_modules', '.git', '.netlify', 'dist']);
 function walk(dir) {
@@ -31,3 +37,4 @@ for (const f of files) {
   if (out !== html) { if (!dry) fs.writeFileSync(f, out); changed++; }
 }
 console.log(`${dry ? '[DRY] ' : ''}footer single-société: ${changed} fichiers, ${hits} lignes réseau corrigées (Dépan'DK société retirée)`);
+}
