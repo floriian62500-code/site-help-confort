@@ -2,6 +2,24 @@
 # racine. Sans cette regle, le fragment serait servi comme une page.
 /partials/* /404.html 404!
 
+# Dossiers internes : le site est publie depuis la racine, donc tout fichier suivi part chez
+# Netlify. Seule une regle terminee par « ! » passe devant le fichier statique ; le `ignore` de
+# netlify.toml ne decide que de reconstruire ou non. Releve du 2026-10-07 sur depan59-62.fr :
+# ces dix dossiers repondaient 200, et aucune page publique n'en reference un seul chemin.
+# `/admin/*` n'est PAS dans cette liste : c'est le back-office Decap, lie depuis actualites.html
+# et realisations.html, et il lit son propre config.yml au chargement.
+/docs/* /404.html 404!
+/scripts/* /404.html 404!
+/supabase/* /404.html 404!
+/tools/* /404.html 404!
+/logs/* /404.html 404!
+/secrets/* /404.html 404!
+/.github/* /404.html 404!
+/.autopush/* /404.html 404!
+/admin-pro/audits/* /404.html 404!
+/admin-pro/scripts/* /404.html 404!
+
+
 # Sitemap dynamique servi par Edge Function Supabase
 /sitemap.xml https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sitemap 200
 
