@@ -191,6 +191,7 @@ rc = rc.replace(/\n*(# Anciennes URLs)/, '\n\n' + block + '\n\n$1'); // idempote
 writeFileSync(RP, rc);
 // Manifeste des fiches réellement générées : les cartes du site ne pointent QUE vers ces fiches (sinon le fallback
 // /realisations/:slug → /realisation.html → /realisations.html recharge la liste : « le clic ne fait rien »).
-writeFileSync(join(OUT, 'index.json'), JSON.stringify({ generated: new Date().toISOString(), slugs: slugs.slice().sort() }, null, 1) + '\n');
+// Pas d'horodatage : une regeneration sans changement doit redonner le meme fichier (git date le commit).
+writeFileSync(join(OUT, 'index.json'), JSON.stringify({ slugs: slugs.slice().sort() }, null, 1) + '\n');
 console.log(`OK ${n} pages générées dans realisations/ · _redirects mis à jour (${slugs.length} règles) · manifeste realisations/index.json.`);
 }
