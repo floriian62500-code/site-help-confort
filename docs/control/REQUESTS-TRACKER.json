@@ -1419,7 +1419,7 @@
    "request_id": "REQ-20260926-051",
    "title": "Tunnel Ma demande : l accueil a deja son propre parcours, lequel recoit les visiteurs ?",
    "priority": "P1",
-   "status": "WAITING_FLORIAN",
+   "status": "READY_FOR_CONTROL",
    "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-07-PROGRAMME-AUTONOME-APRES-PR50.md",
    "legacy_instruction_id": null,
    "created_at": "2026-10-07",
@@ -1431,15 +1431,15 @@
     "verdicts demande-v2",
     "mesures 1440 et 390 du parcours retenu"
    ],
-   "latest_sha": "branche feat/tunnel-ma-demande (sans PR)",
-   "claude_outbox": "CLAUDE-2026-10-07-TUNNEL-ET-ENCART.md",
-   "human_gate": "A : l accueil garde son parcours en page, le tunnel ne sert que depuis les pages metier. B : l accueil ouvre le tunnel et son parcours en page est retire. C : les deux coexistent, roles a definir. L accueil appelle aussi stripe-create-payment-link : le choix touche ce sujet.",
+   "latest_sha": "PR #52, branche feat/tunnel-ma-demande (non fusionnee)",
+   "claude_outbox": "CLAUDE-2026-10-07-TUNNEL-PR52-READY.md",
+   "human_gate": null,
    "blocked_by": null,
-   "next_action": "Decision de Florian. En attendant je traite consent, anti-double-envoi, puis Contrats Chauffage.",
+   "next_action": "Controle ChatGPT de la PR #52, puis merge et PROD_VERIFY.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null,
-   "decide_par": null
+   "closure_proof": "demande-v2 190/0, 6 suites du tunnel vertes, 0 appel de paiement depuis l accueil, clic verifie a 1440 et 390.",
+   "decide_par": "Florian — option B : un seul parcours, l accueil ouvre le tunnel canonique"
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id. Le 2026-09-28, deux demandes ont reçu 032 à la même minute (refonte Nos métiers et routage e-mail) : 032 reste à « Nos métiers », le routage devient 033, prochain_id passe à 034. Le nom du fichier d’instruction d’origine est conservé dans legacy_instruction_id.",
