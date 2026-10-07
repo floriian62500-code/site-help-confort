@@ -1300,14 +1300,14 @@
    "evidence_required": [
     "statut HTTP d un fichier temoin par dossier, avant et apres"
    ],
-   "latest_sha": "constat sur main a5cf4fa2 ; la PR #43 n ajoute la regle que pour /partials/*",
-   "claude_outbox": "CLAUDE-2026-10-07-REQ-044-EN-TETE-UNIQUE.md",
-   "human_gate": "Verifier qu aucun chemin bloque n est utilise par une page publique avant d appliquer les 404!.",
+   "latest_sha": "PR #47, branche fix/dossiers-internes (non fusionnee)",
+   "claude_outbox": "CLAUDE-2026-10-07-PROGRAMME-TACHES-3.md",
+   "human_gate": null,
    "blocked_by": null,
-   "next_action": "Lot dedie : ajouter les regles 404! manquantes dans _redirects, puis PROD_VERIFY.",
+   "next_action": "Controle ChatGPT des PR #47 et #44 (les deux ensemble ferment les 3 echecs restants de depot-propre), puis merge et PROD_VERIFY.",
    "attempt": 1,
    "closed_at": null,
-   "closure_proof": null,
+   "closure_proof": "Preview : 9 temoins passent de 200 a 404 ; accueil, back-office Decap, config.yml, assets, fiches, robots.txt et sitemap.xml restent 200.",
    "decide_par": null
   },
   {
