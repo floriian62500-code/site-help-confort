@@ -30,7 +30,7 @@
   "READY_FOR_FLORIAN_VISUAL"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-043",
+ "prochain_id": "REQ-20260926-044",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -1193,11 +1193,38 @@
     "verdicts de scripts/tests/realisations.test.mjs, reference contre lot",
     "perimetre par famille de dossier"
    ],
-   "latest_sha": "6c1c0391 (tete de fix/realisations-lot-cartes-et-fiches, PR #40, non fusionnee)",
-   "claude_outbox": "CLAUDE-2026-10-07-REQ-042-REALISATIONS.md",
+   "latest_sha": "b29bd574599638c27f422dde92f720816b6b88b3 (commit de fusion dans main, PR #40)",
+   "claude_outbox": "CLAUDE-2026-10-07-REQ-042-REALISATIONS.md + CLAUDE-2026-10-07-REQ-042-PROD-VERIFY.md",
    "human_gate": "Deux decisions metier : (1) corriger le metier dans la base du back-office, sinon les cartes affichent un metier different de la fiche ; (2) « Avant l'hiver, pensez a l'entretien de votre chauffage » est un conseil, pas un chantier : a marquer actualite en base, ou a laisser en chantier.",
    "blocked_by": null,
-   "next_action": "Controle ChatGPT de la PR #40, puis merge par Florian et PROD_VERIFY sur depan59-62.fr.",
+   "next_action": "Cloture par Florian ou par le controle ChatGPT. Les deux decisions de donnee (metier en base, statut de la publication « Avant l hiver ») restent ouvertes.",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": "PROD_VERIFY sur depan59-62.fr : 34/34 liens de carte en 200 (34 x 404 avant), 0 chemin singulier, 0 fiche referencant hc-header (5 avant), 4 fiches manquantes desormais en 200, en-tete 2889 px -> 69 px a 390 px sans debordement.",
+   "decide_par": null
+  },
+  {
+   "request_id": "REQ-20260926-043",
+   "title": "Le generateur de realisations salit le depot a chaque passage : un diff de regeneration ne veut rien dire",
+   "priority": "P2",
+   "status": "READY_FOR_CONTROL",
+   "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-07-REQ-042-PROD-VERIFY.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-07",
+   "acceptance_criteria": [
+    "trois executions successives du generateur laissent l'arbre de travail propre",
+    "un diff de regeneration ne contient que des changements reels de contenu"
+   ],
+   "evidence_required": [
+    "taille de _redirects sur trois executions, avant et apres",
+    "git status apres trois executions",
+    "verdicts de la suite de tests, reference contre lot"
+   ],
+   "latest_sha": "PR #42, branche fix/realisations-redirects-idempotent (non fusionnee)",
+   "claude_outbox": "CLAUDE-2026-10-07-REQ-042-PROD-VERIFY.md",
+   "human_gate": null,
+   "blocked_by": null,
+   "next_action": "Controle ChatGPT de la PR #42, puis merge par Florian.",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": null,
