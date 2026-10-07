@@ -49,13 +49,20 @@ ok(`tunnel : le bouton est rendu même quand l’envoi échoue (${echecs} chemin
 
 // ── 2. Rappel de l'accueil : verrou explicite, pas seulement « disabled »
 const home = lire('index.html');
+// Le verrou est vérifié sur son comportement, pas sur le nom de la variable qui le porte.
+// Les deux boutons d'envoi de l'accueil s'appellent `sendComplex` et `payBtn`, pas `btn` : la
+// protection était bien là, c'est l'assertion qui exigeait une écriture précise.
+const poseVerrou = [...home.matchAll(/(\w+)\.dataset\.sending\s*=\s*'1'/g)].map((m) => m.index);
 ok('rappel accueil : verrou explicite avant toute validation (un 2ᵉ envoi sort immédiatement)',
-  /if\(btn\.dataset\.sending==='1'\) return;/.test(home));
-ok('rappel accueil : le verrou est posé AVANT l’appel au serveur',
-  home.indexOf("btn.dataset.sending='1'") < home.indexOf("functions/v1/submit-lead-v6") &&
-  home.indexOf("btn.dataset.sending='1'") > 0);
+  /\w+\.dataset\.sending\s*===?\s*'1'\)\s*return;/.test(home));
+// L'ordre du fichier n'est pas l'ordre d'exécution : la fonction qui appelle submit-lead-v6 est
+// déclarée avant les gestionnaires qui l'utilisent. On vérifie donc, pour chaque envoi déclenché
+// par un clic, que le verrou est posé avant l'appel — dans le corps du gestionnaire.
+const envois = [...home.matchAll(/await\s+persistLeadToSupabase\(/g)].map((m) => m.index);
+const verrouPose = envois.every((i) => /\w+\.dataset\.sending\s*=\s*'1'/.test(home.slice(Math.max(0, i - 700), i)));
+ok('rappel accueil : le verrou est posé AVANT l’appel au serveur', envois.length > 0 && verrouPose);
 ok('rappel accueil : le verrou est levé dans les deux issues (succès et échec)',
-  (home.match(/btn\.dataset\.sending='0'/g) || []).length >= 2);
+  (home.match(/\w+\.dataset\.sending\s*=\s*'0'/g) || []).length >= 2);
 
 // ── 3. Formulaires de page
 const capture = lire('assets/hc-leads-capture.js');
