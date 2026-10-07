@@ -8,12 +8,19 @@ import { writeFileSync, readFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
+import { createHash } from 'node:crypto';
 const { isRecruitment } = createRequire(import.meta.url)('../assets/hc-realisations.js'); // annonce de recrutement : pas de fiche chantier
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'realisations');
 const SUPA = 'https://btcbjwqiivhpwoszomhg.supabase.co';
 const SITE = 'https://depan59-62.fr';
+// Encart saisonnier : present sur toutes les pages publiques (PR #38). Sans ces deux balises,
+// chaque regeneration le retirerait des fiches deja en ligne.
+const sha10 = (f) => createHash('sha256').update(readFileSync(join(ROOT, f))).digest('hex').slice(0, 10);
+const PROMO = `<link rel="stylesheet" href="/assets/hc-promo-saison.css?v=${sha10('assets/hc-promo-saison.css')}">
+<script src="/assets/hc-promo-saison.js?v=${sha10('assets/hc-promo-saison.js')}" defer></script>`;
+
 const PHONE = '03 66 10 01 34', TEL = '+33366100134';
 
 const METIERS = {
@@ -122,6 +129,7 @@ ${img?`<meta property="og:image" content="${esc(img)}">`:''}
 <style>*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,sans-serif;color:#0A1428;background:#fff}a{color:#0DA0CF}${HEAD_CSS}</style>
 <script type="application/ld+json">${JSON.stringify(ld)}</script>
 <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
+${PROMO}
 </head><body>
 ${HEADER}
 <main class="real-page">
