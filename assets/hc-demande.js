@@ -1174,6 +1174,11 @@
     try { history.replaceState(history.state, '', location.pathname + location.search.replace(/([?&])hc_pay=[^&]*&?/, '$1').replace(/[?&]$/, '') + location.hash); } catch (e) {}
   }
   function row(k, v) { return v ? '<div class="rw"><span class="rw-k">' + esc(k) + '</span><span class="rw-v">' + v + '</span><span></span></div>' : ''; }
+  // Paiement en ligne : volontairement verrouille. La fonction serveur appelee ici
+  // (create-payment-session) n'est pas deployee sur le projet, et son activation doit rester
+  // une decision, pas l'effet de bord d'un deploiement futur. Tant que ce drapeau vaut false,
+  // le tunnel se comporte comme si le serveur repondait « indisponible ».
+  var PAIEMENT_ACTIF = false;
   function payApi(mode, leadId, token) {
     var s = state.sent || {};
     return fetch(SUPA + '/functions/v1/create-payment-session', { method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -1182,6 +1187,7 @@
   }
   function checkPayment(attempt) {
     var s = state.sent; if (!s) return;
+    if (!PAIEMENT_ACTIF) { s.payState = 'unavailable'; ENTER.envoye(); return; }
     attempt = attempt || 0; s.payState = 'checking'; ENTER.envoye();
     payApi('check').then(function (r) {
       if (!r || !r.available) s.payState = 'unavailable';
