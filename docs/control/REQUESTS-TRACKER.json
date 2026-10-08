@@ -30,7 +30,7 @@
   "READY_FOR_FLORIAN_VISUAL"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-056",
+ "prochain_id": "REQ-20260926-057",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -1544,6 +1544,34 @@
    "human_gate": null,
    "blocked_by": null,
    "next_action": "Controle ChatGPT de la PR #58. J enchaine sur Nos metiers (REQ-032).",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null,
+   "decide_par": null
+  },
+  {
+   "request_id": "REQ-20260926-056",
+   "title": "La FAQ recommandait la formule SECURITE aux chaudieres de plus de 5 ans, qui en sont exclues",
+   "priority": "P1",
+   "status": "READY_FOR_CONTROL",
+   "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-08-APRES-PR58-BACKLOG-AUTONOME.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-08",
+   "acceptance_criteria": [
+    "chaque promesse publiee correspond au catalogue",
+    "les restrictions sont dites la ou la formule est recommandee",
+    "texte visible et donnees structurees alignes"
+   ],
+   "evidence_required": [
+    "tableau promesse contre catalogue",
+    "verdicts prix-contrats",
+    "preuve que la garde mord"
+   ],
+   "latest_sha": "PR #59, branche fix/promesses-blog (non fusionnee)",
+   "claude_outbox": "CLAUDE-2026-10-08-PR59-PROMESSES.md",
+   "human_gate": null,
+   "blocked_by": null,
+   "next_action": "Controle ChatGPT de la PR #59. J enchaine sur l audit Stripe en lecture seule puis Nos metiers.",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": null,
