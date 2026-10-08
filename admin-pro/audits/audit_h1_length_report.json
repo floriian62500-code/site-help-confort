@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-07 09:58",
+  "generated": "2026-10-08 10:10",
   "thresholds": {
     "min_len": 20,
     "max_len": 70
   },
-  "n_total": 136,
+  "n_total": 137,
   "n_ok": 93,
   "n_warn": 0,
-  "n_errors": 40,
+  "n_errors": 41,
   "n_info": 3,
   "results": [
     {
@@ -404,6 +404,17 @@
       "length": 80,
       "errors": [
         "H1-TOO-LONG : 80 chars > 70"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "catalogue.html",
+      "status": "error",
+      "n_h1": 1,
+      "h1_text": "Votre demande",
+      "length": 13,
+      "errors": [
+        "H1-TOO-SHORT : 13 chars < 20"
       ],
       "warnings": []
     },

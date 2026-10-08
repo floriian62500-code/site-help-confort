@@ -1,12 +1,12 @@
-# Audit liens internes vs sitemap.xml — 2026-10-07 09:57
+# Audit liens internes vs sitemap.xml — 2026-10-08 10:09
 
 Sonde #61 : croise les `href` locaux `.html` avec `sitemap.xml` et le disque.
 
-- **Pages scannées** : 117
-- **Liens internes uniques (par page)** : 3437
+- **Pages scannées** : 118
+- **Liens internes uniques (par page)** : 3527
 - **URLs dans sitemap.xml** : 190
 - **🚨 Liens cassés (BROKEN)** : 1 (1 cibles uniques)
-- **🟠 Liens orphelins (ORPHAN — absents du sitemap)** : 259 (9 cibles uniques)
+- **🟠 Liens orphelins (ORPHAN — absents du sitemap)** : 265 (10 cibles uniques)
 
 ## 🚨 Cibles introuvables sur le disque
 
@@ -29,6 +29,7 @@ explicitement (whitelist du script si page technique/noindex).
 | `blog-pmr-adapter-salle-de-bain-senior.html` | 11× — `blog-comment-detecter-fuite-eau-cachee.html`, `blog-cout-renovation-salle-de-bain.html`, `blog-debouchage-canalisation-furet-hydrocurage.html`, `blog-entretien-chaudiere-annuel-obligatoire.html`, `blog-fenetres-double-vitrage-pvc-alu-bois.html` … (+6) |
 | `blog-porte-claquee-cle-perdue-que-faire.html` | 11× — `blog-comment-detecter-fuite-eau-cachee.html`, `blog-cout-renovation-salle-de-bain.html`, `blog-debouchage-canalisation-furet-hydrocurage.html`, `blog-entretien-chaudiere-annuel-obligatoire.html`, `blog-fenetres-double-vitrage-pvc-alu-bois.html` … (+6) |
 | `blog-comment-detecter-fuite-eau-cachee.html` | 11× — `blog-cout-renovation-salle-de-bain.html`, `blog-debouchage-canalisation-furet-hydrocurage.html`, `blog-entretien-chaudiere-annuel-obligatoire.html`, `blog-fenetres-double-vitrage-pvc-alu-bois.html`, `blog-isolation-combles-aides-2026.html` … (+6) |
+| `catalogue.html` | 6× — `chauffagiste-boulogne-sur-mer.html`, `chauffagiste-calais.html`, `chauffagiste-dunkerque.html`, `chauffagiste-saint-omer.html`, `index.html` … (+1) |
 | `blog-entretien-chaudiere-annuel-obligatoire.html` | 4× — `blog-comment-detecter-fuite-eau-cachee.html`, `blog-pmr-adapter-salle-de-bain-senior.html`, `blog-porte-claquee-cle-perdue-que-faire.html`, `blog-remplacement-chaudiere-gaz-aides-2026.html` |
 | `prestations/salle-de-bain-pmr.html` | 2× — `pmr-dunkerque.html`, `pmr-saint-omer.html` |
 

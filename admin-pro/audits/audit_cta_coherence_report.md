@@ -1,9 +1,9 @@
 # 🎯 Audit CTA cohérence URL — sonde #20
 
-_Généré le 2026-10-07 09:58_
+_Généré le 2026-10-08 10:10_
 
-- Pages scannées : **116**
-- CTA trouvés (toutes familles) : **120**
+- Pages scannées : **117**
+- CTA trouvés (toutes familles) : **121**
 - Familles avec ≥ 1 occurrence : **3**
 - Familles **divergentes** (alertes) : **2**
 
@@ -11,7 +11,7 @@ _Généré le 2026-10-07 09:58_
 
 ## ❌ Familles divergentes
 
-### Famille `devis` — 4 destinations
+### Famille `devis` — 5 destinations
 
 - **`contact.html`** — 109 occurrence(s)
   - `avant-apres.html` : « Demander un devis → » → `contact.html#form`
@@ -23,6 +23,8 @@ _Généré le 2026-10-07 09:58_
   - `remplacement-chauffe-eau.html` : « Demander un devis 03 66 10 01 34 » → `tel:+33366100134`
 - **`[button-js]`** — 1 occurrence(s)
   - `contact.html` : « Recevoir mon devis gratuit » → `[button-js]`
+- **`catalogue.html`** — 1 occurrence(s)
+  - `index.html` : « J'ai un projet ou des travaux Devis gratuit, étudié par un t » → `/catalogue.html#devis`
 - **`devis-express.html`** — 1 occurrence(s)
   - `plan-du-site.html` : « Devis express » → `devis-express.html`
 
@@ -41,10 +43,11 @@ _Généré le 2026-10-07 09:58_
 
 ## 📊 Stats par famille
 
-### ⚠️ `devis` — 115 occurrence(s), 4 destination(s)
+### ⚠️ `devis` — 116 occurrence(s), 5 destination(s)
 - `contact.html` × 109
 - `tel:+33366100134` × 4
 - `[button-js]` × 1
+- `catalogue.html` × 1
 - `devis-express.html` × 1
 
 ### ✅ `estimation` — 2 occurrence(s), 1 destination(s)

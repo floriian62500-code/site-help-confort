@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-07 09:58",
+  "generated": "2026-10-08 10:10",
   "canonical_e164": "+33366100134",
   "canonical_local": "0366100134",
-  "n_total": 137,
-  "n_flagged_pages": 2,
-  "n_findings": 2,
+  "n_total": 138,
+  "n_flagged_pages": 1,
+  "n_findings": 1,
   "results": [
     {
       "file": "a-propos.html",
@@ -208,6 +208,11 @@
     },
     {
       "file": "carrieres.html",
+      "n_findings": 0,
+      "findings": []
+    },
+    {
+      "file": "catalogue.html",
       "n_findings": 0,
       "findings": []
     },
@@ -418,17 +423,8 @@
     },
     {
       "file": "index.html",
-      "n_findings": 1,
-      "findings": [
-        {
-          "type": "fr-display",
-          "line": 1673,
-          "raw": "06 12 34 56 78",
-          "normalized": "0612345678",
-          "expected": "0366100134",
-          "snippet": ".tel), msg: 'Téléphone FR invalide (ex: 06 12 34 56 78)' },        { id:'resa-email',  valid:"
-        }
-      ]
+      "n_findings": 0,
+      "findings": []
     },
     {
       "file": "maprimeadapt.html",
@@ -461,7 +457,7 @@
       "findings": [
         {
           "type": "fr-display",
-          "line": 1728,
+          "line": 1647,
           "raw": "06 12 34 56 78",
           "normalized": "0612345678",
           "expected": "0366100134",

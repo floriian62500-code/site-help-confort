@@ -1,9 +1,9 @@
 {
-  "generated": "2026-10-07 09:58",
-  "n_total": 137,
+  "generated": "2026-10-08 10:10",
+  "n_total": 138,
   "n_ok": 135,
-  "n_errors": 1,
-  "n_with_robots": 132,
+  "n_errors": 2,
+  "n_with_robots": 133,
   "results": [
     {
       "file": "a-propos.html",
@@ -509,6 +509,21 @@
         ]
       },
       "errors": []
+    },
+    {
+      "file": "catalogue.html",
+      "status": "error",
+      "robots_meta": {
+        "type": "robots",
+        "content": "noindex,follow",
+        "directives": [
+          "follow",
+          "noindex"
+        ]
+      },
+      "errors": [
+        "ROBOTS-NOINDEX (L.6) : directive(s) bloquante(s) « noindex » dans <meta robots> → page invisible Google"
+      ]
     },
     {
       "file": "chauffagiste-boulogne-sur-mer.html",

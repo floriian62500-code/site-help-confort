@@ -1,15 +1,15 @@
 # Audit og:url vs canonical — Rapport
 
-_Généré le 2026-10-07 09:58_
+_Généré le 2026-10-08 10:10_
 
 ## Synthèse
 
-- Pages scannées : **137**
+- Pages scannées : **138**
 - ✅ OK : **49**
 - ❌ Erreurs : **0** (cumul 0 findings)
-- ⚠️  Avertissements (pages) : **86**
+- ⚠️  Avertissements (pages) : **87**
 - ℹ️  Info : **2**
-- ⚠️  Total warnings : **88**
+- ⚠️  Total warnings : **89**
 
 ## Findings
 
@@ -75,6 +75,10 @@ _Généré le 2026-10-07 09:58_
 
 ### `blog-remplacement-chaudiere-gaz-aides-2026.html`
 - canonical = `https://depan59-62.fr/blog-remplacement-chaudiere-gaz-aides-2026.html`
+- ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
+
+### `catalogue.html`
+- canonical = `https://depan59-62.fr/catalogue.html`
 - ⚠️ OG-URL-MISSING : `og:url` absent alors que canonical défini
 
 ### `chauffagiste-boulogne-sur-mer.html`

@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-10-07T09:58:34",
-  "scanned_pages": 116,
-  "total_ctas": 120,
+  "generated_at": "2026-10-08T10:10:46",
+  "scanned_pages": 117,
+  "total_ctas": 121,
   "families": {
     "estimation": {
       "occurrences": 2,
@@ -11,12 +11,13 @@
       }
     },
     "devis": {
-      "occurrences": 115,
-      "unique_destinations": 4,
+      "occurrences": 116,
+      "unique_destinations": 5,
       "destinations": {
         "contact.html": 109,
         "tel:+33366100134": 4,
         "[button-js]": 1,
+        "catalogue.html": 1,
         "devis-express.html": 1
       }
     },
@@ -33,7 +34,7 @@
   "alerts": [
     {
       "family": "devis",
-      "destination_count": 4,
+      "destination_count": 5,
       "destinations": [
         {
           "canon": "contact.html",
@@ -85,6 +86,17 @@
               "page": "contact.html",
               "text": "Recevoir mon devis gratuit",
               "href": "[button-js]"
+            }
+          ]
+        },
+        {
+          "canon": "catalogue.html",
+          "count": 1,
+          "examples": [
+            {
+              "page": "index.html",
+              "text": "J'ai un projet ou des travaux Devis gratuit, étudié par un t",
+              "href": "/catalogue.html#devis"
             }
           ]
         },

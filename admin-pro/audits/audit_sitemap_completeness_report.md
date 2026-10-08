@@ -1,15 +1,15 @@
 # Audit Sitemap completeness — Rapport
 
-Généré le : `2026-10-07T09:58:31`
+Généré le : `2026-10-08T10:10:44`
 
 Source de vérité : `sitemap.xml` (`<urlset>`) + `*.html` à la racine du repo.
 
 ## Synthèse
 
-- Pages HTML racine sur disque : **116**
+- Pages HTML racine sur disque : **117**
 - URLs dans sitemap.xml : **190**
 - Dont pages racine (`/X.html` ou `/`) : **0**
-- ⚠️ Pages absentes du sitemap : **116**
+- ⚠️ Pages absentes du sitemap : **117**
 - ❌ URLs sitemap orphelines (fichier introuvable) : **0**
 - ℹ️ `<lastmod>` dans le futur : **0**
 
@@ -38,6 +38,7 @@ Correction : ajouter une `<url>` dans `sitemap.xml`.
 - `blog-remplacement-chaudiere-gaz-aides-2026.html`
 - `blog.html`
 - `carrieres.html`
+- `catalogue.html`
 - `chauffagiste-boulogne-sur-mer.html`
 - `chauffagiste-calais.html`
 - `chauffagiste-coudekerque-branche.html`

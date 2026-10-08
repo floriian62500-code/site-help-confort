@@ -1,14 +1,14 @@
 # 🖼️ Audit images hot-linkées CDN tiers — sonde #13
 
-_Généré le 2026-10-07 09:58_
+_Généré le 2026-10-08 10:10_
 
-- Pages HTML scannées : **116**
-- Fichiers JS scannés : **40**
-- Hosts uniques détectés : **76**
+- Pages HTML scannées : **117**
+- Fichiers JS scannés : **47**
+- Hosts uniques détectés : **77**
   - Self (HC) : 1
   - Supabase projet : 1
   - CDN tolérés (CSP-whitelistés) : 7
-  - **Externes non whitelistés** : **67**
+  - **Externes non whitelistés** : **68**
 
 ## ⚠️ Hosts externes non whitelistés
 
@@ -74,6 +74,14 @@ Fichiers concernés : `partenaires.html`
 Fichiers concernés : `partenaires.html`
 
 - `partenaires.html` → `https://groupe-millet.com/`
+
+→ Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
+
+### 📄 `localhost:54321` — 1 occurrence(s) (0 image(s))
+
+Fichiers concernés : `assets/hc-demande.js`
+
+- `assets/hc-demande.js` → `http://localhost:54321`
 
 → Vérifier si le host est légitimement whitelisté côté CSP (`netlify.toml` → `connect-src` / `script-src`).
 
@@ -576,20 +584,21 @@ Fichiers concernés : `assets/hc-map-zones.js`
 | Host | Classification | Occurrences | Images |
 |------|----------------|-------------|--------|
 | `akw.fr` | 🔴 external | 1 | 0 |
-| `api-adresse.data.gouv.fr` | ⚪ trusted | 60 | 0 |
+| `api-adresse.data.gouv.fr` | ⚪ trusted | 63 | 0 |
 | `bricard.com` | 🔴 external | 1 | 0 |
-| `btcbjwqiivhpwoszomhg.supabase.co` | 🔵 supabase | 127 | 47 |
+| `btcbjwqiivhpwoszomhg.supabase.co` | 🔵 supabase | 130 | 47 |
 | `cdn.jsdelivr.net` | ⚪ trusted | 68 | 0 |
 | `comap.aalberts-hfc.com` | 🔴 external | 1 | 0 |
 | `connect.facebook.net` | ⚪ trusted | 1 | 0 |
 | `coretecfloors.com` | 🔴 external | 1 | 0 |
-| `depan59-62.fr` | 🟢 self | 231 | 116 |
-| `fonts.googleapis.com` | ⚪ trusted | 240 | 0 |
-| `fonts.gstatic.com` | ⚪ trusted | 95 | 0 |
+| `depan59-62.fr` | 🟢 self | 232 | 116 |
+| `fonts.googleapis.com` | ⚪ trusted | 244 | 0 |
+| `fonts.gstatic.com` | ⚪ trusted | 97 | 0 |
 | `fr.indeed.com` | 🔴 external | 1 | 0 |
 | `france-renov.gouv.fr` | 🔴 external | 2 | 0 |
 | `gef.fr` | 🔴 external | 1 | 0 |
 | `groupe-millet.com` | 🔴 external | 1 | 0 |
+| `localhost:54321` | 🔴 external | 1 | 0 |
 | `maps.app.goo.gl` | 🔴 external | 69 | 0 |
 | `mon-installateur.atlantic.fr` | 🔴 external | 1 | 0 |
 | `new.abb.com` | 🔴 external | 1 | 0 |

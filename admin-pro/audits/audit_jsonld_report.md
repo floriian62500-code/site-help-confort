@@ -1,18 +1,19 @@
-# Audit JSON-LD — 2026-10-07 09:57
+# Audit JSON-LD — 2026-10-08 10:09
 
 > Audit local des blocs `<script type="application/ld+json">` de chaque page HTML.
 > Lancement : `python3 admin-pro/audits/audit_jsonld.py`
 
 ## Synthèse
 
-- Pages auditées : **118**
+- Pages auditées : **119**
 - Pages avec JSON-LD : **112**
-- Pages sans JSON-LD : **6**
+- Pages sans JSON-LD : **7**
 - Erreurs de syntaxe JSON : **0**
 - Avertissements (champs manquants/dupliqués) : **793**
 
 ## ⚠️ Pages sans aucun JSON-LD
 
+- `catalogue.html`
 - `espace-client-dashboard.html`
 - `fournisseur.html`
 - `googlef09a1887914c5a23.html`

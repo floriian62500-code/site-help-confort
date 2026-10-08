@@ -1,8 +1,8 @@
-# Audit FAQPage doublon — 2026-10-07 09:58
+# Audit FAQPage doublon — 2026-10-08 10:10
 
-- **Pages scannées** : 117
+- **Pages scannées** : 118
 - **Pages avec 1 bloc FAQPage** : 32
-- **Pages sans FAQPage** : 85
+- **Pages sans FAQPage** : 86
 - **Pages avec > 1 bloc FAQPage (alertes)** : 0
 
 > Google recommande un seul bloc `FAQPage` par URL. Au-delà, le rich result peut être ignoré silencieusement.

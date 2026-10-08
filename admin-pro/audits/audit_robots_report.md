@@ -1,6 +1,6 @@
 # 🤖 Audit robots.txt + sitemap.xml — P10
 
-*Généré le 2026-10-07 09:58 — `admin-pro/audits/audit_robots.py`*
+*Généré le 2026-10-08 10:10 — `admin-pro/audits/audit_robots.py`*
 
 **Findings totaux** : 1 (0 critical, 0 high, 1 med, 0 low)
 **Vérifications OK** : 8
@@ -19,7 +19,7 @@
 
 ## 🚨 Findings
 
-- 🟡 **MED** : 37 page(s) racine absente(s) du sitemap
+- 🟡 **MED** : 38 page(s) racine absente(s) du sitemap
   - `blog-comment-detecter-fuite-eau-cachee.html`
   - `blog-cout-renovation-salle-de-bain.html`
   - `blog-debouchage-canalisation-furet-hydrocurage.html`

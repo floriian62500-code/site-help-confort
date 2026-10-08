@@ -1,6 +1,6 @@
-# Audit Leaflet map init — 2026-10-07 09:58
+# Audit Leaflet map init — 2026-10-08 10:10
 
-- **Pages scannées** : 117
+- **Pages scannées** : 118
 - **Pages avec init Leaflet (`L.map(` / `new L.Map(`)** : 1
 - **Pages avec garde anti-tuiles-grises** : 1
 - **Alertes (init sans garde)** : 0

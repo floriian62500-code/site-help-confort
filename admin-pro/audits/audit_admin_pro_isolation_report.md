@@ -1,10 +1,10 @@
 # Audit admin-pro isolation — Rapport
 
-_Généré le 2026-10-07 09:58_
+_Généré le 2026-10-08 10:10_
 
 ## Synthèse
 
-- Pages publiques scannées : **137**
+- Pages publiques scannées : **138**
 - Pages avec fuite admin-pro : **1**
 - Total fuites détectées : **1**
 - Whitelist : `admin-pro/index.html, admin/index.html`
@@ -15,5 +15,5 @@ Ces pages publiques référencent en clair une URL `admin-pro/...html` (ou `admi
 
 ### `nos-prestations.html` — 1 fuite(s)
 
-- Ligne 1007 → `admin-pro/services.html`  
+- Ligne 923 → `admin-pro/services.html`  
   `admin-pro/services.html`

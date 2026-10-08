@@ -1,11 +1,11 @@
 {
   "audit": "typo_fr",
-  "generated_at": "2026-10-07T09:58:32",
+  "generated_at": "2026-10-08T10:10:45",
   "threshold": 5,
   "stats": {
-    "pages_audited": 116,
+    "pages_audited": 117,
     "pages_alerted": 72,
-    "total_fautifs": 1048,
+    "total_fautifs": 1051,
     "code_distribution": {
       "TYPO-FR": 72
     }
@@ -166,7 +166,7 @@
           "detail": "26 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…Canalisation bouchée : furet, hydrocurage ou pr…",
-            "…t, hydrocurage ou produit ? | Blog HELP Confort Sain…",
+            "…t, hydrocurage ou produit ? | Blog HELP Confort Dépa…",
             "…erie Canalisation bouchée : furet, hydrocurage ou pr…",
             "…t, hydrocurage ou produit ? Évier qui se vide en 10…",
             "…orde, WC qui ne tire plus : votre canalisation est b…",
@@ -183,25 +183,25 @@
     },
     {
       "file": "blog-entretien-chaudiere-annuel-obligatoire.html",
-      "fautifs": 13,
+      "fautifs": 12,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "13 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "12 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…Entretien chaudière : pourquoi c'est obligatoi…",
             "…ffage Entretien chaudière : pourquoi c'est obligatoi…",
-            "…e passe si vous l'oubliez ? Spoiler : amende ET refu…",
-            "…vous l'oubliez ? Spoiler : amende ET refus d'indemn…",
-            "…rticuliers). Mais surtout : votre assurance habitati…",
-            "…e Entretien chaudière gaz : 120 € à 180 € TTC Entret…",
-            "…Entretien chaudière fioul : 150 € à 220 € TTC Entret…",
-            "…chaudière à condensation : 130 € à 200 € Contrat d'…",
-            "…ien annuel (Essentiel HC) : 12,90 € / mois = 154,80…",
+            "…cas de défaut d'entretien ? La réglementation ne pré…",
+            "…es conséquences pratiques : en location, le bailleur…",
+            "…e Entretien chaudière gaz : 121 € TTC Entretien chau…",
+            "…Entretien chaudière fioul : 178,20 € TTC (218,90 € T…",
+            "…chaudière à condensation : sur devis, après visite…",
+            "…en annuel (formule BASIC) : 9,90 € TTC / mois = 118,…",
             "…l'intervention. Avantages : entretien automatique pr…",
             "…emplacement chaudière gaz : aides 2026 et démarches…",
-            "…e bain pour senior ou PMR : guide complet 🔑 Porte cl…"
+            "…e bain pour senior ou PMR : guide complet 🔑 Porte cl…",
+            "…rte claquée ou clé perdue : 5 réflexes avant d'appel…"
           ]
         }
       ]
@@ -216,7 +216,7 @@
           "detail": "23 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…Fenêtres double vitrage : PVC, alu ou bois ? | Blo…",
-            "…itrage : PVC, alu ou bois ? | Blog HELP Confort Sain…",
+            "…itrage : PVC, alu ou bois ? | Blog HELP Confort Dépa…",
             "…e Fenêtres double vitrage : PVC, alu ou bois ? Rempl…",
             "…itrage : PVC, alu ou bois ? Remplacer vos fenêtres s…",
             "…ge. Mais PVC, alu ou bois ? Voici le comparatif sans…",
@@ -431,19 +431,25 @@
       "findings": []
     },
     {
+      "file": "catalogue.html",
+      "fautifs": 0,
+      "findings": []
+    },
+    {
       "file": "chauffagiste-boulogne-sur-mer.html",
-      "fautifs": 6,
+      "fautifs": 7,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "6 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "7 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…retien annuel obligatoire : nos chauffagistes HELP C…",
             "…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…",
             "…panne ? Plus d'eau chaude ? Je vous mets en relation…",
             "…uffage dans le Boulonnais : beaucoup de chaudières g…",
             "…+ factures qui s'envolent ? Un désembouage du circui…",
+            "…s s&apos;occupent de tout : la visite annuelle, l&ap…",
             "…s de chauffage, fuite gaz : intervention rapide pour…"
           ]
         }
@@ -451,12 +457,12 @@
     },
     {
       "file": "chauffagiste-calais.html",
-      "fautifs": 8,
+      "fautifs": 9,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "8 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "9 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…etien annuel, désembouage : nos chauffagistes HELP C…",
             "…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…",
@@ -465,6 +471,7 @@
             "…e). Les modèles fréquents : Frisquet Hydromotrix, Sa…",
             "…le Calaisis qui incluent : passage annuel, attestat…",
             "…a + de 12 ans, anticipez : un désembouage circuit o…",
+            "…s s&apos;occupent de tout : la visite annuelle, l&ap…",
             "…s de chauffage, fuite gaz : intervention rapide pour…"
           ]
         }
@@ -477,8 +484,22 @@
     },
     {
       "file": "chauffagiste-dunkerque.html",
-      "fautifs": 5,
-      "findings": []
+      "fautifs": 6,
+      "findings": [
+        {
+          "code": "TYPO-FR",
+          "severity": "warning",
+          "detail": "6 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "samples": [
+            "…etien annuel, désembouage : nos chauffagistes HELP C…",
+            "…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…",
+            "…panne ? Plus d'eau chaude ? Je vous mets en relation…",
+            "…16h Chauffage à Dunkerque : nos retours terrain Beau…",
+            "…s s&apos;occupent de tout : la visite annuelle, l&ap…",
+            "…s de chauffage, fuite gaz : intervention rapide pour…"
+          ]
+        }
+      ]
     },
     {
       "file": "chauffagiste-marck.html",
@@ -492,16 +513,17 @@
     },
     {
       "file": "chauffagiste-saint-omer.html",
-      "fautifs": 15,
+      "fautifs": 16,
       "findings": [
         {
           "code": "TYPO-FR",
           "severity": "warning",
-          "detail": "15 occurrences de ponctuation haute (?!:;») sans espace insécable.",
+          "detail": "16 occurrences de ponctuation haute (?!:;») sans espace insécable.",
           "samples": [
             "…retien annuel obligatoire : nos chauffagistes interv…",
             "…dép. 👋 Chaudière en panne ? Plus d'eau chaude ? Je v…",
             "…panne ? Plus d'eau chaude ? Je vous mets en relation…",
+            "…s s&apos;occupent de tout : la visite annuelle, l&ap…",
             "…rt. Pas de sous-traitance : un seul interlocuteur, u…",
             "…s de chauffage, fuite gaz : intervention rapide pour…",
             "…lariés s'occupent de tout : la visite annuelle, l'at…",
@@ -509,8 +531,7 @@
             "…annuel des chaudières gaz ? Oui. Nos chauffagistes r…",
             "…vous les pompes à chaleur ? Oui. Nous installons pom…",
             "…ière qui ne s'allume plus ? Oui, nos techniciens int…",
-            "…sur tous types de pannes : ne s'allume plus, s'arrê…",
-            "…ontrat d'entretien annuel ? Oui, plusieurs formules…"
+            "…sur tous types de pannes : ne s'allume plus, s'arrê…"
           ]
         }
       ]
@@ -1120,7 +1141,7 @@
             "…t inclut systématiquement : Vérification du corps de…",
             "…urant 4. Combien ça coûte ? Le prix moyen d'un entre…",
             "…TC (forfait entretien gaz : contrôle, nettoyage, vér…",
-            "…st encore plus avantageux : à partir de 9 € HT/mois…",
+            "…st encore plus avantageux : à partir de 9,90 € TTC/m…",
             "…nces peuvent être lourdes : Refus de prise en charge…"
           ]
         }
@@ -1183,24 +1204,8 @@
     },
     {
       "file": "index.html",
-      "fautifs": 8,
-      "findings": [
-        {
-          "code": "TYPO-FR",
-          "severity": "warning",
-          "detail": "8 occurrences de ponctuation haute (?!:;») sans espace insécable.",
-          "samples": [
-            "…r avec un seul engagement : diagnostic clair, devis…",
-            "…pond rapidement 👋 Bonjour ! Je vous guide en 4 étape…",
-            "…Une question vous bloque ? Notre équipe finalise vo…",
-            "…avec vous. Besoin d'aide ? 03 66 10 01 34 1 Type de…",
-            "…ion Quel est votre besoin ? 3 voies selon votre situ…",
-            "…(s) métier(s) concerné(s) ? * — plusieurs choix poss…",
-            "…cture détaillée Important : vous réservez ici une pr…",
-            "…-vous être pris en charge ? Notre équipe est mobilis…"
-          ]
-        }
-      ]
+      "fautifs": 5,
+      "findings": []
     },
     {
       "file": "maprimeadapt.html",
@@ -1305,7 +1310,7 @@
     },
     {
       "file": "nos-prestations.html",
-      "fautifs": 0,
+      "fautifs": 3,
       "findings": []
     },
     {

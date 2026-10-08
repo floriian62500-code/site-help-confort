@@ -1,12 +1,12 @@
-# Audit duplicate IDs — 2026-10-07 09:57
+# Audit duplicate IDs — 2026-10-08 10:09
 
 Sonde #63 : détecte les `id="X"` répétés dans une page (HTML invalide) et les ids partagés par > 10 pages (potentielle factorisation).
 
-- **Pages scannées** : 117
-- **IDs totaux (toutes pages)** : 1110
-- **IDs uniques (clés)** : 255
+- **Pages scannées** : 118
+- **IDs totaux (toutes pages)** : 1334
+- **IDs uniques (clés)** : 240
 - **🚨 Pages avec ids dupliqués** : 1
-- **🟠 IDs partagés par ≥ 10 pages** : 20
+- **🟠 IDs partagés par ≥ 10 pages** : 22
 
 ## 🚨 IDs dupliqués dans la même page (HTML invalide)
 
@@ -22,6 +22,8 @@ Si c'est un header/footer/banner attendu, ajouter l'id à
 
 | ID | Nb pages | Usages totaux |
 |----|----------|---------------|
+| `hcMegaMetiers` | 114 | 114 |
+| `hcNavMobile` | 114 | 114 |
 | `hc-avis-live` | 31 | 32 |
 | `m-modal-detail-brands` | 26 | 26 |
 | `m-modal-detail-brands-block` | 26 | 26 |

@@ -1,15 +1,16 @@
-# 🔦 Audit Lighthouse local — 2026-10-07 09:57
+# 🔦 Audit Lighthouse local — 2026-10-08 10:09
 
-**117 pages auditées** · **7 erreurs** · **76 warnings** · **Score moyen 97/100**
+**118 pages auditées** · **7 erreurs** · **77 warnings** · **Score moyen 97/100**
 
 ## 📊 Résumé par page
 
 | Page | Score | Erreurs | Warnings |
 |------|------:|--------:|---------:|
 | `googlef09a1887914c5a23.html` | **0/100** | 7 | 3 |
-| `maprimeadapt.html` | **84/100** | 0 | 4 |
 | `espace-client-dashboard.html` | **88/100** | 0 | 3 |
+| `maprimeadapt.html` | **88/100** | 0 | 3 |
 | `notre-equipe.html` | **88/100** | 0 | 3 |
+| `catalogue.html` | **92/100** | 0 | 2 |
 | `partenaire.html` | **92/100** | 0 | 2 |
 | `plombier-coudekerque-branche.html` | **92/100** | 0 | 2 |
 | `plombier-grande-synthe.html` | **92/100** | 0 | 2 |
@@ -142,14 +143,6 @@
 - ⚠️ og:image manquant
 - ⚠️ Aucun rel=preconnect
 
-### maprimeadapt.html — 84/100
-
-**Warnings :**
-- ⚠️ SEO title long (72 chars)
-- ⚠️ meta description longue (191 chars)
-- ⚠️ og:image manquant
-- ⚠️ Aucun rel=preconnect
-
 ### espace-client-dashboard.html — 88/100
 
 **Warnings :**
@@ -157,12 +150,25 @@
 - ⚠️ og:image manquant
 - ⚠️ Aucun rel=preconnect
 
+### maprimeadapt.html — 88/100
+
+**Warnings :**
+- ⚠️ SEO title long (72 chars)
+- ⚠️ meta description longue (191 chars)
+- ⚠️ og:image manquant
+
 ### notre-equipe.html — 88/100
 
 **Warnings :**
 - ⚠️ SEO title long (68 chars)
 - ⚠️ meta description longue (178 chars)
 - ⚠️ Aucun rel=preconnect
+
+### catalogue.html — 92/100
+
+**Warnings :**
+- ⚠️ meta description longue (188 chars)
+- ⚠️ og:image manquant
 
 ### partenaire.html — 92/100
 

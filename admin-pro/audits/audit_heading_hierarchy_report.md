@@ -1,13 +1,13 @@
 # Audit Heading hierarchy — Rapport
 
-Généré le : `2026-10-07T09:58:31`
+Généré le : `2026-10-08T10:10:44`
 
 Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il y a exactement un <h1>, et que la séquence commence bien par un <h1>.
 
 ## Synthèse
 
-- Pages auditées : **116**
-- Pages clean : **110**
+- Pages auditées : **117**
+- Pages clean : **111**
 - Pages avec erreur(s) : **1**
 - Pages avec warning(s) : **6**
 - Findings totaux : **7**
@@ -86,6 +86,7 @@ Sonde MEMOIRE #53 — vérifie qu'il n'y a pas de saut de niveau h1→h3, qu'il 
 - `blog-remplacement-chaudiere-gaz-aides-2026.html`
 - `blog.html`
 - `carrieres.html`
+- `catalogue.html`
 - `chauffagiste-boulogne-sur-mer.html`
 - `chauffagiste-calais.html`
 - `chauffagiste-coudekerque-branche.html`

@@ -1,8 +1,8 @@
-# Audit Open Graph images — 2026-10-07 09:58
+# Audit Open Graph images — 2026-10-08 10:10
 
-- **Pages scannées** : 116
+- **Pages scannées** : 117
 - **Pages avec og:image OK** : 110
-- **Pages alertées** : 6
+- **Pages alertées** : 7
 - **OG image externe (non testée)** : 0
 - **Pillow disponible** : oui
 - **Cible** : 1200×630 px ±5%
@@ -11,6 +11,7 @@
 
 | Page | Statut | URL | Dimensions | Détail |
 |------|--------|-----|------------|--------|
+| `catalogue.html` | **MISSING-OG-IMAGE** | `(absent)` | — | Pas de <meta property="og:image"> sur la page |
 | `espace-client-dashboard.html` | **MISSING-OG-IMAGE** | `(absent)` | — | Pas de <meta property="og:image"> sur la page |
 | `googlef09a1887914c5a23.html` | **MISSING-OG-IMAGE** | `(absent)` | — | Pas de <meta property="og:image"> sur la page |
 | `maprimeadapt.html` | **MISSING-OG-IMAGE** | `(absent)` | — | Pas de <meta property="og:image"> sur la page |
@@ -21,6 +22,6 @@
 ## Récap par statut
 
 - **ok** : 110
-- **MISSING-OG-IMAGE** : 4
+- **MISSING-OG-IMAGE** : 5
 - **MISSING-FILE** : 1
 - **WRONG-SIZE** : 1

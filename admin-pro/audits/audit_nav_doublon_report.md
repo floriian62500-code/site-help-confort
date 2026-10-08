@@ -1,11 +1,11 @@
 # 🧭 Audit double nav identique — sonde #51
 
-_Généré le 2026-10-07 09:58_
+_Généré le 2026-10-08 10:10_
 
 - Source nav : `index.html` (nav.hc-nav détectée)
-- Liens internes uniques scannés : **17**
-- Pages cibles lues : **17**
-- Pages cibles manquantes : **0**
+- Liens internes uniques scannés : **16**
+- Pages cibles lues : **0**
+- Pages cibles manquantes : **16**
 - Findings (similarité ≥ 0.70 sur H1 ou ≥ 0.80 combiné) : **0**
 
 Règle : si 2 entrées de la nav principale pointent vers des pages 
@@ -18,20 +18,19 @@ ranker).
 
 ## 📋 Liens nav scannés
 
-- ✓ `index.html` — « Accueil »
-- ✓ `zones-intervention.html` — « Zones d'intervention »
-- ✓ `nos-prestations.html` — « Nos prestations »
-- ✓ `realisations.html` — « Actu & réalisations »
-- ✓ `a-propos.html` — « À propos »
-- ✓ `pro.html` — « Espace Pro »
-- ✓ `contact.html` — « Contact »
-- ✓ `plombier-saint-omer.html` — « Plomberie »
-- ✓ `chauffagiste-saint-omer.html` — « Chauffage »
-- ✓ `electricien-saint-omer.html` — « Électricité »
-- ✓ `serrurier-saint-omer.html` — « Serrurerie »
-- ✓ `vitrier-saint-omer.html` — « Vitrerie »
-- ✓ `menuisier-saint-omer.html` — « Menuiserie »
-- ✓ `travaux-saint-omer.html` — « Rénovation »
-- ✓ `volets-saint-omer.html` — « Volets »
-- ✓ `pmr-saint-omer.html` — « Adaptation PMR »
-- ✓ `contrats-entretien.html` — « Contrats d'entretien → »
+- ❌ MANQUANT `/zones-intervention.html` — « Zones d'intervention »
+- ❌ MANQUANT `/nos-prestations.html` — « Nos prestations »
+- ❌ MANQUANT `/realisations.html` — « Actu & réalisations »
+- ❌ MANQUANT `/a-propos.html` — « À propos »
+- ❌ MANQUANT `/pro.html` — « Espace Pro »
+- ❌ MANQUANT `/contact.html` — « Contact »
+- ❌ MANQUANT `/plombier-saint-omer.html` — « Plomberie »
+- ❌ MANQUANT `/chauffagiste-saint-omer.html` — « Chauffage »
+- ❌ MANQUANT `/electricien-saint-omer.html` — « Électricité »
+- ❌ MANQUANT `/serrurier-saint-omer.html` — « Serrurerie »
+- ❌ MANQUANT `/vitrier-saint-omer.html` — « Vitrerie »
+- ❌ MANQUANT `/menuisier-saint-omer.html` — « Menuiserie »
+- ❌ MANQUANT `/travaux-saint-omer.html` — « Rénovation »
+- ❌ MANQUANT `/volets-saint-omer.html` — « Volets »
+- ❌ MANQUANT `/pmr-saint-omer.html` — « Adaptation PMR »
+- ❌ MANQUANT `/contrats-entretien.html` — « Contrats d'entretien → »

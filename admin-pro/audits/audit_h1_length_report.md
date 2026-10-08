@@ -1,16 +1,16 @@
 # Audit H1 length — Rapport
 
-_Généré le 2026-10-07 09:58_
+_Généré le 2026-10-08 10:10_
 
 ## Synthèse
 
-- Pages scannées : **136**
+- Pages scannées : **137**
 - ✅ OK (20-70 chars) : **93**
 - ⚠️  Warnings (h1 multiples, hors longueur) : **0**
-- ❌ Erreurs (< 20 ou > 70) : **40**
+- ❌ Erreurs (< 20 ou > 70) : **41**
 - ℹ️  Sans h1 ou parse error : **3**
-- Findings totaux : **43**
-  - Erreurs : 40
+- Findings totaux : **44**
+  - Erreurs : 41
   - Avertissements : 3
 
 ## Bornes appliquées
@@ -75,6 +75,10 @@ _Généré le 2026-10-07 09:58_
 ### `carrieres.html`  (80 chars, n_h1=1)
 > Rejoignez une équipe qui pense différemment l'artisanat moderne, ça commence ici
 - ❌ H1-TOO-LONG : 80 chars > 70
+
+### `catalogue.html`  (13 chars, n_h1=1)
+> Votre demande
+- ❌ H1-TOO-SHORT : 13 chars < 20
 
 ### `chauffagiste-coudekerque-branche.html`  (82 chars, n_h1=1)
 > Chauffagiste Coudekerque-Branche chaudière, entretien, pompe à chaleur, radiateurs

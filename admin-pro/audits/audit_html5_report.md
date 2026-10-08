@@ -1,15 +1,15 @@
-# Audit HTML5 — 2026-10-07 09:57
+# Audit HTML5 — 2026-10-08 10:09
 
 > Audit local rapide HTML5 + a11y de base. Lancement : `python3 admin-pro/audits/audit_html5.py`
 > ⚠️ Ce n'est pas un substitut au validateur W3C officiel, mais il pré-filtre les erreurs évidentes.
 
 ## Synthèse
 
-- Pages auditées : **118**
+- Pages auditées : **119**
 - Pages avec erreurs : **3**
-- Pages avec warnings : **10**
+- Pages avec warnings : **11**
 - Total erreurs : **11**
-- Total warnings : **10**
+- Total warnings : **11**
 
 ## Top patterns d'erreurs
 
@@ -47,7 +47,7 @@
 ### `index.html`
 
 - ❌ 1 id(s) dupliqué(s) : #hc-avis-live×2
-- ℹ️ 18 <img> avec alt vide (OK si décoratif)
+- ℹ️ 17 <img> avec alt vide (OK si décoratif)
 
 ### `blog-cout-renovation-salle-de-bain.html`
 
@@ -69,13 +69,19 @@
 - ⚠️ <title> long (92 chars, >70 recommandé)
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
+### `catalogue.html`
+
+- ⚠️ meta description longue (188 chars, >170 → tronquée)
+
 ### `maprimeadapt.html`
 
 - ⚠️ meta description longue (191 chars, >170 → tronquée)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `notre-equipe.html`
 
 - ⚠️ meta description longue (178 chars, >170 → tronquée)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `plombier-coudekerque-branche.html`
 
@@ -114,7 +120,11 @@
 
 ### `aides.html`
 
-- ℹ️ 8 <img> avec alt vide (OK si décoratif)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `avant-apres.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `blog-comment-detecter-fuite-eau-cachee.html`
 
@@ -248,6 +258,10 @@
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
+### `devis-express.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
 ### `electricien-boulogne-sur-mer.html`
 
 - ℹ️ 10 <img> avec alt vide (OK si décoratif)
@@ -272,9 +286,14 @@
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
+### `faq.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
 ### `fournisseur.html`
 
 - ℹ️ aucun <h1> statique — injecté par JS (page dynamique)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `garanties.html`
 
@@ -335,8 +354,13 @@
 ### `partenaire.html`
 
 - ℹ️ aucun <h1> statique — injecté par JS (page dynamique)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `partenaires.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `plan-du-site.html`
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
@@ -396,9 +420,14 @@
 
 - ℹ️ 15 <img> avec alt vide (OK si décoratif)
 
+### `processus.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
 ### `realisation.html`
 
 - ℹ️ aucun <h1> statique — injecté par JS (page dynamique)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `realisations.html`
 
@@ -449,6 +478,10 @@
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `tarifs.html`
+
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
+
+### `temoignages.html`
 
 - ℹ️ 9 <img> avec alt vide (OK si décoratif)
 

@@ -1,16 +1,16 @@
 # Audit meta description length — Rapport
 
-_Généré le 2026-10-07 09:58_
+_Généré le 2026-10-08 10:10_
 
 ## Synthèse
 
-- Pages scannées : **136**
+- Pages scannées : **137**
 - ✅ OK (120-158 chars) : **96**
 - ⚠️  Warnings (acceptable mais hors cible) : **17**
-- ❌ Erreurs (< 70 ou > 160) : **22**
+- ❌ Erreurs (< 70 ou > 160) : **23**
 - ℹ️  Sans description : **1**
-- Findings totaux : **40**
-  - Erreurs : 22
+- Findings totaux : **41**
+  - Erreurs : 23
   - Avertissements : 18
 
 ## Bornes appliquées
@@ -40,6 +40,10 @@ _Généré le 2026-10-07 09:58_
 ### `actualites/2026-05-19-tableau-electrique-aux-normes-nf-c-15-100.html`  (174 chars)
 > Différentiel 30 mA, prises terre, sections câbles : les points clés pour vérifier la conformité de votre tableau électrique NF C 15-100. Diagnostic à Saint-Omer et Dunkerque.
 - ❌ DESC-TOO-LONG : 174 chars > 160
+
+### `catalogue.html`  (188 chars)
+> Demandez une intervention ou un devis à HELP Confort, agence de Saint-Omer : prix fermes affichés en cours de demande, techniciens salariés, interlocuteur humain sur toute la Côte d'Opale.
+- ❌ DESC-TOO-LONG : 188 chars > 160
 
 ### `chauffagiste-saint-omer.html`  (162 chars)
 > Chauffagiste à Saint-Omer & Dunkerque : entretien chaudière, dépannage rapide, contrats d'entretien annuels — forfait transparent, devis gratuit. ☎ 03 66 10 01 34
