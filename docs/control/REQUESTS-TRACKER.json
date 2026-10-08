@@ -30,7 +30,7 @@
   "READY_FOR_FLORIAN_VISUAL"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-053",
+ "prochain_id": "REQ-20260926-055",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -1463,6 +1463,58 @@
    "human_gate": null,
    "blocked_by": null,
    "next_action": "Controle ChatGPT de la PR #54, puis merge. Je poursuis l experience contrats des 4 pages chauffagiste.",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null,
+   "decide_par": null
+  },
+  {
+   "request_id": "REQ-20260926-053",
+   "title": "Chauffage : teaser contrats absent des 4 pages, comparatif recopie sur 3, et deux pages en HT",
+   "priority": "P1",
+   "status": "READY_FOR_CONTROL",
+   "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-08-PROGRAMME-AUTONOME-APRES-PR55.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-08",
+   "acceptance_criteria": [
+    "les 4 pages chauffagiste portent le teaser",
+    "aucune carte detaillee recopiee",
+    "aucun prix de contrat en HT hors page canonique"
+   ],
+   "evidence_required": [
+    "verdicts prix-contrats et intention-unique",
+    "tableau HT -> TTC"
+   ],
+   "latest_sha": "PR #56, branche feat/contrats-experience (non fusionnee)",
+   "claude_outbox": "CLAUDE-2026-10-08-PR56-CHAUFFAGE.md",
+   "human_gate": null,
+   "blocked_by": null,
+   "next_action": "Controle ChatGPT de la PR #56. J enchaine sur la page contrats elle-meme (contrats 8/27).",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null,
+   "decide_par": null
+  },
+  {
+   "request_id": "REQ-20260926-054",
+   "title": "entretien-chaudiere.html : la garde demande sa suppression, je ne supprime pas de page",
+   "priority": "P3",
+   "status": "WAITING_FLORIAN",
+   "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-08-PR56-CHAUFFAGE.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-08",
+   "acceptance_criteria": [
+    "une seule page canonique pour l entretien chaudiere"
+   ],
+   "evidence_required": [
+    "liens entrants vers entretien-chaudiere.html",
+    "position SEO avant decision"
+   ],
+   "latest_sha": "constat sur main fd47aca3",
+   "claude_outbox": "CLAUDE-2026-10-08-PR56-CHAUFFAGE.md",
+   "human_gate": "Supprimer une page a des effets SEO (liens entrants, position acquise). Decision Florian : suppression + 301, ou garder la page et desactiver l assertion avec son motif.",
+   "blocked_by": null,
+   "next_action": "Decision de Florian.",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": null,
