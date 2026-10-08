@@ -87,9 +87,20 @@ ok('la page de service ne vend pas le contrat : elle présente les formules et r
   !/Souscrire (BASIC|CONFORT|SÉCURITÉ)/.test(visible(CANON_SERVICE)) &&
   new RegExp('href="[^"]*' + CANON_CONTRAT).test(visible(CANON_SERVICE)));
 // La landing supprimée ne doit pas se reformer ailleurs : aucune autre page ne reprend son rôle.
-ok('la landing autonome supprimée n’est reconstruite nulle part',
-  !pages.includes('entretien-chaudiere.html') &&
-  !pages.some((f) => /data-hc-cta="landing_chaudiere_(hero|side)"/.test(lire(f))));
+// Décision Florian du 2026-10-08 : on ne supprime pas le fichier, on consolide la route. Une 404
+// perdrait les liens entrants ; une 301 forcée les reporte sur la page métier canonique. Ce qui
+// doit être vrai, c'est que l'ancienne adresse ne serve plus une page autonome et que rien n'y
+// renvoie — pas que le fichier ait disparu du disque.
+const redirections = lire('_redirects');
+// Les deux formes doivent être couvertes : Netlify sert aussi l'adresse sans `.html`, et un
+// visiteur peut arriver par l'une ou par l'autre.
+const routeConsolidee = ['/entretien-chaudiere.html', '/entretien-chaudiere']
+  .every((r) => redirections.includes(r + ' /chauffagiste-saint-omer.html#entretien 301!'));
+const lienVersAncienne = pages.filter((f) => f !== 'entretien-chaudiere.html' && /href="\/?entretien-chaudiere\.html/.test(lire(f)));
+ok('l’ancienne adresse ne sert plus de page autonome, et rien n’y renvoie',
+  routeConsolidee && lienVersAncienne.length === 0 &&
+  !pages.some((f) => /data-hc-cta="landing_chaudiere_(hero|side)"/.test(lire(f))),
+  !routeConsolidee ? 'pas de 301 forcée vers la page métier' : lienVersAncienne.join(', '));
 
 // ── 6. Les points d'entrée marketing visent les URL canoniques
 const home = visible('index.html');
