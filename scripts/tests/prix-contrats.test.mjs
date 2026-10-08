@@ -94,12 +94,16 @@ ok('aucun prix affiché pour une prestation absente du catalogue (ex. « chaudi�
   condensation.length === 0, condensation.join(', '));
 
 // ── 5. Le nom des formules doit être celui du catalogue
-const formules = new Set(Object.keys(ref.contrats_ttc_mois).map((s) => s.split('-')[1]?.toUpperCase()).filter(Boolean));
+const formules = new Set(Object.keys(ref.contrats_ttc_mois)
+  .map((s) => s.split('-')[1]?.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase()).filter(Boolean));
 const inventees = [];
 for (const p of pages) {
   for (const m of texte(p).matchAll(/formule\s+(?:«\s*)?([A-ZÉÈ][A-Za-zÉÈéèêî]{3,12})/g)) {
-    const nom = m[1].toUpperCase();
-    if (!formules.has(nom) && !['CHOISIR', 'ADAPTÉE', 'CONTRAT', 'ANNUELLE', 'IDÉALE'].includes(nom)) inventees.push(`${p} : « ${m[1]} »`);
+    // Le catalogue nomme la formule « SÉCURITÉ » (tier_label) mais son identifiant est
+    // « securite » : une page qui écrit le libellé exact ne doit pas être prise pour une
+    // invention. On compare sans les accents, des deux côtés.
+    const nom = m[1].normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
+    if (!formules.has(nom) && !['CHOISIR', 'ADAPTEE', 'CONTRAT', 'ANNUELLE', 'IDEALE'].includes(nom)) inventees.push(`${p} : « ${m[1]} »`);
   }
 }
 ok(`aucune formule de contrat inventée (catalogue : ${[...formules].join(', ')})`, inventees.length === 0,
