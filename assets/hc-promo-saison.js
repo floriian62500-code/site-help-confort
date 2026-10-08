@@ -41,6 +41,7 @@
       requestAnimationFrame(function () { el.classList.add('est-visible'); });
     });
     mesurer(el);
+    cohabiter(el);
   }
 
   /* Mesure d'audience — reprise telle quelle de l'accueil (5733153347), pour ne pas rompre
@@ -75,6 +76,22 @@
         target: String(a.getAttribute('href') || '').replace(/[^a-z-]/g, '').slice(0, 40)
       });
     });
+  }
+
+  // Le bloc contrats de la page metier propose deja l'entretien, avec son propre appel a l'action.
+  // Tant qu'il est a l'ecran, l'encart se range : il recouvrait son texte et son bouton principal
+  // (releve du 2026-10-08, a 1440 comme a 390). Il revient des que le bloc sort du champ.
+  function cohabiter(box) {
+    if (typeof document.querySelectorAll !== 'function' || !('IntersectionObserver' in window)) return;
+    var blocs = document.querySelectorAll('.ctp, .m-contrats-premium');
+    if (!blocs.length) return;
+    var vus = 0;
+    var io = new IntersectionObserver(function (entrees) {
+      entrees.forEach(function (e) { vus += e.isIntersecting ? 1 : -1; });
+      if (vus < 0) vus = 0;
+      box.classList.toggle('hcs-range', vus > 0);
+    }, { threshold: 0 });
+    for (var i = 0; i < blocs.length; i++) io.observe(blocs[i]);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', poser);

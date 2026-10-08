@@ -2,6 +2,13 @@
 # racine. Sans cette regle, le fragment serait servi comme une page.
 /partials/* /404.html 404!
 
+# Ancienne page autonome « entretien chaudiere » : dupliquee de la page metier, et elle portait
+# encore Dunkerque en agence et les granules. On consolide vers la page canonique plutot que de
+# la supprimer : une 404 perdrait les liens entrants. Le « ! » passe devant le fichier statique.
+/entretien-chaudiere.html /chauffagiste-saint-omer.html#entretien 301!
+/entretien-chaudiere /chauffagiste-saint-omer.html#entretien 301!
+
+
 # Dossiers internes : le site est publie depuis la racine, donc tout fichier suivi part chez
 # Netlify. Seule une regle terminee par « ! » passe devant le fichier statique ; le `ignore` de
 # netlify.toml ne decide que de reconstruire ou non. Releve du 2026-10-07 sur depan59-62.fr :
