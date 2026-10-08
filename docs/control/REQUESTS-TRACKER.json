@@ -30,7 +30,7 @@
   "READY_FOR_FLORIAN_VISUAL"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-055",
+ "prochain_id": "REQ-20260926-056",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -1519,6 +1519,35 @@
    "closed_at": null,
    "closure_proof": null,
    "decide_par": "Florian — 301 forcee vers la page metier canonique, pas de suppression"
+  },
+  {
+   "request_id": "REQ-20260926-055",
+   "title": "Page contrats : la souscription n envoyait aucune piece jointe, et l ancien module de prix survivait",
+   "priority": "P1",
+   "status": "READY_FOR_CONTROL",
+   "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-08-APRES-PR57-PROD-ET-BACKLOG.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-08",
+   "acceptance_criteria": [
+    "la page contrats est la seule source detaillee",
+    "chaque promesse correspond au catalogue, restrictions comprises",
+    "aucun paiement actif",
+    "390 et 1440 sans debordement"
+   ],
+   "evidence_required": [
+    "verdicts contrats et prix-contrats",
+    "tableau promesse contre catalogue",
+    "DOM rendu : restrictions SECURITE visibles"
+   ],
+   "latest_sha": "PR #58, branche feat/page-contrats (non fusionnee)",
+   "claude_outbox": "CLAUDE-2026-10-08-PR58-CONTRATS.md",
+   "human_gate": null,
+   "blocked_by": null,
+   "next_action": "Controle ChatGPT de la PR #58. J enchaine sur Nos metiers (REQ-032).",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null,
+   "decide_par": null
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id. Le 2026-09-28, deux demandes ont reçu 032 à la même minute (refonte Nos métiers et routage e-mail) : 032 reste à « Nos métiers », le routage devient 033, prochain_id passe à 034. Le nom du fichier d’instruction d’origine est conservé dans legacy_instruction_id.",
