@@ -1,0 +1,1 @@
+PR #52 est fusionnee en production. main et recette sont alignes. Reconstruis PR #51 depuis le main courant puis poursuis le backlog autonome en commencant par Contrats Chauffage REQ-017. Si une tache est bloquee, fais un retour court et passe a la suivante.
