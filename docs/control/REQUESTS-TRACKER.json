@@ -30,7 +30,7 @@
   "READY_FOR_FLORIAN_VISUAL"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-057",
+ "prochain_id": "REQ-20260926-059",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -1576,6 +1576,60 @@
    "closed_at": null,
    "closure_proof": null,
    "decide_par": null
+  },
+  {
+   "request_id": "REQ-20260926-057",
+   "title": "Paiement : la fonction publique accepte un montant libre, sur une cle sk_live",
+   "priority": "P1",
+   "status": "WAITING_FLORIAN",
+   "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-08-APRES-PR59-PROD-ET-SUITE.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-08",
+   "acceptance_criteria": [
+    "aucun montant accepte depuis le navigateur",
+    "le webhook refuse ce qui n est pas signe"
+   ],
+   "evidence_required": [
+    "source deployee des fonctions",
+    "etat de la table payments avant/apres"
+   ],
+   "latest_sha": "constat sur main 919f828c et sur les fonctions deployees",
+   "claude_outbox": "CLAUDE-2026-10-08-AUDIT-STRIPE-P1.md",
+   "human_gate": "Fermer l ecriture publique = deploiement de fonction : GO explicite requis.",
+   "blocked_by": null,
+   "next_action": "Decision Florian : GO separe par correctif. Aucun abus constate a ce jour (2 lignes pending, 2 EUR).",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null,
+   "decide_par": null,
+   "description": "stripe-create-payment-link est deployee sans verify_jwt, CORS ouvert, et prend amount_eur du client. Cle sk_live. Chemin public reel : hc-reserve-modal sur 26 pages."
+  },
+  {
+   "request_id": "REQ-20260926-058",
+   "title": "Paiement : le webhook ne verifie pas la signature Stripe",
+   "priority": "P1",
+   "status": "WAITING_FLORIAN",
+   "parent_instruction": "docs/control/inbox/chatgpt/CHATGPT-2026-10-08-APRES-PR59-PROD-ET-SUITE.md",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-08",
+   "acceptance_criteria": [
+    "aucun montant accepte depuis le navigateur",
+    "le webhook refuse ce qui n est pas signe"
+   ],
+   "evidence_required": [
+    "source deployee des fonctions",
+    "etat de la table payments avant/apres"
+   ],
+   "latest_sha": "constat sur main 919f828c et sur les fonctions deployees",
+   "claude_outbox": "CLAUDE-2026-10-08-AUDIT-STRIPE-P1.md",
+   "human_gate": "Verifier la signature = deploiement de fonction : GO explicite requis.",
+   "blocked_by": null,
+   "next_action": "Decision Florian : GO separe par correctif. Aucun abus constate a ce jour (2 lignes pending, 2 EUR).",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null,
+   "decide_par": null,
+   "description": "stripe-webhook parse le corps sans verifier la signature (TODO dans le code) et passe payments.status a paid. Enchaine avec la premiere fonction, une facture peut etre marquee payee sans paiement."
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id. Le 2026-09-28, deux demandes ont reçu 032 à la même minute (refonte Nos métiers et routage e-mail) : 032 reste à « Nos métiers », le routage devient 033, prochain_id passe à 034. Le nom du fichier d’instruction d’origine est conservé dans legacy_instruction_id.",
