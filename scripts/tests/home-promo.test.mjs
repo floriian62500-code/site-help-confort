@@ -28,7 +28,9 @@ const styleFlot = (css.match(/\.hcs-flot\{[^}]*\}/) || [''])[0];
 // titre : « Que souhaitez-vous faire ? » a ete reecrit en « Quel est votre besoin ? » le 2026-09-27
 // (reformulation volontaire, commit 5cf82c11 et suivants). Un test qui fige une formulation se
 // casse a chaque relecture editoriale, et ne protege rien de plus.
-const blocDecision = /class="mq-head"/.test(h) && /class="mq-grid"/.test(h) && (h.match(/class="mq-card /g) || []).length >= 3;
+// Depuis la PR #52 l'accueil n'embarque plus son propre parcours : le bloc d'entree renvoie au
+// tunnel canonique. On verifie ce bloc-la, par ses cartes d'entree.
+const blocDecision = /class="hrr-head"/.test(h) && /class="hrr-cards"/.test(h) && (h.match(/class="hrr-card /g) || []).length >= 2;
 ok('l’encart est produit une seule fois, et ne remplace pas le bloc d’aide à la décision de l’accueil',
   !!mod && (js.match(/id = 'entretien-saison'/g) || []).length === 1 && blocDecision);
 ok('il ne vit plus dans une page : ni section dans le flux, ni copie en dur dans l’accueil',
@@ -58,18 +60,27 @@ ok(`la seule exception est documentée et prouvée (${PROMO_HORS_PERIMETRE.join(
 ok('il arrive par le même canal que l’en-tête (une seule source, jamais recopiée dans une page)',
   /hc-promo-saison\.css\?v=/.test(lire('index.html')) && /hc-promo-saison\.js\?v=/.test(lire('index.html')));
 
-ok('1 message, 1 bouton principal, 2 entrées secondaires',
-  (mod.match(/<h2\b/g) || []).length === 1 && (mod.match(/class="hcs-cta"/g) || []).length === 1 && (mod.match(/class="hcs-link"/g) || []).length === 2);
+// « Poêle ou insert » a été retiré par décision (PR #48) : l'encart n'annonce que ce qui est au
+// catalogue. Le nombre d'entrées suit donc l'offre, on vérifie la forme — un message, une action
+// principale, au moins une sortie secondaire.
+ok('1 message, 1 bouton principal, des entrées secondaires',
+  (mod.match(/<h2\b/g) || []).length === 1 && (mod.match(/class="hcs-cta"/g) || []).length === 1 && (mod.match(/class="hcs-link"/g) || []).length >= 1);
 
 // Plus aucun bouton ne part au tunnel, donc plus aucun ne peut retomber sur l'écran « demande en cours ».
 const cibles = [...mod.matchAll(/href="([^"]+)"[^>]*data-hc-promo-fam="([a-z-]+)"/g)].map((m) => ({ href: m[1], fam: m[2] }));
-ok('les trois boutons mènent à la page Chauffage, chacun sur son ancre',
-  cibles.length === 3 && cibles.every((c) => /^\/chauffagiste-saint-omer\.html#[a-z-]+$/.test(c.href)) &&
-  new Set(cibles.map((c) => c.href)).size === 3);
+ok('chaque bouton a sa propre destination, sur le site',
+  cibles.length >= 2 && new Set(cibles.map((c) => c.href)).size === cibles.length &&
+  cibles.every((c) => /^\/[a-z0-9/-]+\.html(#[a-z-]+)?$/.test(c.href)));
 ok('aucun bouton n’ouvre le tunnel ni un hub générique (c’est la régression corrigée)',
   !/catalogue\.html#/.test(mod) && !/#devis|#intervention|#entretien&|sujet=/.test(mod));
-ok('les ancres visées existent sur la page Chauffage',
-  cibles.every((c) => lire('chauffagiste-saint-omer.html').includes('id="' + c.href.split('#')[1] + '"')));
+// Une destination sans ancre est une page entiere : on verifie alors que la page existe.
+const destinationsCassees = cibles.filter((c) => {
+  const [page, ancre] = c.href.replace(/^\//, '').split('#');
+  if (!fs.existsSync(path.join(ROOT, page))) return true;
+  return !!ancre && !lire(page).includes('id="' + ancre + '"');
+});
+ok('chaque destination existe vraiment (page, et ancre quand il y en a une)', destinationsCassees.length === 0,
+  destinationsCassees.map((c) => c.href).join(', '));
 
 ok('aucun prix ni téléphone dans l’encart (source tarifaire : la page métier et le catalogue)', !/€|\d+\s?%|tel:|03 66/.test(mod));
 ok('aucune promesse de délai ni de sécurité inventée', !/sous \d+ ?h|garanti|sécurité|obligatoire|urgent/i.test(mod));
