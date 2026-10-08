@@ -6,6 +6,10 @@
    jamais le bouton d'appel. */
 .hcs-flot{box-sizing:border-box;position:fixed;z-index:9990;left:24px;bottom:24px;width:min(370px,calc(100vw - 32px));background:linear-gradient(135deg,#0A1428 0%,#123055 55%,#1B2B4D 100%);color:#fff;border-radius:20px;padding:20px 22px 22px;box-shadow:0 26px 60px -18px rgba(10,20,40,.55);overflow:hidden;opacity:0;transform:translateY(14px);transition:opacity .32s ease,transform .32s ease}
 .hcs-flot.est-visible{opacity:1;transform:none}
+/* L'encart s'efface pendant que le bloc contrats est a l'ecran : les deux proposent l'entretien,
+   et l'encart flottant recouvrait le texte et l'action principale du teaser. Il n'est pas fermable
+   pour autant — il revient des que le bloc sort du champ. */
+.hcs-flot.hcs-range{opacity:0;transform:translateY(130%);pointer-events:none}
 .hcs-flot[hidden]{display:none}
 .hcs-flot::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,#FF6B1A,#FFB061 45%,#1FC4F0)}
 .hcs-flot::after{content:"";position:absolute;right:-70px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,26,.22),transparent 68%);pointer-events:none}
