@@ -27,6 +27,10 @@ const ref = JSON.parse(readFileSync(join(ROOT, 'data/contrats-tarifs.json'), 'ut
 const mensuels = new Set(Object.values(ref.contrats_ttc_mois).map((n) => n.toFixed(2).replace('.', ',')));
 const ponctuels = new Set(Object.values(ref.prestations_ponctuelles_ttc).map((n) => n.toFixed(2).replace('.', ',')));
 const entiers = new Set([...ponctuels].map((v) => v.split(',')[0]));   // « 121 € » est aussi correct
+// Un total annuel n'est pas un prix inventé : c'est douze fois un prix du catalogue. On l'accepte,
+// et seulement lui — une valeur qui ne tombe pas juste reste un défaut.
+const annuels = new Set(Object.values(ref.contrats_ttc_mois)
+  .map((v) => (Math.round(v * 12 * 100) / 100).toFixed(2).replace('.', ',').replace(/,00$/, '')));
 
 const pages = [
   ...readdirSync(ROOT).filter((f) => f.endsWith('.html')),
@@ -75,7 +79,7 @@ for (const p of ['chauffagiste-saint-omer.html', 'blog-entretien-chaudiere-annue
   const s = texte(p);
   for (const m of s.matchAll(/(\d{2,3}(?:,\d{2})?)\s*€\s*TTC(?!\s*\/?\s*mois)/g)) {
     const v = m[1];
-    if (ponctuels.has(v) || entiers.has(v) || mensuels.has(v)) continue;
+    if (ponctuels.has(v) || entiers.has(v) || mensuels.has(v) || annuels.has(v)) continue;
     const phrase = s.slice(Math.max(0, m.index - 220), m.index + 40).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
     if (MARCHE.test(phrase.split(/[.!?]\s/).pop() || phrase)) continue;   // prix de marché assumé
     ponctuelsFautifs.push(`${p} : ${v} € — ${phrase.trim().slice(-80)}`);
