@@ -1499,7 +1499,7 @@
    "request_id": "REQ-20260926-054",
    "title": "entretien-chaudiere.html : la garde demande sa suppression, je ne supprime pas de page",
    "priority": "P3",
-   "status": "WAITING_FLORIAN",
+   "status": "READY_FOR_CONTROL",
    "parent_instruction": "docs/control/outbox/claude/CLAUDE-2026-10-08-PR56-CHAUFFAGE.md",
    "legacy_instruction_id": null,
    "created_at": "2026-10-08",
@@ -1510,15 +1510,15 @@
     "liens entrants vers entretien-chaudiere.html",
     "position SEO avant decision"
    ],
-   "latest_sha": "constat sur main fd47aca3",
-   "claude_outbox": "CLAUDE-2026-10-08-PR56-CHAUFFAGE.md",
-   "human_gate": "Supprimer une page a des effets SEO (liens entrants, position acquise). Decision Florian : suppression + 301, ou garder la page et desactiver l assertion avec son motif.",
+   "latest_sha": "PR #57, branche fix/301-entretien-chaudiere (non fusionnee)",
+   "claude_outbox": "CLAUDE-2026-10-08-PR57.md",
+   "human_gate": "Le sitemap publie vient de la fonction edge « sitemap » et liste encore la page : reprendre la fonction demande un GO de deploiement.",
    "blocked_by": null,
-   "next_action": "Decision de Florian.",
+   "next_action": "Controle ChatGPT de la PR #57, puis merge. Le sitemap servi reste a reprendre cote fonction edge.",
    "attempt": 1,
    "closed_at": null,
    "closure_proof": null,
-   "decide_par": null
+   "decide_par": "Florian — 301 forcee vers la page metier canonique, pas de suppression"
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id. Le 2026-09-28, deux demandes ont reçu 032 à la même minute (refonte Nos métiers et routage e-mail) : 032 reste à « Nos métiers », le routage devient 033, prochain_id passe à 034. Le nom du fichier d’instruction d’origine est conservé dans legacy_instruction_id.",
