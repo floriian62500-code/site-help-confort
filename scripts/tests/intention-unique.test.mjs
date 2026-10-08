@@ -17,7 +17,7 @@
  *
  *   node scripts/tests/intention-unique.test.mjs
  */
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -123,17 +123,26 @@ const noyau = lire('assets/hc-demande-core.js');
 // sujets hors catalogue n'en ont pas. Ce qui doit rester vrai, c'est que chacun mène à SA chose,
 // et que deux boutons ne partagent jamais la même destination.
 const tous = [...promo.matchAll(/href="([^"]+)"[^>]*data-hc-promo-fam="([a-z-]+)"/g)].map((m) => ({ href: m[1].replace(/&amp;/g, '&'), fam: m[2] }));
-ok(`bandeau : trois boutons, trois destinations distinctes (${tous.map((c) => c.fam).join(', ') || '—'})`,
-  tous.length === 3 && new Set(tous.map((c) => c.href)).size === 3);
+// « Poêle ou insert » a été retiré par décision (PR #48) : l'encart n'annonce que ce qui est au
+// catalogue. Le nombre de boutons suit donc l'offre ; ce qui doit rester vrai, c'est que chacun
+// mène à SA chose.
+ok(`bandeau : des destinations distinctes (${tous.map((c) => c.fam).join(', ') || '—'})`,
+  tous.length >= 2 && new Set(tous.map((c) => c.href)).size === tous.length);
 // 2026-09-26 : les trois familles mènent à la page Chauffage, chacune sur SON ancre. Le tunnel
 // n'est plus une destination de l'accueil — il s'ouvre depuis une prestation de la page métier.
-ok('bandeau : les trois familles mènent à la page Chauffage, chacune sur son ancre',
-  tous.every((c) => /^\/chauffagiste-saint-omer\.html#[a-z-]+$/.test(c.href)) &&
+// L'entretien chaudière reste ancré sur la page métier. Le ramonage a sa propre page depuis la
+// PR #48 : une page entière est une destination aussi valable qu'une ancre.
+ok('bandeau : l’entretien chaudière mène à la page Chauffage, sur son ancre',
   (tous.find((c) => c.fam === 'chaudiere') || {}).href === '/chauffagiste-saint-omer.html#entretien' &&
-  (tous.find((c) => c.fam === 'poele') || {}).href === '/chauffagiste-saint-omer.html#poele-insert' &&
-  (tous.find((c) => c.fam === 'ramonage') || {}).href === '/chauffagiste-saint-omer.html#ramonage');
-ok('les ancres visées existent vraiment sur la page Chauffage',
-  tous.every((c) => lire(CANON_SERVICE).includes('id="' + c.href.split('#')[1] + '"')));
+  tous.every((c) => /^\/[a-z0-9/-]+\.html(#[a-z-]+)?$/.test(c.href)));
+// On vérifie la destination complète : la page existe, et l'ancre aussi quand il y en a une.
+const cassees = tous.filter((c) => {
+  const [page, ancre] = c.href.replace(/^\//, '').split('#');
+  if (!existsSync(join(ROOT, page))) return true;
+  return !!ancre && !lire(page).includes('id="' + ancre + '"');
+});
+ok('chaque destination du bandeau existe vraiment (page, et ancre quand il y en a une)',
+  cassees.length === 0, cassees.map((c) => c.href).join(', '));
 const ctas = tous.filter((c) => c.href.startsWith('/catalogue.html#')).map((c) => ({ hash: c.href.split('#')[1], fam: c.fam }));
 // Les contrôles qui suivent portaient sur les liens profonds vers le tunnel. Ils n'ont plus de
 // sujet depuis le 26/09, et une boucle vide ne prouve rien : on l'écrit donc noir sur blanc.
