@@ -37,11 +37,19 @@ ok('la feuille d’en-tête garde le masque de secours', /\.hc-topbar\s*\{[^}]*d
 // 4. La version demandée par les pages = le fichier réellement servi. Sans ça, un correctif de la
 //    feuille n'atteint pas les visiteurs qui l'ont déjà en cache (Cache-Control: 30 jours).
 const vCss = sha10('assets/hc-header.css'), vJs = sha10('assets/hc-header.js');
+// Même règle pour les autres assets servis avec un cache long et chargés par toutes les pages.
+// Trois fois le même défaut : un fichier corrigé sans que les pages changent de version, donc un
+// visiteur qui l'avait déjà gardait l'ancien — l'en-tête (PR #50), l'encart (PR #48) et le
+// bandeau de consentement. Le correctif ne sert à rien s'il n'atteint pas les navigateurs.
+const AUTRES = ['assets/hc-promo-saison.css', 'assets/hc-promo-saison.js'];
+
 const perimees = pages.filter((p) => {
   const s = rd(p);
-  return !s.includes(`/assets/hc-header.css?v=${vCss}`) || !s.includes(`/assets/hc-header.js?v=${vJs}`);
+  if (!s.includes(`/assets/hc-header.css?v=${vCss}`) || !s.includes(`/assets/hc-header.js?v=${vJs}`)) return true;
+  // Un asset n'est contrôlé que sur les pages qui le chargent : toutes ne portent pas tout.
+  return AUTRES.some((f) => s.includes('/' + f + '?v=') && !s.includes(`/${f}?v=${sha10(f)}`));
 });
-ok(`la version des assets d’en-tête n’est pas périmée (css ${vCss}, js ${vJs})`, perimees.length === 0,
+ok(`aucune page ne demande une version périmée (en-tête ${vCss}/${vJs}, et ${AUTRES.length} autres assets)`, perimees.length === 0,
   perimees.length + ' page(s), ex. ' + perimees.slice(0, 3).join(', '));
 
 // 5. La zone au-dessus de l'en-tête ne présente plus Dunkerque comme une agence : c'était tout le
