@@ -224,5 +224,96 @@ for (const dossier of ['assets', 'partials']) {
 }
 ok('aucun CSS ni JS partagé ne décrit encore ce module', ORPHELINS.length === 0, ORPHELINS.join(', '));
 
+// ── Les données structurées disent-elles le bon métier ? ──────────────────────
+// Le 09/10, le contrôle « accroche » a ramené menuisier-saint-omer : il portait l'accroche du
+// vitrier. En regardant la page entière, c'était pire — trois métiers cohabitaient. Le texte parlait
+// menuiserie, les descriptions de partage vendaient du bris de glace, le catalogue d'offres était
+// celui du vitrier relabellisé, la carte de partage montrait la vitrerie, et la fiche business
+// annonçait à Google : « HELP Confort — Plombier Saint-Omer ». Huit pages portaient cette fiche.
+// Ce que le texte visible montre ne dit rien de ce que les moteurs lisent : on contrôle les deux.
+const FAMILLES = { plombier: 'Plombier', chauffagiste: 'Chauffagiste', electricien: 'Électricien',
+  serrurier: 'Serrurier', vitrier: 'Vitrier', menuisier: 'Menuisier', volets: 'Volets', pmr: 'Adaptation PMR' };
+const VITRINES = readdirSync(ROOT).filter(f => /^(plombier|chauffagiste|electricien|serrurier|vitrier|menuisier|volets|pmr)-(saint-omer|dunkerque|calais|boulogne-sur-mer)\.html$/.test(f));
+const usurpent = [], imagesEtrangeres = [];
+for (const f of VITRINES) {
+  const c = lire(f), sien = f.split('-')[0];
+  const fiche = (c.match(/"name":\s*"HELP Confort — ([^"]+?) (?:Saint-Omer|Dunkerque)/) || [])[1];
+  if (fiche && fiche !== FAMILLES[sien]) usurpent.push(`${f} : fiche « ${fiche} »`);
+  for (const [autre, label] of Object.entries(FAMILLES)) {
+    if (autre === sien) continue;
+    if (c.includes(`og/${autre}-saint-omer.png`)) imagesEtrangeres.push(`${f} → og/${autre}-saint-omer.png`);
+  }
+}
+ok(`les ${VITRINES.length} pages métier : la fiche business annonce le métier de la page`,
+  usurpent.length === 0, usurpent.slice(0, 8).join('\n     '));
+ok('les pages métier : aucune carte de partage empruntée à un autre métier',
+  imagesEtrangeres.length === 0, imagesEtrangeres.slice(0, 8).join('\n     '));
+
+// Un catalogue d'offres recopié garde le vocabulaire de sa source, même après relabellisation.
+const EXCLUSIF = { vitrier: /bris de glace|double vitrage isolant|vitrage sur-mesure/i,
+                   plombier: /recherche de fuite|dégorgement|chasse d'eau/i };
+const catalogues = [];
+for (const f of VITRINES) {
+  const sien = f.split('-')[0];
+  const offres = [...lire(f).matchAll(/"itemOffered":\s*\{"@type":\s*"Service",\s*"name":\s*"([^"]+)"/g)].map(m => m[1]);
+  for (const [autre, mots] of Object.entries(EXCLUSIF)) {
+    if (autre === sien) continue;
+    const vol = offres.filter(o => mots.test(o));
+    if (vol.length) catalogues.push(`${f} (${sien}) propose « ${vol[0]} »`);
+  }
+}
+ok('les pages métier : aucun catalogue d’offres emprunté à un autre métier',
+  catalogues.length === 0, catalogues.slice(0, 8).join('\n     '));
+
+// ── La vitrine « Nos métiers » ────────────────────────────────────────────────
+// Elle annonçait « Nos 8 métiers » et en présentait 9, dans quatre surfaces à la fois : le H1, les
+// deux descriptions de partage et la description JSON-LD. Un chiffre faux sur une page indexée se
+// corrige une fois ; ce qui le fait revenir, c'est qu'aucun contrôle ne relie le chiffre annoncé au
+// nombre réel de sections. Les contrôles ci-dessous lient les deux, dans le texte visible ET dans
+// les données structurées — la leçon du 09/10 : une page se corrige en auditant ses deux surfaces.
+const VITRINE = 'nos-metiers.html';
+const v = lire(VITRINE);
+const itemList = JSON.parse(
+  (v.match(/<script type="application\/ld\+json"[^>]*>\s*(\{[^<]*?"@type":\s*"ItemList"[\s\S]*?)<\/script>/) || [])[1] || '{}');
+const sections = (v.match(/class="nm-card"/g) || []).length || (v.match(/<h2[^>]*>/g) || []).length;
+const items = (itemList.itemListElement || []).length;
+const chiffres = [...v.matchAll(/(\d+)\s+métiers/g)].map(m => Number(m[1]));
+
+ok(`« Nos métiers » : la liste structurée compte autant d'entrées que de métiers réels (${items})`,
+  items > 0 && items === new Set((itemList.itemListElement || []).map(x => x.name)).size,
+  `itemListElement=${items}`);
+ok(`« Nos métiers » : le chiffre annoncé est le même partout et vaut ${items} (H1, partage, JSON-LD)`,
+  chiffres.length > 0 && chiffres.every(n => n === items),
+  `chiffres trouvés : ${[...new Set(chiffres)].join(', ')} · attendu ${items}`);
+
+// Le chapeau énumérait des métiers que la page ne présente pas (« peintres ») et en oubliait trois.
+const chapeau = (v.match(/<h1[\s\S]*?<p>([\s\S]*?)<\/p>/) || [])[1] || '';
+ok('« Nos métiers » : le chapeau n’annonce aucun métier absent de la page',
+  !/peintres?/i.test(chapeau), chapeau.replace(/<[^>]+>/g, '').slice(0, 120));
+
+// Orpheline dans la navigation, elle reste indexée : elle doit nourrir le tunnel comme les autres.
+ok('« Nos métiers » : au moins un chemin vers le tunnel canonique',
+  /href="\/?catalogue\.html#/.test(v));
+
+// Elle chargeait la couche d’événements sans le chargeur GA4 ni le bandeau : rien n’était mesuré,
+// et le visiteur n’avait aucun choix à faire. Les deux vont ensemble, comme sur les pages d’arrivée.
+ok('« Nos métiers » : bandeau de consentement et chargeur de mesure, tous deux versionnés',
+  /hc-consent\.js\?v=/.test(v) && /assets\/tracking\.js\?v=/.test(v));
+
+// Doctrine agence unique : le texte visible avait été repris, les données structurées non.
+ok('« Nos métiers » : les données structurées ne nomment qu’une agence',
+  !/"name":\s*"HELP Confort Saint-Omer & Dunkerque"/.test(v));
+
+// Une vitrine ne doit renvoyer que vers des pages qui existent, et jamais vers une route /docs.
+const liensVitrine = [...v.matchAll(/href="([^"]+)"/g)].map(m => m[1])
+  .filter(h => !/^(tel:|mailto:|https?:|#|\/assets\/)/.test(h));
+const vitrineMorts = liensVitrine.filter(h => {
+  const c = h.split('#')[0].split('?')[0].replace(/^\//, '') || 'index.html';
+  return !existsSync(join(ROOT, c));
+});
+ok(`« Nos métiers » : ses ${liensVitrine.length} liens internes mènent à une page qui existe`,
+  vitrineMorts.length === 0, [...new Set(vitrineMorts)].slice(0, 6).join(', '));
+ok('« Nos métiers » : aucune route /docs publique', !/href="\/?docs\//.test(v));
+
 console.log(`\nRÉSULTAT PAGES MÉTIER : ${pass} PASS / ${fail} FAIL\n`);
 process.exit(fail ? 1 : 0);

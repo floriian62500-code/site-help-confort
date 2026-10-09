@@ -83,7 +83,7 @@
   // (releve du 2026-10-08, a 1440 comme a 390). Il revient des que le bloc sort du champ.
   function cohabiter(box) {
     if (typeof document.querySelectorAll !== 'function' || !('IntersectionObserver' in window)) return;
-    var blocs = document.querySelectorAll('.ctp, .m-contrats-premium');
+    var blocs = document.querySelectorAll('.ctp, .m-contrats-premium, .nm-grid');
     if (!blocs.length) return;
     var vus = 0;
     var io = new IntersectionObserver(function (entrees) {
