@@ -27,6 +27,50 @@
 /admin-pro/scripts/* /404.html 404!
 
 
+# Notes de travail, scripts et brouillons de la racine. Le site est publie depuis la racine
+# (`publish = "."`), donc chacun de ces fichiers partait chez Netlify et repondait 200 sur
+# depan59-62.fr. Releve du 2026-10-09 : 27 d'entre eux etaient bel et bien servis, dont
+# `index.html.bak.before-minify` — une copie de 205 ko de l'accueil, en `robots: index, follow`,
+# soit un doublon indexable de la page d'accueil. `robots.txt` interdit `/*.md$` aux moteurs, mais
+# cela ne protege rien de qui connait l'URL. Seule une regle terminee par « ! » passe devant le
+# fichier statique. Ne JAMAIS bloquer ici : logo, styles.css, script.js, sw*.js, manifest.json,
+# robots.txt, humans.txt, les sitemaps, ni 9e0e7a80….txt qui est un fichier de verification de
+# domaine (son contenu est son propre nom).
+/.agent1-lock /404.html 404!
+/.test-rm-perm /404.html 404!
+/ALERTES.md /404.html 404!
+/AUDIT-COMPLET-2026-05-28.md /404.html 404!
+/BUGS-HISTORY.md /404.html 404!
+/CHANGELOG-2026-05-15.md /404.html 404!
+/CHANGELOG-2026-05-16-PM.md /404.html 404!
+/CHANGELOG-2026-05-16-SOIR.md /404.html 404!
+/CHANGELOG-2026-05-16.md /404.html 404!
+/CHANGELOG.md /404.html 404!
+/CLAUDE-AUTONOME.md /404.html 404!
+/CLAUDE.md /404.html 404!
+/CONFIG-PUSH-NOTIFICATIONS.md /404.html 404!
+/CONTEXTE-ACTIF.md /404.html 404!
+/Cleanup-Doublons.command /404.html 404!
+/GOOGLE-ADS-SETUP.md /404.html 404!
+/Gemini_Generated_Image_mf7cnomf7cnomf7c%20%281%29.png /404.html 404!
+/IMAGES-A-NETTOYER.md /404.html 404!
+/MAIL-APOGEE-API.md /404.html 404!
+/PHOTOS-PRESTATIONS-A-UPLOADER.xlsx /404.html 404!
+/POUR-FLORIAN.md /404.html 404!
+/SEO-INSTRUCTIONS.md /404.html 404!
+/SETUP-AUTO-DEPLOY.md /404.html 404!
+/SETUP-EMAIL-RESEND.md /404.html 404!
+/SKILL-hc-site-autonome-phase7-DRAFT.md /404.html 404!
+/TODO.md /404.html 404!
+/_PROMPT-MODE-BATCH.md /404.html 404!
+/_gen_blog_articles.py /404.html 404!
+/_gen_seo_pages.py /404.html 404!
+/index.html.bak.before-minify /404.html 404!
+/outputs_contrat_hc_visual.jpg /404.html 404!
+
+# Dossiers de travail suivis par erreur (verrous d'agent).
+/.helpconfort/* /404.html 404!
+
 # Sitemap dynamique servi par Edge Function Supabase
 /sitemap.xml https://btcbjwqiivhpwoszomhg.supabase.co/functions/v1/sitemap 200
 
