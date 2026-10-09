@@ -1,6 +1,6 @@
 # 🛡️ Audit CSP whitelist — Sonde IA #41
 
-*Généré le 2026-10-08 10:09 — `admin-pro/audits/audit_csp.py`*
+*Généré le 2026-10-09 10:11 — `admin-pro/audits/audit_csp.py`*
 
 **Pages scannées** : 119
 **Hosts externes distincts détectés** : 6
@@ -36,7 +36,7 @@
 - ✅ `btcbjwqiivhpwoszomhg.supabase.co` — 9 page(s)
 
 ### connect-src
-- ✅ `btcbjwqiivhpwoszomhg.supabase.co` — 10 page(s)
+- ✅ `btcbjwqiivhpwoszomhg.supabase.co` — 11 page(s)
 
 ### frame-src
 - ✅ `www.google.com` — 1 page(s)

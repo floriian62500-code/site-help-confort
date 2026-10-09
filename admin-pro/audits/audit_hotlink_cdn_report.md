@@ -1,9 +1,9 @@
 # 🖼️ Audit images hot-linkées CDN tiers — sonde #13
 
-_Généré le 2026-10-08 10:10_
+_Généré le 2026-10-09 10:12_
 
 - Pages HTML scannées : **117**
-- Fichiers JS scannés : **47**
+- Fichiers JS scannés : **46**
 - Hosts uniques détectés : **77**
   - Self (HC) : 1
   - Supabase projet : 1

@@ -1,6 +1,6 @@
 {
   "audit": "fallback_supabase",
-  "generated_at": "2026-10-08T10:10:44",
+  "generated_at": "2026-10-09T10:12:23",
   "stats": {
     "pages_audited": 117,
     "pages_using_supabase": 14,
@@ -311,7 +311,7 @@
         {
           "code": "NO-FALLBACK",
           "severity": "warning",
-          "detail": "Page utilise Supabase (2 appel(s) détecté(s)) mais aucun fallback local (`LOCAL_CATALOG`, `FALLBACK_DATA`, …) n'est déclaré dans les <script>. Aucun catch() de secours visible."
+          "detail": "Page utilise Supabase (1 appel(s) détecté(s)) mais aucun fallback local (`LOCAL_CATALOG`, `FALLBACK_DATA`, …) n'est déclaré dans les <script>. Aucun catch() de secours visible."
         }
       ]
     },

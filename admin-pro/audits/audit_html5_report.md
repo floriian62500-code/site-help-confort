@@ -1,4 +1,4 @@
-# Audit HTML5 — 2026-10-08 10:09
+# Audit HTML5 — 2026-10-09 10:11
 
 > Audit local rapide HTML5 + a11y de base. Lancement : `python3 admin-pro/audits/audit_html5.py`
 > ⚠️ Ce n'est pas un substitut au validateur W3C officiel, mais il pré-filtre les erreurs évidentes.
@@ -7,9 +7,9 @@
 
 - Pages auditées : **119**
 - Pages avec erreurs : **3**
-- Pages avec warnings : **11**
+- Pages avec warnings : **12**
 - Total erreurs : **11**
-- Total warnings : **11**
+- Total warnings : **12**
 
 ## Top patterns d'erreurs
 
@@ -72,6 +72,11 @@
 ### `catalogue.html`
 
 - ⚠️ meta description longue (188 chars, >170 → tronquée)
+
+### `contrats-entretien.html`
+
+- ⚠️ meta description longue (181 chars, >170 → tronquée)
+- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `maprimeadapt.html`
 
@@ -201,10 +206,6 @@
 ### `contact.html`
 
 - ℹ️ 18 <img> avec alt vide (OK si décoratif)
-
-### `contrats-entretien.html`
-
-- ℹ️ 9 <img> avec alt vide (OK si décoratif)
 
 ### `debouchage-canalisation.html`
 
@@ -545,7 +546,6 @@
 - `chauffagiste-saint-omer.html`
 - `chauffagiste-wimereux.html`
 - `contact.html`
-- `contrats-entretien.html`
 - `debouchage-canalisation.html`
 - `depannage-arques.html`
 - `depannage-bergues.html`

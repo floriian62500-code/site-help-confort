@@ -7,13 +7,13 @@ _Généré par `admin-pro/audits/audit_aria.py` — 118 pages scannées._
 - Pages scannées : **118**
 - Pages 100% clean : **47**
 - Pages avec ≥ 1 erreur : **31**
-- Total findings : **162**
+- Total findings : **161**
 
 ### Répartition par code
 
 | Code | Sévérité | Occurrences |
 |------|----------|-------------|
-| `INPUT-NO-LABEL` | avertissement | 49 |
+| `INPUT-NO-LABEL` | avertissement | 48 |
 | `INPUT-NO-ARIA-LABEL` | avertissement | 48 |
 | `A-NO-NAME` | avertissement | 32 |
 | `DIALOG-NO-LABEL` | erreur | 28 |
@@ -36,15 +36,14 @@ _Généré par `admin-pro/audits/audit_aria.py` — 118 pages scannées._
 - **INPUT-NO-ARIA-LABEL** (avertissement, l. 665) — `<input type="checkbox" name="services[]"> sans id`
 - _… et 16 autre(s)_
 
-### `contrats-entretien.html` — 7 finding(s)
+### `contrats-entretien.html` — 6 finding(s)
 
-- **INPUT-NO-LABEL** (avertissement, l. 850) — `<input type="text" name="website">`
-- **INPUT-NO-ARIA-LABEL** (avertissement, l. 850) — `<input type="text" name="website"> sans id`
-- **INPUT-NO-LABEL** (avertissement, l. 1140) — `<input type="checkbox" name="no_facture">`
-- **INPUT-NO-LABEL** (avertissement, l. 1155) — `<input type="checkbox" name="sepa_principe">`
-- **INPUT-NO-ARIA-LABEL** (avertissement, l. 1155) — `<input type="checkbox" name="sepa_principe"> sans id`
-- **INPUT-NO-LABEL** (avertissement, l. 1186) — `<input type="checkbox" name="cgv">`
-- **INPUT-NO-ARIA-LABEL** (avertissement, l. 1186) — `<input type="checkbox" name="cgv"> sans id`
+- **INPUT-NO-LABEL** (avertissement, l. 810) — `<input type="text" name="website">`
+- **INPUT-NO-ARIA-LABEL** (avertissement, l. 810) — `<input type="text" name="website"> sans id`
+- **INPUT-NO-LABEL** (avertissement, l. 1072) — `<input type="checkbox" name="sepa_principe">`
+- **INPUT-NO-ARIA-LABEL** (avertissement, l. 1072) — `<input type="checkbox" name="sepa_principe"> sans id`
+- **INPUT-NO-LABEL** (avertissement, l. 1103) — `<input type="checkbox" name="cgv">`
+- **INPUT-NO-ARIA-LABEL** (avertissement, l. 1103) — `<input type="checkbox" name="cgv"> sans id`
 
 ### `chauffagiste-boulogne-sur-mer.html` — 3 finding(s)
 

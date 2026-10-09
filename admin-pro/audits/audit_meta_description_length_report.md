@@ -1,16 +1,16 @@
 # Audit meta description length — Rapport
 
-_Généré le 2026-10-08 10:10_
+_Généré le 2026-10-09 10:12_
 
 ## Synthèse
 
 - Pages scannées : **137**
-- ✅ OK (120-158 chars) : **96**
+- ✅ OK (120-158 chars) : **95**
 - ⚠️  Warnings (acceptable mais hors cible) : **17**
-- ❌ Erreurs (< 70 ou > 160) : **23**
+- ❌ Erreurs (< 70 ou > 160) : **24**
 - ℹ️  Sans description : **1**
-- Findings totaux : **41**
-  - Erreurs : 23
+- Findings totaux : **42**
+  - Erreurs : 24
   - Avertissements : 18
 
 ## Bornes appliquées
@@ -48,6 +48,10 @@ _Généré le 2026-10-08 10:10_
 ### `chauffagiste-saint-omer.html`  (162 chars)
 > Chauffagiste à Saint-Omer & Dunkerque : entretien chaudière, dépannage rapide, contrats d'entretien annuels — forfait transparent, devis gratuit. ☎ 03 66 10 01 34
 - ❌ DESC-TOO-LONG : 162 chars > 160
+
+### `contrats-entretien.html`  (181 chars)
+> Contrats d&#x27;entretien chaudière gaz, fioul et adoucisseur dès 9,90 € TTC/mois : visite annuelle et attestation comprises, rappel chaque année. Agence HELP Confort de Saint-Omer.
+- ❌ DESC-TOO-LONG : 181 chars > 160
 
 ### `espace-client-dashboard.html`  (67 chars)
 > Dashboard client HELP Confort : interventions, paiements, factures.

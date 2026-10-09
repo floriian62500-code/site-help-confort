@@ -1,6 +1,6 @@
 # Audit Tarifs — Sonde IA #28
 
-_Généré le 2026-10-08 10:09 — `admin-pro/audits/audit_tarifs.py`_
+_Généré le 2026-10-09 10:11 — `admin-pro/audits/audit_tarifs.py`_
 
 - Pages publiques scannées : **119**
 - Montants validés (TARIFS_REFERENCE.md) : **53**
@@ -49,9 +49,9 @@ Tout montant `\d+\s*€` visible doit :
 | `blog-cout-renovation-salle-de-bain.html` | 227 | **600 €** | € MPR + 350 € CEE. Si vous remplacez un cumulus par un solaire = 4 000 € MPR + 600 € CEE. C'est l'occasion de moderniser le système ECS en m |
 | `blog-entretien-chaudiere-annuel-obligatoire.html` | 211 | **178 €** | li>Entretien chaudière gaz : 121 € TTC</li> ⏎     <li>Entretien chaudière fioul : 178,20 € TTC (218,90 € TTC pour un gros volume)</li> ⏎     |
 | `blog-entretien-chaudiere-annuel-obligatoire.html` | 211 | **218 €** | haudière gaz : 121 € TTC</li> ⏎     <li>Entretien chaudière fioul : 178,20 € TTC (218,90 € TTC pour un gros volume)</li> ⏎     <li>Entretien |
-| `blog-entretien-chaudiere-annuel-obligatoire.html` | 213 | **118 €** | e</li> ⏎     <li>Contrat d'entretien annuel (formule BASIC) : 9,90 € TTC / mois = 118,80 € TTC / an + dépannage prioritaire</li> ⏎   </ul> ⏎ |
-| `blog-entretien-chaudiere-annuel-obligatoire.html` | 218 | **14 €** | r/week-end, petites pièces incluses, conseils continus. Notre formule CONFORT à 14,30 € TTC/mois est plébiscitée par nos clients (78% des co |
-| `blog-entretien-chaudiere-annuel-obligatoire.html` | 223 | **29 €** | <h2>Souscrire un contrat d'entretien chaudière</h2> ⏎   <p>3 formules de 9,90 € à 29,70 € TTC/mois. Sans engagement, résiliation libre.</p>  |
+| `blog-entretien-chaudiere-annuel-obligatoire.html` | 213 | **118 €** | e</li> ⏎     <li>Contrat d'entretien annuel (formule BASIC) : 9,90 € TTC / mois = 118,80 € TTC / an — visite annuelle et attestation ; dépan |
+| `blog-entretien-chaudiere-annuel-obligatoire.html` | 218 | **14 €** | rmule SÉCURITÉ, réservée aux chaudières de moins de 5 ans. La formule CONFORT à 14,30 € TTC/mois est la plus choisie.</p> ⏎ </section> ⏎  ⏎  |
+| `blog-entretien-chaudiere-annuel-obligatoire.html` | 223 | **29 €** | <h2>Souscrire un contrat d'entretien chaudière</h2> ⏎   <p>3 formules de 9,90 € à 29,70 € TTC/mois. Contrat d'un an, reconduit tacitement ;  |
 | `blog-fenetres-double-vitrage-pvc-alu-bois.html` | 193 | **200 €** | ée de vie variable (20 à 60 ans selon essence et exposition), prix élevé (700-1 200 €/fenêtre). À privilégier pour bâtiments anciens, secteu |
 | `blog-fenetres-double-vitrage-pvc-alu-bois.html` | 207 | **100 €** | og-section"> ⏎   <h2>Aides 2026 pour fenêtres</h2> ⏎   <p>MaPrimeRenov accorde 40 à 100 €/fenêtre selon tranche revenus (Intermédiaires et M |
 | `blog-fenetres-double-vitrage-pvc-alu-bois.html` | 207 | **100 €** | 0 à 100 €/fenêtre selon tranche revenus (Intermédiaires et Modestes). CEE prime 100 €/fenêtre cumulable. TVA 5,5%. Conditions : Uw <1,3 W/m² |
@@ -120,9 +120,9 @@ Tout montant `\d+\s*€` visible doit :
 | `entretien-chaudiere.html` | 251 | **130 €** | annuel + attestation</td><td style="padding:14px;font-weight:700;color:#FF6B1A">130€</td></tr> ⏎     <tr style="background:#FAFCFD"><td styl |
 | `entretien-chaudiere.html` | 252 | **175 €** | dépannage gratuit/an</td><td style="padding:14px;font-weight:700;color:#FF6B1A">175€</td></tr> ⏎     <tr><td style="padding:14px;font-weight |
 | `entretien-chaudiere.html` | 253 | **210 €** | s + pièces (limites)</td><td style="padding:14px;font-weight:700;color:#FF6B1A">210€</td></tr> ⏎   </tbody> ⏎ </table> ⏎  ⏎ <p style="margin |
-| `faq.html` | 225 | **14 €** | ong>3 formules gaz</strong> : BASIC 9,90 € TTC/mois (entretien annuel), CONFORT 14,30 € TTC/mois (+ dépannage prioritaire), SÉCURITÉ 25,30 € |
-| `faq.html` | 225 | **25 €** | entretien annuel), CONFORT 14,30 € TTC/mois (+ dépannage prioritaire), SÉCURITÉ 25,30 € TTC/mois (tout inclus pièces + main d'œuvre).<br> ⏎  |
-| `faq.html` | 226 | **17 €** | main d'œuvre).<br> ⏎  <strong>3 formules fioul</strong> : BASIC 13,20 €, CONFORT 17,60 €, SÉCURITÉ 29,70 € TTC/mois. <a href="contrats-entre |
+| `faq.html` | 225 | **14 €** | ong>3 formules gaz</strong> : BASIC 9,90 € TTC/mois (entretien annuel), CONFORT 14,30 € TTC/mois (+ 2 dépannages par an inclus), SÉCURITÉ 25 |
+| `faq.html` | 225 | **25 €** | tien annuel), CONFORT 14,30 € TTC/mois (+ 2 dépannages par an inclus), SÉCURITÉ 25,30 € TTC/mois (pièces incluses avec exclusions, réservée  |
+| `faq.html` | 226 | **17 €** | ôle technique).<br> ⏎  <strong>3 formules fioul</strong> : BASIC 13,20 €, CONFORT 17,60 €, SÉCURITÉ 29,70 € TTC/mois. <a href="contrats-entr |
 | `faq.html` | 226 | **29 €** | > ⏎  <strong>3 formules fioul</strong> : BASIC 13,20 €, CONFORT 17,60 €, SÉCURITÉ 29,70 € TTC/mois. <a href="contrats-entretien.html">Souscr |
 | `guide-adaptation-pmr.html` | 335 | **22000 €** | rir jusqu'à <strong>50 % à 70 % du coût des travaux</strong>, dans la limite de 22 000 € HT. Le bénéficiaire doit être propriétaire occupant |
 | `guide-adaptation-pmr.html` | 348 | **5500 €** | lète adaptée</strong> (douche italienne + WC rehaussés + barres d'appui)&nbsp;: 5 500 € → reste à charge ~1 800 € après MaPrimeAdapt'</li> ⏎ |
@@ -235,7 +235,7 @@ Tout montant `\d+\s*€` visible doit :
 | `chauffagiste-saint-omer.html` | 0 | 0 | 0 | 0 | **0** |
 | `chauffagiste-wimereux.html` | 0 | 0 | 0 | 0 | **0** |
 | `contact.html` | 0 | 0 | 0 | 0 | **0** |
-| `contrats-entretien.html` | 2 | 0 | 0 | 2 | **0** |
+| `contrats-entretien.html` | 3 | 0 | 0 | 1 | **0** |
 | `debouchage-canalisation.html` | 1 | 0 | 0 | 2 | **6** |
 | `depannage-arques.html` | 0 | 0 | 0 | 0 | **0** |
 | `depannage-bergues.html` | 3 | 0 | 0 | 0 | **0** |

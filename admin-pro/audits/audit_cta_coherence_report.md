@@ -1,9 +1,9 @@
 # 🎯 Audit CTA cohérence URL — sonde #20
 
-_Généré le 2026-10-08 10:10_
+_Généré le 2026-10-09 10:12_
 
 - Pages scannées : **117**
-- CTA trouvés (toutes familles) : **121**
+- CTA trouvés (toutes familles) : **120**
 - Familles avec ≥ 1 occurrence : **3**
 - Familles **divergentes** (alertes) : **2**
 
@@ -13,7 +13,7 @@ _Généré le 2026-10-08 10:10_
 
 ### Famille `devis` — 5 destinations
 
-- **`contact.html`** — 109 occurrence(s)
+- **`contact.html`** — 108 occurrence(s)
   - `avant-apres.html` : « Demander un devis → » → `contact.html#form`
   - `blog.html` : « Demander un devis » → `contact.html`
   - `chauffagiste-coudekerque-branche.html` : « Devis gratuit » → `contact.html?presta=Chauffagiste&objet=Intervention Coudekerque-Branche#form`
@@ -43,8 +43,8 @@ _Généré le 2026-10-08 10:10_
 
 ## 📊 Stats par famille
 
-### ⚠️ `devis` — 116 occurrence(s), 5 destination(s)
-- `contact.html` × 109
+### ⚠️ `devis` — 115 occurrence(s), 5 destination(s)
+- `contact.html` × 108
 - `tel:+33366100134` × 4
 - `[button-js]` × 1
 - `catalogue.html` × 1

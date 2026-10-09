@@ -1,12 +1,12 @@
 # 📐 Audit CLS prevention (img width/height) — sonde #56
 
-_Généré le 2026-10-08 10:10_
+_Généré le 2026-10-09 10:12_
 
 - Pages scannées : **117**
-- `<img>` total : **1512**
-- `<img>` avec width+height : **1480**
-- `<img>` **sans dimensions** (alertes CLS) : **32**
-- Pages avec au moins 1 alerte : **19**
+- `<img>` total : **1507**
+- `<img>` avec width+height : **1476**
+- `<img>` **sans dimensions** (alertes CLS) : **31**
+- Pages avec au moins 1 alerte : **18**
 
 Taux de couverture dimensions : **97.9%**
 
@@ -27,10 +27,6 @@ Taux de couverture dimensions : **97.9%**
 ### `chauffagiste-saint-omer.html` — 1 `<img>` à corriger
 
 - L1642 (width+height manquant) — `' + escapeHtml(s.logo_url) + '`
-
-### `contrats-entretien.html` — 1 `<img>` à corriger
-
-- L1780 (width+height manquant) — `' + p.data + '`
 
 ### `electricien-saint-omer.html` — 1 `<img>` à corriger
 

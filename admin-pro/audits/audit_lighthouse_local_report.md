@@ -1,6 +1,6 @@
-# 🔦 Audit Lighthouse local — 2026-10-08 10:09
+# 🔦 Audit Lighthouse local — 2026-10-09 10:11
 
-**118 pages auditées** · **7 erreurs** · **77 warnings** · **Score moyen 97/100**
+**118 pages auditées** · **7 erreurs** · **78 warnings** · **Score moyen 97/100**
 
 ## 📊 Résumé par page
 
@@ -37,6 +37,7 @@
 | `chauffagiste-coudekerque-branche.html` | **96/100** | 0 | 1 |
 | `chauffagiste-saint-omer.html` | **96/100** | 0 | 1 |
 | `chauffagiste-wimereux.html` | **96/100** | 0 | 1 |
+| `contrats-entretien.html` | **96/100** | 0 | 1 |
 | `debouchage-canalisation.html` | **96/100** | 0 | 1 |
 | `diagnostic-electrique.html` | **96/100** | 0 | 1 |
 | `electricien-boulogne-sur-mer.html` | **96/100** | 0 | 1 |
@@ -77,7 +78,6 @@
 | `chauffagiste-marck.html` | **100/100** | 0 | 0 |
 | `chauffagiste-outreau.html` | **100/100** | 0 | 0 |
 | `contact.html` | **100/100** | 0 | 0 |
-| `contrats-entretien.html` | **100/100** | 0 | 0 |
 | `depannage-arques.html` | **100/100** | 0 | 0 |
 | `depannage-bergues.html` | **100/100** | 0 | 0 |
 | `depannage-boulogne-sur-mer.html` | **100/100** | 0 | 0 |
@@ -308,6 +308,11 @@
 **Warnings :**
 - ⚠️ SEO title long (66 chars)
 
+### contrats-entretien.html — 96/100
+
+**Warnings :**
+- ⚠️ meta description longue (181 chars)
+
 ### debouchage-canalisation.html — 96/100
 
 **Warnings :**
@@ -466,7 +471,6 @@
 - chauffagiste-marck.html
 - chauffagiste-outreau.html
 - contact.html
-- contrats-entretien.html
 - depannage-arques.html
 - depannage-bergues.html
 - depannage-boulogne-sur-mer.html

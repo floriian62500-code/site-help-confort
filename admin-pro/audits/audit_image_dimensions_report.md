@@ -1,12 +1,12 @@
 # 📐 Audit dimensions images (PIL) — extension CLS prevention
 
-_Généré le 2026-10-08 10:10_
+_Généré le 2026-10-09 10:12_
 
 - Pages scannées : **117**
-- `<img>` avec width+height : **1480**
+- `<img>` avec width+height : **1476**
 - Patchables (dimensions lues PIL) : **1**
 - Externes (CDN/hot-link) : **3**
-- Non-résolues (fichier absent) : **21**
+- Non-résolues (fichier absent) : **20**
 - Dynamiques (template `${...}`) : **7**
 
 ## 🛠️ Patches proposés (dimensions lues PIL)
@@ -43,9 +43,6 @@ Recommandation : rapatrier en local (cf. `audit_hotlink_cdn.py`) puis re-runner.
 
 ### `chauffagiste-saint-omer.html` — 1
 - L1642 — `' + escapeHtml(s.logo_url) + '` (fichier introuvable sur disque)
-
-### `contrats-entretien.html` — 1
-- L1780 — `' + p.data + '` (fichier introuvable sur disque)
 
 ### `electricien-saint-omer.html` — 1
 - L1476 — `' + escapeHtml(s.logo_url) + '` (fichier introuvable sur disque)

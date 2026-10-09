@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-08 10:10",
+  "generated": "2026-10-09 10:12",
   "thresholds": {
     "min_error": 70,
     "max_error": 160,
@@ -7,9 +7,9 @@
     "max_warn": 158
   },
   "n_total": 137,
-  "n_ok": 96,
+  "n_ok": 95,
   "n_warn": 17,
-  "n_errors": 23,
+  "n_errors": 24,
   "n_info": 1,
   "results": [
     {
@@ -464,10 +464,12 @@
     },
     {
       "file": "contrats-entretien.html",
-      "status": "ok",
-      "length": 143,
-      "description": "Contrats d&#x27;entretien chaudière gaz, fioul et adoucisseur dès 9 €/mois. Visite annuelle, dépannage prioritaire. Saint-Omer &amp; Dunkerque.",
-      "errors": [],
+      "status": "error",
+      "length": 181,
+      "description": "Contrats d&#x27;entretien chaudière gaz, fioul et adoucisseur dès 9,90 € TTC/mois : visite annuelle et attestation comprises, rappel chaque année. Agence HELP Confort de Saint-Omer.",
+      "errors": [
+        "DESC-TOO-LONG : 181 chars > 160"
+      ],
       "warnings": []
     },
     {

@@ -1,10 +1,10 @@
 # ⏱️ Audit délais d'intervention promis — Sonde IA #43
 
-*Généré le 2026-10-08 10:09 — `admin-pro/audits/audit_delais.py`*
+*Généré le 2026-10-09 10:11 — `admin-pro/audits/audit_delais.py`*
 
 **Pages scannées** : 119
-**Findings (promesses commerciales détectées)** : **117**
-**Pages concernées** : 56
+**Findings (promesses commerciales détectées)** : **126**
+**Pages concernées** : 57
 
 ## 🎯 Contexte
 
@@ -14,15 +14,16 @@ Décision Florian 15 mai 2026 : retirer tous les délais d'intervention promis d
 
 | Pattern | Occurrences |
 |---------|-------------|
-| engagement « sous X (h/min) » | 115 |
-| engagement « intervention sous X » | 2 |
+| engagement « sous X (h/min) » | 119 |
+| engagement « intervention sous X » | 7 |
 
 ## 📋 Findings détaillés
 
 | Fichier | Ligne | Pattern | Match | Contexte |
 |---------|------:|---------|-------|----------|
 | `blog-debouchage-canalisation-furet-hydrocurage.html` | 221 | engagement « sous X (h/min) » | `sous 2h` | …ret, hydrocurage ou caméra : on diagnostique et on débouche sous 2h.</p> <a href="tel:+33366100134"> <svg width="18" heig… |
-| `blog-entretien-chaudiere-annuel-obligatoire.html` | 218 | engagement « sous X (h/min) » | `sous 24h` | …s : entretien automatique programmé, dépannage prioritaire (sous 24h en formule Confort), pas de majoration soir/week-end, petit… |
+| `blog-entretien-chaudiere-annuel-obligatoire.html` | 218 | engagement « sous X (h/min) » | `sous 48 h` | …inclus (main-d'œuvre et déplacement) avec une intervention sous 48 h. Les pièces de rechange ne sont incluses qu'en formule SÉCU… |
+| `blog-entretien-chaudiere-annuel-obligatoire.html` | 218 | engagement « intervention sous X » | `intervention sous 4` | …nnages par an inclus (main-d'œuvre et déplacement) avec une intervention sous 48 h. Les pièces de rechange ne sont incluses qu'en formule S… |
 | `blog-panne-electrique-disjoncteur-saute.html` | 208 | engagement « sous X (h/min) » | `sous 2h` | …équipe intervient à Saint-Omer, Dunkerque, Calais, Boulogne sous 2h en urgence électrique.</p> </section> <section class="blog-… |
 | `chauffagiste-boulogne-sur-mer.html` | 898 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `chauffagiste-boulogne-sur-mer.html` | 898 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
@@ -42,10 +43,12 @@ Décision Florian 15 mai 2026 : retirer tous les délais d'intervention promis d
 | `chauffagiste-wimereux.html` | 253 | engagement « sous X (h/min) » | `sous 2h` | …enir <strong>sous 24 à 48h</strong> en standard, et <strong>sous 2h en urgence</strong> (avec majoration soir/week-end).</p>… |
 | `contact.html` | 349 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.94rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.74rem;color… |
 | `contact.html` | 349 | engagement « sous X (h/min) » | `sous 24h` | …us adressons un <strong>devis gratuit et détaillé</strong> (sous 24h ouvrées pour les demandes simples)</li> <li>Vous décid… |
-| `contrats-entretien.html` | 843 | engagement « sous X (h/min) » | `sous 24h` | …> · Renseignez le formulaire et nous validons votre dossier sous 24h ouvrées.</p> </div> <form id="sousForm" onsubmit="retu… |
-| `contrats-entretien.html` | 843 | engagement « sous X (h/min) » | `sous 24h` | …oordonnées</h4> <p class="sw-step-hint">Pour vous rappeler sous 24h ouvrées et envoyer votre contrat.</p> </div> <div style="… |
-| `contrats-entretien.html` | 843 | engagement « sous X (h/min) » | `sous 24h` | …ons puis envoyez votre demande. Un conseiller vous rappelle sous 24h ouvrées pour planifier la visite technique.</p> </div>… |
-| `contrats-entretien.html` | 843 | engagement « sous X (h/min) » | `sous 24h` | …ata-validate="checked"> <span>J'accepte d'être contacté(e) sous 24h ouvrées pour finaliser mon contrat. Je reconnais que ce for… |
+| `contrats-entretien.html` | 441 | engagement « sous X (h/min) » | `sous 48 h` | …par an inclus (main-d'œuvre et déplacement) et intervention sous 48 h.</span></li> </ul> </div> </section> <section class="ct… |
+| `contrats-entretien.html` | 803 | engagement « sous X (h/min) » | `sous 24h` | …> · Renseignez le formulaire et nous validons votre dossier sous 24h ouvrées.</p> </div> <form id="sousForm" onsubmit="retu… |
+| `contrats-entretien.html` | 803 | engagement « sous X (h/min) » | `sous 24h` | …oordonnées</h4> <p class="sw-step-hint">Pour vous rappeler sous 24h ouvrées et envoyer votre contrat.</p> </div> <div style="… |
+| `contrats-entretien.html` | 803 | engagement « sous X (h/min) » | `sous 24h` | …ons puis envoyez votre demande. Un conseiller vous rappelle sous 24h ouvrées pour planifier la visite technique.</p> </div>… |
+| `contrats-entretien.html` | 803 | engagement « sous X (h/min) » | `sous 24h` | …ata-validate="checked"> <span>J'accepte d'être contacté(e) sous 24h ouvrées pour finaliser mon contrat. Je reconnais que ce for… |
+| `contrats-entretien.html` | 441 | engagement « intervention sous X » | `intervention sous 4` | …2 dépannages par an inclus (main-d'œuvre et déplacement) et intervention sous 48 h.</span></li> </ul> </div> </section> <section class=… |
 | `diagnostic-electrique.html` | 57 | engagement « sous X (h/min) » | `sous 48h` | …tion de plus de 15 ans. Conforme arrêté 28/09/2017. Rapport sous 48h ouvrées.</p> <a href="tel:+33366100134" class="de-cta">📞… |
 | `diagnostic-electrique.html` | 57 | engagement « sous X (h/min) » | `sous 48h` | …<p style="font-size:.92rem;color:#64748b">📄 Rapport remis sous 48h ouvrées. Compatible toutes notariées + agences immobilières… |
 | `diagnostic-electrique.html` | 57 | engagement « sous X (h/min) » | `sous 48h` | …ur T2-T4 standard. Tarif annoncé avant déplacement, rapport sous 48h ouvrées.</p> </div> <div class="de-faq"> <h3>Mon install… |
@@ -61,7 +64,13 @@ Décision Florian 15 mai 2026 : retirer tous les délais d'intervention promis d
 | `electricien-saint-omer.html` | 847 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `electricien-saint-omer.html` | 847 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |
 | `electricien-saint-omer.html` | 847 | engagement « sous X (h/min) » | `sous 24h` | …9;line-height:1.5">Notre équipe vous rappelle <strong>Devis sous 24h ouvrées ouvrées</strong> avec le tarif personnalisé.</p> <… |
+| `faq.html` | 231 | engagement « sous X (h/min) » | `sous 48 h` | …s par an inclus (main-d'œuvre et déplacement), intervention sous 48 h. <strong>Sécurité</strong> = pièces incluses en plus, inter… |
+| `faq.html` | 231 | engagement « sous X (h/min) » | `sous 24 h` | …g>Sécurité</strong> = pièces incluses en plus, intervention sous 24 h — réservée aux chaudières de moins de 5 ans, après contrôle… |
 | `faq.html` | 287 | engagement « sous X (h/min) » | `sous 24h` | …as votre réponse&nbsp;?</h3> <p>Notre équipe vous rappelle sous 24h ouvrées avec une réponse personnalisée.</p> <a href="conta… |
+| `faq.html` | 231 | engagement « intervention sous X » | `intervention sous 4` | …= 2 dépannages par an inclus (main-d'œuvre et déplacement), intervention sous 48 h. <strong>Sécurité</strong> = pièces incluses en plus, in… |
+| `faq.html` | 231 | engagement « intervention sous X » | `intervention sous 2` | …48 h. <strong>Sécurité</strong> = pièces incluses en plus, intervention sous 24 h — réservée aux chaudières de moins de 5 ans, après contr… |
+| `guide-entretien-chaudiere.html` | 321 | engagement « sous X (h/min) » | `sous 48 h` | …inclus (main-d'œuvre et déplacement), avec une intervention sous 48 h. C'est généralement plus rentable qu'un entretien à la pièc… |
+| `guide-entretien-chaudiere.html` | 321 | engagement « intervention sous X » | `intervention sous 4` | …par an sont inclus (main-d'œuvre et déplacement), avec une intervention sous 48 h. C'est généralement plus rentable qu'un entretien à la p… |
 | `guide-fuite-eau.html` | 341 | engagement « sous X (h/min) » | `Sous 24h` | …uite simple (joint d'évier, mitigeur usé)</li> <li><strong>Sous 24h ouvrées</strong> dans tous les cas — même si vous avez « ré… |
 | `menuisier-dunkerque.html` | 831 | engagement « sous X (h/min) » | `sous 24h` | …lass="m-cta-text"><strong>Être rappelé</strong><small>Devis sous 24h ouvrées</small></span> </a> </div> <div class="m-trust-… |
 | `menuisier-dunkerque.html` | 831 | engagement « sous X (h/min) » | `sous 24h` | …"display:block;color:#0A1428;font-size:.96rem">Devis simple sous 24h ouvrées</strong> <span style="font-size:.76rem;co… |

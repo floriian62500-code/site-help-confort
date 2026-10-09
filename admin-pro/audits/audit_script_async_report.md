@@ -1,11 +1,11 @@
 # Audit script async/defer — Rapport
 
-_Généré le 2026-10-08 10:10_
+_Généré le 2026-10-09 10:12_
 
 ## Synthèse
 
 - Pages scannées : **138**
-- Scripts externes total : **1725**
+- Scripts externes total : **1720**
 - Scripts render-blocking : **125**
 - ✅ OK : **84**
 - ❌ Erreurs (script bloquant dans `<head>`) : **0**
@@ -56,9 +56,9 @@ _Généré le 2026-10-08 10:10_
 - ⚠️ L.1041 (head) `assets/hc-leads-capture.js?v=20260804` — ajouter `defer` ou `async`
 
 ### `contrats-entretien.html`
-- ⚠️ L.819 (head) `script.js` — ajouter `defer` ou `async`
-- ⚠️ L.1262 (head) `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js` — ajouter `defer` ou `async`
-- ⚠️ L.1578 (head) `assets/hc-leads-capture.js?v=20260804` — ajouter `defer` ou `async`
+- ⚠️ L.779 (head) `script.js` — ajouter `defer` ou `async`
+- ⚠️ L.1180 (head) `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js` — ajouter `defer` ou `async`
+- ⚠️ L.1422 (head) `assets/hc-leads-capture.js?v=20260804` — ajouter `defer` ou `async`
 
 ### `depannage-boulogne-sur-mer.html`
 - ⚠️ L.939 (head) `script.js` — ajouter `defer` ou `async`

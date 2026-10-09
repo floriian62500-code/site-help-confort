@@ -11,9 +11,16 @@
     {
       "file": "blog-entretien-chaudiere-annuel-obligatoire.html",
       "line": 218,
-      "match": "sous 24h",
+      "match": "sous 48 h",
       "label": "engagement « sous X (h/min) »",
-      "context": "s : entretien automatique programmé, dépannage prioritaire (sous 24h en formule Confort), pas de majoration soir/week-end, petit"
+      "context": "inclus (main-d'œuvre et déplacement) avec une intervention sous 48 h. Les pièces de rechange ne sont incluses qu'en formule SÉCU"
+    },
+    {
+      "file": "blog-entretien-chaudiere-annuel-obligatoire.html",
+      "line": 218,
+      "match": "intervention sous 4",
+      "label": "engagement « intervention sous X »",
+      "context": "nnages par an inclus (main-d'œuvre et déplacement) avec une intervention sous 48 h. Les pièces de rechange ne sont incluses qu'en formule S"
     },
     {
       "file": "blog-panne-electrique-disjoncteur-saute.html",
@@ -150,31 +157,45 @@
     },
     {
       "file": "contrats-entretien.html",
-      "line": 843,
+      "line": 441,
+      "match": "sous 48 h",
+      "label": "engagement « sous X (h/min) »",
+      "context": "par an inclus (main-d'œuvre et déplacement) et intervention sous 48 h.</span></li> </ul> </div> </section> <section class=\"ct"
+    },
+    {
+      "file": "contrats-entretien.html",
+      "line": 803,
       "match": "sous 24h",
       "label": "engagement « sous X (h/min) »",
       "context": "> · Renseignez le formulaire et nous validons votre dossier sous 24h ouvrées.</p> </div> <form id=\"sousForm\" onsubmit=\"retu"
     },
     {
       "file": "contrats-entretien.html",
-      "line": 843,
+      "line": 803,
       "match": "sous 24h",
       "label": "engagement « sous X (h/min) »",
       "context": "oordonnées</h4> <p class=\"sw-step-hint\">Pour vous rappeler sous 24h ouvrées et envoyer votre contrat.</p> </div> <div style=\""
     },
     {
       "file": "contrats-entretien.html",
-      "line": 843,
+      "line": 803,
       "match": "sous 24h",
       "label": "engagement « sous X (h/min) »",
       "context": "ons puis envoyez votre demande. Un conseiller vous rappelle sous 24h ouvrées pour planifier la visite technique.</p> </div>"
     },
     {
       "file": "contrats-entretien.html",
-      "line": 843,
+      "line": 803,
       "match": "sous 24h",
       "label": "engagement « sous X (h/min) »",
       "context": "ata-validate=\"checked\"> <span>J'accepte d'être contacté(e) sous 24h ouvrées pour finaliser mon contrat. Je reconnais que ce for"
+    },
+    {
+      "file": "contrats-entretien.html",
+      "line": 441,
+      "match": "intervention sous 4",
+      "label": "engagement « intervention sous X »",
+      "context": "2 dépannages par an inclus (main-d'œuvre et déplacement) et intervention sous 48 h.</span></li> </ul> </div> </section> <section class="
     },
     {
       "file": "diagnostic-electrique.html",
@@ -283,10 +304,52 @@
     },
     {
       "file": "faq.html",
+      "line": 231,
+      "match": "sous 48 h",
+      "label": "engagement « sous X (h/min) »",
+      "context": "s par an inclus (main-d'œuvre et déplacement), intervention sous 48 h. <strong>Sécurité</strong> = pièces incluses en plus, inter"
+    },
+    {
+      "file": "faq.html",
+      "line": 231,
+      "match": "sous 24 h",
+      "label": "engagement « sous X (h/min) »",
+      "context": "g>Sécurité</strong> = pièces incluses en plus, intervention sous 24 h — réservée aux chaudières de moins de 5 ans, après contrôle"
+    },
+    {
+      "file": "faq.html",
       "line": 287,
       "match": "sous 24h",
       "label": "engagement « sous X (h/min) »",
       "context": "as votre réponse&nbsp;?</h3> <p>Notre équipe vous rappelle sous 24h ouvrées avec une réponse personnalisée.</p> <a href=\"conta"
+    },
+    {
+      "file": "faq.html",
+      "line": 231,
+      "match": "intervention sous 4",
+      "label": "engagement « intervention sous X »",
+      "context": "= 2 dépannages par an inclus (main-d'œuvre et déplacement), intervention sous 48 h. <strong>Sécurité</strong> = pièces incluses en plus, in"
+    },
+    {
+      "file": "faq.html",
+      "line": 231,
+      "match": "intervention sous 2",
+      "label": "engagement « intervention sous X »",
+      "context": "48 h. <strong>Sécurité</strong> = pièces incluses en plus, intervention sous 24 h — réservée aux chaudières de moins de 5 ans, après contr"
+    },
+    {
+      "file": "guide-entretien-chaudiere.html",
+      "line": 321,
+      "match": "sous 48 h",
+      "label": "engagement « sous X (h/min) »",
+      "context": "inclus (main-d'œuvre et déplacement), avec une intervention sous 48 h. C'est généralement plus rentable qu'un entretien à la pièc"
+    },
+    {
+      "file": "guide-entretien-chaudiere.html",
+      "line": 321,
+      "match": "intervention sous 4",
+      "label": "engagement « intervention sous X »",
+      "context": "par an sont inclus (main-d'œuvre et déplacement), avec une intervention sous 48 h. C'est généralement plus rentable qu'un entretien à la p"
     },
     {
       "file": "guide-fuite-eau.html",
@@ -823,7 +886,7 @@
   ],
   "per_file": {
     "blog-debouchage-canalisation-furet-hydrocurage.html": 1,
-    "blog-entretien-chaudiere-annuel-obligatoire.html": 1,
+    "blog-entretien-chaudiere-annuel-obligatoire.html": 2,
     "blog-panne-electrique-disjoncteur-saute.html": 1,
     "chauffagiste-boulogne-sur-mer.html": 3,
     "chauffagiste-calais.html": 3,
@@ -834,13 +897,14 @@
     "chauffagiste-saint-omer.html": 3,
     "chauffagiste-wimereux.html": 1,
     "contact.html": 2,
-    "contrats-entretien.html": 4,
+    "contrats-entretien.html": 6,
     "diagnostic-electrique.html": 3,
     "electricien-boulogne-sur-mer.html": 3,
     "electricien-calais.html": 3,
     "electricien-dunkerque.html": 3,
     "electricien-saint-omer.html": 3,
-    "faq.html": 1,
+    "faq.html": 5,
+    "guide-entretien-chaudiere.html": 2,
     "guide-fuite-eau.html": 1,
     "menuisier-dunkerque.html": 3,
     "menuisier-saint-omer.html": 3,
@@ -880,8 +944,8 @@
     "zones-intervention.html": 1
   },
   "per_label": {
-    "engagement « sous X (h/min) »": 115,
-    "engagement « intervention sous X »": 2
+    "engagement « sous X (h/min) »": 119,
+    "engagement « intervention sous X »": 7
   },
-  "generated_at": "2026-10-08T10:09:39"
+  "generated_at": "2026-10-09T10:11:11"
 }
