@@ -224,6 +224,47 @@ for (const dossier of ['assets', 'partials']) {
 }
 ok('aucun CSS ni JS partagé ne décrit encore ce module', ORPHELINS.length === 0, ORPHELINS.join(', '));
 
+// ── Les données structurées disent-elles le bon métier ? ──────────────────────
+// Le 09/10, le contrôle « accroche » a ramené menuisier-saint-omer : il portait l'accroche du
+// vitrier. En regardant la page entière, c'était pire — trois métiers cohabitaient. Le texte parlait
+// menuiserie, les descriptions de partage vendaient du bris de glace, le catalogue d'offres était
+// celui du vitrier relabellisé, la carte de partage montrait la vitrerie, et la fiche business
+// annonçait à Google : « HELP Confort — Plombier Saint-Omer ». Huit pages portaient cette fiche.
+// Ce que le texte visible montre ne dit rien de ce que les moteurs lisent : on contrôle les deux.
+const FAMILLES = { plombier: 'Plombier', chauffagiste: 'Chauffagiste', electricien: 'Électricien',
+  serrurier: 'Serrurier', vitrier: 'Vitrier', menuisier: 'Menuisier', volets: 'Volets', pmr: 'Adaptation PMR' };
+const VITRINES = readdirSync(ROOT).filter(f => /^(plombier|chauffagiste|electricien|serrurier|vitrier|menuisier|volets|pmr)-(saint-omer|dunkerque|calais|boulogne-sur-mer)\.html$/.test(f));
+const usurpent = [], imagesEtrangeres = [];
+for (const f of VITRINES) {
+  const c = lire(f), sien = f.split('-')[0];
+  const fiche = (c.match(/"name":\s*"HELP Confort — ([^"]+?) (?:Saint-Omer|Dunkerque)/) || [])[1];
+  if (fiche && fiche !== FAMILLES[sien]) usurpent.push(`${f} : fiche « ${fiche} »`);
+  for (const [autre, label] of Object.entries(FAMILLES)) {
+    if (autre === sien) continue;
+    if (c.includes(`og/${autre}-saint-omer.png`)) imagesEtrangeres.push(`${f} → og/${autre}-saint-omer.png`);
+  }
+}
+ok(`les ${VITRINES.length} pages métier : la fiche business annonce le métier de la page`,
+  usurpent.length === 0, usurpent.slice(0, 8).join('\n     '));
+ok('les pages métier : aucune carte de partage empruntée à un autre métier',
+  imagesEtrangeres.length === 0, imagesEtrangeres.slice(0, 8).join('\n     '));
+
+// Un catalogue d'offres recopié garde le vocabulaire de sa source, même après relabellisation.
+const EXCLUSIF = { vitrier: /bris de glace|double vitrage isolant|vitrage sur-mesure/i,
+                   plombier: /recherche de fuite|dégorgement|chasse d'eau/i };
+const catalogues = [];
+for (const f of VITRINES) {
+  const sien = f.split('-')[0];
+  const offres = [...lire(f).matchAll(/"itemOffered":\s*\{"@type":\s*"Service",\s*"name":\s*"([^"]+)"/g)].map(m => m[1]);
+  for (const [autre, mots] of Object.entries(EXCLUSIF)) {
+    if (autre === sien) continue;
+    const vol = offres.filter(o => mots.test(o));
+    if (vol.length) catalogues.push(`${f} (${sien}) propose « ${vol[0]} »`);
+  }
+}
+ok('les pages métier : aucun catalogue d’offres emprunté à un autre métier',
+  catalogues.length === 0, catalogues.slice(0, 8).join('\n     '));
+
 // ── La vitrine « Nos métiers » ────────────────────────────────────────────────
 // Elle annonçait « Nos 8 métiers » et en présentait 9, dans quatre surfaces à la fois : le H1, les
 // deux descriptions de partage et la description JSON-LD. Un chiffre faux sur une page indexée se
