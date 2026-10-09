@@ -30,7 +30,7 @@
   "READY_FOR_FLORIAN_VISUAL"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-060",
+ "prochain_id": "REQ-20260926-061",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -1661,6 +1661,38 @@
    "closure_proof": null,
    "decide_par": null,
    "description": "hc-reserve-modal.js reecrit (9521 -> 1631 octets) : plus d appel stripe-create-payment-link, plus de modale 'Reserver & payer en ligne' jamais ouverte, plus d ancienne cle anon revoquee ; les cartes tarif mènent au tunnel canonique. Garde scripts/tests/paiement-front.test.mjs sur 259 fichiers publics, 5 PASS. stripe-create-payment-link et stripe-webhook versionnees telles quelles + README-PAIEMENT. Aucun deploiement. Les 3 correctifs serveur restent en attente de GO separe."
+  },
+  {
+   "request_id": "REQ-20260926-060",
+   "title": "Nos metiers : vitrine fausse, identite metier usurpee sur 8 pages, Plomberie disparue de 14 pieds de page",
+   "priority": "P1",
+   "status": "READY_FOR_CONTROL",
+   "parent_instruction": "instruction ChatGPT 2026-10-08 — priorite 2 Nos metiers, reconstruction depuis le main courant",
+   "legacy_instruction_id": "REQ-20260926-032 (CLOSED/SUPERSEDED : ancienne maquette, non reprise)",
+   "created_at": "2026-10-09",
+   "acceptance_criteria": [
+    "page publique finale, pas une maquette docs",
+    "desktop 1440 et mobile 390",
+    "liens vers pages metier reelles",
+    "coherente avec header/footer actuels",
+    "aucune route /docs publique",
+    "pas de duplication inutile",
+    "preview Netlify puis PR READY_FOR_CONTROL"
+   ],
+   "evidence_required": [
+    "rendu preview en 1440 et 390",
+    "suite de tests avant/apres sur worktrees jetables"
+   ],
+   "latest_sha": "PR #61, branche fix/nos-metiers-vitrine f19f94a6, depuis main 919f828c (non fusionnee)",
+   "claude_outbox": "CLAUDE-2026-10-09-NOS-METIERS.md",
+   "human_gate": "Ajouter /nos-metiers.html au menu = changement de navigation : decision Florian. Non fait.",
+   "blocked_by": null,
+   "next_action": "Controle ChatGPT de la PR #61. J enchaine sur les cartes prestations puis la doctrine agence unique.",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null,
+   "decide_par": null,
+   "description": "4 correctifs, 1 commit chacun. (1) la vitrine annoncait 8 metiers et en presentait 9, dans 4 surfaces ; chapeau annoncant des peintres absents ; 0 chemin vers le tunnel ; couche d evenements sans bandeau ni chargeur GA4. (2) 8 pages portaient la fiche business du plombier (menuiseries, vitreries, volets, PMR) ; les menuiseries etaient des copies du vitrier jusqu au catalogue d offres et a la carte de partage. (3) la Plomberie avait disparu de 14 pieds de page. (4) l encart saisonnier recouvrait la premiere carte en 1440 ; 205 pages repropagees. Constat de fond : la suite de tests est rouge sur main (9 suites, 45 controles) depuis le 25/09, ce qui explique que le defaut menuiserie soit reste 15 jours en production. pages-metier passe de 54/4 a 69/0. Releve non corrige : 47 pages sans mesure, garde consent aveugle a hc-tracking.js, 78 pages '& Dunkerque' en donnees structurees, og/menuisier-saint-omer.png inexistant."
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id. Le 2026-09-28, deux demandes ont reçu 032 à la même minute (refonte Nos métiers et routage e-mail) : 032 reste à « Nos métiers », le routage devient 033, prochain_id passe à 034. Le nom du fichier d’instruction d’origine est conservé dans legacy_instruction_id.",
