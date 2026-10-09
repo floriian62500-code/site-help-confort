@@ -224,5 +224,55 @@ for (const dossier of ['assets', 'partials']) {
 }
 ok('aucun CSS ni JS partagé ne décrit encore ce module', ORPHELINS.length === 0, ORPHELINS.join(', '));
 
+// ── La vitrine « Nos métiers » ────────────────────────────────────────────────
+// Elle annonçait « Nos 8 métiers » et en présentait 9, dans quatre surfaces à la fois : le H1, les
+// deux descriptions de partage et la description JSON-LD. Un chiffre faux sur une page indexée se
+// corrige une fois ; ce qui le fait revenir, c'est qu'aucun contrôle ne relie le chiffre annoncé au
+// nombre réel de sections. Les contrôles ci-dessous lient les deux, dans le texte visible ET dans
+// les données structurées — la leçon du 09/10 : une page se corrige en auditant ses deux surfaces.
+const VITRINE = 'nos-metiers.html';
+const v = lire(VITRINE);
+const itemList = JSON.parse(
+  (v.match(/<script type="application\/ld\+json"[^>]*>\s*(\{[^<]*?"@type":\s*"ItemList"[\s\S]*?)<\/script>/) || [])[1] || '{}');
+const sections = (v.match(/class="nm-card"/g) || []).length || (v.match(/<h2[^>]*>/g) || []).length;
+const items = (itemList.itemListElement || []).length;
+const chiffres = [...v.matchAll(/(\d+)\s+métiers/g)].map(m => Number(m[1]));
+
+ok(`« Nos métiers » : la liste structurée compte autant d'entrées que de métiers réels (${items})`,
+  items > 0 && items === new Set((itemList.itemListElement || []).map(x => x.name)).size,
+  `itemListElement=${items}`);
+ok(`« Nos métiers » : le chiffre annoncé est le même partout et vaut ${items} (H1, partage, JSON-LD)`,
+  chiffres.length > 0 && chiffres.every(n => n === items),
+  `chiffres trouvés : ${[...new Set(chiffres)].join(', ')} · attendu ${items}`);
+
+// Le chapeau énumérait des métiers que la page ne présente pas (« peintres ») et en oubliait trois.
+const chapeau = (v.match(/<h1[\s\S]*?<p>([\s\S]*?)<\/p>/) || [])[1] || '';
+ok('« Nos métiers » : le chapeau n’annonce aucun métier absent de la page',
+  !/peintres?/i.test(chapeau), chapeau.replace(/<[^>]+>/g, '').slice(0, 120));
+
+// Orpheline dans la navigation, elle reste indexée : elle doit nourrir le tunnel comme les autres.
+ok('« Nos métiers » : au moins un chemin vers le tunnel canonique',
+  /href="\/?catalogue\.html#/.test(v));
+
+// Elle chargeait la couche d’événements sans le chargeur GA4 ni le bandeau : rien n’était mesuré,
+// et le visiteur n’avait aucun choix à faire. Les deux vont ensemble, comme sur les pages d’arrivée.
+ok('« Nos métiers » : bandeau de consentement et chargeur de mesure, tous deux versionnés',
+  /hc-consent\.js\?v=/.test(v) && /assets\/tracking\.js\?v=/.test(v));
+
+// Doctrine agence unique : le texte visible avait été repris, les données structurées non.
+ok('« Nos métiers » : les données structurées ne nomment qu’une agence',
+  !/"name":\s*"HELP Confort Saint-Omer & Dunkerque"/.test(v));
+
+// Une vitrine ne doit renvoyer que vers des pages qui existent, et jamais vers une route /docs.
+const liensVitrine = [...v.matchAll(/href="([^"]+)"/g)].map(m => m[1])
+  .filter(h => !/^(tel:|mailto:|https?:|#|\/assets\/)/.test(h));
+const vitrineMorts = liensVitrine.filter(h => {
+  const c = h.split('#')[0].split('?')[0].replace(/^\//, '') || 'index.html';
+  return !existsSync(join(ROOT, c));
+});
+ok(`« Nos métiers » : ses ${liensVitrine.length} liens internes mènent à une page qui existe`,
+  vitrineMorts.length === 0, [...new Set(vitrineMorts)].slice(0, 6).join(', '));
+ok('« Nos métiers » : aucune route /docs publique', !/href="\/?docs\//.test(v));
+
 console.log(`\nRÉSULTAT PAGES MÉTIER : ${pass} PASS / ${fail} FAIL\n`);
 process.exit(fail ? 1 : 0);
