@@ -1,5 +1,12 @@
 # Audit paiement — lecture seule — **deux P1 ouverts**
 
+> **CORRECTION du 2026-10-09** — la phrase « chemin public réel : `hc-reserve-modal.js`, chargé par
+> 26 pages métier » ci-dessous est **inexacte**. Les cartes tarif que ce module accroche n'ont
+> **aucun balisage** sur les 26 pages (mesuré : 26/26 inertes, seul le CSS subsiste) : le module
+> sortait immédiatement et **aucun visiteur ne pouvait déclencher ce paiement**. Les deux P1
+> restent entiers — la fonction demeure appelable **directement**, sans authentification, et cela
+> ne dépend pas du front. Détail et mesure : `CLAUDE-2026-10-09-PR60-PAIEMENT-FRONT.md`.
+
 Rien n'a été modifié ni déployé. Tout ci-dessous est relevé, pas supposé : sources des fonctions
 déployées lues par l'API, tables lues en SQL, call sites lus dans `main` (`919f828c`).
 
@@ -25,8 +32,9 @@ Confort**, avec le montant et le texte de son choix. Le risque principal n'est p
 de l'argent — c'est qu'on encaisse **en votre nom** auprès de vos clients, avec les impayés, les
 litiges et les remboursements qui suivent. Accessoirement : création illimitée de lignes en base.
 
-**Chemin public réel** : `assets/hc-reserve-modal.js`, chargé par **26 pages métier**, lit un prix
-dans la page (`parsePrice`) et l'envoie comme `amount_eur`, puis redirige vers le lien reçu.
+~~**Chemin public réel** : `assets/hc-reserve-modal.js`, chargé par **26 pages métier**, lit un prix
+dans la page (`parsePrice`) et l'envoie comme `amount_eur`, puis redirige vers le lien reçu.~~
+**Corrigé le 09/10** : ce code existait mais n'avait **aucun déclencheur** — 0 carte tarif sur les 26 pages.
 
 ## P1 — le webhook accepte n'importe quel message, sans signature
 
@@ -72,8 +80,8 @@ recevoir **ce qui est acheté**, et aller chercher le prix lui-même dans `v_con
 
 ## Ce que je recommande, par ordre de risque — **rien n'est exécuté**
 
-1. **Fermer l'écriture publique.** Le plus court : retirer l'appel public (les 26 pages passent par
-   le tunnel, déjà verrouillé) **ou** exiger un en-tête d'autorisation sur la fonction. Tant que
+1. **Fermer l'écriture publique.** Retirer l'appel public est **fait** (PR #60), mais ne suffit pas :
+   le code était déjà inerte. Il faut **exiger un en-tête d'autorisation sur la fonction**. Tant que
    `verify_jwt` est désactivé et le CORS ouvert, tout le reste est cosmétique.
 2. **Vérifier la signature du webhook** avec le `webhook_secret` Stripe, et refuser ce qui n'est pas
    signé. Sans cela, `payments.status` ne vaut rien.
