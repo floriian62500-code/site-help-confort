@@ -30,7 +30,7 @@
   "READY_FOR_FLORIAN_VISUAL"
  ],
  "regle_de_relance": "Une demande P0/P1 sans preuve complète au retour suivant garde son request_id, incrémente attempt, passe REWORK_REQUIRED et reçoit une relance ciblée.",
- "prochain_id": "REQ-20260926-062",
+ "prochain_id": "REQ-20260926-063",
  "requests": [
   {
    "request_id": "REQ-20260926-001",
@@ -1722,6 +1722,35 @@
    "closure_proof": null,
    "decide_par": null,
    "description": "Correction de mon propre chiffre : ce n est pas 9 suites / 45 controles mais 51 assertions en echec sur 10 suites, PLUS 5 suites qui plantent (ENOENT) dont 3 sans produire la moindre assertion — je comptais les lignes de verdict, que ces 5 suites n emettent pas. ads-landing portait a elle seule 10 echecs invisibles. Cause : les 10 gardes sont arrivees le 2026-10-06 par un seul commit (1c54c89d, Merge PR #37 port control and QA tooling) deja rouges (24 echecs a ce commit), sans les fichiers dont elles dependent. derive-release plante sur .github/workflows/tests.yml : la garde qui verifie que la suite tourne en CI plante parce qu il n y a pas de CI. Inventaire decoupe en 8 lots A..H avec severite et gates. Document : docs/control/TESTS-ROUGES-INVENTAIRE-2026-10-09.md"
+  },
+  {
+   "request_id": "REQ-20260926-062",
+   "title": "27 fichiers internes etaient servis sur depan59-62.fr, dont une copie indexable de l accueil",
+   "priority": "P1",
+   "status": "READY_FOR_CONTROL",
+   "parent_instruction": "docs/control/TESTS-ROUGES-INVENTAIRE-2026-10-09.md — lot A",
+   "legacy_instruction_id": null,
+   "created_at": "2026-10-09",
+   "acceptance_criteria": [
+    "aucun fichier interne de la racine n est servi",
+    "les fichiers publics legitimes restent servis",
+    "la garde couvre tout ce que git suit, pas une liste a la main",
+    "aucune assertion affaiblie"
+   ],
+   "evidence_required": [
+    "statut HTTP fichier par fichier sur la preview",
+    "depot-propre vert"
+   ],
+   "latest_sha": "PR #62, branche fix/notes-internes-servies, depuis main c4f009a3 (non fusionnee)",
+   "claude_outbox": "CLAUDE-2026-10-09-LOT-A-DEPOT-SERVI.md",
+   "human_gate": null,
+   "blocked_by": null,
+   "next_action": "Controle ChatGPT de la PR #62. J enchaine sur le lot H (suites qui plantent) puis la CI.",
+   "attempt": 1,
+   "closed_at": null,
+   "closure_proof": null,
+   "decide_par": null,
+   "description": "27 fichiers internes repondaient 200 en production dont index.html.bak.before-minify, copie de 205 ko de l accueil en robots index,follow. Verifie : aucune cle ni JWT complet, ce n est pas une fuite de secret. 30 regles 404! posees ; 9e0e7a80….txt laisse servi car c est une verification de domaine. Garde corrigee 2 fois : admin manquait a la liste des dossiers publics alors que son propre commentaire interdit de le bloquer ; et elle nommait 5 notes a la main quand la realite en comptait 27. depot-propre 8/2 → 11/0."
   }
  ],
  "regle_de_numerotation": "Un request_id n'est JAMAIS réutilisé. Les identifiants 001 à 015 sont l'historique créé par Claude le 2026-09-26 ; les instructions arrivées ensuite sous les mêmes numéros ont été remappées vers 016 à 022, avec le nom de fichier d'origine conservé dans legacy_instruction_id. Le 2026-09-28, deux demandes ont reçu 032 à la même minute (refonte Nos métiers et routage e-mail) : 032 reste à « Nos métiers », le routage devient 033, prochain_id passe à 034. Le nom du fichier d’instruction d’origine est conservé dans legacy_instruction_id.",
