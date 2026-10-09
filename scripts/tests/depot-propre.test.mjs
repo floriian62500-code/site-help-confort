@@ -162,8 +162,11 @@ const nonBloques = INTERNES.filter((c) => !bloque(c));
 ok(`les dossiers internes sont tous bloqués (${INTERNES.length} surveillés)`, nonBloques.length === 0, nonBloques.join(', '));
 
 // Un dossier interne apparu depuis doit se faire remarquer : on compare ce qui existe à la liste.
+// `admin` figure ici pour la raison écrite plus haut : c'est le back-office Decap, servi volontairement.
+// Il manquait à la liste, si bien que la garde réclamait de bloquer un dossier que son propre commentaire
+// interdit de bloquer — elle échouait sans qu'aucune correction du site ne puisse la satisfaire.
 const SERVIS_LEGITIMES = new Set(['actualites', 'assets', 'content', 'data', 'emploi', 'guides', 'images',
-  'og', 'prestations', 'realisations', 'videos', 'admin-pro', '.well-known']);
+  'og', 'prestations', 'realisations', 'videos', 'admin', 'admin-pro', '.well-known']);
 const dossiers = [...new Set(suivis.filter((f) => f.includes('/')).map((f) => f.split('/')[0]))];
 const inconnus = dossiers.filter((d) => !SERVIS_LEGITIMES.has(d) && !bloque('/' + d + '/*'));
 ok('aucun dossier suivi n’échappe à la fois à la liste des dossiers publics et aux règles de blocage',
@@ -173,6 +176,37 @@ ok('aucun dossier suivi n’échappe à la fois à la liste des dossiers publics
 const NOTES = ['/CLAUDE.md', '/POUR-FLORIAN.md', '/BUGS-HISTORY.md', '/TODO.md', '/ALERTES.md'];
 const notesServies = NOTES.filter((c) => !bloque(c));
 ok('les notes de travail de la racine ne sont pas servies', notesServies.length === 0, notesServies.join(', '));
+
+// Ces cinq-là étaient nommées à la main, et la liste était très en dessous du réel : relevé du
+// 2026-10-09 sur depan59-62.fr, **27 fichiers internes de la racine répondaient 200**, dont des
+// changelogs, deux générateurs Python, un script shell `.command`, un classeur de photos et
+// `index.html.bak.before-minify` — une copie de 205 ko de l'accueil, en `robots: index, follow`,
+// donc un doublon indexable de la page d'accueil. Nommer les fautifs ne protège pas du suivant :
+// on part maintenant de ce que git suit, moins une liste **courte et justifiée** de ce qui doit
+// rester public. Tout le reste doit être bloqué.
+const PUBLICS_RACINE = new Set([
+  'logo.svg', 'logo-officiel.jpg',          // identité, référencés par 207 et 238 pages
+  'styles.css', 'script.js',                // feuille et script hérités, 171 et 63 pages
+  'sw.js', 'sw-push.js', 'manifest.json',   // service workers et manifeste PWA
+  'robots.txt', 'humans.txt',
+  'sitemap.xml', 'sitemap-index.xml', 'sitemap-pages.xml', 'sitemap-actus.xml',
+  '9e0e7a806c9dc08d00dc44da895a8a1b.txt',   // vérification de domaine : son contenu est son propre nom
+  '_redirects', '_headers', 'netlify.toml', // lus par Netlify, jamais servis comme page
+  '.gitignore', '.env.example',             // non servis (fichiers masqués), gardés pour la lisibilité
+]);
+const internesRacine = suivis
+  .filter((f) => !f.includes('/') && !f.endsWith('.html') && !PUBLICS_RACINE.has(f));
+// Un nom peut contenir espaces et parenthèses : `_redirects` est séparé par des espaces, donc la
+// règle est forcément encodée. Comparer les chaînes encodées rendrait la garde dépendante du
+// détail de l'encodage ; on compare les chemins **décodés**.
+const bloquesDecodes = new Set(
+  redirects.split('\n')
+    .map((l) => l.trim())
+    .filter((l) => /\s404!$/.test(l))
+    .map((l) => { try { return decodeURIComponent(l.split(/\s+/)[0]); } catch { return l.split(/\s+/)[0]; } }));
+const servisQuandMeme = internesRacine.filter((f) => !bloquesDecodes.has('/' + f));
+ok(`aucun fichier interne de la racine n’est servi (${internesRacine.length} surveillés)`,
+  servisQuandMeme.length === 0, servisQuandMeme.join(', '));
 
 console.log(`\nRÉSULTAT DÉPÔT PROPRE : ${pass} PASS / ${fail} FAIL\n`);
 process.exit(fail ? 1 : 0);
