@@ -1,12 +1,12 @@
-# Audit liens internes vs sitemap.xml — 2026-10-09 10:11
+# Audit liens internes vs sitemap.xml — 2026-10-10 09:32
 
 Sonde #61 : croise les `href` locaux `.html` avec `sitemap.xml` et le disque.
 
 - **Pages scannées** : 118
-- **Liens internes uniques (par page)** : 3529
+- **Liens internes uniques (par page)** : 3530
 - **URLs dans sitemap.xml** : 189
 - **🚨 Liens cassés (BROKEN)** : 1 (1 cibles uniques)
-- **🟠 Liens orphelins (ORPHAN — absents du sitemap)** : 266 (10 cibles uniques)
+- **🟠 Liens orphelins (ORPHAN — absents du sitemap)** : 267 (10 cibles uniques)
 
 ## 🚨 Cibles introuvables sur le disque
 
@@ -29,7 +29,7 @@ explicitement (whitelist du script si page technique/noindex).
 | `blog-pmr-adapter-salle-de-bain-senior.html` | 11× — `blog-comment-detecter-fuite-eau-cachee.html`, `blog-cout-renovation-salle-de-bain.html`, `blog-debouchage-canalisation-furet-hydrocurage.html`, `blog-entretien-chaudiere-annuel-obligatoire.html`, `blog-fenetres-double-vitrage-pvc-alu-bois.html` … (+6) |
 | `blog-porte-claquee-cle-perdue-que-faire.html` | 11× — `blog-comment-detecter-fuite-eau-cachee.html`, `blog-cout-renovation-salle-de-bain.html`, `blog-debouchage-canalisation-furet-hydrocurage.html`, `blog-entretien-chaudiere-annuel-obligatoire.html`, `blog-fenetres-double-vitrage-pvc-alu-bois.html` … (+6) |
 | `blog-comment-detecter-fuite-eau-cachee.html` | 11× — `blog-cout-renovation-salle-de-bain.html`, `blog-debouchage-canalisation-furet-hydrocurage.html`, `blog-entretien-chaudiere-annuel-obligatoire.html`, `blog-fenetres-double-vitrage-pvc-alu-bois.html`, `blog-isolation-combles-aides-2026.html` … (+6) |
-| `catalogue.html` | 7× — `chauffagiste-boulogne-sur-mer.html`, `chauffagiste-calais.html`, `chauffagiste-dunkerque.html`, `chauffagiste-saint-omer.html`, `contrats-entretien.html` … (+2) |
+| `catalogue.html` | 8× — `chauffagiste-boulogne-sur-mer.html`, `chauffagiste-calais.html`, `chauffagiste-dunkerque.html`, `chauffagiste-saint-omer.html`, `contrats-entretien.html` … (+3) |
 | `blog-entretien-chaudiere-annuel-obligatoire.html` | 4× — `blog-comment-detecter-fuite-eau-cachee.html`, `blog-pmr-adapter-salle-de-bain-senior.html`, `blog-porte-claquee-cle-perdue-que-faire.html`, `blog-remplacement-chaudiere-gaz-aides-2026.html` |
 | `prestations/salle-de-bain-pmr.html` | 2× — `pmr-dunkerque.html`, `pmr-saint-omer.html` |
 

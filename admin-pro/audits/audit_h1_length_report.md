@@ -1,6 +1,6 @@
 # Audit H1 length — Rapport
 
-_Généré le 2026-10-09 10:12_
+_Généré le 2026-10-10 09:33_
 
 ## Synthèse
 
@@ -149,7 +149,7 @@ _Généré le 2026-10-09 10:12_
 - ❌ H1-TOO-SHORT : 16 chars < 20
 
 ### `nos-metiers.html`  (13 chars, n_h1=1)
-> Nos 8 métiers
+> Nos 9 métiers
 - ❌ H1-TOO-SHORT : 13 chars < 20
 
 ### `notre-equipe.html`  (12 chars, n_h1=1)

@@ -1,4 +1,4 @@
-# Audit typographie FR (espaces insécables) — 2026-10-09 10:12
+# Audit typographie FR (espaces insécables) — 2026-10-10 09:33
 
 Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une espace **insécable** (`&nbsp;`, U+00A0, U+202F). Seuil d'alerte : > **5** occurrences fautives par page.
 
@@ -50,7 +50,7 @@ Sonde MEMOIRE #52 — la ponctuation haute (?!:;») doit être précédée d'une
 | `travaux-saint-omer.html` | **13** | `…enuiserie, adaptation PMR : un seul interlocuteur po…` · `…👋 Un projet de rénovation ? Salle de bain, cuisine,…` · `…lle de bain, cuisine, PMR : parlons de votre chantie…` |
 | `blog-isolation-combles-aides-2026.html` | **12** | `…Isolation des combles : la meilleure rentabilité…` · `…ion Isolation des combles : la meilleure rentabilité…` · `…rgétique le plus rentable : amortissement en 3-5 ans…` |
 | `guide-entretien-chaudiere.html` | **12** | `…Entretien chaudière : la loi — Guide HELP Conf…` · `…e Entretien chaudière gaz : tout ce que dit la loi 📖…` · `…nt. On vous explique tout : pourquoi c'est obligatoi…` |
-| `menuisier-saint-omer.html` | **12** | `…sur-mesure, sécurisation : nos vitriers intervienne…` · `…lle Indép. 👋 Porte abîmée ? Panneau cassé ? On envoi…` · `…te abîmée ? Panneau cassé ? On envoie notre menuisie…` |
+| `menuisier-saint-omer.html` | **12** | `…bois, alu ou PVC, parquet : nos menuisiers intervien…` · `…lle Indép. 👋 Porte abîmée ? Panneau cassé ? On envoi…` · `…te abîmée ? Panneau cassé ? On envoie notre menuisie…` |
 | `plombier-saint-omer.html` | **12** | `…erche de fuite, sanitaire : nos techniciens intervie…` · `…tville Indép. 👋 Une fuite ? Un dégorgement ? On envo…` · `…ne fuite ? Un dégorgement ? On envoie notre spéciali…` |
 | `serrurier-saint-omer.html` | **12** | `…cée, clé cassée, blindage : nos serruriers intervien…` · `…le Indép. 👋 Porte claquée ? Clé cassée ? Un serrurie…` · `…orte claquée ? Clé cassée ? Un serrurier intervient…` |
 | `depannage-saint-martin-lez-tatinghem.html` | **11** | `…ez-Tatinghem ou Tatinghem ? Notre dépôt est sur la c…` · `…rerie, volets, rénovation : tous les métiers du bâti…` · `…llons de la rue de Calais : nous connaissons chaque…` |

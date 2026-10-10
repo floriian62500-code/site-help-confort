@@ -1,11 +1,11 @@
 # Audit HTML weight — Rapport
 
-_Généré le 2026-10-09 10:12_
+_Généré le 2026-10-10 09:33_
 
 ## Synthèse
 
 - Pages scannées : **138**
-- Poids cumulé : **7067.2 KB**
+- Poids cumulé : **7067.7 KB**
 - Poids moyen : **51.2 KB**
 - ❌ Pages > 250 KB : **0**
 - ⚠️ Pages 150–250 KB : **0**
